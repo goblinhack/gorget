@@ -106,7 +106,7 @@ exit:
   return result;
 }
 
-bool test_load_slots(void)
+bool test_load_slots()
 {
   TRACE_NO_INDENT();
 

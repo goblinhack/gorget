@@ -114,7 +114,7 @@ exit:
   return result;
 }
 
-bool test_load_barrel(void)
+bool test_load_barrel()
 {
   TRACE_NO_INDENT();
 

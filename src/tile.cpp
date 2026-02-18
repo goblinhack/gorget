@@ -31,8 +31,8 @@ static bool tile_init_done;
 class Tile
 {
 public:
-  Tile(void);
-  ~Tile(void);
+  Tile();
+  ~Tile();
   Tile(const class Tile *tile);
 
   std::string name;
@@ -97,10 +97,10 @@ private:
   int _gl_binding_outline {};
 
 public:
-  int gl_binding(void) const;
-  int gl_binding_monochrome(void) const;
-  int gl_binding_mask(void) const;
-  int gl_binding_outline(void) const;
+  [[nodiscard]] int gl_binding() const;
+  [[nodiscard]] int gl_binding_monochrome() const;
+  [[nodiscard]] int gl_binding_mask() const;
+  [[nodiscard]] int gl_binding_outline() const;
 
   void set_gl_binding(int v);
   void set_gl_binding_monochrome(int v);
@@ -108,11 +108,11 @@ public:
   void set_gl_binding_outline(int v);
 };
 
-Tile::Tile(void) { newptr(MTYPE_TILE, this, "Tile"); }
+Tile::Tile() { newptr(MTYPE_TILE, this, "Tile"); }
 
-Tile::~Tile(void) { oldptr(MTYPE_TILE, this); }
+Tile::~Tile() { oldptr(MTYPE_TILE, this); }
 
-bool tile_init(void)
+bool tile_init()
 {
   TRACE_NO_INDENT();
 
@@ -121,7 +121,7 @@ bool tile_init(void)
   return true;
 }
 
-void tile_fini(void)
+void tile_fini()
 {
   TRACE_NO_INDENT();
 
@@ -763,7 +763,7 @@ void tile_is_alive_on_end_of_anim_set(Tilep t)
   t->is_alive_on_end_of_anim = true;
 }
 
-int Tile::gl_binding(void) const
+int Tile::gl_binding() const
 {
   TRACE_NO_INDENT();
   if (g_monochrome) {
@@ -784,7 +784,7 @@ int tile_gl_binding(Tilep t)
   return t->gl_binding();
 }
 
-int Tile::gl_binding_monochrome(void) const
+int Tile::gl_binding_monochrome() const
 {
   TRACE_NO_INDENT();
   return _gl_binding_monochrome;
@@ -796,7 +796,7 @@ void Tile::set_gl_binding_monochrome(int v)
   _gl_binding_monochrome = v;
 }
 
-int Tile::gl_binding_mask(void) const
+int Tile::gl_binding_mask() const
 {
   TRACE_NO_INDENT();
   return _gl_binding_mask;
@@ -808,7 +808,7 @@ void Tile::set_gl_binding_mask(int v)
   _gl_binding_mask = v;
 }
 
-int Tile::gl_binding_outline(void) const
+int Tile::gl_binding_outline() const
 {
   TRACE_NO_INDENT();
   return _gl_binding_outline;

@@ -14,7 +14,7 @@
 
 WidPopup *wid_warning_window;
 
-static void wid_warning_destroy(void)
+static void wid_warning_destroy()
 {
   TRACE_NO_INDENT();
   delete wid_warning_window;

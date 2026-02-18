@@ -39,7 +39,7 @@ static std::string tp_potion_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
   return true;
 }
 
-bool tp_load_potion(void)
+bool tp_load_potion()
 {
   TRACE_NO_INDENT();
 

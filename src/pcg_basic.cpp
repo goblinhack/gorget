@@ -41,7 +41,7 @@ struct pcg_state_setseq_64 { // Internals are *Private*.
   uint64_t inc;              // Controls which RNG sequence (stream) is
                              // selected. Must *always* be odd.
 };
-typedef struct pcg_state_setseq_64 pcg32_random_t;
+using pcg32_random_t = struct pcg_state_setseq_64;
 
 #define PCG32_INITIALIZER {0x853c49e6748fea9bULL, 0xda3e39cb94b95bdbULL}
 static thread_local pcg32_random_t pcg32_global = PCG32_INITIALIZER;
@@ -146,9 +146,9 @@ uint32_t pcg32_boundedrand(const char *func, int line, uint32_t bound)
   return out;
 }
 
-void game_pcg_lock(void) { pcg_lock_count++; }
+void game_pcg_lock() { pcg_lock_count++; }
 
-void game_pcg_unlock(void)
+void game_pcg_unlock()
 {
   if (pcg_lock_count == 0) {
     CROAK("pcg lock count error");

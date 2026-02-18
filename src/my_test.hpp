@@ -19,7 +19,7 @@ class Test;
 const char *test_name(Testp /*test*/);
 Testp       test_load(const char       */*name_in*/);
 
-typedef bool (*test_callback_t)(Gamep, Testp);
+using test_callback_t = bool (*)(Gamep, Testp);
 void test_callback_set(Testp /*test*/, test_callback_t /*callback*/);
 void tests_run(Gamep g);
 
@@ -73,8 +73,8 @@ void tests_run(Gamep g);
 
 #define TEST_PROGRESS(test) LOG("Test %s: %s:%u: progress", test_name(test), __FUNCTION__, __LINE__);
 
-void test_init(void);
-void test_fini(void);
+void test_init();
+void test_fini();
 
 [[nodiscard]] Levelsp game_test_init(Gamep g, Levelp *out, LevelNum level_num, int w, int h, const char *contents,
                                      Overrides /*overrides*/ = no_overrides);

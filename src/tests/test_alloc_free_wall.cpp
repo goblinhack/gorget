@@ -116,7 +116,7 @@ exit:
   return result;
 }
 
-bool test_load_alloc_free_walls(void)
+bool test_load_alloc_free_walls()
 {
   TRACE_NO_INDENT();
 

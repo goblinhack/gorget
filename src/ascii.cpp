@@ -44,7 +44,7 @@ int ascii_mouse_y;
 
 std::array< std::array< AsciiCell, TERM_HEIGHT_MAX >, TERM_WIDTH_MAX > *cells;
 
-void ascii_init(void) { ascii_clear_display(); }
+void ascii_init() { ascii_clear_display(); }
 
 #ifdef ENABLE_UI_ASCII_MOUSE
 //
@@ -107,7 +107,7 @@ int ascii_y_ok(int y)
   return 1;
 }
 
-void ascii_clear_scissors(void) { scissors_enabled = false; }
+void ascii_clear_scissors() { scissors_enabled = false; }
 
 void ascii_set_scissors(spoint tl, spoint br)
 {
@@ -764,8 +764,8 @@ static void ascii_map_thing_replace(int depth, int x, int y, Tilep tile, color c
   ascii_set(depth, x, y, col);
 }
 
-typedef void (*ascii_draw_char_fn)(int depth, int x, int y, char ch);
-typedef void (*ascii_draw_col_fn)(int depth, int x, int y, color col);
+using ascii_draw_char_fn = void (*)(int depth, int x, int y, char ch);
+using ascii_draw_col_fn = void (*)(int depth, int x, int y, color col);
 
 void ascii_draw_line(int depth, int x0, int y0, int x1, int y1, Tilep tile, color col)
 {
@@ -1008,7 +1008,7 @@ void ascii_display(Gamep g)
   blit_fbo_unbind_locked();
 }
 
-void ascii_clear_display(void)
+void ascii_clear_display()
 {
   if (cells == nullptr) {
     cells = new std::array< std::array< AsciiCell, TERM_HEIGHT_MAX >, TERM_WIDTH_MAX >;

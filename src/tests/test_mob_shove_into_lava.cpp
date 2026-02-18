@@ -184,7 +184,7 @@ exit:
   return result;
 }
 
-bool test_load_mob_shove_into_lava(void)
+bool test_load_mob_shove_into_lava()
 {
   TRACE_NO_INDENT();
 

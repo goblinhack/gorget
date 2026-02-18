@@ -4,12 +4,12 @@
 
 #pragma once
 
-typedef void (*wid_keyboard_event_t)(Gamep, Widp, const std::string &text);
+using wid_keyboard_event_t = void (*)(Gamep, Widp, const std::string &text);
 
 #define WID_KEYBOARD_ACROSS 12
 #define WID_KEYBOARD_DOWN   5
 
-typedef struct {
+using wid_keyboard_ctx = struct {
   /*
    * Parent widget
    */
@@ -59,7 +59,7 @@ typedef struct {
 
   size_t max_len;
 
-} wid_keyboard_ctx;
+};
 
 Widp wid_keyboard(Gamep g, const std::string &text, const std::string &title, wid_keyboard_event_t selected,
                   wid_keyboard_event_t cancelled, size_t max_len);

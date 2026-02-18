@@ -22,7 +22,7 @@ static std::string tp_trap_description_get(Gamep g, Levelsp v, Levelp l, Thingp 
   return "odd looking floor tile";
 }
 
-bool tp_load_trap(void)
+bool tp_load_trap()
 {
   TRACE_NO_INDENT();
 

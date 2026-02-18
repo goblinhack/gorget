@@ -24,7 +24,7 @@ static std::string tp_teleport_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t
   return UI_INFO1_FMT_STR "Run of the mill teleport.";
 }
 
-bool tp_load_teleport(void)
+bool tp_load_teleport()
 {
   TRACE_NO_INDENT();
 

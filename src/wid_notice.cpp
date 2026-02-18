@@ -8,7 +8,7 @@
 
 static WidPopup *wid_notice_window;
 
-void wid_notice_destroy(void)
+void wid_notice_destroy()
 {
   TRACE_NO_INDENT();
   delete wid_notice_window;

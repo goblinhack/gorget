@@ -16,7 +16,7 @@
 //
 // This can be done for a thread also.
 //
-FILE *redirect_stdout(void)
+FILE *redirect_stdout()
 {
 #if 0
   //
@@ -76,7 +76,7 @@ FILE *redirect_stdout(void)
 //
 // This can be done for a thread also.
 //
-FILE *redirect_stderr(void)
+FILE *redirect_stderr()
 {
 #if 0
   //
@@ -134,7 +134,7 @@ FILE *redirect_stderr(void)
 //
 // Close the per thread file handle
 //
-void close_stdout(void)
+void close_stdout()
 {
   if ((g_log_stdout != nullptr) && (g_log_stdout != stdout)) {
     fclose(g_log_stdout);
@@ -145,7 +145,7 @@ void close_stdout(void)
 //
 // Close the per thread file handle
 //
-void close_stderr(void)
+void close_stderr()
 {
   if ((g_log_stderr != nullptr) && (g_log_stderr != stderr)) {
     fclose(g_log_stderr);

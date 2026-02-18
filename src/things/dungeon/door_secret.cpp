@@ -44,7 +44,7 @@ static std::string tp_door_secret_description_get(Gamep g, Levelsp v, Levelp l, 
   return true;
 }
 
-bool tp_load_door_secret(void)
+bool tp_load_door_secret()
 {
   TRACE_NO_INDENT();
 

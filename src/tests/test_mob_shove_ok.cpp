@@ -114,7 +114,7 @@ exit:
   return result;
 }
 
-bool test_load_mob(void)
+bool test_load_mob()
 {
   TRACE_NO_INDENT();
 

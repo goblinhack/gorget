@@ -294,18 +294,18 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
 void blit_fbo(Gamep g, FboEnum fbo);
 void blit_fbo(Gamep g, FboEnum fbo, int tl_x, int tl_y, int br_x, int br_y);
 void blit_fbo_push(FboEnum fbo);
-void blit_fbo_pop(void);
+void blit_fbo_pop();
 void blit_fbo_bind(FboEnum fbo);
 void blit_fbo_bind_locked(FboEnum fbo);
-void blit_fbo_unbind(void);
-void blit_fbo_unbind_locked(void);
-void blit_fini(void);
-void blit_flush(void);
+void blit_fbo_unbind();
+void blit_fbo_unbind_locked();
+void blit_fini();
+void blit_flush();
 void blit_flush_colored_triangle_fan(float *begin, const float *end);
-void blit_flush_colored_triangle_fan(void);
+void blit_flush_colored_triangle_fan();
 void blit_flush_triangle_fan(float *begin, const float *end);
-void blit_flush_triangle_fan(void);
-void blit_init(void);
+void blit_flush_triangle_fan();
+void blit_init();
 void fbo_get_size(Gamep g, FboEnum fbo, int &w, int &h);
 void fbo_get_curr_size(Gamep g, int &w, int &h);
 
@@ -317,13 +317,13 @@ void gl_enter_2_5d_mode(Gamep);
 void gl_enter_2d_mode(Gamep g, int w, int h);
 void gl_enter_2d_mode(Gamep g);
 void gl_error(GLenum err);
-void gl_ext_init(void);
+void gl_ext_init();
 void gl_fini_2d_mode(Gamep g);
 void gl_fini_fbo(Gamep g);
 void gl_init_2d_mode(Gamep g);
 void gl_init_fbo(Gamep g, FboEnum fbo = FBO_NONE);
 void gl_leave_2d_mode(Gamep g);
-void gl_clear(void);
+void gl_clear();
 
 #define GL_ERROR_CHECK()                                                                                             \
   {                                                                                                                  \

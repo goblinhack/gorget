@@ -168,7 +168,7 @@ exit:
   return result;
 }
 
-bool test_load_path_astar(void)
+bool test_load_path_astar()
 {
   TRACE_NO_INDENT();
 

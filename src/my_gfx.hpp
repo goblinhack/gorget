@@ -8,6 +8,6 @@
 #define MY_GFX_H_
 
 extern void gfx_init();
-extern void gfx_fini(void);
+extern void gfx_fini();
 
 #endif

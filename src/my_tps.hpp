@@ -7,7 +7,7 @@
 #ifndef _MY_TPS_HPP_
 #define MY_TPS_HPP_
 
-bool templates_init(void);
+bool templates_init();
 
 // clang-format off
 /* begin shell marker1 */

@@ -911,7 +911,7 @@ std::string strerror_to_string(const int err)
   // XSI version returns 0 on success
   //
   if (strerror_r(err, err_out, SIZEOF(err_out)) == 0) {
-    return std::string(err_out);
+    return {err_out};
   }
 #endif
   return "Could not decode errno: " + std::to_string(err) + " strerror_r errno=" + std::to_string(errno);

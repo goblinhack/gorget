@@ -26,7 +26,7 @@ static std::string tp_ghost_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
       UI_INFO2_FMT_STR "Beware, such spirits can traverse chasms and float through solid rock.";
 }
 
-bool tp_load_ghost(void)
+bool tp_load_ghost()
 {
   auto *tp   = tp_load("ghost"); // keep as string for scripts
   auto  name = tp_name(tp);

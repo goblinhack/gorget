@@ -142,7 +142,7 @@ exit:
   return result;
 }
 
-bool test_load_bridge_on_fire(void)
+bool test_load_bridge_on_fire()
 {
   TRACE_NO_INDENT();
 

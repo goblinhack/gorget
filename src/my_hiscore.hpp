@@ -14,7 +14,7 @@
 class HiScore
 {
 public:
-  HiScore(void) = default;
+  HiScore() = default;
   HiScore(std::string vname, std::string vreason, std::string vwhen, int vscore, int vlevels_completed)
   {
     this->name             = vname;
@@ -24,7 +24,7 @@ public:
     this->levels_completed = vlevels_completed;
   }
 
-  ~HiScore(void) = default;
+  ~HiScore() = default;
 
   //
   // Who made the score?
@@ -45,8 +45,8 @@ public:
 class HiScores
 {
 public:
-  HiScores(void);
-  ~HiScores(void);
+  HiScores();
+  ~HiScores();
 
   //
   // All the hiscores held in the file.

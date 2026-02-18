@@ -16,7 +16,7 @@ static std::string tp_deep_water_description_get(Gamep g, Levelsp v, Levelp l, T
   return "deep water";
 }
 
-bool tp_load_deep_water(void)
+bool tp_load_deep_water()
 {
   TRACE_NO_INDENT();
 

@@ -159,8 +159,8 @@ class Cell
 {
 private:
 public:
-  Cell(void)  = default;
-  ~Cell(void) = default;
+  Cell()  = default;
+  ~Cell() = default;
 
   //
   // Room char
@@ -177,8 +177,8 @@ class LevelGen
 {
 private:
 public:
-  LevelGen(void) { info = {}; }
-  ~LevelGen(void) = default;
+  LevelGen() { info = {}; }
+  ~LevelGen() = default;
 
   //
   // Dump levels as generating them, enable via -debug
@@ -260,7 +260,7 @@ public:
   Cave cave = {};
 };
 
-typedef enum {
+using RoomType = enum {
   ROOM_TYPE_START,
 #define ROOM_TYPE_FIRST ROOM_TYPE_START
   ROOM_TYPE_NORMAL,
@@ -268,14 +268,14 @@ typedef enum {
   ROOM_TYPE_LOCKED,
   ROOM_TYPE_HAS_KEY,
   ROOM_TYPE_MAX
-} RoomType;
+};
 
 class Room
 {
 private:
 public:
-  Room(void) = default;
-  ~Room(void) { myfree(data); }
+  Room() = default;
+  ~Room() { myfree(data); }
 
   //
   // Globally unique
@@ -336,8 +336,8 @@ class LevelFixed
 {
 private:
 public:
-  LevelFixed(void) = default;
-  ~LevelFixed(void) { myfree(data); }
+  LevelFixed() = default;
+  ~LevelFixed() { myfree(data); }
 
   //
   // Globally unique
@@ -387,8 +387,8 @@ class FragmentAlt
 {
 private:
 public:
-  FragmentAlt(void) = default;
-  ~FragmentAlt(void) { myfree(data); }
+  FragmentAlt() = default;
+  ~FragmentAlt() { myfree(data); }
 
   //
   // Globally unique
@@ -426,8 +426,8 @@ class Fragment
 {
 private:
 public:
-  Fragment(void) = default;
-  ~Fragment(void) { myfree(data); }
+  Fragment() = default;
+  ~Fragment() { myfree(data); }
 
   //
   // Globally unique
@@ -5142,7 +5142,7 @@ void level_gen_create_levels(Gamep g, Levelsp v)
   std::vector< std::thread > threads;
 
   for (auto i = 0; i < max_threads; i++) {
-    threads.push_back(std::thread(level_gen_create_fixed_or_proc_gen_level, g, i));
+    threads.emplace_back(level_gen_create_fixed_or_proc_gen_level, g, i);
   }
 
   v->is_generating_levels = true;

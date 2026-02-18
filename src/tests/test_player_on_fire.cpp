@@ -115,7 +115,7 @@ exit:
   return result;
 }
 
-bool test_load_player_on_fire(void)
+bool test_load_player_on_fire()
 {
   TRACE_NO_INDENT();
 

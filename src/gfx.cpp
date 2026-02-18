@@ -5,7 +5,7 @@
 #include "my_gfx.hpp"
 #include "my_ui.hpp"
 
-static void gfx_init_font_ui(void)
+static void gfx_init_font_ui()
 {
   const char *tiles[] = {
       //////////////////////////////////////////////////////////////////
@@ -156,7 +156,7 @@ static void gfx_init_font_ui(void)
   tile_load_arr_sprites("data/fonts/6x8.tga", "font_ui", UI_FONT_WIDTH, UI_FONT_HEIGHT, ARRAY_SIZE(tiles), tiles);
 }
 
-static void gfx_ui_init_0(void)
+static void gfx_ui_init_0()
 {
   const char *tiles[] = {
       "ui.0,0,0",  "ui.0,1,0",  "ui.0,2,0",   "ui.0,3,0",   "ui.0,4,0",   "ui.0,5,0",   "ui.0,6,0",   "ui.0,7,0",
@@ -195,7 +195,7 @@ static void gfx_ui_init_0(void)
   tile_load_arr("data/gfx/ui/ui_box0.tga", "ui_box0", 8, 8, ARRAY_SIZE(tiles), tiles);
 }
 
-static void gfx_ui_init_1(void)
+static void gfx_ui_init_1()
 {
   const char *tiles[] = {
       "ui.1,0,0",  "ui.1,1,0",  "ui.1,2,0",   "ui.1,3,0",   "ui.1,4,0",   "ui.1,5,0",   "ui.1,6,0",   "ui.1,7,0",
@@ -234,7 +234,7 @@ static void gfx_ui_init_1(void)
   tile_load_arr("data/gfx/ui/ui_box1.tga", "ui_box", UI_TILE_WIDTH, UI_TILE_HEIGHT, ARRAY_SIZE(tiles), tiles);
 }
 
-static void gfx_ui_init_2(void)
+static void gfx_ui_init_2()
 {
   const char *tiles[] = {
       "ui.2,0,0",  "ui.2,1,0",  "ui.2,2,0",   "ui.2,3,0",   "ui.2,4,0",   "ui.2,5,0",   "ui.2,6,0",   "ui.2,7,0",
@@ -273,7 +273,7 @@ static void gfx_ui_init_2(void)
   tile_load_arr("data/gfx/ui/ui_box2.tga", "ui_box2", UI_TILE_WIDTH, UI_TILE_HEIGHT, ARRAY_SIZE(tiles), tiles);
 }
 
-static void gfx_ui_init_3(void)
+static void gfx_ui_init_3()
 {
   const char *tiles[] = {
       "ui.3,0,0",  "ui.3,1,0",  "ui.3,2,0",   "ui.3,3,0",   "ui.3,4,0",   "ui.3,5,0",   "ui.3,6,0",   "ui.3,7,0",
@@ -312,7 +312,7 @@ static void gfx_ui_init_3(void)
   tile_load_arr("data/gfx/ui/ui_box3.tga", "ui_box3", UI_TILE_WIDTH, UI_TILE_HEIGHT, ARRAY_SIZE(tiles), tiles);
 }
 
-static void gfx_ui_init_4(void)
+static void gfx_ui_init_4()
 {
   const char *tiles[] = {
       "ui.4,0,0",  "ui.4,1,0",  "ui.4,2,0",   "ui.4,3,0",   "ui.4,4,0",   "ui.4,5,0",   "ui.4,6,0",   "ui.4,7,0",
@@ -351,7 +351,7 @@ static void gfx_ui_init_4(void)
   tile_load_arr("data/gfx/ui/ui_box4.tga", "ui_box4", UI_TILE_WIDTH, UI_TILE_HEIGHT, ARRAY_SIZE(tiles), tiles);
 }
 
-static void gfx_ui_init_5(void)
+static void gfx_ui_init_5()
 {
   const char *tiles[] = {
       "ui.5,0,0",  "ui.5,1,0",  "ui.5,2,0",   "ui.5,3,0",   "ui.5,4,0",   "ui.5,5,0",   "ui.5,6,0",   "ui.5,7,0",
@@ -390,7 +390,7 @@ static void gfx_ui_init_5(void)
   tile_load_arr("data/gfx/ui/ui_box5.tga", "ui_box5", 8, 8, ARRAY_SIZE(tiles), tiles);
 }
 
-static void gfx_ui_init_6(void)
+static void gfx_ui_init_6()
 {
   const char *tiles[] = {
       "ui.6,0,0",  "ui.6,1,0",  "ui.6,2,0",   "ui.6,3,0",   "ui.6,4,0",   "ui.6,5,0",   "ui.6,6,0",   "ui.6,7,0",
@@ -429,7 +429,7 @@ static void gfx_ui_init_6(void)
   tile_load_arr("data/gfx/ui/ui_box6.tga", "ui_box6", UI_TILE_WIDTH, UI_TILE_HEIGHT, ARRAY_SIZE(tiles), tiles);
 }
 
-static void gfx_ui_init_7(void)
+static void gfx_ui_init_7()
 {
   const char *tiles[] = {
       "ui.7,0,0",  "ui.7,1,0",  "ui.7,2,0",   "ui.7,3,0",   "ui.7,4,0",   "ui.7,5,0",   "ui.7,6,0",   "ui.7,7,0",
@@ -468,7 +468,7 @@ static void gfx_ui_init_7(void)
   tile_load_arr("data/gfx/ui/ui_box7.tga", "ui_box7", UI_TILE_WIDTH, UI_TILE_HEIGHT, ARRAY_SIZE(tiles), tiles);
 }
 
-static void gfx_ui_init_8(void)
+static void gfx_ui_init_8()
 {
   const char *tiles[] = {
       "ui.8,0,0",  "ui.8,1,0",  "ui.8,2,0",   "ui.8,3,0",   "ui.8,4,0",   "ui.8,5,0",   "ui.8,6,0",   "ui.8,7,0",
@@ -507,7 +507,7 @@ static void gfx_ui_init_8(void)
   tile_load_arr("data/gfx/ui/ui_vert1.tga", "ui_box8", 8, 8, ARRAY_SIZE(tiles), tiles);
 }
 
-static void gfx_ui_init_9(void)
+static void gfx_ui_init_9()
 {
   const char *tiles[] = {
       "ui.9,0,0",  "ui.9,1,0",  "ui.9,2,0",   "ui.9,3,0",   "ui.9,4,0",   "ui.9,5,0",   "ui.9,6,0",   "ui.9,7,0",
@@ -546,7 +546,7 @@ static void gfx_ui_init_9(void)
   tile_load_arr("data/gfx/ui/ui_vert2.tga", "ui_box9", 8, 8, ARRAY_SIZE(tiles), tiles);
 }
 
-static void gfx_ui_init_10(void)
+static void gfx_ui_init_10()
 {
   const char *tiles[] = {
       "ui.10,0,0",   "ui.10,1,0",   "ui.10,2,0",   "ui.10,3,0",   "ui.10,4,0",   "ui.10,5,0",   "ui.10,6,0",
@@ -590,7 +590,7 @@ static void gfx_ui_init_10(void)
   tile_load_arr("data/gfx/ui/ui_horiz1.tga", "ui_box10", 8, 8, ARRAY_SIZE(tiles), tiles);
 }
 
-static void gfx_ui_init_11(void)
+static void gfx_ui_init_11()
 {
   const char *tiles[] = {
       "ui.11,0,0",   "ui.11,1,0",   "ui.11,2,0",   "ui.11,3,0",   "ui.11,4,0",   "ui.11,5,0",   "ui.11,6,0",
@@ -634,7 +634,7 @@ static void gfx_ui_init_11(void)
   tile_load_arr("data/gfx/ui/ui_horiz2.tga", "ui_box11", 8, 8, ARRAY_SIZE(tiles), tiles);
 }
 
-static void gfx_ui_init_12(void)
+static void gfx_ui_init_12()
 {
   const char *tiles[] = {
       "ui.12,0,0",   "ui.12,1,0",   "ui.12,2,0",   "ui.12,3,0",   "ui.12,4,0",   "ui.12,5,0",   "ui.12,6,0",
@@ -678,7 +678,7 @@ static void gfx_ui_init_12(void)
   tile_load_arr("data/gfx/ui/ui_vert_scroll1.tga", "ui_box12", 8, 8, ARRAY_SIZE(tiles), tiles);
 }
 
-static void gfx_ui_init_13(void)
+static void gfx_ui_init_13()
 {
   const char *tiles[] = {
       "ui.13,0,0",   "ui.13,1,0",   "ui.13,2,0",   "ui.13,3,0",   "ui.13,4,0",   "ui.13,5,0",   "ui.13,6,0",
@@ -722,7 +722,7 @@ static void gfx_ui_init_13(void)
   tile_load_arr("data/gfx/ui/ui_vert_scroll2.tga", "ui_box13", 8, 8, ARRAY_SIZE(tiles), tiles);
 }
 
-static void gfx_ui_init_14(void)
+static void gfx_ui_init_14()
 {
   const char *tiles[] = {
       "ui.14,0,0",   "ui.14,1,0",   "ui.14,2,0",   "ui.14,3,0",   "ui.14,4,0",   "ui.14,5,0",   "ui.14,6,0",
@@ -766,7 +766,7 @@ static void gfx_ui_init_14(void)
   tile_load_arr("data/gfx/ui/ui_horiz_scroll1.tga", "ui_box14", 8, 8, ARRAY_SIZE(tiles), tiles);
 }
 
-static void gfx_ui_init_15(void)
+static void gfx_ui_init_15()
 {
   const char *tiles[] = {
       "ui.15,0,0",   "ui.15,1,0",   "ui.15,2,0",   "ui.15,3,0",   "ui.15,4,0",   "ui.15,5,0",   "ui.15,6,0",
@@ -810,7 +810,7 @@ static void gfx_ui_init_15(void)
   tile_load_arr("data/gfx/ui/ui_horiz_scroll2.tga", "ui_box15", 8, 8, ARRAY_SIZE(tiles), tiles);
 }
 
-static void gfx_ui_init_progress_bar(void)
+static void gfx_ui_init_progress_bar()
 {
   const char *tiles[] = {
       "progress_bar.1",  "progress_bar.2",  "progress_bar.3",  "progress_bar.4",  "progress_bar.5",
@@ -824,7 +824,7 @@ static void gfx_ui_init_progress_bar(void)
   tile_load_arr("data/gfx/ui/progress_bar.tga", "progress_bar", 256, 32, ARRAY_SIZE(tiles), tiles);
 }
 
-static void gfx_ui_init_health_bar(void)
+static void gfx_ui_init_health_bar()
 {
   const char *tiles[] = {
       "health_bar.32", "health_bar.31", "health_bar.30", "health_bar.29", "health_bar.28", "health_bar.27",
@@ -837,13 +837,13 @@ static void gfx_ui_init_health_bar(void)
   tile_load_arr("data/gfx/ui/health_bar.tga", "health_bar", 192, 8, ARRAY_SIZE(tiles), tiles);
 }
 
-static void gfx_ui_init_solid(void)
+static void gfx_ui_init_solid()
 {
   const char *tiles[] = {"solid"};
   tile_load_arr("data/gfx/ui/solid.tga", "solid", 8, 8, ARRAY_SIZE(tiles), tiles);
 }
 
-static void gfx_init_tiles(void)
+static void gfx_init_tiles()
 {
   const char *tiles[] = {
       // ##############################################################################
@@ -3846,7 +3846,7 @@ static void gfx_init_tiles(void)
   tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
 }
 
-void gfx_init(void)
+void gfx_init()
 {
   gfx_init_font_ui();
 
@@ -3874,4 +3874,4 @@ void gfx_init(void)
   // end sort marker1 }
 }
 
-void gfx_fini(void) {}
+void gfx_fini() {}

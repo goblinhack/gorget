@@ -22,9 +22,9 @@ ts_t time_game;
 
 static char buf_[ MAXSHORTSTR ];
 
-ts_t time_ms_cached(void) { return time_now; }
+ts_t time_ms_cached() { return time_now; }
 
-ts_t time_ms(void)
+ts_t time_ms()
 {
   time_now = SDL_GetTicks();
 
@@ -36,12 +36,12 @@ ts_t time_ms(void)
   return time_now;
 }
 
-ts_t time_game_ms(void)
+ts_t time_game_ms()
 {
   time_game = time_ms();
   return time_game;
 }
-ts_t time_game_ms_cached(void) { return time_game; }
+ts_t time_game_ms_cached() { return time_game; }
 
 const char *time2str(ts_t ms, char *buf, int len)
 {
@@ -160,7 +160,7 @@ static size_t my_strftime(char *s, size_t max, const char *fmt, const struct tm 
   return strftime(s, max, fmt, tm);
 }
 
-std::string current_date(void)
+std::string current_date()
 {
   struct tm *timeinfo;
   time_t     rawtime;
@@ -207,10 +207,10 @@ std::string current_date(void)
   //
   my_strftime(buffer, SIZEOF(buffer), "%c", timeinfo);
 
-  return std::string(buffer);
+  return {buffer};
 }
 
-std::string &string_timestamp(void)
+std::string &string_timestamp()
 {
   static ts_t        time_last;
   static std::string last_timestamp;

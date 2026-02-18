@@ -16,7 +16,7 @@ static std::string tp_foliage_description_get(Gamep g, Levelsp v, Levelp l, Thin
   return "sickly looking foliage";
 }
 
-bool tp_load_foliage(void)
+bool tp_load_foliage()
 {
   TRACE_NO_INDENT();
 

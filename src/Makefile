@@ -95,28 +95,45 @@ tidy:
 			bugprone-*,\
 			cppcoreguidelines-no-malloc,\
 			misc-redundant-expression,\
+			modernize-avoid-bind,\
 			modernize-avoid-c-arrays,\
+			modernize-concat-nested-namespaces,\
 			modernize-deprecated-headers,\
+			modernize-deprecated-ios-base-aliases,\
 			modernize-loop-convert,\
 			modernize-macro-to-enum,\
+			modernize-make-shared,\
+			modernize-make-unique,\
+			modernize-min-max-use-initializer-list,\
 			modernize-pass-by-value,\
 			modernize-raw-string-literal,\
+			modernize-redundant-void-arg,\
 			modernize-replace-auto-ptr,\
+			modernize-replace-disallow-copy-and-assign-macro,\
+			modernize-replace-random-shuffle,\
+			modernize-return-braced-init-list,\
+			modernize-shrink-to-fit,\
+			modernize-type-traits,\
+			modernize-unary-static-assert,\
 			modernize-use-auto,\
 			modernize-use-bool-literals,\
+			modernize-use-constraints,\
 			modernize-use-default-member-init,\
 			modernize-use-designated-initializers,\
+			modernize-use-emplace,\
 			modernize-use-equals-default,\
 			modernize-use-equals-delete,\
 			modernize-use-integer-sign-comparison,\
+			modernize-use-nodiscard,\
+			modernize-use-noexcept,\
 			modernize-use-nullptr,\
+			modernize-use-override,\
 			modernize-use-ranges,\
 			modernize-use-starts-ends-with,\
-			modernize-unary-static-assert,\
-			modernize-min-max-use-initializer-list,\
 			modernize-use-std-format,\
 			modernize-use-std-numbers,\
 			modernize-use-std-print,\
+			modernize-use-using,\
 			readability-*" \
 			-header-filter=".*" "$(SRC_DIR)/$$src" -- $(CFLAGS); \
 	done

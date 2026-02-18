@@ -131,19 +131,19 @@ std::array< std::array< Widp, TERM_HEIGHT_MAX >, TERM_WIDTH_MAX > wid_on_screen_
 bool wid_init_done;
 bool wid_exiting;
 
-Wid::Wid(void) { newptr(MTYPE_WID, this, "wid"); }
+Wid::Wid() { newptr(MTYPE_WID, this, "wid"); }
 
-Wid::~Wid(void) { oldptr(MTYPE_WID, this); }
+Wid::~Wid() { oldptr(MTYPE_WID, this); }
 
 //
 // Check if we are on the main thread and not exitting
 //
-[[nodiscard]] static bool wid_safe(void)
+[[nodiscard]] static bool wid_safe()
 {
   return wid_init_done && ! wid_exiting && ! g_dying && ! g_quitting && (g_thread_id == MAIN_THREAD);
 }
 
-bool wid_init(void)
+bool wid_init()
 {
   TRACE_NO_INDENT();
 
@@ -848,7 +848,7 @@ bool wid_ignore_being_destroyed(Widp w)
   return false;
 }
 
-Widp wid_get_current_focus(void)
+Widp wid_get_current_focus()
 {
   TRACE_NO_INDENT();
 
@@ -1666,7 +1666,7 @@ void wid_focus_lock(Gamep g, Widp w)
   wid_focus_locked = w;
 }
 
-void wid_unset_focus_lock(void)
+void wid_unset_focus_lock()
 {
   TRACE_NO_INDENT();
   wid_focus_locked = nullptr;
@@ -5597,7 +5597,7 @@ void wid_move_to_abs_centered(Gamep g, Widp w, int x, int y)
   wid_move_delta(g, w, dx, dy);
 }
 
-void wid_ignore_events_briefly(void)
+void wid_ignore_events_briefly()
 {
   TRACE_NO_INDENT();
 
@@ -5608,7 +5608,7 @@ void wid_ignore_events_briefly(void)
   wid_ignore_events_briefly_ts = time_ms_cached();
 }
 
-bool wid_some_recent_event_occurred(void)
+bool wid_some_recent_event_occurred()
 {
   TRACE_NO_INDENT();
 

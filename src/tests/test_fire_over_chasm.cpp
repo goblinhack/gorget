@@ -115,7 +115,7 @@ exit:
   return result;
 }
 
-bool test_load_fire_over_chasm(void)
+bool test_load_fire_over_chasm()
 {
   TRACE_NO_INDENT();
 

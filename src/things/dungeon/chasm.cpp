@@ -16,7 +16,7 @@ static std::string tp_chasm_description_get(Gamep g, Levelsp v, Levelp l, Thingp
   return "gaping chasm";
 }
 
-bool tp_load_chasm(void)
+bool tp_load_chasm()
 {
   TRACE_NO_INDENT();
 

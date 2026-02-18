@@ -21,7 +21,7 @@ static std::string tp_grass_description_get(Gamep g, Levelsp v, Levelp l, Thingp
   return "dry grass";
 }
 
-bool tp_load_grass(void)
+bool tp_load_grass()
 {
   TRACE_NO_INDENT();
 

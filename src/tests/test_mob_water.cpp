@@ -115,7 +115,7 @@ exit:
   return result;
 }
 
-bool test_load_mob_water(void)
+bool test_load_mob_water()
 {
   TRACE_NO_INDENT();
 

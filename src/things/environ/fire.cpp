@@ -161,7 +161,7 @@ static void tp_fire_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 }
 
-bool tp_load_fire(void)
+bool tp_load_fire()
 {
   TRACE_NO_INDENT();
 

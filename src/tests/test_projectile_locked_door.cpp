@@ -84,7 +84,7 @@ exit:
   return result;
 }
 
-bool test_load_projectile_locked_door(void)
+bool test_load_projectile_locked_door()
 {
   TRACE_NO_INDENT();
 

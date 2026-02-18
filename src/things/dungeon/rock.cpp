@@ -22,7 +22,7 @@ static void tp_rock_melt(Gamep g, Levelsp v, Levelp l, Thingp t)
   (void) thing_spawn(g, v, l, tp_first(is_lava), t);
 }
 
-bool tp_load_rock(void)
+bool tp_load_rock()
 {
   TRACE_NO_INDENT();
 

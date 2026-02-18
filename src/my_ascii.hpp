@@ -42,14 +42,14 @@ public:
   //
   void *context {};
 
-  AsciiCell(void) = default;
+  AsciiCell() = default;
 };
 
 using ascii_key_down_callback   = int (*)(int, int, const struct SDL_Keysym *);
 using ascii_mouse_down_callback = int (*)(int, int, int);
 using ascii_mouse_over_callback = int (*)(int, int);
 
-typedef std::array< Tilep, TILE_LAYER_ENUM_MAX > TileLayers;
+using TileLayers = std::array< Tilep, TILE_LAYER_ENUM_MAX >;
 
 using button_args = struct {
   int x;
@@ -109,8 +109,8 @@ std::string ascii_strip(std::string const &text);
 void *ascii_get_stat_context(int x, int y);
 
 void ascii_blit_layer(int z, int no_color);
-void ascii_clear_display(void);
-void ascii_clear_scissors(void);
+void ascii_clear_display();
+void ascii_clear_scissors();
 void ascii_dim(int x, int y, int z, float alpha);
 void ascii_display(Gamep g);
 void ascii_draw_line(int depth, int x0, int y0, int x1, int y1, char ch, color c);
@@ -118,7 +118,7 @@ void ascii_draw_line(int x0, int y0, int x1, int y1, const char *tilename, color
 void ascii_draw_line(int x0, int y0, int x1, int y1, Tilep what, color c);
 void ascii_draw_line(int x0, int y0, int x1, int y1, char what, color c);
 void ascii_dump_to_console(FILE *, bool no_color);
-void ascii_init(void);
+void ascii_init();
 void ascii_put_bg_square(int tlx, int tly, int brx, int bry, const char *tilename, color c);
 void ascii_put_bg_square(int tlx, int tly, int brx, int bry, Tilep what, color c);
 void ascii_put_bg_square(int tlx, int tly, int brx, int bry, char what, color c);

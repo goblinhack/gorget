@@ -14,7 +14,7 @@
 #ifdef USE_SIZE_T
 typedef size_t my_size_t;
 #else
-typedef int my_size_t;
+using my_size_t = int;
 #endif
 
 template < typename TYPE > struct Bits {

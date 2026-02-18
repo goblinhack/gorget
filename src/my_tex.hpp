@@ -26,9 +26,9 @@ Texp tex_from_fbo(Gamep g, FboEnum fbo);
 uint32_t tex_get_height(Texp /*tex*/);
 uint32_t tex_get_width(Texp /*tex*/);
 
-bool tex_init(void);
+bool tex_init();
 
-void tex_fini(void);
+void tex_fini();
 void tex_free(Texp tex);
 void tex_load_sprites(Texp *tex, Texp *tex_monochrome, Texp *tex_mask, Texp *tex_outline, std::string file,
                       std::string name, uint32_t tile_width, uint32_t tile_height, int mode);

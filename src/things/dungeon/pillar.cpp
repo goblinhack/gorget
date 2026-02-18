@@ -16,7 +16,7 @@ static std::string tp_pillar_description_get(Gamep g, Levelsp v, Levelp l, Thing
   return "ancient moss covered pillar";
 }
 
-bool tp_load_pillar(void)
+bool tp_load_pillar()
 {
   TRACE_NO_INDENT();
 

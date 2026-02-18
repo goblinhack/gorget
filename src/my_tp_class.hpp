@@ -237,8 +237,8 @@ public:
   thing_display_get_tile_info_t display_get_tile_info = {};
   thing_assess_tile_t           assess_tile           = {};
 
-  Tp(void);
-  ~Tp(void);
+  Tp();
+  ~Tp();
 };
 
 #endif

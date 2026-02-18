@@ -42,7 +42,7 @@ bool dir_exists(const char *indir)
 /*
  * Given a directory, find out what ./ is.
  */
-char *dir_dot(void)
+char *dir_dot()
 {
   TRACE_NO_INDENT();
   static char buf[ MAXPATHLEN ];

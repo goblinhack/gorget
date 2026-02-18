@@ -135,7 +135,7 @@ exit:
   return result;
 }
 
-bool test_load_player_on_fire_move_into_water(void)
+bool test_load_player_on_fire_move_into_water()
 {
   TRACE_NO_INDENT();
 

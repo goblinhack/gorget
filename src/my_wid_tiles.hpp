@@ -10,14 +10,14 @@
 
 #include <array>
 
-typedef class WidTiles *wid_tilesp;
+using wid_tilesp = class WidTiles *;
 
 class WidTiles
 {
 public:
-  WidTiles(void) = default;
+  WidTiles() = default;
 
-  ~WidTiles(void) = default;
+  ~WidTiles() = default;
 
   int                                       across = {};
   int                                       down   = {};
@@ -27,9 +27,9 @@ public:
   std::array< std::array< Tilep, 32 >, 32 > tile {};
 };
 
-bool wid_tiles_init(void);
+bool wid_tiles_init();
 
-void wid_tiles_fini(void);
+void wid_tiles_fini();
 
 wid_tilesp wid_tiles_load(std::string name, double scale);
 wid_tilesp wid_tiles_find(std::string name);

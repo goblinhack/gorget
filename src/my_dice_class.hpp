@@ -19,14 +19,14 @@ private:
   bool        initialized {};
 
 public:
-  std::string to_string(void) const;
+  [[nodiscard]] std::string to_string() const;
 
-  Dice(void);
+  Dice();
   Dice(std::string s);
 
-  int roll(void) const;
-  int max_roll(void) const;
-  int min_roll(void) const;
+  [[nodiscard]] int roll() const;
+  [[nodiscard]] int max_roll() const;
+  [[nodiscard]] int min_roll() const;
 
   int operator()() const;
 };

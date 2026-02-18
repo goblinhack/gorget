@@ -42,7 +42,7 @@ void sdl_joy_rumble(float strength, uint32_t ms)
   SDL_HapticRumblePlay(sdl.haptic, strength, ms);
 }
 
-static void sdl_init_rumble(void)
+static void sdl_init_rumble()
 {
   LOG("SDL: Init rumble:");
   TRACE_AND_INDENT();
@@ -71,7 +71,7 @@ static void sdl_init_rumble(void)
   LOG("- Opened Haptic for joy index %d", sdl.joy_index);
 }
 
-static void sdl_init_joystick(void)
+static void sdl_init_joystick()
 {
   LOG("SDL: Init input:");
   TRACE_NO_INDENT();
@@ -122,7 +122,7 @@ static void sdl_init_joystick(void)
   }
 }
 
-bool sdl_init(void)
+bool sdl_init()
 {
   gl_ext_init();
 
@@ -152,7 +152,7 @@ bool sdl_init(void)
   return true;
 }
 
-int sdl_get_mouse(void)
+int sdl_get_mouse()
 {
   TRACE_NO_INDENT();
 

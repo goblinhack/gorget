@@ -89,7 +89,7 @@ exit:
   return result;
 }
 
-bool test_load_teleport_shove_brazier(void)
+bool test_load_teleport_shove_brazier()
 {
   TRACE_NO_INDENT();
 

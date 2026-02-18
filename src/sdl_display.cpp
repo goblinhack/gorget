@@ -113,7 +113,7 @@ void sdl_display_reset(Gamep g)
   sdl_flush_display(g);
 }
 
-static inline void sdl_list_video_size(void)
+static inline void sdl_list_video_size()
 {
   TRACE_NO_INDENT();
   int i;

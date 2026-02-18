@@ -79,7 +79,7 @@ exit:
   return result;
 }
 
-bool test_load_projectile_over_water(void)
+bool test_load_projectile_over_water()
 {
   TRACE_NO_INDENT();
 

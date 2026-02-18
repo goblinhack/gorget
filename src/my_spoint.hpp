@@ -6,7 +6,7 @@
 #ifndef _MY_SPOINT_HPP_
 #define MY_SPOINT_HPP_
 
-typedef struct my_spoint {
+using spoint = struct my_spoint {
 public:
   short x;
   short y;
@@ -20,9 +20,9 @@ public:
   void  operator-=(my_spoint const  &/*b*/);
   void  operator*=(short /*b*/);
   void  operator/=(short /*b*/);
-  float length(void) const;
-  void  unit(void);
-} spoint;
+  [[nodiscard]] float length() const;
+  void  unit();
+};
 
 bool   operator<(spoint const &a, spoint const &b); // Needed for std::map
 bool   operator==(spoint const   &/*a*/, spoint const   &/*b*/);

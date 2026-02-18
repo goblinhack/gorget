@@ -158,7 +158,7 @@ exit:
   return result;
 }
 
-bool test_load_wall(void)
+bool test_load_wall()
 {
   TRACE_NO_INDENT();
 

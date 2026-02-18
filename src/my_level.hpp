@@ -26,15 +26,15 @@ enum {
 //
 // Used for level selection on the command line
 //
-typedef struct LevelOpt_ {
+using LevelOpt = struct LevelOpt_ {
   std::string level_name;
   LevelNum    level_num;
   bool        is_set;
-} LevelOpt;
+};
 
 extern LevelOpt g_level_opt;
 
-typedef struct LevelInfo_ {
+using LevelInfo = struct LevelInfo_ {
   //////////////////////////////////////////////////////////////
   // No c++ types can be used here, to allow easy level replay
   //
@@ -104,33 +104,33 @@ typedef struct LevelInfo_ {
   //////////////////////////////////////////////////////////////
   // No c++ types can be used here, to allow easy level replay
   //////////////////////////////////////////////////////////////
-} LevelInfo;
+};
 
-typedef struct {
+using LightPixel = struct {
   //
   // The total of all lights intersecting here, which is then scaled into the final light
   //
   float r;
   float g;
   float b;
-} LightPixel;
+};
 
-typedef struct LightPixels_ {
+using LightPixels = struct LightPixels_ {
   LightPixel pixel[ LIGHT_PIXEL ][ LIGHT_PIXEL ];
-} LightPixels;
+};
 
-typedef struct {
+using LightTile = struct {
   LightPixels pixels;
-} LightTile;
+};
 
 //
 // Light map for the level
 //
-typedef struct LightMap_ {
+using LightMap = struct LightMap_ {
   LightTile tile[ MAP_WIDTH ][ MAP_HEIGHT ];
-} LightMap;
+};
 
-typedef struct Level_ {
+using Level = struct Level_ {
   //////////////////////////////////////////////////////////////
   // No c++ types can be used here, to allow easy level replay
   //
@@ -272,9 +272,9 @@ typedef struct Level_ {
   //////////////////////////////////////////////////////////////
   // No c++ types can be used here, to allow easy level replay
   //////////////////////////////////////////////////////////////
-} Level;
+};
 
-typedef struct LevelSelectCell_ {
+using LevelSelectCell = struct LevelSelectCell_ {
   //
   // If there is a level here
   //
@@ -287,9 +287,9 @@ typedef struct LevelSelectCell_ {
   // Back pointer to the level here, if any
   //
   LevelNum level_num;
-} LevelSelectCell;
+};
 
-typedef struct LevelSelect_ {
+using LevelSelect = struct LevelSelect_ {
   //
   // Set when we have populated the levels.
   //
@@ -314,9 +314,9 @@ typedef struct LevelSelect_ {
   // This is a reverse mapping from on screen tile to level
   //
   LevelNum tile_to_level[ MAP_WIDTH ][ MAP_HEIGHT ];
-} LevelSelect;
+};
 
-typedef struct Levels_ {
+using Levels = struct Levels_ {
   //////////////////////////////////////////////////////////////
   // No c++ types can be used here, to allow easy level replay
   //
@@ -488,7 +488,7 @@ typedef struct Levels_ {
   //////////////////////////////////////////////////////////////
   // No c++ types can be used here, to allow easy level replay
   //////////////////////////////////////////////////////////////
-} Levels;
+};
 
 bool level_iter_begin(Gamep, Levelsp v, int *iter, const char *func, int line);
 bool level_iter_end(Gamep, Levelsp v, int iter, const char *func, int line);
@@ -705,7 +705,7 @@ void level_is_player_level_unset(Gamep g, Levelsp v, Levelp l);
 void level_light_calculate_all(Gamep g, Levelsp v, Levelp l);
 void level_light_per_pixel_lighting(Gamep g, Levelsp v, Levelp l, Thingp t, spoint pov, spoint p);
 void level_light_precalculate(Gamep g);
-void level_light_raycast_fini(void);
+void level_light_raycast_fini();
 void level_light_raycast(Gamep g, Levelsp v, Levelp l, FboEnum fbo);
 void level_minimaps_update(Gamep g, Levelsp v, Levelp l);
 void level_mouse_position_get(Gamep g, Levelsp v, Levelp l);
@@ -765,16 +765,16 @@ void rooms_start(Gamep g);
 void rooms_test(Gamep g);
 // end sort marker2 }
 
-typedef void (*level_fov_can_see_callback_t)(Gamep, Levelsp, Levelp, Thingp me, spoint pov, spoint p);
+using level_fov_can_see_callback_t = void (*)(Gamep, Levelsp, Levelp, Thingp me, spoint pov, spoint p);
 void level_fov(Gamep g, Levelsp v, Levelp l, Thingp me, FovMap *curr, FovMap *ever, spoint pov, int max_radius,
                level_fov_can_see_callback_t can_see_callback = nullptr);
 
-typedef enum {
+using LevelType = enum {
   LEVEL_TYPE_NORMAL,
   LEVEL_TYPE_TEST,
   LEVEL_TYPE_BOSS,
 #define LEVEL_TYPE_FIRST LEVEL_TYPE_NORMAL
   LEVEL_TYPE_MAX
-} LevelType;
+};
 
 #endif // _MY_LEVEL_H_

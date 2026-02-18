@@ -659,7 +659,7 @@ bool Game::save(int slot)
   return ret;
 }
 
-bool Game::save_snapshot(void)
+bool Game::save_snapshot()
 {
   LOG("Save snapshot");
   TRACE_AND_INDENT();
@@ -680,7 +680,7 @@ bool Game::save_snapshot(void)
   return ret;
 }
 
-bool Game::save_config(void)
+bool Game::save_config()
 {
   TRACE_NO_INDENT();
 
@@ -796,7 +796,7 @@ static bool wid_save_cancel(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-bool Game::save_select(void)
+bool Game::save_select()
 {
   LOG("Save menu");
   TRACE_AND_INDENT();

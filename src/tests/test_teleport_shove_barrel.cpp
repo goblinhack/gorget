@@ -89,7 +89,7 @@ exit:
   return result;
 }
 
-bool test_load_teleport_shove_barrel(void)
+bool test_load_teleport_shove_barrel()
 {
   TRACE_NO_INDENT();
 

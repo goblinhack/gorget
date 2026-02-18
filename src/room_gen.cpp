@@ -33,7 +33,7 @@ class RoomGen
 {
 private:
 public:
-  RoomGen(void)
+  RoomGen()
   {
     for (int y = 0; y < MAP_HEIGHT; y++) {
       for (auto &x : data) {
@@ -41,7 +41,7 @@ public:
       }
     }
   }
-  ~RoomGen(void) = default;
+  ~RoomGen() = default;
 
   //
   // Level tiles and room info

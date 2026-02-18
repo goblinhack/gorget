@@ -133,7 +133,7 @@ static void tp_bridge_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
   thing_dead(g, v, l, t, e);
 }
 
-bool tp_load_bridge(void)
+bool tp_load_bridge()
 {
   TRACE_NO_INDENT();
 

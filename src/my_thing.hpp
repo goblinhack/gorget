@@ -20,7 +20,7 @@
 
 enum { MY_ITERS_MAX = 4 };
 
-typedef union {
+using ThingIdPacked = union {
   struct {
     unsigned int val : 32;
   } __attribute__((__packed__)) a;
@@ -33,7 +33,7 @@ typedef union {
     unsigned int entropy   : THING_ENTROPY_BITS;
     unsigned int arr_index : THING_ARR_INDEX_BITS;
   } __attribute__((__packed__)) c;
-} __attribute__((__packed__)) ThingIdPacked;
+};
 
 //
 // Essentially equates to the max number of monsters+light sources per level
@@ -54,7 +54,7 @@ enum {
   TEXT_PLURALIZE     = 8,
 };
 
-typedef uint8_t ThingTextFlags;
+using ThingTextFlags = uint8_t;
 
 //
 // Player state
@@ -86,14 +86,14 @@ ENUM_DEF_H(MONST_STATE_ENUM, MonstState)
 //
 // Field of view for a monster or player
 //
-typedef struct FovMap_ {
+using FovMap = struct FovMap_ {
   uint8_t can_see[ MAP_WIDTH ][ MAP_HEIGHT ];
-} FovMap;
+};
 
 //
 // Some kind of event that befalls a thing. Usually an attack
 //
-typedef struct ThingEvent_ {
+using ThingEvent = struct ThingEvent_ {
   //
   // What happened?
   //
@@ -110,27 +110,27 @@ typedef struct ThingEvent_ {
   // Whodunnit?
   //
   Thingp source = nullptr;
-} ThingEvent;
+};
 
 //
 // Minions
 //
-typedef struct ThingMinion_ {
+using ThingMinion = struct ThingMinion_ {
   ThingId minion_id;
-} ThingMinion;
+};
 
 //
 // Per mob minions
 //
-typedef struct ThingMinions_ {
+using ThingMinions = struct ThingMinions_ {
   ThingMinion minion[ THING_MINION_MAX ];
   int8_t      count;
-} ThingMinions;
+};
 
 //
 // Per thing extended memory
 //
-typedef struct ThingExt_ {
+using ThingExt = struct ThingExt_ {
   uint8_t in_use : 1;
   //
   // All minions for this mob
@@ -152,44 +152,44 @@ typedef struct ThingExt_ {
     spoint points[ THING_MOVE_PATH_MAX ];
     int8_t size;
   } move_path;
-} ThingExt;
+};
 
 //
 // Per thing lighting memory
 //
-typedef struct ThingFov_ {
+using ThingFov = struct ThingFov_ {
   uint8_t in_use : 1;
   //
   // What we can currently see (monst) or is lit (light source)
   //
   FovMap fov_can_see_tile;
-} ThingFov;
+};
 
 //
 // Inventory items
 //
-typedef struct ThingSlot_ {
+using ThingSlot = struct ThingSlot_ {
   ThingId item_id;
   //
   // How many of this identical item are there?
   //
   int8_t count;
-} ThingSlot;
+};
 
 //
 // Per thing inventory memory
 //
-typedef struct ThingInventory_ {
+using ThingInventory = struct ThingInventory_ {
   //
   // This is the max any player or monster can carry
   //
   ThingSlot slots[ THING_INVENTORY_MAX ];
-} ThingInventory;
+};
 
 //
 // Player specific memory
 //
-typedef struct ThingPlayer_ {
+using ThingPlayer = struct ThingPlayer_ {
   //
   // For hiscores
   //
@@ -198,9 +198,9 @@ typedef struct ThingPlayer_ {
   // What we're carrying
   //
   ThingInventory inventory;
-} ThingPlayer;
+};
 
-typedef struct Thing_ {
+using Thing = struct Thing_ {
   //////////////////////////////////////////////////////////////
   // No c++ types can be used here, to allow easy level replay
   //
@@ -482,7 +482,7 @@ typedef struct Thing_ {
   // What we're chasing currently. Might be the player or some random tile.
   //
   spoint _target;
-} Thing;
+};
 
 // begin sort marker1 {
 [[nodiscard]] bool   player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, spoint to);

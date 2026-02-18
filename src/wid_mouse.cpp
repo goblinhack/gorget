@@ -346,7 +346,7 @@ void wid_update_mouse(Gamep g)
   wid_mouse_motion(g, x, y, 0, 0, 0, 0);
 }
 
-Widp wid_find_under_mouse(void)
+Widp wid_find_under_mouse()
 {
   TRACE_NO_INDENT();
 

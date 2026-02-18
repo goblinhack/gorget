@@ -84,7 +84,7 @@ exit:
   return result;
 }
 
-bool test_load_projectile(void)
+bool test_load_projectile()
 {
   TRACE_NO_INDENT();
 

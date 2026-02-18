@@ -52,7 +52,7 @@ ThingEnviron tp_mantisman_assess_tile(Gamep g, Levelsp v, Levelp l, spoint at, T
   return THING_ENVIRON_NEUTRAL;
 }
 
-bool tp_load_mantisman(void)
+bool tp_load_mantisman()
 {
   auto *tp   = tp_load("mantisman"); // keep as string for scripts
   auto  name = tp_name(tp);

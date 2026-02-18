@@ -31,7 +31,7 @@ public:
     newptr(MTYPE_TEX, this, "Tex");
   }
 
-  ~Tex(void)
+  ~Tex()
   {
     oldptr(MTYPE_TEX, this);
 
@@ -62,13 +62,13 @@ static std::unordered_map< std::string, Texp > textures_monochrome;
 static std::unordered_map< std::string, Texp > textures_mask;
 static std::unordered_map< std::string, Texp > textures_outline;
 
-bool tex_init(void)
+bool tex_init()
 {
   TRACE_NO_INDENT();
   return true;
 }
 
-void tex_fini(void)
+void tex_fini()
 {
   TRACE_NO_INDENT();
   for (auto &t : textures) {

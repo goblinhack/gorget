@@ -5,7 +5,7 @@
 #include "my_callstack.hpp"
 #include "my_tps.hpp"
 
-bool templates_init(void)
+bool templates_init()
 {
   TRACE_NO_INDENT();
 

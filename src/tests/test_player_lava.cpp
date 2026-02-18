@@ -166,7 +166,7 @@ exit:
   return result;
 }
 
-bool test_load_player_lava(void)
+bool test_load_player_lava()
 {
   TRACE_NO_INDENT();
 

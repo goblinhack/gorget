@@ -158,7 +158,7 @@ exit:
   return result;
 }
 
-bool test_load_player_fall_while_on_fire(void)
+bool test_load_player_fall_while_on_fire()
 {
   TRACE_NO_INDENT();
 

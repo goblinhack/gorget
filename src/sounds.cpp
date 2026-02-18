@@ -5,7 +5,7 @@
 #include "my_callstack.hpp"
 #include "my_sound.hpp"
 
-void sounds_init(void)
+void sounds_init()
 {
   TRACE_NO_INDENT();
 

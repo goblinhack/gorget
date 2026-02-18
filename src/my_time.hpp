@@ -23,16 +23,16 @@ bool time_have_x_tenths_passed_since(ts_t tenths, ts_t since);
 const char *time2str(ts_t ms, char *buf, int len);
 const char *timestamp(char *buf, int len);
 
-ts_t time_game_ms(void);
-ts_t time_game_ms_cached(void);
+ts_t time_game_ms();
+ts_t time_game_ms_cached();
 
-ts_t time_ms(void);
-ts_t time_ms_cached(void);
+ts_t time_ms();
+ts_t time_ms_cached();
 
 void get_timestamp(char *buf, int len);
 
-std::string  current_date(void);
-std::string &string_timestamp(void);
+std::string  current_date();
+std::string &string_timestamp();
 
 extern ts_t time_now;
 extern ts_t time_game;

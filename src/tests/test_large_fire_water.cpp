@@ -147,7 +147,7 @@ exit:
   return result;
 }
 
-bool test_load_large_fire_water(void)
+bool test_load_large_fire_water()
 {
   TRACE_NO_INDENT();
 

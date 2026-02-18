@@ -12,7 +12,7 @@ public:
   T y {};
   T z {};
 
-  my_apoint3d(void) : x(0), y(0), z(0) {}
+  my_apoint3d() : x(0), y(0), z(0) {}
   my_apoint3d(T vx, T vy, T vz) : x(vx), y(vy), z(vz) {}
 
   void operator+=(my_apoint3d< T > const & /*b*/);

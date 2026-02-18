@@ -76,7 +76,7 @@ exit:
   return result;
 }
 
-bool test_load_no_change(void)
+bool test_load_no_change()
 {
   TRACE_NO_INDENT();
 

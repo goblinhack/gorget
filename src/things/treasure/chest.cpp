@@ -38,7 +38,7 @@ static std::string tp_chest_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
   return UI_INFO1_FMT_STR "A closed chest. What wonders might it contain? Probably none.";
 }
 
-bool tp_load_treasure(void)
+bool tp_load_treasure()
 {
   TRACE_NO_INDENT();
 

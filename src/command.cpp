@@ -84,7 +84,7 @@
 class command_t
 {
 public:
-  command_t(void)
+  command_t()
   {
     memset(&this->tokens, 0, SIZEOF(this->tokens));
     memset(&this->readable_tokens, 0, SIZEOF(this->readable_tokens));
@@ -92,7 +92,7 @@ public:
     this->callback = nullptr;
   }
 
-  ~command_t(void) = default;
+  ~command_t() = default;
 
   class Tokens tokens;
   class Tokens readable_tokens;
@@ -100,13 +100,13 @@ public:
   command_fn_t callback;
 };
 
-typedef class command_t                            *commandp;
-typedef std::unordered_map< std::string, commandp > commands;
+using commandp = class command_t                            *;
+using commands = std::unordered_map< std::string, commandp >;
 static commands                                     commands_map;
 
 static bool command_inited;
 
-void command_fini(void)
+void command_fini()
 {
   TRACE_NO_INDENT();
   if (command_inited) {
@@ -118,7 +118,7 @@ void command_fini(void)
   }
 }
 
-bool command_init(void)
+bool command_init()
 {
   TRACE_NO_INDENT();
   command_inited = true;

@@ -84,7 +84,7 @@ exit:
   return result;
 }
 
-bool test_load_projectile_wall_turns_to_lava(void)
+bool test_load_projectile_wall_turns_to_lava()
 {
   TRACE_NO_INDENT();
 

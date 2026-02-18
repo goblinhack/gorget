@@ -10,7 +10,7 @@
 
 #include <math.h>
 
-typedef struct my_fpoint {
+using fpoint = struct my_fpoint {
 public:
   float x;
   float y;
@@ -19,9 +19,9 @@ public:
   void  operator-=(my_fpoint const  &/*b*/);
   void  operator*=(float /*b*/);
   void  operator/=(float /*b*/);
-  float length(void) const;
-  void  unit(void);
-} fpoint;
+  [[nodiscard]] float length() const;
+  void  unit();
+};
 
 bool   operator==(fpoint const   &/*a*/, fpoint const   &/*b*/);
 fpoint operator+(fpoint const & /*a*/, fpoint const & /*b*/);

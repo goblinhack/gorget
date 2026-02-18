@@ -39,9 +39,9 @@ void fpoint::operator/=(float b)
   y /= b;
 }
 
-float fpoint::length(void) const { return (sqrt((x * x) + (y * y))); }
+float fpoint::length() const { return (sqrt((x * x) + (y * y))); }
 
-void fpoint::unit(void)
+void fpoint::unit()
 {
   float len = sqrt((x * x) + (y * y));
   x /= len;

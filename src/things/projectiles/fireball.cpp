@@ -49,7 +49,7 @@ static void tp_fireball_on_moved(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 }
 
-bool tp_load_fireball(void)
+bool tp_load_fireball()
 {
   auto *tp   = tp_load("fireball"); // keep as string for scripts
   auto  name = tp_name(tp);

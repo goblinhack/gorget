@@ -323,7 +323,7 @@ static Ptrcheck *ptrcheck_describe_pointer(int mtype, const void *ptr)
     auto *a = pc->allocated_by;
     if (a != nullptr) {
       std::println(stderr, "PTRCHECK: Currently allocated at {} \"{}\" ({} bytes) at {}:{} line {} at {}", pc->ptr,
-              pc->what, pc->size, a->file, a->func, a->line, a->ts);
+                   pc->what, pc->size, a->file, a->func, a->line, a->ts);
 
       std::print(stderr, "{}", a->bt);
     }
@@ -372,13 +372,13 @@ static Ptrcheck *ptrcheck_describe_pointer(int mtype, const void *ptr)
       auto *a = pc->allocated_by;
       if (a != nullptr) {
         std::println(stderr, "PTRCHECK: {} allocated at \"{}\" ({} bytes) at {}:{} line {} at {}\n{}", ptr, pc->what,
-                pc->size, a->file, a->func, a->line, a->ts, a->bt);
+                     pc->size, a->file, a->func, a->line, a->ts, a->bt);
       }
 
       auto *f = pc->freed_by;
       if (f != nullptr) {
         std::println(stderr, "PTRCHECK: {} freed at {}:{} line {} at {}\n{}", ptr, f->file, f->func, f->line, f->ts,
-                f->bt);
+                     f->bt);
       }
 
       //
@@ -701,7 +701,7 @@ void ptrcheck_leak_print(int mtype)
       auto *a = pc->allocated_by;
       if (a != nullptr) {
         std::println(stderr, "PTRCHECK: Leak {} \"{}\" ({} bytes) at {}:{} line {} at {}\n{}", pc->ptr, pc->what,
-                pc->size, a->file, a->func, a->line, a->ts, a->bt);
+                     pc->size, a->file, a->func, a->line, a->ts, a->bt);
       } else {
         std::println(stderr, "PTRCHECK: Leak \"{}\" ({} bytes)", pc->what, pc->size);
       }

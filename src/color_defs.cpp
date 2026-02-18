@@ -88,7 +88,7 @@ color YELLOW4;
 
 extern bool color_init_done;
 
-void color_init(void)
+void color_init()
 {
   TRACE_NO_INDENT();
 

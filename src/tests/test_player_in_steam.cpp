@@ -118,7 +118,7 @@ exit:
   return result;
 }
 
-bool test_load_player_in_steam(void)
+bool test_load_player_in_steam()
 {
   TRACE_NO_INDENT();
 

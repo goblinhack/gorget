@@ -110,7 +110,7 @@ static void tp_brazier_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEve
   }
 }
 
-bool tp_load_brazier(void)
+bool tp_load_brazier()
 {
   TRACE_NO_INDENT();
 

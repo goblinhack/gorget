@@ -12,11 +12,11 @@
 #include <map>
 #include <vector>
 
-typedef enum {
+using wid_text_format = enum {
   TEXT_FORMAT_NONE,
   TEXT_FORMAT_LHS,
   TEXT_FORMAT_RHS,
-} wid_text_format;
+};
 
 class WidTextBox
 {

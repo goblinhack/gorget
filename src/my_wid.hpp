@@ -11,41 +11,41 @@
 #include "my_time.hpp"
 #include "my_types.hpp"
 
-typedef enum {
+using wid_color = enum {
   WID_COLOR_BG,
   WID_COLOR_TEXT_FG,
   WID_COLOR_TEXT_BG,
   WID_COLOR_MAX,
-} wid_color;
+};
 
-typedef enum {
+using wid_mode = enum {
   WID_MODE_NORMAL,
   WID_MODE_OVER,
   WID_MODE_FOCUS,
   WID_MODE_ACTIVE,
   WID_MODE_LAST,
-} wid_mode;
+};
 
 #define WID_MODE_FIRST WID_MODE_NORMAL
 
 char wid_event_to_char(const struct SDL_Keysym *evt);
 
-typedef bool (*on_joy_button_t)(Gamep, Widp, int x, int y);
-typedef bool (*on_key_down_t)(Gamep, Widp, const struct SDL_Keysym *);
-typedef bool (*on_key_up_t)(Gamep, Widp, const struct SDL_Keysym *);
-typedef bool (*on_mouse_down_t)(Gamep, Widp, int x, int y, uint32_t button);
-typedef bool (*on_mouse_held_t)(Gamep, Widp, int x, int y, uint32_t button);
-typedef bool (*on_mouse_motion_t)(Gamep, Widp, int x, int y, int relx, int rely, int wx, int wy);
-typedef bool (*on_mouse_up_t)(Gamep, Widp, int x, int y, uint32_t button);
+using on_joy_button_t = bool (*)(Gamep, Widp, int x, int y);
+using on_key_down_t = bool (*)(Gamep, Widp, const struct SDL_Keysym *);
+using on_key_up_t = bool (*)(Gamep, Widp, const struct SDL_Keysym *);
+using on_mouse_down_t = bool (*)(Gamep, Widp, int x, int y, uint32_t button);
+using on_mouse_held_t = bool (*)(Gamep, Widp, int x, int y, uint32_t button);
+using on_mouse_motion_t = bool (*)(Gamep, Widp, int x, int y, int relx, int rely, int wx, int wy);
+using on_mouse_up_t = bool (*)(Gamep, Widp, int x, int y, uint32_t button);
 
-typedef void (*on_destroy_begin_t)(Gamep, Widp);
-typedef void (*on_destroy_t)(Gamep, Widp);
-typedef void (*on_mouse_focus_begin_t)(Gamep, Widp);
-typedef void (*on_mouse_focus_end_t)(Gamep, Widp);
-typedef void (*on_mouse_over_begin_t)(Gamep, Widp, int relx, int rely, int wheelx, int wheely);
-typedef void (*on_mouse_over_end_t)(Gamep, Widp);
-typedef void (*on_tick_t)(Gamep, Widp);
-typedef void (*on_display_t)(Gamep, Widp, spoint tl, spoint br);
+using on_destroy_begin_t = void (*)(Gamep, Widp);
+using on_destroy_t = void (*)(Gamep, Widp);
+using on_mouse_focus_begin_t = void (*)(Gamep, Widp);
+using on_mouse_focus_end_t = void (*)(Gamep, Widp);
+using on_mouse_over_begin_t = void (*)(Gamep, Widp, int relx, int rely, int wheelx, int wheely);
+using on_mouse_over_end_t = void (*)(Gamep, Widp);
+using on_tick_t = void (*)(Gamep, Widp);
+using on_display_t = void (*)(Gamep, Widp, spoint tl, spoint br);
 
 [[nodiscard]] void *wid_get_void_context(Widp w);
 [[nodiscard]] color wid_get_color(Widp w, wid_color which);
@@ -69,10 +69,10 @@ typedef void (*on_display_t)(Gamep, Widp, spoint tl, spoint br);
 
 [[nodiscard]] Widp wid_find_at(int x, int y);
 [[nodiscard]] Widp wid_find(const std::string &name);
-[[nodiscard]] Widp wid_find_under_mouse(void);
+[[nodiscard]] Widp wid_find_under_mouse();
 [[nodiscard]] Widp wid_find_under_mouse_when_scrolling(Gamep g);
 [[nodiscard]] Widp wid_find(Widp w, const std::string &name);
-[[nodiscard]] Widp wid_get_current_focus(void);
+[[nodiscard]] Widp wid_get_current_focus();
 [[nodiscard]] Widp wid_get_focus(Widp w);
 [[nodiscard]] Widp wid_get_head(Widp w);
 [[nodiscard]] Widp wid_get_next(Widp w);
@@ -112,13 +112,13 @@ typedef void (*on_display_t)(Gamep, Widp, spoint tl, spoint br);
 [[nodiscard]] bool wid_ignore_events(Widp w);
 [[nodiscard]] bool wid_ignore_for_focus(Widp w);
 [[nodiscard]] bool wid_ignore_scroll_events(Widp w);
-[[nodiscard]] bool wid_init(void);
+[[nodiscard]] bool wid_init();
 [[nodiscard]] bool wid_is_always_hidden(Widp w);
 [[nodiscard]] bool wid_is_hidden(Widp w);
 [[nodiscard]] bool wid_is_visible(Widp w);
 [[nodiscard]] bool wid_receive_input(Gamep g, Widp w, const SDL_Keysym *key);
 [[nodiscard]] bool wid_scroll_trough_mouse_down(Gamep g, Widp w, int x, int y, uint32_t button);
-[[nodiscard]] bool wid_some_recent_event_occurred(void);
+[[nodiscard]] bool wid_some_recent_event_occurred();
 [[nodiscard]] bool wid_scroll_motion(Gamep g, Widp w, int x, int y, int relx, int rely, int wheelx, int wheely);
 
 [[nodiscard]] wid_mode wid_get_mode(Widp w);
@@ -236,7 +236,7 @@ void wid_set_top_focus(Gamep g);
 void wid_set_top(Gamep, Widp, bool val = true);
 void wid_set_void_context(Widp w, void *context);
 void wid_toggle_hidden(Gamep g, Widp w);
-void wid_unset_focus_lock(void);
+void wid_unset_focus_lock();
 void wid_unset_focus(Gamep g);
 void wid_update_mouse(Gamep g);
 void wid_update(Gamep g, Widp w);

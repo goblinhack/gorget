@@ -84,7 +84,7 @@ exit:
   return result;
 }
 
-bool test_load_projectile_mob(void)
+bool test_load_projectile_mob()
 {
   TRACE_NO_INDENT();
 

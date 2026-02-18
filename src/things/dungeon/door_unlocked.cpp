@@ -151,7 +151,7 @@ static void tp_door_unlocked_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, Th
   }
 }
 
-bool tp_load_door_unlocked(void)
+bool tp_load_door_unlocked()
 {
   TRACE_NO_INDENT();
 

@@ -19,15 +19,15 @@ extern Fontp font_ui;
 #define FONT_TILENAME_BLOCK_STR   "1.97"
 #define FONT_TILENAME_POINTER_STR "1.100"
 
-void  font_fini(void);
-bool  font_init(void);
+void  font_fini();
+bool  font_init();
 Fontp font_find(std::string /*file*/);
 
 class Font
 {
 public:
-  Font(void)  = default;
-  ~Font(void) = default;
+  Font()  = default;
+  ~Font() = default;
   std::array< int, FONT_CHAR_MAX + 1 >   u_to_c {};
   std::array< Tilep, FONT_CHAR_MAX + 1 > cache {};
   int                                    tile_index;

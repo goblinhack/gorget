@@ -230,7 +230,7 @@ exit:
   return result;
 }
 
-bool test_load_brazier_shove_chasm_twice(void)
+bool test_load_brazier_shove_chasm_twice()
 {
   TRACE_NO_INDENT();
 

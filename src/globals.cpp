@@ -50,7 +50,7 @@ thread_local FILE       *g_log_stderr; // stderr is redirected to a log file
 thread_local FILE       *g_log_stdout; // stdout is redirected to a log file
 thread_local int         g_thread_id;
 
-void reset_globals(void)
+void reset_globals()
 {
   g_opt_no_slow_log_flush     = false;
   g_opt_override_debug_level  = false;

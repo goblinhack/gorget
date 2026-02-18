@@ -32,7 +32,7 @@
 //
 bool compiler_unused;
 
-static void usage(void)
+static void usage()
 {
   TRACE_NO_INDENT();
   static int whinged;

@@ -100,7 +100,7 @@ exit:
   return result;
 }
 
-bool test_load_save_load(void)
+bool test_load_save_load()
 {
   TRACE_NO_INDENT();
 

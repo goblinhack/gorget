@@ -49,7 +49,7 @@ ThingEnviron tp_kobalos_assess_tile(Gamep g, Levelsp v, Levelp l, spoint at, Thi
   return THING_ENVIRON_NEUTRAL;
 }
 
-bool tp_load_kobalos(void)
+bool tp_load_kobalos()
 {
   auto *tp   = tp_load("kobalos"); // keep as string for scripts
   auto  name = tp_name(tp);

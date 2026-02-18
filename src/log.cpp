@@ -25,7 +25,7 @@ extern Game *game;
 //
 // Where all logs go
 //
-std::string log_dir_create(void)
+std::string log_dir_create()
 {
   TRACE_NO_INDENT();
 
@@ -49,7 +49,7 @@ std::string log_dir_create(void)
 #endif
   myfree(dir);
 
-  return std::string(appdata);
+  return {appdata};
 }
 
 void log_(const char *fmt, va_list args)
@@ -146,7 +146,7 @@ void CON(const char *fmt, ...)
   va_end(args);
 }
 
-void CON_NEW_LINE(void)
+void CON_NEW_LINE()
 {
   TRACE_NO_INDENT();
 
@@ -310,7 +310,7 @@ void TOPCON(const char *fmt, ...)
   va_end(args);
 }
 
-void TOPCON_NEW_LINE(void)
+void TOPCON_NEW_LINE()
 {
   TRACE_NO_INDENT();
 
@@ -343,7 +343,7 @@ void BOTCON(const char *fmt, ...)
   va_end(args);
 }
 
-void BOTCON_NEW_LINE(void)
+void BOTCON_NEW_LINE()
 {
   TRACE_NO_INDENT();
 

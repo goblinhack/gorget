@@ -89,7 +89,7 @@ exit:
   return result;
 }
 
-bool test_load_teleport_shove_mob(void)
+bool test_load_teleport_shove_mob()
 {
   TRACE_NO_INDENT();
 

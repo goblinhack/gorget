@@ -27,7 +27,7 @@ static std::string tp_key_description_get(Gamep g, Levelsp v, Levelp l, Thingp t
   return "a... key";
 }
 
-bool tp_load_key(void)
+bool tp_load_key()
 {
   TRACE_NO_INDENT();
 

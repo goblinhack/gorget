@@ -19,7 +19,7 @@ class music
 public:
   music(std::string vname_alias) : name_alias(std::move(vname_alias)) {}
 
-  ~music(void)
+  ~music()
   {
     Mix_FreeMusic(m);
     myfree(data);
@@ -38,7 +38,7 @@ static std::string music_current;
 
 static bool music_init_done;
 
-bool music_init(void)
+bool music_init()
 {
   TRACE_NO_INDENT();
 
@@ -57,7 +57,7 @@ bool music_init(void)
   return true;
 }
 
-void music_fini(void)
+void music_fini()
 {
   LOG("Music fini");
   TRACE_NO_INDENT();
@@ -173,7 +173,7 @@ bool music_play(Gamep g, const char *name)
   return true;
 }
 
-bool music_halt(void)
+bool music_halt()
 {
   TRACE_NO_INDENT();
   music_current = "";

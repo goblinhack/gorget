@@ -47,7 +47,7 @@ static void tp_kobalos_mob_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 }
 
-bool tp_load_kobalos_mob(void)
+bool tp_load_kobalos_mob()
 {
   auto *tp   = tp_load("kobalos_mob"); // keep as string for scripts
   auto  name = tp_name(tp);

@@ -9,7 +9,7 @@
 #ifndef _MY_AUDIO_HPP_
 #define MY_AUDIO_HPP_
 
-bool audio_init(void);
-void audio_fini(void);
+bool audio_init();
+void audio_fini();
 
 #endif

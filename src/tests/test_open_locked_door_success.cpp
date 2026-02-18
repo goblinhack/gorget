@@ -151,7 +151,7 @@ exit:
   return result;
 }
 
-bool test_load_open_locked_door_success(void)
+bool test_load_open_locked_door_success()
 {
   TRACE_NO_INDENT();
 

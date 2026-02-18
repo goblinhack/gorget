@@ -244,7 +244,7 @@ bool d20_ge(int stat_total, const int dice_roll_to_exceed)
 
 Dice::Dice(void) = default;
 
-std::string Dice::to_string(void) const { return hitdice; }
+std::string Dice::to_string() const { return hitdice; }
 
 Dice::Dice(std::string s)
 {
@@ -280,7 +280,7 @@ Dice::Dice(std::string s)
   // CON("new dice [%s] %dd%d+%d", s.c_str(), ndice, sides, modifier);
 }
 
-int Dice::roll(void) const
+int Dice::roll() const
 {
   if (! initialized) {
     return 0;
@@ -297,7 +297,7 @@ int Dice::roll(void) const
   return tot;
 }
 
-int Dice::max_roll(void) const
+int Dice::max_roll() const
 {
   if (! initialized) {
     return 0;
@@ -306,7 +306,7 @@ int Dice::max_roll(void) const
   return (ndice * sides) + modifier;
 }
 
-int Dice::min_roll(void) const
+int Dice::min_roll() const
 {
   if (! initialized) {
     return 0;

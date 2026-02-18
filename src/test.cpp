@@ -91,8 +91,8 @@ public:
   //
   test_callback_t callback;
 
-  Test(void);
-  ~Test(void);
+  Test();
+  ~Test();
 };
 
 using Testidmap = std::vector< class Test * >;
@@ -104,9 +104,9 @@ static std::map< std::string, class Test * > test_name_map;
 
 static bool test_init_done;
 
-Test::Test(void) { newptr(MTYPE_TP, this, "Test"); }
+Test::Test() { newptr(MTYPE_TP, this, "Test"); }
 
-Test::~Test(void) { oldptr(MTYPE_TP, this); }
+Test::~Test() { oldptr(MTYPE_TP, this); }
 
 Testp test_find(const char *name_in)
 {
@@ -122,7 +122,7 @@ Testp test_find(const char *name_in)
   return nullptr;
 }
 
-void test_init(void)
+void test_init()
 {
   TRACE_NO_INDENT();
 
@@ -131,7 +131,7 @@ void test_init(void)
   tests_init();
 }
 
-void test_fini(void)
+void test_fini()
 {
   TRACE_NO_INDENT();
 

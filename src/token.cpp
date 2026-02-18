@@ -179,7 +179,7 @@ void tokens_print_to(class Tokens *tokens, char *output, int output_size)
   }
 }
 
-void tokens_test(void)
+void tokens_test()
 {
   TRACE_NO_INDENT();
   class Tokens tmp;

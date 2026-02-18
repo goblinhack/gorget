@@ -10,7 +10,7 @@
 
 bool audio_init_done;
 
-void audio_fini(void)
+void audio_fini()
 {
   LOG("Audio fini");
   TRACE_AND_INDENT();
@@ -18,7 +18,7 @@ void audio_fini(void)
   audio_init_done = 0u;
 }
 
-bool audio_init(void)
+bool audio_init()
 {
   TRACE_NO_INDENT();
   //

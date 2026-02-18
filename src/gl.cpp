@@ -223,7 +223,7 @@ void gl_leave_2d_mode(Gamep g)
   GL_ERROR_CHECK();
 }
 
-void gl_clear(void)
+void gl_clear()
 {
   TRACE_NO_INDENT();
 
@@ -591,7 +591,7 @@ void blit_fbo(Gamep g, FboEnum fbo, int tl_x, int tl_y, int br_x, int br_y)
 
 void blit_fbo_push(FboEnum fbo) { glBindFramebuffer_EXT(GL_FRAMEBUFFER, g_fbo_id[ fbo ]); }
 
-void blit_fbo_pop(void) { glBindFramebuffer_EXT(GL_FRAMEBUFFER, g_fbo_id[ fbo_last ]); }
+void blit_fbo_pop() { glBindFramebuffer_EXT(GL_FRAMEBUFFER, g_fbo_id[ fbo_last ]); }
 
 void blit_fbo_bind(FboEnum fbo)
 {
@@ -602,7 +602,7 @@ void blit_fbo_bind(FboEnum fbo)
   glBindFramebuffer_EXT(GL_FRAMEBUFFER, g_fbo_id[ fbo ]);
 }
 
-void blit_fbo_unbind(void)
+void blit_fbo_unbind()
 {
   if (fbo_locked != FBO_NONE) {
     CROAK("Attempt to unbind when locked");
@@ -617,7 +617,7 @@ void blit_fbo_bind_locked(FboEnum fbo)
   glBindFramebuffer_EXT(GL_FRAMEBUFFER, g_fbo_id[ fbo ]);
 }
 
-void blit_fbo_unbind_locked(void)
+void blit_fbo_unbind_locked()
 {
   fbo_locked = FBO_NONE;
   glBindFramebuffer_EXT(GL_FRAMEBUFFER, 0);
@@ -649,7 +649,7 @@ GLfloat *bufp;
 GLfloat *bufp_end;
 int      buf_tex;
 
-void blit_init(void)
+void blit_init()
 {
 #ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT();
@@ -684,7 +684,7 @@ void blit_init(void)
   bufp_end = gl_array_buf_end;
 }
 
-void blit_fini(void)
+void blit_fini()
 {
   TRACE_NO_INDENT();
   if (gl_array_buf != nullptr) {
@@ -693,7 +693,7 @@ void blit_fini(void)
   }
 }
 
-void blit_flush(void)
+void blit_flush()
 {
 #ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT();
@@ -744,9 +744,9 @@ void blit_flush(void)
   blit_init();
 }
 
-void blit_flush_triangle_fan(void) { blit_flush_triangle_fan(gl_array_buf, bufp); }
+void blit_flush_triangle_fan() { blit_flush_triangle_fan(gl_array_buf, bufp); }
 
-void blit_flush_colored_triangle_fan(void)
+void blit_flush_colored_triangle_fan()
 {
   TRACE_NO_INDENT();
   blit_flush_colored_triangle_fan(gl_array_buf, bufp);
@@ -1342,7 +1342,7 @@ void gl_ext_init(void)
   ReleaseDC(hwnd, hDC);
 }
 #else
-void gl_ext_init(void) { TRACE_NO_INDENT(); }
+void gl_ext_init() { TRACE_NO_INDENT(); }
 #endif
 
 void gl_error(GLenum errCode)

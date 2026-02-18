@@ -12,7 +12,7 @@
 //
 // Cellular automata helpers
 //
-typedef struct {
+using Blob = struct {
   //
   // Keeps track of the largest blob so fat
   //
@@ -24,11 +24,11 @@ typedef struct {
   // Unique id per blob
   //
   uint16_t id[ MAP_WIDTH ][ MAP_HEIGHT ];
-} Blob;
+};
 
 enum { MAP_LEVEL_CELLULAR_BORDER = 2 };
 
-typedef struct {
+using Cave = struct {
   //
   // Used for cellular automata
   //
@@ -39,7 +39,7 @@ typedef struct {
   // Keeps track of the largest blob so fat
   //
   Blob blob;
-} Cave;
+};
 
 void cave_dump(Gamep g, Cave * /*c*/);
 void cave_create(Gamep g, Cave * /*c*/, uint32_t fill_prob, uint8_t r1, uint8_t r2, int map_generations);

@@ -26,7 +26,7 @@ static std::string tp_entrance_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t
   return UI_INFO1_FMT_STR "Enter here to cowardly return to level selection.";
 }
 
-bool tp_load_entrance(void)
+bool tp_load_entrance()
 {
   TRACE_NO_INDENT();
 

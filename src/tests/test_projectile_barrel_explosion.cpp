@@ -84,7 +84,7 @@ exit:
   return result;
 }
 
-bool test_load_projectile_barrel_explosion(void)
+bool test_load_projectile_barrel_explosion()
 {
   TRACE_NO_INDENT();
 

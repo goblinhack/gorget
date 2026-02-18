@@ -83,7 +83,7 @@ exit:
   return result;
 }
 
-bool test_load_alloc_free_monsts(void)
+bool test_load_alloc_free_monsts()
 {
   TRACE_NO_INDENT();
 

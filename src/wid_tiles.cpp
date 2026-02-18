@@ -14,7 +14,7 @@
 static int                                       wid_tiles_init_done;
 static std::map< std::string, class WidTiles * > wid_tiles_all;
 
-bool wid_tiles_init(void)
+bool wid_tiles_init()
 {
   TRACE_NO_INDENT();
   wid_tiles_init_done = 1;
@@ -24,7 +24,7 @@ bool wid_tiles_init(void)
 
 static void wid_tiles_destroy(wid_tilesp w) { TRACE_NO_INDENT(); }
 
-void wid_tiles_fini(void)
+void wid_tiles_fini()
 {
   TRACE_NO_INDENT();
   if (wid_tiles_init_done != 0) {

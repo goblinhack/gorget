@@ -159,7 +159,7 @@ exit:
   return result;
 }
 
-bool test_load_path_dmap_reverse(void)
+bool test_load_path_dmap_reverse()
 {
   TRACE_NO_INDENT();
 

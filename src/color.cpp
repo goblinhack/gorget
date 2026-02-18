@@ -30,7 +30,7 @@ void color_set(std::string name, color *c, uint8_t r, uint8_t g, uint8_t b, uint
   }
 }
 
-void color_fini(void)
+void color_fini()
 {
   TRACE_NO_INDENT();
   //

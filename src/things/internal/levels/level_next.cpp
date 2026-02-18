@@ -8,7 +8,7 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-bool tp_load_level_next(void)
+bool tp_load_level_next()
 {
   TRACE_NO_INDENT();
 

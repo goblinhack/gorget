@@ -17,7 +17,7 @@ static void tp_explosion_spawned(Gamep g, Levelsp v, Levelp l, Thingp t)
   thing_sound_play(g, v, l, t, "explosion");
 }
 
-bool tp_load_explosion(void)
+bool tp_load_explosion()
 {
   TRACE_NO_INDENT();
 

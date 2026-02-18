@@ -17,7 +17,7 @@ static std::string tp_steam_description_get(Gamep g, Levelsp v, Levelp l, Thingp
   return "thick steam";
 }
 
-bool tp_load_steam(void)
+bool tp_load_steam()
 {
   TRACE_NO_INDENT();
 

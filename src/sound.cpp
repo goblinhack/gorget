@@ -19,7 +19,7 @@ class sound
 public:
   sound(std::string valias) : alias(std::move(valias)) {}
 
-  ~sound(void)
+  ~sound()
   {
     Mix_FreeChunk(chunk);
     myfree(data);
@@ -61,7 +61,7 @@ static void sound_finished(int channel)
   }
 }
 
-bool sound_init(void)
+bool sound_init()
 {
   TRACE_NO_INDENT();
   Mix_AllocateChannels(8);
@@ -72,7 +72,7 @@ bool sound_init(void)
   return true;
 }
 
-void sound_fini(void)
+void sound_fini()
 {
   TRACE_NO_INDENT();
 
@@ -239,4 +239,4 @@ bool sound_play(Gamep g, const std::string &alias, float scale)
   return sound_play_internal(g, alias, -1 /* first free channel */, sound->second, scale);
 }
 
-void sound_halt(void) { TRACE_NO_INDENT(); }
+void sound_halt() { TRACE_NO_INDENT(); }

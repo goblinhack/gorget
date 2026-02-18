@@ -58,7 +58,7 @@ extern thread_local FILE       *g_log_stdout;
 enum { MAIN_THREAD = 0 };
 extern thread_local int g_thread_id;
 
-static inline bool AN_ERROR_OCCURRED(void) { return g_errored_thread_id != -1; }
-static inline bool NO_ERROR_OCCURRED(void) { return g_errored_thread_id == -1; }
+static inline bool AN_ERROR_OCCURRED() { return g_errored_thread_id != -1; }
+static inline bool NO_ERROR_OCCURRED() { return g_errored_thread_id == -1; }
 
 #endif

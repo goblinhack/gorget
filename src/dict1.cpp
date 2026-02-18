@@ -235,7 +235,7 @@ static const char *dict1_names[] = {
     /* newline */ "zar",
 };
 
-const char *os_rand_dict1_name(void)
+const char *os_rand_dict1_name()
 {
   TRACE_NO_INDENT();
   return dict1_names[ os_random_range(0, ARRAY_SIZE(dict1_names)) ];

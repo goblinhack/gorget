@@ -16,7 +16,7 @@ static std::string tp_lava_description_get(Gamep g, Levelsp v, Levelp l, Thingp 
   return "lovely lava";
 }
 
-bool tp_load_lava(void)
+bool tp_load_lava()
 {
   TRACE_NO_INDENT();
 

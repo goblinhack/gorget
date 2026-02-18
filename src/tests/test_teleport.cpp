@@ -89,7 +89,7 @@ exit:
   return result;
 }
 
-bool test_load_teleport(void)
+bool test_load_teleport()
 {
   TRACE_NO_INDENT();
 

@@ -32,14 +32,14 @@ public:
 class tree_wid_key
 {
 public:
-  tree_wid_key(void) = default;
+  tree_wid_key() = default;
 
   tree_wid_key(int vpriority, spoint vtl, spoint vbr, uint64_t vkey)
       : priority(vpriority), tl(vtl), br(vbr), key(vkey)
   {
   }
 
-  ~tree_wid_key(void) = default;
+  ~tree_wid_key() = default;
 
   int priority {};
 
@@ -86,7 +86,7 @@ struct tree_wid_key_cmp {
 class WidKeyType
 {
 public:
-  WidKeyType(void) = default;
+  WidKeyType() = default;
 
   WidKeyType(uint64_t v_val) : val(v_val) {}
 
@@ -95,16 +95,16 @@ public:
   uint64_t val {};
 };
 
-typedef std::map< tree_wid_key, Widp, tree_wid_key_cmp > wid_key_map_location;
-typedef std::map< WidKeyType, Widp >                     wid_key_map_int;
+using wid_key_map_location = std::map< tree_wid_key, Widp, tree_wid_key_cmp >;
+using wid_key_map_int = std::map< WidKeyType, Widp >;
 
 WidKeyType wid_unsorted_get_key(Gamep g, Widp w);
 
 class Wid
 {
 public:
-  Wid(void);
-  ~Wid(void);
+  Wid();
+  ~Wid();
 
   WidKeyType tree_global_key;
 

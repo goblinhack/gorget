@@ -185,7 +185,7 @@ STBIWDEF int stbiw_convert_charo_utf8(char *buffer, size_t bufferlen, const char
 #endif
 #endif
 
-typedef void stbi_write_func(void *context, void *data, int size);
+using stbi_write_func = void (void *context, void *data, int size);
 
 STBIWDEF int stbi_write_png_to_func(stbi_write_func *func, void *context, int w, int h, int comp, const void *data,
                                     int stride_in_bytes);

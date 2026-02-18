@@ -993,7 +993,7 @@ static std::vector< char > read_lzo_file(const std::string filename, long *uncom
     // tellg is not ideal, look into <filesystem> post mojave
     std::ifstream::pos_type sz = ifs.tellg();
     if (sz < 0) {
-      return (std::vector< char >());
+      return {};
     }
 
     ifs.seekg(0, std::ios::beg);
@@ -1153,7 +1153,7 @@ bool game_load(Gamep g, const std::string &file_to_load)
   return g->load(file_to_load, *g);
 }
 
-std::string Game::load_config(void) const
+std::string Game::load_config() const
 {
   TRACE_NO_INDENT();
   game_load_error = "";
@@ -1217,7 +1217,7 @@ bool Game::load(int slot)
   return game_load_error.empty();
 }
 
-bool Game::load_snapshot(void)
+bool Game::load_snapshot()
 {
   LOG("Load snapshot");
   TRACE_AND_INDENT();
@@ -1352,7 +1352,7 @@ static bool wid_load_cancel(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-void Game::load_select(void)
+void Game::load_select()
 {
   LOG("Load menu");
   TRACE_AND_INDENT();

@@ -125,11 +125,11 @@ static std::map< std::string, class Tp * > tp_name_map;
 
 static bool tp_init_done;
 
-static void tp_fixup(void);
+static void tp_fixup();
 
-Tp::Tp(void) { newptr(MTYPE_TP, this, "Tp"); }
+Tp::Tp() { newptr(MTYPE_TP, this, "Tp"); }
 
-Tp::~Tp(void) { oldptr(MTYPE_TP, this); }
+Tp::~Tp() { oldptr(MTYPE_TP, this); }
 
 Tpp tp_find_mand(const std::string &val)
 {
@@ -191,7 +191,7 @@ TpId tp_id_get(Tpp tp)
   return tp->id;
 }
 
-bool tp_init(void)
+bool tp_init()
 {
   TRACE_NO_INDENT();
 
@@ -203,7 +203,7 @@ bool tp_init(void)
   return true;
 }
 
-void tp_fini(void)
+void tp_fini()
 {
   TRACE_NO_INDENT();
 
@@ -295,7 +295,7 @@ Tpp tp_load(const std::string &val)
   return tp;
 }
 
-static void tp_fixup(void)
+static void tp_fixup()
 {
   TRACE_NO_INDENT();
 

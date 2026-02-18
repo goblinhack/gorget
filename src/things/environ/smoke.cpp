@@ -18,7 +18,7 @@ static std::string tp_smoke_description_get(Gamep g, Levelsp v, Levelp l, Thingp
   return "thick smoke";
 }
 
-bool tp_load_smoke(void)
+bool tp_load_smoke()
 {
   TRACE_NO_INDENT();
 

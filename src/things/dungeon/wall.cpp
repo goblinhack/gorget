@@ -22,7 +22,7 @@ static void tp_wall_melt(Gamep g, Levelsp v, Levelp l, Thingp t)
   (void) thing_spawn(g, v, l, tp_first(is_lava), t);
 }
 
-bool tp_load_wall(void)
+bool tp_load_wall()
 {
   TRACE_NO_INDENT();
 

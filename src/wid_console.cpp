@@ -258,7 +258,7 @@ static void wid_console_wid_create(Gamep g)
   wid_update(g, wid_console_window);
 }
 
-std::vector< std::string > wid_console_serialize(void)
+std::vector< std::string > wid_console_serialize()
 {
   TRACE_NO_INDENT();
   std::vector< std::string > r;

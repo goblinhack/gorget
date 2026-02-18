@@ -85,7 +85,7 @@ static void tp_barrel_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
   thing_dead(g, v, l, t, e);
 }
 
-bool tp_load_barrel(void)
+bool tp_load_barrel()
 {
   TRACE_NO_INDENT();
 

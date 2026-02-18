@@ -9,22 +9,22 @@
 #include "my_serialize.hpp"
 #include "my_time.hpp"
 
-HiScores::HiScores(void)
+HiScores::HiScores()
 {
   TRACE_NO_INDENT();
   if ((int) hiscores.size() > HiScore::max) {
     hiscores.resize(HiScore::max);
   } else {
     while ((int) hiscores.size() < HiScore::max) {
-      hiscores.push_back(HiScore("AAA", "", "",
+      hiscores.emplace_back("AAA", "", "",
                                  0, // score
                                  0  // levels_completed
-                                 ));
+                                 );
     }
   }
 }
 
-HiScores::~HiScores(void) { TRACE_NO_INDENT(); }
+HiScores::~HiScores() { TRACE_NO_INDENT(); }
 
 void HiScores::add_new_hiscore(Gamep g, int score, LevelNum level_num, const std::string &name,
                                const std::string &reason)

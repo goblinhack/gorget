@@ -33,12 +33,12 @@
 
 ENUM_DEF_H(GAME_STATE_ENUM, GameState)
 
-typedef enum {
+using SeedSource = enum {
   SEED_SOURCE_RANDOM,
   SEED_SOURCE_USER,
   SEED_SOURCE_TEST,
   SEED_SOURCE_COMMAND_LINE,
-} SeedSource;
+};
 
 enum {
   CONFIG_MAGIC_1 = 0xaabbccdd,

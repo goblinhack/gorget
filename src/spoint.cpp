@@ -38,9 +38,9 @@ void spoint::operator/=(short b)
   y /= b;
 }
 
-float spoint::length(void) const { return ((float) sqrt((x * x) + (y * y))); }
+float spoint::length() const { return ((float) sqrt((x * x) + (y * y))); }
 
-void spoint::unit(void)
+void spoint::unit()
 {
   short len = (int) sqrt((x * x) + (y * y));
   x /= len;

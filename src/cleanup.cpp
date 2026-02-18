@@ -26,7 +26,7 @@
 //
 // Free all resources
 //
-void cleanup(void)
+void cleanup()
 {
   LOG("Cleanup, thread %d", g_thread_id);
   TRACE_AND_INDENT();

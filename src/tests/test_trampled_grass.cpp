@@ -114,7 +114,7 @@ exit:
   return result;
 }
 
-bool test_load_trampled_grass(void)
+bool test_load_trampled_grass()
 {
   TRACE_NO_INDENT();
 

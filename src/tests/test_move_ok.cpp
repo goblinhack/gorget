@@ -189,7 +189,7 @@ exit:
   return result;
 }
 
-bool test_load_move_ok(void)
+bool test_load_move_ok()
 {
   TRACE_NO_INDENT();
 

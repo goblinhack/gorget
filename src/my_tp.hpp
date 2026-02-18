@@ -450,7 +450,7 @@ ENUM_DEF_H(THING_DIR_ENUM, ThingDir)
 
 class Tp;
 
-[[nodiscard]] bool tp_init(void);
+[[nodiscard]] bool tp_init();
 
 [[nodiscard]] std::string tp_name(Tpp tp);
 
@@ -496,12 +496,12 @@ void               tp_chance_set(Tpp tp, ThingChanceType /*ev*/, const std::stri
 [[nodiscard]] Tpp tp_random(ThingFlag f);
 [[nodiscard]] Tpp tp_variant(ThingFlag f, int /*variant*/);
 [[nodiscard]] Tpp tp_first(ThingFlag f);
-[[nodiscard]] Tpp tp_random_dungeon_entrance(void);
-[[nodiscard]] Tpp tp_random_exit(void);
-[[nodiscard]] Tpp tp_random_key(void);
+[[nodiscard]] Tpp tp_random_dungeon_entrance();
+[[nodiscard]] Tpp tp_random_exit();
+[[nodiscard]] Tpp tp_random_key();
 [[nodiscard]] Tpp tp_random_monst(int c);
-[[nodiscard]] Tpp tp_random_player(void);
-[[nodiscard]] Tpp tp_random_wall(void);
+[[nodiscard]] Tpp tp_random_player();
+[[nodiscard]] Tpp tp_random_wall();
 
 void TP_CON(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void TP_CON_(Tpp tp, const char *fmt, va_list args); // compile error without
@@ -513,7 +513,7 @@ void TP_ERR_(Tpp tp, const char *fmt, va_list args); // compile error without
 void TP_LOG(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void TP_LOG_(Tpp tp, const char *fmt, va_list args); // compile error without
                                                      //
-void tp_fini(void);
+void tp_fini();
 void tp_get_id(const char *, int *id);
 
 [[nodiscard]] int tp_flag(Tpp tp, ThingFlag f);

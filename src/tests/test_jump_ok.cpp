@@ -87,7 +87,7 @@ exit:
   return result;
 }
 
-bool test_load_jump_ok(void)
+bool test_load_jump_ok()
 {
   TRACE_NO_INDENT();
 

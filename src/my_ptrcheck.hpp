@@ -11,7 +11,7 @@
 //
 #define PTRCHECK_AT SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM
 
-void  ptrcheck_fini(void);
+void  ptrcheck_fini();
 void *myzalloc_(int size, const char *what, const char *func, const char *file, int line);
 void *mymalloc_(int size, const char *what, const char *func, const char *file, int line);
 void *myrealloc_(void *ptr, int size, const char *what, const char *func, const char *file, int line);
@@ -37,7 +37,7 @@ void *ptrcheck_alloc(int mtype, const void *ptr, const char *what, int size, con
 int   ptrcheck_verify(int mtype, const void *ptr, const char *file, const char *func, int line);
 int   ptrcheck_free(int mtype, void *ptr, const char *file, const char *func, int line);
 void  ptrcheck_leak_print(int mtype);
-void  ptrcheck_leak_print(void);
+void  ptrcheck_leak_print();
 
 //
 // MUST use DEBUG2 else "set debug on" gets confused as it never learned pointers.

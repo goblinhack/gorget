@@ -16,8 +16,8 @@
 //
 // Overriding specific characters
 //
-typedef std::function< Tpp(char, spoint) > Override;
-typedef std::map< char, Override >         Overrides;
+using Override = std::function< Tpp(char, spoint) >;
+using Overrides = std::map< char, Override >;
 
 extern Overrides no_overrides;
 

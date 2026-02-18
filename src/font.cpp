@@ -14,7 +14,7 @@ Fontp font_ui;
 
 static std::unordered_map< std::string, Fontp > fonts;
 
-void font_fini(void) { TRACE_NO_INDENT(); }
+void font_fini() { TRACE_NO_INDENT(); }
 
 static Fontp font_load(std::string name)
 {
@@ -125,7 +125,7 @@ Tilep Font::font_get_tile(int u)
   return tile;
 }
 
-bool font_init(void)
+bool font_init()
 {
   TRACE_NO_INDENT();
 

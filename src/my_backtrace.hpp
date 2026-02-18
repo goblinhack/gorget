@@ -8,8 +8,8 @@
 
 #include <string>
 
-void        backtrace_dump(void);
+void        backtrace_dump();
 void        backtrace_dump(FILE        */*fp*/);
-std::string backtrace_string(void);
+std::string backtrace_string();
 
 #endif

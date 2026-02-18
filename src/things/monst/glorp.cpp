@@ -51,7 +51,7 @@ ThingEnviron tp_glorp_assess_tile(Gamep g, Levelsp v, Levelp l, spoint at, Thing
   return THING_ENVIRON_NEUTRAL;
 }
 
-bool tp_load_glorp(void)
+bool tp_load_glorp()
 {
   auto *tp   = tp_load("glorp"); // keep as string for scripts
   auto  name = tp_name(tp);

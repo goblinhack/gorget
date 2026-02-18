@@ -164,7 +164,7 @@ exit:
   return result;
 }
 
-bool test_load_brazier_shove_fail(void)
+bool test_load_brazier_shove_fail()
 {
   TRACE_NO_INDENT();
 

@@ -115,7 +115,7 @@ exit:
   return result;
 }
 
-bool test_load_bridge_on_fire_over_lava(void)
+bool test_load_bridge_on_fire_over_lava()
 {
   TRACE_NO_INDENT();
 

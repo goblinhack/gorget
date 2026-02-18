@@ -151,7 +151,7 @@ exit:
   return result;
 }
 
-bool test_load_door_secret(void)
+bool test_load_door_secret()
 {
   TRACE_NO_INDENT();
 

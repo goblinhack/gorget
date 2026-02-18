@@ -298,7 +298,7 @@ std::string backtrace_string(void)
   return out;
 }
 #else
-std::string backtrace_string(void)
+std::string backtrace_string()
 {
   backtrace_mutex.lock();
 
@@ -354,7 +354,7 @@ void backtrace_dump(FILE *fp)
   backtrace_mutex.unlock();
 }
 
-void backtrace_dump(void)
+void backtrace_dump()
 {
   backtrace_mutex.lock();
   auto bt = backtrace_string();

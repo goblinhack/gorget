@@ -15,20 +15,20 @@
 #include <cmath>
 #include <cstring>
 
-typedef struct {
+using Ray = struct {
   int16_t depth_furthest;
-} Ray;
+};
 
-typedef struct {
+using RayPixel = struct {
   spoint p;
   float  distance;
-} RayPixel;
+};
 
 class Raycast
 {
 public:
-  Raycast(void);
-  ~Raycast(void);
+  Raycast();
+  ~Raycast();
 
   void ray_pixel_line_draw(int16_t index, spoint p0, spoint p1);
   void ray_pixel_add(int16_t index, spoint p0, spoint p1);
@@ -243,14 +243,14 @@ void level_light_per_pixel_lighting(Gamep g, Levelsp v, Levelp l, Thingp t, spoi
   }
 }
 
-Raycast::Raycast(void)
+Raycast::Raycast()
 {
   TRACE_NO_INDENT();
 
   newptr(MTYPE_LIGHT, this, "Raycast");
 }
 
-Raycast::~Raycast(void)
+Raycast::~Raycast()
 {
   TRACE_NO_INDENT();
 
@@ -738,7 +738,7 @@ void level_light_raycast(Gamep g, Levelsp v, Levelp l, FboEnum fbo)
   player_raycast->raycast_do(g, v, l);
 }
 
-void level_light_raycast_fini(void)
+void level_light_raycast_fini()
 {
   delete player_raycast;
   player_raycast = nullptr;

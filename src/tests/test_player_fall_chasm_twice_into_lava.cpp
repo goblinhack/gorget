@@ -195,7 +195,7 @@ exit:
   return result;
 }
 
-bool test_load_player_fall_chasm_twice_into_lava(void)
+bool test_load_player_fall_chasm_twice_into_lava()
 {
   TRACE_NO_INDENT();
 

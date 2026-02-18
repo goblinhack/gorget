@@ -137,8 +137,8 @@ public:
   //
   HiScores hiscores;
 
-  static void fini(void);
-  void        reset(void);
+  static void fini();
+  void        reset();
 };
 
 class Game
@@ -266,36 +266,36 @@ public:
   /////////////////////////////////////////////////////////////////////////
 
   Game(std::string appdata);
-  Game(void) = default;
+  Game() = default;
 
-  bool load_snapshot(void);
+  bool load_snapshot();
   bool load(const std::string & /*file_to_load*/, class Game &target);
   bool load(int slot);
-  bool save_config(void);
-  bool save_select(void);
-  bool save_snapshot(void);
+  bool save_config();
+  bool save_select();
+  bool save_snapshot();
   bool save(const std::string & /*file_to_save*/);
   bool save(int slot);
 
-  void cleanup(void);
-  void create_levels(void);
-  void destroy_levels(void);
-  void display(void);
-  void fini(void);
-  void handle_game_request_to_remake_ui(void);
-  void init(void);
-  void load_select(void);
+  void cleanup();
+  void create_levels();
+  void destroy_levels();
+  void display();
+  void fini();
+  void handle_game_request_to_remake_ui();
+  void init();
+  void load_select();
   void player_name_set(const char *player_name);
-  void popup_cleanup(void);
+  void popup_cleanup();
   void popup_text_add(spoint p, const std::string &);
-  void seed_clear(void);
+  void seed_clear();
   void seed_set(const char *seed = nullptr);
-  void start_playing(void);
+  void start_playing();
   void state_change(GameState state, const std::string &why);
   void state_reset(const std::string &why);
-  void tick(void);
+  void tick();
 
-  std::string load_config(void) const;
+  [[nodiscard]] std::string load_config() const;
 };
 
 static void game_map_zoom_update(Gamep /*g*/);
@@ -305,13 +305,13 @@ class Game *game;
 #include "game_load.hpp"
 #include "game_save.hpp"
 
-void Config::fini(void)
+void Config::fini()
 {
   LOG("Game fini");
   TRACE_AND_INDENT();
 }
 
-void Config::reset(void)
+void Config::reset()
 {
   LOG("Game reset");
   TRACE_AND_INDENT();
@@ -385,7 +385,7 @@ Game::Game(std::string vappdata)
   save_file = saved_dir + "saved-slot-" + std::to_string(save_slot);
 }
 
-void Game::init(void)
+void Game::init()
 {
   CON("Game init");
   TRACE_AND_INDENT();
@@ -509,7 +509,7 @@ void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num,
   game_test_init_level(g, v, l_out, level_num, spoint(0, level_num), w, h, contents, overrides);
 }
 
-void Game::fini(void)
+void Game::fini()
 {
   LOG("Game fini");
   TRACE_AND_INDENT();
@@ -533,7 +533,7 @@ void game_fini(Gamep g)
   game = nullptr;
 }
 
-void Game::cleanup(void)
+void Game::cleanup()
 {
   LOG("Game cleanup");
   TRACE_AND_INDENT();
@@ -599,7 +599,7 @@ bool game_popups_present(Gamep g, int x, int y)
   return ! g->popups[ x ][ y ].all.empty();
 }
 
-void Game::seed_clear(void)
+void Game::seed_clear()
 {
   config.seed_name   = "";
   config.seed_source = SEED_SOURCE_RANDOM;
@@ -780,7 +780,7 @@ const char *game_player_name_get(Gamep g)
   return g->config.player_name.c_str();
 }
 
-void Game::create_levels(void)
+void Game::create_levels()
 {
   LOG("Create levels");
   TRACE_AND_INDENT();
@@ -866,7 +866,7 @@ void Game::create_levels(void)
 }
 void game_create_levels(Gamep g) { g->create_levels(); }
 
-void Game::start_playing(void)
+void Game::start_playing()
 {
   LOG("Game started playing");
   TRACE_AND_INDENT();
@@ -894,7 +894,7 @@ void Game::start_playing(void)
 }
 void game_start_playing(Gamep g) { g->start_playing(); }
 
-void Game::destroy_levels(void)
+void Game::destroy_levels()
 {
   auto *g = this;
   auto *v = game_levels_get(g);
@@ -1112,7 +1112,7 @@ void game_state_change(Gamep g, GameState new_state, const char *why)
 //
 // Do something per tick in a given state
 //
-void Game::handle_game_request_to_remake_ui(void)
+void Game::handle_game_request_to_remake_ui()
 {
   TRACE_NO_INDENT();
 
@@ -1158,7 +1158,7 @@ void Game::handle_game_request_to_remake_ui(void)
 //
 // Do something per tick in a given state
 //
-void Game::tick(void)
+void Game::tick()
 {
   TRACE_NO_INDENT();
 
@@ -1283,7 +1283,7 @@ bool game_wait_for_tick_to_finish(Gamep g, Levelsp v, Levelp l)
 //
 // Display the game
 //
-void Game::display(void)
+void Game::display()
 {
   TRACE_NO_INDENT();
 
