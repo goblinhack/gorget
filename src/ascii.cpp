@@ -1026,7 +1026,7 @@ void ascii_clear_display(void)
   }
 }
 
-static void ascii_put_box__(int style, const TileLayers tiles_in, int x1, int y1, int x2, int y2, color col_bg,
+static void ascii_put_box_(int style, const TileLayers tiles_in, int x1, int y1, int x2, int y2, color col_bg,
                             color col_fg, void *context)
 {
   static bool      init;
@@ -1194,7 +1194,7 @@ static void ascii_put_box_(int style, const TileLayers tiles, int x, int y, int 
                            color col_text, const char *fmt, va_list args)
 {
   if (*fmt == 0) {
-    ascii_put_box__(style, tiles, x, y, x + width - 1, y + height - 1, col_bg, col_text, nullptr /* context */);
+    ascii_put_box_(style, tiles, x, y, x + width - 1, y + height - 1, col_bg, col_text, nullptr /* context */);
   } else {
     char buf[ MAXLONGSTR ];
     auto wrote = vsnprintf(buf, MAXLONGSTR, fmt, args);
@@ -1209,7 +1209,7 @@ static void ascii_put_box_(int style, const TileLayers tiles, int x, int y, int 
     auto b   = std::string(buf);
     int  len = ascii_strlen(b);
 
-    ascii_put_box__(style, tiles, x, y, x + width - 1, y + height - 1, col_bg, col_text, nullptr /* context */);
+    ascii_put_box_(style, tiles, x, y, x + width - 1, y + height - 1, col_bg, col_text, nullptr /* context */);
 
     ascii_putf_internal2(x + ((width - len) / 2), y + 1, col_text, COLOR_NONE, b);
   }

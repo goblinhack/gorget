@@ -4,7 +4,7 @@
 
 #include <algorithm>
 #include <ctime>
-#include <time.h>
+#include <ctime>
 
 #include "my_ascii.hpp"
 #include "my_game.hpp"

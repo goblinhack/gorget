@@ -667,12 +667,12 @@ void config_game_gfx_update(Gamep g)
   //
   // Work out the size of the game map
   //
-  if (TILE_WIDTH == 0u) {
+  if (TILE_WIDTH == 0U) {
     ERR("TILE_WIDTH zero");
     return;
   }
 
-  if (TILE_HEIGHT == 0u) {
+  if (TILE_HEIGHT == 0U) {
     ERR("TILE_HEIGHT zero");
     return;
   }

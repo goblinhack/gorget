@@ -42,7 +42,7 @@ std::array< bool, UI_MAX_SAVE_SLOTS > slot_valid;
   {                                                                                                                  \
     uint32_t magic;                                                                                                  \
     in >> bits(magic);                                                                                               \
-    if (magic != m) {                                                                                                \
+    if (magic != (m)) {                                                                                                \
       game_load_error                                                                                                \
           = "bad '" what "' magic expected: " + std::format("0x{:x}", m) + " got " + std::format("0x{:x}", magic);   \
       return in;                                                                                                     \

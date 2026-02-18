@@ -4,7 +4,7 @@
 
 #pragma once
 #ifndef _MY_TYPES_HPP_
-#define _MY_TYPES_HPP_
+#define MY_TYPES_HPP_
 
 ////////////////////////////////////////////////////////////////////////
 // Bare minimal includes. Do not add any c++ includes here for speed.
@@ -80,7 +80,7 @@
 //
 // Simple array routines
 //
-#define ARRAY_SIZE(my_array) ((int) (sizeof(my_array) / sizeof(my_array[ 0 ])))
+#define ARRAY_SIZE(my_array) ((int) (sizeof(my_array) / sizeof((my_array)[ 0 ])))
 
 //
 // Tired of compiler warnings on assuming int.
@@ -88,8 +88,7 @@
 #define SIZEOF(my_array) ((int) sizeof(my_array))
 
 #define FOR_ALL_IN_ARRAY(my_iterator, my_array)                                                                      \
-  __typeof__(&my_array[ 0 ]) my_iterator;                                                                            \
-  for ((my_iterator) = (my_array); (my_iterator) < ((my_array) + ARRAY_SIZE(my_array)); (my_iterator)++)
+  for (auto(my_iterator) = (my_array); (my_iterator) < ((my_array) + ARRAY_SIZE(my_array)); (my_iterator)++)
 
 //
 // GCC extensions

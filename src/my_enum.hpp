@@ -6,6 +6,8 @@
 #ifndef _MY_ENUM_HPP__
 #define MY_ENUM_HPP_
 
+#include "my_types.hpp"
+
 #include <unordered_map>
 
 /*
