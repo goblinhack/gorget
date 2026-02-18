@@ -692,13 +692,13 @@ Widp wid_get_scrollbar_horiz(Widp w)
 void wid_set_ignore_events(Widp w, bool val)
 {
   TRACE_NO_INDENT();
-  w->ignore_events = static_cast<uint8_t>(val);
+  w->ignore_events = static_cast< uint8_t >(val);
 }
 
 void wid_set_ignore_scroll_events(Widp w, bool val)
 {
   TRACE_NO_INDENT();
-  w->ignore_scroll_events = static_cast<uint8_t>(val);
+  w->ignore_scroll_events = static_cast< uint8_t >(val);
 }
 
 static void wid_set_scissors(int tlx, int tly, int brx, int bry)
@@ -1159,13 +1159,13 @@ void wid_set_name(Widp w, std::string name)
 void wid_set_ignore_for_mouse_down(Widp w, bool val)
 {
   TRACE_NO_INDENT();
-  w->ignore_for_mouse_down = static_cast<uint8_t>(val);
+  w->ignore_for_mouse_down = static_cast< uint8_t >(val);
 }
 
 void wid_set_debug(Widp w, bool val)
 {
   TRACE_NO_INDENT();
-  w->debug = static_cast<uint8_t>(val);
+  w->debug = static_cast< uint8_t >(val);
 }
 
 void wid_set_text_max_len(Widp w, size_t max_len)
@@ -1216,7 +1216,7 @@ bool wid_get_received_input(Widp w)
 void wid_set_received_input(Widp w, bool val)
 {
   TRACE_NO_INDENT();
-  w->received_input = static_cast<uint8_t>(val);
+  w->received_input = static_cast< uint8_t >(val);
 }
 
 void wid_set_cursor(Widp w, uint32_t val)
@@ -1246,7 +1246,7 @@ bool wid_get_focusable(Widp w)
 void wid_set_focusable(Widp w, bool val)
 {
   TRACE_NO_INDENT();
-  w->focus_order = static_cast<uint8_t>(val);
+  w->focus_order = static_cast< uint8_t >(val);
 }
 
 bool wid_get_show_cursor(Widp w)
@@ -1258,7 +1258,7 @@ bool wid_get_show_cursor(Widp w)
 void wid_set_show_cursor(Widp w, bool val)
 {
   TRACE_NO_INDENT();
-  w->show_cursor = static_cast<uint8_t>(val);
+  w->show_cursor = static_cast< uint8_t >(val);
 }
 
 bool wid_get_do_not_raise(Widp w)
@@ -1270,7 +1270,7 @@ bool wid_get_do_not_raise(Widp w)
 void wid_set_do_not_raise(Widp w, bool val)
 {
   TRACE_NO_INDENT();
-  w->do_not_raise = static_cast<uint8_t>(val);
+  w->do_not_raise = static_cast< uint8_t >(val);
 }
 
 bool wid_get_do_not_lower(Widp w)
@@ -1282,7 +1282,7 @@ bool wid_get_do_not_lower(Widp w)
 void wid_set_do_not_lower(Widp w, bool val)
 {
   TRACE_NO_INDENT();
-  w->do_not_lower = static_cast<uint8_t>(val);
+  w->do_not_lower = static_cast< uint8_t >(val);
 }
 
 bool wid_get_moveable(Widp w)
@@ -1308,7 +1308,7 @@ void wid_set_moveable(Gamep g, Widp w, bool val)
     return;
   }
 
-  w->moveable     = static_cast<uint8_t>(val);
+  w->moveable     = static_cast< uint8_t >(val);
   w->moveable_set = 1U;
 
   wid_set_moveable_horiz(g, w, val);
@@ -1334,7 +1334,7 @@ void wid_set_moveable_horiz(Gamep g, Widp w, bool val)
     return;
   }
 
-  w->moveable_horiz     = static_cast<uint8_t>(val);
+  w->moveable_horiz     = static_cast< uint8_t >(val);
   w->moveable_horiz_set = 1U;
 }
 
@@ -1357,7 +1357,7 @@ void wid_set_moveable_vert(Gamep g, Widp w, bool val)
     return;
   }
 
-  w->moveable_vert     = static_cast<uint8_t>(val);
+  w->moveable_vert     = static_cast< uint8_t >(val);
   w->moveable_vert_set = 1U;
 }
 
@@ -1380,7 +1380,7 @@ void wid_set_moveable_bounded(Gamep g, Widp w, bool val)
     return;
   }
 
-  w->moveable_bounded     = static_cast<uint8_t>(val);
+  w->moveable_bounded     = static_cast< uint8_t >(val);
   w->moveable_bounded_set = 1U;
 }
 
@@ -1403,7 +1403,7 @@ void wid_set_moveable_no_user_scroll(Gamep g, Widp w, bool val)
     return;
   }
 
-  w->moveable_no_user_scroll     = static_cast<uint8_t>(val);
+  w->moveable_no_user_scroll     = static_cast< uint8_t >(val);
   w->moveable_no_user_scroll_set = 1U;
 }
 
@@ -1416,7 +1416,7 @@ bool wid_get_text_lhs(Widp w)
 void wid_set_text_lhs(Widp w, bool val)
 {
   TRACE_NO_INDENT();
-  w->text_lhs = static_cast<uint8_t>(val);
+  w->text_lhs = static_cast< uint8_t >(val);
 }
 
 bool wid_get_text_rhs(Widp w)
@@ -1440,7 +1440,7 @@ bool wid_get_text_centerx(Widp w)
 void wid_set_text_centerx(Widp w, bool val)
 {
   TRACE_NO_INDENT();
-  w->text_centerx = static_cast<uint8_t>(val);
+  w->text_centerx = static_cast< uint8_t >(val);
 }
 
 bool wid_get_text_top(Widp w)
@@ -1452,7 +1452,7 @@ bool wid_get_text_top(Widp w)
 void wid_set_text_top(Widp w, bool val)
 {
   TRACE_NO_INDENT();
-  w->text_top = static_cast<uint8_t>(val);
+  w->text_top = static_cast< uint8_t >(val);
 }
 
 bool wid_get_text_bot(Widp w)
@@ -1464,7 +1464,7 @@ bool wid_get_text_bot(Widp w)
 void wid_set_text_bot(Widp w, bool val)
 {
   TRACE_NO_INDENT();
-  w->text_bot = static_cast<uint8_t>(val);
+  w->text_bot = static_cast< uint8_t >(val);
 }
 
 bool wid_get_text_centery(Widp w)
@@ -1476,7 +1476,7 @@ bool wid_get_text_centery(Widp w)
 void wid_set_text_centery(Widp w, bool val)
 {
   TRACE_NO_INDENT();
-  w->text_centery = static_cast<uint8_t>(val);
+  w->text_centery = static_cast< uint8_t >(val);
 }
 
 bool wid_get_text_pos(Widp w, int *x, int *y)

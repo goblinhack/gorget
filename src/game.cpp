@@ -1268,7 +1268,8 @@ bool game_wait_for_tick_to_finish(Gamep g, Levelsp v, Levelp l)
     }
 
     TRACE_NO_INDENT();
-    if ((!static_cast<bool>(v->level_tick_in_progress_count)) && (!static_cast<bool>(v->level_tick_request_count))) {
+    if ((! static_cast< bool >(v->level_tick_in_progress_count))
+        && (! static_cast< bool >(v->level_tick_request_count))) {
       LEVEL_LOG(g, v, l, "Test: tick %u finished, stop waiting", v->tick);
       return true;
     }

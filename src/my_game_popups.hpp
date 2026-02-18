@@ -43,6 +43,6 @@ void game_popups_clear(Gamep g);
 void game_popups_display(Gamep g, Levelsp v, Levelp l);
 
 std::list< GamePopup * > *game_popups_get(Gamep g, int x, int y);
-void                      game_popups_set(Gamep g, int x, int y, std::list< GamePopup * > & l);
+void                      game_popups_set(Gamep g, int x, int y, std::list< GamePopup * > &l);
 
 #endif /* _MY_GAME_POPUP_HPP_ */

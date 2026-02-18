@@ -86,7 +86,7 @@ void wid_mouse_over_end(Gamep g)
 
   Widp w {};
 
-  if (static_cast<int>(wid_mouse_visible) == 0) {
+  if (static_cast< int >(wid_mouse_visible) == 0) {
     return;
   }
 
@@ -118,7 +118,7 @@ void wid_mouse_over_end(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  if (static_cast<int>(wid_mouse_visible) == 0) {
+  if (static_cast< int >(wid_mouse_visible) == 0) {
     return false;
   }
 
@@ -1123,11 +1123,11 @@ void wid_mouse_hide(Gamep g, bool value)
 {
   TRACE_NO_INDENT();
 
-  bool visible = !value;
+  bool visible = ! value;
 
   if (visible != wid_mouse_visible) {
     wid_mouse_visible = visible;
-    if (static_cast<int>(visible) != 0) {
+    if (static_cast< int >(visible) != 0) {
       sdl_mouse_warp(g, saved_mouse_x, saved_mouse_y);
     } else {
       saved_mouse_x = sdl.mouse_x;

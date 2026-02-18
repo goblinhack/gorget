@@ -536,8 +536,7 @@ typedef struct Thing_ {
 [[nodiscard]] bool   thing_is_broken_on_death(Thingp t);
 [[nodiscard]] bool   thing_is_burnable(Thingp t);
 [[nodiscard]] bool   thing_is_burning(Thingp t);
-[[nodiscard]] bool   thing_is_carried_try_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp carrier,
-                                              bool val = true);
+[[nodiscard]] bool   thing_is_carried_try_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp me, bool val = true);
 [[nodiscard]] bool   thing_is_carried_try_unset(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp dropr);
 [[nodiscard]] bool   thing_is_carried(Thingp t);
 [[nodiscard]] bool   thing_is_chasm(Thingp t);
