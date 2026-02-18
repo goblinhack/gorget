@@ -13,7 +13,7 @@
 #include "my_sound.hpp"
 #include "my_wids.hpp"
 
-#include <limits.h>
+#include <climits>
 
 static WidPopup *wid_cfg_gfx_window;
 

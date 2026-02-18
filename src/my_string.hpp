@@ -18,9 +18,11 @@ extern char  *my_strcasestr(const char *s, const char *find);
 //
 // Max long string size
 //
-#define MAXLONGSTR  (1024 * 16) // Needs to be big for long tracebacks
-#define MAXSTR      1024
-#define MAXSHORTSTR 128
+enum {
+MAXLONGSTR =  (1024 * 16), // Needs to be big for long tracebacks
+MAXSTR =      1024,
+MAXSHORTSTR = 128
+};
 
 char *dynprintf(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 char *strappend(const char *in, const char *append);

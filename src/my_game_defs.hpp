@@ -9,85 +9,86 @@
 //
 // The level map dimensions
 //
-#define MAP_HEIGHT 48
-#define MAP_WIDTH  48
-#define MAP_SLOTS  14
+enum {
+  MAP_HEIGHT = 48,
+  MAP_WIDTH  = 48,
+  MAP_SLOTS  = 14,
 
-//
-// The world map is smaller than the level map by a factor.
-//
-#define LEVEL_SCALE     6
-#define LEVEL_ACROSS    (MAP_WIDTH / LEVEL_SCALE)
-#define LEVEL_DOWN      (MAP_HEIGHT / LEVEL_SCALE)
-#define LEVEL_SELECT_ID (LEVEL_MAX - 1) // The level select level
-#define LEVEL_MAX       ((LEVEL_ACROSS * LEVEL_DOWN) + 1)
+  //
+  // The world map is smaller than the level map by a factor.
+  //
+  LEVEL_SCALE = 6,
 
-//
-// Entropy is always > 0 for Thing IDs to distinguish them
-// A thing ID is composed as: [ Entropy bits ] [ ID bits ]
-//
-//                       31      |       |       |      0
-//                       +-------------------------------
-//                       0LLLLLLIIIIIIIIIIIIIIIEEEEEEEEEE
-//
-// E Entropy
-// I Per level ID (enough for THING_ID_PER_LEVEL_REQ)
-// L Level        (enough for LEVEL_MAX - 1)
-//
-#define THING_LEVEL_ID_BITS           6
-#define THING_PER_LEVEL_THING_ID_BITS 15
-#define THING_ENTROPY_BITS            10
+  //
+  // Entropy is always > 0 for Thing IDs to distinguish them
+  // A thing ID is composed as: [ Entropy bits ] [ ID bits ]
+  //
+  //                       31      |       |       |      0
+  //                       +-------------------------------
+  //                       0LLLLLLIIIIIIIIIIIIIIIEEEEEEEEEE
+  //
+  // E Entropy
+  // I Per level ID (enough for THING_ID_PER_LEVEL_REQ)
+  // L Level        (enough for LEVEL_MAX - 1)
+  //
+  THING_LEVEL_ID_BITS           = 6,
+  THING_PER_LEVEL_THING_ID_BITS = 15,
+  THING_ENTROPY_BITS            = 10,
 
-#define THING_ARR_INDEX_BITS (THING_LEVEL_ID_BITS + THING_PER_LEVEL_THING_ID_BITS)
+  //
+  // In the world minimap, this is how large each level tile is
+  //
+  MAP_WORLD_MAP_PIXEL_SIZE_PER_LEVEL = 4,
 
-#define THING_ID_MAX (1 << THING_ARR_INDEX_BITS)
+  //
+  // Number of light rays the player casts
+  //
+  LIGHT_MAX_RAYS_MAX = (360 * 4),
 
-#define THING_ID_PER_LEVEL_REQ (MAP_SLOTS * MAP_WIDTH * MAP_HEIGHT)
-#define THING_ID_PER_LEVEL_MAX (1 << THING_PER_LEVEL_THING_ID_BITS)
+  MAP_SCROLL_SPEED          = 50,
+  MAP_SCROLL_TELEPORT_SPEED = 200,
 
-#define LEVEL_ID_REQ (LEVEL_ACROSS * LEVEL_DOWN)
-#define LEVEL_ID_MAX (1 << THING_LEVEL_ID_BITS)
+  //
+  // How many on screen tiles we aim to have
+  //
+  MAP_TILES_ACROSS_DEF = 16,
+  MAP_TILES_DOWN_DEF   = 16,
 
-//
-// In the world minimap, this is how large each level tile is
-//
-#define MAP_WORLD_MAP_PIXEL_SIZE_PER_LEVEL 4
+  //
+  // Visible map zoom level
+  //
+  MAP_ZOOM_FULL_MAP = 1,
+  MAP_ZOOM_DEF      = 2,
+  MAP_ZOOM_MAX      = 16,
 
-//
-// Number of light rays the player casts
-//
-#define LIGHT_MAX_RAYS_MAX (360 * 4)
+  MAX_FALL_TILE_HEIGHT       = 4,
+  MAX_FALL_TIME_MS           = 250,
+  MAX_HIT_TIME_MS            = 250,
+  MAX_TESTED_LEVELS          = 1000,
+  POPUP_DURATION_MS          = 2000,
+  POPUP_DURATION_TILE_HEIGHT = 6,
+  POPUP_TEXT_SCALE_ACROSS    = 3,
 
-#define MAP_SCROLL_SPEED          50
-#define MAP_SCROLL_TELEPORT_SPEED 200
+  LEVEL_ACROSS    = (MAP_WIDTH / LEVEL_SCALE),
+  LEVEL_DOWN      = (MAP_HEIGHT / LEVEL_SCALE),
+  LEVEL_MAX       = ((LEVEL_ACROSS * LEVEL_DOWN) + 1),
+  LEVEL_SELECT_ID = (LEVEL_MAX - 1), // The level select level
 
-//
-// How many on screen tiles we aim to have
-//
-#define MAP_TILES_ACROSS_DEF 16
-#define MAP_TILES_DOWN_DEF   16
+  THING_ARR_INDEX_BITS = (THING_LEVEL_ID_BITS + THING_PER_LEVEL_THING_ID_BITS),
+  THING_ID_MAX         = (1 << THING_ARR_INDEX_BITS),
 
-//
-// Visible map zoom level
-//
-#define MAP_ZOOM_FULL_MAP 1
-#define MAP_ZOOM_DEF      2
-#define MAP_ZOOM_MAX      16
+  THING_ID_PER_LEVEL_REQ = (MAP_SLOTS * MAP_WIDTH * MAP_HEIGHT),
+  THING_ID_PER_LEVEL_MAX = (1 << THING_PER_LEVEL_THING_ID_BITS),
 
-#define MAX_FALL_TILE_HEIGHT       4
-#define MAX_FALL_TIME_MS           250
-#define MAX_HIT_TIME_MS            250
-#define MAX_TESTED_LEVELS          1000
-#define POPUP_DURATION_MS          2000
-#define POPUP_DURATION_TILE_HEIGHT 6
-#define POPUP_TEXT_SCALE_ACROSS    3
-#define POPUP_TEXT_SCALE_DOWN      1.5
-#define TEST_SEED                  "test-seed"
-#define TEST_ITERATIONS            100
-#define TICK_DURATION_MS           100
+  LEVEL_ID_REQ = (LEVEL_ACROSS * LEVEL_DOWN),
+  LEVEL_ID_MAX = (1 << THING_LEVEL_ID_BITS),
+};
 
-#define WALL_VARIANTS  12
-#define FLOOR_VARIANTS 10
+#define POPUP_TEXT_SCALE_DOWN 1.5
+#define TEST_SEED             "test-seed"
+
+enum { TEST_ITERATIONS = 100, TICK_DURATION_MS = 100 };
+enum { WALL_VARIANTS = 12, FLOOR_VARIANTS = 10 };
 
 //
 // 'x' is the edge of the visible map

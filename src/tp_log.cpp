@@ -13,7 +13,7 @@
 #include "my_tp.hpp"
 #include "my_wid_console.hpp"
 
-#include <string.h>
+#include <cstring>
 
 void TP_LOG_(Tpp tp, const char *fmt, va_list args)
 {

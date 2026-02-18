@@ -32,7 +32,7 @@
 #include "my_main.hpp"
 #include "my_source_loc.hpp"
 
-#include <stdlib.h>
+#include <cstdlib>
 
 static int pcg_lock_count; // No pcg random numbers allowed here
 

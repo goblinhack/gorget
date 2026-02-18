@@ -33,8 +33,10 @@
 //
 // Default UI style
 //
-#define UI_TYPE_PIXELART 0
-#define UI_TYPES_MAX     1
+enum {
+UI_TYPE_PIXELART = 0,
+UI_TYPES_MAX =     1
+};
 
 //
 // Format strings
@@ -62,44 +64,58 @@
 //
 // Character sizes for boxes in the UI
 //
-#define UI_TILE_HEIGHT 8
-#define UI_TILE_WIDTH  8
+enum {
+UI_TILE_HEIGHT = 8,
+UI_TILE_WIDTH =  8
+};
 
 //
 // Character sizes for text in the UI
 //
-#define UI_FONT_HEIGHT 8
-#define UI_FONT_WIDTH  6
+enum {
+UI_FONT_HEIGHT = 8,
+UI_FONT_WIDTH =  6
+};
 
 //
 // Name limits
 //
-#define UI_MAX_PLAYER_NAME_LEN 12
-#define UI_MAX_SEED_NAME_LEN   10
-#define UI_MAX_WID_CONTEXT     2
-#define UI_MAX_SAVE_SLOTS      10 // How many save game slots
+enum {
+UI_MAX_PLAYER_NAME_LEN = 12,
+UI_MAX_SEED_NAME_LEN =   10,
+UI_MAX_WID_CONTEXT =     2,
+UI_MAX_SAVE_SLOTS =      10 // How many save game slots
+};
 
 //
 // Popups
 //
-#define UI_WID_POPUP_WIDTH_NORMAL 18
-#define UI_WID_POPUP_WIDTH_WIDE   60
+enum {
+UI_WID_POPUP_WIDTH_NORMAL = 18,
+UI_WID_POPUP_WIDTH_WIDE =   60
+};
 
 //
 // Left and right bar sizes
 //
 #define UI_HEALTH_BAR_STEPS (UI_LEFTBAR_WIDTH - 2)
-#define UI_LEFTBAR_WIDTH    34 // In characters
-#define UI_RIGHTBAR_WIDTH   34 // In characters
+enum {
+UI_LEFTBAR_WIDTH =    34, // In characters
+UI_RIGHTBAR_WIDTH =   34 // In characters
+};
 
 //
 // Mouse scrolling
 //
 #define UI_GAME_MOUSE_WHEEL_SCALE     2.0 // How much the wheel mouse moves when in game
-#define UI_GAME_MOUSE_WHEEL_SCALE_MAX 50
+enum {
+UI_GAME_MOUSE_WHEEL_SCALE_MAX = 50
+};
 #define UI_WID_MOUSE_WHEEL_SCALE      1.0 // How much the wheel mouse moves when over a wid
-#define UI_WID_MOUSE_WHEEL_SCALE_MAX  10
-#define UI_MOUSE_DOUBLE_CLICK         500 // Double click time in ms
+enum {
+UI_WID_MOUSE_WHEEL_SCALE_MAX =  10,
+UI_MOUSE_DOUBLE_CLICK =         500 // Double click time in ms
+};
 
 //
 // Joystick scrolling
@@ -110,7 +126,9 @@
 //
 // This is for areas we've visited before. The higher the number, the darker the background is.
 //
-#define UI_LIGHT_BACKGROUND 3
+enum {
+UI_LIGHT_BACKGROUND = 3
+};
 
 //
 // This is to allow the player light to fade rapidly, which allows other lighting like fire
@@ -121,11 +139,15 @@
 #define UI_CENTER_WIDTH (TERM_WIDTH - UI_RIGHTBAR_WIDTH - UI_LEFTBAR_WIDTH)
 
 #define UI_TOPCON_TEXT_COLOR UI_TEXT_COLOR
-#define UI_TOPCON_HEIGHT     4
+enum {
+UI_TOPCON_HEIGHT =     4
+};
 #define UI_TOPCON_WIDTH      UI_CENTER_WIDTH
 
 #define UI_BOTCON_WIDTH      UI_CENTER_WIDTH
-#define UI_BOTCON_HEIGHT     1 // Scrollbar limit
+enum {
+UI_BOTCON_HEIGHT =     1 // Scrollbar limit
+};
 #define UI_BOTCON_TEXT_COLOR UI_TEXT_COLOR
 
 #define UI_INVENTORY_WIDTH  (UI_CENTER_WIDTH - 2)
@@ -134,17 +156,23 @@
 //
 // Do faster processing of events, like reading the keyboard and updating widgets.
 //
-#define UI_EVENT_LOOP_FREQ_FAST_MS 5
+enum {
+UI_EVENT_LOOP_FREQ_FAST_MS = 5
+};
 
 //
 // Less frequent updates like updating the FPS.
 //
-#define UI_EVENT_LOOP_FREQ_SLOW_MS 10
+enum {
+UI_EVENT_LOOP_FREQ_SLOW_MS = 10
+};
 
 //
 // This is for waiting for level fade in.
 //
-#define UI_EVENT_LOOP_FREQ_VERY_SLOW_MS 20
+enum {
+UI_EVENT_LOOP_FREQ_VERY_SLOW_MS = 20
+};
 
 enum {
   UI_WID_STYLE_SPARSE_NONE = -1, // Used for widgets with their own backgrounds

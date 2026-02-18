@@ -12,11 +12,12 @@
 
 #include <SDL_mixer.h>
 #include <map>
+#include <utility>
 
 class sound
 {
 public:
-  sound(std::string valias) : alias(valias) {}
+  sound(std::string valias) : alias(std::move(valias)) {}
 
   ~sound(void)
   {

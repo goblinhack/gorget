@@ -21,8 +21,8 @@
 #include "my_wids.hpp"
 
 #include <iostream>
-#include <signal.h>
-#include <string.h>
+#include <csignal>
+#include <cstring>
 #include <strings.h>
 #include <sys/stat.h>
 #include <unistd.h>

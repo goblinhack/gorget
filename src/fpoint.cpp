@@ -6,7 +6,7 @@
 #include "my_main.hpp"
 #include "my_math.hpp"
 
-#include <math.h>
+#include <cmath>
 
 fpoint operator+(fpoint const &a, fpoint const &b) { return fpoint(a.x + b.x, a.y + b.y); }
 fpoint operator-(fpoint const &a, fpoint const &b) { return fpoint(a.x - b.x, a.y - b.y); }

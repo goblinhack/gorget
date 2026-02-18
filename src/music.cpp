@@ -12,11 +12,12 @@
 
 #include <SDL_mixer.h>
 #include <map>
+#include <utility>
 
 class music
 {
 public:
-  music(std::string vname_alias) : name_alias(vname_alias) {}
+  music(std::string vname_alias) : name_alias(std::move(vname_alias)) {}
 
   ~music(void)
   {

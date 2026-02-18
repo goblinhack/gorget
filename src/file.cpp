@@ -10,10 +10,10 @@
 #include "my_ramdisk.hpp"
 #include "my_string.hpp"
 
-#include <stdarg.h>
-#include <string.h>
+#include <cstdarg>
+#include <cstring>
 #include <sys/stat.h>
-#include <time.h>
+#include <ctime>
 #include <unistd.h>
 
 static unsigned char *file_io_read_if_exists(const char *filename, int *out_len);

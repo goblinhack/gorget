@@ -11,11 +11,15 @@
 #include "my_tile.hpp"
 #include "my_ui.hpp"
 
-#define TERM_WIDTH_DEF  240
-#define TERM_HEIGHT_DEF 120
+enum {
+TERM_WIDTH_DEF =  240,
+TERM_HEIGHT_DEF = 120
+};
 
-#define TERM_WIDTH_MIN  120
-#define TERM_HEIGHT_MIN 60
+enum {
+TERM_WIDTH_MIN =  120,
+TERM_HEIGHT_MIN = 60
+};
 
 #define TERM_WIDTH_MAX  TERM_WIDTH_DEF
 #define TERM_HEIGHT_MAX TERM_HEIGHT_DEF

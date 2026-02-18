@@ -705,8 +705,8 @@ void config_game_gfx_update(Gamep g)
   int map_w = visible_map_br_x - visible_map_tl_x;
   int map_h = visible_map_br_y - visible_map_tl_y;
 
-  int max_fbo_w = TILE_WIDTH * MAP_WIDTH;
-  int max_fbo_h = TILE_HEIGHT * MAP_HEIGHT;
+  int max_fbo_w = (int) TILE_WIDTH * (int) MAP_WIDTH;
+  int max_fbo_h = (int) TILE_HEIGHT * (int) MAP_HEIGHT;
 
   double map_w_h_ratio = (double) map_w / (double) map_h;
   int    fbo_w         = TILE_WIDTH * game_tiles_visible_across_get(g);

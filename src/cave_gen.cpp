@@ -6,7 +6,7 @@
 #include "my_random.hpp"
 #include "my_spoint.hpp"
 
-#include <string.h>
+#include <cstring>
 
 #include <algorithm>
 

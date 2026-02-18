@@ -2,7 +2,7 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include <string.h>
+#include <cstring>
 #include <sys/param.h>
 #include <sys/stat.h>
 #include <unistd.h>

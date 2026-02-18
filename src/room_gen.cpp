@@ -241,8 +241,8 @@ static void room_gen_draw_circle(Gamep g, RoomGen *grid, int x, int y, int radiu
   int i;
   int j;
 
-  for (i = std::max(0, x - radius - 1); i < std::max(MAP_WIDTH, x + radius); i++) {
-    for (j = std::max(0, y - radius - 1); j < std::max(MAP_HEIGHT, y + radius); j++) {
+  for (i = std::max(0, x - radius - 1); i < std::max((int) MAP_WIDTH, x + radius); i++) {
+    for (j = std::max(0, y - radius - 1); j < std::max((int) MAP_HEIGHT, y + radius); j++) {
       if (((i - x) * (i - x)) + ((j - y) * (j - y)) < (radius * radius) + radius) {
         spoint p(i, j);
         if (is_oob(p)) {
@@ -397,7 +397,8 @@ static void room_gen_design_cross_room(Gamep g, RoomGen *grid)
   int roomY2;
 
   room_width  = pcg_random_range(3, 12);
-  roomX       = pcg_random_range(std::max(0, MAP_WIDTH / 2 - (room_width - 1)), std::min(MAP_WIDTH, MAP_WIDTH / 2));
+  roomX       = pcg_random_range(std::max(0, MAP_WIDTH / 2 - (room_width - 1)),
+                                 std::min((int) MAP_WIDTH, (int) MAP_WIDTH / 2));
   room_width2 = pcg_random_range(4, 20);
   roomX2      = (roomX + (room_width / 2) + pcg_random_range(0, 2) + pcg_random_range(0, 2) - 3) - (room_width2 / 2);
 

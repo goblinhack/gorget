@@ -12,7 +12,7 @@
 #include "my_thing_inlines.hpp"
 #include "my_wid_warning.hpp"
 
-#include <string.h>
+#include <cstring>
 
 //
 // Is this minion attached to a mob?

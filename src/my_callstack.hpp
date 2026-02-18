@@ -32,7 +32,9 @@ struct callframe {
 // No needs for bounds checking if we use unsigned char as the size, as
 // the index will wrap around to 0 if we hit some endless recursion.
 //
-#define MAXCALLFRAME 256
+enum {
+MAXCALLFRAME = 256
+};
 
 #define USE_THREADS
 

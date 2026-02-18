@@ -16,7 +16,7 @@
 #include "my_wid_topcon.hpp"
 
 #include <mutex>
-#include <stdlib.h>
+#include <cstdlib>
 #include <sys/stat.h>
 
 extern Game *game;

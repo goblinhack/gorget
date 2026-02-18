@@ -234,7 +234,7 @@ static void thing_display_falling(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp
 
   int fall_height = thing_is_falling(t);
 
-  int dh = (int) (((0.5 * ((float) (br.y - tl.y))) / MAX_FALL_TIME_MS) * fall_height);
+  int dh = (int) (((0.5f * ((float) (br.y - tl.y))) / (float) MAX_FALL_TIME_MS) * fall_height);
   tl.x += dh;
   tl.y += dh;
   br.x -= dh;

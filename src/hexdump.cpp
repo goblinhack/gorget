@@ -6,9 +6,11 @@
 
 #include <iomanip>
 #include <iostream>
-#include <string.h>
+#include <cstring>
 
-#define HEX_DUMP_WIDTH (16)
+enum {
+HEX_DUMP_WIDTH = (16)
+};
 
 //
 // e.g.

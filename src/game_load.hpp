@@ -385,26 +385,26 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
   in >> bits(my.t.seed_name);
   in >> bits(my.t.seed_num);
 
-  READ_MAGIC("config part 1", CONFIG_MAGIC_1);
+  READ_MAGIC("config part 1", (unsigned int) CONFIG_MAGIC_1);
 
   in >> bits(my.t.seed_source);
   in >> bits(my.t.player_name);
 
-  READ_MAGIC("config part 2", CONFIG_MAGIC_2);
+  READ_MAGIC("config part 2", (unsigned int) CONFIG_MAGIC_2);
 
   in >> bits(my.t.config_pix_height);
   in >> bits(my.t.config_pix_width);
   in >> bits(my.t.debug_mode);
   in >> bits(my.t.fps_counter);
 
-  READ_MAGIC("config part 3", CONFIG_MAGIC_3);
+  READ_MAGIC("config part 3", (unsigned int) CONFIG_MAGIC_3);
 
   in >> bits(my.t.gfx_borderless);
   in >> bits(my.t.gfx_fullscreen);
   in >> bits(my.t.gfx_fullscreen_desktop);
   in >> bits(my.t.gfx_vsync_enable);
 
-  READ_MAGIC("config part 4", CONFIG_MAGIC_4);
+  READ_MAGIC("config part 4", (unsigned int) CONFIG_MAGIC_4);
 
   in >> bits(my.t.key_wait);
   in >> bits(my.t.key_console);
@@ -418,7 +418,7 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
   in >> bits(my.t.key_save);
   in >> bits(my.t.key_screenshot);
 
-  READ_MAGIC("config part 5", CONFIG_MAGIC_5);
+  READ_MAGIC("config part 5", (unsigned int) CONFIG_MAGIC_5);
 
   in >> bits(my.t.key_unused1);
   in >> bits(my.t.key_unused2);
@@ -441,7 +441,7 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
   in >> bits(my.t.key_descend);
   in >> bits(my.t.key_zoom);
 
-  READ_MAGIC("config part 6", CONFIG_MAGIC_6);
+  READ_MAGIC("config part 6", (unsigned int) CONFIG_MAGIC_6);
 
   in >> bits(my.t.mouse_wheel_lr_negated);
   in >> bits(my.t.mouse_wheel_ud_negated);

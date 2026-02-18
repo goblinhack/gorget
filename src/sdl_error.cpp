@@ -18,7 +18,7 @@
 #include "my_wid_topcon.hpp"
 
 #include <mutex>
-#include <stdlib.h>
+#include <cstdlib>
 #include <sys/stat.h>
 
 static void sdl_msgerr_(const char *fmt, va_list args)

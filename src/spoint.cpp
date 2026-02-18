@@ -5,7 +5,7 @@
 #include "my_math.hpp"
 #include "my_spoint.hpp"
 
-#include <math.h>
+#include <cmath>
 
 bool   operator<(spoint const &a, spoint const &b) { return (a.x < b.x) || (a.x == b.x && a.y < b.y); }
 spoint operator+(spoint const &a, spoint const &b) { return spoint(a.x + b.x, a.y + b.y); }

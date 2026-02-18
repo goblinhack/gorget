@@ -13,7 +13,7 @@
 #include <algorithm>
 #include <iostream>
 #include <mutex>
-#include <string.h>
+#include <cstring>
 #include <vector>
 
 static std::mutex ptrcheck_mutex;

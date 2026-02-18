@@ -26,7 +26,9 @@ typedef struct {
   uint16_t id[ MAP_WIDTH ][ MAP_HEIGHT ];
 } Blob;
 
-#define MAP_LEVEL_CELLULAR_BORDER 2
+enum {
+MAP_LEVEL_CELLULAR_BORDER = 2
+};
 
 typedef struct {
   //

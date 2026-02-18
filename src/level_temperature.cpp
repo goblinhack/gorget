@@ -8,7 +8,7 @@
 #include "my_thing_inlines.hpp"
 
 #include <algorithm>
-#include <math.h>
+#include <cmath>
 #include <set>
 #include <vector>
 

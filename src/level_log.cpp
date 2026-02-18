@@ -14,7 +14,7 @@
 #include "my_wid_console.hpp"
 #include "my_wid_topcon.hpp"
 
-#include <string.h>
+#include <cstring>
 
 static void level_log_(Gamep g, Levelsp v, Levelp l, const char *fmt, va_list args)
 {

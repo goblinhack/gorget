@@ -18,8 +18,10 @@ class Tile;
 //
 // This is the actual tile sizw
 //
-#define TILE_HEIGHT 12
-#define TILE_WIDTH  12
+enum {
+TILE_HEIGHT = 12,
+TILE_WIDTH =  12
+};
 
 //
 // This is the tile size with outline padding. Only the actual tile size is used in game.

@@ -95,7 +95,10 @@ tidy:
 			bugprone-sizeof-expression,\
 			cppcoreguidelines-no-malloc,\
 			misc-redundant-expression,\
+			modernize-pass-by-value,\
+			modernize-deprecated-headers,\
 			modernize-loop-convert,\
+			modernize-macro-to-enum,\
 			modernize-use-auto,\
 			modernize-avoid-c-arrays,\
 			modernize-use-bool-literals,\

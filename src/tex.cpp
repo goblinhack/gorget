@@ -19,11 +19,12 @@ extern void           stbi_image_free(void *retval_from_stbi_load);
 #include "my_ui.hpp"
 
 #include <unordered_map>
+#include <utility>
 
 class Tex
 {
 public:
-  Tex(std::string vname) : name(vname)
+  Tex(std::string vname) : name(std::move(vname))
   {
     surface            = nullptr;
     gl_surface_binding = 0;

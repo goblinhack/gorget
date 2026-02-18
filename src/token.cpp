@@ -6,7 +6,7 @@
 #include "my_main.hpp"
 #include "my_token.hpp"
 
-#include <string.h>
+#include <cstring>
 
 static class Tokens *tokens_parse(const char *input, class Tokens *tokens)
 {

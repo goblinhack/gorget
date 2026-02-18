@@ -2657,11 +2657,11 @@ int game_map_zoom_def_get(Gamep g)
 
   float map_pix_width = visible_map_br_x - visible_map_tl_x;
 
-  float zoom = map_pix_width / TILE_WIDTH / MAP_TILES_ACROSS_DEF;
+  float zoom = map_pix_width / (float) TILE_WIDTH / (float) MAP_TILES_ACROSS_DEF;
 
   zoom = std::max< float >(zoom, 2);
 
-  if (zoom >= MAP_ZOOM_MAX) {
+  if (zoom >= (float) MAP_ZOOM_MAX) {
     zoom = MAP_ZOOM_MAX - 1;
   }
 

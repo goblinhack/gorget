@@ -11,7 +11,7 @@
 #include "my_string.hpp"
 
 #include <libgen.h>
-#include <string.h>
+#include <cstring>
 #include <unistd.h>
 
 //

@@ -24,10 +24,10 @@ bool is_oob(fpoint p)
   if (p.y < 0) {
     return true;
   }
-  if (p.x >= MAP_WIDTH) {
+  if (p.x >= (float) MAP_WIDTH) {
     return true;
   }
-  if (p.y >= MAP_HEIGHT) {
+  if (p.y >= (float) MAP_HEIGHT) {
     return true;
   }
   return false;
@@ -717,8 +717,8 @@ void level_bounds_set(Gamep g, Levelsp v, Levelp l)
   tmp_maxx += clipping_border;
   tmp_maxy += clipping_border;
 
-  tmp_maxx = std::min(tmp_maxx, MAP_WIDTH);
-  tmp_maxy = std::min(tmp_maxy, MAP_HEIGHT);
+  tmp_maxx = std::min(tmp_maxx, (int) MAP_WIDTH);
+  tmp_maxy = std::min(tmp_maxy, (int) MAP_HEIGHT);
 
   v->minx = tmp_minx;
   v->miny = tmp_miny;

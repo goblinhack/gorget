@@ -6,9 +6,9 @@
 #include "my_globals.hpp"
 #include "my_sprintf.hpp"
 
-#include <errno.h>
-#include <stdlib.h>
-#include <string.h>
+#include <cerrno>
+#include <cstdlib>
+#include <cstring>
 
 //
 // Remap stdout to a file of our choosing.

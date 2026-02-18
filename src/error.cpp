@@ -12,14 +12,14 @@
 #include "my_string.hpp"
 #include "my_wid_console.hpp"
 
-#include <errno.h>
+#include <cerrno>
 #include <mutex>
-#include <signal.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <csignal>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 #include <strings.h>
-#include <time.h>
+#include <ctime>
 #include <unistd.h>
 
 static void error_message_do(Gamep g, std::string &tech_support)

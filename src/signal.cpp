@@ -10,16 +10,16 @@
 #include "my_string.hpp"
 #include "my_wid_console.hpp"
 
-#include <errno.h>
-#include <signal.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <cerrno>
+#include <csignal>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 #include <strings.h>
-#include <time.h>
+#include <ctime>
 #include <unistd.h>
 
-#include <assert.h>
+#include <cassert>
 #ifndef _WIN32
 #include <sys/wait.h>
 #endif
