@@ -16,14 +16,12 @@
 #include <cstring>
 #include <ctime>
 #include <cxxabi.h>
-#include <execinfo.h>
 #include <format>
 #include <functional>
 #include <inttypes.h>
 #include <iomanip>
 #include <iostream>
 #include <libgen.h>
-#include <libunwind.h>
 #include <limits>
 #include <list>
 #include <map>
