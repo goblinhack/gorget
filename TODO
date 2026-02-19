@@ -1,5 +1,6 @@
 bugs
 ----
+if hovering over a widget, remove cursor path
 monst chasing
 monst wandering
 need mob distance and lunging

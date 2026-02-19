@@ -21,7 +21,7 @@ void        error_clear(Gamep g);
 void        find_file_locations();
 void        LOG(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 void        reset_globals();
-void        restart(Gamep g, std::string /*restart_arg*/);
+void        restart(Gamep g, const std::string& /*restart_arg*/);
 void        sdl_msg_box(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 void        crash_handler(int sig);
 void        TOPCON_NEW_LINE();

@@ -2,8 +2,6 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include <utility>
-
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
 #include "my_game.hpp"
@@ -14,6 +12,9 @@
 #include "my_sprintf.hpp"
 #include "my_thing_inlines.hpp"
 #include "my_wids.hpp"
+
+#include <print>
+#include <utility>
 
 static WidPopup *wid_rightbar;
 static auto      minimap_size = 14;
@@ -118,12 +119,12 @@ static void wid_rightbar_create_minimap_world(Gamep g)
     // Normal level contents
     //
     wid_rightbar->log_empty_line(g);
-    auto s = string_sprintf("Level:%u Dungeon:%s", l->level_num + 1, game_seed_name_get(g));
+    auto s = std::format("Level:{} Dungeon:{}", l->level_num + 1, game_seed_name_get(g));
     wid_rightbar->log(g, s);
 
     IF_DEBUG
     {
-      s = string_sprintf("Move:%u", v->tick);
+      s = std::format("Move:{}", v->tick);
       wid_rightbar->log(g, s);
     }
 

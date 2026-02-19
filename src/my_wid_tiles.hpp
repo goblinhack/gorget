@@ -31,6 +31,6 @@ bool wid_tiles_init();
 void wid_tiles_fini();
 
 wid_tilesp wid_tiles_load(std::string name, double scale);
-wid_tilesp wid_tiles_find(std::string name);
+wid_tilesp wid_tiles_find(const std::string& name);
 
 #endif

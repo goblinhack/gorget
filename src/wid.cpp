@@ -28,6 +28,7 @@
 #include <algorithm>
 #include <print>
 #include <ranges>
+#include <utility>
 
 //
 // Unique key for each tree
@@ -410,7 +411,7 @@ void wid_set_string_context(Widp w, std::string string_context)
     ERR("NULL pointer");
     return;
   }
-  w->string_context = string_context;
+  w->string_context = std::move(string_context);
 }
 
 std::string wid_get_string_context(Widp w)
@@ -1129,7 +1130,7 @@ static std::string wid_get_text_with_cursor(Widp w)
   return o;
 }
 
-void wid_set_name(Widp w, std::string name)
+void wid_set_name(Widp w, const std::string &name)
 {
   TRACE_NO_INDENT();
 
@@ -1176,7 +1177,7 @@ void wid_set_text_max_len(Widp w, size_t max_len)
   w->max_len = max_len;
 }
 
-void wid_set_text(Widp w, std::string text)
+void wid_set_text(Widp w, const std::string &text)
 {
   TRACE_NO_INDENT();
 
@@ -1501,7 +1502,7 @@ void wid_set_tile(int depth, Widp w, Tilep tile)
   w->tiles[ depth ] = tile;
 }
 
-void wid_set_tilename(int depth, Widp w, std::string name)
+void wid_set_tilename(int depth, Widp w, const std::string &name)
 {
   TRACE_NO_INDENT();
 
@@ -2267,7 +2268,7 @@ Widp wid_new_container(Gamep g, Widp parent, std::string name)
 
   WID_DBG(w, "%s", __FUNCTION__);
 
-  wid_set_name(w, name);
+  wid_set_name(w, std::move(name));
   wid_set_mode(w, WID_MODE_NORMAL);
   wid_set_color(w, WID_COLOR_BG, WHITE);
   wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
@@ -2286,7 +2287,7 @@ Widp wid_new_container(Gamep g, Widp parent, std::string name)
 //
 // Initialize a top level wid with basic settings
 //
-Widp wid_new_window(Gamep g, std::string name)
+Widp wid_new_window(Gamep g, const std::string &name)
 {
   TRACE_NO_INDENT();
 
@@ -2341,7 +2342,7 @@ Widp wid_new_square_button(Gamep g, Widp parent, std::string name)
 
   WID_DBG(w, "%s", __FUNCTION__);
 
-  wid_set_name(w, name);
+  wid_set_name(w, std::move(name));
   wid_set_shape_square(w);
 
   wid_set_mode(w, WID_MODE_OVER);
@@ -2386,7 +2387,7 @@ Widp wid_new_plain(Gamep g, Widp parent, std::string name)
 
   WID_DBG(w, "%s", __FUNCTION__);
 
-  wid_set_name(w, name);
+  wid_set_name(w, std::move(name));
   wid_set_shape_square(w);
 
   wid_set_mode(w, WID_MODE_OVER);
@@ -2454,7 +2455,7 @@ static Widp wid_new_scroll_trough(Gamep g, Widp parent)
 //
 // Initialize a wid with basic settings
 //
-static Widp wid_new_scroll_bar(Gamep g, Widp parent, std::string name, Widp scrollbar_owner, bool vertical)
+static Widp wid_new_scroll_bar(Gamep g, Widp parent, const std::string &name, Widp scrollbar_owner, bool vertical)
 {
   TRACE_NO_INDENT();
 
@@ -2565,7 +2566,7 @@ Widp wid_new_vert_scroll_bar(Gamep g, Widp parent, std::string name, Widp scroll
   {
     fpoint tl(0, 0);
     fpoint br(1, 1);
-    Widp   scrollbar = wid_new_scroll_bar(g, trough, name, scrollbar_owner, 1U);
+    Widp   scrollbar = wid_new_scroll_bar(g, trough, std::move(name), scrollbar_owner, 1U);
     wid_set_pos_pct(scrollbar, tl, br);
 
     wid_update_internal(g, scrollbar);
@@ -2627,7 +2628,7 @@ Widp wid_new_horiz_scroll_bar(Gamep g, Widp parent, std::string name, Widp scrol
   {
     fpoint tl(0, 0);
     fpoint br(1, 1);
-    Widp   scrollbar = wid_new_scroll_bar(g, trough, name, scrollbar_owner, 0U);
+    Widp   scrollbar = wid_new_scroll_bar(g, trough, std::move(name), scrollbar_owner, 0U);
     wid_set_pos_pct(scrollbar, tl, br);
 
     wid_update_internal(g, scrollbar);
@@ -3543,7 +3544,7 @@ void wid_scroll_with_input(Gamep g, Widp w, std::string str)
   if (tmp != nullptr) {
     tmp = wid_get_next(tmp);
     if (tmp != nullptr) {
-      wid_set_text(tmp, str);
+      wid_set_text(tmp, std::move(str));
     }
   }
 }

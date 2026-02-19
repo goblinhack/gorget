@@ -87,12 +87,15 @@ $(TARGET_GAME): $(OBJ_FILES)
 #####################################################
 # to show options:
 # clang-tidy -checks=* -list-checks
+#
+# This is good, but introduces some errors in macros
+#			bugprone-*,\
 #####################################################
 tidy:
 	for src in $(CPP_SOURCES) ; do \
 		echo "Running tidy on $$src..." ; \
 		clang-tidy -fix -checks="-*,\
-			bugprone-*,\
+			performance-*,\
 			cppcoreguidelines-no-malloc,\
 			misc-redundant-expression,\
 			modernize-avoid-bind,\
@@ -137,6 +140,8 @@ tidy:
 			readability-*" \
 			-header-filter=".*" "$(SRC_DIR)/$$src" -- $(CFLAGS); \
 	done
+	git checkout 3rdparty
+	git checkout my_cfg.hpp # avoids enum errors
 	@echo "Done"
 
 .PHONY: style check-style tidy

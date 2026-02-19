@@ -1804,7 +1804,7 @@ static void level_gen_add_fragments(Gamep g, class LevelGen *l)
 
     if (unlikely(l->debug)) {
       auto fragment_name
-          = string_sprintf("placed another fragment %s:%d with %s:%d", f->file, f->line, alt->file, alt->line);
+          = std::format("placed another fragment {}:{} with {}:{}", f->file, f->line, alt->file, alt->line);
       level_gen_dump(g, l, fragment_name.c_str());
     }
 
@@ -1830,7 +1830,7 @@ void fragments_fini(Gamep g)
 // Add a level
 //
 void level_fixed_add(Gamep g, int chance, LevelType level_type, const std::string &alias, const char *file, int line,
-                     Overrides overrides, ...)
+                     const Overrides overrides, ...)
 {
   TRACE_NO_INDENT();
 
@@ -5141,6 +5141,7 @@ void level_gen_create_levels(Gamep g, Levelsp v)
 
   std::vector< std::thread > threads;
 
+  threads.reserve(max_threads);
   for (auto i = 0; i < max_threads; i++) {
     threads.emplace_back(level_gen_create_fixed_or_proc_gen_level, g, i);
   }

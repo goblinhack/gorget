@@ -2,8 +2,6 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include <algorithm>
-
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
 #include "my_game.hpp"
@@ -14,6 +12,9 @@
 #include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp"
 #include "my_wids.hpp"
+
+#include <algorithm>
+#include <print>
 
 //
 // The thing icon
@@ -310,7 +311,7 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp t, WidPopup *parent, in
     auto at = thing_at(t);
     FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, at)
     {
-      auto s = string_sprintf("- %s", thing_short_name(g, v, l, it).c_str());
+      auto s = std::format("- {}", thing_short_name(g, v, l, it).c_str());
       parent->log(g, s, TEXT_FORMAT_LHS);
     }
   }

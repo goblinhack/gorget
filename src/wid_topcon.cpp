@@ -58,7 +58,7 @@ static void wid_topcon_reset_scroll(Gamep g)
   wid_move_to_bottom(g, wid_topcon_vert_scroll);
 }
 
-static void wid_topcon_scroll(Widp w, std::string str)
+static void wid_topcon_scroll(Widp w, const std::string& str)
 {
   TRACE_NO_INDENT();
   Widp tmp {};
@@ -74,7 +74,7 @@ static void wid_topcon_scroll(Widp w, std::string str)
   }
 }
 
-static void wid_topcon_replace(Gamep g, Widp w, std::string str)
+static void wid_topcon_replace(Gamep g, Widp w, const std::string& str)
 {
   TRACE_NO_INDENT();
   Widp tmp {};
@@ -161,7 +161,7 @@ void wid_topcon_flush(Gamep g)
 //
 // Log a message to the topcon
 //
-void wid_topcon_log(std::string s)
+void wid_topcon_log(const std::string& s)
 {
   TRACE_NO_INDENT();
 

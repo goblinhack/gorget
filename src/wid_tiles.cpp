@@ -39,7 +39,7 @@ void wid_tiles_fini()
   }
 }
 
-wid_tilesp wid_tiles_load(std::string name, float scale)
+wid_tilesp wid_tiles_load(const std::string& name, float scale)
 {
   TRACE_NO_INDENT();
   auto *t = wid_tiles_find(name);
@@ -213,7 +213,7 @@ wid_tilesp wid_tiles_load(std::string name, float scale)
   return t;
 }
 
-wid_tilesp wid_tiles_find(std::string file)
+wid_tilesp wid_tiles_find(const std::string& file)
 {
   TRACE_NO_INDENT();
   if (file.empty()) {

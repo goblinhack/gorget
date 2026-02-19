@@ -58,7 +58,7 @@ static void wid_botcon_reset_scroll(Gamep g)
   wid_move_to_bottom(g, wid_botcon_vert_scroll);
 }
 
-static void wid_botcon_scroll(Widp w, std::string str)
+static void wid_botcon_scroll(Widp w, const std::string& str)
 {
   TRACE_NO_INDENT();
   Widp tmp {};
@@ -74,7 +74,7 @@ static void wid_botcon_scroll(Widp w, std::string str)
   }
 }
 
-static void wid_botcon_replace(Gamep g, Widp w, std::string str)
+static void wid_botcon_replace(Gamep g, Widp w, const std::string& str)
 {
   TRACE_NO_INDENT();
   Widp tmp {};
@@ -91,7 +91,7 @@ static void wid_botcon_replace(Gamep g, Widp w, std::string str)
 //
 // Log a message to the botcon
 //
-static void wid_botcon_log_(std::string s)
+static void wid_botcon_log_(const std::string& s)
 {
   TRACE_NO_INDENT();
   static int log_wid_botcon_buffered_lines;
@@ -157,7 +157,7 @@ void wid_botcon_flush(Gamep g)
 //
 // Log a message to the botcon
 //
-void wid_botcon_log(std::string s)
+void wid_botcon_log(const std::string& s)
 {
   TRACE_NO_INDENT();
 

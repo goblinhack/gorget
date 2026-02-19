@@ -187,7 +187,7 @@ bool sound_find(const std::string &alias)
   // Playing already? And louder?
   //
   int count = 0;
-  for (auto p : already_playing) {
+  for (const auto& p : already_playing) {
     if ((p.second.alias == alias) && (p.second.volume >= volume)) {
       count++;
     }

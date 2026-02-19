@@ -20,7 +20,7 @@ extern Fontp font_ui;
 
 void  font_fini();
 bool  font_init();
-Fontp font_find(std::string /*file*/);
+Fontp font_find(const std::string& /*file*/);
 
 class Font
 {

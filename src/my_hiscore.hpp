@@ -6,6 +6,7 @@
 #define _MY_HISCORE_HPP_
 
 #include <string>
+#include <utility>
 #include <vector>
 
 #include "my_types.hpp"
@@ -16,9 +17,9 @@ public:
   HiScore() = default;
   HiScore(std::string vname, std::string vreason, std::string vwhen, int vscore, int vlevels_completed)
   {
-    this->name             = vname;
-    this->reason           = vreason;
-    this->when             = vwhen;
+    this->name             = std::move(vname);
+    this->reason           = std::move(vreason);
+    this->when             = std::move(vwhen);
     this->score            = vscore;
     this->levels_completed = vlevels_completed;
   }

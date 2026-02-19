@@ -532,7 +532,7 @@ static void wid_cfg_key_screenshot_set(Gamep g, SDL_Keysym code)
   wid_cfg_help_select(g);
 }
 
-static void grab_key(Gamep g, const std::string which)
+static void grab_key(Gamep g, const std::string& which)
 {
   TRACE_NO_INDENT();
   wid_notice("Press a key for " + which);

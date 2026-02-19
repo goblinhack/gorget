@@ -19,6 +19,7 @@
 
 #include <SDL_mixer.h>
 #include <array>
+#include <utility>
 
 static SDL_Keysym no_key;
 
@@ -263,7 +264,7 @@ public:
   // | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | |
   /////////////////////////////////////////////////////////////////////////
 
-  Game(std::string appdata);
+  Game(const std::string &appdata);
   Game() = default;
 
   bool load_snapshot();
@@ -361,7 +362,7 @@ void Config::reset()
 
 void game_config_reset(Gamep g) { g->config.reset(); }
 
-Game::Game(std::string vappdata)
+Game::Game(const std::string &vappdata)
 {
   LOG("Game load %s", vappdata.c_str());
   TRACE_AND_INDENT();
@@ -426,7 +427,7 @@ Levelsp game_test_init(Gamep g, Levelp *l_out, LevelNum level_num, int w, int h,
   auto *v = game_levels_set(g, levels_memory_alloc(g));
 
   TRACE_NO_INDENT();
-  game_test_init_level(g, v, l_out, level_num, w, h, contents, overrides);
+  game_test_init_level(g, v, l_out, level_num, w, h, contents, std::move(overrides));
 
   TRACE_NO_INDENT();
   game_state_reset(g, "new game");
@@ -457,7 +458,7 @@ void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num,
   level_init(g, v, l, level_num);
 
   TRACE_NO_INDENT();
-  if (! level_populate(g, v, l, nullptr, w, h, contents, overrides)) {
+  if (! level_populate(g, v, l, nullptr, w, h, contents, std::move(overrides))) {
     CROAK("level populate failed");
   }
 
@@ -504,7 +505,7 @@ void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num,
 {
   TRACE_NO_INDENT();
 
-  game_test_init_level(g, v, l_out, level_num, spoint(0, level_num), w, h, contents, overrides);
+  game_test_init_level(g, v, l_out, level_num, spoint(0, level_num), w, h, contents, std::move(overrides));
 }
 
 void Game::fini()

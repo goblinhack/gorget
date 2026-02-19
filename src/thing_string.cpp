@@ -9,6 +9,8 @@
 #include "my_sprintf.hpp"
 #include "my_thing_inlines.hpp"
 
+#include <print>
+
 std::string to_string(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
@@ -31,32 +33,33 @@ std::string to_string(Gamep g, Levelsp v, Levelp l, Thingp t)
 
   auto at = thing_at(t);
 
-  return /* keep ( */ (string_sprintf("%08" PRIX32
-                                      /* level num                     */ " l%u"
-                                      /* tick                          */ " t%3u"
-                                      /* thing_health                  */ " h%-3d"
-                                      /* at                            */ " @%2d,%2d"
-                                      /* name                          */ " %s"
-                                      /* is_dead                       */ "%s"
-                                      /* is_moving                     */ "%s"
-                                      /* is_sleeping                   */ "%s"
-                                      /* is_falling                    */ "%s"
-                                      /* is_open                       */ "%s"
-                                      /* is_burning                    */ "%s"
-                                      /* is_scheduled_for_cleanup      */ "%s",
-                                      /* newline */ t->id,
-                                      /* newline */ t->level_num + 1,
-                                      /* newline */ t->tick,
-                                      /* newline */ thing_health(t),
-                                      /* newline */ at.x, at.y,
-                                      /* newline */ name.c_str(),
-                                      /* newline */ thing_is_moving(t) ? "/mv" : "",
-                                      /* newline */ thing_is_dead(t) ? "/de" : "",
-                                      /* newline */ thing_is_sleeping(t) ? "/sl" : "",
-                                      /* newline */ (thing_is_falling(t) != 0) ? "/fl" : "",
-                                      /* newline */ thing_is_open(t) ? "/op" : "",
-                                      /* newline */ thing_is_burning(t) ? "/bn" : "",
-                                      /* newline */ thing_is_scheduled_for_cleanup(t) ? "/fre" : ""));
+  return /* keep ( */ (
+      std::format("{:08x}"
+                  /* level num                     */ " l{}"
+                  /* tick                          */ " t{:3}"
+                  /* thing_health                  */ " h{:<3}"
+                  /* at                            */ " @{:2},{:2}"
+                  /* name                          */ " {}"
+                  /* is_dead                       */ "{}"
+                  /* is_moving                     */ "{}"
+                  /* is_sleeping                   */ "{}"
+                  /* is_falling                    */ "{}"
+                  /* is_open                       */ "{}"
+                  /* is_burning                    */ "{}"
+                  /* is_scheduled_for_cleanup      */ "{}",
+                  /* newline */ t->id,
+                  /* newline */ t->level_num + 1,
+                  /* newline */ t->tick,
+                  /* newline */ thing_health(t),
+                  /* newline */ at.x, at.y,
+                  /* newline */ name.c_str(),
+                  /* newline */ thing_is_moving(t) ? "/mv" : "",
+                  /* newline */ thing_is_dead(t) ? "/de" : "",
+                  /* newline */ thing_is_sleeping(t) ? "/sl" : "",
+                  /* newline */ (thing_is_falling(t) != 0) ? "/fl" : "",
+                  /* newline */ thing_is_open(t) ? "/op" : "",
+                  /* newline */ thing_is_burning(t) ? "/bn" : "",
+                  /* newline */ thing_is_scheduled_for_cleanup(t) ? "/fre" : ""));
 }
 
 std::string to_string(Gamep g, Levelsp v, Levelp l, ThingEvent &e)

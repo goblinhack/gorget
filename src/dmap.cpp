@@ -9,6 +9,7 @@
 
 #include <algorithm>
 #include <array>
+#include <print>
 #include <utility>
 
 void dmap_print(const Dmap *D, spoint at, spoint tl, spoint br)
@@ -109,7 +110,7 @@ void dmap_print(const Dmap *D, spoint at, spoint tl, spoint br)
       }
 
       if (e > 0) {
-        debug += string_sprintf("%3X", e);
+        debug += std::format("{:3X}", e);
       } else {
         debug += "  *";
       }
@@ -139,7 +140,7 @@ void dmap_print(const Dmap *D)
       }
 
       if (e > 0) {
-        debug += string_sprintf("%2X", e);
+        debug += std::format("{:2X}", e);
       } else {
         debug += " *";
       }

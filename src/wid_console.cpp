@@ -85,7 +85,7 @@ static void wid_console_reset_scroll(Gamep g)
 //
 // Log a message to the console
 //
-static void wid_console_log_(Gamep g, std::string s)
+static void wid_console_log_(Gamep g, const std::string& s)
 {
   TRACE_NO_INDENT();
   static int log_wid_console_buffered_lines;
@@ -125,7 +125,7 @@ static void wid_console_log_(Gamep g, std::string s)
 //
 // Log a message to the console
 //
-void wid_console_log(std::string s)
+void wid_console_log(const std::string& s)
 {
   if ((wid_console_inited == 0) || g_dying || g_quitting || (g_thread_id != MAIN_THREAD)) {
     return;
@@ -274,12 +274,12 @@ std::vector< std::string > wid_console_serialize()
   return r;
 }
 
-void wid_console_deserialize(std::vector< std::string > r)
+void wid_console_deserialize(const std::vector< std::string >& r)
 {
   TRACE_NO_INDENT();
   DBG2("Start of replaying old logs");
   DBG2("Vvvvvvvvvvvvvvvvvvvvvvvvvvv");
-  for (auto s : r) {
+  for (const auto& s : r) {
     if (! s.empty()) {
       wid_console_log(s);
     }

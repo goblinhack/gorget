@@ -29,7 +29,7 @@ void wid_notice_destroy()
   return true;
 }
 
-void wid_notice(std::string s)
+void wid_notice(const std::string& s)
 {
   TRACE_NO_INDENT();
 

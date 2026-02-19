@@ -17,6 +17,7 @@
 #include <ranges>
 #include <sstream>
 #include <string>
+#include <utility>
 
 /*
  * Replace chars in replace_set with replace_with.
@@ -923,7 +924,7 @@ std::string strerror_to_string(const int err)
 std::string capitalize(std::string in)
 {
   TRACE_NO_INDENT();
-  std::string out = in;
+  std::string out = std::move(in);
 
   char *b          = (char *) out.c_str();
   char *e          = b + out.size();
@@ -951,7 +952,7 @@ std::string capitalize(std::string in)
 std::string capitalize_first(std::string in)
 {
   TRACE_NO_INDENT();
-  std::string out = in;
+  std::string out = std::move(in);
 
   char *b          = (char *) out.c_str();
   char *e          = b + out.size();

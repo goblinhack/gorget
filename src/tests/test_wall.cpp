@@ -27,7 +27,7 @@
         ".xxx..."
         "......."
         ".......";
-  std::string expect = start;
+  const std::string& expect = start;
 
   //
   // Create the level and start playing

@@ -13,6 +13,7 @@
 #include "my_ui.hpp"
 
 #include <map>
+#include <print>
 
 /* clang-format off */
 std::initializer_list< std::string > tests = {
@@ -216,7 +217,7 @@ void tests_run(Gamep g)
     //
     auto  name = "test_" + test.first;
     auto *t    = test.second;
-    auto  pre  = string_sprintf("Running %-70s", name.c_str());
+    auto  pre  = std::format("Running {:<70s}", name.c_str());
 
     //
     // Skip the test if needed
@@ -246,7 +247,7 @@ void tests_run(Gamep g)
       result = t->callback(g, t);
     }
     auto elapsed  = time_ms() - started;
-    auto how_long = string_sprintf("(took %.2f secs, %u ms)", (float) elapsed / 1000.0, elapsed);
+    auto how_long = std::format("(took {:.2f} secs, {} ms)", (float) elapsed / 1000.0, elapsed);
 
     //
     // Print the timestamp

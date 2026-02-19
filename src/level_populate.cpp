@@ -16,7 +16,7 @@
 #include <utility>
 
 bool level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int w, int h, const char *in,
-                    Overrides overrides)
+                    const Overrides &overrides)
 {
   TRACE_NO_INDENT();
 
@@ -321,11 +321,12 @@ bool level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int
   return true;
 }
 
-bool level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, const char *in, Overrides overrides)
+bool level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, const char *in,
+                    const Overrides &overrides)
 {
   TRACE_NO_INDENT();
 
-  if (! level_populate(g, v, l, level_gen, MAP_WIDTH, MAP_HEIGHT, in, overrides)) {
+  if (! level_populate(g, v, l, level_gen, MAP_WIDTH, MAP_HEIGHT, in, std::move(overrides))) {
     ERR("level populate failed");
     return false;
   }

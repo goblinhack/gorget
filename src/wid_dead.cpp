@@ -80,7 +80,7 @@ static void wid_dead_selected(Gamep g)
   return true;
 }
 
-void wid_dead_select(Gamep g, std::string reason)
+void wid_dead_select(Gamep g, const std::string& reason)
 {
   TRACE_NO_INDENT();
 

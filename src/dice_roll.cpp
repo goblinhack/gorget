@@ -246,7 +246,7 @@ Dice::Dice(void) = default;
 
 std::string Dice::to_string() const { return hitdice; }
 
-Dice::Dice(std::string s)
+Dice::Dice(const std::string& s)
 {
   if (s.empty()) {
     return;
@@ -258,7 +258,7 @@ Dice::Dice(std::string s)
   //
   // 1d6+1
   //
-  for (auto x : split_tokens(s, '+')) {
+  for (const auto& x : split_tokens(s, '+')) {
     auto sp = split_tokens(x, 'd');
     if (sp.size() == 2) {
       //

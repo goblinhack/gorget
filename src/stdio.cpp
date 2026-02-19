@@ -39,9 +39,9 @@ FILE *redirect_stdout()
 
   std::string out;
   if (g_thread_id == MAIN_THREAD) {
-    out = string_sprintf("%s%s%s%s%s", appdata, DIR_SEP, "gorget", DIR_SEP, "stdout.txt");
+    out = std::format("{}{}{}{}{}", appdata, DIR_SEP, "gorget", DIR_SEP, "stdout.txt");
   } else {
-    out = string_sprintf("%s%s%s%s%s.level.%d", appdata, DIR_SEP, "gorget", DIR_SEP, "stdout.txt", g_thread_id);
+    out = std::format("{}{}{}{}{}.level.{}", appdata, DIR_SEP, "gorget", DIR_SEP, "stdout.txt", g_thread_id);
   }
   g_log_stdout_filename = out;
   g_log_stdout          = fopen(out.c_str(), "w+");
@@ -53,7 +53,7 @@ FILE *redirect_stdout()
     if (g_thread_id == MAIN_THREAD) {
       out = "gorget.stdout.txt";
     } else {
-      out = string_sprintf("%s.level.%d", "gorget.stdout.txt", g_thread_id);
+      out = std::format("{}.level.{}", "gorget.stdout.txt", g_thread_id);
     }
     g_log_stdout_filename = out;
     g_log_stdout          = fopen(out.c_str(), "w+");
@@ -63,7 +63,7 @@ FILE *redirect_stdout()
     //
     if (g_log_stdout == nullptr) {
       std::println(stderr, "Failed to create stdout log file \"{}\" for thread {}, error: {}", out, g_thread_id,
-              strerror(errno));
+                   strerror(errno));
       g_log_stdout = stdout;
     }
   }
@@ -99,9 +99,9 @@ FILE *redirect_stderr()
 
   std::string out;
   if (g_thread_id == MAIN_THREAD) {
-    out = string_sprintf("%s%s%s%s%s", appdata, DIR_SEP, "gorget", DIR_SEP, "stderr.txt");
+    out = std::format("{}{}{}{}{}", appdata, DIR_SEP, "gorget", DIR_SEP, "stderr.txt");
   } else {
-    out = string_sprintf("%s%s%s%s%s.level.%d", appdata, DIR_SEP, "gorget", DIR_SEP, "stderr.txt", g_thread_id);
+    out = std::format("{}{}{}{}{}.level.{}", appdata, DIR_SEP, "gorget", DIR_SEP, "stderr.txt", g_thread_id);
   }
   g_log_stderr_filename = out;
   g_log_stderr          = fopen(out.c_str(), "w+");
@@ -113,7 +113,7 @@ FILE *redirect_stderr()
     if (g_thread_id == MAIN_THREAD) {
       out = "gorget.stderr.txt";
     } else {
-      out = string_sprintf("%s.level.%d", "gorget.stderr.txt", g_thread_id);
+      out = std::format("{}.level.{}", "gorget.stderr.txt", g_thread_id);
     }
     g_log_stderr_filename = out;
     g_log_stderr          = fopen(out.c_str(), "w+");
@@ -123,7 +123,7 @@ FILE *redirect_stderr()
     //
     if (g_log_stderr == nullptr) {
       std::println(stderr, "Failed to create stderr log file \"{}\" for thread {}, error: {}", out, g_thread_id,
-              strerror(errno));
+                   strerror(errno));
       g_log_stderr = stderr;
     }
   }

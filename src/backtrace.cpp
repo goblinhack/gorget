@@ -130,7 +130,7 @@ static std::string demangle_symbol(char *name)
 
     auto was_demangled = demangle(cur);
     if (! was_demangled.empty()) {
-      sout += string_sprintf("%s", was_demangled.c_str());
+      sout += std::format("{}", was_demangled);
       demangled = true;
       break;
     }
@@ -143,7 +143,7 @@ static std::string demangle_symbol(char *name)
     //
     // Not demangled
     //
-    sout += string_sprintf("%s", p);
+    sout += std::format("{}", p);
   }
 
   return sout;
@@ -236,7 +236,7 @@ std::string backtrace_string(void)
       BOOL result = StackWalk64(imageType, handle, thread, &stackframe, &context, NULL, SymFunctionTableAccess64,
                                 SymGetModuleBase64, NULL);
       if (! result) {
-        out += string_sprintf("StackWalk[end]\n");
+        out += "StackWalk[end]\n";
         break;
       }
 
@@ -247,7 +247,7 @@ std::string backtrace_string(void)
 
       DWORD64 displacement = 0;
       if (SymFromAddr(handle, stackframe.AddrPC.Offset, &displacement, symbol)) {
-        out += string_sprintf("StackWalk[%d]: sym:%s\n", i, symbol->Name);
+        out += std::format("StackWalk[{}]: sym:{}\n", i, symbol->Name);
       }
     }
   }
@@ -281,10 +281,10 @@ std::string backtrace_string(void)
     if (SymFromAddr(handle, addr, nullptr, symbol)) {
       char *function_name = symbol->Name;
       auto  sym           = demangle_symbol(function_name);
-      out += string_sprintf("CaptureStackBackTrace[%d]: %s() %s:%d\n", i - frames_to_skip, sym.c_str(), file,
-                            line_number);
+      out += std::format("CaptureStackBackTrace[{}]: {}() {}:{}\n", i - frames_to_skip, sym.c_str(), file,
+                         line_number);
     } else {
-      out += string_sprintf("CaptureStackBackTrace[%d]: %s:%d\n", i - frames_to_skip, file, line_number);
+      out += std::format("CaptureStackBackTrace[{}]: {}:{}\n", i - frames_to_skip, file, line_number);
     }
   }
   backtrace_mutex.unlock();

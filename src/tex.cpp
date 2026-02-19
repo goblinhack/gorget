@@ -99,7 +99,7 @@ void tex_free(Texp tex)
   delete (tex);
 }
 
-static unsigned char *load_raw_image(std::string filename, int *x, int *y, int *comp)
+static unsigned char *load_raw_image(const std::string& filename, int *x, int *y, int *comp)
 {
   TRACE_NO_INDENT();
   unsigned char *file_data;
@@ -129,7 +129,7 @@ static void free_raw_image(unsigned char *image_data)
   stbi_image_free(image_data);
 }
 
-static SDL_Surface *load_image(std::string filename)
+static SDL_Surface *load_image(const std::string& filename)
 {
   TRACE_NO_INDENT();
   uint32_t       rmask;
@@ -191,7 +191,7 @@ static SDL_Surface *load_image(std::string filename)
   return surf;
 }
 
-static void load_images(SDL_Surface **surf1_out, std::string filename)
+static void load_images(SDL_Surface **surf1_out, const std::string& filename)
 {
   TRACE_NO_INDENT();
   uint32_t       rmask;
@@ -270,7 +270,7 @@ static void load_images(SDL_Surface **surf1_out, std::string filename)
 //
 // Load a texture
 //
-Texp tex_load(std::string file, std::string name, int mode)
+Texp tex_load(const std::string& file, const std::string& name, int mode)
 {
   TRACE_NO_INDENT();
   Texp t = tex_find(name);
@@ -310,7 +310,7 @@ Texp tex_load(std::string file, std::string name, int mode)
 // 2 - white mask
 // 3 - white outline only
 //
-static std::vector< Texp > tex_create_masks_from_surface(SDL_Surface *src, std::string file, std::string name,
+static std::vector< Texp > tex_create_masks_from_surface(SDL_Surface *src, const std::string& file, const std::string& name,
                                                          uint32_t tile_width, uint32_t tile_height, int mode)
 {
   auto name_monochrome = name + "_monochrome";
@@ -436,8 +436,8 @@ static std::vector< Texp > tex_create_masks_from_surface(SDL_Surface *src, std::
   return out;
 }
 
-void tex_load_sprites(Texp *tex, Texp *tex_monochrome, Texp *tex_mask, Texp *tex_outline, std::string file,
-                      std::string name, uint32_t tile_width, uint32_t tile_height, int mode)
+void tex_load_sprites(Texp *tex, Texp *tex_monochrome, Texp *tex_mask, Texp *tex_outline, const std::string& file,
+                      const std::string& name, uint32_t tile_width, uint32_t tile_height, int mode)
 {
   TRACE_NO_INDENT();
   Texp t = tex_find(name);
@@ -475,7 +475,7 @@ void tex_load_sprites(Texp *tex, Texp *tex_monochrome, Texp *tex_mask, Texp *tex
 //
 // Find an existing tex.
 //
-Texp tex_find(std::string file)
+Texp tex_find(const std::string& file)
 {
   TRACE_NO_INDENT();
   if (file.empty()) {
@@ -493,7 +493,7 @@ Texp tex_find(std::string file)
 //
 // Creae a texture from a surface
 //
-Texp tex_from_surface(SDL_Surface *surface, std::string file, std::string name, int mode)
+Texp tex_from_surface(SDL_Surface *surface, const std::string& file, const std::string& name, int mode)
 {
   TRACE_NO_INDENT();
 

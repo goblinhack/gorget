@@ -30,7 +30,7 @@ void hexdump(const unsigned char *addr, size_t len)
   size_t        i;
   unsigned int  x;
 
-  std::cout << std::dec << len << " bytes:" << std::endl;
+  std::cout << std::dec << len << " bytes:" << '\n';
 
   if (! static_cast< bool >(len)) {
     return;
@@ -40,7 +40,7 @@ void hexdump(const unsigned char *addr, size_t len)
     if ((i % HEX_DUMP_WIDTH) == 0) {
       if (skipping_blanks == 0) {
         if (i != 0) {
-          std::cout << " |" << std::setw(HEX_DUMP_WIDTH) << buf << "|" << std::endl;
+          std::cout << " |" << std::setw(HEX_DUMP_WIDTH) << buf << "|" << '\n';
         }
       }
 
@@ -93,7 +93,7 @@ void hexdump(const unsigned char *addr, size_t len)
     i++;
   }
 
-  std::cout << " |" << std::setw(-HEX_DUMP_WIDTH) << buf << "|" << std::endl;
+  std::cout << " |" << std::setw(-HEX_DUMP_WIDTH) << buf << "|" << '\n';
 }
 
 void hexdump(std::vector< unsigned char > &v) { hexdump(v.data(), v.size()); }

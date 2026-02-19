@@ -57,7 +57,7 @@ public:
 class Ptrcheck
 {
 public:
-  Ptrcheck(void) = default;
+  Ptrcheck() = default;
 
   //
   // For sanity, the pointer itself.
@@ -132,11 +132,11 @@ void ERROR(const char *fmt, ...)
 }
 
 #define CROAK(args...)                                                                                               \
-  std::cerr << string_sprintf("Died at %s:%s line %u", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM);                  \
+  std::cerr << std::format("Died at {}:{} line {}", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM);                     \
   CLEANUP(args);
 
 #define ERR(args...)                                                                                                 \
-  std::cerr << string_sprintf("Error at %s:%s line %u", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM);                 \
+  std::cerr << std::format("Error at {}:{} line {}", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM);                    \
   ERROR(args);
 
 #endif
@@ -144,15 +144,15 @@ void ERROR(const char *fmt, ...)
 //
 // A hash table so we can check pointers fast.
 //
-typedef struct hash_elem_t_ {
+using hash_elem_t = struct hash_elem_t_ {
   struct hash_elem_t_ *next;
   Ptrcheck            *pc;
-} hash_elem_t;
+};
 
-typedef struct hash_t_ {
+using hash_t = struct hash_t_ {
   int           hash_size;
   hash_elem_t **elements;
-} hash_t;
+};
 
 static hash_t *ptrcheck_hash[ MTYPE_MAX ];
 
@@ -441,7 +441,7 @@ static Ptrcheck *ptrcheck_verify_pointer(int mtype, const void *ptr, const char 
     if (dont_store != 0) {
 #if 0
 #ifdef ENABLE_DEBUG_PTRCHECK
-      std::cerr << string_sprintf("PTRCHECK: %p verified at \"%s\" (%u bytes) at %s:%s line %u (do not store)\n", ptr,
+      std::cerr << std::format("PTRCHECK: {} verified at \"{}\" ({} bytes) at {}:{} line {} (do not store)\n", ptr,
                                   pc->what, pc->size, file, func, line);
 #endif
 #endif
@@ -467,8 +467,8 @@ static Ptrcheck *ptrcheck_verify_pointer(int mtype, const void *ptr, const char 
       timestamp(l->ts, SIZEOF(l->ts));
 
 #ifdef ENABLE_DEBUG_PTRCHECK
-      std::cerr << string_sprintf("PTRCHECK: %p verified at \"%s\" (%u bytes) at %s:%s line %u at %s\n", ptr,
-                                  pc->what, pc->size, file, func, line, l->ts);
+      std::cerr << std::format("PTRCHECK: {} verified at \"{}\" ({} bytes) at {}:{} line {} at {}\n", ptr, pc->what,
+                               pc->size, file, func, line, l->ts);
 #endif
 
       pc->last_seen_at++;
@@ -732,7 +732,7 @@ void ptrcheck_leak_print(int mtype)
   }
 }
 
-void ptrcheck_leak_print(void)
+void ptrcheck_leak_print()
 {
   for (int mtype = 0; mtype < MTYPE_MAX; mtype++) {
     ptrcheck_leak_print(mtype);
@@ -772,7 +772,7 @@ static void ptrcheck_fini(int mtype)
   ptrcheck_hash[ mtype ] = nullptr;
 }
 
-void ptrcheck_fini(void)
+void ptrcheck_fini()
 {
   for (int mtype = 0; mtype < MTYPE_MAX; mtype++) {
     ptrcheck_fini(mtype);

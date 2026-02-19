@@ -2,8 +2,6 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include <algorithm>
-
 #include "my_callstack.hpp"
 #include "my_charmap.hpp"
 #include "my_dice_rolls.hpp"
@@ -16,6 +14,9 @@
 #include "my_thing_inlines.hpp"
 #include "my_ui.hpp"
 #include "my_wids.hpp"
+
+#include <algorithm>
+#include <print>
 
 static spoint car_to_iso(spoint car)
 {
@@ -828,7 +829,7 @@ void level_select_destroy(Gamep g, Levelsp v, Levelp l)
 // Show a sorted list of vales
 //
 static void level_select_show_sorted_values(Gamep g, Levelsp v, Levelp l, WidPopup *parent,
-                                            std::map< std::string, int > &map_in, std::string map_name)
+                                            std::map< std::string, int > &map_in, const std::string &map_name)
 {
   TRACE_NO_INDENT();
 
@@ -837,13 +838,13 @@ static void level_select_show_sorted_values(Gamep g, Levelsp v, Levelp l, WidPop
   }
 
   {
-    auto s1 = string_sprintf(" %s:", map_name.c_str());
+    auto s1 = std::format(" {}:", map_name.c_str());
     parent->log(g, UI_INFO_FMT_STR + std::string(s1) + UI_RESET_FMT, TEXT_FORMAT_LHS);
   }
 
   while (static_cast< unsigned int >(! map_in.empty()) != 0U) {
     std::string highest;
-    for (auto m : map_in) {
+    for (const auto &m : map_in) {
       auto name = m.first;
       auto val  = m.second;
       if (highest.empty()) {
@@ -858,7 +859,7 @@ static void level_select_show_sorted_values(Gamep g, Levelsp v, Levelp l, WidPop
       auto       *tp   = tp_find_mand(highest);
       std::string name = tp_short_name(tp);
 
-      auto s2 = string_sprintf("  %u x %%tp=%s$ %s", map_in[ highest ], highest.c_str(), name.c_str());
+      auto s2 = std::format("  {} x %tp={}$ {}", map_in[ highest ], highest.c_str(), name.c_str());
       parent->log(g, s2, TEXT_FORMAT_LHS);
     }
 
@@ -907,7 +908,7 @@ void level_select_rightbar_show_contents(Gamep g, Levelsp v, Levelp l, WidPopup 
     }
   }
 
-  auto tmp = string_sprintf("Level %u", level_over->level_num + 1);
+  auto tmp = std::format("Level {}", level_over->level_num + 1);
   parent->log(g, UI_INFO_FMT_STR + std::string(tmp) + UI_RESET_FMT);
   parent->log_empty_line(g);
 

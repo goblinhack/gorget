@@ -298,7 +298,8 @@ void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
     }
 
     std::vector< std::pair< Thingp, Thingp > > sorted_pairs;
-    for (auto a_pair : pairs) {
+    sorted_pairs.reserve(pairs.size());
+for (auto a_pair : pairs) {
       sorted_pairs.push_back(a_pair);
     }
 
