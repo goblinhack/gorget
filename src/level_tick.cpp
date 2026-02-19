@@ -337,8 +337,8 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool tick_is
       continue;
     }
 
-    float t_speed      = thing_speed(t);
-    auto  old_thing_dt = t->thing_dt;
+    float const t_speed      = thing_speed(t);
+    auto        old_thing_dt = t->thing_dt;
 
     if (thing_is_projectile(t)) {
       t->thing_dt = v->time_step;
@@ -608,7 +608,7 @@ static uint32_t level_tick_process_pending_request(Gamep g, Levelsp v, Levelp cu
 //
 // How many ms have elapsed during processing the tick
 //
-static void level_tick_update_frame_counter(Gamep g, Levelsp v)
+static void level_tick_update_frame_counter(Levelsp v)
 {
   TRACE_NO_INDENT();
 
@@ -666,7 +666,7 @@ static void level_tick_all(Gamep g, Levelsp v, Levelp current_level)
   // Record if a level wants to start ticking, prior to processing the levels in case a level
   // requests to tick during processing.
   //
-  bool tick_begin_requested = level_tick_process_pending_request(g, v, current_level) > 0;
+  bool const tick_begin_requested = level_tick_process_pending_request(g, v, current_level) > 0;
 
   //
   // Do the actual tick of the levels now
@@ -753,5 +753,5 @@ void levels_tick(Gamep g, Levelsp v)
   //
   // How many ms have elapsed during processing the tick
   //
-  level_tick_update_frame_counter(g, v);
+  level_tick_update_frame_counter(v);
 }

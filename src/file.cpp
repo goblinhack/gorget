@@ -154,7 +154,7 @@ unsigned char *file_load(const char *filename, int *outlen)
 
   {
     TRACE_NO_INDENT();
-    std::string base_alt_filename = mybasename(filename, "strip dir");
+    std::string const base_alt_filename = mybasename(filename, "strip dir");
 
     out = file_io_read_if_exists(base_alt_filename.c_str(), outlen);
     if (out != nullptr) {
@@ -386,7 +386,7 @@ double file_age(const char *filename)
     return -1;
   }
 
-  time_t now = time(nullptr);
+  time_t const now = time(nullptr);
 
   return difftime(now, buf.st_mtime);
 }

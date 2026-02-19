@@ -49,9 +49,9 @@ static void thing_temperature_damage_apply(Gamep g, Levelsp v, Levelp l, Thingp 
 {
   TRACE_NO_INDENT();
 
-  auto *tp        = thing_tp(t);
-  int   damage    = d6();
-  int   damage_at = tp_temperature_damage_at_get(tp);
+  auto     *tp        = thing_tp(t);
+  int       damage    = d6();
+  int const damage_at = tp_temperature_damage_at_get(tp);
 
   if (n > damage_at * 2) {
     damage *= 2;

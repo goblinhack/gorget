@@ -268,7 +268,7 @@ Tpp tp_load(const std::string &val)
 {
   TRACE_NO_INDENT();
 
-  std::string name(val);
+  std::string const name(val);
 
   int id;
   tp_assign_id(val, &id);

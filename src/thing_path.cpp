@@ -16,7 +16,7 @@
 //
 void thing_path_shorten(Gamep g, Levelsp v, Levelp l, Thingp t, std::vector< spoint > &path)
 {
-  bool debug = false;
+  bool const debug = false;
 
   auto at = thing_at(t);
   if (debug) {

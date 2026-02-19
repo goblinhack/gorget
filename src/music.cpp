@@ -46,8 +46,8 @@ bool music_init()
   // MP3 is a pain to use, use OGG instead
   // int flags = MIX_INIT_OGG|MIX_INIT_MP3;
   //
-  int flags   = MIX_INIT_OGG;
-  int initted = Mix_Init(flags);
+  int const flags   = MIX_INIT_OGG;
+  int const initted = Mix_Init(flags);
   LOG("SDL: Load mixer");
   if ((initted & flags) != flags) {
     ERR("Mix_Init: Failed to init required OGG support");

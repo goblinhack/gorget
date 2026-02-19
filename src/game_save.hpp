@@ -459,7 +459,7 @@ bool Game::save(const std::string &file_to_save)
   //
   // Not sur why I needed this
   //
-  bool need_larger_src_buffer = false;
+  bool const need_larger_src_buffer = false;
 
   if (! game_headers_only) {
     wid_progress_bar(this, "Serializing...", 0.2F);
@@ -745,7 +745,7 @@ static bool wid_save_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)
               case '9' :
                 {
                   TRACE_NO_INDENT();
-                  int slot = c - '0';
+                  int const slot = c - '0';
                   game->save(slot);
                   wid_save_destroy(game);
                   return true;
@@ -805,10 +805,10 @@ bool Game::save_select()
     return false;
   }
 
-  int    menu_height = UI_MAX_SAVE_SLOTS + 8;
-  int    menu_width  = UI_WID_POPUP_WIDTH_WIDE;
-  spoint outer_tl((TERM_WIDTH / 2) - (menu_width / 2), (TERM_HEIGHT / 2) - (menu_height / 2));
-  spoint outer_br((TERM_WIDTH / 2) + (menu_width / 2), (TERM_HEIGHT / 2) + (menu_height / 2));
+  int const    menu_height = UI_MAX_SAVE_SLOTS + 8;
+  int const    menu_width  = UI_WID_POPUP_WIDTH_WIDE;
+  spoint const outer_tl((TERM_WIDTH / 2) - (menu_width / 2), (TERM_HEIGHT / 2) - (menu_height / 2));
+  spoint const outer_br((TERM_WIDTH / 2) + (menu_width / 2), (TERM_HEIGHT / 2) + (menu_height / 2));
   wid_save = new WidPopup(game, "Game save", outer_tl, outer_br, nullptr, "", false, false);
 
   wid_set_on_key_up(wid_save->wid_popup_container, wid_save_key_up);
@@ -819,8 +819,8 @@ bool Game::save_select()
     auto *p = wid_save->wid_text_area->wid_text_area;
     auto *w = wid_new_back_button(game, p, "back");
 
-    spoint tl((menu_width / 2) - 4, menu_height - 4);
-    spoint br((menu_width / 2) + 3, menu_height - 2);
+    spoint const tl((menu_width / 2) - 4, menu_height - 4);
+    spoint const br((menu_width / 2) + 3, menu_height - 2);
 
     wid_set_on_mouse_up(w, wid_save_cancel);
     wid_set_pos(w, tl, br);
@@ -840,10 +840,10 @@ bool Game::save_select()
       tmp_file = saved_dir + "saved-snapshot";
     }
 
-    auto  *p = wid_save->wid_text_area->wid_text_area;
-    auto  *w = wid_new_button(game, p, "save slot");
-    spoint tl(0, y_at);
-    spoint br(menu_width - 2, y_at);
+    auto        *p = wid_save->wid_text_area->wid_text_area;
+    auto        *w = wid_new_button(game, p, "save slot");
+    spoint const tl(0, y_at);
+    spoint const br(menu_width - 2, y_at);
 
     std::string s = std::to_string(slot) + ": ";
     if (! load(tmp_file, tmp)) {

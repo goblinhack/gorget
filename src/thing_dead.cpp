@@ -13,7 +13,7 @@
 //
 // The player has been attacked
 //
-static void thing_killed_player(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
+static void thing_killed_player(Gamep g, Levelsp v, Levelp l, ThingEvent &e)
 {
   TRACE_AND_INDENT();
 
@@ -186,7 +186,7 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
   // Call this prior to setting death, else we are told that we killed an already dead thing
   //
   if (thing_is_player(t)) {
-    thing_killed_player(g, v, l, t, e);
+    thing_killed_player(g, v, l, e);
   } else if ((e.source != nullptr) && thing_is_player(e.source)) {
     thing_killed_by_player(g, v, l, t, e);
   }

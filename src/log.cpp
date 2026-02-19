@@ -258,7 +258,7 @@ void putf(FILE *fp, const char *s)
   const auto *sp = s;
   while (*sp != 0) {
     if (*sp == '%') {
-      std::string out = ascii_strip(s);
+      std::string const out = ascii_strip(s);
       fputs(out.c_str(), fp);
       putc('\n', fp);
       return;

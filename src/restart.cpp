@@ -87,7 +87,7 @@ void restart(Gamep g, const std::string &restart_arg)
     char tmp_cmd[ PATH_MAX ];
     snprintf(tmp_cmd, SIZEOF(tmp_cmd), "%s &", argument_line.c_str());
     CON("system(%s)", tmp_cmd);
-    int ret = system(tmp_cmd);
+    int const ret = system(tmp_cmd);
     exit(ret);
   }
 

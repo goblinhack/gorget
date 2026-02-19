@@ -82,6 +82,6 @@ void game_test_init_level(Gamep g, Levelsp v, Levelp *out, LevelNum level_num, i
                           Overrides /*overrides*/ = no_overrides);
 
 void game_test_init_level(Gamep g, Levelsp v, Levelp *out, LevelNum level_num, spoint level_at, int w, int h,
-                          const char *contents, Overrides /*overrides*/ = no_overrides);
+                          const char *contents, const Overrides & /*overrides*/ = no_overrides);
 
 #endif // _MY_TEST_H_

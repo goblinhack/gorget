@@ -17,7 +17,7 @@ static std::mutex thing_mutex;
 static bool memory_test = true;
 #endif
 
-[[nodiscard]] static bool thing_ext_alloc(Gamep g, Levelsp v, Levelp l, Thingp t)
+[[nodiscard]] static bool thing_ext_alloc(Levelsp v, Thingp t)
 {
   TRACE_NO_INDENT();
 
@@ -53,7 +53,7 @@ static bool memory_test = true;
   return false;
 }
 
-static void thing_ext_free(Gamep g, Levelsp v, Levelp l, Thingp t)
+static void thing_ext_free(Levelsp v, Thingp t)
 {
   TRACE_NO_INDENT();
 
@@ -75,7 +75,7 @@ static void thing_ext_free(Gamep g, Levelsp v, Levelp l, Thingp t)
   t->ext_id = 0;
 }
 
-[[nodiscard]] static bool thing_fov_alloc(Gamep g, Levelsp v, Levelp l, Thingp t)
+[[nodiscard]] static bool thing_fov_alloc(Levelsp v, Thingp t)
 {
   TRACE_NO_INDENT();
 
@@ -111,7 +111,7 @@ static void thing_ext_free(Gamep g, Levelsp v, Levelp l, Thingp t)
   return false;
 }
 
-static void thing_fov_free(Gamep g, Levelsp v, Levelp l, Thingp t)
+static void thing_fov_free(Levelsp v, Thingp t)
 {
   TRACE_NO_INDENT();
 
@@ -133,7 +133,7 @@ static void thing_fov_free(Gamep g, Levelsp v, Levelp l, Thingp t)
   t->fov_id = 0;
 }
 
-static Thingp thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p, ThingIdPacked id, bool needs_ext_memory,
+static Thingp thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, ThingIdPacked id, bool needs_ext_memory,
                              bool needs_fov_memory, bool need_mutex)
 {
   TRACE_NO_INDENT();
@@ -224,14 +224,14 @@ static Thingp thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p, Thi
   }
 
   if (needs_ext_memory) {
-    if (! thing_ext_alloc(g, v, l, t)) {
+    if (! thing_ext_alloc(v, t)) {
       thing_free(g, v, l, t);
       return nullptr;
     }
   }
 
   if (needs_fov_memory) {
-    if (! thing_fov_alloc(g, v, l, t)) {
+    if (! thing_fov_alloc(v, t)) {
       thing_free(g, v, l, t);
       return nullptr;
     }
@@ -313,7 +313,7 @@ Thingp thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p)
     id.b.level_num    = level_num;
     id.b.per_level_id = per_level_id;
 
-    auto *t = thing_alloc_do(g, v, l, tp, p, id, needs_ext_memory, needs_fov_memory, false /* mutex */);
+    auto *t = thing_alloc_do(g, v, l, tp, id, needs_ext_memory, needs_fov_memory, false /* mutex */);
     if (t != nullptr) {
       last_per_level_id[ level_num ] = per_level_id;
       return t;
@@ -336,7 +336,7 @@ Thingp thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p)
     ThingIdPacked id = {};
     id.c.arr_index   = arr_index;
 
-    auto *t = thing_alloc_do(g, v, l, tp, p, id, needs_ext_memory, needs_fov_memory, true /* mutex */);
+    auto *t = thing_alloc_do(g, v, l, tp, id, needs_ext_memory, needs_fov_memory, true /* mutex */);
     if (t != nullptr) {
       last_arr_index = arr_index;
       return t;
@@ -379,8 +379,8 @@ void thing_free(Gamep g, Levelsp v, Levelp l, Thingp t)
 
   (void) thing_pop(g, v, t);
 
-  thing_ext_free(g, v, l, t);
-  thing_fov_free(g, v, l, t);
+  thing_ext_free(v, t);
+  thing_fov_free(v, t);
   memset((void *) t, 0, SIZEOF(*t));
 
 #ifdef ENABLE_PER_THING_MEMORY

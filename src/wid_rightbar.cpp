@@ -24,9 +24,9 @@ static void wid_rightbar_create_minimap_level(Gamep g)
   TRACE_NO_INDENT();
 
   {
-    auto  *w = wid_new_square_button(g, wid_rightbar->wid_popup_container, "level map text");
-    spoint minimap_tl(1, TERM_HEIGHT - minimap_size);
-    spoint minimap_br(minimap_size + 2, TERM_HEIGHT - minimap_size);
+    auto        *w = wid_new_square_button(g, wid_rightbar->wid_popup_container, "level map text");
+    spoint const minimap_tl(1, TERM_HEIGHT - minimap_size);
+    spoint const minimap_br(minimap_size + 2, TERM_HEIGHT - minimap_size);
     wid_set_text(w, "Level:");
     wid_set_text_lhs(w);
     wid_set_text_top(w);
@@ -39,9 +39,9 @@ static void wid_rightbar_create_minimap_level(Gamep g)
   }
 
   {
-    auto  *w = wid_new_square_button(g, wid_rightbar->wid_popup_container, "level map");
-    spoint minimap_tl(1, TERM_HEIGHT - minimap_size + 1);
-    spoint minimap_br(minimap_size + 2, TERM_HEIGHT - 2);
+    auto        *w = wid_new_square_button(g, wid_rightbar->wid_popup_container, "level map");
+    spoint const minimap_tl(1, TERM_HEIGHT - minimap_size + 1);
+    spoint const minimap_br(minimap_size + 2, TERM_HEIGHT - 2);
     wid_set_tilename(TILE_LAYER_FG_0, w, "FBO_MINIMAP_LEVEL");
     wid_set_text_lhs(w);
     wid_set_text_top(w);
@@ -59,9 +59,9 @@ static void wid_rightbar_create_minimap_world(Gamep g)
   TRACE_NO_INDENT();
 
   {
-    auto  *w = wid_new_square_button(g, wid_rightbar->wid_popup_container, "world map text");
-    spoint minimap_tl(minimap_size + 3, TERM_HEIGHT - minimap_size);
-    spoint minimap_br(minimap_size + minimap_size + 4, TERM_HEIGHT - minimap_size);
+    auto        *w = wid_new_square_button(g, wid_rightbar->wid_popup_container, "world map text");
+    spoint const minimap_tl(minimap_size + 3, TERM_HEIGHT - minimap_size);
+    spoint const minimap_br(minimap_size + minimap_size + 4, TERM_HEIGHT - minimap_size);
     wid_set_text(w, "World:");
     wid_set_text_lhs(w);
     wid_set_text_top(w);
@@ -74,9 +74,9 @@ static void wid_rightbar_create_minimap_world(Gamep g)
   }
 
   {
-    auto  *w = wid_new_square_button(g, wid_rightbar->wid_popup_container, "world map");
-    spoint minimap_tl(minimap_size + 3, TERM_HEIGHT - minimap_size + 1);
-    spoint minimap_br(minimap_size + minimap_size + 4, TERM_HEIGHT - 2);
+    auto        *w = wid_new_square_button(g, wid_rightbar->wid_popup_container, "world map");
+    spoint const minimap_tl(minimap_size + 3, TERM_HEIGHT - minimap_size + 1);
+    spoint const minimap_br(minimap_size + minimap_size + 4, TERM_HEIGHT - 2);
     wid_set_tilename(TILE_LAYER_FG_0, w, "FBO_MINIMAP_WORLD_ROTATED");
     wid_set_style(w, UI_WID_STYLE_SPARSE_NONE);
     wid_set_pos(w, minimap_tl, minimap_br);
@@ -104,9 +104,9 @@ static void wid_rightbar_create_minimap_world(Gamep g)
     return false;
   }
 
-  auto   width = UI_RIGHTBAR_WIDTH;
-  spoint tl(TERM_WIDTH - width, 0);
-  spoint br(TERM_WIDTH - 1, TERM_HEIGHT - 1);
+  auto         width = UI_RIGHTBAR_WIDTH;
+  spoint const tl(TERM_WIDTH - width, 0);
+  spoint const br(TERM_WIDTH - 1, TERM_HEIGHT - 1);
   wid_rightbar = new WidPopup(g, "right bar", tl, br, nullptr, "", false, false);
 
   if (level_is_level_select(g, v, l)) {

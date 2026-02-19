@@ -12,7 +12,7 @@
 static WidPopup *wid_cfg_mouse_window;
 static bool      local_g_config_changed;
 
-static void wid_cfg_mouse_destroy(Gamep g)
+static void wid_cfg_mouse_destroy()
 {
   TRACE_NO_INDENT();
   delete wid_cfg_mouse_window;
@@ -29,7 +29,7 @@ static void wid_cfg_mouse_destroy(Gamep g)
     (void) game_load_config(g);
     sdl_config_update_all(g);
   }
-  wid_cfg_mouse_destroy(g);
+  wid_cfg_mouse_destroy();
   wid_options_menu_select(g);
   return true;
 }
@@ -41,7 +41,7 @@ static void wid_cfg_mouse_destroy(Gamep g)
   CON("Save config for mouse");
   game_save_config(g);
 
-  wid_cfg_mouse_destroy(g);
+  wid_cfg_mouse_destroy();
   wid_options_menu_select(g);
   return true;
 }
@@ -49,7 +49,7 @@ static void wid_cfg_mouse_destroy(Gamep g)
 [[nodiscard]] static bool wid_cfg_mouse_back(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
-  wid_cfg_mouse_destroy(g);
+  wid_cfg_mouse_destroy();
   wid_options_menu_select(g);
   return true;
 }
@@ -123,13 +123,13 @@ void wid_cfg_mouse_select(Gamep g)
 {
   TRACE_NO_INDENT();
   if (wid_cfg_mouse_window != nullptr) {
-    wid_cfg_mouse_destroy(g);
+    wid_cfg_mouse_destroy();
   }
 
-  int    menu_height = 20;
-  int    menu_width  = UI_WID_POPUP_WIDTH_NORMAL * 2;
-  spoint outer_tl((TERM_WIDTH / 2) - (menu_width / 2), (TERM_HEIGHT / 2) - (menu_height / 2));
-  spoint outer_br((TERM_WIDTH / 2) + (menu_width / 2), (TERM_HEIGHT / 2) + (menu_height / 2));
+  int const    menu_height = 20;
+  int const    menu_width  = UI_WID_POPUP_WIDTH_NORMAL * 2;
+  spoint const outer_tl((TERM_WIDTH / 2) - (menu_width / 2), (TERM_HEIGHT / 2) - (menu_height / 2));
+  spoint const outer_br((TERM_WIDTH / 2) + (menu_width / 2), (TERM_HEIGHT / 2) + (menu_height / 2));
   wid_cfg_mouse_window = new WidPopup(g, "Mouse", outer_tl, outer_br, nullptr, "", false, false);
 
   auto button_width = outer_br.x - outer_tl.x - 2;
@@ -146,8 +146,8 @@ void wid_cfg_mouse_select(Gamep g)
     auto *p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
     auto *w = wid_new_square_button(g, p, "configuration");
 
-    spoint tl(1, y_at);
-    spoint br(button_width, y_at + 2);
+    spoint const tl(1, y_at);
+    spoint const br(button_width, y_at + 2);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text(w, "Configuration");
@@ -159,8 +159,8 @@ void wid_cfg_mouse_select(Gamep g)
     auto *p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
     auto *w = wid_new_back_button(g, p, "BACK");
 
-    spoint tl(1, y_at);
-    spoint br(6, y_at + 2);
+    spoint const tl(1, y_at);
+    spoint const br(6, y_at + 2);
     wid_set_on_mouse_up(w, wid_cfg_mouse_back);
     wid_set_pos(w, tl, br);
   }
@@ -169,8 +169,8 @@ void wid_cfg_mouse_select(Gamep g)
     auto *p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
     auto *w = wid_new_save_button(g, p, "Save");
 
-    spoint tl(button_width - 15, y_at);
-    spoint br(button_width - 10, y_at + 2);
+    spoint const tl(button_width - 15, y_at);
+    spoint const br(button_width - 10, y_at + 2);
     wid_set_on_mouse_up(w, wid_cfg_mouse_save);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "S" UI_RESET_FMT "ave");
@@ -180,8 +180,8 @@ void wid_cfg_mouse_select(Gamep g)
     auto *p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
     auto *w = wid_new_cancel_button(g, p, "Cancel");
 
-    spoint tl(button_width - 8, y_at);
-    spoint br(button_width - 1, y_at + 2);
+    spoint const tl(button_width - 8, y_at);
+    spoint const br(button_width - 1, y_at + 2);
     wid_set_on_mouse_up(w, wid_cfg_mouse_cancel);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "C" UI_RESET_FMT "ancel");
@@ -198,8 +198,8 @@ void wid_cfg_mouse_select(Gamep g)
     auto *p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
     auto *w = wid_new_square_button(g, p, "Mouse scroll lr invert lr");
 
-    spoint tl(1, y_at);
-    spoint br(button_width, y_at);
+    spoint const tl(1, y_at);
+    spoint const br(button_width, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, 1u);
@@ -210,8 +210,8 @@ void wid_cfg_mouse_select(Gamep g)
     auto *p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
     auto *w = wid_new_menu_button(g, p, "Mouse scroll lr invert");
 
-    spoint tl(28, y_at);
-    spoint br(34, y_at + 2);
+    spoint const tl(28, y_at);
+    spoint const br(34, y_at + 2);
     wid_set_pos(w, tl, br);
     wid_set_on_mouse_up(w, wid_cfg_mouse_wheel_lr_negated);
 
@@ -231,8 +231,8 @@ void wid_cfg_mouse_select(Gamep g)
     auto *p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
     auto *w = wid_new_square_button(g, p, "Mouse scroll ud invert");
 
-    spoint tl(1, y_at);
-    spoint br(button_width, y_at);
+    spoint const tl(1, y_at);
+    spoint const br(button_width, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, 1u);
@@ -243,8 +243,8 @@ void wid_cfg_mouse_select(Gamep g)
     auto *p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
     auto *w = wid_new_menu_button(g, p, "Mouse scroll ud invert value");
 
-    spoint tl(28, y_at);
-    spoint br(34, y_at + 2);
+    spoint const tl(28, y_at);
+    spoint const br(34, y_at + 2);
     wid_set_pos(w, tl, br);
     wid_set_on_mouse_up(w, wid_cfg_mouse_wheel_ud_negated);
 

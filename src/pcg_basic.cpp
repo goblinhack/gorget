@@ -51,11 +51,11 @@ static thread_local pcg32_random_t pcg32_global = PCG32_INITIALIZER;
 
 uint32_t pcg32_random_r(pcg32_random_t *rng)
 {
-  uint64_t oldstate   = rng->state;
-  rng->state          = (oldstate * 6364136223846793005ULL) + rng->inc;
-  uint32_t xorshifted = ((oldstate >> 18U) ^ oldstate) >> 27U;
-  uint32_t rot        = oldstate >> 59U;
-  uint32_t r          = (xorshifted >> rot) | (xorshifted << ((-rot) & 31));
+  uint64_t const oldstate   = rng->state;
+  rng->state                = (oldstate * 6364136223846793005ULL) + rng->inc;
+  uint32_t const xorshifted = ((oldstate >> 18U) ^ oldstate) >> 27U;
+  uint32_t const rot        = oldstate >> 59U;
+  uint32_t const r          = (xorshifted >> rot) | (xorshifted << ((-rot) & 31));
   //  LOG("r %d", r);
   return r;
 }
@@ -119,7 +119,7 @@ uint32_t pcg32_boundedrand_r(pcg32_random_t *rng, uint32_t bound)
   // because this version will calculate the same modulus, but the LHS
   // value is less than 2^32.
 
-  uint32_t threshold = -bound % bound;
+  uint32_t const threshold = -bound % bound;
 
   // Uniformity guarantees that this loop will terminate.  In practice, it
   // should usually terminate quickly; on average (assuming all bounds are
@@ -129,7 +129,7 @@ uint32_t pcg32_boundedrand_r(pcg32_random_t *rng, uint32_t bound)
   // practice, bounds are typically small and only a tiny amount of the range
   // is eliminated.
   for (; /*ever*/;) {
-    uint32_t r = pcg32_random_r(rng);
+    uint32_t const r = pcg32_random_r(rng);
     if (r >= threshold) {
       return r % bound;
     }

@@ -136,7 +136,7 @@ static void game_display_title_bg(Gamep g)
   glcolor(WHITE);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-  std::string t = "title_bg";
+  std::string const t = "title_bg";
   blit_init();
   tile_blit(tile_find_mand(t), spoint(0, 0), spoint(game_window_pix_width_get(g), game_window_pix_height_get(g)),
             WHITE);
@@ -150,7 +150,7 @@ static void game_display_title_fg1(Gamep g)
   glcolor(WHITE);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-  std::string t = "title_fg1_1";
+  std::string const t = "title_fg1_1";
   blit_init();
   tile_blit(tile_find_mand(t), spoint(0, 0), spoint(game_window_pix_width_get(g), game_window_pix_height_get(g)),
             WHITE);
@@ -182,7 +182,7 @@ static void game_display_title_fg2(Gamep g)
 
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-  std::string t = "title_fg2_1";
+  std::string const t = "title_fg2_1";
   blit_init();
   tile_blit(tile_find_mand(t), spoint(0, 0), spoint(game_window_pix_width_get(g), game_window_pix_height_get(g)),
             WHITE);
@@ -207,7 +207,7 @@ color color_change_hue(const color &in, const float fHue)
   const float cosA = cos(fHue * std::numbers::pi_v< float > / 180); // convert degrees to radians
   const float sinA = sin(fHue * std::numbers::pi_v< float > / 180); // convert degrees to radians
   // calculate the rotation matrix, only depends on Hue
-  float matrix[ 3 ][ 3 ]
+  float const matrix[ 3 ][ 3 ]
       = {{cosA + ((1.0F - cosA) / 3.0F), (1.0F / 3.0F * (1.0F - cosA)) - (sqrtf(1.0F / 3.0F) * sinA),
           (1.0F / 3.0F * (1.0F - cosA)) + (sqrtf(1.0F / 3.0F) * sinA)},
          {(1.0F / 3.0F * (1.0F - cosA)) + (sqrtf(1.0F / 3.0F) * sinA), cosA + (1.0F / 3.0F * (1.0F - cosA)),
@@ -258,7 +258,7 @@ static void game_display_title_fg3(Gamep g)
 
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-  std::string t = "title_fg3_1";
+  std::string const t = "title_fg3_1";
   blit_init();
   tile_blit(tile_find_mand(t), spoint(0, 0), spoint(game_window_pix_width_get(g), game_window_pix_height_get(g)),
             WHITE);
@@ -283,7 +283,7 @@ static void game_display_title_fg4(Gamep g)
     ts = time_ms_cached();
   }
 
-  std::string t = "title_fg4_" + std::to_string(frame);
+  std::string const t = "title_fg4_" + std::to_string(frame);
   blit_init();
   tile_blit(tile_find_mand(t), spoint(0, 0), spoint(game_window_pix_width_get(g), game_window_pix_height_get(g)),
             WHITE);
@@ -305,8 +305,8 @@ static void wid_main_menu_tick(Gamep g, Widp w)
   if (wid_main_menu_window != nullptr) {
     ascii_putf(TERM_WIDTH - SIZEOF(MYVER), TERM_HEIGHT - 1, GREEN, BLACK, "v" MYVER);
 
-    std::string seed_name(game_seed_name_get(g));
-    auto        seed_text = "Seed: '" + seed_name + "'";
+    std::string const seed_name(game_seed_name_get(g));
+    auto              seed_text = "Seed: '" + seed_name + "'";
 
     switch (game_seed_source_get(g)) {
       case SEED_SOURCE_COMMAND_LINE : seed_text += " (set via cli)"; break;
@@ -354,8 +354,8 @@ void wid_main_menu_select(Gamep g)
     auto *p = wid_main_menu_window->wid_text_area->wid_text_area;
     auto *w = wid_new_menu_button(g, p, "New Game");
 
-    spoint tl(0, y_at);
-    spoint br(button_width, y_at + button_height);
+    spoint const tl(0, y_at);
+    spoint const br(button_width, y_at + button_height);
     wid_set_on_mouse_up(w, game_menu_new_game);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "N" UI_RESET_FMT "ew game" UI_RESET_FMT);
@@ -366,8 +366,8 @@ void wid_main_menu_select(Gamep g)
     auto *p = wid_main_menu_window->wid_text_area->wid_text_area;
     auto *w = wid_new_menu_button(g, p, "Load Game");
 
-    spoint tl(0, y_at);
-    spoint br(button_width, y_at + button_height);
+    spoint const tl(0, y_at);
+    spoint const br(button_width, y_at + button_height);
     wid_set_on_mouse_up(w, wid_main_menu_load);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "L" UI_FMT_STR "oad game");
@@ -378,8 +378,8 @@ void wid_main_menu_select(Gamep g)
     auto *p = wid_main_menu_window->wid_text_area->wid_text_area;
     auto *w = wid_new_menu_button(g, p, "Options");
 
-    spoint tl(0, y_at);
-    spoint br(button_width, y_at + button_height);
+    spoint const tl(0, y_at);
+    spoint const br(button_width, y_at + button_height);
     wid_set_on_mouse_up(w, wid_main_menu_cfg);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "O" UI_FMT_STR "ptions");
@@ -390,8 +390,8 @@ void wid_main_menu_select(Gamep g)
     auto *p = wid_main_menu_window->wid_text_area->wid_text_area;
     auto *w = wid_new_menu_button(g, p, "More");
 
-    spoint tl(0, y_at);
-    spoint br(button_width, y_at + button_height);
+    spoint const tl(0, y_at);
+    spoint const br(button_width, y_at + button_height);
     wid_set_on_mouse_up(w, wid_main_menu_more);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "M" UI_FMT_STR "ore");
@@ -402,8 +402,8 @@ void wid_main_menu_select(Gamep g)
     auto *p = wid_main_menu_window->wid_text_area->wid_text_area;
     auto *w = wid_new_cancel_button(g, p, "Quit Game");
 
-    spoint tl(0, y_at);
-    spoint br(button_width, y_at + button_height);
+    spoint const tl(0, y_at);
+    spoint const br(button_width, y_at + button_height);
     wid_set_on_mouse_up(w, wid_main_menu_quit);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "Q" UI_FMT_STR "uit Game");

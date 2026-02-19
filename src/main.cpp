@@ -318,7 +318,7 @@ int main(int argc, char *argv[])
   //
 #ifndef _WIN32
   LOG("Set locale for console");
-  std::locale loc("");
+  std::locale const loc("");
   std::ios_base::sync_with_stdio(false);
   std::wcout.imbue(loc);
 #endif

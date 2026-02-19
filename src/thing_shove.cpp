@@ -11,7 +11,7 @@
 //
 // The player has been attacked
 //
-static void thing_shoved_player(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
+static void thing_shoved_player(Gamep g, Levelsp v, Levelp l, ThingEvent &e)
 {
   TRACE_AND_INDENT();
 
@@ -44,7 +44,7 @@ static void thing_shoved_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
 // Handle interactions for a thing at its location with a dead thing
 //
 [[nodiscard]] static bool thing_shove_handle_dead_thing(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp shover,
-                                                        spoint from, spoint to, spoint direction)
+                                                        spoint to)
 {
   TRACE_NO_INDENT();
 
@@ -69,7 +69,7 @@ static void thing_shoved_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
     thing_on_shoved(g, v, l, t, shover);
 
     if (thing_is_player(t)) {
-      thing_shoved_player(g, v, l, t, e);
+      thing_shoved_player(g, v, l, e);
     } else if ((e.source != nullptr) && thing_is_player(e.source)) {
       thing_shoved_by_player(g, v, l, t, e);
     }
@@ -86,7 +86,7 @@ static void thing_shoved_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
 // Handle interactions for a thing at its location with an alive thing
 //
 [[nodiscard]] static bool thing_shove_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp shover,
-                                                         spoint from, spoint to, spoint direction)
+                                                         spoint to, spoint direction)
 {
   TRACE_NO_INDENT();
 
@@ -125,7 +125,7 @@ static void thing_shoved_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
     thing_on_shoved(g, v, l, t, shover);
 
     if (thing_is_player(t)) {
-      thing_shoved_player(g, v, l, t, e);
+      thing_shoved_player(g, v, l, e);
     } else if ((e.source != nullptr) && thing_is_player(e.source)) {
       thing_shoved_by_player(g, v, l, t, e);
     }
@@ -143,10 +143,9 @@ bool thing_shove_handle(Gamep g, Levelsp v, Levelp l, Thingp shover, spoint at)
 {
   TRACE_NO_INDENT();
 
-  bool   ret       = false;
-  auto   direction = at - thing_at(shover);
-  spoint from      = at;
-  spoint to        = at + direction;
+  bool         ret       = false;
+  auto         direction = at - thing_at(shover);
+  spoint const to        = at + direction;
 
   if (thing_is_ethereal(shover)) {
     return false;
@@ -169,14 +168,14 @@ bool thing_shove_handle(Gamep g, Levelsp v, Levelp l, Thingp shover, spoint at)
       //
       // Dead things
       //
-      if (thing_shove_handle_dead_thing(g, v, l, it, shover, from, to, direction)) {
+      if (thing_shove_handle_dead_thing(g, v, l, it, shover, to)) {
         ret = true;
       }
     } else {
       //
       // Alive things
       //
-      if (thing_shove_handle_alive_thing(g, v, l, it, shover, from, to, direction)) {
+      if (thing_shove_handle_alive_thing(g, v, l, it, shover, to, direction)) {
         ret = true;
       }
     }

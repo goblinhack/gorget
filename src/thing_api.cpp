@@ -98,7 +98,7 @@ void thing_pix_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, short x, short y)
     CROAK("No thing pointer set");
   }
 
-  spoint val(x, y);
+  spoint const val(x, y);
 
   if (t->_curr_pix_at != val) {
     l->request_to_update_visibility = true;

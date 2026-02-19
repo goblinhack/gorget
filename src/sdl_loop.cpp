@@ -82,10 +82,10 @@ void sdl_loop(Gamep g)
     //
     // Various event frequencies
     //
-    int  ts_now           = time_ms();
-    bool update_very_slow = (ts_now - ui_ts_very_slow_last >= UI_EVENT_LOOP_FREQ_VERY_SLOW_MS);
-    bool update_slow      = (ts_now - ui_ts_slow_last >= UI_EVENT_LOOP_FREQ_SLOW_MS);
-    bool update_fast      = (ts_now - ui_ts_fast_last >= UI_EVENT_LOOP_FREQ_FAST_MS);
+    int const  ts_now           = time_ms();
+    bool const update_very_slow = (ts_now - ui_ts_very_slow_last >= UI_EVENT_LOOP_FREQ_VERY_SLOW_MS);
+    bool const update_slow      = (ts_now - ui_ts_slow_last >= UI_EVENT_LOOP_FREQ_SLOW_MS);
+    bool const update_fast      = (ts_now - ui_ts_fast_last >= UI_EVENT_LOOP_FREQ_FAST_MS);
 
     //
     // Check for clock reset due to leaving robot mode
@@ -234,10 +234,10 @@ void sdl_loop(Gamep g)
       }
 
       if (unlikely(frames >= 100)) {
-        fps_ts_now    = time_ms();
-        uint32_t diff = fps_ts_now - fps_ts_begin;
+        fps_ts_now          = time_ms();
+        uint32_t const diff = fps_ts_now - fps_ts_begin;
         if (diff != 0) {
-          float fps = (float) (frames * ONESEC) / (float) diff;
+          float const fps = (float) (frames * ONESEC) / (float) diff;
           CON("FPS %f", fps);
           game_fps_value_set(g, (int) fps);
         } else {

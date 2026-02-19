@@ -34,13 +34,13 @@ void level_mouse_position_get(Gamep g, Levelsp v, Levelp l)
   int map_mouse_x = sdl.mouse_x - visible_map_tl_x;
   int map_mouse_y = sdl.mouse_y - visible_map_tl_y;
 
-  int zoom = game_map_zoom_get(g);
+  int const zoom = game_map_zoom_get(g);
 
   //
   // Do not allow the mouse events to have an impact when not over the map fbo
   //
-  int map_pix_width  = visible_map_br_x - visible_map_tl_x;
-  int map_pix_height = visible_map_br_y - visible_map_tl_y;
+  int const map_pix_width  = visible_map_br_x - visible_map_tl_x;
+  int const map_pix_height = visible_map_br_y - visible_map_tl_y;
 
   if (map_mouse_x < 0) {
     level_cursor_set(g, v, spoint(-1, -1));
@@ -59,8 +59,8 @@ void level_mouse_position_get(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
-  float scale_x = (float) map_pix_width / (float) game_map_fbo_width_get(g);
-  float scale_y = (float) map_pix_height / (float) game_map_fbo_height_get(g);
+  float const scale_x = (float) map_pix_width / (float) game_map_fbo_width_get(g);
+  float const scale_y = (float) map_pix_height / (float) game_map_fbo_height_get(g);
 
   map_mouse_x = (int) ((float) map_mouse_x / scale_x);
   map_mouse_y = (int) ((float) map_mouse_y / scale_y);
@@ -77,6 +77,6 @@ void level_mouse_position_get(Gamep g, Levelsp v, Levelp l)
   //
   // Update the cursor
   //
-  spoint p(map_mouse_x, map_mouse_y);
+  spoint const p(map_mouse_x, map_mouse_y);
   level_cursor_set(g, v, p);
 }

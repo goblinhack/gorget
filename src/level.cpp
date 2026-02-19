@@ -84,7 +84,7 @@ bool level_is_level_select(Gamep g, Levelsp v, Levelp l)
 //
 // Print a level string
 //
-static void level_dump(Gamep g, Levelsp v, Levelp l, int w, int h, std::string s)
+static void level_dump(Levelp l, int w, int h, std::string s)
 {
   TRACE_NO_INDENT();
 
@@ -113,9 +113,9 @@ void level_dump(Gamep g, Levelsp v, Levelp l, int w, int h)
 {
   TRACE_NO_INDENT();
 
-  std::string s = level_string(g, v, l, w, h);
+  std::string const s = level_string(g, v, l, w, h);
 
-  level_dump(g, v, l, w, h, s);
+  level_dump(l, w, h, s);
 }
 
 //
@@ -129,7 +129,7 @@ bool level_match_contents(Gamep g, Levelsp v, Levelp l, Testp t, int w, int h, c
   std::string found = level_string(g, v, l, w, h);
 
   for (int y = 0; y < h; y++) {
-    std::string line;
+    std::string const line;
 
     for (int x = 0; x < w; x++) {
       auto offset = (w * y) + x;
@@ -138,7 +138,7 @@ bool level_match_contents(Gamep g, Levelsp v, Levelp l, Testp t, int w, int h, c
       if (c != e) {
         CON_NEW_LINE();
         CON("Expected:");
-        level_dump(g, v, l, w, h, expected);
+        level_dump(l, w, h, expected);
         CON_NEW_LINE();
         CON("Found:");
         level_dump(g, v, l, w, h);
@@ -291,7 +291,7 @@ Levelp level_change(Gamep g, Levelsp v, LevelNum level_num)
   //
   // Check we're not trying to jump off the end of the levels
   //
-  LevelSelect *s = &v->level_select;
+  LevelSelect const *s = &v->level_select;
   if (s == nullptr) {
     ERR("No level selection created");
     return nullptr;
@@ -424,7 +424,7 @@ ThingId level_get_thing_id_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot)
 //
 // Additional level flag filters e.g. open doors are not obstacles
 //
-[[nodiscard]] static bool level_flag_filter(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp it)
+[[nodiscard]] static bool level_flag_filter(ThingFlag f, Thingp it)
 {
   TRACE_NO_INDENT();
 
@@ -466,7 +466,7 @@ std::vector< Thingp > level_find_all(Gamep g, Levelsp v, Levelp l, ThingFlag f)
 
   FOR_ALL_THINGS_ON_LEVEL_UNSAFE(g, v, l, it)
   {
-    if (level_flag_filter(g, v, l, f, it)) {
+    if (level_flag_filter(f, it)) {
       continue;
     }
 
@@ -486,7 +486,7 @@ std::vector< Thingp > level_find_all(Gamep g, Levelsp v, Levelp l, ThingFlag f, 
 
   FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, p)
   {
-    if (level_flag_filter(g, v, l, f, it)) {
+    if (level_flag_filter(f, it)) {
       continue;
     }
 
@@ -504,7 +504,7 @@ Thingp level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
 
   FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, p)
   {
-    if (level_flag_filter(g, v, l, f, it)) {
+    if (level_flag_filter(f, it)) {
       continue;
     }
 
@@ -537,7 +537,7 @@ Thingp level_alive(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
 
   FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, p)
   {
-    if (level_flag_filter(g, v, l, f, it)) {
+    if (level_flag_filter(f, it)) {
       continue;
     }
 
@@ -574,7 +574,7 @@ Thingp level_open(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
 
   FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, p)
   {
-    if (level_flag_filter(g, v, l, f, it)) {
+    if (level_flag_filter(f, it)) {
       continue;
     }
 
@@ -613,7 +613,7 @@ int level_count(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
 
   FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, p)
   {
-    if (level_flag_filter(g, v, l, f, it)) {
+    if (level_flag_filter(f, it)) {
       continue;
     }
 
@@ -675,9 +675,9 @@ void level_bounds_set(Gamep g, Levelsp v, Levelp l)
 
   verify(MTYPE_LEVELS, v);
 
-  int  zoom = game_map_zoom_get(g);
-  auto dw   = TILE_WIDTH * zoom;
-  auto dh   = TILE_HEIGHT * zoom;
+  int const zoom = game_map_zoom_get(g);
+  auto      dw   = TILE_WIDTH * zoom;
+  auto      dh   = TILE_HEIGHT * zoom;
 
   //
   // The number of tiles additionally to draw to avoid clipping

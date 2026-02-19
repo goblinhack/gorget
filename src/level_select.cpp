@@ -68,7 +68,7 @@ bool level_select_is_oob(int x, int y)
 //
 // If in level select mode, enter the chosen level
 //
-Levelp level_select_get_level_at_tile_coords(Gamep g, Levelsp v, spoint p)
+Levelp level_select_get_level_at_tile_coords(Gamep g, Levelsp v, spoint /*p*/)
 {
   TRACE_NO_INDENT();
 
@@ -101,7 +101,7 @@ Levelp level_select_get_level_at_tile_coords(Gamep g, Levelsp v, spoint p)
 // Given a point in the level select grid, return the corresponding level,
 // if one exists there.
 //
-static Levelp level_select_get_level_from_grid_coords(Gamep g, Levelsp v, spoint p)
+static Levelp level_select_get_level_from_grid_coords(Levelsp v, spoint p)
 {
   TRACE_NO_INDENT();
 
@@ -188,7 +188,7 @@ Levelp level_select_calculate_next_level_down(Gamep g, Levelsp v, Levelp l, bool
       CON("level %d -> next (look diagonally left at %u,%u)", l->level_num, p.x, p.y);
     }
 
-    auto *cand = level_select_get_level_from_grid_coords(g, v, p);
+    auto *cand = level_select_get_level_from_grid_coords(v, p);
     if ((cand != nullptr) && (cand != l)) {
       level_out = cand;
       goto got_level;
@@ -213,7 +213,7 @@ Levelp level_select_calculate_next_level_down(Gamep g, Levelsp v, Levelp l, bool
       CON("level %d -> next (look diagonally right at %u,%u)", l->level_num, p.x, p.y);
     }
 
-    auto *cand = level_select_get_level_from_grid_coords(g, v, p);
+    auto *cand = level_select_get_level_from_grid_coords(v, p);
     if ((cand != nullptr) && (cand != l)) {
       level_out = cand;
       goto got_level;
@@ -225,7 +225,7 @@ Levelp level_select_calculate_next_level_down(Gamep g, Levelsp v, Levelp l, bool
   //
   for (int y = 0; y < LEVEL_DOWN; y++) {
     for (auto &x : s->data) {
-      LevelSelectCell *c = &x[ y ];
+      LevelSelectCell const *c = &x[ y ];
       if (c->is_set == 0U) {
         continue;
       }
@@ -265,9 +265,9 @@ Levelp level_select_calculate_next_level_down(Gamep g, Levelsp v, Levelp l, bool
     if (compiler_unused) {
       CON("level %d -> next (random)", l->level_num);
     }
-    spoint random_p(pcg_random_range(0, LEVEL_ACROSS), pcg_random_range(0, LEVEL_DOWN));
+    spoint const random_p(pcg_random_range(0, LEVEL_ACROSS), pcg_random_range(0, LEVEL_DOWN));
 
-    auto *cand = level_select_get_level_from_grid_coords(g, v, random_p);
+    auto *cand = level_select_get_level_from_grid_coords(v, random_p);
     if ((cand != nullptr) && (cand != l)) {
       level_out = cand;
       goto got_level;
@@ -316,7 +316,7 @@ Thingp thing_level_select(Gamep g)
 //
 // Dump a level
 //
-static void level_select_dump(Gamep g, Levelsp v, LevelSelect *s)
+static void level_select_dump(LevelSelect *s)
 {
   TRACE_NO_INDENT();
 
@@ -395,7 +395,7 @@ LevelSelectCell *level_select_get(Gamep g, Levelsp v, spoint p)
 //
 // Count the levels created
 //
-static int level_select_count_levels(Gamep g, Levelsp v, LevelSelect *s)
+static int level_select_count_levels(LevelSelect *s)
 {
   TRACE_NO_INDENT();
 
@@ -415,7 +415,7 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, spoint at, int dive_c
 {
   TRACE_NO_INDENT();
 
-  spoint end(LEVEL_ACROSS - 1, LEVEL_DOWN - 1);
+  spoint const end(LEVEL_ACROSS - 1, LEVEL_DOWN - 1);
 
   while (at != end) {
     //
@@ -423,7 +423,7 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, spoint at, int dive_c
     //
     // Keep one free for the select level
     //
-    if (level_select_count_levels(g, v, s) >= LEVEL_SELECT_ID) {
+    if (level_select_count_levels(s) >= LEVEL_SELECT_ID) {
       return;
     }
 
@@ -494,11 +494,11 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
   auto *tp_is_level_visited_icon     = tp_first(is_level_visited_icon);
   auto *tp_is_level_next_icon        = tp_first(is_level_next_icon);
 
-  spoint map_offset(MAP_WIDTH / 2, 1);
+  spoint const map_offset(MAP_WIDTH / 2, 1);
 
   for (auto y = 0; y < LEVEL_DOWN; y++) {
     for (auto x = 0; x < LEVEL_ACROSS; x++) {
-      LevelSelectCell *c = &s->data[ x ][ y ];
+      LevelSelectCell const *c = &s->data[ x ][ y ];
       if (c->is_set == 0U) {
         continue;
       }
@@ -525,14 +525,14 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
       if ((player_level != nullptr)
           && (player_level->player_completed_level_via_exit || player_level->player_fell_out_of_level)) {
         if (y > 0) {
-          LevelSelectCell *o = &s->data[ x ][ y - 1 ]; // limit to adjacent levels
+          LevelSelectCell const *o = &s->data[ x ][ y - 1 ]; // limit to adjacent levels
           if ((o != nullptr) && (o->is_set != 0U) && (o->level_num == player_level->level_num)) {
             tp                                  = tp_is_level_next_icon;
             l->player_can_enter_this_level_next = true;
           }
         }
         if (x > 0) {
-          LevelSelectCell *o = &s->data[ x - 1 ][ y ]; // limit to adjacent levels
+          LevelSelectCell const *o = &s->data[ x - 1 ][ y ]; // limit to adjacent levels
           if ((o != nullptr) && (o->is_set != 0U) && (o->level_num == player_level->level_num)) {
             tp                                  = tp_is_level_next_icon;
             l->player_can_enter_this_level_next = true;
@@ -540,14 +540,14 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
         }
 
         if (y < LEVEL_DOWN - 1) {
-          LevelSelectCell *o = &s->data[ x ][ y + 1 ]; // limit to adjacent levels
+          LevelSelectCell const *o = &s->data[ x ][ y + 1 ]; // limit to adjacent levels
           if ((o != nullptr) && (o->is_set != 0U) && (o->level_num == player_level->level_num)) {
             tp                                  = tp_is_level_next_icon;
             l->player_can_enter_this_level_next = true;
           }
         }
         if (x < LEVEL_ACROSS - 1) {
-          LevelSelectCell *o = &s->data[ x + 1 ][ y ]; // limit to adjacent levels
+          LevelSelectCell const *o = &s->data[ x + 1 ][ y ]; // limit to adjacent levels
           if ((o != nullptr) && (o->is_set != 0U) && (o->level_num == player_level->level_num)) {
             tp                                  = tp_is_level_next_icon;
             l->player_can_enter_this_level_next = true;
@@ -560,14 +560,14 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
       //
       if ((player_level != nullptr) && (l->player_completed_level_via_exit || l->player_fell_out_of_level)) {
         if (y > 0) {
-          LevelSelectCell *o = &s->data[ x ][ y - 1 ]; // limit to adjacent levels
+          LevelSelectCell const *o = &s->data[ x ][ y - 1 ]; // limit to adjacent levels
           if ((o != nullptr) && (o->is_set != 0U) && (o->level_num == player_level->level_num)) {
             tp                                  = tp_is_level_next_icon;
             l->player_can_enter_this_level_next = true;
           }
         }
         if (x > 0) {
-          LevelSelectCell *o = &s->data[ x - 1 ][ y ]; // limit to adjacent levels
+          LevelSelectCell const *o = &s->data[ x - 1 ][ y ]; // limit to adjacent levels
           if ((o != nullptr) && (o->is_set != 0U) && (o->level_num == player_level->level_num)) {
             tp                                  = tp_is_level_next_icon;
             l->player_can_enter_this_level_next = true;
@@ -575,14 +575,14 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
         }
 
         if (y < LEVEL_DOWN - 1) {
-          LevelSelectCell *o = &s->data[ x ][ y + 1 ]; // limit to adjacent levels
+          LevelSelectCell const *o = &s->data[ x ][ y + 1 ]; // limit to adjacent levels
           if ((o != nullptr) && (o->is_set != 0U) && (o->level_num == player_level->level_num)) {
             tp                                  = tp_is_level_next_icon;
             l->player_can_enter_this_level_next = true;
           }
         }
         if (x < LEVEL_ACROSS - 1) {
-          LevelSelectCell *o = &s->data[ x + 1 ][ y ]; // limit to adjacent levels
+          LevelSelectCell const *o = &s->data[ x + 1 ][ y ]; // limit to adjacent levels
           if ((o != nullptr) && (o->is_set != 0U) && (o->level_num == player_level->level_num)) {
             tp                                  = tp_is_level_next_icon;
             l->player_can_enter_this_level_next = true;
@@ -668,11 +668,11 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
   //
   for (auto y = 0; y < LEVEL_DOWN; y++) {
     for (auto x = 0; x < LEVEL_ACROSS - 1; x++) {
-      LevelSelectCell *c = &s->data[ x ][ y ];
+      LevelSelectCell const *c = &s->data[ x ][ y ];
       if (c->is_set == 0U) {
         continue;
       }
-      LevelSelectCell *n = &s->data[ x + 1 ][ y ];
+      LevelSelectCell const *n = &s->data[ x + 1 ][ y ];
       if (n->is_set == 0U) {
         continue;
       }
@@ -697,11 +697,11 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
   //
   for (auto y = 0; y < LEVEL_DOWN - 1; y++) {
     for (auto x = 0; x < LEVEL_ACROSS; x++) {
-      LevelSelectCell *c = &s->data[ x ][ y ];
+      LevelSelectCell const *c = &s->data[ x ][ y ];
       if (c->is_set == 0U) {
         continue;
       }
-      LevelSelectCell *n = &s->data[ x ][ y + 1 ];
+      LevelSelectCell const *n = &s->data[ x ][ y + 1 ];
       if (n->is_set == 0U) {
         continue;
       }
@@ -760,7 +760,7 @@ static void level_select_create(Gamep g, Levelsp v, LevelSelect *s)
   //
   // Use a consistent seed
   //
-  uint32_t seed_num = game_seed_num_get(g);
+  uint32_t const seed_num = game_seed_num_get(g);
   pcg_srand(seed_num);
 
   snake_dive(g, v, s, spoint(0, 0), 90);
@@ -805,8 +805,8 @@ void level_select_grid_of_empty_levels(Gamep g)
   LevelSelect *s = &v->level_select;
 
   level_select_create(g, v, s);
-  level_select_dump(g, v, s);
-  level_select_count_levels(g, v, s);
+  level_select_dump(s);
+  level_select_count_levels(s);
 }
 
 //
@@ -828,8 +828,8 @@ void level_select_destroy(Gamep g, Levelsp v, Levelp l)
 //
 // Show a sorted list of vales
 //
-static void level_select_show_sorted_values(Gamep g, Levelsp v, Levelp l, WidPopup *parent,
-                                            std::map< std::string, int > &map_in, const std::string &map_name)
+static void level_select_show_sorted_values(Gamep g, WidPopup *parent, std::map< std::string, int > &map_in,
+                                            const std::string &map_name)
 {
   TRACE_NO_INDENT();
 
@@ -838,7 +838,7 @@ static void level_select_show_sorted_values(Gamep g, Levelsp v, Levelp l, WidPop
   }
 
   {
-    auto s1 = std::format(" {}:", map_name.c_str());
+    auto s1 = std::format(" {}:", map_name);
     parent->log(g, UI_INFO_FMT_STR + std::string(s1) + UI_RESET_FMT, TEXT_FORMAT_LHS);
   }
 
@@ -856,10 +856,10 @@ static void level_select_show_sorted_values(Gamep g, Levelsp v, Levelp l, WidPop
 
     {
       TRACE_NO_INDENT();
-      auto       *tp   = tp_find_mand(highest);
-      std::string name = tp_short_name(tp);
+      auto             *tp   = tp_find_mand(highest);
+      std::string const name = tp_short_name(tp);
 
-      auto s2 = std::format("  {} x %tp={}$ {}", map_in[ highest ], highest.c_str(), name.c_str());
+      auto s2 = std::format("  {} x %tp={}$ {}", map_in[ highest ], highest, name);
       parent->log(g, s2, TEXT_FORMAT_LHS);
     }
 
@@ -937,9 +937,9 @@ void level_select_rightbar_show_contents(Gamep g, Levelsp v, Levelp l, WidPopup 
     parent->log(g, " Contents:", TEXT_FORMAT_LHS);
   }
 
-  level_select_show_sorted_values(g, v, level_over, parent, mobs, "Mobs");
-  level_select_show_sorted_values(g, v, level_over, parent, monsts, "Monsters");
-  level_select_show_sorted_values(g, v, level_over, parent, treasure, "Loot");
+  level_select_show_sorted_values(g, parent, mobs, "Mobs");
+  level_select_show_sorted_values(g, parent, monsts, "Monsters");
+  level_select_show_sorted_values(g, parent, treasure, "Loot");
 
   level_minimaps_update(g, v, level_over);
 }
@@ -1025,6 +1025,6 @@ void level_select_test(Gamep g)
   LevelSelect *s = &v->level_select;
 
   level_select_create(g, v, s);
-  level_select_dump(g, v, s);
-  level_select_count_levels(g, v, s);
+  level_select_dump(s);
+  level_select_count_levels(s);
 }

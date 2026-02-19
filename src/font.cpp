@@ -73,7 +73,7 @@ Fontp font_find(const std::string &file)
 
 Tilep Font::font_get_tile(int u)
 {
-  Font *me = this;
+  Font const *me = this;
   if (unlikely(! me)) {
     CROAK("No font");
   }

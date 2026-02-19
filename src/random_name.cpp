@@ -9,8 +9,8 @@
 std::string os_random_name(int len)
 {
   for (;;) {
-    std::string d1(os_rand_dict1_name());
-    std::string d2(os_rand_dict2_name());
+    std::string const d1(os_rand_dict1_name());
+    std::string const d2(os_rand_dict2_name());
     if (std::cmp_greater((d1.size() + d2.size()), len)) {
       continue;
     }

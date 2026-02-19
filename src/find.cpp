@@ -102,7 +102,7 @@ static void find_executable()
   //
   path = getenv("PATH");
   if (path != nullptr) {
-    char *dir = nullptr;
+    char const *dir = nullptr;
 
     path = mydupstr(path, "path");
 

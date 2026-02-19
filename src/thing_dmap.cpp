@@ -36,10 +36,10 @@ void thing_dmap(Gamep g, Levelsp v, Levelp l, Thingp me, bool reverse)
     return;
   }
 
-  uint8_t minx = 0;
-  uint8_t miny = 0;
-  uint8_t maxx = MAP_WIDTH - 1;
-  uint8_t maxy = MAP_HEIGHT - 1;
+  uint8_t const minx = 0;
+  uint8_t const miny = 0;
+  uint8_t const maxx = MAP_WIDTH - 1;
+  uint8_t const maxy = MAP_HEIGHT - 1;
 
   auto *ext = thing_ext_struct(g, me);
   if (ext == nullptr) {
@@ -50,7 +50,7 @@ void thing_dmap(Gamep g, Levelsp v, Levelp l, Thingp me, bool reverse)
 
   for (auto y = miny; y < maxy; y++) {
     for (auto x = minx; x < maxx; x++) {
-      spoint p(x, y);
+      spoint const p(x, y);
 
       if (! thing_can_move_to_ai(g, v, l, me, p)) {
         ext->dmap.val[ x ][ y ] = DMAP_IS_WALL;

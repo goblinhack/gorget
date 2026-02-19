@@ -78,23 +78,23 @@ void wid_hiscores_show(Gamep g)
     wid_hiscore_destroy(g);
   }
 
-  int menu_height = 26;
-  int menu_width  = 100;
+  int const menu_height = 26;
+  int const menu_width  = 100;
 
   const auto *name           = "Name";
-  int         name_field_len = UI_MAX_PLAYER_NAME_LEN + 1;
+  int const   name_field_len = UI_MAX_PLAYER_NAME_LEN + 1;
 
   const auto *when           = "Date of Demise";
-  int         when_field_len = 25;
+  int const   when_field_len = 25;
 
   const auto *completed           = "Completed";
-  int         completed_field_len = 9;
+  int const   completed_field_len = 9;
 
   const auto *reason           = "Reason of Unfair Demise";
-  int         reason_field_len = 28;
+  int const   reason_field_len = 28;
 
-  spoint outer_tl((TERM_WIDTH / 2) - (menu_width / 2), (TERM_HEIGHT / 2) - (menu_height / 2));
-  spoint outer_br((TERM_WIDTH / 2) + (menu_width / 2), (TERM_HEIGHT / 2) + (menu_height / 2));
+  spoint const outer_tl((TERM_WIDTH / 2) - (menu_width / 2), (TERM_HEIGHT / 2) - (menu_height / 2));
+  spoint const outer_br((TERM_WIDTH / 2) + (menu_width / 2), (TERM_HEIGHT / 2) + (menu_height / 2));
   wid_hiscore_window = new WidPopup(g, "hiscores", outer_tl, outer_br, nullptr, "", false, false);
 
   {
@@ -171,8 +171,8 @@ void wid_hiscores_show(Gamep g)
     auto *p = wid_hiscore_window->wid_text_area->wid_text_area;
     auto *w = wid_new_back_button(g, p, "hiscore");
 
-    spoint tl((menu_width / 2) - 4, menu_height - 4);
-    spoint br((menu_width / 2) + 3, menu_height - 2);
+    spoint const tl((menu_width / 2) - 4, menu_height - 4);
+    spoint const br((menu_width / 2) + 3, menu_height - 2);
 
     wid_set_on_mouse_up(w, wid_hiscore_mouse_up);
     wid_set_pos(w, tl, br);

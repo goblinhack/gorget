@@ -12,14 +12,14 @@
 
 #include <string>
 
-static std::string tp_entrance_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static std::string tp_entrance_description_get(Gamep g, Levelsp v, Levelp l, Thingp /*t*/)
 {
   TRACE_NO_INDENT();
 
   return "the way back up";
 }
 
-static std::string tp_entrance_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static std::string tp_entrance_detail_get(Gamep g, Levelsp v, Levelp l, Thingp /*t*/)
 {
   TRACE_NO_INDENT();
 

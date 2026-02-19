@@ -2,6 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include <utility>
+
 #include "my_callstack.hpp"
 #include "my_main.hpp"
 #include "my_ui.hpp"
@@ -19,16 +21,16 @@ WidPopup::~WidPopup()
 }
 
 WidPopup::WidPopup(Gamep g, const std::string &vname, spoint vtl, spoint vbr, Tilep vtitle_tile,
-                   const std::string &vbackground, bool horiz_scroll, bool vert_scoll, int scroll_height)
-    : tl(vtl), br(vbr), title_tile(vtitle_tile), background(vbackground)
+                   std::string vbackground, bool horiz_scroll, bool vert_scoll, int scroll_height)
+    : tl(vtl), br(vbr), title_tile(vtitle_tile), background(std::move(vbackground))
 {
   TRACE_NO_INDENT();
 
   outer_w = br.x - tl.x;
   outer_h = br.y - tl.y;
 
-  int width  = outer_w;
-  int height = outer_h;
+  int const width  = outer_w;
+  int const height = outer_h;
 
   this->name = vname;
 
@@ -71,8 +73,8 @@ WidPopup::WidPopup(Gamep g, const std::string &vname, spoint vtl, spoint vbr, Ti
   }
 
   {
-    spoint box_tl(0, tile_size);
-    spoint box_br(inner_w, inner_h + tile_size);
+    spoint const box_tl(0, tile_size);
+    spoint const box_br(inner_w, inner_h + tile_size);
     wid_text_area = new WidTextBox(g, box_tl, box_br, wid_popup_container, horiz_scroll, vert_scoll, scroll_height);
   }
 
@@ -106,7 +108,7 @@ void WidPopup::compress(Gamep g) const
 {
   TRACE_NO_INDENT();
 
-  int utilized = wid_text_area->line_count;
+  int const utilized = wid_text_area->line_count;
 
   wid_resize(g, wid_popup_container, -1, utilized + 1);
   wid_resize(g, wid_text_area->wid_text_area, -1, utilized + 1);

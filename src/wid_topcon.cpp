@@ -74,7 +74,7 @@ static void wid_topcon_scroll(Widp w, const std::string &str)
   }
 }
 
-static void wid_topcon_replace(Gamep g, Widp w, const std::string &str)
+static void wid_topcon_replace(Widp w, const std::string &str)
 {
   TRACE_NO_INDENT();
   Widp tmp {};
@@ -128,16 +128,16 @@ static void wid_topcon_log_(std::string s)
   if (last_msg == s) {
     s = last_msg + " (x" + std::to_string(last_msg_count + 2) + ")";
     last_msg_count++;
-    wid_topcon_replace(g, wid_topcon_input_line, s);
+    wid_topcon_replace(wid_topcon_input_line, s);
   } else if (! curr_msg.empty() && length_without_format(curr_msg) + length_without_format(s) + 1 < UI_TOPCON_WIDTH) {
     curr_msg = curr_msg + " " + s;
-    wid_topcon_replace(g, wid_topcon_input_line, curr_msg);
+    wid_topcon_replace(wid_topcon_input_line, curr_msg);
     last_msg       = "";
     last_msg_count = 0;
   } else if (curr_msg.empty()) {
     last_msg       = s;
     last_msg_count = 0;
-    wid_topcon_replace(g, wid_topcon_input_line, s);
+    wid_topcon_replace(wid_topcon_input_line, s);
   } else {
     last_msg       = s;
     last_msg_count = 0;
@@ -169,7 +169,7 @@ void wid_topcon_log(const std::string &s)
     return;
   }
 
-  int chars_per_line = UI_TOPCON_WIDTH;
+  int const chars_per_line = UI_TOPCON_WIDTH;
 
   if (TERM_WIDTH == 0) {
     CROAK("No TERM_WIDTH set");
@@ -193,7 +193,7 @@ void wid_topcon_log(const std::string &s)
 static void wid_topcon_wid_create(Gamep g)
 {
   TRACE_NO_INDENT();
-  int h = UI_TOPCON_HEIGHT;
+  int const h = UI_TOPCON_HEIGHT;
 
   if (wid_topcon_window != nullptr) {
     wid_topcon_fini(g);

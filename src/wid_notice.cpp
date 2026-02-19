@@ -22,7 +22,7 @@ void wid_notice_destroy()
   return true;
 }
 
-[[nodiscard]] static bool wid_notice_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
+[[nodiscard]] static bool wid_notice_key_down(Gamep g, Widp w, const struct SDL_Keysym * /*key*/)
 {
   TRACE_NO_INDENT();
   (void) wid_notice_ok(g, nullptr, 0, 0, 0);
@@ -64,8 +64,8 @@ void wid_notice(const std::string &s)
     auto *p = wid_notice_window->wid_text_area->wid_text_area;
     auto *w = wid_new_square_button(g, p, "notice");
 
-    spoint tl1(0, y_at);
-    spoint br1(width - 1, y_at + 1);
+    spoint const tl1(0, y_at);
+    spoint const br1(width - 1, y_at + 1);
     wid_set_shape_none(w);
     wid_set_on_mouse_up(w, wid_notice_ok);
     wid_set_pos(w, tl1, br1);
@@ -79,8 +79,8 @@ void wid_notice(const std::string &s)
     auto *p = wid_notice_window->wid_text_area->wid_text_area;
     auto *w = wid_new_square_button(g, p, "ok");
 
-    spoint tl2((width / 2) - 4, y_at);
-    spoint br2((width / 2) + 4, y_at + 2);
+    spoint const tl2((width / 2) - 4, y_at);
+    spoint const br2((width / 2) + 4, y_at + 2);
     wid_set_style(w, UI_WID_STYLE_GREEN);
     wid_set_on_mouse_up(w, wid_notice_ok);
     wid_set_pos(w, tl2, br2);

@@ -96,11 +96,11 @@ static std::string demangle_symbol(char *name)
   std::string sout;
   char       *p         = name;
   char       *cur       = p;
-  char       *end       = p + strlen(cur);
+  char const *end       = p + strlen(cur);
   bool        demangled = false;
 
   while (cur < end) {
-    size_t special = strcspn(cur, "_?");
+    size_t const special = strcspn(cur, "_?");
     cur += special;
 
     if (cur >= end) {
@@ -121,8 +121,8 @@ static std::string demangle_symbol(char *name)
       continue;
     }
 
-    char tmp     = cur[ n_sym ];
-    cur[ n_sym ] = '\0';
+    char const tmp = cur[ n_sym ];
+    cur[ n_sym ]   = '\0';
 
     if (starts_with(cur, "__Z")) {
       cur++;

@@ -38,7 +38,7 @@ void wid_progress_bar(Gamep g, const std::string &title, float pct)
   tile_num     = std::min(tile_num, progress_steps);
   tile_num     = std::max(tile_num, 1);
 
-  std::string tilename = "progress_bar." + std::to_string(tile_num);
+  std::string const tilename = "progress_bar." + std::to_string(tile_num);
 
   auto m  = TERM_WIDTH / 2;
   auto n  = TERM_HEIGHT / 2;

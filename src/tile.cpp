@@ -193,8 +193,8 @@ void tile_load_arr(const char *file, const char *alias, uint32_t width, uint32_t
 
   Texp tex = tex_load(file, alias, GL_NEAREST);
 
-  float fw = (float) 1.0 / ((((float) tex_get_width(tex))) / (((float) width)));
-  float fh = (float) 1.0 / ((((float) tex_get_height(tex))) / (((float) height)));
+  float const fw = (float) 1.0 / ((((float) tex_get_width(tex))) / (((float) width)));
+  float const fh = (float) 1.0 / ((((float) tex_get_height(tex))) / (((float) height)));
 
   int x   = 0;
   int y   = 0;
@@ -206,7 +206,7 @@ void tile_load_arr(const char *file, const char *alias, uint32_t width, uint32_t
   pixel_size.h = height;
 
   while (nargs-- > 0) {
-    std::string name = arr[ idx++ ];
+    std::string const name = arr[ idx++ ];
 
     if (! name.empty()) {
       if (tile_find(name) != nullptr) {
@@ -333,8 +333,8 @@ void tile_load_arr_sprites(const char *file, const char *alias, uint32_t tile_wi
 
   tex_load_sprites(&tex, &tex_monochrome, &tex_mask, &tex_outline, file, alias, tile_width, tile_height, gl_mode);
 
-  float fw = (float) 1.0 / ((((float) tex_get_width(tex))) / (((float) tile_width)));
-  float fh = (float) 1.0 / ((((float) tex_get_height(tex))) / (((float) tile_height)));
+  float const fw = (float) 1.0 / ((((float) tex_get_width(tex))) / (((float) tile_width)));
+  float const fh = (float) 1.0 / ((((float) tex_get_height(tex))) / (((float) tile_height)));
 
   int x   = 0;
   int y   = 0;
@@ -362,7 +362,7 @@ void tile_load_arr_sprites(const char *file, const char *alias, uint32_t tile_wi
   pixel_size.h = tile_height;
 
   while (nargs-- > 0) {
-    std::string name = arr[ idx++ ];
+    std::string const name = arr[ idx++ ];
 
     if (! name.empty()) {
       if (tile_find(name) != nullptr) {
@@ -702,13 +702,13 @@ void tile_size_set(Tilep t, uint32_t w, uint32_t h)
 {
   TRACE_NO_INDENT();
 
-  float dx = (t->x2 - t->x1) / (float) t->pix_width;
-  float cx = (t->pix_width - w) / 2;
+  float const dx = (t->x2 - t->x1) / (float) t->pix_width;
+  float const cx = (t->pix_width - w) / 2;
   t->x1 += cx * dx;
   t->x2 -= cx * dx;
 
-  float dy = (t->y2 - t->y1) / (float) t->pix_width;
-  float cy = (t->pix_width - w) / 2;
+  float const dy = (t->y2 - t->y1) / (float) t->pix_width;
+  float const cy = (t->pix_width - w) / 2;
   t->y1 += cy * dy;
   t->y2 -= cy * dy;
 
@@ -855,10 +855,10 @@ void tile_blit(const Tilep &tile, float x1, float x2, float y1, float y2, const 
 void tile_blit(const Tilep &tile, spoint tl, spoint br, const color &color_tl, const color &color_tr,
                const color &color_bl, const color &color_br)
 {
-  float x1 = tile->x1;
-  float x2 = tile->x2;
-  float y1 = tile->y1;
-  float y2 = tile->y2;
+  float const x1 = tile->x1;
+  float const x2 = tile->x2;
+  float const y1 = tile->y1;
+  float const y2 = tile->y2;
 
   blit(tile->gl_binding(), x1, y2, x2, y1, tl.x, br.y, br.x, tl.y, color_tl, color_tr, color_bl, color_br);
 }
@@ -867,12 +867,12 @@ void tile_blit_section(const Tilep &tile, const fpoint &tile_tl, const fpoint &t
                        const spoint br, const color &color_tl, const color &color_tr, const color &color_bl,
                        const color &color_br)
 {
-  float x1;
-  float x2;
-  float y1;
-  float y2;
-  float tw = tile->x2 - tile->x1;
-  float th = tile->y2 - tile->y1;
+  float       x1;
+  float       x2;
+  float       y1;
+  float       y2;
+  float const tw = tile->x2 - tile->x1;
+  float const th = tile->y2 - tile->y1;
 
   x1 = tile->x1 + (tile_tl.x * tw);
   x2 = tile->x1 + (tile_br.x * tw);
@@ -930,14 +930,14 @@ void tile_blit_outlined(const Tilep &tile, float x1, float x2, float y1, float y
 // Shift the coordinates of a tile by a given percentage, so the bottom is
 // trimmed and looks submerged.
 //
-void tile_blit_apply_submerge_pct(Gamep g, spoint &tl, spoint &br, float &x1, float &x2, float &y1, float &y2,
-                                  float percent)
+void tile_blit_apply_submerge_pct(Gamep g, spoint &tl, spoint &br, float & /*x1*/, float & /*x2*/, float &y1,
+                                  float &y2, float percent)
 {
-  float h1 = br.y - tl.y;
-  float h2 = y2 - y1;
+  float const h1 = br.y - tl.y;
+  float const h2 = y2 - y1;
 
-  float off1 = ((h1 / 100) * percent);
-  float off2 = ((h2 / 100) * percent);
+  float const off1 = ((h1 / 100) * percent);
+  float const off2 = ((h2 / 100) * percent);
 
   tl.y += (int) off1;
   y2 -= off2;
@@ -948,8 +948,8 @@ void tile_blit_apply_submerge_pct(Gamep g, spoint &tl, spoint &br, float &x1, fl
   //
   // Round back to the nearest pixel size
   //
-  float pix = game_map_single_pix_size_get(g);
-  auto  h   = br.y - tl.y;
-  tl.y      = (int) (floor((float) tl.y / pix) * pix);
-  br.y      = tl.y + h;
+  float const pix = game_map_single_pix_size_get(g);
+  auto        h   = br.y - tl.y;
+  tl.y            = (int) (floor((float) tl.y / pix) * pix);
+  br.y            = tl.y + h;
 }

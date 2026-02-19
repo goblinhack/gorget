@@ -9,7 +9,7 @@
 #include "my_math.hpp"
 #include "my_thing_callbacks.hpp"
 
-static fpoint thing_projectile_get_delta_from_dt(Gamep g, Levelsp v, Levelp l, Thingp t, float dt)
+static fpoint thing_projectile_get_delta_from_dt(Gamep g, Thingp t, float dt)
 {
   TRACE_NO_INDENT();
 
@@ -39,7 +39,7 @@ fpoint thing_projectile_get_direction(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  return unit(thing_projectile_get_delta_from_dt(g, v, l, t, 1.0));
+  return unit(thing_projectile_get_delta_from_dt(g, t, 1.0));
 }
 
 bool thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const fpoint target)
@@ -65,7 +65,7 @@ bool thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what,
   // Need a small fraction to account for comparisons of very similar floats where
   // we end up shooting the player upon firing
   //
-  float offset = thing_collision_radius(me) + tp_collision_radius(what) + THING_COLLISION_FIRING_OFFSET;
+  float const offset = thing_collision_radius(me) + tp_collision_radius(what) + THING_COLLISION_FIRING_OFFSET;
   proj_at.x += c * offset;
   proj_at.y += s * offset;
 
@@ -79,8 +79,8 @@ bool thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what,
   //
   // Set my direction based on where I fire
   //
-  spoint dir    = make_spoint(proj_at);
-  spoint source = thing_at(me);
+  spoint const dir    = make_spoint(proj_at);
+  spoint const source = thing_at(me);
   thing_set_dir_from_delta(me, dir.x - source.x, dir.y - source.y);
 
   thing_is_moving_set(g, v, l, projectile);
@@ -103,8 +103,8 @@ void thing_projectile_move(Gamep g, Levelsp v, Levelp l, Thingp t, float dt)
 {
   TRACE_NO_INDENT();
 
-  fpoint old_at = thing_real_at(t);
-  auto   at     = old_at;
+  fpoint const old_at = thing_real_at(t);
+  auto         at     = old_at;
 
   auto *player = thing_player(g);
   if (player == nullptr) {
@@ -112,7 +112,7 @@ void thing_projectile_move(Gamep g, Levelsp v, Levelp l, Thingp t, float dt)
     return;
   }
 
-  auto delta = thing_projectile_get_delta_from_dt(g, v, l, t, dt);
+  auto delta = thing_projectile_get_delta_from_dt(g, t, dt);
   at.x += delta.x;
   at.y += delta.y;
 

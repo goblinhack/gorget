@@ -247,7 +247,7 @@ int wid_get_tl_x(Widp w)
 {
   TRACE_NO_INDENT();
 
-  int cx = (w->key.tl.x + w->key.br.x) / 2;
+  int const cx = (w->key.tl.x + w->key.br.x) / 2;
 
   return cx - (cx - w->key.tl.x);
 }
@@ -256,7 +256,7 @@ int wid_get_tl_y(Widp w)
 {
   TRACE_NO_INDENT();
 
-  int cy = (w->key.tl.y + w->key.br.y) / 2;
+  int const cy = (w->key.tl.y + w->key.br.y) / 2;
 
   return cy - (cy - w->key.tl.y);
 }
@@ -265,7 +265,7 @@ int wid_get_br_x(Widp w)
 {
   TRACE_NO_INDENT();
 
-  int cx = (w->key.tl.x + w->key.br.x) / 2;
+  int const cx = (w->key.tl.x + w->key.br.x) / 2;
 
   return cx + (w->key.br.x - cx);
 }
@@ -274,7 +274,7 @@ int wid_get_br_y(Widp w)
 {
   TRACE_NO_INDENT();
 
-  int cy = (w->key.tl.y + w->key.br.y) / 2;
+  int const cy = (w->key.tl.y + w->key.br.y) / 2;
 
   return cy + (w->key.br.y - cy);
 }
@@ -1124,8 +1124,8 @@ static std::string wid_get_text_with_cursor(Widp w)
     w->cursor = (uint32_t) w->text.length();
   }
 
-  std::string t = w->text;
-  std::string o = t.substr(0, w->cursor) + (char) FONT_CHAR_CURSOR + t.substr(w->cursor);
+  std::string const t = w->text;
+  std::string       o = t.substr(0, w->cursor) + (char) FONT_CHAR_CURSOR + t.substr(w->cursor);
 
   return o;
 }
@@ -1428,7 +1428,7 @@ bool wid_get_text_rhs(Widp w)
   return static_cast< bool >(w->text_rhs);
 }
 
-void wid_set_text_rhs(Widp w, bool val)
+void wid_set_text_rhs(Widp w, bool /*val*/)
 {
   TRACE_NO_INDENT();
   w->text_rhs = 1U;
@@ -1557,8 +1557,8 @@ int wid_get_style(Widp w)
 {
   TRACE_NO_INDENT();
 
-  auto              mode = wid_get_mode(w); // for c++, no enum walk
-  wid_options_menu *cfg  = &w->cfg[ mode ];
+  auto                    mode = wid_get_mode(w); // for c++, no enum walk
+  wid_options_menu const *cfg  = &w->cfg[ mode ];
 
   if (static_cast< bool >(cfg->style_set)) {
     return cfg->style;
@@ -2001,7 +2001,7 @@ static void wid_tree5_tick_wids_remove(Widp w)
 //
 // Initialize a wid with basic settings
 //
-static Widp wid_new(Gamep g, Widp parent)
+static Widp wid_new(Widp parent)
 {
   TRACE_NO_INDENT();
 
@@ -2031,7 +2031,7 @@ static Widp wid_new(Gamep g, Widp parent)
   return w;
 }
 
-static Widp wid_new(Gamep g)
+static Widp wid_new()
 {
   TRACE_NO_INDENT();
 
@@ -2248,7 +2248,7 @@ void wid_destroy_in(Gamep g, Widp w, uint32_t ms)
 //
 // Initialize a top level wid with basic settings
 //
-Widp wid_new_container(Gamep g, Widp parent, std::string name)
+Widp wid_new_container(Gamep g, Widp parent, const std::string &name)
 {
   TRACE_NO_INDENT();
 
@@ -2256,7 +2256,7 @@ Widp wid_new_container(Gamep g, Widp parent, std::string name)
     return nullptr;
   }
 
-  Widp w = wid_new(g, parent);
+  Widp w = wid_new(parent);
 
 #ifdef ENABLE_DEBUG_UI
 #ifdef ENABLE_DEBUG_UI2
@@ -2268,7 +2268,7 @@ Widp wid_new_container(Gamep g, Widp parent, std::string name)
 
   WID_DBG(w, "%s", __FUNCTION__);
 
-  wid_set_name(w, std::move(name));
+  wid_set_name(w, name);
   wid_set_mode(w, WID_MODE_NORMAL);
   wid_set_color(w, WID_COLOR_BG, WHITE);
   wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
@@ -2295,7 +2295,7 @@ Widp wid_new_window(Gamep g, const std::string &name)
     return nullptr;
   }
 
-  Widp w = wid_new(g);
+  Widp w = wid_new();
 
   w->to_string = string_sprintf("%s[%p]", name.c_str(), (void *) w);
 
@@ -2317,7 +2317,7 @@ Widp wid_new_window(Gamep g, const std::string &name)
   return w;
 }
 
-Widp wid_new_square_button(Gamep g, Widp parent, std::string name)
+Widp wid_new_square_button(Gamep g, Widp parent, const std::string &name)
 {
   TRACE_NO_INDENT();
 
@@ -2329,7 +2329,7 @@ Widp wid_new_square_button(Gamep g, Widp parent, std::string name)
     ERR("No parent");
   }
 
-  Widp w = wid_new(g, parent);
+  Widp w = wid_new(parent);
 
 #ifdef ENABLE_DEBUG_UI
 #ifdef ENABLE_DEBUG_UI2
@@ -2342,7 +2342,7 @@ Widp wid_new_square_button(Gamep g, Widp parent, std::string name)
 
   WID_DBG(w, "%s", __FUNCTION__);
 
-  wid_set_name(w, std::move(name));
+  wid_set_name(w, name);
   wid_set_shape_square(w);
 
   wid_set_mode(w, WID_MODE_OVER);
@@ -2363,7 +2363,7 @@ Widp wid_new_square_button(Gamep g, Widp parent, std::string name)
   return w;
 }
 
-Widp wid_new_plain(Gamep g, Widp parent, std::string name)
+Widp wid_new_plain(Gamep g, Widp parent, const std::string &name)
 {
   TRACE_NO_INDENT();
 
@@ -2375,7 +2375,7 @@ Widp wid_new_plain(Gamep g, Widp parent, std::string name)
     ERR("No parent");
   }
 
-  Widp w = wid_new(g, parent);
+  Widp w = wid_new(parent);
 
 #ifdef ENABLE_DEBUG_UI
 #ifdef ENABLE_DEBUG_UI2
@@ -2387,7 +2387,7 @@ Widp wid_new_plain(Gamep g, Widp parent, std::string name)
 
   WID_DBG(w, "%s", __FUNCTION__);
 
-  wid_set_name(w, std::move(name));
+  wid_set_name(w, name);
   wid_set_shape_square(w);
 
   wid_set_mode(w, WID_MODE_OVER);
@@ -2421,7 +2421,7 @@ static Widp wid_new_scroll_trough(Gamep g, Widp parent)
     ERR("No parent");
   }
 
-  Widp w = wid_new(g, parent);
+  Widp w = wid_new(parent);
 
   w->to_string
       = string_sprintf("[%p] scroll trough (parent %s[%p])", (void *) w, parent->to_string.c_str(), (void *) parent);
@@ -2430,7 +2430,7 @@ static Widp wid_new_scroll_trough(Gamep g, Widp parent)
 
   wid_set_mode(w, WID_MODE_NORMAL);
   {
-    color c = GRAY90;
+    color const c = GRAY90;
     wid_set_color(w, WID_COLOR_BG, c);
   }
 
@@ -2467,7 +2467,7 @@ static Widp wid_new_scroll_bar(Gamep g, Widp parent, const std::string &name, Wi
     ERR("No parent");
   }
 
-  Widp w = wid_new(g, parent);
+  Widp w = wid_new(parent);
 
   if (vertical) {
     w->to_string = string_sprintf("%s, %s[%p]", name.c_str(), "vert scroll bar", (void *) w);
@@ -2481,13 +2481,13 @@ static Widp wid_new_scroll_bar(Gamep g, Widp parent, const std::string &name, Wi
 
   wid_set_mode(w, WID_MODE_ACTIVE);
   {
-    color c = GREEN;
+    color const c = GREEN;
     wid_set_color(w, WID_COLOR_BG, c);
   }
 
   wid_set_mode(w, WID_MODE_NORMAL);
   {
-    color c = GRAY50;
+    color const c = GRAY50;
     wid_set_color(w, WID_COLOR_BG, c);
   }
 
@@ -2522,7 +2522,7 @@ static Widp wid_new_scroll_bar(Gamep g, Widp parent, const std::string &name, Wi
   return w;
 }
 
-Widp wid_new_vert_scroll_bar(Gamep g, Widp parent, std::string name, Widp scrollbar_owner)
+Widp wid_new_vert_scroll_bar(Gamep g, Widp parent, const std::string &name, Widp scrollbar_owner)
 {
   TRACE_NO_INDENT();
 
@@ -2564,9 +2564,9 @@ Widp wid_new_vert_scroll_bar(Gamep g, Widp parent, std::string name, Widp scroll
   wid_set_style(trough, UI_WID_STYLE_VERT_SCROLL_DARK);
 
   {
-    fpoint tl(0, 0);
-    fpoint br(1, 1);
-    Widp   scrollbar = wid_new_scroll_bar(g, trough, std::move(name), scrollbar_owner, 1U);
+    fpoint const tl(0, 0);
+    fpoint const br(1, 1);
+    Widp         scrollbar = wid_new_scroll_bar(g, trough, name, scrollbar_owner, 1U);
     wid_set_pos_pct(scrollbar, tl, br);
 
     wid_update_internal(g, scrollbar);
@@ -2584,7 +2584,7 @@ Widp wid_new_vert_scroll_bar(Gamep g, Widp parent, std::string name, Widp scroll
   }
 }
 
-Widp wid_new_horiz_scroll_bar(Gamep g, Widp parent, std::string name, Widp scrollbar_owner)
+Widp wid_new_horiz_scroll_bar(Gamep g, Widp parent, const std::string &name, Widp scrollbar_owner)
 {
   TRACE_NO_INDENT();
 
@@ -2626,9 +2626,9 @@ Widp wid_new_horiz_scroll_bar(Gamep g, Widp parent, std::string name, Widp scrol
   wid_set_style(trough, UI_WID_STYLE_HORIZ_SCROLL_DARK);
 
   {
-    fpoint tl(0, 0);
-    fpoint br(1, 1);
-    Widp   scrollbar = wid_new_scroll_bar(g, trough, std::move(name), scrollbar_owner, 0U);
+    fpoint const tl(0, 0);
+    fpoint const br(1, 1);
+    Widp         scrollbar = wid_new_scroll_bar(g, trough, name, scrollbar_owner, 0U);
     wid_set_pos_pct(scrollbar, tl, br);
 
     wid_update_internal(g, scrollbar);
@@ -2643,7 +2643,7 @@ Widp wid_new_horiz_scroll_bar(Gamep g, Widp parent, std::string name, Widp scrol
   }
 }
 
-static void wid_raise_internal(Gamep g, Widp w)
+static void wid_raise_internal(Widp w)
 {
   TRACE_NO_INDENT();
 
@@ -2672,14 +2672,14 @@ static void wid_raise_override(Gamep g, Widp parent)
   // If some widget wants to be on top, let it.
   //
   if (static_cast< bool >(parent->do_not_lower)) {
-    wid_raise_internal(g, parent);
+    wid_raise_internal(parent);
   }
 
   for (auto &iter : parent->children_display_sorted) {
     auto *w = iter.second;
 
     if (static_cast< bool >(w->do_not_lower)) {
-      wid_raise_internal(g, w);
+      wid_raise_internal(w);
       break;
     }
 
@@ -2699,7 +2699,7 @@ void wid_raise(Gamep g, Widp w_in)
     return;
   }
 
-  wid_raise_internal(g, w_in);
+  wid_raise_internal(w_in);
 
   //
   // If some widget wants to be on top, let it.
@@ -2725,7 +2725,7 @@ void wid_raise(Gamep g, Widp w_in)
   }
 }
 
-static void wid_lower_internal(Gamep g, Widp w)
+static void wid_lower_internal(Widp w)
 {
   TRACE_NO_INDENT();
 
@@ -2754,7 +2754,7 @@ void wid_lower(Gamep g, Widp w_in)
     return;
   }
 
-  wid_lower_internal(g, w_in);
+  wid_lower_internal(w_in);
 
   //
   // If some widget wants to be on top, let it.
@@ -2762,7 +2762,7 @@ void wid_lower(Gamep g, Widp w_in)
   for (auto &iter : wid_top_level) {
     auto *w = iter.second;
     if (static_cast< bool >(w->do_not_raise)) {
-      wid_lower_internal(g, w);
+      wid_lower_internal(w);
       break;
     }
   }
@@ -3150,7 +3150,7 @@ void wid_visible(Gamep g, Widp w)
   w->visible = 1U;
   w->hidden  = 0U;
 
-  std::vector< Widp > worklist;
+  std::vector< Widp > const worklist;
   for (auto &iter : w->children_display_sorted) {
     auto *child = iter.second;
     wid_visible(g, child);
@@ -3197,31 +3197,31 @@ void wid_hide(Gamep g, Widp w)
     wid_set_top_focus(g);
   }
 
-  std::vector< Widp > worklist;
+  std::vector< Widp > const worklist;
   for (auto &iter : w->children_display_sorted) {
     auto *child = iter.second;
     wid_hide(g, child);
   }
 }
 
-static void wid_adjust_scrollbar(Gamep g, Widp scrollbar, Widp owner)
+static void wid_adjust_scrollbar(Widp scrollbar, Widp owner)
 {
   TRACE_NO_INDENT();
 
-  float height       = wid_get_height(owner);
-  float width        = wid_get_width(owner);
-  float child_height = 0;
-  float child_width  = 0;
-  float scrollbar_width;
-  float scrollbar_height;
-  float trough_height;
-  float trough_width;
-  float miny = 0;
-  float maxy = 0;
-  float minx = 0;
-  float maxx = 0;
-  float pct;
-  bool  first = 1u;
+  float const height       = wid_get_height(owner);
+  float const width        = wid_get_width(owner);
+  float       child_height = 0;
+  float       child_width  = 0;
+  float       scrollbar_width;
+  float       scrollbar_height;
+  float       trough_height;
+  float       trough_width;
+  float       miny = 0;
+  float       maxy = 0;
+  float       minx = 0;
+  float       maxx = 0;
+  float       pct;
+  bool        first = 1u;
 
   //
   // Find out the space that the children take up then use this to
@@ -3296,7 +3296,7 @@ static void wid_adjust_scrollbar(Gamep g, Widp scrollbar, Widp owner)
       owner->offset.y = (int) -miny;
       owner->offset.y -= (int) ((pct * (child_height - height)));
 
-      float n             = ((float) wid_get_tl_y(scrollbar->parent)) + (pct * ((trough_height - scrollbar_height)));
+      float const n       = ((float) wid_get_tl_y(scrollbar->parent)) + (pct * ((trough_height - scrollbar_height)));
       scrollbar->key.tl.y = (int) ceil(n);
 
       wid_tree_detach(scrollbar);
@@ -3321,7 +3321,7 @@ static void wid_adjust_scrollbar(Gamep g, Widp scrollbar, Widp owner)
       owner->offset.x = (int) -minx;
       owner->offset.x -= (int) (pct * (child_width - width));
 
-      float n             = ((float) wid_get_tl_x(scrollbar->parent)) + (pct * ((trough_width - scrollbar_width)));
+      float const n       = ((float) wid_get_tl_x(scrollbar->parent)) + (pct * ((trough_width - scrollbar_width)));
       scrollbar->key.tl.x = (int) ceil(n);
 
       wid_tree_detach(scrollbar);
@@ -3337,15 +3337,15 @@ void wid_get_children_size(Widp owner, int *w, int *h)
 {
   TRACE_NO_INDENT();
 
-  float height       = wid_get_height(owner);
-  float width        = wid_get_width(owner);
-  float child_height = 0;
-  float child_width  = 0;
-  float miny         = 0;
-  float maxy         = 0;
-  float minx         = 0;
-  float maxx         = 0;
-  bool  first        = 1u;
+  float const height       = wid_get_height(owner);
+  float const width        = wid_get_width(owner);
+  float       child_height = 0;
+  float       child_width  = 0;
+  float       miny         = 0;
+  float       maxy         = 0;
+  float       minx         = 0;
+  float       maxx         = 0;
+  bool        first        = 1u;
 
   //
   // Find out the space that the children take up then use this to
@@ -3355,10 +3355,10 @@ void wid_get_children_size(Widp owner, int *w, int *h)
 
     auto *child = iter.second;
 
-    int tminx = wid_get_tl_x(child) - wid_get_tl_x(child->parent);
-    int tminy = wid_get_tl_y(child) - wid_get_tl_y(child->parent);
-    int tmaxx = wid_get_br_x(child) - wid_get_tl_x(child->parent);
-    int tmaxy = wid_get_br_y(child) - wid_get_tl_y(child->parent);
+    int const tminx = wid_get_tl_x(child) - wid_get_tl_x(child->parent);
+    int const tminy = wid_get_tl_y(child) - wid_get_tl_y(child->parent);
+    int const tmaxx = wid_get_br_x(child) - wid_get_tl_x(child->parent);
+    int const tmaxy = wid_get_br_y(child) - wid_get_tl_y(child->parent);
 
     if (first) {
       minx  = tminx;
@@ -3456,18 +3456,18 @@ static void wid_update_internal(Gamep g, Widp w)
   // If the source of the event is the scrollbars themselves...
   //
   if (w->scrollbar_owner != nullptr) {
-    wid_adjust_scrollbar(g, w, w->scrollbar_owner);
+    wid_adjust_scrollbar(w, w->scrollbar_owner);
     wid_update_internal(g, w->scrollbar_owner);
   } else {
     //
     // If the source of the event is the owner of the scrollbars...
     //
     if (w->scrollbar_vert != nullptr) {
-      wid_adjust_scrollbar(g, w->scrollbar_vert, w);
+      wid_adjust_scrollbar(w->scrollbar_vert, w);
     }
 
     if (w->scrollbar_horiz != nullptr) {
-      wid_adjust_scrollbar(g, w->scrollbar_horiz, w);
+      wid_adjust_scrollbar(w->scrollbar_horiz, w);
     }
   }
 }
@@ -3524,7 +3524,7 @@ void wid_scroll_text(Widp w)
 // Replace the 2nd last line of text and scroll. The assumption is the last
 // line is the input line.
 //
-void wid_scroll_with_input(Gamep g, Widp w, std::string str)
+void wid_scroll_with_input(Gamep g, Widp w, const std::string &str)
 {
   TRACE_NO_INDENT();
 
@@ -3544,7 +3544,7 @@ void wid_scroll_with_input(Gamep g, Widp w, std::string str)
   if (tmp != nullptr) {
     tmp = wid_get_next(tmp);
     if (tmp != nullptr) {
-      wid_set_text(tmp, std::move(str));
+      wid_set_text(tmp, str);
     }
   }
 }
@@ -3553,14 +3553,14 @@ bool wid_receive_input(Gamep g, Widp w, const SDL_Keysym *key)
 {
   TRACE_NO_INDENT();
 
-  std::string beforecursor;
-  std::string aftercursor;
-  std::string tmp;
-  std::string origtext;
-  std::string updatedtext;
-  std::string newchar;
-  uint32_t    origlen;
-  uint32_t    cnt;
+  std::string       beforecursor;
+  std::string       aftercursor;
+  std::string const tmp;
+  std::string       origtext;
+  std::string       updatedtext;
+  std::string       newchar;
+  uint32_t          origlen;
+  uint32_t          cnt;
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
     sound_play(g, "keypress");
@@ -4296,9 +4296,9 @@ void wid_move_to_vert_pct(Gamep g, Widp w, float pct)
 {
   TRACE_NO_INDENT();
 
-  float pheight = wid_get_br_y(w->parent) - wid_get_tl_y(w->parent);
-  float at      = (wid_get_tl_y(w) - wid_get_tl_y(w->parent)) / pheight;
-  float delta   = (pct - at) * pheight;
+  float const pheight = wid_get_br_y(w->parent) - wid_get_tl_y(w->parent);
+  float const at      = (wid_get_tl_y(w) - wid_get_tl_y(w->parent)) / pheight;
+  float const delta   = (pct - at) * pheight;
 
   wid_move_delta(g, w, 0, (int) delta);
 }
@@ -4307,9 +4307,9 @@ void wid_move_to_horiz_pct(Gamep g, Widp w, float pct)
 {
   TRACE_NO_INDENT();
 
-  float pwidth = wid_get_br_x(w->parent) - wid_get_tl_x(w->parent);
-  float at     = (wid_get_tl_x(w) - wid_get_tl_x(w->parent)) / pwidth;
-  float delta  = (pct - at) * pwidth;
+  float const pwidth = wid_get_br_x(w->parent) - wid_get_tl_x(w->parent);
+  float const at     = (wid_get_tl_x(w) - wid_get_tl_x(w->parent)) / pwidth;
+  float const delta  = (pct - at) * pwidth;
 
   wid_move_delta(g, w, (int) delta, 0);
 }
@@ -5252,7 +5252,7 @@ static void wid_display(Gamep g, Widp w, uint8_t disable_scissor, uint8_t *updat
         //
         x = ((owidth - width) / 2) + otlx;
 
-        uint32_t c_width = (int) (width / (float) text.length());
+        uint32_t const c_width = (int) (width / (float) text.length());
 
         x -= (w->cursor - (text.length() / 2)) * c_width;
       } else if (wid_get_text_lhs(w)) {
@@ -5532,8 +5532,8 @@ void wid_move_to_pct(Gamep g, Widp w, float x, float y)
     y *= wid_get_height(w->parent);
   }
 
-  float dx = x - wid_get_tl_x(w);
-  float dy = y - wid_get_tl_y(w);
+  float const dx = x - wid_get_tl_x(w);
+  float const dy = y - wid_get_tl_y(w);
 
   wid_move_delta(g, w, (int) dx, (int) dy);
 }
@@ -5542,8 +5542,8 @@ void wid_move_to_abs(Gamep g, Widp w, int x, int y)
 {
   TRACE_NO_INDENT();
 
-  int dx = x - wid_get_tl_x(w);
-  int dy = y - wid_get_tl_y(w);
+  int const dx = x - wid_get_tl_x(w);
+  int const dy = y - wid_get_tl_y(w);
 
   wid_move_delta(g, w, dx, dy);
 }
@@ -5552,8 +5552,8 @@ void wid_move_to_pct_centered(Gamep g, Widp w, float ox, float oy)
 {
   TRACE_NO_INDENT();
 
-  float x = ox;
-  float y = oy;
+  float const x = ox;
+  float const y = oy;
 
   int tlx;
   int tly;

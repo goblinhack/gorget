@@ -522,7 +522,7 @@ static std::vector< spoint > dmap_solve_(const Dmap *D, const spoint start, cons
         }
       }
 
-      int c = D->val[ tx ][ ty ];
+      int const c = D->val[ tx ][ ty ];
       if (std::cmp_less_equal(c, lowest)) {
         got    = true;
         best   = t;

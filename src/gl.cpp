@@ -30,8 +30,8 @@ isize  g_fbo_size[ FBO_ENUM_MAX ];
 static FboEnum fbo_locked = FBO_NONE;
 static FboEnum fbo_last   = FBO_NONE;
 
-void MessageCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *message,
-                     const void *userParam)
+void MessageCallback(GLenum /*source*/, GLenum type, GLuint /*id*/, GLenum severity, GLsizei /*length*/,
+                     const GLchar *message, const void * /*userParam*/)
 {
   CON("GL CALLBACK: type = 0x%x, severity = 0x%x, message = %s\n", type, severity, message);
 }
@@ -412,8 +412,7 @@ static void gl_init_fbo_(FboEnum fbo, GLuint *render_buf_id, GLuint *fbo_id, GLu
   GL_ERROR_CHECK();
 }
 
-static void gl_fini_fbo_(FboEnum fbo, GLuint *render_buf_id, GLuint *fbo_id, GLuint *fbo_tex_id, GLuint tex_width,
-                         GLuint tex_height)
+static void gl_fini_fbo_(GLuint *fbo_id, GLuint *fbo_tex_id, GLuint tex_width, GLuint tex_height)
 {
   TRACE_AND_INDENT();
   DBG2("GFX: destroy FBO, size %dx%d", tex_width, tex_height);
@@ -520,7 +519,7 @@ void gl_fini_fbo(Gamep g)
 
     fbo_get_size(g, i, tex_width, tex_height);
 
-    gl_fini_fbo_(i, &g_render_buf_id[ i ], &g_fbo_id[ i ], &g_fbo_tex_id[ i ], tex_width, tex_height);
+    gl_fini_fbo_(&g_fbo_id[ i ], &g_fbo_tex_id[ i ], tex_width, tex_height);
     g_fbo_size[ i ] = isize(0, 0);
   }
 
@@ -1421,10 +1420,10 @@ static void gl_push(float **P, float *p_end, bool first_vertex, float tex_left, 
                     uint8_t g1, uint8_t b1, uint8_t a1, uint8_t r2, uint8_t g2, uint8_t b2, uint8_t a2, uint8_t r3,
                     uint8_t g3, uint8_t b3, uint8_t a3, uint8_t r4, uint8_t g4, uint8_t b4, uint8_t a4)
 {
-  spoint tl(left, top);
-  spoint tr(right, top);
-  spoint bl(left, bottom);
-  spoint br(right, bottom);
+  spoint const tl(left, top);
+  spoint const tr(right, top);
+  spoint const bl(left, bottom);
+  spoint const br(right, bottom);
 
   gl_push(P, p_end, first_vertex, tex_left, tex_top, tex_right, tex_bottom, tl, tr, bl, br, r1, g1, b1, a1, r2, g2,
           b2, a2, r3, g3, b3, a3, r4, g4, b4, a4);
@@ -1447,17 +1446,17 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
 
   buf_tex = tex;
 
-  uint8_t r = c.r;
-  uint8_t g = c.g;
-  uint8_t b = c.b;
-  uint8_t a = c.a;
+  uint8_t const r = c.r;
+  uint8_t const g = c.g;
+  uint8_t const b = c.b;
+  uint8_t const a = c.a;
 
   gl_push(&bufp, bufp_end, first_vertex, texMinX, texMinY, texMaxX, texMaxY, left, top, right, bottom, r, g, b, a, r,
           g, b, a, r, g, b, a, r, g, b, a);
 }
 
 void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLshort pixMinX, GLshort pixMinY,
-          GLshort pixMaxX, GLshort pixMaxY, const color &c, LightPixels *light_pixels, bool blit_flush_per_line)
+          GLshort pixMaxX, GLshort pixMaxY, const color & /*c*/, LightPixels *light_pixels, bool blit_flush_per_line)
 {
   if (unlikely(! buf_tex)) {
     blit_init();
@@ -1489,15 +1488,15 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
 
     for (auto x = 0; x < LIGHT_PIXEL; x++) {
 
-      auto *const pixel = &light_pixels->pixel[ x ][ y ];
-      uint8_t     r     = pixel->r > 255 ? 255 : (uint8_t) (int) pixel->r;
-      uint8_t     g     = pixel->g > 255 ? 255 : (uint8_t) (int) pixel->g;
-      uint8_t     b     = pixel->b > 255 ? 255 : (uint8_t) (int) pixel->b;
+      auto *const   pixel = &light_pixels->pixel[ x ][ y ];
+      uint8_t const r     = pixel->r > 255 ? 255 : (uint8_t) (int) pixel->r;
+      uint8_t const g     = pixel->g > 255 ? 255 : (uint8_t) (int) pixel->g;
+      uint8_t const b     = pixel->b > 255 ? 255 : (uint8_t) (int) pixel->b;
 
-      float texMinX2 = texMinX + (x * texDiffX);
-      float texMaxX2 = texMinX + ((x + 1) * texDiffX);
-      auto  pixMinX2 = (GLshort) ((float) pixMinX + ((float) x * pixDiffX));
-      auto  pixMaxX2 = (GLshort) ((float) pixMinX + ((float) (x + 1) * pixDiffX));
+      float const texMinX2 = texMinX + (x * texDiffX);
+      float const texMaxX2 = texMinX + ((x + 1) * texDiffX);
+      auto        pixMinX2 = (GLshort) ((float) pixMinX + ((float) x * pixDiffX));
+      auto        pixMaxX2 = (GLshort) ((float) pixMinX + ((float) (x + 1) * pixDiffX));
 
       gl_push(&bufp, bufp_end, first_vertex, texMinX2, texMinY2, texMaxX2, texMaxY2, pixMinX2, pixMinY2, pixMaxX2,
               pixMaxY2, r, g, b, a, r, g, b, a, r, g, b, a, r, g, b, a);

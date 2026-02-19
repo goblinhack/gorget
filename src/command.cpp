@@ -392,7 +392,8 @@ uint8_t command_handle(Gamep g, const std::string &input, std::string *expanded_
 
   buf[ 0 ] = '\0';
 
-  uint8_t r = command_handle(g, input.c_str(), &buf[ 0 ], show_ambiguous, show_complete, execute_command, context);
+  uint8_t const r
+      = command_handle(g, input.c_str(), &buf[ 0 ], show_ambiguous, show_complete, execute_command, context);
 
   if (expanded_text != nullptr) {
     *expanded_text = std::string(buf);

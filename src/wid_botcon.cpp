@@ -74,7 +74,7 @@ static void wid_botcon_scroll(Widp w, const std::string &str)
   }
 }
 
-static void wid_botcon_replace(Gamep g, Widp w, const std::string &str)
+static void wid_botcon_replace(Widp w, const std::string &str)
 {
   TRACE_NO_INDENT();
   Widp tmp {};
@@ -127,13 +127,13 @@ static void wid_botcon_log_(const std::string &s)
 
   if (! curr_msg.empty() && length_without_format(curr_msg) + length_without_format(s) + 1 < UI_BOTCON_WIDTH) {
     curr_msg = curr_msg + " " + s;
-    wid_botcon_replace(g, wid_botcon_input_line, curr_msg);
+    wid_botcon_replace(wid_botcon_input_line, curr_msg);
     last_msg       = "";
     last_msg_count = 0;
   } else if (curr_msg.empty()) {
     last_msg       = s;
     last_msg_count = 0;
-    wid_botcon_replace(g, wid_botcon_input_line, s);
+    wid_botcon_replace(wid_botcon_input_line, s);
   } else {
     last_msg       = s;
     last_msg_count = 0;
@@ -165,7 +165,7 @@ void wid_botcon_log(const std::string &s)
     return;
   }
 
-  int chars_per_line = UI_BOTCON_WIDTH;
+  int const chars_per_line = UI_BOTCON_WIDTH;
 
   if (TERM_WIDTH == 0) {
     CROAK("No TERM_WIDTH set");
@@ -189,7 +189,7 @@ void wid_botcon_log(const std::string &s)
 static void wid_botcon_wid_create(Gamep g)
 {
   TRACE_NO_INDENT();
-  int h = UI_BOTCON_HEIGHT;
+  int const h = UI_BOTCON_HEIGHT;
 
   if (wid_botcon_window != nullptr) {
     wid_botcon_fini(g);

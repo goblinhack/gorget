@@ -31,7 +31,7 @@ Thingp thing_get(Gamep g, Levelsp v, Levelp l, spoint p, int slot)
     return nullptr;
   }
 
-  ThingId id = l->thing_id[ p.x ][ p.y ][ slot ];
+  ThingId const id = l->thing_id[ p.x ][ p.y ][ slot ];
   if (id == 0U) {
     return nullptr;
   }
@@ -50,7 +50,7 @@ Thingp thing_get_at_safe(Gamep g, Levelsp v, Levelp l, spoint p, int slot)
   TRACE_NO_INDENT(); // expensive
 #endif
 
-  ThingId id = l->thing_id[ p.x ][ p.y ][ slot ];
+  ThingId const id = l->thing_id[ p.x ][ p.y ][ slot ];
 
   if (id == 0U) {
     return nullptr;
@@ -70,7 +70,7 @@ Thingp thing_and_tp_get_at_safe(Gamep g, Levelsp v, Levelp l, spoint p, int slot
   TRACE_NO_INDENT(); // expensive
 #endif
 
-  ThingId id = l->thing_id[ p.x ][ p.y ][ slot ];
+  ThingId const id = l->thing_id[ p.x ][ p.y ][ slot ];
 
   if (id == 0U) {
     *out = nullptr;
@@ -111,7 +111,7 @@ Thingp thing_and_tp_get_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot, Tpp
     return nullptr;
   }
 
-  ThingId id = l->thing_id[ p.x ][ p.y ][ slot ];
+  ThingId const id = l->thing_id[ p.x ][ p.y ][ slot ];
 
   if (id == 0U) {
     return nullptr;

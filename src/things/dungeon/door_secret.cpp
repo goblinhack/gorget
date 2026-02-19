@@ -49,8 +49,8 @@ bool tp_load_door_secret()
   TRACE_NO_INDENT();
 
   for (auto variant = 1; variant <= WALL_VARIANTS; variant++) {
-    std::string name = "door_secret" + std::to_string(variant);
-    auto       *tp   = tp_load(name);
+    std::string const name = "door_secret" + std::to_string(variant);
+    auto             *tp   = tp_load(name);
     // begin sort marker1 {
     thing_description_set(tp, tp_door_secret_description_get);
     thing_on_open_request_set(tp, tp_door_secret_on_open_request);

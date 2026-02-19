@@ -12,7 +12,7 @@
 //
 // Ok to land on this spot?
 //
-[[nodiscard]] static bool thing_ok_landing_spot(Gamep g, Levelsp v, Levelp l, Thingp t, spoint p)
+[[nodiscard]] static bool thing_ok_landing_spot(Gamep g, Levelsp v, Levelp l, spoint p)
 {
   TRACE_NO_INDENT();
 
@@ -39,7 +39,7 @@ static spoint thing_choose_landing_spot(Gamep g, Levelsp v, Levelp l, Thingp t)
   int  dist = 1;
 
   for (;;) {
-    if (thing_ok_landing_spot(g, v, l, t, at)) {
+    if (thing_ok_landing_spot(g, v, l, at)) {
       return at;
     }
 
@@ -49,7 +49,7 @@ static spoint thing_choose_landing_spot(Gamep g, Levelsp v, Levelp l, Thingp t)
         q.x = at.x + dx;
         q.y = at.y + dy;
 
-        if (thing_ok_landing_spot(g, v, l, t, q)) {
+        if (thing_ok_landing_spot(g, v, l, q)) {
           return q;
         }
       }

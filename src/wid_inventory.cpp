@@ -28,7 +28,8 @@ static void wid_inventory_destroy(Gamep g)
   }
 }
 
-static void wid_inventory_mouse_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
+static void wid_inventory_mouse_over_begin(Gamep g, Widp w, int /*relx*/, int /*rely*/, int /*wheelx*/,
+                                           int /*wheely*/)
 {
   TRACE_NO_INDENT();
 
@@ -217,8 +218,8 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
 
   {
     TRACE_NO_INDENT();
-    spoint tl((TERM_WIDTH / 2) - left_half, (TERM_HEIGHT / 2) - top_half);
-    spoint br((TERM_WIDTH / 2) + right_half - 1, (TERM_HEIGHT / 2) + bot_half - 1);
+    spoint const tl((TERM_WIDTH / 2) - left_half, (TERM_HEIGHT / 2) - top_half);
+    spoint const br((TERM_WIDTH / 2) + right_half - 1, (TERM_HEIGHT / 2) + bot_half - 1);
 
     wid_inventory_window = wid_new_window(g, "wid inventory");
     wid_set_pos(wid_inventory_window, tl, br);
@@ -231,9 +232,9 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
 
   {
     TRACE_NO_INDENT();
-    auto  *w = wid_new_square_button(g, wid_inventory_window, "text");
-    spoint tl(0, y_at);
-    spoint br(inventory_width, y_at);
+    auto        *w = wid_new_square_button(g, wid_inventory_window, "text");
+    spoint const tl(0, y_at);
+    spoint const br(inventory_width, y_at);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_FMT_STR "Mouse select an item or press key a-z");
     wid_set_style(w, UI_WID_STYLE_NORMAL);
@@ -257,9 +258,9 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
       Tilep tile = tp_tiles_get(tp, THING_ANIM_IDLE, 0);
       if (tile != nullptr) {
         TRACE_NO_INDENT();
-        auto  *w = wid_new_square_button(g, wid_inventory_window, "Icon");
-        spoint tl(1, y_at);
-        spoint br(2, y_at + button_height);
+        auto        *w = wid_new_square_button(g, wid_inventory_window, "Icon");
+        spoint const tl(1, y_at);
+        spoint const br(2, y_at + button_height);
         wid_set_tile(TILE_LAYER_BG_0, w, tile);
         wid_set_style(w, button_style);
         wid_set_pos(w, tl, br);
@@ -287,8 +288,8 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
       s += (char) ('a' + _n_);
       s += ')';
 
-      spoint tl(3, y_at);
-      spoint br(6, y_at + button_height);
+      spoint const tl(3, y_at);
+      spoint const br(6, y_at + button_height);
       wid_set_text_lhs(w, 1u);
 
       wid_set_mode(w, WID_MODE_NORMAL);
@@ -329,8 +330,8 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
         TRACE_NO_INDENT();
         auto *w = wid_new_button(g, wid_inventory_window, "Item");
 
-        spoint tl(6, y_at);
-        spoint br(button_width, y_at + button_height);
+        spoint const tl(6, y_at);
+        spoint const br(button_width, y_at + button_height);
         wid_set_text_lhs(w, 1u);
         wid_set_pos(w, tl, br);
         wid_set_text(w, s);
@@ -354,8 +355,8 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
     TRACE_NO_INDENT();
     auto *w = wid_new_back_button(g, wid_inventory_window, "BACK");
 
-    spoint tl((inventory_width / 2) - 4, inventory_height - 4);
-    spoint br((inventory_width / 2) + 3, inventory_height - 2);
+    spoint const tl((inventory_width / 2) - 4, inventory_height - 4);
+    spoint const br((inventory_width / 2) + 3, inventory_height - 2);
     wid_set_on_mouse_up(w, wid_inventory_back);
     wid_set_pos(w, tl, br);
   }

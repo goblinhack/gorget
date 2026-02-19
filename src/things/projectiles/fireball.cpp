@@ -19,14 +19,14 @@ static void tp_fireball_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp t)
   thing_sound_play(g, v, l, t, "fireball");
 }
 
-static void tp_fireball_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
+static void tp_fireball_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent & /*e*/)
 {
   TRACE_NO_INDENT();
 
   thing_sound_play(g, v, l, t, "explosion");
 }
 
-static std::string tp_fireball_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static std::string tp_fireball_description_get(Gamep g, Levelsp v, Levelp l, Thingp /*t*/)
 {
   TRACE_NO_INDENT();
 

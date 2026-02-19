@@ -22,7 +22,7 @@ bool wid_tiles_init()
   return true;
 }
 
-static void wid_tiles_destroy(wid_tilesp w) { TRACE_NO_INDENT(); }
+static void wid_tiles_destroy() { TRACE_NO_INDENT(); }
 
 void wid_tiles_fini()
 {
@@ -33,7 +33,7 @@ void wid_tiles_fini()
     auto iter = wid_tiles_all.begin();
 
     while (iter != wid_tiles_all.end()) {
-      wid_tiles_destroy(iter->second);
+      wid_tiles_destroy();
       iter = wid_tiles_all.erase(iter);
     }
   }
@@ -71,10 +71,10 @@ wid_tilesp wid_tiles_load(const std::string &name, float scale)
 
   Texp tex = tile_tex(a_tile);
 
-  float tile_w = tile_width(a_tile);
-  float tile_h = tile_height(a_tile);
-  float tex_w  = tex_get_width(tex);
-  float tex_h  = tex_get_height(tex);
+  float const tile_w = tile_width(a_tile);
+  float const tile_h = tile_height(a_tile);
+  float const tex_w  = tex_get_width(tex);
+  float const tex_h  = tex_get_height(tex);
 
   t->across = (int) (tex_w / tile_w);
   t->down   = (int) (tex_h / tile_h);

@@ -451,7 +451,7 @@ bool player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, spo
   if (level_is_needs_move_confirm(g, v, l, to)) {
     if (! thing_is_ethereal(me) && ! thing_is_floating(me) && ! thing_is_flying(me)) {
       if (level_is_chasm(g, v, l, to)) {
-        std::string msg = "Do you really want to leap into a chasm?";
+        std::string const msg = "Do you really want to leap into a chasm?";
         player_state_change(g, v, l, PLAYER_STATE_MOVE_CONFIRM_REQUESTED);
         game_state_change(g, STATE_MOVE_WARNING_MENU, "need warning confirmation");
         if (g_opt_tests) {
@@ -463,7 +463,7 @@ bool player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, spo
       }
 
       if (level_alive_is_brazier(g, v, l, to)) {
-        std::string msg = "Do you really want to kick over the brazier?";
+        std::string const msg = "Do you really want to kick over the brazier?";
         player_state_change(g, v, l, PLAYER_STATE_MOVE_CONFIRM_REQUESTED);
         game_state_change(g, STATE_MOVE_WARNING_MENU, "need warning confirmation");
         if (g_opt_tests) {
@@ -481,7 +481,7 @@ bool player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, spo
         if (level_is_lava(g, v, l, to)) {
           if (! thing_is_immune_to(me, THING_EVENT_HEAT_DAMAGE)
               && ! thing_is_immune_to(me, THING_EVENT_FIRE_DAMAGE)) {
-            std::string msg = "Do you really want to leap into lava?";
+            std::string const msg = "Do you really want to leap into lava?";
             player_state_change(g, v, l, PLAYER_STATE_MOVE_CONFIRM_REQUESTED);
             game_state_change(g, STATE_MOVE_WARNING_MENU, "need warning confirmation");
             if (g_opt_tests) {
@@ -602,8 +602,8 @@ static void player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy)
     return;
   }
 
-  auto   at = thing_at(me);
-  spoint to(at.x + dx, at.y + dy);
+  auto         at = thing_at(me);
+  spoint const to(at.x + dx, at.y + dy);
 
   (void) player_move_try(g, v, l, me, to, true);
 
@@ -650,8 +650,8 @@ void player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what)
   if (v->cursor_visible) {
     target = v->cursor_at;
   } else {
-    fpoint delta = thing_get_direction(g, v, l, me);
-    target       = make_spoint(thing_real_at(me) + delta);
+    fpoint const delta = thing_get_direction(g, v, l, me);
+    target             = make_spoint(thing_real_at(me) + delta);
   }
 
   player_move_reset(g, v, l);
@@ -857,7 +857,7 @@ void player_reached_entrance(Gamep g, Levelsp v, Levelp l)
 //
 // Handle the me falling out of the level
 //
-void player_fell(Gamep g, Levelsp v, Levelp l, Levelp next_level, Thingp me)
+void player_fell(Gamep g, Levelsp v, Levelp l, Levelp next_level, Thingp /*me*/)
 {
   TRACE_NO_INDENT();
 

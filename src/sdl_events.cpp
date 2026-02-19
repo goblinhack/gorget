@@ -19,7 +19,7 @@
 
 static struct SDL_Keysym last_key_pressed;
 
-int sdl_filter_events(void *userdata, SDL_Event *event)
+int sdl_filter_events(void * /*userdata*/, SDL_Event *event)
 {
   TRACE_NO_INDENT();
 
@@ -50,7 +50,7 @@ int sdl_filter_events(void *userdata, SDL_Event *event)
   }
 }
 
-static void __attribute__((noinline)) sdl_event_keydown_repeat(Gamep g, SDL_Keysym *key, SDL_Event *event)
+static void __attribute__((noinline)) sdl_event_keydown_repeat(SDL_Keysym *key, SDL_Event *event)
 {
   TRACE_NO_INDENT();
 
@@ -77,7 +77,7 @@ static void __attribute__((noinline)) sdl_event_keydown_repeat(Gamep g, SDL_Keys
   sdl.key_repeat_this_key = time_ms();
 }
 
-[[nodiscard]] static bool __attribute__((noinline)) sdl_event_keydown_same_key(Gamep g, SDL_Keysym *key)
+[[nodiscard]] static bool __attribute__((noinline)) sdl_event_keydown_same_key(SDL_Keysym *key)
 {
   TRACE_NO_INDENT();
 
@@ -101,7 +101,7 @@ static void __attribute__((noinline)) sdl_event_keydown_repeat(Gamep g, SDL_Keys
   return true;
 }
 
-static void __attribute__((noinline)) sdl_event_keydown_handler(Gamep g, SDL_Keysym *key, SDL_Event *event)
+static void __attribute__((noinline)) sdl_event_keydown_handler(Gamep g, SDL_Keysym *key)
 {
   TRACE_NO_INDENT();
 
@@ -126,8 +126,8 @@ static void __attribute__((noinline)) sdl_event_keydown(Gamep g, SDL_Keysym *key
   //
   // SDL2 has no auto repeat.
   //
-  if (sdl_event_keydown_same_key(g, key)) {
-    sdl_event_keydown_repeat(g, key, event);
+  if (sdl_event_keydown_same_key(key)) {
+    sdl_event_keydown_repeat(key, event);
   } else {
     //
     // Pressing a different key
@@ -135,7 +135,7 @@ static void __attribute__((noinline)) sdl_event_keydown(Gamep g, SDL_Keysym *key
     sdl.key_repeat_count = 0;
   }
 
-  sdl_event_keydown_handler(g, key, event);
+  sdl_event_keydown_handler(g, key);
 }
 
 static void __attribute__((noinline)) sdl_event_keyup(Gamep g, SDL_Keysym *key, SDL_Event *event)
@@ -171,7 +171,7 @@ static void __attribute__((noinline)) sdl_event_keyup(Gamep g, SDL_Keysym *key, 
   sdl.shift_held = ((key->mod & KMOD_SHIFT) != 0) ? 1 : 0;
 }
 
-static void __attribute__((noinline)) sdl_event_mousemotion(Gamep g, SDL_Keysym *key, SDL_Event *event,
+static void __attribute__((noinline)) sdl_event_mousemotion(Gamep g, SDL_Event *event,
                                                             bool &processed_mouse_motion_event)
 {
   TRACE_NO_INDENT();
@@ -205,7 +205,7 @@ static void __attribute__((noinline)) sdl_event_mousemotion(Gamep g, SDL_Keysym 
   }
 }
 
-static void __attribute__((noinline)) sdl_event_mousedown(Gamep g, SDL_Keysym *key, SDL_Event *event)
+static void __attribute__((noinline)) sdl_event_mousedown(Gamep g, SDL_Event *event)
 {
   TRACE_NO_INDENT();
 
@@ -226,7 +226,7 @@ static void __attribute__((noinline)) sdl_event_mousedown(Gamep g, SDL_Keysym *k
   sdl.mouse_down_when = now;
 }
 
-static void __attribute__((noinline)) sdl_event_mouseup(Gamep g, SDL_Keysym *key, SDL_Event *event)
+static void __attribute__((noinline)) sdl_event_mouseup(Gamep g, SDL_Event *event)
 {
   TRACE_NO_INDENT();
 
@@ -261,15 +261,15 @@ void sdl_event(Gamep g, SDL_Event *event, bool &processed_mouse_motion_event)
       break;
     case SDL_MOUSEMOTION :
       // newline
-      sdl_event_mousemotion(g, key, event, processed_mouse_motion_event);
+      sdl_event_mousemotion(g, event, processed_mouse_motion_event);
       break;
     case SDL_MOUSEBUTTONDOWN :
       DBG("SDL: Event mouse button down");
-      sdl_event_mousedown(g, key, event);
+      sdl_event_mousedown(g, event);
       break;
     case SDL_MOUSEBUTTONUP :
       DBG("SDL: Event mouse button up");
-      sdl_event_mouseup(g, key, event);
+      sdl_event_mouseup(g, event);
       break;
     case SDL_TEXTINPUT :
       {
@@ -343,8 +343,8 @@ void sdl_event(Gamep g, SDL_Event *event, bool &processed_mouse_motion_event)
         sdl.event_count++;
         DBG("SDL: Joystick %d: Axis %d moved by %d", event->jaxis.which, event->jaxis.axis, event->jaxis.value);
 
-        int axis  = event->jaxis.axis;
-        int value = event->jaxis.value;
+        int const axis  = event->jaxis.axis;
+        int const value = event->jaxis.value;
 
         if (sdl.joy_axes == nullptr) {
           sdl.joy_axes = (int *) myzalloc(SIZEOF(int) * sdl.joy_naxes, "joy axes");
@@ -610,11 +610,11 @@ void sdl_key_repeat_events(Gamep g)
   right_held_prev = right_held;
   left_held_prev  = left_held;
 
-  bool fire  = (fire_pressed != 0) || fire_held;
-  bool up    = (up_pressed != 0) || up_held;
-  bool down  = (down_pressed != 0) || down_held;
-  bool left  = (left_pressed != 0) || left_held;
-  bool right = (right_pressed != 0) || right_held;
+  bool const fire  = (fire_pressed != 0) || fire_held;
+  bool const up    = (up_pressed != 0) || up_held;
+  bool const down  = (down_pressed != 0) || down_held;
+  bool const left  = (left_pressed != 0) || left_held;
+  bool const right = (right_pressed != 0) || right_held;
 
   static ts_t last_movement_keypress = 0;
 

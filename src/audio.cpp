@@ -26,15 +26,15 @@ bool audio_init()
   // you might use MIX_DEFAULT_FREQUENCY(22050) since that is a good value
   // for most games.
   //
-  int audio_freq   = MIX_DEFAULT_FREQUENCY;
-  int audio_format = MIX_DEFAULT_FORMAT;
+  int const audio_freq   = MIX_DEFAULT_FREQUENCY;
+  int const audio_format = MIX_DEFAULT_FORMAT;
 
   //
   // Number of sound channels in output.
   // Set to 2 for stereo, 1 for mono. This has nothing to do with
   // mixing channels.
   //
-  int channels = 2;
+  int const channels = 2;
 
   //
   // chunksize is the size of each mixed sample. The smaller this is the
@@ -45,7 +45,7 @@ bool audio_init()
   // playing music.
   //
   // int chunksize = 4096;
-  int chunksize = 1024; // less latency but might be choppy
+  int const chunksize = 1024; // less latency but might be choppy
 
   if (! audio_init_done) {
     if (Mix_OpenAudio(audio_freq, audio_format, channels, chunksize) != 0) {

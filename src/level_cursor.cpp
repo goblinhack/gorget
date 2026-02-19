@@ -54,7 +54,7 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
 {
   TRACE_AND_INDENT();
 
-  static std::vector< spoint > empty;
+  static std::vector< spoint > const empty;
 
   bool   prev_tile_was_hazard = {};
   Dmap   dmap {};
@@ -112,7 +112,7 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
       if (thing_vision_player_has_seen_tile(g, v, l, end)) {
         for (auto y = miny; y < maxy; y++) {
           for (auto x = minx; x < maxx; x++) {
-            spoint p(x, y);
+            spoint const p(x, y);
 
             if (level_alive_is_obs_to_cursor_path(g, v, l, p)) {
               dmap.val[ x ][ y ] = DMAP_IS_WALL;
@@ -128,7 +128,7 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
         //
         for (auto y = miny; y < maxy; y++) {
           for (auto x = minx; x < maxx; x++) {
-            spoint p(x, y);
+            spoint const p(x, y);
 
             if (level_alive_is_obs_to_cursor_path(g, v, l, p) || level_alive_is_cursor_path_hazard(g, v, l, p)) {
               dmap.val[ x ][ y ] = DMAP_IS_WALL;
@@ -145,7 +145,7 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
       //
       for (auto y = miny; y < maxy; y++) {
         for (auto x = minx; x < maxx; x++) {
-          spoint p(x, y);
+          spoint const p(x, y);
 
           //
           // Any tile will do as long as not consecutive hazard tiles.
@@ -183,7 +183,7 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
         //
         for (auto y = miny; y < maxy; y++) {
           for (auto x = minx; x < maxx; x++) {
-            spoint p(x, y);
+            spoint const p(x, y);
 
             if (level_alive_is_obs_to_cursor_path(g, v, l, p)) {
               dmap.val[ x ][ y ] = DMAP_IS_WALL;
@@ -196,8 +196,8 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
         //
         // Here the cursor is over a hazard. Plot a course that allows travel via other hazards.
         //
-        bool                               got_one = false;
-        std::initializer_list< ThingFlag > init    = {is_lava, is_chasm, is_water};
+        bool                                     got_one = false;
+        std::initializer_list< ThingFlag > const init    = {is_lava, is_chasm, is_water};
 
         for (auto i : init) {
           if (level_flag(g, v, l, i, spoint(v->cursor_at.x, v->cursor_at.y)) != nullptr) {
@@ -212,7 +212,7 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
             //
             for (auto y = miny; y < maxy; y++) {
               for (auto x = minx; x < maxx; x++) {
-                spoint p(x, y);
+                spoint const p(x, y);
 
                 //
                 // But we still can't walk through walls to get to the hazard
@@ -244,7 +244,7 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
         if (! got_one) {
           for (auto y = miny; y < maxy; y++) {
             for (auto x = minx; x < maxx; x++) {
-              spoint p(x, y);
+              spoint const p(x, y);
 
               if (level_alive_is_obs_to_cursor_path(g, v, l, p) || level_is_cursor_path_hazard(g, v, l, p)) {
                 dmap.val[ x ][ y ] = DMAP_IS_WALL;
@@ -260,7 +260,7 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
         //
         for (auto y = miny; y < maxy; y++) {
           for (auto x = minx; x < maxx; x++) {
-            spoint p(x, y);
+            spoint const p(x, y);
 
             //
             // Avoid hazards
@@ -281,7 +281,7 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
   //
   for (auto y = miny; y < maxy; y++) {
     for (auto x = minx; x < maxx; x++) {
-      spoint p(x, y);
+      spoint const p(x, y);
 
       if (DEBUG) {
         //
@@ -354,7 +354,7 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
 //
 static std::vector< spoint > level_cursor_path_draw_line(Gamep g, Levelsp v, Levelp l, spoint start, spoint end)
 {
-  static std::vector< spoint > empty;
+  static std::vector< spoint > const empty;
 
   auto *player = thing_player(g);
   if (player == nullptr) {

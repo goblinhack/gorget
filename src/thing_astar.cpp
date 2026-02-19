@@ -210,7 +210,7 @@ void Astar::eval_neighbor(Node *current, const spoint &delta)
     return;
   }
 
-  Cost cost = current->cost.cost + heuristic(next_hop);
+  Cost const cost = current->cost.cost + heuristic(next_hop);
 
   Node *neighbor = open[ next_hop.x ][ next_hop.y ];
   if (neighbor == nullptr) {

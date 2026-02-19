@@ -98,6 +98,10 @@ tidy:
 			performance-*,\
 			cppcoreguidelines-no-malloc,\
 			misc-redundant-expression,\
+			misc-const-correctness,\
+			misc-static-assert,\
+			misc-unused-parameters,\
+			misc-misplaced-const,\
 			modernize-avoid-bind,\
 			modernize-avoid-c-arrays,\
 			modernize-concat-nested-namespaces,\

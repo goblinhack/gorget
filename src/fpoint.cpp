@@ -43,7 +43,7 @@ float fpoint::length() const { return (sqrt((x * x) + (y * y))); }
 
 void fpoint::unit()
 {
-  float len = sqrt((x * x) + (y * y));
+  float const len = sqrt((x * x) + (y * y));
   x /= len;
   y /= len;
 }
@@ -56,7 +56,7 @@ float distance(const fpoint &a, const fpoint &b) { return (((float) DISTANCEf(a.
 //
 float angle_radians(const fpoint &p)
 {
-  float theta = asin(p.y / p.length());
+  float const theta = asin(p.y / p.length());
 
   if (p.x > 0) {
     if (p.y > 0) {
@@ -74,12 +74,12 @@ fpoint rotate_radians(float angle, const fpoint &p, const fpoint &O)
   sincosf(angle, &s, &c);
 
   // translate point back to origin:
-  float X = p.x - O.x;
-  float Y = p.y - O.y;
+  float const X = p.x - O.x;
+  float const Y = p.y - O.y;
 
   // rotate point
-  float xnew = (X * c) - (Y * s);
-  float ynew = (X * s) + (Y * c);
+  float const xnew = (X * c) - (Y * s);
+  float const ynew = (X * s) + (Y * c);
 
   // translate point back:
   return fpoint(xnew + O.x, ynew + O.y);
@@ -91,25 +91,25 @@ fpoint rotate_radians(const fpoint &p, float angle)
   float c;
   sincosf(angle, &s, &c);
 
-  float X = p.x;
-  float Y = p.y;
+  float const X = p.x;
+  float const Y = p.y;
 
   // rotate point
-  float xnew = (X * c) - (Y * s);
-  float ynew = (X * s) + (Y * c);
+  float const xnew = (X * c) - (Y * s);
+  float const ynew = (X * s) + (Y * c);
 
   return fpoint(xnew, ynew);
 }
 
 fpoint normal(const fpoint &p)
 {
-  float length = sqrt((p.x * p.x) + (p.y * p.y));
+  float const length = sqrt((p.x * p.x) + (p.y * p.y));
   return fpoint(p.x / length, p.y / length);
 }
 
 fpoint unit(const fpoint &p)
 {
-  float length = sqrt((p.x * p.x) + (p.y * p.y));
+  float const length = sqrt((p.x * p.x) + (p.y * p.y));
   return fpoint(p.x / length, p.y / length);
 }
 

@@ -88,10 +88,10 @@ void wid_dead_select(Gamep g, const std::string &reason)
 
   game_state_change(g, STATE_DEAD_MENU, "player is dead");
 
-  auto   h = TERM_HEIGHT / 2;
-  spoint tl(0, h + 1);
-  spoint br(UI_LEFTBAR_WIDTH - 1, TERM_HEIGHT - 1);
-  auto   width = br.x - tl.x - 1;
+  auto         h = TERM_HEIGHT / 2;
+  spoint const tl(0, h + 1);
+  spoint const br(UI_LEFTBAR_WIDTH - 1, TERM_HEIGHT - 1);
+  auto         width = br.x - tl.x - 1;
 
   wid_dead_window = new WidPopup(g, "Game dead", tl, br, nullptr, "", false, false);
 
@@ -120,10 +120,10 @@ void wid_dead_select(Gamep g, const std::string &reason)
   // Center the player name
   //
   {
-    std::string text    = capitalize(game_player_name_get(g));
-    int         pad     = grave_text_width - text.size();
-    int         lhs_pad = pad / 2;
-    int         rhs_pad = pad - lhs_pad;
+    std::string const text    = capitalize(game_player_name_get(g));
+    int const         pad     = grave_text_width - text.size();
+    int               lhs_pad = pad / 2;
+    int               rhs_pad = pad - lhs_pad;
 
     std::string grave_name = "|";
     while ((lhs_pad--) != 0) {
@@ -197,12 +197,12 @@ void wid_dead_select(Gamep g, const std::string &reason)
   // Center the death mockery
   //
   {
-    std::vector< std::string > d = split(capitalize(epitaph), grave_text_width);
+    std::vector< std::string > const d = split(capitalize(epitaph), grave_text_width);
 
     for (const auto &text : d) {
-      int pad     = grave_text_width - text.size();
-      int lhs_pad = pad / 2;
-      int rhs_pad = pad - lhs_pad;
+      int const pad     = grave_text_width - text.size();
+      int       lhs_pad = pad / 2;
+      int       rhs_pad = pad - lhs_pad;
 
       std::string death_reason = " |";
       while ((lhs_pad--) != 0) {
@@ -225,12 +225,12 @@ void wid_dead_select(Gamep g, const std::string &reason)
   // Center the death reason
   //
   {
-    std::vector< std::string > d = split(capitalize(reason), grave_text_width);
+    std::vector< std::string > const d = split(capitalize(reason), grave_text_width);
 
     for (const auto &text : d) {
-      int pad     = grave_text_width - text.size();
-      int lhs_pad = pad / 2;
-      int rhs_pad = pad - lhs_pad;
+      int const pad     = grave_text_width - text.size();
+      int       lhs_pad = pad / 2;
+      int       rhs_pad = pad - lhs_pad;
 
       std::string death_reason = " |";
       while ((lhs_pad--) != 0) {
@@ -260,8 +260,8 @@ void wid_dead_select(Gamep g, const std::string &reason)
   auto *w = wid_new_menu_button(g, p, "dead");
 
   {
-    spoint tl2(9, h - 7);
-    spoint br2(width - 11, h - 5);
+    spoint const tl2(9, h - 7);
+    spoint const br2(width - 11, h - 5);
 
     wid_set_pos(w, tl2, br2);
     wid_set_on_mouse_up(w, wid_dead_mouse_up);

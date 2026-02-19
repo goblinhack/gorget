@@ -53,25 +53,26 @@ bool level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int
   //
   auto wall_variant = tp_variant_get(tp_wall);
 
-  bool is_test_level = g_opt_tests || l->is_fixed_level;
-  bool need_deco     = ! is_test_level;
+  bool const is_test_level = g_opt_tests || l->is_fixed_level;
+  bool const need_deco     = ! is_test_level;
 
   for (auto y = 0; y < h; y++) {
     for (auto x = 0; x < w; x++) {
-      auto   offset = (w * y) + x;
-      auto   c      = in[ offset ];
-      Tpp    tp     = nullptr;
-      spoint at(x, y);
+      auto         offset = (w * y) + x;
+      auto         c      = in[ offset ];
+      Tpp          tp     = nullptr;
+      spoint const at(x, y);
 
       l->debug[ x ][ y ] = c;
 
-      bool need_floor    = false;
-      bool need_entrance = false;
-      bool need_corridor = false;
-      bool need_water    = false;
-      bool need_dirt     = false;
-      bool need_foliage  = false;
-      bool need_border   = ! is_test_level && ((x == 0) || (x == MAP_WIDTH - 1) || (y == 0) || (y == MAP_HEIGHT - 1));
+      bool       need_floor    = false;
+      bool       need_entrance = false;
+      bool       need_corridor = false;
+      bool       need_water    = false;
+      bool       need_dirt     = false;
+      bool       need_foliage  = false;
+      bool const need_border
+          = ! is_test_level && ((x == 0) || (x == MAP_WIDTH - 1) || (y == 0) || (y == MAP_HEIGHT - 1));
 
       auto o = overrides.find(c);
       if (o != overrides.end()) {
@@ -326,7 +327,7 @@ bool level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, con
 {
   TRACE_NO_INDENT();
 
-  if (! level_populate(g, v, l, level_gen, MAP_WIDTH, MAP_HEIGHT, in, std::move(overrides))) {
+  if (! level_populate(g, v, l, level_gen, MAP_WIDTH, MAP_HEIGHT, in, overrides)) {
     ERR("level populate failed");
     return false;
   }

@@ -12,14 +12,14 @@
   TEST_LOG(t, "begin");
   TRACE_AND_INDENT();
 
-  LevelNum level_num = 0;
-  auto     w         = 7;
-  auto     h         = 7;
+  LevelNum const level_num = 0;
+  auto           w         = 7;
+  auto           h         = 7;
 
   //
   // How the dungeon starts out, and how we expect it to change
   //
-  std::string start
+  std::string const start
       = "xxxxxxx"
         "x.....x"
         "x.....x"
@@ -27,7 +27,7 @@
         "x.....x"
         "x.....x"
         "xxxxxxx";
-  std::string expect1
+  std::string const expect1
       = "xxxxxxx"
         "x.....x"
         "x.....x"
@@ -35,7 +35,7 @@
         "x.....x"
         "x.....x"
         "xxxxxxx";
-  std::string expect2
+  std::string const expect2
       = "xxxxxxx"
         "x.....x"
         "x.....x"
@@ -43,7 +43,7 @@
         "x..@..x"
         "x.....x"
         "xxxxxxx";
-  std::string expect3
+  std::string const expect3
       = "xxxxxxx"
         "x.....x"
         "x.....x"
@@ -51,7 +51,7 @@
         "x.@...x"
         "x.....x"
         "xxxxxxx";
-  std::string expect4
+  std::string const expect4
       = "xxxxxxx"
         "x.....x"
         "x.....x"

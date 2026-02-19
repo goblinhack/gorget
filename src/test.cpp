@@ -113,8 +113,8 @@ Testp test_find(const char *name_in)
 {
   TRACE_NO_INDENT();
 
-  std::string name(name_in);
-  auto        result = test_name_map.find(name);
+  std::string const name(name_in);
+  auto              result = test_name_map.find(name);
 
   if (unlikely(result != test_name_map.end())) {
     return result->second;
@@ -162,7 +162,7 @@ Testp test_load(const char *name_in)
 {
   TRACE_NO_INDENT();
 
-  std::string name(name_in);
+  std::string const name(name_in);
 
   LOG("Load test '%s'", name_in);
 
@@ -217,7 +217,7 @@ void tests_run(Gamep g)
     //
     auto  name = "test_" + test.first;
     auto *t    = test.second;
-    auto  pre  = std::format("Running {:<70s}", name.c_str());
+    auto  pre  = std::format("Running {:<70s}", name);
 
     //
     // Skip the test if needed

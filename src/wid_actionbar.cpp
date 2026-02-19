@@ -37,7 +37,7 @@ static ts_t wid_last_wait_repeat;
   return game_event_save(g);
 }
 
-static void wid_actionbar_save_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
+static void wid_actionbar_save_over_begin(Gamep g, Widp w, int /*relx*/, int /*rely*/, int /*wheelx*/, int /*wheely*/)
 {
   TRACE_NO_INDENT();
 
@@ -47,8 +47,8 @@ static void wid_actionbar_save_over_begin(Gamep g, Widp w, int relx, int rely, i
   int bry;
   wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
 
-  int width  = 32;
-  int height = 8;
+  int const width  = 32;
+  int const height = 8;
 
   tlx -= width / 2;
   brx += width / 2;
@@ -57,8 +57,8 @@ static void wid_actionbar_save_over_begin(Gamep g, Widp w, int relx, int rely, i
   bry += 2;
   tly += 2;
 
-  spoint tl(tlx, tly);
-  spoint br(brx, bry);
+  spoint const tl(tlx, tly);
+  spoint const br(brx, bry);
 
   wid_over_save = new WidPopup(g, "Save game", tl, br, nullptr, "", false, false);
   wid_over_save->log(g, UI_HIGHLIGHT_FMT_STR "Save game");
@@ -82,7 +82,7 @@ static void wid_actionbar_save_over_end(Gamep g, Widp w)
   return game_event_load(g);
 }
 
-static void wid_actionbar_load_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
+static void wid_actionbar_load_over_begin(Gamep g, Widp w, int /*relx*/, int /*rely*/, int /*wheelx*/, int /*wheely*/)
 {
   TRACE_NO_INDENT();
 
@@ -92,8 +92,8 @@ static void wid_actionbar_load_over_begin(Gamep g, Widp w, int relx, int rely, i
   int bry;
   wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
 
-  int width  = 32;
-  int height = 8;
+  int const width  = 32;
+  int const height = 8;
 
   tlx -= width / 2;
   brx += width / 2;
@@ -102,8 +102,8 @@ static void wid_actionbar_load_over_begin(Gamep g, Widp w, int relx, int rely, i
   bry += 2;
   tly += 2;
 
-  spoint tl(tlx, tly);
-  spoint br(brx, bry);
+  spoint const tl(tlx, tly);
+  spoint const br(brx, bry);
 
   wid_over_load = new WidPopup(g, "Load game", tl, br, nullptr, "", false, false);
   wid_over_load->log(g, UI_HIGHLIGHT_FMT_STR "Load game");
@@ -147,7 +147,7 @@ static void wid_actionbar_load_over_end(Gamep g, Widp w)
   return game_event_wait(g);
 }
 
-static void wid_actionbar_wait_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
+static void wid_actionbar_wait_over_begin(Gamep g, Widp w, int /*relx*/, int /*rely*/, int /*wheelx*/, int /*wheely*/)
 {
   TRACE_NO_INDENT();
 
@@ -157,8 +157,8 @@ static void wid_actionbar_wait_over_begin(Gamep g, Widp w, int relx, int rely, i
   int bry;
   wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
 
-  int width  = 32;
-  int height = 10;
+  int const width  = 32;
+  int const height = 10;
 
   tlx -= width / 2;
   brx += width / 2;
@@ -167,8 +167,8 @@ static void wid_actionbar_wait_over_begin(Gamep g, Widp w, int relx, int rely, i
   bry -= 1;
   tly += 1;
 
-  spoint tl(tlx, tly);
-  spoint br(brx, bry);
+  spoint const tl(tlx, tly);
+  spoint const br(brx, bry);
 
   wid_over_wait = new WidPopup(g, "Wait/rest", tl, br, nullptr, "", false, false);
   wid_over_wait->log(g, UI_HIGHLIGHT_FMT_STR "Wait/rest");
@@ -195,7 +195,8 @@ static void wid_actionbar_wait_over_end(Gamep g, Widp w)
   return game_event_inventory(g);
 }
 
-static void wid_actionbar_inventory_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
+static void wid_actionbar_inventory_over_begin(Gamep g, Widp w, int /*relx*/, int /*rely*/, int /*wheelx*/,
+                                               int /*wheely*/)
 {
   TRACE_NO_INDENT();
 
@@ -205,8 +206,8 @@ static void wid_actionbar_inventory_over_begin(Gamep g, Widp w, int relx, int re
   int bry;
   wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
 
-  int width  = 32;
-  int height = 8;
+  int const width  = 32;
+  int const height = 8;
 
   tlx -= width / 2;
   brx += width / 2;
@@ -215,8 +216,8 @@ static void wid_actionbar_inventory_over_begin(Gamep g, Widp w, int relx, int re
   bry -= 1;
   tly += 1;
 
-  spoint tl(tlx, tly);
-  spoint br(brx, bry);
+  spoint const tl(tlx, tly);
+  spoint const br(brx, bry);
 
   wid_over_inventory = new WidPopup(g, "Inventory", tl, br, nullptr, "", false, false);
   wid_over_inventory->log(g, UI_HIGHLIGHT_FMT_STR "Inventory");
@@ -233,7 +234,7 @@ static void wid_actionbar_inventory_over_end(Gamep g, Widp w)
   wid_over_inventory = nullptr;
 }
 
-static void wid_actionbar_fire_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
+static void wid_actionbar_fire_over_begin(Gamep g, Widp w, int /*relx*/, int /*rely*/, int /*wheelx*/, int /*wheely*/)
 {
   TRACE_NO_INDENT();
 
@@ -243,8 +244,8 @@ static void wid_actionbar_fire_over_begin(Gamep g, Widp w, int relx, int rely, i
   int bry;
   wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
 
-  int width  = 32;
-  int height = 9;
+  int const width  = 32;
+  int const height = 9;
 
   tlx -= width / 2;
   brx += width / 2;
@@ -253,8 +254,8 @@ static void wid_actionbar_fire_over_begin(Gamep g, Widp w, int relx, int rely, i
   bry -= 1;
   tly += 1;
 
-  spoint tl(tlx, tly);
-  spoint br(brx, bry);
+  spoint const tl(tlx, tly);
+  spoint const br(brx, bry);
 
   wid_over_fire = new WidPopup(g, "Fire", tl, br, nullptr, "", false, false);
   wid_over_fire->log(g, UI_HIGHLIGHT_FMT_STR "Fire");
@@ -280,7 +281,8 @@ static void wid_actionbar_fire_over_end(Gamep g, Widp w)
   return game_event_ascend(g);
 }
 
-static void wid_actionbar_ascend_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
+static void wid_actionbar_ascend_over_begin(Gamep g, Widp w, int /*relx*/, int /*rely*/, int /*wheelx*/,
+                                            int /*wheely*/)
 {
   TRACE_NO_INDENT();
 
@@ -290,8 +292,8 @@ static void wid_actionbar_ascend_over_begin(Gamep g, Widp w, int relx, int rely,
   int bry;
   wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
 
-  int width  = 32;
-  int height = 7;
+  int const width  = 32;
+  int const height = 7;
 
   tlx -= width / 2;
   brx += width / 2;
@@ -300,8 +302,8 @@ static void wid_actionbar_ascend_over_begin(Gamep g, Widp w, int relx, int rely,
   bry -= 1;
   tly += 1;
 
-  spoint tl(tlx, tly);
-  spoint br(brx, bry);
+  spoint const tl(tlx, tly);
+  spoint const br(brx, bry);
 
   wid_over_ascend = new WidPopup(g, "Ascend", tl, br, nullptr, "", false, false);
   wid_over_ascend->log(g, UI_HIGHLIGHT_FMT_STR "Ascend");
@@ -326,7 +328,8 @@ static void wid_actionbar_ascend_over_end(Gamep g, Widp w)
   return game_event_descend(g);
 }
 
-static void wid_actionbar_descend_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
+static void wid_actionbar_descend_over_begin(Gamep g, Widp w, int /*relx*/, int /*rely*/, int /*wheelx*/,
+                                             int /*wheely*/)
 {
   TRACE_NO_INDENT();
 
@@ -336,8 +339,8 @@ static void wid_actionbar_descend_over_begin(Gamep g, Widp w, int relx, int rely
   int bry;
   wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
 
-  int width  = 32;
-  int height = 8;
+  int const width  = 32;
+  int const height = 8;
 
   tlx -= width / 2;
   brx += width / 2;
@@ -346,8 +349,8 @@ static void wid_actionbar_descend_over_begin(Gamep g, Widp w, int relx, int rely
   bry -= 1;
   tly += 1;
 
-  spoint tl(tlx, tly);
-  spoint br(brx, bry);
+  spoint const tl(tlx, tly);
+  spoint const br(brx, bry);
 
   wid_over_descend = new WidPopup(g, "Descend", tl, br, nullptr, "", false, false);
   wid_over_descend->log(g, UI_HIGHLIGHT_FMT_STR "Descend");
@@ -372,7 +375,7 @@ static void wid_actionbar_descend_over_end(Gamep g, Widp w)
   return game_event_quit(g);
 }
 
-static void wid_actionbar_quit_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
+static void wid_actionbar_quit_over_begin(Gamep g, Widp w, int /*relx*/, int /*rely*/, int /*wheelx*/, int /*wheely*/)
 {
   TRACE_NO_INDENT();
 
@@ -382,8 +385,8 @@ static void wid_actionbar_quit_over_begin(Gamep g, Widp w, int relx, int rely, i
   int bry;
   wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
 
-  int width  = 32;
-  int height = 8;
+  int const width  = 32;
+  int const height = 8;
 
   tlx -= width / 2;
   brx += width / 2;
@@ -391,8 +394,8 @@ static void wid_actionbar_quit_over_begin(Gamep g, Widp w, int relx, int rely, i
   tly += 2;
   bry += 2;
 
-  spoint tl(tlx, tly);
-  spoint br(brx, bry);
+  spoint const tl(tlx, tly);
+  spoint const br(brx, bry);
 
   wid_over_quit = new WidPopup(g, "Quit", tl, br, nullptr, "", false, false);
   wid_over_quit->log(g, UI_HIGHLIGHT_FMT_STR "Quit game");
@@ -417,7 +420,7 @@ static void wid_actionbar_quit_over_end(Gamep g, Widp w)
   return game_event_help(g);
 }
 
-static void wid_actionbar_help_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
+static void wid_actionbar_help_over_begin(Gamep g, Widp w, int /*relx*/, int /*rely*/, int /*wheelx*/, int /*wheely*/)
 {
   TRACE_NO_INDENT();
 
@@ -427,8 +430,8 @@ static void wid_actionbar_help_over_begin(Gamep g, Widp w, int relx, int rely, i
   int bry;
   wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
 
-  int width  = 32;
-  int height = 8;
+  int const width  = 32;
+  int const height = 8;
 
   tlx -= width / 2;
   brx += width / 2;
@@ -436,8 +439,8 @@ static void wid_actionbar_help_over_begin(Gamep g, Widp w, int relx, int rely, i
   bry += 1;
   tly += 1;
 
-  spoint tl(tlx, tly);
-  spoint br(brx, bry);
+  spoint const tl(tlx, tly);
+  spoint const br(brx, bry);
 
   wid_over_help = new WidPopup(g, "Help", tl, br, nullptr, "", false, false);
   wid_over_help->log(g, UI_HIGHLIGHT_FMT_STR "Help");
@@ -482,16 +485,16 @@ bool wid_actionbar_create_window(Gamep g)
   auto box_style           = UI_WID_STYLE_HORIZ_DARK;
   auto box_highlight_style = UI_WID_STYLE_HORIZ_LIGHT;
 
-  int  option_width  = 13;
-  bool opt_wait      = true;
-  bool opt_inventory = true;
-  bool opt_quit      = true;
-  bool opt_help      = true;
-  bool opt_load      = false;
-  bool opt_save      = false;
-  bool opt_descend   = level_is_exit(g, v, l, player);
-  bool opt_ascend    = level_is_entrance(g, v, l, player);
-  bool opt_fire      = true;
+  int        option_width  = 13;
+  bool       opt_wait      = true;
+  bool       opt_inventory = true;
+  bool const opt_quit      = true;
+  bool       opt_help      = true;
+  bool       opt_load      = false;
+  bool       opt_save      = false;
+  bool       opt_descend   = level_is_exit(g, v, l, player);
+  bool       opt_ascend    = level_is_entrance(g, v, l, player);
+  bool       opt_fire      = true;
 
   if (g_opt_debug1 || level_is_level_select(g, v, l)) {
     opt_save = true;

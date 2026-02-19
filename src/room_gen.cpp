@@ -67,7 +67,7 @@ public:
 //
 // Dump a level
 //
-static void room_gen_dump(Gamep g, RoomGen *grid)
+static void room_gen_dump(RoomGen *grid)
 {
   TRACE_NO_INDENT();
 
@@ -87,7 +87,7 @@ static void room_gen_dump(Gamep g, RoomGen *grid)
 //
 // Dump a level
 //
-static void room_gen_room_only_dump(Gamep g, RoomGen *grid)
+static void room_gen_room_only_dump(RoomGen *grid)
 {
   TRACE_NO_INDENT();
 
@@ -104,7 +104,7 @@ static void room_gen_room_only_dump(Gamep g, RoomGen *grid)
   std::println(grid->out, "");
 }
 
-static void room_gen_clear(Gamep g, RoomGen *grid)
+static void room_gen_clear(RoomGen *grid)
 {
   TRACE_NO_INDENT();
 
@@ -139,7 +139,7 @@ static void room_gen_keep_largest_chunk(Gamep g, class RoomGen *grid)
   //
   // Map that back to a room shape
   //
-  room_gen_clear(g, grid);
+  room_gen_clear(grid);
 
   for (y = 0; y < MAP_HEIGHT; y++) {
     for (x = 0; x < MAP_WIDTH; x++) {
@@ -153,7 +153,7 @@ static void room_gen_keep_largest_chunk(Gamep g, class RoomGen *grid)
 //
 // Get the top left and bottom right bounds of the room
 //
-[[nodiscard]] static bool room_gen_get_bounds(Gamep g, class RoomGen *grid)
+[[nodiscard]] static bool room_gen_get_bounds(class RoomGen *grid)
 {
   int x;
   int y;
@@ -220,13 +220,13 @@ static void room_gen_keep_largest_chunk(Gamep g, class RoomGen *grid)
 //
 // Draw a rectangle in the buffer, checking for oob
 //
-static void room_gen_draw_rectangle(Gamep g, RoomGen *grid, int x, int y, int width, int height, char c)
+static void room_gen_draw_rectangle(RoomGen *grid, int x, int y, int width, int height, char c)
 {
   TRACE_NO_INDENT();
 
   for (auto i = x; i < x + width; i++) {
     for (auto j = y; j < y + height; j++) {
-      spoint p(i, j);
+      spoint const p(i, j);
       if (is_oob(p)) {
         continue;
       }
@@ -235,7 +235,7 @@ static void room_gen_draw_rectangle(Gamep g, RoomGen *grid, int x, int y, int wi
   }
 }
 
-static void room_gen_draw_circle(Gamep g, RoomGen *grid, int x, int y, int radius, char value)
+static void room_gen_draw_circle(RoomGen *grid, int x, int y, int radius, char value)
 {
   TRACE_NO_INDENT();
 
@@ -245,7 +245,7 @@ static void room_gen_draw_circle(Gamep g, RoomGen *grid, int x, int y, int radiu
   for (i = std::max(0, x - radius - 1); i < std::max((int) MAP_WIDTH, x + radius); i++) {
     for (j = std::max(0, y - radius - 1); j < std::max((int) MAP_HEIGHT, y + radius); j++) {
       if (((i - x) * (i - x)) + ((j - y) * (j - y)) < (radius * radius) + radius) {
-        spoint p(i, j);
+        spoint const p(i, j);
         if (is_oob(p)) {
           continue;
         }
@@ -258,7 +258,7 @@ static void room_gen_draw_circle(Gamep g, RoomGen *grid, int x, int y, int radiu
 //
 // Add random exits to the room
 //
-static void room_gen_add_exits(Gamep g, RoomGen *grid)
+static void room_gen_add_exits(RoomGen *grid)
 {
   TRACE_NO_INDENT();
 
@@ -325,7 +325,7 @@ static void room_gen_add_exits(Gamep g, RoomGen *grid)
 //
 // Extend an existing exit
 //
-static void room_gen_add_corridor(Gamep g, RoomGen *grid)
+static void room_gen_add_corridor(RoomGen *grid)
 {
   TRACE_NO_INDENT();
 
@@ -409,8 +409,8 @@ static void room_gen_design_cross_room(Gamep g, RoomGen *grid)
   room_height2 = pcg_random_range(2, 5);
   roomY2       = ((MAP_HEIGHT / 2) - room_height2 - (pcg_random_range(0, 2) + pcg_random_range(0, 1)));
 
-  room_gen_draw_rectangle(g, grid, roomX - 5, roomY + 5, room_width, room_height, CHARMAP_FLOOR);
-  room_gen_draw_rectangle(g, grid, roomX2 - 5, roomY2 + 5, room_width2, room_height2, CHARMAP_FLOOR);
+  room_gen_draw_rectangle(grid, roomX - 5, roomY + 5, room_width, room_height, CHARMAP_FLOOR);
+  room_gen_draw_rectangle(grid, roomX2 - 5, roomY2 + 5, room_width2, room_height2, CHARMAP_FLOOR);
 }
 
 //
@@ -438,9 +438,9 @@ static void room_gen_design_cross_room_symmetrical(Gamep g, RoomGen *grid)
     minor_height -= 1;
   }
 
-  room_gen_draw_rectangle(g, grid, (MAP_WIDTH - major_width) / 2, (MAP_HEIGHT - minor_height) / 2, major_width,
+  room_gen_draw_rectangle(grid, (MAP_WIDTH - major_width) / 2, (MAP_HEIGHT - minor_height) / 2, major_width,
                           minor_height, CHARMAP_FLOOR);
-  room_gen_draw_rectangle(g, grid, (MAP_WIDTH - minor_width) / 2, (MAP_HEIGHT - major_height) / 2, minor_width,
+  room_gen_draw_rectangle(grid, (MAP_WIDTH - minor_width) / 2, (MAP_HEIGHT - major_height) / 2, minor_width,
                           major_height, CHARMAP_FLOOR);
 }
 
@@ -454,7 +454,7 @@ static void room_gen_design_small_room(Gamep g, RoomGen *grid)
   width  = pcg_random_range(3, 6);
   height = pcg_random_range(3, 6);
 
-  room_gen_draw_rectangle(g, grid, (MAP_WIDTH - width) / 2, (MAP_HEIGHT - height) / 2, width, height, CHARMAP_FLOOR);
+  room_gen_draw_rectangle(grid, (MAP_WIDTH - width) / 2, (MAP_HEIGHT - height) / 2, width, height, CHARMAP_FLOOR);
 }
 
 static void room_gen_design_medium_room(Gamep g, RoomGen *grid)
@@ -467,7 +467,7 @@ static void room_gen_design_medium_room(Gamep g, RoomGen *grid)
   width  = pcg_random_range(6, 10);
   height = pcg_random_range(4, 10);
 
-  room_gen_draw_rectangle(g, grid, (MAP_WIDTH - width) / 2, (MAP_HEIGHT - height) / 2, width, height, CHARMAP_FLOOR);
+  room_gen_draw_rectangle(grid, (MAP_WIDTH - width) / 2, (MAP_HEIGHT - height) / 2, width, height, CHARMAP_FLOOR);
 }
 
 static void room_gen_design_circular_room(Gamep g, RoomGen *grid)
@@ -480,10 +480,10 @@ static void room_gen_design_circular_room(Gamep g, RoomGen *grid)
     radius = pcg_random_range(2, 4);
   }
 
-  room_gen_draw_circle(g, grid, MAP_WIDTH / 2, MAP_HEIGHT / 2, radius, CHARMAP_FLOOR);
+  room_gen_draw_circle(grid, MAP_WIDTH / 2, MAP_HEIGHT / 2, radius, CHARMAP_FLOOR);
 
   if (radius > 6 && d100() < 50) {
-    room_gen_draw_circle(g, grid, MAP_WIDTH / 2, MAP_HEIGHT / 2, pcg_random_range(3, radius - 3), CHARMAP_EMPTY);
+    room_gen_draw_circle(grid, MAP_WIDTH / 2, MAP_HEIGHT / 2, pcg_random_range(3, radius - 3), CHARMAP_EMPTY);
   }
 }
 
@@ -491,16 +491,16 @@ static void room_gen_design_chunky_room(Gamep g, RoomGen *grid)
 {
   TRACE_NO_INDENT();
 
-  int i;
-  int x;
-  int y;
-  int minX;
-  int maxX;
-  int minY;
-  int maxY;
-  int chunkCount = pcg_random_range(2, 8);
+  int       i;
+  int       x;
+  int       y;
+  int       minX;
+  int       maxX;
+  int       minY;
+  int       maxY;
+  int const chunkCount = pcg_random_range(2, 8);
 
-  room_gen_draw_circle(g, grid, MAP_WIDTH / 2, MAP_HEIGHT / 2, 2, CHARMAP_FLOOR);
+  room_gen_draw_circle(grid, MAP_WIDTH / 2, MAP_HEIGHT / 2, 2, CHARMAP_FLOOR);
 
   minX = (MAP_WIDTH / 2) - 3;
   maxX = (MAP_WIDTH / 2) + 3;
@@ -512,7 +512,7 @@ static void room_gen_design_chunky_room(Gamep g, RoomGen *grid)
     y = pcg_random_range(minY, maxY);
 
     if (grid->data[ x ][ y ] != CHARMAP_EMPTY) {
-      room_gen_draw_circle(g, grid, x, y, 2, CHARMAP_FLOOR);
+      room_gen_draw_circle(grid, x, y, 2, CHARMAP_FLOOR);
 
       i++;
       minX = std::max(1, std::min(x - 3, minX));
@@ -532,7 +532,7 @@ static void room_gen_design_chunky_room(Gamep g, RoomGen *grid)
 
   RoomGen grid;
 
-  room_gen_clear(g, &grid);
+  room_gen_clear(&grid);
 
   grid.out = out;
 
@@ -560,18 +560,18 @@ static void room_gen_design_chunky_room(Gamep g, RoomGen *grid)
   //
   room_gen_keep_largest_chunk(g, &grid);
 
-  if (! room_gen_get_bounds(g, &grid)) {
+  if (! room_gen_get_bounds(&grid)) {
     return false;
   }
   if (compiler_unused) {
-    room_gen_dump(g, &grid);
+    room_gen_dump(&grid);
   }
 
   //
   // Add room exits
   //
-  room_gen_add_exits(g, &grid);
-  if (! room_gen_get_bounds(g, &grid)) {
+  room_gen_add_exits(&grid);
+  if (! room_gen_get_bounds(&grid)) {
     return false;
   }
 
@@ -580,19 +580,19 @@ static void room_gen_design_chunky_room(Gamep g, RoomGen *grid)
   //
   if (d100() < 50) {
     for (auto corridors = 0; corridors < MAX_ROOM_CORRIDOR; corridors++) {
-      room_gen_add_corridor(g, &grid);
-      if (! room_gen_get_bounds(g, &grid)) {
+      room_gen_add_corridor(&grid);
+      if (! room_gen_get_bounds(&grid)) {
         return false;
       }
 
-      room_gen_add_corridor(g, &grid);
-      if (! room_gen_get_bounds(g, &grid)) {
+      room_gen_add_corridor(&grid);
+      if (! room_gen_get_bounds(&grid)) {
         return false;
       }
     }
   }
 
-  room_gen_room_only_dump(g, &grid);
+  room_gen_room_only_dump(&grid);
   return true;
 }
 
@@ -603,7 +603,7 @@ static void rooms_write_source_file_for_n_rooms(Gamep g, int n, int which, const
 {
   TRACE_NO_INDENT();
 
-  std::string f = "src/rooms_" + std::string(name) + ".cpp";
+  std::string const f = "src/rooms_" + std::string(name) + ".cpp";
 
   CON("Write to %s", f.c_str());
 

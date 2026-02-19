@@ -284,7 +284,7 @@ bool wid_scroll_motion(Gamep g, Widp w, int x, int y, int relx, int rely, int wh
   int dx;
   int dy;
 
-  bool left = SDL_BUTTON(SDL_BUTTON_LEFT) & SDL_GetMouseState(nullptr, nullptr);
+  bool const left = SDL_BUTTON(SDL_BUTTON_LEFT) & SDL_GetMouseState(nullptr, nullptr);
   if (left || (wheely != 0) || (wheelx != 0)) {
     dy = (rely != 0) ? rely : -wheely;
     dx = (relx != 0) ? relx : -wheelx;
@@ -773,7 +773,7 @@ static Widp wid_mouse_up_handler(Gamep g, int x, int y)
   return nullptr;
 }
 
-static Widp wid_mouse_motion_handler(int x, int y, int relx, int rely, int wheelx, int wheely)
+static Widp wid_mouse_motion_handler(int x, int y, int wheelx, int wheely)
 {
   TRACE_NO_INDENT();
 
@@ -880,7 +880,7 @@ void wid_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx, int
       // TOPCON("mouse motion %s mouse %d,%d.", w->name.c_str(), x, y);
     }
 
-    w = wid_mouse_motion_handler(x, y, relx, rely, wheelx, wheely);
+    w = wid_mouse_motion_handler(x, y, wheelx, wheely);
     if (w != nullptr) {
       if (wid_mouse_over_begin(g, w, x, y, relx, rely, wheelx, wheely)) {
         over = 1U;
@@ -1123,7 +1123,7 @@ void wid_mouse_hide(Gamep g, bool value)
 {
   TRACE_NO_INDENT();
 
-  bool visible = ! value;
+  bool const visible = ! value;
 
   if (visible != wid_mouse_visible) {
     wid_mouse_visible = visible;
@@ -1147,8 +1147,8 @@ void wid_mouse_warp(Gamep g, Widp w)
 
   wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
 
-  int x = (tlx + brx) / 2;
-  int y = (tly + bry) / 2;
+  int const x = (tlx + brx) / 2;
+  int const y = (tly + bry) / 2;
 
   sdl_mouse_warp(g, x, y);
 }
@@ -1164,8 +1164,8 @@ void wid_mouse_move(Gamep g, Widp w)
 
   wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
 
-  int x = (tlx + brx) / 2;
-  int y = (tly + bry) / 2;
+  int const x = (tlx + brx) / 2;
+  int const y = (tly + bry) / 2;
 
   saved_mouse_x = sdl.mouse_x;
   saved_mouse_y = sdl.mouse_y;

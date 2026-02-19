@@ -64,13 +64,13 @@ void level_tick_begin_temperature(Gamep g, Levelsp v, Levelp l)
         continue;
       }
 
-      auto *tp            = thing_tp(t);
-      float Ta            = thing_temperature(t);
-      float To            = tp_temperature_initial_get(thing_tp(t));
-      float heat_capacity = tp_temperature_heat_capacity_get(tp);
-      float diff          = Ta - To;
-      float ndiff         = diff * (1.0F - ((HEAT_CAPACITY_MAX - heat_capacity) / HEAT_CAPACITY_MAX));
-      int   Tn            = (int) Ta - (int) ndiff;
+      auto       *tp            = thing_tp(t);
+      float const Ta            = thing_temperature(t);
+      float const To            = tp_temperature_initial_get(thing_tp(t));
+      float const heat_capacity = tp_temperature_heat_capacity_get(tp);
+      float const diff          = Ta - To;
+      float const ndiff         = diff * (1.0F - ((HEAT_CAPACITY_MAX - heat_capacity) / HEAT_CAPACITY_MAX));
+      int const   Tn            = (int) Ta - (int) ndiff;
 
       //
       // No ice yet
@@ -114,13 +114,13 @@ void level_tick_begin_temperature(Gamep g, Levelsp v, Levelp l)
 // dT = q / (c * m)
 // Tfinal = Tinitial + (Q / (m * c))
 //
-static void thing_heat_exchange(Gamep g, Levelsp v, Levelp l, Thingp a, Thingp b, int &finalT)
+static void thing_heat_exchange(Levelsp v, Thingp a, Thingp b, int &finalT)
 {
   TRACE_NO_INDENT();
 
-  auto *tpA = thing_tp(a);
-  float Ta  = thing_temperature(a);
-  float Tb  = thing_temperature(b);
+  auto       *tpA = thing_tp(a);
+  float const Ta  = thing_temperature(a);
+  float const Tb  = thing_temperature(b);
 
   finalT = (int) Ta;
 
@@ -146,13 +146,13 @@ static void thing_heat_exchange(Gamep g, Levelsp v, Levelp l, Thingp a, Thingp b
     return;
   }
 
-  float K  = tp_temperature_thermal_conductivity_get(tpA);
-  float c  = tp_temperature_heat_capacity_get(tpA);
-  float A  = 1.0F;
-  float dT = Tb - Ta;
-  float d  = 0.01F;
-  float Q  = (K * A * dT) / d;
-  float m  = thing_weight(a);
+  float const K  = tp_temperature_thermal_conductivity_get(tpA);
+  float const c  = tp_temperature_heat_capacity_get(tpA);
+  float const A  = 1.0F;
+  float const dT = Tb - Ta;
+  float const d  = 0.01F;
+  float const Q  = (K * A * dT) / d;
+  float       m  = thing_weight(a);
 
   //
   // We don't have ice yet
@@ -176,8 +176,8 @@ static void thing_heat_exchange(Gamep g, Levelsp v, Levelp l, Thingp a, Thingp b
     }
   }
 
-  float final_dT = (Q / (m * c));
-  finalT         = (int) ceilf((Ta) + final_dT);
+  float const final_dT = (Q / (m * c));
+  finalT               = (int) ceilf((Ta) + final_dT);
 
   //  THING_DBG(a, "b");
   // THING_DBG(b, "b");
@@ -195,8 +195,8 @@ void level_thing_pair_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp a,
     return;
   }
 
-  int Ta = thing_temperature(a);
-  int Tb = thing_temperature(b);
+  int const Ta = thing_temperature(a);
+  int const Tb = thing_temperature(b);
 
   if (compiler_unused) {
     THING_LOG(a, "a Ta %d", Ta);
@@ -207,10 +207,10 @@ void level_thing_pair_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp a,
   // The new temperatures
   //
   int Na;
-  thing_heat_exchange(g, v, l, a, b, Na);
+  thing_heat_exchange(v, a, b, Na);
 
   int Nb;
-  thing_heat_exchange(g, v, l, b, a, Nb);
+  thing_heat_exchange(v, b, a, Nb);
 
   //
   // First step is to mark things as burning and change temperatures

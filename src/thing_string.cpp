@@ -52,7 +52,7 @@ std::string to_string(Gamep g, Levelsp v, Levelp l, Thingp t)
                   /* newline */ t->tick,
                   /* newline */ thing_health(t),
                   /* newline */ at.x, at.y,
-                  /* newline */ name.c_str(),
+                  /* newline */ name,
                   /* newline */ thing_is_moving(t) ? "/mv" : "",
                   /* newline */ thing_is_dead(t) ? "/de" : "",
                   /* newline */ thing_is_sleeping(t) ? "/sl" : "",

@@ -186,11 +186,11 @@ void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
 
 bool thing_collision_check_circle_circle(Gamep g, Levelsp v, Levelp l, Thingp A, fpoint A_at, Thingp B, fpoint B_at)
 {
-  float A_radius = thing_collision_radius(A);
-  float B_radius = thing_collision_radius(B);
+  float const A_radius = thing_collision_radius(A);
+  float const B_radius = thing_collision_radius(B);
 
-  float touching_dist = A_radius + B_radius;
-  float dist          = distance(A_at, B_at);
+  float const touching_dist = A_radius + B_radius;
+  float const dist          = distance(A_at, B_at);
 
   if (compiler_unused) {
     THING_LOG(A, "A %f,%f touching_dist %f dist %f ", A_at.x, A_at.y, touching_dist, dist);
@@ -204,10 +204,9 @@ bool thing_collision_check_circle_circle(Gamep g, Levelsp v, Levelp l, Thingp A,
   return true;
 }
 
-[[nodiscard]] static bool thing_collision_check_circle_square(Gamep g, Levelsp v, Levelp l, Thingp C, fpoint C_at,
-                                                              Thingp B, fpoint B_at)
+[[nodiscard]] static bool thing_collision_check_circle_square(Thingp C, fpoint C_at, Thingp B, fpoint B_at)
 {
-  float radius = thing_collision_radius(C);
+  float const radius = thing_collision_radius(C);
 
   //
   // Need to perform calculations from the center of the circle as the
@@ -218,18 +217,18 @@ bool thing_collision_check_circle_circle(Gamep g, Levelsp v, Levelp l, Thingp A,
   C_at.x += 0.5F;
   C_at.y += 0.5F;
 
-  fpoint tl(B_at.x, B_at.y);
-  fpoint br(B_at.x + 1, B_at.y + 1);
+  fpoint const tl(B_at.x, B_at.y);
+  fpoint const br(B_at.x + 1, B_at.y + 1);
 
   if (compiler_unused) {
     THING_LOG(C, "circle %f,%f", C_at.x, C_at.y);
     THING_LOG(B, "box %f,%f -> %f,%f", tl.x, tl.y, br.x, br.y);
   }
 
-  fpoint B0(B_at.x - 0, B_at.y - 0);
-  fpoint B1(B_at.x + 1, B_at.y - 0);
-  fpoint B2(B_at.x + 1, B_at.y + 1);
-  fpoint B3(B_at.x + 0, B_at.y + 1);
+  fpoint const B0(B_at.x - 0, B_at.y - 0);
+  fpoint const B1(B_at.x + 1, B_at.y - 0);
+  fpoint const B2(B_at.x + 1, B_at.y + 1);
+  fpoint const B3(B_at.x + 0, B_at.y + 1);
 
   //
   // Circle inside box
@@ -287,16 +286,15 @@ bool thing_collision_check_circle_circle(Gamep g, Levelsp v, Levelp l, Thingp A,
   return false;
 }
 
-[[nodiscard]] static bool thing_collision_check_squares(Gamep g, Levelsp v, Levelp l, Thingp A, fpoint A_at, Thingp B,
-                                                        fpoint B_at)
+[[nodiscard]] static bool thing_collision_check_squares(fpoint A_at, fpoint B_at)
 {
-  fpoint A0(A_at.x - 0, A_at.y - 0);
-  fpoint A1(A_at.x + 1, A_at.y - 0);
-  fpoint A2(A_at.x - 0, A_at.y + 1);
-  fpoint A3(A_at.x + 1, A_at.y + 1);
+  fpoint const A0(A_at.x - 0, A_at.y - 0);
+  fpoint const A1(A_at.x + 1, A_at.y - 0);
+  fpoint const A2(A_at.x - 0, A_at.y + 1);
+  fpoint const A3(A_at.x + 1, A_at.y + 1);
 
-  fpoint tl(B_at.x - 0, B_at.y - 0);
-  fpoint br(B_at.x + 1, B_at.y + 1);
+  fpoint const tl(B_at.x - 0, B_at.y - 0);
+  fpoint const br(B_at.x + 1, B_at.y + 1);
 
   if ((A0.x >= tl.x) && (A0.x <= br.x) && (A0.y >= tl.y) && (A0.y <= br.y)) {
     return true;
@@ -332,7 +330,7 @@ bool thing_collision_check_circle_circle(Gamep g, Levelsp v, Levelp l, Thingp A,
                                                                     fpoint me_at, Thingp o, fpoint o_at)
 {
   TRACE_NO_INDENT();
-  return thing_collision_check_circle_square(g, v, l, me, me_at, o, o_at);
+  return thing_collision_check_circle_square(me, me_at, o, o_at);
 }
 
 [[nodiscard]] static bool thing_collision_check_circle_large_circle_large(Gamep g, Levelsp v, Levelp l, Thingp me,
@@ -346,14 +344,14 @@ bool thing_collision_check_circle_circle(Gamep g, Levelsp v, Levelp l, Thingp A,
                                                                     fpoint me_at, Thingp o, fpoint o_at)
 {
   TRACE_NO_INDENT();
-  return thing_collision_check_circle_square(g, v, l, me, me_at, o, o_at);
+  return thing_collision_check_circle_square(me, me_at, o, o_at);
 }
 
 [[nodiscard]] static bool thing_collision_check_square_square(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint me_at,
                                                               Thingp o, fpoint o_at)
 {
   TRACE_NO_INDENT();
-  return thing_collision_check_squares(g, v, l, me, me_at, o, o_at);
+  return thing_collision_check_squares(me_at, o_at);
 }
 
 //
@@ -368,17 +366,17 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
     THING_LOG(me, "thing_collision_handle_interpolated");
   }
 
-  auto  at    = thing_real_at(me);
-  auto  src   = thing_at(me);
-  float dist  = distance(at, old_at);
-  float steps = ceil(dist) * 10;
-  auto  diff  = at - old_at;
-  float stepx = diff.x / steps;
-  float stepy = diff.y / steps;
+  auto        at    = thing_real_at(me);
+  auto        src   = thing_at(me);
+  float const dist  = distance(at, old_at);
+  float const steps = ceil(dist) * 10;
+  auto        diff  = at - old_at;
+  float const stepx = diff.x / steps;
+  float const stepy = diff.y / steps;
 
   for (auto step = 0; step < steps; step++) {
     std::vector< std::pair< float, Thingp > > pairs;
-    fpoint                                    interp_at(old_at.x + (stepx * step), old_at.y + (stepy * step));
+    fpoint const                              interp_at(old_at.x + (stepx * step), old_at.y + (stepy * step));
 
     if (compiler_unused) {
       THING_LOG(me, "interp collision at %f,%f", interp_at.x, interp_at.y);
@@ -465,8 +463,8 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
           }
 
           if (collision) {
-            float                      o_dist = distance(at, o_at);
-            std::pair< float, Thingp > p      = std::make_pair(o_dist, o);
+            float const                      o_dist = distance(at, o_at);
+            std::pair< float, Thingp > const p      = std::make_pair(o_dist, o);
             pairs.push_back(p);
           }
         }

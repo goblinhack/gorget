@@ -48,7 +48,7 @@ T pcg_rand_one_of(C< T > &c)
   auto so = c.begin();
   auto eo = c.end();
 
-  size_t sz = eo - so;
+  size_t const sz = eo - so;
   if (! sz) {
     return *so;
   }
@@ -62,7 +62,7 @@ T rand_one_of(C< T > &c)
   auto so = c.begin();
   auto eo = c.end();
 
-  size_t sz = eo - so;
+  size_t const sz = eo - so;
   if (! sz) {
     return *so;
   }

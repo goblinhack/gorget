@@ -14,8 +14,8 @@ void thing_blit_text(Gamep g, Levelsp v, Levelp l, spoint tl, spoint br, std::st
 {
   TRACE_NO_INDENT();
 
-  auto single_pix_size = game_map_single_pix_size_get(g);
-  int  len             = length_without_format(text);
+  auto      single_pix_size = game_map_single_pix_size_get(g);
+  int const len             = length_without_format(text);
 
   if (br.x < tl.x) {
     std::swap(tl, br);

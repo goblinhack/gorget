@@ -21,7 +21,7 @@ bool thing_open(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp player_or_monst)
     return false;
   }
 
-  bool success = thing_is_open_try_set(g, v, l, me, player_or_monst);
+  bool const success = thing_is_open_try_set(g, v, l, me, player_or_monst);
   if (success) {
     if (thing_is_player(player_or_monst)) {
       level_tick_begin_requested(g, v, l, "player opened something");
@@ -48,7 +48,7 @@ bool thing_close(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp player_or_monst
     return false;
   }
 
-  bool success = thing_is_open_try_unset(g, v, l, me, player_or_monst);
+  bool const success = thing_is_open_try_unset(g, v, l, me, player_or_monst);
   if (success) {
     if (thing_is_player(player_or_monst)) {
       level_tick_begin_requested(g, v, l, "player closed something");

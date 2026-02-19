@@ -72,10 +72,10 @@ void wid_credits_select(Gamep g)
     wid_credits_destroy(g);
   }
 
-  int    menu_height = 18;
-  int    menu_width  = UI_WID_POPUP_WIDTH_NORMAL * 2;
-  spoint outer_tl((TERM_WIDTH / 2) - (menu_width / 2), (TERM_HEIGHT / 2) - (menu_height / 2));
-  spoint outer_br((TERM_WIDTH / 2) + (menu_width / 2), (TERM_HEIGHT / 2) + (menu_height / 2));
+  int const    menu_height = 18;
+  int const    menu_width  = UI_WID_POPUP_WIDTH_NORMAL * 2;
+  spoint const outer_tl((TERM_WIDTH / 2) - (menu_width / 2), (TERM_HEIGHT / 2) - (menu_height / 2));
+  spoint const outer_br((TERM_WIDTH / 2) + (menu_width / 2), (TERM_HEIGHT / 2) + (menu_height / 2));
   wid_credits_window = new WidPopup(g, "Credits", outer_tl, outer_br, nullptr, "", false, false);
 
   wid_set_on_key_down(wid_credits_window->wid_popup_container, wid_credits_key_down);
@@ -99,8 +99,8 @@ void wid_credits_select(Gamep g)
     auto *p = wid_credits_window->wid_text_area->wid_text_area;
     auto *w = wid_new_back_button(g, p, "credits");
 
-    spoint tl((menu_width / 2) - 4, menu_height - 4);
-    spoint br((menu_width / 2) + 3, menu_height - 2);
+    spoint const tl((menu_width / 2) - 4, menu_height - 4);
+    spoint const br((menu_width / 2) + 3, menu_height - 2);
 
     wid_set_on_mouse_up(w, wid_credits_mouse_up);
     wid_set_pos(w, tl, br);

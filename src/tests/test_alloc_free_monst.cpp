@@ -17,7 +17,7 @@
   auto     w         = 0;
   auto     h         = 0;
 
-  std::string start;
+  std::string const start;
 
   //
   // Create the level and start playing

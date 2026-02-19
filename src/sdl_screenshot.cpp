@@ -29,9 +29,9 @@ void sdl_screenshot_do(Gamep g)
   }
 
   GL_ERROR_CHECK();
-  FboEnum fbo = FBO_FINAL;
-  int     w;
-  int     h;
+  FboEnum const fbo = FBO_FINAL;
+  int           w;
+  int           h;
   GL_ERROR_CHECK();
   fbo_get_size(g, fbo, w, h);
   GL_ERROR_CHECK();
@@ -61,7 +61,7 @@ void sdl_screenshot_do(Gamep g)
                      pixels.begin() + 3 * w * (h - line - 1));
   }
 
-  int components = 3;
+  int const components = 3;
 
   char *png = dynprintf("screenshot.%d.png", count);
   stbi_write_png(png, w, h, components, pixels.data(), 3 * w);
@@ -153,9 +153,9 @@ void sdl_fbo_dump(Gamep g, FboEnum fbo, const std::string &name)
   blit_fbo_pop();
   GL_ERROR_CHECK();
 
-  static int count      = 0;
-  int        components = 4;
-  char      *png        = dynprintf("screenshot.%s.%03d.png", name.c_str(), count);
+  static int const count      = 0;
+  int const        components = 4;
+  char            *png        = dynprintf("screenshot.%s.%03d.png", name.c_str(), count);
   stbi_write_png(png, w, h, components, pixels.data(), 4 * w);
   CON("Screenshot: %s", png);
   myfree(png);

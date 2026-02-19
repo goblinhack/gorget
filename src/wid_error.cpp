@@ -69,8 +69,8 @@ void wid_error(Gamep g, const std::string &error)
     wid_error_destroy(g);
   }
 
-  spoint tl(5, 5);
-  spoint br(TERM_WIDTH - 5, TERM_HEIGHT - 5);
+  spoint const tl(5, 5);
+  spoint const br(TERM_WIDTH - 5, TERM_HEIGHT - 5);
 
   wid_error_window = new WidPopup(g, "Game error", tl, br, nullptr, "");
   wid_set_on_key_down(wid_error_window->wid_popup_container, wid_error_key_down);

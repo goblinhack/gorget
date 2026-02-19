@@ -75,7 +75,7 @@ static void sdl_init_joystick()
   LOG("SDL: Init input:");
   TRACE_NO_INDENT();
 
-  SDL_GameController *controller = nullptr;
+  SDL_GameController const *controller = nullptr;
 
   LOG("- Init game controleer");
   SDL_InitSubSystem(SDL_INIT_GAMECONTROLLER);
@@ -159,9 +159,9 @@ int sdl_get_mouse()
     return 0;
   }
 
-  int x      = 0;
-  int y      = 0;
-  int button = SDL_GetMouseState(&x, &y);
+  int       x      = 0;
+  int       y      = 0;
+  int const button = SDL_GetMouseState(&x, &y);
 
   if ((x == 0) && (y == 0)) {
     return button;
@@ -190,7 +190,7 @@ void sdl_mouse_warp(Gamep g, int x, int y)
 {
   TRACE_NO_INDENT();
 
-  int border = 10;
+  int const border = 10;
 
   if (x <= 0) {
     x = border;
@@ -346,11 +346,11 @@ void sdl_prepare_to_exit(Gamep g)
 //
 // User has entered a command, run it
 //
-uint8_t config_fps_counter_set(Gamep g, class Tokens *tokens, void *context)
+uint8_t config_fps_counter_set(Gamep g, class Tokens *tokens, void * /*context*/)
 {
   TRACE_NO_INDENT();
 
-  char *s = tokens->args[ 2 ];
+  char const *s = tokens->args[ 2 ];
 
   if ((s == nullptr) || (*s == '\0')) {
     game_fps_counter_set(g);
@@ -374,11 +374,11 @@ uint8_t config_fps_counter_set(Gamep g, class Tokens *tokens, void *context)
 //
 // User wants to change the debug level
 //
-uint8_t config_debug_set(Gamep g, class Tokens *tokens, void *context)
+uint8_t config_debug_set(Gamep g, class Tokens *tokens, void * /*context*/)
 {
   TRACE_NO_INDENT();
 
-  char *s = tokens->args[ 2 ];
+  char const *s = tokens->args[ 2 ];
 
   if ((s == nullptr) || (*s == '\0')) {
     g_opt_debug1 = false;
@@ -404,11 +404,11 @@ uint8_t config_debug_set(Gamep g, class Tokens *tokens, void *context)
 //
 // User has entered a command, run it
 //
-uint8_t config_gfx_vsync_enable(Gamep g, class Tokens *tokens, void *context)
+uint8_t config_gfx_vsync_enable(Gamep g, class Tokens *tokens, void * /*context*/)
 {
   TRACE_NO_INDENT();
 
-  char *s = tokens->args[ 2 ];
+  char const *s = tokens->args[ 2 ];
 
   if ((s == nullptr) || (*s == '\0')) {
     game_gfx_vsync_enable_set(g);
@@ -447,7 +447,7 @@ void config_gfx_vsync_update(Gamep g)
 //
 // User has entered a command, run it
 //
-uint8_t config_errored_clear(Gamep g, class Tokens *tokens, void *context)
+uint8_t config_errored_clear(Gamep g, class Tokens * /*tokens*/, void * /*context*/)
 {
   TRACE_NO_INDENT();
 
@@ -467,7 +467,7 @@ uint8_t config_errored_clear(Gamep g, class Tokens *tokens, void *context)
   return 1U;
 }
 
-uint8_t show_error(Gamep g, class Tokens *tokens, void *context)
+uint8_t show_error(Gamep g, class Tokens * /*tokens*/, void * /*context*/)
 {
   TRACE_NO_INDENT();
 
@@ -498,7 +498,7 @@ void sdl_config_update_all(Gamep g)
 //
 // User has entered a command, run it
 //
-uint8_t sdl_user_exit(Gamep g, class Tokens *tokens, void *context)
+uint8_t sdl_user_exit(Gamep g, class Tokens * /*tokens*/, void * /*context*/)
 {
   TRACE_NO_INDENT();
   sdl_prepare_to_exit(g);
@@ -678,22 +678,22 @@ void config_game_gfx_update(Gamep g)
 
   LOG("SDL: Map:");
 
-  auto w          = game_ascii_pix_width_get(g);
-  auto h          = game_ascii_pix_height_get(g);
-  int  map_term_w = TERM_WIDTH - (UI_LEFTBAR_WIDTH + UI_RIGHTBAR_WIDTH);
-  int  map_term_h = (TERM_HEIGHT - 3) - UI_TOPCON_HEIGHT;
+  auto      w          = game_ascii_pix_width_get(g);
+  auto      h          = game_ascii_pix_height_get(g);
+  int const map_term_w = TERM_WIDTH - (UI_LEFTBAR_WIDTH + UI_RIGHTBAR_WIDTH);
+  int const map_term_h = (TERM_HEIGHT - 3) - UI_TOPCON_HEIGHT;
 
   int visible_map_tl_x = w * UI_LEFTBAR_WIDTH;
   int visible_map_br_x = (TERM_WIDTH - UI_RIGHTBAR_WIDTH) * w;
 
-  int visible_map_tl_y = h * UI_TOPCON_HEIGHT;
-  int visible_map_br_y = (TERM_HEIGHT - 3) * h;
+  int const visible_map_tl_y = h * UI_TOPCON_HEIGHT;
+  int const visible_map_br_y = (TERM_HEIGHT - 3) * h;
 
   //
   // For screens that are very wide, unstretch the map
   //
   if (map_term_w > map_term_h) {
-    int pad = (((map_term_w * w) - (map_term_h * h)) / w) / 2;
+    int const pad = (((map_term_w * w) - (map_term_h * h)) / w) / 2;
     if (pad > 0) {
       LOG("SDL: - map is over wide      : %dx%d (reduce by %d cells either side)", map_term_w, map_term_h, pad);
       visible_map_tl_x += w * pad;
@@ -701,15 +701,15 @@ void config_game_gfx_update(Gamep g)
     }
   }
 
-  int map_w = visible_map_br_x - visible_map_tl_x;
-  int map_h = visible_map_br_y - visible_map_tl_y;
+  int const map_w = visible_map_br_x - visible_map_tl_x;
+  int const map_h = visible_map_br_y - visible_map_tl_y;
 
-  int max_fbo_w = (int) TILE_WIDTH * (int) MAP_WIDTH;
-  int max_fbo_h = (int) TILE_HEIGHT * (int) MAP_HEIGHT;
+  int const max_fbo_w = (int) TILE_WIDTH * (int) MAP_WIDTH;
+  int const max_fbo_h = (int) TILE_HEIGHT * (int) MAP_HEIGHT;
 
-  double map_w_h_ratio = (double) map_w / (double) map_h;
-  int    fbo_w         = TILE_WIDTH * game_tiles_visible_across_get(g);
-  int    fbo_h         = (int) ceil(fbo_w / map_w_h_ratio);
+  double const map_w_h_ratio = (double) map_w / (double) map_h;
+  int          fbo_w         = TILE_WIDTH * game_tiles_visible_across_get(g);
+  int          fbo_h         = (int) ceil(fbo_w / map_w_h_ratio);
 
   fbo_w = std::min(fbo_w, max_fbo_w);
 
@@ -757,8 +757,8 @@ void config_game_gfx_update(Gamep g)
   //
   // The map within the game fbo. Use the height of the screen so the width is pixel perfect.
   //
-  int tiles_across = (int) ceil(game_map_fbo_width_get(g) / (TILE_WIDTH * zoom));
-  int tiles_down   = (int) ceil(game_map_fbo_height_get(g) / (TILE_HEIGHT * zoom));
+  int const tiles_across = (int) ceil(game_map_fbo_width_get(g) / (TILE_WIDTH * zoom));
+  int const tiles_down   = (int) ceil(game_map_fbo_height_get(g) / (TILE_HEIGHT * zoom));
 
   game_tiles_visible_across_set(g, tiles_across);
   game_tiles_visible_down_set(g, tiles_down);

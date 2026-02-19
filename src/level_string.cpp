@@ -38,8 +38,8 @@ std::string level_string(Gamep g, Levelsp v, Levelp l, int w, int h)
   LEVEL_LOG(g, v, l, "string");
   for (int y = 0; y < h; y++) {
     for (int x = 0; x < w; x++) {
-      char   c = CHARMAP_EMPTY;
-      spoint p(x, y);
+      char         c = CHARMAP_EMPTY;
+      spoint const p(x, y);
 
       if (level_is_dirt(g, v, l, p)) {
         c = CHARMAP_DIRT;

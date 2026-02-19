@@ -50,7 +50,7 @@ void cave_dump(Gamep g, Cave *c)
 //
 // Iterate a single generations for cellular automata
 //
-static void cave_generation(Gamep g, Cave *c, uint32_t fill_prob, uint8_t r1, uint8_t r2, int map_generations)
+static void cave_generation(Cave *c, uint32_t fill_prob, uint8_t r1, uint8_t r2, int map_generations)
 {
   uint8_t x;
   uint8_t y;
@@ -130,7 +130,7 @@ static void cave_generation(Gamep g, Cave *c, uint32_t fill_prob, uint8_t r1, ui
 void cave_create(Gamep g, Cave *c, uint32_t fill_prob, uint8_t r1, uint8_t r2, int map_generations)
 {
   for (auto gen = 0; gen < map_generations; gen++) {
-    cave_generation(g, c, fill_prob, r1, r2, gen);
+    cave_generation(c, fill_prob, r1, r2, gen);
     memcpy(c->curr, c->prev, SIZEOF(c->prev));
     memset(c->prev, 0, SIZEOF(c->prev));
   }
@@ -223,9 +223,9 @@ void cave_generation_keep_largest_blob(Gamep g, Cave *c)
     return;
   }
 
-  x                = c->blob.largest_at_x;
-  y                = c->blob.largest_at_y;
-  uint16_t best_id = c->blob.id[ x ][ y ];
+  x                      = c->blob.largest_at_x;
+  y                      = c->blob.largest_at_y;
+  uint16_t const best_id = c->blob.id[ x ][ y ];
 
   for (x = 0; x < MAP_WIDTH; x++) {
     for (y = 0; y < MAP_HEIGHT; y++) {
@@ -286,20 +286,20 @@ void cave_generation_center_blob(Gamep g, Cave *c)
   //
   // Get the required offset to center this blob
   //
-  int tx = tl.x / 2;
-  int ty = tl.y / 2;
-  int bx = (MAP_WIDTH - br.x) / 2;
-  int by = (MAP_HEIGHT - br.y) / 2;
+  int const tx = tl.x / 2;
+  int const ty = tl.y / 2;
+  int const bx = (MAP_WIDTH - br.x) / 2;
+  int const by = (MAP_HEIGHT - br.y) / 2;
 
   //
   // Move the blob
   //
   for (x = 0; x < MAP_WIDTH; x++) {
     for (y = 0; y < MAP_HEIGHT; y++) {
-      int ox = x + MAP_LEVEL_CELLULAR_BORDER;
-      int oy = y + MAP_LEVEL_CELLULAR_BORDER;
-      int nx = ox - tx + bx;
-      int ny = oy - ty + by;
+      int const ox = x + MAP_LEVEL_CELLULAR_BORDER;
+      int const oy = y + MAP_LEVEL_CELLULAR_BORDER;
+      int const nx = ox - tx + bx;
+      int const ny = oy - ty + by;
 
       if (nx < 0) {
         continue;

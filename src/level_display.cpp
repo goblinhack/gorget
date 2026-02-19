@@ -91,7 +91,7 @@ static void level_display_cursor(Gamep g, Levelsp v, Levelp l, FboEnum fbo)
 
   for (auto y = v->miny; y < v->maxy; y++) {
     for (auto x = v->minx; x < v->maxx; x++) {
-      spoint p(x, y);
+      spoint const p(x, y);
       level_display_cursor(g, v, l, p, fbo);
     }
   }
@@ -145,8 +145,8 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp l, Levelp level_abov
     for (auto y = v->miny; y < v->maxy; y++) {
       for (auto x = v->minx; x < v->maxx; x++) {
 
-        spoint p(x, y);
-        auto   display_tile = false;
+        spoint const p(x, y);
+        auto         display_tile = false;
 
         switch (fbo) {
           case FBO_MAP_BG :

@@ -13,14 +13,14 @@
   TEST_LOG(t, "begin");
   TRACE_AND_INDENT();
 
-  LevelNum level_num = 0;
-  auto     w         = 7;
-  auto     h         = 7;
+  LevelNum const level_num = 0;
+  auto           w         = 7;
+  auto           h         = 7;
 
   //
   // How the dungeon starts out, and how we expect it to change
   //
-  std::string level1
+  std::string const level1
       = "......."
         "......."
         "....C.."
@@ -28,7 +28,7 @@
         "....C.."
         "......."
         ".......";
-  std::string expect_1a // first shove
+  std::string const expect_1a // first shove
       = "......."
         "......."
         "....C.."
@@ -36,7 +36,7 @@
         "....C.."
         "......."
         ".......";
-  std::string expect_1b // second shove
+  std::string const expect_1b // second shove
       = "......."
         "......."
         "....C.."
@@ -44,7 +44,7 @@
         "....C.."
         "......."
         ".......";
-  std::string level2
+  std::string const level2
       = "......."
         "......."
         "....C.."
@@ -52,7 +52,7 @@
         "....C.."
         "......."
         ".......";
-  std::string expect2 // second level
+  std::string const expect2 // second level
       = "......."
         "......."
         "....C.."
@@ -60,7 +60,7 @@
         "....C.."
         "......."
         ".......";
-  std::string level3
+  std::string const level3
       = "......."
         "......."
         "....x.."
@@ -68,7 +68,7 @@
         "....x.."
         "......."
         ".......";
-  std::string expect3 // second level
+  std::string const expect3 // second level
       = "......."
         "......."
         "...Bx.."

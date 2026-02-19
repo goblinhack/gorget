@@ -19,10 +19,10 @@ void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp_
 {
   TRACE_NO_INDENT();
 
-  int   zoom = game_map_zoom_get(g);
-  int   dw   = TILE_WIDTH * zoom;
-  int   dh   = TILE_HEIGHT * zoom;
-  Tilep tile = nullptr;
+  int const zoom = game_map_zoom_get(g);
+  int const dw   = TILE_WIDTH * zoom;
+  int const dh   = TILE_HEIGHT * zoom;
+  Tilep     tile = nullptr;
 
   tile = thing_display_get_tile_info(g, v, l, p, tp_maybe_null, t_maybe_null);
   if (tile != nullptr) {
@@ -140,9 +140,8 @@ void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp_
 //
 // Solid black outline
 //
-static void thing_display_outlined_blit(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_maybe_null,
-                                        spoint tl, spoint br, Tilep tile, float x1, float x2, float y1, float y2,
-                                        FboEnum fbo, color fg)
+static void thing_display_outlined_blit(Gamep g, Tpp tp, spoint tl, spoint br, Tilep tile, float x1, float x2,
+                                        float y1, float y2, color fg)
 {
   TRACE_NO_INDENT();
 
@@ -170,9 +169,9 @@ static void thing_display_outlined_blit(Gamep g, Levelsp v, Levelp l, spoint p, 
 //
 // Show an outline if obscured? e.g. foliage and the player hiding in it
 //
-[[nodiscard]] static bool thing_display_outline_blit(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp,
-                                                     Thingp t_maybe_null, spoint tl, spoint br, Tilep tile, float x1,
-                                                     float x2, float y1, float y2, FboEnum fbo, color fg)
+[[nodiscard]] static bool thing_display_outline_blit(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, spoint tl,
+                                                     spoint br, Tilep tile, float x1, float x2, float y1, float y2,
+                                                     FboEnum fbo, color fg)
 {
   TRACE_NO_INDENT();
 
@@ -204,7 +203,7 @@ static void thing_display_blit(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, T
         return;
       }
 
-      if (thing_display_outline_blit(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg)) {
+      if (thing_display_outline_blit(g, v, l, p, tp, tl, br, tile, x1, x2, y1, y2, fbo, fg)) {
         return;
       }
 
@@ -219,7 +218,7 @@ static void thing_display_blit(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, T
   //
 
   if (tp_is_blit_outlined(tp) || tp_is_blit_square_outlined(tp)) {
-    thing_display_outlined_blit(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg);
+    thing_display_outlined_blit(g, tp, tl, br, tile, x1, x2, y1, y2, fg);
   } else {
     tile_blit(tile, x1, x2, y1, y2, tl, br, fg, light_pixels, blit_flush_per_line);
   }
@@ -233,9 +232,9 @@ static void thing_display_falling(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp
 {
   TRACE_NO_INDENT();
 
-  int fall_height = thing_is_falling(t);
+  int const fall_height = thing_is_falling(t);
 
-  int dh = (int) (((0.5F * ((float) (br.y - tl.y))) / (float) MAX_FALL_TIME_MS) * fall_height);
+  int const dh = (int) (((0.5F * ((float) (br.y - tl.y))) / (float) MAX_FALL_TIME_MS) * fall_height);
   tl.x += dh;
   tl.y += dh;
   br.x -= dh;
@@ -245,7 +244,7 @@ static void thing_display_falling(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp
   blit_flush();
   glPushMatrix();
   glTranslatef(mid.x, mid.y, 0);
-  float ang = dh * 10;
+  float const ang = dh * 10;
   glRotatef(ang, 0.0F, 0.0F, 1.0F);
   glTranslatef(-mid.x, -mid.y, 0);
   thing_display_blit(g, v, l, p, tp, t, tl, br, tile, x1, x2, y1, y2, fbo, fg);
@@ -265,7 +264,7 @@ static void thing_display_rotated(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp
   blit_flush();
   glPushMatrix();
   glTranslatef(mid.x, mid.y, 0);
-  float ang = t->angle * (180.0F / std::numbers::pi_v< float >);
+  float const ang = t->angle * (180.0F / std::numbers::pi_v< float >);
   glRotatef(ang, 0.0F, 0.0F, 1.0F);
   glTranslatef(-mid.x, -mid.y, 0);
   thing_display_blit(g, v, l, p, tp, t, tl, br, tile, x1, x2, y1, y2, fbo, fg);
@@ -451,11 +450,11 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
       //
       // Preserve original alpha
       //
-      color flash  = ORANGE;
-      fg.r         = flash.r;
-      fg.g         = flash.g;
-      fg.b         = flash.b;
-      light_pixels = nullptr;
+      color const flash = ORANGE;
+      fg.r              = flash.r;
+      fg.g              = flash.g;
+      fg.b              = flash.b;
+      light_pixels      = nullptr;
     }
 
     //
@@ -466,9 +465,9 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
       //
       // Preserve original alpha
       //
-      auto  pulse = thing_is_hot(t_maybe_null);
-      color flash = RED;
-      fg.r        = flash.r;
+      auto        pulse = thing_is_hot(t_maybe_null);
+      color const flash = RED;
+      fg.r              = flash.r;
       if (pulse < 128) {
         pulse = 255 - pulse;
       }
@@ -490,7 +489,7 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
     // If we have alpha values in the texture, the end of one triangle line and the start of another creates
     // a visible strip
     //
-    bool is_blit_flush_per_line = thing_is_blit_flush_per_line(t_maybe_null);
+    bool const is_blit_flush_per_line = thing_is_blit_flush_per_line(t_maybe_null);
     thing_display_blit(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg, light_pixels,
                        is_blit_flush_per_line);
 

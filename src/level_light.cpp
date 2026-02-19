@@ -194,7 +194,7 @@ void level_light_precalculate(Gamep g)
 //
 // All light from all light sources, combined.
 //
-void level_light_per_pixel_lighting(Gamep g, Levelsp v, Levelp l, Thingp t, spoint pov, spoint p)
+void level_light_per_pixel_lighting(Gamep g, Levelsp v, Levelp l, Thingp t, spoint /*pov*/, spoint p)
 {
   const color  light_color              = tp_light_color(thing_tp(t));
   const float  light_strength_in_pixels = thing_is_light_source(t) * TILE_WIDTH;
@@ -206,9 +206,9 @@ void level_light_per_pixel_lighting(Gamep g, Levelsp v, Levelp l, Thingp t, spoi
     THING_ERR(t, "thing has no light source");
   }
 
-  float col_r = light_color.r;
-  float col_g = light_color.g;
-  float col_b = light_color.b;
+  float const col_r = light_color.r;
+  float const col_g = light_color.g;
+  float const col_b = light_color.b;
 
   if (thing_is_player(t)) {
     //
@@ -225,7 +225,7 @@ void level_light_per_pixel_lighting(Gamep g, Levelsp v, Levelp l, Thingp t, spoi
     uint16_t light_pixel_at_x = (p.x * TILE_WIDTH) - (TILE_WIDTH / 2);
     for (uint8_t pixx = 0; pixx < LIGHT_PIXEL; pixx++, light_pixel_at_x++) {
 
-      float dist_in_pixels
+      float const dist_in_pixels
           = DISTANCEf(light_pixel_at_x, light_pixel_at_y, (float) thing_at_in_pixels.x, (float) thing_at_in_pixels.y);
 
       auto light_fade_index = (uint8_t) (int) ((dist_in_pixels / light_strength_in_pixels) * (float) MAP_WIDTH);
@@ -233,8 +233,8 @@ void level_light_per_pixel_lighting(Gamep g, Levelsp v, Levelp l, Thingp t, spoi
         light_fade_index = MAP_WIDTH - 1;
       }
 
-      auto *light_pixel = &light_tile->pixels.pixel[ pixx ][ pixy ];
-      float fade        = light_fade_map[ light_fade_index ];
+      auto       *light_pixel = &light_tile->pixels.pixel[ pixx ][ pixy ];
+      float const fade        = light_fade_map[ light_fade_index ];
 
       light_pixel->r += fade * col_r;
       light_pixel->g += fade * col_g;
@@ -281,10 +281,10 @@ void Raycast::ray_pixel_line_draw(int16_t index, const spoint p0, const spoint p
   int  longLen  = x2 - x;
 
   if (abs(shortLen) > abs(longLen)) {
-    int swap = shortLen;
-    shortLen = longLen;
-    longLen  = swap;
-    yLonger  = true;
+    int const swap = shortLen;
+    shortLen       = longLen;
+    longLen        = swap;
+    yLonger        = true;
   }
   int decInc;
   if (longLen == 0) {
@@ -332,7 +332,7 @@ void Raycast::ray_lengths_precalculate(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  float dr = (float) RAD_360 / ((float) LIGHT_MAX_RAYS_MAX);
+  float const dr = (float) RAD_360 / ((float) LIGHT_MAX_RAYS_MAX);
   for (int i = 0; i < LIGHT_MAX_RAYS_MAX; i++) {
     float cosr;
     float sinr;
@@ -659,10 +659,10 @@ void Raycast::raycast_render(Gamep g, Levelsp v, Levelp l)
     push_point(light_pos.x, light_pos.y);
 
     for (auto i = 0; i < LIGHT_MAX_RAYS_MAX; i++) {
-      auto   *ray = &rays[ i ];
-      spoint &p   = ray_pixels[ i ][ ray->depth_furthest ].p;
-      int16_t p1x = light_pos.x + p.x;
-      int16_t p1y = light_pos.y + p.y;
+      auto         *ray = &rays[ i ];
+      spoint const &p   = ray_pixels[ i ][ ray->depth_furthest ].p;
+      int16_t const p1x = light_pos.x + p.x;
+      int16_t const p1y = light_pos.y + p.y;
       push_point(p1x, p1y);
     }
 
@@ -670,10 +670,10 @@ void Raycast::raycast_render(Gamep g, Levelsp v, Levelp l)
     // Complete the circle with the first point again.
     //
     {
-      auto   *ray = &rays[ 0 ];
-      spoint &p   = ray_pixels[ 0 ][ ray->depth_furthest ].p;
-      int16_t p1x = light_pos.x + p.x;
-      int16_t p1y = light_pos.y + p.y;
+      auto         *ray = &rays[ 0 ];
+      spoint const &p   = ray_pixels[ 0 ][ ray->depth_furthest ].p;
+      int16_t const p1x = light_pos.x + p.x;
+      int16_t const p1y = light_pos.y + p.y;
       push_point(p1x, p1y);
     }
 

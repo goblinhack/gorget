@@ -19,8 +19,7 @@
 //
 // The thing icon
 //
-[[nodiscard]] static bool wid_thing_info_icon(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, WidPopup *parent,
-                                              int width)
+[[nodiscard]] static bool wid_thing_info_icon(Gamep g, Tpp tp, WidPopup *parent)
 {
   TRACE_NO_INDENT();
 
@@ -32,9 +31,9 @@
     return false;
   }
 
-  auto  *w = wid_new_square_button(g, b, "Icon");
-  spoint tl(0, text->line_count);
-  spoint br(3, text->line_count + 2);
+  auto        *w = wid_new_square_button(g, b, "Icon");
+  spoint const tl(0, text->line_count);
+  spoint const br(3, text->line_count + 2);
   wid_set_tile(TILE_LAYER_BG_0, w, tile);
   wid_set_style(w, UI_WID_STYLE_SPARSE_NONE);
   wid_set_pos(w, tl, br);
@@ -42,8 +41,7 @@
   return true;
 }
 
-[[nodiscard]] static bool wid_thing_info_keys(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, WidPopup *parent,
-                                              int width)
+[[nodiscard]] static bool wid_thing_info_keys(Gamep g, Thingp t, WidPopup *parent)
 {
   TRACE_NO_INDENT();
 
@@ -56,20 +54,20 @@
   }
 
   {
-    auto  *tile = tile_find_mand("key.0");
-    auto  *w    = wid_new_square_button(g, b, "Keys");
-    spoint tl(UI_LEFTBAR_WIDTH - 8, text->line_count);
-    spoint br(UI_LEFTBAR_WIDTH - 5, text->line_count + 2);
+    auto        *tile = tile_find_mand("key.0");
+    auto        *w    = wid_new_square_button(g, b, "Keys");
+    spoint const tl(UI_LEFTBAR_WIDTH - 8, text->line_count);
+    spoint const br(UI_LEFTBAR_WIDTH - 5, text->line_count + 2);
     wid_set_tile(TILE_LAYER_BG_0, w, tile);
     wid_set_style(w, UI_WID_STYLE_SPARSE_NONE);
     wid_set_pos(w, tl, br);
   }
 
   {
-    auto       *w = wid_new_square_button(g, b, "Key count");
-    spoint      tl(UI_LEFTBAR_WIDTH - 4, text->line_count);
-    spoint      br(UI_LEFTBAR_WIDTH - 2, text->line_count + 2);
-    std::string how_many_keys = "x" + std::to_string(key_count);
+    auto        *w = wid_new_square_button(g, b, "Key count");
+    spoint const tl(UI_LEFTBAR_WIDTH - 4, text->line_count);
+    spoint const br(UI_LEFTBAR_WIDTH - 2, text->line_count + 2);
+    std::string  how_many_keys = "x" + std::to_string(key_count);
 
     if (key_count > 9) {
       how_many_keys = std::to_string(key_count);
@@ -86,8 +84,7 @@
 //
 // The thing name
 //
-[[nodiscard]] static bool wid_thing_info_name(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, WidPopup *parent,
-                                              int width)
+[[nodiscard]] static bool wid_thing_info_name(Gamep g, Thingp t, Tpp tp, WidPopup *parent)
 {
   TRACE_NO_INDENT();
 
@@ -107,8 +104,7 @@
 //
 // The thing description
 //
-[[nodiscard]] static bool wid_thing_info_detail(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, WidPopup *parent,
-                                                int width)
+[[nodiscard]] static bool wid_thing_info_detail(Gamep g, Levelsp v, Levelp l, Thingp t, WidPopup *parent)
 {
   TRACE_NO_INDENT();
 
@@ -120,8 +116,7 @@
 //
 // Health bar
 //
-[[nodiscard]] static bool wid_thing_info_health_bar(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, WidPopup *parent,
-                                                    int width)
+[[nodiscard]] static bool wid_thing_info_health_bar(Gamep g, Thingp t, Tpp tp, WidPopup *parent, int width)
 {
   TRACE_NO_INDENT();
 
@@ -150,7 +145,7 @@
   auto h          = thing_health(t);
   h               = std::max(h, 0);
 
-  std::string health_str = std::to_string(h) + "/" + std::to_string(health_max);
+  std::string const health_str = std::to_string(h) + "/" + std::to_string(health_max);
   my_strlcpy(tmp + width - health_str.size() - 3, health_str.c_str(), width - health_str.size());
   tmp[ strlen(tmp) ] = ' ';
 
@@ -178,8 +173,7 @@
 //
 // Add immunities
 //
-[[nodiscard]] static bool wid_thing_info_immunities(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, WidPopup *parent,
-                                                    int width)
+[[nodiscard]] static bool wid_thing_info_immunities(Gamep g, Thingp t, WidPopup *parent, int width)
 {
   TRACE_NO_INDENT();
 
@@ -236,8 +230,7 @@
 //
 // Add special damage
 //
-[[nodiscard]] static bool wid_thing_info_special_damage(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp,
-                                                        WidPopup *parent, int width)
+[[nodiscard]] static bool wid_thing_info_special_damage(Gamep g, Thingp t, WidPopup *parent)
 {
   TRACE_NO_INDENT();
 
@@ -272,29 +265,29 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp t, WidPopup *parent, in
     return;
   }
 
-  if (wid_thing_info_icon(g, v, l, t, tp, parent, width)) {
+  if (wid_thing_info_icon(g, tp, parent)) {
     parent->log_empty_line(g);
   }
 
-  (void) wid_thing_info_keys(g, v, l, t, tp, parent, width);
+  (void) wid_thing_info_keys(g, t, parent);
 
-  if (wid_thing_info_name(g, v, l, t, tp, parent, width)) {
+  if (wid_thing_info_name(g, t, tp, parent)) {
     parent->log_empty_line(g);
   }
 
-  if (wid_thing_info_detail(g, v, l, t, tp, parent, width)) {
+  if (wid_thing_info_detail(g, v, l, t, parent)) {
     parent->log_empty_line(g);
   }
 
-  if (wid_thing_info_health_bar(g, v, l, t, tp, parent, width)) {
+  if (wid_thing_info_health_bar(g, t, tp, parent, width)) {
     parent->log_empty_line(g);
   }
 
-  if (wid_thing_info_immunities(g, v, l, t, tp, parent, width)) {
+  if (wid_thing_info_immunities(g, t, parent, width)) {
     parent->log_empty_line(g);
   }
 
-  if (wid_thing_info_special_damage(g, v, l, t, tp, parent, width)) {
+  if (wid_thing_info_special_damage(g, t, parent)) {
     parent->log_empty_line(g);
   }
 
@@ -311,7 +304,7 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp t, WidPopup *parent, in
     auto at = thing_at(t);
     FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, at)
     {
-      auto s = std::format("- {}", thing_short_name(g, v, l, it).c_str());
+      auto s = std::format("- {}", thing_short_name(g, v, l, it));
       parent->log(g, s, TEXT_FORMAT_LHS);
     }
   }

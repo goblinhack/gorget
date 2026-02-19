@@ -71,7 +71,7 @@
 // Roll 30 ->  bonus +10
 int stat_to_bonus(int stat)
 {
-  int bonus = (stat - 10) / 2;
+  int const bonus = (stat - 10) / 2;
   if (bonus < -20) {
     return -20;
   }
@@ -199,7 +199,7 @@ std::string stat_to_bonus_slash_str(int stat)
 //
 bool d20_ge(int stat_total, const int dice_roll_to_exceed, bool &fumble, bool &critical)
 {
-  int dice_roll = pcg_random_range_inclusive(1, 20);
+  int const dice_roll = pcg_random_range_inclusive(1, 20);
 
   critical = false;
   fumble   = false;

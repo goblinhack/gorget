@@ -16,7 +16,7 @@
 static WidPopup *wid_cfg_sound_window;
 static bool      local_g_config_changed;
 
-static void wid_cfg_sound_destroy(Gamep g)
+static void wid_cfg_sound_destroy()
 {
   TRACE_NO_INDENT();
   delete wid_cfg_sound_window;
@@ -33,7 +33,7 @@ static void wid_cfg_sound_destroy(Gamep g)
     (void) game_load_config(g);
     sdl_config_update_all(g);
   }
-  wid_cfg_sound_destroy(g);
+  wid_cfg_sound_destroy();
   wid_options_menu_select(g);
   return true;
 }
@@ -45,7 +45,7 @@ static void wid_cfg_sound_destroy(Gamep g)
   CON("Save config for sound");
   game_save_config(g);
 
-  wid_cfg_sound_destroy(g);
+  wid_cfg_sound_destroy();
   wid_options_menu_select(g);
   return true;
 }
@@ -53,7 +53,7 @@ static void wid_cfg_sound_destroy(Gamep g)
 [[nodiscard]] static bool wid_cfg_sound_back(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
-  wid_cfg_sound_destroy(g);
+  wid_cfg_sound_destroy();
   wid_options_menu_select(g);
   return true;
 }
@@ -163,13 +163,13 @@ void wid_cfg_sound_select(Gamep g)
 {
   TRACE_NO_INDENT();
   if (wid_cfg_sound_window != nullptr) {
-    wid_cfg_sound_destroy(g);
+    wid_cfg_sound_destroy();
   }
 
   auto m = TERM_WIDTH / 2;
 
-  spoint outer_tl(m - 16, (TERM_HEIGHT / 2) - 8);
-  spoint outer_br(m + 16, (TERM_HEIGHT / 2) + 8);
+  spoint const outer_tl(m - 16, (TERM_HEIGHT / 2) - 8);
+  spoint const outer_br(m + 16, (TERM_HEIGHT / 2) + 8);
 
   auto width = outer_br.x - outer_tl.x - 2;
 
@@ -187,8 +187,8 @@ void wid_cfg_sound_select(Gamep g)
     auto *p = wid_cfg_sound_window->wid_text_area->wid_text_area;
     auto *w = wid_new_square_button(g, p, "configuration");
 
-    spoint tl(1, y_at);
-    spoint br(width, y_at + 2);
+    spoint const tl(1, y_at);
+    spoint const br(width, y_at + 2);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text(w, "Volume (max " + std::to_string(MIX_MAX_VOLUME) + ")");
@@ -200,8 +200,8 @@ void wid_cfg_sound_select(Gamep g)
     auto *p = wid_cfg_sound_window->wid_text_area->wid_text_area;
     auto *w = wid_new_back_button(g, p, "BACK");
 
-    spoint tl(1, y_at);
-    spoint br(6, y_at + 2);
+    spoint const tl(1, y_at);
+    spoint const br(6, y_at + 2);
     wid_set_on_mouse_up(w, wid_cfg_sound_back);
     wid_set_pos(w, tl, br);
   }
@@ -210,8 +210,8 @@ void wid_cfg_sound_select(Gamep g)
     auto *p = wid_cfg_sound_window->wid_text_area->wid_text_area;
     auto *w = wid_new_save_button(g, p, "Save");
 
-    spoint tl(width - 15, y_at);
-    spoint br(width - 10, y_at + 2);
+    spoint const tl(width - 15, y_at);
+    spoint const br(width - 10, y_at + 2);
     wid_set_on_mouse_up(w, wid_cfg_sound_save);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "S" UI_RESET_FMT "ave");
@@ -221,8 +221,8 @@ void wid_cfg_sound_select(Gamep g)
     auto *p = wid_cfg_sound_window->wid_text_area->wid_text_area;
     auto *w = wid_new_cancel_button(g, p, "Cancel");
 
-    spoint tl(width - 8, y_at);
-    spoint br(width - 1, y_at + 2);
+    spoint const tl(width - 8, y_at);
+    spoint const br(width - 1, y_at + 2);
     wid_set_on_mouse_up(w, wid_cfg_sound_cancel);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "C" UI_RESET_FMT "ancel");
@@ -234,8 +234,8 @@ void wid_cfg_sound_select(Gamep g)
     auto *p = wid_cfg_sound_window->wid_text_area->wid_text_area;
     auto *w = wid_new_square_button(g, p, "Effects volume");
 
-    spoint tl(1, y_at);
-    spoint br(width / 2, y_at);
+    spoint const tl(1, y_at);
+    spoint const br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w);
@@ -246,8 +246,8 @@ void wid_cfg_sound_select(Gamep g)
     auto *p = wid_cfg_sound_window->wid_text_area->wid_text_area;
     auto *w = wid_new_button(g, p, "Effects volume value");
 
-    spoint tl(width / 2, y_at);
-    spoint br((width / 2) + 8, y_at);
+    spoint const tl(width / 2, y_at);
+    spoint const br((width / 2) + 8, y_at);
     wid_set_pos(w, tl, br);
     wid_set_text(w, std::to_string(game_sound_volume_get(g)));
   }
@@ -256,8 +256,8 @@ void wid_cfg_sound_select(Gamep g)
     auto *p = wid_cfg_sound_window->wid_text_area->wid_text_area;
     auto *w = wid_new_menu_button(g, p, "Effects value +");
 
-    spoint tl((width / 2) + 9, y_at);
-    spoint br((width / 2) + 11, y_at + 2);
+    spoint const tl((width / 2) + 9, y_at);
+    spoint const br((width / 2) + 11, y_at + 2);
     wid_set_pos(w, tl, br);
     wid_set_on_mouse_down(w, wid_cfg_sound_effects_volume_incr);
     wid_set_on_mouse_held(w, wid_cfg_sound_effects_volume_incr);
@@ -268,8 +268,8 @@ void wid_cfg_sound_select(Gamep g)
     auto *p = wid_cfg_sound_window->wid_text_area->wid_text_area;
     auto *w = wid_new_menu_button(g, p, "Effects value -");
 
-    spoint tl((width / 2) + 12, y_at);
-    spoint br((width / 2) + 14, y_at + 2);
+    spoint const tl((width / 2) + 12, y_at);
+    spoint const br((width / 2) + 14, y_at + 2);
     wid_set_pos(w, tl, br);
     wid_set_on_mouse_down(w, wid_cfg_sound_effects_volume_decr);
     wid_set_on_mouse_held(w, wid_cfg_sound_effects_volume_decr);
@@ -282,8 +282,8 @@ void wid_cfg_sound_select(Gamep g)
     auto *p = wid_cfg_sound_window->wid_text_area->wid_text_area;
     auto *w = wid_new_square_button(g, p, "Music volume");
 
-    spoint tl(1, y_at);
-    spoint br(width / 2, y_at);
+    spoint const tl(1, y_at);
+    spoint const br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w);
@@ -294,8 +294,8 @@ void wid_cfg_sound_select(Gamep g)
     auto *p = wid_cfg_sound_window->wid_text_area->wid_text_area;
     auto *w = wid_new_button(g, p, "Music volume value");
 
-    spoint tl(width / 2, y_at);
-    spoint br((width / 2) + 8, y_at);
+    spoint const tl(width / 2, y_at);
+    spoint const br((width / 2) + 8, y_at);
     wid_set_pos(w, tl, br);
     wid_set_text(w, std::to_string(game_music_volume_get(g)));
   }
@@ -304,8 +304,8 @@ void wid_cfg_sound_select(Gamep g)
     auto *p = wid_cfg_sound_window->wid_text_area->wid_text_area;
     auto *w = wid_new_menu_button(g, p, "Music value +");
 
-    spoint tl((width / 2) + 9, y_at);
-    spoint br((width / 2) + 11, y_at + 2);
+    spoint const tl((width / 2) + 9, y_at);
+    spoint const br((width / 2) + 11, y_at + 2);
     wid_set_pos(w, tl, br);
     wid_set_on_mouse_down(w, wid_cfg_sound_music_volume_incr);
     wid_set_on_mouse_held(w, wid_cfg_sound_music_volume_incr);
@@ -316,8 +316,8 @@ void wid_cfg_sound_select(Gamep g)
     auto *p = wid_cfg_sound_window->wid_text_area->wid_text_area;
     auto *w = wid_new_menu_button(g, p, "Music value -");
 
-    spoint tl((width / 2) + 12, y_at);
-    spoint br((width / 2) + 14, y_at + 2);
+    spoint const tl((width / 2) + 12, y_at);
+    spoint const br((width / 2) + 14, y_at + 2);
     wid_set_pos(w, tl, br);
     wid_set_on_mouse_down(w, wid_cfg_sound_music_volume_decr);
     wid_set_on_mouse_held(w, wid_cfg_sound_music_volume_decr);

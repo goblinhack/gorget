@@ -311,8 +311,7 @@ Texp tex_load(const std::string &file, const std::string &name, int mode)
 // 3 - white outline only
 //
 static std::vector< Texp > tex_create_masks_from_surface(SDL_Surface *src, const std::string &file,
-                                                         const std::string &name, uint32_t tile_width,
-                                                         uint32_t tile_height, int mode)
+                                                         const std::string &name, int mode)
 {
   auto name_monochrome = name + "_monochrome";
   auto name_mask       = name + "_mask";
@@ -340,10 +339,10 @@ static std::vector< Texp > tex_create_masks_from_surface(SDL_Surface *src, const
   amask = 0xff000000;
 #endif
 
-  uint32_t src_width  = src->w;
-  uint32_t src_height = src->h;
-  uint32_t src_x;
-  uint32_t src_y;
+  uint32_t const src_width  = src->w;
+  uint32_t const src_height = src->h;
+  uint32_t       src_x;
+  uint32_t       src_y;
 
   SDL_Surface *dst_monochrome = SDL_CreateRGBSurface(0, src_width, src_height, 32, rmask, gmask, bmask, amask);
   newptr(MTYPE_SDL, dst_monochrome, "SDL_CreateRGBSurface17");
@@ -354,7 +353,7 @@ static std::vector< Texp > tex_create_masks_from_surface(SDL_Surface *src, const
   SDL_Surface *dst_outline = SDL_CreateRGBSurface(0, src_width, src_height, 32, rmask, gmask, bmask, amask);
   newptr(MTYPE_SDL, dst_outline, "SDL_CreateRGBSurface19");
 
-  color col_white(255, 255, 255, 255);
+  color const col_white(255, 255, 255, 255);
 
   for (src_y = 0; src_y < src_height; src_y++) {
     for (src_x = 0; src_x < src_width; src_x++) {
@@ -372,8 +371,8 @@ static std::vector< Texp > tex_create_masks_from_surface(SDL_Surface *src, const
       // Give an averaged, purpleish color to tiles
       //
       if (col_orig.a > 0) {
-        auto    col_monochrome = col_orig;
-        uint8_t avg
+        auto          col_monochrome = col_orig;
+        uint8_t const avg
             = ((int) col_monochrome.r + (int) col_monochrome.g + (int) col_monochrome.b) / UI_LIGHT_BACKGROUND;
         col_monochrome.r = avg;
         col_monochrome.g = avg;
@@ -465,7 +464,7 @@ void tex_load_sprites(Texp *tex, Texp *tex_monochrome, Texp *tex_mask, Texp *tex
   }
 
   *tex            = tex_from_surface(surface, file, name, mode);
-  auto p          = tex_create_masks_from_surface(surface, file, name, tile_width, tile_height, mode);
+  auto p          = tex_create_masks_from_surface(surface, file, name, mode);
   *tex_monochrome = p[ 0 ];
   *tex_mask       = p[ 1 ];
   *tex_outline    = p[ 2 ];
@@ -507,8 +506,8 @@ Texp tex_from_surface(SDL_Surface *surface, const std::string &file, const std::
   //
   // Get the number of channels in the SDL surface
   //
-  int channels      = surface->format->BytesPerPixel;
-  int textureFormat = 0;
+  int const channels      = surface->format->BytesPerPixel;
+  int       textureFormat = 0;
 
   if (channels == 4) {
     //
@@ -653,10 +652,10 @@ SDL_Surface *tex_get_surface(Texp tex)
 Texp string2tex(const char **s)
 {
   TRACE_NO_INDENT();
-  static char        tmp[ MAXSHORTSTR ];
-  static std::string eo_tmp = tmp + MAXSHORTSTR - 1;
-  const char        *c      = *s;
-  char              *t      = tmp;
+  static char              tmp[ MAXSHORTSTR ];
+  static std::string const eo_tmp = tmp + MAXSHORTSTR - 1;
+  const char              *c      = *s;
+  char                    *t      = tmp;
 
   while (t < eo_tmp) {
     if ((*c == '\0') || (*c == '$')) {

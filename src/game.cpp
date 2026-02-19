@@ -297,7 +297,7 @@ public:
   [[nodiscard]] std::string load_config() const;
 };
 
-static void game_map_zoom_update(Gamep /*g*/);
+static void game_map_zoom_update(Gamep g);
 
 class Game *game;
 
@@ -445,7 +445,7 @@ Levelsp game_test_init(Gamep g, Levelp *l_out, LevelNum level_num, int w, int h,
 // Create an additional level with the given contents and start the game into playing state
 //
 void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num, spoint level_at, int w, int h,
-                          const char *contents, Overrides overrides)
+                          const char *contents, const Overrides &overrides)
 {
   TRACE_NO_INDENT();
 
@@ -458,7 +458,7 @@ void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num,
   level_init(g, v, l, level_num);
 
   TRACE_NO_INDENT();
-  if (! level_populate(g, v, l, nullptr, w, h, contents, std::move(overrides))) {
+  if (! level_populate(g, v, l, nullptr, w, h, contents, overrides)) {
     CROAK("level populate failed");
   }
 
@@ -698,7 +698,7 @@ void game_seed_set(Gamep g, uint32_t seed)
     return;
   }
 
-  std::string seed_name = std::to_string(seed);
+  std::string const seed_name = std::to_string(seed);
   game_seed_set(g, seed_name.c_str());
 }
 
@@ -824,7 +824,7 @@ void Game::create_levels()
   //
   // Sanity checks
   //
-  LevelSelect *s = &v->level_select;
+  LevelSelect const *s = &v->level_select;
   if (s == nullptr) {
     ERR("No level selection created");
     return;
@@ -2653,7 +2653,7 @@ int game_map_zoom_def_get(Gamep g)
   int visible_map_br_y = 0;
   game_visible_map_pix_get(g, &visible_map_tl_x, &visible_map_tl_y, &visible_map_br_x, &visible_map_br_y);
 
-  float map_pix_width = visible_map_br_x - visible_map_tl_x;
+  float const map_pix_width = visible_map_br_x - visible_map_tl_x;
 
   float zoom = map_pix_width / (float) TILE_WIDTH / (float) MAP_TILES_ACROSS_DEF;
 

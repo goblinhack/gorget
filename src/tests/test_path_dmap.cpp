@@ -13,14 +13,14 @@
   TEST_LOG(t, "begin");
   TRACE_AND_INDENT();
 
-  LevelNum level_num = 0;
-  auto     w         = MAP_WIDTH;
-  auto     h         = MAP_HEIGHT;
+  LevelNum const level_num = 0;
+  auto           w         = MAP_WIDTH;
+  auto           h         = MAP_HEIGHT;
 
   //
   // How the dungeon starts out, and how we expect it to change
   //
-  std::string start
+  std::string const start
       = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"  // newline
         "xE.....x....................x..................x"  // newline
         "x......x....................x..................x"  // newline
@@ -70,7 +70,7 @@
         "x.............................................@x"  // newline
         "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"; // newline
 
-  std::string expect
+  std::string const expect
       = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"  // newline
         "xE.....x....................x..................x"  // newline
         "x#.....x....................x..................x"  // newline

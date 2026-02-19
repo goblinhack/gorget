@@ -14,16 +14,16 @@ extern Gamep game;
   TEST_LOG(t, "begin");
   TRACE_AND_INDENT();
 
-  LevelNum level_num = 0;
-  auto     w         = 7;
-  auto     h         = 7;
+  LevelNum const level_num = 0;
+  auto           w         = 7;
+  auto           h         = 7;
 
-  std::string file_to_save = ".o/test-tmp-file";
+  std::string const file_to_save = ".o/test-tmp-file";
 
   //
   // How the dungeon starts out, and how we expect it to change
   //
-  std::string start
+  std::string const start
       = "xxxxxxx"
         "x.....x"
         "x.....x"
@@ -31,7 +31,7 @@ extern Gamep game;
         "x.....x"
         "x.....x"
         "xxxxxxx";
-  std::string expect1
+  std::string const expect1
       = "xxxxxxx"
         "x.....x"
         "x.....x"

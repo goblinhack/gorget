@@ -152,7 +152,7 @@ bool thing_pop(Gamep g, Levelsp v, Thingp t)
     return false;
   }
 
-  spoint at = t->last_pushed_at;
+  spoint const at = t->last_pushed_at;
 
   if (compiler_unused) {
     THING_DBG(t, "is on the map, last pushed %u,%u", at.x, at.y);

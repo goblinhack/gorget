@@ -32,8 +32,8 @@ void thing_interpolate(Gamep g, Levelsp v, Levelp l, Thingp t, float dt)
   //
   // Cannot use thing_update_pos here, as the thing is already at the destination
   //
-  float pix_x = (float) moving_from.x + (((float) (at.x - moving_from.x)) * dt);
-  float pix_y = (float) moving_from.y + (((float) (at.y - moving_from.y)) * dt);
+  float const pix_x = (float) moving_from.x + (((float) (at.x - moving_from.x)) * dt);
+  float const pix_y = (float) moving_from.y + (((float) (at.y - moving_from.y)) * dt);
 
   spoint pix_at;
   pix_at.x = (int) (pix_x * (float) TILE_WIDTH);

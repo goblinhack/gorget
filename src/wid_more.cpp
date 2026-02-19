@@ -12,7 +12,7 @@
 
 static WidPopup *wid_more_window;
 
-static void wid_more_destroy(Gamep g)
+static void wid_more_destroy()
 {
   TRACE_NO_INDENT();
   delete wid_more_window;
@@ -22,7 +22,7 @@ static void wid_more_destroy(Gamep g)
 [[nodiscard]] static bool wid_more_credits(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
-  wid_more_destroy(g);
+  wid_more_destroy();
   wid_credits_select(g);
   return true;
 }
@@ -30,7 +30,7 @@ static void wid_more_destroy(Gamep g)
 [[nodiscard]] static bool wid_more_hiscores(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
-  wid_more_destroy(g);
+  wid_more_destroy();
   wid_hiscores_show(g);
   return true;
 }
@@ -38,7 +38,7 @@ static void wid_more_destroy(Gamep g)
 [[nodiscard]] static bool wid_more_back(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
-  wid_more_destroy(g);
+  wid_more_destroy();
   wid_main_menu_select(g);
   return true;
 }
@@ -92,16 +92,16 @@ void wid_more_select(Gamep g)
   LOG("More menu");
 
   if (wid_more_window != nullptr) {
-    wid_more_destroy(g);
+    wid_more_destroy();
   }
 
   auto box_height = 2;
   auto box_step   = 3;
 
-  int    menu_height = 14;
-  int    menu_width  = UI_WID_POPUP_WIDTH_NORMAL;
-  spoint outer_tl((TERM_WIDTH / 2) - (menu_width / 2), (TERM_HEIGHT / 2) - (menu_height / 2));
-  spoint outer_br((TERM_WIDTH / 2) + (menu_width / 2), (TERM_HEIGHT / 2) + (menu_height / 2));
+  int const    menu_height = 14;
+  int const    menu_width  = UI_WID_POPUP_WIDTH_NORMAL;
+  spoint const outer_tl((TERM_WIDTH / 2) - (menu_width / 2), (TERM_HEIGHT / 2) - (menu_height / 2));
+  spoint const outer_br((TERM_WIDTH / 2) + (menu_width / 2), (TERM_HEIGHT / 2) + (menu_height / 2));
   wid_more_window = new WidPopup(g, "More menu", outer_tl, outer_br, nullptr, "nothing", false, false);
 
   auto button_width = outer_br.x - outer_tl.x - 2;
@@ -120,8 +120,8 @@ void wid_more_select(Gamep g)
     auto *p = wid_more_window->wid_text_area->wid_text_area;
     auto *w = wid_new_menu_button(g, p, "Credits");
 
-    spoint tl(0, y_at);
-    spoint br(button_width, y_at + box_height);
+    spoint const tl(0, y_at);
+    spoint const br(button_width, y_at + box_height);
     wid_set_on_mouse_up(w, wid_more_credits);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "C" UI_FMT_STR "redits");
@@ -132,8 +132,8 @@ void wid_more_select(Gamep g)
     auto *p = wid_more_window->wid_text_area->wid_text_area;
     auto *w = wid_new_menu_button(g, p, "Hiscores");
 
-    spoint tl(0, y_at);
-    spoint br(button_width, y_at + box_height);
+    spoint const tl(0, y_at);
+    spoint const br(button_width, y_at + box_height);
     wid_set_on_mouse_up(w, wid_more_hiscores);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "H" UI_FMT_STR "iscores");
@@ -144,8 +144,8 @@ void wid_more_select(Gamep g)
     auto *p = wid_more_window->wid_text_area->wid_text_area;
     auto *w = wid_new_back_button(g, p, "BACK");
 
-    spoint tl(0, y_at);
-    spoint br(button_width, y_at + box_height);
+    spoint const tl(0, y_at);
+    spoint const br(button_width, y_at + box_height);
     wid_set_on_mouse_up(w, wid_more_back);
     wid_set_pos(w, tl, br);
   }

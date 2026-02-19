@@ -24,7 +24,7 @@ static std::string tp_kobalos_description_get(Gamep g, Levelsp v, Levelp l, Thin
   return "kobalos";
 }
 
-static std::string tp_kobalos_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static std::string tp_kobalos_detail_get(Gamep g, Levelsp v, Levelp l, Thingp /*t*/)
 {
   TRACE_NO_INDENT();
 
@@ -34,7 +34,7 @@ static std::string tp_kobalos_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
       UI_INFO2_FMT_STR "Kobalos are vindictive, greedy little things and have a habit of thievery...";
 }
 
-ThingEnviron tp_kobalos_assess_tile(Gamep g, Levelsp v, Levelp l, spoint at, Thingp t)
+ThingEnviron tp_kobalos_assess_tile(Gamep g, Levelsp v, Levelp l, spoint at, Thingp /*t*/)
 {
   TRACE_NO_INDENT();
 

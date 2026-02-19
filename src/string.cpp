@@ -283,9 +283,9 @@ int strisregexp(const char *in)
 size_t my_strlcpy(char *dst, const char *src, size_t max_len)
 {
   TRACE_NO_INDENT();
-  size_t srclen = strlen(src);
+  size_t const srclen = strlen(src);
   if (max_len > 0) {
-    uint32_t len = std::min(srclen, max_len - 1);
+    uint32_t const len = std::min(srclen, max_len - 1);
     memcpy(dst, src, len);
     dst[ len ] = '\0';
   }
@@ -295,8 +295,8 @@ size_t my_strlcpy(char *dst, const char *src, size_t max_len)
 size_t my_strlcat(char *dst, const char *src, size_t max_len)
 {
   TRACE_NO_INDENT();
-  uint32_t dstlen = strlen(dst);
-  uint32_t srclen = strlen(src);
+  uint32_t const dstlen = strlen(dst);
+  uint32_t const srclen = strlen(src);
   if (dstlen < max_len) {
     my_strlcpy(dst + dstlen, src, max_len - dstlen);
   }
@@ -329,8 +329,8 @@ void strnoescape(char *uncompressed)
       case '\\' : *t++ = '\\'; break;
       default :
         {
-          char *o = s - 1;
-          char  orig;
+          char const *o = s - 1;
+          char        orig;
 
           while (isdigit(*s) != 0) {
             s++;
@@ -875,13 +875,13 @@ const std::string WHITESPACE = " \n\r\t\f\v";
 
 std::string ltrim_ws(const std::string &s)
 {
-  size_t start = s.find_first_not_of(WHITESPACE);
+  size_t const start = s.find_first_not_of(WHITESPACE);
   return (start == std::string::npos) ? "" : s.substr(start);
 }
 
 std::string rtrim_ws(const std::string &s)
 {
-  size_t end = s.find_last_not_of(WHITESPACE);
+  size_t const end = s.find_last_not_of(WHITESPACE);
   return (end == std::string::npos) ? "" : s.substr(0, end + 1);
 }
 
@@ -926,10 +926,10 @@ std::string capitalize(std::string in)
   TRACE_NO_INDENT();
   std::string out = std::move(in);
 
-  char *b          = (char *) out.c_str();
-  char *e          = b + out.size();
-  char *c          = b;
-  bool  word_start = true;
+  char       *b          = (char *) out.c_str();
+  char const *e          = b + out.size();
+  char       *c          = b;
+  bool        word_start = true;
   while (c < e) {
     if (word_start) {
       if (islower(*c) != 0) {
@@ -954,10 +954,10 @@ std::string capitalize_first(std::string in)
   TRACE_NO_INDENT();
   std::string out = std::move(in);
 
-  char *b          = (char *) out.c_str();
-  char *e          = b + out.size();
-  char *c          = b;
-  bool  word_start = true;
+  char       *b          = (char *) out.c_str();
+  char const *e          = b + out.size();
+  char       *c          = b;
+  bool        word_start = true;
   while (c < e) {
     if (word_start) {
       if (islower(*c) != 0) {

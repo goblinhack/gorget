@@ -16,7 +16,7 @@
 static Texp solid_tex;
 static int  solid_tex_id;
 
-static void level_minimap_world_update(Gamep g, Levelsp v, Levelp l, const bool level_select)
+static void level_minimap_world_update(Gamep g, Levelsp v, const bool level_select)
 {
   TRACE_NO_INDENT();
 
@@ -52,8 +52,8 @@ static void level_minimap_world_update(Gamep g, Levelsp v, Levelp l, const bool 
         color  c              = BLACK;
         Levelp level_at_coord = nullptr;
 
-        spoint p(x, y);
-        auto  *s = level_select_get(g, v, p);
+        spoint const p(x, y);
+        auto        *s = level_select_get(g, v, p);
         if (s->is_set == 0U) {
           //
           // No level here
@@ -159,8 +159,8 @@ static void level_minimap_world_update_rotated(Gamep g, Levelsp v, Levelp l)
       //
       // Center the map then rotate it
       //
-      float ox = w / 2;
-      float oy = h / 2;
+      float const ox = w / 2;
+      float const oy = h / 2;
       glTranslatef(ox, oy, 0);
       glRotatef((float) -135, 0.0F, 0.0F, 1.0F);
       glTranslatef(-ox, -oy, 0);
@@ -170,7 +170,7 @@ static void level_minimap_world_update_rotated(Gamep g, Levelsp v, Levelp l)
       //
       // As we map this into a widget that is composed of text chars, it ends up slightly vertically stretched
       //
-      int shrink = (int) ((float) w / 6.6); // hack hack
+      int const shrink = (int) ((float) w / 6.6); // hack hack
       blit_fbo(g, FBO_MINIMAP_WORLD, 0 + shrink, 0 + shrink, w - shrink, h - shrink);
     }
     glPopMatrix();
@@ -205,8 +205,8 @@ static void level_minimap_levels_update(Gamep g, Levelsp v, Levelp l, const bool
 
     for (auto y = 0; y < MAP_HEIGHT; y++) {
       for (auto x = 0; x < MAP_WIDTH; x++) {
-        color  c = BLACK;
-        spoint p(x, y);
+        color        c = BLACK;
+        spoint const p(x, y);
 
         if (! g_opt_debug1) {
           if (! thing_vision_player_has_seen_tile(g, v, l, p)) {
@@ -324,7 +324,7 @@ void level_minimaps_update(Gamep g, Levelsp v, Levelp l)
   //
   // If in level select mode, avoid certain things, like vision effects
   //
-  bool level_select = level_is_level_select(g, v, game_level_get(g, v));
+  bool const level_select = level_is_level_select(g, v, game_level_get(g, v));
 
   if (solid_tex == nullptr) {
     solid_tex    = tex_load("", "solid", GL_LINEAR);
@@ -334,7 +334,7 @@ void level_minimaps_update(Gamep g, Levelsp v, Levelp l)
   level_minimap_levels_update(g, v, l, level_select);
   //  sdl_fbo_dump(g, FBO_MINIMAP_LEVEL, "level");
 
-  level_minimap_world_update(g, v, l, level_select);
+  level_minimap_world_update(g, v, level_select);
   //  sdl_fbo_dump(g, FBO_MINIMAP_WORLD, "world");
 
   level_minimap_world_update_rotated(g, v, l);

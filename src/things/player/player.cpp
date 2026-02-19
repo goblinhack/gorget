@@ -26,7 +26,7 @@ static std::string tp_player_description_get(Gamep g, Levelsp v, Levelp l, Thing
   return "You";
 }
 
-static std::string tp_player_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static std::string tp_player_detail_get(Gamep g, Levelsp v, Levelp l, Thingp /*t*/)
 {
   TRACE_NO_INDENT();
 
@@ -122,9 +122,9 @@ static void tp_player_level_enter(Gamep g, Levelsp v, Levelp l, Thingp t)
   thing_prev_pix_at_set(g, v, l, t, spoint(-1, -1));
 }
 
-static void tp_player_level_populated(Gamep g, Levelsp v, Levelp l, Thingp t) { TRACE_NO_INDENT(); }
+static void tp_player_level_populated(Gamep g, Levelsp v, Levelp l, Thingp /*t*/) { TRACE_NO_INDENT(); }
 
-static void tp_player_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t) { TRACE_NO_INDENT(); }
+static void tp_player_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp /*t*/) { TRACE_NO_INDENT(); }
 
 static void tp_player_on_teleported(Gamep g, Levelsp v, Levelp l, Thingp t)
 {

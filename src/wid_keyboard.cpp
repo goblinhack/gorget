@@ -150,8 +150,8 @@ static void wid_keyboard_update_buttons(Gamep g, Widp w)
   auto *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
   verify(MTYPE_MISC, ctx);
 
-  int width  = 7;
-  int height = 5;
+  int const width  = 7;
+  int const height = 5;
 
   int x;
   int y;
@@ -217,7 +217,7 @@ static void wid_keyboard_event(Gamep g, Widp w, int focusx, int focusy, const SD
       SDL_Keysym key = {};
       key.sym        = SDLK_BACKSPACE;
 
-      std::string tmp = wid_get_text(ctx->input);
+      std::string const tmp = wid_get_text(ctx->input);
       if (tmp.empty()) {
         break;
       }
@@ -244,7 +244,7 @@ static void wid_keyboard_event(Gamep g, Widp w, int focusx, int focusy, const SD
 
     for (x = 0; x < WID_KEYBOARD_ACROSS; x++) {
       for (y = 0; y < WID_KEYBOARD_DOWN; y++) {
-        char c = key_char[ y ][ x ];
+        char const c = key_char[ y ][ x ];
         if (c == key_in->sym) {
           focusx = x;
           focusy = y;
@@ -274,9 +274,9 @@ static void wid_keyboard_event(Gamep g, Widp w, int focusx, int focusy, const SD
 [[nodiscard]] static bool wid_keyboard_button_mouse_event(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
-  int focus  = wid_get_int_context(w);
-  int focusx = (focus & 0xff);
-  int focusy = (focus & 0xff00) >> 8;
+  int const focus  = wid_get_int_context(w);
+  int const focusx = (focus & 0xff);
+  int const focusy = (focus & 0xff00) >> 8;
 
   return wid_keyboard_mouse_event(g, w, focusx, focusy);
 }
@@ -644,9 +644,9 @@ static void wid_keyboard_tick(Gamep g, Widp w)
   auto *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
   verify(MTYPE_MISC, ctx);
 
-  static int val;
-  static int delta = 1;
-  static int step  = 2;
+  static int       val;
+  static int       delta = 1;
+  static int const step  = 2;
 
   val += delta * step;
 
@@ -717,14 +717,14 @@ Widp wid_keyboard(Gamep g, const std::string &text, const std::string &title, wi
   const auto width  = (WID_KEYBOARD_ACROSS * 7) + 1;
   const auto height = (WID_KEYBOARD_DOWN * 5) + 8;
 
-  int left_half  = width / 2;
-  int right_half = width - left_half;
-  int top_half   = height / 2;
-  int bot_half   = height - top_half;
+  int const left_half  = width / 2;
+  int const right_half = width - left_half;
+  int const top_half   = height / 2;
+  int const bot_half   = height - top_half;
 
   {
-    spoint tl((TERM_WIDTH / 2) - left_half, (TERM_HEIGHT / 2) - top_half);
-    spoint br((TERM_WIDTH / 2) + right_half, (TERM_HEIGHT / 2) + bot_half);
+    spoint const tl((TERM_WIDTH / 2) - left_half, (TERM_HEIGHT / 2) - top_half);
+    spoint const br((TERM_WIDTH / 2) + right_half, (TERM_HEIGHT / 2) + bot_half);
 
     wid_set_pos(window, tl, br);
     wid_set_style(window, UI_WID_STYLE_NORMAL);
@@ -740,8 +740,8 @@ Widp wid_keyboard(Gamep g, const std::string &text, const std::string &title, wi
   {
     Widp w = wid_new_square_button(g, window, "wid keyboard title");
 
-    spoint tl = {5, 1};
-    spoint br = {width - 5, 1};
+    spoint const tl = {5, 1};
+    spoint const br = {width - 5, 1};
 
     wid_set_pos(w, tl, br);
     wid_set_text(w, title);
@@ -757,8 +757,8 @@ Widp wid_keyboard(Gamep g, const std::string &text, const std::string &title, wi
 
     ctx->input = w;
 
-    spoint tl = {10, 3};
-    spoint br = {width - 10, 5};
+    spoint const tl = {10, 3};
+    spoint const br = {width - 10, 5};
 
     wid_set_pos(w, tl, br);
     wid_set_text(w, text);
@@ -790,8 +790,8 @@ Widp wid_keyboard(Gamep g, const std::string &text, const std::string &title, wi
     wid_set_shape_none(button_container);
     wid_set_on_tick(button_container, wid_keyboard_tick);
 
-    spoint tl = {1, 7};
-    spoint br = {width - 1, height - 2};
+    spoint const tl = {1, 7};
+    spoint const br = {width - 1, height - 2};
 
     wid_set_pos(button_container, tl, br);
     wid_set_void_context(button_container, ctx);
@@ -824,7 +824,7 @@ Widp wid_keyboard(Gamep g, const std::string &text, const std::string &title, wi
         wid_set_on_mouse_down(b, wid_keyboard_button_mouse_event);
 
         wid_set_void_context(b, ctx);
-        int focus = (y << 8) | x;
+        int const focus = (y << 8) | x;
         wid_set_int_context(b, focus);
       }
     }

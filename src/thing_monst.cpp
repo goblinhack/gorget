@@ -69,7 +69,7 @@ bool thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thingp me)
 //
 // Return true on a successful move (or a popup asking more info)
 //
-[[nodiscard]] static bool thing_monst_move_try(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to, bool need_path)
+[[nodiscard]] static bool thing_monst_move_try(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to)
 {
   THING_DBG(me, "move try");
 
@@ -159,7 +159,7 @@ bool thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thingp me)
     }
   }
 
-  if (! thing_monst_move_try(g, v, l, me, move_next, false)) {
+  if (! thing_monst_move_try(g, v, l, me, move_next)) {
     //
     // If could not move, then abort the path walk
     //

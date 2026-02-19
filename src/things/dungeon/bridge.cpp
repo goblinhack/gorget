@@ -13,7 +13,7 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-static std::string tp_bridge_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static std::string tp_bridge_description_get(Gamep g, Levelsp v, Levelp l, Thingp /*t*/)
 {
   TRACE_NO_INDENT();
 
@@ -87,7 +87,7 @@ static void tp_bridge_destroy_adj(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 }
 
-static void tp_bridge_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
+static void tp_bridge_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent & /*e*/)
 {
   TRACE_NO_INDENT();
 

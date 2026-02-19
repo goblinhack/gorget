@@ -24,9 +24,9 @@ static WidPopup *wid_leftbar;
     return false;
   }
 
-  auto   width = UI_LEFTBAR_WIDTH;
-  spoint tl(0, 0);
-  spoint br(width - 1, TERM_HEIGHT - 1);
+  auto         width = UI_LEFTBAR_WIDTH;
+  spoint const tl(0, 0);
+  spoint const br(width - 1, TERM_HEIGHT - 1);
   wid_leftbar = new WidPopup(g, "left bar", tl, br, nullptr, "", false, false);
 
   auto *player = thing_player(g);

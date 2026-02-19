@@ -12,8 +12,8 @@ bool tp_load_border()
 {
   TRACE_NO_INDENT();
 
-  std::string name = "border";
-  auto       *tp   = tp_load(name);
+  std::string const name = "border";
+  auto             *tp   = tp_load(name);
   // begin sort marker1 {
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_if_has_seen);

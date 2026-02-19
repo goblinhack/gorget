@@ -20,8 +20,8 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
 
   auto *it = e.source;
 
-  std::string msg = "-" + std::to_string(e.damage);
-  auto        at  = thing_at(t);
+  std::string const msg = "-" + std::to_string(e.damage);
+  auto              at  = thing_at(t);
   game_popup_text_add(g, at.x, at.y, msg, RED);
 
   if (it != nullptr) {
@@ -116,8 +116,8 @@ static void thing_damage_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
   TRACE_AND_INDENT();
   auto *the_player = e.source;
 
-  std::string msg = "-" + std::to_string(e.damage);
-  auto        at  = thing_at(t);
+  std::string const msg = "-" + std::to_string(e.damage);
+  auto              at  = thing_at(t);
   game_popup_text_add(g, at.x, at.y, msg, WHITE);
 
   if ((the_player != nullptr) && thing_is_loggable(t)) {

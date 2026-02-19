@@ -89,10 +89,10 @@ void game_popups_display(Gamep g, Levelsp v, Levelp l)
       }
 
       for (auto *i : *game_popups_get(g, x, y)) {
-        uint16_t tile_index;
-        spoint   p(x, y);
-        spoint   tl = {};
-        spoint   br = {};
+        uint16_t     tile_index;
+        spoint const p(x, y);
+        spoint       tl = {};
+        spoint       br = {};
 
         //
         // Get the coords of the tile on the map this text would be over
@@ -106,7 +106,7 @@ void game_popups_display(Gamep g, Levelsp v, Levelp l)
         //
         // Fade out and raise the text up with a percentage
         //
-        float pct = (float) (time_ms_cached() - i->created) / (float) POPUP_DURATION_MS;
+        float const pct = (float) (time_ms_cached() - i->created) / (float) POPUP_DURATION_MS;
 
         //
         // Fade out

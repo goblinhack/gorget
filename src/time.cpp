@@ -45,10 +45,10 @@ ts_t time_game_ms_cached() { return time_game; }
 
 const char *time2str(ts_t ms, char *buf, int len)
 {
-  int log_msec = ms;
-  int log_secs = log_msec / ONESEC;
-  int log_mins = log_secs / 60;
-  int log_hrs  = log_mins / 60;
+  int       log_msec = ms;
+  int       log_secs = log_msec / ONESEC;
+  int       log_mins = log_secs / 60;
+  int const log_hrs  = log_mins / 60;
 
   log_msec = log_msec % ONESEC;
   log_secs = log_secs % 60;
@@ -71,10 +71,10 @@ const char *time2str(ts_t ms, char *buf, int len)
 
 const char *timestamp(char *buf, int len)
 {
-  int log_msec = time_ms();
-  int log_secs = log_msec / ONESEC;
-  int log_mins = log_secs / 60;
-  int log_hrs  = log_mins / 60;
+  int       log_msec = time_ms();
+  int       log_secs = log_msec / ONESEC;
+  int       log_mins = log_secs / 60;
+  int const log_hrs  = log_mins / 60;
 
   log_msec = log_msec % ONESEC;
   log_secs = log_secs % 60;
@@ -102,7 +102,7 @@ bool time_have_x_hundredths_passed_since(ts_t val, ts_t since)
   //
   // Cater for negative future times.
   //
-  ts_t delay = time_now - since;
+  ts_t const delay = time_now - since;
 
   return (ts_t) (delay / 10) > val;
 }
@@ -114,7 +114,7 @@ bool time_have_x_ms_passed_since(ts_t val, ts_t since)
   //
   // Cater for negative future times.
   //
-  ts_t delay = time_now - since;
+  ts_t const delay = time_now - since;
 
   return delay >= val;
 }
@@ -126,7 +126,7 @@ bool time_have_x_tenths_passed_since(ts_t val, ts_t since)
   //
   // Cater for negative future times.
   //
-  ts_t delay = time_now - since;
+  ts_t const delay = time_now - since;
 
   return (ts_t) (delay / 100) >= val;
 }
@@ -138,7 +138,7 @@ bool time_have_x_secs_passed_since(ts_t val, ts_t since)
   //
   // Cater for negative future times.
   //
-  ts_t delay = time_now - since;
+  ts_t const delay = time_now - since;
 
   return (ts_t) (delay / ONESEC) >= val;
 }
@@ -222,9 +222,9 @@ std::string &string_timestamp()
     }
   }
 
-  time_last          = the_time_now;
-  std::time_t result = std::time(nullptr);
-  auto        s      = std::string(std::asctime(std::localtime(&result)));
+  time_last                = the_time_now;
+  std::time_t const result = std::time(nullptr);
+  auto              s      = std::string(std::asctime(std::localtime(&result)));
   s.pop_back();
   last_timestamp = s;
   return last_timestamp;

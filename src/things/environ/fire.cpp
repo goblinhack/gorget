@@ -14,7 +14,7 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-static std::string tp_fire_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static std::string tp_fire_description_get(Gamep g, Levelsp v, Levelp l, Thingp /*t*/)
 {
   TRACE_NO_INDENT();
 
@@ -111,7 +111,7 @@ static void tp_fire_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 }
 
-static void tp_fire_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
+static void tp_fire_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent & /*e*/)
 {
   TRACE_NO_INDENT();
 
