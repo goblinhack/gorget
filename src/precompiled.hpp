@@ -37,9 +37,6 @@
 #include <string.h>
 #include <string>
 #include <strings.h>
-#include <sys/param.h>
-#include <sys/stat.h>
-#include <sys/wait.h>
 #include <thread>
 #include <unistd.h>
 #include <unordered_map>
