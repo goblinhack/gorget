@@ -12,7 +12,6 @@
 #include "my_main.hpp"
 #include "my_sdl_event.hpp"
 #include "my_sdl_proto.hpp"
-#include "my_wid_console.hpp"
 #include "my_wids.hpp"
 
 SDL sdl;

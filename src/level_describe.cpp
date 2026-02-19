@@ -10,7 +10,7 @@
 #include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp"
 #include "my_ui.hpp"
-#include "my_wid_botcon.hpp"
+#include "my_wids.hpp"
 
 //
 // Update the count of things being described

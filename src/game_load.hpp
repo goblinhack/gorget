@@ -25,7 +25,7 @@
 #include "my_sound.hpp"
 #include "my_wid_error.hpp"
 #include "my_wid_popup.hpp"
-#include "my_wid_progress_bar.hpp"
+#include "my_wids.hpp"
 
 #include <array>
 #include <format>

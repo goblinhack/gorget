@@ -16,7 +16,6 @@
 #include "my_sound.hpp"
 #include "my_test.hpp"
 #include "my_tests.hpp"
-#include "my_wid_console.hpp"
 #include "my_wid_tiles.hpp"
 #include "my_wids.hpp"
 

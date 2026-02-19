@@ -16,7 +16,6 @@
 #include "my_size.hpp"
 #include "my_sound.hpp"
 #include "my_sprintf.hpp"
-#include "my_wid_console.hpp"
 #include "my_wid_tiles.hpp"
 #include "my_wids.hpp"
 
@@ -96,7 +95,7 @@ public:
 };
 
 using wid_key_map_location = std::map< tree_wid_key, Widp, tree_wid_key_cmp >;
-using wid_key_map_int = std::map< WidKeyType, Widp >;
+using wid_key_map_int      = std::map< WidKeyType, Widp >;
 
 WidKeyType wid_unsorted_get_key(Gamep g, Widp w);
 

@@ -9,7 +9,7 @@
 #include "my_main.hpp"
 #include "my_sprintf.hpp"
 #include "my_string.hpp"
-#include "my_wid_console.hpp"
+#include "my_wids.hpp"
 
 thread_local struct callframe callframes[ MAXCALLFRAME ];
 thread_local unsigned char    g_callframes_depth;

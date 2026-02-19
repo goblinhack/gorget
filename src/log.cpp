@@ -11,9 +11,7 @@
 #include "my_main.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_string.hpp"
-#include "my_wid_botcon.hpp"
-#include "my_wid_console.hpp"
-#include "my_wid_topcon.hpp"
+#include "my_wids.hpp"
 
 #include <cstdlib>
 #include <mutex>

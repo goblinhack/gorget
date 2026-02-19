@@ -356,6 +356,7 @@ case "$MY_OS_NAME" in
         LDLIBS=$(echo $LDLIBS | sed -e 's/-lmingw32 //g')
         LDLIBS+=" -funwind-tables"
         LDLIBS+=" -lstdc++"
+        LDLIBS+=" -lstdc++exp"
         LDLIBS+=" -lopengl32"
         LDLIBS+=" -lpthread"
         LDLIBS+=" /${MSYS_PATH}/lib/libSDL2_mixer.a"

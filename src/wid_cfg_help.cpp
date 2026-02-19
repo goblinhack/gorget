@@ -10,7 +10,6 @@
 #include "my_sdl_event.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
-#include "my_wid_notice.hpp"
 #include "my_wids.hpp"
 
 static int       last_vert_scroll_offset = -1;

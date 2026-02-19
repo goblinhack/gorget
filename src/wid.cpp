@@ -18,7 +18,6 @@
 #include "my_sprintf.hpp"
 #include "my_thing_inlines.hpp"
 #include "my_wid_class.hpp"
-#include "my_wid_console.hpp"
 #include "my_wid_tiles.hpp"
 #include "my_wids.hpp"
 

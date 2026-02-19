@@ -10,9 +10,7 @@
 #include "my_log.hpp"
 #include "my_main.hpp"
 #include "my_string.hpp"
-#include "my_wid_botcon.hpp"
-#include "my_wid_console.hpp"
-#include "my_wid_topcon.hpp"
+#include "my_wids.hpp"
 
 #include <cstring>
 

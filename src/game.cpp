@@ -15,8 +15,6 @@
 #include "my_random_name.hpp"
 #include "my_test.hpp"
 #include "my_wid.hpp"
-#include "my_wid_botcon.hpp"
-#include "my_wid_topcon.hpp"
 #include "my_wids.hpp"
 
 #include <SDL_mixer.h>
