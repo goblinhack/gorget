@@ -105,7 +105,7 @@ using LevelInfo = struct LevelInfo_ {
   //////////////////////////////////////////////////////////////
 };
 
-using LightPixel = struct {
+using LightPixel = struct LightPixel_ {
   //
   // The total of all lights intersecting here, which is then scaled into the final light
   //
@@ -118,7 +118,7 @@ using LightPixels = struct LightPixels_ {
   LightPixel pixel[ LIGHT_PIXEL ][ LIGHT_PIXEL ];
 };
 
-using LightTile = struct {
+using LightTile = struct LightTile_ {
   LightPixels pixels;
 };
 
@@ -768,7 +768,7 @@ using level_fov_can_see_callback_t = void (*)(Gamep, Levelsp, Levelp, Thingp me,
 void level_fov(Gamep g, Levelsp v, Levelp l, Thingp me, FovMap *curr, FovMap *ever, spoint pov, int max_radius,
                level_fov_can_see_callback_t can_see_callback = nullptr);
 
-using LevelType = enum {
+using LevelType = enum LevelType_ {
   LEVEL_TYPE_NORMAL,
   LEVEL_TYPE_TEST,
   LEVEL_TYPE_BOSS,

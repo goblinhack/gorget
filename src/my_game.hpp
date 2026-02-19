@@ -32,7 +32,7 @@
 
 ENUM_DEF_H(GAME_STATE_ENUM, GameState)
 
-using SeedSource = enum {
+using SeedSource = enum SeedSource_ {
   SEED_SOURCE_RANDOM,
   SEED_SOURCE_USER,
   SEED_SOURCE_TEST,

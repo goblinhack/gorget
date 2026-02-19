@@ -87,7 +87,7 @@
 #define SIZEOF(my_array) ((int) sizeof(my_array))
 
 #define FOR_ALL_IN_ARRAY(my_iterator, my_array)                                                                      \
-  for (auto(my_iterator) = (my_array); (my_iterator) < ((my_array) + ARRAY_SIZE(my_array)); (my_iterator)++)
+  for (auto my_iterator = (my_array); (my_iterator) < ((my_array) + ARRAY_SIZE(my_array)); (my_iterator)++)
 
 //
 // GCC extensions

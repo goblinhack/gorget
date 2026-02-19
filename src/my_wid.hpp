@@ -10,14 +10,14 @@
 #include "my_time.hpp"
 #include "my_types.hpp"
 
-using wid_color = enum {
+using wid_color = enum wid_color_ {
   WID_COLOR_BG,
   WID_COLOR_TEXT_FG,
   WID_COLOR_TEXT_BG,
   WID_COLOR_MAX,
 };
 
-using wid_mode = enum {
+using wid_mode = enum wid_mode_ {
   WID_MODE_NORMAL,
   WID_MODE_OVER,
   WID_MODE_FOCUS,

@@ -2,6 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
+#ifndef _MY_WID_TOPCON_HPP
+#define _MY_WID_TOPCON_HPP
 
 void wid_topcon_fini(Gamep g);
 bool wid_topcon_init(Gamep g);
@@ -16,3 +18,5 @@ void wid_topcon_flush(Gamep g);
 extern Widp wid_topcon_input_line;
 extern Widp wid_topcon_window;
 extern Widp wid_topcon_container;
+
+#endif

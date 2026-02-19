@@ -12,7 +12,7 @@
 //
 // Must be a struct and not a class as we save this structure as is
 //
-using color = struct {
+using color = struct color_ {
   unsigned char r;
   unsigned char g;
   unsigned char b;

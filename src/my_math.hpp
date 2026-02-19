@@ -2,11 +2,10 @@
 // Copyright goblinhack@gmail.com
 //
 
+#ifndef _MY_MATH_HPP_
+#define _MY_MATH_HPP_
 
 #include <stdlib.h>
-
-#ifndef _MY_MATH_UTIL_HPP_
-#define MY_MATH_UTIL_HPP_
 
 #ifdef __APPLE__
 #define sincos(x, s, c)  __sincos(x, s, c)

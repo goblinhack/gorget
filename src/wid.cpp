@@ -206,8 +206,10 @@ void wid_dump(Widp w, int depth)
 
   wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
 
+#if 0
   std::print("\n          {:>{}} dump: [{}] text [{}] {},{} to @{},{} {} children", "", depth * 2, wid_name(w),
-         wid_get_text(w), tlx, tly, brx, bry, wid_count(w, depth));
+             wid_get_text(w), tlx, tly, brx, bry, wid_count(w, depth));
+#endif
 
 #if 1
   for (auto &iter : w->children_display_sorted) {

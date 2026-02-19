@@ -5,6 +5,7 @@
 #ifndef _MY_ASCII_HPP_
 #define _MY_ASCII_HPP_
 
+#include "my_color.hpp"
 #include "my_fpoint.hpp"
 #include "my_tex.hpp"
 #include "my_tile.hpp"
@@ -50,7 +51,7 @@ using ascii_mouse_over_callback = int (*)(int, int);
 
 using TileLayers = std::array< Tilep, TILE_LAYER_ENUM_MAX >;
 
-using button_args = struct {
+using button_args = struct button_args_ {
   int x;
   int y;
   int width;

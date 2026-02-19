@@ -10,7 +10,7 @@ using wid_keyboard_event_t = void (*)(Gamep, Widp, const std::string &text);
 #define WID_KEYBOARD_ACROSS 12
 #define WID_KEYBOARD_DOWN   5
 
-using wid_keyboard_ctx = struct {
+using wid_keyboard_ctx = struct wid_keyboard_ctx_ {
   /*
    * Parent widget
    */

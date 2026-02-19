@@ -7,7 +7,7 @@
 
 #include "my_color.hpp"
 
-using term_color = enum {
+using term_color = enum term_color_ {
   TERM_COLOR_BLACK,
   TERM_COLOR_RED,
   TERM_COLOR_GREEN,

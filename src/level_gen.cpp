@@ -260,7 +260,7 @@ public:
   Cave cave = {};
 };
 
-using RoomType = enum {
+using RoomType = enum RoomType_ {
   ROOM_TYPE_START,
 #define ROOM_TYPE_FIRST ROOM_TYPE_START
   ROOM_TYPE_NORMAL,

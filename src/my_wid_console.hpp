@@ -2,6 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
+#ifndef _MY_WID_CONSOLE_HPP
+#define _MY_WID_CONSOLE_HPP
 
 void wid_console_fini(Gamep g);
 bool wid_console_init(Gamep g);
@@ -23,3 +25,5 @@ bool wid_console_receive_input(Gamep g, Widp w, const SDL_Keysym *key);
 std::vector< std::string > wid_console_serialize();
 
 void wid_console_deserialize(std::vector< std::string > r);
+
+#endif

@@ -11,7 +11,7 @@
 #include <map>
 #include <vector>
 
-using wid_text_format = enum {
+using wid_text_format = enum wid_text_format_ {
   TEXT_FORMAT_NONE,
   TEXT_FORMAT_LHS,
   TEXT_FORMAT_RHS,
