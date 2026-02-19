@@ -8,10 +8,8 @@
 #define ENABLE_ASSERT              // Abort on errors
 #define ENABLE_CRASH_HANDLER       // Intercept SEGV and other faults
 #define ENABLE_DEBUG_TRACE         // (SLOW) Function tracing
-enum {
-ENABLE_PTRCHECK_HISTORY = 5,  // Per pointer history (when in --debug2 mode)
-ENABLE_MAX_ERR_COUNT =    10 // Maximum errors before we give up
-};
+#define ENABLE_PTRCHECK_HISTORY 5  // Per pointer history (when in --debug2 mode)
+#define ENABLE_MAX_ERR_COUNT    10 // Maximum errors before we give up
 
 #undef ENABLE_TILE_BOUNDS        // For collisions
 #undef ENABLE_DEBUG_GFX_GL_BLEND // Use to debug specific blends
