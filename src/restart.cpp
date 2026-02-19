@@ -21,7 +21,7 @@
 //
 // Restart the game, with an optional restart argument to indicate how to restart
 //
-void restart(Gamep g, const std::string& restart_arg)
+void restart(Gamep g, const std::string &restart_arg)
 {
   CON("Exiting, restart called");
   TRACE_NO_INDENT();

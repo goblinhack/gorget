@@ -547,7 +547,7 @@ void tile_from_fbo(Gamep g, FboEnum fbo)
 //
 // Find an existing tile.
 //
-Tilep tile_find(const std::string& name)
+Tilep tile_find(const std::string &name)
 {
   TRACE_NO_INDENT();
 
@@ -563,7 +563,7 @@ Tilep tile_find(const std::string& name)
   return result->second;
 }
 
-Tilep tile_find_mand(const std::string& name)
+Tilep tile_find_mand(const std::string &name)
 {
   TRACE_NO_INDENT();
 

@@ -18,8 +18,8 @@ WidPopup::~WidPopup()
   delete wid_text_area;
 }
 
-WidPopup::WidPopup(Gamep g, const std::string& vname, spoint vtl, spoint vbr, Tilep vtitle_tile,
-                   const std::string& vbackground, bool horiz_scroll, bool vert_scoll, int scroll_height)
+WidPopup::WidPopup(Gamep g, const std::string &vname, spoint vtl, spoint vbr, Tilep vtitle_tile,
+                   const std::string &vbackground, bool horiz_scroll, bool vert_scoll, int scroll_height)
     : tl(vtl), br(vbr), title_tile(vtitle_tile), background(vbackground)
 {
   TRACE_NO_INDENT();
@@ -82,7 +82,7 @@ WidPopup::WidPopup(Gamep g, const std::string& vname, spoint vtl, spoint vbr, Ti
 //
 // Log a message to the popup
 //
-Widp WidPopup::log(Gamep g, const std::string& s, wid_text_format format, const std::string& col) const
+Widp WidPopup::log(Gamep g, const std::string &s, wid_text_format format, const std::string &col) const
 {
   TRACE_NO_INDENT();
 

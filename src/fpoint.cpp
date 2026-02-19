@@ -64,7 +64,7 @@ float angle_radians(const fpoint &p)
     }
     return (float) RAD_360 + theta;
   }
-  return std::numbers::pi_v<float> - theta;
+  return std::numbers::pi_v< float > - theta;
 }
 
 fpoint rotate_radians(float angle, const fpoint &p, const fpoint &O)

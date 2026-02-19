@@ -17,9 +17,9 @@ HiScores::HiScores()
   } else {
     while ((int) hiscores.size() < HiScore::max) {
       hiscores.emplace_back("AAA", "", "",
-                                 0, // score
-                                 0  // levels_completed
-                                 );
+                            0, // score
+                            0  // levels_completed
+      );
     }
   }
 }

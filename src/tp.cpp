@@ -135,8 +135,8 @@ Tpp tp_find_mand(const std::string &val)
 {
   TRACE_NO_INDENT();
 
-  const std::string& name(val);
-  auto        result = tp_name_map.find(name);
+  const std::string &name(val);
+  auto               result = tp_name_map.find(name);
 
   if (unlikely(result != tp_name_map.end())) {
     return result->second;
@@ -150,8 +150,8 @@ Tpp tp_find_opt(const std::string &val)
 {
   TRACE_NO_INDENT();
 
-  const std::string& name(val);
-  auto        result = tp_name_map.find(name);
+  const std::string &name(val);
+  auto               result = tp_name_map.find(name);
 
   if (unlikely(result != tp_name_map.end())) {
     return result->second;
@@ -247,7 +247,7 @@ static void tp_assign_id(const std::string &tp_name, int *id_out)
   //
   if (! init) {
     init = true;
-    for (const auto& t : tp_arr) {
+    for (const auto &t : tp_arr) {
       tp_preferred_id[ t ] = id++;
     }
   }

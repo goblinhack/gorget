@@ -100,9 +100,9 @@ public:
   command_fn_t callback;
 };
 
-using commandp = class command_t                            *;
+using commandp = class command_t *;
 using commands = std::unordered_map< std::string, commandp >;
-static commands                                     commands_map;
+static commands commands_map;
 
 static bool command_inited;
 
@@ -111,7 +111,7 @@ void command_fini()
   TRACE_NO_INDENT();
   if (command_inited) {
     command_inited = false;
-    for (const auto& iter : commands_map) {
+    for (const auto &iter : commands_map) {
       auto *command = iter.second;
       delete command;
     }
@@ -126,7 +126,7 @@ bool command_init()
   return true;
 }
 
-void command_add(Gamep g, command_fn_t callback, const std::string& input, const std::string& readable)
+void command_add(Gamep g, command_fn_t callback, const std::string &input, const std::string &readable)
 {
   TRACE_NO_INDENT();
 
@@ -177,7 +177,7 @@ static int command_matches(Gamep g, const char *input, char *output, uint8_t sho
   /*
    * Find the command(s) with the most number of matching tokens.
    */
-  for (const auto& iter : commands_map) {
+  for (const auto &iter : commands_map) {
     auto *command = iter.second;
 
     for (t = 0; std::cmp_less(t, std::min(command->tokens.cnt, input_tokens.cnt)); t++) {
@@ -210,7 +210,7 @@ static int command_matches(Gamep g, const char *input, char *output, uint8_t sho
    * Repeat and optionally dump other possibilities if the command is
    * not complete.
    */
-  for (const auto& iter : commands_map) {
+  for (const auto &iter : commands_map) {
     auto *command = iter.second;
 
     for (t = 0; std::cmp_less(t, std::min(command->tokens.cnt, input_tokens.cnt)); t++) {
@@ -270,7 +270,7 @@ static int command_matches(Gamep g, const char *input, char *output, uint8_t sho
     expands_to[ 0 ] = '\0';
 
     {
-      for (const auto& iter : commands_map) {
+      for (const auto &iter : commands_map) {
         auto *command = iter.second;
 
         for (t = 0; std::cmp_less(t, std::min(command->tokens.cnt, input_tokens.cnt)); t++) {
@@ -385,7 +385,7 @@ uint8_t command_handle(Gamep g, const char *input, char *expandedtext, uint8_t s
   return 1U;
 }
 
-uint8_t command_handle(Gamep g, const std::string& input, std::string *expanded_text, uint8_t show_ambiguous,
+uint8_t command_handle(Gamep g, const std::string &input, std::string *expanded_text, uint8_t show_ambiguous,
                        uint8_t show_complete, uint8_t execute_command, void *context)
 {
   char buf[ MAXSTR ];

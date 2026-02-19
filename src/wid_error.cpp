@@ -60,7 +60,7 @@ static void wid_error_destroy(Gamep g)
   return true;
 }
 
-void wid_error(Gamep g, const std::string& error)
+void wid_error(Gamep g, const std::string &error)
 {
   TRACE_NO_INDENT();
   CON("ERROR: %s", error.c_str());

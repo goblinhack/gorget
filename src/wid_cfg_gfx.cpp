@@ -264,7 +264,7 @@ static std::string wid_cfg_gfx_find_closest_resolution(Gamep g)
     modes[ cand ] = mode;
   }
   for (int i = 0; std::cmp_less(i, cands.size()); ++i) {
-    const auto& cand = cands[ i ];
+    const auto &cand = cands[ i ];
     if (current_res == cand) {
       if (i > 0) {
         chosen = cands[ i - 1 ];
@@ -320,7 +320,7 @@ static std::string wid_cfg_gfx_find_closest_resolution(Gamep g)
     modes[ cand ] = mode;
   }
   for (int i = 0; std::cmp_less(i, cands.size()); ++i) {
-    const auto& cand = cands[ i ];
+    const auto &cand = cands[ i ];
     if (current_res == cand) {
       if (i < (int) cands.size() - 1) {
         chosen = cands[ i + 1 ];

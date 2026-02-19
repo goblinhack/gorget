@@ -108,15 +108,15 @@ public:
   std::array< std::array< bool, MAP_HEIGHT >, MAP_WIDTH > can_move_to_tile     = {};
   std::array< std::array< bool, MAP_HEIGHT >, MAP_WIDTH > can_move_to_tile_set = {};
 
-  bool        can_move_to(const spoint &to);
-  [[nodiscard]] Cost        heuristic(spoint at) const;
-  Node       *node_init(spoint next_hop, Nodecost cost);
-  void        add_to_closed(Node *n);
-  void        add_to_open(Node *n);
-  void        dump();
-  void        eval_neighbor(Node *current, const spoint &delta);
-  static void init();
-  void        remove_from_open(Node *n);
+  bool               can_move_to(const spoint &to);
+  [[nodiscard]] Cost heuristic(spoint at) const;
+  Node              *node_init(spoint next_hop, Nodecost cost);
+  void               add_to_closed(Node *n);
+  void               add_to_open(Node *n);
+  void               dump();
+  void               eval_neighbor(Node *current, const spoint &delta);
+  static void        init();
+  void               remove_from_open(Node *n);
 
   std::vector< spoint >        solve(bool allow_diagonal);
   static std::vector< spoint > create_path(const Node *came_from);

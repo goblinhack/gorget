@@ -21,7 +21,7 @@ public:
   [[nodiscard]] std::string to_string() const;
 
   Dice();
-  Dice(const std::string& s);
+  Dice(const std::string &s);
 
   [[nodiscard]] int roll() const;
   [[nodiscard]] int max_roll() const;

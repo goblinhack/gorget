@@ -765,7 +765,7 @@ static void ascii_map_thing_replace(int depth, int x, int y, Tilep tile, color c
 }
 
 using ascii_draw_char_fn = void (*)(int depth, int x, int y, char ch);
-using ascii_draw_col_fn = void (*)(int depth, int x, int y, color col);
+using ascii_draw_col_fn  = void (*)(int depth, int x, int y, color col);
 
 void ascii_draw_line(int depth, int x0, int y0, int x1, int y1, Tilep tile, color col)
 {

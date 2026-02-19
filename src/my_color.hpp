@@ -31,7 +31,7 @@ void        color_init2();
 void        color_init3();
 void        color_init4();
 void        color_init();
-void        color_set(const std::string& name, color *c, uint8_t r, uint8_t g, uint8_t b, uint8_t a);
+void        color_set(const std::string &name, color *c, uint8_t r, uint8_t g, uint8_t b, uint8_t a);
 bool        color_eq(const color &a, const color &b);
 bool        color_neq(const color &a, const color &b);
 

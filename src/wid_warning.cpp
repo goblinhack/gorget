@@ -107,7 +107,7 @@ static void wid_warning_destroy()
   return true;
 }
 
-void wid_warning(Gamep g, const std::string& warning, wid_warning_callback_t callback)
+void wid_warning(Gamep g, const std::string &warning, wid_warning_callback_t callback)
 {
   TRACE_NO_INDENT();
 

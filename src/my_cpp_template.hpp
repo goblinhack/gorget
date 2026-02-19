@@ -26,7 +26,7 @@ bool contains(C< T > *c, T t)
 
 template < class T, template < typename ELEM, typename ALLOC = std::allocator< ELEM > > class C >
 
-void push_back_if_unique(C< T > &c, const T& d)
+void push_back_if_unique(C< T > &c, const T &d)
 {
   auto so = c.begin();
   auto eo = c.end();

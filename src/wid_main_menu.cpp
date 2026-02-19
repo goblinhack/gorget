@@ -204,8 +204,8 @@ static uint8_t clamp(float v) // define a function to bound and round the input 
 color color_change_hue(const color &in, const float fHue)
 {
   color       out;
-  const float cosA = cos(fHue * std::numbers::pi_v<float> / 180); // convert degrees to radians
-  const float sinA = sin(fHue * std::numbers::pi_v<float> / 180); // convert degrees to radians
+  const float cosA = cos(fHue * std::numbers::pi_v< float > / 180); // convert degrees to radians
+  const float sinA = sin(fHue * std::numbers::pi_v< float > / 180); // convert degrees to radians
   // calculate the rotation matrix, only depends on Hue
   float matrix[ 3 ][ 3 ]
       = {{cosA + ((1.0F - cosA) / 3.0F), (1.0F / 3.0F * (1.0F - cosA)) - (sqrtf(1.0F / 3.0F) * sinA),

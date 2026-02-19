@@ -21,7 +21,7 @@
   // How the dungeon starts out, and how we expect it to change
   //
   std::string start;
-  
+
   //
   // Create the level and start playing
   //

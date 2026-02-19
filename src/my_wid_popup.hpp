@@ -33,10 +33,11 @@ public:
   int         inner_h {};
 
   ~WidPopup();
-  WidPopup(Gamep g, const std::string& name, spoint tl, spoint br, Tilep title_tile = nullptr, const std::string& background = "",
-           bool horiz_scroll = true, bool vert_scoll = true, int vert_scroll_size = -1);
+  WidPopup(Gamep g, const std::string &name, spoint tl, spoint br, Tilep title_tile = nullptr,
+           const std::string &background = "", bool horiz_scroll = true, bool vert_scoll = true,
+           int vert_scroll_size = -1);
 
-  Widp log(Gamep g, const std::string& s, wid_text_format format = TEXT_FORMAT_NONE, const std::string& c = "") const;
+  Widp log(Gamep g, const std::string &s, wid_text_format format = TEXT_FORMAT_NONE, const std::string &c = "") const;
   Widp log_empty_line(Gamep g) const;
 
   //
