@@ -46,7 +46,7 @@ enum { TILE_HEIGHT = 12, TILE_WIDTH = 12 };
 
 ENUM_DEF_H(TILE_LAYER_ENUM, TileLayerEnum);
 
-class Tex *tile_tex(Tilep /*tile*/);
+class Tex *tile_tex(Tilep tile);
 
 bool        tile_init();
 bool        tile_is_alive_on_end_of_anim(Tilep t);
@@ -55,8 +55,8 @@ bool        tile_is_dead(Tilep);
 bool        tile_is_end_of_anim(Tilep t);
 bool        tile_is_loggable(Tilep t);
 bool        tile_is_open(Tilep);
-int         tile_height(Tilep /*tile*/);
-int         tile_width(Tilep /*tile*/);
+int         tile_height(Tilep tile);
+int         tile_width(Tilep tile);
 int         tile_gl_binding(Tilep t);
 std::string tile_name(Tilep t);
 Tilep       string2tile(const char **s, int *len = nullptr);
@@ -66,9 +66,9 @@ Tilep       tile_find(const std::string &name);
 Tilep       tile_index_to_tile(int i);
 uint32_t    tile_delay_ms(Tilep t);
 uint32_t    tile_global_index(Tilep t);
-uint32_t    tile_index(Tilep /*tile*/);
+uint32_t    tile_index(Tilep tile);
 uint32_t    tile_move(Tilep);
-void        tile_coords(Tilep /*tile*/, float *x1, float *y1, float *x2, float *y2);
+void        tile_coords(Tilep tile, float *x1, float *y1, float *x2, float *y2);
 void        tile_size_set(Tilep t, uint32_t w, uint32_t h);
 void        tile_delay_ms_set(Tilep t, uint32_t val);
 void        tile_fini();

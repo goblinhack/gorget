@@ -22,7 +22,7 @@ void wid_notice_destroy()
   return true;
 }
 
-[[nodiscard]] static bool wid_notice_key_down(Gamep g, Widp w, const struct SDL_Keysym * /*key*/)
+[[nodiscard]] static bool wid_notice_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 {
   TRACE_NO_INDENT();
   (void) wid_notice_ok(g, nullptr, 0, 0, 0);

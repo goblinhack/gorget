@@ -68,7 +68,7 @@ bool level_select_is_oob(int x, int y)
 //
 // If in level select mode, enter the chosen level
 //
-Levelp level_select_get_level_at_tile_coords(Gamep g, Levelsp v, spoint /*p*/)
+Levelp level_select_get_level_at_tile_coords(Gamep g, Levelsp v, spoint p)
 {
   TRACE_NO_INDENT();
 

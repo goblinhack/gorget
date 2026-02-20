@@ -33,7 +33,7 @@ static std::string tp_door_unlocked_description_get(Gamep g, Levelsp v, Levelp l
   return "unlocked door";
 }
 
-static Tilep tp_door_unlocked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint /*p*/, Tpp tp,
+static Tilep tp_door_unlocked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp,
                                                        Thingp t_maybe_null)
 {
   TRACE_NO_INDENT();
@@ -132,7 +132,7 @@ static Tilep tp_door_unlocked_at_display_get_tile_info(Gamep g, Levelsp v, Level
   return true;
 }
 
-static void tp_door_unlocked_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent & /*e*/)
+static void tp_door_unlocked_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 {
   TRACE_NO_INDENT();
 

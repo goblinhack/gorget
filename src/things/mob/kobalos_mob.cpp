@@ -13,21 +13,21 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
-static std::string tp_kobalos_mob_description_get(Gamep g, Levelsp v, Levelp l, Thingp /*t*/)
+static std::string tp_kobalos_mob_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
   return "kobalos spawning grounds";
 }
 
-static std::string tp_kobalos_mob_detail_get(Gamep g, Levelsp v, Levelp l, Thingp /*t*/)
+static std::string tp_kobalos_mob_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
   return UI_INFO1_FMT_STR "This hideous, puslating creation is a kobalos spawning device.";
 }
 
-static void tp_kobalos_mob_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent & /*e*/)
+static void tp_kobalos_mob_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 {
   TRACE_NO_INDENT();
 

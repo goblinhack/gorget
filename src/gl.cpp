@@ -30,7 +30,7 @@ isize  g_fbo_size[ FBO_ENUM_MAX ];
 static FboEnum fbo_locked = FBO_NONE;
 static FboEnum fbo_last   = FBO_NONE;
 
-void MessageCallback(GLenum /*source*/, GLenum type, GLuint /*id*/, GLenum severity, GLsizei /*length*/,
+void MessageCallback(GLenum /*source*/, GLenum type, GLuint id, GLenum severity, GLsizei /*length*/,
                      const GLchar *message, const void * /*userParam*/)
 {
   CON("GL CALLBACK: type = 0x%x, severity = 0x%x, message = %s\n", type, severity, message);
@@ -1456,7 +1456,7 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
 }
 
 void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLshort pixMinX, GLshort pixMinY,
-          GLshort pixMaxX, GLshort pixMaxY, const color & /*c*/, LightPixels *light_pixels, bool blit_flush_per_line)
+          GLshort pixMaxX, GLshort pixMaxY, const color &c, LightPixels *light_pixels, bool blit_flush_per_line)
 {
   if (unlikely(! buf_tex)) {
     blit_init();

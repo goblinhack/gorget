@@ -620,6 +620,18 @@ void player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what)
     return;
   }
 
+  //
+  // TODO
+  //
+  static Tpp tp_fireball;
+  if (tp_fireball == nullptr) {
+    tp_fireball = tp_find_mand("fireball");
+  }
+
+  if (! fire_what) {
+    fire_what = tp_fireball;
+  }
+
   auto *ext_struct = thing_ext_struct(g, me);
   if (ext_struct == nullptr) {
     ERR("No me struct found");
@@ -736,37 +748,29 @@ bool player_move_request(Gamep g, bool up, bool down, bool left, bool right, boo
     return false;
   }
 
-  //
-  // TODO
-  //
-  static Tpp tp_fireball;
-  if (tp_fireball == nullptr) {
-    tp_fireball = tp_find_mand("fireball");
-  }
-
   if (v->requested_fire) {
     if (v->requested_move_up) {
       if (v->requested_move_left) {
-        player_fire(g, v, l, -1, -1, tp_fireball);
+        player_fire(g, v, l, -1, -1);
       } else if (v->requested_move_right) {
-        player_fire(g, v, l, 1, -1, tp_fireball);
+        player_fire(g, v, l, 1, -1);
       } else {
-        player_fire(g, v, l, 0, -1, tp_fireball);
+        player_fire(g, v, l, 0, -1);
       }
     } else if (v->requested_move_down) {
       if (v->requested_move_left) {
-        player_fire(g, v, l, -1, 1, tp_fireball);
+        player_fire(g, v, l, -1, 1);
       } else if (v->requested_move_right) {
-        player_fire(g, v, l, 1, 1, tp_fireball);
+        player_fire(g, v, l, 1, 1);
       } else {
-        player_fire(g, v, l, 0, 1, tp_fireball);
+        player_fire(g, v, l, 0, 1);
       }
     } else if (v->requested_move_left) {
-      player_fire(g, v, l, -1, 0, tp_fireball);
+      player_fire(g, v, l, -1, 0);
     } else if (v->requested_move_right) {
-      player_fire(g, v, l, 1, 0, tp_fireball);
+      player_fire(g, v, l, 1, 0);
     } else {
-      player_fire(g, v, l, 0, 0, tp_fireball);
+      player_fire(g, v, l, 0, 0);
     }
   }
 
@@ -857,7 +861,7 @@ void player_reached_entrance(Gamep g, Levelsp v, Levelp l)
 //
 // Handle the me falling out of the level
 //
-void player_fell(Gamep g, Levelsp v, Levelp l, Levelp next_level, Thingp /*me*/)
+void player_fell(Gamep g, Levelsp v, Levelp l, Levelp next_level, Thingp me)
 {
   TRACE_NO_INDENT();
 

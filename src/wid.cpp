@@ -1428,7 +1428,7 @@ bool wid_get_text_rhs(Widp w)
   return static_cast< bool >(w->text_rhs);
 }
 
-void wid_set_text_rhs(Widp w, bool /*val*/)
+void wid_set_text_rhs(Widp w, bool val)
 {
   TRACE_NO_INDENT();
   w->text_rhs = 1U;

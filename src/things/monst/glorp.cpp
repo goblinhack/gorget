@@ -22,7 +22,7 @@ static std::string tp_glorp_description_get(Gamep g, Levelsp v, Levelp l, Thingp
   return "living mass of slime known as a glorp";
 }
 
-static std::string tp_glorp_detail_get(Gamep g, Levelsp v, Levelp l, Thingp /*t*/)
+static std::string tp_glorp_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
@@ -32,7 +32,7 @@ static std::string tp_glorp_detail_get(Gamep g, Levelsp v, Levelp l, Thingp /*t*
       UI_INFO3_FMT_STR "Although they look like lime jelly, no one has yet confirmed how they taste..."; // newline
 }
 
-ThingEnviron tp_glorp_assess_tile(Gamep g, Levelsp v, Levelp l, spoint at, Thingp /*t*/)
+ThingEnviron tp_glorp_assess_tile(Gamep g, Levelsp v, Levelp l, spoint at, Thingp t)
 {
   TRACE_NO_INDENT();
 

@@ -20,7 +20,7 @@ static void tp_key_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &
   }
 }
 
-static std::string tp_key_description_get(Gamep g, Levelsp v, Levelp l, Thingp /*t*/)
+static std::string tp_key_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 

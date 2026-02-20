@@ -11,7 +11,7 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-static std::string tp_smoke_description_get(Gamep g, Levelsp v, Levelp l, Thingp /*t*/)
+static std::string tp_smoke_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 

@@ -965,7 +965,7 @@ void LEVEL_WARN(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT
 void monst_state_change(Gamep g, Levelsp v, Levelp l, Thingp me, MonstState new_state);
 void player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me);
 void player_fell(Gamep g, Levelsp v, Levelp l, Levelp next_level, Thingp me);
-void player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp what);
+void player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp what = nullptr);
 void player_map_center(Gamep, Levelsp, Levelp);
 void player_move_accum(Gamep g, Levelsp v, Levelp l, bool up, bool down, bool left, bool right, bool fire);
 void player_move_reset(Gamep g, Levelsp v, Levelp l);

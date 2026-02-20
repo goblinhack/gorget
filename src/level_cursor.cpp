@@ -418,6 +418,24 @@ void level_cursor_path_reset(Gamep g, Levelsp v, Levelp l)
 }
 
 //
+// Stop following the current path
+//
+void level_cursor_path_reset(Gamep g)
+{
+  auto *v = game_levels_get(g);
+  if (v == nullptr) {
+    return;
+  }
+
+  auto *l = game_level_get(g, v);
+  if (l == nullptr) {
+    return;
+  }
+
+  level_cursor_path_reset(g, v, l);
+}
+
+//
 // Copy the given path to the thing
 //
 void level_cursor_copy_path_to_player(Gamep g, Levelsp v, Levelp l, std::vector< spoint > &move_path)

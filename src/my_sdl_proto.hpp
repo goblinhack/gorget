@@ -25,11 +25,11 @@ std::string to_string_ignoring_mods(const SDL_Keysym &k);
 
 std::vector< uint8_t > sdl_fbo_save(Gamep, FboEnum fbo);
 
-uint8_t config_errored_clear(Gamep g, class Tokens * /*tokens*/, void *context);
-uint8_t show_error(Gamep g, class Tokens * /*tokens*/, void *context);
-uint8_t config_fps_counter_set(Gamep g, class Tokens * /*tokens*/, void *context);
-uint8_t config_debug_set(Gamep g, class Tokens * /*tokens*/, void *context);
-uint8_t config_gfx_vsync_enable(Gamep g, class Tokens * /*tokens*/, void *context);
+uint8_t config_errored_clear(Gamep g, class Tokens *tokens, void *context);
+uint8_t show_error(Gamep g, class Tokens *tokens, void *context);
+uint8_t config_fps_counter_set(Gamep g, class Tokens *tokens, void *context);
+uint8_t config_debug_set(Gamep g, class Tokens *tokens, void *context);
+uint8_t config_gfx_vsync_enable(Gamep g, class Tokens *tokens, void *context);
 bool    sdl_init();
 
 class Tokens;

@@ -78,7 +78,7 @@ bool game_mouse_down(Gamep g, int x, int y, uint32_t button)
 
 bool game_mouse_up(Gamep g, int x, int y, uint32_t button) { return false; }
 
-bool game_mouse_motion(Gamep g, int x, int y, int /*relx*/, int /*rely*/, int wheelx, int wheely)
+bool game_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx, int wheely)
 {
   DBG2("Game mouse motion");
   TRACE_NO_INDENT();

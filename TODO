@@ -1,6 +1,5 @@
 bugs
 ----
-if hovering over a widget, remove cursor path
 monst chasing
 monst wandering
 need mob distance and lunging
@@ -12,6 +11,7 @@ stamina needed to avoid fast jump loops
 score is hard coded to 666
 chests need to contain something and those items destroyed when the chest is
 hard coded to fire fireball
+a better name like dungenator / gobliette / sacrecant ?
 
 later features
 --------------

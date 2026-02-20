@@ -22,7 +22,7 @@ static std::string tp_mantisman_description_get(Gamep g, Levelsp v, Levelp l, Th
   return "living mantisman";
 }
 
-static std::string tp_mantisman_detail_get(Gamep g, Levelsp v, Levelp l, Thingp /*t*/)
+static std::string tp_mantisman_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
@@ -33,7 +33,7 @@ static std::string tp_mantisman_detail_get(Gamep g, Levelsp v, Levelp l, Thingp 
       UI_INFO4_FMT_STR "The one thing they do not do... is pray.";
 }
 
-ThingEnviron tp_mantisman_assess_tile(Gamep g, Levelsp v, Levelp l, spoint at, Thingp /*t*/)
+ThingEnviron tp_mantisman_assess_tile(Gamep g, Levelsp v, Levelp l, spoint at, Thingp t)
 {
   TRACE_NO_INDENT();
 

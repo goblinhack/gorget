@@ -20,7 +20,7 @@ using term_color = enum term_color_ {
   TERM_COLOR_MAX,
 };
 
-extern int  term_color_to_console_color(color /*c*/);
+extern int  term_color_to_console_color(color c);
 extern void term_log(const char *buf);
 
 #endif

@@ -28,8 +28,7 @@ static void wid_inventory_destroy(Gamep g)
   }
 }
 
-static void wid_inventory_mouse_over_begin(Gamep g, Widp w, int /*relx*/, int /*rely*/, int /*wheelx*/,
-                                           int /*wheely*/)
+static void wid_inventory_mouse_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
 {
   TRACE_NO_INDENT();
 

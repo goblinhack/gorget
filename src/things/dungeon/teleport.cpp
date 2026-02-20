@@ -10,14 +10,14 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
-static std::string tp_teleport_description_get(Gamep g, Levelsp v, Levelp l, Thingp /*t*/)
+static std::string tp_teleport_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
   return "teleport";
 }
 
-static std::string tp_teleport_detail_get(Gamep g, Levelsp v, Levelp l, Thingp /*t*/)
+static std::string tp_teleport_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 

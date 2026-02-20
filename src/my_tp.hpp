@@ -477,10 +477,10 @@ void                tp_light_color_apply(Tpp tp);
 [[nodiscard]] Tilep tp_tiles_get(Tpp tp, ThingAnim anim_type, int index);
 void                tp_tiles_push_back(Tpp tp, ThingAnim val, Tilep tile_p);
 
-void              tp_damage_set(Tpp tp, ThingEventType /*ev*/, const std::string &val);
+void              tp_damage_set(Tpp tp, ThingEventType e, const std::string &val);
 [[nodiscard]] int tp_damage(Tpp tp, ThingEventType val);
 
-void               tp_chance_set(Tpp tp, ThingChanceType /*ev*/, const std::string &val);
+void               tp_chance_set(Tpp tp, ThingChanceType e, const std::string &val);
 [[nodiscard]] int  tp_chance(Tpp tp, ThingChanceType val);
 [[nodiscard]] bool tp_chance_success(Tpp tp, ThingChanceType val);
 [[nodiscard]] bool tp_chance_fail(Tpp tp, ThingChanceType val);

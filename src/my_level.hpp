@@ -683,6 +683,7 @@ void level_cursor_describe_update(Gamep g, Levelsp v);
 void level_cursor_describe(Gamep g, Levelsp v, Levelp l);
 void level_cursor_path_recreate(Gamep g, Levelsp v, Levelp l);
 void level_cursor_path_reset(Gamep g, Levelsp v, Levelp l);
+void level_cursor_path_reset(Gamep g);
 void level_cursor_set(Gamep g, Levelsp v, spoint p);
 void level_debug(Gamep g, Levelsp v, Levelp l);
 void level_destroy(Gamep g, Levelsp v, Levelp l);

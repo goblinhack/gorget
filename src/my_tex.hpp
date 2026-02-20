@@ -11,9 +11,9 @@
 #include <SDL.h>
 #include <string>
 
-int tex_get_gl_binding(Texp /*tex*/);
+int tex_get_gl_binding(Texp tex);
 
-SDL_Surface *tex_get_surface(Texp /*tex*/);
+SDL_Surface *tex_get_surface(Texp tex);
 
 Texp string2tex(const char **s);
 Texp string2tex(std::string &s, int *len);
@@ -22,8 +22,8 @@ Texp tex_from_surface(SDL_Surface *surface, const std::string &file, const std::
 Texp tex_load(const std::string &file, const std::string &name, int mode);
 Texp tex_from_fbo(Gamep g, FboEnum fbo);
 
-uint32_t tex_get_height(Texp /*tex*/);
-uint32_t tex_get_width(Texp /*tex*/);
+uint32_t tex_get_height(Texp tex);
+uint32_t tex_get_width(Texp tex);
 
 bool tex_init();
 

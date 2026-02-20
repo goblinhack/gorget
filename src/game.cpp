@@ -268,12 +268,12 @@ public:
   Game() = default;
 
   bool load_snapshot();
-  bool load(const std::string & /*file_to_load*/, class Game &target);
+  bool load(const std::string &file_to_load, class Game &target);
   bool load(int slot);
   bool save_config();
   bool save_select();
   bool save_snapshot();
-  bool save(const std::string & /*file_to_save*/);
+  bool save(const std::string &file_to_save);
   bool save(int slot);
 
   void cleanup();
@@ -1019,9 +1019,9 @@ void Game::state_change(GameState new_state, const std::string &why)
     case STATE_LOAD_MENU :
     case STATE_LOADED :
     case STATE_SAVE_MENU :
-    case STATE_QUIT_MENU :         wid_actionbar_fini(g); break;
-    case STATE_INVENTORY_MENU :    break;
-    case STATE_ITEM_MENU :         break;
+    case STATE_QUIT_MENU :
+    case STATE_INVENTORY_MENU :
+    case STATE_ITEM_MENU :         wid_actionbar_fini(g); break;
     case STATE_GENERATING :        break;
     case STATE_GENERATED :         break;
     case GAME_STATE_ENUM_MAX :     break;
@@ -1056,10 +1056,10 @@ void Game::state_change(GameState new_state, const std::string &why)
         case STATE_LOADED :
           wid_leftbar_init(g);
           wid_rightbar_init(g);
-          wid_actionbar_init(g);
           wid_topcon_init(g);
           wid_botcon_init(g);
           game_map_zoom_update(g);
+          wid_actionbar_init(g);
           break;
         case STATE_QUIT_MENU :
         case STATE_MOVE_WARNING_MENU :

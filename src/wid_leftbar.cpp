@@ -62,15 +62,3 @@ bool wid_leftbar_init(Gamep g)
   TRACE_NO_INDENT();
   return wid_leftbar_create_window(g);
 }
-
-bool wid_leftbar_create(Gamep g)
-{
-  wid_leftbar_fini(g);
-
-  auto *level = game_levels_get(g);
-  if (level == nullptr) {
-    return false;
-  }
-
-  return wid_leftbar_create_window(g);
-}

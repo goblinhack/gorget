@@ -23,10 +23,14 @@ static WidPopup *wid_over_fire {};
 static WidPopup *wid_over_descend {};
 static WidPopup *wid_over_quit {};
 static WidPopup *wid_over_help {};
-static WidPopup *wid_actionbar_popup {};
 
-static ts_t wid_last_wait;
-static ts_t wid_last_wait_repeat;
+static ts_t wid_last_key_press;
+static ts_t wid_last_key_repeat;
+
+//
+// Used to detect changes in the menu
+//
+static std::string last_menu_string;
 
 [[nodiscard]] static bool wid_actionbar_save(Gamep g, Widp w, int x, int y, uint32_t button)
 {
@@ -37,7 +41,7 @@ static ts_t wid_last_wait_repeat;
   return game_event_save(g);
 }
 
-static void wid_actionbar_save_over_begin(Gamep g, Widp w, int /*relx*/, int /*rely*/, int /*wheelx*/, int /*wheely*/)
+static void wid_actionbar_save_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
 {
   TRACE_NO_INDENT();
 
@@ -65,6 +69,8 @@ static void wid_actionbar_save_over_begin(Gamep g, Widp w, int /*relx*/, int /*r
   wid_over_save->log_empty_line(g);
   wid_over_save->log(g, "Select this to save your progress");
   wid_over_save->compress(g);
+
+  level_cursor_path_reset(g);
 }
 
 static void wid_actionbar_save_over_end(Gamep g, Widp w)
@@ -82,7 +88,7 @@ static void wid_actionbar_save_over_end(Gamep g, Widp w)
   return game_event_load(g);
 }
 
-static void wid_actionbar_load_over_begin(Gamep g, Widp w, int /*relx*/, int /*rely*/, int /*wheelx*/, int /*wheely*/)
+static void wid_actionbar_load_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
 {
   TRACE_NO_INDENT();
 
@@ -110,6 +116,8 @@ static void wid_actionbar_load_over_begin(Gamep g, Widp w, int /*relx*/, int /*r
   wid_over_load->log_empty_line(g);
   wid_over_load->log(g, "Select this to load an old game");
   wid_over_load->compress(g);
+
+  level_cursor_path_reset(g);
 }
 
 static void wid_actionbar_load_over_end(Gamep g, Widp w)
@@ -125,7 +133,7 @@ static void wid_actionbar_load_over_end(Gamep g, Widp w)
   LOG("Actionbar wait");
   TRACE_NO_INDENT();
 
-  wid_last_wait = time_ms_cached();
+  wid_last_key_press = time_ms_cached();
 
   return game_event_wait(g);
 }
@@ -135,19 +143,19 @@ static void wid_actionbar_load_over_end(Gamep g, Widp w)
   LOG("Actionbar wait");
   TRACE_NO_INDENT();
 
-  if (! time_have_x_tenths_passed_since(1, wid_last_wait)) {
+  if (! time_have_x_tenths_passed_since(1, wid_last_key_press)) {
     return true;
   }
 
-  if (! time_have_x_tenths_passed_since(1, wid_last_wait_repeat)) {
+  if (! time_have_x_tenths_passed_since(1, wid_last_key_repeat)) {
     return true;
   }
 
-  wid_last_wait_repeat = time_ms_cached();
+  wid_last_key_repeat = time_ms_cached();
   return game_event_wait(g);
 }
 
-static void wid_actionbar_wait_over_begin(Gamep g, Widp w, int /*relx*/, int /*rely*/, int /*wheelx*/, int /*wheely*/)
+static void wid_actionbar_wait_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
 {
   TRACE_NO_INDENT();
 
@@ -177,6 +185,8 @@ static void wid_actionbar_wait_over_begin(Gamep g, Widp w, int /*relx*/, int /*r
   wid_over_wait->log_empty_line(g);
   wid_over_wait->log(g, "Hold down to pass multiple turns.");
   wid_over_wait->compress(g);
+
+  level_cursor_path_reset(g);
 }
 
 static void wid_actionbar_wait_over_end(Gamep g, Widp w)
@@ -195,8 +205,7 @@ static void wid_actionbar_wait_over_end(Gamep g, Widp w)
   return game_event_inventory(g);
 }
 
-static void wid_actionbar_inventory_over_begin(Gamep g, Widp w, int /*relx*/, int /*rely*/, int /*wheelx*/,
-                                               int /*wheely*/)
+static void wid_actionbar_inventory_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
 {
   TRACE_NO_INDENT();
 
@@ -224,6 +233,8 @@ static void wid_actionbar_inventory_over_begin(Gamep g, Widp w, int /*relx*/, in
   wid_over_inventory->log_empty_line(g);
   wid_over_inventory->log(g, "Select this to view your hard gotten loot.");
   wid_over_inventory->compress(g);
+
+  level_cursor_path_reset(g);
 }
 
 static void wid_actionbar_inventory_over_end(Gamep g, Widp w)
@@ -234,7 +245,59 @@ static void wid_actionbar_inventory_over_end(Gamep g, Widp w)
   wid_over_inventory = nullptr;
 }
 
-static void wid_actionbar_fire_over_begin(Gamep g, Widp w, int /*relx*/, int /*rely*/, int /*wheelx*/, int /*wheely*/)
+[[nodiscard]] static bool wid_actionbar_fire(Gamep g, Widp w, int x, int y, uint32_t button)
+{
+  LOG("Actionbar fire");
+  TRACE_NO_INDENT();
+
+  wid_last_key_repeat = time_ms_cached();
+
+  auto *v = game_levels_get(g);
+  if (v == nullptr) {
+    return false;
+  }
+
+  auto *l = game_level_get(g, v);
+  if (l == nullptr) {
+    return false;
+  }
+
+  player_fire(g, v, l, 0, 0, nullptr);
+
+  return true;
+}
+
+[[nodiscard]] static bool wid_actionbar_repeat_fire(Gamep g, Widp w, int x, int y, uint32_t button)
+{
+  LOG("Actionbar fire");
+  TRACE_NO_INDENT();
+
+  if (! time_have_x_tenths_passed_since(1, wid_last_key_repeat)) {
+    return true;
+  }
+
+  if (! time_have_x_tenths_passed_since(1, wid_last_key_repeat)) {
+    return true;
+  }
+
+  wid_last_key_repeat = time_ms_cached();
+
+  auto *v = game_levels_get(g);
+  if (v == nullptr) {
+    return false;
+  }
+
+  auto *l = game_level_get(g, v);
+  if (l == nullptr) {
+    return false;
+  }
+
+  player_fire(g, v, l, 0, 0, nullptr);
+
+  return true;
+}
+
+static void wid_actionbar_fire_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
 {
   TRACE_NO_INDENT();
 
@@ -263,6 +326,8 @@ static void wid_actionbar_fire_over_begin(Gamep g, Widp w, int /*relx*/, int /*r
   wid_over_fire->log(g,
                      "Hover the mouse over your chosen enemy and press this key to blast them to deserved oblivion.");
   wid_over_fire->compress(g);
+
+  level_cursor_path_reset(g);
 }
 
 static void wid_actionbar_fire_over_end(Gamep g, Widp w)
@@ -281,8 +346,7 @@ static void wid_actionbar_fire_over_end(Gamep g, Widp w)
   return game_event_ascend(g);
 }
 
-static void wid_actionbar_ascend_over_begin(Gamep g, Widp w, int /*relx*/, int /*rely*/, int /*wheelx*/,
-                                            int /*wheely*/)
+static void wid_actionbar_ascend_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
 {
   TRACE_NO_INDENT();
 
@@ -310,6 +374,8 @@ static void wid_actionbar_ascend_over_begin(Gamep g, Widp w, int /*relx*/, int /
   wid_over_ascend->log_empty_line(g);
   wid_over_ascend->log(g, "Select this return to level selection.");
   wid_over_ascend->compress(g);
+
+  level_cursor_path_reset(g);
 }
 
 static void wid_actionbar_ascend_over_end(Gamep g, Widp w)
@@ -328,8 +394,7 @@ static void wid_actionbar_ascend_over_end(Gamep g, Widp w)
   return game_event_descend(g);
 }
 
-static void wid_actionbar_descend_over_begin(Gamep g, Widp w, int /*relx*/, int /*rely*/, int /*wheelx*/,
-                                             int /*wheely*/)
+static void wid_actionbar_descend_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
 {
   TRACE_NO_INDENT();
 
@@ -357,6 +422,8 @@ static void wid_actionbar_descend_over_begin(Gamep g, Widp w, int /*relx*/, int 
   wid_over_descend->log_empty_line(g);
   wid_over_descend->log(g, "Select this to descend further into the dungeon.");
   wid_over_descend->compress(g);
+
+  level_cursor_path_reset(g);
 }
 
 static void wid_actionbar_descend_over_end(Gamep g, Widp w)
@@ -375,7 +442,7 @@ static void wid_actionbar_descend_over_end(Gamep g, Widp w)
   return game_event_quit(g);
 }
 
-static void wid_actionbar_quit_over_begin(Gamep g, Widp w, int /*relx*/, int /*rely*/, int /*wheelx*/, int /*wheely*/)
+static void wid_actionbar_quit_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
 {
   TRACE_NO_INDENT();
 
@@ -402,6 +469,8 @@ static void wid_actionbar_quit_over_begin(Gamep g, Widp w, int /*relx*/, int /*r
   wid_over_quit->log_empty_line(g);
   wid_over_quit->log(g, "Select this to abandon all hope.");
   wid_over_quit->compress(g);
+
+  level_cursor_path_reset(g);
 }
 
 static void wid_actionbar_quit_over_end(Gamep g, Widp w)
@@ -420,7 +489,7 @@ static void wid_actionbar_quit_over_end(Gamep g, Widp w)
   return game_event_help(g);
 }
 
-static void wid_actionbar_help_over_begin(Gamep g, Widp w, int /*relx*/, int /*rely*/, int /*wheelx*/, int /*wheely*/)
+static void wid_actionbar_help_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
 {
   TRACE_NO_INDENT();
 
@@ -447,6 +516,8 @@ static void wid_actionbar_help_over_begin(Gamep g, Widp w, int /*relx*/, int /*r
   wid_over_help->log_empty_line(g);
   wid_over_help->log(g, "Select this to configure keyboard options.");
   wid_over_help->compress(g);
+
+  level_cursor_path_reset(g);
 }
 
 static void wid_actionbar_help_over_end(Gamep g, Widp w)
@@ -460,8 +531,6 @@ static void wid_actionbar_help_over_end(Gamep g, Widp w)
 bool wid_actionbar_create_window(Gamep g)
 {
   TRACE_NO_INDENT();
-
-  wid_actionbar_fini(g);
 
   auto *v = game_levels_get(g);
   if (v == nullptr) {
@@ -510,6 +579,74 @@ bool wid_actionbar_create_window(Gamep g)
     opt_fire      = false;
   }
 
+  //
+  // Used to detect changes in the menu
+  //
+  std::string menu_string;
+  if (opt_wait) {
+    menu_string += "opt_wait";
+  }
+  if (opt_inventory) {
+    menu_string += "opt_inventory";
+  }
+  if (opt_quit) {
+    menu_string += "opt_quit";
+  }
+  if (opt_help) {
+    menu_string += "opt_help";
+  }
+  if (opt_load) {
+    menu_string += "opt_load";
+  }
+  if (opt_save) {
+    menu_string += "opt_save";
+  }
+  if (opt_descend) {
+    menu_string += "opt_descend";
+  }
+  if (opt_ascend) {
+    menu_string += "opt_ascend";
+  }
+  if (opt_fire) {
+    menu_string += "opt_fire";
+  }
+
+  if (wid_actionbar && (menu_string == last_menu_string)) {
+    wid_raise(g, wid_actionbar);
+    if (wid_over_save) {
+      wid_raise(g, wid_over_save->wid_popup_container);
+    }
+    if (wid_over_load) {
+      wid_raise(g, wid_over_load->wid_popup_container);
+    }
+    if (wid_over_wait) {
+      wid_raise(g, wid_over_wait->wid_popup_container);
+    }
+    if (wid_over_inventory) {
+      wid_raise(g, wid_over_inventory->wid_popup_container);
+    }
+    if (wid_over_ascend) {
+      wid_raise(g, wid_over_ascend->wid_popup_container);
+    }
+    if (wid_over_fire) {
+      wid_raise(g, wid_over_fire->wid_popup_container);
+    }
+    if (wid_over_descend) {
+      wid_raise(g, wid_over_descend->wid_popup_container);
+    }
+    if (wid_over_quit) {
+      wid_raise(g, wid_over_quit->wid_popup_container);
+    }
+    if (wid_over_help) {
+      wid_raise(g, wid_over_help->wid_popup_container);
+    }
+    return true;
+  }
+
+  wid_actionbar_fini(g);
+
+  last_menu_string = menu_string;
+
   {
     auto tl = spoint(0, TERM_HEIGHT - 2);
     auto br = spoint(TERM_WIDTH, TERM_HEIGHT - 2);
@@ -539,6 +676,8 @@ bool wid_actionbar_create_window(Gamep g)
     auto tl      = spoint(x_at, 0);
     auto br      = spoint(x_at + option_width - 1, 0);
     wid_set_pos(w, tl, br);
+    wid_set_on_mouse_up(w, wid_actionbar_fire);
+    wid_set_on_mouse_held(w, wid_actionbar_repeat_fire);
     wid_set_on_mouse_over_begin(w, wid_actionbar_fire_over_begin);
     wid_set_on_mouse_over_end(w, wid_actionbar_fire_over_end);
     wid_set_text(w, UI_SHORTCUT_FMT_STR "" + ::to_string(game_key_fire_get(g)) + UI_HIGHLIGHT_FMT_STR "" + " Fire");
@@ -689,8 +828,6 @@ bool wid_actionbar_create_window(Gamep g)
     x_at += option_width + 1;
   }
 
-  wid_update(g, wid_actionbar);
-
   {
     wid_resize(g, wid_actionbar_container, x_at, -1);
     wid_move_to_pct_centered(g, wid_actionbar_container, 0.5, 0.0);
@@ -706,24 +843,29 @@ void wid_actionbar_fini(Gamep g)
   TRACE_NO_INDENT();
   wid_destroy(g, &wid_actionbar);
 
-  delete wid_actionbar_popup;
-  wid_actionbar_popup = nullptr;
+  delete wid_over_save;
+  wid_over_save = nullptr;
+  delete wid_over_load;
+  wid_over_load = nullptr;
+  delete wid_over_wait;
+  wid_over_wait = nullptr;
+  delete wid_over_inventory;
+  wid_over_inventory = nullptr;
+  delete wid_over_ascend;
+  wid_over_ascend = nullptr;
+  delete wid_over_fire;
+  wid_over_fire = nullptr;
+  delete wid_over_descend;
+  wid_over_descend = nullptr;
+  delete wid_over_quit;
+  wid_over_quit = nullptr;
+  delete wid_over_help;
+  wid_over_help    = nullptr;
+  last_menu_string = "";
 }
 
 bool wid_actionbar_init(Gamep g)
 {
   TRACE_NO_INDENT();
-  return wid_actionbar_create_window(g);
-}
-
-bool wid_actionbar_create(Gamep g)
-{
-  wid_actionbar_fini(g);
-
-  auto *level = game_levels_get(g);
-  if (level == nullptr) {
-    return false;
-  }
-
   return wid_actionbar_create_window(g);
 }

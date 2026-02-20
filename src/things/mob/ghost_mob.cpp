@@ -13,14 +13,14 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
-static std::string tp_ghost_mob_description_get(Gamep g, Levelsp v, Levelp l, Thingp /*t*/)
+static std::string tp_ghost_mob_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
   return "pile of bones";
 }
 
-static std::string tp_ghost_mob_detail_get(Gamep g, Levelsp v, Levelp l, Thingp /*t*/)
+static std::string tp_ghost_mob_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
@@ -30,7 +30,7 @@ static std::string tp_ghost_mob_detail_get(Gamep g, Levelsp v, Levelp l, Thingp 
       UI_INFO2_FMT_STR "When such devices are destroyed, all that they summoned will also vanish into oblivion.";
 }
 
-static void tp_ghost_mob_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent & /*e*/)
+static void tp_ghost_mob_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 {
   TRACE_NO_INDENT();
 

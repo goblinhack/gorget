@@ -15,20 +15,20 @@ public:
   my_spoint(short _x, short _y) : x(_x), y(_y) {}
   my_spoint(void) : x(0), y(0) {}
 #endif
-  void                operator+=(my_spoint const                &/*b*/);
-  void                operator-=(my_spoint const                &/*b*/);
-  void                operator*=(short /*b*/);
-  void                operator/=(short /*b*/);
+  void                operator+=(my_spoint const &b);
+  void                operator-=(my_spoint const &b);
+  void                operator*=(short b);
+  void                operator/=(short b);
   [[nodiscard]] float length() const;
   void                unit();
 };
 
 bool   operator<(spoint const &a, spoint const &b); // Needed for std::map
-bool   operator==(spoint const   &/*a*/, spoint const   &/*b*/);
-spoint operator+(spoint const & /*a*/, spoint const & /*b*/);
-spoint operator-(spoint const & /*a*/, spoint const & /*b*/);
-spoint operator*(spoint const & /*a*/, short /*b*/);
-spoint operator/(spoint const & /*a*/, short /*b*/);
+bool   operator==(spoint const &a, spoint const &b);
+spoint operator+(spoint const &a, spoint const &b);
+spoint operator-(spoint const &a, spoint const &b);
+spoint operator*(spoint const &a, short b);
+spoint operator/(spoint const &a, short b);
 
 static inline spoint make_spoint(const spoint &f) { return spoint(f.x, f.y); }
 static inline spoint make_spoint(spoint &f) { return spoint(f.x, f.y); }

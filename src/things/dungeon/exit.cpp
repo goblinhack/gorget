@@ -12,14 +12,14 @@
 
 #include <string>
 
-static std::string tp_exit_description_get(Gamep g, Levelsp v, Levelp l, Thingp /*t*/)
+static std::string tp_exit_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
   return "slime covered stairs leading down";
 }
 
-static std::string tp_exit_detail_get(Gamep g, Levelsp v, Levelp l, Thingp /*t*/)
+static std::string tp_exit_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 

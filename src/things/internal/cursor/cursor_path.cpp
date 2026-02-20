@@ -11,8 +11,7 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-static Tilep tp_cursor_path_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp,
-                                                  Thingp /*t_maybe_null*/)
+static Tilep tp_cursor_path_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_maybe_null)
 {
   TRACE_NO_INDENT();
 
