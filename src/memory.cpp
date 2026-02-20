@@ -107,7 +107,7 @@ char *mydupstr_(const char *in, const char *what, const char *file, const char *
 
   IF_DEBUG2
   {
-    int const size = (__typeof__(size)) strlen(in);
+    auto const size = strlen(in);
 
     ptrcheck_alloc(MTYPE_MISC, ptr, what, size, file, func, line);
   }
