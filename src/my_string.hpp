@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef _MY_STRING_UTIL_HPP_
-#define _MY_STRING_UTIL_HPP_
+#ifndef MY_STRING_UTIL_HPP_
+#define MY_STRING_UTIL_HPP_
 
 #include "my_types.hpp"
 

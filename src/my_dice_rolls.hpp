@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef _MY_DICE_ROLLS_HPP_
-#define _MY_DICE_ROLLS_HPP_
+#ifndef MY_DICE_ROLLS_HPP_
+#define MY_DICE_ROLLS_HPP_
 
 int d10000();
 int d1000();

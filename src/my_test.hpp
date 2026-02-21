@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef _MY_TEST_H_
-#define _MY_TEST_H_
+#ifndef MY_TEST_H_
+#define MY_TEST_H_
 
 #include "my_callstack.hpp"
 #include "my_game.hpp"

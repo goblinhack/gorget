@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef _MY_THING_CALLBACKS_H_
-#define _MY_THING_CALLBACKS_H_
+#ifndef MY_THING_CALLBACKS_H_
+#define MY_THING_CALLBACKS_H_
 
 #include "my_thing.hpp"
 #include "my_tile.hpp"

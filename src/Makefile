@@ -89,26 +89,24 @@ $(TARGET_GAME): $(OBJ_FILES)
 # clang-tidy -checks=* -list-checks
 #
 # This is good, but introduces some errors in macros
-#			bugprone-*,\
+#			modernize-macro-to-enum,
 #####################################################
 tidy:
 	for src in $(CPP_SOURCES) ; do \
 		echo "Running tidy on $$src..." ; \
 		clang-tidy -fix -checks="-*,\
+			bugprone-*,\
 			performance-*,\
 			cppcoreguidelines-no-malloc,\
 			misc-redundant-expression,\
 			misc-const-correctness,\
 			misc-static-assert,\
-			misc-unused-parameters,\
-			misc-misplaced-const,\
 			modernize-avoid-bind,\
 			modernize-avoid-c-arrays,\
 			modernize-concat-nested-namespaces,\
 			modernize-deprecated-headers,\
 			modernize-deprecated-ios-base-aliases,\
 			modernize-loop-convert,\
-			modernize-macro-to-enum,\
 			modernize-make-shared,\
 			modernize-make-unique,\
 			modernize-min-max-use-initializer-list,\

@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef _MY_THING_HPP_
-#define _MY_THING_HPP_
+#ifndef MY_THING_HPP_
+#define MY_THING_HPP_
 
 #include "my_color.hpp"
 #include "my_dmap.hpp"
@@ -1086,8 +1086,8 @@ std::vector< spoint > astar_solve(Gamep g, Levelsp v, Levelp l, Thingp t, spoint
   if ((_g_) && (_v_) && (_l_))                                                                                       \
     for (auto _ext_ = thing_ext_struct(_g_, _mob_); _ext_; _ext_ = nullptr)                                          \
       for (auto _n_ = 0; _n_ < THING_MINION_MAX; _n_++)                                                              \
-        for (auto _slot_ = &_ext_->minions.minion[ _n_ ]; _slot_; (_slot_) = nullptr)                                \
-          for (auto _minion_ = thing_find_optional(g, v, (_slot_)->minion_id), loop2 = (Thingp) 1;                   \
+        for (auto (_slot_) = &_ext_->minions.minion[ _n_ ]; _slot_; (_slot_) = nullptr)                                \
+          for (auto (_minion_) = thing_find_optional(g, v, (_slot_)->minion_id), loop2 = (Thingp) 1;                   \
                loop2 == (Thingp) 1; loop2 = (Thingp) 0)
 
 #define FOR_ALL_MINIONS(_g_, _v_, _l_, _mob_, _minion_)                                                              \
@@ -1101,8 +1101,8 @@ std::vector< spoint > astar_solve(Gamep g, Levelsp v, Levelp l, Thingp t, spoint
   if ((_g_) && (_v_) && (_l_))                                                                                       \
     for (auto _ext_ = thing_player_struct(_g_); _ext_; _ext_ = nullptr)                                              \
       for (auto _n_ = 0; _n_ < THING_INVENTORY_MAX; _n_++)                                                           \
-        for (auto _slot_ = &_ext_->inventory.slots[ _n_ ]; _slot_; (_slot_) = nullptr)                               \
-          for (auto _item_ = thing_find_optional(g, v, (_slot_)->item_id), loop2 = (Thingp) 1; loop2 == (Thingp) 1;  \
+        for (auto (_slot_) = &_ext_->inventory.slots[ _n_ ]; _slot_; (_slot_) = nullptr)                               \
+          for (auto (_item_) = thing_find_optional(g, v, (_slot_)->item_id), loop2 = (Thingp) 1; loop2 == (Thingp) 1;  \
                loop2 = (Thingp) 0)
 
 #define FOR_ALL_INVENTORY_ITEMS(_g_, _v_, _l_, _owner_, _item_)                                                      \
@@ -1110,6 +1110,6 @@ std::vector< spoint > astar_solve(Gamep g, Levelsp v, Levelp l, Thingp t, spoint
     for (auto _ext_ = thing_player_struct(_g_); _ext_; _ext_ = nullptr)                                              \
       for (auto _n_ = 0; _n_ < THING_INVENTORY_MAX; _n_++)                                                           \
         for (auto _slot_ = &_ext_->inventory.slots[ _n_ ]; _slot_; _slot_ = nullptr)                                 \
-          for (auto _item_ = thing_find_optional(g, v, _slot_->item_id); _item_; (_item_) = nullptr)
+          for (auto (_item_) = thing_find_optional(g, v, _slot_->item_id); _item_; (_item_) = nullptr)
 
 #endif

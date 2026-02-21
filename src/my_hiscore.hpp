@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef _MY_HISCORE_HPP_
-#define _MY_HISCORE_HPP_
+#ifndef MY_HISCORE_HPP_
+#define MY_HISCORE_HPP_
 
 #include <string>
 #include <utility>

@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef _MY_GAME_DEFS_HPP_
-#define _MY_GAME_DEFS_HPP_
+#ifndef MY_GAME_DEFS_HPP_
+#define MY_GAME_DEFS_HPP_
 
 //
 // The level map dimensions

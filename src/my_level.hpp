@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef _MY_LEVEL_H_
-#define _MY_LEVEL_H_
+#ifndef MY_LEVEL_H_
+#define MY_LEVEL_H_
 
 #include "my_game_defs.hpp"
 #include "my_ptrcheck.hpp"

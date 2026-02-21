@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef _MY_SERIALIZE_HPP_
-#define _MY_SERIALIZE_HPP_
+#ifndef MY_SERIALIZE_HPP_
+#define MY_SERIALIZE_HPP_
 
 #include "c_plus_plus_serializer.hpp"
 #include "my_hiscore.hpp"

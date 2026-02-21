@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef _MY_BITS_HPP_
-#define _MY_BITS_HPP_
+#ifndef MY_BITS_HPP_
+#define MY_BITS_HPP_
 
 //
 // Bit routines

@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef _MY_MATH_HPP_
-#define _MY_MATH_HPP_
+#ifndef MY_MATH_HPP_
+#define MY_MATH_HPP_
 
 #include <stdlib.h>
 

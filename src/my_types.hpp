@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef _MY_TYPES_HPP_
-#define _MY_TYPES_HPP_
+#ifndef MY_TYPES_HPP_
+#define MY_TYPES_HPP_
 
 ////////////////////////////////////////////////////////////////////////
 // Bare minimal includes. Do not add any c++ includes here for speed.
@@ -87,7 +87,10 @@
 #define SIZEOF(my_array) ((int) sizeof(my_array))
 
 #define FOR_ALL_IN_ARRAY(my_iterator, my_array)                                                                      \
-  for (auto my_iterator = (my_array); (my_iterator) < ((my_array) + ARRAY_SIZE(my_array)); (my_iterator)++)
+  for (auto /* newline */                                                                                            \
+       (my_iterator)                                                                                                 \
+       = (my_array);                                                                                                 \
+       (my_iterator) < ((my_array) + ARRAY_SIZE(my_array)); (my_iterator)++)
 
 //
 // GCC extensions

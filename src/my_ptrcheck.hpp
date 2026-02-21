@@ -1,6 +1,6 @@
 
-#ifndef _MY_PTRCHECK_HPP_
-#define _MY_PTRCHECK_HPP_
+#ifndef MY_PTRCHECK_HPP_
+#define MY_PTRCHECK_HPP_
 
 #include "my_source_loc.hpp"
 

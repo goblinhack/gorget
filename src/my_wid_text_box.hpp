@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef _MY_WID_TEXT_BOX_HPP_
-#define _MY_WID_TEXT_BOX_HPP_
+#ifndef MY_WID_TEXT_BOX_HPP_
+#define MY_WID_TEXT_BOX_HPP_
 
 #include "my_types.hpp"
 #include "my_wid.hpp"

@@ -46,8 +46,8 @@
 //	\meta		Match one of the meta character: ^$().[*+?
 //
 
-#ifndef _MY_SLRE_HEADER_DEFINED
-#define _MY_SLRE_HEADER_DEFINED
+#ifndef MY_SLRE_HEADER_DEFINED
+#define MY_SLRE_HEADER_DEFINED
 
 //
 // Compiled regular expression

@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef _MY_COLOR_HPP_
-#define _MY_COLOR_HPP_
+#ifndef MY_COLOR_HPP_
+#define MY_COLOR_HPP_
 
 #include "my_types.hpp"
 

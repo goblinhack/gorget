@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef _MY_TESTS_HPP_
-#define _MY_TESTS_HPP_
+#ifndef MY_TESTS_HPP_
+#define MY_TESTS_HPP_
 
 extern bool tests_init();
 

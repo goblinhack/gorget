@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef _MY_WIDS_HPP_
-#define _MY_WIDS_HPP_
+#ifndef MY_WIDS_HPP_
+#define MY_WIDS_HPP_
 
 #include "my_color_defs.hpp"
 #include "my_thing.hpp"

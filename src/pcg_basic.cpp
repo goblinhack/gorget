@@ -28,8 +28,8 @@
  * your project.
  */
 
-#ifndef _MY_PCG_BASIC_HPP
-#define _MY_PCG_BASIC_HPP
+#ifndef MY_PCG_BASIC_HPP
+#define MY_PCG_BASIC_HPP
 
 #include "my_globals.hpp"
 #include "my_main.hpp"

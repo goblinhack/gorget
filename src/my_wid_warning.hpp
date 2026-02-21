@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef _MY_WID_WARNING_HPP_
-#define _MY_WID_WARNING_HPP_
+#ifndef MY_WID_WARNING_HPP_
+#define MY_WID_WARNING_HPP_
 
 #include "my_wid_popup.hpp"
 

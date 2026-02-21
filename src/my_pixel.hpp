@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef _MY_GETPUT_PIXEL_MACROS_HPP_
-#define _MY_GETPUT_PIXEL_MACROS_HPP_
+#ifndef MY_GETPUT_PIXEL_MACROS_HPP_
+#define MY_GETPUT_PIXEL_MACROS_HPP_
 
 #include "my_color.hpp"
 #include "my_globals.hpp"

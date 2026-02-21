@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef _MY_GLOBALS_HPP_
-#define _MY_GLOBALS_HPP_
+#ifndef MY_GLOBALS_HPP_
+#define MY_GLOBALS_HPP_
 
 #include <string>
 

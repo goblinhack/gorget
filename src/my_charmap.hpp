@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef _MY_CHARMAP_HPP_
-#define _MY_CHARMAP_HPP_
+#ifndef MY_CHARMAP_HPP_
+#define MY_CHARMAP_HPP_
 
 enum {
   // begin sort marker1 {

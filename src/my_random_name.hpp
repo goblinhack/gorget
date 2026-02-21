@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef _MY_RANDOM_NAME_HPP
-#define _MY_RANDOM_NAME_HPP
+#ifndef MY_RANDOM_NAME_HPP
+#define MY_RANDOM_NAME_HPP
 
 #include <cstdint>
 #include <string>

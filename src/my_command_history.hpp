@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef _MY_COMMAND_HISTORY_HPP_
-#define _MY_COMMAND_HISTORY_HPP_
+#ifndef MY_COMMAND_HISTORY_HPP_
+#define MY_COMMAND_HISTORY_HPP_
 
 //
 // History for all text widgets.
