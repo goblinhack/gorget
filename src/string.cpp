@@ -95,11 +95,11 @@ auto strsub_(const char *in, const char *look_for, const char *replace_with, con
              int line) -> char *
 {
   TRACE_NO_INDENT();
-  char       *buf = nullptr;
-  const char *at = nullptr;
+  char       *buf    = nullptr;
+  const char *at     = nullptr;
   int         newlen = 0;
   int         oldlen = 0;
-  int         len = 0;
+  int         len    = 0;
 
   if ((in == nullptr) || (look_for == nullptr) || (replace_with == nullptr)) {
     return nullptr;
@@ -145,9 +145,9 @@ auto strsub_(const char *in, const char *look_for, const char *replace_with, con
 auto strappend(const char *in, const char *append) -> char *
 {
   TRACE_NO_INDENT();
-  char *buf = nullptr;
+  char *buf    = nullptr;
   int   newlen = 0;
-  int   len = 0;
+  int   len    = 0;
 
   if ((in == nullptr) || (append == nullptr)) {
     return nullptr;
@@ -174,9 +174,9 @@ auto strappend(const char *in, const char *append) -> char *
 auto strprepend(const char *in, const char *prepend) -> char *
 {
   TRACE_NO_INDENT();
-  char *buf = nullptr;
+  char *buf    = nullptr;
   int   newlen = 0;
-  int   len = 0;
+  int   len    = 0;
 
   if ((in == nullptr) || (prepend == nullptr)) {
     return nullptr;
@@ -220,7 +220,7 @@ void strchop(char *s)
 {
   TRACE_NO_INDENT();
   uint32_t size = 0;
-  char    *end = nullptr;
+  char    *end  = nullptr;
 
   size = (uint32_t) strlen(s);
   if (! static_cast< bool >(size)) {
@@ -242,7 +242,7 @@ void strchopc(char *s, char c)
 {
   TRACE_NO_INDENT();
   uint32_t size = 0;
-  char    *end = nullptr;
+  char    *end  = nullptr;
 
   size = (uint32_t) strlen(s);
   if (! static_cast< bool >(size)) {
@@ -329,7 +329,7 @@ void strnoescape(char *uncompressed)
       case '\\' : *t++ = '\\'; break;
       default :
         {
-          char const *o = s - 1;
+          char const *o    = s - 1;
           char        orig = 0;
 
           while (isdigit(*s) != 0) {
@@ -365,8 +365,8 @@ static auto dynvprintf_(const char *fmt, va_list args) -> const char *
 auto dynprintf(const char *fmt, ...) -> char *
 {
   TRACE_NO_INDENT();
-  const char *ret = nullptr;
-  va_list     args = nullptr;
+  const char *ret  = nullptr;
+  va_list     args = {};
 
   va_start(args, fmt);
   ret = dynvprintf_(fmt, args);
@@ -432,8 +432,8 @@ auto mybasename(const char *in, const char *who) -> std::string
 auto my_strcasestr(const char *s, const char *find) -> char *
 {
   TRACE_NO_INDENT();
-  char   c = 0;
-  char   sc = 0;
+  char   c   = 0;
+  char   sc  = 0;
   size_t len = 0;
 
   if ((c = *find++) != 0) {
@@ -455,12 +455,12 @@ auto split(const std::string &text, int max_line_len) -> std::vector< std::strin
 {
   TRACE_NO_INDENT();
   bool found_format_string = false;
-  int  line_len = 0;
-  char c = 0;
-  auto text_start = text.begin();
-  auto text_iter  = text_start;
-  auto line_start = text_start;
-  auto line_end   = text_start;
+  int  line_len            = 0;
+  char c                   = 0;
+  auto text_start          = text.begin();
+  auto text_iter           = text_start;
+  auto line_start          = text_start;
+  auto line_end            = text_start;
   //
   // Save the format string such that if we split a line of text, we carry
   // the format onto subsequent lines.
@@ -663,10 +663,10 @@ auto length_without_format(const std::string &text) -> int
 {
   TRACE_NO_INDENT();
   bool found_format_string = false;
-  char c = 0;
-  auto text_start = text.begin();
-  auto text_iter  = text_start;
-  int  line_len   = 0;
+  char c                   = 0;
+  auto text_start          = text.begin();
+  auto text_iter           = text_start;
+  int  line_len            = 0;
 
   for (;;) {
     c = *text_iter;
@@ -773,8 +773,8 @@ auto snprintf_realloc(char **str, int *size, int *used, const char *fmt, ...) ->
   int     freespace = 0;
   int     needspace = 0;
   int     usedspace = 0;
-  va_list ap = nullptr;
-  char   *tmp = nullptr;
+  va_list ap        = {};
+  char   *tmp       = nullptr;
 
   if (str == nullptr) {
     return (-1);

@@ -2536,10 +2536,10 @@ auto wid_new_vert_scroll_bar(Gamep g, Widp parent, const std::string &name, Widp
   spoint vert_tl = {};
   spoint vert_br = {};
 
-  int tlx = 0;
-  int tly = 0;
-  int brx = 0;
-  int bry = 0;
+  int tlx  = 0;
+  int tly  = 0;
+  int brx  = 0;
+  int bry  = 0;
   int ptlx = 0;
   int ptly = 0;
   int pbrx = 0;
@@ -2598,10 +2598,10 @@ auto wid_new_horiz_scroll_bar(Gamep g, Widp parent, const std::string &name, Wid
   spoint horiz_tl = {};
   spoint horiz_br = {};
 
-  int tlx = 0;
-  int tly = 0;
-  int brx = 0;
-  int bry = 0;
+  int tlx  = 0;
+  int tly  = 0;
+  int brx  = 0;
+  int bry  = 0;
   int ptlx = 0;
   int ptly = 0;
   int pbrx = 0;
@@ -3207,20 +3207,20 @@ static void wid_adjust_scrollbar(Widp scrollbar, Widp owner)
 {
   TRACE_NO_INDENT();
 
-  float const height       = wid_get_height(owner);
-  float const width        = wid_get_width(owner);
-  float       child_height = 0;
-  float       child_width  = 0;
-  float       scrollbar_width = 0;
+  float const height           = wid_get_height(owner);
+  float const width            = wid_get_width(owner);
+  float       child_height     = 0;
+  float       child_width      = 0;
+  float       scrollbar_width  = 0;
   float       scrollbar_height = 0;
-  float       trough_height = 0;
-  float       trough_width = 0;
-  float       miny = 0;
-  float       maxy = 0;
-  float       minx = 0;
-  float       maxx = 0;
-  float       pct = 0;
-  bool        first = 1u;
+  float       trough_height    = 0;
+  float       trough_width     = 0;
+  float       miny             = 0;
+  float       maxy             = 0;
+  float       minx             = 0;
+  float       maxx             = 0;
+  float       pct              = 0;
+  bool        first            = 1u;
 
   //
   // Find out the space that the children take up then use this to
@@ -3559,7 +3559,7 @@ auto wid_receive_input(Gamep g, Widp w, const SDL_Keysym *key) -> bool
   std::string       updatedtext;
   std::string       newchar;
   uint32_t          origlen = 0;
-  uint32_t          cnt = 0;
+  uint32_t          cnt     = 0;
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
     sound_play(g, "keypress");
@@ -4428,7 +4428,7 @@ void wid_joy_button(Gamep g, int x, int y)
   //
   static std::array< ts_t, SDL_MAX_BUTTONS > ts;
   int                                        changed = 0;
-  int                                        b = 0;
+  int                                        b       = 0;
 
   for (b = 0; b < SDL_MAX_BUTTONS; b++) {
     if (static_cast< bool >(sdl.joy_buttons[ b ])) {
@@ -4973,20 +4973,20 @@ static void wid_display(Gamep g, Widp w, uint8_t disable_scissor, uint8_t *updat
   TRACE_NO_INDENT();
 
   wid_total_count++;
-  int     clip_height = 0;
-  int     clip_width  = 0;
-  uint8_t hidden = 0;
+  int     clip_height   = 0;
+  int     clip_width    = 0;
+  uint8_t hidden        = 0;
   uint8_t always_hidden = 0;
-  int     owidth = 0;
-  int     oheight = 0;
-  int     otlx = 0;
-  int     otly = 0;
-  int     obrx = 0;
-  int     obry = 0;
-  int     tlx = 0;
-  int     tly = 0;
-  int     brx = 0;
-  int     bry = 0;
+  int     owidth        = 0;
+  int     oheight       = 0;
+  int     otlx          = 0;
+  int     otly          = 0;
+  int     obrx          = 0;
+  int     obry          = 0;
+  int     tlx           = 0;
+  int     tly           = 0;
+  int     brx           = 0;
+  int     bry           = 0;
 #if 0
   Widp p {};
 #endif
@@ -5225,11 +5225,11 @@ static void wid_display(Gamep g, Widp w, uint8_t disable_scissor, uint8_t *updat
   }
 
   if (! text.empty()) {
-    int x = 0;
-    int y = 0;
-    int xpc = 0;
-    int ypc = 0;
-    int width = 0;
+    int x      = 0;
+    int y      = 0;
+    int xpc    = 0;
+    int ypc    = 0;
+    int width  = 0;
     int height = 0;
 
     //
@@ -5554,10 +5554,10 @@ void wid_move_to_pct_centered(Gamep g, Widp w, float ox, float oy)
   float const x = ox;
   float const y = oy;
 
-  int tlx = 0;
-  int tly = 0;
-  int brx = 0;
-  int bry = 0;
+  int tlx  = 0;
+  int tly  = 0;
+  int brx  = 0;
+  int bry  = 0;
   int ptlx = 0;
   int ptly = 0;
   int pbrx = 0;
@@ -5649,7 +5649,7 @@ static void wid_log_(Widp w, const char *fmt, va_list args)
 
 void WID_LOG(Widp w, const char *fmt, ...)
 {
-  va_list args = nullptr;
+  va_list args = {};
 
   if (! wid_safe()) {
     return;
@@ -5664,7 +5664,7 @@ void WID_LOG(Widp w, const char *fmt, ...)
 
 void WID_DBG(Widp w, const char *fmt, ...)
 {
-  va_list args = nullptr;
+  va_list args = {};
 
   if (! wid_safe()) {
     return;

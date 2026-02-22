@@ -41,7 +41,7 @@ void TP_LOG(Tpp tp, const char *fmt, ...)
 
   verify(MTYPE_TP, tp);
 
-  va_list args = nullptr;
+  va_list args = {};
   va_start(args, fmt);
   TP_LOG_(tp, fmt, args);
   va_end(args);
@@ -55,7 +55,7 @@ void TP_DBG_(Tpp tp, const char *fmt, ...)
 
   verify(MTYPE_TP, tp);
 
-  va_list args = nullptr;
+  va_list args = {};
   va_start(args, fmt);
   TP_LOG_(tp, fmt, args);
   va_end(args);
@@ -85,7 +85,7 @@ void TP_DIE(Tpp tp, const char *fmt, ...)
   TRACE_NO_INDENT();
 
   verify(MTYPE_TP, tp);
-  va_list args = nullptr;
+  va_list args = {};
 
   va_start(args, fmt);
   TP_DIE_(tp, fmt, args);
@@ -123,7 +123,7 @@ void TP_CON(Tpp tp, const char *fmt, ...)
   TRACE_NO_INDENT();
 
   verify(MTYPE_TP, tp);
-  va_list args = nullptr;
+  va_list args = {};
 
   va_start(args, fmt);
   TP_CON_(tp, fmt, args);
@@ -147,7 +147,7 @@ void TP_ERR(Tpp tp, const char *fmt, ...)
 {
   TRACE_NO_INDENT();
 
-  va_list args = nullptr;
+  va_list args = {};
   va_start(args, fmt);
   TP_ERR_(tp, fmt, args);
   va_end(args);

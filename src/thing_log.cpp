@@ -42,7 +42,7 @@ void THING_LOG(Thingp t, const char *fmt, ...)
     return;
   }
 
-  va_list args = nullptr;
+  va_list args = {};
   va_start(args, fmt);
   thing_log_(t, fmt, args);
   va_end(args);
@@ -61,7 +61,7 @@ void THING_DBG(Thingp t, const char *fmt, ...)
     return;
   }
 
-  va_list args = nullptr;
+  va_list args = {};
   va_start(args, fmt);
   thing_log_(t, fmt, args);
   va_end(args);
@@ -89,7 +89,7 @@ void THING_WARN(Thingp t, const char *fmt, ...)
 {
   TRACE_NO_INDENT();
 
-  va_list args = nullptr;
+  va_list args = {};
 
   va_start(args, fmt);
   thing_warn_(t, fmt, args);
@@ -123,7 +123,7 @@ void THING_CON(Thingp t, const char *fmt, ...)
 {
   TRACE_NO_INDENT();
 
-  va_list args = nullptr;
+  va_list args = {};
   va_start(args, fmt);
   thing_con_(t, fmt, args);
   va_end(args);
@@ -146,7 +146,7 @@ void THING_ERR(Thingp t, const char *fmt, ...)
 {
   TRACE_NO_INDENT();
 
-  va_list args = nullptr;
+  va_list args = {};
   va_start(args, fmt);
   thing_err_(t, fmt, args);
   va_end(args);
@@ -181,7 +181,7 @@ void THING_TOPCON(Thingp t, const char *fmt, ...)
 {
   TRACE_NO_INDENT();
 
-  va_list args = nullptr;
+  va_list args = {};
 
   va_start(args, fmt);
   thing_topcon_(t, fmt, args);
@@ -209,7 +209,7 @@ void THING_BOTCON(Thingp t, const char *fmt, ...)
 {
   TRACE_NO_INDENT();
 
-  va_list args = nullptr;
+  va_list args = {};
 
   va_start(args, fmt);
   thing_botcon_(t, fmt, args);

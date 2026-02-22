@@ -56,8 +56,8 @@ int asprintf(char *strp[], const char *fmt, ...)
 
 auto string_sprintf(const char *format, ...) -> std::string
 {
-  va_list args = nullptr;
-  char   *buf = nullptr;
+  va_list args = {};
+  char   *buf  = nullptr;
 
   va_start(args, format);
 

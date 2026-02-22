@@ -28,7 +28,7 @@ auto log_dir_create() -> std::string
   TRACE_NO_INDENT();
 
   const char *appdata = nullptr;
-  appdata = getenv("APPDATA");
+  appdata             = getenv("APPDATA");
   if ((appdata == nullptr) || (appdata[ 0 ] == 0)) {
     appdata = "appdata";
   }
@@ -76,7 +76,7 @@ void LOG(const char *fmt, ...)
 {
   TRACE_NO_INDENT();
 
-  va_list args = nullptr;
+  va_list args = {};
   va_start(args, fmt);
   log_(fmt, args);
   va_end(args);
@@ -103,7 +103,7 @@ void WARN(const char *fmt, ...)
 {
   TRACE_NO_INDENT();
 
-  va_list args = nullptr;
+  va_list args = {};
 
   va_start(args, fmt);
   warn_(fmt, args);
@@ -138,7 +138,7 @@ void CON(const char *fmt, ...)
 {
   TRACE_NO_INDENT();
 
-  va_list args = nullptr;
+  va_list args = {};
   va_start(args, fmt);
   con_(fmt, args);
   va_end(args);
@@ -201,7 +201,7 @@ void CROAK_HANDLE(bool clean, const char *fmt, ...)
 {
   TRACE_NO_INDENT();
 
-  va_list args = nullptr;
+  va_list args = {};
 
   if (! clean) {
     g_errored_thread_id = g_thread_id;
@@ -247,7 +247,7 @@ void ERR_HANDLE(const char *fmt, ...)
   auto *g             = game;
   g_errored_thread_id = g_thread_id;
 
-  va_list args = nullptr;
+  va_list args = {};
   va_start(args, fmt);
   err_handle(g, fmt, args);
   va_end(args);
@@ -301,7 +301,7 @@ void TOPCON(const char *fmt, ...)
 {
   TRACE_NO_INDENT();
 
-  va_list args = nullptr;
+  va_list args = {};
 
   va_start(args, fmt);
   topcon_(fmt, args);
@@ -334,7 +334,7 @@ void BOTCON(const char *fmt, ...)
 {
   TRACE_NO_INDENT();
 
-  va_list args = nullptr;
+  va_list args = {};
 
   va_start(args, fmt);
   botcon_(fmt, args);
