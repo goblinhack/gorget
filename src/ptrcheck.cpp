@@ -168,7 +168,7 @@ static Ptrcheck                                      *ringbuf_base[ MTYPE_MAX ];
 //
 static auto local_zalloc(int size) -> void *
 {
-  void *p = nullptr;
+  void *p = nullptr; // NOLINT
   p       = calloc(1, size);
   return p;
 }
@@ -250,8 +250,8 @@ static void hash_add(hash_t *hash_table, Ptrcheck *pc)
 //
 static auto hash_find(hash_t *hash_table, void *ptr) -> hash_elem_t *
 {
-  hash_elem_t **slot = nullptr;
-  hash_elem_t  *elem = nullptr;
+  hash_elem_t *const *slot = nullptr;
+  hash_elem_t        *elem = nullptr; // NOLINT
 
   if (hash_table == nullptr) {
     return nullptr;
@@ -425,7 +425,7 @@ static auto ptrcheck_verify_pointer(int mtype, const void *ptr, const char *func
   static const char *unknown_ptr_warning  = "** UNKNOWN POINTER ** ";
   static const char *null_pointer_warning = "** NULL POINTER ** ";
   Ptrcheck          *pc                   = nullptr;
-  hash_elem_t       *e                    = nullptr;
+  hash_elem_t const *e                    = nullptr;
 
   //
   // Check the robust handle is valid.
@@ -677,10 +677,10 @@ auto ptrcheck_verify(int mtype, const void *ptr, const char *func, const char *f
 //
 void ptrcheck_leak_print(int mtype)
 {
-  hash_elem_t **slot = nullptr;
-  hash_elem_t  *elem = nullptr;
-  Ptrcheck     *pc   = nullptr;
-  int           i    = 0;
+  hash_elem_t *const *slot = nullptr;
+  hash_elem_t const  *elem = nullptr;
+  Ptrcheck           *pc   = nullptr;
+  int                 i    = 0;
 
   if (ptrcheck_hash[ mtype ] == nullptr) {
     return;
@@ -736,9 +736,9 @@ void ptrcheck_leak_print()
 
 static void ptrcheck_fini(int mtype)
 {
-  hash_elem_t **slot = nullptr;
-  hash_elem_t  *elem = nullptr;
-  int           i    = 0;
+  hash_elem_t *const *slot = nullptr;
+  hash_elem_t        *elem = nullptr;
+  int                 i    = 0;
 
   if (ptrcheck_hash[ mtype ] == nullptr) {
     return;

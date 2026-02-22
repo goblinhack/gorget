@@ -264,7 +264,7 @@ public:
   // | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | |
   /////////////////////////////////////////////////////////////////////////
 
-  Game(const std::string &appdata);
+  explicit Game(const std::string &appdata);
   Game() = default;
 
   auto load_snapshot() -> bool;
@@ -646,8 +646,7 @@ void Game::seed_set(const char *maybe_seed)
   //
   // If a number, use that as the seed, else convert the string to hash number
   //
-  TRACE_NO_INDENT();
-  char *p         = nullptr;
+  char *p         = nullptr; // NOLINT
   config.seed_num = strtol(config.seed_name.c_str(), &p, 10);
   if (*p != 0) {
     //

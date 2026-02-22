@@ -10,10 +10,10 @@
 #include "my_ramdisk.hpp"
 #include "my_string.hpp"
 
+#include <cmath>
 #include <cstdarg>
 #include <cstring>
 #include <ctime>
-#include <math.h>
 #include <print>
 #include <sys/stat.h>
 #include <unistd.h>
@@ -24,7 +24,7 @@ static auto file_io_read(const char *filename, int *len) -> unsigned char *;
 auto file_load(const char *filename, int *outlen) -> unsigned char *
 {
   TRACE_NO_INDENT();
-  unsigned char *out          = nullptr;
+  unsigned char *out          = nullptr; // NOLINT
   char          *alt_filename = nullptr;
 
   alt_filename = nullptr;

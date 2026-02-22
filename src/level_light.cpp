@@ -14,7 +14,6 @@
 #include <cmath>
 
 #include <array>
-#include <cmath>
 #include <cstring>
 
 using Ray = struct Ray_ {

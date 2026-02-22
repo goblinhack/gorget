@@ -8,7 +8,6 @@
 
 #include <cmath>
 
-#include <cmath>
 #include <numbers>
 
 auto operator+(fpoint const &a, fpoint const &b) -> fpoint { return fpoint(a.x + b.x, a.y + b.y); }

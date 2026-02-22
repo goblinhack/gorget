@@ -24,14 +24,7 @@ extern void stbi_image_free(void *retval_from_stbi_load);
 class Tex
 {
 public:
-  Tex(std::string vname)
-      : name(std::move(vname)), // newline
-        gl_surface_binding(0),  // newline
-        surface(nullptr)
-  {
-
-    newptr(MTYPE_TEX, this, "Tex");
-  }
+  explicit Tex(std::string vname) : name(std::move(vname)) { newptr(MTYPE_TEX, this, "Tex"); }
 
   ~Tex()
   {

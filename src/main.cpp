@@ -142,7 +142,7 @@ static void parse_args(int argc, char *argv[])
       //
       // Check if this is a level number or name
       //
-      char *p   = nullptr;
+      char *p   = nullptr; // NOLINT
       auto  num = strtol(argv[ i + 1 ], &p, 10);
       if (*p != 0) {
         //

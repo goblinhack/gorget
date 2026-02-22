@@ -17,7 +17,7 @@
 #include "my_tex.hpp"
 #include "my_tile.hpp"
 
-#include <math.h>
+#include <cmath>
 
 #include <array>
 #ifdef WRITE_TILED
@@ -35,7 +35,7 @@ class Tile
 public:
   Tile();
   ~Tile();
-  Tile(const class Tile *tile);
+  explicit Tile(const class Tile *tile);
 
   std::string name;
 
@@ -142,7 +142,7 @@ void tile_fini()
 
 Tile::Tile(const class Tile *tile)
     :                                                             // newline
-      global_index(all_tiles_array.size() + 1), index(0),         // newline
+      global_index(all_tiles_array.size() + 1),                   // newline
       pix_width(tile->pix_width),                                 // newline
       pix_height(tile->pix_height),                               // newline
       x1(tile->x1),                                               // newline

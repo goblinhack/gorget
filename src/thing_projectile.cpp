@@ -2,7 +2,7 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include <math.h>
+#include <cmath>
 
 #include "my_callstack.hpp"
 #include "my_globals.hpp"

@@ -193,7 +193,7 @@ auto tokens_to_string(const char *input, class Tokens *tokens) -> class Tokens *
 {
   TRACE_NO_INDENT();
 
-  class Tokens *t = nullptr;
+  class Tokens *t = nullptr; // NOLINT
   t               = tokens_parse(input, tokens);
   tokens_compile(tokens);
 
