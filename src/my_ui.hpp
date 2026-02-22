@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_UI_HPP_
-#define MY_UI_HPP_
+#ifndef MY_UI_HPP
+#define MY_UI_HPP
 
 #include "my_ascii.hpp"
 

@@ -32,12 +32,12 @@
  *   http://www.oberhumer.com/opensource/lzo/
  */
 
-#ifndef __MINILZO_HPP_INCLUDED
-#define __MINILZO_HPP_INCLUDED 1
+#ifndef __MINILZO_HPPINCLUDED
+#define __MINILZO_HPPINCLUDED 1
 
 #define MINILZO_VERSION 0x20a0 /* 2.10 */
 
-#if defined(__LZOCONF_HPP_INCLUDED)
+#if defined(__LZOCONF_HPPINCLUDED)
 #error "you cannot use both LZO and miniLZO"
 #endif
 
@@ -48,7 +48,7 @@
 #include <limits.h>
 #include <stddef.h>
 
-#ifndef __LZODEFS_HPP_INCLUDED
+#ifndef __LZODEFS_HPPINCLUDED
 #include "lzodefs.hpp"
 #endif
 #undef LZO_HAVE_CONFIG_H

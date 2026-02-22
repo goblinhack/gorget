@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_TIME_UTIL_HPP_
-#define MY_TIME_UTIL_HPP_
+#ifndef MY_TIME_UTIL_HPP
+#define MY_TIME_UTIL_HPP
 
 #undef ONESEC
 #define ONESEC 1000

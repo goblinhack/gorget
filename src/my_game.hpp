@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_GAME_HPP_
-#define MY_GAME_HPP_
+#ifndef MY_GAME_HPP
+#define MY_GAME_HPP
 
 #include "my_enum.hpp"
 #include "my_spoint.hpp"

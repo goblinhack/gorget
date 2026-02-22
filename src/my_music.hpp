@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_MUSIC_HPP_
-#define MY_MUSIC_HPP_
+#ifndef MY_MUSIC_HPP
+#define MY_MUSIC_HPP
 
 auto music_init() -> bool;
 void music_fini();

@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_CONFIG_HPP_
-#define MY_CONFIG_HPP_
+#ifndef MY_CONFIG_HPP
+#define MY_CONFIG_HPP
 
 // NOLINTBEGIN
 

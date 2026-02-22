@@ -1,8 +1,8 @@
 //
 // Copyright goblinhack@gmail.com
 //
-#ifndef MY_SOURCE_LOC_HPP_
-#define MY_SOURCE_LOC_HPP_
+#ifndef MY_SOURCE_LOC_HPP
+#define MY_SOURCE_LOC_HPP
 
 #if defined(__cpp_lib_source_location) && (__cpp_lib_source_location >= 201907L)
 // Feature test macros https://en.cppreference.com/w/cpp/feature_test
@@ -16,4 +16,4 @@
 #define SRC_LINE_NUM  __LINE__
 #endif
 
-#endif // _MY_SOURCE_LOC_HPP_
+#endif // _MY_SOURCE_LOC_HPP

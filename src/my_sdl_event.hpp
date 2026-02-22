@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_SDL_EVENT_HPP_
-#define MY_SDL_EVENT_HPP_
+#ifndef MY_SDL_EVENT_HPP
+#define MY_SDL_EVENT_HPP
 
 #include <SDL.h>
 #include <array>

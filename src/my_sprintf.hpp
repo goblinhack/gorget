@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_SPRINTF_HPP_
-#define MY_SPRINTF_HPP_
+#ifndef MY_SPRINTF_HPP
+#define MY_SPRINTF_HPP
 
 #include "my_types.hpp"
 

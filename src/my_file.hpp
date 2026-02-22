@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_FILE_HPP_
-#define MY_FILE_HPP_
+#ifndef MY_FILE_HPP
+#define MY_FILE_HPP
 
 auto file_write(const char *filename, unsigned char *buffer, int len) -> int;
 auto file_exists(const char *filename) -> uint8_t;

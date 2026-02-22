@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_ASCII_HPP_
-#define MY_ASCII_HPP_
+#ifndef MY_ASCII_HPP
+#define MY_ASCII_HPP
 
 #include "my_color.hpp"
 #include "my_fpoint.hpp"

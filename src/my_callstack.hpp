@@ -1,8 +1,8 @@
 //
 // Copyright goblinhack@gmail.com
 //
-#ifndef MY_CALLSTACK_HPP_
-#define MY_CALLSTACK_HPP_
+#ifndef MY_CALLSTACK_HPP
+#define MY_CALLSTACK_HPP
 
 #include "my_source_loc.hpp"
 #include "my_types.hpp"

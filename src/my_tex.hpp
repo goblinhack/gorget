@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_TEX_HPP_
-#define MY_TEX_HPP_
+#ifndef MY_TEX_HPP
+#define MY_TEX_HPP
 
 #include "my_gl.hpp"
 #include "my_types.hpp"

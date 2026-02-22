@@ -1,5 +1,5 @@
-#ifndef MY_RANDOM_HPP_
-#define MY_RANDOM_HPP_
+#ifndef MY_RANDOM_HPP
+#define MY_RANDOM_HPP
 
 ////////////////////////////////////////////////////////////////////////////
 // Random numbers

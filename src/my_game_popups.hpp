@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_GAME_POPUP_HPP_
-#define MY_GAME_POPUP_HPP_
+#ifndef MY_GAME_POPUP_HPP
+#define MY_GAME_POPUP_HPP
 
 #include "my_color.hpp"
 #include "my_color_defs.hpp"
@@ -44,4 +44,4 @@ void game_popups_display(Gamep g, Levelsp v, Levelp l);
 auto game_popups_get(Gamep g, int x, int y) -> std::list< GamePopup * > *;
 void game_popups_set(Gamep g, int x, int y, std::list< GamePopup * > &l);
 
-#endif /* _MY_GAME_POPUP_HPP_ */
+#endif /* _MY_GAME_POPUP_HPP */

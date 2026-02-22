@@ -26,8 +26,8 @@
    http://www.oberhumer.com/opensource/lzo/
  */
 
-#ifndef __LZODEFS_HPP_INCLUDED
-#define __LZODEFS_HPP_INCLUDED 1
+#ifndef __LZODEFS_HPPINCLUDED
+#define __LZODEFS_HPPINCLUDED 1
 
 #if defined(__CYGWIN32__) && !defined(__CYGWIN__)
 #  define __CYGWIN__ __CYGWIN32__

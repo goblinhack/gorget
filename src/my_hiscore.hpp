@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_HISCORE_HPP_
-#define MY_HISCORE_HPP_
+#ifndef MY_HISCORE_HPP
+#define MY_HISCORE_HPP
 
 #include <string>
 #include <utility>
@@ -56,4 +56,4 @@ public:
   auto place_str(int score) -> const char *;
 };
 
-#endif // _MY_HISCORE_HPP_
+#endif // _MY_HISCORE_HPP

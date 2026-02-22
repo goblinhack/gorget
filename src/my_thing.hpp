@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_THING_HPP_
-#define MY_THING_HPP_
+#ifndef MY_THING_HPP
+#define MY_THING_HPP
 
 #include "my_color.hpp"
 #include "my_dmap.hpp"

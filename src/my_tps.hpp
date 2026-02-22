@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_TPS_HPP_
-#define MY_TPS_HPP_
+#ifndef MY_TPS_HPP
+#define MY_TPS_HPP
 
 auto templates_init() -> bool;
 

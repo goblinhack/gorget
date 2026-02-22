@@ -26,8 +26,8 @@
    http://www.oberhumer.com/opensource/lzo/
  */
 
-#ifndef __LZOCONF_HPP_INCLUDED
-#define __LZOCONF_HPP_INCLUDED 1
+#ifndef __LZOCONF_HPPINCLUDED
+#define __LZOCONF_HPPINCLUDED 1
 
 #define LZO_VERSION        0x20a0 /* 2.10 */
 #define LZO_VERSION_STRING "2.10"
@@ -55,7 +55,7 @@
 #endif
 
 /* get OS and architecture defines */
-#ifndef __LZODEFS_HPP_INCLUDED
+#ifndef __LZODEFS_HPPINCLUDED
 #include <lzo/lzodefs.h>
 #endif
 

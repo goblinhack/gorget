@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_COMMAND_HPP_
-#define MY_COMMAND_HPP_
+#ifndef MY_COMMAND_HPP
+#define MY_COMMAND_HPP
 
 #include "my_token.hpp"
 #include "my_types.hpp"

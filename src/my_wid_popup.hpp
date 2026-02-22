@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_UI_WID_POPUP_HPP_
-#define MY_UI_WID_POPUP_HPP_
+#ifndef MY_UI_WID_POPUP_HPP
+#define MY_UI_WID_POPUP_HPP
 
 #include <map>
 #include <string>

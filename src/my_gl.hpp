@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_GLAPI_HPP_
-#define MY_GLAPI_HPP_
+#ifndef MY_GLAPI_HPP
+#define MY_GLAPI_HPP
 
 #define GL_GLEXT_PROTOTYPES
 

@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_COLOR_DEFS_HPP_
-#define MY_COLOR_DEFS_HPP_
+#ifndef MY_COLOR_DEFS_HPP
+#define MY_COLOR_DEFS_HPP
 
 #include "my_color.hpp"
 
@@ -89,4 +89,4 @@ extern color YELLOW3;
 extern color YELLOW4;
 // end sort marker1 }
 
-#endif // _MY_COLOR_HPP_
+#endif // _MY_COLOR_HPP

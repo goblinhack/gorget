@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_FONT_HPP_
-#define MY_FONT_HPP_
+#ifndef MY_FONT_HPP
+#define MY_FONT_HPP
 
 #include "my_tile.hpp"
 #include <array>

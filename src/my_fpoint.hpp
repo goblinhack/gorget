@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_FPOINT_HPP_
-#define MY_FPOINT_HPP_
+#ifndef MY_FPOINT_HPP
+#define MY_FPOINT_HPP
 
 #include "my_spoint.hpp"
 
@@ -45,4 +45,4 @@ static inline auto make_fpoint(const spoint f) -> fpoint { return fpoint(f.x, f.
 //
 static inline auto make_spoint(const fpoint &f) -> spoint { return spoint((int) roundf(f.x), (int) roundf(f.y)); }
 
-#endif // _MY_FPOINT_HPP_
+#endif // _MY_FPOINT_HPP

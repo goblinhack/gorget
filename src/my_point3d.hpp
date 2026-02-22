@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_POINT3D_HPP_
-#define MY_POINT3D_HPP_
+#ifndef MY_POINT3D_HPP
+#define MY_POINT3D_HPP
 
 template < typename T > struct my_apoint3d {
 public:
@@ -28,4 +28,4 @@ template < typename T > auto operator/(my_apoint3d< T > const &a, T b) -> my_apo
 
 using point3d = my_apoint3d< short >;
 
-#endif // _MY_POINT3D_HPP_
+#endif // _MY_POINT3D_HPP

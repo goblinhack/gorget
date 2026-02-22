@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_RAMDISK_HPP_
-#define MY_RAMDISK_HPP_
+#ifndef MY_RAMDISK_HPP
+#define MY_RAMDISK_HPP
 
 #include <string>
 #include <unordered_map>

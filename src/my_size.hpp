@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_SIZE_HPP_
-#define MY_SIZE_HPP_
+#ifndef MY_SIZE_HPP
+#define MY_SIZE_HPP
 
 template < class T > class my_asize
 {
@@ -68,4 +68,4 @@ public:
 using isize = my_asize< int16_t >;
 using fsize = my_asize< float >;
 
-#endif // _MY_SIZE_HPP_
+#endif // _MY_SIZE_HPP

@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_WID_KEYBOARD_HPP_
-#define MY_WID_KEYBOARD_HPP_
+#ifndef MY_WID_KEYBOARD_HPP
+#define MY_WID_KEYBOARD_HPP
 
 using wid_keyboard_event_t = void (*)(Gamep, Widp, const std::string &text);
 

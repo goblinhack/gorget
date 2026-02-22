@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_CPP_TEMPLATE_HPP_
-#define MY_CPP_TEMPLATE_HPP_
+#ifndef MY_CPP_TEMPLATE_HPP
+#define MY_CPP_TEMPLATE_HPP
 
 #include "my_random.hpp"
 #include <map>

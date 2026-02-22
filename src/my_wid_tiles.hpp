@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_WID_TILES_HPP_
-#define MY_WID_TILES_HPP_
+#ifndef MY_WID_TILES_HPP
+#define MY_WID_TILES_HPP
 
 #include "my_types.hpp"
 

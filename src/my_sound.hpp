@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_SOUND_HPP_
-#define MY_SOUND_HPP_
+#ifndef MY_SOUND_HPP
+#define MY_SOUND_HPP
 
 #include "my_game.hpp"
 

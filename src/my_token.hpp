@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_TOKEN_HPP_
-#define MY_TOKEN_HPP_
+#ifndef MY_TOKEN_HPP
+#define MY_TOKEN_HPP
 
 #include "3rdparty/slre.hpp"
 #include "my_string.hpp"

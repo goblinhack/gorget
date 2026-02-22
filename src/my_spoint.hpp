@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_SPOINT_HPP_
-#define MY_SPOINT_HPP_
+#ifndef MY_SPOINT_HPP
+#define MY_SPOINT_HPP
 
 using spoint = struct my_spoint {
 public:
@@ -36,4 +36,4 @@ static inline auto make_spoint(short x, short y) -> spoint { return spoint(x, y)
 
 auto distance(spoint a, spoint b) -> float;
 
-#endif // _MY_SPOINT_HPP_
+#endif // _MY_SPOINT_HPP

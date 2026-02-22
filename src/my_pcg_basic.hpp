@@ -28,8 +28,8 @@
 // your project.
 //
 
-#ifndef MY_PCG_BASIC_HPP_
-#define MY_PCG_BASIC_HPP_
+#ifndef MY_PCG_BASIC_HPP
+#define MY_PCG_BASIC_HPP
 
 #include "my_globals.hpp"
 #include "my_main.hpp"
@@ -49,4 +49,4 @@ extern auto pcg32_boundedrand(const char *, int, uint32_t bound) -> uint32_t;
 void game_pcg_lock();
 void game_pcg_unlock();
 
-#endif // _PCG_BASIC_HPP_
+#endif // _PCG_BASIC_HPP

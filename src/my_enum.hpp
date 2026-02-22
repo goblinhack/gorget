@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_ENUM_HPP_
-#define MY_ENUM_HPP_
+#ifndef MY_ENUM_HPP
+#define MY_ENUM_HPP
 
 #include "my_types.hpp"
 

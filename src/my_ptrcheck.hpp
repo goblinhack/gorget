@@ -1,6 +1,6 @@
 
-#ifndef MY_PTRCHECK_HPP_
-#define MY_PTRCHECK_HPP_
+#ifndef MY_PTRCHECK_HPP
+#define MY_PTRCHECK_HPP
 
 #include "my_source_loc.hpp"
 
@@ -78,4 +78,4 @@ enum {
   MTYPE_MAX,
 };
 
-#endif // _MY__PTRCHECK_HPP__
+#endif // _MY__PTRCHECK_HPP_

@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_TYPES_HPP_
-#define MY_TYPES_HPP_
+#ifndef MY_TYPES_HPP
+#define MY_TYPES_HPP
 
 ////////////////////////////////////////////////////////////////////////
 // Bare minimal includes. Do not add any c++ includes here for speed.
@@ -217,4 +217,4 @@ using LevelNum     = unsigned char;
 #define NULL_THING ((Thingp) nullptr)
 #define NULL_TP    ((Tpp) nullptr)
 
-#endif // _MY_TYPES_HPP_
+#endif // _MY_TYPES_HPP

@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_LOG_HPP_
-#define MY_LOG_HPP_
+#ifndef MY_LOG_HPP
+#define MY_LOG_HPP
 
 #include <stdio.h>
 

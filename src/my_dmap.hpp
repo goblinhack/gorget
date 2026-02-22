@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_DMAP_HPP_
-#define MY_DMAP_HPP_
+#ifndef MY_DMAP_HPP
+#define MY_DMAP_HPP
 
 #include "my_game.hpp"
 #include "my_game_defs.hpp"

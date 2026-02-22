@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_COLOR_HPP_
-#define MY_COLOR_HPP_
+#ifndef MY_COLOR_HPP
+#define MY_COLOR_HPP
 
 #include "my_types.hpp"
 
@@ -37,4 +37,4 @@ auto color_neq(const color &a, const color &b) -> bool;
 
 #define glcolor(_c_) glColor4ub((_c_).r, (_c_).g, (_c_).b, (_c_).a)
 
-#endif // _MY_COLOR_HPP_
+#endif // _MY_COLOR_HPP

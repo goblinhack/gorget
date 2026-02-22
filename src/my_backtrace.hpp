@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_BACKTRACE_HPP_
-#define MY_BACKTRACE_HPP_
+#ifndef MY_BACKTRACE_HPP
+#define MY_BACKTRACE_HPP
 
 #include <string>
 

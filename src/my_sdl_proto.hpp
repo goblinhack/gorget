@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_SDL_PROTO_HPP_
-#define MY_SDL_PROTO_HPP_
+#ifndef MY_SDL_PROTO_HPP
+#define MY_SDL_PROTO_HPP
 
 #include "my_gl.hpp"
 #include "my_types.hpp"
