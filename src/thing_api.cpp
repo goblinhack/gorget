@@ -4217,29 +4217,6 @@ auto thing_distance_minion_from_mob_max_set(Gamep g, Levelsp v, Levelp l, Thingp
   return t->_distance_minion_from_mob_max = val;
 }
 
-auto thing_distance_minion_from_mob_max_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_NO_INDENT();
-  if (t == nullptr) {
-    ERR("No thing pointer set");
-    return 0;
-  }
-  return t->_distance_minion_from_mob_max += val;
-}
-
-auto thing_distance_minion_from_mob_max_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_NO_INDENT();
-  if (t == nullptr) {
-    ERR("No thing pointer set");
-    return 0;
-  }
-  if ((int) t->_distance_minion_from_mob_max - val <= 0) {
-    return t->_distance_minion_from_mob_max = 0;
-  }
-  return t->_distance_minion_from_mob_max -= val;
-}
-
 auto thing_distance_vision(Thingp t) -> int
 {
   TRACE_NO_INDENT();

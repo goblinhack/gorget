@@ -13,53 +13,6 @@ auto templates_init() -> bool;
 /* shell do */
 /* shell echo "bool $i();" */
 /* shell done */
-auto tp_load_barrel() -> bool;
-auto tp_load_border() -> bool;
-auto tp_load_brazier() -> bool;
-auto tp_load_bridge() -> bool;
-auto tp_load_chasm() -> bool;
-auto tp_load_corridor() -> bool;
-auto tp_load_cursor_at() -> bool;
-auto tp_load_cursor_path() -> bool;
-auto tp_load_deep_water() -> bool;
-auto tp_load_dirt() -> bool;
-auto tp_load_door_locked() -> bool;
-auto tp_load_door_secret() -> bool;
-auto tp_load_door_unlocked() -> bool;
-auto tp_load_entrance() -> bool;
-auto tp_load_exit() -> bool;
-auto tp_load_explosion() -> bool;
-auto tp_load_fire() -> bool;
-auto tp_load_fireball() -> bool;
-auto tp_load_floor() -> bool;
-auto tp_load_foliage() -> bool;
-auto tp_load_ghost_mob() -> bool;
-auto tp_load_ghost() -> bool;
-auto tp_load_glorp() -> bool;
-auto tp_load_grass() -> bool;
-auto tp_load_key() -> bool;
-auto tp_load_kobalos_mob() -> bool;
-auto tp_load_kobalos() -> bool;
-auto tp_load_lava() -> bool;
-auto tp_load_level_across() -> bool;
-auto tp_load_level_curr() -> bool;
-auto tp_load_level_down() -> bool;
-auto tp_load_level_final() -> bool;
-auto tp_load_level_next() -> bool;
-auto tp_load_level_not_visited() -> bool;
-auto tp_load_level_visited() -> bool;
-auto tp_load_mantisman() -> bool;
-auto tp_load_pillar() -> bool;
-auto tp_load_player() -> bool;
-auto tp_load_potion() -> bool;
-auto tp_load_rock() -> bool;
-auto tp_load_smoke() -> bool;
-auto tp_load_steam() -> bool;
-auto tp_load_teleport() -> bool;
-auto tp_load_trap() -> bool;
-auto tp_load_treasure() -> bool;
-auto tp_load_wall() -> bool;
-auto tp_load_water() -> bool;
   /* end shell marker1 */
 
 #endif

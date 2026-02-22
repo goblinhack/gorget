@@ -502,26 +502,26 @@ struct MyIter {
   ~MyIter();
 };
 
-#define FOR_ALL_LEVELS(_g_, _v_, _l_)                                                                                \
-  if ((_g_) && (_v_))                                                                                                \
-    if (Levelp _l_ = nullptr; true)                                                                                  \
-      for (auto _n_ = 0; _n_ < LEVEL_MAX; _n_++)                                                                     \
-        if (((_l_) = &v->level[ _n_ ]))                                                                              \
+#define FOR_ALL_LEVELS(_g_, _v_, _l_)                                                                                                      \
+  if ((_g_) && (_v_))                                                                                                                      \
+    if (Levelp _l_ = nullptr; true)                                                                                                        \
+      for (auto _n_ = 0; _n_ < LEVEL_MAX; _n_++)                                                                                           \
+        if (((_l_) = &v->level[ _n_ ]))                                                                                                    \
           if ((_l_)->is_initialized)
 
-#define FOR_ALL_TICKING_LEVELS(_g_, _v_, _l_)                                                                        \
-  if ((_g_) && (_v_))                                                                                                \
-    if (Levelp _l_ = nullptr; true)                                                                                  \
-      for (auto _n_ = 0; _n_ < LEVEL_MAX; _n_++)                                                                     \
-        if (((_l_) = &v->level[ _n_ ]))                                                                              \
+#define FOR_ALL_TICKING_LEVELS(_g_, _v_, _l_)                                                                                              \
+  if ((_g_) && (_v_))                                                                                                                      \
+    if (Levelp _l_ = nullptr; true)                                                                                                        \
+      for (auto _n_ = 0; _n_ < LEVEL_MAX; _n_++)                                                                                           \
+        if (((_l_) = &v->level[ _n_ ]))                                                                                                    \
           if ((_l_)->is_tick_required)
 
 //
 // For all things on the map
 //
-#define FOR_ALL_MAP_POINTS(_g_, _v_, _l_, _x_, _y_)                                                                  \
-  if ((_g_) && (_v_) && (_l_))                                                                                       \
-    for ((_x_) = 0; (_x_) < MAP_WIDTH; (_x_)++)                                                                      \
+#define FOR_ALL_MAP_POINTS(_g_, _v_, _l_, _x_, _y_)                                                                                        \
+  if ((_g_) && (_v_) && (_l_))                                                                                                             \
+    for ((_x_) = 0; (_x_) < MAP_WIDTH; (_x_)++)                                                                                            \
       for ((_y_) = 0; (_y_) < MAP_HEIGHT; (_y_)++)
 
 //
@@ -530,57 +530,57 @@ struct MyIter {
 // Unsafe here means that if things move around during processing, we could process
 // them more than once per loop
 //
-#define FOR_ALL_THINGS_ON_LEVEL_UNSAFE(_g_, _v_, _l_, _t_)                                                           \
-  if ((_g_) && (_v_) && (_l_))                                                                                       \
-    for (auto _x_ = 0; _x_ < MAP_WIDTH; _x_++)                                                                       \
-      for (auto _y_ = 0; _y_ < MAP_HEIGHT; _y_++)                                                                    \
-        for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                          \
-          if (ThingId _id_ = 0; (_id_ = (_l_)->thing_id[ _x_ ][ _y_ ][ _slot_ ]))                                    \
+#define FOR_ALL_THINGS_ON_LEVEL_UNSAFE(_g_, _v_, _l_, _t_)                                                                                 \
+  if ((_g_) && (_v_) && (_l_))                                                                                                             \
+    for (auto _x_ = 0; _x_ < MAP_WIDTH; _x_++)                                                                                             \
+      for (auto _y_ = 0; _y_ < MAP_HEIGHT; _y_++)                                                                                          \
+        for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                                                \
+          if (ThingId _id_ = 0; (_id_ = (_l_)->thing_id[ _x_ ][ _y_ ][ _slot_ ]))                                                          \
             if (Thingp _t_ = nullptr; ((_t_) = thing_find(_g_, _v_, _id_)))
 
-#define FOR_ALL_THINGS_ON_LEVEL(_g_, _v_, _l_, _t_)                                                                  \
-  if ((_g_) && (_v_) && (_l_))                                                                                       \
-    if (int _iter_index_ = 0; true)                                                                                  \
-      if (MyIter _iter_(_g_, _v_, &_iter_index_, __FUNCTION__, __LINE__); true)                                      \
-        for (auto _x_ = 0; _x_ < MAP_WIDTH; _x_++)                                                                   \
-          for (auto _y_ = 0; _y_ < MAP_HEIGHT; _y_++)                                                                \
-            for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                      \
-              if (ThingId _id_ = 0; (_id_ = (_l_)->thing_id[ _x_ ][ _y_ ][ _slot_ ]))                                \
-                if (Thingp _t_ = nullptr; ((_t_) = thing_find(_g_, _v_, _id_)))                                      \
-                  if ((_t_)->iter[ _iter_index_ ] != (_v_)->iter[ _iter_index_ ])                                    \
+#define FOR_ALL_THINGS_ON_LEVEL(_g_, _v_, _l_, _t_)                                                                                        \
+  if ((_g_) && (_v_) && (_l_))                                                                                                             \
+    if (int _iter_index_ = 0; true)                                                                                                        \
+      if (MyIter _iter_(_g_, _v_, &_iter_index_, __FUNCTION__, __LINE__); true)                                                            \
+        for (auto _x_ = 0; _x_ < MAP_WIDTH; _x_++)                                                                                         \
+          for (auto _y_ = 0; _y_ < MAP_HEIGHT; _y_++)                                                                                      \
+            for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                                            \
+              if (ThingId _id_ = 0; (_id_ = (_l_)->thing_id[ _x_ ][ _y_ ][ _slot_ ]))                                                      \
+                if (Thingp _t_ = nullptr; ((_t_) = thing_find(_g_, _v_, _id_)))                                                            \
+                  if ((_t_)->iter[ _iter_index_ ] != (_v_)->iter[ _iter_index_ ])                                                          \
                     if ((((_t_)->iter[ _iter_index_ ] = (_v_)->iter[ _iter_index_ ])) || 1)
 
-#define FOR_ALL_THINGS_ON_LEVEL_DEBUG(_g_, _v_, _l_, _t_)                                                            \
-  if ((_g_) && (_v_) && (_l_))                                                                                       \
-    if (int _iter_index_ = 0; true)                                                                                  \
-      if (MyIter _iter_(_g_, _v_, &_iter_index_, __FUNCTION__, __LINE__); true)                                      \
-        for (auto _x_ = 0; _x_ < MAP_WIDTH; _x_++)                                                                   \
-          for (auto _y_ = 0; _y_ < MAP_HEIGHT; _y_++)                                                                \
-            for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                      \
-              if (ThingId _id_ = 0; (_id_ = (_l_)->thing_id[ _x_ ][ _y_ ][ _slot_ ]))                                \
-                if (Thingp _t_ = nullptr; ((_t_) = thing_find(_g_, _v_, _id_)))                                      \
-                  if (thing_debug(_g_, _v_, _l_, _t_, _iter_index_))                                                 \
-                    if ((_t_)->iter[ _iter_index_ ] != (_v_)->iter[ _iter_index_ ])                                  \
+#define FOR_ALL_THINGS_ON_LEVEL_DEBUG(_g_, _v_, _l_, _t_)                                                                                  \
+  if ((_g_) && (_v_) && (_l_))                                                                                                             \
+    if (int _iter_index_ = 0; true)                                                                                                        \
+      if (MyIter _iter_(_g_, _v_, &_iter_index_, __FUNCTION__, __LINE__); true)                                                            \
+        for (auto _x_ = 0; _x_ < MAP_WIDTH; _x_++)                                                                                         \
+          for (auto _y_ = 0; _y_ < MAP_HEIGHT; _y_++)                                                                                      \
+            for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                                            \
+              if (ThingId _id_ = 0; (_id_ = (_l_)->thing_id[ _x_ ][ _y_ ][ _slot_ ]))                                                      \
+                if (Thingp _t_ = nullptr; ((_t_) = thing_find(_g_, _v_, _id_)))                                                            \
+                  if (thing_debug(_g_, _v_, _l_, _t_, _iter_index_))                                                                       \
+                    if ((_t_)->iter[ _iter_index_ ] != (_v_)->iter[ _iter_index_ ])                                                        \
                       if ((((_t_)->iter[ _iter_index_ ] = (_v_)->iter[ _iter_index_ ])) || 1)
 
-#define FOR_ALL_THINGS_AT_UNSAFE(_g_, _v_, _l_, _t_, _p_)                                                            \
-  if ((_g_) && (_v_) && (_l_))                                                                                       \
-    if (spoint _at_ = make_spoint(_p_); true)                                                                        \
-      if (! is_oob(_at_))                                                                                            \
-        for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                          \
-          if (ThingId _id_ = 0; (_id_ = (_l_)->thing_id[ _at_.x ][ _at_.y ][ _slot_ ]))                              \
+#define FOR_ALL_THINGS_AT_UNSAFE(_g_, _v_, _l_, _t_, _p_)                                                                                  \
+  if ((_g_) && (_v_) && (_l_))                                                                                                             \
+    if (spoint _at_ = make_spoint(_p_); true)                                                                                              \
+      if (! is_oob(_at_))                                                                                                                  \
+        for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                                                \
+          if (ThingId _id_ = 0; (_id_ = (_l_)->thing_id[ _at_.x ][ _at_.y ][ _slot_ ]))                                                    \
             if (Thingp _t_ = nullptr; ((_t_) = thing_find(_g_, _v_, _id_)))
 
-#define FOR_ALL_THINGS_AT(_g_, _v_, _l_, _t_, _p_)                                                                   \
-  if ((_g_) && (_v_) && (_l_))                                                                                       \
-    if (spoint _at_ = make_spoint(_p_); true)                                                                        \
-      if (! is_oob(_at_))                                                                                            \
-        if (int _iter_index_ = 0; true)                                                                              \
-          if (MyIter _iter_(_g_, _v_, &_iter_index_, __FUNCTION__, __LINE__); true)                                  \
-            for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                      \
-              if (ThingId _id_ = 0; (_id_ = (_l_)->thing_id[ _at_.x ][ _at_.y ][ _slot_ ]))                          \
-                if (Thingp _t_ = nullptr; ((_t_) = thing_find(_g_, _v_, _id_)))                                      \
-                  if ((_t_)->iter[ _iter_index_ ] != (_v_)->iter[ _iter_index_ ])                                    \
+#define FOR_ALL_THINGS_AT(_g_, _v_, _l_, _t_, _p_)                                                                                         \
+  if ((_g_) && (_v_) && (_l_))                                                                                                             \
+    if (spoint _at_ = make_spoint(_p_); true)                                                                                              \
+      if (! is_oob(_at_))                                                                                                                  \
+        if (int _iter_index_ = 0; true)                                                                                                    \
+          if (MyIter _iter_(_g_, _v_, &_iter_index_, __FUNCTION__, __LINE__); true)                                                        \
+            for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                                            \
+              if (ThingId _id_ = 0; (_id_ = (_l_)->thing_id[ _at_.x ][ _at_.y ][ _slot_ ]))                                                \
+                if (Thingp _t_ = nullptr; ((_t_) = thing_find(_g_, _v_, _id_)))                                                            \
+                  if ((_t_)->iter[ _iter_index_ ] != (_v_)->iter[ _iter_index_ ])                                                          \
                     if ((((_t_)->iter[ _iter_index_ ] = (_v_)->iter[ _iter_index_ ])) || 1)
 
 enum {
@@ -622,49 +622,48 @@ enum {
 [[nodiscard]] auto is_oob(fpoint p) -> bool;
 [[nodiscard]] auto is_oob(int x, int y) -> bool;
 [[nodiscard]] auto is_oob(spoint p) -> bool;
+[[nodiscard]] auto level_alive(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> Thingp;
+[[nodiscard]] auto level_alive(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp at) -> Thingp;
+[[nodiscard]] auto level_change(Gamep g, Levelsp v, LevelNum level_num) -> Levelp;
+[[nodiscard]] auto level_count(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> int;
+[[nodiscard]] auto level_count(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp t) -> int;
 [[nodiscard]] auto level_cursor_describe_add(Gamep g, Levelsp v, Thingp t) -> bool;
 [[nodiscard]] auto level_cursor_describe_remove(Gamep g, Levelsp v, Thingp t) -> bool;
 [[nodiscard]] auto level_cursor_is_valid(Gamep g, Levelsp v) -> bool;
+[[nodiscard]] auto level_cursor_path_size(Gamep g) -> int;
+[[nodiscard]] auto level_find_all(Gamep g, Levelsp v, Levelp l, ThingFlag f) -> std::vector< Thingp >;
+[[nodiscard]] auto level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> Thingp;
+[[nodiscard]] auto level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp at) -> Thingp;
 [[nodiscard]] auto level_gen_is_room_entrance(Gamep g, class LevelGen *l, int x, int y) -> bool;
 [[nodiscard]] auto level_gen_is_room_entrance(Gamep g, class LevelGen *l, spoint at) -> bool;
+[[nodiscard]] auto level_get_thing_id_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot) -> ThingId;
 [[nodiscard]] auto level_is_level_select(Gamep g, Levelsp v, Levelp l) -> bool;
 [[nodiscard]] auto level_is_player_level(Gamep g, Levelsp v, Levelp l) -> bool;
 [[nodiscard]] auto level_is_same_obj_type_at(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp) -> bool;
+[[nodiscard]] auto level_light_blocker_at(Gamep g, Levelsp v, Levelp l, spoint pov) -> Thingp;
+[[nodiscard]] auto level_open(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> Thingp;
+[[nodiscard]] auto level_open(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp at) -> Thingp;
 [[nodiscard]] auto level_request_to_cleanup_things(Gamep g, Levelsp v, Levelp l) -> bool;
-[[nodiscard]] auto level_select_is_oob(int x, int y) -> bool;
-[[nodiscard]] auto level_select_is_oob(spoint p) -> bool;
-[[nodiscard]] auto level_tick_is_in_progress(Gamep g, Levelsp v, Levelp l) -> bool;
-[[nodiscard]] auto level_count(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> int;
-[[nodiscard]] auto level_count(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp t) -> int;
-[[nodiscard]] auto level_cursor_path_size(Gamep g) -> int;
-[[nodiscard]] auto levels_thing_count(Gamep g, Levelsp v) -> int;
-[[nodiscard]] auto levels_thing_ext_count(Gamep g, Levelsp v) -> int;
-[[nodiscard]] auto level_change(Gamep g, Levelsp v, LevelNum level_num) -> Levelp;
 [[nodiscard]] auto level_select_calculate_next_level_down(Gamep g, Levelsp v, Levelp l, bool redo = false) -> Levelp;
 [[nodiscard]] auto level_select_get_level_at_tile_coords(Gamep g, Levelsp v, spoint p) -> Levelp;
 [[nodiscard]] auto level_select_get_level(Gamep, Levelsp, Levelp, spoint) -> Levelp;
 [[nodiscard]] auto level_select_get_next_level_down(Gamep g, Levelsp v, Levelp l) -> Levelp;
 [[nodiscard]] auto level_select_get(Gamep g, Levelsp v, spoint p) -> LevelSelectCell *;
-[[nodiscard]] auto levels_memory_alloc(Gamep g) -> Levelsp;
-[[nodiscard]] auto player_state(Gamep g, Levelsp v) -> PlayerState;
+[[nodiscard]] auto level_select_is_oob(int x, int y) -> bool;
+[[nodiscard]] auto level_select_is_oob(spoint p) -> bool;
 [[nodiscard]] auto level_string(Gamep g, Levelsp v, Levelp l, int w, int h) -> std::string;
+[[nodiscard]] auto level_tick_is_in_progress(Gamep g, Levelsp v, Levelp l) -> bool;
+[[nodiscard]] auto levels_memory_alloc(Gamep g) -> Levelsp;
+[[nodiscard]] auto levels_thing_count(Gamep g, Levelsp v) -> int;
+[[nodiscard]] auto levels_thing_ext_count(Gamep g, Levelsp v) -> int;
 [[nodiscard]] auto player_state_to_string(PlayerState state) -> std::string;
-[[nodiscard]] auto to_string(Gamep g, Levelsp v, Levelp l) -> std::string;
-[[nodiscard]] auto level_find_all(Gamep g, Levelsp v, Levelp l, ThingFlag f) -> std::vector< Thingp >;
-[[nodiscard]] auto level_get_thing_id_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot) -> ThingId;
-[[nodiscard]] auto level_alive(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> Thingp;
-[[nodiscard]] auto level_alive(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp at) -> Thingp;
-[[nodiscard]] auto level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> Thingp;
-[[nodiscard]] auto level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp at) -> Thingp;
-[[nodiscard]] auto level_light_blocker_at(Gamep g, Levelsp v, Levelp l, spoint pov) -> Thingp;
-[[nodiscard]] auto level_open(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> Thingp;
-[[nodiscard]] auto level_open(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp at) -> Thingp;
+[[nodiscard]] auto player_state(Gamep g, Levelsp v) -> PlayerState;
 [[nodiscard]] auto thing_level_select(Gamep g) -> Thingp;
-// end sort marker1 }
-
+[[nodiscard]] auto to_string(Gamep g, Levelsp v, Levelp l) -> std::string;
 [[nodiscard]] auto level_find_all(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> std::vector< Thingp >;
 [[nodiscard]] auto level_match_contents(Gamep g, Levelsp v, Levelp l, Testp t, int w, int h, const char *in) -> bool;
 [[nodiscard]] auto level_populate_thing_id_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot, ThingId id) -> bool;
+// end sort marker1 }
 
 // begin sort marker2 {
 void fragment_alts_fini(Gamep g);
