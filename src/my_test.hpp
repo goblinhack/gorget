@@ -16,28 +16,28 @@
 class Test;
 
 auto test_name(Testp test) -> const char *;
-auto       test_load(const char       */*name_in*/) -> Testp;
+auto test_load(const char * /*name_in*/) -> Testp;
 
 using test_callback_t = bool (*)(Gamep, Testp);
 void test_callback_set(Testp test, test_callback_t callback);
 void tests_run(Gamep g);
 
-#define TEST_FAILED(test, why)                                                                                       \
-  {                                                                                                                  \
-    TRACE_NO_INDENT();                                                                                               \
-    LOG("Test %s: failed at %s:%u, reason: %s", test_name(test), __FUNCTION__, __LINE__, why);                       \
-    result = false;                                                                                                  \
-    goto exit;                                                                                                       \
+#define TEST_FAILED(test, why)                                                                                                   \
+  {                                                                                                                              \
+    TRACE_NO_INDENT();                                                                                                           \
+    LOG("Test %s: failed at %s:%u, reason: %s", test_name(test), __FUNCTION__, __LINE__, why);                                   \
+    result = false;                                                                                                              \
+    goto exit;                                                                                                                   \
   }
 
-#define TEST_ASSERT(test, what, why)                                                                                 \
-  {                                                                                                                  \
-    TRACE_NO_INDENT();                                                                                               \
-    if (! (what)) {                                                                                                  \
-      LOG("Test %s: assertion failed at %s:%u, reason: %s", test_name(test), __FUNCTION__, __LINE__, why);           \
-      result = false;                                                                                                \
-      goto exit;                                                                                                     \
-    }                                                                                                                \
+#define TEST_ASSERT(test, what, why)                                                                                             \
+  {                                                                                                                              \
+    TRACE_NO_INDENT();                                                                                                           \
+    if (! (what)) {                                                                                                              \
+      LOG("Test %s: assertion failed at %s:%u, reason: %s", test_name(test), __FUNCTION__, __LINE__, why);                       \
+      result = false;                                                                                                            \
+      goto exit;                                                                                                                 \
+    }                                                                                                                            \
   }
 
 #define TEST_PASSED(test) LOG("Test %s: passed at %s:%u", test_name(test), __FUNCTION__, __LINE__);
@@ -50,18 +50,18 @@ void tests_run(Gamep g);
 #pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
 #endif
 
-#define TEST_LOG(test, msg, ...)                                                                                     \
-  {                                                                                                                  \
-    char tmp[ MAXSTR ];                                                                                              \
-    snprintf(tmp, sizeof(tmp), msg, ##__VA_ARGS__);                                                                  \
-    LOG("Test %s: %s:%u: %s", test_name(test), __FUNCTION__, __LINE__, tmp);                                         \
+#define TEST_LOG(test, msg, ...)                                                                                                 \
+  {                                                                                                                              \
+    char tmp[ MAXSTR ];                                                                                                          \
+    snprintf(tmp, sizeof(tmp), msg, ##__VA_ARGS__);                                                                              \
+    LOG("Test %s: %s:%u: %s", test_name(test), __FUNCTION__, __LINE__, tmp);                                                     \
   }
 
-#define TEST_CON(test, msg, ...)                                                                                     \
-  {                                                                                                                  \
-    char tmp[ MAXSTR ];                                                                                              \
-    snprintf(tmp, sizeof(tmp), msg, ##__VA_ARGS__);                                                                  \
-    CON("Test %s: %s:%u: %s", test_name(test), __FUNCTION__, __LINE__, tmp);                                         \
+#define TEST_CON(test, msg, ...)                                                                                                 \
+  {                                                                                                                              \
+    char tmp[ MAXSTR ];                                                                                                          \
+    snprintf(tmp, sizeof(tmp), msg, ##__VA_ARGS__);                                                                              \
+    CON("Test %s: %s:%u: %s", test_name(test), __FUNCTION__, __LINE__, tmp);                                                     \
   }
 
 #ifdef __clang__
@@ -76,10 +76,10 @@ void test_init();
 void test_fini();
 
 [[nodiscard]] auto game_test_init(Gamep g, Levelp *out, LevelNum level_num, int w, int h, const char *contents,
-                                     Overrides overrides = no_overrides) -> Levelsp;
+                                  Overrides overrides = no_overrides) -> Levelsp;
 
 void game_test_init_level(Gamep g, Levelsp v, Levelp *out, LevelNum level_num, int w, int h, const char *contents,
-                          const Overrides& overrides = no_overrides);
+                          const Overrides &overrides = no_overrides);
 
 void game_test_init_level(Gamep g, Levelsp v, Levelp *out, LevelNum level_num, spoint level_at, int w, int h,
                           const char *contents, const Overrides &overrides = no_overrides);

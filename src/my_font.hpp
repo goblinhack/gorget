@@ -18,8 +18,8 @@ extern Fontp font_ui;
 #define FONT_TILENAME_BLOCK_STR   "1.97"
 #define FONT_TILENAME_POINTER_STR "1.100"
 
-void  font_fini();
-auto  font_init() -> bool;
+void font_fini();
+auto font_init() -> bool;
 auto font_find(const std::string &file) -> Fontp;
 
 class Font
@@ -30,6 +30,6 @@ public:
   std::array< int, FONT_CHAR_MAX + 1 >   u_to_c {};
   std::array< Tilep, FONT_CHAR_MAX + 1 > cache {};
   int                                    tile_index;
-  auto                                  font_get_tile(int u) -> Tilep;
+  auto                                   font_get_tile(int u) -> Tilep;
 };
 #endif

@@ -15,16 +15,16 @@ public:
   my_spoint(short _x, short _y) : x(_x), y(_y) {}
   my_spoint(void) : x(0), y(0) {}
 #endif
-  void                operator+=(my_spoint const &b);
-  void                operator-=(my_spoint const &b);
-  void                operator*=(short b);
-  void                operator/=(short b);
+  void               operator+=(my_spoint const &b);
+  void               operator-=(my_spoint const &b);
+  void               operator*=(short b);
+  void               operator/=(short b);
   [[nodiscard]] auto length() const -> float;
-  void                unit();
+  void               unit();
 };
 
-auto   operator<(spoint const &a, spoint const &b) -> bool; // Needed for std::map
-auto   operator==(spoint const &a, spoint const &b) -> bool;
+auto operator<(spoint const &a, spoint const &b) -> bool; // Needed for std::map
+auto operator==(spoint const &a, spoint const &b) -> bool;
 auto operator+(spoint const &a, spoint const &b) -> spoint;
 auto operator-(spoint const &a, spoint const &b) -> spoint;
 auto operator*(spoint const &a, short b) -> spoint;

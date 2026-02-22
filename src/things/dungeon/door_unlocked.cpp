@@ -33,8 +33,8 @@ static auto tp_door_unlocked_description_get(Gamep g, Levelsp v, Levelp l, Thing
   return "unlocked door";
 }
 
-static auto tp_door_unlocked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp,
-                                                       Thingp t_maybe_null) -> Tilep
+static auto tp_door_unlocked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_maybe_null)
+    -> Tilep
 {
   TRACE_NO_INDENT();
 
@@ -56,8 +56,7 @@ static auto tp_door_unlocked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp
   return nullptr;
 }
 
-[[nodiscard]] static auto tp_door_unlocked_mouse_down(Gamep g, Levelsp v, Levelp l, Thingp t, int x, int y,
-                                                      int button) -> bool
+[[nodiscard]] static auto tp_door_unlocked_mouse_down(Gamep g, Levelsp v, Levelp l, Thingp t, int x, int y, int button) -> bool
 {
   TRACE_NO_INDENT();
 

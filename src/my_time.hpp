@@ -30,7 +30,7 @@ auto time_ms_cached() -> ts_t;
 
 void get_timestamp(char *buf, int len);
 
-auto  current_date() -> std::string;
+auto current_date() -> std::string;
 auto string_timestamp() -> std::string &;
 
 extern ts_t time_now;

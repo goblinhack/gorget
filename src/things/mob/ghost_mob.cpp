@@ -24,9 +24,8 @@ static auto tp_ghost_mob_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> s
 {
   TRACE_NO_INDENT();
 
-  return // newline
-      UI_INFO1_FMT_STR
-      "This large pile of bones, whispers and moans as spectral creations dance around it.\n" // newline
+  return                                                                                                       // newline
+      UI_INFO1_FMT_STR "This large pile of bones, whispers and moans as spectral creations dance around it.\n" // newline
       UI_INFO2_FMT_STR "When such devices are destroyed, all that they summoned will also vanish into oblivion.";
 }
 

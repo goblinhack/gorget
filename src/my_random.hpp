@@ -13,11 +13,10 @@
 //
 // For randomness that matters for reproducability.
 //
-#define pcg_rand()             pcg32_random(__FUNCTION__, __LINE__)
-#define pcg_srand(a)           pcg32_srandom(a, a)
-#define pcg_random_range(a, b) ((b) > (a) ? pcg32_boundedrand(__FUNCTION__, __LINE__, (b) - (a)) + (a) : (a))
-#define pcg_random_range_inclusive(a, b)                                                                             \
-  ((b) > (a) ? pcg32_boundedrand(__FUNCTION__, __LINE__, (b) - (a) + 1) + (a) : (a))
+#define pcg_rand()                       pcg32_random(__FUNCTION__, __LINE__)
+#define pcg_srand(a)                     pcg32_srandom(a, a)
+#define pcg_random_range(a, b)           ((b) > (a) ? pcg32_boundedrand(__FUNCTION__, __LINE__, (b) - (a)) + (a) : (a))
+#define pcg_random_range_inclusive(a, b) ((b) > (a) ? pcg32_boundedrand(__FUNCTION__, __LINE__, (b) - (a) + 1) + (a) : (a))
 
 //
 // For randomness that does not matter for reproducability.

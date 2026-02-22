@@ -20,8 +20,8 @@ WidPopup::~WidPopup()
   delete wid_text_area;
 }
 
-WidPopup::WidPopup(Gamep g, const std::string &vname, spoint vtl, spoint vbr, Tilep vtitle_tile,
-                   std::string vbackground, bool horiz_scroll, bool vert_scoll, int scroll_height)
+WidPopup::WidPopup(Gamep g, const std::string &vname, spoint vtl, spoint vbr, Tilep vtitle_tile, std::string vbackground,
+                   bool horiz_scroll, bool vert_scoll, int scroll_height)
     : tl(vtl), br(vbr), title_tile(vtitle_tile), background(std::move(vbackground))
 {
   TRACE_NO_INDENT();

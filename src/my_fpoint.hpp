@@ -14,15 +14,15 @@ public:
   float x;
   float y;
 
-  void                operator+=(my_fpoint const &b);
-  void                operator-=(my_fpoint const &b);
-  void                operator*=(float b);
-  void                operator/=(float b);
+  void               operator+=(my_fpoint const &b);
+  void               operator-=(my_fpoint const &b);
+  void               operator*=(float b);
+  void               operator/=(float b);
   [[nodiscard]] auto length() const -> float;
-  void                unit();
+  void               unit();
 };
 
-auto   operator==(fpoint const &a, fpoint const &b) -> bool;
+auto operator==(fpoint const &a, fpoint const &b) -> bool;
 auto operator+(fpoint const &a, fpoint const &b) -> fpoint;
 auto operator-(fpoint const &a, fpoint const &b) -> fpoint;
 auto operator*(fpoint const &a, float b) -> fpoint;
@@ -35,7 +35,7 @@ auto unit(const fpoint &p) -> fpoint;
 
 auto distance(const fpoint &a, const fpoint &b) -> float;
 auto angle_radians(const fpoint &p) -> float;
-auto   distance_to_line(fpoint P0, fpoint L0, fpoint L1, float *dist, fpoint *intersect_out) -> int;
+auto distance_to_line(fpoint P0, fpoint L0, fpoint L1, float *dist, fpoint *intersect_out) -> int;
 
 static inline auto make_fpoint(const spoint f) -> fpoint { return fpoint(f.x, f.y); }
 

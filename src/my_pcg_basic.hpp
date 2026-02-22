@@ -40,8 +40,8 @@
 using pcg32_random_t = struct pcg_state_setseq_64;
 
 extern auto pcg32_random_r(pcg32_random_t *rng) -> uint32_t;
-extern void     pcg32_srandom_r(pcg32_random_t *rng, uint64_t initstate, uint64_t initseq);
-extern void     pcg32_srandom(uint64_t seed, uint64_t seq);
+extern void pcg32_srandom_r(pcg32_random_t *rng, uint64_t initstate, uint64_t initseq);
+extern void pcg32_srandom(uint64_t seed, uint64_t seq);
 extern auto pcg32_random(const char *, int) -> uint32_t;
 extern auto pcg32_boundedrand_r(pcg32_random_t *rng, uint32_t bound) -> uint32_t;
 extern auto pcg32_boundedrand(const char *, int, uint32_t bound) -> uint32_t;

@@ -1552,9 +1552,7 @@ auto fragment_add(Gamep g, int chance, const char *file, int line, ...) -> bool
         case CHARMAP_WATER :         break;
         case CHARMAP_WILDCARD :      break;
         case CHARMAP_FIRE :          break;
-        default :
-          CROAK("fragment has unknown char [%c] in fragment @ %s:%d", fragment_line[ i ], file, line);
-          return false;
+        default :                    CROAK("fragment has unknown char [%c] in fragment @ %s:%d", fragment_line[ i ], file, line); return false;
       }
     }
 
@@ -1803,8 +1801,7 @@ static void level_gen_add_fragments(Gamep g, class LevelGen *l)
     }
 
     if (unlikely(l->debug)) {
-      auto fragment_name
-          = std::format("placed another fragment {}:{} with {}:{}", f->file, f->line, alt->file, alt->line);
+      auto fragment_name = std::format("placed another fragment {}:{} with {}:{}", f->file, f->line, alt->file, alt->line);
       level_gen_dump(l, fragment_name.c_str());
     }
 
@@ -2234,8 +2231,7 @@ void level_gen_stats_dump(Gamep g)
 //
 // Update the list of all doors, and return a new unwalked door to use
 //
-[[nodiscard]] static auto level_gen_random_door_get(class LevelGen *l, spoint *door_out, class Room **room_out)
-    -> bool
+[[nodiscard]] static auto level_gen_random_door_get(class LevelGen *l, spoint *door_out, class Room **room_out) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -4205,8 +4201,7 @@ static void level_gen_add_missing_monsts_and_treasure(Gamep g, class LevelGen *l
 //
 // Try to add a telport on the main path
 //
-[[nodiscard]] static auto level_gen_add_missing_teleport_do(class LevelGen *l, const std::vector< spoint > &cands)
-    -> bool
+[[nodiscard]] static auto level_gen_add_missing_teleport_do(class LevelGen *l, const std::vector< spoint > &cands) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -4556,8 +4551,7 @@ static void level_gen_mark_tiles_on_path_entrance_to_exit(Gamep g, class LevelGe
 //
 // Can this bridge extension reach something useful?
 //
-[[nodiscard]] static auto level_gen_extend_bridge_direction_check(class LevelGen *l, int x, int y, int lr, int ud)
-    -> bool
+[[nodiscard]] static auto level_gen_extend_bridge_direction_check(class LevelGen *l, int x, int y, int lr, int ud) -> bool
 {
   for (;;) {
     x += lr;

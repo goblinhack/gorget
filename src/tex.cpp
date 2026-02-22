@@ -310,8 +310,8 @@ auto tex_load(const std::string &file, const std::string &name, int mode) -> Tex
 // 2 - white mask
 // 3 - white outline only
 //
-static auto tex_create_masks_from_surface(SDL_Surface *src, const std::string &file, const std::string &name,
-                                          int mode) -> std::vector< Texp >
+static auto tex_create_masks_from_surface(SDL_Surface *src, const std::string &file, const std::string &name, int mode)
+    -> std::vector< Texp >
 {
   auto name_monochrome = name + "_monochrome";
   auto name_mask       = name + "_mask";
@@ -372,11 +372,10 @@ static auto tex_create_masks_from_surface(SDL_Surface *src, const std::string &f
       //
       if (col_orig.a > 0) {
         auto          col_monochrome = col_orig;
-        uint8_t const avg
-            = ((int) col_monochrome.r + (int) col_monochrome.g + (int) col_monochrome.b) / UI_LIGHT_BACKGROUND;
-        col_monochrome.r = avg;
-        col_monochrome.g = avg;
-        col_monochrome.b = avg;
+        uint8_t const avg = ((int) col_monochrome.r + (int) col_monochrome.g + (int) col_monochrome.b) / UI_LIGHT_BACKGROUND;
+        col_monochrome.r  = avg;
+        col_monochrome.g  = avg;
+        col_monochrome.b  = avg;
         col_monochrome.r /= UI_LIGHT_BACKGROUND;
         col_monochrome.g /= UI_LIGHT_BACKGROUND;
 
@@ -553,8 +552,7 @@ auto tex_from_surface(SDL_Surface *surface, const std::string &file, const std::
     //
     // Generate the tex
     //
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, surface->w, surface->h, 0, textureFormat, GL_UNSIGNED_BYTE,
-                 surface->pixels);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, surface->w, surface->h, 0, textureFormat, GL_UNSIGNED_BYTE, surface->pixels);
 
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);

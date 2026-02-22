@@ -24,7 +24,7 @@ void level_fixed_add(Gamep g, int chance, LevelType level_type, const std::strin
                      const Overrides &overrides, int dummy, ...);
 [[nodiscard]] auto level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, const char *in,
                                   const Overrides &overrides = no_overrides) -> bool;
-[[nodiscard]] auto level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int w, int h,
-                                  const char *in, const Overrides &overrides = no_overrides) -> bool;
+[[nodiscard]] auto level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int w, int h, const char *in,
+                                  const Overrides &overrides = no_overrides) -> bool;
 
 #endif

@@ -138,8 +138,7 @@ static void game_display_title_bg(Gamep g)
 
   std::string const t = "title_bg";
   blit_init();
-  tile_blit(tile_find_mand(t), spoint(0, 0), spoint(game_window_pix_width_get(g), game_window_pix_height_get(g)),
-            WHITE);
+  tile_blit(tile_find_mand(t), spoint(0, 0), spoint(game_window_pix_width_get(g), game_window_pix_height_get(g)), WHITE);
   blit_flush();
 }
 
@@ -152,8 +151,7 @@ static void game_display_title_fg1(Gamep g)
 
   std::string const t = "title_fg1_1";
   blit_init();
-  tile_blit(tile_find_mand(t), spoint(0, 0), spoint(game_window_pix_width_get(g), game_window_pix_height_get(g)),
-            WHITE);
+  tile_blit(tile_find_mand(t), spoint(0, 0), spoint(game_window_pix_width_get(g), game_window_pix_height_get(g)), WHITE);
   blit_flush();
 }
 
@@ -184,8 +182,7 @@ static void game_display_title_fg2(Gamep g)
 
   std::string const t = "title_fg2_1";
   blit_init();
-  tile_blit(tile_find_mand(t), spoint(0, 0), spoint(game_window_pix_width_get(g), game_window_pix_height_get(g)),
-            WHITE);
+  tile_blit(tile_find_mand(t), spoint(0, 0), spoint(game_window_pix_width_get(g), game_window_pix_height_get(g)), WHITE);
   blit_flush();
 }
 
@@ -215,12 +212,9 @@ auto color_change_hue(const color &in, const float fHue) -> color
          {(1.0F / 3.0F * (1.0F - cosA)) - (sqrtf(1.0F / 3.0F) * sinA),
           (1.0F / 3.0F * (1.0F - cosA)) + (sqrtf(1.0F / 3.0F) * sinA), cosA + (1.0F / 3.0F * (1.0F - cosA))}};
   // Use the rotation matrix to convert the RGB directly
-  out.r = clamp((((float) in.r) * matrix[ 0 ][ 0 ]) + (((float) in.g) * matrix[ 0 ][ 1 ])
-                + (((float) in.b) * matrix[ 0 ][ 2 ]));
-  out.g = clamp((((float) in.r) * matrix[ 1 ][ 0 ]) + (((float) in.g) * matrix[ 1 ][ 1 ])
-                + (((float) in.b) * matrix[ 1 ][ 2 ]));
-  out.b = clamp((((float) in.r) * matrix[ 2 ][ 0 ]) + (((float) in.g) * matrix[ 2 ][ 1 ])
-                + (((float) in.b) * matrix[ 2 ][ 2 ]));
+  out.r = clamp((((float) in.r) * matrix[ 0 ][ 0 ]) + (((float) in.g) * matrix[ 0 ][ 1 ]) + (((float) in.b) * matrix[ 0 ][ 2 ]));
+  out.g = clamp((((float) in.r) * matrix[ 1 ][ 0 ]) + (((float) in.g) * matrix[ 1 ][ 1 ]) + (((float) in.b) * matrix[ 1 ][ 2 ]));
+  out.b = clamp((((float) in.r) * matrix[ 2 ][ 0 ]) + (((float) in.g) * matrix[ 2 ][ 1 ]) + (((float) in.b) * matrix[ 2 ][ 2 ]));
   return out;
 }
 
@@ -260,8 +254,7 @@ static void game_display_title_fg3(Gamep g)
 
   std::string const t = "title_fg3_1";
   blit_init();
-  tile_blit(tile_find_mand(t), spoint(0, 0), spoint(game_window_pix_width_get(g), game_window_pix_height_get(g)),
-            WHITE);
+  tile_blit(tile_find_mand(t), spoint(0, 0), spoint(game_window_pix_width_get(g), game_window_pix_height_get(g)), WHITE);
   blit_flush();
 }
 
@@ -285,8 +278,7 @@ static void game_display_title_fg4(Gamep g)
 
   std::string const t = "title_fg4_" + std::to_string(frame);
   blit_init();
-  tile_blit(tile_find_mand(t), spoint(0, 0), spoint(game_window_pix_width_get(g), game_window_pix_height_get(g)),
-            WHITE);
+  tile_blit(tile_find_mand(t), spoint(0, 0), spoint(game_window_pix_width_get(g), game_window_pix_height_get(g)), WHITE);
   blit_flush();
 }
 

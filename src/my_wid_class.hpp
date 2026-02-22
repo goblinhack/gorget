@@ -33,10 +33,7 @@ class tree_wid_key
 public:
   tree_wid_key() = default;
 
-  tree_wid_key(int vpriority, spoint vtl, spoint vbr, uint64_t vkey)
-      : priority(vpriority), tl(vtl), br(vbr), key(vkey)
-  {
-  }
+  tree_wid_key(int vpriority, spoint vtl, spoint vbr, uint64_t vkey) : priority(vpriority), tl(vtl), br(vbr), key(vkey) {}
 
   ~tree_wid_key() = default;
 

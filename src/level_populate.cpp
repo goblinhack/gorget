@@ -23,8 +23,8 @@ auto level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int
   auto expected_len = w * h;
 
   if (std::cmp_not_equal(strlen(in), expected_len)) {
-    CROAK("bad map size, expected %d chars, got %d chars for map of expected size %dx%d", (int) expected_len,
-          (int) strlen(in), w, h);
+    CROAK("bad map size, expected %d chars, got %d chars for map of expected size %dx%d", (int) expected_len, (int) strlen(in), w,
+          h);
   }
 
   auto *tp_wall       = tp_random(is_wall);
@@ -71,8 +71,7 @@ auto level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int
       bool       need_water    = false;
       bool       need_dirt     = false;
       bool       need_foliage  = false;
-      bool const need_border
-          = ! is_test_level && ((x == 0) || (x == MAP_WIDTH - 1) || (y == 0) || (y == MAP_HEIGHT - 1));
+      bool const need_border   = ! is_test_level && ((x == 0) || (x == MAP_WIDTH - 1) || (y == 0) || (y == MAP_HEIGHT - 1));
 
       auto o = overrides.find(c);
       if (o != overrides.end()) {
@@ -322,8 +321,7 @@ auto level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int
   return true;
 }
 
-auto level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, const char *in,
-                    const Overrides &overrides) -> bool
+auto level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, const char *in, const Overrides &overrides) -> bool
 {
   TRACE_NO_INDENT();
 

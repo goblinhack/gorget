@@ -42,8 +42,7 @@ void wid_seed_select(Gamep g)
 
   CON("Choose seed menu");
 
-  wid_choose_seed = wid_keyboard(g, "",
-                                 "Enter a name or number for the dungeon seed, max "
-                                     + std::to_string(UI_MAX_SEED_NAME_LEN) + " characters",
-                                 selected, selected, UI_MAX_SEED_NAME_LEN);
+  wid_choose_seed = wid_keyboard(
+      g, "", "Enter a name or number for the dungeon seed, max " + std::to_string(UI_MAX_SEED_NAME_LEN) + " characters", selected,
+      selected, UI_MAX_SEED_NAME_LEN);
 }

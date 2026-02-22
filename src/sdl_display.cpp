@@ -220,8 +220,7 @@ auto sdl_display_init(Gamep g) -> bool
     LOG("SDL: Create window size %ux%u", video_width, video_height);
   }
 
-  sdl.window = SDL_CreateWindow("gorget", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, video_width, video_height,
-                                video_flags);
+  sdl.window = SDL_CreateWindow("gorget", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, video_width, video_height, video_flags);
 
   if (sdl.window == nullptr) {
     ERR("SDL_CreateWindow couldn't set windowed display %ux%u: '%s'", video_width, video_height, SDL_GetError());

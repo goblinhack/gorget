@@ -71,8 +71,8 @@ auto thing_player_level(Gamep g) -> Levelp
 //
 // Pass the event to things for consumption e.g. doors
 //
-[[nodiscard]] static auto thing_player_pass_event_to_other_things(Gamep g, Levelsp v, Levelp l, int x, int y,
-                                                                  uint32_t button) -> bool
+[[nodiscard]] static auto thing_player_pass_event_to_other_things(Gamep g, Levelsp v, Levelp l, int x, int y, uint32_t button)
+    -> bool
 {
   TRACE_NO_INDENT();
 
@@ -308,8 +308,7 @@ void player_state_change(Gamep g, Levelsp v, Levelp l, PlayerState new_state)
   //
   // Why oh why change state
   //
-  THING_LOG(me, "state change: %s -> %s", player_state_to_string(old_state).c_str(),
-            player_state_to_string(new_state).c_str());
+  THING_LOG(me, "state change: %s -> %s", player_state_to_string(old_state).c_str(), player_state_to_string(new_state).c_str());
 
   switch (new_state) {
     case PLAYER_STATE_INIT :
@@ -479,8 +478,7 @@ auto player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, spo
       //
       if (! level_is_lava(g, v, l, me)) {
         if (level_is_lava(g, v, l, to)) {
-          if (! thing_is_immune_to(me, THING_EVENT_HEAT_DAMAGE)
-              && ! thing_is_immune_to(me, THING_EVENT_FIRE_DAMAGE)) {
+          if (! thing_is_immune_to(me, THING_EVENT_HEAT_DAMAGE) && ! thing_is_immune_to(me, THING_EVENT_FIRE_DAMAGE)) {
             std::string const msg = "Do you really want to leap into lava?";
             player_state_change(g, v, l, PLAYER_STATE_MOVE_CONFIRM_REQUESTED);
             game_state_change(g, STATE_MOVE_WARNING_MENU, "need warning confirmation");
@@ -802,8 +800,7 @@ auto player_move_request(Gamep g, bool up, bool down, bool left, bool right, boo
 //
 // Handle common level exit interactions
 //
-static void player_leave_current_level_and_change_to_level_num(Gamep g, Levelsp v,
-                                                               LevelNum level_num = LEVEL_SELECT_ID)
+static void player_leave_current_level_and_change_to_level_num(Gamep g, Levelsp v, LevelNum level_num = LEVEL_SELECT_ID)
 {
   TRACE_NO_INDENT();
 

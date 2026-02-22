@@ -30,8 +30,8 @@ isize  g_fbo_size[ FBO_ENUM_MAX ];
 static FboEnum fbo_locked = FBO_NONE;
 static FboEnum fbo_last   = FBO_NONE;
 
-void MessageCallback(GLenum /*source*/, GLenum type, GLuint id, GLenum severity, GLsizei /*length*/,
-                     const GLchar *message, const void * /*userParam*/)
+void MessageCallback(GLenum /*source*/, GLenum type, GLuint id, GLenum severity, GLsizei /*length*/, const GLchar *message,
+                     const void * /*userParam*/)
 {
   CON("GL CALLBACK: type = 0x%x, severity = 0x%x, message = %s\n", type, severity, message);
 }
@@ -474,8 +474,7 @@ void gl_init_fbo(Gamep g, FboEnum fbo)
       // continue;
     }
     if (g_fbo_size[ i ].w != 0) {
-      LOG("Change in size for FBO %u, %ux%u -> %ux%u", i, g_fbo_size[ i ].w, g_fbo_size[ i ].h, tex_width,
-          tex_height);
+      LOG("Change in size for FBO %u, %ux%u -> %ux%u", i, g_fbo_size[ i ].w, g_fbo_size[ i ].h, tex_width, tex_height);
     } else {
       LOG("Init FBO %u, %ux%u", i, tex_width, tex_height);
     }
@@ -1129,16 +1128,14 @@ static void gl_ext_load(void)
     LOG("OpenGl: - glRenderbufferStorage_EXT - present");
   }
 
-  glFramebufferRenderbuffer_EXT
-      = (__typeof__(glFramebufferRenderbuffer_EXT)) wglGetProcAddress("glFramebufferRenderbuffer");
+  glFramebufferRenderbuffer_EXT = (__typeof__(glFramebufferRenderbuffer_EXT)) wglGetProcAddress("glFramebufferRenderbuffer");
   if (! glFramebufferRenderbuffer_EXT) {
     LOG("OpenGl: - glFramebufferRenderbuffer_EXT - NOT present");
   } else {
     LOG("OpenGl: - glFramebufferRenderbuffer_EXT - present");
   }
 
-  glCheckFramebufferStatus_EXT
-      = (__typeof__(glCheckFramebufferStatus_EXT)) wglGetProcAddress("glCheckFramebufferStatus");
+  glCheckFramebufferStatus_EXT = (__typeof__(glCheckFramebufferStatus_EXT)) wglGetProcAddress("glCheckFramebufferStatus");
   if (! glCheckFramebufferStatus_EXT) {
     LOG("OpenGl: - glCheckFramebufferStatus_EXT - NOT present");
   } else {
@@ -1307,8 +1304,8 @@ void gl_ext_init(void)
   }
 
   LOG("OpenGl: - CreateWindowEx");
-  hwnd = CreateWindowEx(WS_EX_CLIENTEDGE, g_szClassName, "gorget startup", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT,
-                        CW_USEDEFAULT, 240, 120, nullptr, nullptr, hInstance, nullptr);
+  hwnd = CreateWindowEx(WS_EX_CLIENTEDGE, g_szClassName, "gorget startup", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 240,
+                        120, nullptr, nullptr, hInstance, nullptr);
 
   if (hwnd == nullptr) {
     MessageBox(nullptr, "Window Creation Failed!", "Error!", MB_ICONEXCLAMATION | MB_OK);
@@ -1366,9 +1363,9 @@ void gl_error(GLenum errCode)
 }
 
 static void gl_push(float **P, const float *p_end, bool first_vertex, float tex_left, float tex_top, float tex_right,
-                    float tex_bottom, spoint tl, spoint tr, spoint bl, spoint br, uint8_t r1, uint8_t g1, uint8_t b1,
-                    uint8_t a1, uint8_t r2, uint8_t g2, uint8_t b2, uint8_t a2, uint8_t r3, uint8_t g3, uint8_t b3,
-                    uint8_t a3, uint8_t r4, uint8_t g4, uint8_t b4, uint8_t a4)
+                    float tex_bottom, spoint tl, spoint tr, spoint bl, spoint br, uint8_t r1, uint8_t g1, uint8_t b1, uint8_t a1,
+                    uint8_t r2, uint8_t g2, uint8_t b2, uint8_t a2, uint8_t r3, uint8_t g3, uint8_t b3, uint8_t a3, uint8_t r4,
+                    uint8_t g4, uint8_t b4, uint8_t a4)
 {
   float *p = *P;
 
@@ -1415,24 +1412,24 @@ static void gl_push(float **P, const float *p_end, bool first_vertex, float tex_
   *P                    = p;
 }
 
-static void gl_push(float **P, float *p_end, bool first_vertex, float tex_left, float tex_top, float tex_right,
-                    float tex_bottom, GLshort left, GLshort top, GLshort right, GLshort bottom, uint8_t r1,
-                    uint8_t g1, uint8_t b1, uint8_t a1, uint8_t r2, uint8_t g2, uint8_t b2, uint8_t a2, uint8_t r3,
-                    uint8_t g3, uint8_t b3, uint8_t a3, uint8_t r4, uint8_t g4, uint8_t b4, uint8_t a4)
+static void gl_push(float **P, float *p_end, bool first_vertex, float tex_left, float tex_top, float tex_right, float tex_bottom,
+                    GLshort left, GLshort top, GLshort right, GLshort bottom, uint8_t r1, uint8_t g1, uint8_t b1, uint8_t a1,
+                    uint8_t r2, uint8_t g2, uint8_t b2, uint8_t a2, uint8_t r3, uint8_t g3, uint8_t b3, uint8_t a3, uint8_t r4,
+                    uint8_t g4, uint8_t b4, uint8_t a4)
 {
   spoint const tl(left, top);
   spoint const tr(right, top);
   spoint const bl(left, bottom);
   spoint const br(right, bottom);
 
-  gl_push(P, p_end, first_vertex, tex_left, tex_top, tex_right, tex_bottom, tl, tr, bl, br, r1, g1, b1, a1, r2, g2,
-          b2, a2, r3, g3, b3, a3, r4, g4, b4, a4);
+  gl_push(P, p_end, first_vertex, tex_left, tex_top, tex_right, tex_bottom, tl, tr, bl, br, r1, g1, b1, a1, r2, g2, b2, a2, r3,
+          g3, b3, a3, r4, g4, b4, a4);
 }
 
 static bool first_vertex;
 
-void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLshort left, GLshort top,
-          GLshort right, GLshort bottom, const color &c)
+void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLshort left, GLshort top, GLshort right,
+          GLshort bottom, const color &c)
 {
   if (unlikely(! buf_tex)) {
     blit_init();
@@ -1451,12 +1448,12 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
   uint8_t const b = c.b;
   uint8_t const a = c.a;
 
-  gl_push(&bufp, bufp_end, first_vertex, texMinX, texMinY, texMaxX, texMaxY, left, top, right, bottom, r, g, b, a, r,
-          g, b, a, r, g, b, a, r, g, b, a);
+  gl_push(&bufp, bufp_end, first_vertex, texMinX, texMinY, texMaxX, texMaxY, left, top, right, bottom, r, g, b, a, r, g, b, a, r,
+          g, b, a, r, g, b, a);
 }
 
-void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLshort pixMinX, GLshort pixMinY,
-          GLshort pixMaxX, GLshort pixMaxY, const color &c, LightPixels *light_pixels, bool blit_flush_per_line)
+void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLshort pixMinX, GLshort pixMinY, GLshort pixMaxX,
+          GLshort pixMaxY, const color &c, LightPixels *light_pixels, bool blit_flush_per_line)
 {
   if (unlikely(! buf_tex)) {
     blit_init();
@@ -1498,8 +1495,8 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
       auto        pixMinX2 = (GLshort) ((float) pixMinX + ((float) x * pixDiffX));
       auto        pixMaxX2 = (GLshort) ((float) pixMinX + ((float) (x + 1) * pixDiffX));
 
-      gl_push(&bufp, bufp_end, first_vertex, texMinX2, texMinY2, texMaxX2, texMaxY2, pixMinX2, pixMinY2, pixMaxX2,
-              pixMaxY2, r, g, b, a, r, g, b, a, r, g, b, a, r, g, b, a);
+      gl_push(&bufp, bufp_end, first_vertex, texMinX2, texMinY2, texMaxX2, texMaxY2, pixMinX2, pixMinY2, pixMaxX2, pixMaxY2, r, g,
+              b, a, r, g, b, a, r, g, b, a, r, g, b, a);
     }
 
     //
@@ -1513,9 +1510,8 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
   }
 }
 
-void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLshort left, GLshort top,
-          GLshort right, GLshort bottom, const color &color_bl, const color &color_br, const color &color_tl,
-          const color &color_tr)
+void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLshort left, GLshort top, GLshort right,
+          GLshort bottom, const color &color_bl, const color &color_br, const color &color_tl, const color &color_tr)
 {
   if (unlikely(! buf_tex)) {
     blit_init();
@@ -1529,9 +1525,9 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
 
   buf_tex = tex;
 
-  gl_push(&bufp, bufp_end, first_vertex, texMinX, texMinY, texMaxX, texMaxY, left, top, right, bottom, color_tl.r,
-          color_tl.g, color_tl.b, color_tl.a, color_bl.r, color_bl.g, color_bl.b, color_bl.a, color_tr.r, color_tr.g,
-          color_tr.b, color_tr.a, color_br.r, color_br.g, color_br.b, color_br.a);
+  gl_push(&bufp, bufp_end, first_vertex, texMinX, texMinY, texMaxX, texMaxY, left, top, right, bottom, color_tl.r, color_tl.g,
+          color_tl.b, color_tl.a, color_bl.r, color_bl.g, color_bl.b, color_bl.a, color_tr.r, color_tr.g, color_tr.b, color_tr.a,
+          color_br.r, color_br.g, color_br.b, color_br.a);
 }
 
 void blit(int tex, GLshort left, GLshort top, GLshort right, GLshort bottom, const color &c)

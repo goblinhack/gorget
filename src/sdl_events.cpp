@@ -120,8 +120,8 @@ static void __attribute__((noinline)) sdl_event_keydown(Gamep g, SDL_Keysym *key
 
   sdl.event_count++;
 
-  DBG("SDL: Keyboard: Key pressed keycode 0x%08" PRIX32 " = %s %d", event->key.keysym.sym,
-      to_string(event->key.keysym).c_str(), key->mod);
+  DBG("SDL: Keyboard: Key pressed keycode 0x%08" PRIX32 " = %s %d", event->key.keysym.sym, to_string(event->key.keysym).c_str(),
+      key->mod);
 
   //
   // SDL2 has no auto repeat.
@@ -144,8 +144,8 @@ static void __attribute__((noinline)) sdl_event_keyup(Gamep g, SDL_Keysym *key, 
 
   sdl.event_count++;
   if (g_grab_next_key) {
-    DBG("SDL: Keyboard: Grabbed 0x%08" PRIX32 " = %s / %s", event->key.keysym.sym,
-        to_string(event->key.keysym).c_str(), SDL_GetScancodeName(event->key.keysym.scancode));
+    DBG("SDL: Keyboard: Grabbed 0x%08" PRIX32 " = %s / %s", event->key.keysym.sym, to_string(event->key.keysym).c_str(),
+        SDL_GetScancodeName(event->key.keysym.scancode));
 
     g_grab_next_key = false;
     sdl.grabbed_key = sdlk_normalize(event->key.keysym);
@@ -161,8 +161,7 @@ static void __attribute__((noinline)) sdl_event_keyup(Gamep g, SDL_Keysym *key, 
 
   memset(&last_key_pressed, 0, SIZEOF(last_key_pressed));
 
-  DBG("SDL: Keyboard: Key released keycode 0x%08" PRIX32 " = %s", event->key.keysym.sym,
-      to_string(event->key.keysym).c_str());
+  DBG("SDL: Keyboard: Key released keycode 0x%08" PRIX32 " = %s", event->key.keysym.sym, to_string(event->key.keysym).c_str());
 
   key = &event->key.keysym;
 
@@ -171,8 +170,7 @@ static void __attribute__((noinline)) sdl_event_keyup(Gamep g, SDL_Keysym *key, 
   sdl.shift_held = ((key->mod & KMOD_SHIFT) != 0) ? 1 : 0;
 }
 
-static void __attribute__((noinline)) sdl_event_mousemotion(Gamep g, SDL_Event *event,
-                                                            bool &processed_mouse_motion_event)
+static void __attribute__((noinline)) sdl_event_mousemotion(Gamep g, SDL_Event *event, bool &processed_mouse_motion_event)
 {
   TRACE_NO_INDENT();
 
@@ -280,8 +278,7 @@ void sdl_event(Gamep g, SDL_Event *event, bool &processed_mouse_motion_event)
     case SDL_MOUSEWHEEL :
       {
         sdl.event_count++;
-        DBG("SDL: Mouse: Wheel scrolled %d in x and %d in y in window %d", event->wheel.x, event->wheel.y,
-            event->wheel.windowID);
+        DBG("SDL: Mouse: Wheel scrolled %d in x and %d in y in window %d", event->wheel.x, event->wheel.y, event->wheel.windowID);
 
         sdl_get_mouse();
 

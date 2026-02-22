@@ -836,14 +836,13 @@ void tile_blit(const Tilep &tile, const spoint tl, const spoint br, const color 
   blit(binding, x1, y2, x2, y1, tl.x, br.y, br.x, tl.y, c);
 }
 
-void tile_blit(const Tilep &tile, float x1, float x2, float y1, float y2, const spoint tl, const spoint br,
-               const color &c)
+void tile_blit(const Tilep &tile, float x1, float x2, float y1, float y2, const spoint tl, const spoint br, const color &c)
 {
   blit(tile->gl_binding(), x1, y2, x2, y1, tl.x, br.y, br.x, tl.y, c);
 }
 
-void tile_blit(const Tilep &tile, float x1, float x2, float y1, float y2, const spoint tl, const spoint br,
-               const color &c, LightPixels *light_pixels, bool is_blit_flush_per_line)
+void tile_blit(const Tilep &tile, float x1, float x2, float y1, float y2, const spoint tl, const spoint br, const color &c,
+               LightPixels *light_pixels, bool is_blit_flush_per_line)
 {
   if (light_pixels != nullptr) {
     blit(tile->gl_binding(), x1, y2, x2, y1, tl.x, br.y, br.x, tl.y, c, light_pixels, is_blit_flush_per_line);
@@ -852,8 +851,8 @@ void tile_blit(const Tilep &tile, float x1, float x2, float y1, float y2, const 
   }
 }
 
-void tile_blit(const Tilep &tile, spoint tl, spoint br, const color &color_tl, const color &color_tr,
-               const color &color_bl, const color &color_br)
+void tile_blit(const Tilep &tile, spoint tl, spoint br, const color &color_tl, const color &color_tr, const color &color_bl,
+               const color &color_br)
 {
   float const x1 = tile->x1;
   float const x2 = tile->x2;
@@ -863,9 +862,8 @@ void tile_blit(const Tilep &tile, spoint tl, spoint br, const color &color_tl, c
   blit(tile->gl_binding(), x1, y2, x2, y1, tl.x, br.y, br.x, tl.y, color_tl, color_tr, color_bl, color_br);
 }
 
-void tile_blit_section(const Tilep &tile, const fpoint &tile_tl, const fpoint &tile_br, const spoint tl,
-                       const spoint br, const color &color_tl, const color &color_tr, const color &color_bl,
-                       const color &color_br)
+void tile_blit_section(const Tilep &tile, const fpoint &tile_tl, const fpoint &tile_br, const spoint tl, const spoint br,
+                       const color &color_tl, const color &color_tr, const color &color_bl, const color &color_br)
 {
   float       x1;
   float       x2;
@@ -930,8 +928,8 @@ void tile_blit_outlined(const Tilep &tile, float x1, float x2, float y1, float y
 // Shift the coordinates of a tile by a given percentage, so the bottom is
 // trimmed and looks submerged.
 //
-void tile_blit_apply_submerge_pct(Gamep g, spoint &tl, spoint &br, float & /*x1*/, float & /*x2*/, float &y1,
-                                  float &y2, float percent)
+void tile_blit_apply_submerge_pct(Gamep g, spoint &tl, spoint &br, float & /*x1*/, float & /*x2*/, float &y1, float &y2,
+                                  float percent)
 {
   float const h1 = br.y - tl.y;
   float const h2 = y2 - y1;

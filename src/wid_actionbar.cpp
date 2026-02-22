@@ -323,8 +323,7 @@ static void wid_actionbar_fire_over_begin(Gamep g, Widp w, int relx, int rely, i
   wid_over_fire = new WidPopup(g, "Fire", tl, br, nullptr, "", false, false);
   wid_over_fire->log(g, UI_HIGHLIGHT_FMT_STR "Fire");
   wid_over_fire->log_empty_line(g);
-  wid_over_fire->log(g,
-                     "Hover the mouse over your chosen enemy and press this key to blast them to deserved oblivion.");
+  wid_over_fire->log(g, "Hover the mouse over your chosen enemy and press this key to blast them to deserved oblivion.");
   wid_over_fire->compress(g);
 
   level_cursor_path_reset(g);
@@ -697,8 +696,7 @@ auto wid_actionbar_create_window(Gamep g) -> bool
     wid_set_on_mouse_up(w, wid_actionbar_descend);
     wid_set_on_mouse_over_begin(w, wid_actionbar_descend_over_begin);
     wid_set_on_mouse_over_end(w, wid_actionbar_descend_over_end);
-    wid_set_text(w, UI_SHORTCUT_FMT_STR "" + ::to_string(game_key_descend_get(g)) + UI_HIGHLIGHT_FMT_STR ""
-                        + " Descend");
+    wid_set_text(w, UI_SHORTCUT_FMT_STR "" + ::to_string(game_key_descend_get(g)) + UI_HIGHLIGHT_FMT_STR "" + " Descend");
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(w, WID_MODE_NORMAL);
@@ -715,8 +713,7 @@ auto wid_actionbar_create_window(Gamep g) -> bool
     wid_set_on_mouse_up(w, wid_actionbar_ascend);
     wid_set_on_mouse_over_begin(w, wid_actionbar_ascend_over_begin);
     wid_set_on_mouse_over_end(w, wid_actionbar_ascend_over_end);
-    wid_set_text(w,
-                 UI_SHORTCUT_FMT_STR "" + ::to_string(game_key_ascend_get(g)) + UI_HIGHLIGHT_FMT_STR "" + " Ascend");
+    wid_set_text(w, UI_SHORTCUT_FMT_STR "" + ::to_string(game_key_ascend_get(g)) + UI_HIGHLIGHT_FMT_STR "" + " Ascend");
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(w, WID_MODE_NORMAL);
@@ -751,8 +748,7 @@ auto wid_actionbar_create_window(Gamep g) -> bool
     wid_set_on_mouse_up(w, wid_actionbar_inventory);
     wid_set_on_mouse_over_begin(w, wid_actionbar_inventory_over_begin);
     wid_set_on_mouse_over_end(w, wid_actionbar_inventory_over_end);
-    wid_set_text(w,
-                 UI_SHORTCUT_FMT_STR "" + ::to_string(game_key_inventory_get(g)) + UI_HIGHLIGHT_FMT_STR "" + " Inv");
+    wid_set_text(w, UI_SHORTCUT_FMT_STR "" + ::to_string(game_key_inventory_get(g)) + UI_HIGHLIGHT_FMT_STR "" + " Inv");
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(w, WID_MODE_NORMAL);

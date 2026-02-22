@@ -26,8 +26,7 @@ HiScores::HiScores()
 
 HiScores::~HiScores() { TRACE_NO_INDENT(); }
 
-void HiScores::add_new_hiscore(Gamep g, int score, LevelNum level_num, const std::string &name,
-                               const std::string &reason)
+void HiScores::add_new_hiscore(Gamep g, int score, LevelNum level_num, const std::string &name, const std::string &reason)
 {
   TRACE_NO_INDENT();
   auto        h = hiscores.begin();
@@ -123,8 +122,7 @@ auto operator>>(std::istream &in, Bits< HiScore & > my) -> std::istream &
   in >> bits(my.t.when);
   in >> bits(my.t.score);
   in >> bits(my.t.levels_completed);
-  DBG("Read Hiscore: who:%s score:%d demise:%s when:%s", my.t.name.c_str(), my.t.score, my.t.reason.c_str(),
-      my.t.when.c_str());
+  DBG("Read Hiscore: who:%s score:%d demise:%s when:%s", my.t.name.c_str(), my.t.score, my.t.reason.c_str(), my.t.when.c_str());
   return in;
 }
 
@@ -136,8 +134,7 @@ auto operator<<(std::ostream &out, Bits< const HiScore & > const my) -> std::ost
   out << bits(my.t.when);
   out << bits(my.t.score);
   out << bits(my.t.levels_completed);
-  DBG("Saved Hiscore: who:%s score:%d demise:%s when:%s", my.t.name.c_str(), my.t.score, my.t.reason.c_str(),
-      my.t.when.c_str());
+  DBG("Saved Hiscore: who:%s score:%d demise:%s when:%s", my.t.name.c_str(), my.t.score, my.t.reason.c_str(), my.t.when.c_str());
   return out;
 }
 
@@ -160,8 +157,7 @@ auto operator<<(std::ostream &out, Bits< HiScore & > const my) -> std::ostream &
   out << bits(my.t.when);
   out << bits(my.t.score);
   out << bits(my.t.levels_completed);
-  DBG("Saved Hiscore: who:%s score:%d demise:%s when:%s", my.t.name.c_str(), my.t.score, my.t.reason.c_str(),
-      my.t.when.c_str());
+  DBG("Saved Hiscore: who:%s score:%d demise:%s when:%s", my.t.name.c_str(), my.t.score, my.t.reason.c_str(), my.t.when.c_str());
   return out;
 }
 //////////////////////////////////////////////////////////////////////////////////////

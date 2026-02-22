@@ -405,8 +405,8 @@ void game_init(Gamep g) { g->init(); }
 //
 // Create a level with the given contents and start the game into playing state
 //
-auto game_test_init(Gamep g, Levelp *l_out, LevelNum level_num, int w, int h, const char *contents,
-                       Overrides overrides) -> Levelsp
+auto game_test_init(Gamep g, Levelp *l_out, LevelNum level_num, int w, int h, const char *contents, Overrides overrides)
+    -> Levelsp
 {
   TRACE_NO_INDENT();
   game_cleanup(g);
@@ -501,7 +501,7 @@ void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num,
 }
 
 void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num, int w, int h, const char *contents,
-                          const Overrides& overrides)
+                          const Overrides &overrides)
 {
   TRACE_NO_INDENT();
 
@@ -968,8 +968,8 @@ void Game::state_change(GameState new_state, const std::string &why)
   //
   // Why oh why change state
   //
-  LOG("Game state change: %s -> %s, reason: %s", game_state_to_string(old_state).c_str(),
-      game_state_to_string(new_state).c_str(), why.c_str());
+  LOG("Game state change: %s -> %s, reason: %s", game_state_to_string(old_state).c_str(), game_state_to_string(new_state).c_str(),
+      why.c_str());
   TRACE_AND_INDENT();
 
   //
@@ -1271,8 +1271,7 @@ auto game_wait_for_tick_to_finish(Gamep g, Levelsp v, Levelp l) -> bool
     }
 
     TRACE_NO_INDENT();
-    if ((! static_cast< bool >(v->level_tick_in_progress_count))
-        && (! static_cast< bool >(v->level_tick_request_count))) {
+    if ((! static_cast< bool >(v->level_tick_in_progress_count)) && (! static_cast< bool >(v->level_tick_request_count))) {
       LEVEL_LOG(g, v, l, "Test: tick %u finished, stop waiting", v->tick);
       return true;
     }
@@ -1392,8 +1391,7 @@ auto game_place_str(Gamep g, int score) -> const char *
   return g->config.hiscores.place_str(score);
 }
 
-void game_visible_map_pix_get(Gamep g, int *visible_map_tl_x, int *visible_map_tl_y, int *visible_map_br_x,
-                              int *visible_map_br_y)
+void game_visible_map_pix_get(Gamep g, int *visible_map_tl_x, int *visible_map_tl_y, int *visible_map_br_x, int *visible_map_br_y)
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -1410,8 +1408,7 @@ void game_visible_map_pix_get(Gamep g, int *visible_map_tl_x, int *visible_map_t
   *visible_map_br_y = g->visible_map_br_y;
 }
 
-void game_visible_map_pix_set(Gamep g, int visible_map_tl_x, int visible_map_tl_y, int visible_map_br_x,
-                              int visible_map_br_y)
+void game_visible_map_pix_set(Gamep g, int visible_map_tl_x, int visible_map_tl_y, int visible_map_br_x, int visible_map_br_y)
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {

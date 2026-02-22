@@ -25,10 +25,10 @@ bool        game_save_config_only;
 int         GAME_SAVE_MARKER_EOL    = 123456;
 int         GAME_SAVE_MARKER_CONFIG = 987654;
 
-#define WRITE_MAGIC(m)                                                                                               \
-  {                                                                                                                  \
-    uint32_t magic = m;                                                                                              \
-    out << bits(magic);                                                                                              \
+#define WRITE_MAGIC(m)                                                                                                           \
+  {                                                                                                                              \
+    uint32_t magic = m;                                                                                                          \
+    out << bits(magic);                                                                                                          \
   }
 
 auto operator<<(std::ostream &out, Bits< const SDL_Keysym & > const my) -> std::ostream &

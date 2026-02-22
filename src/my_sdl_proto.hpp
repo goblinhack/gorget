@@ -17,7 +17,7 @@ auto sdlk_eq(const SDL_Keysym &a, const SDL_Keysym &b) -> bool;
 auto sdl_filter_events(void *userdata, SDL_Event *event) -> int;
 auto sdl_get_mouse() -> int;
 
-auto   sdlk_normalize(SDL_Keysym k) -> SDL_Keysym;
+auto sdlk_normalize(SDL_Keysym k) -> SDL_Keysym;
 auto sdlk_to_scancode(const SDL_Keysym &k) -> SDL_Scancode;
 
 auto to_string(const SDL_Keysym &k) -> std::string;
@@ -30,7 +30,7 @@ auto show_error(Gamep g, class Tokens *tokens, void *context) -> uint8_t;
 auto config_fps_counter_set(Gamep g, class Tokens *tokens, void *context) -> uint8_t;
 auto config_debug_set(Gamep g, class Tokens *tokens, void *context) -> uint8_t;
 auto config_gfx_vsync_enable(Gamep g, class Tokens *tokens, void *context) -> uint8_t;
-auto    sdl_init() -> bool;
+auto sdl_init() -> bool;
 
 class Tokens;
 auto sdl_user_exit(Gamep g, class Tokens *tokens, void *context) -> uint8_t;

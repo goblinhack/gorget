@@ -133,8 +133,8 @@ static void thing_fov_free(Levelsp v, Thingp t)
   t->fov_id = 0;
 }
 
-static auto thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, ThingIdPacked id, bool needs_ext_memory,
-                             bool needs_fov_memory, bool need_mutex) -> Thingp
+static auto thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, ThingIdPacked id, bool needs_ext_memory, bool needs_fov_memory,
+                           bool need_mutex) -> Thingp
 {
   TRACE_NO_INDENT();
 

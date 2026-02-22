@@ -452,8 +452,8 @@ void dmap_process_reverse(Dmap *D, spoint tl, spoint br)
   } while (static_cast< bool >(changed));
 }
 
-static auto dmap_solve_(const Dmap *D, const spoint start, const std::vector< spoint > &all_deltas,
-                                         bool allow_diagonals) -> std::vector< spoint >
+static auto dmap_solve_(const Dmap *D, const spoint start, const std::vector< spoint > &all_deltas, bool allow_diagonals)
+    -> std::vector< spoint >
 {
   std::array< std::array< bool, MAP_HEIGHT >, MAP_WIDTH > walked = {};
   std::vector< spoint >                                   out    = {};
@@ -544,8 +544,7 @@ static auto dmap_solve_(const Dmap *D, const spoint start, const std::vector< sp
 auto dmap_solve_allow_diagonal(const Dmap *D, const spoint start) -> std::vector< spoint >
 {
   static const std::vector< spoint > all_deltas = {
-      spoint(-1, -1), spoint(1, -1), spoint(-1, 1), spoint(1, 1),
-      spoint(0, -1),  spoint(-1, 0), spoint(1, 0),  spoint(0, 1),
+      spoint(-1, -1), spoint(1, -1), spoint(-1, 1), spoint(1, 1), spoint(0, -1), spoint(-1, 0), spoint(1, 0), spoint(0, 1),
   };
   return dmap_solve_(D, start, all_deltas, true);
 }

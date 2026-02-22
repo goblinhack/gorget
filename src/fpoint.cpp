@@ -13,7 +13,7 @@ auto operator+(fpoint const &a, fpoint const &b) -> fpoint { return fpoint(a.x +
 auto operator-(fpoint const &a, fpoint const &b) -> fpoint { return fpoint(a.x - b.x, a.y - b.y); }
 auto operator*(fpoint const &a, float b) -> fpoint { return fpoint(a.x * b, a.y * b); }
 auto operator/(fpoint const &a, float b) -> fpoint { return fpoint(a.x / b, a.y / b); }
-auto   operator==(fpoint const &a, fpoint const &b) -> bool { return (a.x == b.x) && (a.y == b.y); }
+auto operator==(fpoint const &a, fpoint const &b) -> bool { return (a.x == b.x) && (a.y == b.y); }
 
 void fpoint::operator+=(fpoint const &b)
 {

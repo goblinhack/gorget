@@ -62,8 +62,7 @@ auto redirect_stdout() -> FILE *
     // Last resort
     //
     if (g_log_stdout == nullptr) {
-      std::println(stderr, "Failed to create stdout log file \"{}\" for thread {}, error: {}", out, g_thread_id,
-                   strerror(errno));
+      std::println(stderr, "Failed to create stdout log file \"{}\" for thread {}, error: {}", out, g_thread_id, strerror(errno));
       g_log_stdout = stdout;
     }
   }
@@ -122,8 +121,7 @@ auto redirect_stderr() -> FILE *
     // Last resort
     //
     if (g_log_stderr == nullptr) {
-      std::println(stderr, "Failed to create stderr log file \"{}\" for thread {}, error: {}", out, g_thread_id,
-                   strerror(errno));
+      std::println(stderr, "Failed to create stderr log file \"{}\" for thread {}, error: {}", out, g_thread_id, strerror(errno));
       g_log_stderr = stderr;
     }
   }

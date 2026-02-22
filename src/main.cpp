@@ -189,8 +189,7 @@ static void parse_args(int argc, char *argv[])
       continue;
     }
 
-    if ((strcasecmp(argv[ i ], "--do-level-select-gen") == 0)
-        || (strcasecmp(argv[ i ], "-do-level-select-gen") == 0)) {
+    if ((strcasecmp(argv[ i ], "--do-level-select-gen") == 0) || (strcasecmp(argv[ i ], "-do-level-select-gen") == 0)) {
       g_opt_do_level_select_gen = true;
       g_skip_audio_and_gfx      = true;
       continue;
@@ -207,8 +206,7 @@ static void parse_args(int argc, char *argv[])
       continue;
     }
 
-    if ((strcasecmp(argv[ i ], "--restart-in-gfx-menu") == 0)
-        || (strcasecmp(argv[ i ], "-restart-in-gfx-menu") == 0)) {
+    if ((strcasecmp(argv[ i ], "--restart-in-gfx-menu") == 0) || (strcasecmp(argv[ i ], "-restart-in-gfx-menu") == 0)) {
       g_opt_restarted_in_gfx_menu = true;
       continue;
     }

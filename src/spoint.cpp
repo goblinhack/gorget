@@ -7,12 +7,12 @@
 
 #include <cmath>
 
-auto   operator<(spoint const &a, spoint const &b) -> bool { return (a.x < b.x) || (a.x == b.x && a.y < b.y); }
+auto operator<(spoint const &a, spoint const &b) -> bool { return (a.x < b.x) || (a.x == b.x && a.y < b.y); }
 auto operator+(spoint const &a, spoint const &b) -> spoint { return spoint(a.x + b.x, a.y + b.y); }
 auto operator-(spoint const &a, spoint const &b) -> spoint { return spoint(a.x - b.x, a.y - b.y); }
 auto operator*(spoint const &a, short b) -> spoint { return spoint(a.x * b, a.y * b); }
 auto operator/(spoint const &a, short b) -> spoint { return spoint(a.x / b, a.y / b); }
-auto   operator==(spoint const &a, spoint const &b) -> bool { return (a.x == b.x) && (a.y == b.y); }
+auto operator==(spoint const &a, spoint const &b) -> bool { return (a.x == b.x) && (a.y == b.y); }
 
 void spoint::operator+=(spoint const &b)
 {

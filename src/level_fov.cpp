@@ -50,8 +50,7 @@
 // Octant transformation matrixes.
 // {xx, xy, yx, yy}
 static const int matrix_table[ 8 ][ 4 ] = {
-    {1, 0, 0, 1},   {0, 1, 1, 0},   {0, -1, 1, 0}, {-1, 0, 0, 1},
-    {-1, 0, 0, -1}, {0, -1, -1, 0}, {0, 1, -1, 0}, {1, 0, 0, -1},
+    {1, 0, 0, 1}, {0, 1, 1, 0}, {0, -1, 1, 0}, {-1, 0, 0, 1}, {-1, 0, 0, -1}, {0, -1, -1, 0}, {0, 1, -1, 0}, {1, 0, 0, -1},
 };
 
 static void level_fov_set(FovMap *m, spoint pov, bool val)
@@ -131,8 +130,7 @@ void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
     }
 
     // Current tile is in view.
-    const spoint p(pov.x + (angle * xx) + (distance_from_origin * xy),
-                   pov.y + (angle * yx) + (distance_from_origin * yy));
+    const spoint p(pov.x + (angle * xx) + (distance_from_origin * xy), pov.y + (angle * yx) + (distance_from_origin * yy));
 
     if (is_oob(p)) {
       continue; // Angle is out-of-bounds.
@@ -204,13 +202,13 @@ void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
     //
     // Tail-recurse into the current view.
     //
-    level_fov_do(g, v, l, me, fov_can_see_tile, fov_has_seen_tile, pov, distance_from_origin + 1, view_slope_high,
-                 view_slope_low, max_radius, octant, light_walls, can_see_callback);
+    level_fov_do(g, v, l, me, fov_can_see_tile, fov_has_seen_tile, pov, distance_from_origin + 1, view_slope_high, view_slope_low,
+                 max_radius, octant, light_walls, can_see_callback);
   }
 }
 
-void level_fov(Gamep g, Levelsp v, Levelp l, Thingp me, FovMap *fov_can_see_tile, FovMap *fov_has_seen_tile,
-               spoint pov, int max_radius, level_fov_can_see_callback_t can_see_callback)
+void level_fov(Gamep g, Levelsp v, Levelp l, Thingp me, FovMap *fov_can_see_tile, FovMap *fov_has_seen_tile, spoint pov,
+               int max_radius, level_fov_can_see_callback_t can_see_callback)
 {
   TRACE_NO_INDENT();
 

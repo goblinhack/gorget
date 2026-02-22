@@ -39,16 +39,15 @@ extern int                            GAME_SAVE_MARKER_EOL;
 extern int                            GAME_SAVE_MARKER_CONFIG;
 std::array< bool, UI_MAX_SAVE_SLOTS > slot_valid;
 
-#define READ_MAGIC(what, m)                                                                                          \
-  {                                                                                                                  \
-    uint32_t magic;                                                                                                  \
-    in >> bits(magic);                                                                                               \
-    if (magic != (m)) {                                                                                              \
-      game_load_error                                                                                                \
-          = "bad '" what "' magic expected: " + std::format("0x{:x}", m) + " got " + std::format("0x{:x}", magic);   \
-      return in;                                                                                                     \
-    }                                                                                                                \
-    IF_DEBUG2 { CON("Read magic '%s' %s", what, std::format("0x{:x}", magic).c_str()); }                             \
+#define READ_MAGIC(what, m)                                                                                                      \
+  {                                                                                                                              \
+    uint32_t magic;                                                                                                              \
+    in >> bits(magic);                                                                                                           \
+    if (magic != (m)) {                                                                                                          \
+      game_load_error = "bad '" what "' magic expected: " + std::format("0x{:x}", m) + " got " + std::format("0x{:x}", magic);   \
+      return in;                                                                                                                 \
+    }                                                                                                                            \
+    IF_DEBUG2 { CON("Read magic '%s' %s", what, std::format("0x{:x}", magic).c_str()); }                                         \
   }
 
 auto operator>>(std::istream &in, Bits< SDL_Keysym & > my) -> std::istream &

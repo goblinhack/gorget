@@ -57,8 +57,7 @@ void sdl_screenshot_do(Gamep g)
   GL_ERROR_CHECK();
 
   for (int line = 0; line != h / 2; ++line) {
-    std::swap_ranges(pixels.begin() + 3 * w * line, pixels.begin() + 3 * w * (line + 1),
-                     pixels.begin() + 3 * w * (h - line - 1));
+    std::swap_ranges(pixels.begin() + 3 * w * line, pixels.begin() + 3 * w * (line + 1), pixels.begin() + 3 * w * (h - line - 1));
   }
 
   int const components = 3;

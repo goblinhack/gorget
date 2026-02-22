@@ -87,9 +87,8 @@ auto thing_minion_detach_me_from_mob(Gamep g, Levelsp v, Levelp l, Thingp me) ->
 // The points are arranged in a radius around the dmap goal, which was
 // what was presumably used to create the dmap.
 //
-[[nodiscard]] static auto thing_minion_get_mob_dmap_target_cand(Gamep g, Levelsp v, Levelp l, Thingp me,
-                                                                spoint dmap_goal, Dmap *dmap, int radius,
-                                                                spoint &target) -> bool
+[[nodiscard]] static auto thing_minion_get_mob_dmap_target_cand(Gamep g, Levelsp v, Levelp l, Thingp me, spoint dmap_goal,
+                                                                Dmap *dmap, int radius, spoint &target) -> bool
 {
   TRACE_NO_INDENT();
 

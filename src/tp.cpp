@@ -268,7 +268,7 @@ auto tp_load(const std::string &val) -> Tpp
 {
   TRACE_NO_INDENT();
 
-  std::string const& name(val);
+  std::string const &name(val);
 
   int id;
   tp_assign_id(val, &id);
@@ -545,8 +545,8 @@ auto tp_tiles_get(Tpp tp, ThingAnim val, int index) -> Tilep
   }
 
   if (std::cmp_greater_equal(index, tp->tiles[ val ].size())) {
-    TP_ERR(tp, "tp_tiles_get: tile overflow tp %s class %s/%d index %d", tp->name.c_str(),
-           ThingAnim_to_string(val).c_str(), val, index);
+    TP_ERR(tp, "tp_tiles_get: tile overflow tp %s class %s/%d index %d", tp->name.c_str(), ThingAnim_to_string(val).c_str(), val,
+           index);
   }
 
   return tp->tiles[ val ][ index ];

@@ -27,8 +27,7 @@ WidTextBox::~WidTextBox()
   wid_destroy(g, &wid_text_area);
 }
 
-WidTextBox::WidTextBox(Gamep g, spoint vtl, spoint vbr, Widp vparent, bool horiz_scroll, bool vert_scroll,
-                       int vscroll_height_in)
+WidTextBox::WidTextBox(Gamep g, spoint vtl, spoint vbr, Widp vparent, bool horiz_scroll, bool vert_scroll, int vscroll_height_in)
     : scroll_height(vscroll_height_in), tl(vtl), br(vbr), wid_parent(vparent)
 {
   TRACE_NO_INDENT();

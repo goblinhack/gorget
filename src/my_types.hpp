@@ -91,7 +91,7 @@
 //
 #define AUTO(a) auto a // NOLINT
 
-#define FOR_ALL_IN_ARRAY(my_iterator, my_array)                                                                      \
+#define FOR_ALL_IN_ARRAY(my_iterator, my_array)                                                                                  \
   for (AUTO(my_iterator) = (my_array); (my_iterator) < ((my_array) + ARRAY_SIZE(my_array)); (my_iterator)++)
 
 //

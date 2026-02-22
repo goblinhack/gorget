@@ -248,12 +248,10 @@ void wid_dead_select(Gamep g, const std::string &reason)
 
   wid_dead_window->log(g, "|                  |");
   wid_dead_window->log(g, "|     " UI_YELLOW_FMT_STR "*" UI_RESET_FMT "            |");
-  wid_dead_window->log(g, "|     " UI_GREEN_FMT_STR "|" UI_RESET_FMT "        " UI_YELLOW_FMT_STR "*" UI_RESET_FMT
-                          "   |");
-  wid_dead_window->log(g, UI_GREEN_FMT_STR ".,." UI_RESET_FMT "|" UI_GREEN_FMT_STR "'" UI_RESET_FMT
-                                           "__" UI_GREEN_FMT_STR "'\"|" UI_RESET_FMT "___" UI_GREEN_FMT_STR
-                                           "'\"'" UI_RESET_FMT "_" UI_GREEN_FMT_STR "\"|'" UI_RESET_FMT
-                                           "__|" UI_GREEN_FMT_STR ",,." UI_RESET_FMT);
+  wid_dead_window->log(g, "|     " UI_GREEN_FMT_STR "|" UI_RESET_FMT "        " UI_YELLOW_FMT_STR "*" UI_RESET_FMT "   |");
+  wid_dead_window->log(g, UI_GREEN_FMT_STR ".,." UI_RESET_FMT "|" UI_GREEN_FMT_STR "'" UI_RESET_FMT "__" UI_GREEN_FMT_STR
+                                           "'\"|" UI_RESET_FMT "___" UI_GREEN_FMT_STR "'\"'" UI_RESET_FMT "_" UI_GREEN_FMT_STR
+                                           "\"|'" UI_RESET_FMT "__|" UI_GREEN_FMT_STR ",,." UI_RESET_FMT);
   wid_dead_window->log_empty_line(g);
 
   auto *p = wid_dead_window->wid_text_area->wid_text_area;

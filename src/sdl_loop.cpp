@@ -68,8 +68,7 @@ void sdl_loop(Gamep g)
         if (g_errored_thread_id == MAIN_THREAD) {
           CON(UI_IMPORTANT_FMT_STR "An error occurred on the main thread. Check the logs." UI_RESET_FMT);
         } else {
-          CON(UI_IMPORTANT_FMT_STR "An error occurred on thread %d. Check the logs." UI_RESET_FMT,
-              g_errored_thread_id);
+          CON(UI_IMPORTANT_FMT_STR "An error occurred on thread %d. Check the logs." UI_RESET_FMT, g_errored_thread_id);
         }
         auto key = ::to_string(game_key_console_get(g));
         CON("To continue playing at your own risk, 'clear errored' and then press <%s>", key.c_str());
@@ -159,8 +158,8 @@ void sdl_loop(Gamep g)
           if (static_cast< bool >(sdl.last_mouse_held_down_when)) {
             if (time_have_x_hundredths_passed_since(50, sdl.last_mouse_held_down_when)) {
               if ((sdl.held_mouse_x != 0) && (sdl.held_mouse_y != 0)) {
-                DBG2("SDL: Mouse DOWN: held: Button %d now at %d,%d initially at %d,%d", mouse_down, sdl.mouse_x,
-                     sdl.mouse_y, sdl.held_mouse_x, sdl.held_mouse_y);
+                DBG2("SDL: Mouse DOWN: held: Button %d now at %d,%d initially at %d,%d", mouse_down, sdl.mouse_x, sdl.mouse_y,
+                     sdl.held_mouse_x, sdl.held_mouse_y);
                 wid_mouse_held(g, sdl.mouse_down, sdl.held_mouse_x, sdl.held_mouse_y);
                 sdl.held_mouse_x = 0;
                 sdl.held_mouse_y = 0;

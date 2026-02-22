@@ -111,7 +111,7 @@ public:
 
   auto               can_move_to(const spoint &to) -> bool;
   [[nodiscard]] auto heuristic(spoint at) const -> Cost;
-  auto node_init(spoint next_hop, Nodecost cost) -> Node              *;
+  auto               node_init(spoint next_hop, Nodecost cost) -> Node *;
   void               add_to_closed(Node *n);
   void               add_to_open(Node *n);
   void               dump();

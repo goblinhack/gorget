@@ -56,8 +56,7 @@ auto pcg_rand_one_of(C< T > &c) -> T
   return *(so + (pcg_rand() % sz));
 }
 
-template < class T, template < typename ELEM, typename ALLOC = std::allocator< ELEM > > class C >
-auto rand_one_of(C< T > &c) -> T
+template < class T, template < typename ELEM, typename ALLOC = std::allocator< ELEM > > class C > auto rand_one_of(C< T > &c) -> T
 {
   auto so = c.begin();
   auto eo = c.end();

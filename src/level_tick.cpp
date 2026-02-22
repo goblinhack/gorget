@@ -708,8 +708,8 @@ static void level_tick_monitor_progress(Gamep g, Levelsp v, Levelp current_level
   //
   IF_DEBUG2
   {
-    LEVEL_DBG(g, v, current_level, "Tick %u: req %u in-progress-count %u tick-end-count %u", v->tick,
-              v->level_tick_request_count, v->level_tick_in_progress_count, v->level_tick_done_count);
+    LEVEL_DBG(g, v, current_level, "Tick %u: req %u in-progress-count %u tick-end-count %u", v->tick, v->level_tick_request_count,
+              v->level_tick_in_progress_count, v->level_tick_done_count);
 
     if ((v->level_tick_done_count != 0U) && (v->level_ticking_count == v->level_tick_done_count)) {
       LEVEL_DBG(g, v, current_level, "Tick %u: all %u levels finished ticking", v->tick, v->level_tick_done_count);

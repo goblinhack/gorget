@@ -155,10 +155,7 @@ void get_timestamp(char *buf, int len)
 }
 
 // avoid: warning: ‘%c’ yields only last 2 digits of year in some locales [-Wformat-y2k]
-static auto my_strftime(char *s, size_t max, const char *fmt, const struct tm *tm) -> size_t
-{
-  return strftime(s, max, fmt, tm);
-}
+static auto my_strftime(char *s, size_t max, const char *fmt, const struct tm *tm) -> size_t { return strftime(s, max, fmt, tm); }
 
 auto current_date() -> std::string
 {

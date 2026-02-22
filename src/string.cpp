@@ -91,8 +91,8 @@ static char *substr (const char *in, int pos, int len)
 //
 // strsub("foo.zip", ".zip", ""); -> "foo"
 //
-auto strsub_(const char *in, const char *look_for, const char *replace_with, const char *what, const char *file,
-             const char *func, int line) -> char *
+auto strsub_(const char *in, const char *look_for, const char *replace_with, const char *what, const char *file, const char *func,
+             int line) -> char *
 {
   TRACE_NO_INDENT();
   char       *buf;

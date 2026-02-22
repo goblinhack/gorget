@@ -4527,8 +4527,7 @@ auto thing_collision_radius(Thingp t) -> float
 {
   TRACE_NO_INDENT();
 
-  return thing_is_collision_circle_small(t) ? THING_COLLISION_CIRCLE_SMALL_RADIUS
-                                            : THING_COLLISION_CIRCLE_LARGE_RADIUS;
+  return thing_is_collision_circle_small(t) ? THING_COLLISION_CIRCLE_SMALL_RADIUS : THING_COLLISION_CIRCLE_LARGE_RADIUS;
 }
 
 auto thing_target(Thingp t) -> spoint

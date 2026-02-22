@@ -428,7 +428,22 @@ static inline auto operator>>(std::istream &in, Bits< M< K, V > & > m) -> std::i
 // Read/write set
 ////////////////////////////////////////////////////////////////////////////
 
-template < template < class K, class Compare = std::less< K >, class Allocator = std::allocator< K > > class M,
+template < template < class K, class Compare = std::less< K >, class Allocator = std::allocator< K > > class M, class K >
+
+static inline auto operator<<(std::ostream &out, Bits< M< K > & > const m) -> std::ostream &
+{
+#ifdef DEBUG_C_PLUS_PLUS_SERIALIZER
+  std::cout << "write set<K> " << m.t.size() << " elems" << std::endl;
+#endif
+  my_size_t sz = m.t.size();
+  out << bits(sz);
+  for (auto i : m.t) {
+    out << bits(i);
+  }
+  return out;
+}
+
+template < template < class K, class Compare = std::less< const K >, class Allocator = std::allocator< const K > > class M,
            class K >
 
 static inline auto operator<<(std::ostream &out, Bits< M< K > & > const m) -> std::ostream &
@@ -444,25 +459,7 @@ static inline auto operator<<(std::ostream &out, Bits< M< K > & > const m) -> st
   return out;
 }
 
-template <
-    template < class K, class Compare = std::less< const K >, class Allocator = std::allocator< const K > > class M,
-    class K >
-
-static inline auto operator<<(std::ostream &out, Bits< M< K > & > const m) -> std::ostream &
-{
-#ifdef DEBUG_C_PLUS_PLUS_SERIALIZER
-  std::cout << "write set<K> " << m.t.size() << " elems" << std::endl;
-#endif
-  my_size_t sz = m.t.size();
-  out << bits(sz);
-  for (auto i : m.t) {
-    out << bits(i);
-  }
-  return out;
-}
-
-template < template < class K, class Compare = std::less< K >, class Allocator = std::allocator< K > > class M,
-           class K >
+template < template < class K, class Compare = std::less< K >, class Allocator = std::allocator< K > > class M, class K >
 
 static inline auto operator>>(std::istream &in, Bits< M< K > & > m) -> std::istream &
 {

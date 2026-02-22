@@ -286,8 +286,7 @@ got_level:
     l->level_num_next_set = true;
     l->level_num_next     = level_out->level_num;
     if (compiler_unused) {
-      CON("level %d -> next %d at %u,%u", l->level_num, l->level_num_next, l->level_select_at.x,
-          l->level_select_at.y);
+      CON("level %d -> next %d at %u,%u", l->level_num, l->level_num_next, l->level_select_at.x, l->level_select_at.y);
     }
   }
 
@@ -468,9 +467,9 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
   LOG("Level select map");
   TRACE_NO_INDENT();
 
-  LevelSelect  const*s            = &v->level_select;
-  auto         level_num    = LEVEL_SELECT_ID;
-  auto        *level_select = game_level_get(g, v, level_num);
+  LevelSelect const *s            = &v->level_select;
+  auto               level_num    = LEVEL_SELECT_ID;
+  auto              *level_select = game_level_get(g, v, level_num);
 
   auto  *player       = thing_player(g);
   Levelp player_level = thing_player_level(g);

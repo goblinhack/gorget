@@ -732,8 +732,7 @@ auto wid_ignore_events(Widp w) -> bool
     return true;
   }
 
-  if ((static_cast< bool >(w->ignore_events)) || (static_cast< bool >(w->hidden))
-      || (static_cast< bool >(w->being_destroyed))) {
+  if ((static_cast< bool >(w->ignore_events)) || (static_cast< bool >(w->hidden)) || (static_cast< bool >(w->being_destroyed))) {
     return true;
   }
 
@@ -2333,8 +2332,7 @@ auto wid_new_square_button(Gamep g, Widp parent, const std::string &name) -> Wid
 
 #ifdef ENABLE_DEBUG_UI
 #ifdef ENABLE_DEBUG_UI2
-  w->to_string
-      = string_sprintf("%s[%p] (parent %s[%p])", name.c_str(), w, parent->to_string.c_str(), (void *) parent);
+  w->to_string = string_sprintf("%s[%p] (parent %s[%p])", name.c_str(), w, parent->to_string.c_str(), (void *) parent);
 #else
   w->to_string = string_sprintf("%s[%p]", name.c_str(), (void *) w);
 #endif
@@ -2423,8 +2421,7 @@ static auto wid_new_scroll_trough(Gamep g, Widp parent) -> Widp
 
   Widp w = wid_new(parent);
 
-  w->to_string
-      = string_sprintf("[%p] scroll trough (parent %s[%p])", (void *) w, parent->to_string.c_str(), (void *) parent);
+  w->to_string = string_sprintf("[%p] scroll trough (parent %s[%p])", (void *) w, parent->to_string.c_str(), (void *) parent);
 
   WID_DBG(w, "%s", __FUNCTION__);
 
@@ -2455,8 +2452,7 @@ static auto wid_new_scroll_trough(Gamep g, Widp parent) -> Widp
 //
 // Initialize a wid with basic settings
 //
-static auto wid_new_scroll_bar(Gamep g, Widp parent, const std::string &name, Widp scrollbar_owner, bool vertical)
-    -> Widp
+static auto wid_new_scroll_bar(Gamep g, Widp parent, const std::string &name, Widp scrollbar_owner, bool vertical) -> Widp
 {
   TRACE_NO_INDENT();
 

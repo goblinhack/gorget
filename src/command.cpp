@@ -149,7 +149,7 @@ void command_add(Gamep g, command_fn_t callback, const std::string &input, const
 }
 
 static auto command_matches(Gamep g, const char *input, char *output, uint8_t show_ambiguous, uint8_t show_complete,
-                           uint8_t execute_command, void *context) -> int
+                            uint8_t execute_command, void *context) -> int
 {
   TRACE_NO_INDENT();
 
@@ -332,7 +332,7 @@ static auto command_matches(Gamep g, const char *input, char *output, uint8_t sh
 }
 
 auto command_handle(Gamep g, const char *input, char *expandedtext, uint8_t show_ambiguous, uint8_t show_complete,
-                       uint8_t execute_command, void *context) -> uint8_t
+                    uint8_t execute_command, void *context) -> uint8_t
 {
   TRACE_NO_INDENT();
   int matches;
@@ -385,15 +385,14 @@ auto command_handle(Gamep g, const char *input, char *expandedtext, uint8_t show
   return 1U;
 }
 
-auto command_handle(Gamep g, const std::string &input, std::string *expanded_text, uint8_t show_ambiguous,
-                       uint8_t show_complete, uint8_t execute_command, void *context) -> uint8_t
+auto command_handle(Gamep g, const std::string &input, std::string *expanded_text, uint8_t show_ambiguous, uint8_t show_complete,
+                    uint8_t execute_command, void *context) -> uint8_t
 {
   char buf[ MAXSTR ];
 
   buf[ 0 ] = '\0';
 
-  uint8_t const r
-      = command_handle(g, input.c_str(), &buf[ 0 ], show_ambiguous, show_complete, execute_command, context);
+  uint8_t const r = command_handle(g, input.c_str(), &buf[ 0 ], show_ambiguous, show_complete, execute_command, context);
 
   if (expanded_text != nullptr) {
     *expanded_text = std::string(buf);

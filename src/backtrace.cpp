@@ -281,8 +281,7 @@ std::string backtrace_string(void)
     if (SymFromAddr(handle, addr, nullptr, symbol)) {
       char *function_name = symbol->Name;
       auto  sym           = demangle_symbol(function_name);
-      out += std::format("CaptureStackBackTrace[{}]: {}() {}:{}\n", i - frames_to_skip, sym.c_str(), file,
-                         line_number);
+      out += std::format("CaptureStackBackTrace[{}]: {}() {}:{}\n", i - frames_to_skip, sym.c_str(), file, line_number);
     } else {
       out += std::format("CaptureStackBackTrace[{}]: {}:{}\n", i - frames_to_skip, file, line_number);
     }

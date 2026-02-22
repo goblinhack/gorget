@@ -79,8 +79,7 @@
 
   if ((delta == fpoint(0, 0)) || level_is_obs_to_teleporting_onto(g, v, l, to)) {
     const std::initializer_list< fpoint > deltas = {
-        fpoint(1, 0),   fpoint(-1, 0), fpoint(0, 1),  fpoint(0, -1),
-        fpoint(-1, -1), fpoint(-1, 1), fpoint(1, -1), fpoint(1, 1),
+        fpoint(1, 0), fpoint(-1, 0), fpoint(0, 1), fpoint(0, -1), fpoint(-1, -1), fpoint(-1, 1), fpoint(1, -1), fpoint(1, 1),
     };
 
     //

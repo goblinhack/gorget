@@ -337,9 +337,8 @@ void Raycast::ray_lengths_precalculate(Gamep g, Levelsp v, Levelp l)
     float cosr;
     float sinr;
     sincosf(dr * (float) i, &sinr, &cosr);
-    ray_pixel_line_draw(
-        i, spoint(0, 0),
-        spoint((int) ((float) ray_max_length_in_pixels * cosr), (int) ((float) ray_max_length_in_pixels * sinr)));
+    ray_pixel_line_draw(i, spoint(0, 0),
+                        spoint((int) ((float) ray_max_length_in_pixels * cosr), (int) ((float) ray_max_length_in_pixels * sinr)));
   }
 }
 
