@@ -642,7 +642,7 @@ enum {
 [[nodiscard]] auto level_is_player_level(Gamep g, Levelsp v, Levelp l) -> bool;
 [[nodiscard]] auto level_is_same_obj_type_at(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp) -> bool;
 [[nodiscard]] auto level_light_blocker_at(Gamep g, Levelsp v, Levelp l, spoint pov) -> Thingp;
-[[nodiscard]] auto level_match_contents(Gamep g, Levelsp v, Levelp l, Testp t, int w, int h, const char *in) -> bool;
+[[nodiscard]] auto level_match_contents(Gamep g, Levelsp v, Levelp l, Testp t, int w, int h, const char *expected) -> bool;
 [[nodiscard]] auto level_open(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> Thingp;
 [[nodiscard]] auto level_open(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp at) -> Thingp;
 [[nodiscard]] auto level_populate_thing_id_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot, ThingId id) -> bool;
@@ -696,7 +696,7 @@ void level_forced_auto_scroll(Gamep g, Levelsp v, Levelp l);
 void level_gen_create_levels(Gamep g, Levelsp v);
 void level_gen_stats_dump(Gamep g);
 void level_gen_test(Gamep g);
-void level_init(Gamep g, Levelsp v, Levelp l, LevelNum level_num);
+void level_init(Gamep g, Levelsp v, Levelp l, LevelNum n);
 void level_is_completed_by_player_exiting(Gamep g, Levelsp v, Levelp l);
 void level_is_completed_by_player_falling(Gamep g, Levelsp v, Levelp l);
 void level_is_player_level_set(Gamep g, Levelsp v, Levelp l);
@@ -765,7 +765,7 @@ void rooms_test(Gamep g);
 // end sort marker2 }
 
 using level_fov_can_see_callback_t = void (*)(Gamep, Levelsp, Levelp, Thingp me, spoint pov, spoint p);
-void level_fov(Gamep g, Levelsp v, Levelp l, Thingp me, FovMap *curr, FovMap *ever, spoint pov, int max_radius,
+void level_fov(Gamep g, Levelsp v, Levelp l, Thingp me, FovMap *fov_can_see_tile, FovMap *fov_has_seen_tile, spoint pov, int max_radius,
                level_fov_can_see_callback_t can_see_callback = nullptr);
 
 using LevelType = enum LevelType_ {

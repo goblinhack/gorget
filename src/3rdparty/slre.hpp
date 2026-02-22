@@ -74,7 +74,7 @@ struct cap {
 // Compile regular expression. If success, 1 is returned.
 // If error, 0 is returned and slre.err_str points to the error message.
 //
-int slre_compile(struct slre *, const char *re);
+auto slre_compile(struct slre *, const char *re) -> int;
 
 //
 // Return 1 if match, 0 if no match.
@@ -86,7 +86,7 @@ int slre_compile(struct slre *, const char *re);
 // hold all captures. The caller function must make sure it is! So, the
 // array_size = number_of_round_bracket_pairs + 1
 //
-int slre_match(const struct slre *, const char *buf, int buf_len, struct cap *captured_substrings);
+auto slre_match(const struct slre *, const char *buf, int buf_len, struct cap *captured_substrings) -> int;
 
 void slre_test();
 #endif // SLRE_HEADER_DEFINED

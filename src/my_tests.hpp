@@ -11,7 +11,7 @@ auto tests_init() -> bool;
 /* begin shell marker1 */
 /* shell for i in $(find tests -name "*.cpp" | xargs grep -h "^auto test_load" | sort | awk '{print $2}' | cut -d'(' -f1 ) */
 /* shell do */
-/* shell echo "bool $i();" */
+/* shell echo "auto $i() -> bool;" */
 /* shell done */
 bool test_load_alloc_free_monsts();
 bool test_load_alloc_free_walls();

@@ -21,6 +21,6 @@ using term_color = enum term_color_ {
 };
 
 extern auto term_color_to_console_color(color c) -> int;
-extern void term_log(const char *buf);
+extern void term_log(const char *s);
 
 #endif

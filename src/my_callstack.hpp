@@ -11,8 +11,8 @@
 #define CAT2(A, B) CAT(A, B)
 
 #ifdef ENABLE_DEBUG_TRACE
-#define TRACE_AND_INDENT() tracer_t CAT2(__my_trace__, __LINE__)(SRC_FUNC_NAME, SRC_LINE_NUM);
-#define TRACE_NO_INDENT()  tracer_no_indent_t CAT2(__my_trace__, __LINE__)(SRC_FUNC_NAME, SRC_LINE_NUM);
+#define TRACE_AND_INDENT() const tracer_t CAT2(__my_trace__, __LINE__)(SRC_FUNC_NAME, SRC_LINE_NUM);
+#define TRACE_NO_INDENT()  const tracer_no_indent_t CAT2(__my_trace__, __LINE__)(SRC_FUNC_NAME, SRC_LINE_NUM);
 #else
 #define TRACE_AND_INDENT()
 #define TRACE_NO_INDENT()

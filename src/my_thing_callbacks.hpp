@@ -88,7 +88,7 @@ void thing_on_teleported(Gamep g, Levelsp v, Levelp l, Thingp me);
 
 using thing_on_shoved_t = void (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp shover);
 void thing_on_shoved_set(Tpp tp, thing_on_shoved_t callback);
-void thing_on_shoved(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp shover);
+void thing_on_shoved(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp player_or_monst);
 
 using thing_on_jump_begin_t = void (*)(Gamep, Levelsp, Levelp, Thingp me);
 void thing_on_jump_begin_set(Tpp tp, thing_on_jump_begin_t callback);

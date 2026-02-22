@@ -285,8 +285,8 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
           GLshort bottom, const color &c);
 void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLshort left, GLshort top, GLshort right,
           GLshort bottom, const color &color_bl, const color &color_br, const color &color_tl, const color &color_tr);
-void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLshort left, GLshort top, GLshort right,
-          GLshort bottom, const color &c, struct LightPixels_ * /*light_pixels*/, bool is_blit_flush_per_line);
+void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLshort pixMinX, GLshort pixMinY, GLshort pixMaxX,
+          GLshort pixMaxY, const color &c, struct LightPixels_ * /*light_pixels*/, bool is_blit_flush_per_line);
 void blit_fbo(Gamep g, FboEnum fbo);
 void blit_fbo(Gamep g, FboEnum fbo, int tl_x, int tl_y, int br_x, int br_y);
 void blit_fbo_push(FboEnum fbo);
@@ -305,10 +305,10 @@ void blit_init();
 void fbo_get_size(Gamep g, FboEnum fbo, int &w, int &h);
 void fbo_get_curr_size(Gamep g, int &w, int &h);
 
-void gl_blitline(GLshort tlx, GLshort tly, GLshort brx, GLshort bry);
+void gl_blitline(GLshort left, GLshort top, GLshort right, GLshort bottom);
 void gl_blitquad(spoint tl, spoint tr, spoint bl, spoint br);
-void gl_blitquad(GLshort tlx, GLshort tly, GLshort brx, GLshort bry);
-void gl_blitsquare(GLshort tlx, GLshort tly, GLshort brx, GLshort bry);
+void gl_blitquad(GLshort left, GLshort top, GLshort right, GLshort bottom);
+void gl_blitsquare(GLshort left, GLshort top, GLshort right, GLshort bottom);
 void gl_enter_2_5d_mode(Gamep);
 void gl_enter_2d_mode(Gamep g, int w, int h);
 void gl_enter_2d_mode(Gamep g);

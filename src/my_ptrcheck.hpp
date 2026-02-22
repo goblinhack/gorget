@@ -11,11 +11,11 @@
 #define PTRCHECK_AT SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM
 
 void ptrcheck_fini();
-auto myzalloc_(int size, const char *what, const char *func, const char *file, int line) -> void *;
-auto mymalloc_(int size, const char *what, const char *func, const char *file, int line) -> void *;
-auto myrealloc_(void *ptr, int size, const char *what, const char *func, const char *file, int line) -> void *;
-void myfree_(void *ptr, const char *func, const char *file, int line);
-auto mydupstr_(const char *in, const char *what, const char *func, const char *file, int line) -> char *;
+auto myzalloc_(int size, const char *what, const char *file, const char *func, int line) -> void *;
+auto mymalloc_(int size, const char *what, const char *file, const char *func, int line) -> void *;
+auto myrealloc_(void *ptr, int size, const char *what, const char *file, const char *func, int line) -> void *;
+void myfree_(void *ptr, const char *file, const char *func, int line);
+auto mydupstr_(const char *in, const char *what, const char *file, const char *func, int line) -> char *;
 auto strsub_(const char *in, const char *old, const char *replace_with, const char *what, const char *file, const char *func,
              int line) -> char *;
 

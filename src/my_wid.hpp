@@ -165,7 +165,7 @@ void wid_move_to_abs(Gamep g, Widp w, int dx, int dy);
 void wid_move_to_bottom(Gamep g, Widp w);
 void wid_move_to_horiz_pct(Gamep g, Widp w, float pct);
 void wid_move_to_left(Gamep g, Widp w);
-void wid_move_to_pct_centered(Gamep g, Widp w, float dx, float dy);
+void wid_move_to_pct_centered(Gamep g, Widp w, float ox, float oy);
 void wid_move_to_pct(Gamep g, Widp w, float dx, float dy);
 void wid_move_to_right(Gamep g, Widp w);
 void wid_move_to_top(Gamep g, Widp w);

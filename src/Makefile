@@ -103,7 +103,10 @@ tidy:
 		clang-tidy \
 			-fix \
 			-fix-errors \
+			-fix-notes \
+			--quiet \
 			--system-headers=0 \
+			-header-filter="*.hpp" \
 			-checks="-*,\
 			hicpp-*,\
 			bugprone-*,\
@@ -116,8 +119,10 @@ tidy:
 			misc-confusable-identifiers,\
 			modernize-*,\
 			performance-*,\
-			readability-*" \
-			-header-filter=".*" "$(SRC_DIR)/$$src" -- $(CFLAGS); \
+			readability-*\
+			" \
+			-header-filter=".*" \
+			"$(SRC_DIR)/$$src" -- $(CFLAGS); \
 	done
 	git checkout 3rdparty
 	@echo "Done"

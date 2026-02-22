@@ -648,37 +648,6 @@ case "$MY_OS_NAME" in
         LDLIBS+=" -lmingw32 -mwindows /${MSYS_PATH}/lib/libSDL2main.a -L/${MSYS_PATH}/lib -lSDL2main -lSDL2"
     ;;
 esac
-
-#
-# Create the makefile
-#
-cat >>$MAKEFILE <<%%
-EXE=$EXE
-DSYM=$DSYM
-LDLIBS=$LDLIBS
-SDL2_INC_PATH=$SDL2_INC_PATH
-%%
-
-log_info "LDFLAGS                    :$LDFLAGS"
-log_info "LDLIBS                     : $LDLIBS"
-
-#
-# Cleanup pre-build
-#
-log_info "Cleaning"
-make clobber | sed 's/^/  /g'
-
-log_info "OS version                 :"
-cat /etc/*-release 2>/dev/null
-lsb_release -a 2>/dev/null
-cat /proc/version 2>/dev/null
-uname -a
-
-log_info "Game version               : $MYVER"
-
-log_info "Compiler version           :"
-$CC --version
-
 #
 # How many cores?
 #
@@ -704,6 +673,37 @@ then
 else
     log_info "Compiling"
 fi
+
+#
+# Create the makefile
+#
+cat >>$MAKEFILE <<%%
+EXE=$EXE
+DSYM=$DSYM
+LDLIBS=$LDLIBS
+SDL2_INC_PATH=$SDL2_INC_PATH
+CORES=$CORES
+%%
+
+log_info "LDFLAGS                    :$LDFLAGS"
+log_info "LDLIBS                     : $LDLIBS"
+
+#
+# Cleanup pre-build
+#
+log_info "Cleaning"
+make clobber | sed 's/^/  /g'
+
+log_info "OS version                 :"
+cat /etc/*-release 2>/dev/null
+lsb_release -a 2>/dev/null
+cat /proc/version 2>/dev/null
+uname -a
+
+log_info "Game version               : $MYVER"
+
+log_info "Compiler version           :"
+$CC --version
 
 cd ..
 
