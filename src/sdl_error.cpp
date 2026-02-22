@@ -58,7 +58,7 @@ void sdl_msg_box(const char *fmt, ...)
 {
   TRACE_NO_INDENT();
 
-  va_list args;
+  va_list args = nullptr;
 
   va_start(args, fmt);
   sdl_msgerr_(fmt, args);

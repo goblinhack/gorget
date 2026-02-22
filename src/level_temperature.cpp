@@ -19,8 +19,8 @@ void level_tick_begin_temperature(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  int x;
-  int y;
+  int x = 0;
+  int y = 0;
 
   FOR_ALL_MAP_POINTS(g, v, l, x, y)
   {
@@ -206,10 +206,10 @@ void level_thing_pair_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp a,
   //
   // The new temperatures
   //
-  int Na;
+  int Na = 0;
   thing_heat_exchange(v, a, b, Na);
 
-  int Nb;
+  int Nb = 0;
   thing_heat_exchange(v, b, a, Nb);
 
   //
@@ -245,8 +245,8 @@ void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  int x;
-  int y;
+  int x = 0;
+  int y = 0;
 
   if (l->is_handling_temperature_changes) {
     return;

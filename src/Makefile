@@ -106,7 +106,7 @@ tidy:
 			--system-headers=0 \
 			-checks="-*,\
 			bugprone-*,\
-			cppcoreguidelines-no-malloc,\
+			cppcoreguidelines-*,\
 			misc-const-correctness,\
 			misc-redundant-expression,\
 			misc-static-assert,\

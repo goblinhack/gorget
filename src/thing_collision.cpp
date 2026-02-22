@@ -6,6 +6,8 @@
 #include "my_main.hpp"
 #include "my_thing_inlines.hpp"
 
+#include <math.h>
+
 #include <algorithm>
 
 //
@@ -257,7 +259,7 @@ auto thing_collision_check_circle_circle(Gamep g, Levelsp v, Levelp l, Thingp A,
   }
 
   fpoint *intersect_out = nullptr;
-  float   dist;
+  float   dist = 0;
 
   if (distance_to_line(C_at, B0, B1, &dist, intersect_out) != 0) {
     if (dist < radius) {

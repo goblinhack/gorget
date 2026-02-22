@@ -49,7 +49,7 @@ static inline void unlock(SDL_Surface *surface)
 //
 static void inline putPixel(SDL_Surface *surface, uint16_t x, uint16_t y, const color &col)
 {
-  uint32_t rgb;
+  uint32_t rgb = 0;
 
 #ifdef _DEBUG_BUILD_
   if (unlikely((x >= (uint32_t) surface->w) || (y >= (uint32_t) surface->h))) {
@@ -73,7 +73,7 @@ static void inline putPixel(SDL_Surface *surface, uint16_t x, uint16_t y, const 
 //
 static inline void getPixel(SDL_Surface *surface, uint16_t x, uint16_t y, color &col)
 {
-  uint32_t rgb;
+  uint32_t rgb = 0;
 
 #ifdef _DEBUG_BUILD_
   if (unlikely((x >= (uint32_t) surface->w) || (y >= (uint32_t) surface->h))) {

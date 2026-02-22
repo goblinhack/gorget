@@ -22,10 +22,10 @@ void level_mouse_position_get(Gamep g, Levelsp v, Levelp l)
   //
   // Get the visible map bounds
   //
-  int visible_map_tl_x;
-  int visible_map_tl_y;
-  int visible_map_br_x;
-  int visible_map_br_y;
+  int visible_map_tl_x = 0;
+  int visible_map_tl_y = 0;
+  int visible_map_br_x = 0;
+  int visible_map_br_y = 0;
   game_visible_map_pix_get(g, &visible_map_tl_x, &visible_map_tl_y, &visible_map_br_x, &visible_map_br_y);
 
   //

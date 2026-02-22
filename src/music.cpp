@@ -97,7 +97,7 @@ auto music_load(uint32_t rate, const char *file, const char *name_alias) -> bool
     return false;
   }
 
-  SDL_RWops *rw;
+  SDL_RWops *rw = nullptr;
 
   rw = SDL_RWFromMem(m->data, m->len);
   if (rw == nullptr) {

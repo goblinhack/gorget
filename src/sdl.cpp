@@ -177,8 +177,8 @@ void sdl_mouse_center(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  int x;
-  int y;
+  int x = 0;
+  int y = 0;
 
   x = game_window_pix_width_get(g) / 2;
   y = game_window_pix_height_get(g) / 2;
@@ -768,8 +768,8 @@ void config_game_gfx_update(Gamep g)
 
   FOR_ALL_FBO(fbo)
   {
-    int fbo_tmp_w;
-    int fbo_tmp_h;
+    int fbo_tmp_w = 0;
+    int fbo_tmp_h = 0;
     fbo_get_size(g, fbo, fbo_tmp_w, fbo_tmp_h);
     LOG("SDL: - %-30s : %ux%u pixels", FboEnum_to_string(fbo).c_str(), fbo_tmp_w, fbo_tmp_h);
   }

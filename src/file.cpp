@@ -14,6 +14,7 @@
 #include <cstring>
 #include <ctime>
 #include <print>
+#include <math.h>
 #include <sys/stat.h>
 #include <unistd.h>
 
@@ -23,8 +24,8 @@ static auto file_io_read(const char *filename, int *len) -> unsigned char *;
 auto file_load(const char *filename, int *outlen) -> unsigned char *
 {
   TRACE_NO_INDENT();
-  unsigned char *out;
-  char          *alt_filename;
+  unsigned char *out = nullptr;
+  char          *alt_filename = nullptr;
 
   alt_filename = nullptr;
 
@@ -177,9 +178,9 @@ auto file_load(const char *filename, int *outlen) -> unsigned char *
 auto file_io_read(const char *filename, int *out_len) -> unsigned char *
 {
   TRACE_NO_INDENT();
-  unsigned char *buffer;
-  FILE          *file;
-  int            len;
+  unsigned char *buffer = nullptr;
+  FILE          *file = nullptr;
+  int            len = 0;
 
   file = fopen(filename, "rb");
   if (file == nullptr) {
@@ -236,8 +237,8 @@ auto file_io_read(const char *filename, int *out_len) -> unsigned char *
 auto file_write(const char *filename, unsigned char *buffer, int len) -> int
 {
   TRACE_NO_INDENT();
-  FILE   *file;
-  uint8_t rc;
+  FILE   *file = nullptr;
+  uint8_t rc = 0;
 
   file = fopen(filename, "w");
   if (file == nullptr) {
@@ -274,7 +275,7 @@ auto file_write(const char *filename, unsigned char *buffer, int len) -> int
 auto file_exists(const char *filename) -> uint8_t
 {
   TRACE_NO_INDENT();
-  struct stat buf;
+  struct stat buf{};
 
   if (filename == nullptr) {
     return 0;
@@ -333,7 +334,7 @@ auto file_io_read_if_exists(const char *filename, int *out_len) -> unsigned char
 auto file_size(const char *filename) -> int
 {
   TRACE_NO_INDENT();
-  struct stat buf;
+  struct stat buf{};
 
   if (stat(filename, &buf) >= 0) {
     return int(buf.st_size);
@@ -380,7 +381,7 @@ auto file_unlink(const char *filename) -> uint8_t
 auto file_age(const char *filename) -> double
 {
   TRACE_NO_INDENT();
-  struct stat buf;
+  struct stat buf{};
 
   if (stat(filename, &buf) < 0) {
     return -1;
@@ -397,9 +398,9 @@ auto file_age(const char *filename) -> double
 auto file_exists_and_is_newer_than(const char *filename1, const char *filename2) -> uint8_t
 {
   TRACE_NO_INDENT();
-  struct stat buf1;
-  struct stat buf2;
-  double      delta;
+  struct stat buf1{};
+  struct stat buf2{};
+  double      delta = 0;
 
   if (filename1 == nullptr) {
     CROAK("expected two filenames");
@@ -426,7 +427,7 @@ auto file_exists_and_is_newer_than(const char *filename1, const char *filename2)
 
 void FILE_LOG(const char *fmt, ...)
 {
-  va_list args;
+  va_list args = nullptr;
 
   va_start(args, fmt);
   log_(fmt, args);
@@ -435,7 +436,7 @@ void FILE_LOG(const char *fmt, ...)
 
 void FILE_DBG(const char *fmt, ...)
 {
-  va_list args;
+  va_list args = nullptr;
 
   IF_NODEBUG2 { return; }
 

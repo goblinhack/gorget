@@ -15,13 +15,13 @@ class HiScore
 {
 public:
   HiScore() = default;
-  HiScore(std::string vname, std::string vreason, std::string vwhen, int vscore, int vlevels_completed)
+  HiScore(std::string vname, std::string vreason, std::string vwhen, int vscore, int vlevels_completed) : name(std::move(vname)), reason(std::move(vreason)), when(std::move(vwhen)), score(vscore), levels_completed(vlevels_completed)
   {
-    this->name             = std::move(vname);
-    this->reason           = std::move(vreason);
-    this->when             = std::move(vwhen);
-    this->score            = vscore;
-    this->levels_completed = vlevels_completed;
+    
+    
+    
+    
+    
   }
 
   ~HiScore() = default;

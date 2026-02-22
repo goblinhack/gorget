@@ -17,6 +17,8 @@
 #include "my_tex.hpp"
 #include "my_tile.hpp"
 
+#include <math.h>
+
 #include <array>
 #ifdef WRITE_TILED
 #include <libgen.h>
@@ -41,7 +43,7 @@ public:
   // Grabbed by a template
   //
   uint8_t in_use {};
-  int     global_index;
+  int     global_index {};
 
   //
   // Index within the overall texture, left to right, top to bottom.
@@ -73,7 +75,7 @@ public:
   class Tex *tex_mask {};
   class Tex *tex_outline {};
 
-  uint8_t pix[ TILE_WIDTH_MAX ][ TILE_HEIGHT_MAX ];
+  uint8_t pix[ TILE_WIDTH_MAX ][ TILE_HEIGHT_MAX ] {};
 
   //
   // Delay in ms between frames.
@@ -139,15 +141,27 @@ void tile_fini()
 }
 
 Tile::Tile(const class Tile *tile)
+    :                                                             // newline
+      global_index(all_tiles_array.size() + 1), index(0),         // newline
+      pix_width(tile->pix_width),                                 // newline
+      pix_height(tile->pix_height),                               // newline
+      x1(tile->x1),                                               // newline
+      y1(tile->y1),                                               // newline
+      x2(tile->x2),                                               // newline
+      y2(tile->y2),                                               // newline
+      tex(tile->tex),                                             // newline
+      tex_monochrome(tile->tex_monochrome),                       // newline
+      tex_mask(tile->tex_mask),                                   // newline
+      tex_outline(tile->tex_outline),                             // newline
+      delay_ms(tile->delay_ms),                                   // newline
+      dir(tile->dir),                                             // newline
+      internal_has_dir_anim(tile->internal_has_dir_anim),         // newline
+      is_alive_on_end_of_anim(tile->is_alive_on_end_of_anim),     // newline
+      is_cleanup_on_end_of_anim(tile->is_cleanup_on_end_of_anim), // newline
+      is_end_of_anim(tile->is_end_of_anim),                       // newline
+      is_loggable(tile->is_loggable)                              // newline
 {
   newptr(MTYPE_TILE, this, "Tile copy");
-
-  pix_width  = tile->pix_width;
-  pix_height = tile->pix_height;
-  x1         = tile->x1;
-  y1         = tile->y1;
-  x2         = tile->x2;
-  y2         = tile->y2;
 
 #ifdef ENABLE_TILE_BOUNDS
   px1 = tile->px1;
@@ -161,24 +175,9 @@ Tile::Tile(const class Tile *tile)
   set_gl_binding_mask(tile->gl_binding_mask());
   set_gl_binding_outline(tile->gl_binding_outline());
 
-  tex            = tile->tex;
-  tex_monochrome = tile->tex_monochrome;
-  tex_mask       = tile->tex_mask;
-  tex_outline    = tile->tex_outline;
-
   memcpy(pix, tile->pix, sizeof(pix));
 
-  delay_ms                  = tile->delay_ms;
-  dir                       = tile->dir;
-  is_loggable               = tile->is_loggable;
-  is_end_of_anim            = tile->is_end_of_anim;
-  is_cleanup_on_end_of_anim = tile->is_cleanup_on_end_of_anim;
-  is_alive_on_end_of_anim   = tile->is_alive_on_end_of_anim;
-  internal_has_dir_anim     = tile->internal_has_dir_anim;
-
-  index        = 0;
-  global_index = all_tiles_array.size() + 1;
-  name         = tile->name + " " + std::to_string(global_index);
+  name = tile->name + " " + std::to_string(global_index);
 
   auto result = all_tiles.insert(std::make_pair(name, this));
   if (! result.second) {
@@ -326,10 +325,10 @@ void tile_load_arr_sprites(const char *file, const char *alias, uint32_t tile_wi
                            const char *arr[], int gl_mode)
 {
   TRACE_NO_INDENT();
-  Texp tex;
-  Texp tex_monochrome;
-  Texp tex_mask;
-  Texp tex_outline;
+  Texp tex            = nullptr;
+  Texp tex_monochrome = nullptr;
+  Texp tex_mask       = nullptr;
+  Texp tex_outline    = nullptr;
 
   tex_load_sprites(&tex, &tex_monochrome, &tex_mask, &tex_outline, file, alias, tile_width, tile_height, gl_mode);
 
@@ -506,8 +505,8 @@ void tile_load_arr_sprites(const char *file, const char *alias, uint32_t tile_wi
 //
 void tile_from_fbo(Gamep g, FboEnum fbo)
 {
-  int w;
-  int h;
+  int w = 0;
+  int h = 0;
   fbo_get_size(g, fbo, w, h);
   auto name = FboEnum_to_string(fbo);
 
@@ -822,10 +821,10 @@ void Tile::set_gl_binding_outline(int v)
 
 void tile_blit(const Tilep &tile, const spoint tl, const spoint br, const color &c)
 {
-  float x1;
-  float x2;
-  float y1;
-  float y2;
+  float x1 = 0;
+  float x2 = 0;
+  float y1 = 0;
+  float y2 = 0;
 
   x1 = tile->x1;
   x2 = tile->x2;
@@ -865,10 +864,10 @@ void tile_blit(const Tilep &tile, spoint tl, spoint br, const color &color_tl, c
 void tile_blit_section(const Tilep &tile, const fpoint &tile_tl, const fpoint &tile_br, const spoint tl, const spoint br,
                        const color &color_tl, const color &color_tr, const color &color_bl, const color &color_br)
 {
-  float       x1;
-  float       x2;
-  float       y1;
-  float       y2;
+  float       x1 = 0;
+  float       x2 = 0;
+  float       y1 = 0;
+  float       y2 = 0;
   float const tw = tile->x2 - tile->x1;
   float const th = tile->y2 - tile->y1;
 

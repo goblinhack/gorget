@@ -14,13 +14,13 @@
 
 void dmap_print(const Dmap *D, spoint at, spoint tl, spoint br)
 {
-  int x;
-  int y;
+  int x = 0;
+  int y = 0;
 
-  int minx;
-  int miny;
-  int maxx;
-  int maxy;
+  int minx = 0;
+  int miny = 0;
+  int maxx = 0;
+  int maxy = 0;
   if (tl.x < br.x) {
     minx = tl.x;
     maxx = br.x;
@@ -45,7 +45,7 @@ void dmap_print(const Dmap *D, spoint at, spoint tl, spoint br)
     maxy = MAP_HEIGHT - 1;
   }
 
-  bool all_walls;
+  bool all_walls = false;
 
   //
   // Try to minimize the DMAP area if it is mostly walls at the edges, for speed.
@@ -121,8 +121,8 @@ void dmap_print(const Dmap *D, spoint at, spoint tl, spoint br)
 
 void dmap_print(const Dmap *D)
 {
-  int x;
-  int y;
+  int x = 0;
+  int y = 0;
 
   LOG("DMAP:");
 
@@ -172,23 +172,23 @@ void dmap_print(const Dmap *D)
 //
 void dmap_process(Dmap *D, spoint tl, spoint br)
 {
-  uint8_t  x;
-  uint8_t  y;
-  uint8_t  a;
-  uint8_t  b;
-  uint8_t  c;
-  uint8_t  d;
-  uint8_t *e;
-  uint8_t  f;
-  uint8_t  g;
-  uint8_t  h;
-  uint8_t  i;
-  uint8_t  lowest;
-  uint8_t  changed;
-  uint8_t  minx;
-  uint8_t  miny;
-  uint8_t  maxx;
-  uint8_t  maxy;
+  uint8_t  x = 0;
+  uint8_t  y = 0;
+  uint8_t  a = 0;
+  uint8_t  b = 0;
+  uint8_t  c = 0;
+  uint8_t  d = 0;
+  uint8_t *e = nullptr;
+  uint8_t  f = 0;
+  uint8_t  g = 0;
+  uint8_t  h = 0;
+  uint8_t  i = 0;
+  uint8_t  lowest = 0;
+  uint8_t  changed = 0;
+  uint8_t  minx = 0;
+  uint8_t  miny = 0;
+  uint8_t  maxx = 0;
+  uint8_t  maxy = 0;
   auto     orig = *D;
 
   if (tl.x < br.x) {
@@ -311,23 +311,23 @@ void dmap_process(Dmap *D, spoint tl, spoint br)
 //
 void dmap_process_reverse(Dmap *D, spoint tl, spoint br)
 {
-  uint8_t  x;
-  uint8_t  y;
-  uint8_t  a;
-  uint8_t  b;
-  uint8_t  c;
-  uint8_t  d;
-  uint8_t *e;
-  uint8_t  f;
-  uint8_t  g;
-  uint8_t  h;
-  uint8_t  i;
-  uint8_t  highest;
-  uint8_t  changed;
-  uint8_t  minx;
-  uint8_t  miny;
-  uint8_t  maxx;
-  uint8_t  maxy;
+  uint8_t  x = 0;
+  uint8_t  y = 0;
+  uint8_t  a = 0;
+  uint8_t  b = 0;
+  uint8_t  c = 0;
+  uint8_t  d = 0;
+  uint8_t *e = nullptr;
+  uint8_t  f = 0;
+  uint8_t  g = 0;
+  uint8_t  h = 0;
+  uint8_t  i = 0;
+  uint8_t  highest = 0;
+  uint8_t  changed = 0;
+  uint8_t  minx = 0;
+  uint8_t  miny = 0;
+  uint8_t  maxx = 0;
+  uint8_t  maxy = 0;
   auto     orig = *D;
 
   if (tl.x < br.x) {

@@ -19,7 +19,7 @@ struct ascii_ {
   //
   // In ascii mode, where on the ASCII we are
   //
-  spoint mouse_at;
+  spoint mouse_at{};
   //
   // UI triggers for ASCII co-ords.
   //
@@ -287,7 +287,7 @@ void ascii_set(int depth, int x, int y, const char ch) { ascii_set(depth, x, y, 
 
 void ascii_putf_internal2(int x, int y, color fg, color bg, const std::string &text)
 {
-  Tilep tile;
+  Tilep tile = nullptr;
   int   bg_set    = 0;
   auto  text_iter = text.begin();
 
@@ -649,7 +649,7 @@ static void ascii_putf_internal(int x, int y, color fg, color bg, const char *fm
 
 void ascii_putf(int x, int y, const char *fmt, ...)
 {
-  va_list args;
+  va_list args = nullptr;
 
   va_start(args, fmt);
   ascii_putf_internal(x, y, WHITE, COLOR_NONE, fmt, args);
@@ -658,7 +658,7 @@ void ascii_putf(int x, int y, const char *fmt, ...)
 
 void ascii_putf(int x, int y, color fg, const char *fmt, ...)
 {
-  va_list args;
+  va_list args = nullptr;
 
   va_start(args, fmt);
   ascii_putf_internal(x, y, fg, COLOR_NONE, fmt, args);
@@ -667,7 +667,7 @@ void ascii_putf(int x, int y, color fg, const char *fmt, ...)
 
 void ascii_putf(int x, int y, color fg, color bg, const char *fmt, ...)
 {
-  va_list args;
+  va_list args = nullptr;
 
   va_start(args, fmt);
   ascii_putf_internal(x, y, fg, bg, fmt, args);
@@ -692,8 +692,8 @@ static void ascii_display_mouse(spoint mouse_tile_tl, spoint mouse_tile_br, spoi
 
 void ascii_put_bg_square(int tlx, int tly, int brx, int bry, Tilep tile, color col)
 {
-  int x;
-  int y;
+  int x = 0;
+  int y = 0;
 
   for (x = tlx; x <= brx; x++) {
     for (y = tly; y <= bry; y++) {
@@ -729,7 +729,7 @@ void ascii_draw_line(int depth, int x0, int y0, int x1, int y1, Tilep tile, colo
   int const dy  = -abs(y1 - y0);
   int const sy  = y0 < y1 ? 1 : -1;
   int       err = dx + dy;
-  int       e2; /* error value e_xy */
+  int       e2 = 0; /* error value e_xy */
 
   for (;;) { /* loop */
     ascii_map_thing_replace(depth, x0, y0, tile, col);
@@ -763,10 +763,10 @@ void ascii_draw_line(int depth, int x0, int y0, int x1, int y1, const char *tile
 //
 static void ascii_blit(Gamep g)
 {
-  int x;
-  int y;
-  int tile_x;
-  int tile_y;
+  int x = 0;
+  int y = 0;
+  int tile_x = 0;
+  int tile_y = 0;
 
   glcolor(WHITE);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -1166,7 +1166,7 @@ static void ascii_put_box_(int style, const TileLayers tiles, int x, int y, int 
 
 void ascii_put_box(box_args b, int style, const TileLayers tiles, const char *fmt, ...)
 {
-  va_list args;
+  va_list args = nullptr;
 
   if ((b.width == 0) || (b.height == 0)) {
     b.x      = 0;
@@ -1192,10 +1192,10 @@ void ascii_put_box(box_args b, int style, const TileLayers tiles, const char *fm
   //
   // Populate the ascii callbacks for this box.
   //
-  int x1;
-  int x2;
-  int y1;
-  int y2;
+  int x1 = 0;
+  int x2 = 0;
+  int y1 = 0;
+  int y2 = 0;
 
   x1 = x;
   y1 = y;

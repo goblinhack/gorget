@@ -153,8 +153,8 @@ static void wid_keyboard_update_buttons(Gamep g, Widp w)
   int const width  = 7;
   int const height = 5;
 
-  int x;
-  int y;
+  int x = 0;
+  int y = 0;
 
   ctx->b = nullptr;
 
@@ -199,7 +199,7 @@ static void wid_keyboard_event(Gamep g, Widp w, int focusx, int focusy, const SD
   auto *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
   verify(MTYPE_MISC, ctx);
 
-  const char *add;
+  const char *add = nullptr;
   if ((focusx == -1) && (focusy == -1)) {
     add = nullptr;
   } else {
@@ -239,8 +239,8 @@ static void wid_keyboard_event(Gamep g, Widp w, int focusx, int focusy, const SD
   }
 
   if ((key_in != nullptr) && (focusx == -1) && (focusy == -1)) {
-    int x;
-    int y;
+    int x = 0;
+    int y = 0;
 
     for (x = 0; x < WID_KEYBOARD_ACROSS; x++) {
       for (y = 0; y < WID_KEYBOARD_DOWN; y++) {
@@ -660,8 +660,8 @@ static void wid_keyboard_tick(Gamep g, Widp w)
     delta = 1;
   }
 
-  int x;
-  int y;
+  int x = 0;
+  int y = 0;
 
   for (x = 0; x < WID_KEYBOARD_ACROSS; x++) {
     for (y = 0; y < WID_KEYBOARD_DOWN; y++) {
@@ -679,7 +679,7 @@ static void wid_keyboard_tick(Gamep g, Widp w)
       /*
        * Make sure the other widgets look plain in all modes.
        */
-      int mode;
+      int mode = 0;
       for (mode = WID_MODE_NORMAL; mode < WID_MODE_LAST; mode++) {
         wid_set_mode(b, (wid_mode) mode);
         wid_set_color(b, WID_COLOR_TEXT_FG, c);
@@ -799,12 +799,12 @@ auto wid_keyboard(Gamep g, const std::string &text, const std::string &title, wi
     /*
      * Create the buttons
      */
-    int x;
-    int y;
+    int x = 0;
+    int y = 0;
 
     for (x = 0; x < WID_KEYBOARD_ACROSS; x++) {
       for (y = 0; y < WID_KEYBOARD_DOWN; y++) {
-        Widp b;
+        Widp b = nullptr;
 
         if (strcasecmp(keys[ y ][ x ], "CLEAR") == 0) {
           b = wid_new_cancel_button(g, button_container, "wid keyboard button");

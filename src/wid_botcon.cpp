@@ -219,7 +219,7 @@ static void wid_botcon_wid_create(Gamep g)
 
   TRACE_NO_INDENT();
   {
-    int row;
+    int row = 0;
     int row_bottom = h;
 
     Widp child {};

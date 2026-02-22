@@ -89,7 +89,7 @@ void game_popups_display(Gamep g, Levelsp v, Levelp l)
       }
 
       for (auto *i : *game_popups_get(g, x, y)) {
-        uint16_t     tile_index;
+        uint16_t     tile_index = 0;
         spoint const p(x, y);
         spoint       tl = {};
         spoint       br = {};

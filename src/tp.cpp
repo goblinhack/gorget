@@ -270,7 +270,7 @@ auto tp_load(const std::string &val) -> Tpp
 
   std::string const &name(val);
 
-  int id;
+  int id = 0;
   tp_assign_id(val, &id);
 
   if (tp_find_opt(val) != nullptr) {

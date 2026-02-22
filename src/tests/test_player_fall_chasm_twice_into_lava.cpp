@@ -72,9 +72,9 @@
   //
   // Create the level and start playing
   //
-  Levelp  l1;
-  Levelp  l2;
-  Levelp  l3;
+  Levelp  l1 = nullptr;
+  Levelp  l2 = nullptr;
+  Levelp  l3 = nullptr;
   Levelsp v = game_test_init(g, &l1, level_num, w, h, level1.c_str());
   game_test_init_level(g, v, &l2, level_num + 1, w, h, level2.c_str());
   game_test_init_level(g, v, &l3, level_num + 2, w, h, level3.c_str());

@@ -199,7 +199,7 @@ static void wid_console_wid_create(Gamep g)
   }
 
   {
-    int row;
+    int row = 0;
     int row_bottom = UI_CONSOLE_HEIGHT - 1;
 
     Widp child {};

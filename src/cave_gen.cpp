@@ -16,8 +16,8 @@ static const int MAP_LEVEL_BLOB_CENTERING = MAP_WIDTH / 4;
 
 void cave_dump(Gamep g, Cave *c)
 {
-  uint8_t x;
-  uint8_t y;
+  uint8_t x = 0;
+  uint8_t y = 0;
 
   std::print("+");
   for (x = 0; x < MAP_WIDTH; x++) {
@@ -52,8 +52,8 @@ void cave_dump(Gamep g, Cave *c)
 //
 static void cave_generation(Cave *c, uint32_t fill_prob, uint8_t r1, uint8_t r2, int map_generations)
 {
-  uint8_t x;
-  uint8_t y;
+  uint8_t x = 0;
+  uint8_t y = 0;
 
   //
   // Reset the cave map on the first generation
@@ -182,8 +182,8 @@ auto cave_generation_fill_blob_cand(Gamep g, Cave *c, int x, int y, uint16_t siz
 //
 void cave_generation_keep_largest_blob(Gamep g, Cave *c)
 {
-  uint16_t x;
-  uint16_t y;
+  uint16_t x = 0;
+  uint16_t y = 0;
   uint16_t id = 1;
 
   //
@@ -244,8 +244,8 @@ void cave_generation_keep_largest_blob(Gamep g, Cave *c)
 //
 void cave_generation_center_blob(Gamep g, Cave *c)
 {
-  int x;
-  int y;
+  int x = 0;
+  int y = 0;
 
   spoint tl(999, 999);
   spoint br(-1, -1);

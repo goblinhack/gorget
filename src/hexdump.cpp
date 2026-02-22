@@ -27,8 +27,8 @@ void hexdump(const unsigned char *addr, size_t len)
   unsigned char empty[ HEX_DUMP_WIDTH ] = {0};
   unsigned char buf[ HEX_DUMP_WIDTH + 1 ];
   auto         *pc = (unsigned char *) addr;
-  size_t        i;
-  unsigned int  x;
+  size_t        i = 0;
+  unsigned int  x = 0;
 
   std::cout << std::dec << len << " bytes:" << '\n';
 

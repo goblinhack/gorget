@@ -2,6 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include <math.h>
+
 #include <algorithm>
 #include <numbers>
 
@@ -349,10 +351,10 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
   }
 
   color fg = WHITE;
-  float x1;
-  float x2;
-  float y1;
-  float y2;
+  float x1 = 0;
+  float x2 = 0;
+  float y1 = 0;
+  float y2 = 0;
   tile_coords(tile, &x1, &y1, &x2, &y2);
 
   LightPixels *light_pixels = nullptr;
@@ -407,7 +409,7 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
       return;
     }
 
-    int submerged_pct;
+    int submerged_pct = 0;
     if ((submerged_pct = thing_submerged_pct(t_maybe_null)) != 0) {
       //
       // Submerge the tile if it is over some kind of liquid.

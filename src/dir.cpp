@@ -18,9 +18,9 @@
 auto dir_exists(const char *indir) -> bool
 {
   TRACE_NO_INDENT();
-  struct stat buf;
-  char       *dir;
-  uint8_t     rc;
+  struct stat buf{};
+  char       *dir = nullptr;
+  uint8_t     rc = 0;
 
   /*
    * msys is crap and unless you remove the / from the end of the name
@@ -59,8 +59,8 @@ auto dir_dot() -> char *
 auto dir_dotdot(char *s) -> char *
 {
   TRACE_NO_INDENT();
-  uint32_t size;
-  char    *end;
+  uint32_t size = 0;
+  char    *end = nullptr;
 
   size = (uint32_t) strlen(s);
   if (size <= 1) {

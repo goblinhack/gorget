@@ -26,11 +26,11 @@ public:
   spoint      br;
   Tilep       title_tile {};
   std::string background;
-  std::string name;
   int         outer_w {};
   int         outer_h {};
   int         inner_w {};
   int         inner_h {};
+  std::string name;
 
   ~WidPopup();
   WidPopup(Gamep g, const std::string &name, spoint tl, spoint br, Tilep title_tile = nullptr, std::string background = "",

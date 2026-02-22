@@ -54,7 +54,7 @@ public:
 
   class Node *came_from {};
   Nodecost    cost;
-  spoint      at;
+  spoint      at{};
 };
 
 //
@@ -85,8 +85,8 @@ public:
   //
   // Start and desired end of the search
   //
-  spoint src;
-  spoint dst;
+  spoint src{};
+  spoint dst{};
 
   //
   // Indicates which nodes in the grid we've searched and added to the open list

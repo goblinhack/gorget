@@ -82,9 +82,9 @@ auto wid_tiles_load(const std::string &name, float scale) -> wid_tilesp
   t->tile_h = (int) tile_h;
   t->scale  = scale;
 
-  int i;
-  int j;
-  int c;
+  int i = 0;
+  int j = 0;
+  int c = 0;
 
   {
     c = 1;

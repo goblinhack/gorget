@@ -61,10 +61,10 @@ static auto level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Th
   spoint dmap_start = start;
   spoint dmap_end   = end;
 
-  int minx;
-  int miny;
-  int maxx;
-  int maxy;
+  int minx = 0;
+  int miny = 0;
+  int maxx = 0;
+  int maxy = 0;
   if (dmap_start.x < dmap_end.x) {
     minx = dmap_start.x;
     maxx = dmap_end.x;

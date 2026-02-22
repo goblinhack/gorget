@@ -451,8 +451,8 @@ void gl_init_fbo(Gamep g, FboEnum fbo)
 
   FOR_ALL_FBO(i)
   {
-    int tex_width;
-    int tex_height;
+    int tex_width = 0;
+    int tex_height = 0;
 
     //
     // Filter to a specific fbo?
@@ -513,8 +513,8 @@ void gl_fini_fbo(Gamep g)
 
   FOR_ALL_FBO(i)
   {
-    int tex_width;
-    int tex_height;
+    int tex_width = 0;
+    int tex_height = 0;
 
     fbo_get_size(g, i, tex_width, tex_height);
 
@@ -572,8 +572,8 @@ void fbo_get_curr_size(Gamep g, int &w, int &h) { fbo_get_size(g, fbo_last, w, h
 
 void blit_fbo(Gamep g, FboEnum fbo)
 {
-  int tex_width;
-  int tex_height;
+  int tex_width = 0;
+  int tex_height = 0;
   fbo_get_size(g, fbo, tex_width, tex_height);
   blit_init();
   blit(g_fbo_tex_id[ fbo ], 0.0, 1.0, 1.0, 0.0, 0, 0, tex_width, tex_height, WHITE);
@@ -663,7 +663,7 @@ void blit_init()
   //
   // Our array size requirements.
   //
-  uint32_t gl_array_size_required;
+  uint32_t gl_array_size_required = 0;
 
   //
   // If the screen size has changed or this is the first run, allocate our

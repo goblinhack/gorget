@@ -13,8 +13,8 @@ void level_tick_water(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  int x;
-  int y;
+  int x = 0;
+  int y = 0;
 
   FOR_ALL_MAP_POINTS(g, v, l, x, y)
   {

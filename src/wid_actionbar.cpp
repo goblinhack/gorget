@@ -45,10 +45,10 @@ static void wid_actionbar_save_over_begin(Gamep g, Widp w, int relx, int rely, i
 {
   TRACE_NO_INDENT();
 
-  int tlx;
-  int tly;
-  int brx;
-  int bry;
+  int tlx = 0;
+  int tly = 0;
+  int brx = 0;
+  int bry = 0;
   wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
 
   int const width  = 32;
@@ -92,10 +92,10 @@ static void wid_actionbar_load_over_begin(Gamep g, Widp w, int relx, int rely, i
 {
   TRACE_NO_INDENT();
 
-  int tlx;
-  int tly;
-  int brx;
-  int bry;
+  int tlx = 0;
+  int tly = 0;
+  int brx = 0;
+  int bry = 0;
   wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
 
   int const width  = 32;
@@ -159,10 +159,10 @@ static void wid_actionbar_wait_over_begin(Gamep g, Widp w, int relx, int rely, i
 {
   TRACE_NO_INDENT();
 
-  int tlx;
-  int tly;
-  int brx;
-  int bry;
+  int tlx = 0;
+  int tly = 0;
+  int brx = 0;
+  int bry = 0;
   wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
 
   int const width  = 32;
@@ -209,10 +209,10 @@ static void wid_actionbar_inventory_over_begin(Gamep g, Widp w, int relx, int re
 {
   TRACE_NO_INDENT();
 
-  int tlx;
-  int tly;
-  int brx;
-  int bry;
+  int tlx = 0;
+  int tly = 0;
+  int brx = 0;
+  int bry = 0;
   wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
 
   int const width  = 32;
@@ -301,10 +301,10 @@ static void wid_actionbar_fire_over_begin(Gamep g, Widp w, int relx, int rely, i
 {
   TRACE_NO_INDENT();
 
-  int tlx;
-  int tly;
-  int brx;
-  int bry;
+  int tlx = 0;
+  int tly = 0;
+  int brx = 0;
+  int bry = 0;
   wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
 
   int const width  = 32;
@@ -349,10 +349,10 @@ static void wid_actionbar_ascend_over_begin(Gamep g, Widp w, int relx, int rely,
 {
   TRACE_NO_INDENT();
 
-  int tlx;
-  int tly;
-  int brx;
-  int bry;
+  int tlx = 0;
+  int tly = 0;
+  int brx = 0;
+  int bry = 0;
   wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
 
   int const width  = 32;
@@ -397,10 +397,10 @@ static void wid_actionbar_descend_over_begin(Gamep g, Widp w, int relx, int rely
 {
   TRACE_NO_INDENT();
 
-  int tlx;
-  int tly;
-  int brx;
-  int bry;
+  int tlx = 0;
+  int tly = 0;
+  int brx = 0;
+  int bry = 0;
   wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
 
   int const width  = 32;
@@ -445,10 +445,10 @@ static void wid_actionbar_quit_over_begin(Gamep g, Widp w, int relx, int rely, i
 {
   TRACE_NO_INDENT();
 
-  int tlx;
-  int tly;
-  int brx;
-  int bry;
+  int tlx = 0;
+  int tly = 0;
+  int brx = 0;
+  int bry = 0;
   wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
 
   int const width  = 32;
@@ -492,10 +492,10 @@ static void wid_actionbar_help_over_begin(Gamep g, Widp w, int relx, int rely, i
 {
   TRACE_NO_INDENT();
 
-  int tlx;
-  int tly;
-  int brx;
-  int bry;
+  int tlx = 0;
+  int tly = 0;
+  int brx = 0;
+  int bry = 0;
   wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
 
   int const width  = 32;

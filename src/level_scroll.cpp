@@ -52,8 +52,8 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
   //
   // Get the size of the on screen map.
   //
-  int w;
-  int h;
+  int w = 0;
+  int h = 0;
   fbo_get_size(g, FBO_MAP_FG, w, h);
 
   //

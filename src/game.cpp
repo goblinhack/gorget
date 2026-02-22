@@ -243,10 +243,10 @@ public:
   //
   // These are the onscreen map pixel co-ords.
   //
-  int visible_map_tl_x;
-  int visible_map_tl_y;
-  int visible_map_br_x;
-  int visible_map_br_y;
+  int visible_map_tl_x{};
+  int visible_map_tl_y{};
+  int visible_map_br_x{};
+  int visible_map_br_y{};
 
   //
   // Temporary popup text that is overlaid over the map
@@ -362,7 +362,7 @@ void Config::reset()
 
 void game_config_reset(Gamep g) { g->config.reset(); }
 
-Game::Game(const std::string &vappdata)
+Game::Game(const std::string &vappdata) : save_slot(1)
 {
   LOG("Game load %s", vappdata.c_str());
   TRACE_AND_INDENT();
@@ -374,7 +374,7 @@ Game::Game(const std::string &vappdata)
   g->appdata = vappdata;
 
   saved_dir = appdata + DIR_SEP + "gorget" + DIR_SEP;
-  save_slot = 1;
+  
 
   if (! config.seed_name.empty()) {
     save_meta = "seed " + config.seed_name + ", ";
@@ -405,7 +405,7 @@ void game_init(Gamep g) { g->init(); }
 //
 // Create a level with the given contents and start the game into playing state
 //
-auto game_test_init(Gamep g, Levelp *l_out, LevelNum level_num, int w, int h, const char *contents, Overrides overrides)
+auto game_test_init(Gamep g, Levelp *l_out, LevelNum level_num, int w, int h, const char *contents, const Overrides& overrides)
     -> Levelsp
 {
   TRACE_NO_INDENT();
@@ -427,7 +427,7 @@ auto game_test_init(Gamep g, Levelp *l_out, LevelNum level_num, int w, int h, co
   auto *v = game_levels_set(g, levels_memory_alloc(g));
 
   TRACE_NO_INDENT();
-  game_test_init_level(g, v, l_out, level_num, w, h, contents, std::move(overrides));
+  game_test_init_level(g, v, l_out, level_num, w, h, contents, overrides);
 
   TRACE_NO_INDENT();
   game_state_reset(g, "new game");
@@ -648,7 +648,7 @@ void Game::seed_set(const char *maybe_seed)
   // If a number, use that as the seed, else convert the string to hash number
   //
   TRACE_NO_INDENT();
-  char *p;
+  char *p = nullptr;
   config.seed_num = strtol(config.seed_name.c_str(), &p, 10);
   if (*p != 0) {
     //

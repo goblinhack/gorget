@@ -56,8 +56,8 @@ int asprintf(char *strp[], const char *fmt, ...)
 
 auto string_sprintf(const char *format, ...) -> std::string
 {
-  va_list args;
-  char   *buf;
+  va_list args = nullptr;
+  char   *buf = nullptr;
 
   va_start(args, format);
 
@@ -75,7 +75,7 @@ auto string_sprintf(const char *format, ...) -> std::string
 
 auto string_sprintf(const char *format, va_list args) -> std::string
 {
-  char *buf;
+  char *buf = nullptr;
 
   if (asprintf(&buf, format, args) == -1) {
     throw std::bad_alloc();

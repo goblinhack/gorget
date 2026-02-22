@@ -22,24 +22,20 @@ WidPopup::~WidPopup()
 
 WidPopup::WidPopup(Gamep g, const std::string &vname, spoint vtl, spoint vbr, Tilep vtitle_tile, std::string vbackground,
                    bool horiz_scroll, bool vert_scoll, int scroll_height)
-    : tl(vtl), br(vbr), title_tile(vtitle_tile), background(std::move(vbackground))
+    : tl(vtl), br(vbr), title_tile(vtitle_tile), background(std::move(vbackground)), outer_w(br.x - tl.x), outer_h(br.y - tl.y),
+      name(vname)
 {
   TRACE_NO_INDENT();
 
-  outer_w = br.x - tl.x;
-  outer_h = br.y - tl.y;
-
   int const width  = outer_w;
   int const height = outer_h;
-
-  this->name = vname;
 
   auto inner_tl = spoint(0, 0);
   auto inner_br = spoint(width, height);
   inner_w       = inner_br.x - inner_tl.x;
   inner_h       = inner_br.y - inner_tl.y;
 
-  int tile_size;
+  int tile_size = 0;
   if (title_tile != nullptr) {
     tile_size = 4;
   } else {

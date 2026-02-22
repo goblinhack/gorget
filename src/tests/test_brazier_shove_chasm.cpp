@@ -64,8 +64,8 @@
   //
   // Create the level and start playing
   //
-  Levelp  l1;
-  Levelp  l2;
+  Levelp  l1 = nullptr;
+  Levelp  l2 = nullptr;
   Levelsp v = game_test_init(g, &l1, level_num, w, h, level1.c_str());
   game_test_init_level(g, v, &l2, level_num + 1, w, h, level2.c_str());
 
@@ -78,9 +78,9 @@
   bool   left   = false;
   bool   right  = false;
   spoint p;
-  bool   found_it;
-  Thingp player;
-  int    tries;
+  bool   found_it = false;
+  Thingp player = nullptr;
+  int    tries = 0;
 
   //
   // Bump into a brazier. It should be knocked over.

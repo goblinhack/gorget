@@ -31,10 +31,10 @@ public:
   float dx[ TILE_LAYER_ENUM_MAX ] {};
   float dy[ TILE_LAYER_ENUM_MAX ] {};
 
-  color color_tl[ TILE_LAYER_ENUM_MAX ];
-  color color_bl[ TILE_LAYER_ENUM_MAX ];
-  color color_tr[ TILE_LAYER_ENUM_MAX ];
-  color color_br[ TILE_LAYER_ENUM_MAX ];
+  color color_tl[ TILE_LAYER_ENUM_MAX ]{};
+  color color_bl[ TILE_LAYER_ENUM_MAX ]{};
+  color color_tr[ TILE_LAYER_ENUM_MAX ]{};
+  color color_br[ TILE_LAYER_ENUM_MAX ]{};
 
   //
   // Is reset each frame, and so although a pointer potentially should be

@@ -116,7 +116,7 @@ void sdl_display_reset(Gamep g)
 static inline void sdl_list_video_size()
 {
   TRACE_NO_INDENT();
-  int i;
+  int i = 0;
 
   if (! g_opt_debug1) {
     return;
@@ -131,8 +131,8 @@ static inline void sdl_list_video_size()
 
 auto sdl_display_init(Gamep g) -> bool
 {
-  int video_width;
-  int video_height;
+  int video_width = 0;
+  int video_height = 0;
 
   sdl.init_video = 1;
 
@@ -169,7 +169,7 @@ auto sdl_display_init(Gamep g) -> bool
   SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
   SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
 
-  uint32_t video_flags;
+  uint32_t video_flags = 0;
 
   LOG("SDL: Set SDL_WINDOW_OPENGL");
   video_flags = SDL_WINDOW_OPENGL;
@@ -229,8 +229,8 @@ auto sdl_display_init(Gamep g) -> bool
     return false;
   }
 
-  int w;
-  int h;
+  int w = 0;
+  int h = 0;
   SDL_GetWindowSize(sdl.window, &w, &h);
   LOG("SDL: Created window size %ux%u", w, h);
 

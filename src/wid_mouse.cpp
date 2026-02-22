@@ -230,8 +230,8 @@ auto wid_scroll_trough_mouse_down(Gamep g, Widp w, int x, int y, uint32_t button
 {
   TRACE_NO_INDENT();
 
-  int dx;
-  int dy;
+  int dx = 0;
+  int dy = 0;
 
   std::vector< Widp > worklist;
   for (auto &iter : w->children_display_sorted) {
@@ -281,8 +281,8 @@ auto wid_scroll_motion(Gamep g, Widp w, int x, int y, int relx, int rely, int wh
 {
   TRACE_NO_INDENT();
 
-  int dx;
-  int dy;
+  int dx = 0;
+  int dy = 0;
 
   bool const left = SDL_BUTTON(SDL_BUTTON_LEFT) & SDL_GetMouseState(nullptr, nullptr);
   if (left || (wheely != 0) || (wheelx != 0)) {
@@ -338,8 +338,8 @@ void wid_update_mouse(Gamep g)
   // So if we are now over a new widget that was created on top of the
   // mouse, we activate it.
   //
-  int x;
-  int y;
+  int x = 0;
+  int y = 0;
 
   SDL_GetMouseState(&x, &y);
 
@@ -1140,10 +1140,10 @@ void wid_mouse_warp(Gamep g, Widp w)
 {
   TRACE_NO_INDENT();
 
-  int tlx;
-  int tly;
-  int brx;
-  int bry;
+  int tlx = 0;
+  int tly = 0;
+  int brx = 0;
+  int bry = 0;
 
   wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
 
@@ -1157,10 +1157,10 @@ void wid_mouse_move(Gamep g, Widp w)
 {
   TRACE_NO_INDENT();
 
-  int tlx;
-  int tly;
-  int brx;
-  int bry;
+  int tlx = 0;
+  int tly = 0;
+  int brx = 0;
+  int bry = 0;
 
   wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
 

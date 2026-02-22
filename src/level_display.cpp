@@ -72,7 +72,7 @@ static void level_display_cursor(Gamep g, Levelsp v, Levelp l, spoint p, FboEnum
   if (tp != nullptr) {
     spoint   tl;
     spoint   br;
-    uint16_t tile_index;
+    uint16_t tile_index = 0;
     thing_display_get_tile_info(g, v, l, p, tp, NULL_THING, &tl, &br, &tile_index);
     thing_display(g, v, l, p, tp, NULL_THING, tl, br, tile_index, fbo);
   }
@@ -101,7 +101,7 @@ static void level_display_slot(Gamep g, Levelsp v, Levelp l, spoint p, int slot,
 {
   TRACE_NO_INDENT();
 
-  Tpp   tp;
+  Tpp   tp = nullptr;
   auto *t = thing_and_tp_get_at(g, v, l, p, slot, &tp);
   if (unlikely(! tp)) {
     return;
@@ -113,7 +113,7 @@ static void level_display_slot(Gamep g, Levelsp v, Levelp l, spoint p, int slot,
 
   spoint   tl;
   spoint   br;
-  uint16_t tile_index;
+  uint16_t tile_index = 0;
   thing_display_get_tile_info(g, v, l, p, tp, t, &tl, &br, &tile_index);
   thing_display(g, v, l, p, tp, t, tl, br, tile_index, fbo);
 }
@@ -314,10 +314,10 @@ static void level_blit_light(Gamep g, Levelsp v, Levelp l, color c)
   //
   // Get the pixel extents of the map on screen
   //
-  int visible_map_tl_x;
-  int visible_map_tl_y;
-  int visible_map_br_x;
-  int visible_map_br_y;
+  int visible_map_tl_x = 0;
+  int visible_map_tl_y = 0;
+  int visible_map_br_x = 0;
+  int visible_map_br_y = 0;
   game_visible_map_pix_get(g, &visible_map_tl_x, &visible_map_tl_y, &visible_map_br_x, &visible_map_br_y);
 
   if (game_map_zoom_is_full_map_visible(g)) {
@@ -393,10 +393,10 @@ void level_blit(Gamep g)
   //
   // Get the pixel extents of the map on screen
   //
-  int visible_map_tl_x;
-  int visible_map_tl_y;
-  int visible_map_br_x;
-  int visible_map_br_y;
+  int visible_map_tl_x = 0;
+  int visible_map_tl_y = 0;
+  int visible_map_br_x = 0;
+  int visible_map_br_y = 0;
   game_visible_map_pix_get(g, &visible_map_tl_x, &visible_map_tl_y, &visible_map_br_x, &visible_map_br_y);
 
   if (DEBUG || level_is_level_select(g, v, l)) {

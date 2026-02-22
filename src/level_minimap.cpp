@@ -33,8 +33,8 @@ static void level_minimap_world_update(Gamep g, Levelsp v, const bool level_sele
     return;
   }
 
-  int w;
-  int h;
+  int w = 0;
+  int h = 0;
   fbo_get_size(g, fbo, w, h);
   gl_enter_2d_mode(g, w, h);
 
@@ -69,7 +69,7 @@ static void level_minimap_world_update(Gamep g, Levelsp v, const bool level_sele
         //
         // Only if in level selection can we be hovering over a level
         //
-        Levelp level_over;
+        Levelp level_over = nullptr;
         if (level_select) {
           level_over = level_select_get_level_at_tile_coords(g, v, p);
         } else {
@@ -140,8 +140,8 @@ static void level_minimap_world_update_rotated(Gamep g, Levelsp v, Levelp l)
 
   const FboEnum fbo = FBO_MINIMAP_WORLD_ROTATED;
 
-  int w;
-  int h;
+  int w = 0;
+  int h = 0;
   fbo_get_size(g, fbo, w, h);
   gl_enter_2d_mode(g, w, h);
 
@@ -191,8 +191,8 @@ static void level_minimap_levels_update(Gamep g, Levelsp v, Levelp l, const bool
   const auto    dx  = 1;
   const auto    dy  = 1;
 
-  int w;
-  int h;
+  int w = 0;
+  int h = 0;
   fbo_get_size(g, fbo, w, h);
   gl_enter_2d_mode(g, w, h);
 

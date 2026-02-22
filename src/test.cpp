@@ -90,7 +90,7 @@ public:
   //
   // Callbacks
   //
-  test_callback_t callback;
+  test_callback_t callback{};
 
   Test();
   ~Test();

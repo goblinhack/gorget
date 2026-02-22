@@ -25,6 +25,8 @@
 #include <unistd.h>
 #endif
 
+#include <math.h>
+
 #include <algorithm>
 #include <print>
 #include <ranges>
@@ -199,10 +201,10 @@ void wid_dump(Widp w, int depth)
     return;
   }
 
-  int tlx;
-  int tly;
-  int brx;
-  int bry;
+  int tlx = 0;
+  int tly = 0;
+  int brx = 0;
+  int bry = 0;
 
   wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
 
@@ -1732,7 +1734,7 @@ static void wid_tree_attach(Widp w)
 {
   TRACE_NO_INDENT();
 
-  wid_key_map_location *root;
+  wid_key_map_location *root = nullptr;
 
   if (w->in_tree_root != nullptr) {
     CROAK("Wid is already attached");
@@ -1764,7 +1766,7 @@ static void wid_tree_insert(Widp w)
     CROAK("Wid is already inserted");
   }
 
-  wid_key_map_location *root;
+  wid_key_map_location *root = nullptr;
 
   //
   // Get a wid sort ID.
@@ -1820,7 +1822,7 @@ static void wid_tree2_unsorted_insert(Widp w)
     CROAK("Wid is already in the in_tree2_unsorted_root");
   }
 
-  wid_key_map_int *root;
+  wid_key_map_int *root = nullptr;
 
   if (w->parent == nullptr) {
     root = &wid_top_level2;
@@ -1849,7 +1851,7 @@ static void wid_tree4_wids_being_destroyed_insert(Widp w)
     return;
   }
 
-  wid_key_map_int *root;
+  wid_key_map_int *root = nullptr;
 
   root = &wid_top_level4;
 
@@ -1874,7 +1876,7 @@ static void wid_tree5_tick_wids_insert(Widp w)
     return;
   }
 
-  wid_key_map_int *root;
+  wid_key_map_int *root = nullptr;
 
   root = &wid_tick_top_level;
 
@@ -1891,7 +1893,7 @@ static void wid_tree_remove(Widp w)
 {
   TRACE_NO_INDENT();
 
-  wid_key_map_location *root;
+  wid_key_map_location *root = nullptr;
 
   root = w->in_tree_root;
   if (root == nullptr) {
@@ -2165,10 +2167,10 @@ static void wid_destroy_delay(Gamep g, Widp *wp, int delay)
 {
   TRACE_NO_INDENT();
 
-  int tlx;
-  int tly;
-  int brx;
-  int bry;
+  int tlx = 0;
+  int tly = 0;
+  int brx = 0;
+  int bry = 0;
 
   if (wp == nullptr) {
     return;
@@ -2534,14 +2536,14 @@ auto wid_new_vert_scroll_bar(Gamep g, Widp parent, const std::string &name, Widp
   spoint vert_tl = {};
   spoint vert_br = {};
 
-  int tlx;
-  int tly;
-  int brx;
-  int bry;
-  int ptlx;
-  int ptly;
-  int pbrx;
-  int pbry;
+  int tlx = 0;
+  int tly = 0;
+  int brx = 0;
+  int bry = 0;
+  int ptlx = 0;
+  int ptly = 0;
+  int pbrx = 0;
+  int pbry = 0;
 
   //
   // Make the trough line up with the scrolling window.
@@ -2596,14 +2598,14 @@ auto wid_new_horiz_scroll_bar(Gamep g, Widp parent, const std::string &name, Wid
   spoint horiz_tl = {};
   spoint horiz_br = {};
 
-  int tlx;
-  int tly;
-  int brx;
-  int bry;
-  int ptlx;
-  int ptly;
-  int pbrx;
-  int pbry;
+  int tlx = 0;
+  int tly = 0;
+  int brx = 0;
+  int bry = 0;
+  int ptlx = 0;
+  int ptly = 0;
+  int pbrx = 0;
+  int pbry = 0;
 
   //
   // Make the trough line up with the scrolling window.
@@ -3209,15 +3211,15 @@ static void wid_adjust_scrollbar(Widp scrollbar, Widp owner)
   float const width        = wid_get_width(owner);
   float       child_height = 0;
   float       child_width  = 0;
-  float       scrollbar_width;
-  float       scrollbar_height;
-  float       trough_height;
-  float       trough_width;
+  float       scrollbar_width = 0;
+  float       scrollbar_height = 0;
+  float       trough_height = 0;
+  float       trough_width = 0;
   float       miny = 0;
   float       maxy = 0;
   float       minx = 0;
   float       maxx = 0;
-  float       pct;
+  float       pct = 0;
   bool        first = 1u;
 
   //
@@ -3228,10 +3230,10 @@ static void wid_adjust_scrollbar(Widp scrollbar, Widp owner)
     for (auto &iter : owner->tree2_children_unsorted) {
       auto *child = iter.second;
 
-      int tl_x;
-      int tl_y;
-      int br_x;
-      int br_y;
+      int tl_x = 0;
+      int tl_y = 0;
+      int br_x = 0;
+      int br_y = 0;
 
       wid_get_tl_x_tl_y_br_x_br_y(child, &tl_x, &tl_y, &br_x, &br_y);
 
@@ -3254,10 +3256,10 @@ static void wid_adjust_scrollbar(Widp scrollbar, Widp owner)
     }
   }
 
-  int ptl_x;
-  int ptl_y;
-  int pbr_x;
-  int pbr_y;
+  int ptl_x = 0;
+  int ptl_y = 0;
+  int pbr_x = 0;
+  int pbr_y = 0;
   wid_get_tl_x_tl_y_br_x_br_y(owner, &ptl_x, &ptl_y, &pbr_x, &pbr_y);
 
   minx -= ptl_x;
@@ -3401,10 +3403,10 @@ static void wid_update_internal(Gamep g, Widp w)
 {
   TRACE_NO_INDENT();
 
-  int tlx;
-  int tly;
-  int brx;
-  int bry;
+  int tlx = 0;
+  int tly = 0;
+  int brx = 0;
+  int bry = 0;
 
   if (w == nullptr) {
     return;
@@ -3556,8 +3558,8 @@ auto wid_receive_input(Gamep g, Widp w, const SDL_Keysym *key) -> bool
   std::string       origtext;
   std::string       updatedtext;
   std::string       newchar;
-  uint32_t          origlen;
-  uint32_t          cnt;
+  uint32_t          origlen = 0;
+  uint32_t          cnt = 0;
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
     sound_play(g, "keypress");
@@ -4426,7 +4428,7 @@ void wid_joy_button(Gamep g, int x, int y)
   //
   static std::array< ts_t, SDL_MAX_BUTTONS > ts;
   int                                        changed = 0;
-  int                                        b;
+  int                                        b = 0;
 
   for (b = 0; b < SDL_MAX_BUTTONS; b++) {
     if (static_cast< bool >(sdl.joy_buttons[ b ])) {
@@ -4938,10 +4940,10 @@ void wid_get_abs(Widp w, int *x, int *y)
 {
   TRACE_NO_INDENT();
 
-  int tlx;
-  int tly;
-  int brx;
-  int bry;
+  int tlx = 0;
+  int tly = 0;
+  int brx = 0;
+  int bry = 0;
 
   wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
 
@@ -4953,8 +4955,8 @@ void wid_get_pct(Widp w, float *px, float *py)
 {
   TRACE_NO_INDENT();
 
-  int x;
-  int y;
+  int x = 0;
+  int y = 0;
 
   wid_get_abs(w, &x, &y);
 
@@ -4973,18 +4975,18 @@ static void wid_display(Gamep g, Widp w, uint8_t disable_scissor, uint8_t *updat
   wid_total_count++;
   int     clip_height = 0;
   int     clip_width  = 0;
-  uint8_t hidden;
-  uint8_t always_hidden;
-  int     owidth;
-  int     oheight;
-  int     otlx;
-  int     otly;
-  int     obrx;
-  int     obry;
-  int     tlx;
-  int     tly;
-  int     brx;
-  int     bry;
+  uint8_t hidden = 0;
+  uint8_t always_hidden = 0;
+  int     owidth = 0;
+  int     oheight = 0;
+  int     otlx = 0;
+  int     otly = 0;
+  int     obrx = 0;
+  int     obry = 0;
+  int     tlx = 0;
+  int     tly = 0;
+  int     brx = 0;
+  int     bry = 0;
 #if 0
   Widp p {};
 #endif
@@ -5134,10 +5136,10 @@ static void wid_display(Gamep g, Widp w, uint8_t disable_scissor, uint8_t *updat
 
     auto *p = w->parent;
     while (p != nullptr) {
-      int ptlx;
-      int ptly;
-      int pbrx;
-      int pbry;
+      int ptlx = 0;
+      int ptly = 0;
+      int pbrx = 0;
+      int pbry = 0;
       wid_get_abs_coords(p, &ptlx, &ptly, &pbrx, &pbry);
 
       sciss_tlx = std::max(ptlx, sciss_tlx);
@@ -5223,12 +5225,12 @@ static void wid_display(Gamep g, Widp w, uint8_t disable_scissor, uint8_t *updat
   }
 
   if (! text.empty()) {
-    int x;
-    int y;
-    int xpc;
-    int ypc;
-    int width;
-    int height;
+    int x = 0;
+    int y = 0;
+    int xpc = 0;
+    int ypc = 0;
+    int width = 0;
+    int height = 0;
 
     //
     // Manually specified text position.
@@ -5552,14 +5554,14 @@ void wid_move_to_pct_centered(Gamep g, Widp w, float ox, float oy)
   float const x = ox;
   float const y = oy;
 
-  int tlx;
-  int tly;
-  int brx;
-  int bry;
-  int ptlx;
-  int ptly;
-  int pbrx;
-  int pbry;
+  int tlx = 0;
+  int tly = 0;
+  int brx = 0;
+  int bry = 0;
+  int ptlx = 0;
+  int ptly = 0;
+  int pbrx = 0;
+  int pbry = 0;
 
   if (w->parent == nullptr) {
     ptlx = 0;
@@ -5632,7 +5634,7 @@ auto wid_some_recent_event_occurred() -> bool
 static void wid_log_(Widp w, const char *fmt, va_list args)
 {
   char buf[ MAXLONGSTR ];
-  int  len;
+  int  len = 0;
 
   verify(MTYPE_WID, w);
   buf[ 0 ] = '\0';
@@ -5647,7 +5649,7 @@ static void wid_log_(Widp w, const char *fmt, va_list args)
 
 void WID_LOG(Widp w, const char *fmt, ...)
 {
-  va_list args;
+  va_list args = nullptr;
 
   if (! wid_safe()) {
     return;
@@ -5662,7 +5664,7 @@ void WID_LOG(Widp w, const char *fmt, ...)
 
 void WID_DBG(Widp w, const char *fmt, ...)
 {
-  va_list args;
+  va_list args = nullptr;
 
   if (! wid_safe()) {
     return;

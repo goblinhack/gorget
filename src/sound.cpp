@@ -49,7 +49,7 @@ class Playing
 {
 public:
   std::string alias;
-  int         volume;
+  int         volume{};
 };
 
 static std::unordered_map< int, Playing > already_playing;
@@ -123,7 +123,7 @@ auto sound_load(float volume, const std::string &file, const std::string &alias,
     return false;
   }
 
-  SDL_RWops *rw;
+  SDL_RWops *rw = nullptr;
 
   rw = SDL_RWFromMem(s->data, s->len);
   if (rw == nullptr) {

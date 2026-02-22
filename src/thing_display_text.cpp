@@ -2,6 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include <math.h>
+
 #include "my_callstack.hpp"
 #include "my_color_defs.hpp"
 #include "my_font.hpp"
@@ -40,7 +42,7 @@ void thing_blit_text(Gamep g, Levelsp v, Levelp l, spoint tl, spoint br, std::st
   br.y = tl.y + h;
 
   bool found_format_string = false;
-  char c;
+  char c = 0;
   auto text_start = text.begin();
   auto text_iter  = text_start;
 
@@ -136,10 +138,10 @@ void thing_blit_text(Gamep g, Levelsp v, Levelp l, spoint tl, spoint br, std::st
     }
 
     if (outline) {
-      float x1;
-      float x2;
-      float y1;
-      float y2;
+      float x1 = 0;
+      float x2 = 0;
+      float y1 = 0;
+      float y2 = 0;
       tile_coords(tile, &x1, &y1, &x2, &y2);
       if (single_pix_size > 1) {
         tile_blit_outlined(tile, x1, x2, y1, y2, tl, br, fg, BLACK, single_pix_size, true);

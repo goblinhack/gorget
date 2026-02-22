@@ -43,7 +43,7 @@ extern Gamep game;
   //
   // Create the level and start playing
   //
-  Levelp  l;
+  Levelp  l = nullptr;
   Levelsp v = game_test_init(g, &l, level_num, w, h, start.c_str());
 
   //

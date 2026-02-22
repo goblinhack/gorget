@@ -11,6 +11,8 @@
 #include "my_tile.hpp"
 #include "my_ui.hpp"
 
+#include <math.h>
+
 #include <array>
 #include <cmath>
 #include <cstring>
@@ -49,7 +51,7 @@ public:
   //
   // The lenght of each ray when it is cast
   //
-  Ray rays[ LIGHT_MAX_RAYS_MAX ];
+  Ray rays[ LIGHT_MAX_RAYS_MAX ]{};
 
   //
   // The precalculated ray lines
@@ -199,7 +201,7 @@ void level_light_per_pixel_lighting(Gamep g, Levelsp v, Levelp l, Thingp t, spoi
   const color  light_color              = tp_light_color(thing_tp(t));
   const float  light_strength_in_pixels = thing_is_light_source(t) * TILE_WIDTH;
   auto *const  light_tile               = &v->light_map.tile[ p.x ][ p.y ];
-  const float *light_fade_map;
+  const float *light_fade_map = nullptr;
   const spoint thing_at_in_pixels = thing_pix_at(t);
 
   if (light_strength_in_pixels == 0.0F) {
@@ -286,7 +288,7 @@ void Raycast::ray_pixel_line_draw(int16_t index, const spoint p0, const spoint p
     longLen        = swap;
     yLonger        = true;
   }
-  int decInc;
+  int decInc = 0;
   if (longLen == 0) {
     decInc = 0;
   } else {
@@ -334,8 +336,8 @@ void Raycast::ray_lengths_precalculate(Gamep g, Levelsp v, Levelp l)
 
   float const dr = (float) RAD_360 / ((float) LIGHT_MAX_RAYS_MAX);
   for (int i = 0; i < LIGHT_MAX_RAYS_MAX; i++) {
-    float cosr;
-    float sinr;
+    float cosr = 0;
+    float sinr = 0;
     sincosf(dr * (float) i, &sinr, &cosr);
     ray_pixel_line_draw(i, spoint(0, 0),
                         spoint((int) ((float) ray_max_length_in_pixels * cosr), (int) ((float) ray_max_length_in_pixels * sinr)));
@@ -523,9 +525,9 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
       //
       // Keep track of the type of object we hit
       //
-      Thingp obs_to_vision;
-      Tpp    tp_obs_to_vision;
-      Thingp next_obs_to_vision;
+      Thingp obs_to_vision = nullptr;
+      Tpp    tp_obs_to_vision = nullptr;
+      Thingp next_obs_to_vision = nullptr;
 
       //
       // Did the light ray hit an obstacle?
@@ -640,8 +642,8 @@ void Raycast::raycast_render(Gamep g, Levelsp v, Levelp l)
   light_pos.x += TILE_WIDTH / 2;
   light_pos.y += TILE_HEIGHT / 2;
 
-  int w;
-  int h;
+  int w = 0;
+  int h = 0;
   fbo_get_size(g, FBO_MAP_LIGHT, w, h);
   gl_enter_2d_mode(g, w, h);
 
@@ -800,7 +802,7 @@ void level_light_calculate_all(Gamep g, Levelsp v, Levelp l)
       max_radius += 2;
     }
 
-    level_fov_can_see_callback_t callback;
+    level_fov_can_see_callback_t callback = nullptr;
     if (thing_is_light_source(t) != 0) {
       callback = level_light_per_pixel_lighting;
     } else {

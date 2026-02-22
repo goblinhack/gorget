@@ -26,10 +26,10 @@ void restart(Gamep g, const std::string &restart_arg)
   CON("Exiting, restart called");
   TRACE_NO_INDENT();
 
-  char       *executable;
+  char       *executable = nullptr;
   const char *argv[ MAXSHORTSTR /* in pointers, should be enough */ ];
   int         argc = 0;
-  int         i;
+  int         i = 0;
 
   memset(argv, 0, sizeof(argv));
 
@@ -63,7 +63,7 @@ void restart(Gamep g, const std::string &restart_arg)
 
   wid_console_flush(g);
 
-  bool use_system;
+  bool use_system = false;
 
 #ifdef __linux__
   //

@@ -188,7 +188,7 @@ public:
   //
   // Level gen stats
   //
-  LevelInfo info;
+  LevelInfo info{};
 
   //
   // Level number
@@ -595,7 +595,7 @@ void room_add(Gamep g, int chance, int room_flags, const char *file, int line, .
 {
   TRACE_NO_INDENT();
 
-  va_list ap;
+  va_list ap = nullptr;
 
   int room_width  = 0;
   int room_height = 0;
@@ -1179,7 +1179,7 @@ auto fragment_alt_add(Gamep g, int chance, const char *file, int line, ...) -> b
 {
   TRACE_NO_INDENT();
 
-  va_list ap;
+  va_list ap = nullptr;
   int     fragment_alt_width  = 0;
   int     fragment_alt_height = 0;
 
@@ -1483,7 +1483,7 @@ auto fragment_add(Gamep g, int chance, const char *file, int line, ...) -> bool
 {
   TRACE_NO_INDENT();
 
-  va_list ap;
+  va_list ap = nullptr;
   int     fragment_width  = 0;
   int     fragment_height = 0;
 
@@ -1831,7 +1831,7 @@ void level_fixed_add(Gamep g, int chance, LevelType level_type, const std::strin
 {
   TRACE_NO_INDENT();
 
-  va_list ap;
+  va_list ap = nullptr;
 
   int level_width  = 0;
   int level_height = 0;
@@ -2548,8 +2548,8 @@ static void level_gen_create_remaining_rooms(Gamep g, LevelGen *l)
   // Choose a random start point for the rooms
   //
   int const border = MAP_WIDTH / 4;
-  int       x;
-  int       y;
+  int       x = 0;
+  int       y = 0;
 
   //
   // Start somewhere central
@@ -2581,8 +2581,8 @@ static void level_gen_create_remaining_rooms(Gamep g, LevelGen *l)
 
 static void cave_dump(class LevelGen *l)
 {
-  uint8_t x;
-  uint8_t y;
+  uint8_t x = 0;
+  uint8_t y = 0;
 
   std::print("+");
   for (x = 0; x < MAP_WIDTH; x++) {
@@ -2617,8 +2617,8 @@ static void cave_dump(class LevelGen *l)
 //
 static void level_gen_single_large_blob_in_center(Gamep g, class LevelGen *l, char c)
 {
-  uint8_t        x;
-  uint8_t        y;
+  uint8_t        x = 0;
+  uint8_t        y = 0;
   uint32_t const fill_prob       = LEVEL_BLOB_GEN_FILL_PROB;
   int const      r1              = 10; // higher r1 gives a more rounded look
   int const      r2              = 4;  // larger r2 gives a smaller pool
@@ -2719,8 +2719,8 @@ static void level_gen_single_large_blob_in_center(Gamep g, class LevelGen *l, ch
 //
 static void level_gen_blob(Gamep g, class LevelGen *l, char c)
 {
-  uint8_t        x;
-  uint8_t        y;
+  uint8_t        x = 0;
+  uint8_t        y = 0;
   uint32_t const fill_prob       = LEVEL_BLOB_GEN_FILL_PROB;
   int const      r1              = 4; // higher r1 gives a more rounded look
   int const      r2              = 4; // larger r2 gives a smaller pool
@@ -5056,7 +5056,7 @@ static void level_gen_create_fixed_or_proc_gen_level(Gamep g, LevelNum level_num
       break;
     }
 
-    LevelGen *l;
+    LevelGen *l = nullptr;
 
     if (level_gen_is_special_level(v, level_num)) {
       //

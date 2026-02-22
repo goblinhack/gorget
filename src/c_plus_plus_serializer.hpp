@@ -88,10 +88,10 @@ static inline auto operator<<(std::ostream &out, Bits< std::string & > const v) 
 static inline auto operator>>(std::istream &in, Bits< char & > v) -> std::istream &
 {
   if (sizeof(char) == 4) {
-    unsigned char _a;
-    unsigned char _b;
-    unsigned char _c;
-    unsigned char _d;
+    unsigned char _a = 0;
+    unsigned char _b = 0;
+    unsigned char _c = 0;
+    unsigned char _d = 0;
     in >> bits(_a);
     in >> bits(_b);
     in >> bits(_c);
@@ -104,8 +104,8 @@ static inline auto operator>>(std::istream &in, Bits< char & > v) -> std::istrea
     std::cout << "read '" << _d << "'" << std::endl;
 #endif
   } else if (sizeof(char) == 2) {
-    unsigned char _a;
-    unsigned char _b;
+    unsigned char _a = 0;
+    unsigned char _b = 0;
     in >> bits(_a);
     in >> bits(_b);
     v.t = (_a << 8) | _b;
@@ -126,10 +126,10 @@ static inline auto operator<<(std::ostream &out, Bits< const char & > const v) -
   std::cout << "write const '" << v.t << "'" << std::endl;
 #endif
   if (sizeof(char) == 4) {
-    unsigned char _a;
-    unsigned char _b;
-    unsigned char _c;
-    unsigned char _d;
+    unsigned char _a = 0;
+    unsigned char _b = 0;
+    unsigned char _c = 0;
+    unsigned char _d = 0;
     _a = (v.t & (0xff000000)) >> 24;
     out << bits(_a);
     _b = (v.t & (0x00ff0000)) >> 16;
@@ -145,8 +145,8 @@ static inline auto operator<<(std::ostream &out, Bits< const char & > const v) -
     std::cout << "write '" << _d << "'" << std::endl;
 #endif
   } else if (sizeof(char) == 2) {
-    unsigned char _a;
-    unsigned char _b;
+    unsigned char _a = 0;
+    unsigned char _b = 0;
     _a = (v.t & (0xff00)) >> 8;
     out << bits(_a);
     _b = (v.t & (0x00ff)) >> 0;
@@ -167,10 +167,10 @@ static inline auto operator<<(std::ostream &out, Bits< char & > const v) -> std:
   std::cout << "write const '" << v.t << "'" << std::endl;
 #endif
   if (sizeof(char) == 4) {
-    unsigned char _a;
-    unsigned char _b;
-    unsigned char _c;
-    unsigned char _d;
+    unsigned char _a = 0;
+    unsigned char _b = 0;
+    unsigned char _c = 0;
+    unsigned char _d = 0;
     _a = (v.t & (0xff000000)) >> 24;
     out << bits(_a);
     _b = (v.t & (0x00ff0000)) >> 16;
@@ -186,8 +186,8 @@ static inline auto operator<<(std::ostream &out, Bits< char & > const v) -> std:
     std::cout << "write '" << _d << "'" << std::endl;
 #endif
   } else if (sizeof(char) == 2) {
-    unsigned char _a;
-    unsigned char _b;
+    unsigned char _a = 0;
+    unsigned char _b = 0;
     _a = (v.t & (0xff00)) >> 8;
     out << bits(_a);
     _b = (v.t & (0x00ff)) >> 0;

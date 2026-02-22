@@ -78,7 +78,7 @@ auto operator>>(std::istream &in, Bits< Config & > my) -> std::istream &
   // Check various structure sizes prior to reading the data
   //
   {
-    uint32_t tmp;
+    uint32_t tmp = 0;
 
     in >> bits(tmp);
     if (tmp != offsetof(Config, seed_name)) {
@@ -472,7 +472,7 @@ auto operator>>(std::istream &in, Bits< Config & > my) -> std::istream &
 
   in >> bits(my.t.hiscores);
 
-  int eol;
+  int eol = 0;
   in >> bits(eol);
   if (eol != GAME_SAVE_MARKER_CONFIG) {
     game_load_error += "end of config marker not found";
@@ -537,7 +537,7 @@ auto operator>>(std::istream &in, Bits< class Game & > my) -> std::istream &
   // Check various structure sizes prior to reading the data
   //
   {
-    uint32_t tmp;
+    uint32_t tmp = 0;
 
     in >> bits(tmp);
     LOG("Read config: sizeof(Thing)          = %u", tmp);
@@ -1020,7 +1020,7 @@ auto Game::load(const std::string &file_to_load, class Game &target) -> bool
   //
   // Read to a vector and then copy to a C buffer for LZO to use
   //
-  long dst_size;
+  long dst_size = 0;
 
   TRACE_NO_INDENT();
   if (! game_headers_only) {
@@ -1072,7 +1072,7 @@ auto Game::load(const std::string &file_to_load, class Game &target) -> bool
 
 #ifdef USE_LZ4
   const auto *which = "LZ4";
-  long        new_len;
+  long        new_len = 0;
   new_len = LZ4_decompress_safe((const char *) src, (char *) dst, src_size, dst_size);
   if (new_len >= 0)
 #else

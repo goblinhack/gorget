@@ -6,6 +6,8 @@
 #include "my_main.hpp"
 #include "my_math.hpp"
 
+#include <math.h>
+
 #include <cmath>
 #include <numbers>
 
@@ -69,8 +71,8 @@ auto angle_radians(const fpoint &p) -> float
 
 auto rotate_radians(float angle, const fpoint &p, const fpoint &O) -> fpoint
 {
-  float s;
-  float c;
+  float s = 0;
+  float c = 0;
   sincosf(angle, &s, &c);
 
   // translate point back to origin:
@@ -87,8 +89,8 @@ auto rotate_radians(float angle, const fpoint &p, const fpoint &O) -> fpoint
 
 auto rotate_radians(const fpoint &p, float angle) -> fpoint
 {
-  float s;
-  float c;
+  float s = 0;
+  float c = 0;
   sincosf(angle, &s, &c);
 
   float const X = p.x;
@@ -206,8 +208,8 @@ float dot (const fpoint b
 auto distance_to_line(fpoint P0, fpoint L0, fpoint L1, float *dist, fpoint *intersect_out) -> int
 {
   fpoint intersect;
-  float  mag;
-  float  U;
+  float  mag = 0;
+  float  U = 0;
 
   //
   // Can get the squared distance to avoid this.

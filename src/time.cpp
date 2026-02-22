@@ -159,8 +159,8 @@ static auto my_strftime(char *s, size_t max, const char *fmt, const struct tm *t
 
 auto current_date() -> std::string
 {
-  struct tm *timeinfo;
-  time_t     rawtime;
+  struct tm *timeinfo = nullptr;
+  time_t     rawtime = 0;
   char       buffer[ MAXSTR ];
 
   time(&rawtime);

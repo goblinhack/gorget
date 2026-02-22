@@ -24,10 +24,12 @@ extern void stbi_image_free(void *retval_from_stbi_load);
 class Tex
 {
 public:
-  Tex(std::string vname) : name(std::move(vname))
+  Tex(std::string vname)
+      : name(std::move(vname)), // newline
+        gl_surface_binding(0),  // newline
+        surface(nullptr)
   {
-    surface            = nullptr;
-    gl_surface_binding = 0;
+
     newptr(MTYPE_TEX, this, "Tex");
   }
 
@@ -43,8 +45,8 @@ public:
     }
 
     if (gl_surface_binding != 0) {
-      GLuint tmp;
-      tmp = gl_surface_binding;
+      GLuint tmp = 0;
+      tmp        = gl_surface_binding;
       glDeleteTextures(1, &tmp);
       gl_surface_binding = 0;
     }
@@ -102,9 +104,9 @@ void tex_free(Texp tex)
 static auto load_raw_image(const std::string &filename, int *x, int *y, int *comp) -> unsigned char *
 {
   TRACE_NO_INDENT();
-  unsigned char *file_data;
-  unsigned char *image_data = nullptr; // NOLINt
-  int            len;
+  unsigned char *file_data  = nullptr;
+  unsigned char *image_data = nullptr; // NOLINT
+  int            len        = 0;
 
   file_data = file_load(filename.c_str(), &len);
   if (file_data == nullptr) {
@@ -132,15 +134,15 @@ static void free_raw_image(unsigned char *image_data)
 static auto load_image(const std::string &filename) -> SDL_Surface *
 {
   TRACE_NO_INDENT();
-  uint32_t       rmask;
-  uint32_t       gmask;
-  uint32_t       bmask;
-  uint32_t       amask;
-  unsigned char *image_data;
-  SDL_Surface   *surf;
-  int            x;
-  int            y;
-  int            comp;
+  uint32_t       rmask      = 0;
+  uint32_t       gmask      = 0;
+  uint32_t       bmask      = 0;
+  uint32_t       amask      = 0;
+  unsigned char *image_data = nullptr;
+  SDL_Surface   *surf       = nullptr;
+  int            x          = 0;
+  int            y          = 0;
+  int            comp       = 0;
 
   image_data = load_raw_image(filename, &x, &y, &comp);
   if (image_data == nullptr) {
@@ -194,15 +196,15 @@ static auto load_image(const std::string &filename) -> SDL_Surface *
 static void load_images(SDL_Surface **surf1_out, const std::string &filename)
 {
   TRACE_NO_INDENT();
-  uint32_t       rmask;
-  uint32_t       gmask;
-  uint32_t       bmask;
-  uint32_t       amask;
-  unsigned char *image_data;
-  SDL_Surface   *surf1 = nullptr;
-  int            x;
-  int            y;
-  int            comp;
+  uint32_t       rmask      = 0;
+  uint32_t       gmask      = 0;
+  uint32_t       bmask      = 0;
+  uint32_t       amask      = 0;
+  unsigned char *image_data = nullptr;
+  SDL_Surface   *surf1      = nullptr;
+  int            x          = 0;
+  int            y          = 0;
+  int            comp       = 0;
 
   image_data = load_raw_image(filename, &x, &y, &comp);
   if (image_data == nullptr) {
@@ -325,7 +327,7 @@ static auto tex_create_masks_from_surface(SDL_Surface *src, const std::string &f
   textures_mask.insert(std::make_pair(name_mask, tex_dst_mask));
   textures_outline.insert(std::make_pair(name_outline, tex_dst_outline));
 
-  uint32_t rmask, gmask, bmask, amask;
+  uint32_t rmask = 0, gmask = 0, bmask = 0, amask = 0;
 
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
   rmask = 0xff000000;
@@ -341,8 +343,8 @@ static auto tex_create_masks_from_surface(SDL_Surface *src, const std::string &f
 
   uint32_t const src_width  = src->w;
   uint32_t const src_height = src->h;
-  uint32_t       src_x;
-  uint32_t       src_y;
+  uint32_t       src_x      = 0;
+  uint32_t       src_y      = 0;
 
   SDL_Surface *dst_monochrome = SDL_CreateRGBSurface(0, src_width, src_height, 32, rmask, gmask, bmask, amask);
   newptr(MTYPE_SDL, dst_monochrome, "SDL_CreateRGBSurface17");
@@ -593,8 +595,8 @@ auto tex_from_fbo(Gamep g, FboEnum fbo) -> Texp
 {
   TRACE_NO_INDENT();
 
-  int w;
-  int h;
+  int w = 0;
+  int h = 0;
   fbo_get_size(g, fbo, w, h);
   auto name = FboEnum_to_string(fbo);
 

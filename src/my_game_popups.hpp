@@ -26,7 +26,7 @@ public:
   //
   // Text color
   //
-  color fg;
+  color fg{};
 };
 
 class GamePopups

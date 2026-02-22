@@ -10,7 +10,7 @@ void thing_water_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
   TRACE_NO_INDENT();
 
   auto   at = thing_at(t);
-  Thingp source;
+  Thingp source = nullptr;
   if (level_is_deep_water(g, v, l, at)) {
     source = level_is_deep_water(g, v, l, at);
   } else {

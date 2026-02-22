@@ -75,7 +75,7 @@ static void usage()
 static void parse_args(int argc, char *argv[])
 {
   TRACE_NO_INDENT();
-  int i;
+  int i = 0;
 
   //
   // Parse format args
@@ -142,7 +142,7 @@ static void parse_args(int argc, char *argv[])
       //
       // Check if this is a level number or name
       //
-      char *p;
+      char *p = nullptr;
       auto  num = strtol(argv[ i + 1 ], &p, 10);
       if (*p != 0) {
         //

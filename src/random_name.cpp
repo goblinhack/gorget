@@ -23,7 +23,7 @@ auto os_random_name(int len) -> std::string
 static auto hash(const char *s) -> unsigned long
 {
   unsigned long hash = 5381;
-  char          c;
+  char          c = 0;
 
   while ((c = *s++) != 0) {
     hash = ((hash << 5) + hash) + c; /* hash * 33 + c */

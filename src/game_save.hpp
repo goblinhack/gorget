@@ -52,7 +52,7 @@ auto operator<<(std::ostream &out, Bits< const Config & > const my) -> std::ostr
   // Save various structure offsets so we can check what we load looks sane
   //
   {
-    uint32_t tmp;
+    uint32_t tmp = 0;
     tmp = offsetof(Config, seed_name);
     out << bits(tmp);
     tmp = offsetof(Config, seed_num);
@@ -276,7 +276,7 @@ auto operator<<(std::ostream &out, Bits< const class Game & > const my) -> std::
   // Save various structure offsets so we can check what we load looks sane
   //
   {
-    uint32_t tmp;
+    uint32_t tmp = 0;
     //
     // Save Thing offsets
     //
@@ -482,7 +482,7 @@ auto Game::save(const std::string &file_to_save) -> bool
   long src_size = s.tellg();
   s.seekg(0, std::ios::beg);
 
-  void *src;
+  void *src = nullptr;
   if (need_larger_src_buffer) {
     if (! game_headers_only) {
       wid_progress_bar(this, "Allocating src buffer...", 0.5F);

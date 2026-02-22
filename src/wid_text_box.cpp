@@ -71,12 +71,12 @@ WidTextBox::WidTextBox(Gamep g, spoint vtl, spoint vbr, Widp vparent, bool horiz
   }
 
   {
-    int row;
+    int row = 0;
 
     Widp child {};
     Widp prev {};
 
-    int lines_of_text;
+    int lines_of_text = 0;
     if (vert_scroll) {
       lines_of_text = scroll_height;
     } else {

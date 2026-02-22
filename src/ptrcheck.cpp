@@ -30,7 +30,7 @@ class Ptrcheck_history
 public:
   const char *file {};
   const char *func {};
-  char        ts[ MY_TIMESTAMP_SIZE ];
+  char        ts[ MY_TIMESTAMP_SIZE ]{};
   int         line {};
   std::string bt;
 
@@ -39,14 +39,14 @@ public:
     ts[ 0 ] = '\0';
     all_Ptrcheck_history.push_back(this);
   }
-  Ptrcheck_history(const Ptrcheck_history &other)
+  Ptrcheck_history(const Ptrcheck_history &other) : file(other.file), func(other.func), line(other.line), bt(other.bt)
   {
     all_Ptrcheck_history.push_back(this);
-    file = other.file;
-    func = other.func;
-    line = other.line;
+    
+    
+    
     strcpy(ts, other.ts);
-    bt = other.bt;
+    
   }
   ~Ptrcheck_history() = default;
 };
@@ -67,7 +67,7 @@ public:
   //
   // The type of memory.
   //
-  const char *what;
+  const char *what{};
 
   //
   // How much memory it is using.
@@ -171,7 +171,7 @@ static Ptrcheck                                      *ringbuf_base[ MTYPE_MAX ];
 //
 static auto local_zalloc(int size) -> void *
 {
-  void *p;
+  void *p = nullptr;
   p = calloc(1, size);
   return p;
 }
@@ -181,7 +181,7 @@ static auto local_zalloc(int size) -> void *
 //
 static auto ptr2hash(hash_t *hash_table, void *ptr) -> hash_elem_t **
 {
-  int slot;
+  int slot = 0;
 
   //
   // Knock lower 2 bits off of pointer - these are always 0.
@@ -196,7 +196,7 @@ static auto ptr2hash(hash_t *hash_table, void *ptr) -> hash_elem_t **
 //
 static auto hash_init(int hash_size) -> hash_t *
 {
-  hash_t *hash_table;
+  hash_t *hash_table = nullptr;
 
   hash_table = (__typeof__(hash_table)) local_zalloc(SIZEOF(hash_t));
 
@@ -212,8 +212,8 @@ static auto hash_init(int hash_size) -> hash_t *
 //
 static void hash_add(hash_t *hash_table, Ptrcheck *pc)
 {
-  hash_elem_t **slot;
-  hash_elem_t  *elem;
+  hash_elem_t **slot = nullptr;
+  hash_elem_t  *elem = nullptr;
 
   if (! g_ptrcheck_inited) {
     if (g_memory_allocated > 0) {
@@ -253,8 +253,8 @@ static void hash_add(hash_t *hash_table, Ptrcheck *pc)
 //
 static auto hash_find(hash_t *hash_table, void *ptr) -> hash_elem_t *
 {
-  hash_elem_t **slot;
-  hash_elem_t  *elem;
+  hash_elem_t **slot = nullptr;
+  hash_elem_t  *elem = nullptr;
 
   if (hash_table == nullptr) {
     return nullptr;
@@ -274,9 +274,9 @@ static auto hash_find(hash_t *hash_table, void *ptr) -> hash_elem_t *
 //
 static void hash_free(hash_t *hash_table, void *ptr)
 {
-  hash_elem_t **slot;
-  hash_elem_t  *prev;
-  hash_elem_t  *elem;
+  hash_elem_t **slot = nullptr;
+  hash_elem_t  *prev = nullptr;
+  hash_elem_t  *elem = nullptr;
 
   if (hash_table == nullptr) {
     return;
@@ -311,7 +311,7 @@ static void hash_free(hash_t *hash_table, void *ptr)
 
 static auto ptrcheck_describe_pointer(int mtype, const void *ptr) -> Ptrcheck *
 {
-  int ring_ptr_size;
+  int ring_ptr_size = 0;
 
   //
   // Currently active pointer?
@@ -427,8 +427,8 @@ static auto ptrcheck_verify_pointer(int mtype, const void *ptr, const char *func
 {
   static const char *unknown_ptr_warning  = "** UNKNOWN POINTER ** ";
   static const char *null_pointer_warning = "** NULL POINTER ** ";
-  Ptrcheck          *pc;
-  hash_elem_t       *e;
+  Ptrcheck          *pc = nullptr;
+  hash_elem_t       *e = nullptr;
 
   //
   // Check the robust handle is valid.
@@ -502,7 +502,7 @@ static auto ptrcheck_verify_pointer(int mtype, const void *ptr, const char *func
 static auto ptrcheck_alloc_(int mtype, const void *ptr, const char *what, int size, const char *func, const char *file, int line)
     -> void *
 {
-  Ptrcheck *pc;
+  Ptrcheck *pc = nullptr;
 
 #ifdef ENABLE_DEBUG_PTRCHECK
   char tmp[ MY_TIMESTAMP_SIZE ];
@@ -589,7 +589,7 @@ auto ptrcheck_alloc(int mtype, const void *ptr, const char *what, int size, cons
 //
 static auto ptrcheck_free_(int mtype, void *ptr, const char *func, const char *file, int line) -> int
 {
-  Ptrcheck *pc;
+  Ptrcheck *pc = nullptr;
 
 #ifdef ENABLE_DEBUG_PTRCHECK
   char tmp[ MY_TIMESTAMP_SIZE ];
@@ -680,10 +680,10 @@ auto ptrcheck_verify(int mtype, const void *ptr, const char *func, const char *f
 //
 void ptrcheck_leak_print(int mtype)
 {
-  hash_elem_t **slot;
-  hash_elem_t  *elem;
-  Ptrcheck     *pc;
-  int           i;
+  hash_elem_t **slot = nullptr;
+  hash_elem_t  *elem = nullptr;
+  Ptrcheck     *pc = nullptr;
+  int           i = 0;
 
   if (ptrcheck_hash[ mtype ] == nullptr) {
     return;
@@ -739,9 +739,9 @@ void ptrcheck_leak_print()
 
 static void ptrcheck_fini(int mtype)
 {
-  hash_elem_t **slot;
-  hash_elem_t  *elem;
-  int           i;
+  hash_elem_t **slot = nullptr;
+  hash_elem_t  *elem = nullptr;
+  int           i = 0;
 
   if (ptrcheck_hash[ mtype ] == nullptr) {
     return;
