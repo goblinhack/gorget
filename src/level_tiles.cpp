@@ -101,9 +101,9 @@ static void level_assign_tiles_at(Gamep g, Levelsp v, Levelp l, spoint p)
       const uint16_t omask = (I << 8) | (H << 7) | (G << 6) | (F << 5) | (E << 4) | (D << 3) | (C << 2) | (B << 1) | (A << 0);
 
       uint8_t  block_type_score = 0;
-      uint8_t  best_block_type = 0;
-      int8_t   block_type      = -1;
-      uint16_t mask = 0;
+      uint8_t  best_block_type  = 0;
+      int8_t   block_type       = -1;
+      uint16_t mask             = 0;
 
 #define BLOCK(a, b, c, d, e, f, g, h, i, _index_)                                                                                \
   mask = ((i) << 8) | ((h) << 7) | ((g) << 6) | ((f) << 5) | ((e) << 4) | ((d) << 3) | ((c) << 2) | ((b) << 1) | ((a) << 0);     \

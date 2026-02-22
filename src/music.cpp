@@ -17,7 +17,7 @@
 class music
 {
 public:
-  music(std::string vname_alias) : name_alias(std::move(vname_alias)) {}
+  explicit music(std::string vname_alias) : name_alias(std::move(vname_alias)) {}
 
   ~music()
   {

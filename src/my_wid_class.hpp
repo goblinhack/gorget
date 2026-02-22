@@ -84,7 +84,7 @@ class WidKeyType
 public:
   WidKeyType() = default;
 
-  WidKeyType(uint64_t v_val) : val(v_val) {}
+  explicit WidKeyType(uint64_t v_val) : val(v_val) {}
 
   auto operator<(const WidKeyType &rhs) const -> bool { return (val < rhs.val); }
 

@@ -650,7 +650,7 @@ auto level_is_same_obj_type_at(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp) -
 
   for (auto slot = 0; slot < MAP_SLOTS; slot++) {
     Tpp    it_tp = nullptr;
-    Thingp it = thing_and_tp_get_at(g, v, l, p, slot, &it_tp);
+    Thingp it    = thing_and_tp_get_at(g, v, l, p, slot, &it_tp);
     if (it == nullptr) {
       continue;
     }

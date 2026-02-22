@@ -1071,9 +1071,9 @@ auto Game::load(const std::string &file_to_load, class Game &target) -> bool
       dst_size);
 
 #ifdef USE_LZ4
-  const auto *which = "LZ4";
+  const auto *which   = "LZ4";
   long        new_len = 0;
-  new_len = LZ4_decompress_safe((const char *) src, (char *) dst, src_size, dst_size);
+  new_len             = LZ4_decompress_safe((const char *) src, (char *) dst, src_size, dst_size);
   if (new_len >= 0)
 #else
   auto     which   = "LZ0";

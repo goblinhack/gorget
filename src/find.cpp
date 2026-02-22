@@ -26,7 +26,7 @@ static void find_executable()
   std::string exec_name;
   char       *exec_expanded_name = nullptr;
   char       *path               = nullptr;
-  char       *tmp = nullptr;
+  char       *tmp                = nullptr;
 
   exec_name = mybasename(g_argv[ 0 ], __FUNCTION__);
   LOG("Will use EXEC_NAME as '%s'", exec_name.c_str());

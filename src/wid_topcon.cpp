@@ -223,7 +223,7 @@ static void wid_topcon_wid_create(Gamep g)
 
   TRACE_NO_INDENT();
   {
-    int row = 0;
+    int row        = 0;
     int row_bottom = h;
 
     Widp child {};

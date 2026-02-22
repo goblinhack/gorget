@@ -30,8 +30,8 @@ void sdl_screenshot_do(Gamep g)
 
   GL_ERROR_CHECK();
   FboEnum const fbo = FBO_FINAL;
-  int           w = 0;
-  int           h = 0;
+  int           w   = 0;
+  int           h   = 0;
   GL_ERROR_CHECK();
   fbo_get_size(g, fbo, w, h);
   GL_ERROR_CHECK();

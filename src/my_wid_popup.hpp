@@ -33,7 +33,7 @@ public:
   std::string name;
 
   ~WidPopup();
-  WidPopup(Gamep g, const std::string &name, spoint tl, spoint br, Tilep title_tile = nullptr, std::string background = "",
+  WidPopup(Gamep g, std::string name, spoint tl, spoint br, Tilep title_tile = nullptr, std::string background = "",
            bool horiz_scroll = true, bool vert_scoll = true, int vert_scroll_size = -1);
 
   auto log(Gamep g, const std::string &s, wid_text_format format = TEXT_FORMAT_NONE, const std::string &c = "") const -> Widp;

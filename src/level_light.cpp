@@ -11,7 +11,7 @@
 #include "my_tile.hpp"
 #include "my_ui.hpp"
 
-#include <math.h>
+#include <cmath>
 
 #include <array>
 #include <cmath>
@@ -51,7 +51,7 @@ public:
   //
   // The lenght of each ray when it is cast
   //
-  Ray rays[ LIGHT_MAX_RAYS_MAX ]{};
+  Ray rays[ LIGHT_MAX_RAYS_MAX ] {};
 
   //
   // The precalculated ray lines
@@ -201,8 +201,8 @@ void level_light_per_pixel_lighting(Gamep g, Levelsp v, Levelp l, Thingp t, spoi
   const color  light_color              = tp_light_color(thing_tp(t));
   const float  light_strength_in_pixels = thing_is_light_source(t) * TILE_WIDTH;
   auto *const  light_tile               = &v->light_map.tile[ p.x ][ p.y ];
-  const float *light_fade_map = nullptr;
-  const spoint thing_at_in_pixels = thing_pix_at(t);
+  const float *light_fade_map           = nullptr;
+  const spoint thing_at_in_pixels       = thing_pix_at(t);
 
   if (light_strength_in_pixels == 0.0F) {
     THING_ERR(t, "thing has no light source");
@@ -525,8 +525,8 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
       //
       // Keep track of the type of object we hit
       //
-      Thingp obs_to_vision = nullptr;
-      Tpp    tp_obs_to_vision = nullptr;
+      Thingp obs_to_vision      = nullptr;
+      Tpp    tp_obs_to_vision   = nullptr;
       Thingp next_obs_to_vision = nullptr;
 
       //

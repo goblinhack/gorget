@@ -2,7 +2,7 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include <math.h>
+#include <cmath>
 
 #include "my_callstack.hpp"
 #include "my_color_defs.hpp"
@@ -42,9 +42,9 @@ void thing_blit_text(Gamep g, Levelsp v, Levelp l, spoint tl, spoint br, std::st
   br.y = tl.y + h;
 
   bool found_format_string = false;
-  char c = 0;
-  auto text_start = text.begin();
-  auto text_iter  = text_start;
+  char c                   = 0;
+  auto text_start          = text.begin();
+  auto text_iter           = text_start;
 
   for (;;) {
     Tilep tile = nullptr;

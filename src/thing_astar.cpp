@@ -29,7 +29,7 @@ class Nodecost
 {
 public:
   Nodecost() = default;
-  Nodecost(Cost c) : cost(c), tiebreak(g_tiebreak++) {}
+  explicit Nodecost(Cost c) : cost(c), tiebreak(g_tiebreak++) {}
 
   auto operator<(const Nodecost &rhs) const -> bool
   {
@@ -54,7 +54,7 @@ public:
 
   class Node *came_from {};
   Nodecost    cost;
-  spoint      at{};
+  spoint      at {};
 };
 
 //
@@ -85,8 +85,8 @@ public:
   //
   // Start and desired end of the search
   //
-  spoint src{};
-  spoint dst{};
+  spoint src {};
+  spoint dst {};
 
   //
   // Indicates which nodes in the grid we've searched and added to the open list

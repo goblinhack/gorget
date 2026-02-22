@@ -26,10 +26,10 @@ void restart(Gamep g, const std::string &restart_arg)
   CON("Exiting, restart called");
   TRACE_NO_INDENT();
 
-  char       *executable = nullptr;
+  char const *executable = nullptr;
   const char *argv[ MAXSHORTSTR /* in pointers, should be enough */ ];
   int         argc = 0;
-  int         i = 0;
+  int         i    = 0;
 
   memset(argv, 0, sizeof(argv));
 

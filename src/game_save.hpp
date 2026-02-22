@@ -53,7 +53,7 @@ auto operator<<(std::ostream &out, Bits< const Config & > const my) -> std::ostr
   //
   {
     uint32_t tmp = 0;
-    tmp = offsetof(Config, seed_name);
+    tmp          = offsetof(Config, seed_name);
     out << bits(tmp);
     tmp = offsetof(Config, seed_num);
     out << bits(tmp);

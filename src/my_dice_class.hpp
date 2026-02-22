@@ -21,7 +21,7 @@ public:
   [[nodiscard]] auto to_string() const -> std::string;
 
   Dice();
-  Dice(const std::string &s);
+  explicit Dice(const std::string &s);
 
   [[nodiscard]] auto roll() const -> int;
   [[nodiscard]] auto max_roll() const -> int;

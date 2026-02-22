@@ -182,8 +182,8 @@ auto cave_generation_fill_blob_cand(Gamep g, Cave *c, int x, int y, uint16_t siz
 //
 void cave_generation_keep_largest_blob(Gamep g, Cave *c)
 {
-  uint16_t x = 0;
-  uint16_t y = 0;
+  uint16_t x  = 0;
+  uint16_t y  = 0;
   uint16_t id = 1;
 
   //

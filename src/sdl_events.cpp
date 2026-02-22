@@ -176,8 +176,8 @@ static void __attribute__((noinline)) sdl_event_mousemotion(Gamep g, SDL_Event *
 
   sdl.event_count++;
   sdl.mouse_down = sdl_get_mouse();
-  int        mx = 0;
-  int        my = 0;
+  int        mx  = 0;
+  int        my  = 0;
   static int last_mx;
   static int last_my;
 

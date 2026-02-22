@@ -13,9 +13,9 @@ static auto tokens_parse(const char *input, class Tokens *tokens) -> class Token
 {
   TRACE_NO_INDENT();
 
-  const char *in = nullptr;
+  const char *in  = nullptr;
   char       *out = nullptr;
-  char        i = 0;
+  char        i   = 0;
 
   memset(tokens, 0, SIZEOF(*tokens));
 
@@ -182,7 +182,7 @@ void tokens_print_to(class Tokens *tokens, char *output, int output_size)
 void tokens_test()
 {
   TRACE_NO_INDENT();
-  class Tokens tmp{};
+  class Tokens tmp {};
 
   tokens_print(tokens_to_string("s  ", &tmp));
   tokens_print(tokens_to_string("set god mode on", &tmp));
@@ -194,7 +194,7 @@ auto tokens_to_string(const char *input, class Tokens *tokens) -> class Tokens *
   TRACE_NO_INDENT();
 
   class Tokens *t = nullptr;
-  t = tokens_parse(input, tokens);
+  t               = tokens_parse(input, tokens);
   tokens_compile(tokens);
 
   return t;

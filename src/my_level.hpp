@@ -27,8 +27,8 @@ enum {
 //
 using LevelOpt = struct LevelOpt_ {
   std::string level_name;
-  LevelNum    level_num{};
-  bool        is_set{};
+  LevelNum    level_num {};
+  bool        is_set {};
 };
 
 extern LevelOpt g_level_opt;

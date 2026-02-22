@@ -30,7 +30,7 @@ class Ptrcheck_history
 public:
   const char *file {};
   const char *func {};
-  char        ts[ MY_TIMESTAMP_SIZE ]{};
+  char        ts[ MY_TIMESTAMP_SIZE ] {};
   int         line {};
   std::string bt;
 
@@ -42,11 +42,8 @@ public:
   Ptrcheck_history(const Ptrcheck_history &other) : file(other.file), func(other.func), line(other.line), bt(other.bt)
   {
     all_Ptrcheck_history.push_back(this);
-    
-    
-    
+
     strcpy(ts, other.ts);
-    
   }
   ~Ptrcheck_history() = default;
 };
@@ -67,7 +64,7 @@ public:
   //
   // The type of memory.
   //
-  const char *what{};
+  const char *what {};
 
   //
   // How much memory it is using.
@@ -172,7 +169,7 @@ static Ptrcheck                                      *ringbuf_base[ MTYPE_MAX ];
 static auto local_zalloc(int size) -> void *
 {
   void *p = nullptr;
-  p = calloc(1, size);
+  p       = calloc(1, size);
   return p;
 }
 
@@ -427,8 +424,8 @@ static auto ptrcheck_verify_pointer(int mtype, const void *ptr, const char *func
 {
   static const char *unknown_ptr_warning  = "** UNKNOWN POINTER ** ";
   static const char *null_pointer_warning = "** NULL POINTER ** ";
-  Ptrcheck          *pc = nullptr;
-  hash_elem_t       *e = nullptr;
+  Ptrcheck          *pc                   = nullptr;
+  hash_elem_t       *e                    = nullptr;
 
   //
   // Check the robust handle is valid.
@@ -682,8 +679,8 @@ void ptrcheck_leak_print(int mtype)
 {
   hash_elem_t **slot = nullptr;
   hash_elem_t  *elem = nullptr;
-  Ptrcheck     *pc = nullptr;
-  int           i = 0;
+  Ptrcheck     *pc   = nullptr;
+  int           i    = 0;
 
   if (ptrcheck_hash[ mtype ] == nullptr) {
     return;
@@ -741,7 +738,7 @@ static void ptrcheck_fini(int mtype)
 {
   hash_elem_t **slot = nullptr;
   hash_elem_t  *elem = nullptr;
-  int           i = 0;
+  int           i    = 0;
 
   if (ptrcheck_hash[ mtype ] == nullptr) {
     return;

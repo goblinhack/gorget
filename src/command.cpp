@@ -84,20 +84,19 @@
 class command_t
 {
 public:
-  command_t() : callback(nullptr)
+  command_t()
   {
     memset(&this->tokens, 0, SIZEOF(this->tokens));
     memset(&this->readable_tokens, 0, SIZEOF(this->readable_tokens));
     memset(&this->input_tokens, 0, SIZEOF(this->input_tokens));
-    
   }
 
   ~command_t() = default;
 
-  class Tokens tokens{};
-  class Tokens readable_tokens{};
-  class Tokens input_tokens{};
-  command_fn_t callback;
+  class Tokens tokens {};
+  class Tokens readable_tokens {};
+  class Tokens input_tokens {};
+  command_fn_t callback {nullptr};
 };
 
 using commandp = class command_t *;
@@ -157,14 +156,14 @@ static auto command_matches(Gamep g, const char *input, char *output, uint8_t sh
   commandp     matched_command = nullptr;
   char         completes_to[ MAXSTR ];
   char         expands_to[ MAXSTR ];
-  class Tokens input_tokens{};
+  class Tokens input_tokens {};
   char         match[ MAXSTR ];
   char         match2[ MAXSTR ];
   int          longest_match = 0;
-  int          common_len = 0;
-  int          matches = 0;
-  int          cnt = 0;
-  int          t = 0;
+  int          common_len    = 0;
+  int          matches       = 0;
+  int          cnt           = 0;
+  int          t             = 0;
 
   longest_match = -1;
   matches       = 0;

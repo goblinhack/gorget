@@ -172,24 +172,24 @@ void dmap_print(const Dmap *D)
 //
 void dmap_process(Dmap *D, spoint tl, spoint br)
 {
-  uint8_t  x = 0;
-  uint8_t  y = 0;
-  uint8_t  a = 0;
-  uint8_t  b = 0;
-  uint8_t  c = 0;
-  uint8_t  d = 0;
-  uint8_t *e = nullptr;
-  uint8_t  f = 0;
-  uint8_t  g = 0;
-  uint8_t  h = 0;
-  uint8_t  i = 0;
-  uint8_t  lowest = 0;
+  uint8_t  x       = 0;
+  uint8_t  y       = 0;
+  uint8_t  a       = 0;
+  uint8_t  b       = 0;
+  uint8_t  c       = 0;
+  uint8_t  d       = 0;
+  uint8_t *e       = nullptr;
+  uint8_t  f       = 0;
+  uint8_t  g       = 0;
+  uint8_t  h       = 0;
+  uint8_t  i       = 0;
+  uint8_t  lowest  = 0;
   uint8_t  changed = 0;
-  uint8_t  minx = 0;
-  uint8_t  miny = 0;
-  uint8_t  maxx = 0;
-  uint8_t  maxy = 0;
-  auto     orig = *D;
+  uint8_t  minx    = 0;
+  uint8_t  miny    = 0;
+  uint8_t  maxx    = 0;
+  uint8_t  maxy    = 0;
+  auto     orig    = *D;
 
   if (tl.x < br.x) {
     minx = tl.x;
@@ -311,24 +311,24 @@ void dmap_process(Dmap *D, spoint tl, spoint br)
 //
 void dmap_process_reverse(Dmap *D, spoint tl, spoint br)
 {
-  uint8_t  x = 0;
-  uint8_t  y = 0;
-  uint8_t  a = 0;
-  uint8_t  b = 0;
-  uint8_t  c = 0;
-  uint8_t  d = 0;
-  uint8_t *e = nullptr;
-  uint8_t  f = 0;
-  uint8_t  g = 0;
-  uint8_t  h = 0;
-  uint8_t  i = 0;
+  uint8_t  x       = 0;
+  uint8_t  y       = 0;
+  uint8_t  a       = 0;
+  uint8_t  b       = 0;
+  uint8_t  c       = 0;
+  uint8_t  d       = 0;
+  uint8_t *e       = nullptr;
+  uint8_t  f       = 0;
+  uint8_t  g       = 0;
+  uint8_t  h       = 0;
+  uint8_t  i       = 0;
   uint8_t  highest = 0;
   uint8_t  changed = 0;
-  uint8_t  minx = 0;
-  uint8_t  miny = 0;
-  uint8_t  maxx = 0;
-  uint8_t  maxy = 0;
-  auto     orig = *D;
+  uint8_t  minx    = 0;
+  uint8_t  miny    = 0;
+  uint8_t  maxx    = 0;
+  uint8_t  maxy    = 0;
+  auto     orig    = *D;
 
   if (tl.x < br.x) {
     minx = tl.x;

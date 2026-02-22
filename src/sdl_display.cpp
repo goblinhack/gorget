@@ -131,7 +131,7 @@ static inline void sdl_list_video_size()
 
 auto sdl_display_init(Gamep g) -> bool
 {
-  int video_width = 0;
+  int video_width  = 0;
   int video_height = 0;
 
   sdl.init_video = 1;

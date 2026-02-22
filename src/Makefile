@@ -105,11 +105,15 @@ tidy:
 			-fix-errors \
 			--system-headers=0 \
 			-checks="-*,\
+			hicpp-*,\
 			bugprone-*,\
 			cppcoreguidelines-*,\
 			misc-const-correctness,\
 			misc-redundant-expression,\
 			misc-static-assert,\
+			misc-misleading-bidirectional,\
+			misc-misleading-identifier,\
+			misc-confusable-identifiers,\
 			modernize-*,\
 			performance-*,\
 			readability-*" \

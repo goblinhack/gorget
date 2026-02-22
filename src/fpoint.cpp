@@ -6,7 +6,7 @@
 #include "my_main.hpp"
 #include "my_math.hpp"
 
-#include <math.h>
+#include <cmath>
 
 #include <cmath>
 #include <numbers>
@@ -209,7 +209,7 @@ auto distance_to_line(fpoint P0, fpoint L0, fpoint L1, float *dist, fpoint *inte
 {
   fpoint intersect;
   float  mag = 0;
-  float  U = 0;
+  float  U   = 0;
 
   //
   // Can get the squared distance to avoid this.

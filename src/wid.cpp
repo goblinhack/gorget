@@ -1830,8 +1830,8 @@ static void wid_tree2_unsorted_insert(Widp w)
     root = &w->parent->tree2_children_unsorted;
   }
 
-  w->tree2_key = ++wid_unique_key;
-  auto result  = root->insert(std::make_pair(w->tree2_key, w));
+  w->tree2_key.val = ++wid_unique_key;
+  auto result      = root->insert(std::make_pair(w->tree2_key, w));
   if (! result.second) {
     CROAK("Wid insert name [%s] tree2 failed", wid_get_name(w).c_str());
   }
@@ -1855,8 +1855,8 @@ static void wid_tree4_wids_being_destroyed_insert(Widp w)
 
   root = &wid_top_level4;
 
-  w->tree4_key = ++wid_unique_key;
-  auto result  = root->insert(std::make_pair(w->tree4_key, w));
+  w->tree4_key.val = ++wid_unique_key;
+  auto result      = root->insert(std::make_pair(w->tree4_key, w));
   if (! result.second) {
     CROAK("Wid insert name [%s] tree4 failed", wid_get_name(w).c_str());
   }
@@ -1880,8 +1880,8 @@ static void wid_tree5_tick_wids_insert(Widp w)
 
   root = &wid_tick_top_level;
 
-  w->tree5_key = ++wid_unique_key;
-  auto result  = root->insert(std::make_pair(w->tree5_key, w));
+  w->tree5_key.val = ++wid_unique_key;
+  auto result      = root->insert(std::make_pair(w->tree5_key, w));
   if (! result.second) {
     CROAK("Wid insert name [%s] tree5 failed", wid_get_name(w).c_str());
   }

@@ -57,8 +57,8 @@ auto thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what,
   }
 
   auto  angle = angle_radians(delta);
-  float s = 0;
-  float c = 0;
+  float s     = 0;
+  float c     = 0;
   sincosf(angle, &s, &c);
 
   fpoint proj_at = thing_real_at(me);

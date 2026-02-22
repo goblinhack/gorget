@@ -29,7 +29,7 @@ public:
   ~Font() = default;
   std::array< int, FONT_CHAR_MAX + 1 >   u_to_c {};
   std::array< Tilep, FONT_CHAR_MAX + 1 > cache {};
-  int                                    tile_index{};
+  int                                    tile_index {};
   auto                                   font_get_tile(int u) -> Tilep;
 };
 #endif

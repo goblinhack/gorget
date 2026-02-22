@@ -76,7 +76,7 @@ void test_init();
 void test_fini();
 
 [[nodiscard]] auto game_test_init(Gamep g, Levelp *out, LevelNum level_num, int w, int h, const char *contents,
-                                  const Overrides& overrides = no_overrides) -> Levelsp;
+                                  const Overrides &overrides = no_overrides) -> Levelsp;
 
 void game_test_init_level(Gamep g, Levelsp v, Levelp *out, LevelNum level_num, int w, int h, const char *contents,
                           const Overrides &overrides = no_overrides);

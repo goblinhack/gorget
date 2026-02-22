@@ -21,7 +21,7 @@ auto draw_line(const spoint s, const spoint e, size_t max_elems) -> std::vector<
   int const dy  = -abs(y1 - y0);
   int const sy  = y0 < y1 ? 1 : -1;
   int       err = dx + dy;
-  int       e2 = 0; /* error value e_xy */
+  int       e2  = 0; /* error value e_xy */
 
   for (;;) { /* loop */
     out.push_back(spoint(x0, y0));

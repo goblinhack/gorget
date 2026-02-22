@@ -32,7 +32,7 @@ auto redirect_stdout() -> FILE *
   TRACE_NO_INDENT();
 
   const char *appdata = nullptr;
-  appdata = getenv("APPDATA");
+  appdata             = getenv("APPDATA");
   if ((appdata == nullptr) || (appdata[ 0 ] == 0)) {
     appdata = "appdata";
   }
@@ -91,7 +91,7 @@ auto redirect_stderr() -> FILE *
   TRACE_NO_INDENT();
 
   const char *appdata = nullptr;
-  appdata = getenv("APPDATA");
+  appdata             = getenv("APPDATA");
   if ((appdata == nullptr) || (appdata[ 0 ] == 0)) {
     appdata = "appdata";
   }

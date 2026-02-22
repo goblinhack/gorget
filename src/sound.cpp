@@ -17,7 +17,7 @@
 class sound
 {
 public:
-  sound(std::string valias) : alias(std::move(valias)) {}
+  explicit sound(std::string valias) : alias(std::move(valias)) {}
 
   ~sound()
   {
@@ -49,7 +49,7 @@ class Playing
 {
 public:
   std::string alias;
-  int         volume{};
+  int         volume {};
 };
 
 static std::unordered_map< int, Playing > already_playing;

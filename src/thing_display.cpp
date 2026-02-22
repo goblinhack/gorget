@@ -2,7 +2,7 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include <math.h>
+#include <cmath>
 
 #include <algorithm>
 #include <numbers>
