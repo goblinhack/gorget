@@ -1,3 +1,5 @@
+include build/Makefile.template
+
 pre:
 	@build/check_files.sh
 	@build/ramdisk.py
@@ -19,7 +21,7 @@ FORMAT_DIRS=$(DIRS) \
 	    src/tests
 
 all: pre
-	$(foreach var,$(DIRS), $(MAKE) -C $(var) $@; )
+	$(foreach var,$(DIRS), $(MAKE) -C $(var) $(CORES) $@; )
 
 format:
 	$(foreach var,$(FORMAT_DIRS), (cd $(var); cp $(TOP)/.clang-format .) ;)
@@ -28,7 +30,7 @@ format:
 	$(foreach var,$(FORMAT_DIRS), (cd $(var); sh $(TOP)/build/format.sh do) ;)
 
 tidy:
-	$(foreach var,$(DIRS), $(MAKE) -C $(var) $@; )
+	$(foreach var,$(DIRS), $(MAKE) -C $(var) $(CORES) $@; )
 
 clean_files:
 	/bin/rm -rf data/sounds/

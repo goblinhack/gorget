@@ -98,8 +98,8 @@ $(TARGET_GAME): $(OBJ_FILES)
 #			// NOLINTEND
 #####################################################
 tidy:
-	for src in $(CPP_SOURCES) ; do \
-		echo "Running tidy on $$src..." ; \
+	$(foreach x,$(CPP_SOURCES),\
+		echo "Running tidy on $x..." ; \
 		clang-tidy \
 			-fix \
 			-fix-errors \
@@ -122,8 +122,8 @@ tidy:
 			readability-*\
 			" \
 			-header-filter=".*" \
-			"$(SRC_DIR)/$$src" -- $(CFLAGS); \
-	done
+			$x -- $(CFLAGS); \
+	)
 	git checkout 3rdparty
 	@echo "Done"
 
