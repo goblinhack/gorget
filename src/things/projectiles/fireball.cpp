@@ -26,7 +26,7 @@ static void tp_fireball_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEv
   thing_sound_play(g, v, l, t, "explosion");
 }
 
-static std::string tp_fireball_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static auto tp_fireball_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
   TRACE_NO_INDENT();
 
@@ -49,7 +49,7 @@ static void tp_fireball_on_moved(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 }
 
-bool tp_load_fireball()
+auto tp_load_fireball() -> bool
 {
   auto *tp   = tp_load("fireball"); // keep as string for scripts
   auto  name = tp_name(tp);

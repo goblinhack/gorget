@@ -17,7 +17,7 @@ public:
   uint32_t    cnt;
 };
 
-class Tokens *tokens_to_string(const char *input, class Tokens *tokens);
+auto tokens_to_string(const char *input, class Tokens *tokens) -> class Tokens *;
 void          tokens_print_to(class Tokens *tokens, char *output, int output_size);
 void          tokens_print(class Tokens *tokens);
 void          tokens_test();

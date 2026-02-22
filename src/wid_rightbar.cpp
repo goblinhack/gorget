@@ -87,7 +87,7 @@ static void wid_rightbar_create_minimap_world(Gamep g)
   }
 }
 
-[[nodiscard]] static bool wid_rightbar_create_window(Gamep g)
+[[nodiscard]] static auto wid_rightbar_create_window(Gamep g) -> bool
 {
   TRACE_NO_INDENT();
   DBG2("Remake rightbar");
@@ -161,7 +161,7 @@ void wid_rightbar_fini(Gamep g)
   wid_rightbar = nullptr;
 }
 
-bool wid_rightbar_init(Gamep g)
+auto wid_rightbar_init(Gamep g) -> bool
 {
   TRACE_NO_INDENT();
   return wid_rightbar_create_window(g);

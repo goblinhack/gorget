@@ -109,7 +109,7 @@ Test::Test() { newptr(MTYPE_TP, this, "Test"); }
 
 Test::~Test() { oldptr(MTYPE_TP, this); }
 
-Testp test_find(const char *name_in)
+auto test_find(const char *name_in) -> Testp
 {
   TRACE_NO_INDENT();
 
@@ -158,7 +158,7 @@ void test_callback_set(Testp test, test_callback_t callback)
   test->callback = callback;
 }
 
-Testp test_load(const char *name_in)
+auto test_load(const char *name_in) -> Testp
 {
   TRACE_NO_INDENT();
 
@@ -181,7 +181,7 @@ Testp test_load(const char *name_in)
   return test;
 }
 
-const char *test_name(Testp test)
+auto test_name(Testp test) -> const char *
 {
   TRACE_NO_INDENT();
 

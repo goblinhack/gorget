@@ -13,7 +13,7 @@
 #include "my_thing_inlines.hpp"
 #include "my_wid_warning.hpp"
 
-Thingp thing_player(Gamep g)
+auto thing_player(Gamep g) -> Thingp
 {
   TRACE_NO_INDENT();
 
@@ -29,7 +29,7 @@ Thingp thing_player(Gamep g)
   return thing_find(g, v, v->player_id);
 }
 
-Levelp thing_player_level(Gamep g)
+auto thing_player_level(Gamep g) -> Levelp
 {
   TRACE_NO_INDENT();
 
@@ -49,7 +49,7 @@ Levelp thing_player_level(Gamep g)
 //
 // Replace the mouse path upon mouse down events
 //
-[[nodiscard]] static bool thing_player_replace_current_mouse_path(Gamep g, Levelsp v, Levelp l)
+[[nodiscard]] static auto thing_player_replace_current_mouse_path(Gamep g, Levelsp v, Levelp l) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -71,8 +71,8 @@ Levelp thing_player_level(Gamep g)
 //
 // Pass the event to things for consumption e.g. doors
 //
-[[nodiscard]] static bool thing_player_pass_event_to_other_things(Gamep g, Levelsp v, Levelp l, int x, int y,
-                                                                  uint32_t button)
+[[nodiscard]] static auto thing_player_pass_event_to_other_things(Gamep g, Levelsp v, Levelp l, int x, int y,
+                                                                  uint32_t button) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -92,7 +92,7 @@ Levelp thing_player_level(Gamep g)
 //
 // Return true on the event being consumed
 //
-bool thing_player_mouse_down(Gamep g, Levelsp v, Levelp l, int x, int y, uint32_t button)
+auto thing_player_mouse_down(Gamep g, Levelsp v, Levelp l, int x, int y, uint32_t button) -> bool
 {
   LOG("Thing mouse down");
   TRACE_NO_INDENT();
@@ -239,13 +239,13 @@ void thing_player_event_loop(Gamep g, Levelsp v, Levelp l)
   }
 }
 
-std::string player_state_to_string(PlayerState state)
+auto player_state_to_string(PlayerState state) -> std::string
 {
   TRACE_NO_INDENT();
   return PlayerState_to_string(state);
 }
 
-PlayerState player_state(Gamep g, Levelsp v)
+auto player_state(Gamep g, Levelsp v) -> PlayerState
 {
   TRACE_NO_INDENT();
   return v->_player_state;
@@ -434,7 +434,7 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
 //
 // Return true on the event being consumed
 //
-bool player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, spoint to)
+auto player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, spoint to) -> bool
 {
   auto *me = thing_player(g);
   if (me == nullptr) {
@@ -502,7 +502,7 @@ bool player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, spo
 //
 // Return true on a successful move (or a popup asking more info)
 //
-[[nodiscard]] static bool player_move_try(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to, bool need_path)
+[[nodiscard]] static auto player_move_try(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to, bool need_path) -> bool
 {
   THING_LOG(me, "move try");
 
@@ -628,7 +628,7 @@ void player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what)
     tp_fireball = tp_find_mand("fireball");
   }
 
-  if (! fire_what) {
+  if (fire_what == nullptr) {
     fire_what = tp_fireball;
   }
 
@@ -720,7 +720,7 @@ void player_move_accum(Gamep g, Levelsp v, Levelp l, bool up, bool down, bool le
 //
 // Attempt to move
 //
-bool player_move_request(Gamep g, bool up, bool down, bool left, bool right, bool fire)
+auto player_move_request(Gamep g, bool up, bool down, bool left, bool right, bool fire) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -948,7 +948,7 @@ void player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
 //
 // Handle me jumping
 //
-bool player_jump(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to)
+auto player_jump(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -977,7 +977,7 @@ bool player_jump(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to)
 //
 // Move to the next path on the popped path if it exits.
 //
-bool player_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp me)
+auto player_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
 {
   TRACE_NO_INDENT();
 

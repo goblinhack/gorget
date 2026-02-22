@@ -14,7 +14,7 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
-static std::string tp_kobalos_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static auto tp_kobalos_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
   TRACE_NO_INDENT();
 
@@ -24,7 +24,7 @@ static std::string tp_kobalos_description_get(Gamep g, Levelsp v, Levelp l, Thin
   return "kobalos";
 }
 
-static std::string tp_kobalos_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static auto tp_kobalos_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
   TRACE_NO_INDENT();
 
@@ -34,7 +34,7 @@ static std::string tp_kobalos_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
       UI_INFO2_FMT_STR "Kobalos are vindictive, greedy little things and have a habit of thievery...";
 }
 
-ThingEnviron tp_kobalos_assess_tile(Gamep g, Levelsp v, Levelp l, spoint at, Thingp t)
+auto tp_kobalos_assess_tile(Gamep g, Levelsp v, Levelp l, spoint at, Thingp t) -> ThingEnviron
 {
   TRACE_NO_INDENT();
 
@@ -49,7 +49,7 @@ ThingEnviron tp_kobalos_assess_tile(Gamep g, Levelsp v, Levelp l, spoint at, Thi
   return THING_ENVIRON_NEUTRAL;
 }
 
-bool tp_load_kobalos()
+auto tp_load_kobalos() -> bool
 {
   auto *tp   = tp_load("kobalos"); // keep as string for scripts
   auto  name = tp_name(tp);

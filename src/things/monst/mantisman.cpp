@@ -12,7 +12,7 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
-static std::string tp_mantisman_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static auto tp_mantisman_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
   TRACE_NO_INDENT();
 
@@ -22,7 +22,7 @@ static std::string tp_mantisman_description_get(Gamep g, Levelsp v, Levelp l, Th
   return "living mantisman";
 }
 
-static std::string tp_mantisman_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static auto tp_mantisman_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
   TRACE_NO_INDENT();
 
@@ -33,7 +33,7 @@ static std::string tp_mantisman_detail_get(Gamep g, Levelsp v, Levelp l, Thingp 
       UI_INFO4_FMT_STR "The one thing they do not do... is pray.";
 }
 
-ThingEnviron tp_mantisman_assess_tile(Gamep g, Levelsp v, Levelp l, spoint at, Thingp t)
+auto tp_mantisman_assess_tile(Gamep g, Levelsp v, Levelp l, spoint at, Thingp t) -> ThingEnviron
 {
   TRACE_NO_INDENT();
 
@@ -52,7 +52,7 @@ ThingEnviron tp_mantisman_assess_tile(Gamep g, Levelsp v, Levelp l, spoint at, T
   return THING_ENVIRON_NEUTRAL;
 }
 
-bool tp_load_mantisman()
+auto tp_load_mantisman() -> bool
 {
   auto *tp   = tp_load("mantisman"); // keep as string for scripts
   auto  name = tp_name(tp);

@@ -394,7 +394,7 @@ static const char *dict2_names[] = {
     /* newline */ "zoo",
 };
 
-const char *os_rand_dict2_name()
+auto os_rand_dict2_name() -> const char *
 {
   TRACE_NO_INDENT();
   return dict2_names[ os_random_range(0, ARRAY_SIZE(dict2_names)) ];

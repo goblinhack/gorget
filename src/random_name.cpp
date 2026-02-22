@@ -6,7 +6,7 @@
 
 #include "my_random_name.hpp"
 
-std::string os_random_name(int len)
+auto os_random_name(int len) -> std::string
 {
   for (;;) {
     std::string const d1(os_rand_dict1_name());
@@ -20,7 +20,7 @@ std::string os_random_name(int len)
 }
 
 // https://stackoverflow.com/questions/7666509/hash-function-for-string
-static unsigned long hash(const char *s)
+static auto hash(const char *s) -> unsigned long
 {
   unsigned long hash = 5381;
   char          c;
@@ -32,7 +32,7 @@ static unsigned long hash(const char *s)
   return hash;
 }
 
-uint32_t string_to_hash(const std::string &str)
+auto string_to_hash(const std::string &str) -> uint32_t
 {
 #ifdef FANCY_BUT_GIVES_DIFFERENT_RESULTS_ON_DIFFERENT_PLATFORMS
   return static_cast< uint32_t >(std::hash< std::string > {}(str));

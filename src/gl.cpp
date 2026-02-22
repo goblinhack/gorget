@@ -809,7 +809,7 @@ void blit_flush_triangle_fan(float *b, const float *e)
 void gl_blitquad(GLshort left, GLshort top, GLshort right, GLshort bottom)
 {
   GLshort  xy[ 4 * 2 ];
-  GLshort *xyp = xy;
+  GLshort *xyp = xy; // NOLINT
 
   Vertex2(left, top);
   Vertex2(right, top);
@@ -828,7 +828,7 @@ void gl_blitquad(GLshort left, GLshort top, GLshort right, GLshort bottom)
 void gl_blitquad(const spoint tl, const spoint tr, const spoint bl, const spoint br)
 {
   GLshort  xy[ 4 * 2 ];
-  GLshort *xyp = xy;
+  GLshort *xyp = xy; // NOLINT
 
   Vertex2(tl.x, tl.y);
   Vertex2(tr.x, tr.y);
@@ -847,7 +847,7 @@ void gl_blitquad(const spoint tl, const spoint tr, const spoint bl, const spoint
 void gl_blitsquare(GLshort left, GLshort top, GLshort right, GLshort bottom)
 {
   GLshort  xy[ 4 * 2 ];
-  GLshort *xyp = xy;
+  GLshort *xyp = xy; // NOLINT
 
   Vertex2(left, top);
   Vertex2(right, top);
@@ -866,7 +866,7 @@ void gl_blitsquare(GLshort left, GLshort top, GLshort right, GLshort bottom)
 void gl_blitline(GLshort left, GLshort top, GLshort right, GLshort bottom)
 {
   GLshort  xy[ 2 * 2 ];
-  GLshort *xyp = xy;
+  GLshort *xyp = xy; // NOLINT
 
   Vertex2(left, top);
   Vertex2(right, bottom);

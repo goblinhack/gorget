@@ -9,7 +9,7 @@
 #include "my_main.hpp"
 #include "my_thing.hpp"
 
-bool thing_debug(Gamep g, Levelsp v, Levelp l, Thingp t, uint32_t iter_index)
+auto thing_debug(Gamep g, Levelsp v, Levelp l, Thingp t, uint32_t iter_index) -> bool
 {
   TRACE_NO_INDENT();
   if (! thing_is_projectile(t)) {

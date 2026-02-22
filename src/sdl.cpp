@@ -121,7 +121,7 @@ static void sdl_init_joystick()
   }
 }
 
-bool sdl_init()
+auto sdl_init() -> bool
 {
   gl_ext_init();
 
@@ -151,7 +151,7 @@ bool sdl_init()
   return true;
 }
 
-int sdl_get_mouse()
+auto sdl_get_mouse() -> int
 {
   TRACE_NO_INDENT();
 
@@ -346,7 +346,7 @@ void sdl_prepare_to_exit(Gamep g)
 //
 // User has entered a command, run it
 //
-uint8_t config_fps_counter_set(Gamep g, class Tokens *tokens, void *context)
+auto config_fps_counter_set(Gamep g, class Tokens *tokens, void *context) -> uint8_t
 {
   TRACE_NO_INDENT();
 
@@ -374,7 +374,7 @@ uint8_t config_fps_counter_set(Gamep g, class Tokens *tokens, void *context)
 //
 // User wants to change the debug level
 //
-uint8_t config_debug_set(Gamep g, class Tokens *tokens, void *context)
+auto config_debug_set(Gamep g, class Tokens *tokens, void *context) -> uint8_t
 {
   TRACE_NO_INDENT();
 
@@ -404,7 +404,7 @@ uint8_t config_debug_set(Gamep g, class Tokens *tokens, void *context)
 //
 // User has entered a command, run it
 //
-uint8_t config_gfx_vsync_enable(Gamep g, class Tokens *tokens, void *context)
+auto config_gfx_vsync_enable(Gamep g, class Tokens *tokens, void *context) -> uint8_t
 {
   TRACE_NO_INDENT();
 
@@ -447,7 +447,7 @@ void config_gfx_vsync_update(Gamep g)
 //
 // User has entered a command, run it
 //
-uint8_t config_errored_clear(Gamep g, class Tokens *tokens, void *context)
+auto config_errored_clear(Gamep g, class Tokens *tokens, void *context) -> uint8_t
 {
   TRACE_NO_INDENT();
 
@@ -467,7 +467,7 @@ uint8_t config_errored_clear(Gamep g, class Tokens *tokens, void *context)
   return 1U;
 }
 
-uint8_t show_error(Gamep g, class Tokens *tokens, void *context)
+auto show_error(Gamep g, class Tokens *tokens, void *context) -> uint8_t
 {
   TRACE_NO_INDENT();
 
@@ -498,7 +498,7 @@ void sdl_config_update_all(Gamep g)
 //
 // User has entered a command, run it
 //
-uint8_t sdl_user_exit(Gamep g, class Tokens *tokens, void *context)
+auto sdl_user_exit(Gamep g, class Tokens *tokens, void *context) -> uint8_t
 {
   TRACE_NO_INDENT();
   sdl_prepare_to_exit(g);

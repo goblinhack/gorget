@@ -19,7 +19,7 @@ static void wid_more_destroy()
   wid_more_window = nullptr;
 }
 
-[[nodiscard]] static bool wid_more_credits(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static auto wid_more_credits(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE_NO_INDENT();
   wid_more_destroy();
@@ -27,7 +27,7 @@ static void wid_more_destroy()
   return true;
 }
 
-[[nodiscard]] static bool wid_more_hiscores(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static auto wid_more_hiscores(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE_NO_INDENT();
   wid_more_destroy();
@@ -35,7 +35,7 @@ static void wid_more_destroy()
   return true;
 }
 
-[[nodiscard]] static bool wid_more_back(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static auto wid_more_back(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE_NO_INDENT();
   wid_more_destroy();
@@ -43,7 +43,7 @@ static void wid_more_destroy()
   return true;
 }
 
-[[nodiscard]] static bool wid_more_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
+[[nodiscard]] static auto wid_more_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
 {
   TRACE_NO_INDENT();
 

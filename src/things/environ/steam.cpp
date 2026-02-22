@@ -10,14 +10,14 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-static std::string tp_steam_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static auto tp_steam_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
   TRACE_NO_INDENT();
 
   return "thick steam";
 }
 
-bool tp_load_steam()
+auto tp_load_steam() -> bool
 {
   TRACE_NO_INDENT();
 

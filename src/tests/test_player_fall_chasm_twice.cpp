@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static bool test_player_fall_chasm_twice(Gamep g, Testp t)
+[[nodiscard]] static auto test_player_fall_chasm_twice(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE_AND_INDENT();
@@ -166,7 +166,7 @@ exit:
   return result;
 }
 
-bool test_load_player_fall_chasm_twice()
+auto test_load_player_fall_chasm_twice() -> bool
 {
   TRACE_NO_INDENT();
 

@@ -13,14 +13,14 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
-static std::string tp_ghost_mob_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static auto tp_ghost_mob_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
   TRACE_NO_INDENT();
 
   return "pile of bones";
 }
 
-static std::string tp_ghost_mob_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static auto tp_ghost_mob_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
   TRACE_NO_INDENT();
 
@@ -50,7 +50,7 @@ static void tp_ghost_mob_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 }
 
-bool tp_load_ghost_mob()
+auto tp_load_ghost_mob() -> bool
 {
   auto *tp   = tp_load("ghost_mob"); // keep as string for scripts
   auto  name = tp_name(tp);

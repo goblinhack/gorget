@@ -656,6 +656,7 @@ cat >>$MAKEFILE <<%%
 EXE=$EXE
 DSYM=$DSYM
 LDLIBS=$LDLIBS
+SDL2_INC_PATH=$SDL2_INC_PATH
 %%
 
 log_info "LDFLAGS                    :$LDFLAGS"

@@ -8,7 +8,7 @@
 #include "../my_test.hpp"
 #include "../my_thing.hpp"
 
-[[nodiscard]] static bool test_path_astar(Gamep g, Testp t)
+[[nodiscard]] static auto test_path_astar(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE_AND_INDENT();
@@ -168,7 +168,7 @@ exit:
   return result;
 }
 
-bool test_load_path_astar()
+auto test_load_path_astar() -> bool
 {
   TRACE_NO_INDENT();
 

@@ -11,13 +11,13 @@
 #define PTRCHECK_AT SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM
 
 void  ptrcheck_fini();
-void *myzalloc_(int size, const char *what, const char *func, const char *file, int line);
-void *mymalloc_(int size, const char *what, const char *func, const char *file, int line);
-void *myrealloc_(void *ptr, int size, const char *what, const char *func, const char *file, int line);
+auto myzalloc_(int size, const char *what, const char *func, const char *file, int line) -> void *;
+auto mymalloc_(int size, const char *what, const char *func, const char *file, int line) -> void *;
+auto myrealloc_(void *ptr, int size, const char *what, const char *func, const char *file, int line) -> void *;
 void  myfree_(void *ptr, const char *func, const char *file, int line);
-char *mydupstr_(const char *in, const char *what, const char *func, const char *file, int line);
-char *strsub_(const char *in, const char *old, const char *replace_with, const char *what, const char *file,
-              const char *func, int line);
+auto mydupstr_(const char *in, const char *what, const char *func, const char *file, int line) -> char *;
+auto strsub_(const char *in, const char *old, const char *replace_with, const char *what, const char *file,
+              const char *func, int line) -> char *;
 
 #define myzalloc(__size__, __what__) myzalloc_((__size__), (__what__), PTRCHECK_AT)
 
@@ -31,10 +31,10 @@ char *strsub_(const char *in, const char *old, const char *replace_with, const c
 
 #define strsub(a, b, c, __what__) strsub_(a, b, c, (__what__), PTRCHECK_AT)
 
-void *ptrcheck_alloc(int mtype, const void *ptr, const char *what, int size, const char *file, const char *func,
-                     int line);
-int   ptrcheck_verify(int mtype, const void *ptr, const char *file, const char *func, int line);
-int   ptrcheck_free(int mtype, void *ptr, const char *file, const char *func, int line);
+auto ptrcheck_alloc(int mtype, const void *ptr, const char *what, int size, const char *file, const char *func,
+                     int line) -> void *;
+auto   ptrcheck_verify(int mtype, const void *ptr, const char *file, const char *func, int line) -> int;
+auto   ptrcheck_free(int mtype, void *ptr, const char *file, const char *func, int line) -> int;
 void  ptrcheck_leak_print(int mtype);
 void  ptrcheck_leak_print();
 

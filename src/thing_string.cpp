@@ -11,7 +11,7 @@
 
 #include <print>
 
-std::string to_string(Gamep g, Levelsp v, Levelp l, Thingp t)
+auto to_string(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
   TRACE_NO_INDENT();
 
@@ -62,7 +62,7 @@ std::string to_string(Gamep g, Levelsp v, Levelp l, Thingp t)
                   /* newline */ thing_is_scheduled_for_cleanup(t) ? "/fre" : ""));
 }
 
-std::string to_string(Gamep g, Levelsp v, Levelp l, ThingEvent &e)
+auto to_string(Gamep g, Levelsp v, Levelp l, ThingEvent &e) -> std::string
 {
   TRACE_NO_INDENT();
 
@@ -93,7 +93,7 @@ std::string to_string(Gamep g, Levelsp v, Levelp l, ThingEvent &e)
   return s;
 }
 
-std::string to_death_reason_string(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
+auto to_death_reason_string(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e) -> std::string
 {
   TRACE_NO_INDENT();
 

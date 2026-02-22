@@ -91,8 +91,8 @@ static char *substr (const char *in, int pos, int len)
 //
 // strsub("foo.zip", ".zip", ""); -> "foo"
 //
-char *strsub_(const char *in, const char *look_for, const char *replace_with, const char *what, const char *file,
-              const char *func, int line)
+auto strsub_(const char *in, const char *look_for, const char *replace_with, const char *what, const char *file,
+             const char *func, int line) -> char *
 {
   TRACE_NO_INDENT();
   char       *buf;
@@ -142,7 +142,7 @@ char *strsub_(const char *in, const char *look_for, const char *replace_with, co
  *
  * strappend("foo", ".zip"); -> "foo.zip"
  */
-char *strappend(const char *in, const char *append)
+auto strappend(const char *in, const char *append) -> char *
 {
   TRACE_NO_INDENT();
   char *buf;
@@ -171,7 +171,7 @@ char *strappend(const char *in, const char *append)
  *
  * strprepend("foo", "bar"); -> "barfoo"
  */
-char *strprepend(const char *in, const char *prepend)
+auto strprepend(const char *in, const char *prepend) -> char *
 {
   TRACE_NO_INDENT();
   char *buf;
@@ -198,7 +198,7 @@ char *strprepend(const char *in, const char *prepend)
 /*
  * Return the common matching length of two strings.
  */
-uint32_t strcommon(const char *a, const char *b)
+auto strcommon(const char *a, const char *b) -> uint32_t
 {
   TRACE_NO_INDENT();
   const char *o;
@@ -257,7 +257,7 @@ void strchopc(char *s, char c)
   *(end + 1) = '\0';
 }
 
-int strisregexp(const char *in)
+auto strisregexp(const char *in) -> int
 {
   TRACE_NO_INDENT();
   const char *a = in;
@@ -280,7 +280,7 @@ int strisregexp(const char *in)
   return 0;
 }
 
-size_t my_strlcpy(char *dst, const char *src, size_t max_len)
+auto my_strlcpy(char *dst, const char *src, size_t max_len) -> size_t
 {
   TRACE_NO_INDENT();
   size_t const srclen = strlen(src);
@@ -292,7 +292,7 @@ size_t my_strlcpy(char *dst, const char *src, size_t max_len)
   return srclen;
 }
 
-size_t my_strlcat(char *dst, const char *src, size_t max_len)
+auto my_strlcat(char *dst, const char *src, size_t max_len) -> size_t
 {
   TRACE_NO_INDENT();
   uint32_t const dstlen = strlen(dst);
@@ -347,7 +347,7 @@ void strnoescape(char *uncompressed)
   *t = '\0';
 }
 
-static const char *dynvprintf_(const char *fmt, va_list args)
+static auto dynvprintf_(const char *fmt, va_list args) -> const char *
 {
   TRACE_NO_INDENT();
   static char buf[ MAXSTR ];
@@ -362,7 +362,7 @@ static const char *dynvprintf_(const char *fmt, va_list args)
  * dynamically allocate a printf formatted string. e.g.
  * dynprintf("%sbar", "foo"); => "foobar"
  */
-char *dynprintf(const char *fmt, ...)
+auto dynprintf(const char *fmt, ...) -> char *
 {
   TRACE_NO_INDENT();
   const char *ret;
@@ -380,7 +380,7 @@ char *dynprintf(const char *fmt, ...)
  *
  * A safe wrapper for basename to avoid modifications to the input string.
  */
-std::string mybasename(const char *in, const char *who)
+auto mybasename(const char *in, const char *who) -> std::string
 {
   TRACE_NO_INDENT();
   char       *tmp = mydupstr(in, who);
@@ -429,7 +429,7 @@ std::string mybasename(const char *in, const char *who)
 /*
  * Find the first occurrence of find in s, ignore case.
  */
-char *my_strcasestr(const char *s, const char *find)
+auto my_strcasestr(const char *s, const char *find) -> char *
 {
   TRACE_NO_INDENT();
   char   c;
@@ -451,7 +451,7 @@ char *my_strcasestr(const char *s, const char *find)
   return ((char *) s);
 }
 
-std::vector< std::string > split(const std::string &text, int max_line_len)
+auto split(const std::string &text, int max_line_len) -> std::vector< std::string >
 {
   TRACE_NO_INDENT();
   bool found_format_string = false;
@@ -659,7 +659,7 @@ std::vector< std::string > split(const std::string &text, int max_line_len)
   return result;
 }
 
-int length_without_format(const std::string &text)
+auto length_without_format(const std::string &text) -> int
 {
   TRACE_NO_INDENT();
   bool found_format_string = false;
@@ -767,7 +767,7 @@ int length_without_format(const std::string &text)
  *
  * returns 0 on success
  */
-int snprintf_realloc(char **str, int *size, int *used, const char *fmt, ...)
+auto snprintf_realloc(char **str, int *size, int *used, const char *fmt, ...) -> int
 {
   TRACE_NO_INDENT();
   int     freespace;
@@ -842,7 +842,7 @@ int snprintf_realloc(char **str, int *size, int *used, const char *fmt, ...)
   }
 }
 
-std::vector< std::string > split_tokens(const std::string &s, const char delimiter)
+auto split_tokens(const std::string &s, const char delimiter) -> std::vector< std::string >
 {
   std::string                token;
   std::istringstream         s_stream(s);
@@ -854,43 +854,43 @@ std::vector< std::string > split_tokens(const std::string &s, const char delimit
 }
 
 // https://www.techiedelight.com/trim-string-cpp-remove-leading-trailing-spaces/
-std::string &ltrim(std::string &s)
+auto ltrim(std::string &s) -> std::string &
 {
-  auto it = std::ranges::find_if(s, [](char c) { return ! std::isspace< char >(c, std::locale::classic()); });
+  auto it = std::ranges::find_if(s, [](char c) -> bool { return ! std::isspace< char >(c, std::locale::classic()); });
   s.erase(s.begin(), it);
   return s;
 }
 
-std::string &rtrim(std::string &s)
+auto rtrim(std::string &s) -> std::string &
 {
   auto it = std::ranges::find_if(std::ranges::reverse_view(s),
-                                 [](char c) { return ! std::isspace< char >(c, std::locale::classic()); });
+                                 [](char c) -> bool { return ! std::isspace< char >(c, std::locale::classic()); });
   s.erase(it.base(), s.end());
   return s;
 }
 
-std::string &trim(std::string &s) { return ltrim(rtrim(s)); }
+auto trim(std::string &s) -> std::string & { return ltrim(rtrim(s)); }
 
 const std::string WHITESPACE = " \n\r\t\f\v";
 
-std::string ltrim_ws(const std::string &s)
+auto ltrim_ws(const std::string &s) -> std::string
 {
   size_t const start = s.find_first_not_of(WHITESPACE);
   return (start == std::string::npos) ? "" : s.substr(start);
 }
 
-std::string rtrim_ws(const std::string &s)
+auto rtrim_ws(const std::string &s) -> std::string
 {
   size_t const end = s.find_last_not_of(WHITESPACE);
   return (end == std::string::npos) ? "" : s.substr(0, end + 1);
 }
 
-std::string trim_ws(const std::string &s) { return rtrim_ws(ltrim_ws(s)); }
+auto trim_ws(const std::string &s) -> std::string { return rtrim_ws(ltrim_ws(s)); }
 
 //
 // Concert errno to a std::string
 //
-std::string strerror_to_string(const int err)
+auto strerror_to_string(const int err) -> std::string
 {
   static const auto MAX_ERRNO_BUF_SIZE = 1024U;
   char              err_out[ MAX_ERRNO_BUF_SIZE ];
@@ -921,7 +921,7 @@ std::string strerror_to_string(const int err)
 //
 // foo bar -> Foo Bar
 //
-std::string capitalize(std::string in)
+auto capitalize(std::string in) -> std::string
 {
   TRACE_NO_INDENT();
   std::string out = std::move(in);
@@ -949,7 +949,7 @@ std::string capitalize(std::string in)
 //
 // foo bar -> Foo bar
 //
-std::string capitalize_first(std::string in)
+auto capitalize_first(std::string in) -> std::string
 {
   TRACE_NO_INDENT();
   std::string out = std::move(in);
@@ -988,13 +988,13 @@ void replace(std::string &input, const std::string &pattern, const std::string &
   }
 }
 
-Tpp string2tp(const char **s, int *len)
+auto string2tp(const char **s, int *len) -> Tpp
 {
   TRACE_NO_INDENT();
   static char        tmp[ MAXSHORTSTR ];
   static const char *eo_tmp = tmp + MAXSHORTSTR;
   const char        *c      = *s;
-  char              *t      = tmp;
+  char              *t      = tmp; // NOLINT
 
   while (t < eo_tmp) {
     if ((*c == '\0') || (*c == '$')) {

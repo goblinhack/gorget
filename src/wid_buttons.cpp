@@ -19,7 +19,7 @@ void wid_gray_out_button(Gamep g, Widp w)
   wid_set_color(w, WID_COLOR_BG, GRAY40);
 }
 
-Widp wid_new_back_button(Gamep g, Widp parent, const std::string &name)
+auto wid_new_back_button(Gamep g, Widp parent, const std::string &name) -> Widp
 {
   TRACE_NO_INDENT();
 
@@ -33,7 +33,7 @@ Widp wid_new_back_button(Gamep g, Widp parent, const std::string &name)
   return w;
 }
 
-Widp wid_new_menu_button(Gamep g, Widp parent, const std::string &name)
+auto wid_new_menu_button(Gamep g, Widp parent, const std::string &name) -> Widp
 {
   TRACE_NO_INDENT();
 
@@ -46,7 +46,7 @@ Widp wid_new_menu_button(Gamep g, Widp parent, const std::string &name)
   return w;
 }
 
-Widp wid_new_button(Gamep g, Widp parent, const std::string &name)
+auto wid_new_button(Gamep g, Widp parent, const std::string &name) -> Widp
 {
   TRACE_NO_INDENT();
 
@@ -61,7 +61,7 @@ Widp wid_new_button(Gamep g, Widp parent, const std::string &name)
   return w;
 }
 
-Widp wid_new_green_button(Gamep g, Widp parent, const std::string &name)
+auto wid_new_green_button(Gamep g, Widp parent, const std::string &name) -> Widp
 {
   TRACE_NO_INDENT();
 
@@ -75,7 +75,7 @@ Widp wid_new_green_button(Gamep g, Widp parent, const std::string &name)
   return w;
 }
 
-Widp wid_new_red_button(Gamep g, Widp parent, const std::string &name)
+auto wid_new_red_button(Gamep g, Widp parent, const std::string &name) -> Widp
 {
   TRACE_NO_INDENT();
 
@@ -89,14 +89,14 @@ Widp wid_new_red_button(Gamep g, Widp parent, const std::string &name)
   return w;
 }
 
-Widp wid_new_save_button(Gamep g, Widp parent, const std::string &name)
+auto wid_new_save_button(Gamep g, Widp parent, const std::string &name) -> Widp
 {
   TRACE_NO_INDENT();
 
   return wid_new_green_button(g, parent, name);
 }
 
-Widp wid_new_cancel_button(Gamep g, Widp parent, const std::string &name)
+auto wid_new_cancel_button(Gamep g, Widp parent, const std::string &name) -> Widp
 {
   TRACE_NO_INDENT();
 

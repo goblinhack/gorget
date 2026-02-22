@@ -23,7 +23,7 @@ void wid_quit_destroy(Gamep g)
   }
 }
 
-[[nodiscard]] static bool wid_quit_yes(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static auto wid_quit_yes(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE_NO_INDENT();
   LOG("Quit, yes");
@@ -43,7 +43,7 @@ void wid_quit_destroy(Gamep g)
   return true;
 }
 
-[[nodiscard]] static bool wid_quit_no(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static auto wid_quit_no(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE_NO_INDENT();
   LOG("Quit, no");
@@ -56,7 +56,7 @@ void wid_quit_destroy(Gamep g)
   return true;
 }
 
-[[nodiscard]] static bool wid_quit_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
+[[nodiscard]] static auto wid_quit_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
 {
   TRACE_NO_INDENT();
 

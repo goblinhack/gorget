@@ -13,7 +13,7 @@ void levels_fixed(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_BOSS, "boss1", __FUNCTION__, __LINE__, no_overrides,
+  level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_BOSS, "boss1", __FUNCTION__, __LINE__, no_overrides, 0,
                   /* line */ (const char *) "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
                   /* line */ (const char *) "x..............................................x",
                   /* line */ (const char *) "x.@.E..........................................x",

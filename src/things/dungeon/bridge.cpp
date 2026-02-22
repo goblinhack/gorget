@@ -13,7 +13,7 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-static std::string tp_bridge_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static auto tp_bridge_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
   TRACE_NO_INDENT();
 
@@ -133,7 +133,7 @@ static void tp_bridge_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
   thing_dead(g, v, l, t, e);
 }
 
-bool tp_load_bridge()
+auto tp_load_bridge() -> bool
 {
   TRACE_NO_INDENT();
 

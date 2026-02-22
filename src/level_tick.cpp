@@ -480,7 +480,7 @@ static void level_tick_end(Gamep g, Levelsp v, Levelp l)
   }
 }
 
-bool level_tick_is_in_progress(Gamep g, Levelsp v, Levelp l)
+auto level_tick_is_in_progress(Gamep g, Levelsp v, Levelp l) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -564,7 +564,7 @@ static void level_tick_select(Gamep g, Levelsp v, Levelp current_level)
 //
 // Do any levels want to tick?
 //
-static uint32_t level_tick_process_pending_request(Gamep g, Levelsp v, Levelp current_level)
+static auto level_tick_process_pending_request(Gamep g, Levelsp v, Levelp current_level) -> uint32_t
 {
   TRACE_NO_INDENT();
 

@@ -5,12 +5,12 @@
 #ifndef MY_MUSIC_HPP_
 #define MY_MUSIC_HPP_
 
-bool music_init();
+auto music_init() -> bool;
 void music_fini();
-bool music_load(uint32_t rate, const char *file, const char *name);
-bool music_find(const char * /*name_alias*/);
-bool music_play(Gamep g, const char *name);
-bool music_halt();
+auto music_load(uint32_t rate, const char *file, const char *name) -> bool;
+auto music_find(const char * /*name_alias*/) -> bool;
+auto music_play(Gamep g, const char *name) -> bool;
+auto music_halt() -> bool;
 void music_update_volume(Gamep g);
 
 #endif

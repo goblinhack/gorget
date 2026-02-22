@@ -10,7 +10,7 @@
 //
 // Push the thing onto the level
 //
-bool thing_push(Gamep g, Levelsp v, Levelp l, Thingp t)
+auto thing_push(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -136,7 +136,7 @@ bool thing_push(Gamep g, Levelsp v, Levelp l, Thingp t)
 //
 // Pop the thing off the level
 //
-bool thing_pop(Gamep g, Levelsp v, Thingp t)
+auto thing_pop(Gamep g, Levelsp v, Thingp t) -> bool
 {
   TRACE_NO_INDENT();
 

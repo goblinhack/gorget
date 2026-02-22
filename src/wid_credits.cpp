@@ -20,7 +20,7 @@ static void wid_credits_destroy(Gamep g)
   wid_main_menu_select(g);
 }
 
-[[nodiscard]] static bool wid_credits_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
+[[nodiscard]] static auto wid_credits_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -56,7 +56,7 @@ static void wid_credits_destroy(Gamep g)
   return true;
 }
 
-[[nodiscard]] static bool wid_credits_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static auto wid_credits_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE_NO_INDENT();
   wid_credits_destroy(g);

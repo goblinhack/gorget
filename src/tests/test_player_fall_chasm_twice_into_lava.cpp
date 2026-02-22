@@ -8,7 +8,7 @@
 #include "../my_test.hpp"
 #include "../my_thing_inlines.hpp"
 
-[[nodiscard]] static bool test_player_fall_chasm_twice_into_lava(Gamep g, Testp t)
+[[nodiscard]] static auto test_player_fall_chasm_twice_into_lava(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE_AND_INDENT();
@@ -195,7 +195,7 @@ exit:
   return result;
 }
 
-bool test_load_player_fall_chasm_twice_into_lava()
+auto test_load_player_fall_chasm_twice_into_lava() -> bool
 {
   TRACE_NO_INDENT();
 

@@ -20,7 +20,7 @@ static void wid_cfg_mouse_destroy()
   local_g_config_changed = false;
 }
 
-[[nodiscard]] static bool wid_cfg_mouse_cancel(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static auto wid_cfg_mouse_cancel(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE_NO_INDENT();
   CON("Reload config");
@@ -34,7 +34,7 @@ static void wid_cfg_mouse_destroy()
   return true;
 }
 
-[[nodiscard]] static bool wid_cfg_mouse_save(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static auto wid_cfg_mouse_save(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -46,7 +46,7 @@ static void wid_cfg_mouse_destroy()
   return true;
 }
 
-[[nodiscard]] static bool wid_cfg_mouse_back(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static auto wid_cfg_mouse_back(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE_NO_INDENT();
   wid_cfg_mouse_destroy();
@@ -54,7 +54,7 @@ static void wid_cfg_mouse_destroy()
   return true;
 }
 
-[[nodiscard]] static bool wid_cfg_mouse_wheel_lr_negated(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static auto wid_cfg_mouse_wheel_lr_negated(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE_NO_INDENT();
   local_g_config_changed = true;
@@ -70,7 +70,7 @@ static void wid_cfg_mouse_destroy()
   return true;
 }
 
-[[nodiscard]] static bool wid_cfg_mouse_wheel_ud_negated(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static auto wid_cfg_mouse_wheel_ud_negated(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE_NO_INDENT();
   local_g_config_changed = true;
@@ -86,7 +86,7 @@ static void wid_cfg_mouse_destroy()
   return true;
 }
 
-[[nodiscard]] static bool wid_cfg_mouse_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
+[[nodiscard]] static auto wid_cfg_mouse_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
 {
   TRACE_NO_INDENT();
 

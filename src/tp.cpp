@@ -131,7 +131,7 @@ Tp::Tp() { newptr(MTYPE_TP, this, "Tp"); }
 
 Tp::~Tp() { oldptr(MTYPE_TP, this); }
 
-Tpp tp_find_mand(const std::string &val)
+auto tp_find_mand(const std::string &val) -> Tpp
 {
   TRACE_NO_INDENT();
 
@@ -146,7 +146,7 @@ Tpp tp_find_mand(const std::string &val)
   return nullptr;
 }
 
-Tpp tp_find_opt(const std::string &val)
+auto tp_find_opt(const std::string &val) -> Tpp
 {
   TRACE_NO_INDENT();
 
@@ -160,7 +160,7 @@ Tpp tp_find_opt(const std::string &val)
   return nullptr;
 }
 
-Tpp tp_find(TpId id)
+auto tp_find(TpId id) -> Tpp
 {
 #ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT(); // expensive
@@ -182,7 +182,7 @@ Tpp tp_find(TpId id)
   return result;
 }
 
-TpId tp_id_get(Tpp tp)
+auto tp_id_get(Tpp tp) -> TpId
 {
 #ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT(); // expensive
@@ -191,7 +191,7 @@ TpId tp_id_get(Tpp tp)
   return tp->id;
 }
 
-bool tp_init()
+auto tp_init() -> bool
 {
   TRACE_NO_INDENT();
 
@@ -264,11 +264,11 @@ static void tp_assign_id(const std::string &tp_name, int *id_out)
   *id_out = tp_preferred_id[ tp_name ];
 }
 
-Tpp tp_load(const std::string &val)
+auto tp_load(const std::string &val) -> Tpp
 {
   TRACE_NO_INDENT();
 
-  std::string const name(val);
+  std::string const& name(val);
 
   int id;
   tp_assign_id(val, &id);
@@ -314,7 +314,7 @@ static void tp_fixup()
   }
 }
 
-Tilep tp_first_tile(Tpp tp, ThingAnim val)
+auto tp_first_tile(Tpp tp, ThingAnim val) -> Tilep
 {
   TRACE_NO_INDENT();
 
@@ -335,7 +335,7 @@ Tilep tp_first_tile(Tpp tp, ThingAnim val)
   return tp->tiles[ val ][ 0 ];
 }
 
-static Tpp tp_get_with_no_rarity_filter(TpVec &m)
+static auto tp_get_with_no_rarity_filter(TpVec &m) -> Tpp
 {
   TRACE_NO_INDENT();
 
@@ -369,7 +369,7 @@ static Tpp tp_get_with_no_rarity_filter(TpVec &m)
   return tp;
 }
 
-Tpp tp_random_monst(int c)
+auto tp_random_monst(int c) -> Tpp
 {
   TRACE_NO_INDENT();
 
@@ -386,7 +386,7 @@ Tpp tp_random_monst(int c)
   return tp_get_with_no_rarity_filter(tp_monst_vec[ c ]);
 }
 
-Tpp tp_random(ThingFlag f)
+auto tp_random(ThingFlag f) -> Tpp
 {
   TRACE_NO_INDENT();
 
@@ -397,7 +397,7 @@ Tpp tp_random(ThingFlag f)
   return tp_get_with_no_rarity_filter(tp_flag_vec[ f ]);
 }
 
-Tpp tp_variant(ThingFlag f, int variant)
+auto tp_variant(ThingFlag f, int variant) -> Tpp
 {
   TRACE_NO_INDENT();
 
@@ -411,7 +411,7 @@ Tpp tp_variant(ThingFlag f, int variant)
   return nullptr;
 }
 
-Tpp tp_first(ThingFlag f)
+auto tp_first(ThingFlag f) -> Tpp
 {
   TRACE_NO_INDENT();
 
@@ -441,7 +441,7 @@ void tp_damage_set(Tpp tp, ThingEventType ev, const std::string &val)
 //
 // Roll for damage
 //
-int tp_damage(Tpp tp, ThingEventType val)
+auto tp_damage(Tpp tp, ThingEventType val) -> int
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -476,7 +476,7 @@ void tp_chance_set(Tpp tp, ThingChanceType ev, const std::string &val)
 //
 // Roll for chance
 //
-int tp_chance(Tpp tp, ThingChanceType val)
+auto tp_chance(Tpp tp, ThingChanceType val) -> int
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -495,7 +495,7 @@ int tp_chance(Tpp tp, ThingChanceType val)
 //
 // Roll for chance of success
 //
-bool tp_chance_success(Tpp tp, ThingChanceType val)
+auto tp_chance_success(Tpp tp, ThingChanceType val) -> bool
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -519,7 +519,7 @@ bool tp_chance_success(Tpp tp, ThingChanceType val)
 //
 // Roll for chance of success
 //
-bool tp_chance_fail(Tpp tp, ThingChanceType val)
+auto tp_chance_fail(Tpp tp, ThingChanceType val) -> bool
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -535,7 +535,7 @@ bool tp_chance_fail(Tpp tp, ThingChanceType val)
   return tp->chance[ val ].roll() == 1;
 }
 
-Tilep tp_tiles_get(Tpp tp, ThingAnim val, int index)
+auto tp_tiles_get(Tpp tp, ThingAnim val, int index) -> Tilep
 {
   TRACE_NO_INDENT();
 
@@ -568,7 +568,7 @@ void tp_tiles_push_back(Tpp tp, ThingAnim val, Tilep tile)
   tp->tiles[ val ].push_back(tile);
 }
 
-int tp_tiles_size(Tpp tp, ThingAnim val)
+auto tp_tiles_size(Tpp tp, ThingAnim val) -> int
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -578,7 +578,7 @@ int tp_tiles_size(Tpp tp, ThingAnim val)
   return (int) tp->tiles[ val ].size();
 }
 
-std::string tp_name(Tpp tp)
+auto tp_name(Tpp tp) -> std::string
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -598,7 +598,7 @@ void tp_short_name_set(Tpp tp, const std::string &val)
   tp->short_name = std::string(val);
 }
 
-std::string tp_short_name(Tpp tp)
+auto tp_short_name(Tpp tp) -> std::string
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -621,7 +621,7 @@ void tp_long_name_set(Tpp tp, const std::string &val)
   tp->long_name = std::string(val);
 }
 
-std::string tp_long_name(Tpp tp)
+auto tp_long_name(Tpp tp) -> std::string
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -644,7 +644,7 @@ void tp_apostrophize_name_set(Tpp tp, const std::string &val)
   tp->apostrophize_name = std::string(val);
 }
 
-std::string tp_apostrophize_name(Tpp tp)
+auto tp_apostrophize_name(Tpp tp) -> std::string
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -667,7 +667,7 @@ void tp_pluralize_name_set(Tpp tp, const std::string &val)
   tp->pluralize_name = std::string(val);
 }
 
-std::string tp_pluralize_name(Tpp tp)
+auto tp_pluralize_name(Tpp tp) -> std::string
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -690,7 +690,7 @@ void tp_real_name_set(Tpp tp, const std::string &val)
   tp->real_name = std::string(val);
 }
 
-std::string tp_real_name(Tpp tp)
+auto tp_real_name(Tpp tp) -> std::string
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -723,7 +723,7 @@ void tp_light_color_apply(Tpp tp)
   glcolor(tp->light_color);
 }
 
-color tp_light_color(Tpp tp)
+auto tp_light_color(Tpp tp) -> color
 {
 #ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT();
@@ -735,7 +735,7 @@ color tp_light_color(Tpp tp)
   return tp->light_color;
 }
 
-int tp_flag(Tpp tp, ThingFlag f)
+auto tp_flag(Tpp tp, ThingFlag f) -> int
 {
 #ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT(); // expensive
@@ -767,7 +767,7 @@ void tp_z_depth_set(Tpp tp, MapZDepth val)
   }
   tp->z_depth = val;
 }
-uint8_t tp_z_depth_get(Tpp tp)
+auto tp_z_depth_get(Tpp tp) -> uint8_t
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -787,7 +787,7 @@ void tp_speed_set(Tpp tp, int val)
   tp->speed = val;
 }
 
-int tp_speed_get(Tpp tp)
+auto tp_speed_get(Tpp tp) -> int
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -807,7 +807,7 @@ void tp_weight_set(Tpp tp, int val)
   tp->weight = val;
 }
 
-int tp_weight_get(Tpp tp)
+auto tp_weight_get(Tpp tp) -> int
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -877,7 +877,7 @@ void tp_is_immunity_add(Tpp tp, ThingEventType val)
   tp->is_immune[ val ] = true;
 }
 
-bool tp_is_immune_to(Tpp tp, ThingEventType val)
+auto tp_is_immune_to(Tpp tp, ThingEventType val) -> bool
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -903,7 +903,7 @@ void tp_health_set(Tpp tp, const std::string &val)
   tp->health_initial = Dice(std::string(val));
 }
 
-int tp_health_get(Tpp tp)
+auto tp_health_get(Tpp tp) -> int
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -913,7 +913,7 @@ int tp_health_get(Tpp tp)
   return tp->health_initial.roll();
 }
 
-int tp_health_max_get(Tpp tp)
+auto tp_health_max_get(Tpp tp) -> int
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -933,7 +933,7 @@ void tp_temperature_initial_set(Tpp tp, int val)
   tp->temperature_initial = val;
 }
 
-int tp_temperature_initial_get(Tpp tp)
+auto tp_temperature_initial_get(Tpp tp) -> int
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -953,7 +953,7 @@ void tp_temperature_burns_at_set(Tpp tp, int val)
   tp->temperature_burns_at = val;
 }
 
-int tp_temperature_burns_at_get(Tpp tp)
+auto tp_temperature_burns_at_get(Tpp tp) -> int
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -973,7 +973,7 @@ void tp_temperature_melts_at_set(Tpp tp, int val)
   tp->temperature_melts_at = val;
 }
 
-int tp_temperature_melts_at_get(Tpp tp)
+auto tp_temperature_melts_at_get(Tpp tp) -> int
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -993,7 +993,7 @@ void tp_temperature_damage_at_set(Tpp tp, int val)
   tp->temperature_damage_at = val;
 }
 
-int tp_temperature_damage_at_get(Tpp tp)
+auto tp_temperature_damage_at_get(Tpp tp) -> int
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -1013,7 +1013,7 @@ void tp_value1_set(Tpp tp, int val)
   tp->value1 = val;
 }
 
-int tp_value1_get(Tpp tp)
+auto tp_value1_get(Tpp tp) -> int
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -1033,7 +1033,7 @@ void tp_value2_set(Tpp tp, int val)
   tp->value2 = val;
 }
 
-int tp_value2_get(Tpp tp)
+auto tp_value2_get(Tpp tp) -> int
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -1053,7 +1053,7 @@ void tp_value3_set(Tpp tp, int val)
   tp->value3 = val;
 }
 
-int tp_value3_get(Tpp tp)
+auto tp_value3_get(Tpp tp) -> int
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -1073,7 +1073,7 @@ void tp_value4_set(Tpp tp, int val)
   tp->value4 = val;
 }
 
-int tp_value4_get(Tpp tp)
+auto tp_value4_get(Tpp tp) -> int
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -1093,7 +1093,7 @@ void tp_value5_set(Tpp tp, int val)
   tp->value5 = val;
 }
 
-int tp_value5_get(Tpp tp)
+auto tp_value5_get(Tpp tp) -> int
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -1113,7 +1113,7 @@ void tp_value6_set(Tpp tp, int val)
   tp->value6 = val;
 }
 
-int tp_value6_get(Tpp tp)
+auto tp_value6_get(Tpp tp) -> int
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -1133,7 +1133,7 @@ void tp_value7_set(Tpp tp, int val)
   tp->value7 = val;
 }
 
-int tp_value7_get(Tpp tp)
+auto tp_value7_get(Tpp tp) -> int
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -1153,7 +1153,7 @@ void tp_value8_set(Tpp tp, int val)
   tp->value8 = val;
 }
 
-int tp_value8_get(Tpp tp)
+auto tp_value8_get(Tpp tp) -> int
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -1173,7 +1173,7 @@ void tp_value9_set(Tpp tp, int val)
   tp->value9 = val;
 }
 
-int tp_value9_get(Tpp tp)
+auto tp_value9_get(Tpp tp) -> int
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -1193,7 +1193,7 @@ void tp_value10_set(Tpp tp, int val)
   tp->value10 = val;
 }
 
-int tp_value10_get(Tpp tp)
+auto tp_value10_get(Tpp tp) -> int
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -1213,7 +1213,7 @@ void tp_value11_set(Tpp tp, int val)
   tp->value11 = val;
 }
 
-int tp_value11_get(Tpp tp)
+auto tp_value11_get(Tpp tp) -> int
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -1233,7 +1233,7 @@ void tp_value12_set(Tpp tp, int val)
   tp->value12 = val;
 }
 
-int tp_value12_get(Tpp tp)
+auto tp_value12_get(Tpp tp) -> int
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -1253,7 +1253,7 @@ void tp_value13_set(Tpp tp, int val)
   tp->value13 = val;
 }
 
-int tp_value13_get(Tpp tp)
+auto tp_value13_get(Tpp tp) -> int
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -1273,7 +1273,7 @@ void tp_value14_set(Tpp tp, int val)
   tp->value14 = val;
 }
 
-int tp_value14_get(Tpp tp)
+auto tp_value14_get(Tpp tp) -> int
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -1293,7 +1293,7 @@ void tp_value15_set(Tpp tp, int val)
   tp->value15 = val;
 }
 
-int tp_value15_get(Tpp tp)
+auto tp_value15_get(Tpp tp) -> int
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -1313,7 +1313,7 @@ void tp_value16_set(Tpp tp, int val)
   tp->value16 = val;
 }
 
-int tp_value16_get(Tpp tp)
+auto tp_value16_get(Tpp tp) -> int
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -1333,7 +1333,7 @@ void tp_value17_set(Tpp tp, int val)
   tp->value17 = val;
 }
 
-int tp_value17_get(Tpp tp)
+auto tp_value17_get(Tpp tp) -> int
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -1353,7 +1353,7 @@ void tp_value18_set(Tpp tp, int val)
   tp->value18 = val;
 }
 
-int tp_value18_get(Tpp tp)
+auto tp_value18_get(Tpp tp) -> int
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -1373,7 +1373,7 @@ void tp_value19_set(Tpp tp, int val)
   tp->value19 = val;
 }
 
-int tp_value19_get(Tpp tp)
+auto tp_value19_get(Tpp tp) -> int
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -1393,7 +1393,7 @@ void tp_value20_set(Tpp tp, int val)
   tp->value20 = val;
 }
 
-int tp_value20_get(Tpp tp)
+auto tp_value20_get(Tpp tp) -> int
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -1418,7 +1418,7 @@ void tp_minion_max_set(Tpp tp, int val)
   tp->minion_max = val;
 }
 
-int tp_minion_max_get(Tpp tp)
+auto tp_minion_max_get(Tpp tp) -> int
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -1438,7 +1438,7 @@ void tp_distance_minion_from_mob_max_set(Tpp tp, int val)
   tp->distance_minion_from_mob_max = val;
 }
 
-int tp_distance_minion_from_mob_max_get(Tpp tp)
+auto tp_distance_minion_from_mob_max_get(Tpp tp) -> int
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -1458,7 +1458,7 @@ void tp_distance_vision_set(Tpp tp, int val)
   tp->distance_vision = val;
 }
 
-int tp_distance_vision_get(Tpp tp)
+auto tp_distance_vision_get(Tpp tp) -> int
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -1478,7 +1478,7 @@ void tp_temperature_thermal_conductivity_set(Tpp tp, float val)
   tp->temperature_thermal_conductivity = val;
 }
 
-float tp_temperature_thermal_conductivity_get(Tpp tp)
+auto tp_temperature_thermal_conductivity_get(Tpp tp) -> float
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -1498,7 +1498,7 @@ void tp_temperature_heat_capacity_set(Tpp tp, float val)
   tp->temperature_heat_capacity = val;
 }
 
-float tp_temperature_heat_capacity_get(Tpp tp)
+auto tp_temperature_heat_capacity_get(Tpp tp) -> float
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -1518,7 +1518,7 @@ void tp_variant_set(Tpp tp, int val)
   tp->variant = val;
 }
 
-int tp_variant_get(Tpp tp)
+auto tp_variant_get(Tpp tp) -> int
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -1538,7 +1538,7 @@ void tp_priority_set(Tpp tp, ThingPriorityType val)
   tp->priority = val;
 }
 
-ThingPriorityType tp_priority_get(Tpp tp)
+auto tp_priority_get(Tpp tp) -> ThingPriorityType
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -1558,7 +1558,7 @@ void tp_distance_jump_set(Tpp tp, int val)
   tp->distance_jump = val;
 }
 
-int tp_distance_jump_get(Tpp tp)
+auto tp_distance_jump_get(Tpp tp) -> int
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -1578,7 +1578,7 @@ void tp_lifespan_set(Tpp tp, const std::string &val)
   tp->lifespan = Dice(std::string(val));
 }
 
-int tp_lifespan_get(Tpp tp)
+auto tp_lifespan_get(Tpp tp) -> int
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -1588,7 +1588,7 @@ int tp_lifespan_get(Tpp tp)
   return tp->lifespan.roll();
 }
 
-int tp_lifespan_max_get(Tpp tp)
+auto tp_lifespan_max_get(Tpp tp) -> int
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -1598,7 +1598,7 @@ int tp_lifespan_max_get(Tpp tp)
   return tp->lifespan.max_roll();
 }
 
-float tp_collision_radius(Tpp t)
+auto tp_collision_radius(Tpp t) -> float
 {
   TRACE_NO_INDENT();
 

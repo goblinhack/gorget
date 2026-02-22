@@ -16,7 +16,7 @@
 static Tilep door_unlocked_idle_damaged;
 static Tilep door_unlocked_open_damaged;
 
-static std::string tp_door_unlocked_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static auto tp_door_unlocked_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
   TRACE_NO_INDENT();
 
@@ -33,8 +33,8 @@ static std::string tp_door_unlocked_description_get(Gamep g, Levelsp v, Levelp l
   return "unlocked door";
 }
 
-static Tilep tp_door_unlocked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp,
-                                                       Thingp t_maybe_null)
+static auto tp_door_unlocked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp,
+                                                       Thingp t_maybe_null) -> Tilep
 {
   TRACE_NO_INDENT();
 
@@ -56,8 +56,8 @@ static Tilep tp_door_unlocked_at_display_get_tile_info(Gamep g, Levelsp v, Level
   return nullptr;
 }
 
-[[nodiscard]] static bool tp_door_unlocked_mouse_down(Gamep g, Levelsp v, Levelp l, Thingp t, int x, int y,
-                                                      int button)
+[[nodiscard]] static auto tp_door_unlocked_mouse_down(Gamep g, Levelsp v, Levelp l, Thingp t, int x, int y,
+                                                      int button) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -88,7 +88,7 @@ static Tilep tp_door_unlocked_at_display_get_tile_info(Gamep g, Levelsp v, Level
   return false;
 }
 
-[[nodiscard]] static bool tp_door_unlocked_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener)
+[[nodiscard]] static auto tp_door_unlocked_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -119,7 +119,7 @@ static Tilep tp_door_unlocked_at_display_get_tile_info(Gamep g, Levelsp v, Level
   return true;
 }
 
-[[nodiscard]] static bool tp_door_unlocked_on_close_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener)
+[[nodiscard]] static auto tp_door_unlocked_on_close_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -151,7 +151,7 @@ static void tp_door_unlocked_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, Th
   }
 }
 
-bool tp_load_door_unlocked()
+auto tp_load_door_unlocked() -> bool
 {
   TRACE_NO_INDENT();
 

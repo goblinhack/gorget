@@ -19,7 +19,7 @@
 
 static struct SDL_Keysym last_key_pressed;
 
-int sdl_filter_events(void * /*userdata*/, SDL_Event *event)
+auto sdl_filter_events(void * /*userdata*/, SDL_Event *event) -> int
 {
   TRACE_NO_INDENT();
 
@@ -77,7 +77,7 @@ static void __attribute__((noinline)) sdl_event_keydown_repeat(SDL_Keysym *key, 
   sdl.key_repeat_this_key = time_ms();
 }
 
-[[nodiscard]] static bool __attribute__((noinline)) sdl_event_keydown_same_key(SDL_Keysym *key)
+[[nodiscard]] static auto __attribute__((noinline)) sdl_event_keydown_same_key(SDL_Keysym *key) -> bool
 {
   TRACE_NO_INDENT();
 

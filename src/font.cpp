@@ -16,7 +16,7 @@ static std::unordered_map< std::string, Fontp > fonts;
 
 void font_fini() { TRACE_NO_INDENT(); }
 
-static Fontp font_load(const std::string &name)
+static auto font_load(const std::string &name) -> Fontp
 {
   TRACE_NO_INDENT();
   auto *f = font_find(name);
@@ -55,7 +55,7 @@ static Fontp font_load(const std::string &name)
   return f;
 }
 
-Fontp font_find(const std::string &file)
+auto font_find(const std::string &file) -> Fontp
 {
   TRACE_NO_INDENT();
   if (file.empty()) {
@@ -71,7 +71,7 @@ Fontp font_find(const std::string &file)
   return result->second;
 }
 
-Tilep Font::font_get_tile(int u)
+auto Font::font_get_tile(int u) -> Tilep
 {
   Font const *me = this;
   if (unlikely(! me)) {
@@ -125,7 +125,7 @@ Tilep Font::font_get_tile(int u)
   return tile;
 }
 
-bool font_init()
+auto font_init() -> bool
 {
   TRACE_NO_INDENT();
 

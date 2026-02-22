@@ -12,11 +12,11 @@
 class sound;
 using soundp = class sound *;
 
-bool sound_init();
+auto sound_init() -> bool;
 void sound_fini();
-bool sound_load(float volume, const std::string &file, const std::string &alias, int concurrent_max = 1);
-bool sound_find(const std::string &alias);
-bool sound_play(Gamep g, const std::string &alias, float scale = 1.0);
+auto sound_load(float volume, const std::string &file, const std::string &alias, int concurrent_max = 1) -> bool;
+auto sound_find(const std::string &alias) -> bool;
+auto sound_play(Gamep g, const std::string &alias, float scale = 1.0) -> bool;
 void sound_halt();
 void sounds_init();
 

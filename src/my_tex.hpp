@@ -11,21 +11,21 @@
 #include <SDL.h>
 #include <string>
 
-int tex_get_gl_binding(Texp tex);
+auto tex_get_gl_binding(Texp tex) -> int;
 
-SDL_Surface *tex_get_surface(Texp tex);
+auto tex_get_surface(Texp tex) -> SDL_Surface *;
 
-Texp string2tex(const char **s);
-Texp string2tex(std::string &s, int *len);
-Texp tex_find(const std::string &name);
-Texp tex_from_surface(SDL_Surface *surface, const std::string &file, const std::string &name, int mode);
-Texp tex_load(const std::string &file, const std::string &name, int mode);
-Texp tex_from_fbo(Gamep g, FboEnum fbo);
+auto string2tex(const char **s) -> Texp;
+auto string2tex(std::string &s, int *len) -> Texp;
+auto tex_find(const std::string &name) -> Texp;
+auto tex_from_surface(SDL_Surface *surface, const std::string &file, const std::string &name, int mode) -> Texp;
+auto tex_load(const std::string &file, const std::string &name, int mode) -> Texp;
+auto tex_from_fbo(Gamep g, FboEnum fbo) -> Texp;
 
-uint32_t tex_get_height(Texp tex);
-uint32_t tex_get_width(Texp tex);
+auto tex_get_height(Texp tex) -> uint32_t;
+auto tex_get_width(Texp tex) -> uint32_t;
 
-bool tex_init();
+auto tex_init() -> bool;
 
 void tex_fini();
 void tex_free(Texp tex);

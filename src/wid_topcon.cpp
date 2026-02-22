@@ -33,7 +33,7 @@ void wid_topcon_fini(Gamep g)
   wid_destroy(g, &wid_topcon_window);
 }
 
-bool wid_topcon_init(Gamep g)
+auto wid_topcon_init(Gamep g) -> bool
 {
   TRACE_NO_INDENT();
   wid_topcon_wid_create(g);

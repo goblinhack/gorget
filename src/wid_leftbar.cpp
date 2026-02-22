@@ -12,7 +12,7 @@
 
 static WidPopup *wid_leftbar;
 
-[[nodiscard]] static bool wid_leftbar_create_window(Gamep g)
+[[nodiscard]] static auto wid_leftbar_create_window(Gamep g) -> bool
 {
   TRACE_NO_INDENT();
   DBG2("Remake leftbar");
@@ -57,7 +57,7 @@ void wid_leftbar_fini(Gamep g)
   wid_leftbar = nullptr;
 }
 
-bool wid_leftbar_init(Gamep g)
+auto wid_leftbar_init(Gamep g) -> bool
 {
   TRACE_NO_INDENT();
   return wid_leftbar_create_window(g);

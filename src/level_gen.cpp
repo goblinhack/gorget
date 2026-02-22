@@ -469,7 +469,7 @@ static std::vector< class Fragment * > fragments_curr;
 //
 // Read a room char
 //
-static char room_char(class Room *r, int x, int y)
+static auto room_char(class Room *r, int x, int y) -> char
 {
   if (unlikely(x < 0)) {
     return CHARMAP_EMPTY;
@@ -525,7 +525,7 @@ static void room_scan(Gamep g, class Room *r)
 //
 // Rotate the current room clockwise and put that into a new room
 //
-static class Room *room_rotate(Gamep g, class Room *r)
+static auto room_rotate(Gamep g, class Room *r) -> class Room *
 {
   TRACE_NO_INDENT();
 
@@ -558,7 +558,7 @@ static class Room *room_rotate(Gamep g, class Room *r)
 //
 // Flip the current room horizontally and put that into a new room
 //
-static class Room *room_flip_horiz(Gamep g, class Room *r)
+static auto room_flip_horiz(Gamep g, class Room *r) -> class Room *
 {
   TRACE_NO_INDENT();
 
@@ -849,7 +849,7 @@ void room_add(Gamep g, int chance, int room_flags, const char *file, int line, .
 //
 // Get a random room.
 //
-static class Room *room_random_get(RoomType room_type)
+static auto room_random_get(RoomType room_type) -> class Room *
 {
   TRACE_NO_INDENT();
 
@@ -899,7 +899,7 @@ void rooms_dump(Gamep g)
 //
 // Can we place a room here on the level?
 //
-[[nodiscard]] static bool room_can_place_at(class LevelGen *l, class Room *r, spoint at, int rx, int ry)
+[[nodiscard]] static auto room_can_place_at(class LevelGen *l, class Room *r, spoint at, int rx, int ry) -> bool
 {
   //
   // Check we have something to place here.
@@ -980,7 +980,7 @@ void rooms_dump(Gamep g)
 //
 // Can we place a room here on the level?
 //
-[[nodiscard]] static bool room_can_place_at(Gamep g, class LevelGen *l, class Room *r, spoint at)
+[[nodiscard]] static auto room_can_place_at(Gamep g, class LevelGen *l, class Room *r, spoint at) -> bool
 {
   //
   // Optimization, check edge tiles first
@@ -1094,7 +1094,7 @@ void rooms_fini(Gamep g)
 //
 // Read a fragment_alt char
 //
-static char fragment_alt_char(class FragmentAlt *r, int x, int y)
+static auto fragment_alt_char(class FragmentAlt *r, int x, int y) -> char
 {
   if (x < 0) {
     return CHARMAP_EMPTY;
@@ -1115,7 +1115,7 @@ static char fragment_alt_char(class FragmentAlt *r, int x, int y)
 //
 // Rotate the current fragment_alt clockwise and put that into a new fragment_alt
 //
-static class FragmentAlt *fragment_alt_rotate(class FragmentAlt *r)
+static auto fragment_alt_rotate(class FragmentAlt *r) -> class FragmentAlt *
 {
   TRACE_NO_INDENT();
 
@@ -1145,7 +1145,7 @@ static class FragmentAlt *fragment_alt_rotate(class FragmentAlt *r)
 //
 // Flip the current fragment_alt horizontally and put that into a new fragment_alt
 //
-static class FragmentAlt *fragment_alt_flip_horiz(class FragmentAlt *r)
+static auto fragment_alt_flip_horiz(class FragmentAlt *r) -> class FragmentAlt *
 {
   TRACE_NO_INDENT();
 
@@ -1175,7 +1175,7 @@ static class FragmentAlt *fragment_alt_flip_horiz(class FragmentAlt *r)
 //
 // Add a fragment_alt and copies with all possible rotations
 //
-bool fragment_alt_add(Gamep g, int chance, const char *file, int line, ...)
+auto fragment_alt_add(Gamep g, int chance, const char *file, int line, ...) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -1331,7 +1331,7 @@ bool fragment_alt_add(Gamep g, int chance, const char *file, int line, ...)
 //
 // Get a random alt fragment.
 //
-static class FragmentAlt *fragment_alt_random_get(Fragment *f)
+static auto fragment_alt_random_get(Fragment *f) -> class FragmentAlt *
 {
   TRACE_NO_INDENT();
 
@@ -1398,7 +1398,7 @@ void fragment_alts_fini(Gamep g)
 //
 // Read a fragment char
 //
-static char fragment_char(class Fragment *f, int x, int y)
+static auto fragment_char(class Fragment *f, int x, int y) -> char
 {
   if (x < 0) {
     return CHARMAP_EMPTY;
@@ -1419,7 +1419,7 @@ static char fragment_char(class Fragment *f, int x, int y)
 //
 // Rotate the current fragment clockwise and put that into a new fragment
 //
-static class Fragment *fragment_rotate(class Fragment *f)
+static auto fragment_rotate(class Fragment *f) -> class Fragment *
 {
   TRACE_NO_INDENT();
 
@@ -1449,7 +1449,7 @@ static class Fragment *fragment_rotate(class Fragment *f)
 //
 // Flip the current fragment horizontally and put that into a new fragment
 //
-static class Fragment *fragment_flip_horiz(class Fragment *f)
+static auto fragment_flip_horiz(class Fragment *f) -> class Fragment *
 {
   TRACE_NO_INDENT();
 
@@ -1479,7 +1479,7 @@ static class Fragment *fragment_flip_horiz(class Fragment *f)
 //
 // Add a fragment and copies with all possible rotations
 //
-bool fragment_add(Gamep g, int chance, const char *file, int line, ...)
+auto fragment_add(Gamep g, int chance, const char *file, int line, ...) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -1628,7 +1628,7 @@ bool fragment_add(Gamep g, int chance, const char *file, int line, ...)
 //
 // Get a random fragment.
 //
-static class Fragment *fragment_random_get(Gamep g, class LevelGen *l)
+static auto fragment_random_get(Gamep g, class LevelGen *l) -> class Fragment *
 {
   TRACE_NO_INDENT();
 
@@ -1683,7 +1683,7 @@ void fragments_dump(Gamep g)
 //
 // Can we match a fragment against the location
 //
-[[nodiscard]] static bool fragment_match(Gamep g, class LevelGen *l, class Fragment *f, spoint at)
+[[nodiscard]] static auto fragment_match(Gamep g, class LevelGen *l, class Fragment *f, spoint at) -> bool
 {
   for (int ry = 0; ry < f->height; ry++) {
     for (int rx = 0; rx < f->width; rx++) {
@@ -1722,7 +1722,7 @@ void fragments_dump(Gamep g)
 //
 // Place the fragment
 //
-static FragmentAlt *fragment_put(Gamep g, class LevelGen *l, class Fragment *f, spoint at)
+static auto fragment_put(Gamep g, class LevelGen *l, class Fragment *f, spoint at) -> FragmentAlt *
 {
   TRACE_NO_INDENT();
 
@@ -1830,7 +1830,7 @@ void fragments_fini(Gamep g)
 // Add a level
 //
 void level_fixed_add(Gamep g, int chance, LevelType level_type, const std::string &alias, const char *file, int line,
-                     const Overrides overrides, ...)
+                     const Overrides &overrides, int dummy, ...)
 {
   TRACE_NO_INDENT();
 
@@ -1848,7 +1848,7 @@ void level_fixed_add(Gamep g, int chance, LevelType level_type, const std::strin
   //
   // First scan, get width and height
   //
-  va_start(ap, overrides);
+  va_start(ap, dummy);
 
   for (;;) {
     const char *level_line = va_arg(ap, const char *);
@@ -1988,7 +1988,7 @@ void level_fixed_add(Gamep g, int chance, LevelType level_type, const std::strin
   //
   // Now read the level again
   //
-  va_start(ap, overrides);
+  va_start(ap, dummy);
 
   for (int y = 0; y < l->height; y++) {
     const char *level_line = va_arg(ap, char *);
@@ -2029,7 +2029,7 @@ void levels_fini(Gamep g)
 //
 // Get a random level.
 //
-static class LevelFixed *level_random_get(LevelType level_type)
+static auto level_random_get(LevelType level_type) -> class LevelFixed *
 {
   TRACE_NO_INDENT();
 
@@ -2044,7 +2044,7 @@ static class LevelFixed *level_random_get(LevelType level_type)
 //
 // Get a random level.
 //
-static class LevelFixed *level_fixed_find_by_name(const std::string &alias, LevelNum level_num)
+static auto level_fixed_find_by_name(const std::string &alias, LevelNum level_num) -> class LevelFixed *
 {
   TRACE_NO_INDENT();
 
@@ -2069,7 +2069,7 @@ static class LevelFixed *level_fixed_find_by_name(const std::string &alias, Leve
 //
 // Convert a level into a single string
 //
-static std::string level_gen_string(class LevelGen *o, class LevelFixed *l)
+static auto level_gen_string(class LevelGen *o, class LevelFixed *l) -> std::string
 {
   TRACE_NO_INDENT();
 
@@ -2199,7 +2199,7 @@ static void level_gen_dump(class LevelGen *l, const char *msg)
 //
 // Convert a level into a single string
 //
-static std::string level_gen_string(class LevelGen *l)
+static auto level_gen_string(class LevelGen *l) -> std::string
 {
   TRACE_NO_INDENT();
 
@@ -2234,7 +2234,8 @@ void level_gen_stats_dump(Gamep g)
 //
 // Update the list of all doors, and return a new unwalked door to use
 //
-[[nodiscard]] static bool level_gen_random_door_get(class LevelGen *l, spoint *door_out, class Room **room_out)
+[[nodiscard]] static auto level_gen_random_door_get(class LevelGen *l, spoint *door_out, class Room **room_out)
+    -> bool
 {
   TRACE_NO_INDENT();
 
@@ -2299,8 +2300,8 @@ void level_gen_stats_dump(Gamep g)
 //
 // Place a room of the given type at a specific door
 //
-[[nodiscard]] static bool level_gen_place_room_at_door_intersection(Gamep g, LevelGen *l, const spoint door_other,
-                                                                    const RoomType room_type)
+[[nodiscard]] static auto level_gen_place_room_at_door_intersection(Gamep g, LevelGen *l, const spoint door_other,
+                                                                    const RoomType room_type) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -2394,7 +2395,7 @@ void level_gen_stats_dump(Gamep g)
 //
 // Place a room of the given type at a random door
 //
-[[nodiscard]] static bool level_gen_create_another_room(Gamep g, LevelGen *l, RoomType room_type)
+[[nodiscard]] static auto level_gen_create_another_room(Gamep g, LevelGen *l, RoomType room_type) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -2402,7 +2403,7 @@ void level_gen_stats_dump(Gamep g)
   // Find a random door that we have not walked before
   //
   spoint      door_other = {};
-  class Room *room_other = {};
+  class Room *room_other = {}; // NOLINT
   if (! level_gen_random_door_get(l, &door_other, &room_other)) {
     level_find_door_fail_count++;
     return false;
@@ -2543,7 +2544,7 @@ static void level_gen_create_remaining_rooms(Gamep g, LevelGen *l)
 //
 // Place the first room
 //
-[[nodiscard]] static bool level_gen_create_first_room(Gamep g, LevelGen *l)
+[[nodiscard]] static auto level_gen_create_first_room(Gamep g, LevelGen *l) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -2799,7 +2800,7 @@ static void level_gen_blob(Gamep g, class LevelGen *l, char c)
 //
 // Create rooms from the current seed
 //
-static class LevelGen *level_gen_new_class(Gamep g, LevelNum level_num)
+static auto level_gen_new_class(Gamep g, LevelNum level_num) -> class LevelGen *
 {
   TRACE_NO_INDENT();
 
@@ -2829,7 +2830,7 @@ static class LevelGen *level_gen_new_class(Gamep g, LevelNum level_num)
 //
 // Is this a special named level? or some kind of boss level?
 //
-[[nodiscard]] static bool level_gen_is_special_level(Levelsp v, LevelNum level_num)
+[[nodiscard]] static auto level_gen_is_special_level(Levelsp v, LevelNum level_num) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -2854,7 +2855,7 @@ static class LevelGen *level_gen_new_class(Gamep g, LevelNum level_num)
 //
 // Create rooms from the current seed
 //
-static class LevelGen *level_proc_gen_create_rooms(Gamep g, LevelNum level_num)
+static auto level_proc_gen_create_rooms(Gamep g, LevelNum level_num) -> class LevelGen *
 {
   TRACE_NO_INDENT();
 
@@ -2970,7 +2971,7 @@ static class LevelGen *level_proc_gen_create_rooms(Gamep g, LevelNum level_num)
 //
 // Has to be a tile you could walk or swim on
 //
-[[nodiscard]] static bool level_gen_tile_is_traversable(class LevelGen *l, int x, int y)
+[[nodiscard]] static auto level_gen_tile_is_traversable(class LevelGen *l, int x, int y) -> bool
 {
   switch (l->data[ x ][ y ].c) {
     case CHARMAP_BARREL :        return true;
@@ -3001,7 +3002,7 @@ static class LevelGen *level_proc_gen_create_rooms(Gamep g, LevelNum level_num)
 //
 // Get rid of tiles that go nowhere
 //
-[[nodiscard]] static bool level_gen_trim_dead_tiles(Gamep g, class LevelGen *l)
+[[nodiscard]] static auto level_gen_trim_dead_tiles(Gamep g, class LevelGen *l) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -3595,7 +3596,7 @@ static void level_gen_add_walls_around_rooms(class LevelGen *l)
 //
 // Is this tile in the entrance?
 //
-bool level_gen_is_room_entrance(Gamep g, class LevelGen *l, int x, int y)
+auto level_gen_is_room_entrance(Gamep g, class LevelGen *l, int x, int y) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -3614,7 +3615,7 @@ bool level_gen_is_room_entrance(Gamep g, class LevelGen *l, int x, int y)
 //
 // Is this tile in the entrance?
 //
-bool level_gen_is_room_entrance(Gamep g, class LevelGen *l, spoint at)
+auto level_gen_is_room_entrance(Gamep g, class LevelGen *l, spoint at) -> bool
 {
   return level_gen_is_room_entrance(g, l, at.x, at.y);
 }
@@ -3766,7 +3767,7 @@ static void level_gen_add_foliage_around_secret_doors(Gamep g, class LevelGen *l
 //
 // e.g. chasm next to water
 //
-[[nodiscard]] static bool level_gen_remove_water_conflicts(class LevelGen *l)
+[[nodiscard]] static auto level_gen_remove_water_conflicts(class LevelGen *l) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -3817,7 +3818,7 @@ static void level_gen_add_foliage_around_secret_doors(Gamep g, class LevelGen *l
 //
 // e.g. chasm next to lava
 //
-[[nodiscard]] static bool level_gen_remove_lava_conflicts(class LevelGen *l)
+[[nodiscard]] static auto level_gen_remove_lava_conflicts(class LevelGen *l) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -3868,7 +3869,7 @@ static void level_gen_add_foliage_around_secret_doors(Gamep g, class LevelGen *l
 //
 // e.g. water next to chasm
 //
-[[nodiscard]] static bool level_gen_remove_chasm_conflicts(class LevelGen *l)
+[[nodiscard]] static auto level_gen_remove_chasm_conflicts(class LevelGen *l) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -4204,7 +4205,8 @@ static void level_gen_add_missing_monsts_and_treasure(Gamep g, class LevelGen *l
 //
 // Try to add a telport on the main path
 //
-[[nodiscard]] static bool level_gen_add_missing_teleport_do(class LevelGen *l, const std::vector< spoint > &cands)
+[[nodiscard]] static auto level_gen_add_missing_teleport_do(class LevelGen *l, const std::vector< spoint > &cands)
+    -> bool
 {
   TRACE_NO_INDENT();
 
@@ -4554,7 +4556,8 @@ static void level_gen_mark_tiles_on_path_entrance_to_exit(Gamep g, class LevelGe
 //
 // Can this bridge extension reach something useful?
 //
-[[nodiscard]] static bool level_gen_extend_bridge_direction_check(class LevelGen *l, int x, int y, int lr, int ud)
+[[nodiscard]] static auto level_gen_extend_bridge_direction_check(class LevelGen *l, int x, int y, int lr, int ud)
+    -> bool
 {
   for (;;) {
     x += lr;
@@ -4728,7 +4731,7 @@ static void level_gen_extend_bridges(Gamep g, class LevelGen *l)
 // Convert the level into a string and then populate all the things onto the
 // real level, assign tiles etc...
 //
-[[nodiscard]] static bool level_gen_populate_for_fixed_or_proc_gen_level(Gamep g, class LevelGen *l)
+[[nodiscard]] static auto level_gen_populate_for_fixed_or_proc_gen_level(Gamep g, class LevelGen *l) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -4865,7 +4868,7 @@ static void level_gen_test_flood(class LevelGen *l)
 //
 // Create a level from the current game seed
 //
-static class LevelGen *level_gen_create_proc_gen_level(Gamep g, Levelsp v, LevelNum level_num)
+static auto level_gen_create_proc_gen_level(Gamep g, Levelsp v, LevelNum level_num) -> class LevelGen *
 {
   TRACE_NO_INDENT();
 

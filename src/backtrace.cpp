@@ -39,22 +39,22 @@ static std::recursive_mutex backtrace_mutex;
 //
 // Inspired from https://github.com/nico/demumble/issues
 //
-[[nodiscard]] static bool starts_with(const char *s, const char *prefix)
+[[nodiscard]] static auto starts_with(const char *s, const char *prefix) -> bool
 {
   return strncmp(s, prefix, strlen(prefix)) == 0;
 }
 
-[[nodiscard]] static bool is_mangle_char_win(char c)
+[[nodiscard]] static auto is_mangle_char_win(char c) -> bool
 {
   return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || (strchr("?_@$", c) != nullptr);
 }
 
-[[nodiscard]] static bool is_mangle_char_posix(char c)
+[[nodiscard]] static auto is_mangle_char_posix(char c) -> bool
 {
   return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_';
 }
 
-[[nodiscard]] static bool is_plausible_posix_prefix(char *s)
+[[nodiscard]] static auto is_plausible_posix_prefix(char *s) -> bool
 {
   // POSIX symbols start with 1-4 underscores followed by Z.
   // strnstr() is BSD, so use a small local buffer and strstr().
@@ -74,7 +74,7 @@ static std::recursive_mutex backtrace_mutex;
 // c++filt -n _ZNK3MapI10StringName3RefI8GDScriptE10ComparatorIS0_E16DefaultAllocatorE3hasERKS0_
 // Map<StringName, Ref<GDScript>, Comparator<StringName>, DefaultAllocator>::has(StringName const&) const
 //
-static std::string demangle(const char *name)
+static auto demangle(const char *name) -> std::string
 {
 
   int status = -4; // some arbitrary value to eliminate the compiler warning
@@ -91,7 +91,7 @@ static std::string demangle(const char *name)
   return "";
 }
 
-static std::string demangle_symbol(char *name)
+static auto demangle_symbol(char *name) -> std::string
 {
   std::string sout;
   char       *p         = name;
@@ -298,7 +298,7 @@ std::string backtrace_string(void)
   return out;
 }
 #else
-std::string backtrace_string()
+auto backtrace_string() -> std::string
 {
   backtrace_mutex.lock();
 

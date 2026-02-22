@@ -9,15 +9,15 @@
 //
 // Get thing direction
 //
-bool thing_is_dir_br(Thingp me) { return (me->dir == THING_DIR_BR); }
-bool thing_is_dir_tr(Thingp me) { return (me->dir == THING_DIR_TR); }
-bool thing_is_dir_bl(Thingp me) { return (me->dir == THING_DIR_BL); }
-bool thing_is_dir_tl(Thingp me) { return (me->dir == THING_DIR_TL); }
-bool thing_is_dir_right(Thingp me) { return (me->dir == THING_DIR_RIGHT); }
-bool thing_is_dir_none(Thingp me) { return (me->dir == THING_DIR_NONE); }
-bool thing_is_dir_down(Thingp me) { return (me->dir == THING_DIR_DOWN); }
-bool thing_is_dir_up(Thingp me) { return (me->dir == THING_DIR_UP); }
-bool thing_is_dir_left(Thingp me) { return (me->dir == THING_DIR_LEFT); }
+auto thing_is_dir_br(Thingp me) -> bool { return (me->dir == THING_DIR_BR); }
+auto thing_is_dir_tr(Thingp me) -> bool { return (me->dir == THING_DIR_TR); }
+auto thing_is_dir_bl(Thingp me) -> bool { return (me->dir == THING_DIR_BL); }
+auto thing_is_dir_tl(Thingp me) -> bool { return (me->dir == THING_DIR_TL); }
+auto thing_is_dir_right(Thingp me) -> bool { return (me->dir == THING_DIR_RIGHT); }
+auto thing_is_dir_none(Thingp me) -> bool { return (me->dir == THING_DIR_NONE); }
+auto thing_is_dir_down(Thingp me) -> bool { return (me->dir == THING_DIR_DOWN); }
+auto thing_is_dir_up(Thingp me) -> bool { return (me->dir == THING_DIR_UP); }
+auto thing_is_dir_left(Thingp me) -> bool { return (me->dir == THING_DIR_LEFT); }
 
 //
 // Set thing direction
@@ -227,7 +227,7 @@ void thing_set_dir_from_delta(Thingp me, int dx, int dy)
 //
 // Get direction; need to also account for projectiles that move at an angle.
 //
-fpoint thing_get_direction(Gamep g, Levelsp v, Levelp l, Thingp me)
+auto thing_get_direction(Gamep g, Levelsp v, Levelp l, Thingp me) -> fpoint
 {
   TRACE_NO_INDENT();
 
@@ -252,7 +252,7 @@ fpoint thing_get_direction(Gamep g, Levelsp v, Levelp l, Thingp me)
 //
 // Handles manual and mouse follow moves
 //
-bool thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to)
+auto thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -285,7 +285,7 @@ bool thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to)
 //
 // Handles shoving to a location. We can'me move there yet.
 //
-bool thing_shove_to(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to)
+auto thing_shove_to(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -311,7 +311,7 @@ bool thing_shove_to(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to)
 //
 // Handles immediate moves even across levels.
 //
-bool thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp me, spoint to)
+auto thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp me, spoint to) -> bool
 {
   TRACE_NO_INDENT();
 

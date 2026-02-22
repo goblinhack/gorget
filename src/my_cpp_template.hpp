@@ -11,7 +11,7 @@
 
 template < class T, template < typename ELEM, typename ALLOC = std::allocator< ELEM > > class C >
 
-bool contains(C< T > *c, T t)
+auto contains(C< T > *c, T t) -> bool
 {
   typename C< T >::iterator i = c->begin();
 
@@ -43,7 +43,7 @@ void push_back_if_unique(C< T > &c, const T &d)
 }
 
 template < class T, template < typename ELEM, typename ALLOC = std::allocator< ELEM > > class C >
-T pcg_rand_one_of(C< T > &c)
+auto pcg_rand_one_of(C< T > &c) -> T
 {
   auto so = c.begin();
   auto eo = c.end();
@@ -57,7 +57,7 @@ T pcg_rand_one_of(C< T > &c)
 }
 
 template < class T, template < typename ELEM, typename ALLOC = std::allocator< ELEM > > class C >
-T rand_one_of(C< T > &c)
+auto rand_one_of(C< T > &c) -> T
 {
   auto so = c.begin();
   auto eo = c.end();

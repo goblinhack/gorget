@@ -20,11 +20,11 @@ public:
   void operator/=(T b);
 };
 
-template < typename T > bool             operator==(my_apoint3d< T > const &a, my_apoint3d< T > const &b);
-template < typename T > my_apoint3d< T > operator+(my_apoint3d< T > const &a, my_apoint3d< T > const &b);
-template < typename T > my_apoint3d< T > operator-(my_apoint3d< T > const &a, my_apoint3d< T > const &b);
-template < typename T > my_apoint3d< T > operator*(my_apoint3d< T > const &a, T b);
-template < typename T > my_apoint3d< T > operator/(my_apoint3d< T > const &a, T b);
+template < typename T > auto             operator==(my_apoint3d< T > const &a, my_apoint3d< T > const &b) -> bool;
+template < typename T > auto operator+(my_apoint3d< T > const &a, my_apoint3d< T > const &b) -> my_apoint3d< T >;
+template < typename T > auto operator-(my_apoint3d< T > const &a, my_apoint3d< T > const &b) -> my_apoint3d< T >;
+template < typename T > auto operator*(my_apoint3d< T > const &a, T b) -> my_apoint3d< T >;
+template < typename T > auto operator/(my_apoint3d< T > const &a, T b) -> my_apoint3d< T >;
 
 using point3d = my_apoint3d< short >;
 

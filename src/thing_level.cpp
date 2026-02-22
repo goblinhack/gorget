@@ -11,7 +11,7 @@
 //
 // Return the level of the thing
 //
-Levelp thing_level(Gamep g, Levelsp v, Thingp t)
+auto thing_level(Gamep g, Levelsp v, Thingp t) -> Levelp
 {
   TRACE_NO_INDENT();
 
@@ -23,7 +23,7 @@ Levelp thing_level(Gamep g, Levelsp v, Thingp t)
   return game_level_get(g, v, t->level_num);
 }
 
-bool thing_on_same_level_as_player(Gamep g, Levelsp v, Thingp t)
+auto thing_on_same_level_as_player(Gamep g, Levelsp v, Thingp t) -> bool
 {
   TRACE_NO_INDENT();
 

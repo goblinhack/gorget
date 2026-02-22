@@ -10,7 +10,7 @@
 //
 // Add a minion to the mob if possible
 //
-int thing_mob_minion_count_get(Gamep g, Levelsp v, Levelp l, Thingp mob)
+auto thing_mob_minion_count_get(Gamep g, Levelsp v, Levelp l, Thingp mob) -> int
 {
   if (mob == nullptr) {
     return 0;
@@ -31,7 +31,7 @@ int thing_mob_minion_count_get(Gamep g, Levelsp v, Levelp l, Thingp mob)
 //
 // Add a minion to the mob if possible
 //
-Thingp thing_mob_spawn_a_minion(Gamep g, Levelsp v, Levelp l, Thingp mob, Tpp tp_minion)
+auto thing_mob_spawn_a_minion(Gamep g, Levelsp v, Levelp l, Thingp mob, Tpp tp_minion) -> Thingp
 {
   TRACE_NO_INDENT();
 
@@ -112,8 +112,8 @@ Thingp thing_mob_spawn_a_minion(Gamep g, Levelsp v, Levelp l, Thingp mob, Tpp tp
 //
 // Detach or kill all minions (or a specific one)
 //
-[[nodiscard]] static bool thing_mob_process_minions(Gamep g, Levelsp v, Levelp l, Thingp mob, Thingp specific_minion,
-                                                    ThingEvent &e)
+[[nodiscard]] static auto thing_mob_process_minions(Gamep g, Levelsp v, Levelp l, Thingp mob, Thingp specific_minion,
+                                                    ThingEvent &e) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -171,7 +171,7 @@ Thingp thing_mob_spawn_a_minion(Gamep g, Levelsp v, Levelp l, Thingp mob, Tpp tp
 //
 // Detach all minions from their mob
 //
-bool thing_mob_detach_all_minions(Gamep g, Levelsp v, Levelp l, Thingp mob)
+auto thing_mob_detach_all_minions(Gamep g, Levelsp v, Levelp l, Thingp mob) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -182,7 +182,7 @@ bool thing_mob_detach_all_minions(Gamep g, Levelsp v, Levelp l, Thingp mob)
 //
 // Kill all minions
 //
-bool thing_mob_kill_all_minions(Gamep g, Levelsp v, Levelp l, Thingp mob, ThingEvent &e)
+auto thing_mob_kill_all_minions(Gamep g, Levelsp v, Levelp l, Thingp mob, ThingEvent &e) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -192,7 +192,7 @@ bool thing_mob_kill_all_minions(Gamep g, Levelsp v, Levelp l, Thingp mob, ThingE
 //
 // Detach a minion from its mob
 //
-bool thing_mob_detach_minion(Gamep g, Levelsp v, Levelp l, Thingp mob, Thingp minion)
+auto thing_mob_detach_minion(Gamep g, Levelsp v, Levelp l, Thingp mob, Thingp minion) -> bool
 {
   TRACE_NO_INDENT();
 

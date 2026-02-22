@@ -43,11 +43,11 @@ public:
              int scroll_height = -1);
 
 private:
-  Widp log_(Gamep g, const std::string & /*str*/, wid_text_format format = TEXT_FORMAT_NONE,
-            const std::string &c = "");
+  auto log_(Gamep g, const std::string & /*str*/, wid_text_format format = TEXT_FORMAT_NONE,
+            const std::string &c = "") -> Widp;
 
 public:
-  Widp log(Gamep g, const std::string &s, wid_text_format format = TEXT_FORMAT_NONE, const std::string &c = "");
-  Widp log_empty_line(Gamep g);
+  auto log(Gamep g, const std::string &s, wid_text_format format = TEXT_FORMAT_NONE, const std::string &c = "") -> Widp;
+  auto log_empty_line(Gamep g) -> Widp;
 };
 #endif

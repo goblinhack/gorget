@@ -9,7 +9,7 @@
 #include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp"
 
-spoint thing_at(Thingp t)
+auto thing_at(Thingp t) -> spoint
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -29,7 +29,7 @@ void thing_at_set(Thingp t, const spoint &val)
   t->_at     = make_fpoint(val);
 }
 
-fpoint thing_real_at(Thingp t)
+auto thing_real_at(Thingp t) -> fpoint
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -49,7 +49,7 @@ void thing_at_set(Thingp t, const fpoint &val)
   t->_at     = val;
 }
 
-spoint thing_old_at(Thingp t)
+auto thing_old_at(Thingp t) -> spoint
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -58,7 +58,7 @@ spoint thing_old_at(Thingp t)
   return make_spoint(t->_old_at);
 }
 
-spoint thing_prev_pix_at(Thingp t)
+auto thing_prev_pix_at(Thingp t) -> spoint
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -108,7 +108,7 @@ void thing_pix_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, short x, short y)
   t->_curr_pix_at = val;
 }
 
-spoint thing_moving_from(Thingp t)
+auto thing_moving_from(Thingp t) -> spoint
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -126,7 +126,7 @@ void thing_moving_from_set(Thingp t, const spoint &val)
   t->_moving_from = val;
 }
 
-int thing_speed(Thingp t)
+auto thing_speed(Thingp t) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -136,7 +136,7 @@ int thing_speed(Thingp t)
   return t->_speed;
 }
 
-int thing_speed_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_speed_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -146,7 +146,7 @@ int thing_speed_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_speed = val;
 }
 
-int thing_weight(Thingp t)
+auto thing_weight(Thingp t) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -156,7 +156,7 @@ int thing_weight(Thingp t)
   return t->_weight;
 }
 
-int thing_weight_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_weight_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -166,7 +166,7 @@ int thing_weight_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_weight = val;
 }
 
-int thing_health(Thingp t)
+auto thing_health(Thingp t) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -176,7 +176,7 @@ int thing_health(Thingp t)
   return t->_health;
 }
 
-int thing_health_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_health_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -187,7 +187,7 @@ int thing_health_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_health = val;
 }
 
-int thing_health_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_health_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -198,7 +198,7 @@ int thing_health_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_health += val;
 }
 
-int thing_health_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_health_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -249,7 +249,7 @@ void thing_is_falling_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
   }
 }
 
-int thing_is_falling_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_is_falling_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -264,7 +264,7 @@ int thing_is_falling_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_is_falling_ms += val;
 }
 
-bool thing_is_falling_continues(Thingp t)
+auto thing_is_falling_continues(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -337,7 +337,7 @@ void thing_is_hit_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   }
 }
 
-int thing_is_hit_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_is_hit_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -356,7 +356,7 @@ int thing_is_hit_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_is_hit += val;
 }
 
-int thing_is_hit_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_is_hit_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -404,7 +404,7 @@ void thing_is_hot_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   t->_is_hot = val;
 }
 
-int thing_is_hot_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_is_hot_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -419,7 +419,7 @@ int thing_is_hot_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_is_hot += val;
 }
 
-int thing_is_hot_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_is_hot_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -434,7 +434,7 @@ int thing_is_hot_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_is_hot -= val;
 }
 
-int thing_temperature(Thingp t)
+auto thing_temperature(Thingp t) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -444,7 +444,7 @@ int thing_temperature(Thingp t)
   return t->_temperature;
 }
 
-int thing_temperature_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_temperature_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -473,7 +473,7 @@ int thing_temperature_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_temperature = val;
 }
 
-int thing_temperature_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_temperature_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -483,7 +483,7 @@ int thing_temperature_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return thing_temperature_set(g, v, l, t, t->_temperature + val);
 }
 
-int thing_temperature_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_temperature_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -493,7 +493,7 @@ int thing_temperature_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return thing_temperature_set(g, v, l, t, t->_temperature - val);
 }
 
-int thing_damage_this_tick(Thingp t)
+auto thing_damage_this_tick(Thingp t) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -503,7 +503,7 @@ int thing_damage_this_tick(Thingp t)
   return t->_damage_this_tick;
 }
 
-int thing_damage_this_tick_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_damage_this_tick_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -513,7 +513,7 @@ int thing_damage_this_tick_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_damage_this_tick = val;
 }
 
-int thing_damage_this_tick_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_damage_this_tick_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -523,7 +523,7 @@ int thing_damage_this_tick_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_damage_this_tick += val;
 }
 
-int thing_damage_this_tick_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_damage_this_tick_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -533,7 +533,7 @@ int thing_damage_this_tick_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_damage_this_tick -= val;
 }
 
-int thing_keys_carried(Thingp t)
+auto thing_keys_carried(Thingp t) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -543,7 +543,7 @@ int thing_keys_carried(Thingp t)
   return t->_keys_carried;
 }
 
-int thing_keys_carried_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_keys_carried_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -553,7 +553,7 @@ int thing_keys_carried_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_keys_carried = val;
 }
 
-int thing_keys_carried_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_keys_carried_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -563,7 +563,7 @@ int thing_keys_carried_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_keys_carried += val;
 }
 
-int thing_keys_carried_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_keys_carried_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -604,7 +604,7 @@ void thing_is_dead_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   thing_is_dead_set(g, v, l, t, false);
 }
 
-bool thing_is_burning(Thingp t)
+auto thing_is_burning(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -648,7 +648,7 @@ void thing_is_burning_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   thing_is_burning_set(g, v, l, t, false);
 }
 
-bool thing_is_corpse(Thingp t)
+auto thing_is_corpse(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -682,7 +682,7 @@ void thing_is_corpse_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   thing_is_corpse_set(g, v, l, t, false);
 }
 
-bool thing_is_scheduled_for_cleanup(Thingp t)
+auto thing_is_scheduled_for_cleanup(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -719,7 +719,7 @@ void thing_is_scheduled_for_cleanup_unset(Gamep g, Levelsp v, Levelp l, Thingp t
   thing_is_scheduled_for_cleanup_set(g, v, l, t, false);
 }
 
-bool thing_is_sleeping(Thingp t)
+auto thing_is_sleeping(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -745,7 +745,7 @@ void thing_is_sleeping_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   thing_is_sleeping_set(g, v, l, t, false);
 }
 
-bool thing_is_unlocked(Thingp t)
+auto thing_is_unlocked(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -771,7 +771,7 @@ void thing_is_unlocked_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   thing_is_unlocked_set(g, v, l, t, false);
 }
 
-bool thing_is_on_map(Thingp t)
+auto thing_is_on_map(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -848,7 +848,7 @@ void thing_is_spawned_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   thing_is_spawned_set(g, v, l, t, false);
 }
 
-bool thing_is_teleporting(Thingp t)
+auto thing_is_teleporting(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -911,7 +911,7 @@ void thing_is_jumping_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
 //
 // Returns true/false on success/fail
 //
-bool thing_is_open_try_set(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener, bool val)
+auto thing_is_open_try_set(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener, bool val) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -964,13 +964,13 @@ bool thing_is_open_try_set(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener
   return true;
 }
 
-bool thing_is_open_try_unset(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp closer)
+auto thing_is_open_try_unset(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp closer) -> bool
 {
   TRACE_NO_INDENT();
   return thing_is_open_try_set(g, v, l, t, closer, false);
 }
 
-bool thing_is_carried(Thingp t)
+auto thing_is_carried(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -983,7 +983,7 @@ bool thing_is_carried(Thingp t)
 //
 // Returns true/false on success/fail
 //
-bool thing_is_carried_try_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp player_or_monst, bool val)
+auto thing_is_carried_try_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp player_or_monst, bool val) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -1072,13 +1072,13 @@ bool thing_is_carried_try_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp 
   return true;
 }
 
-bool thing_is_carried_try_unset(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp player_or_monst)
+auto thing_is_carried_try_unset(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp player_or_monst) -> bool
 {
   TRACE_NO_INDENT();
   return thing_is_carried_try_set(g, v, l, item, player_or_monst, false);
 }
 
-bool thing_is_animated_can_hflip(Thingp t)
+auto thing_is_animated_can_hflip(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1088,7 +1088,7 @@ bool thing_is_animated_can_hflip(Thingp t)
   return tp_flag(thing_tp(t), is_animated_can_hflip) != 0;
 }
 
-bool thing_is_animated_no_dir(Thingp t)
+auto thing_is_animated_no_dir(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1098,7 +1098,7 @@ bool thing_is_animated_no_dir(Thingp t)
   return tp_flag(thing_tp(t), is_animated_no_dir) != 0;
 }
 
-bool thing_is_animated_sync_first(Thingp t)
+auto thing_is_animated_sync_first(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1108,7 +1108,7 @@ bool thing_is_animated_sync_first(Thingp t)
   return tp_flag(thing_tp(t), is_animated_sync_first) != 0;
 }
 
-bool thing_is_animated(Thingp t)
+auto thing_is_animated(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1118,7 +1118,7 @@ bool thing_is_animated(Thingp t)
   return tp_flag(thing_tp(t), is_animated) != 0;
 }
 
-bool thing_is_barrel(Thingp t)
+auto thing_is_barrel(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1128,7 +1128,7 @@ bool thing_is_barrel(Thingp t)
   return tp_flag(thing_tp(t), is_barrel) != 0;
 }
 
-bool thing_is_blit_centered(Thingp t)
+auto thing_is_blit_centered(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1138,7 +1138,7 @@ bool thing_is_blit_centered(Thingp t)
   return tp_flag(thing_tp(t), is_blit_centered) != 0;
 }
 
-bool thing_is_blit_flush_per_line(Thingp t)
+auto thing_is_blit_flush_per_line(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1148,7 +1148,7 @@ bool thing_is_blit_flush_per_line(Thingp t)
   return tp_flag(thing_tp(t), is_blit_flush_per_line) != 0;
 }
 
-bool thing_is_blit_outlined(Thingp t)
+auto thing_is_blit_outlined(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1158,7 +1158,7 @@ bool thing_is_blit_outlined(Thingp t)
   return tp_flag(thing_tp(t), is_blit_outlined) != 0;
 }
 
-bool thing_is_blit_square_outlined(Thingp t)
+auto thing_is_blit_square_outlined(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1168,7 +1168,7 @@ bool thing_is_blit_square_outlined(Thingp t)
   return tp_flag(thing_tp(t), is_blit_square_outlined) != 0;
 }
 
-bool thing_is_brazier(Thingp t)
+auto thing_is_brazier(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1178,7 +1178,7 @@ bool thing_is_brazier(Thingp t)
   return tp_flag(thing_tp(t), is_brazier) != 0;
 }
 
-bool thing_is_bridge(Thingp t)
+auto thing_is_bridge(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1188,7 +1188,7 @@ bool thing_is_bridge(Thingp t)
   return tp_flag(thing_tp(t), is_bridge) != 0;
 }
 
-bool thing_is_chasm(Thingp t)
+auto thing_is_chasm(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1198,7 +1198,7 @@ bool thing_is_chasm(Thingp t)
   return tp_flag(thing_tp(t), is_chasm) != 0;
 }
 
-bool thing_is_corridor(Thingp t)
+auto thing_is_corridor(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1208,7 +1208,7 @@ bool thing_is_corridor(Thingp t)
   return tp_flag(thing_tp(t), is_corridor) != 0;
 }
 
-bool thing_is_collision_square(Thingp t)
+auto thing_is_collision_square(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1218,7 +1218,7 @@ bool thing_is_collision_square(Thingp t)
   return tp_flag(thing_tp(t), is_collision_square) != 0;
 }
 
-bool thing_is_obs_to_cursor_path(Thingp t)
+auto thing_is_obs_to_cursor_path(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1238,7 +1238,7 @@ bool thing_is_obs_to_cursor_path(Thingp t)
   return tp_flag(thing_tp(t), is_obs_to_cursor_path) != 0;
 }
 
-bool thing_is_cursor_path_hazard(Thingp t)
+auto thing_is_cursor_path_hazard(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1248,7 +1248,7 @@ bool thing_is_cursor_path_hazard(Thingp t)
   return tp_flag(thing_tp(t), is_cursor_path_hazard) != 0;
 }
 
-bool thing_is_cursor_path(Thingp t)
+auto thing_is_cursor_path(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1258,7 +1258,7 @@ bool thing_is_cursor_path(Thingp t)
   return tp_flag(thing_tp(t), is_cursor_path) != 0;
 }
 
-bool thing_is_cursor(Thingp t)
+auto thing_is_cursor(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1268,7 +1268,7 @@ bool thing_is_cursor(Thingp t)
   return tp_flag(thing_tp(t), is_cursor) != 0;
 }
 
-bool thing_is_deep_water(Thingp t)
+auto thing_is_deep_water(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1278,7 +1278,7 @@ bool thing_is_deep_water(Thingp t)
   return tp_flag(thing_tp(t), is_deep_water) != 0;
 }
 
-bool thing_is_described_cursor(Thingp t)
+auto thing_is_described_cursor(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1288,7 +1288,7 @@ bool thing_is_described_cursor(Thingp t)
   return tp_flag(thing_tp(t), is_described_cursor) != 0;
 }
 
-bool thing_is_dirt(Thingp t)
+auto thing_is_dirt(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1298,7 +1298,7 @@ bool thing_is_dirt(Thingp t)
   return tp_flag(thing_tp(t), is_dirt) != 0;
 }
 
-bool thing_is_door_unlocked(Thingp t)
+auto thing_is_door_unlocked(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1308,7 +1308,7 @@ bool thing_is_door_unlocked(Thingp t)
   return tp_flag(thing_tp(t), is_door_unlocked) != 0;
 }
 
-bool thing_is_dungeon_entrance(Thingp t)
+auto thing_is_dungeon_entrance(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1318,7 +1318,7 @@ bool thing_is_dungeon_entrance(Thingp t)
   return tp_flag(thing_tp(t), is_dungeon_entrance) != 0;
 }
 
-bool thing_is_entrance(Thingp t)
+auto thing_is_entrance(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1328,7 +1328,7 @@ bool thing_is_entrance(Thingp t)
   return tp_flag(thing_tp(t), is_entrance) != 0;
 }
 
-bool thing_is_exit(Thingp t)
+auto thing_is_exit(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1338,7 +1338,7 @@ bool thing_is_exit(Thingp t)
   return tp_flag(thing_tp(t), is_exit) != 0;
 }
 
-bool thing_is_floor(Thingp t)
+auto thing_is_floor(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1348,7 +1348,7 @@ bool thing_is_floor(Thingp t)
   return tp_flag(thing_tp(t), is_floor) != 0;
 }
 
-bool thing_is_foliage(Thingp t)
+auto thing_is_foliage(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1358,7 +1358,7 @@ bool thing_is_foliage(Thingp t)
   return tp_flag(thing_tp(t), is_foliage) != 0;
 }
 
-bool thing_is_ghost(Thingp t)
+auto thing_is_ghost(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1368,7 +1368,7 @@ bool thing_is_ghost(Thingp t)
   return tp_flag(thing_tp(t), is_ghost) != 0;
 }
 
-bool thing_is_kobalos(Thingp t)
+auto thing_is_kobalos(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1378,7 +1378,7 @@ bool thing_is_kobalos(Thingp t)
   return tp_flag(thing_tp(t), is_kobalos) != 0;
 }
 
-bool thing_is_grass(Thingp t)
+auto thing_is_grass(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1388,7 +1388,7 @@ bool thing_is_grass(Thingp t)
   return tp_flag(thing_tp(t), is_grass) != 0;
 }
 
-bool thing_is_key(Thingp t)
+auto thing_is_key(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1398,7 +1398,7 @@ bool thing_is_key(Thingp t)
   return tp_flag(thing_tp(t), is_key) != 0;
 }
 
-bool thing_is_lava(Thingp t)
+auto thing_is_lava(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1408,7 +1408,7 @@ bool thing_is_lava(Thingp t)
   return tp_flag(thing_tp(t), is_lava) != 0;
 }
 
-bool thing_is_level_across_icon(Thingp t)
+auto thing_is_level_across_icon(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1418,7 +1418,7 @@ bool thing_is_level_across_icon(Thingp t)
   return tp_flag(thing_tp(t), is_level_across_icon) != 0;
 }
 
-bool thing_is_level_curr(Thingp t)
+auto thing_is_level_curr(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1428,7 +1428,7 @@ bool thing_is_level_curr(Thingp t)
   return tp_flag(thing_tp(t), is_level_curr) != 0;
 }
 
-bool thing_is_level_down_icon(Thingp t)
+auto thing_is_level_down_icon(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1438,7 +1438,7 @@ bool thing_is_level_down_icon(Thingp t)
   return tp_flag(thing_tp(t), is_level_down_icon) != 0;
 }
 
-bool thing_is_level_final_icon(Thingp t)
+auto thing_is_level_final_icon(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1448,7 +1448,7 @@ bool thing_is_level_final_icon(Thingp t)
   return tp_flag(thing_tp(t), is_level_final_icon) != 0;
 }
 
-bool thing_is_level_next_icon(Thingp t)
+auto thing_is_level_next_icon(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1458,7 +1458,7 @@ bool thing_is_level_next_icon(Thingp t)
   return tp_flag(thing_tp(t), is_level_next_icon) != 0;
 }
 
-bool thing_is_level_not_visited_icon(Thingp t)
+auto thing_is_level_not_visited_icon(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1468,7 +1468,7 @@ bool thing_is_level_not_visited_icon(Thingp t)
   return tp_flag(thing_tp(t), is_level_not_visited_icon) != 0;
 }
 
-bool thing_is_level_visited_icon(Thingp t)
+auto thing_is_level_visited_icon(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1478,7 +1478,7 @@ bool thing_is_level_visited_icon(Thingp t)
   return tp_flag(thing_tp(t), is_level_visited_icon) != 0;
 }
 
-bool thing_is_minion(Thingp t)
+auto thing_is_minion(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1488,7 +1488,7 @@ bool thing_is_minion(Thingp t)
   return tp_flag(thing_tp(t), is_minion) != 0;
 }
 
-bool thing_is_mob(Thingp t)
+auto thing_is_mob(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1498,7 +1498,7 @@ bool thing_is_mob(Thingp t)
   return tp_flag(thing_tp(t), is_mob) != 0;
 }
 
-bool thing_is_mob1(Thingp t)
+auto thing_is_mob1(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1508,7 +1508,7 @@ bool thing_is_mob1(Thingp t)
   return tp_flag(thing_tp(t), is_mob1) != 0;
 }
 
-bool thing_is_mob2(Thingp t)
+auto thing_is_mob2(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1518,7 +1518,7 @@ bool thing_is_mob2(Thingp t)
   return tp_flag(thing_tp(t), is_mob2) != 0;
 }
 
-bool thing_is_monst(Thingp t)
+auto thing_is_monst(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1528,7 +1528,7 @@ bool thing_is_monst(Thingp t)
   return tp_flag(thing_tp(t), is_monst) != 0;
 }
 
-bool thing_is_monst_group_easy(Thingp t)
+auto thing_is_monst_group_easy(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1538,7 +1538,7 @@ bool thing_is_monst_group_easy(Thingp t)
   return tp_flag(thing_tp(t), is_monst_group_easy) != 0;
 }
 
-bool thing_is_monst_group_hard(Thingp t)
+auto thing_is_monst_group_hard(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1548,7 +1548,7 @@ bool thing_is_monst_group_hard(Thingp t)
   return tp_flag(thing_tp(t), is_monst_group_hard) != 0;
 }
 
-bool thing_is_obs_to_movement(Thingp t)
+auto thing_is_obs_to_movement(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1568,7 +1568,7 @@ bool thing_is_obs_to_movement(Thingp t)
   return tp_flag(thing_tp(t), is_obs_to_movement) != 0;
 }
 
-bool thing_is_pillar(Thingp t)
+auto thing_is_pillar(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1578,7 +1578,7 @@ bool thing_is_pillar(Thingp t)
   return tp_flag(thing_tp(t), is_pillar) != 0;
 }
 
-bool thing_is_rock(Thingp t)
+auto thing_is_rock(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1588,7 +1588,7 @@ bool thing_is_rock(Thingp t)
   return tp_flag(thing_tp(t), is_rock) != 0;
 }
 
-bool thing_is_door_secret(Thingp t)
+auto thing_is_door_secret(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1598,7 +1598,7 @@ bool thing_is_door_secret(Thingp t)
   return tp_flag(thing_tp(t), is_door_secret) != 0;
 }
 
-bool thing_is_slime(Thingp t)
+auto thing_is_slime(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1608,7 +1608,7 @@ bool thing_is_slime(Thingp t)
   return tp_flag(thing_tp(t), is_slime) != 0;
 }
 
-bool thing_is_teleport(Thingp t)
+auto thing_is_teleport(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1618,7 +1618,7 @@ bool thing_is_teleport(Thingp t)
   return tp_flag(thing_tp(t), is_teleport) != 0;
 }
 
-bool thing_is_tickable(Thingp t)
+auto thing_is_tickable(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1628,7 +1628,7 @@ bool thing_is_tickable(Thingp t)
   return tp_flag(thing_tp(t), is_tickable) != 0;
 }
 
-bool thing_is_tiled(Thingp t)
+auto thing_is_tiled(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1638,7 +1638,7 @@ bool thing_is_tiled(Thingp t)
   return tp_flag(thing_tp(t), is_tiled) != 0;
 }
 
-bool thing_is_trap(Thingp t)
+auto thing_is_trap(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1648,7 +1648,7 @@ bool thing_is_trap(Thingp t)
   return tp_flag(thing_tp(t), is_trap) != 0;
 }
 
-bool thing_is_treasure(Thingp t)
+auto thing_is_treasure(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1658,7 +1658,7 @@ bool thing_is_treasure(Thingp t)
   return tp_flag(thing_tp(t), is_treasure) != 0;
 }
 
-bool thing_is_unused1(Thingp t)
+auto thing_is_unused1(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1668,7 +1668,7 @@ bool thing_is_unused1(Thingp t)
   return tp_flag(thing_tp(t), is_unused1) != 0;
 }
 
-bool thing_is_unused2(Thingp t)
+auto thing_is_unused2(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1678,7 +1678,7 @@ bool thing_is_unused2(Thingp t)
   return tp_flag(thing_tp(t), is_unused2) != 0;
 }
 
-bool thing_is_unused3(Thingp t)
+auto thing_is_unused3(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1688,7 +1688,7 @@ bool thing_is_unused3(Thingp t)
   return tp_flag(thing_tp(t), is_unused3) != 0;
 }
 
-bool thing_is_unused4(Thingp t)
+auto thing_is_unused4(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1698,7 +1698,7 @@ bool thing_is_unused4(Thingp t)
   return tp_flag(thing_tp(t), is_unused4) != 0;
 }
 
-bool thing_is_unused5(Thingp t)
+auto thing_is_unused5(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1708,7 +1708,7 @@ bool thing_is_unused5(Thingp t)
   return tp_flag(thing_tp(t), is_unused5) != 0;
 }
 
-bool thing_is_unused6(Thingp t)
+auto thing_is_unused6(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1718,7 +1718,7 @@ bool thing_is_unused6(Thingp t)
   return tp_flag(thing_tp(t), is_unused6) != 0;
 }
 
-bool thing_is_unused7(Thingp t)
+auto thing_is_unused7(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1728,7 +1728,7 @@ bool thing_is_unused7(Thingp t)
   return tp_flag(thing_tp(t), is_unused7) != 0;
 }
 
-bool thing_is_unused8(Thingp t)
+auto thing_is_unused8(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1738,7 +1738,7 @@ bool thing_is_unused8(Thingp t)
   return tp_flag(thing_tp(t), is_unused8) != 0;
 }
 
-bool thing_is_unused9(Thingp t)
+auto thing_is_unused9(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1748,7 +1748,7 @@ bool thing_is_unused9(Thingp t)
   return tp_flag(thing_tp(t), is_unused9) != 0;
 }
 
-bool thing_is_unused10(Thingp t)
+auto thing_is_unused10(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1758,7 +1758,7 @@ bool thing_is_unused10(Thingp t)
   return tp_flag(thing_tp(t), is_unused10) != 0;
 }
 
-bool thing_is_unused11(Thingp t)
+auto thing_is_unused11(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1768,7 +1768,7 @@ bool thing_is_unused11(Thingp t)
   return tp_flag(thing_tp(t), is_unused11) != 0;
 }
 
-bool thing_is_unused12(Thingp t)
+auto thing_is_unused12(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1778,7 +1778,7 @@ bool thing_is_unused12(Thingp t)
   return tp_flag(thing_tp(t), is_unused12) != 0;
 }
 
-bool thing_is_unused13(Thingp t)
+auto thing_is_unused13(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1788,7 +1788,7 @@ bool thing_is_unused13(Thingp t)
   return tp_flag(thing_tp(t), is_unused13) != 0;
 }
 
-bool thing_is_unused14(Thingp t)
+auto thing_is_unused14(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1798,7 +1798,7 @@ bool thing_is_unused14(Thingp t)
   return tp_flag(thing_tp(t), is_unused14) != 0;
 }
 
-bool thing_is_unused15(Thingp t)
+auto thing_is_unused15(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1808,7 +1808,7 @@ bool thing_is_unused15(Thingp t)
   return tp_flag(thing_tp(t), is_unused15) != 0;
 }
 
-bool thing_is_unused16(Thingp t)
+auto thing_is_unused16(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1818,7 +1818,7 @@ bool thing_is_unused16(Thingp t)
   return tp_flag(thing_tp(t), is_unused16) != 0;
 }
 
-bool thing_is_unused17(Thingp t)
+auto thing_is_unused17(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1828,7 +1828,7 @@ bool thing_is_unused17(Thingp t)
   return tp_flag(thing_tp(t), is_unused17) != 0;
 }
 
-bool thing_is_unused18(Thingp t)
+auto thing_is_unused18(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1838,7 +1838,7 @@ bool thing_is_unused18(Thingp t)
   return tp_flag(thing_tp(t), is_unused18) != 0;
 }
 
-bool thing_is_unused19(Thingp t)
+auto thing_is_unused19(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1848,7 +1848,7 @@ bool thing_is_unused19(Thingp t)
   return tp_flag(thing_tp(t), is_unused19) != 0;
 }
 
-bool thing_is_unused20(Thingp t)
+auto thing_is_unused20(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1858,7 +1858,7 @@ bool thing_is_unused20(Thingp t)
   return tp_flag(thing_tp(t), is_unused20) != 0;
 }
 
-bool thing_is_unused21(Thingp t)
+auto thing_is_unused21(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1868,7 +1868,7 @@ bool thing_is_unused21(Thingp t)
   return tp_flag(thing_tp(t), is_unused21) != 0;
 }
 
-bool thing_is_unused22(Thingp t)
+auto thing_is_unused22(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1878,7 +1878,7 @@ bool thing_is_unused22(Thingp t)
   return tp_flag(thing_tp(t), is_unused22) != 0;
 }
 
-bool thing_is_unused23(Thingp t)
+auto thing_is_unused23(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1888,7 +1888,7 @@ bool thing_is_unused23(Thingp t)
   return tp_flag(thing_tp(t), is_unused23) != 0;
 }
 
-bool thing_is_unused24(Thingp t)
+auto thing_is_unused24(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1898,7 +1898,7 @@ bool thing_is_unused24(Thingp t)
   return tp_flag(thing_tp(t), is_unused24) != 0;
 }
 
-bool thing_is_unused25(Thingp t)
+auto thing_is_unused25(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1908,7 +1908,7 @@ bool thing_is_unused25(Thingp t)
   return tp_flag(thing_tp(t), is_unused25) != 0;
 }
 
-bool thing_is_unused26(Thingp t)
+auto thing_is_unused26(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1918,7 +1918,7 @@ bool thing_is_unused26(Thingp t)
   return tp_flag(thing_tp(t), is_unused26) != 0;
 }
 
-bool thing_is_unused27(Thingp t)
+auto thing_is_unused27(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1928,7 +1928,7 @@ bool thing_is_unused27(Thingp t)
   return tp_flag(thing_tp(t), is_unused27) != 0;
 }
 
-bool thing_is_unused28(Thingp t)
+auto thing_is_unused28(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1938,7 +1938,7 @@ bool thing_is_unused28(Thingp t)
   return tp_flag(thing_tp(t), is_unused28) != 0;
 }
 
-bool thing_is_unused29(Thingp t)
+auto thing_is_unused29(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1948,7 +1948,7 @@ bool thing_is_unused29(Thingp t)
   return tp_flag(thing_tp(t), is_unused29) != 0;
 }
 
-bool thing_is_unused30(Thingp t)
+auto thing_is_unused30(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1958,7 +1958,7 @@ bool thing_is_unused30(Thingp t)
   return tp_flag(thing_tp(t), is_unused30) != 0;
 }
 
-bool thing_is_unused31(Thingp t)
+auto thing_is_unused31(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1968,7 +1968,7 @@ bool thing_is_unused31(Thingp t)
   return tp_flag(thing_tp(t), is_unused31) != 0;
 }
 
-bool thing_is_unused32(Thingp t)
+auto thing_is_unused32(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1978,7 +1978,7 @@ bool thing_is_unused32(Thingp t)
   return tp_flag(thing_tp(t), is_unused32) != 0;
 }
 
-bool thing_is_unused33(Thingp t)
+auto thing_is_unused33(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1988,7 +1988,7 @@ bool thing_is_unused33(Thingp t)
   return tp_flag(thing_tp(t), is_unused33) != 0;
 }
 
-bool thing_is_unused34(Thingp t)
+auto thing_is_unused34(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -1998,7 +1998,7 @@ bool thing_is_unused34(Thingp t)
   return tp_flag(thing_tp(t), is_unused34) != 0;
 }
 
-bool thing_is_unused35(Thingp t)
+auto thing_is_unused35(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2008,7 +2008,7 @@ bool thing_is_unused35(Thingp t)
   return tp_flag(thing_tp(t), is_unused35) != 0;
 }
 
-bool thing_is_unused36(Thingp t)
+auto thing_is_unused36(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2018,7 +2018,7 @@ bool thing_is_unused36(Thingp t)
   return tp_flag(thing_tp(t), is_unused36) != 0;
 }
 
-bool thing_is_unused37(Thingp t)
+auto thing_is_unused37(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2028,7 +2028,7 @@ bool thing_is_unused37(Thingp t)
   return tp_flag(thing_tp(t), is_unused37) != 0;
 }
 
-bool thing_is_unused38(Thingp t)
+auto thing_is_unused38(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2038,7 +2038,7 @@ bool thing_is_unused38(Thingp t)
   return tp_flag(thing_tp(t), is_unused38) != 0;
 }
 
-bool thing_is_unused39(Thingp t)
+auto thing_is_unused39(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2048,7 +2048,7 @@ bool thing_is_unused39(Thingp t)
   return tp_flag(thing_tp(t), is_unused39) != 0;
 }
 
-bool thing_is_unused40(Thingp t)
+auto thing_is_unused40(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2058,7 +2058,7 @@ bool thing_is_unused40(Thingp t)
   return tp_flag(thing_tp(t), is_unused40) != 0;
 }
 
-bool thing_is_unused41(Thingp t)
+auto thing_is_unused41(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2068,7 +2068,7 @@ bool thing_is_unused41(Thingp t)
   return tp_flag(thing_tp(t), is_unused41) != 0;
 }
 
-bool thing_is_unused42(Thingp t)
+auto thing_is_unused42(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2078,7 +2078,7 @@ bool thing_is_unused42(Thingp t)
   return tp_flag(thing_tp(t), is_unused42) != 0;
 }
 
-bool thing_is_unused43(Thingp t)
+auto thing_is_unused43(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2088,7 +2088,7 @@ bool thing_is_unused43(Thingp t)
   return tp_flag(thing_tp(t), is_unused43) != 0;
 }
 
-bool thing_is_unused44(Thingp t)
+auto thing_is_unused44(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2098,7 +2098,7 @@ bool thing_is_unused44(Thingp t)
   return tp_flag(thing_tp(t), is_unused44) != 0;
 }
 
-bool thing_is_unused45(Thingp t)
+auto thing_is_unused45(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2108,7 +2108,7 @@ bool thing_is_unused45(Thingp t)
   return tp_flag(thing_tp(t), is_unused45) != 0;
 }
 
-bool thing_is_unused46(Thingp t)
+auto thing_is_unused46(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2118,7 +2118,7 @@ bool thing_is_unused46(Thingp t)
   return tp_flag(thing_tp(t), is_unused46) != 0;
 }
 
-bool thing_is_unused47(Thingp t)
+auto thing_is_unused47(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2128,7 +2128,7 @@ bool thing_is_unused47(Thingp t)
   return tp_flag(thing_tp(t), is_unused47) != 0;
 }
 
-bool thing_is_unused48(Thingp t)
+auto thing_is_unused48(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2138,7 +2138,7 @@ bool thing_is_unused48(Thingp t)
   return tp_flag(thing_tp(t), is_unused48) != 0;
 }
 
-bool thing_is_unused49(Thingp t)
+auto thing_is_unused49(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2148,7 +2148,7 @@ bool thing_is_unused49(Thingp t)
   return tp_flag(thing_tp(t), is_unused49) != 0;
 }
 
-bool thing_is_unused50(Thingp t)
+auto thing_is_unused50(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2158,7 +2158,7 @@ bool thing_is_unused50(Thingp t)
   return tp_flag(thing_tp(t), is_unused50) != 0;
 }
 
-bool thing_is_unused51(Thingp t)
+auto thing_is_unused51(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2168,7 +2168,7 @@ bool thing_is_unused51(Thingp t)
   return tp_flag(thing_tp(t), is_unused51) != 0;
 }
 
-bool thing_is_unused52(Thingp t)
+auto thing_is_unused52(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2178,7 +2178,7 @@ bool thing_is_unused52(Thingp t)
   return tp_flag(thing_tp(t), is_unused52) != 0;
 }
 
-bool thing_is_unused53(Thingp t)
+auto thing_is_unused53(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2188,7 +2188,7 @@ bool thing_is_unused53(Thingp t)
   return tp_flag(thing_tp(t), is_unused53) != 0;
 }
 
-bool thing_is_unused54(Thingp t)
+auto thing_is_unused54(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2198,7 +2198,7 @@ bool thing_is_unused54(Thingp t)
   return tp_flag(thing_tp(t), is_unused54) != 0;
 }
 
-bool thing_is_unused55(Thingp t)
+auto thing_is_unused55(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2208,7 +2208,7 @@ bool thing_is_unused55(Thingp t)
   return tp_flag(thing_tp(t), is_unused55) != 0;
 }
 
-bool thing_is_unused56(Thingp t)
+auto thing_is_unused56(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2218,7 +2218,7 @@ bool thing_is_unused56(Thingp t)
   return tp_flag(thing_tp(t), is_unused56) != 0;
 }
 
-bool thing_is_unused57(Thingp t)
+auto thing_is_unused57(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2228,7 +2228,7 @@ bool thing_is_unused57(Thingp t)
   return tp_flag(thing_tp(t), is_unused57) != 0;
 }
 
-bool thing_is_unused58(Thingp t)
+auto thing_is_unused58(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2238,7 +2238,7 @@ bool thing_is_unused58(Thingp t)
   return tp_flag(thing_tp(t), is_unused58) != 0;
 }
 
-bool thing_is_unused59(Thingp t)
+auto thing_is_unused59(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2248,7 +2248,7 @@ bool thing_is_unused59(Thingp t)
   return tp_flag(thing_tp(t), is_unused59) != 0;
 }
 
-bool thing_is_unused60(Thingp t)
+auto thing_is_unused60(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2258,7 +2258,7 @@ bool thing_is_unused60(Thingp t)
   return tp_flag(thing_tp(t), is_unused60) != 0;
 }
 
-bool thing_is_unused61(Thingp t)
+auto thing_is_unused61(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2268,7 +2268,7 @@ bool thing_is_unused61(Thingp t)
   return tp_flag(thing_tp(t), is_unused61) != 0;
 }
 
-bool thing_is_unused62(Thingp t)
+auto thing_is_unused62(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2278,7 +2278,7 @@ bool thing_is_unused62(Thingp t)
   return tp_flag(thing_tp(t), is_unused62) != 0;
 }
 
-bool thing_is_unused63(Thingp t)
+auto thing_is_unused63(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2288,7 +2288,7 @@ bool thing_is_unused63(Thingp t)
   return tp_flag(thing_tp(t), is_unused63) != 0;
 }
 
-bool thing_is_unused64(Thingp t)
+auto thing_is_unused64(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2298,7 +2298,7 @@ bool thing_is_unused64(Thingp t)
   return tp_flag(thing_tp(t), is_unused64) != 0;
 }
 
-bool thing_is_unused65(Thingp t)
+auto thing_is_unused65(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2308,7 +2308,7 @@ bool thing_is_unused65(Thingp t)
   return tp_flag(thing_tp(t), is_unused65) != 0;
 }
 
-bool thing_is_unused66(Thingp t)
+auto thing_is_unused66(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2318,7 +2318,7 @@ bool thing_is_unused66(Thingp t)
   return tp_flag(thing_tp(t), is_unused66) != 0;
 }
 
-bool thing_is_unused67(Thingp t)
+auto thing_is_unused67(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2328,7 +2328,7 @@ bool thing_is_unused67(Thingp t)
   return tp_flag(thing_tp(t), is_unused67) != 0;
 }
 
-bool thing_is_unused68(Thingp t)
+auto thing_is_unused68(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2338,7 +2338,7 @@ bool thing_is_unused68(Thingp t)
   return tp_flag(thing_tp(t), is_unused68) != 0;
 }
 
-bool thing_is_removable_when_dead_on_err(Thingp t)
+auto thing_is_removable_when_dead_on_err(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2348,7 +2348,7 @@ bool thing_is_removable_when_dead_on_err(Thingp t)
   return tp_flag(thing_tp(t), is_removable_when_dead_on_err) != 0;
 }
 
-bool thing_is_removable_on_err(Thingp t)
+auto thing_is_removable_on_err(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2358,7 +2358,7 @@ bool thing_is_removable_on_err(Thingp t)
   return tp_flag(thing_tp(t), is_removable_on_err) != 0;
 }
 
-bool thing_is_obs_when_dead(Thingp t)
+auto thing_is_obs_when_dead(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2368,7 +2368,7 @@ bool thing_is_obs_when_dead(Thingp t)
   return tp_flag(thing_tp(t), is_obs_when_dead) != 0;
 }
 
-bool thing_is_able_to_fall_repeatedly(Thingp t)
+auto thing_is_able_to_fall_repeatedly(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2378,7 +2378,7 @@ bool thing_is_able_to_fall_repeatedly(Thingp t)
   return tp_flag(thing_tp(t), is_able_to_fall_repeatedly) != 0;
 }
 
-bool thing_is_able_to_move_through_walls(Thingp t)
+auto thing_is_able_to_move_through_walls(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2388,7 +2388,7 @@ bool thing_is_able_to_move_through_walls(Thingp t)
   return tp_flag(thing_tp(t), is_able_to_move_through_walls) != 0;
 }
 
-bool thing_is_able_to_move_diagonally(Thingp t)
+auto thing_is_able_to_move_diagonally(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2398,7 +2398,7 @@ bool thing_is_able_to_move_diagonally(Thingp t)
   return tp_flag(thing_tp(t), is_able_to_move_diagonally) != 0;
 }
 
-bool thing_is_blit_on_ground(Thingp t)
+auto thing_is_blit_on_ground(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2408,7 +2408,7 @@ bool thing_is_blit_on_ground(Thingp t)
   return tp_flag(thing_tp(t), is_blit_on_ground) != 0;
 }
 
-bool thing_is_insectoid(Thingp t)
+auto thing_is_insectoid(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2418,7 +2418,7 @@ bool thing_is_insectoid(Thingp t)
   return tp_flag(thing_tp(t), is_insectoid) != 0;
 }
 
-bool thing_is_mantisman(Thingp t)
+auto thing_is_mantisman(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2428,7 +2428,7 @@ bool thing_is_mantisman(Thingp t)
   return tp_flag(thing_tp(t), is_mantisman) != 0;
 }
 
-bool thing_is_dmap(Thingp t)
+auto thing_is_dmap(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2438,7 +2438,7 @@ bool thing_is_dmap(Thingp t)
   return tp_flag(thing_tp(t), is_dmap) != 0;
 }
 
-bool thing_is_obs_to_spawning(Thingp t)
+auto thing_is_obs_to_spawning(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2448,7 +2448,7 @@ bool thing_is_obs_to_spawning(Thingp t)
   return tp_flag(thing_tp(t), is_obs_to_spawning) != 0;
 }
 
-bool thing_is_mob_kill_minions_on_death(Thingp t)
+auto thing_is_mob_kill_minions_on_death(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2458,7 +2458,7 @@ bool thing_is_mob_kill_minions_on_death(Thingp t)
   return tp_flag(thing_tp(t), is_mob_kill_minions_on_death) != 0;
 }
 
-bool thing_is_border(Thingp t)
+auto thing_is_border(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2468,7 +2468,7 @@ bool thing_is_border(Thingp t)
   return tp_flag(thing_tp(t), is_border) != 0;
 }
 
-bool thing_is_collision_detection_enabled(Thingp t)
+auto thing_is_collision_detection_enabled(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2478,7 +2478,7 @@ bool thing_is_collision_detection_enabled(Thingp t)
   return tp_flag(thing_tp(t), is_collision_detection_enabled) != 0;
 }
 
-bool thing_is_gold(Thingp t)
+auto thing_is_gold(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2488,7 +2488,7 @@ bool thing_is_gold(Thingp t)
   return tp_flag(thing_tp(t), is_gold) != 0;
 }
 
-bool thing_is_glass(Thingp t)
+auto thing_is_glass(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2498,7 +2498,7 @@ bool thing_is_glass(Thingp t)
   return tp_flag(thing_tp(t), is_glass) != 0;
 }
 
-bool thing_is_plant(Thingp t)
+auto thing_is_plant(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2508,7 +2508,7 @@ bool thing_is_plant(Thingp t)
   return tp_flag(thing_tp(t), is_plant) != 0;
 }
 
-bool thing_is_wood(Thingp t)
+auto thing_is_wood(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2518,7 +2518,7 @@ bool thing_is_wood(Thingp t)
   return tp_flag(thing_tp(t), is_wood) != 0;
 }
 
-bool thing_is_metal(Thingp t)
+auto thing_is_metal(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2528,7 +2528,7 @@ bool thing_is_metal(Thingp t)
   return tp_flag(thing_tp(t), is_metal) != 0;
 }
 
-bool thing_is_flesh(Thingp t)
+auto thing_is_flesh(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2538,7 +2538,7 @@ bool thing_is_flesh(Thingp t)
   return tp_flag(thing_tp(t), is_flesh) != 0;
 }
 
-bool thing_is_stone(Thingp t)
+auto thing_is_stone(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2548,7 +2548,7 @@ bool thing_is_stone(Thingp t)
   return tp_flag(thing_tp(t), is_stone) != 0;
 }
 
-bool thing_is_meltable(Thingp t)
+auto thing_is_meltable(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2558,7 +2558,7 @@ bool thing_is_meltable(Thingp t)
   return tp_flag(thing_tp(t), is_meltable) != 0;
 }
 
-bool thing_is_blit_per_pixel_lighting(Thingp t)
+auto thing_is_blit_per_pixel_lighting(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2568,7 +2568,7 @@ bool thing_is_blit_per_pixel_lighting(Thingp t)
   return tp_flag(thing_tp(t), is_blit_per_pixel_lighting) != 0;
 }
 
-bool thing_is_dead_on_collision(Thingp t)
+auto thing_is_dead_on_collision(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2578,7 +2578,7 @@ bool thing_is_dead_on_collision(Thingp t)
   return tp_flag(thing_tp(t), is_dead_on_collision) != 0;
 }
 
-bool thing_is_obs_to_jumping_out_of(Thingp t)
+auto thing_is_obs_to_jumping_out_of(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2588,7 +2588,7 @@ bool thing_is_obs_to_jumping_out_of(Thingp t)
   return tp_flag(thing_tp(t), is_obs_to_jumping_out_of) != 0;
 }
 
-bool thing_is_cursor_path_warning(Thingp t)
+auto thing_is_cursor_path_warning(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2598,7 +2598,7 @@ bool thing_is_cursor_path_warning(Thingp t)
   return tp_flag(thing_tp(t), is_cursor_path_warning) != 0;
 }
 
-bool thing_is_collision_circle_large(Thingp t)
+auto thing_is_collision_circle_large(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2608,7 +2608,7 @@ bool thing_is_collision_circle_large(Thingp t)
   return tp_flag(thing_tp(t), is_collision_circle_large) != 0;
 }
 
-bool thing_is_collision_circle_small(Thingp t)
+auto thing_is_collision_circle_small(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2618,7 +2618,7 @@ bool thing_is_collision_circle_small(Thingp t)
   return tp_flag(thing_tp(t), is_collision_circle_small) != 0;
 }
 
-bool thing_is_fireball(Thingp t)
+auto thing_is_fireball(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2628,7 +2628,7 @@ bool thing_is_fireball(Thingp t)
   return tp_flag(thing_tp(t), is_fireball) != 0;
 }
 
-bool thing_is_projectile(Thingp t)
+auto thing_is_projectile(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2638,7 +2638,7 @@ bool thing_is_projectile(Thingp t)
   return tp_flag(thing_tp(t), is_projectile) != 0;
 }
 
-bool thing_is_health_bar_shown(Thingp t)
+auto thing_is_health_bar_shown(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2648,7 +2648,7 @@ bool thing_is_health_bar_shown(Thingp t)
   return tp_flag(thing_tp(t), is_health_bar_shown) != 0;
 }
 
-bool thing_is_item_mergeable(Thingp t)
+auto thing_is_item_mergeable(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2658,7 +2658,7 @@ bool thing_is_item_mergeable(Thingp t)
   return tp_flag(thing_tp(t), is_item_mergeable) != 0;
 }
 
-bool thing_is_door_locked(Thingp t)
+auto thing_is_door_locked(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2668,7 +2668,7 @@ bool thing_is_door_locked(Thingp t)
   return tp_flag(thing_tp(t), is_door_locked) != 0;
 }
 
-bool thing_is_inventory_item(Thingp t)
+auto thing_is_inventory_item(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2678,7 +2678,7 @@ bool thing_is_inventory_item(Thingp t)
   return tp_flag(thing_tp(t), is_inventory_item) != 0;
 }
 
-bool thing_is_able_to_open(Thingp t)
+auto thing_is_able_to_open(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2688,7 +2688,7 @@ bool thing_is_able_to_open(Thingp t)
   return tp_flag(thing_tp(t), is_able_to_open) != 0;
 }
 
-bool thing_is_item(Thingp t)
+auto thing_is_item(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2698,7 +2698,7 @@ bool thing_is_item(Thingp t)
   return tp_flag(thing_tp(t), is_item) != 0;
 }
 
-bool thing_is_able_to_crush_grass(Thingp t)
+auto thing_is_able_to_crush_grass(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2708,7 +2708,7 @@ bool thing_is_able_to_crush_grass(Thingp t)
   return tp_flag(thing_tp(t), is_able_to_crush_grass) != 0;
 }
 
-bool thing_is_able_to_collect_keys(Thingp t)
+auto thing_is_able_to_collect_keys(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2718,7 +2718,7 @@ bool thing_is_able_to_collect_keys(Thingp t)
   return tp_flag(thing_tp(t), is_able_to_collect_keys) != 0;
 }
 
-bool thing_is_able_to_collect_items(Thingp t)
+auto thing_is_able_to_collect_items(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2728,7 +2728,7 @@ bool thing_is_able_to_collect_items(Thingp t)
   return tp_flag(thing_tp(t), is_able_to_collect_items) != 0;
 }
 
-bool thing_is_collectable(Thingp t)
+auto thing_is_collectable(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2738,7 +2738,7 @@ bool thing_is_collectable(Thingp t)
   return tp_flag(thing_tp(t), is_collectable) != 0;
 }
 
-bool thing_is_blit_when_obscured(Thingp t)
+auto thing_is_blit_when_obscured(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2748,7 +2748,7 @@ bool thing_is_blit_when_obscured(Thingp t)
   return tp_flag(thing_tp(t), is_blit_when_obscured) != 0;
 }
 
-bool thing_is_openable(Thingp t)
+auto thing_is_openable(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2758,7 +2758,7 @@ bool thing_is_openable(Thingp t)
   return tp_flag(thing_tp(t), is_openable) != 0;
 }
 
-bool thing_is_tick_end_delay(Thingp t)
+auto thing_is_tick_end_delay(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2768,7 +2768,7 @@ bool thing_is_tick_end_delay(Thingp t)
   return tp_flag(thing_tp(t), is_tick_end_delay) != 0;
 }
 
-bool thing_is_damage_capped(Thingp t)
+auto thing_is_damage_capped(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2778,7 +2778,7 @@ bool thing_is_damage_capped(Thingp t)
   return tp_flag(thing_tp(t), is_damage_capped) != 0;
 }
 
-bool thing_is_physics_explosion(Thingp t)
+auto thing_is_physics_explosion(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2788,7 +2788,7 @@ bool thing_is_physics_explosion(Thingp t)
   return tp_flag(thing_tp(t), is_physics_explosion) != 0;
 }
 
-bool thing_is_explosion(Thingp t)
+auto thing_is_explosion(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2798,7 +2798,7 @@ bool thing_is_explosion(Thingp t)
   return tp_flag(thing_tp(t), is_explosion) != 0;
 }
 
-bool thing_is_obs_to_explosion(Thingp t)
+auto thing_is_obs_to_explosion(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2818,7 +2818,7 @@ bool thing_is_obs_to_explosion(Thingp t)
   return tp_flag(thing_tp(t), is_obs_to_explosion) != 0;
 }
 
-bool thing_is_obs_to_jump_over(Thingp t)
+auto thing_is_obs_to_jump_over(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2838,7 +2838,7 @@ bool thing_is_obs_to_jump_over(Thingp t)
   return tp_flag(thing_tp(t), is_obs_to_jump_over) != 0;
 }
 
-bool thing_is_teleport_blocked(Thingp t)
+auto thing_is_teleport_blocked(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2848,7 +2848,7 @@ bool thing_is_teleport_blocked(Thingp t)
   return tp_flag(thing_tp(t), is_teleport_blocked) != 0;
 }
 
-bool thing_is_cursor_path_none(Thingp t)
+auto thing_is_cursor_path_none(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2858,7 +2858,7 @@ bool thing_is_cursor_path_none(Thingp t)
   return tp_flag(thing_tp(t), is_cursor_path_none) != 0;
 }
 
-bool thing_is_able_to_jump(Thingp t)
+auto thing_is_able_to_jump(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2868,7 +2868,7 @@ bool thing_is_able_to_jump(Thingp t)
   return tp_flag(thing_tp(t), is_able_to_jump) != 0;
 }
 
-bool thing_is_blit_obscures(Thingp t)
+auto thing_is_blit_obscures(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2878,7 +2878,7 @@ bool thing_is_blit_obscures(Thingp t)
   return tp_flag(thing_tp(t), is_blit_obscures) != 0;
 }
 
-bool thing_is_flying(Thingp t)
+auto thing_is_flying(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2888,7 +2888,7 @@ bool thing_is_flying(Thingp t)
   return tp_flag(thing_tp(t), is_flying) != 0;
 }
 
-bool thing_is_needs_move_confirm(Thingp t)
+auto thing_is_needs_move_confirm(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2898,7 +2898,7 @@ bool thing_is_needs_move_confirm(Thingp t)
   return tp_flag(thing_tp(t), is_needs_move_confirm) != 0;
 }
 
-bool thing_is_obs_to_falling_onto(Thingp t)
+auto thing_is_obs_to_falling_onto(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2918,7 +2918,7 @@ bool thing_is_obs_to_falling_onto(Thingp t)
   return tp_flag(thing_tp(t), is_obs_to_falling_onto) != 0;
 }
 
-bool thing_is_obs_to_jumping_onto(Thingp t)
+auto thing_is_obs_to_jumping_onto(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2938,7 +2938,7 @@ bool thing_is_obs_to_jumping_onto(Thingp t)
   return tp_flag(thing_tp(t), is_obs_to_jumping_onto) != 0;
 }
 
-bool thing_is_obs_to_teleporting_onto(Thingp t)
+auto thing_is_obs_to_teleporting_onto(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2958,7 +2958,7 @@ bool thing_is_obs_to_teleporting_onto(Thingp t)
   return tp_flag(thing_tp(t), is_obs_to_teleporting_onto) != 0;
 }
 
-bool thing_is_submergible(Thingp t)
+auto thing_is_submergible(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2968,7 +2968,7 @@ bool thing_is_submergible(Thingp t)
   return tp_flag(thing_tp(t), is_submergible) != 0;
 }
 
-bool thing_is_able_to_fall(Thingp t)
+auto thing_is_able_to_fall(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2978,7 +2978,7 @@ bool thing_is_able_to_fall(Thingp t)
   return tp_flag(thing_tp(t), is_able_to_fall) != 0;
 }
 
-bool thing_is_physics_water(Thingp t)
+auto thing_is_physics_water(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2988,7 +2988,7 @@ bool thing_is_physics_water(Thingp t)
   return tp_flag(thing_tp(t), is_physics_water) != 0;
 }
 
-bool thing_is_indestructible(Thingp t)
+auto thing_is_indestructible(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -2998,7 +2998,7 @@ bool thing_is_indestructible(Thingp t)
   return tp_flag(thing_tp(t), is_indestructible) != 0;
 }
 
-bool thing_is_floating(Thingp t)
+auto thing_is_floating(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3008,7 +3008,7 @@ bool thing_is_floating(Thingp t)
   return tp_flag(thing_tp(t), is_floating) != 0;
 }
 
-bool thing_is_obs_to_fire(Thingp t)
+auto thing_is_obs_to_fire(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3028,7 +3028,7 @@ bool thing_is_obs_to_fire(Thingp t)
   return tp_flag(thing_tp(t), is_obs_to_fire) != 0;
 }
 
-bool thing_is_combustible(Thingp t)
+auto thing_is_combustible(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3038,7 +3038,7 @@ bool thing_is_combustible(Thingp t)
   return tp_flag(thing_tp(t), is_combustible) != 0;
 }
 
-bool thing_is_blit_shown_in_chasms(Thingp t)
+auto thing_is_blit_shown_in_chasms(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3048,7 +3048,7 @@ bool thing_is_blit_shown_in_chasms(Thingp t)
   return tp_flag(thing_tp(t), is_blit_shown_in_chasms) != 0;
 }
 
-bool thing_is_gaseous(Thingp t)
+auto thing_is_gaseous(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3058,7 +3058,7 @@ bool thing_is_gaseous(Thingp t)
   return tp_flag(thing_tp(t), is_gaseous) != 0;
 }
 
-bool thing_is_extinguished_on_death(Thingp t)
+auto thing_is_extinguished_on_death(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3068,7 +3068,7 @@ bool thing_is_extinguished_on_death(Thingp t)
   return tp_flag(thing_tp(t), is_extinguished_on_death) != 0;
 }
 
-bool thing_is_broken_on_death(Thingp t)
+auto thing_is_broken_on_death(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3078,7 +3078,7 @@ bool thing_is_broken_on_death(Thingp t)
   return tp_flag(thing_tp(t), is_broken_on_death) != 0;
 }
 
-bool thing_is_undead(Thingp t)
+auto thing_is_undead(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3088,7 +3088,7 @@ bool thing_is_undead(Thingp t)
   return tp_flag(thing_tp(t), is_undead) != 0;
 }
 
-bool thing_is_wait_on_dead_anim(Thingp t)
+auto thing_is_wait_on_dead_anim(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3098,7 +3098,7 @@ bool thing_is_wait_on_dead_anim(Thingp t)
   return tp_flag(thing_tp(t), is_wait_on_dead_anim) != 0;
 }
 
-bool thing_is_corpse_on_death(Thingp t)
+auto thing_is_corpse_on_death(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3108,7 +3108,7 @@ bool thing_is_corpse_on_death(Thingp t)
   return tp_flag(thing_tp(t), is_corpse_on_death) != 0;
 }
 
-bool thing_is_monst_group_mob(Thingp t)
+auto thing_is_monst_group_mob(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3118,7 +3118,7 @@ bool thing_is_monst_group_mob(Thingp t)
   return tp_flag(thing_tp(t), is_monst_group_mob) != 0;
 }
 
-bool thing_is_blit_if_has_seen(Thingp t)
+auto thing_is_blit_if_has_seen(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3128,7 +3128,7 @@ bool thing_is_blit_if_has_seen(Thingp t)
   return tp_flag(thing_tp(t), is_blit_if_has_seen) != 0;
 }
 
-bool thing_is_smoke(Thingp t)
+auto thing_is_smoke(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3138,7 +3138,7 @@ bool thing_is_smoke(Thingp t)
   return tp_flag(thing_tp(t), is_smoke) != 0;
 }
 
-bool thing_is_steam(Thingp t)
+auto thing_is_steam(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3148,7 +3148,7 @@ bool thing_is_steam(Thingp t)
   return tp_flag(thing_tp(t), is_steam) != 0;
 }
 
-bool thing_is_fire(Thingp t)
+auto thing_is_fire(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3158,7 +3158,7 @@ bool thing_is_fire(Thingp t)
   return tp_flag(thing_tp(t), is_fire) != 0;
 }
 
-bool thing_is_burnable(Thingp t)
+auto thing_is_burnable(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3168,7 +3168,7 @@ bool thing_is_burnable(Thingp t)
   return tp_flag(thing_tp(t), is_burnable) != 0;
 }
 
-bool thing_is_dead_on_shoving(Thingp t)
+auto thing_is_dead_on_shoving(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3178,7 +3178,7 @@ bool thing_is_dead_on_shoving(Thingp t)
   return tp_flag(thing_tp(t), is_dead_on_shoving) != 0;
 }
 
-bool thing_is_able_to_shove(Thingp t)
+auto thing_is_able_to_shove(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3188,7 +3188,7 @@ bool thing_is_able_to_shove(Thingp t)
   return tp_flag(thing_tp(t), is_able_to_shove) != 0;
 }
 
-bool thing_is_shovable(Thingp t)
+auto thing_is_shovable(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3198,7 +3198,7 @@ bool thing_is_shovable(Thingp t)
   return tp_flag(thing_tp(t), is_shovable) != 0;
 }
 
-bool thing_is_loggable(Thingp t)
+auto thing_is_loggable(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -3225,7 +3225,7 @@ bool thing_is_loggable(Thingp t)
   return tp_flag(thing_tp(t), is_loggable) != 0;
 }
 
-bool thing_is_crushable(Thingp t)
+auto thing_is_crushable(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3235,7 +3235,7 @@ bool thing_is_crushable(Thingp t)
   return tp_flag(thing_tp(t), is_crushable) != 0;
 }
 
-bool thing_is_ethereal(Thingp t)
+auto thing_is_ethereal(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3245,7 +3245,7 @@ bool thing_is_ethereal(Thingp t)
   return tp_flag(thing_tp(t), is_ethereal) != 0;
 }
 
-bool thing_is_blit_shown_in_overlay(Thingp t)
+auto thing_is_blit_shown_in_overlay(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3255,7 +3255,7 @@ bool thing_is_blit_shown_in_overlay(Thingp t)
   return tp_flag(thing_tp(t), is_blit_shown_in_overlay) != 0;
 }
 
-bool thing_is_levitating(Thingp t)
+auto thing_is_levitating(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3265,7 +3265,7 @@ bool thing_is_levitating(Thingp t)
   return tp_flag(thing_tp(t), is_levitating) != 0;
 }
 
-bool thing_is_item_equipable(Thingp t)
+auto thing_is_item_equipable(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3275,7 +3275,7 @@ bool thing_is_item_equipable(Thingp t)
   return tp_flag(thing_tp(t), is_item_equipable) != 0;
 }
 
-bool thing_is_item_droppable(Thingp t)
+auto thing_is_item_droppable(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3285,7 +3285,7 @@ bool thing_is_item_droppable(Thingp t)
   return tp_flag(thing_tp(t), is_item_droppable) != 0;
 }
 
-bool thing_is_able_to_walk_through_walls(Thingp t)
+auto thing_is_able_to_walk_through_walls(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3295,7 +3295,7 @@ bool thing_is_able_to_walk_through_walls(Thingp t)
   return tp_flag(thing_tp(t), is_able_to_walk_through_walls) != 0;
 }
 
-bool thing_is_wall(Thingp t)
+auto thing_is_wall(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3305,7 +3305,7 @@ bool thing_is_wall(Thingp t)
   return tp_flag(thing_tp(t), is_wall) != 0;
 }
 
-bool thing_is_water(Thingp t)
+auto thing_is_water(Thingp t) -> bool
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3315,7 +3315,7 @@ bool thing_is_water(Thingp t)
   return tp_flag(thing_tp(t), is_water) != 0;
 }
 
-int thing_value1(Thingp t)
+auto thing_value1(Thingp t) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3325,7 +3325,7 @@ int thing_value1(Thingp t)
   return t->_value1;
 }
 
-int thing_value1_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value1_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3335,7 +3335,7 @@ int thing_value1_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_value1 = val;
 }
 
-int thing_value1_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value1_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3345,7 +3345,7 @@ int thing_value1_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_value1 += val;
 }
 
-int thing_value1_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value1_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3357,7 +3357,7 @@ int thing_value1_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   }
   return t->_value1 -= val;
 }
-int thing_value2(Thingp t)
+auto thing_value2(Thingp t) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3367,7 +3367,7 @@ int thing_value2(Thingp t)
   return t->_value2;
 }
 
-int thing_value2_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value2_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3377,7 +3377,7 @@ int thing_value2_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_value2 = val;
 }
 
-int thing_value2_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value2_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3387,7 +3387,7 @@ int thing_value2_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_value2 += val;
 }
 
-int thing_value2_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value2_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3399,7 +3399,7 @@ int thing_value2_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   }
   return t->_value2 -= val;
 }
-int thing_value3(Thingp t)
+auto thing_value3(Thingp t) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3409,7 +3409,7 @@ int thing_value3(Thingp t)
   return t->_value3;
 }
 
-int thing_value3_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value3_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3419,7 +3419,7 @@ int thing_value3_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_value3 = val;
 }
 
-int thing_value3_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value3_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3429,7 +3429,7 @@ int thing_value3_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_value3 += val;
 }
 
-int thing_value3_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value3_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3441,7 +3441,7 @@ int thing_value3_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   }
   return t->_value3 -= val;
 }
-int thing_value4(Thingp t)
+auto thing_value4(Thingp t) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3451,7 +3451,7 @@ int thing_value4(Thingp t)
   return t->_value4;
 }
 
-int thing_value4_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value4_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3461,7 +3461,7 @@ int thing_value4_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_value4 = val;
 }
 
-int thing_value4_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value4_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3471,7 +3471,7 @@ int thing_value4_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_value4 += val;
 }
 
-int thing_value4_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value4_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3483,7 +3483,7 @@ int thing_value4_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   }
   return t->_value4 -= val;
 }
-int thing_value5(Thingp t)
+auto thing_value5(Thingp t) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3493,7 +3493,7 @@ int thing_value5(Thingp t)
   return t->_value5;
 }
 
-int thing_value5_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value5_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3503,7 +3503,7 @@ int thing_value5_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_value5 = val;
 }
 
-int thing_value5_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value5_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3513,7 +3513,7 @@ int thing_value5_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_value5 += val;
 }
 
-int thing_value5_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value5_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3525,7 +3525,7 @@ int thing_value5_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   }
   return t->_value5 -= val;
 }
-int thing_value6(Thingp t)
+auto thing_value6(Thingp t) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3535,7 +3535,7 @@ int thing_value6(Thingp t)
   return t->_value6;
 }
 
-int thing_value6_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value6_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3545,7 +3545,7 @@ int thing_value6_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_value6 = val;
 }
 
-int thing_value6_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value6_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3555,7 +3555,7 @@ int thing_value6_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_value6 += val;
 }
 
-int thing_value6_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value6_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3567,7 +3567,7 @@ int thing_value6_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   }
   return t->_value6 -= val;
 }
-int thing_value7(Thingp t)
+auto thing_value7(Thingp t) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3577,7 +3577,7 @@ int thing_value7(Thingp t)
   return t->_value7;
 }
 
-int thing_value7_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value7_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3587,7 +3587,7 @@ int thing_value7_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_value7 = val;
 }
 
-int thing_value7_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value7_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3597,7 +3597,7 @@ int thing_value7_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_value7 += val;
 }
 
-int thing_value7_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value7_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3609,7 +3609,7 @@ int thing_value7_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   }
   return t->_value7 -= val;
 }
-int thing_value8(Thingp t)
+auto thing_value8(Thingp t) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3619,7 +3619,7 @@ int thing_value8(Thingp t)
   return t->_value8;
 }
 
-int thing_value8_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value8_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3629,7 +3629,7 @@ int thing_value8_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_value8 = val;
 }
 
-int thing_value8_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value8_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3639,7 +3639,7 @@ int thing_value8_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_value8 += val;
 }
 
-int thing_value8_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value8_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3651,7 +3651,7 @@ int thing_value8_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   }
   return t->_value8 -= val;
 }
-int thing_value9(Thingp t)
+auto thing_value9(Thingp t) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3661,7 +3661,7 @@ int thing_value9(Thingp t)
   return t->_value9;
 }
 
-int thing_value9_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value9_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3671,7 +3671,7 @@ int thing_value9_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_value9 = val;
 }
 
-int thing_value9_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value9_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3681,7 +3681,7 @@ int thing_value9_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_value9 += val;
 }
 
-int thing_value9_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value9_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3693,7 +3693,7 @@ int thing_value9_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   }
   return t->_value9 -= val;
 }
-int thing_value10(Thingp t)
+auto thing_value10(Thingp t) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3703,7 +3703,7 @@ int thing_value10(Thingp t)
   return t->_value10;
 }
 
-int thing_value10_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value10_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3713,7 +3713,7 @@ int thing_value10_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_value10 = val;
 }
 
-int thing_value10_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value10_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3723,7 +3723,7 @@ int thing_value10_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_value10 += val;
 }
 
-int thing_value10_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value10_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3735,7 +3735,7 @@ int thing_value10_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   }
   return t->_value10 -= val;
 }
-int thing_value11(Thingp t)
+auto thing_value11(Thingp t) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3745,7 +3745,7 @@ int thing_value11(Thingp t)
   return t->_value11;
 }
 
-int thing_value11_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value11_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3755,7 +3755,7 @@ int thing_value11_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_value11 = val;
 }
 
-int thing_value11_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value11_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3765,7 +3765,7 @@ int thing_value11_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_value11 += val;
 }
 
-int thing_value11_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value11_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3777,7 +3777,7 @@ int thing_value11_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   }
   return t->_value11 -= val;
 }
-int thing_value12(Thingp t)
+auto thing_value12(Thingp t) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3787,7 +3787,7 @@ int thing_value12(Thingp t)
   return t->_value12;
 }
 
-int thing_value12_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value12_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3797,7 +3797,7 @@ int thing_value12_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_value12 = val;
 }
 
-int thing_value12_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value12_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3807,7 +3807,7 @@ int thing_value12_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_value12 += val;
 }
 
-int thing_value12_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value12_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3819,7 +3819,7 @@ int thing_value12_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   }
   return t->_value12 -= val;
 }
-int thing_value13(Thingp t)
+auto thing_value13(Thingp t) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3829,7 +3829,7 @@ int thing_value13(Thingp t)
   return t->_value13;
 }
 
-int thing_value13_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value13_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3839,7 +3839,7 @@ int thing_value13_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_value13 = val;
 }
 
-int thing_value13_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value13_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3849,7 +3849,7 @@ int thing_value13_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_value13 += val;
 }
 
-int thing_value13_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value13_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3861,7 +3861,7 @@ int thing_value13_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   }
   return t->_value13 -= val;
 }
-int thing_value14(Thingp t)
+auto thing_value14(Thingp t) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3871,7 +3871,7 @@ int thing_value14(Thingp t)
   return t->_value14;
 }
 
-int thing_value14_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value14_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3881,7 +3881,7 @@ int thing_value14_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_value14 = val;
 }
 
-int thing_value14_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value14_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3891,7 +3891,7 @@ int thing_value14_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_value14 += val;
 }
 
-int thing_value14_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value14_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3903,7 +3903,7 @@ int thing_value14_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   }
   return t->_value14 -= val;
 }
-int thing_value15(Thingp t)
+auto thing_value15(Thingp t) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3913,7 +3913,7 @@ int thing_value15(Thingp t)
   return t->_value15;
 }
 
-int thing_value15_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value15_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3923,7 +3923,7 @@ int thing_value15_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_value15 = val;
 }
 
-int thing_value15_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value15_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3933,7 +3933,7 @@ int thing_value15_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_value15 += val;
 }
 
-int thing_value15_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value15_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3945,7 +3945,7 @@ int thing_value15_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   }
   return t->_value15 -= val;
 }
-int thing_value16(Thingp t)
+auto thing_value16(Thingp t) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3955,7 +3955,7 @@ int thing_value16(Thingp t)
   return t->_value16;
 }
 
-int thing_value16_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value16_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3965,7 +3965,7 @@ int thing_value16_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_value16 = val;
 }
 
-int thing_value16_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value16_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3975,7 +3975,7 @@ int thing_value16_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_value16 += val;
 }
 
-int thing_value16_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value16_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3987,7 +3987,7 @@ int thing_value16_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   }
   return t->_value16 -= val;
 }
-int thing_value17(Thingp t)
+auto thing_value17(Thingp t) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -3997,7 +3997,7 @@ int thing_value17(Thingp t)
   return t->_value17;
 }
 
-int thing_value17_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value17_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4007,7 +4007,7 @@ int thing_value17_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_value17 = val;
 }
 
-int thing_value17_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value17_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4017,7 +4017,7 @@ int thing_value17_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_value17 += val;
 }
 
-int thing_value17_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value17_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4029,7 +4029,7 @@ int thing_value17_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   }
   return t->_value17 -= val;
 }
-int thing_value18(Thingp t)
+auto thing_value18(Thingp t) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4039,7 +4039,7 @@ int thing_value18(Thingp t)
   return t->_value18;
 }
 
-int thing_value18_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value18_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4049,7 +4049,7 @@ int thing_value18_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_value18 = val;
 }
 
-int thing_value18_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value18_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4059,7 +4059,7 @@ int thing_value18_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_value18 += val;
 }
 
-int thing_value18_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value18_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4071,7 +4071,7 @@ int thing_value18_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   }
   return t->_value18 -= val;
 }
-int thing_value19(Thingp t)
+auto thing_value19(Thingp t) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4081,7 +4081,7 @@ int thing_value19(Thingp t)
   return t->_value19;
 }
 
-int thing_value19_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value19_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4091,7 +4091,7 @@ int thing_value19_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_value19 = val;
 }
 
-int thing_value19_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value19_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4101,7 +4101,7 @@ int thing_value19_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_value19 += val;
 }
 
-int thing_value19_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value19_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4113,7 +4113,7 @@ int thing_value19_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   }
   return t->_value19 -= val;
 }
-int thing_value20(Thingp t)
+auto thing_value20(Thingp t) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4123,7 +4123,7 @@ int thing_value20(Thingp t)
   return t->_value20;
 }
 
-int thing_value20_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value20_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4133,7 +4133,7 @@ int thing_value20_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_value20 = val;
 }
 
-int thing_value20_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value20_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4143,7 +4143,7 @@ int thing_value20_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_value20 += val;
 }
 
-int thing_value20_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_value20_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4155,7 +4155,7 @@ int thing_value20_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   }
   return t->_value20 -= val;
 }
-int thing_minion_max(Thingp t)
+auto thing_minion_max(Thingp t) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4165,7 +4165,7 @@ int thing_minion_max(Thingp t)
   return t->_minion_max;
 }
 
-int thing_minion_max_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_minion_max_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4175,7 +4175,7 @@ int thing_minion_max_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_minion_max = val;
 }
 
-int thing_minion_max_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_minion_max_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4185,7 +4185,7 @@ int thing_minion_max_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_minion_max += val;
 }
 
-int thing_minion_max_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_minion_max_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4197,7 +4197,7 @@ int thing_minion_max_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   }
   return t->_minion_max -= val;
 }
-int thing_distance_minion_from_mob_max(Thingp t)
+auto thing_distance_minion_from_mob_max(Thingp t) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4207,7 +4207,7 @@ int thing_distance_minion_from_mob_max(Thingp t)
   return t->_distance_minion_from_mob_max;
 }
 
-int thing_distance_minion_from_mob_max_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_distance_minion_from_mob_max_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4217,7 +4217,7 @@ int thing_distance_minion_from_mob_max_set(Gamep g, Levelsp v, Levelp l, Thingp 
   return t->_distance_minion_from_mob_max = val;
 }
 
-int thing_distance_minion_from_mob_max_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_distance_minion_from_mob_max_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4227,7 +4227,7 @@ int thing_distance_minion_from_mob_max_incr(Gamep g, Levelsp v, Levelp l, Thingp
   return t->_distance_minion_from_mob_max += val;
 }
 
-int thing_distance_minion_from_mob_max_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_distance_minion_from_mob_max_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4240,7 +4240,7 @@ int thing_distance_minion_from_mob_max_decr(Gamep g, Levelsp v, Levelp l, Thingp
   return t->_distance_minion_from_mob_max -= val;
 }
 
-int thing_distance_vision(Thingp t)
+auto thing_distance_vision(Thingp t) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4250,7 +4250,7 @@ int thing_distance_vision(Thingp t)
   return t->_distance_vision;
 }
 
-int thing_distance_vision_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_distance_vision_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4260,7 +4260,7 @@ int thing_distance_vision_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_distance_vision = val;
 }
 
-int thing_distance_vision_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_distance_vision_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4270,7 +4270,7 @@ int thing_distance_vision_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_distance_vision += val;
 }
 
-int thing_distance_vision_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_distance_vision_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4283,7 +4283,7 @@ int thing_distance_vision_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_distance_vision -= val;
 }
 
-int thing_variant(Thingp t)
+auto thing_variant(Thingp t) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4293,7 +4293,7 @@ int thing_variant(Thingp t)
   return t->_variant;
 }
 
-int thing_variant_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_variant_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4303,7 +4303,7 @@ int thing_variant_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_variant = val;
 }
 
-ThingPriorityType thing_priority(Thingp t)
+auto thing_priority(Thingp t) -> ThingPriorityType
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4313,7 +4313,7 @@ ThingPriorityType thing_priority(Thingp t)
   return t->_priority;
 }
 
-ThingPriorityType thing_priority_set(Gamep g, Levelsp v, Levelp l, Thingp t, ThingPriorityType val)
+auto thing_priority_set(Gamep g, Levelsp v, Levelp l, Thingp t, ThingPriorityType val) -> ThingPriorityType
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4323,7 +4323,7 @@ ThingPriorityType thing_priority_set(Gamep g, Levelsp v, Levelp l, Thingp t, Thi
   return t->_priority = val;
 }
 
-int thing_distance_jump(Thingp t)
+auto thing_distance_jump(Thingp t) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4333,7 +4333,7 @@ int thing_distance_jump(Thingp t)
   return t->_distance_jump;
 }
 
-int thing_distance_jump_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_distance_jump_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4343,7 +4343,7 @@ int thing_distance_jump_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_distance_jump = val;
 }
 
-int thing_distance_jump_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_distance_jump_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4353,7 +4353,7 @@ int thing_distance_jump_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_distance_jump += val;
 }
 
-int thing_distance_jump_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_distance_jump_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4366,7 +4366,7 @@ int thing_distance_jump_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_distance_jump -= val;
 }
 
-int thing_lifespan(Thingp t)
+auto thing_lifespan(Thingp t) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4376,7 +4376,7 @@ int thing_lifespan(Thingp t)
   return t->_lifespan;
 }
 
-int thing_lifespan_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_lifespan_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4386,7 +4386,7 @@ int thing_lifespan_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_lifespan = val;
 }
 
-int thing_lifespan_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_lifespan_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4396,7 +4396,7 @@ int thing_lifespan_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_lifespan += val;
 }
 
-int thing_lifespan_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_lifespan_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4409,7 +4409,7 @@ int thing_lifespan_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_lifespan -= val;
 }
 
-int thing_submerged_pct(Thingp t)
+auto thing_submerged_pct(Thingp t) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4427,7 +4427,7 @@ int thing_submerged_pct(Thingp t)
   return t->_submerged_pct;
 }
 
-int thing_submerged_pct_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_submerged_pct_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4437,7 +4437,7 @@ int thing_submerged_pct_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_submerged_pct = val;
 }
 
-int thing_submerged_pct_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_submerged_pct_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4447,7 +4447,7 @@ int thing_submerged_pct_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_submerged_pct += val;
 }
 
-int thing_submerged_pct_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_submerged_pct_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4460,7 +4460,7 @@ int thing_submerged_pct_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_submerged_pct -= val;
 }
 
-int thing_age(Thingp t)
+auto thing_age(Thingp t) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4470,7 +4470,7 @@ int thing_age(Thingp t)
   return t->_age;
 }
 
-int thing_age_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_age_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4480,7 +4480,7 @@ int thing_age_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_age = val;
 }
 
-int thing_age_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_age_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4490,7 +4490,7 @@ int thing_age_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_age += val;
 }
 
-int thing_age_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_age_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4503,7 +4503,7 @@ int thing_age_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_age -= val;
 }
 
-int thing_move_remaining(Thingp t)
+auto thing_move_remaining(Thingp t) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4513,7 +4513,7 @@ int thing_move_remaining(Thingp t)
   return t->_move_remaining;
 }
 
-int thing_move_remaining_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_move_remaining_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4523,7 +4523,7 @@ int thing_move_remaining_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_move_remaining = val;
 }
 
-int thing_move_remaining_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_move_remaining_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4533,7 +4533,7 @@ int thing_move_remaining_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_move_remaining += val;
 }
 
-int thing_move_remaining_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+auto thing_move_remaining_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {
@@ -4546,7 +4546,7 @@ int thing_move_remaining_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_move_remaining -= val;
 }
 
-float thing_collision_radius(Thingp t)
+auto thing_collision_radius(Thingp t) -> float
 {
   TRACE_NO_INDENT();
 
@@ -4554,7 +4554,7 @@ float thing_collision_radius(Thingp t)
                                             : THING_COLLISION_CIRCLE_LARGE_RADIUS;
 }
 
-spoint thing_target(Thingp t)
+auto thing_target(Thingp t) -> spoint
 {
   TRACE_NO_INDENT();
   if (t == nullptr) {

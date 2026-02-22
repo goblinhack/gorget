@@ -240,7 +240,7 @@ static void parse_args(int argc, char *argv[])
   }
 }
 
-int main(int argc, char *argv[])
+auto main(int argc, char *argv[]) -> int
 {
   TRACE_NO_INDENT();
   Gamep g = nullptr;

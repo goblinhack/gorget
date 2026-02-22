@@ -18,7 +18,7 @@ void thing_description_set(Tpp tp, thing_description_get_t callback)
   tp->description_get = callback;
 }
 
-std::string thing_description_get(Gamep g, Levelsp v, Levelp l, Thingp me)
+auto thing_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE_NO_INDENT();
   auto *tp = thing_tp(me);
@@ -42,7 +42,7 @@ void thing_detail_set(Tpp tp, thing_detail_get_t callback)
   tp->detail_get = callback;
 }
 
-std::string thing_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me)
+auto thing_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE_NO_INDENT();
   auto *tp = thing_tp(me);
@@ -66,7 +66,7 @@ void thing_mouse_down_set(Tpp tp, thing_mouse_down_t callback)
   tp->mouse_down = callback;
 }
 
-bool thing_mouse_down(Gamep g, Levelsp v, Levelp l, Thingp me, int x, int y, int button)
+auto thing_mouse_down(Gamep g, Levelsp v, Levelp l, Thingp me, int x, int y, int button) -> bool
 {
   TRACE_NO_INDENT();
   auto *tp = thing_tp(me);
@@ -258,7 +258,7 @@ void thing_on_open_request_set(Tpp tp, thing_on_open_request_t callback)
   tp->on_open_request = callback;
 }
 
-bool thing_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp player_or_monst)
+auto thing_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp player_or_monst) -> bool
 {
   TRACE_NO_INDENT();
   auto *tp = thing_tp(me);
@@ -295,7 +295,7 @@ void thing_on_close_request_set(Tpp tp, thing_on_close_request_t callback)
   tp->on_close_request = callback;
 }
 
-bool thing_on_close_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp player_or_monst)
+auto thing_on_close_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp player_or_monst) -> bool
 {
   TRACE_NO_INDENT();
   auto *tp = thing_tp(me);
@@ -332,7 +332,7 @@ void thing_on_carry_request_set(Tpp tp, thing_on_carry_request_t callback)
   tp->on_carry_request = callback;
 }
 
-bool thing_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp player_or_monst)
+auto thing_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp player_or_monst) -> bool
 {
   TRACE_NO_INDENT();
   auto *tp = thing_tp(me);
@@ -363,7 +363,7 @@ void thing_on_drop_request_set(Tpp tp, thing_on_drop_request_t callback)
   tp->on_drop_request = callback;
 }
 
-bool thing_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp player_or_monst)
+auto thing_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp player_or_monst) -> bool
 {
   TRACE_NO_INDENT();
   auto *tp = thing_tp(me);
@@ -666,7 +666,7 @@ void thing_display_get_tile_info_set(Tpp tp, thing_display_get_tile_info_t callb
   tp->display_get_tile_info = callback;
 }
 
-Tilep thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_maybe_null)
+auto thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_maybe_null) -> Tilep
 {
   TRACE_NO_INDENT();
   if (tp == nullptr) {
@@ -688,7 +688,7 @@ void thing_assess_tile_set(Tpp tp, thing_assess_tile_t callback)
   tp->assess_tile = callback;
 }
 
-ThingEnviron thing_assess_tile(Gamep g, Levelsp v, Levelp l, spoint p, Thingp me)
+auto thing_assess_tile(Gamep g, Levelsp v, Levelp l, spoint p, Thingp me) -> ThingEnviron
 {
   TRACE_NO_INDENT();
   auto *tp = thing_tp(me);

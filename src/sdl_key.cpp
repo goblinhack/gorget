@@ -5,7 +5,7 @@
 #include "my_main.hpp"
 #include "my_sdl_event.hpp"
 
-std::string to_string_ignoring_mods(const SDL_Keysym &k)
+auto to_string_ignoring_mods(const SDL_Keysym &k) -> std::string
 {
   if (k.sym == SDLK_AMPERSAND) {
     return "&";
@@ -905,7 +905,7 @@ std::string to_string_ignoring_mods(const SDL_Keysym &k)
   return "";
 }
 
-std::string to_string(const SDL_Keysym &k)
+auto to_string(const SDL_Keysym &k) -> std::string
 {
   std::string out;
 
@@ -1003,7 +1003,7 @@ std::string to_string(const SDL_Keysym &k)
   return out + to_string_ignoring_mods(k);
 }
 
-SDL_Keysym sdlk_normalize(SDL_Keysym k_in)
+auto sdlk_normalize(SDL_Keysym k_in) -> SDL_Keysym
 {
   SDL_Keysym k = k_in;
 
@@ -1098,7 +1098,7 @@ SDL_Keysym sdlk_normalize(SDL_Keysym k_in)
   return k_in;
 }
 
-bool sdlk_eq(const SDL_Keysym &a, const SDL_Keysym &b)
+auto sdlk_eq(const SDL_Keysym &a, const SDL_Keysym &b) -> bool
 {
   auto k1 = sdlk_normalize(a);
   auto k2 = sdlk_normalize(b);
@@ -1134,7 +1134,7 @@ bool sdlk_eq(const SDL_Keysym &a, const SDL_Keysym &b)
   return (k1.sym == k2.sym) && (k1.mod == k2.mod);
 }
 
-bool sdlk_eq(const SDL_Scancode s, const SDL_Keysym &k)
+auto sdlk_eq(const SDL_Scancode s, const SDL_Keysym &k) -> bool
 {
   if ((k.scancode == s) || ((s == SDL_SCANCODE_0) && (k.sym == SDLK_0))) {
     return true;
@@ -2007,7 +2007,7 @@ bool sdlk_eq(const SDL_Scancode s, const SDL_Keysym &k)
   return false;
 }
 
-SDL_Scancode sdlk_to_scancode(const SDL_Keysym &k)
+auto sdlk_to_scancode(const SDL_Keysym &k) -> SDL_Scancode
 {
   if (k.sym == SDLK_0) {
     return SDL_SCANCODE_0;

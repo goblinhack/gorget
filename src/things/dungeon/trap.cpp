@@ -11,7 +11,7 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-static std::string tp_trap_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static auto tp_trap_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
   TRACE_NO_INDENT();
 
@@ -22,7 +22,7 @@ static std::string tp_trap_description_get(Gamep g, Levelsp v, Levelp l, Thingp 
   return "odd looking floor tile";
 }
 
-bool tp_load_trap()
+auto tp_load_trap() -> bool
 {
   TRACE_NO_INDENT();
 

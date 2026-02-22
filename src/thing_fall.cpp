@@ -12,7 +12,7 @@
 //
 // Ok to land on this spot?
 //
-[[nodiscard]] static bool thing_ok_landing_spot(Gamep g, Levelsp v, Levelp l, spoint p)
+[[nodiscard]] static auto thing_ok_landing_spot(Gamep g, Levelsp v, Levelp l, spoint p) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -31,7 +31,7 @@
 // Try to find a spot close to where we landed that is ok to exist in.
 // i.e. no landing inside walls.
 //
-static spoint thing_choose_landing_spot(Gamep g, Levelsp v, Levelp l, Thingp t)
+static auto thing_choose_landing_spot(Gamep g, Levelsp v, Levelp l, Thingp t) -> spoint
 {
   TRACE_NO_INDENT();
 
@@ -64,7 +64,7 @@ static spoint thing_choose_landing_spot(Gamep g, Levelsp v, Levelp l, Thingp t)
 //
 // How much damage does the thing take on falling.
 //
-static int thing_fall_damage(Gamep g, Levelsp v, Levelp l, Thingp t)
+static auto thing_fall_damage(Gamep g, Levelsp v, Levelp l, Thingp t) -> int
 {
   TRACE_NO_INDENT();
 

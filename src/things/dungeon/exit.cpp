@@ -12,21 +12,21 @@
 
 #include <string>
 
-static std::string tp_exit_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static auto tp_exit_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
   TRACE_NO_INDENT();
 
   return "slime covered stairs leading down";
 }
 
-static std::string tp_exit_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static auto tp_exit_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
   TRACE_NO_INDENT();
 
   return UI_INFO1_FMT_STR "Exit here to exit the level.";
 }
 
-bool tp_load_exit()
+auto tp_load_exit() -> bool
 {
   TRACE_NO_INDENT();
 

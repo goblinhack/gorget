@@ -36,7 +36,10 @@ OBJ_FILES := $(addprefix $(BUILD_DIR)/,$(OBJECTS))
 DEP_FILES := $(OBJ_FILES:.o=.d)
 DEP_FLAGS = -MMD -MP
 
-CFLAGS := -I. $(COMPILER_FLAGS) $(COMPILER_WARNINGS) $(DEP_FLAGS)
+#
+# -isystem ignores header files for clang tidy
+#
+CFLAGS := -I. -isystem $(SDL2_INC_PATH) $(COMPILER_FLAGS) $(COMPILER_WARNINGS) $(DEP_FLAGS)
 
 $(BUILD_DIR): ; mkdir -p $(BUILD_DIR)
 $(OBJ_FILES): | $(BUILD_DIR)
@@ -86,7 +89,7 @@ $(TARGET_GAME): $(OBJ_FILES)
 
 #####################################################
 # to show options:
-# clang-tidy -checks=* -list-checks
+# clang-tidy checks=* -list-checks
 #
 #	NOTE: Use these defines to avoid clang changing an area of code
 #			xxx // NOLINT
@@ -97,57 +100,22 @@ $(TARGET_GAME): $(OBJ_FILES)
 tidy:
 	for src in $(CPP_SOURCES) ; do \
 		echo "Running tidy on $$src..." ; \
-		clang-tidy -fix -checks="-*,\
+		clang-tidy \
+			-fix \
+			-fix-errors \
+			--system-headers=0 \
+			-checks="-*,\
 			bugprone-*,\
 			cppcoreguidelines-no-malloc,\
 			misc-const-correctness,\
 			misc-redundant-expression,\
 			misc-static-assert,\
-			modernize-avoid-bind,\
-			modernize-avoid-c-arrays,\
-			modernize-concat-nested-namespaces,\
-			modernize-deprecated-headers,\
-			modernize-deprecated-ios-base-aliases,\
-			modernize-loop-convert,\
-			modernize-macro-to-enum,\
-			modernize-make-shared,\
-			modernize-make-unique,\
-			modernize-min-max-use-initializer-list,\
-			modernize-pass-by-value,\
-			modernize-raw-string-literal,\
-			modernize-redundant-void-arg,\
-			modernize-replace-auto-ptr,\
-			modernize-replace-disallow-copy-and-assign-macro,\
-			modernize-replace-random-shuffle,\
-			modernize-return-braced-init-list,\
-			modernize-shrink-to-fit,\
-			modernize-type-traits,\
-			modernize-unary-static-assert,\
-			modernize-use-auto,\
-			modernize-use-bool-literals,\
-			modernize-use-constraints,\
-			modernize-use-default-member-init,\
-			modernize-use-designated-initializers,\
-			modernize-use-emplace,\
-			modernize-use-equals-default,\
-			modernize-use-equals-delete,\
-			modernize-use-integer-sign-comparison,\
-			modernize-use-nodiscard,\
-			modernize-use-noexcept,\
-			modernize-use-nullptr,\
-			modernize-use-override,\
-			modernize-use-ranges,\
-			modernize-use-starts-ends-with,\
-			modernize-use-std-format,\
-			modernize-use-std-numbers,\
-			modernize-use-std-print,\
-			modernize-use-using,\
+			modernize-*,\
 			performance-*,\
 			readability-*" \
 			-header-filter=".*" "$(SRC_DIR)/$$src" -- $(CFLAGS); \
 	done
 	git checkout 3rdparty
-	git checkout my_cfg.hpp # avoids enum errors
 	@echo "Done"
 
 .PHONY: style check-style tidy

@@ -11,14 +11,14 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-static std::string tp_smoke_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static auto tp_smoke_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
   TRACE_NO_INDENT();
 
   return "thick smoke";
 }
 
-bool tp_load_smoke()
+auto tp_load_smoke() -> bool
 {
   TRACE_NO_INDENT();
 

@@ -8,7 +8,7 @@
 #include "my_main.hpp"
 #include "my_thing_callbacks.hpp"
 
-Thingp thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &at)
+auto thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &at) -> Thingp
 {
   TRACE_NO_INDENT();
 
@@ -43,12 +43,12 @@ Thingp thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &at)
   return t;
 }
 
-Thingp thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, const spoint &at)
+auto thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, const spoint &at) -> Thingp
 {
   return thing_spawn(g, v, l, tp, make_fpoint(at));
 }
 
-Thingp thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp at)
+auto thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp at) -> Thingp
 {
   if (at == nullptr) {
     ERR("No thing pointer");

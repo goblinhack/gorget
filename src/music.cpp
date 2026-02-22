@@ -38,7 +38,7 @@ static std::string music_current;
 
 static bool music_init_done;
 
-bool music_init()
+auto music_init() -> bool
 {
   TRACE_NO_INDENT();
 
@@ -78,7 +78,7 @@ void music_fini()
   all_music.clear();
 }
 
-bool music_load(uint32_t rate, const char *file, const char *name_alias)
+auto music_load(uint32_t rate, const char *file, const char *name_alias) -> bool
 {
   TRACE_NO_INDENT();
   if ((name_alias != nullptr) && (*name_alias != 0)) {
@@ -132,7 +132,7 @@ bool music_load(uint32_t rate, const char *file, const char *name_alias)
 /*
  * Find an existing pice of music.
  */
-bool music_find(const char *name_alias)
+auto music_find(const char *name_alias) -> bool
 {
   TRACE_NO_INDENT();
   auto result = all_music.find(name_alias);
@@ -146,7 +146,7 @@ void music_update_volume(Gamep g)
   SDL_ClearError();
 }
 
-bool music_play(Gamep g, const char *name)
+auto music_play(Gamep g, const char *name) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -173,7 +173,7 @@ bool music_play(Gamep g, const char *name)
   return true;
 }
 
-bool music_halt()
+auto music_halt() -> bool
 {
   TRACE_NO_INDENT();
   music_current = "";

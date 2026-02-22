@@ -13,7 +13,7 @@
 
 std::unordered_map< std::string, ramdisk_t_ > ramdisk_data;
 
-unsigned char *ramdisk_load(const char *filename, int *outlen)
+auto ramdisk_load(const char *filename, int *outlen) -> unsigned char *
 {
   TRACE_NO_INDENT();
 

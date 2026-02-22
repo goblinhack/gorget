@@ -7,7 +7,7 @@
 #include "my_main.hpp"
 #include "my_thing_inlines.hpp"
 
-Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &real_at)
+auto thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &real_at) -> Thingp
 {
   TRACE_NO_INDENT();
 
@@ -124,7 +124,7 @@ Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &real_at)
   return t;
 }
 
-Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const spoint &at)
+auto thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const spoint &at) -> Thingp
 {
   return thing_init(g, v, l, tp, make_fpoint(at));
 }

@@ -83,6 +83,6 @@ struct tracer_no_indent_t {
 
 extern void        callstack_dump(FILE *fp);
 extern void        callstack_dump();
-extern std::string callstack_string();
+extern auto callstack_string() -> std::string;
 
 #endif

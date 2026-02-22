@@ -449,58 +449,58 @@ ENUM_DEF_H(THING_DIR_ENUM, ThingDir)
 
 class Tp;
 
-[[nodiscard]] bool tp_init();
+[[nodiscard]] auto tp_init() -> bool;
 
-[[nodiscard]] std::string tp_name(Tpp tp);
+[[nodiscard]] auto tp_name(Tpp tp) -> std::string;
 
-[[nodiscard]] std::string tp_short_name(Tpp tp);
+[[nodiscard]] auto tp_short_name(Tpp tp) -> std::string;
 void                      tp_short_name_set(Tpp tp, const std::string &val);
 
-[[nodiscard]] std::string tp_long_name(Tpp tp);
+[[nodiscard]] auto tp_long_name(Tpp tp) -> std::string;
 void                      tp_long_name_set(Tpp tp, const std::string &val);
 
-[[nodiscard]] std::string tp_pluralize_name(Tpp tp);
+[[nodiscard]] auto tp_pluralize_name(Tpp tp) -> std::string;
 void                      tp_pluralize_name_set(Tpp tp, const std::string &val);
 
-[[nodiscard]] std::string tp_apostrophize_name(Tpp tp);
+[[nodiscard]] auto tp_apostrophize_name(Tpp tp) -> std::string;
 void                      tp_apostrophize_name_set(Tpp tp, const std::string &val);
 
-[[nodiscard]] std::string tp_real_name(Tpp tp);
+[[nodiscard]] auto tp_real_name(Tpp tp) -> std::string;
 void                      tp_real_name_set(Tpp tp, const std::string &val);
 
 void                tp_light_color_set(Tpp tp, const std::string &val);
 void                tp_light_color_apply(Tpp tp);
-[[nodiscard]] color tp_light_color(Tpp tp);
+[[nodiscard]] auto tp_light_color(Tpp tp) -> color;
 
-[[nodiscard]] int   tp_tiles_size(Tpp tp, ThingAnim val);
-[[nodiscard]] Tilep tp_first_tile(class Tp *tp, ThingAnim val);
-[[nodiscard]] Tilep tp_tiles_get(Tpp tp, ThingAnim anim_type, int index);
+[[nodiscard]] auto   tp_tiles_size(Tpp tp, ThingAnim val) -> int;
+[[nodiscard]] auto tp_first_tile(class Tp *tp, ThingAnim val) -> Tilep;
+[[nodiscard]] auto tp_tiles_get(Tpp tp, ThingAnim anim_type, int index) -> Tilep;
 void                tp_tiles_push_back(Tpp tp, ThingAnim val, Tilep tile_p);
 
 void              tp_damage_set(Tpp tp, ThingEventType e, const std::string &val);
-[[nodiscard]] int tp_damage(Tpp tp, ThingEventType val);
+[[nodiscard]] auto tp_damage(Tpp tp, ThingEventType val) -> int;
 
 void               tp_chance_set(Tpp tp, ThingChanceType e, const std::string &val);
-[[nodiscard]] int  tp_chance(Tpp tp, ThingChanceType val);
-[[nodiscard]] bool tp_chance_success(Tpp tp, ThingChanceType val);
-[[nodiscard]] bool tp_chance_fail(Tpp tp, ThingChanceType val);
+[[nodiscard]] auto  tp_chance(Tpp tp, ThingChanceType val) -> int;
+[[nodiscard]] auto tp_chance_success(Tpp tp, ThingChanceType val) -> bool;
+[[nodiscard]] auto tp_chance_fail(Tpp tp, ThingChanceType val) -> bool;
 
-[[nodiscard]] TpId tp_id_get(Tpp tp);
-[[nodiscard]] Tpp  tp_find(TpId id);
-[[nodiscard]] Tpp  tp_find_mand(const std::string &val);
-[[nodiscard]] Tpp  tp_find_opt(const std::string &val);
+[[nodiscard]] auto tp_id_get(Tpp tp) -> TpId;
+[[nodiscard]] auto  tp_find(TpId id) -> Tpp;
+[[nodiscard]] auto  tp_find_mand(const std::string &val) -> Tpp;
+[[nodiscard]] auto  tp_find_opt(const std::string &val) -> Tpp;
 
-[[nodiscard]] Tpp string2tp(const char **s, int *len = nullptr);
-[[nodiscard]] Tpp tp_load(const std::string &val);
-[[nodiscard]] Tpp tp_random(ThingFlag f);
-[[nodiscard]] Tpp tp_variant(ThingFlag f, int /*variant*/);
-[[nodiscard]] Tpp tp_first(ThingFlag f);
-[[nodiscard]] Tpp tp_random_dungeon_entrance();
-[[nodiscard]] Tpp tp_random_exit();
-[[nodiscard]] Tpp tp_random_key();
-[[nodiscard]] Tpp tp_random_monst(int c);
-[[nodiscard]] Tpp tp_random_player();
-[[nodiscard]] Tpp tp_random_wall();
+[[nodiscard]] auto string2tp(const char **s, int *len = nullptr) -> Tpp;
+[[nodiscard]] auto tp_load(const std::string &val) -> Tpp;
+[[nodiscard]] auto tp_random(ThingFlag f) -> Tpp;
+[[nodiscard]] auto tp_variant(ThingFlag f, int /*variant*/) -> Tpp;
+[[nodiscard]] auto tp_first(ThingFlag f) -> Tpp;
+[[nodiscard]] auto tp_random_dungeon_entrance() -> Tpp;
+[[nodiscard]] auto tp_random_exit() -> Tpp;
+[[nodiscard]] auto tp_random_key() -> Tpp;
+[[nodiscard]] auto tp_random_monst(int c) -> Tpp;
+[[nodiscard]] auto tp_random_player() -> Tpp;
+[[nodiscard]] auto tp_random_wall() -> Tpp;
 
 void TP_CON(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void TP_CON_(Tpp tp, const char *fmt, va_list args); // compile error without
@@ -515,30 +515,30 @@ void TP_LOG_(Tpp tp, const char *fmt, va_list args); // compile error without
 void tp_fini();
 void tp_get_id(const char *, int *id);
 
-[[nodiscard]] int tp_flag(Tpp tp, ThingFlag f);
+[[nodiscard]] auto tp_flag(Tpp tp, ThingFlag f) -> int;
 void              tp_flag_set(Tpp tp, ThingFlag f, int val = 1);
 
 void                  tp_z_depth_set(Tpp tp, MapZDepth val);
-[[nodiscard]] uint8_t tp_z_depth_get(Tpp tp);
+[[nodiscard]] auto tp_z_depth_get(Tpp tp) -> uint8_t;
 
 void              tp_speed_set(Tpp tp, int val);
-[[nodiscard]] int tp_speed_get(Tpp tp);
+[[nodiscard]] auto tp_speed_get(Tpp tp) -> int;
 
 void              tp_health_set(Tpp tp, const std::string &val);
-[[nodiscard]] int tp_health_get(Tpp tp);
-[[nodiscard]] int tp_health_max_get(Tpp tp);
+[[nodiscard]] auto tp_health_get(Tpp tp) -> int;
+[[nodiscard]] auto tp_health_max_get(Tpp tp) -> int;
 
 void              tp_temperature_initial_set(Tpp tp, int val);
-[[nodiscard]] int tp_temperature_initial_get(Tpp tp);
+[[nodiscard]] auto tp_temperature_initial_get(Tpp tp) -> int;
 
 void              tp_temperature_burns_at_set(Tpp tp, int val);
-[[nodiscard]] int tp_temperature_burns_at_get(Tpp tp);
+[[nodiscard]] auto tp_temperature_burns_at_get(Tpp tp) -> int;
 
 void              tp_temperature_melts_at_set(Tpp tp, int val);
-[[nodiscard]] int tp_temperature_melts_at_get(Tpp tp);
+[[nodiscard]] auto tp_temperature_melts_at_get(Tpp tp) -> int;
 
 void              tp_temperature_damage_at_set(Tpp tp, int val);
-[[nodiscard]] int tp_temperature_damage_at_get(Tpp tp);
+[[nodiscard]] auto tp_temperature_damage_at_get(Tpp tp) -> int;
 
 //
 // Heat capacity indicates the amount of heat energy required to
@@ -596,102 +596,102 @@ void              tp_temperature_damage_at_set(Tpp tp, int val);
 #define WEIGHT_NONE     (0)
 
 void              tp_weight_set(Tpp tp, int val);
-[[nodiscard]] int tp_weight_get(Tpp tp);
+[[nodiscard]] auto tp_weight_get(Tpp tp) -> int;
 
 void                tp_temperature_thermal_conductivity_set(Tpp tp, float val);
-[[nodiscard]] float tp_temperature_thermal_conductivity_get(Tpp tp);
+[[nodiscard]] auto tp_temperature_thermal_conductivity_get(Tpp tp) -> float;
 
 void                tp_temperature_heat_capacity_set(Tpp tp, float val);
-[[nodiscard]] float tp_temperature_heat_capacity_get(Tpp tp);
+[[nodiscard]] auto tp_temperature_heat_capacity_get(Tpp tp) -> float;
 
 void              tp_value1_set(Tpp tp, int val);
-[[nodiscard]] int tp_value1_get(Tpp tp);
+[[nodiscard]] auto tp_value1_get(Tpp tp) -> int;
 
 void              tp_value2_set(Tpp tp, int val);
-[[nodiscard]] int tp_value2_get(Tpp tp);
+[[nodiscard]] auto tp_value2_get(Tpp tp) -> int;
 
 void              tp_value3_set(Tpp tp, int val);
-[[nodiscard]] int tp_value3_get(Tpp tp);
+[[nodiscard]] auto tp_value3_get(Tpp tp) -> int;
 
 void              tp_value4_set(Tpp tp, int val);
-[[nodiscard]] int tp_value4_get(Tpp tp);
+[[nodiscard]] auto tp_value4_get(Tpp tp) -> int;
 
 void              tp_value5_set(Tpp tp, int val);
-[[nodiscard]] int tp_value5_get(Tpp tp);
+[[nodiscard]] auto tp_value5_get(Tpp tp) -> int;
 
 void              tp_value6_set(Tpp tp, int val);
-[[nodiscard]] int tp_value6_get(Tpp tp);
+[[nodiscard]] auto tp_value6_get(Tpp tp) -> int;
 
 void              tp_value7_set(Tpp tp, int val);
-[[nodiscard]] int tp_value7_get(Tpp tp);
+[[nodiscard]] auto tp_value7_get(Tpp tp) -> int;
 
 void              tp_value8_set(Tpp tp, int val);
-[[nodiscard]] int tp_value8_get(Tpp tp);
+[[nodiscard]] auto tp_value8_get(Tpp tp) -> int;
 
 void              tp_value9_set(Tpp tp, int val);
-[[nodiscard]] int tp_value9_get(Tpp tp);
+[[nodiscard]] auto tp_value9_get(Tpp tp) -> int;
 
 void              tp_value10_set(Tpp tp, int val);
-[[nodiscard]] int tp_value10_get(Tpp tp);
+[[nodiscard]] auto tp_value10_get(Tpp tp) -> int;
 
 void              tp_value11_set(Tpp tp, int val);
-[[nodiscard]] int tp_value11_get(Tpp tp);
+[[nodiscard]] auto tp_value11_get(Tpp tp) -> int;
 
 void              tp_value12_set(Tpp tp, int val);
-[[nodiscard]] int tp_value12_get(Tpp tp);
+[[nodiscard]] auto tp_value12_get(Tpp tp) -> int;
 
 void              tp_value13_set(Tpp tp, int val);
-[[nodiscard]] int tp_value13_get(Tpp tp);
+[[nodiscard]] auto tp_value13_get(Tpp tp) -> int;
 
 void              tp_value14_set(Tpp tp, int val);
-[[nodiscard]] int tp_value14_get(Tpp tp);
+[[nodiscard]] auto tp_value14_get(Tpp tp) -> int;
 
 void              tp_value15_set(Tpp tp, int val);
-[[nodiscard]] int tp_value15_get(Tpp tp);
+[[nodiscard]] auto tp_value15_get(Tpp tp) -> int;
 
 void              tp_value16_set(Tpp tp, int val);
-[[nodiscard]] int tp_value16_get(Tpp tp);
+[[nodiscard]] auto tp_value16_get(Tpp tp) -> int;
 
 void              tp_value17_set(Tpp tp, int val);
-[[nodiscard]] int tp_value17_get(Tpp tp);
+[[nodiscard]] auto tp_value17_get(Tpp tp) -> int;
 
 void              tp_value18_set(Tpp tp, int val);
-[[nodiscard]] int tp_value18_get(Tpp tp);
+[[nodiscard]] auto tp_value18_get(Tpp tp) -> int;
 
 void              tp_value19_set(Tpp tp, int val);
-[[nodiscard]] int tp_value19_get(Tpp tp);
+[[nodiscard]] auto tp_value19_get(Tpp tp) -> int;
 
 void              tp_value20_set(Tpp tp, int val);
-[[nodiscard]] int tp_value20_get(Tpp tp);
+[[nodiscard]] auto tp_value20_get(Tpp tp) -> int;
 
 void              tp_minion_max_set(Tpp tp, int val);
-[[nodiscard]] int tp_minion_max_get(Tpp tp);
+[[nodiscard]] auto tp_minion_max_get(Tpp tp) -> int;
 
 void              tp_distance_minion_from_mob_max_set(Tpp tp, int val);
-[[nodiscard]] int tp_distance_minion_from_mob_max_get(Tpp tp);
+[[nodiscard]] auto tp_distance_minion_from_mob_max_get(Tpp tp) -> int;
 
 void              tp_distance_vision_set(Tpp tp, int val);
-[[nodiscard]] int tp_distance_vision_get(Tpp tp);
+[[nodiscard]] auto tp_distance_vision_get(Tpp tp) -> int;
 
 void              tp_variant_set(Tpp tp, int val);
-[[nodiscard]] int tp_variant_get(Tpp tp);
+[[nodiscard]] auto tp_variant_get(Tpp tp) -> int;
 
 void              tp_priority_set(Tpp tp, ThingPriorityType val);
-ThingPriorityType tp_priority_get(Tpp tp);
+auto tp_priority_get(Tpp tp) -> ThingPriorityType;
 
 void              tp_distance_jump_set(Tpp tp, int val);
-[[nodiscard]] int tp_distance_jump_get(Tpp tp);
+[[nodiscard]] auto tp_distance_jump_get(Tpp tp) -> int;
 
 void              tp_lifespan_set(Tpp tp, const std::string &val);
-[[nodiscard]] int tp_lifespan_get(Tpp tp);
-[[nodiscard]] int tp_lifespan_max_get(Tpp tp);
+[[nodiscard]] auto tp_lifespan_get(Tpp tp) -> int;
+[[nodiscard]] auto tp_lifespan_max_get(Tpp tp) -> int;
 
 void               tp_is_immunity_add(Tpp tp, ThingEventType val);
-[[nodiscard]] bool tp_is_immune_to(Tpp tp, ThingEventType val);
+[[nodiscard]] auto tp_is_immune_to(Tpp tp, ThingEventType val) -> bool;
 
 void tp_monst_group_add(Tpp tp, ThingMonstGroup val);
 
-[[nodiscard]] float tp_collision_radius(Tpp t);
+[[nodiscard]] auto tp_collision_radius(Tpp t) -> float;
 
 // begin sort marker1 {
 #define tp_is_able_to_collect_items(tp)       tp_flag(tp, is_able_to_collect_items)

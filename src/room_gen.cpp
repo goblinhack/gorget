@@ -153,7 +153,7 @@ static void room_gen_keep_largest_chunk(Gamep g, class RoomGen *grid)
 //
 // Get the top left and bottom right bounds of the room
 //
-[[nodiscard]] static bool room_gen_get_bounds(class RoomGen *grid)
+[[nodiscard]] static auto room_gen_get_bounds(class RoomGen *grid) -> bool
 {
   int x;
   int y;
@@ -526,7 +526,7 @@ static void room_gen_design_chunky_room(Gamep g, RoomGen *grid)
 //
 // Dump a random room of the given type
 //
-[[nodiscard]] static bool rooms_dump_one(Gamep g, FILE *out, int which)
+[[nodiscard]] static auto rooms_dump_one(Gamep g, FILE *out, int which) -> bool
 {
   TRACE_NO_INDENT();
 

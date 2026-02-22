@@ -12,7 +12,7 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-static Tilep tp_cursor_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_maybe_null)
+static auto tp_cursor_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_maybe_null) -> Tilep
 {
   TRACE_NO_INDENT();
 
@@ -62,7 +62,7 @@ static Tilep tp_cursor_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l, sp
   return tile;
 }
 
-bool tp_load_cursor_at()
+auto tp_load_cursor_at() -> bool
 {
   auto *tp   = tp_load("cursor_at"); // keep as string for scripts
   auto  name = tp_name(tp);

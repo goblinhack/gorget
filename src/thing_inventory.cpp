@@ -10,7 +10,7 @@
 //
 // Anything in the inventory
 //
-bool thing_inventory_is_empty(Gamep g, Levelsp v, Levelp l, Thingp player_or_monst)
+auto thing_inventory_is_empty(Gamep g, Levelsp v, Levelp l, Thingp player_or_monst) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -27,7 +27,7 @@ bool thing_inventory_is_empty(Gamep g, Levelsp v, Levelp l, Thingp player_or_mon
 //
 // Can we combine identical items?
 //
-bool thing_inventory_item_mergeable(Gamep g, Levelsp v, Levelp l, Thingp a, Thingp b)
+auto thing_inventory_item_mergeable(Gamep g, Levelsp v, Levelp l, Thingp a, Thingp b) -> bool
 {
   if (! thing_is_item_mergeable(a)) {
     return false;
@@ -47,7 +47,7 @@ bool thing_inventory_item_mergeable(Gamep g, Levelsp v, Levelp l, Thingp a, Thin
 //
 // Add an item to the inventory
 //
-bool thing_inventory_add(Gamep g, Levelsp v, Levelp l, Thingp new_item, Thingp player_or_monst)
+auto thing_inventory_add(Gamep g, Levelsp v, Levelp l, Thingp new_item, Thingp player_or_monst) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -115,7 +115,7 @@ bool thing_inventory_add(Gamep g, Levelsp v, Levelp l, Thingp new_item, Thingp p
 //
 // Drop an item to the inventory
 //
-bool thing_inventory_remove(Gamep g, Levelsp v, Levelp l, Thingp drop_item, Thingp player_or_monst)
+auto thing_inventory_remove(Gamep g, Levelsp v, Levelp l, Thingp drop_item, Thingp player_or_monst) -> bool
 {
   TRACE_NO_INDENT();
 

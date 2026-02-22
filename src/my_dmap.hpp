@@ -23,7 +23,7 @@ void dmap_process_reverse(Dmap *D, spoint tl, spoint br);
 void dmap_print(const Dmap *d, spoint at, spoint start, spoint end);
 void dmap_print(const Dmap *d);
 
-[[nodiscard]] std::vector< spoint > dmap_solve(Gamep g, Levelsp v, Levelp l, Thingp t, const Dmap *d, spoint start);
+[[nodiscard]] auto dmap_solve(Gamep g, Levelsp v, Levelp l, Thingp t, const Dmap *d, spoint start) -> std::vector< spoint >;
 
 #define DMAP_IS_WALL         ((unsigned char) 255)
 #define DMAP_IS_PASSABLE     ((unsigned char) 254)

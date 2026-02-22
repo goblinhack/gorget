@@ -7,12 +7,12 @@
 
 #include <cmath>
 
-bool   operator<(spoint const &a, spoint const &b) { return (a.x < b.x) || (a.x == b.x && a.y < b.y); }
-spoint operator+(spoint const &a, spoint const &b) { return spoint(a.x + b.x, a.y + b.y); }
-spoint operator-(spoint const &a, spoint const &b) { return spoint(a.x - b.x, a.y - b.y); }
-spoint operator*(spoint const &a, short b) { return spoint(a.x * b, a.y * b); }
-spoint operator/(spoint const &a, short b) { return spoint(a.x / b, a.y / b); }
-bool   operator==(spoint const &a, spoint const &b) { return (a.x == b.x) && (a.y == b.y); }
+auto   operator<(spoint const &a, spoint const &b) -> bool { return (a.x < b.x) || (a.x == b.x && a.y < b.y); }
+auto operator+(spoint const &a, spoint const &b) -> spoint { return spoint(a.x + b.x, a.y + b.y); }
+auto operator-(spoint const &a, spoint const &b) -> spoint { return spoint(a.x - b.x, a.y - b.y); }
+auto operator*(spoint const &a, short b) -> spoint { return spoint(a.x * b, a.y * b); }
+auto operator/(spoint const &a, short b) -> spoint { return spoint(a.x / b, a.y / b); }
+auto   operator==(spoint const &a, spoint const &b) -> bool { return (a.x == b.x) && (a.y == b.y); }
 
 void spoint::operator+=(spoint const &b)
 {
@@ -38,7 +38,7 @@ void spoint::operator/=(short b)
   y /= b;
 }
 
-float spoint::length() const { return ((float) sqrt((x * x) + (y * y))); }
+auto spoint::length() const -> float { return ((float) sqrt((x * x) + (y * y))); }
 
 void spoint::unit()
 {
@@ -47,7 +47,7 @@ void spoint::unit()
   y /= len;
 }
 
-float distance(const spoint a, const spoint b)
+auto distance(const spoint a, const spoint b) -> float
 {
   return (float) DISTANCEf((float) a.x, (float) a.y, (float) b.x, (float) b.y);
 }

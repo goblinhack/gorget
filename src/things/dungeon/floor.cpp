@@ -8,7 +8,7 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-bool tp_load_floor()
+auto tp_load_floor() -> bool
 {
   TRACE_NO_INDENT();
 

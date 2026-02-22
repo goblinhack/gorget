@@ -36,14 +36,14 @@ void wid_main_menu_hide(Gamep g)
   wid_hide(g, wid_main_menu_window->wid_popup_container);
 }
 
-[[nodiscard]] static bool wid_main_menu_load(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static auto wid_main_menu_load(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE_NO_INDENT();
   wid_load_select(g);
   return true;
 }
 
-[[nodiscard]] static bool wid_main_menu_cfg(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static auto wid_main_menu_cfg(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE_NO_INDENT();
   wid_options_menu_select(g);
@@ -51,7 +51,7 @@ void wid_main_menu_hide(Gamep g)
   return true;
 }
 
-[[nodiscard]] static bool wid_main_menu_more(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static auto wid_main_menu_more(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE_NO_INDENT();
   wid_more_select(g);
@@ -59,7 +59,7 @@ void wid_main_menu_hide(Gamep g)
   return true;
 }
 
-[[nodiscard]] static bool game_menu_new_game(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static auto game_menu_new_game(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE_NO_INDENT();
   wid_main_menu_hide(g);
@@ -68,7 +68,7 @@ void wid_main_menu_hide(Gamep g)
   return false; // suppress mouse click
 }
 
-[[nodiscard]] static bool wid_main_menu_quit(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static auto wid_main_menu_quit(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE_NO_INDENT();
   wid_quit_select(g);
@@ -76,7 +76,7 @@ void wid_main_menu_hide(Gamep g)
   return true;
 }
 
-[[nodiscard]] static bool wid_main_menu_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
+[[nodiscard]] static auto wid_main_menu_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -189,7 +189,7 @@ static void game_display_title_fg2(Gamep g)
   blit_flush();
 }
 
-static uint8_t clamp(float v) // define a function to bound and round the input float value to 0-255
+static auto clamp(float v) -> uint8_t // define a function to bound and round the input float value to 0-255
 {
   if (v < 0) {
     return 0;
@@ -201,7 +201,7 @@ static uint8_t clamp(float v) // define a function to bound and round the input 
 }
 
 // https://stackoverflow.com/questions/8507885/shift-hue-of-an-rgb-color#8509802
-color color_change_hue(const color &in, const float fHue)
+auto color_change_hue(const color &in, const float fHue) -> color
 {
   color       out;
   const float cosA = cos(fHue * std::numbers::pi_v< float > / 180); // convert degrees to radians
@@ -315,7 +315,7 @@ static void wid_main_menu_tick(Gamep g, Widp w)
       case SEED_SOURCE_RANDOM :       seed_text += " (randomly generated)"; break;
     }
 
-    ascii_putf(0, TERM_HEIGHT - 1, YELLOW, BLACK, seed_text);
+    ascii_putf(0, TERM_HEIGHT - 1, YELLOW, BLACK, seed_text.c_str());
   }
 }
 

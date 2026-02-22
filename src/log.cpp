@@ -23,7 +23,7 @@ extern Game *game;
 //
 // Where all logs go
 //
-std::string log_dir_create()
+auto log_dir_create() -> std::string
 {
   TRACE_NO_INDENT();
 

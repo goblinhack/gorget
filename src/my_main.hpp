@@ -9,31 +9,31 @@
 
 #include <string>
 
-std::string log_dir_create();
-void        BOTCON_NEW_LINE();
-void        BOTCON(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
-void        cleanup();
-void        CON_NEW_LINE();
-void        CON(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
-void        ctrlc_handler(int sig);
-void        error_message(Gamep g, const std::string &error);
-void        error_clear(Gamep g);
-void        find_file_locations();
-void        LOG(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
-void        reset_globals();
-void        restart(Gamep g, const std::string        &/*restart_arg*/);
-void        sdl_msg_box(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
-void        crash_handler(int sig);
-void        TOPCON_NEW_LINE();
-void        TOPCON(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
-void        WARN(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
-void        CROAK_HANDLE(bool clean, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
-void        ERR_HANDLE(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
+auto log_dir_create() -> std::string;
+void BOTCON_NEW_LINE();
+void BOTCON(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
+void cleanup();
+void CON_NEW_LINE();
+void CON(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
+void ctrlc_handler(int sig);
+void error_message(Gamep g, const std::string &error);
+void error_clear(Gamep g);
+void find_file_locations();
+void LOG(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
+void reset_globals();
+void restart(Gamep g, const std::string & /*restart_arg*/);
+void sdl_msg_box(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
+void crash_handler(int sig);
+void TOPCON_NEW_LINE();
+void TOPCON(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
+void WARN(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
+void CROAK_HANDLE(bool clean, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void ERR_HANDLE(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 
-FILE *redirect_stderr();
-FILE *redirect_stdout();
-void  close_stderr();
-void  close_stdout();
+auto redirect_stderr() -> FILE *;
+auto redirect_stdout() -> FILE *;
+void close_stderr();
+void close_stdout();
 #define MY_STDERR redirect_stderr()
 #define MY_STDOUT redirect_stdout()
 

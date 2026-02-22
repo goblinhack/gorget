@@ -9,7 +9,7 @@
 //
 // Add an item to the things inventory
 //
-bool thing_carry_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp player_or_monst)
+auto thing_carry_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp player_or_monst) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -54,7 +54,7 @@ bool thing_carry_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp player_o
 //
 // Drop an item from the things inventory
 //
-bool thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp player_or_monst)
+auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp player_or_monst) -> bool
 {
   TRACE_NO_INDENT();
 

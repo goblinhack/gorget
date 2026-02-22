@@ -5,7 +5,7 @@
 #include "my_callstack.hpp"
 #include "my_tests.hpp"
 
-bool tests_init()
+auto tests_init() -> bool
 {
   TRACE_NO_INDENT();
 

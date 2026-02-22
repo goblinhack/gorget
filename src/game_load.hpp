@@ -51,7 +51,7 @@ std::array< bool, UI_MAX_SAVE_SLOTS > slot_valid;
     IF_DEBUG2 { CON("Read magic '%s' %s", what, std::format("0x{:x}", magic).c_str()); }                             \
   }
 
-std::istream &operator>>(std::istream &in, Bits< SDL_Keysym & > my)
+auto operator>>(std::istream &in, Bits< SDL_Keysym & > my) -> std::istream &
 {
   TRACE_NO_INDENT();
   in >> bits(my.t.scancode);
@@ -61,7 +61,7 @@ std::istream &operator>>(std::istream &in, Bits< SDL_Keysym & > my)
   return in;
 }
 
-std::istream &operator>>(std::istream &in, Bits< Config & > my)
+auto operator>>(std::istream &in, Bits< Config & > my) -> std::istream &
 {
   TRACE_NO_INDENT();
 
@@ -519,7 +519,7 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
   return in;
 }
 
-std::istream &operator>>(std::istream &in, Bits< class Game & > my)
+auto operator>>(std::istream &in, Bits< class Game & > my) -> std::istream &
 {
   TRACE_NO_INDENT();
   in >> bits(my.t.version);
@@ -967,7 +967,7 @@ std::istream &operator>>(std::istream &in, Bits< class Game & > my)
 
 // binary mode is only for switching off newline translation
 // ios::ate, open at end
-std::vector< char > read_file(const std::string &filename)
+auto read_file(const std::string &filename) -> std::vector< char >
 {
   TRACE_NO_INDENT();
   std::ifstream ifs(filename, std::ios::in | std::ios::binary | std::ios::ate);
@@ -985,7 +985,7 @@ std::vector< char > read_file(const std::string &filename)
   return bytes;
 }
 
-static std::vector< char > read_lzo_file(const std::string &filename, long *uncompressed_sz)
+static auto read_lzo_file(const std::string &filename, long *uncompressed_sz) -> std::vector< char >
 {
   TRACE_NO_INDENT();
   std::ifstream ifs(filename, std::ios::in | std::ios::binary | std::ios::ate);
@@ -1009,7 +1009,7 @@ static std::vector< char > read_lzo_file(const std::string &filename, long *unco
   return bytes;
 }
 
-bool Game::load(const std::string &file_to_load, class Game &target)
+auto Game::load(const std::string &file_to_load, class Game &target) -> bool
 {
   LOG("Load: %s", file_to_load.c_str());
   TRACE_AND_INDENT();
@@ -1146,14 +1146,14 @@ bool Game::load(const std::string &file_to_load, class Game &target)
   return true;
 }
 
-bool game_load(Gamep g, const std::string &file_to_load)
+auto game_load(Gamep g, const std::string &file_to_load) -> bool
 {
   TRACE_NO_INDENT();
 
   return g->load(file_to_load, *g);
 }
 
-std::string Game::load_config() const
+auto Game::load_config() const -> std::string
 {
   TRACE_NO_INDENT();
   game_load_error = "";
@@ -1167,7 +1167,7 @@ std::string Game::load_config() const
   return game_load_error;
 }
 
-bool Game::load(int slot)
+auto Game::load(int slot) -> bool
 {
   LOG("Load slot: %d", slot);
   TRACE_AND_INDENT();
@@ -1217,7 +1217,7 @@ bool Game::load(int slot)
   return game_load_error.empty();
 }
 
-bool Game::load_snapshot()
+auto Game::load_snapshot() -> bool
 {
   LOG("Load snapshot");
   TRACE_AND_INDENT();
@@ -1251,7 +1251,7 @@ void wid_load_destroy(Gamep g)
   wid_load = nullptr;
 }
 
-static bool wid_load_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)
+static auto wid_load_key_up(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -1308,7 +1308,7 @@ static bool wid_load_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)
   return true;
 }
 
-static bool wid_load_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
+static auto wid_load_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -1321,7 +1321,7 @@ static bool wid_load_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
   return true;
 }
 
-static bool wid_load_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button)
+static auto wid_load_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   LOG("Load selected slot");
   TRACE_AND_INDENT();
@@ -1332,7 +1332,7 @@ static bool wid_load_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_load_saved_snapshot(Gamep g, Widp w, int x, int y, uint32_t button)
+static auto wid_load_saved_snapshot(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   LOG("Load snapshot");
   TRACE_AND_INDENT();
@@ -1342,7 +1342,7 @@ static bool wid_load_saved_snapshot(Gamep g, Widp w, int x, int y, uint32_t butt
   return true;
 }
 
-static bool wid_load_cancel(Gamep g, Widp w, int x, int y, uint32_t button)
+static auto wid_load_cancel(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   LOG("Load cancel");
   TRACE_AND_INDENT();
@@ -1444,7 +1444,7 @@ void Game::load_select()
 
 void wid_load_select(Gamep g) { g->load_select(); }
 
-bool game_load_last_config(const char *appdata)
+auto game_load_last_config(const char *appdata) -> bool
 {
   TRACE_NO_INDENT();
 

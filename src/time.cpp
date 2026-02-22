@@ -22,9 +22,9 @@ ts_t time_game;
 
 static char buf_[ MAXSHORTSTR ];
 
-ts_t time_ms_cached() { return time_now; }
+auto time_ms_cached() -> ts_t { return time_now; }
 
-ts_t time_ms()
+auto time_ms() -> ts_t
 {
   time_now = SDL_GetTicks();
 
@@ -36,14 +36,14 @@ ts_t time_ms()
   return time_now;
 }
 
-ts_t time_game_ms()
+auto time_game_ms() -> ts_t
 {
   time_game = time_ms();
   return time_game;
 }
-ts_t time_game_ms_cached() { return time_game; }
+auto time_game_ms_cached() -> ts_t { return time_game; }
 
-const char *time2str(ts_t ms, char *buf, int len)
+auto time2str(ts_t ms, char *buf, int len) -> const char *
 {
   int       log_msec = ms;
   int       log_secs = log_msec / ONESEC;
@@ -69,7 +69,7 @@ const char *time2str(ts_t ms, char *buf, int len)
   return buf_;
 }
 
-const char *timestamp(char *buf, int len)
+auto timestamp(char *buf, int len) -> const char *
 {
   int       log_msec = time_ms();
   int       log_secs = log_msec / ONESEC;
@@ -95,7 +95,7 @@ const char *timestamp(char *buf, int len)
   return buf_;
 }
 
-bool time_have_x_hundredths_passed_since(ts_t val, ts_t since)
+auto time_have_x_hundredths_passed_since(ts_t val, ts_t since) -> bool
 {
   time_ms();
 
@@ -107,7 +107,7 @@ bool time_have_x_hundredths_passed_since(ts_t val, ts_t since)
   return (ts_t) (delay / 10) > val;
 }
 
-bool time_have_x_ms_passed_since(ts_t val, ts_t since)
+auto time_have_x_ms_passed_since(ts_t val, ts_t since) -> bool
 {
   time_ms();
 
@@ -119,7 +119,7 @@ bool time_have_x_ms_passed_since(ts_t val, ts_t since)
   return delay >= val;
 }
 
-bool time_have_x_tenths_passed_since(ts_t val, ts_t since)
+auto time_have_x_tenths_passed_since(ts_t val, ts_t since) -> bool
 {
   time_ms();
 
@@ -131,7 +131,7 @@ bool time_have_x_tenths_passed_since(ts_t val, ts_t since)
   return (ts_t) (delay / 100) >= val;
 }
 
-bool time_have_x_secs_passed_since(ts_t val, ts_t since)
+auto time_have_x_secs_passed_since(ts_t val, ts_t since) -> bool
 {
   time_ms();
 
@@ -155,12 +155,12 @@ void get_timestamp(char *buf, int len)
 }
 
 // avoid: warning: ‘%c’ yields only last 2 digits of year in some locales [-Wformat-y2k]
-static size_t my_strftime(char *s, size_t max, const char *fmt, const struct tm *tm)
+static auto my_strftime(char *s, size_t max, const char *fmt, const struct tm *tm) -> size_t
 {
   return strftime(s, max, fmt, tm);
 }
 
-std::string current_date()
+auto current_date() -> std::string
 {
   struct tm *timeinfo;
   time_t     rawtime;
@@ -210,7 +210,7 @@ std::string current_date()
   return {buffer};
 }
 
-std::string &string_timestamp()
+auto string_timestamp() -> std::string &
 {
   static ts_t        time_last;
   static std::string last_timestamp;

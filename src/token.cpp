@@ -9,7 +9,7 @@
 #include <cstring>
 #include <print>
 
-static class Tokens *tokens_parse(const char *input, class Tokens *tokens)
+static auto tokens_parse(const char *input, class Tokens *tokens) -> class Tokens *
 {
   TRACE_NO_INDENT();
 
@@ -189,7 +189,7 @@ void tokens_test()
   tokens_print(tokens_to_string("set god \"mode on\"", &tmp));
 }
 
-class Tokens *tokens_to_string(const char *input, class Tokens *tokens)
+auto tokens_to_string(const char *input, class Tokens *tokens) -> class Tokens *
 {
   TRACE_NO_INDENT();
 

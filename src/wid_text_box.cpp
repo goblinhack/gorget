@@ -136,7 +136,7 @@ WidTextBox::WidTextBox(Gamep g, spoint vtl, spoint vbr, Widp vparent, bool horiz
 //
 // Get the wid on the bottom of the list/screen.
 //
-Widp WidTextBox::log_(Gamep g, const std::string &str, wid_text_format format, const std::string &col)
+auto WidTextBox::log_(Gamep g, const std::string &str, wid_text_format format, const std::string &col) -> Widp
 {
   TRACE_NO_INDENT();
 
@@ -199,7 +199,7 @@ Widp WidTextBox::log_(Gamep g, const std::string &str, wid_text_format format, c
 //
 // Log a message to the text box
 //
-Widp WidTextBox::log(Gamep g, const std::string &s, wid_text_format format, const std::string &col)
+auto WidTextBox::log(Gamep g, const std::string &s, wid_text_format format, const std::string &col) -> Widp
 {
   TRACE_NO_INDENT();
 
@@ -222,7 +222,7 @@ Widp WidTextBox::log(Gamep g, const std::string &s, wid_text_format format, cons
 //
 // Log a blank line to the text box
 //
-Widp WidTextBox::log_empty_line(Gamep g)
+auto WidTextBox::log_empty_line(Gamep g) -> Widp
 {
   TRACE_NO_INDENT();
 

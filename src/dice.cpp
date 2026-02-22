@@ -4,26 +4,26 @@
 
 #include "my_random.hpp"
 
-int d10000() { return pcg_random_range_inclusive(1, 10000); }
-int d1000() { return pcg_random_range_inclusive(1, 1000); }
-int d100() { return pcg_random_range_inclusive(1, 100); }
-int d10() { return pcg_random_range_inclusive(1, 10); }
-int d11() { return pcg_random_range_inclusive(1, 11); }
-int d12() { return pcg_random_range_inclusive(1, 12); }
-int d13() { return pcg_random_range_inclusive(1, 13); }
-int d14() { return pcg_random_range_inclusive(1, 14); }
-int d15() { return pcg_random_range_inclusive(1, 15); }
-int d16() { return pcg_random_range_inclusive(1, 16); }
-int d17() { return pcg_random_range_inclusive(1, 17); }
-int d18() { return pcg_random_range_inclusive(1, 18); }
-int d19() { return pcg_random_range_inclusive(1, 19); }
-int d20() { return pcg_random_range_inclusive(1, 20); }
-int d2() { return pcg_random_range_inclusive(1, 2); }
-int d3() { return pcg_random_range_inclusive(1, 3); }
-int d4() { return pcg_random_range_inclusive(1, 4); }
-int d50() { return pcg_random_range_inclusive(1, 50); }
-int d5() { return pcg_random_range_inclusive(1, 5); }
-int d6() { return pcg_random_range_inclusive(1, 6); }
-int d7() { return pcg_random_range_inclusive(1, 7); }
-int d8() { return pcg_random_range_inclusive(1, 8); }
-int d9() { return pcg_random_range_inclusive(1, 9); }
+auto d10000() -> int { return pcg_random_range_inclusive(1, 10000); }
+auto d1000() -> int { return pcg_random_range_inclusive(1, 1000); }
+auto d100() -> int { return pcg_random_range_inclusive(1, 100); }
+auto d10() -> int { return pcg_random_range_inclusive(1, 10); }
+auto d11() -> int { return pcg_random_range_inclusive(1, 11); }
+auto d12() -> int { return pcg_random_range_inclusive(1, 12); }
+auto d13() -> int { return pcg_random_range_inclusive(1, 13); }
+auto d14() -> int { return pcg_random_range_inclusive(1, 14); }
+auto d15() -> int { return pcg_random_range_inclusive(1, 15); }
+auto d16() -> int { return pcg_random_range_inclusive(1, 16); }
+auto d17() -> int { return pcg_random_range_inclusive(1, 17); }
+auto d18() -> int { return pcg_random_range_inclusive(1, 18); }
+auto d19() -> int { return pcg_random_range_inclusive(1, 19); }
+auto d20() -> int { return pcg_random_range_inclusive(1, 20); }
+auto d2() -> int { return pcg_random_range_inclusive(1, 2); }
+auto d3() -> int { return pcg_random_range_inclusive(1, 3); }
+auto d4() -> int { return pcg_random_range_inclusive(1, 4); }
+auto d50() -> int { return pcg_random_range_inclusive(1, 50); }
+auto d5() -> int { return pcg_random_range_inclusive(1, 5); }
+auto d6() -> int { return pcg_random_range_inclusive(1, 6); }
+auto d7() -> int { return pcg_random_range_inclusive(1, 7); }
+auto d8() -> int { return pcg_random_range_inclusive(1, 8); }
+auto d9() -> int { return pcg_random_range_inclusive(1, 9); }

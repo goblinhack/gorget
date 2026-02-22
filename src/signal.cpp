@@ -101,7 +101,7 @@ static void debug_crash_handler(int sig)
 }
 #endif
 
-static const char *signal_str(int sig)
+static auto signal_str(int sig) -> const char *
 {
   switch (sig) {
 #ifdef SIGHUP

@@ -9,14 +9,14 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-static std::string tp_foliage_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static auto tp_foliage_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
   TRACE_NO_INDENT();
 
   return "sickly looking foliage";
 }
 
-bool tp_load_foliage()
+auto tp_load_foliage() -> bool
 {
   TRACE_NO_INDENT();
 

@@ -2,7 +2,7 @@
 // Copyright goblinhack@gmail.com
 //
 
-unsigned int nextpoweroftwo(unsigned int val)
+auto nextpoweroftwo(unsigned int val) -> unsigned int
 {
   val--;
   val = (val >> 1) | val;

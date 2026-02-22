@@ -12,7 +12,7 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
-static std::string tp_glorp_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static auto tp_glorp_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
   TRACE_NO_INDENT();
 
@@ -22,7 +22,7 @@ static std::string tp_glorp_description_get(Gamep g, Levelsp v, Levelp l, Thingp
   return "living mass of slime known as a glorp";
 }
 
-static std::string tp_glorp_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static auto tp_glorp_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
   TRACE_NO_INDENT();
 
@@ -32,7 +32,7 @@ static std::string tp_glorp_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
       UI_INFO3_FMT_STR "Although they look like lime jelly, no one has yet confirmed how they taste..."; // newline
 }
 
-ThingEnviron tp_glorp_assess_tile(Gamep g, Levelsp v, Levelp l, spoint at, Thingp t)
+auto tp_glorp_assess_tile(Gamep g, Levelsp v, Levelp l, spoint at, Thingp t) -> ThingEnviron
 {
   TRACE_NO_INDENT();
 
@@ -51,7 +51,7 @@ ThingEnviron tp_glorp_assess_tile(Gamep g, Levelsp v, Levelp l, spoint at, Thing
   return THING_ENVIRON_NEUTRAL;
 }
 
-bool tp_load_glorp()
+auto tp_load_glorp() -> bool
 {
   auto *tp   = tp_load("glorp"); // keep as string for scripts
   auto  name = tp_name(tp);

@@ -13,7 +13,7 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-static std::string tp_door_secret_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static auto tp_door_secret_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
   TRACE_NO_INDENT();
 
@@ -24,7 +24,7 @@ static std::string tp_door_secret_description_get(Gamep g, Levelsp v, Levelp l, 
   return "odd looking rock";
 }
 
-[[nodiscard]] static bool tp_door_secret_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener)
+[[nodiscard]] static auto tp_door_secret_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -44,7 +44,7 @@ static std::string tp_door_secret_description_get(Gamep g, Levelsp v, Levelp l, 
   return true;
 }
 
-bool tp_load_door_secret()
+auto tp_load_door_secret() -> bool
 {
   TRACE_NO_INDENT();
 

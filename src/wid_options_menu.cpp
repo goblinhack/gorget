@@ -19,7 +19,7 @@ static void wid_options_menu_destroy()
   wid_options_menu_window = nullptr;
 }
 
-[[nodiscard]] static bool wid_options_menu_gfx(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static auto wid_options_menu_gfx(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE_NO_INDENT();
   wid_options_menu_destroy();
@@ -27,7 +27,7 @@ static void wid_options_menu_destroy()
   return true;
 }
 
-[[nodiscard]] static bool wid_options_menu_seed(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static auto wid_options_menu_seed(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE_NO_INDENT();
   wid_options_menu_destroy();
@@ -35,7 +35,7 @@ static void wid_options_menu_destroy()
   return true;
 }
 
-[[nodiscard]] static bool wid_options_menu_player_name(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static auto wid_options_menu_player_name(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE_NO_INDENT();
   wid_options_menu_destroy();
@@ -43,7 +43,7 @@ static void wid_options_menu_destroy()
   return true;
 }
 
-[[nodiscard]] static bool wid_options_menu_mouse(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static auto wid_options_menu_mouse(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE_NO_INDENT();
   wid_options_menu_destroy();
@@ -51,7 +51,7 @@ static void wid_options_menu_destroy()
   return true;
 }
 
-[[nodiscard]] static bool wid_options_menu_keyboard(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static auto wid_options_menu_keyboard(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE_NO_INDENT();
   wid_options_menu_destroy();
@@ -59,7 +59,7 @@ static void wid_options_menu_destroy()
   return true;
 }
 
-[[nodiscard]] static bool wid_options_menu_sound(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static auto wid_options_menu_sound(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE_NO_INDENT();
   wid_options_menu_destroy();
@@ -67,7 +67,7 @@ static void wid_options_menu_destroy()
   return true;
 }
 
-[[nodiscard]] static bool wid_options_menu_back(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static auto wid_options_menu_back(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE_NO_INDENT();
   wid_options_menu_destroy();
@@ -75,7 +75,7 @@ static void wid_options_menu_destroy()
   return true;
 }
 
-[[nodiscard]] static bool wid_options_menu_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
+[[nodiscard]] static auto wid_options_menu_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
 {
   TRACE_NO_INDENT();
 

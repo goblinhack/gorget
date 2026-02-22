@@ -31,7 +31,7 @@ public:
   Nodecost() = default;
   Nodecost(Cost c) : cost(c), tiebreak(g_tiebreak++) {}
 
-  bool operator<(const Nodecost &rhs) const
+  auto operator<(const Nodecost &rhs) const -> bool
   {
     if (cost < rhs.cost) {
       return true;
@@ -109,9 +109,9 @@ public:
   std::array< std::array< bool, MAP_HEIGHT >, MAP_WIDTH > can_move_to_tile     = {};
   std::array< std::array< bool, MAP_HEIGHT >, MAP_WIDTH > can_move_to_tile_set = {};
 
-  bool               can_move_to(const spoint &to);
-  [[nodiscard]] Cost heuristic(spoint at) const;
-  Node              *node_init(spoint next_hop, Nodecost cost);
+  auto               can_move_to(const spoint &to) -> bool;
+  [[nodiscard]] auto heuristic(spoint at) const -> Cost;
+  auto node_init(spoint next_hop, Nodecost cost) -> Node              *;
   void               add_to_closed(Node *n);
   void               add_to_open(Node *n);
   void               dump();
@@ -119,8 +119,8 @@ public:
   static void        init();
   void               remove_from_open(Node *n);
 
-  std::vector< spoint >        solve(bool allow_diagonal);
-  static std::vector< spoint > create_path(const Node *came_from);
+  auto        solve(bool allow_diagonal) -> std::vector< spoint >;
+  static auto create_path(const Node *came_from) -> std::vector< spoint >;
 };
 
 void Astar::add_to_open(Node *n)
@@ -170,7 +170,7 @@ void Astar::remove_from_open(Node *n)
   open_nodes.erase(n->cost);
 }
 
-Cost Astar::heuristic(const spoint at) const
+auto Astar::heuristic(const spoint at) const -> Cost
 {
   //
   // This can create wiggles in the path as we're always looking at the distance
@@ -183,7 +183,7 @@ Cost Astar::heuristic(const spoint at) const
   // return std::max(abs(dst.x - at.x), abs(dst.y - at.y));
 }
 
-Node *Astar::node_init(const spoint next_hop, Nodecost cost)
+auto Astar::node_init(const spoint next_hop, Nodecost cost) -> Node *
 {
   auto *n = &nodes[ next_hop.x ][ next_hop.y ];
 
@@ -231,7 +231,7 @@ void Astar::eval_neighbor(Node *current, const spoint &delta)
   }
 }
 
-std::vector< spoint > Astar::create_path(const Node *came_from)
+auto Astar::create_path(const Node *came_from) -> std::vector< spoint >
 {
   static const std::vector< spoint > empty;
 
@@ -257,7 +257,7 @@ void Astar::init()
 #endif
 }
 
-bool Astar::can_move_to(const spoint &to)
+auto Astar::can_move_to(const spoint &to) -> bool
 {
   if (! can_move_to_tile_set[ to.x ][ to.y ]) {
     can_move_to_tile_set[ to.x ][ to.y ]    = true;
@@ -267,7 +267,7 @@ bool Astar::can_move_to(const spoint &to)
   return can_move_to_tile[ to.x ][ to.y ];
 }
 
-std::vector< spoint > Astar::solve(bool allow_diagonal)
+auto Astar::solve(bool allow_diagonal) -> std::vector< spoint >
 {
   auto  ncost    = Nodecost(heuristic(src));
   auto *neighbor = node_init(src, ncost);
@@ -441,7 +441,7 @@ void Astar::dump()
   }
 }
 
-std::vector< spoint > astar_solve(Gamep g, Levelsp v, Levelp l, Thingp t, spoint src, spoint dst)
+auto astar_solve(Gamep g, Levelsp v, Levelp l, Thingp t, spoint src, spoint dst) -> std::vector< spoint >
 {
   TRACE_NO_INDENT();
 

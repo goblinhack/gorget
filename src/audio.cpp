@@ -18,7 +18,7 @@ void audio_fini()
   audio_init_done = 0u;
 }
 
-bool audio_init()
+auto audio_init() -> bool
 {
   TRACE_NO_INDENT();
   //

@@ -11,7 +11,7 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-static std::string tp_grass_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static auto tp_grass_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
   TRACE_NO_INDENT();
 
@@ -21,7 +21,7 @@ static std::string tp_grass_description_get(Gamep g, Levelsp v, Levelp l, Thingp
   return "dry grass";
 }
 
-bool tp_load_grass()
+auto tp_load_grass() -> bool
 {
   TRACE_NO_INDENT();
 

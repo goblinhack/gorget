@@ -91,54 +91,46 @@ using box_args = struct box_args_ {
   void *context;
 };
 
-bool ascii_is_empty(int x, int y);
-
-color ascii_get_color(int x, int y, int z);
-
-int ascii_ok(int x, int y);
-int ascii_ok_for_scissors(int x, int y);
-int ascii_strlen(std::string const &text);
-int ascii_tp_br1_tile(int x, int y, fpoint *);
-int ascii_tp_tile_mid(int x, int y, fpoint *);
-int ascii_tp_tl1_tile(int x, int y, fpoint *);
-int ascii_x_ok(int x);
-int ascii_y_ok(int y);
-
-std::string ascii_strip(std::string const &text);
-
-void *ascii_get_stat_context(int x, int y);
-
+auto ascii_get_color(int x, int y, int z) -> color;
+auto ascii_get_stat_context(int x, int y) -> void *;
+auto ascii_is_empty(int x, int y) -> bool;
+auto ascii_ok_for_scissors(int x, int y) -> int;
+auto ascii_ok(int x, int y) -> int;
+auto ascii_strip(std::string const &text) -> std::string;
+auto ascii_strlen(std::string const &text) -> int;
+auto ascii_tp_br1_tile(int x, int y, fpoint *) -> int;
+auto ascii_tp_tile_mid(int x, int y, fpoint *) -> int;
+auto ascii_tp_tl1_tile(int x, int y, fpoint *) -> int;
+auto ascii_x_ok(int x) -> int;
+auto ascii_y_ok(int y) -> int;
 void ascii_blit_layer(int z, int no_color);
 void ascii_clear_display();
 void ascii_clear_scissors();
 void ascii_dim(int x, int y, int z, float alpha);
 void ascii_display(Gamep g);
 void ascii_draw_line(int depth, int x0, int y0, int x1, int y1, char ch, color c);
+void ascii_draw_line(int x0, int y0, int x1, int y1, char what, color c);
 void ascii_draw_line(int x0, int y0, int x1, int y1, const char *tilename, color c);
 void ascii_draw_line(int x0, int y0, int x1, int y1, Tilep what, color c);
-void ascii_draw_line(int x0, int y0, int x1, int y1, char what, color c);
 void ascii_dump_to_console(FILE *, bool no_color);
 void ascii_init();
+void ascii_put_bg_square(int tlx, int tly, int brx, int bry, char what, color c);
 void ascii_put_bg_square(int tlx, int tly, int brx, int bry, const char *tilename, color c);
 void ascii_put_bg_square(int tlx, int tly, int brx, int bry, Tilep what, color c);
-void ascii_put_bg_square(int tlx, int tly, int brx, int bry, char what, color c);
 void ascii_put_box(box_args b, int style, TileLayers tiles, const char *fmt, ...);
-void ascii_putf(int x, int y, color fg, color bg, std::string fmt, ...);
-void ascii_putf_internal2(int x, int y, color fg, color bg, std::string text);
+void ascii_putf_internal2(int x, int y, color fg, color bg, const std::string &text);
 void ascii_putf(int x, int y, color fg, color bg, const char *fmt, ...);
-void ascii_putf(int x, int y, color fg, std::string fmt, ...);
 void ascii_putf(int x, int y, color fg, const char *fmt, ...);
-void ascii_putf(int x, int y, std::string fmt, ...);
 void ascii_putf(int x, int y, const char *fmt, ...);
 void ascii_set_context(int x, int y, void *context);
+void ascii_set_scissors(spoint tl, spoint br);
+void ascii_set(int depth, int x, int y, char ch);
 void ascii_set(int depth, int x, int y, color c);
 void ascii_set(int depth, int x, int y, const char *tilename, char);
-void ascii_set(int depth, int x, int y, char ch);
 void ascii_set(int depth, int x, int y, Texp tex, float tx, float ty, float dx, float dy);
-void ascii_set(int depth, int x, int y, Tilep tile);
 void ascii_set(int depth, int x, int y, Tilep tile, char ch);
 void ascii_set(int depth, int x, int y, Tilep tile, float tx, float ty, float dx, float dy);
-void ascii_set_scissors(spoint tl, spoint br);
+void ascii_set(int depth, int x, int y, Tilep tile);
 void pixel_to_ascii(Gamep g, int *x, int *y);
 
 extern float tile_pix_w;

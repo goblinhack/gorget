@@ -7,7 +7,7 @@
 #include <cmath>
 #include <vector>
 
-std::vector< spoint > draw_line(const spoint s, const spoint e, size_t max_elems)
+auto draw_line(const spoint s, const spoint e, size_t max_elems) -> std::vector< spoint >
 {
   std::vector< spoint > out;
 

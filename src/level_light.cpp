@@ -365,7 +365,7 @@ static void light_tile(Gamep g, Levelsp v, Levelp l, Thingp t, ThingFovp fov, sp
 //
 // Something blocking the fov?
 //
-Thingp level_light_blocker_at(Gamep g, Levelsp v, Levelp l, spoint pov)
+auto level_light_blocker_at(Gamep g, Levelsp v, Levelp l, spoint pov) -> Thingp
 {
   FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, pov)
   {
@@ -685,7 +685,7 @@ void Raycast::raycast_render(Gamep g, Levelsp v, Levelp l)
   blit_fbo_unbind();
 }
 
-static Raycast *raycast_new(int ray_max_length_in_pixels, FboEnum fbo)
+static auto raycast_new(int ray_max_length_in_pixels, FboEnum fbo) -> Raycast *
 {
   TRACE_NO_INDENT();
 

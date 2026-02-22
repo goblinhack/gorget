@@ -31,7 +31,7 @@ int         GAME_SAVE_MARKER_CONFIG = 987654;
     out << bits(magic);                                                                                              \
   }
 
-std::ostream &operator<<(std::ostream &out, Bits< const SDL_Keysym & > const my)
+auto operator<<(std::ostream &out, Bits< const SDL_Keysym & > const my) -> std::ostream &
 {
   TRACE_NO_INDENT();
   out << bits(my.t.scancode);
@@ -41,7 +41,7 @@ std::ostream &operator<<(std::ostream &out, Bits< const SDL_Keysym & > const my)
   return out;
 }
 
-std::ostream &operator<<(std::ostream &out, Bits< const Config & > const my)
+auto operator<<(std::ostream &out, Bits< const Config & > const my) -> std::ostream &
 {
   TRACE_NO_INDENT();
   out << bits(my.t.version);
@@ -255,7 +255,7 @@ std::ostream &operator<<(std::ostream &out, Bits< const Config & > const my)
   return out;
 }
 
-std::ostream &operator<<(std::ostream &out, Bits< const class Game & > const my)
+auto operator<<(std::ostream &out, Bits< const class Game & > const my) -> std::ostream &
 {
   TRACE_NO_INDENT();
   auto serialized_size = (uint32_t) (sizeof(Game));
@@ -451,7 +451,7 @@ std::ostream &operator<<(std::ostream &out, Bits< const class Game & > const my)
   return out;
 }
 
-bool Game::save(const std::string &file_to_save)
+auto Game::save(const std::string &file_to_save) -> bool
 {
   LOG("Save: %s", file_to_save.c_str());
   TRACE_AND_INDENT();
@@ -622,14 +622,14 @@ bool Game::save(const std::string &file_to_save)
   return true;
 }
 
-bool game_save(Gamep g, const std::string &file_to_save)
+auto game_save(Gamep g, const std::string &file_to_save) -> bool
 {
   LOG("Save: %s", file_to_save.c_str());
 
   return g->save(file_to_save);
 }
 
-bool Game::save(int slot)
+auto Game::save(int slot) -> bool
 {
   LOG("Save slot: %d", slot);
   TRACE_AND_INDENT();
@@ -659,7 +659,7 @@ bool Game::save(int slot)
   return ret;
 }
 
-bool Game::save_snapshot()
+auto Game::save_snapshot() -> bool
 {
   LOG("Save snapshot");
   TRACE_AND_INDENT();
@@ -680,7 +680,7 @@ bool Game::save_snapshot()
   return ret;
 }
 
-bool Game::save_config()
+auto Game::save_config() -> bool
 {
   TRACE_NO_INDENT();
 
@@ -715,7 +715,7 @@ void wid_save_destroy(Gamep g)
   g->state_reset("wid save destroy");
 }
 
-static bool wid_save_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)
+static auto wid_save_key_up(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -767,7 +767,7 @@ static bool wid_save_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)
   return true;
 }
 
-static bool wid_save_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
+static auto wid_save_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -780,7 +780,7 @@ static bool wid_save_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
   return true;
 }
 
-static bool wid_save_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button)
+static auto wid_save_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE_NO_INDENT();
   auto slot = wid_get_int_context(w);
@@ -789,14 +789,14 @@ static bool wid_save_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_save_cancel(Gamep g, Widp w, int x, int y, uint32_t button)
+static auto wid_save_cancel(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE_NO_INDENT();
   wid_save_destroy(game);
   return true;
 }
 
-bool Game::save_select()
+auto Game::save_select() -> bool
 {
   LOG("Save menu");
   TRACE_AND_INDENT();

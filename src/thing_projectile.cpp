@@ -9,7 +9,7 @@
 #include "my_math.hpp"
 #include "my_thing_callbacks.hpp"
 
-static fpoint thing_projectile_get_delta_from_dt(Gamep g, Thingp t, float dt)
+static auto thing_projectile_get_delta_from_dt(Gamep g, Thingp t, float dt) -> fpoint
 {
   TRACE_NO_INDENT();
 
@@ -35,14 +35,14 @@ static fpoint thing_projectile_get_delta_from_dt(Gamep g, Thingp t, float dt)
   return delta;
 }
 
-fpoint thing_projectile_get_direction(Gamep g, Levelsp v, Levelp l, Thingp t)
+auto thing_projectile_get_direction(Gamep g, Levelsp v, Levelp l, Thingp t) -> fpoint
 {
   TRACE_NO_INDENT();
 
   return unit(thing_projectile_get_delta_from_dt(g, t, 1.0));
 }
 
-bool thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const fpoint target)
+auto thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const fpoint target) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -94,7 +94,7 @@ bool thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what,
   return true;
 }
 
-bool thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const spoint target)
+auto thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const spoint target) -> bool
 {
   return thing_projectile_fire_at(g, v, l, me, what, make_fpoint(target));
 }

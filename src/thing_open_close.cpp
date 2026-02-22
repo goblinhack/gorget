@@ -8,7 +8,7 @@
 //
 // Open doors
 //
-bool thing_open(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp player_or_monst)
+auto thing_open(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp player_or_monst) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -35,7 +35,7 @@ bool thing_open(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp player_or_monst)
 //
 // Close doors
 //
-bool thing_close(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp player_or_monst)
+auto thing_close(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp player_or_monst) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -62,7 +62,7 @@ bool thing_close(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp player_or_monst
 //
 // Returns true if we can move to this location by opening a door
 //
-bool thing_can_move_to_attempt_by_opening(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to)
+auto thing_can_move_to_attempt_by_opening(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool
 {
   TRACE_NO_INDENT();
 

@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static bool test_projectile_over_water(Gamep g, Testp t)
+[[nodiscard]] static auto test_projectile_over_water(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE_AND_INDENT();
@@ -79,7 +79,7 @@ exit:
   return result;
 }
 
-bool test_load_projectile_over_water()
+auto test_load_projectile_over_water() -> bool
 {
   TRACE_NO_INDENT();
 

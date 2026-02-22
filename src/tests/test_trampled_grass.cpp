@@ -8,7 +8,7 @@
 #include "../my_test.hpp"
 #include "../my_thing_inlines.hpp"
 
-[[nodiscard]] static bool test_trampled_grass(Gamep g, Testp t)
+[[nodiscard]] static auto test_trampled_grass(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE_AND_INDENT();
@@ -114,7 +114,7 @@ exit:
   return result;
 }
 
-bool test_load_trampled_grass()
+auto test_load_trampled_grass() -> bool
 {
   TRACE_NO_INDENT();
 

@@ -18,7 +18,7 @@
 //
 // Is this minion attached to a mob?
 //
-Thingp thing_minion_mob_get(Gamep g, Levelsp v, Levelp l, Thingp me)
+auto thing_minion_mob_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> Thingp
 {
   if (me == nullptr) {
     return nullptr;
@@ -38,7 +38,7 @@ Thingp thing_minion_mob_get(Gamep g, Levelsp v, Levelp l, Thingp me)
 //
 // Get the dmap associated with the mob
 //
-Dmap *thing_minion_get_mob_dmap(Gamep g, Levelsp v, Levelp l, Thingp me)
+auto thing_minion_get_mob_dmap(Gamep g, Levelsp v, Levelp l, Thingp me) -> Dmap *
 {
   TRACE_NO_INDENT();
 
@@ -59,7 +59,7 @@ Dmap *thing_minion_get_mob_dmap(Gamep g, Levelsp v, Levelp l, Thingp me)
 //
 // Detach a minion from its mob
 //
-bool thing_minion_detach_me_from_mob(Gamep g, Levelsp v, Levelp l, Thingp me)
+auto thing_minion_detach_me_from_mob(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -87,9 +87,9 @@ bool thing_minion_detach_me_from_mob(Gamep g, Levelsp v, Levelp l, Thingp me)
 // The points are arranged in a radius around the dmap goal, which was
 // what was presumably used to create the dmap.
 //
-[[nodiscard]] static bool thing_minion_get_mob_dmap_target_cand(Gamep g, Levelsp v, Levelp l, Thingp me,
+[[nodiscard]] static auto thing_minion_get_mob_dmap_target_cand(Gamep g, Levelsp v, Levelp l, Thingp me,
                                                                 spoint dmap_goal, Dmap *dmap, int radius,
-                                                                spoint &target)
+                                                                spoint &target) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -125,7 +125,7 @@ bool thing_minion_detach_me_from_mob(Gamep g, Levelsp v, Levelp l, Thingp me)
 //
 // Given a mob, choose somewhere to wander, near the mob.
 //
-bool thing_minion_choose_target_near_mob(Gamep g, Levelsp v, Levelp l, Thingp me)
+auto thing_minion_choose_target_near_mob(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
 {
   TRACE_NO_INDENT();
 

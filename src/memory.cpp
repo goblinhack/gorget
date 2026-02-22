@@ -10,11 +10,11 @@
 #include <cstdlib>
 #include <cstring>
 
-void *myzalloc_(int size, const char *what, const char *file, const char *func, int line)
+auto myzalloc_(int size, const char *what, const char *file, const char *func, int line) -> void *
 {
   TRACE_NO_INDENT();
 
-  void *ptr = calloc(1, size);
+  void *ptr = calloc(1, size); // NOLINT
 
   if (unlikely(! ptr)) {
     CROAK("No memory, %s:%s:%u, size %u", file, func, line, size);
@@ -31,11 +31,11 @@ void *myzalloc_(int size, const char *what, const char *file, const char *func, 
   return ptr;
 }
 
-void *mymalloc_(int size, const char *what, const char *file, const char *func, int line)
+auto mymalloc_(int size, const char *what, const char *file, const char *func, int line) -> void *
 {
   TRACE_NO_INDENT();
 
-  void *ptr = malloc(size);
+  void *ptr = malloc(size); // NOLINT
 
   if (unlikely(! ptr)) {
     CROAK("No memory, %s:%s:%u", file, func, line);
@@ -52,7 +52,7 @@ void *mymalloc_(int size, const char *what, const char *file, const char *func, 
   return ptr;
 }
 
-void *myrealloc_(void *ptr, int size, const char *what, const char *file, const char *func, int line)
+auto myrealloc_(void *ptr, int size, const char *what, const char *file, const char *func, int line) -> void *
 {
   TRACE_NO_INDENT();
   IF_DEBUG2
@@ -91,7 +91,7 @@ void myfree_(void *ptr, const char *file, const char *func, int line)
   free(ptr);
 }
 
-char *mydupstr_(const char *in, const char *what, const char *file, const char *func, int line)
+auto mydupstr_(const char *in, const char *what, const char *file, const char *func, int line) -> char *
 {
   TRACE_NO_INDENT();
 
@@ -100,7 +100,7 @@ char *mydupstr_(const char *in, const char *what, const char *file, const char *
     return nullptr;
   }
 
-  char *ptr = strdup(in);
+  char *ptr = strdup(in); // NOLINT
   if (unlikely(! ptr)) {
     CROAK("No memory, %s:%s:%u", file, func, line);
   }

@@ -129,7 +129,7 @@ static inline void sdl_list_video_size()
   }
 }
 
-bool sdl_display_init(Gamep g)
+auto sdl_display_init(Gamep g) -> bool
 {
   int video_width;
   int video_height;

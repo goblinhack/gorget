@@ -8,7 +8,7 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-bool tp_load_level_not_visited()
+auto tp_load_level_not_visited() -> bool
 {
   TRACE_NO_INDENT();
 

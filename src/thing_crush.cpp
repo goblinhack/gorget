@@ -10,7 +10,7 @@
 //
 // "me" here could be a barrel
 //
-bool thing_crush(Gamep g, Levelsp v, Levelp l, Thingp it, Thingp me)
+auto thing_crush(Gamep g, Levelsp v, Levelp l, Thingp it, Thingp me) -> bool
 {
   TRACE_NO_INDENT();
 

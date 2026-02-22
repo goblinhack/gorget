@@ -84,7 +84,7 @@ WidPopup::WidPopup(Gamep g, const std::string &vname, spoint vtl, spoint vbr, Ti
 //
 // Log a message to the popup
 //
-Widp WidPopup::log(Gamep g, const std::string &s, wid_text_format format, const std::string &col) const
+auto WidPopup::log(Gamep g, const std::string &s, wid_text_format format, const std::string &col) const -> Widp
 {
   TRACE_NO_INDENT();
 
@@ -94,7 +94,7 @@ Widp WidPopup::log(Gamep g, const std::string &s, wid_text_format format, const 
 //
 // Log a blank line to the popup
 //
-Widp WidPopup::log_empty_line(Gamep g) const
+auto WidPopup::log_empty_line(Gamep g) const -> Widp
 {
   TRACE_NO_INDENT();
 

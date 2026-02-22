@@ -15,8 +15,8 @@
 
 class Test;
 
-const char *test_name(Testp test);
-Testp       test_load(const char       */*name_in*/);
+auto test_name(Testp test) -> const char *;
+auto       test_load(const char       */*name_in*/) -> Testp;
 
 using test_callback_t = bool (*)(Gamep, Testp);
 void test_callback_set(Testp test, test_callback_t callback);
@@ -75,11 +75,11 @@ void tests_run(Gamep g);
 void test_init();
 void test_fini();
 
-[[nodiscard]] Levelsp game_test_init(Gamep g, Levelp *out, LevelNum level_num, int w, int h, const char *contents,
-                                     Overrides overrides = no_overrides);
+[[nodiscard]] auto game_test_init(Gamep g, Levelp *out, LevelNum level_num, int w, int h, const char *contents,
+                                     Overrides overrides = no_overrides) -> Levelsp;
 
 void game_test_init_level(Gamep g, Levelsp v, Levelp *out, LevelNum level_num, int w, int h, const char *contents,
-                          Overrides overrides = no_overrides);
+                          const Overrides& overrides = no_overrides);
 
 void game_test_init_level(Gamep g, Levelsp v, Levelp *out, LevelNum level_num, spoint level_at, int w, int h,
                           const char *contents, const Overrides &overrides = no_overrides);

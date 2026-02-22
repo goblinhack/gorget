@@ -17,7 +17,7 @@ static std::mutex thing_mutex;
 static bool memory_test = true;
 #endif
 
-[[nodiscard]] static bool thing_ext_alloc(Levelsp v, Thingp t)
+[[nodiscard]] static auto thing_ext_alloc(Levelsp v, Thingp t) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -75,7 +75,7 @@ static void thing_ext_free(Levelsp v, Thingp t)
   t->ext_id = 0;
 }
 
-[[nodiscard]] static bool thing_fov_alloc(Levelsp v, Thingp t)
+[[nodiscard]] static auto thing_fov_alloc(Levelsp v, Thingp t) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -133,8 +133,8 @@ static void thing_fov_free(Levelsp v, Thingp t)
   t->fov_id = 0;
 }
 
-static Thingp thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, ThingIdPacked id, bool needs_ext_memory,
-                             bool needs_fov_memory, bool need_mutex)
+static auto thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, ThingIdPacked id, bool needs_ext_memory,
+                             bool needs_fov_memory, bool need_mutex) -> Thingp
 {
   TRACE_NO_INDENT();
 
@@ -249,7 +249,7 @@ static Thingp thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, ThingIdPacked
   return t;
 }
 
-Thingp thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p)
+auto thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p) -> Thingp
 {
   TRACE_NO_INDENT();
 

@@ -15,7 +15,7 @@ using ramdisk_t = struct ramdisk_t_ {
 
 extern std::unordered_map< std::string, ramdisk_t_ > ramdisk_data;
 
-extern unsigned char *ramdisk_load(const char *filename, int *outlen);
+extern auto ramdisk_load(const char *filename, int *outlen) -> unsigned char *;
 extern void           ramdisk_init();
 
 #endif

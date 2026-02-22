@@ -267,14 +267,14 @@ public:
   Game(const std::string &appdata);
   Game() = default;
 
-  bool load_snapshot();
-  bool load(const std::string &file_to_load, class Game &target);
-  bool load(int slot);
-  bool save_config();
-  bool save_select();
-  bool save_snapshot();
-  bool save(const std::string &file_to_save);
-  bool save(int slot);
+  auto load_snapshot() -> bool;
+  auto load(const std::string &file_to_load, class Game &target) -> bool;
+  auto load(int slot) -> bool;
+  auto save_config() -> bool;
+  auto save_select() -> bool;
+  auto save_snapshot() -> bool;
+  auto save(const std::string &file_to_save) -> bool;
+  auto save(int slot) -> bool;
 
   void cleanup();
   void create_levels();
@@ -294,7 +294,7 @@ public:
   void state_reset(const std::string &why);
   void tick();
 
-  [[nodiscard]] std::string load_config() const;
+  [[nodiscard]] auto load_config() const -> std::string;
 };
 
 static void game_map_zoom_update(Gamep g);
@@ -405,8 +405,8 @@ void game_init(Gamep g) { g->init(); }
 //
 // Create a level with the given contents and start the game into playing state
 //
-Levelsp game_test_init(Gamep g, Levelp *l_out, LevelNum level_num, int w, int h, const char *contents,
-                       Overrides overrides)
+auto game_test_init(Gamep g, Levelp *l_out, LevelNum level_num, int w, int h, const char *contents,
+                       Overrides overrides) -> Levelsp
 {
   TRACE_NO_INDENT();
   game_cleanup(g);
@@ -501,11 +501,11 @@ void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num,
 }
 
 void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num, int w, int h, const char *contents,
-                          Overrides overrides)
+                          const Overrides& overrides)
 {
   TRACE_NO_INDENT();
 
-  game_test_init_level(g, v, l_out, level_num, spoint(0, level_num), w, h, contents, std::move(overrides));
+  game_test_init_level(g, v, l_out, level_num, spoint(0, level_num), w, h, contents, overrides);
 }
 
 void Game::fini()
@@ -580,7 +580,7 @@ void game_save_config(Gamep g)
   g->save_config();
 }
 
-std::list< GamePopup * > *game_popups_get(Gamep g, int x, int y)
+auto game_popups_get(Gamep g, int x, int y) -> std::list< GamePopup * > *
 {
   TRACE_NO_INDENT();
   return &g->popups[ x ][ y ].all;
@@ -592,7 +592,7 @@ void game_popups_set(Gamep g, int x, int y, std::list< GamePopup * > &l)
   g->popups[ x ][ y ].all = l;
 }
 
-bool game_popups_present(Gamep g, int x, int y)
+auto game_popups_present(Gamep g, int x, int y) -> bool
 {
   TRACE_NO_INDENT();
   return ! g->popups[ x ][ y ].all.empty();
@@ -702,7 +702,7 @@ void game_seed_set(Gamep g, uint32_t seed)
   game_seed_set(g, seed_name.c_str());
 }
 
-const char *game_seed_name_get(Gamep g)
+auto game_seed_name_get(Gamep g) -> const char *
 {
   TRACE_NO_INDENT();
 
@@ -714,7 +714,7 @@ const char *game_seed_name_get(Gamep g)
   return g->config.seed_name.c_str();
 }
 
-SeedSource game_seed_source_get(Gamep g)
+auto game_seed_source_get(Gamep g) -> SeedSource
 {
   TRACE_NO_INDENT();
 
@@ -726,7 +726,7 @@ SeedSource game_seed_source_get(Gamep g)
   return g->config.seed_source;
 }
 
-uint32_t game_seed_num_get(Gamep g)
+auto game_seed_num_get(Gamep g) -> uint32_t
 {
   TRACE_NO_INDENT();
 
@@ -767,7 +767,7 @@ void game_player_name_set(Gamep g, const char *maybe_player_name)
   g->player_name_set(maybe_player_name);
 }
 
-const char *game_player_name_get(Gamep g)
+auto game_player_name_get(Gamep g) -> const char *
 {
   TRACE_NO_INDENT();
 
@@ -918,7 +918,7 @@ void Game::destroy_levels()
 }
 void game_destroy_levels(Gamep g) { g->destroy_levels(); }
 
-std::string game_state_to_string(GameState state)
+auto game_state_to_string(GameState state) -> std::string
 {
   TRACE_NO_INDENT();
   return GameState_to_string(state);
@@ -947,7 +947,7 @@ void Game::state_reset(const std::string &why)
 }
 void game_state_reset(Gamep g, const char *why) { g->state_reset(why); }
 
-GameState game_state(Gamep g) { return g->state; }
+auto game_state(Gamep g) -> GameState { return g->state; }
 
 void Game::state_change(GameState new_state, const std::string &why)
 {
@@ -1215,7 +1215,7 @@ void game_tick(Gamep g)
   g->tick();
 }
 
-uint32_t game_tick_get(Gamep g, Levelsp v)
+auto game_tick_get(Gamep g, Levelsp v) -> uint32_t
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -1232,7 +1232,7 @@ uint32_t game_tick_get(Gamep g, Levelsp v)
 //
 // Wait for completion of the tick.
 //
-bool game_wait_for_tick_to_finish(Gamep g, Levelsp v, Levelp l)
+auto game_wait_for_tick_to_finish(Gamep g, Levelsp v, Levelp l) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -1332,7 +1332,7 @@ void game_display(Gamep g)
   g->display();
 }
 
-bool game_load_config(Gamep g)
+auto game_load_config(Gamep g) -> bool
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -1342,7 +1342,7 @@ bool game_load_config(Gamep g)
   return g->load_config().empty() /* no error */;
 }
 
-class HiScores *game_hiscores_get(Gamep g)
+auto game_hiscores_get(Gamep g) -> class HiScores *
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -1362,7 +1362,7 @@ void game_add_new_hiscore(Gamep g, int score, LevelNum level_num, const char *na
   g->config.hiscores.add_new_hiscore(g, score, level_num, name, reason);
 }
 
-bool game_is_new_hiscore(Gamep g, int score)
+auto game_is_new_hiscore(Gamep g, int score) -> bool
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -1372,7 +1372,7 @@ bool game_is_new_hiscore(Gamep g, int score)
   return g->config.hiscores.is_new_hiscore(score);
 }
 
-bool game_is_new_highest_hiscore(Gamep g, int score)
+auto game_is_new_highest_hiscore(Gamep g, int score) -> bool
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -1382,7 +1382,7 @@ bool game_is_new_highest_hiscore(Gamep g, int score)
   return g->config.hiscores.is_new_highest_hiscore(score);
 }
 
-const char *game_place_str(Gamep g, int score)
+auto game_place_str(Gamep g, int score) -> const char *
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -1428,7 +1428,7 @@ void game_visible_map_pix_set(Gamep g, int visible_map_tl_x, int visible_map_tl_
   g->visible_map_br_y = visible_map_br_y;
 }
 
-int game_tiles_visible_across_get(Gamep g)
+auto game_tiles_visible_across_get(Gamep g) -> int
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -1447,7 +1447,7 @@ void game_tiles_visible_across_set(Gamep g, int val)
   g->config.tiles_visible_across = val;
 }
 
-int game_tiles_visible_down_get(Gamep g)
+auto game_tiles_visible_down_get(Gamep g) -> int
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -1466,7 +1466,7 @@ void game_tiles_visible_down_set(Gamep g, int val)
   g->config.tiles_visible_down = val;
 }
 
-int game_last_mouse_down_get(Gamep g)
+auto game_last_mouse_down_get(Gamep g) -> int
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -1485,7 +1485,7 @@ void game_last_mouse_down_set(Gamep g, int val)
   g->last_mouse_down = val;
 }
 
-float game_aspect_ratio_get(Gamep g)
+auto game_aspect_ratio_get(Gamep g) -> float
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -1504,7 +1504,7 @@ void game_aspect_ratio_set(Gamep g, float val)
   g->config.aspect_ratio = val;
 }
 
-int game_ui_term_height_get(Gamep g)
+auto game_ui_term_height_get(Gamep g) -> int
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -1523,7 +1523,7 @@ void game_ui_term_height_set(Gamep g, int val)
   g->config.ui_term_height = val;
 }
 
-int game_ui_term_width_get(Gamep g)
+auto game_ui_term_width_get(Gamep g) -> int
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -1542,7 +1542,7 @@ void game_ui_term_width_set(Gamep g, int val)
   g->config.ui_term_width = val;
 }
 
-bool game_debug_mode_get(Gamep g)
+auto game_debug_mode_get(Gamep g) -> bool
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -1561,7 +1561,7 @@ void game_debug_mode_set(Gamep g, bool val)
   g->config.debug_mode = val;
 }
 
-bool game_fps_counter_get(Gamep g)
+auto game_fps_counter_get(Gamep g) -> bool
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -1589,7 +1589,7 @@ void game_fps_counter_unset(Gamep g)
   g->config.fps_counter = false;
 }
 
-int game_fps_value_get(Gamep g)
+auto game_fps_value_get(Gamep g) -> int
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -1608,7 +1608,7 @@ void game_fps_value_set(Gamep g, int val)
   g->fps_value = val;
 }
 
-bool game_gfx_borderless_get(Gamep g)
+auto game_gfx_borderless_get(Gamep g) -> bool
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -1636,7 +1636,7 @@ void game_gfx_borderless_unset(Gamep g)
   g->config.gfx_borderless = false;
 }
 
-bool game_gfx_fullscreen_get(Gamep g)
+auto game_gfx_fullscreen_get(Gamep g) -> bool
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -1664,7 +1664,7 @@ void game_gfx_fullscreen_unset(Gamep g)
   g->config.gfx_fullscreen = false;
 }
 
-bool game_gfx_fullscreen_desktop_get(Gamep g)
+auto game_gfx_fullscreen_desktop_get(Gamep g) -> bool
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -1692,7 +1692,7 @@ void game_gfx_fullscreen_desktop_unset(Gamep g)
   g->config.gfx_fullscreen_desktop = false;
 }
 
-bool game_gfx_vsync_enable_get(Gamep g)
+auto game_gfx_vsync_enable_get(Gamep g) -> bool
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -1720,7 +1720,7 @@ void game_gfx_vsync_enable_unset(Gamep g)
   g->config.gfx_vsync_enable = false;
 }
 
-bool game_mouse_wheel_lr_negated_get(Gamep g)
+auto game_mouse_wheel_lr_negated_get(Gamep g) -> bool
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -1748,7 +1748,7 @@ void game_mouse_wheel_lr_negated_unset(Gamep g)
   g->config.mouse_wheel_lr_negated = false;
 }
 
-bool game_mouse_wheel_ud_negated_get(Gamep g)
+auto game_mouse_wheel_ud_negated_get(Gamep g) -> bool
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -1776,7 +1776,7 @@ void game_mouse_wheel_ud_negated_unset(Gamep g)
   g->config.mouse_wheel_ud_negated = false;
 }
 
-int game_config_pix_height_get(Gamep g)
+auto game_config_pix_height_get(Gamep g) -> int
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -1795,7 +1795,7 @@ void game_config_pix_height_set(Gamep g, int val)
   g->config.config_pix_height = val;
 }
 
-int game_config_pix_width_get(Gamep g)
+auto game_config_pix_width_get(Gamep g) -> int
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -1814,7 +1814,7 @@ void game_config_pix_width_set(Gamep g, int val)
   g->config.config_pix_width = val;
 }
 
-int game_map_fbo_height_get(Gamep g)
+auto game_map_fbo_height_get(Gamep g) -> int
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -1824,7 +1824,7 @@ int game_map_fbo_height_get(Gamep g)
   return g->config.map_fbo_height;
 }
 
-int game_map_fbo_width_get(Gamep g)
+auto game_map_fbo_width_get(Gamep g) -> int
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -1854,7 +1854,7 @@ void game_map_fbo_width_set(Gamep g, int val)
   g->config.map_fbo_width = val;
 }
 
-int game_window_pix_height_get(Gamep g)
+auto game_window_pix_height_get(Gamep g) -> int
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -1873,7 +1873,7 @@ void game_window_pix_height_set(Gamep g, int val)
   g->config.window_pix_height = val;
 }
 
-int game_window_pix_width_get(Gamep g)
+auto game_window_pix_width_get(Gamep g) -> int
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -1892,7 +1892,7 @@ void game_window_pix_width_set(Gamep g, int val)
   g->config.window_pix_width = val;
 }
 
-int game_ascii_pix_height_get(Gamep g)
+auto game_ascii_pix_height_get(Gamep g) -> int
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -1911,7 +1911,7 @@ void game_ascii_pix_height_set(Gamep g, int val)
   g->config.ascii_pix_height = val;
 }
 
-int game_ascii_pix_width_get(Gamep g)
+auto game_ascii_pix_width_get(Gamep g) -> int
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -1930,7 +1930,7 @@ void game_ascii_pix_width_set(Gamep g, int val)
   g->config.ascii_pix_width = val;
 }
 
-int game_music_volume_get(Gamep g)
+auto game_music_volume_get(Gamep g) -> int
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -1949,7 +1949,7 @@ void game_music_volume_set(Gamep g, int val)
   g->config.music_volume = val;
 }
 
-int game_sdl_delay_get(Gamep g)
+auto game_sdl_delay_get(Gamep g) -> int
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -1968,7 +1968,7 @@ void game_sdl_delay_set(Gamep g, int val)
   g->config.sdl_delay = val;
 }
 
-int game_sound_volume_get(Gamep g)
+auto game_sound_volume_get(Gamep g) -> int
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -1987,7 +1987,7 @@ void game_sound_volume_set(Gamep g, int val)
   g->config.sound_volume = val;
 }
 
-Levelsp game_levels_get(Gamep g)
+auto game_levels_get(Gamep g) -> Levelsp
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -1999,7 +1999,7 @@ Levelsp game_levels_get(Gamep g)
   }
   return g->levels;
 }
-Levelsp game_levels_set(Gamep g, Levelsp val)
+auto game_levels_set(Gamep g, Levelsp val) -> Levelsp
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -2009,7 +2009,7 @@ Levelsp game_levels_set(Gamep g, Levelsp val)
   return g->levels = val;
 }
 
-Levelp game_level_get(Gamep g, Levelsp v)
+auto game_level_get(Gamep g, Levelsp v) -> Levelp
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -2024,7 +2024,7 @@ Levelp game_level_get(Gamep g, Levelsp v)
   return &v->level[ n ];
 }
 
-Levelp game_level_get(Gamep g, Levelsp v, LevelNum n)
+auto game_level_get(Gamep g, Levelsp v, LevelNum n) -> Levelp
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -2042,7 +2042,7 @@ Levelp game_level_get(Gamep g, Levelsp v, LevelNum n)
   return &v->level[ n ];
 }
 
-Levelp game_level_populate(Gamep g, Levelsp v, LevelNum n)
+auto game_level_populate(Gamep g, Levelsp v, LevelNum n) -> Levelp
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -2061,7 +2061,7 @@ Levelp game_level_populate(Gamep g, Levelsp v, LevelNum n)
   return game_level_get(g, v);
 }
 
-SDL_Keysym game_key_wait_get(Gamep g)
+auto game_key_wait_get(Gamep g) -> SDL_Keysym
 {
   TRACE_NO_INDENT();
   if (g == nullptr) {
@@ -2078,7 +2078,7 @@ void game_key_wait_set(Gamep g, SDL_Keysym key)
   g->config.key_wait = key;
 }
 
-SDL_Keysym game_key_console_get(Gamep g)
+auto game_key_console_get(Gamep g) -> SDL_Keysym
 {
   TRACE_NO_INDENT();
   if (g == nullptr) {
@@ -2095,7 +2095,7 @@ void game_key_console_set(Gamep g, SDL_Keysym key)
   g->config.key_console = key;
 }
 
-SDL_Keysym game_key_help_get(Gamep g)
+auto game_key_help_get(Gamep g) -> SDL_Keysym
 {
   TRACE_NO_INDENT();
   if (g == nullptr) {
@@ -2112,7 +2112,7 @@ void game_key_help_set(Gamep g, SDL_Keysym key)
   g->config.key_help = key;
 }
 
-SDL_Keysym game_key_load_get(Gamep g)
+auto game_key_load_get(Gamep g) -> SDL_Keysym
 {
   TRACE_NO_INDENT();
   if (g == nullptr) {
@@ -2129,7 +2129,7 @@ void game_key_load_set(Gamep g, SDL_Keysym key)
   g->config.key_load = key;
 }
 
-SDL_Keysym game_key_move_down_get(Gamep g)
+auto game_key_move_down_get(Gamep g) -> SDL_Keysym
 {
   TRACE_NO_INDENT();
   if (g == nullptr) {
@@ -2146,7 +2146,7 @@ void game_key_move_down_set(Gamep g, SDL_Keysym key)
   g->config.key_move_down = key;
 }
 
-SDL_Keysym game_key_move_left_get(Gamep g)
+auto game_key_move_left_get(Gamep g) -> SDL_Keysym
 {
   TRACE_NO_INDENT();
   if (g == nullptr) {
@@ -2163,7 +2163,7 @@ void game_key_move_left_set(Gamep g, SDL_Keysym key)
   g->config.key_move_left = key;
 }
 
-SDL_Keysym game_key_move_right_get(Gamep g)
+auto game_key_move_right_get(Gamep g) -> SDL_Keysym
 {
   TRACE_NO_INDENT();
   if (g == nullptr) {
@@ -2180,7 +2180,7 @@ void game_key_move_right_set(Gamep g, SDL_Keysym key)
   g->config.key_move_right = key;
 }
 
-SDL_Keysym game_key_move_up_get(Gamep g)
+auto game_key_move_up_get(Gamep g) -> SDL_Keysym
 {
   TRACE_NO_INDENT();
   if (g == nullptr) {
@@ -2197,7 +2197,7 @@ void game_key_move_up_set(Gamep g, SDL_Keysym key)
   g->config.key_move_up = key;
 }
 
-SDL_Keysym game_key_quit_get(Gamep g)
+auto game_key_quit_get(Gamep g) -> SDL_Keysym
 {
   TRACE_NO_INDENT();
   if (g == nullptr) {
@@ -2214,7 +2214,7 @@ void game_key_quit_set(Gamep g, SDL_Keysym key)
   g->config.key_quit = key;
 }
 
-SDL_Keysym game_key_save_get(Gamep g)
+auto game_key_save_get(Gamep g) -> SDL_Keysym
 {
   TRACE_NO_INDENT();
   if (g == nullptr) {
@@ -2231,7 +2231,7 @@ void game_key_save_set(Gamep g, SDL_Keysym key)
   g->config.key_save = key;
 }
 
-SDL_Keysym game_key_screenshot_get(Gamep g)
+auto game_key_screenshot_get(Gamep g) -> SDL_Keysym
 {
   TRACE_NO_INDENT();
   if (g == nullptr) {
@@ -2248,7 +2248,7 @@ void game_key_screenshot_set(Gamep g, SDL_Keysym key)
   g->config.key_screenshot = key;
 }
 
-SDL_Keysym game_key_unused1_get(Gamep g)
+auto game_key_unused1_get(Gamep g) -> SDL_Keysym
 {
   TRACE_NO_INDENT();
   if (g == nullptr) {
@@ -2266,7 +2266,7 @@ void game_key_unused1_set(Gamep g, SDL_Keysym key)
   g->config.key_unused1 = key;
 }
 
-SDL_Keysym game_key_unused2_get(Gamep g)
+auto game_key_unused2_get(Gamep g) -> SDL_Keysym
 {
   TRACE_NO_INDENT();
   if (g == nullptr) {
@@ -2284,7 +2284,7 @@ void game_key_unused2_set(Gamep g, SDL_Keysym key)
   g->config.key_unused2 = key;
 }
 
-SDL_Keysym game_key_unused3_get(Gamep g)
+auto game_key_unused3_get(Gamep g) -> SDL_Keysym
 {
   TRACE_NO_INDENT();
   if (g == nullptr) {
@@ -2302,7 +2302,7 @@ void game_key_unused3_set(Gamep g, SDL_Keysym key)
   g->config.key_unused3 = key;
 }
 
-SDL_Keysym game_key_unused4_get(Gamep g)
+auto game_key_unused4_get(Gamep g) -> SDL_Keysym
 {
   TRACE_NO_INDENT();
   if (g == nullptr) {
@@ -2320,7 +2320,7 @@ void game_key_unused4_set(Gamep g, SDL_Keysym key)
   g->config.key_unused4 = key;
 }
 
-SDL_Keysym game_key_unused5_get(Gamep g)
+auto game_key_unused5_get(Gamep g) -> SDL_Keysym
 {
   TRACE_NO_INDENT();
   if (g == nullptr) {
@@ -2338,7 +2338,7 @@ void game_key_unused5_set(Gamep g, SDL_Keysym key)
   g->config.key_unused5 = key;
 }
 
-SDL_Keysym game_key_unused6_get(Gamep g)
+auto game_key_unused6_get(Gamep g) -> SDL_Keysym
 {
   TRACE_NO_INDENT();
   if (g == nullptr) {
@@ -2356,7 +2356,7 @@ void game_key_unused6_set(Gamep g, SDL_Keysym key)
   g->config.key_unused6 = key;
 }
 
-SDL_Keysym game_key_unused7_get(Gamep g)
+auto game_key_unused7_get(Gamep g) -> SDL_Keysym
 {
   TRACE_NO_INDENT();
   if (g == nullptr) {
@@ -2374,7 +2374,7 @@ void game_key_unused7_set(Gamep g, SDL_Keysym key)
   g->config.key_unused7 = key;
 }
 
-SDL_Keysym game_key_unused8_get(Gamep g)
+auto game_key_unused8_get(Gamep g) -> SDL_Keysym
 {
   TRACE_NO_INDENT();
   if (g == nullptr) {
@@ -2392,7 +2392,7 @@ void game_key_unused8_set(Gamep g, SDL_Keysym key)
   g->config.key_unused8 = key;
 }
 
-SDL_Keysym game_key_unused9_get(Gamep g)
+auto game_key_unused9_get(Gamep g) -> SDL_Keysym
 {
   TRACE_NO_INDENT();
   if (g == nullptr) {
@@ -2410,7 +2410,7 @@ void game_key_unused9_set(Gamep g, SDL_Keysym key)
   g->config.key_unused9 = key;
 }
 
-SDL_Keysym game_key_unused10_get(Gamep g)
+auto game_key_unused10_get(Gamep g) -> SDL_Keysym
 {
   TRACE_NO_INDENT();
   if (g == nullptr) {
@@ -2428,7 +2428,7 @@ void game_key_unused10_set(Gamep g, SDL_Keysym key)
   g->config.key_unused10 = key;
 }
 
-SDL_Keysym game_key_unused11_get(Gamep g)
+auto game_key_unused11_get(Gamep g) -> SDL_Keysym
 {
   TRACE_NO_INDENT();
   if (g == nullptr) {
@@ -2446,7 +2446,7 @@ void game_key_unused11_set(Gamep g, SDL_Keysym key)
   g->config.key_unused11 = key;
 }
 
-SDL_Keysym game_key_unused12_get(Gamep g)
+auto game_key_unused12_get(Gamep g) -> SDL_Keysym
 {
   TRACE_NO_INDENT();
   if (g == nullptr) {
@@ -2464,7 +2464,7 @@ void game_key_unused12_set(Gamep g, SDL_Keysym key)
   g->config.key_unused12 = key;
 }
 
-SDL_Keysym game_key_unused13_get(Gamep g)
+auto game_key_unused13_get(Gamep g) -> SDL_Keysym
 {
   TRACE_NO_INDENT();
   if (g == nullptr) {
@@ -2482,7 +2482,7 @@ void game_key_unused13_set(Gamep g, SDL_Keysym key)
   g->config.key_unused13 = key;
 }
 
-SDL_Keysym game_key_unused14_get(Gamep g)
+auto game_key_unused14_get(Gamep g) -> SDL_Keysym
 {
   TRACE_NO_INDENT();
   if (g == nullptr) {
@@ -2500,7 +2500,7 @@ void game_key_unused14_set(Gamep g, SDL_Keysym key)
   g->config.key_unused14 = key;
 }
 
-SDL_Keysym game_key_fire_get(Gamep g)
+auto game_key_fire_get(Gamep g) -> SDL_Keysym
 {
   TRACE_NO_INDENT();
   if (g == nullptr) {
@@ -2518,7 +2518,7 @@ void game_key_fire_set(Gamep g, SDL_Keysym key)
   g->config.key_fire = key;
 }
 
-SDL_Keysym game_key_inventory_get(Gamep g)
+auto game_key_inventory_get(Gamep g) -> SDL_Keysym
 {
   TRACE_NO_INDENT();
   if (g == nullptr) {
@@ -2536,7 +2536,7 @@ void game_key_inventory_set(Gamep g, SDL_Keysym key)
   g->config.key_inventory = key;
 }
 
-SDL_Keysym game_key_jump_get(Gamep g)
+auto game_key_jump_get(Gamep g) -> SDL_Keysym
 {
   TRACE_NO_INDENT();
   if (g == nullptr) {
@@ -2554,7 +2554,7 @@ void game_key_jump_set(Gamep g, SDL_Keysym key)
   g->config.key_jump = key;
 }
 
-SDL_Keysym game_key_ascend_get(Gamep g)
+auto game_key_ascend_get(Gamep g) -> SDL_Keysym
 {
   TRACE_NO_INDENT();
   if (g == nullptr) {
@@ -2572,7 +2572,7 @@ void game_key_ascend_set(Gamep g, SDL_Keysym key)
   g->config.key_ascend = key;
 }
 
-SDL_Keysym game_key_descend_get(Gamep g)
+auto game_key_descend_get(Gamep g) -> SDL_Keysym
 {
   TRACE_NO_INDENT();
   if (g == nullptr) {
@@ -2590,7 +2590,7 @@ void game_key_descend_set(Gamep g, SDL_Keysym key)
   g->config.key_descend = key;
 }
 
-SDL_Keysym game_key_zoom_get(Gamep g)
+auto game_key_zoom_get(Gamep g) -> SDL_Keysym
 {
   TRACE_NO_INDENT();
   if (g == nullptr) {
@@ -2608,7 +2608,7 @@ void game_key_zoom_set(Gamep g, SDL_Keysym key)
   g->config.key_zoom = key;
 }
 
-int game_map_zoom_get(Gamep g)
+auto game_map_zoom_get(Gamep g) -> int
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -2634,7 +2634,7 @@ void game_map_zoom_set(Gamep g, int val)
 
   g->zoom = val;
 }
-bool game_map_zoom_is_full_map_visible(Gamep g)
+auto game_map_zoom_is_full_map_visible(Gamep g) -> bool
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -2644,7 +2644,7 @@ bool game_map_zoom_is_full_map_visible(Gamep g)
   return g->zoom == MAP_ZOOM_FULL_MAP;
 }
 
-int game_map_zoom_def_get(Gamep g)
+auto game_map_zoom_def_get(Gamep g) -> int
 {
   TRACE_NO_INDENT();
   int visible_map_tl_x = 0;
@@ -2755,7 +2755,7 @@ void game_map_zoom_out(Gamep g)
   game_map_zoom_update(g);
 }
 
-int game_map_single_pix_size_get(Gamep g)
+auto game_map_single_pix_size_get(Gamep g) -> int
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -2779,7 +2779,7 @@ void game_map_single_pix_size_set(Gamep g, int val)
   g->single_pix_size = val;
 }
 
-bool game_request_to_remake_ui_get(Gamep g)
+auto game_request_to_remake_ui_get(Gamep g) -> bool
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -2808,7 +2808,7 @@ void game_request_to_remake_ui_unset(Gamep g)
   g->request_to_remake_ui = false;
 }
 
-bool game_request_to_save_game_get(Gamep g)
+auto game_request_to_save_game_get(Gamep g) -> bool
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -2837,7 +2837,7 @@ void game_request_to_save_game_unset(Gamep g)
   g->request_to_save_game = false;
 }
 
-bool game_request_to_update_cursor_get(Gamep g)
+auto game_request_to_update_cursor_get(Gamep g) -> bool
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -2866,7 +2866,7 @@ void game_request_to_update_cursor_unset(Gamep g)
   g->request_to_update_cursor = false;
 }
 
-bool game_request_to_end_game_get(Gamep g)
+auto game_request_to_end_game_get(Gamep g) -> bool
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -2895,7 +2895,7 @@ void game_request_to_end_game_unset(Gamep g)
   g->request_to_end_game = false;
 }
 
-std::string game_request_to_end_game_reason_get(Gamep g)
+auto game_request_to_end_game_reason_get(Gamep g) -> std::string
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {

@@ -61,7 +61,7 @@ static void sound_finished(int channel)
   }
 }
 
-bool sound_init()
+auto sound_init() -> bool
 {
   TRACE_NO_INDENT();
   Mix_AllocateChannels(8);
@@ -93,7 +93,7 @@ void sound_fini()
   all_sound.clear();
 }
 
-bool sound_load(float volume, const char *file_in, const char *alias_in)
+auto sound_load(float volume, const char *file_in, const char *alias_in) -> bool
 {
   TRACE_NO_INDENT();
   auto file  = std::string(file_in);
@@ -102,7 +102,7 @@ bool sound_load(float volume, const char *file_in, const char *alias_in)
   return sound_load(volume, file, alias);
 }
 
-bool sound_load(float volume, const std::string &file, const std::string &alias, int concurrent_max)
+auto sound_load(float volume, const std::string &file, const std::string &alias, int concurrent_max) -> bool
 {
   TRACE_NO_INDENT();
   if (alias.empty()) {
@@ -159,14 +159,14 @@ bool sound_load(float volume, const std::string &file, const std::string &alias,
 //
 // Find an existing pice of sound.
 //
-bool sound_find(const std::string &alias)
+auto sound_find(const std::string &alias) -> bool
 {
   TRACE_NO_INDENT();
   auto result = all_sound.find(alias);
   return result != all_sound.end();
 }
 
-[[nodiscard]] static bool sound_play_internal(Game *g, const std::string &alias, class sound *s, float scale)
+[[nodiscard]] static auto sound_play_internal(Game *g, const std::string &alias, class sound *s, float scale) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -214,7 +214,7 @@ bool sound_find(const std::string &alias)
   return false;
 }
 
-bool sound_play(Gamep g, const std::string &alias, float scale)
+auto sound_play(Gamep g, const std::string &alias, float scale) -> bool
 {
   TRACE_NO_INDENT();
 

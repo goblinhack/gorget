@@ -5,7 +5,7 @@
 #ifndef MY_AUDIO_HPP_
 #define MY_AUDIO_HPP_
 
-bool audio_init();
+auto audio_init() -> bool;
 void audio_fini();
 
 #endif

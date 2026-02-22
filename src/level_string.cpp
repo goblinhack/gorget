@@ -12,7 +12,7 @@
 
 #include <print>
 
-std::string to_string(Gamep g, Levelsp v, Levelp l)
+auto to_string(Gamep g, Levelsp v, Levelp l) -> std::string
 {
   TRACE_NO_INDENT();
 
@@ -29,7 +29,7 @@ std::string to_string(Gamep g, Levelsp v, Levelp l)
 //
 // Convert a level into a single string
 //
-std::string level_string(Gamep g, Levelsp v, Levelp l, int w, int h)
+auto level_string(Gamep g, Levelsp v, Levelp l, int w, int h) -> std::string
 {
   TRACE_NO_INDENT();
 

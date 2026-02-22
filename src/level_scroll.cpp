@@ -15,7 +15,7 @@
 // We focus on the current level if on the level select screen.
 // Failing that we focus on the player if playing a level.
 //
-Thingp level_scroll_target(Gamep g, Levelsp v)
+auto level_scroll_target(Gamep g, Levelsp v) -> Thingp
 {
   TRACE_NO_INDENT();
 

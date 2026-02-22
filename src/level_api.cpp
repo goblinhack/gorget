@@ -13,7 +13,7 @@
 
 #include <format>
 
-bool level_request_to_cleanup_things(Gamep g, Levelsp v, Levelp l)
+auto level_request_to_cleanup_things(Gamep g, Levelsp v, Levelp l) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -34,7 +34,7 @@ void level_request_to_cleanup_things_unset(Gamep g, Levelsp v, Levelp l)
   l->request_to_cleanup_things = false;
 }
 
-bool level_is_player_level(Gamep g, Levelsp v, Levelp l)
+auto level_is_player_level(Gamep g, Levelsp v, Levelp l) -> bool
 {
   TRACE_NO_INDENT();
 

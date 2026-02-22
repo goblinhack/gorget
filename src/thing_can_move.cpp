@@ -9,7 +9,7 @@
 //
 // Returns true if the thing can move to this location
 //
-bool thing_can_move_to_attempt(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to)
+auto thing_can_move_to_attempt(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -34,7 +34,7 @@ bool thing_can_move_to_attempt(Gamep g, Levelsp v, Levelp l, Thingp me, spoint t
 // to this location. For a chasm, it is unlikely a monst would want to if
 // it means falling to its demise.
 //
-bool thing_can_move_to_ai(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to)
+auto thing_can_move_to_ai(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -95,7 +95,7 @@ bool thing_can_move_to_ai(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to)
 //
 // We do not change direction upon this attempt; purely a check only
 //
-bool thing_can_move_to_check_if_is_possible(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to)
+auto thing_can_move_to_check_if_is_possible(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -143,7 +143,7 @@ bool thing_can_move_to_check_if_is_possible(Gamep g, Levelsp v, Levelp l, Thingp
 //
 // Returns true if we can move to this location by shoving
 //
-bool thing_can_move_to_attempt_by_shoving(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to)
+auto thing_can_move_to_attempt_by_shoving(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool
 {
   TRACE_NO_INDENT();
 

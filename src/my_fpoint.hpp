@@ -18,31 +18,31 @@ public:
   void                operator-=(my_fpoint const &b);
   void                operator*=(float b);
   void                operator/=(float b);
-  [[nodiscard]] float length() const;
+  [[nodiscard]] auto length() const -> float;
   void                unit();
 };
 
-bool   operator==(fpoint const &a, fpoint const &b);
-fpoint operator+(fpoint const &a, fpoint const &b);
-fpoint operator-(fpoint const &a, fpoint const &b);
-fpoint operator*(fpoint const &a, float b);
-fpoint operator/(fpoint const &a, float b);
+auto   operator==(fpoint const &a, fpoint const &b) -> bool;
+auto operator+(fpoint const &a, fpoint const &b) -> fpoint;
+auto operator-(fpoint const &a, fpoint const &b) -> fpoint;
+auto operator*(fpoint const &a, float b) -> fpoint;
+auto operator/(fpoint const &a, float b) -> fpoint;
 
-fpoint rotate_radians(float angle, const fpoint &p, const fpoint &origin);
-fpoint rotate_radians(const fpoint &p, float angle);
-fpoint normal(const fpoint &p);
-fpoint unit(const fpoint &p);
+auto rotate_radians(float angle, const fpoint &p, const fpoint &origin) -> fpoint;
+auto rotate_radians(const fpoint &p, float angle) -> fpoint;
+auto normal(const fpoint &p) -> fpoint;
+auto unit(const fpoint &p) -> fpoint;
 
-float distance(const fpoint &a, const fpoint &b);
-float angle_radians(const fpoint &p);
-int   distance_to_line(fpoint P0, fpoint L0, fpoint L1, float *dist, fpoint *intersect_out);
+auto distance(const fpoint &a, const fpoint &b) -> float;
+auto angle_radians(const fpoint &p) -> float;
+auto   distance_to_line(fpoint P0, fpoint L0, fpoint L1, float *dist, fpoint *intersect_out) -> int;
 
-static inline fpoint make_fpoint(const spoint f) { return fpoint(f.x, f.y); }
+static inline auto make_fpoint(const spoint f) -> fpoint { return fpoint(f.x, f.y); }
 
 //
 // round() is better than floor() as if we do a jump on a diagonal, that is 0.707
 // units. We want to round to 1.0 so the diagonal move works and not 0.0.
 //
-static inline spoint make_spoint(const fpoint &f) { return spoint((int) roundf(f.x), (int) roundf(f.y)); }
+static inline auto make_spoint(const fpoint &f) -> spoint { return spoint((int) roundf(f.x), (int) roundf(f.y)); }
 
 #endif // _MY_FPOINT_HPP_

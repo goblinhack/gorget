@@ -41,7 +41,7 @@ void level_cursor_describe_update(Gamep g, Levelsp v)
 //
 // Add a thing to be described
 //
-bool level_cursor_describe_add(Gamep g, Levelsp v, Thingp t)
+auto level_cursor_describe_add(Gamep g, Levelsp v, Thingp t) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -83,7 +83,7 @@ bool level_cursor_describe_add(Gamep g, Levelsp v, Thingp t)
 //
 // Remove a thing from the describe array
 //
-bool level_cursor_describe_remove(Gamep g, Levelsp v, Thingp t)
+auto level_cursor_describe_remove(Gamep g, Levelsp v, Thingp t) -> bool
 {
   TRACE_NO_INDENT();
 

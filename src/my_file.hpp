@@ -5,14 +5,14 @@
 #ifndef MY_FILE_HPP_
 #define MY_FILE_HPP_
 
-int            file_write(const char *filename, unsigned char *buffer, int len);
-uint8_t        file_exists(const char *filename);
-int            file_size(const char *filename);
-uint8_t        file_non_zero_size_exists(const char *filename);
-uint8_t        file_unlink(const char *filename);
-double         file_age(const char *filename);
-uint8_t        file_exists_and_is_newer_than(const char *filename, const char *filename2);
-unsigned char *file_load(const char *filename, int *outlen);
+auto            file_write(const char *filename, unsigned char *buffer, int len) -> int;
+auto        file_exists(const char *filename) -> uint8_t;
+auto            file_size(const char *filename) -> int;
+auto        file_non_zero_size_exists(const char *filename) -> uint8_t;
+auto        file_unlink(const char *filename) -> uint8_t;
+auto         file_age(const char *filename) -> double;
+auto        file_exists_and_is_newer_than(const char *filename, const char *filename2) -> uint8_t;
+auto file_load(const char *filename, int *outlen) -> unsigned char *;
 void           log_(const char *fmt, va_list args);
 
 #if defined(__WIN64__) || defined(_WIN64) || defined(WIN64) || defined(__WIN32__) || defined(_WIN32)                 \

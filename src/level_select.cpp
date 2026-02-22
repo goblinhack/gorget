@@ -18,7 +18,7 @@
 #include <algorithm>
 #include <print>
 
-static spoint car_to_iso(spoint car)
+static auto car_to_iso(spoint car) -> spoint
 {
   spoint iso;
   iso.y = car.x + car.y;
@@ -27,7 +27,7 @@ static spoint car_to_iso(spoint car)
   return iso;
 }
 
-bool level_select_is_oob(spoint p)
+auto level_select_is_oob(spoint p) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -46,7 +46,7 @@ bool level_select_is_oob(spoint p)
   return false;
 }
 
-bool level_select_is_oob(int x, int y)
+auto level_select_is_oob(int x, int y) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -68,7 +68,7 @@ bool level_select_is_oob(int x, int y)
 //
 // If in level select mode, enter the chosen level
 //
-Levelp level_select_get_level_at_tile_coords(Gamep g, Levelsp v, spoint p)
+auto level_select_get_level_at_tile_coords(Gamep g, Levelsp v, spoint p) -> Levelp
 {
   TRACE_NO_INDENT();
 
@@ -101,7 +101,7 @@ Levelp level_select_get_level_at_tile_coords(Gamep g, Levelsp v, spoint p)
 // Given a point in the level select grid, return the corresponding level,
 // if one exists there.
 //
-static Levelp level_select_get_level_from_grid_coords(Levelsp v, spoint p)
+static auto level_select_get_level_from_grid_coords(Levelsp v, spoint p) -> Levelp
 {
   TRACE_NO_INDENT();
 
@@ -130,7 +130,7 @@ static Levelp level_select_get_level_from_grid_coords(Levelsp v, spoint p)
 //
 // Attempt to find the next level for this thing to fall into
 //
-Levelp level_select_get_next_level_down(Gamep g, Levelsp v, Levelp l)
+auto level_select_get_next_level_down(Gamep g, Levelsp v, Levelp l) -> Levelp
 {
   TRACE_NO_INDENT();
 
@@ -144,7 +144,7 @@ Levelp level_select_get_next_level_down(Gamep g, Levelsp v, Levelp l)
 //
 // Attempt to find the next level for this thing to fall into
 //
-Levelp level_select_calculate_next_level_down(Gamep g, Levelsp v, Levelp l, bool redo)
+auto level_select_calculate_next_level_down(Gamep g, Levelsp v, Levelp l, bool redo) -> Levelp
 {
   TRACE_NO_INDENT();
 
@@ -297,7 +297,7 @@ got_level:
 //
 // This is the thing that is used to represent the current level. We focus the mouse zoom on this.
 //
-Thingp thing_level_select(Gamep g)
+auto thing_level_select(Gamep g) -> Thingp
 {
   TRACE_NO_INDENT();
 
@@ -374,7 +374,7 @@ void level_select_assign_levels_to_grid(Gamep g, Levelsp v)
 //
 // Return the level
 //
-LevelSelectCell *level_select_get(Gamep g, Levelsp v, spoint p)
+auto level_select_get(Gamep g, Levelsp v, spoint p) -> LevelSelectCell *
 {
   TRACE_NO_INDENT();
 
@@ -395,7 +395,7 @@ LevelSelectCell *level_select_get(Gamep g, Levelsp v, spoint p)
 //
 // Count the levels created
 //
-static int level_select_count_levels(LevelSelect *s)
+static auto level_select_count_levels(LevelSelect *s) -> int
 {
   TRACE_NO_INDENT();
 
@@ -463,12 +463,12 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
 //
 // Create a Thing for each level
 //
-[[nodiscard]] static bool level_select_map_set(Gamep g, Levelsp v)
+[[nodiscard]] static auto level_select_map_set(Gamep g, Levelsp v) -> bool
 {
   LOG("Level select map");
   TRACE_NO_INDENT();
 
-  LevelSelect *s            = &v->level_select;
+  LevelSelect  const*s            = &v->level_select;
   auto         level_num    = LEVEL_SELECT_ID;
   auto        *level_select = game_level_get(g, v, level_num);
 

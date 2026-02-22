@@ -8,7 +8,7 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-bool tp_load_border()
+auto tp_load_border() -> bool
 {
   TRACE_NO_INDENT();
 

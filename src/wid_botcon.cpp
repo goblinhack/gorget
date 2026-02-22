@@ -33,7 +33,7 @@ void wid_botcon_fini(Gamep g)
   wid_destroy(g, &wid_botcon_window);
 }
 
-bool wid_botcon_init(Gamep g)
+auto wid_botcon_init(Gamep g) -> bool
 {
   TRACE_NO_INDENT();
   wid_botcon_wid_create(g);

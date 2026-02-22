@@ -18,7 +18,7 @@ static WidPopup *wid_item_menu_window;
 //
 static Thingp g_item;
 
-[[nodiscard]] static bool wid_item_menu_destroy(Gamep g)
+[[nodiscard]] static auto wid_item_menu_destroy(Gamep g) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -55,7 +55,7 @@ static Thingp g_item;
   return true;
 }
 
-[[nodiscard]] static bool wid_item_menu_drop(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static auto wid_item_menu_drop(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -93,20 +93,20 @@ static Thingp g_item;
   return wid_item_menu_destroy(g);
 }
 
-[[nodiscard]] static bool wid_item_menu_equip(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static auto wid_item_menu_equip(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE_NO_INDENT();
   TOPCON("TODO equip");
   return wid_item_menu_destroy(g);
 }
 
-[[nodiscard]] static bool wid_item_menu_back(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static auto wid_item_menu_back(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE_NO_INDENT();
   return wid_item_menu_destroy(g);
 }
 
-[[nodiscard]] static bool wid_item_menu_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
+[[nodiscard]] static auto wid_item_menu_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
 {
   TRACE_NO_INDENT();
 

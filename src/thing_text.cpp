@@ -6,7 +6,7 @@
 #include "my_game.hpp"
 #include "my_thing_inlines.hpp"
 
-std::string thing_pluralize_name(Thingp t)
+auto thing_pluralize_name(Thingp t) -> std::string
 {
   TRACE_NO_INDENT();
 
@@ -20,7 +20,7 @@ std::string thing_pluralize_name(Thingp t)
   return out;
 }
 
-std::string thing_apostrophize_name(Thingp t)
+auto thing_apostrophize_name(Thingp t) -> std::string
 {
   TRACE_NO_INDENT();
 
@@ -34,7 +34,7 @@ std::string thing_apostrophize_name(Thingp t)
   return out;
 }
 
-std::string thing_long_name(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f)
+auto thing_long_name(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) -> std::string
 {
   TRACE_NO_INDENT();
 
@@ -141,14 +141,14 @@ std::string thing_long_name(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFla
   return out;
 }
 
-std::string thing_the_long_name(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f)
+auto thing_the_long_name(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) -> std::string
 {
   TRACE_NO_INDENT();
 
   return "the " + thing_long_name(g, v, l, t, f);
 }
 
-std::string thing_short_name(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f)
+auto thing_short_name(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) -> std::string
 {
   TRACE_NO_INDENT();
 
@@ -210,7 +210,7 @@ std::string thing_short_name(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFl
   return out;
 }
 
-std::string thing_the_short_name(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f)
+auto thing_the_short_name(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) -> std::string
 {
   TRACE_NO_INDENT();
 

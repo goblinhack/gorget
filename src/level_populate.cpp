@@ -15,8 +15,8 @@
 #include <cstring>
 #include <utility>
 
-bool level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int w, int h, const char *in,
-                    const Overrides &overrides)
+auto level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int w, int h, const char *in,
+                    const Overrides &overrides) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -322,8 +322,8 @@ bool level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int
   return true;
 }
 
-bool level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, const char *in,
-                    const Overrides &overrides)
+auto level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, const char *in,
+                    const Overrides &overrides) -> bool
 {
   TRACE_NO_INDENT();
 

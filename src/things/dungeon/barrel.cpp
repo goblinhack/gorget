@@ -12,14 +12,14 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
-static std::string tp_barrel_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static auto tp_barrel_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
   TRACE_NO_INDENT();
 
   return "barrel of oil";
 }
 
-static std::string tp_barrel_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static auto tp_barrel_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
   TRACE_NO_INDENT();
 
@@ -85,7 +85,7 @@ static void tp_barrel_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
   thing_dead(g, v, l, t, e);
 }
 
-bool tp_load_barrel()
+auto tp_load_barrel() -> bool
 {
   TRACE_NO_INDENT();
 

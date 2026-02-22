@@ -28,6 +28,6 @@
 #define RAD_360 (2.0 * 3.14159265358979323846) // 2pi
 #define RAD_270 (RAD_180 + RAD_90)
 
-unsigned int nextpoweroftwo(unsigned int val);
+auto nextpoweroftwo(unsigned int val) -> unsigned int;
 
 #endif

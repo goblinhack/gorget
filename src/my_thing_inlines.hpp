@@ -18,7 +18,7 @@
 // this belongs in my_thing.hpp but as it is inlined, it needs to access
 // the levels structure
 //
-static inline Thingp thing_find(Gamep g, Levelsp v, ThingId id)
+static inline auto thing_find(Gamep g, Levelsp v, ThingId id) -> Thingp
 {
 #ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT(); // expensive
@@ -53,7 +53,7 @@ static inline Thingp thing_find(Gamep g, Levelsp v, ThingId id)
   return t;
 }
 
-static inline Tpp thing_tp(Thingp t)
+static inline auto thing_tp(Thingp t) -> Tpp
 {
 #ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT(); // expensive
@@ -67,7 +67,7 @@ static inline Tpp thing_tp(Thingp t)
   return tp_find(t->tp_id);
 }
 
-static inline int thing_is_falling(Thingp t)
+static inline auto thing_is_falling(Thingp t) -> int
 {
 #ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT();
@@ -79,7 +79,7 @@ static inline int thing_is_falling(Thingp t)
   return t->_is_falling_ms;
 }
 
-static inline int thing_is_hit(Thingp t)
+static inline auto thing_is_hit(Thingp t) -> int
 {
 #ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT();
@@ -91,7 +91,7 @@ static inline int thing_is_hit(Thingp t)
   return t->_is_hit;
 }
 
-static inline int thing_is_hot(Thingp t)
+static inline auto thing_is_hot(Thingp t) -> int
 {
 #ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT();
@@ -103,7 +103,7 @@ static inline int thing_is_hot(Thingp t)
   return t->_is_hot;
 }
 
-static inline bool thing_is_jumping(Thingp t)
+static inline auto thing_is_jumping(Thingp t) -> bool
 {
 #ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT();
@@ -115,7 +115,7 @@ static inline bool thing_is_jumping(Thingp t)
   return t->_is_jumping;
 }
 
-static inline bool thing_is_moving(Thingp t)
+static inline auto thing_is_moving(Thingp t) -> bool
 {
 #ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT();
@@ -127,7 +127,7 @@ static inline bool thing_is_moving(Thingp t)
   return t->_is_moving;
 }
 
-static inline bool thing_is_spawned(Thingp t)
+static inline auto thing_is_spawned(Thingp t) -> bool
 {
 #ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT();
@@ -139,7 +139,7 @@ static inline bool thing_is_spawned(Thingp t)
   return t->_is_spawned;
 }
 
-static inline bool thing_is_dead(Thingp t)
+static inline auto thing_is_dead(Thingp t) -> bool
 {
 #ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT();
@@ -151,7 +151,7 @@ static inline bool thing_is_dead(Thingp t)
   return t->_is_dead;
 }
 
-static inline bool thing_is_physics_temperature(Thingp t)
+static inline auto thing_is_physics_temperature(Thingp t) -> bool
 {
 #ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT();
@@ -163,7 +163,7 @@ static inline bool thing_is_physics_temperature(Thingp t)
   return tp_flag(thing_tp(t), is_physics_temperature) != 0;
 }
 
-static inline bool thing_is_player(const Thingp t)
+static inline auto thing_is_player(const Thingp t) -> bool
 {
 #ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT();
@@ -175,7 +175,7 @@ static inline bool thing_is_player(const Thingp t)
   return t->_is_player;
 }
 
-static inline bool thing_is_obs_to_vision(Thingp t)
+static inline auto thing_is_obs_to_vision(Thingp t) -> bool
 {
 #ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT();
@@ -187,7 +187,7 @@ static inline bool thing_is_obs_to_vision(Thingp t)
   return tp_flag(thing_tp(t), is_obs_to_vision) != 0;
 }
 
-static inline spoint thing_pix_at(Thingp t)
+static inline auto thing_pix_at(Thingp t) -> spoint
 {
 #ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT();
@@ -198,7 +198,7 @@ static inline spoint thing_pix_at(Thingp t)
   return t->_curr_pix_at;
 }
 
-static inline bool thing_is_open(Thingp t)
+static inline auto thing_is_open(Thingp t) -> bool
 {
 #ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT();
@@ -210,7 +210,7 @@ static inline bool thing_is_open(Thingp t)
   return t->_is_open;
 }
 
-static inline Thingp thing_find_optional(Gamep g, Levelsp v, ThingId id)
+static inline auto thing_find_optional(Gamep g, Levelsp v, ThingId id) -> Thingp
 {
 #ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT(); // expensive
@@ -242,7 +242,7 @@ static inline Thingp thing_find_optional(Gamep g, Levelsp v, ThingId id)
   return nullptr;
 }
 
-static inline int thing_is_light_source(Thingp t)
+static inline auto thing_is_light_source(Thingp t) -> int
 {
 #ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT();

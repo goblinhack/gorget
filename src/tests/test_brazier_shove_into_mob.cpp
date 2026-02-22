@@ -8,7 +8,7 @@
 #include "../my_test.hpp"
 #include "../my_thing_inlines.hpp"
 
-[[nodiscard]] static bool test_brazier_shove_into_mob(Gamep g, Testp t)
+[[nodiscard]] static auto test_brazier_shove_into_mob(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE_AND_INDENT();
@@ -164,7 +164,7 @@ exit:
   return result;
 }
 
-bool test_load_brazier_shove_into_mob()
+auto test_load_brazier_shove_into_mob() -> bool
 {
   TRACE_NO_INDENT();
 

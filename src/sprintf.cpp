@@ -54,7 +54,7 @@ int asprintf(char *strp[], const char *fmt, ...)
 #endif // asprintf
 #endif
 
-std::string string_sprintf(const char *format, ...)
+auto string_sprintf(const char *format, ...) -> std::string
 {
   va_list args;
   char   *buf;
@@ -73,7 +73,7 @@ std::string string_sprintf(const char *format, ...)
   return ret;
 }
 
-std::string string_sprintf(const char *format, va_list args)
+auto string_sprintf(const char *format, va_list args) -> std::string
 {
   char *buf;
 

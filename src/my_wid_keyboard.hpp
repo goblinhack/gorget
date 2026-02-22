@@ -61,8 +61,8 @@ using wid_keyboard_ctx = struct wid_keyboard_ctx_ {
   size_t max_len;
 };
 
-Widp wid_keyboard(Gamep g, const std::string &text, const std::string &title, wid_keyboard_event_t selected,
-                  wid_keyboard_event_t cancelled, size_t max_len);
+auto wid_keyboard(Gamep g, const std::string &text, const std::string &title, wid_keyboard_event_t selected,
+                  wid_keyboard_event_t cancelled, size_t max_len) -> Widp;
 
 extern int wid_keyboard_visible;
 

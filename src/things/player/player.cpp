@@ -16,7 +16,7 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
-static std::string tp_player_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static auto tp_player_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
   TRACE_NO_INDENT();
 
@@ -26,7 +26,7 @@ static std::string tp_player_description_get(Gamep g, Levelsp v, Levelp l, Thing
   return "You";
 }
 
-static std::string tp_player_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static auto tp_player_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
   TRACE_NO_INDENT();
 
@@ -158,7 +158,7 @@ static void tp_player_tick_end(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 }
 
-bool tp_load_player()
+auto tp_load_player() -> bool
 {
   auto *tp   = tp_load("player"); // keep as string for scripts
   auto  name = tp_name(tp);

@@ -10,14 +10,14 @@
 
 #include "my_thing_callbacks.hpp"
 
-static std::string tp_water_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static auto tp_water_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
   TRACE_NO_INDENT();
 
   return "shallow water";
 }
 
-bool tp_load_water()
+auto tp_load_water() -> bool
 {
   TRACE_NO_INDENT();
 

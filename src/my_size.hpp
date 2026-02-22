@@ -38,31 +38,31 @@ public:
     h *= a.h;
   }
 
-  friend my_asize operator/(my_asize a, T i) { return (my_asize(a.w / i, a.h / i)); }
+  friend auto operator/(my_asize a, T i) -> my_asize { return (my_asize(a.w / i, a.h / i)); }
 
-  friend my_asize operator*(my_asize a, T i) { return (my_asize(a.w * i, a.h * i)); }
+  friend auto operator*(my_asize a, T i) -> my_asize { return (my_asize(a.w * i, a.h * i)); }
 
-  friend my_asize operator+(my_asize a, my_asize b) { return (my_asize(a.w + b.w, a.h + b.h)); }
+  friend auto operator+(my_asize a, my_asize b) -> my_asize { return (my_asize(a.w + b.w, a.h + b.h)); }
 
-  friend my_asize operator-(my_asize a, my_asize b) { return (my_asize(a.w - b.w, a.h - b.h)); }
+  friend auto operator-(my_asize a, my_asize b) -> my_asize { return (my_asize(a.w - b.w, a.h - b.h)); }
 
-  friend my_asize operator/(my_asize a, my_asize b) { return (my_asize(a.w / b.w, a.h / b.h)); }
+  friend auto operator/(my_asize a, my_asize b) -> my_asize { return (my_asize(a.w / b.w, a.h / b.h)); }
 
-  friend my_asize operator*(my_asize a, my_asize b) { return (my_asize(a.w * b.w, a.h * b.h)); }
+  friend auto operator*(my_asize a, my_asize b) -> my_asize { return (my_asize(a.w * b.w, a.h * b.h)); }
 
-  friend bool operator==(my_asize a, my_asize b) { return (a.w == b.w) && (a.h == b.h); }
+  friend auto operator==(my_asize a, my_asize b) -> bool { return (a.w == b.w) && (a.h == b.h); }
 
-  friend bool operator!=(my_asize a, my_asize b) { return (! (a == b)); }
-
-  //
-  // Compare areas of a and b
-  //
-  friend bool operator<(my_asize a, my_asize b) { return (a.w * a.h) < (b.w * b.h); }
+  friend auto operator!=(my_asize a, my_asize b) -> bool { return (! (a == b)); }
 
   //
   // Compare areas of a and b
   //
-  friend bool operator>(my_asize a, my_asize b) { return (a.w * a.h) > (b.w * b.h); }
+  friend auto operator<(my_asize a, my_asize b) -> bool { return (a.w * a.h) < (b.w * b.h); }
+
+  //
+  // Compare areas of a and b
+  //
+  friend auto operator>(my_asize a, my_asize b) -> bool { return (a.w * a.h) > (b.w * b.h); }
 };
 
 using isize = my_asize< int16_t >;

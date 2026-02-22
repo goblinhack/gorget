@@ -21,7 +21,7 @@ void thing_vision_reset(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 }
 
-bool thing_vision_can_see_tile(Gamep g, Levelsp v, Levelp l, Thingp t, spoint p)
+auto thing_vision_can_see_tile(Gamep g, Levelsp v, Levelp l, Thingp t, spoint p) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -46,7 +46,7 @@ bool thing_vision_can_see_tile(Gamep g, Levelsp v, Levelp l, Thingp t, spoint p)
   return fov->fov_can_see_tile.can_see[ p.x ][ p.y ] != 0U;
 }
 
-bool thing_vision_player_has_seen_tile(Gamep g, Levelsp v, Levelp l, spoint p)
+auto thing_vision_player_has_seen_tile(Gamep g, Levelsp v, Levelp l, spoint p) -> bool
 {
   TRACE_NO_INDENT();
 

@@ -11,35 +11,35 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
-static std::string tp_potion_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static auto tp_potion_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
   TRACE_NO_INDENT();
 
   return "potion";
 }
 
-static std::string tp_potion_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static auto tp_potion_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
   TRACE_NO_INDENT();
 
   return UI_INFO1_FMT_STR "A mysterious purple potion.";
 }
 
-[[nodiscard]] static bool tp_potion_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp collector)
+[[nodiscard]] static auto tp_potion_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp collector) -> bool
 {
   TRACE_NO_INDENT();
 
   return true;
 }
 
-[[nodiscard]] static bool tp_potion_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp dropper)
+[[nodiscard]] static auto tp_potion_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp dropper) -> bool
 {
   TRACE_NO_INDENT();
 
   return true;
 }
 
-bool tp_load_potion()
+auto tp_load_potion() -> bool
 {
   TRACE_NO_INDENT();
 

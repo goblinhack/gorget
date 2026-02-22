@@ -10,7 +10,7 @@
 
 #include <iostream>
 
-Thingp thing_get(Gamep g, Levelsp v, Levelp l, spoint p, int slot)
+auto thing_get(Gamep g, Levelsp v, Levelp l, spoint p, int slot) -> Thingp
 {
 #ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT(); // expensive
@@ -44,7 +44,7 @@ Thingp thing_get(Gamep g, Levelsp v, Levelp l, spoint p, int slot)
   return t;
 }
 
-Thingp thing_get_at_safe(Gamep g, Levelsp v, Levelp l, spoint p, int slot)
+auto thing_get_at_safe(Gamep g, Levelsp v, Levelp l, spoint p, int slot) -> Thingp
 {
 #ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT(); // expensive
@@ -64,7 +64,7 @@ Thingp thing_get_at_safe(Gamep g, Levelsp v, Levelp l, spoint p, int slot)
   return t;
 }
 
-Thingp thing_and_tp_get_at_safe(Gamep g, Levelsp v, Levelp l, spoint p, int slot, Tpp *out)
+auto thing_and_tp_get_at_safe(Gamep g, Levelsp v, Levelp l, spoint p, int slot, Tpp *out) -> Thingp
 {
 #ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT(); // expensive
@@ -88,7 +88,7 @@ Thingp thing_and_tp_get_at_safe(Gamep g, Levelsp v, Levelp l, spoint p, int slot
   return t;
 }
 
-Thingp thing_and_tp_get_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot, Tpp *out)
+auto thing_and_tp_get_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot, Tpp *out) -> Thingp
 {
 #ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT(); // expensive
@@ -157,7 +157,7 @@ void thing_stats_dump(Gamep g, Levelsp v)
   LOG("- Ext mem things      %u out of max %u", v->thing_ext_count, THING_EXT_MAX);
 }
 
-ThingExtp thing_ext_struct(Gamep g, Thingp t)
+auto thing_ext_struct(Gamep g, Thingp t) -> ThingExtp
 {
   TRACE_NO_INDENT();
 
@@ -174,7 +174,7 @@ ThingExtp thing_ext_struct(Gamep g, Thingp t)
   return &v->thing_ext[ ext_id ];
 }
 
-ThingFovp thing_fov_struct(Gamep g, Thingp t)
+auto thing_fov_struct(Gamep g, Thingp t) -> ThingFovp
 {
   TRACE_NO_INDENT();
 
@@ -191,7 +191,7 @@ ThingFovp thing_fov_struct(Gamep g, Thingp t)
   return &v->thing_fov[ fov_id ];
 }
 
-ThingPlayerp thing_player_struct(Gamep g)
+auto thing_player_struct(Gamep g) -> ThingPlayerp
 {
   TRACE_NO_INDENT();
 

@@ -6,7 +6,7 @@
 #include "my_cpp_template.hpp"
 #include "my_thing_inlines.hpp"
 
-[[nodiscard]] static bool teleport_find_other(Gamep g, Levelsp v, Levelp l, spoint in, spoint &out)
+[[nodiscard]] static auto teleport_find_other(Gamep g, Levelsp v, Levelp l, spoint in, spoint &out) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -43,7 +43,7 @@
 //
 // Find a spot next to the teleport where we can land.
 //
-[[nodiscard]] static bool teleport_find_landing_spot(Gamep g, Levelsp v, Levelp l, Thingp t, spoint &out)
+[[nodiscard]] static auto teleport_find_landing_spot(Gamep g, Levelsp v, Levelp l, Thingp t, spoint &out) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -121,7 +121,7 @@
 //
 // Handles player and monster teleports
 //
-bool thing_teleport_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
+auto thing_teleport_handle(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool
 {
   TRACE_NO_INDENT();
 

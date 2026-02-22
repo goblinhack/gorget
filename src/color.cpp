@@ -40,14 +40,14 @@ void color_fini()
   // color_map.clear();
 }
 
-color string2color(const char **s)
+auto string2color(const char **s) -> color
 {
   TRACE_NO_INDENT();
 
   char        tmp[ MAXSHORTSTR ];
   const char *eo_tmp = tmp + SIZEOF(tmp);
   const char *c      = *s;
-  char       *t      = tmp;
+  char       *t      = tmp; // NOLINT
 
   while (t < eo_tmp) {
     if ((*c == '\0') || (*c == '$')) {
@@ -80,7 +80,7 @@ color string2color(const char **s)
   return result->second;
 }
 
-std::string string2colorname(std::string &s, int *len)
+auto string2colorname(std::string &s, int *len) -> std::string
 {
   TRACE_NO_INDENT();
   auto        iter = s.begin();
@@ -104,7 +104,7 @@ std::string string2colorname(std::string &s, int *len)
   return out;
 }
 
-color string2color(std::string &s, int *len)
+auto string2color(std::string &s, int *len) -> color
 {
   TRACE_NO_INDENT();
   auto        iter = s.begin();
@@ -141,7 +141,7 @@ color string2color(std::string &s, int *len)
   return result->second;
 }
 
-color string2color(std::string &s)
+auto string2color(std::string &s) -> color
 {
   auto        iter = s.begin();
   std::string out;
@@ -173,7 +173,7 @@ color string2color(std::string &s)
   return result->second;
 }
 
-color color_find(const char *s)
+auto color_find(const char *s) -> color
 {
   TRACE_NO_INDENT();
   if (s == nullptr) {
@@ -196,12 +196,12 @@ color color_find(const char *s)
   return result->second;
 }
 
-bool color_eq(const color &col1, const color &col2)
+auto color_eq(const color &col1, const color &col2) -> bool
 {
   return col1.r == col2.r && col1.g == col2.g && col1.b == col2.b && col1.a == col2.a;
 }
 
-bool color_neq(const color &col1, const color &col2)
+auto color_neq(const color &col1, const color &col2) -> bool
 {
   return col1.r != col2.r || col1.g != col2.g || col1.b != col2.b || col1.a != col2.a;
 }

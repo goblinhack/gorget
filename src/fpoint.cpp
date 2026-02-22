@@ -9,11 +9,11 @@
 #include <cmath>
 #include <numbers>
 
-fpoint operator+(fpoint const &a, fpoint const &b) { return fpoint(a.x + b.x, a.y + b.y); }
-fpoint operator-(fpoint const &a, fpoint const &b) { return fpoint(a.x - b.x, a.y - b.y); }
-fpoint operator*(fpoint const &a, float b) { return fpoint(a.x * b, a.y * b); }
-fpoint operator/(fpoint const &a, float b) { return fpoint(a.x / b, a.y / b); }
-bool   operator==(fpoint const &a, fpoint const &b) { return (a.x == b.x) && (a.y == b.y); }
+auto operator+(fpoint const &a, fpoint const &b) -> fpoint { return fpoint(a.x + b.x, a.y + b.y); }
+auto operator-(fpoint const &a, fpoint const &b) -> fpoint { return fpoint(a.x - b.x, a.y - b.y); }
+auto operator*(fpoint const &a, float b) -> fpoint { return fpoint(a.x * b, a.y * b); }
+auto operator/(fpoint const &a, float b) -> fpoint { return fpoint(a.x / b, a.y / b); }
+auto   operator==(fpoint const &a, fpoint const &b) -> bool { return (a.x == b.x) && (a.y == b.y); }
 
 void fpoint::operator+=(fpoint const &b)
 {
@@ -39,7 +39,7 @@ void fpoint::operator/=(float b)
   y /= b;
 }
 
-float fpoint::length() const { return (sqrt((x * x) + (y * y))); }
+auto fpoint::length() const -> float { return (sqrt((x * x) + (y * y))); }
 
 void fpoint::unit()
 {
@@ -48,13 +48,13 @@ void fpoint::unit()
   y /= len;
 }
 
-float distance(const fpoint &a, const fpoint &b) { return (((float) DISTANCEf(a.x, a.y, b.x, b.y))); }
+auto distance(const fpoint &a, const fpoint &b) -> float { return (((float) DISTANCEf(a.x, a.y, b.x, b.y))); }
 
 //
 // Yields an angle between 0 and 360 deg radians - essentially, how much
 // this point has been rotated about the origin.
 //
-float angle_radians(const fpoint &p)
+auto angle_radians(const fpoint &p) -> float
 {
   float const theta = asin(p.y / p.length());
 
@@ -67,7 +67,7 @@ float angle_radians(const fpoint &p)
   return std::numbers::pi_v< float > - theta;
 }
 
-fpoint rotate_radians(float angle, const fpoint &p, const fpoint &O)
+auto rotate_radians(float angle, const fpoint &p, const fpoint &O) -> fpoint
 {
   float s;
   float c;
@@ -85,7 +85,7 @@ fpoint rotate_radians(float angle, const fpoint &p, const fpoint &O)
   return fpoint(xnew + O.x, ynew + O.y);
 }
 
-fpoint rotate_radians(const fpoint &p, float angle)
+auto rotate_radians(const fpoint &p, float angle) -> fpoint
 {
   float s;
   float c;
@@ -101,13 +101,13 @@ fpoint rotate_radians(const fpoint &p, float angle)
   return fpoint(xnew, ynew);
 }
 
-fpoint normal(const fpoint &p)
+auto normal(const fpoint &p) -> fpoint
 {
   float const length = sqrt((p.x * p.x) + (p.y * p.y));
   return fpoint(p.x / length, p.y / length);
 }
 
-fpoint unit(const fpoint &p)
+auto unit(const fpoint &p) -> fpoint
 {
   float const length = sqrt((p.x * p.x) + (p.y * p.y));
   return fpoint(p.x / length, p.y / length);
@@ -203,7 +203,7 @@ float dot (const fpoint b
 }
 #endif
 
-int distance_to_line(fpoint P0, fpoint L0, fpoint L1, float *dist, fpoint *intersect_out)
+auto distance_to_line(fpoint P0, fpoint L0, fpoint L1, float *dist, fpoint *intersect_out) -> int
 {
   fpoint intersect;
   float  mag;

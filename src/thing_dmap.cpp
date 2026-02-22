@@ -11,7 +11,7 @@
 //
 // Get the dmap associated with the thing
 //
-Dmap *thing_get_dmap(Gamep g, Levelsp v, Levelp l, Thingp me)
+auto thing_get_dmap(Gamep g, Levelsp v, Levelp l, Thingp me) -> Dmap *
 {
   TRACE_NO_INDENT();
 

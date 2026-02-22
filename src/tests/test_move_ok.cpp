@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static bool test_move_ok(Gamep g, Testp t)
+[[nodiscard]] static auto test_move_ok(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE_AND_INDENT();
@@ -189,7 +189,7 @@ exit:
   return result;
 }
 
-bool test_load_move_ok()
+auto test_load_move_ok() -> bool
 {
   TRACE_NO_INDENT();
 

@@ -69,7 +69,7 @@
 // Roll 28 ->  bonus +9
 // Roll 29 ->  bonus +9
 // Roll 30 ->  bonus +10
-int stat_to_bonus(int stat)
+auto stat_to_bonus(int stat) -> int
 {
   int const bonus = (stat - 10) / 2;
   if (bonus < -20) {
@@ -96,7 +96,7 @@ int stat_to_bonus(int stat)
   return bonus;
 }
 
-std::string bonus_to_string(int stat)
+auto bonus_to_string(int stat) -> std::string
 {
   switch (stat) {
     case -20 : return "-20";
@@ -144,9 +144,9 @@ std::string bonus_to_string(int stat)
   }
 }
 
-std::string stat_to_bonus_string(int stat) { return bonus_to_string(stat_to_bonus(stat)); }
+auto stat_to_bonus_string(int stat) -> std::string { return bonus_to_string(stat_to_bonus(stat)); }
 
-std::string stat_to_bonus_slash_str(int stat)
+auto stat_to_bonus_slash_str(int stat) -> std::string
 {
   switch (stat_to_bonus(stat)) {
     case -20 : return "/-20";
@@ -197,7 +197,7 @@ std::string stat_to_bonus_slash_str(int stat)
 //
 // Return true if we exceed the target roll
 //
-bool d20_ge(int stat_total, const int dice_roll_to_exceed, bool &fumble, bool &critical)
+auto d20_ge(int stat_total, const int dice_roll_to_exceed, bool &fumble, bool &critical) -> bool
 {
   int const dice_roll = pcg_random_range_inclusive(1, 20);
 
@@ -220,7 +220,7 @@ bool d20_ge(int stat_total, const int dice_roll_to_exceed, bool &fumble, bool &c
 //
 // Roll for stat modifier "a" to see if it beats "b"
 //
-bool d20_ge(int stat_total, const int dice_roll_to_exceed)
+auto d20_ge(int stat_total, const int dice_roll_to_exceed) -> bool
 {
   int dice_roll = pcg_random_range_inclusive(1, 20);
 
@@ -244,7 +244,7 @@ bool d20_ge(int stat_total, const int dice_roll_to_exceed)
 
 Dice::Dice(void) = default;
 
-std::string Dice::to_string() const { return hitdice; }
+auto Dice::to_string() const -> std::string { return hitdice; }
 
 Dice::Dice(const std::string &s)
 {
@@ -280,7 +280,7 @@ Dice::Dice(const std::string &s)
   // CON("new dice [%s] %dd%d+%d", s.c_str(), ndice, sides, modifier);
 }
 
-int Dice::roll() const
+auto Dice::roll() const -> int
 {
   if (! initialized) {
     return 0;
@@ -297,7 +297,7 @@ int Dice::roll() const
   return tot;
 }
 
-int Dice::max_roll() const
+auto Dice::max_roll() const -> int
 {
   if (! initialized) {
     return 0;
@@ -306,7 +306,7 @@ int Dice::max_roll() const
   return (ndice * sides) + modifier;
 }
 
-int Dice::min_roll() const
+auto Dice::min_roll() const -> int
 {
   if (! initialized) {
     return 0;

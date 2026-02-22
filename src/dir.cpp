@@ -15,7 +15,7 @@
 /*
  * Does the requested dir exist?
  */
-bool dir_exists(const char *indir)
+auto dir_exists(const char *indir) -> bool
 {
   TRACE_NO_INDENT();
   struct stat buf;
@@ -42,7 +42,7 @@ bool dir_exists(const char *indir)
 /*
  * Given a directory, find out what ./ is.
  */
-char *dir_dot()
+auto dir_dot() -> char *
 {
   TRACE_NO_INDENT();
   static char buf[ MAXPATHLEN ];
@@ -56,7 +56,7 @@ char *dir_dot()
  * Remove \ and change to /
  * Given a directory, find out what ../ is.
  */
-char *dir_dotdot(char *s)
+auto dir_dotdot(char *s) -> char *
 {
   TRACE_NO_INDENT();
   uint32_t size;
@@ -83,7 +83,7 @@ char *dir_dotdot(char *s)
 /*
  * Remove \ and change to /
  */
-char *dospath2unix(char *in)
+auto dospath2unix(char *in) -> char *
 {
   TRACE_NO_INDENT();
   char *s = in;

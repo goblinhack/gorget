@@ -15,9 +15,11 @@ static inline void term_puts_fg(unsigned char a)
 {
   TRACE_NO_INDENT();
 
+  // NOLINTBEGIN
   static const char *data[] = {
       "[30m", "[31m", "[32m", "[33m", "[34m", "[35m", "[36m", "[37m", "\033[m",
   };
+  // NOLINTEND
 
   if (a >= ARRAY_SIZE(data)) {
     ERR("Overflow");
@@ -30,6 +32,7 @@ static void term_puts_fgbg(unsigned char fg, unsigned char bg)
 {
   TRACE_NO_INDENT();
 
+  // NOLINTBEGIN
   static const char *data[] = {
       "[40;30m", "[40;31m", "[40;32m", "[40;33m", "[40;34m", "[40;35m", "[40;36m", "[40;37m",
       "[41;30m", "[41;31m", "[41;32m", "[41;33m", "[41;34m", "[41;35m", "[41;36m", "[41;37m",
@@ -40,6 +43,7 @@ static void term_puts_fgbg(unsigned char fg, unsigned char bg)
       "[46;30m", "[46;31m", "[46;32m", "[46;33m", "[46;34m", "[46;35m", "[46;36m", "[46;37m",
       "[47;30m", "[47;31m", "[47;32m", "[47;33m", "[47;34m", "[47;35m", "[47;36m", "[47;37m",
   };
+  // NOLINTEND
 
   if (bg == 0) {
     /*
@@ -52,7 +56,7 @@ static void term_puts_fgbg(unsigned char fg, unsigned char bg)
   fputs((char *) data[ ((bg & 7) * 8) + (fg & 7) ], stdout);
 }
 
-static term_color term_color_string_to_index(const char **s)
+static auto term_color_string_to_index(const char **s) -> term_color
 {
   TRACE_NO_INDENT();
 
@@ -132,7 +136,7 @@ void term_log(const char *s)
   }
 }
 
-int term_color_to_console_color(color c)
+auto term_color_to_console_color(color c) -> int
 {
   if (color_eq(c, BLACK)) {
     return TERM_COLOR_BLACK;

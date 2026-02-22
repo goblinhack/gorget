@@ -316,7 +316,7 @@ void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
     //
     // Sort by event priority
     //
-    std::ranges::sort(sorted_pairs, [](const std::pair< Thingp, Thingp > &a, const std::pair< Thingp, Thingp > &b) {
+    std::ranges::sort(sorted_pairs, [](const std::pair< Thingp, Thingp > &a, const std::pair< Thingp, Thingp > &b) -> bool {
       auto *t1 = a.first;
       auto *t2 = a.second;
       auto *t3 = b.first;

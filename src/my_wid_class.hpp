@@ -55,7 +55,7 @@ public:
 };
 
 struct tree_wid_key_cmp {
-  bool operator()(const tree_wid_key &lhs, const tree_wid_key &rhs) const
+  auto operator()(const tree_wid_key &lhs, const tree_wid_key &rhs) const -> bool
   {
     if (lhs.priority < rhs.priority) {
       return true;
@@ -89,7 +89,7 @@ public:
 
   WidKeyType(uint64_t v_val) : val(v_val) {}
 
-  bool operator<(const WidKeyType &rhs) const { return (val < rhs.val); }
+  auto operator<(const WidKeyType &rhs) const -> bool { return (val < rhs.val); }
 
   uint64_t val {};
 };
@@ -97,7 +97,7 @@ public:
 using wid_key_map_location = std::map< tree_wid_key, Widp, tree_wid_key_cmp >;
 using wid_key_map_int      = std::map< WidKeyType, Widp >;
 
-WidKeyType wid_unsorted_get_key(Gamep g, Widp w);
+auto wid_unsorted_get_key(Gamep g, Widp w) -> WidKeyType;
 
 class Wid
 {

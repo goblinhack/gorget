@@ -8,7 +8,7 @@
 //
 // Add a key to the things inventory
 //
-bool thing_collect_key(Gamep g, Levelsp v, Levelp l, Thingp it, Thingp player_or_monst)
+auto thing_collect_key(Gamep g, Levelsp v, Levelp l, Thingp it, Thingp player_or_monst) -> bool
 {
   TRACE_NO_INDENT();
 

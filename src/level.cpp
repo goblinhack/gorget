@@ -16,7 +16,7 @@
 
 LevelOpt g_level_opt;
 
-bool is_oob(fpoint p)
+auto is_oob(fpoint p) -> bool
 {
   if (p.x < 0) {
     return true;
@@ -33,7 +33,7 @@ bool is_oob(fpoint p)
   return false;
 }
 
-bool is_oob(spoint p)
+auto is_oob(spoint p) -> bool
 {
   if (p.x < 0) {
     return true;
@@ -50,7 +50,7 @@ bool is_oob(spoint p)
   return false;
 }
 
-bool is_oob(int x, int y)
+auto is_oob(int x, int y) -> bool
 {
   if (x < 0) {
     return true;
@@ -70,7 +70,7 @@ bool is_oob(int x, int y)
 //
 // Are we on the level selection level?
 //
-bool level_is_level_select(Gamep g, Levelsp v, Levelp l)
+auto level_is_level_select(Gamep g, Levelsp v, Levelp l) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -121,7 +121,7 @@ void level_dump(Gamep g, Levelsp v, Levelp l, int w, int h)
 //
 // Compare level contents
 //
-bool level_match_contents(Gamep g, Levelsp v, Levelp l, Testp t, int w, int h, const char *expected)
+auto level_match_contents(Gamep g, Levelsp v, Levelp l, Testp t, int w, int h, const char *expected) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -162,7 +162,7 @@ void level_init(Gamep g, Levelsp v, Levelp l, LevelNum n)
   l->level_num      = n;
 }
 
-Levelsp levels_memory_alloc(Gamep g)
+auto levels_memory_alloc(Gamep g) -> Levelsp
 {
   LOG("Levels alloc memory");
   TRACE_NO_INDENT();
@@ -281,7 +281,7 @@ void level_is_completed_by_player_falling(Gamep g, Levelsp v, Levelp l)
 //
 // Change the current level
 //
-Levelp level_change(Gamep g, Levelsp v, LevelNum level_num)
+auto level_change(Gamep g, Levelsp v, LevelNum level_num) -> Levelp
 {
   LOG("Level change to %u", level_num);
   TRACE_AND_INDENT();
@@ -309,7 +309,7 @@ Levelp level_change(Gamep g, Levelsp v, LevelNum level_num)
     LOG("Level change to %u (max level)", level_num);
   }
 
-  Level *old_level = game_level_get(g, v);
+  Level *old_level = game_level_get(g, v); // NOLINT
   if (game_level_populate(g, v, level_num) == nullptr) {
     TOPCON("The dungeon is still under construction and cannot be entered (BUG)");
     return old_level;
@@ -398,7 +398,7 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
   memset(l, 0, SIZEOF(*l));
 }
 
-bool level_populate_thing_id_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot, ThingId id)
+auto level_populate_thing_id_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot, ThingId id) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -410,7 +410,7 @@ bool level_populate_thing_id_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot
   return true;
 }
 
-ThingId level_get_thing_id_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot)
+auto level_get_thing_id_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot) -> ThingId
 {
   TRACE_NO_INDENT();
 
@@ -424,7 +424,7 @@ ThingId level_get_thing_id_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot)
 //
 // Additional level flag filters e.g. open doors are not obstacles
 //
-[[nodiscard]] static bool level_flag_filter(ThingFlag f, Thingp it)
+[[nodiscard]] static auto level_flag_filter(ThingFlag f, Thingp it) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -458,7 +458,7 @@ ThingId level_get_thing_id_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot)
   return false;
 }
 
-std::vector< Thingp > level_find_all(Gamep g, Levelsp v, Levelp l, ThingFlag f)
+auto level_find_all(Gamep g, Levelsp v, Levelp l, ThingFlag f) -> std::vector< Thingp >
 {
   TRACE_NO_INDENT();
 
@@ -478,7 +478,7 @@ std::vector< Thingp > level_find_all(Gamep g, Levelsp v, Levelp l, ThingFlag f)
   return out;
 }
 
-std::vector< Thingp > level_find_all(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
+auto level_find_all(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> std::vector< Thingp >
 {
   TRACE_NO_INDENT();
 
@@ -498,7 +498,7 @@ std::vector< Thingp > level_find_all(Gamep g, Levelsp v, Levelp l, ThingFlag f, 
   return out;
 }
 
-Thingp level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
+auto level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> Thingp
 {
   TRACE_NO_INDENT();
 
@@ -516,7 +516,7 @@ Thingp level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
   return nullptr;
 }
 
-Thingp level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp at)
+auto level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp at) -> Thingp
 {
   TRACE_NO_INDENT();
 
@@ -531,7 +531,7 @@ Thingp level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp at)
 //
 // Filter to only alive things
 //
-Thingp level_alive(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
+auto level_alive(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> Thingp
 {
   TRACE_NO_INDENT();
 
@@ -553,7 +553,7 @@ Thingp level_alive(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
   return nullptr;
 }
 
-Thingp level_alive(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp at)
+auto level_alive(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp at) -> Thingp
 {
   TRACE_NO_INDENT();
 
@@ -568,7 +568,7 @@ Thingp level_alive(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp at)
 //
 // Flag + is open
 //
-Thingp level_open(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
+auto level_open(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> Thingp
 {
   TRACE_NO_INDENT();
 
@@ -590,7 +590,7 @@ Thingp level_open(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
   return nullptr;
 }
 
-Thingp level_open(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp at)
+auto level_open(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp at) -> Thingp
 {
   TRACE_NO_INDENT();
 
@@ -605,7 +605,7 @@ Thingp level_open(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp at)
 //
 // Count things
 //
-int level_count(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
+auto level_count(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> int
 {
   TRACE_NO_INDENT();
 
@@ -629,14 +629,14 @@ int level_count(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
   return count;
 }
 
-int level_count(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp t)
+auto level_count(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp t) -> int
 {
   TRACE_NO_INDENT();
 
   return level_count(g, v, l, f, thing_at(t));
 }
 
-bool level_is_same_obj_type_at(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp)
+auto level_is_same_obj_type_at(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp) -> bool
 {
   TRACE_NO_INDENT();
 

@@ -19,7 +19,7 @@
 //
 // The thing icon
 //
-[[nodiscard]] static bool wid_thing_info_icon(Gamep g, Tpp tp, WidPopup *parent)
+[[nodiscard]] static auto wid_thing_info_icon(Gamep g, Tpp tp, WidPopup *parent) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -41,7 +41,7 @@
   return true;
 }
 
-[[nodiscard]] static bool wid_thing_info_keys(Gamep g, Thingp t, WidPopup *parent)
+[[nodiscard]] static auto wid_thing_info_keys(Gamep g, Thingp t, WidPopup *parent) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -84,7 +84,7 @@
 //
 // The thing name
 //
-[[nodiscard]] static bool wid_thing_info_name(Gamep g, Thingp t, Tpp tp, WidPopup *parent)
+[[nodiscard]] static auto wid_thing_info_name(Gamep g, Thingp t, Tpp tp, WidPopup *parent) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -104,7 +104,7 @@
 //
 // The thing description
 //
-[[nodiscard]] static bool wid_thing_info_detail(Gamep g, Levelsp v, Levelp l, Thingp t, WidPopup *parent)
+[[nodiscard]] static auto wid_thing_info_detail(Gamep g, Levelsp v, Levelp l, Thingp t, WidPopup *parent) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -116,7 +116,7 @@
 //
 // Health bar
 //
-[[nodiscard]] static bool wid_thing_info_health_bar(Gamep g, Thingp t, Tpp tp, WidPopup *parent, int width)
+[[nodiscard]] static auto wid_thing_info_health_bar(Gamep g, Thingp t, Tpp tp, WidPopup *parent, int width) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -173,7 +173,7 @@
 //
 // Add immunities
 //
-[[nodiscard]] static bool wid_thing_info_immunities(Gamep g, Thingp t, WidPopup *parent, int width)
+[[nodiscard]] static auto wid_thing_info_immunities(Gamep g, Thingp t, WidPopup *parent, int width) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -230,7 +230,7 @@
 //
 // Add special damage
 //
-[[nodiscard]] static bool wid_thing_info_special_damage(Gamep g, Thingp t, WidPopup *parent)
+[[nodiscard]] static auto wid_thing_info_special_damage(Gamep g, Thingp t, WidPopup *parent) -> bool
 {
   TRACE_NO_INDENT();
 

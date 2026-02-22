@@ -3,9 +3,9 @@
 //
 
 extern "C" {
-extern unsigned char *stbi_load_from_memory(const unsigned char *buffer, int len, int *x, int *y, int *comp,
-                                            int req_comp);
-extern void           stbi_image_free(void *retval_from_stbi_load);
+extern auto stbi_load_from_memory(const unsigned char *buffer, int len, int *x, int *y, int *comp, int req_comp)
+    -> unsigned char *;
+extern void stbi_image_free(void *retval_from_stbi_load);
 };
 
 // #include "3rdparty/stb_image.hpp"
@@ -62,7 +62,7 @@ static std::unordered_map< std::string, Texp > textures_monochrome;
 static std::unordered_map< std::string, Texp > textures_mask;
 static std::unordered_map< std::string, Texp > textures_outline;
 
-bool tex_init()
+auto tex_init() -> bool
 {
   TRACE_NO_INDENT();
   return true;
@@ -99,11 +99,11 @@ void tex_free(Texp tex)
   delete (tex);
 }
 
-static unsigned char *load_raw_image(const std::string &filename, int *x, int *y, int *comp)
+static auto load_raw_image(const std::string &filename, int *x, int *y, int *comp) -> unsigned char *
 {
   TRACE_NO_INDENT();
   unsigned char *file_data;
-  unsigned char *image_data = nullptr;
+  unsigned char *image_data = nullptr; // NOLINt
   int            len;
 
   file_data = file_load(filename.c_str(), &len);
@@ -129,7 +129,7 @@ static void free_raw_image(unsigned char *image_data)
   stbi_image_free(image_data);
 }
 
-static SDL_Surface *load_image(const std::string &filename)
+static auto load_image(const std::string &filename) -> SDL_Surface *
 {
   TRACE_NO_INDENT();
   uint32_t       rmask;
@@ -270,7 +270,7 @@ static void load_images(SDL_Surface **surf1_out, const std::string &filename)
 //
 // Load a texture
 //
-Texp tex_load(const std::string &file, const std::string &name, int mode)
+auto tex_load(const std::string &file, const std::string &name, int mode) -> Texp
 {
   TRACE_NO_INDENT();
   Texp t = tex_find(name);
@@ -310,8 +310,8 @@ Texp tex_load(const std::string &file, const std::string &name, int mode)
 // 2 - white mask
 // 3 - white outline only
 //
-static std::vector< Texp > tex_create_masks_from_surface(SDL_Surface *src, const std::string &file,
-                                                         const std::string &name, int mode)
+static auto tex_create_masks_from_surface(SDL_Surface *src, const std::string &file, const std::string &name,
+                                          int mode) -> std::vector< Texp >
 {
   auto name_monochrome = name + "_monochrome";
   auto name_mask       = name + "_mask";
@@ -475,7 +475,7 @@ void tex_load_sprites(Texp *tex, Texp *tex_monochrome, Texp *tex_mask, Texp *tex
 //
 // Find an existing tex.
 //
-Texp tex_find(const std::string &file)
+auto tex_find(const std::string &file) -> Texp
 {
   TRACE_NO_INDENT();
   if (file.empty()) {
@@ -493,7 +493,7 @@ Texp tex_find(const std::string &file)
 //
 // Creae a texture from a surface
 //
-Texp tex_from_surface(SDL_Surface *surface, const std::string &file, const std::string &name, int mode)
+auto tex_from_surface(SDL_Surface *surface, const std::string &file, const std::string &name, int mode) -> Texp
 {
   TRACE_NO_INDENT();
 
@@ -591,7 +591,7 @@ Texp tex_from_surface(SDL_Surface *surface, const std::string &file, const std::
 //
 // Creae a texture from an FBO
 //
-Texp tex_from_fbo(Gamep g, FboEnum fbo)
+auto tex_from_fbo(Gamep g, FboEnum fbo) -> Texp
 {
   TRACE_NO_INDENT();
 
@@ -617,13 +617,13 @@ Texp tex_from_fbo(Gamep g, FboEnum fbo)
   return t;
 }
 
-int tex_get_gl_binding(Texp tex)
+auto tex_get_gl_binding(Texp tex) -> int
 {
   TRACE_NO_INDENT();
   return tex->gl_surface_binding;
 }
 
-uint32_t tex_get_width(Texp tex)
+auto tex_get_width(Texp tex) -> uint32_t
 {
   TRACE_NO_INDENT();
   if (tex == nullptr) {
@@ -633,7 +633,7 @@ uint32_t tex_get_width(Texp tex)
   return tex->width;
 }
 
-uint32_t tex_get_height(Texp tex)
+auto tex_get_height(Texp tex) -> uint32_t
 {
   TRACE_NO_INDENT();
   if (tex == nullptr) {
@@ -643,19 +643,20 @@ uint32_t tex_get_height(Texp tex)
   return tex->height;
 }
 
-SDL_Surface *tex_get_surface(Texp tex)
+auto tex_get_surface(Texp tex) -> SDL_Surface *
 {
   TRACE_NO_INDENT();
   return tex->surface;
 }
 
-Texp string2tex(const char **s)
+auto string2tex(const char **s) -> Texp
 {
   TRACE_NO_INDENT();
+
   static char              tmp[ MAXSHORTSTR ];
   static std::string const eo_tmp = tmp + MAXSHORTSTR - 1;
   const char              *c      = *s;
-  char                    *t      = tmp;
+  char                    *t      = tmp; // NOLINT
 
   while (t < eo_tmp) {
     if ((*c == '\0') || (*c == '$')) {
@@ -680,7 +681,7 @@ Texp string2tex(const char **s)
   return result->second;
 }
 
-Texp string2tex(std::string &s, int *len)
+auto string2tex(std::string &s, int *len) -> Texp
 {
   TRACE_NO_INDENT();
   auto        iter = s.begin();

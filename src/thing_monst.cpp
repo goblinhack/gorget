@@ -15,7 +15,7 @@
 //
 // Can we chase the player?
 //
-bool thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thingp me)
+auto thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -69,7 +69,7 @@ bool thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thingp me)
 //
 // Return true on a successful move (or a popup asking more info)
 //
-[[nodiscard]] static bool thing_monst_move_try(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to)
+[[nodiscard]] static auto thing_monst_move_try(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool
 {
   THING_DBG(me, "move try");
 
@@ -113,7 +113,7 @@ bool thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thingp me)
 //
 // Move to the next path on the popped path if it exits.
 //
-[[nodiscard]] static bool thing_monst_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp me)
+[[nodiscard]] static auto thing_monst_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -170,7 +170,7 @@ bool thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thingp me)
   return thing_move_to(g, v, l, me, move_next);
 }
 
-[[nodiscard]] static bool thing_monst_choose_target(Gamep g, Levelsp v, Levelp l, Thingp me)
+[[nodiscard]] static auto thing_monst_choose_target(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -250,13 +250,13 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 }
 
-std::string monst_state_to_string(MonstState state)
+auto monst_state_to_string(MonstState state) -> std::string
 {
   TRACE_NO_INDENT();
   return MonstState_to_string(state);
 }
 
-MonstState monst_state(Gamep g, Levelsp v, Levelp l, Thingp me)
+auto monst_state(Gamep g, Levelsp v, Levelp l, Thingp me) -> MonstState
 {
   TRACE_NO_INDENT();
   return me->_monst_state;

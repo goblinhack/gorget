@@ -74,7 +74,7 @@ void sdl_screenshot_do(Gamep g)
   count++;
 }
 
-std::vector< uint8_t > sdl_fbo_save(Gamep g, FboEnum fbo)
+auto sdl_fbo_save(Gamep g, FboEnum fbo) -> std::vector< uint8_t >
 {
   TRACE_AND_INDENT();
   int w;

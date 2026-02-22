@@ -34,7 +34,7 @@ void level_cursor_set(Gamep g, Levelsp v, spoint p)
   }
 }
 
-bool level_cursor_is_valid(Gamep g, Levelsp v)
+auto level_cursor_is_valid(Gamep g, Levelsp v) -> bool
 {
   TRACE_AND_INDENT();
 
@@ -49,8 +49,8 @@ bool level_cursor_is_valid(Gamep g, Levelsp v)
 // For the 3rd pass, any tiles will do as long as not consecutive hazard tiles.
 // For the 4th pass, any tiles will do as long as not walls
 //
-static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Thingp player,
-                                                                 spoint start, spoint end, int attempt)
+static auto level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Thingp player,
+                                                                 spoint start, spoint end, int attempt) -> std::vector< spoint >
 {
   TRACE_AND_INDENT();
 
@@ -352,7 +352,7 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
 //
 // Returns true on success
 //
-static std::vector< spoint > level_cursor_path_draw_line(Gamep g, Levelsp v, Levelp l, spoint start, spoint end)
+static auto level_cursor_path_draw_line(Gamep g, Levelsp v, Levelp l, spoint start, spoint end) -> std::vector< spoint >
 {
   static std::vector< spoint > const empty;
 
@@ -608,4 +608,4 @@ void level_cursor_copy_mouse_path_to_player(Gamep g, Levelsp v, Levelp l)
   level_select_mouse_motion(g, v, l);
 }
 
-int level_cursor_path_size(Gamep g) { return (int) cursor_path.size(); }
+auto level_cursor_path_size(Gamep g) -> int { return (int) cursor_path.size(); }

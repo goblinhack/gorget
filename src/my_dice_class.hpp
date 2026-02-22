@@ -18,25 +18,25 @@ private:
   bool        initialized {};
 
 public:
-  [[nodiscard]] std::string to_string() const;
+  [[nodiscard]] auto to_string() const -> std::string;
 
   Dice();
   Dice(const std::string &s);
 
-  [[nodiscard]] int roll() const;
-  [[nodiscard]] int max_roll() const;
-  [[nodiscard]] int min_roll() const;
+  [[nodiscard]] auto roll() const -> int;
+  [[nodiscard]] auto max_roll() const -> int;
+  [[nodiscard]] auto min_roll() const -> int;
 
-  int operator()() const;
+  auto operator()() const -> int;
 };
 
-bool d20_ge(int stat_total, int dice_roll_to_exceed);
-bool d20_ge(int stat_total, int dice_roll_to_exceed, bool &fumble, bool &critical);
+auto d20_ge(int stat_total, int dice_roll_to_exceed) -> bool;
+auto d20_ge(int stat_total, int dice_roll_to_exceed, bool &fumble, bool &critical) -> bool;
 
-int stat_to_bonus(int stat);
+auto stat_to_bonus(int stat) -> int;
 
-std::string stat_to_bonus_string(int stat);
-std::string stat_to_bonus_slash_str(int stat);
-std::string bonus_to_string(int stat);
+auto stat_to_bonus_string(int stat) -> std::string;
+auto stat_to_bonus_slash_str(int stat) -> std::string;
+auto bonus_to_string(int stat) -> std::string;
 
 #endif

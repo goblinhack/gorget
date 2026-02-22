@@ -452,8 +452,8 @@ void dmap_process_reverse(Dmap *D, spoint tl, spoint br)
   } while (static_cast< bool >(changed));
 }
 
-static std::vector< spoint > dmap_solve_(const Dmap *D, const spoint start, const std::vector< spoint > &all_deltas,
-                                         bool allow_diagonals)
+static auto dmap_solve_(const Dmap *D, const spoint start, const std::vector< spoint > &all_deltas,
+                                         bool allow_diagonals) -> std::vector< spoint >
 {
   std::array< std::array< bool, MAP_HEIGHT >, MAP_WIDTH > walked = {};
   std::vector< spoint >                                   out    = {};
@@ -541,7 +541,7 @@ static std::vector< spoint > dmap_solve_(const Dmap *D, const spoint start, cons
   return out;
 }
 
-std::vector< spoint > dmap_solve_allow_diagonal(const Dmap *D, const spoint start)
+auto dmap_solve_allow_diagonal(const Dmap *D, const spoint start) -> std::vector< spoint >
 {
   static const std::vector< spoint > all_deltas = {
       spoint(-1, -1), spoint(1, -1), spoint(-1, 1), spoint(1, 1),
@@ -550,7 +550,7 @@ std::vector< spoint > dmap_solve_allow_diagonal(const Dmap *D, const spoint star
   return dmap_solve_(D, start, all_deltas, true);
 }
 
-std::vector< spoint > dmap_solve_manhattan(const Dmap *D, const spoint start)
+auto dmap_solve_manhattan(const Dmap *D, const spoint start) -> std::vector< spoint >
 {
   static const std::vector< spoint > all_deltas = {
       spoint(0, -1),
@@ -564,7 +564,7 @@ std::vector< spoint > dmap_solve_manhattan(const Dmap *D, const spoint start)
 //
 // Try to solve diagonally first. Then fallback to manhattan if we cannot.
 //
-std::vector< spoint > dmap_solve(Gamep g, Levelsp v, Levelp l, Thingp t, const Dmap *D, const spoint start)
+auto dmap_solve(Gamep g, Levelsp v, Levelp l, Thingp t, const Dmap *D, const spoint start) -> std::vector< spoint >
 {
   //
   // No path? Intentionally not allowing diagonal moves here as that allows the

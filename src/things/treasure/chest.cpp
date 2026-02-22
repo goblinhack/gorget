@@ -12,7 +12,7 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
-static std::string tp_chest_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static auto tp_chest_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
   TRACE_NO_INDENT();
 
@@ -25,7 +25,7 @@ static std::string tp_chest_description_get(Gamep g, Levelsp v, Levelp l, Thingp
   return "closed chest";
 }
 
-static std::string tp_chest_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static auto tp_chest_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
   TRACE_NO_INDENT();
 
@@ -38,7 +38,7 @@ static std::string tp_chest_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
   return UI_INFO1_FMT_STR "A closed chest. What wonders might it contain? Probably none.";
 }
 
-bool tp_load_treasure()
+auto tp_load_treasure() -> bool
 {
   TRACE_NO_INDENT();
 

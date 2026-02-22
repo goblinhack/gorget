@@ -14,7 +14,7 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-static std::string tp_fire_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static auto tp_fire_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
   TRACE_NO_INDENT();
 
@@ -161,7 +161,7 @@ static void tp_fire_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 }
 
-bool tp_load_fire()
+auto tp_load_fire() -> bool
 {
   TRACE_NO_INDENT();
 

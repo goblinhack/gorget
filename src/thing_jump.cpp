@@ -48,7 +48,7 @@ static void thing_jump_truncate(Gamep g, Levelsp v, Levelp l, Thingp t, spoint &
 //
 // Check if jumping over something we cannot
 //
-static Thingp thing_jump_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to)
+static auto thing_jump_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to) -> Thingp
 {
   auto at        = thing_at(t);
   auto jump_path = draw_line(at, to);
@@ -65,7 +65,7 @@ static Thingp thing_jump_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thin
 //
 // Handles player and monster jumps
 //
-bool thing_jump_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to, bool warn)
+auto thing_jump_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to, bool warn) -> bool
 {
   TRACE_NO_INDENT();
 

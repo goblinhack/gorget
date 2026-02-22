@@ -68,7 +68,7 @@ static void level_fov_set(FovMap *m, spoint pov, bool val)
   }
 }
 
-[[nodiscard]] static bool level_fov_get(FovMap *m, spoint pov)
+[[nodiscard]] static auto level_fov_get(FovMap *m, spoint pov) -> bool
 {
 #ifdef _DEBUG_BUILD_
   if (is_oob(pov)) {

@@ -16,7 +16,7 @@
 //
 // This can be done for a thread also.
 //
-FILE *redirect_stdout()
+auto redirect_stdout() -> FILE *
 {
 #if 0
   //
@@ -76,7 +76,7 @@ FILE *redirect_stdout()
 //
 // This can be done for a thread also.
 //
-FILE *redirect_stderr()
+auto redirect_stderr() -> FILE *
 {
 #if 0
   //

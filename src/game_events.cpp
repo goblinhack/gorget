@@ -16,7 +16,7 @@
 //
 // Return true on the event being consumed
 //
-bool game_mouse_down(Gamep g, int x, int y, uint32_t button)
+auto game_mouse_down(Gamep g, int x, int y, uint32_t button) -> bool
 {
   DBG("Game mouse down");
   TRACE_AND_INDENT();
@@ -76,9 +76,9 @@ bool game_mouse_down(Gamep g, int x, int y, uint32_t button)
   return thing_player_mouse_down(g, v, l, x, y, button);
 }
 
-bool game_mouse_up(Gamep g, int x, int y, uint32_t button) { return false; }
+auto game_mouse_up(Gamep g, int x, int y, uint32_t button) -> bool { return false; }
 
-bool game_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx, int wheely)
+auto game_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx, int wheely) -> bool
 {
   DBG2("Game mouse motion");
   TRACE_NO_INDENT();
@@ -129,7 +129,7 @@ bool game_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx, in
   return true;
 }
 
-bool game_event_save(Gamep g)
+auto game_event_save(Gamep g) -> bool
 {
   DBG("Saving");
   TRACE_AND_INDENT();
@@ -174,7 +174,7 @@ bool game_event_save(Gamep g)
   return true;
 }
 
-bool game_event_load(Gamep g)
+auto game_event_load(Gamep g) -> bool
 {
   DBG("Loading");
   TRACE_AND_INDENT();
@@ -184,7 +184,7 @@ bool game_event_load(Gamep g)
   return true;
 }
 
-bool game_event_wait(Gamep g)
+auto game_event_wait(Gamep g) -> bool
 {
   DBG("Wait");
   TRACE_AND_INDENT();
@@ -214,7 +214,7 @@ bool game_event_wait(Gamep g)
   return true;
 }
 
-bool game_event_inventory(Gamep g)
+auto game_event_inventory(Gamep g) -> bool
 {
   DBG("Inventory");
   TRACE_AND_INDENT();
@@ -239,7 +239,7 @@ bool game_event_inventory(Gamep g)
   return true;
 }
 
-bool game_event_descend(Gamep g)
+auto game_event_descend(Gamep g) -> bool
 {
   DBG("Descend");
   TRACE_AND_INDENT();
@@ -274,7 +274,7 @@ bool game_event_descend(Gamep g)
   return true;
 }
 
-bool game_event_ascend(Gamep g)
+auto game_event_ascend(Gamep g) -> bool
 {
   DBG("Ascend");
   TRACE_AND_INDENT();
@@ -309,7 +309,7 @@ bool game_event_ascend(Gamep g)
   return true;
 }
 
-bool game_event_jump(Gamep g)
+auto game_event_jump(Gamep g) -> bool
 {
   DBG("Jump");
   TRACE_AND_INDENT();
@@ -349,7 +349,7 @@ bool game_event_jump(Gamep g)
   return player_jump(g, v, l, player, v->cursor_at);
 }
 
-bool game_event_help(Gamep g)
+auto game_event_help(Gamep g) -> bool
 {
   DBG("Help");
   TRACE_AND_INDENT();
@@ -368,7 +368,7 @@ bool game_event_help(Gamep g)
   return true;
 }
 
-bool game_event_quit(Gamep g)
+auto game_event_quit(Gamep g) -> bool
 {
   DBG("Quitting");
   TRACE_AND_INDENT();
@@ -386,7 +386,7 @@ bool game_event_quit(Gamep g)
   return true;
 }
 
-bool game_input(Gamep g, const SDL_Keysym *key)
+auto game_input(Gamep g, const SDL_Keysym *key) -> bool
 {
   DBG("Pressed a key");
   TRACE_AND_INDENT();

@@ -5,7 +5,7 @@
 #include "my_callstack.hpp"
 #include "my_thing_inlines.hpp"
 
-Thingp top_owner(Gamep g, Levelsp v, Levelp l, Thingp t)
+auto top_owner(Gamep g, Levelsp v, Levelp l, Thingp t) -> Thingp
 {
   TRACE_NO_INDENT();
 
@@ -20,7 +20,7 @@ Thingp top_owner(Gamep g, Levelsp v, Levelp l, Thingp t)
   return top_owner(g, v, l, o);
 }
 
-Thingp immediate_owner(Gamep g, Levelsp v, Levelp l, Thingp t)
+auto immediate_owner(Gamep g, Levelsp v, Levelp l, Thingp t) -> Thingp
 {
   TRACE_NO_INDENT();
 

@@ -169,7 +169,7 @@ static Ptrcheck                                      *ringbuf_base[ MTYPE_MAX ];
 //
 // Wrapper for calloc.
 //
-static void *local_zalloc(int size)
+static auto local_zalloc(int size) -> void *
 {
   void *p;
   p = calloc(1, size);
@@ -179,7 +179,7 @@ static void *local_zalloc(int size)
 //
 // World a pointer to a hash slot.
 //
-static hash_elem_t **ptr2hash(hash_t *hash_table, void *ptr)
+static auto ptr2hash(hash_t *hash_table, void *ptr) -> hash_elem_t **
 {
   int slot;
 
@@ -194,7 +194,7 @@ static hash_elem_t **ptr2hash(hash_t *hash_table, void *ptr)
 //
 // Create a hash table for all pointers.
 //
-static hash_t *hash_init(int hash_size)
+static auto hash_init(int hash_size) -> hash_t *
 {
   hash_t *hash_table;
 
@@ -251,7 +251,7 @@ static void hash_add(hash_t *hash_table, Ptrcheck *pc)
 //
 // Find a pointer in our hash.
 //
-static hash_elem_t *hash_find(hash_t *hash_table, void *ptr)
+static auto hash_find(hash_t *hash_table, void *ptr) -> hash_elem_t *
 {
   hash_elem_t **slot;
   hash_elem_t  *elem;
@@ -309,7 +309,7 @@ static void hash_free(hash_t *hash_table, void *ptr)
   free(elem);
 }
 
-static Ptrcheck *ptrcheck_describe_pointer(int mtype, const void *ptr)
+static auto ptrcheck_describe_pointer(int mtype, const void *ptr) -> Ptrcheck *
 {
   int ring_ptr_size;
 
@@ -340,8 +340,8 @@ static Ptrcheck *ptrcheck_describe_pointer(int mtype, const void *ptr)
 
       auto *H = pc->last_seen[ h ];
       if (H != nullptr) {
-        fprintf(stderr, "PTRCHECK: Last seen at [%u] at %s:%s line %u at %s\n", j, H->file, H->func, H->line, H->ts);
-        fprintf(stderr, "%s", H->bt.c_str());
+        std::println(stderr, "PTRCHECK: Last seen at [{}] at {}:{} line {} at {}", j, H->file, H->func, H->line, H->ts);
+        std::print(stderr, "{}", H->bt);
       }
     }
 #endif
@@ -393,8 +393,8 @@ static Ptrcheck *ptrcheck_describe_pointer(int mtype, const void *ptr)
 
         auto *H = pc->last_seen[ h ];
         if (H != nullptr) {
-          fprintf(stderr, "PTRCHECK: %p last seen at [%u] at %s:%s line %u at %s\n%s\n", ptr, i, H->file, H->func,
-                  H->line, H->ts, H->bt.c_str());
+          std::println(stderr, "PTRCHECK: {} last seen at [{}] at {}:{} line {} at {}\n{}", ptr, i, H->file, H->func,
+                  H->line, H->ts, H->bt);
         }
       }
 #endif
@@ -423,8 +423,8 @@ static Ptrcheck *ptrcheck_describe_pointer(int mtype, const void *ptr)
 //
 // Check a pointer for validity.
 //
-static Ptrcheck *ptrcheck_verify_pointer(int mtype, const void *ptr, const char *func, const char *file, int line,
-                                         int dont_store)
+static auto ptrcheck_verify_pointer(int mtype, const void *ptr, const char *func, const char *file, int line,
+                                         int dont_store) -> Ptrcheck *
 {
   static const char *unknown_ptr_warning  = "** UNKNOWN POINTER ** ";
   static const char *null_pointer_warning = "** NULL POINTER ** ";
@@ -500,8 +500,8 @@ static Ptrcheck *ptrcheck_verify_pointer(int mtype, const void *ptr, const char 
 //
 // Record this pointer.
 //
-static void *ptrcheck_alloc_(int mtype, const void *ptr, const char *what, int size, const char *func,
-                             const char *file, int line)
+static auto ptrcheck_alloc_(int mtype, const void *ptr, const char *what, int size, const char *func,
+                             const char *file, int line) -> void *
 {
   Ptrcheck *pc;
 
@@ -574,8 +574,8 @@ static void *ptrcheck_alloc_(int mtype, const void *ptr, const char *what, int s
   return (void *) ptr;
 }
 
-void *ptrcheck_alloc(int mtype, const void *ptr, const char *what, int size, const char *func, const char *file,
-                     int line)
+auto ptrcheck_alloc(int mtype, const void *ptr, const char *what, int size, const char *func, const char *file,
+                     int line) -> void *
 {
   ptrcheck_mutex.lock();
   TRACE_NO_INDENT();
@@ -589,7 +589,7 @@ void *ptrcheck_alloc(int mtype, const void *ptr, const char *what, int size, con
 // Check a pointer is valid and if so add it to the ring buffer. If not,
 // return false and avert the myfree(), just in case.
 //
-static int ptrcheck_free_(int mtype, void *ptr, const char *func, const char *file, int line)
+static auto ptrcheck_free_(int mtype, void *ptr, const char *func, const char *file, int line) -> int
 {
   Ptrcheck *pc;
 
@@ -648,7 +648,7 @@ static int ptrcheck_free_(int mtype, void *ptr, const char *func, const char *fi
   return 1;
 }
 
-int ptrcheck_free(int mtype, void *ptr, const char *func, const char *file, int line)
+auto ptrcheck_free(int mtype, void *ptr, const char *func, const char *file, int line) -> int
 {
   ptrcheck_mutex.lock();
   TRACE_NO_INDENT();
@@ -661,7 +661,7 @@ int ptrcheck_free(int mtype, void *ptr, const char *func, const char *file, int 
 //
 // Check a pointer for validity with no recording of history.
 //
-int ptrcheck_verify(int mtype, const void *ptr, const char *func, const char *file, int line)
+auto ptrcheck_verify(int mtype, const void *ptr, const char *func, const char *file, int line) -> int
 {
   ptrcheck_mutex.lock();
   TRACE_NO_INDENT();
@@ -718,8 +718,8 @@ void ptrcheck_leak_print(int mtype)
 
         auto *H = pc->last_seen[ h ];
         if (H != nullptr) {
-          fprintf(stderr, "PTRCHECK: Last seen at [%u] at %s:%s line %u at %s\n%s\n", j, H->file, H->func, H->line,
-                  H->ts, H->bt.c_str());
+          std::println(stderr, "PTRCHECK: Last seen at [{}] at {}:{} line {} at {}\n{}", j, H->file, H->func, H->line,
+                  H->ts, H->bt);
         }
       }
 #endif

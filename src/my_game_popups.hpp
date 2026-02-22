@@ -36,12 +36,12 @@ public:
 };
 
 void game_popup_text_add(Gamep g, int x, int y, const std::string &text, color c = WHITE);
-bool game_popups_present(Gamep g, int x, int y);
+auto game_popups_present(Gamep g, int x, int y) -> bool;
 void game_popups_age(Gamep g);
 void game_popups_clear(Gamep g);
 void game_popups_display(Gamep g, Levelsp v, Levelp l);
 
-std::list< GamePopup * > *game_popups_get(Gamep g, int x, int y);
+auto game_popups_get(Gamep g, int x, int y) -> std::list< GamePopup * > *;
 void                      game_popups_set(Gamep g, int x, int y, std::list< GamePopup * > &l);
 
 #endif /* _MY_GAME_POPUP_HPP_ */

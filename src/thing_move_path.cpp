@@ -26,7 +26,7 @@ void thing_move_path_reset(Gamep g, Levelsp v, Levelp l, Thingp t)
 //
 // Get the move path size
 //
-int thing_move_path_size(Gamep g, Levelsp v, Levelp l, Thingp t)
+auto thing_move_path_size(Gamep g, Levelsp v, Levelp l, Thingp t) -> int
 {
   TRACE_NO_INDENT();
 
@@ -41,7 +41,7 @@ int thing_move_path_size(Gamep g, Levelsp v, Levelp l, Thingp t)
 //
 // Return true if there is a move to pop (and pop it)
 //
-bool thing_move_path_pop(Gamep g, Levelsp v, Levelp l, Thingp t, spoint &out)
+auto thing_move_path_pop(Gamep g, Levelsp v, Levelp l, Thingp t, spoint &out) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -67,7 +67,7 @@ bool thing_move_path_pop(Gamep g, Levelsp v, Levelp l, Thingp t, spoint &out)
 //
 // Copy the given path to the thing
 //
-bool thing_move_path_apply(Gamep g, Levelsp v, Levelp l, Thingp t, std::vector< spoint > &move_path)
+auto thing_move_path_apply(Gamep g, Levelsp v, Levelp l, Thingp t, std::vector< spoint > &move_path) -> bool
 {
   auto *ext_struct = thing_ext_struct(g, t);
   if (ext_struct == nullptr) {
@@ -101,7 +101,7 @@ bool thing_move_path_apply(Gamep g, Levelsp v, Levelp l, Thingp t, std::vector< 
 //
 // Return true if there is a move to pop.
 //
-bool thing_move_path_target(Gamep g, Levelsp v, Levelp l, Thingp t, spoint &out)
+auto thing_move_path_target(Gamep g, Levelsp v, Levelp l, Thingp t, spoint &out) -> bool
 {
   TRACE_NO_INDENT();
 

@@ -9,14 +9,14 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-static std::string tp_pillar_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static auto tp_pillar_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
   TRACE_NO_INDENT();
 
   return "ancient moss covered pillar";
 }
 
-bool tp_load_pillar()
+auto tp_load_pillar() -> bool
 {
   TRACE_NO_INDENT();
 

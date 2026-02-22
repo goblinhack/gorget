@@ -113,8 +113,8 @@ void wid_mouse_over_end(Gamep g)
   }
 }
 
-[[nodiscard]] static bool wid_mouse_over_begin(Gamep g, Widp w, uint32_t x, uint32_t y, int relx, int rely,
-                                               int wheelx, int wheely)
+[[nodiscard]] static auto wid_mouse_over_begin(Gamep g, Widp w, uint32_t x, uint32_t y, int relx, int rely,
+                                               int wheelx, int wheely) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -226,7 +226,7 @@ void wid_set_on_mouse_over_end(Widp w, on_mouse_over_end_t fn)
   w->on_mouse_over_end = fn;
 }
 
-bool wid_scroll_trough_mouse_down(Gamep g, Widp w, int x, int y, uint32_t button)
+auto wid_scroll_trough_mouse_down(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -277,7 +277,7 @@ bool wid_scroll_trough_mouse_down(Gamep g, Widp w, int x, int y, uint32_t button
   return true;
 }
 
-bool wid_scroll_motion(Gamep g, Widp w, int x, int y, int relx, int rely, int wheelx, int wheely)
+auto wid_scroll_motion(Gamep g, Widp w, int x, int y, int relx, int rely, int wheelx, int wheely) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -346,7 +346,7 @@ void wid_update_mouse(Gamep g)
   wid_mouse_motion(g, x, y, 0, 0, 0, 0);
 }
 
-Widp wid_find_under_mouse()
+auto wid_find_under_mouse() -> Widp
 {
   TRACE_NO_INDENT();
 
@@ -366,7 +366,7 @@ Widp wid_find_under_mouse()
   return nullptr;
 }
 
-Widp wid_find_under_mouse_when_scrolling(Gamep g)
+auto wid_find_under_mouse_when_scrolling(Gamep g) -> Widp
 {
   TRACE_NO_INDENT();
 
@@ -385,7 +385,7 @@ Widp wid_find_under_mouse_when_scrolling(Gamep g)
   return w;
 }
 
-static Widp wid_mouse_down_handler_at(Gamep g, Widp w, int x, int y, uint8_t strict)
+static auto wid_mouse_down_handler_at(Gamep g, Widp w, int x, int y, uint8_t strict) -> Widp
 {
   TRACE_NO_INDENT();
 
@@ -464,7 +464,7 @@ static Widp wid_mouse_down_handler_at(Gamep g, Widp w, int x, int y, uint8_t str
   return nullptr;
 }
 
-static Widp wid_mouse_held_handler_at(Gamep g, Widp w, int x, int y, uint8_t strict)
+static auto wid_mouse_held_handler_at(Gamep g, Widp w, int x, int y, uint8_t strict) -> Widp
 {
   TRACE_NO_INDENT();
 
@@ -539,7 +539,7 @@ static Widp wid_mouse_held_handler_at(Gamep g, Widp w, int x, int y, uint8_t str
   return nullptr;
 }
 
-static Widp wid_mouse_up_handler_at(Gamep g, Widp w, int x, int y, uint8_t strict)
+static auto wid_mouse_up_handler_at(Gamep g, Widp w, int x, int y, uint8_t strict) -> Widp
 {
   TRACE_NO_INDENT();
 
@@ -614,7 +614,7 @@ static Widp wid_mouse_up_handler_at(Gamep g, Widp w, int x, int y, uint8_t stric
   return nullptr;
 }
 
-static Widp wid_mouse_down_handler(Gamep g, int x, int y)
+static auto wid_mouse_down_handler(Gamep g, int x, int y) -> Widp
 {
   TRACE_NO_INDENT();
 
@@ -667,7 +667,7 @@ static Widp wid_mouse_down_handler(Gamep g, int x, int y)
   return nullptr;
 }
 
-static Widp wid_mouse_held_handler(Gamep g, int x, int y)
+static auto wid_mouse_held_handler(Gamep g, int x, int y) -> Widp
 {
   TRACE_NO_INDENT();
 
@@ -720,7 +720,7 @@ static Widp wid_mouse_held_handler(Gamep g, int x, int y)
   return nullptr;
 }
 
-static Widp wid_mouse_up_handler(Gamep g, int x, int y)
+static auto wid_mouse_up_handler(Gamep g, int x, int y) -> Widp
 {
   TRACE_NO_INDENT();
 
@@ -773,7 +773,7 @@ static Widp wid_mouse_up_handler(Gamep g, int x, int y)
   return nullptr;
 }
 
-static Widp wid_mouse_motion_handler(int x, int y, int wheelx, int wheely)
+static auto wid_mouse_motion_handler(int x, int y, int wheelx, int wheely) -> Widp
 {
   TRACE_NO_INDENT();
 

@@ -70,7 +70,7 @@ static void wid_inventory_mouse_over_end(Gamep g, Widp w)
   (void) level_cursor_describe_remove(g, v, t);
 }
 
-[[nodiscard]] static bool wid_inventory_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static auto wid_inventory_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -90,7 +90,7 @@ static void wid_inventory_mouse_over_end(Gamep g, Widp w)
   return true;
 }
 
-[[nodiscard]] static bool wid_inventory_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
+[[nodiscard]] static auto wid_inventory_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -176,7 +176,7 @@ static void wid_inventory_mouse_over_end(Gamep g, Widp w)
   return false;
 }
 
-[[nodiscard]] static bool wid_inventory_back(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static auto wid_inventory_back(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE_NO_INDENT();
   wid_inventory_destroy(g);

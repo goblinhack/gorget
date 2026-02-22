@@ -44,7 +44,7 @@ void wid_console_fini(Gamep g)
   wid_destroy(g, &wid_console_window);
 }
 
-bool wid_console_init(Gamep g)
+auto wid_console_init(Gamep g) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -151,7 +151,7 @@ void wid_console_log(const std::string &s)
 //
 // Key down etc...
 //
-bool wid_console_receive_input(Gamep g, Widp w, const SDL_Keysym *key)
+auto wid_console_receive_input(Gamep g, Widp w, const SDL_Keysym *key) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -258,7 +258,7 @@ static void wid_console_wid_create(Gamep g)
   wid_update(g, wid_console_window);
 }
 
-std::vector< std::string > wid_console_serialize()
+auto wid_console_serialize() -> std::vector< std::string >
 {
   TRACE_NO_INDENT();
   std::vector< std::string > r;

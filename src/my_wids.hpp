@@ -12,9 +12,9 @@
 
 #include <string>
 
-bool wid_actionbar_init(Gamep g);
-bool wid_leftbar_init(Gamep g);
-bool wid_rightbar_init(Gamep g);
+auto wid_actionbar_init(Gamep g) -> bool;
+auto wid_leftbar_init(Gamep g) -> bool;
+auto wid_rightbar_init(Gamep g) -> bool;
 void wid_actionbar_fini(Gamep g);
 void wid_cfg_gfx_select(Gamep g);
 void wid_cfg_help_select(Gamep g);
@@ -42,34 +42,34 @@ void wid_save_destroy(Gamep g);
 void wid_save_select(Gamep g);
 void wid_seed_select(Gamep g);
 void wid_gray_out_button(Gamep g, Widp w);
-Widp wid_new_back_button(Gamep g, Widp parent, const std::string &name);
-Widp wid_new_menu_button(Gamep g, Widp parent, const std::string &name);
-Widp wid_new_save_button(Gamep g, Widp parent, const std::string &name);
-Widp wid_new_cancel_button(Gamep g, Widp parent, const std::string &name);
-Widp wid_new_green_button(Gamep g, Widp parent, const std::string &name);
-Widp wid_new_red_button(Gamep g, Widp parent, const std::string &name);
-Widp wid_new_button(Gamep g, Widp parent, const std::string &name);
+auto wid_new_back_button(Gamep g, Widp parent, const std::string &name) -> Widp;
+auto wid_new_menu_button(Gamep g, Widp parent, const std::string &name) -> Widp;
+auto wid_new_save_button(Gamep g, Widp parent, const std::string &name) -> Widp;
+auto wid_new_cancel_button(Gamep g, Widp parent, const std::string &name) -> Widp;
+auto wid_new_green_button(Gamep g, Widp parent, const std::string &name) -> Widp;
+auto wid_new_red_button(Gamep g, Widp parent, const std::string &name) -> Widp;
+auto wid_new_button(Gamep g, Widp parent, const std::string &name) -> Widp;
 void wid_botcon_fini(Gamep g);
-bool wid_botcon_init(Gamep g);
+auto wid_botcon_init(Gamep g) -> bool;
 void wid_botcon_log(const std::string &s);
 void wid_botcon_flush(Gamep g);
 void wid_topcon_fini(Gamep g);
-bool wid_topcon_init(Gamep g);
+auto wid_topcon_init(Gamep g) -> bool;
 void wid_topcon_log(const std::string &s);
 void wid_topcon_flush(Gamep g);
 void wid_notice(const std::string &notice);
 void wid_notice_destroy();
 void wid_console_fini(Gamep g);
-bool wid_console_init(Gamep g);
+auto wid_console_init(Gamep g) -> bool;
 void wid_console_log(const std::string &s);
 void wid_console_raise(Gamep g);
 void wid_console_flush(Gamep g);
 void wid_progress_bar(Gamep, const std::string &title, float pct);
 void wid_progress_bar_destroy(Gamep);
-bool wid_console_receive_input(Gamep g, Widp w, const SDL_Keysym *key);
+auto wid_console_receive_input(Gamep g, Widp w, const SDL_Keysym *key) -> bool;
 void wid_console_deserialize(const std::vector< std::string > &r);
 
-std::vector< std::string > wid_console_serialize();
+auto wid_console_serialize() -> std::vector< std::string >;
 
 extern Widp wid_topcon_input_line;
 extern Widp wid_topcon_window;
