@@ -723,8 +723,8 @@ void blit_flush()
   glColorPointer(NUMBER_COMPONENTS_PER_COLOR, // (r,g,b,a)
                  GL_UNSIGNED_BYTE, NUMBER_BYTES_PER_VERTICE_2D,
                  ((char *) gl_array_buf)
-                     + (SIZEOF(GLshort) * // skip (x,y)
-                        NUMBER_DIMENSIONS_PER_COORD_2D)
+                     + (static_cast<ptrdiff_t>(SIZEOF(GLshort) * // skip (x,y)
+                        NUMBER_DIMENSIONS_PER_COORD_2D))
                      + (static_cast<ptrdiff_t>(SIZEOF(GLfloat) * // skip (u,v)
                         NUMBER_DIMENSIONS_PER_COORD_2D)));
 

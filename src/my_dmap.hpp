@@ -11,7 +11,7 @@
 
 #include <vector>
 
-using Dmap = struct Dmap_ {
+using Dmap = struct Dmap {
   //
   // memset is used to initialize this, so be careful if changing the size
   //

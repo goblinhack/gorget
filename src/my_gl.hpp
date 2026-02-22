@@ -278,7 +278,7 @@ extern GLuint g_fbo_id[ FBO_ENUM_MAX ];
 extern GLuint g_fbo_tex_id[ FBO_ENUM_MAX ];
 extern GLuint g_render_buf_id[ FBO_ENUM_MAX ];
 
-struct LightPixels_;
+struct LightPixels;
 
 void blit(int tex, GLshort left, GLshort top, GLshort right, GLshort bottom, const color &c);
 void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLshort left, GLshort top, GLshort right,
@@ -286,7 +286,7 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
 void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLshort left, GLshort top, GLshort right,
           GLshort bottom, const color &color_bl, const color &color_br, const color &color_tl, const color &color_tr);
 void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLshort pixMinX, GLshort pixMinY, GLshort pixMaxX,
-          GLshort pixMaxY, const color &c, struct LightPixels_ * /*light_pixels*/, bool is_blit_flush_per_line);
+          GLshort pixMaxY, const color &c, struct LightPixels * /*light_pixels*/, bool is_blit_flush_per_line);
 void blit_fbo(Gamep g, FboEnum fbo);
 void blit_fbo(Gamep g, FboEnum fbo, int tl_x, int tl_y, int br_x, int br_y);
 void blit_fbo_push(FboEnum fbo);

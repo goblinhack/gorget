@@ -14,12 +14,12 @@
 #include <map>
 #include <utility>
 
-class music
+class Music
 {
 public:
-  explicit music(std::string vname_alias) : name_alias(std::move(vname_alias)) {}
+  explicit Music(std::string vname_alias) : name_alias(std::move(vname_alias)) {}
 
-  ~music()
+  ~Music()
   {
     Mix_FreeMusic(m);
     myfree(data);
@@ -32,7 +32,7 @@ public:
   uint32_t       rate = 44100;
 };
 
-static std::unordered_map< std::string, class music * > all_music;
+static std::unordered_map< std::string, class Music * > all_music;
 
 static std::string music_current;
 
@@ -88,7 +88,7 @@ auto music_load(uint32_t rate, const char *file, const char *name_alias) -> bool
     }
   }
 
-  auto *m = new music(name_alias);
+  auto *m = new Music(name_alias);
 
   m->rate = rate;
   m->data = file_load(file, &m->len);

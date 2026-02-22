@@ -11,7 +11,7 @@
 //
 // Cellular automata helpers
 //
-using Blob = struct Blob_ {
+using Blob = struct Blob {
   //
   // Keeps track of the largest blob so fat
   //
@@ -27,7 +27,7 @@ using Blob = struct Blob_ {
 
 enum { MAP_LEVEL_CELLULAR_BORDER = 2 };
 
-using Cave = struct Cave_ {
+using Cave = struct Cave {
   //
   // Used for cellular automata
   //

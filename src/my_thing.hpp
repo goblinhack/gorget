@@ -85,14 +85,14 @@ ENUM_DEF_H(MONST_STATE_ENUM, MonstState)
 //
 // Field of view for a monster or player
 //
-using FovMap = struct FovMap_ {
+using FovMap = struct FovMap {
   uint8_t can_see[ MAP_WIDTH ][ MAP_HEIGHT ];
 };
 
 //
 // Some kind of event that befalls a thing. Usually an attack
 //
-using ThingEvent = struct ThingEvent_ {
+using ThingEvent = struct ThingEvent {
   //
   // What happened?
   //
@@ -114,14 +114,14 @@ using ThingEvent = struct ThingEvent_ {
 //
 // Minions
 //
-using ThingMinion = struct ThingMinion_ {
+using ThingMinion = struct ThingMinion {
   ThingId minion_id;
 };
 
 //
 // Per mob minions
 //
-using ThingMinions = struct ThingMinions_ {
+using ThingMinions = struct ThingMinions {
   ThingMinion minion[ THING_MINION_MAX ];
   int8_t      count;
 };
@@ -129,7 +129,7 @@ using ThingMinions = struct ThingMinions_ {
 //
 // Per thing extended memory
 //
-using ThingExt = struct ThingExt_ {
+using ThingExt = struct ThingExt {
   uint8_t in_use : 1;
   //
   // All minions for this mob
@@ -156,7 +156,7 @@ using ThingExt = struct ThingExt_ {
 //
 // Per thing lighting memory
 //
-using ThingFov = struct ThingFov_ {
+using ThingFov = struct ThingFov {
   uint8_t in_use : 1;
   //
   // What we can currently see (monst) or is lit (light source)
@@ -167,7 +167,7 @@ using ThingFov = struct ThingFov_ {
 //
 // Inventory items
 //
-using ThingSlot = struct ThingSlot_ {
+using ThingSlot = struct ThingSlot {
   ThingId item_id;
   //
   // How many of this identical item are there?
@@ -178,7 +178,7 @@ using ThingSlot = struct ThingSlot_ {
 //
 // Per thing inventory memory
 //
-using ThingInventory = struct ThingInventory_ {
+using ThingInventory = struct ThingInventory {
   //
   // This is the max any player or monster can carry
   //
@@ -188,7 +188,7 @@ using ThingInventory = struct ThingInventory_ {
 //
 // Player specific memory
 //
-using ThingPlayer = struct ThingPlayer_ {
+using ThingPlayer = struct ThingPlayer {
   //
   // For hiscores
   //
@@ -199,7 +199,7 @@ using ThingPlayer = struct ThingPlayer_ {
   ThingInventory inventory;
 };
 
-using Thing = struct Thing_ {
+using Thing = struct Thing {
   //////////////////////////////////////////////////////////////
   // No c++ types can be used here, to allow easy level replay
   //

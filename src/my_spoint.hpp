@@ -5,7 +5,7 @@
 #ifndef MY_SPOINT_HPP
 #define MY_SPOINT_HPP
 
-using spoint = struct my_spoint {
+using spoint = struct MySpoint {
 public:
   short x;
   short y;
@@ -15,8 +15,8 @@ public:
   my_spoint(short _x, short _y) : x(_x), y(_y) {}
   my_spoint(void) : x(0), y(0) {}
 #endif
-  void               operator+=(my_spoint const &b);
-  void               operator-=(my_spoint const &b);
+  void               operator+=(MySpoint const &b);
+  void               operator-=(MySpoint const &b);
   void               operator*=(short b);
   void               operator/=(short b);
   [[nodiscard]] auto length() const -> float;

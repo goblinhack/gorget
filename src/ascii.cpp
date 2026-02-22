@@ -15,7 +15,7 @@
 #include "my_time.hpp"
 #include "my_tp.hpp"
 
-struct ascii_ {
+struct Ascii {
   //
   // In ascii mode, where on the ASCII we are
   //
@@ -35,7 +35,7 @@ struct ascii_ {
   std::array< std::array< ascii_mouse_over_callback, TERM_HEIGHT_MAX >, TERM_WIDTH_MAX > mouse_over {};
 };
 
-static struct ascii_ ascii;
+static struct Ascii ascii;
 
 int TERM_WIDTH;
 int TERM_HEIGHT;

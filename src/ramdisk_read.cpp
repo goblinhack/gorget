@@ -11,7 +11,7 @@
 #include <cstdlib>
 #include <cstring>
 
-std::unordered_map< std::string, ramdisk_t_ > ramdisk_data;
+std::unordered_map< std::string, RamdiskT > ramdisk_data;
 
 auto ramdisk_load(const char *filename, int *outlen) -> unsigned char *
 {

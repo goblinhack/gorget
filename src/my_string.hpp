@@ -10,8 +10,8 @@
 #include <string>
 #include <vector>
 
-extern auto my_strlcpy(char *dst, const char *src, size_t size) -> size_t;
-extern auto my_strlcat(char *dst, const char *src, size_t size) -> size_t;
+extern auto my_strlcpy(char *dst, const char *src, size_t max_len) -> size_t;
+extern auto my_strlcat(char *dst, const char *src, size_t max_len) -> size_t;
 extern auto my_strcasestr(const char *s, const char *find) -> char *;
 
 //
@@ -34,7 +34,7 @@ auto strisregexp(const char *in) -> int;
 auto split(const std::string &text, int max_line_len) -> std::vector< std::string >;
 
 auto capitalize(std::string in) -> std::string;
-auto capitalize_first(std::string in) -> std::string;
+auto capitalize_first(const std::string& in) -> std::string;
 auto ltrim(std::string &s) -> std::string &;
 auto ltrim_ws(const std::string &s) -> std::string;
 auto mybasename(const char *in, const char *who) -> std::string;

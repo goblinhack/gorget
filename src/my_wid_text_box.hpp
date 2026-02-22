@@ -39,8 +39,8 @@ public:
   Widp   wid_vert_scroll {};
 
   ~WidTextBox();
-  WidTextBox(Gamep g, spoint tl, spoint br, Widp /*vparent*/, bool horiz_scroll = true, bool vert_scoll = true,
-             int scroll_height = -1);
+  WidTextBox(Gamep g, spoint tl, spoint br, Widp /*vparent*/, bool horiz_scroll = true, bool vert_scroll = true,
+             int vscroll_height_in = -1);
 
 private:
   auto log_(Gamep g, const std::string & /*str*/, wid_text_format format = TEXT_FORMAT_NONE, const std::string &c = "") -> Widp;

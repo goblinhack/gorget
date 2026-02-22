@@ -5,7 +5,7 @@
 #ifndef MY_TOKEN_HPP
 #define MY_TOKEN_HPP
 
-#include "3rdparty/slre.hpp"
+#include "3rdparty/slre.hpp" // NOLINT
 #include "my_string.hpp"
 
 class Tokens

@@ -11,7 +11,7 @@
 #include "my_string.hpp"
 #include "my_wids.hpp"
 
-thread_local struct callframe callframes[ MAXCALLFRAME ];
+thread_local struct Callframe callframes[ MAXCALLFRAME ];
 thread_local unsigned char    g_callframes_depth;
 thread_local unsigned char    g_callframes_indent;
 

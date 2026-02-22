@@ -25,7 +25,7 @@ enum {
 //
 // Used for level selection on the command line
 //
-using LevelOpt = struct LevelOpt_ {
+using LevelOpt = struct LevelOpt {
   std::string level_name;
   LevelNum    level_num {};
   bool        is_set {};
@@ -33,7 +33,7 @@ using LevelOpt = struct LevelOpt_ {
 
 extern LevelOpt g_level_opt;
 
-using LevelInfo = struct LevelInfo_ {
+using LevelInfo = struct LevelInfo {
   //////////////////////////////////////////////////////////////
   // No c++ types can be used here, to allow easy level replay
   //
@@ -105,7 +105,7 @@ using LevelInfo = struct LevelInfo_ {
   //////////////////////////////////////////////////////////////
 };
 
-using LightPixel = struct LightPixel_ {
+using LightPixel = struct LightPixel {
   //
   // The total of all lights intersecting here, which is then scaled into the final light
   //
@@ -114,22 +114,22 @@ using LightPixel = struct LightPixel_ {
   float b;
 };
 
-using LightPixels = struct LightPixels_ {
+using LightPixels = struct LightPixels {
   LightPixel pixel[ LIGHT_PIXEL ][ LIGHT_PIXEL ];
 };
 
-using LightTile = struct LightTile_ {
+using LightTile = struct LightTile {
   LightPixels pixels;
 };
 
 //
 // Light map for the level
 //
-using LightMap = struct LightMap_ {
+using LightMap = struct LightMap {
   LightTile tile[ MAP_WIDTH ][ MAP_HEIGHT ];
 };
 
-using Level = struct Level_ {
+using Level = struct Level {
   //////////////////////////////////////////////////////////////
   // No c++ types can be used here, to allow easy level replay
   //
@@ -273,7 +273,7 @@ using Level = struct Level_ {
   //////////////////////////////////////////////////////////////
 };
 
-using LevelSelectCell = struct LevelSelectCell_ {
+using LevelSelectCell = struct LevelSelectCell {
   //
   // If there is a level here
   //
@@ -288,7 +288,7 @@ using LevelSelectCell = struct LevelSelectCell_ {
   LevelNum level_num;
 };
 
-using LevelSelect = struct LevelSelect_ {
+using LevelSelect = struct LevelSelect {
   //
   // Set when we have populated the levels.
   //
@@ -315,7 +315,7 @@ using LevelSelect = struct LevelSelect_ {
   LevelNum tile_to_level[ MAP_WIDTH ][ MAP_HEIGHT ];
 };
 
-using Levels = struct Levels_ {
+using Levels = struct Levels {
   //////////////////////////////////////////////////////////////
   // No c++ types can be used here, to allow easy level replay
   //

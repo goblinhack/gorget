@@ -19,7 +19,7 @@
 #include "my_wid_tiles.hpp"
 #include "my_wids.hpp"
 
-class wid_options_menu
+class WidOptionsMenu
 {
 public:
   std::array< color, WID_COLOR_MAX >   colors    = {WHITE};
@@ -28,14 +28,14 @@ public:
   uint8_t                              style_set = {};
 };
 
-class tree_wid_key
+class TreeWidKey
 {
 public:
-  tree_wid_key() = default;
+  TreeWidKey() = default;
 
-  tree_wid_key(int vpriority, spoint vtl, spoint vbr, uint64_t vkey) : priority(vpriority), tl(vtl), br(vbr), key(vkey) {}
+  TreeWidKey(int vpriority, spoint vtl, spoint vbr, uint64_t vkey) : priority(vpriority), tl(vtl), br(vbr), key(vkey) {}
 
-  ~tree_wid_key() = default;
+  ~TreeWidKey() = default;
 
   int priority {};
 
@@ -51,8 +51,8 @@ public:
   uint64_t key {};
 };
 
-struct tree_wid_key_cmp {
-  auto operator()(const tree_wid_key &lhs, const tree_wid_key &rhs) const -> bool
+struct TreeWidKeyCmp {
+  auto operator()(const TreeWidKey &lhs, const TreeWidKey &rhs) const -> bool
   {
     if (lhs.priority < rhs.priority) {
       return true;
@@ -91,7 +91,7 @@ public:
   uint64_t val {};
 };
 
-using wid_key_map_location = std::map< tree_wid_key, Widp, tree_wid_key_cmp >;
+using wid_key_map_location = std::map< TreeWidKey, Widp, TreeWidKeyCmp >;
 using wid_key_map_int      = std::map< WidKeyType, Widp >;
 
 auto wid_unsorted_get_key(Gamep g, Widp w) -> WidKeyType;
@@ -107,7 +107,7 @@ public:
   //
   // Sorted for display order.
   //
-  tree_wid_key key;
+  TreeWidKey key;
   WidKeyType   tree2_key;
   WidKeyType   tree4_key;
   WidKeyType   tree5_key;
@@ -220,7 +220,7 @@ public:
   //
   // Config layers:
   //
-  std::array< wid_options_menu, WID_MODE_LAST > cfg {};
+  std::array< WidOptionsMenu, WID_MODE_LAST > cfg {};
 
   //
   // Client context

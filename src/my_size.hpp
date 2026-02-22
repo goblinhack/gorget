@@ -5,67 +5,67 @@
 #ifndef MY_SIZE_HPP
 #define MY_SIZE_HPP
 
-template < class T > class my_asize
+template < class T > class MyAsize
 {
 public:
   T w {};
   T h {};
 
-  my_asize() : w(0), h(0) {}
-  my_asize(T vw, T vh) : w(vw), h(vh) {}
+  MyAsize() : w(0), h(0) {}
+  MyAsize(T vw, T vh) : w(vw), h(vh) {}
 
-  void operator+=(my_asize a)
+  void operator+=(MyAsize a)
   {
     w += a.w;
     h += a.h;
   }
 
-  void operator-=(my_asize a)
+  void operator-=(MyAsize a)
   {
     w -= a.w;
     h -= a.h;
   }
 
-  void operator/=(my_asize a)
+  void operator/=(MyAsize a)
   {
     w /= a.w;
     h /= a.h;
   }
 
-  void operator*=(my_asize a)
+  void operator*=(MyAsize a)
   {
     w *= a.w;
     h *= a.h;
   }
 
-  friend auto operator/(my_asize a, T i) -> my_asize { return (my_asize(a.w / i, a.h / i)); }
+  friend auto operator/(MyAsize a, T i) -> MyAsize { return (MyAsize(a.w / i, a.h / i)); }
 
-  friend auto operator*(my_asize a, T i) -> my_asize { return (my_asize(a.w * i, a.h * i)); }
+  friend auto operator*(MyAsize a, T i) -> MyAsize { return (MyAsize(a.w * i, a.h * i)); }
 
-  friend auto operator+(my_asize a, my_asize b) -> my_asize { return (my_asize(a.w + b.w, a.h + b.h)); }
+  friend auto operator+(MyAsize a, MyAsize b) -> MyAsize { return (MyAsize(a.w + b.w, a.h + b.h)); }
 
-  friend auto operator-(my_asize a, my_asize b) -> my_asize { return (my_asize(a.w - b.w, a.h - b.h)); }
+  friend auto operator-(MyAsize a, MyAsize b) -> MyAsize { return (MyAsize(a.w - b.w, a.h - b.h)); }
 
-  friend auto operator/(my_asize a, my_asize b) -> my_asize { return (my_asize(a.w / b.w, a.h / b.h)); }
+  friend auto operator/(MyAsize a, MyAsize b) -> MyAsize { return (MyAsize(a.w / b.w, a.h / b.h)); }
 
-  friend auto operator*(my_asize a, my_asize b) -> my_asize { return (my_asize(a.w * b.w, a.h * b.h)); }
+  friend auto operator*(MyAsize a, MyAsize b) -> MyAsize { return (MyAsize(a.w * b.w, a.h * b.h)); }
 
-  friend auto operator==(my_asize a, my_asize b) -> bool { return (a.w == b.w) && (a.h == b.h); }
+  friend auto operator==(MyAsize a, MyAsize b) -> bool { return (a.w == b.w) && (a.h == b.h); }
 
-  friend auto operator!=(my_asize a, my_asize b) -> bool { return (! (a == b)); }
-
-  //
-  // Compare areas of a and b
-  //
-  friend auto operator<(my_asize a, my_asize b) -> bool { return (a.w * a.h) < (b.w * b.h); }
+  friend auto operator!=(MyAsize a, MyAsize b) -> bool { return (! (a == b)); }
 
   //
   // Compare areas of a and b
   //
-  friend auto operator>(my_asize a, my_asize b) -> bool { return (a.w * a.h) > (b.w * b.h); }
+  friend auto operator<(MyAsize a, MyAsize b) -> bool { return (a.w * a.h) < (b.w * b.h); }
+
+  //
+  // Compare areas of a and b
+  //
+  friend auto operator>(MyAsize a, MyAsize b) -> bool { return (a.w * a.h) > (b.w * b.h); }
 };
 
-using isize = my_asize< int16_t >;
-using fsize = my_asize< float >;
+using isize = MyAsize< int16_t >;
+using fsize = MyAsize< float >;
 
 #endif // _MY_SIZE_HPP

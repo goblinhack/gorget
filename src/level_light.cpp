@@ -16,11 +16,11 @@
 #include <array>
 #include <cstring>
 
-using Ray = struct Ray_ {
+using Ray = struct Ray {
   int16_t depth_furthest;
 };
 
-using RayPixel = struct RayPixel_ {
+using RayPixel = struct RayPixel {
   spoint p;
   float  distance;
 };

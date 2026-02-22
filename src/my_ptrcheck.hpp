@@ -16,7 +16,7 @@ auto mymalloc_(int size, const char *what, const char *file, const char *func, i
 auto myrealloc_(void *ptr, int size, const char *what, const char *file, const char *func, int line) -> void *;
 void myfree_(void *ptr, const char *file, const char *func, int line);
 auto mydupstr_(const char *in, const char *what, const char *file, const char *func, int line) -> char *;
-auto strsub_(const char *in, const char *old, const char *replace_with, const char *what, const char *file, const char *func,
+auto strsub_(const char *in, const char *look_for, const char *replace_with, const char *what, const char *file, const char *func,
              int line) -> char *;
 
 #define myzalloc(__size__, __what__) myzalloc_((__size__), (__what__), PTRCHECK_AT)

@@ -28,9 +28,6 @@
  * your project.
  */
 
-#ifndef MY_PCG_BASIC_HPP
-#define MY_PCG_BASIC_HPP
-
 #include "my_globals.hpp"
 #include "my_main.hpp"
 #include "my_source_loc.hpp"
@@ -158,5 +155,3 @@ void game_pcg_unlock()
   }
   pcg_lock_count--;
 }
-
-#endif

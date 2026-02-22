@@ -81,17 +81,17 @@
  *  Completes to     : set debug on
  */
 
-class command_t
+class CommandT
 {
 public:
-  command_t()
+  CommandT()
   {
     memset(&this->tokens, 0, SIZEOF(this->tokens));
     memset(&this->readable_tokens, 0, SIZEOF(this->readable_tokens));
     memset(&this->input_tokens, 0, SIZEOF(this->input_tokens));
   }
 
-  ~command_t() = default;
+  ~CommandT() = default;
 
   class Tokens tokens {};
   class Tokens readable_tokens {};
@@ -99,7 +99,7 @@ public:
   command_fn_t callback {nullptr};
 };
 
-using commandp = class command_t *;
+using commandp = class CommandT *;
 using commands = std::unordered_map< std::string, commandp >;
 static commands commands_map;
 
@@ -129,7 +129,7 @@ void command_add(Gamep g, command_fn_t callback, const std::string &input, const
 {
   TRACE_NO_INDENT();
 
-  auto *command = new class command_t();
+  auto *command = new class CommandT();
   auto  result  = commands_map.insert(std::make_pair(input, command));
 
   if (! result.second) {

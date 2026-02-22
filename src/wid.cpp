@@ -1530,8 +1530,8 @@ auto wid_get_color(Widp w, wid_color which) -> color
 {
   TRACE_NO_INDENT();
 
-  auto              mode = wid_get_mode(w); // for c++, no enum walk
-  wid_options_menu *cfg  = &w->cfg[ mode ];
+  auto            mode = wid_get_mode(w); // for c++, no enum walk
+  WidOptionsMenu *cfg  = &w->cfg[ mode ];
 
   if (static_cast< bool >(cfg->color_set[ which ])) {
     return cfg->colors[ which ];
@@ -1558,8 +1558,8 @@ auto wid_get_style(Widp w) -> int
 {
   TRACE_NO_INDENT();
 
-  auto                    mode = wid_get_mode(w); // for c++, no enum walk
-  wid_options_menu const *cfg  = &w->cfg[ mode ];
+  auto                  mode = wid_get_mode(w); // for c++, no enum walk
+  WidOptionsMenu const *cfg  = &w->cfg[ mode ];
 
   if (static_cast< bool >(cfg->style_set)) {
     return cfg->style;
@@ -3220,7 +3220,7 @@ static void wid_adjust_scrollbar(Widp scrollbar, Widp owner)
   float       minx             = 0;
   float       maxx             = 0;
   float       pct              = 0;
-  bool        first            = 1u;
+  bool        first            = true;
 
   //
   // Find out the space that the children take up then use this to
@@ -3242,7 +3242,7 @@ static void wid_adjust_scrollbar(Widp scrollbar, Widp owner)
         miny  = tl_y;
         maxx  = br_x;
         maxy  = br_y;
-        first = 0u;
+        first = false;
         continue;
       }
 

@@ -949,7 +949,7 @@ auto capitalize(std::string in) -> std::string
 //
 // foo bar -> Foo bar
 //
-auto capitalize_first(std::string in) -> std::string
+auto capitalize_first(const std::string& in) -> std::string
 {
   TRACE_NO_INDENT();
   std::string out = std::move(in);

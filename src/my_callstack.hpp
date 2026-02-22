@@ -11,14 +11,14 @@
 #define CAT2(A, B) CAT(A, B)
 
 #ifdef ENABLE_DEBUG_TRACE
-#define TRACE_AND_INDENT() const tracer_t CAT2(__my_trace__, __LINE__)(SRC_FUNC_NAME, SRC_LINE_NUM);
-#define TRACE_NO_INDENT()  const tracer_no_indent_t CAT2(__my_trace__, __LINE__)(SRC_FUNC_NAME, SRC_LINE_NUM);
+#define TRACE_AND_INDENT() const TracerT CAT2(__my_trace__, __LINE__)(SRC_FUNC_NAME, SRC_LINE_NUM);
+#define TRACE_NO_INDENT()  const TracerNoIndentT CAT2(__my_trace__, __LINE__)(SRC_FUNC_NAME, SRC_LINE_NUM);
 #else
 #define TRACE_AND_INDENT()
 #define TRACE_NO_INDENT()
 #endif
 
-struct callframe {
+struct Callframe {
   const char    *func;
   unsigned short line;
 };
@@ -35,24 +35,24 @@ enum { MAXCALLFRAME = 256 };
 
 #define USE_THREADS
 
-extern thread_local struct callframe callframes[ MAXCALLFRAME ];
+extern thread_local struct Callframe callframes[ MAXCALLFRAME ];
 extern thread_local unsigned char    g_callframes_depth;
 extern thread_local unsigned char    g_callframes_indent;
 
-struct tracer_t {
-  tracer_t(const char *func, const unsigned short line)
+struct TracerT {
+  TracerT(const char *func, const unsigned short line)
   {
 // useful for code tracing in real time
 // fprintf(stderr, "%s %s() line %d\n", file, func, line);
 #ifdef ENABLE_DEBUG_TRACE
     g_callframes_indent++;
-    callframe *c = &callframes[ g_callframes_depth++ ];
+    Callframe *c = &callframes[ g_callframes_depth++ ];
     c->func      = func;
     c->line      = line;
 #endif
   }
 
-  ~tracer_t()
+  ~TracerT()
   {
 #ifdef ENABLE_DEBUG_TRACE
     g_callframes_indent--;
@@ -61,19 +61,19 @@ struct tracer_t {
   }
 };
 
-struct tracer_no_indent_t {
-  tracer_no_indent_t(const char *func, const unsigned short line)
+struct TracerNoIndentT {
+  TracerNoIndentT(const char *func, const unsigned short line)
   {
 // useful for code tracing in real time
 // fprintf(stderr, "%s %s() line %d\n", file, func, line);
 #ifdef ENABLE_DEBUG_TRACE
-    callframe *c = &callframes[ g_callframes_depth++ ];
+    Callframe *c = &callframes[ g_callframes_depth++ ];
     c->func      = func;
     c->line      = line;
 #endif
   }
 
-  ~tracer_no_indent_t()
+  ~TracerNoIndentT()
   {
 #ifdef ENABLE_DEBUG_TRACE
     g_callframes_depth--;

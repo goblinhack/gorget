@@ -9,13 +9,13 @@
 
 #include <math.h>
 
-using fpoint = struct my_fpoint {
+using fpoint = struct MyFpoint {
 public:
   float x;
   float y;
 
-  void               operator+=(my_fpoint const &b);
-  void               operator-=(my_fpoint const &b);
+  void               operator+=(MyFpoint const &b);
+  void               operator-=(MyFpoint const &b);
   void               operator*=(float b);
   void               operator/=(float b);
   [[nodiscard]] auto length() const -> float;
