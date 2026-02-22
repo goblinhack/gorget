@@ -88,18 +88,20 @@ $(TARGET_GAME): $(OBJ_FILES)
 # to show options:
 # clang-tidy -checks=* -list-checks
 #
-# This is good, but introduces some errors in macros
-#			modernize-macro-to-enum,
+#	NOTE: Use these defines to avoid clang changing an area of code
+#			xxx // NOLINT
+#			// NOLINTBEGIN
+#			xxx
+#			// NOLINTEND
 #####################################################
 tidy:
 	for src in $(CPP_SOURCES) ; do \
 		echo "Running tidy on $$src..." ; \
 		clang-tidy -fix -checks="-*,\
 			bugprone-*,\
-			performance-*,\
 			cppcoreguidelines-no-malloc,\
-			misc-redundant-expression,\
 			misc-const-correctness,\
+			misc-redundant-expression,\
 			misc-static-assert,\
 			modernize-avoid-bind,\
 			modernize-avoid-c-arrays,\
@@ -107,6 +109,7 @@ tidy:
 			modernize-deprecated-headers,\
 			modernize-deprecated-ios-base-aliases,\
 			modernize-loop-convert,\
+			modernize-macro-to-enum,\
 			modernize-make-shared,\
 			modernize-make-unique,\
 			modernize-min-max-use-initializer-list,\
@@ -139,6 +142,7 @@ tidy:
 			modernize-use-std-numbers,\
 			modernize-use-std-print,\
 			modernize-use-using,\
+			performance-*,\
 			readability-*" \
 			-header-filter=".*" "$(SRC_DIR)/$$src" -- $(CFLAGS); \
 	done

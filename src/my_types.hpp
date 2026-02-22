@@ -86,11 +86,13 @@
 //
 #define SIZEOF(my_array) ((int) sizeof(my_array))
 
+//
+// Works around some parentheses warnigns thast clang tidy ands and gcc doesn't like
+//
+#define AUTO(a) auto a // NOLINT
+
 #define FOR_ALL_IN_ARRAY(my_iterator, my_array)                                                                      \
-  for (auto /* newline */                                                                                            \
-       (my_iterator)                                                                                                 \
-       = (my_array);                                                                                                 \
-       (my_iterator) < ((my_array) + ARRAY_SIZE(my_array)); (my_iterator)++)
+  for (AUTO(my_iterator) = (my_array); (my_iterator) < ((my_array) + ARRAY_SIZE(my_array)); (my_iterator)++)
 
 //
 // GCC extensions

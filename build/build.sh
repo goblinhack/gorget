@@ -541,58 +541,56 @@ log_info "LLVM path                  : $LLVM_PATH/bin"
 cat >>$MAKEFILE <<%%
 CPP_STANDARD=-std=c++26
 
-WARNING_FLAGS=-Wall -Wextra -Wpedantic
+COMMON_WARNING_FLAGS=-Wall -Wextra -Wpedantic
 #
 # Additional warnings for uninitialized variables; seem to be gcc only
 #
-WARNING_FLAGS+=-Wuninitialized
+COMMON_WARNING_FLAGS+=-Wuninitialized
 #
 # When compiling C, give string constants the type const char[length] so that copying the address of
 # one into a non-const char * pointer produces a warning. These warnings help you find at compile time
 # code that can try to write into a string constant, but only if you have been very careful about using
 # const in declarations and prototypes.
 #
-WARNING_FLAGS+=-Wwrite-strings
+COMMON_WARNING_FLAGS+=-Wwrite-strings
 #
 # Warn whenever a local variable or type declaration shadows another variable, parameter.
 #
-WARNING_FLAGS+=-Wshadow
+COMMON_WARNING_FLAGS+=-Wshadow
 #
 # Warn whenever a function parameter is unused aside from its declaration. This option is not enabled by
 # -Wunused unless -Wextra is also specified.
 #
-WARNING_FLAGS+=-Wno-unused-parameter
+COMMON_WARNING_FLAGS+=-Wno-unused-parameter
 #
 # Warn if anything is declared more than once in the same scope, even in cases where multiple declaration is valid and changes nothing.
 #
-WARNING_FLAGS+=-Wredundant-decls
+COMMON_WARNING_FLAGS+=-Wredundant-decls
 #
 # Enable -Wformat plus additional format checks. Currently equivalent to -Wformat -Wformat-nonliteral -Wformat-security -Wformat-y2k.
 #
-WARNING_FLAGS+=-Wformat=2
+COMMON_WARNING_FLAGS+=-Wformat=2
 #
 # If -Wformat is specified, also warn if the format string is not a string literal and so cannot be checked, unless the format
 # function takes its format arguments as a va_list.
 #
-WARNING_FLAGS+=-Wno-format-nonliteral
+COMMON_WARNING_FLAGS+=-Wno-format-nonliteral
 #
 # To silence #emded for clang
 #
-WARNING_FLAGS+=-Wno-c2x-extensions # needed on macos clang build
+COMMON_WARNING_FLAGS+=-Wno-c2x-extensions # needed on macos clang build
 #
 # A warning is generated if the precision of a value may change.
 #
-WARNING_FLAGS+=-Wfloat-conversion
+COMMON_WARNING_FLAGS+=-Wfloat-conversion
 #
 # Don't fail if a compiler option is unknown
 #
-WARNING_FLAGS+=-Wno-unknown-warning-option
+COMMON_WARNING_FLAGS+=-Wno-unknown-warning-option
 
 #
 # Clang specific
 #
-CLANG_COMPILER_WARNINGS+=\${WARNING_FLAGS} \${CPP_STANDARD}
-
 CLANG_WARNING_FLAGS+=-Wconditional-uninitialized 
 CLANG_WARNING_FLAGS+=-Wmaybe-uninitialized
 CLANG_WARNING_FLAGS+=-Wuninitialized=verbose
@@ -602,7 +600,12 @@ CLANG_WARNING_FLAGS+=-Wuninitialized=verbose
 #
 CLANG_WARNING_FLAGS+=-Wno-vla-extension
 
-GCC_COMPILER_WARNINGS=\${CPP_STANDARD} \${WARNING_FLAGS} $GCC_STACK_CHECK
+#
+# Compiler flags for each compiler
+#
+GCC_COMPILER_WARNINGS=\${CPP_STANDARD} \${GCC_WARNING_FLAGS\} \${COMMON_WARNING_FLAGS} $GCC_STACK_CHECK
+CLANG_COMPILER_WARNINGS=\${CPP_STANDARD} \${CLANG_WARNING_FLAGS\} \${COMMON_WARNING_FLAGS} $GCC_STACK_CHECK
+
 LDFLAGS=$LDFLAGS
 %%
 

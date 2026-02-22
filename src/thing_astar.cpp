@@ -13,6 +13,7 @@
 #include "my_tp.hpp"
 
 #include <algorithm> // do not remove
+#include <array>     // do not remove
 #include <limits>    // do not remove
 #include <map>
 

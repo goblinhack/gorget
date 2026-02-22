@@ -24,12 +24,12 @@ using ThingIdPacked = union {
     unsigned int val : 32;
   } __attribute__((__packed__)) a;
   struct {
-    unsigned int entropy      : THING_ENTROPY_BITS;
+    unsigned int entropy : THING_ENTROPY_BITS;
     unsigned int per_level_id : THING_PER_LEVEL_THING_ID_BITS;
-    unsigned int level_num    : THING_LEVEL_ID_BITS;
+    unsigned int level_num : THING_LEVEL_ID_BITS;
   } __attribute__((__packed__)) b;
   struct {
-    unsigned int entropy   : THING_ENTROPY_BITS;
+    unsigned int entropy : THING_ENTROPY_BITS;
     unsigned int arr_index : THING_ARR_INDEX_BITS;
   } __attribute__((__packed__)) c;
 };
@@ -1082,12 +1082,17 @@ void thing_blit_text(Gamep g, Levelsp v, Levelp l, spoint tl, spoint br, std::st
 
 std::vector< spoint > astar_solve(Gamep g, Levelsp v, Levelp l, Thingp t, spoint src, spoint dst);
 
+#if 1
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wparentheses"
+#endif
+
 #define FOR_ALL_MINION_SLOTS(_g_, _v_, _l_, _mob_, _slot_, _minion_)                                                 \
   if ((_g_) && (_v_) && (_l_))                                                                                       \
     for (auto _ext_ = thing_ext_struct(_g_, _mob_); _ext_; _ext_ = nullptr)                                          \
       for (auto _n_ = 0; _n_ < THING_MINION_MAX; _n_++)                                                              \
-        for (auto (_slot_) = &_ext_->minions.minion[ _n_ ]; _slot_; (_slot_) = nullptr)                                \
-          for (auto (_minion_) = thing_find_optional(g, v, (_slot_)->minion_id), loop2 = (Thingp) 1;                   \
+        for (AUTO(_slot_) = &_ext_->minions.minion[ _n_ ]; _slot_; (_slot_) = nullptr)                               \
+          for (AUTO(_minion_) = thing_find_optional(g, v, (_slot_)->minion_id), loop2 = (Thingp) 1;                  \
                loop2 == (Thingp) 1; loop2 = (Thingp) 0)
 
 #define FOR_ALL_MINIONS(_g_, _v_, _l_, _mob_, _minion_)                                                              \
@@ -1101,8 +1106,8 @@ std::vector< spoint > astar_solve(Gamep g, Levelsp v, Levelp l, Thingp t, spoint
   if ((_g_) && (_v_) && (_l_))                                                                                       \
     for (auto _ext_ = thing_player_struct(_g_); _ext_; _ext_ = nullptr)                                              \
       for (auto _n_ = 0; _n_ < THING_INVENTORY_MAX; _n_++)                                                           \
-        for (auto (_slot_) = &_ext_->inventory.slots[ _n_ ]; _slot_; (_slot_) = nullptr)                               \
-          for (auto (_item_) = thing_find_optional(g, v, (_slot_)->item_id), loop2 = (Thingp) 1; loop2 == (Thingp) 1;  \
+        for (AUTO(_slot_) = &_ext_->inventory.slots[ _n_ ]; _slot_; (_slot_) = nullptr)                              \
+          for (AUTO(_item_) = thing_find_optional(g, v, (_slot_)->item_id), loop2 = (Thingp) 1; loop2 == (Thingp) 1; \
                loop2 = (Thingp) 0)
 
 #define FOR_ALL_INVENTORY_ITEMS(_g_, _v_, _l_, _owner_, _item_)                                                      \
@@ -1110,6 +1115,8 @@ std::vector< spoint > astar_solve(Gamep g, Levelsp v, Levelp l, Thingp t, spoint
     for (auto _ext_ = thing_player_struct(_g_); _ext_; _ext_ = nullptr)                                              \
       for (auto _n_ = 0; _n_ < THING_INVENTORY_MAX; _n_++)                                                           \
         for (auto _slot_ = &_ext_->inventory.slots[ _n_ ]; _slot_; _slot_ = nullptr)                                 \
-          for (auto (_item_) = thing_find_optional(g, v, _slot_->item_id); _item_; (_item_) = nullptr)
+          for (AUTO(_item_) = thing_find_optional(g, v, _slot_->item_id); _item_; (_item_) = nullptr)
+
+#pragma GCC diagnostic pop
 
 #endif

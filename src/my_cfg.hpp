@@ -5,6 +5,8 @@
 #ifndef MY_CONFIG_HPP_
 #define MY_CONFIG_HPP_
 
+// NOLINTBEGIN
+
 #define ENABLE_ASSERT              // Abort on errors
 #define ENABLE_CRASH_HANDLER       // Intercept SEGV and other faults
 #define ENABLE_DEBUG_TRACE         // (SLOW) Function tracing
@@ -23,5 +25,7 @@
 #undef ENABLE_UI_ASCII_MOUSE     // Show an in-game mouse, not system mouse
 #undef ENABLE_PER_THING_MEMORY   // Use malloc for things (for sanity checking memory access)
                                  // Will not work with save/load
+
+// NOLINTEND
 
 #endif
