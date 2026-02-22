@@ -14,10 +14,10 @@ using ts_t = int;
 
 #include <string>
 
-auto time_have_x_hundredths_passed_since(ts_t tenths, ts_t since) -> bool;
-auto time_have_x_ms_passed_since(ts_t tenths, ts_t since) -> bool;
-auto time_have_x_secs_passed_since(ts_t tenths, ts_t since) -> bool;
-auto time_have_x_tenths_passed_since(ts_t tenths, ts_t since) -> bool;
+auto time_have_x_hundredths_passed_since(ts_t val, ts_t since) -> bool;
+auto time_have_x_ms_passed_since(ts_t val, ts_t since) -> bool;
+auto time_have_x_secs_passed_since(ts_t val, ts_t since) -> bool;
+auto time_have_x_tenths_passed_since(ts_t val, ts_t since) -> bool;
 
 auto time2str(ts_t ms, char *buf, int len) -> const char *;
 auto timestamp(char *buf, int len) -> const char *;

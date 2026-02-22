@@ -19,13 +19,13 @@
 
 static std::mutex ptrcheck_mutex;
 
-class Ptrcheck_history;
-static std::vector< class Ptrcheck_history * > all_Ptrcheck_history {};
+class PtrcheckHistory;
+static std::vector< class PtrcheckHistory * > all_Ptrcheck_history {};
 
 //
 // A single event in the life of a pointer.
 //
-class Ptrcheck_history
+class PtrcheckHistory
 {
 public:
   const char *file {};
@@ -34,18 +34,18 @@ public:
   int         line {};
   std::string bt;
 
-  Ptrcheck_history()
+  PtrcheckHistory()
   {
     ts[ 0 ] = '\0';
     all_Ptrcheck_history.push_back(this);
   }
-  Ptrcheck_history(const Ptrcheck_history &other) : file(other.file), func(other.func), line(other.line), bt(other.bt)
+  PtrcheckHistory(const PtrcheckHistory &other) : file(other.file), func(other.func), line(other.line), bt(other.bt)
   {
     all_Ptrcheck_history.push_back(this);
 
     strcpy(ts, other.ts);
   }
-  ~Ptrcheck_history() = default;
+  ~PtrcheckHistory() = default;
 };
 
 //
@@ -74,10 +74,10 @@ public:
   //
   // Where did the pointer get allocated/freed/last_seen from?
   //
-  Ptrcheck_history *allocated_by {};
-  Ptrcheck_history *freed_by {};
+  PtrcheckHistory *allocated_by {};
+  PtrcheckHistory *freed_by {};
 #ifdef ENABLE_PTRCHECK_HISTORY
-  std::array< Ptrcheck_history *, ENABLE_PTRCHECK_HISTORY > last_seen {};
+  std::array< PtrcheckHistory *, ENABLE_PTRCHECK_HISTORY > last_seen {};
 #endif
 
   //
@@ -141,12 +141,12 @@ void ERROR(const char *fmt, ...)
 //
 // A hash table so we can check pointers fast.
 //
-using hash_elem_t = struct hash_elem_t_ {
-  struct hash_elem_t_ *next;
+using hash_elem_t = struct HashElemT {
+  struct HashElemT *next;
   Ptrcheck            *pc;
 };
 
-using hash_t = struct hash_t_ {
+using hash_t = struct HashT {
   int           hash_size;
   hash_elem_t **elements;
 };
@@ -453,7 +453,7 @@ static auto ptrcheck_verify_pointer(int mtype, const void *ptr, const char *func
     {
       auto *l = pc->last_seen[ pc->last_seen_at ];
       if (l == nullptr) {
-        l = pc->last_seen[ pc->last_seen_at ] = new Ptrcheck_history();
+        l = pc->last_seen[ pc->last_seen_at ] = new PtrcheckHistory();
       }
       l->file = file;
       l->func = func;
@@ -553,7 +553,7 @@ static auto ptrcheck_alloc_(int mtype, const void *ptr, const char *what, int si
   pc->what = what;
   pc->size = size;
 
-  auto *a = pc->allocated_by = new Ptrcheck_history();
+  auto *a = pc->allocated_by = new PtrcheckHistory();
 
   a->func = func;
   a->file = file;
@@ -610,7 +610,7 @@ static auto ptrcheck_free_(int mtype, void *ptr, const char *func, const char *f
   // Add some free information that we know the pointer is safe at this
   // point in time.
   //
-  auto *f = pc->freed_by = new Ptrcheck_history();
+  auto *f = pc->freed_by = new PtrcheckHistory();
 
   f->file = file;
   f->func = func;

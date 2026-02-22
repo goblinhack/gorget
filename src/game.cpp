@@ -23,7 +23,7 @@
 
 static SDL_Keysym no_key;
 
-using Config = class Config_
+using Config = class Config
 {
 public:
   std::string version = "" MYVER "";

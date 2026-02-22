@@ -36,12 +36,12 @@
 
 static int pcg_lock_count; // No pcg random numbers allowed here
 
-struct pcg_state_setseq_64 { // Internals are *Private*.
+struct PcgStateSetseq64 { // Internals are *Private*.
   uint64_t state;            // RNG state.  All values are possible.
   uint64_t inc;              // Controls which RNG sequence (stream) is
                              // selected. Must *always* be odd.
 };
-using pcg32_random_t = struct pcg_state_setseq_64;
+using pcg32_random_t = struct PcgStateSetseq64;
 
 #define PCG32_INITIALIZER {0x853c49e6748fea9bULL, 0xda3e39cb94b95bdbULL}
 static thread_local pcg32_random_t pcg32_global = PCG32_INITIALIZER;

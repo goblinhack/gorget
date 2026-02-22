@@ -9,8 +9,8 @@
 
 #include <string>
 
-class sound;
-using soundp = class sound *;
+class Sound;
+using soundp = class Sound *;
 
 auto sound_init() -> bool;
 void sound_fini();

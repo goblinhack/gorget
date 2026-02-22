@@ -97,7 +97,7 @@ $(TARGET_GAME): $(OBJ_FILES)
 #			xxx
 #			// NOLINTEND
 #####################################################
-tidy_new:
+tidy:
 	$(foreach x,$(CPP_SOURCES),\
 		echo "Running tidy on $x..." ; \
 		clang-tidy \
@@ -127,7 +127,7 @@ tidy_new:
 	git checkout 3rdparty
 	@echo "Done"
 
-tidy:
+tidy_old:
 	for src in $(CPP_SOURCES) ; do \
 		echo "Running tidy on $$src..." ; \
 		clang-tidy \

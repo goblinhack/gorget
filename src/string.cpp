@@ -952,7 +952,7 @@ auto capitalize(std::string in) -> std::string
 auto capitalize_first(const std::string& in) -> std::string
 {
   TRACE_NO_INDENT();
-  std::string out = std::move(in);
+  std::string out = in;
 
   char       *b          = (char *) out.c_str();
   char const *e          = b + out.size();

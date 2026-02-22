@@ -17,7 +17,7 @@ auto tex_get_surface(Texp tex) -> SDL_Surface *;
 
 auto string2tex(const char **s) -> Texp;
 auto string2tex(std::string &s, int *len) -> Texp;
-auto tex_find(const std::string &name) -> Texp;
+auto tex_find(const std::string &file) -> Texp;
 auto tex_from_surface(SDL_Surface *surface, const std::string &file, const std::string &name, int mode) -> Texp;
 auto tex_load(const std::string &file, const std::string &name, int mode) -> Texp;
 auto tex_from_fbo(Gamep g, FboEnum fbo) -> Texp;

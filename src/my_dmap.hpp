@@ -20,7 +20,7 @@ using Dmap = struct Dmap {
 
 void dmap_process(Dmap *D, spoint tl, spoint br);
 void dmap_process_reverse(Dmap *D, spoint tl, spoint br);
-void dmap_print(const Dmap *d, spoint at, spoint start, spoint end);
+void dmap_print(const Dmap *d, spoint at, spoint tl, spoint br);
 void dmap_print(const Dmap *d);
 
 [[nodiscard]] auto dmap_solve(Gamep g, Levelsp v, Levelp l, Thingp t, const Dmap *d, spoint start) -> std::vector< spoint >;

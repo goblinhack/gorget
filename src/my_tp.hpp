@@ -476,7 +476,7 @@ class Tp;
 [[nodiscard]] auto tp_random(ThingFlag f) -> Tpp;
 [[nodiscard]] auto tp_real_name(Tpp tp) -> std::string;
 [[nodiscard]] auto tp_short_name(Tpp tp) -> std::string;
-[[nodiscard]] auto tp_tiles_get(Tpp tp, ThingAnim anim_type, int index) -> Tilep;
+[[nodiscard]] auto tp_tiles_get(Tpp tp, ThingAnim val, int index) -> Tilep;
 [[nodiscard]] auto tp_tiles_size(Tpp tp, ThingAnim val) -> int;
 [[nodiscard]] auto tp_variant(ThingFlag f, int /*variant*/) -> Tpp;
 

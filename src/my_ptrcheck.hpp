@@ -31,10 +31,10 @@ auto strsub_(const char *in, const char *look_for, const char *replace_with, con
 
 #define strsub(a, b, c, __what__) strsub_(a, b, c, (__what__), PTRCHECK_AT)
 
-auto ptrcheck_alloc(int mtype, const void *ptr, const char *what, int size, const char *file, const char *func, int line)
+auto ptrcheck_alloc(int mtype, const void *ptr, const char *what, int size, const char *func, const char *file, int line)
     -> void *;
-auto ptrcheck_verify(int mtype, const void *ptr, const char *file, const char *func, int line) -> int;
-auto ptrcheck_free(int mtype, void *ptr, const char *file, const char *func, int line) -> int;
+auto ptrcheck_verify(int mtype, const void *ptr, const char *func, const char *file, int line) -> int;
+auto ptrcheck_free(int mtype, void *ptr, const char *func, const char *file, int line) -> int;
 void ptrcheck_leak_print(int mtype);
 void ptrcheck_leak_print();
 

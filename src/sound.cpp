@@ -14,12 +14,12 @@
 #include <map>
 #include <utility>
 
-class sound
+class Sound
 {
 public:
-  explicit sound(std::string valias) : alias(std::move(valias)) {}
+  explicit Sound(std::string valias) : alias(std::move(valias)) {}
 
-  ~sound()
+  ~Sound()
   {
     Mix_FreeChunk(chunk);
     myfree(data);
@@ -41,7 +41,7 @@ public:
   float          volume {};
 };
 
-static std::unordered_map< std::string, class sound * > all_sound;
+static std::unordered_map< std::string, class Sound * > all_sound;
 
 static bool sound_init_done;
 
@@ -112,7 +112,7 @@ auto sound_load(float volume, const std::string &file, const std::string &alias,
     }
   }
 
-  auto *s = new sound(alias);
+  auto *s = new Sound(alias);
 
   s->volume         = volume;
   s->concurrent_max = concurrent_max;
@@ -166,7 +166,7 @@ auto sound_find(const std::string &alias) -> bool
   return result != all_sound.end();
 }
 
-[[nodiscard]] static auto sound_play_internal(Game *g, const std::string &alias, class sound *s, float scale) -> bool
+[[nodiscard]] static auto sound_play_internal(Game *g, const std::string &alias, class Sound *s, float scale) -> bool
 {
   TRACE_NO_INDENT();
 
