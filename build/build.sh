@@ -559,9 +559,123 @@ fi
 
 log_info "LLVM path                  : $LLVM_PATH/bin"
 
+CHOSEN_COMPILER=
+
+case "$MY_OS_NAME" in
+    *MING*|*MSYS*)
+        #
+        # Defaults
+        #
+        if [[ $CHOSEN_COMPILER = "" ]]; then
+          CC=/${MSYS_PATH}/bin/g++.exe
+          if [[ -x $CC ]]; then
+            echo "CC=/${MSYS_PATH}/bin/g++.exe" >> $MAKEFILE
+            CHOSEN_COMPILER="gcc"
+          fi
+        fi
+
+        if [[ $CHOSEN_COMPILER = "" ]]; then
+          CC=/${MSYS_PATH}/bin/clang++.exe
+          if [[ -x $CC ]]; then
+            echo "CC=/${MSYS_PATH}/bin/clang++.exe" >> $MAKEFILE
+            CHOSEN_COMPILER="clang"
+          fi
+        fi
+
+        #
+        # Choice
+        #
+        if [[ $OPT_GCC = "" ]]; then
+          CC=/${MSYS_PATH}/bin/clang++.exe
+          if [[ -x $CC ]]; then
+            echo "CC=/${MSYS_PATH}/bin/clang++.exe" >> $MAKEFILE
+            CHOSEN_COMPILER="clang"
+          fi
+        fi
+
+        #
+        # To resolve WinMain, add these at the end again
+        #
+        LDLIBS+=" -lmingw32 -mwindows /${MSYS_PATH}/lib/libSDL2main.a -L/${MSYS_PATH}/lib -lSDL2main -lSDL2"
+    ;;
+    *)
+        #
+        # Defaults
+        #
+        g++ --version > /dev/null 2>/dev/null
+        if [ $? -eq 0 ]
+        then
+            echo "CC=g++" >> $MAKEFILE
+            CC=g++
+            CHOSEN_COMPILER="gcc"
+        fi
+
+        if [[ $CHOSEN_COMPILER = "" ]]; then
+            clang++ --version > /dev/null 2>/dev/null
+            if [ $? -eq 0 ]; then
+                echo "CC=clang++" >> $MAKEFILE
+                CC=clang++
+                CHOSEN_COMPILER="clang"
+            fi
+        fi
+
+        #
+        # Choice
+        #
+        if [[ $OPT_GCC = "" ]]; then
+            clang++ --version > /dev/null 2>/dev/null
+            if [ $? -eq 0 ]; then
+                echo "CC=clang++" >> $MAKEFILE
+                CC=clang++
+                CHOSEN_COMPILER="clang"
+            fi
+        fi
+    ;;
+esac
+
+if [[ $CHOSEN_COMPILER = "" ]]; then
+    log_err "No compiler found"
+    exit 1
+fi
+
+#
+# How many cores?
+#
+CORES=""
+
+case "$MY_OS_NAME" in
+    *Darwin*)
+      CORES=$(/usr/sbin/system_profiler -detailLevel full SPHardwareDataType  | grep Cores | sed 's/.*: //g' | awk '{print $1}')
+    ;;
+    *inux*)
+      CORES=$(grep -E -c "cpu cores|processor" /proc/cpuinfo)
+    ;;
+    *MING*|*MSYS*)
+      CORES=$(grep -E -c "cpu cores|processor" /proc/cpuinfo)
+    ;;
+esac
+
+if [ "$CORES" != "" ]
+then
+    log_info "Compiling ($CORES cpus)"
+
+    CORES="-j $CORES"
+else
+    log_info "Compiling"
+fi
+
+#
+# Create the makefile
+#
 cat >>$MAKEFILE <<%%
+CHOSEN_COMPILER=$CHOSEN_COMPILER
+CORES=$CORES
 CPP_STANDARD=-std=c++26
+DSYM=$DSYM
+EXE=$EXE
+LDLIBS=$LDLIBS
 MY_OS_NAME=$MY_OS_NAME
+SDL2_INC_PATH=$SDL2_INC_PATH
 
 COMMON_WARNING_FLAGS=-Wall -Wextra -Wpedantic
 #
@@ -605,11 +719,10 @@ COMMON_WARNING_FLAGS+=-Wfloat-conversion
 #
 # To silence #emded for clang
 #
-\$(info \$\$MY_OS_NAME is [\${MY_OS_NAME}])
-ifeq (\$(MY_OS_NAME),Darwin)
+#\$(info \$\$MY_OS_NAME is [\${MY_OS_NAME}])
+#ifeq (\$(MY_OS_NAME),Darwin)
 CLANG_WARNING_FLAGS+=-Wno-c2x-extensions # needed on macos clang build
-CLANG_WARNING_FLAGS+=-xxxxxx
-endif
+#endif
 
 #
 # Don't fail if a compiler option is unknown
@@ -635,87 +748,11 @@ CLANG_COMPILER_WARNINGS=\${CPP_STANDARD} \${CLANG_WARNING_FLAGS\} \${COMMON_WARN
 LDFLAGS=$LDFLAGS
 %%
 
-GOT_CC=
-
-g++ --version > /dev/null 2>/dev/null
-if [ $? -eq 0 ]
-then
+if [[ $CHOSEN_COMPILER = "gcc" ]]; then
     echo "COMPILER_WARNINGS=\$(GCC_COMPILER_WARNINGS)" >> $MAKEFILE
-    echo "CC=g++" >> $MAKEFILE
-    CC=g++
-    GOT_CC=1
-fi
-
-#
-# Prefer clang as its faster
-#
-if [[ $OPT_GCC = "" ]]; then
-    clang++ --version > /dev/null 2>/dev/null
-    if [ $? -eq 0 ]; then
-        echo "COMPILER_WARNINGS=\$(CLANG_COMPILER_WARNINGS)" >> $MAKEFILE
-        echo "CC=clang++" >> $MAKEFILE
-        CC=clang++
-        GOT_CC=1
-    fi
-fi
-
-if [[ $GOT_CC = "" ]]; then
-    gcc_help
-    exit 1
-fi
-
-case "$MY_OS_NAME" in
-    *MING*|*MSYS*)
-        if [[ $OPT_GCC = "" ]]; then
-          echo "CC=/${MSYS_PATH}/bin/clang++.exe" >> $MAKEFILE
-          CC=/${MSYS_PATH}/bin/clang++.exe
-        else
-          echo "CC=/${MSYS_PATH}/bin/g++.exe" >> $MAKEFILE
-          CC=/${MSYS_PATH}/bin/g++.exe
-        fi
-
-        #
-        # To resolve WinMain, add these at the end again
-        #
-        LDLIBS+=" -lmingw32 -mwindows /${MSYS_PATH}/lib/libSDL2main.a -L/${MSYS_PATH}/lib -lSDL2main -lSDL2"
-    ;;
-esac
-#
-# How many cores?
-#
-CORES=""
-
-case "$MY_OS_NAME" in
-    *Darwin*)
-      CORES=$(/usr/sbin/system_profiler -detailLevel full SPHardwareDataType  | grep Cores | sed 's/.*: //g' | awk '{print $1}')
-    ;;
-    *inux*)
-      CORES=$(grep -E -c "cpu cores|processor" /proc/cpuinfo)
-    ;;
-    *MING*|*MSYS*)
-      CORES=$(grep -E -c "cpu cores|processor" /proc/cpuinfo)
-    ;;
-esac
-
-if [ "$CORES" != "" ]
-then
-    log_info "Compiling ($CORES cpus)"
-
-    CORES="-j $CORES"
 else
-    log_info "Compiling"
+    echo "COMPILER_WARNINGS=\$(CLANG_COMPILER_WARNINGS)" >> $MAKEFILE
 fi
-
-#
-# Create the makefile
-#
-cat >>$MAKEFILE <<%%
-EXE=$EXE
-DSYM=$DSYM
-LDLIBS=$LDLIBS
-SDL2_INC_PATH=$SDL2_INC_PATH
-CORES=$CORES
-%%
 
 log_info "LDFLAGS                    :$LDFLAGS"
 log_info "LDLIBS                     : $LDLIBS"
