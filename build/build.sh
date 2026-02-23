@@ -561,6 +561,7 @@ log_info "LLVM path                  : $LLVM_PATH/bin"
 
 cat >>$MAKEFILE <<%%
 CPP_STANDARD=-std=c++26
+MY_OS_NAME=$MY_OS_NAME
 
 COMMON_WARNING_FLAGS=-Wall -Wextra -Wpedantic
 #
@@ -604,7 +605,12 @@ COMMON_WARNING_FLAGS+=-Wfloat-conversion
 #
 # To silence #emded for clang
 #
+\$(info \$\$MY_OS_NAME is [\${MY_OS_NAME}])
+ifeq (\$(MY_OS_NAME),Darwin)
 CLANG_WARNING_FLAGS+=-Wno-c2x-extensions # needed on macos clang build
+CLANG_WARNING_FLAGS+=-xxxxxx
+endif
+
 #
 # Don't fail if a compiler option is unknown
 #
