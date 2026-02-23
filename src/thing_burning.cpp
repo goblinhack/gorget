@@ -34,14 +34,14 @@ void thing_continue_to_burn_check(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // Over water?
   //
-  if (level_is_water(g, v, l, t)) {
+  if (level_is_water(g, v, l, thing_at(t))) {
     thing_is_burning_unset(g, v, l, t);
 
     if (thing_is_player(t)) {
       TOPCON(UI_GOOD_FMT_STR "You extinguish the flames in the cool water!" UI_RESET_FMT);
     }
 
-    if (! level_is_steam(g, v, l, t)) {
+    if (! level_is_steam(g, v, l, thing_at(t))) {
       (void) thing_spawn(g, v, l, tp_first(is_steam), t);
     }
     return;
@@ -70,7 +70,7 @@ void thing_continue_to_burn_check(Gamep g, Levelsp v, Levelp l, Thingp t)
     // Spawn more flames?
     //
     if (thing_is_combustible(t)) {
-      if (level_count_is_fire(g, v, l, t) < 2) {
+      if (level_count_is_fire(g, v, l, thing_at(t)) < 2) {
         THING_LOG(t, "spawn additional flames");
         (void) thing_spawn(g, v, l, tp_first(is_fire), t);
 
@@ -83,7 +83,7 @@ void thing_continue_to_burn_check(Gamep g, Levelsp v, Levelp l, Thingp t)
     //
     // Don't let the fire age out.
     //
-    auto *f = level_is_fire(g, v, l, t);
+    auto *f = level_is_fire(g, v, l, thing_at(t));
     if (f != nullptr) {
       THING_DBG(t, "keep the fire burning");
       (void) thing_lifespan_incr(g, v, l, f, 2);
@@ -93,12 +93,12 @@ void thing_continue_to_burn_check(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // Continue to burn
   //
-  if (! level_is_fire(g, v, l, t)) {
+  if (! level_is_fire(g, v, l, thing_at(t))) {
     THING_DBG(t, "spawn flames");
     (void) thing_spawn(g, v, l, tp_first(is_fire), t);
   }
 
-  if (! level_is_smoke(g, v, l, t)) {
+  if (! level_is_smoke(g, v, l, thing_at(t))) {
     THING_DBG(t, "spawn smoke");
     (void) thing_spawn(g, v, l, tp_first(is_smoke), t);
   }

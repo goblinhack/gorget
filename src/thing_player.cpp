@@ -475,7 +475,7 @@ auto player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, spo
       //
       // If not already in lava, warn about moving into it
       //
-      if (! level_is_lava(g, v, l, me)) {
+      if (! level_is_lava(g, v, l, thing_at(me))) {
         if (level_is_lava(g, v, l, to)) {
           if (! thing_is_immune_to(me, THING_EVENT_HEAT_DAMAGE) && ! thing_is_immune_to(me, THING_EVENT_FIRE_DAMAGE)) {
             std::string const msg = "Do you really want to leap into lava?";

@@ -47,15 +47,15 @@ static void tp_bridge_destroy_adj(Gamep g, Levelsp v, Levelp l, Thingp t)
     auto max_count = std::max({lava_count, water_count, chasm_count});
     if (max_count != 0) {
       if (max_count == chasm_count) {
-        if (! level_is_chasm(g, v, l, t)) {
+        if (! level_is_chasm(g, v, l, thing_at(t))) {
           (void) thing_spawn(g, v, l, tp_first(is_chasm), t);
         }
       } else if (max_count == water_count) {
-        if (! level_is_water(g, v, l, t)) {
+        if (! level_is_water(g, v, l, thing_at(t))) {
           (void) thing_spawn(g, v, l, tp_first(is_water), t);
         }
       } else if (max_count == lava_count) {
-        if (! level_is_lava(g, v, l, t)) {
+        if (! level_is_lava(g, v, l, thing_at(t))) {
           (void) thing_spawn(g, v, l, tp_first(is_lava), t);
         }
       }
@@ -78,7 +78,7 @@ static void tp_bridge_destroy_adj(Gamep g, Levelsp v, Levelp l, Thingp t)
       auto  p  = at + delta;
       auto *b  = level_alive_is_bridge(g, v, l, p);
       if (b != nullptr) {
-        if (level_is_chasm(g, v, l, t)) {
+        if (level_is_chasm(g, v, l, thing_at(t))) {
           thing_fall(g, v, l, b);
         }
       }
@@ -121,7 +121,7 @@ static void tp_bridge_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // If we fell into another chasm, don't kill the thing yet
   //
-  if (level_is_chasm(g, v, l, t)) {
+  if (level_is_chasm(g, v, l, thing_at(t))) {
     return;
   }
 

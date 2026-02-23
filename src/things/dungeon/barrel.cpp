@@ -73,7 +73,7 @@ static void tp_barrel_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // If we fell into another chasm, don't kill the thing yet
   //
-  if (level_is_chasm(g, v, l, t)) {
+  if (level_is_chasm(g, v, l, thing_at(t))) {
     return;
   }
 

@@ -176,7 +176,7 @@ static auto level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Th
       //
       // Common code for pass 1 and 2
       //
-      if (level_is_cursor_path_hazard(g, v, l, player)) {
+      if (level_is_cursor_path_hazard(g, v, l, thing_at(player))) {
         //
         // If standing on a hazard, then plot a course that allows travel over hazards.
         // Any path except through walls.

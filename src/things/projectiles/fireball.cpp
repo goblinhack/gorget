@@ -40,8 +40,8 @@ static void tp_fireball_on_moved(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // The fireball doesn't heat water up quick enough, so add this cheap effect
   //
-  if (level_is_water(g, v, l, t)) {
-    if (! level_is_steam(g, v, l, t)) {
+  if (level_is_water(g, v, l, thing_at(t))) {
+    if (! level_is_steam(g, v, l, thing_at(t))) {
       if (d100() < 50) {
         (void) thing_spawn(g, v, l, tp_first(is_steam), thing_at(t));
       }

@@ -117,15 +117,15 @@ static void tp_fire_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent 
   //
   // Allow things to continue to burn if we still have some burnable material
   //
-  if (level_alive_is_combustible(g, v, l, t)) {
-    if (! level_is_fire(g, v, l, t)) {
+  if (level_alive_is_combustible(g, v, l, thing_at(t))) {
+    if (! level_is_fire(g, v, l, thing_at(t))) {
       THING_DBG(t, "spawn fire to continue to burn");
       (void) thing_spawn(g, v, l, tp_first(is_fire), t);
     }
   }
 
-  if (! level_is_smoke(g, v, l, t)) {
-    if (level_is_combustible(g, v, l, t)) {
+  if (! level_is_smoke(g, v, l, thing_at(t))) {
+    if (level_is_combustible(g, v, l, thing_at(t))) {
       THING_DBG(t, "spawn smoke over dying fire");
       (void) thing_spawn(g, v, l, tp_first(is_smoke), t);
     }
@@ -154,7 +154,7 @@ static void tp_fire_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
     return;
   }
 
-  if (! level_is_smoke(g, v, l, t)) {
+  if (! level_is_smoke(g, v, l, thing_at(t))) {
     THING_DBG(t, "spawn smoke over falling fire");
     (void) thing_spawn(g, v, l, tp_random(is_smoke), t);
   }

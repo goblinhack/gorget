@@ -85,7 +85,7 @@ static auto thing_fall_damage(Gamep g, Levelsp v, Levelp l, Thingp t) -> int
   //
   // Landing in lava is bad
   //
-  if (level_is_lava(g, v, l, t)) {
+  if (level_is_lava(g, v, l, thing_at(t))) {
     if (! thing_is_immune_to(t, THING_EVENT_HEAT_DAMAGE)) {
       fall_dmg *= 4;
     }
@@ -94,7 +94,7 @@ static auto thing_fall_damage(Gamep g, Levelsp v, Levelp l, Thingp t) -> int
   //
   // Water dampens the fall
   //
-  if (level_is_water(g, v, l, t)) {
+  if (level_is_water(g, v, l, thing_at(t))) {
     if (thing_is_immune_to(t, THING_EVENT_WATER_DAMAGE)) {
       fall_dmg /= 2;
     }
@@ -103,7 +103,7 @@ static auto thing_fall_damage(Gamep g, Levelsp v, Levelp l, Thingp t) -> int
   //
   // Deep water dampens it further
   //
-  if (level_is_deep_water(g, v, l, t)) {
+  if (level_is_deep_water(g, v, l, thing_at(t))) {
     if (thing_is_immune_to(t, THING_EVENT_WATER_DAMAGE)) {
       fall_dmg /= 2;
     }
@@ -187,7 +187,7 @@ static void thing_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
     THING_ERR(t, "fell into nothing");
   }
 
-  if (level_is_chasm(g, v, t_level, t)) {
+  if (level_is_chasm(g, v, t_level, thing_at(t))) {
     //
     // If we keep on falling through chasms again and again though,
     // we need to break the potential fall loop.
@@ -262,7 +262,7 @@ void thing_fall_end_check(Gamep g, Levelsp v, Levelp l, Thingp t)
     thing_is_falling_set(g, v, t_level, t, false);
 
     if (thing_is_player(t)) {
-      if (level_is_chasm(g, v, t_level, t)) {
+      if (level_is_chasm(g, v, t_level, thing_at(t))) {
         THING_LOG(t, "fell again");
         level_tick_begin_requested(g, v, t_level, "player fell again");
       }
@@ -270,7 +270,7 @@ void thing_fall_end_check(Gamep g, Levelsp v, Levelp l, Thingp t)
       //
       // This seems rather cruel, but...
       //
-      if (level_is_lava(g, v, t_level, t)) {
+      if (level_is_lava(g, v, t_level, thing_at(t))) {
         THING_LOG(t, "fell into lava");
         level_tick_begin_requested(g, v, t_level, "player fell into lava");
       }
@@ -302,7 +302,7 @@ void thing_fall(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // This is for bridges, so a chasm "appears".
   //
-  if (! level_is_chasm(g, v, l, t)) {
+  if (! level_is_chasm(g, v, l, thing_at(t))) {
     (void) thing_spawn(g, v, l, tp_first(is_chasm), t);
   }
 }
