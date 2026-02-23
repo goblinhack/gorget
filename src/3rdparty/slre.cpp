@@ -15,26 +15,7 @@
 
 #include "slre.hpp"
 
-enum {
-  END,
-  BRANCH,
-  ANY,
-  EXACT,
-  ANYOF,
-  ANYBUT,
-  OPEN,
-  CLOSE,
-  BOL,
-  EOL,
-  STAR,
-  PLUS,
-  STARQ,
-  PLUSQ,
-  QUEST,
-  SPACE,
-  NONSPACE,
-  DIGIT
-};
+enum { END, BRANCH, ANY, EXACT, ANYOF, ANYBUT, OPEN, CLOSE, BOL, EOL, STAR, PLUS, STARQ, PLUSQ, QUEST, SPACE, NONSPACE, DIGIT };
 
 #ifdef TEST
 static struct {
@@ -79,7 +60,7 @@ static struct {
  *
  * OPEN capture_number
  * CLOSE capture_number
- *	If the user have passed 'struct cap' array for captures, OPEN
+ *	If the user have passed 'struct Cap' array for captures, OPEN
  *	records the beginning of the matched substring (cap->ptr), CLOSE
  *	sets the length (cap->len) for respective capture_number.
  *
@@ -118,7 +99,7 @@ static void print_character_set(FILE *fp, const unsigned char *p, int len)
   }
 }
 
-void slre_dump(const struct slre *r, FILE *fp)
+void slre_dump(const struct Slre *r, FILE *fp)
 {
   int i, j, ch, op, pc;
 
@@ -160,7 +141,7 @@ void slre_dump(const struct slre *r, FILE *fp)
 }
 #endif
 
-static void set_jump_offset(struct slre *r, int pc, int offset)
+static void set_jump_offset(struct Slre *r, int pc, int offset)
 {
   assert(offset < r->code_size);
 
@@ -171,7 +152,7 @@ static void set_jump_offset(struct slre *r, int pc, int offset)
   }
 }
 
-static void emit(struct slre *r, int code)
+static void emit(struct Slre *r, int code)
 {
   if (r->code_size >= (int) (sizeof(r->code) / sizeof(r->code[ 0 ])))
     r->err_str = "RE is too long (code overflow)";
@@ -179,7 +160,7 @@ static void emit(struct slre *r, int code)
     r->code[ r->code_size++ ] = (unsigned char) code;
 }
 
-static void store_char_in_data(struct slre *r, int ch)
+static void store_char_in_data(struct Slre *r, int ch)
 {
   if (r->data_size >= (int) sizeof(r->data))
     r->err_str = "RE is too long (data overflow)";
@@ -187,7 +168,7 @@ static void store_char_in_data(struct slre *r, int ch)
     r->data[ r->data_size++ ] = ch;
 }
 
-static void exact(struct slre *r, const char **re)
+static void exact(struct Slre *r, const char **re)
 {
   int old_data_size = r->data_size;
 
@@ -217,7 +198,7 @@ static int get_escape_char(const char **re)
   return res;
 }
 
-static void anyof(struct slre *r, const char **re)
+static void anyof(struct Slre *r, const char **re)
 {
   int esc, old_data_size = r->data_size, op = ANYOF;
 
@@ -250,14 +231,14 @@ static void anyof(struct slre *r, const char **re)
   r->err_str = "No closing ']' bracket";
 }
 
-static void relocate(struct slre *r, int begin, int shift)
+static void relocate(struct Slre *r, int begin, int shift)
 {
   emit(r, END);
   memmove(r->code + begin + shift, r->code + begin, r->code_size - begin);
   r->code_size += shift;
 }
 
-static void quantifier(struct slre *r, int prev, int op)
+static void quantifier(struct Slre *r, int prev, int op)
 {
   if (r->code[ prev ] == EXACT && r->code[ prev + 2 ] > 1) {
     r->code[ prev + 2 ]--;
@@ -271,7 +252,7 @@ static void quantifier(struct slre *r, int prev, int op)
   set_jump_offset(r, prev + 1, prev);
 }
 
-static void exact_one_char(struct slre *r, int ch)
+static void exact_one_char(struct Slre *r, int ch)
 {
   emit(r, EXACT);
   emit(r, r->data_size);
@@ -279,7 +260,7 @@ static void exact_one_char(struct slre *r, int ch)
   store_char_in_data(r, ch);
 }
 
-static void fixup_branch(struct slre *r, int fixup)
+static void fixup_branch(struct Slre *r, int fixup)
 {
   if (fixup > 0) {
     emit(r, END);
@@ -287,7 +268,7 @@ static void fixup_branch(struct slre *r, int fixup)
   }
 }
 
-static void compile(struct slre *r, const char **re)
+static void compile(struct Slre *r, const char **re)
 {
   int op, esc, branch_start, last_op, fixup, cap_no, level;
 
@@ -372,7 +353,7 @@ static void compile(struct slre *r, const char **re)
     }
 }
 
-int slre_compile(struct slre *r, const char *re)
+int slre_compile(struct Slre *r, const char *re)
 {
   r->err_str   = nullptr;
   r->code_size = r->data_size = r->num_caps = r->anchored = 0;
@@ -402,9 +383,9 @@ int slre_compile(struct slre *r, const char *re)
   return (r->err_str == nullptr ? 1 : 0);
 }
 
-static int match(const struct slre *, int, const char *, int, int *, struct cap *);
+static int match(const struct Slre *, int, const char *, int, int *, struct Cap *);
 
-static void loop_greedy(const struct slre *r, int pc, const char *s, int len, int *ofs)
+static void loop_greedy(const struct Slre *r, int pc, const char *s, int len, int *ofs)
 {
   int saved_offset, matched_offset = 0;
 
@@ -418,7 +399,7 @@ static void loop_greedy(const struct slre *r, int pc, const char *s, int len, in
   *ofs = matched_offset;
 }
 
-static void loop_non_greedy(const struct slre *r, int pc, const char *s, int len, int *ofs)
+static void loop_non_greedy(const struct Slre *r, int pc, const char *s, int len, int *ofs)
 {
   int saved_offset = *ofs;
 
@@ -460,7 +441,7 @@ static int is_any_but(const unsigned char *p, int len, const char *s, int *ofs)
   return 1;
 }
 
-static int match(const struct slre *r, int pc, const char *s, int len, int *ofs, struct cap *caps)
+static int match(const struct Slre *r, int pc, const char *s, int len, int *ofs, struct Cap *caps)
 {
   int n, saved_offset, res = 1;
 
@@ -592,7 +573,7 @@ static int match(const struct slre *r, int pc, const char *s, int len, int *ofs,
   return res;
 }
 
-int slre_match(const struct slre *r, const char *buf, int len, struct cap *caps)
+int slre_match(const struct Slre *r, const char *buf, int len, struct Cap *caps)
 {
   int i, ofs = 0, res = 0;
 
@@ -611,8 +592,8 @@ int slre_match(const struct slre *r, const char *buf, int len, struct cap *caps)
 #ifdef TEST
 int main(int argc, char *argv[])
 {
-  struct slre slre;
-  struct cap  caps[ 20 ];
+  struct Slre slre;
+  struct Cap  caps[ 20 ];
   char        data[ 1 * 1024 * 1024 ];
   FILE       *fp;
   int         i, count, res, len;
@@ -651,8 +632,8 @@ int main(int argc, char *argv[])
 void slre_test(void)
 {
   char        buf[] = "GET stuffed";
-  struct slre slre;
-  struct cap  captures[ 4 + 1 ];
+  struct Slre slre;
+  struct Cap  captures[ 4 + 1 ];
 
   if (! slre_compile(&slre, "^(GET|POST) (.*)")) {
     printf("Error compiling RE: %s\n", slre.err_str);

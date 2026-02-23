@@ -11,7 +11,7 @@
 class Tokens
 {
 public:
-  struct slre regexp[ MAXSHORTSTR ]; // NOLINT
+  struct Slre regexp[ MAXSHORTSTR ];
   char       *args[ MAXSHORTSTR ];
   char        data[ MAXSHORTSTR ];
   uint32_t    cnt;
