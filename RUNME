@@ -164,6 +164,10 @@ read_opts()
                 OPT_GCC="yes"
                 shift
                 ;;
+            -*clang)
+                OPT_GCC=""
+                shift
+                ;;
             -*github)
                 OPT_GITHUB_BUILD="yes"
                 shift
