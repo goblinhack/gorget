@@ -765,8 +765,8 @@ void rooms_test(Gamep g);
 // end sort marker2 }
 
 using level_fov_can_see_callback_t = void (*)(Gamep, Levelsp, Levelp, Thingp me, spoint pov, spoint p);
-void level_fov(Gamep g, Levelsp v, Levelp l, Thingp me, FovMap *fov_can_see_tile, FovMap *fov_has_seen_tile, spoint pov, int max_radius,
-               level_fov_can_see_callback_t can_see_callback = nullptr);
+void level_fov(Gamep g, Levelsp v, Levelp l, Thingp me, FovMap *fov_can_see_tile, FovMap *fov_has_seen_tile, spoint pov,
+               int max_radius, level_fov_can_see_callback_t can_see_callback = nullptr);
 
 using LevelType = enum LevelType_ {
   LEVEL_TYPE_NORMAL,

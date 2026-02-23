@@ -776,7 +776,10 @@ log_info "Game version               : $MYVER"
 log_info "Compiler version           :"
 $CC --version
 
-cat $MAKEFILE
+#
+# Useful for debugging
+#
+# cat $MAKEFILE
 
 cd ..
 

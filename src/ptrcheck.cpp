@@ -143,7 +143,7 @@ void ERROR(const char *fmt, ...)
 //
 using hash_elem_t = struct HashElemT {
   struct HashElemT *next;
-  Ptrcheck            *pc;
+  Ptrcheck         *pc;
 };
 
 using hash_t = struct HashT {

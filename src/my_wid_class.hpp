@@ -108,10 +108,10 @@ public:
   // Sorted for display order.
   //
   TreeWidKey key;
-  WidKeyType   tree2_key;
-  WidKeyType   tree4_key;
-  WidKeyType   tree5_key;
-  WidKeyType   tree6_key;
+  WidKeyType tree2_key;
+  WidKeyType tree4_key;
+  WidKeyType tree5_key;
+  WidKeyType tree6_key;
 
   wid_key_map_location *in_tree_root {};
   wid_key_map_int      *in_tree2_unsorted_root {};
