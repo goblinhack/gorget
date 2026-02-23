@@ -375,8 +375,12 @@ case "$MY_OS_NAME" in
         #
         # -fno-emulated-tls -fno-lto is needed to work around a thread_local issue with lld
         #
-        C_FLAGS+=" -g -gcodeview"
+        C_FLAGS+=" -g"
         if [[ $OPT_GCC = "" ]]; then
+          #
+          # GCC says cannot be used with precompiled headers
+          #
+          C_FLAGS+=" -gcodeview"
           C_FLAGS+=" -fno-emulated-tls"
         fi
 
