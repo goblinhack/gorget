@@ -640,8 +640,14 @@ fi
 
 case "$MY_OS_NAME" in
     *MING*|*MSYS*)
-        echo "CC=/${MSYS_PATH}/bin/clang++.exe" >> $MAKEFILE
-        CC=/${MSYS_PATH}/bin/clang++.exe
+        if [[ $OPT_GCC = "" ]]; then
+          echo "CC=/${MSYS_PATH}/bin/clang++.exe" >> $MAKEFILE
+          CC=/${MSYS_PATH}/bin/clang++.exe
+        else
+          echo "CC=/${MSYS_PATH}/bin/g++.exe" >> $MAKEFILE
+          CC=/${MSYS_PATH}/bin/g++.exe
+        fi
+
         #
         # To resolve WinMain, add these at the end again
         #
