@@ -191,6 +191,7 @@ export OPT_GCC
 
 read_opts "$@"
 
+touch build/Makefile.template
 make pre
 run build/build.sh $LOG
 
