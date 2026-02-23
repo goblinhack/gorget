@@ -375,12 +375,20 @@ case "$MY_OS_NAME" in
         #
         # -fno-emulated-tls -fno-lto is needed to work around a thread_local issue with lld
         #
-        C_FLAGS+=" -g -gcodeview -fno-emulated-tls "
+        C_FLAGS+=" -g -gcodeview -fno-emulated-tls"
+        if [[ $OPT_GCC = "" ]]; then
+          C_FLAGS+=" -fno-emulated-tls"
+        fi
 
         #
         # The space after pdb= is intentional to use the executable name for PDB file generation.
         #
-        LDFLAGS+=" -g -Wl,--pdb= -fuse-ld=lld -fno-emulated-tls "
+        LDFLAGS+=" -g -Wl,--pdb= "
+        if [[ $OPT_GCC = "" ]]; then
+          LDFLAGS+=" -fno-emulated-tls"
+          LDFLAGS+=" -fuse-ld=lld "
+        fi
+
         ;;
     *Darwin*)
         EXE=""
