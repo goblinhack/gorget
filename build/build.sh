@@ -381,6 +381,9 @@ case "$MY_OS_NAME" in
           # GCC says cannot be used with precompiled headers
           #
           C_FLAGS+=" -gcodeview"
+          #
+          # GCC does not like
+          #
           C_FLAGS+=" -fno-emulated-tls"
         fi
 
@@ -389,7 +392,13 @@ case "$MY_OS_NAME" in
         #
         LDFLAGS+=" -g -Wl,--pdb= "
         if [[ $OPT_GCC = "" ]]; then
+          #
+          # GCC does not like
+          #
           LDFLAGS+=" -fno-emulated-tls"
+          #
+          # Clang linker
+          #
           LDFLAGS+=" -fuse-ld=lld "
         fi
 

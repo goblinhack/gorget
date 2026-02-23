@@ -717,16 +717,16 @@ void blit_flush()
   glVertexPointer(NUMBER_DIMENSIONS_PER_COORD_2D, // (x,y)
                   GL_SHORT, NUMBER_BYTES_PER_VERTICE_2D,
                   ((char *) gl_array_buf)
-                      + (static_cast<ptrdiff_t>(SIZEOF(GLfloat) * // skip (u,v)
-                         NUMBER_DIMENSIONS_PER_COORD_2D)));
+                      + (static_cast< ptrdiff_t >(SIZEOF(GLfloat) * // skip (u,v)
+                                                  NUMBER_DIMENSIONS_PER_COORD_2D)));
 
   glColorPointer(NUMBER_COMPONENTS_PER_COLOR, // (r,g,b,a)
                  GL_UNSIGNED_BYTE, NUMBER_BYTES_PER_VERTICE_2D,
                  ((char *) gl_array_buf)
-                     + (static_cast<ptrdiff_t>(SIZEOF(GLshort) * // skip (x,y)
-                        NUMBER_DIMENSIONS_PER_COORD_2D))
-                     + (static_cast<ptrdiff_t>(SIZEOF(GLfloat) * // skip (u,v)
-                        NUMBER_DIMENSIONS_PER_COORD_2D)));
+                     + (static_cast< ptrdiff_t >(SIZEOF(GLshort) * // skip (x,y)
+                                                 NUMBER_DIMENSIONS_PER_COORD_2D))
+                     + (static_cast< ptrdiff_t >(SIZEOF(GLfloat) * // skip (u,v)
+                                                 NUMBER_DIMENSIONS_PER_COORD_2D)));
 
 #ifdef _DEBUG_BUILD_
   GL_ERROR_CHECK();
@@ -770,8 +770,8 @@ void blit_flush_colored_triangle_fan(float *b, const float *e)
   glColorPointer(NUMBER_COMPONENTS_PER_COLOR, // (r,g,b,a)
                  GL_UNSIGNED_BYTE, stride,
                  ((char *) b)
-                     + (static_cast<ptrdiff_t>(SIZEOF(GLshort) * // skip (x,y)
-                        NUMBER_DIMENSIONS_PER_COORD_2D)));
+                     + (static_cast< ptrdiff_t >(SIZEOF(GLshort) * // skip (x,y)
+                                                 NUMBER_DIMENSIONS_PER_COORD_2D)));
 
   GL_ERROR_CHECK();
   glDrawArrays(GL_TRIANGLE_FAN, 0, (GLsizei) nvertices);
@@ -939,7 +939,7 @@ static void gl_ext_load(void)
   }
 
   TRACE_NO_INDENT();
-  glCreateProgram_EXT = (__typeof__(glCreateProgram_EXT)) wglGetProcAddress("glCreateProgram");
+  glCreateProgram_EXT = (__typeof__(glCreateProgram_EXT)) (void *) wglGetProcAddress("glCreateProgram");
   if (! glCreateProgram_EXT) {
     LOG("OpenGl: - glCreateProgram_EXT - NOT present");
   } else {
