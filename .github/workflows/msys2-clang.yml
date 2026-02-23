@@ -1,4 +1,4 @@
-name: MSYS2
+name: MSYS2-clang
 
 on:
   push:
