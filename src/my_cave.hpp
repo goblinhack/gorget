@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_CAVE_H_
-#define MY_CAVE_H_
+#ifndef MY_CAVE_H
+#define MY_CAVE_H
 
 #include "my_game_defs.hpp"
 #include "my_types.hpp"
@@ -46,4 +46,4 @@ auto cave_generation_fill_blob_cand(Gamep g, Cave *c, int x, int y, uint16_t siz
 void cave_generation_keep_largest_blob(Gamep g, Cave *c);
 void cave_generation_center_blob(Gamep g, Cave *c);
 
-#endif // _MY_LEVEL_H_
+#endif // MY_LEVEL_H

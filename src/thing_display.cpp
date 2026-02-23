@@ -285,7 +285,7 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
   bool is_falling = false;
 
   auto *player = thing_player(g);
-  if (unlikely(! player)) {
+  if (UNLIKELY(! player)) {
     return;
   }
 
@@ -307,7 +307,7 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
     // What level is the player on?
     //
     auto *player_level = game_level_get(g, v, player->level_num);
-    if (unlikely(! player_level)) {
+    if (UNLIKELY(! player_level)) {
       return;
     }
 

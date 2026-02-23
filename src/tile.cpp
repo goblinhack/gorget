@@ -110,9 +110,9 @@ public:
   void set_gl_binding_outline(int v);
 };
 
-Tile::Tile() { newptr(MTYPE_TILE, this, "Tile"); }
+Tile::Tile() { NEWPTR(MTYPE_TILE, this, "Tile"); }
 
-Tile::~Tile() { oldptr(MTYPE_TILE, this); }
+Tile::~Tile() { OLDPTR(MTYPE_TILE, this); }
 
 auto tile_init() -> bool
 {
@@ -132,7 +132,7 @@ void tile_fini()
   }
 
   for (auto &t : all_tiles) {
-    verify(MTYPE_TILE, t.second);
+    VERIFY(MTYPE_TILE, t.second);
     delete t.second;
   }
 
@@ -161,7 +161,7 @@ Tile::Tile(const class Tile *tile)
       is_end_of_anim(tile->is_end_of_anim),                       // newline
       is_loggable(tile->is_loggable)                              // newline
 {
-  newptr(MTYPE_TILE, this, "Tile copy");
+  NEWPTR(MTYPE_TILE, this, "Tile copy");
 
 #ifdef ENABLE_TILE_BOUNDS
   px1 = tile->px1;
@@ -667,7 +667,7 @@ auto string2tile(std::string &s, int *len) -> Tilep
 
 auto tile_index_to_tile(int i) -> Tilep
 {
-  if (unlikely(! i)) {
+  if (UNLIKELY(! i)) {
     return nullptr;
   }
 

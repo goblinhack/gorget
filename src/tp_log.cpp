@@ -19,7 +19,7 @@ void TP_LOG_(Tpp tp, const char *fmt, va_list args)
 {
   TRACE_NO_INDENT();
 
-  verify(MTYPE_TP, tp);
+  VERIFY(MTYPE_TP, tp);
   char buf[ MAXLONGSTR ];
   int  len = 0;
 
@@ -39,7 +39,7 @@ void TP_LOG(Tpp tp, const char *fmt, ...)
 {
   TRACE_NO_INDENT();
 
-  verify(MTYPE_TP, tp);
+  VERIFY(MTYPE_TP, tp);
 
   va_list args = {};
   va_start(args, fmt);
@@ -53,7 +53,7 @@ void TP_DBG_(Tpp tp, const char *fmt, ...)
 
   IF_NODEBUG { return; }
 
-  verify(MTYPE_TP, tp);
+  VERIFY(MTYPE_TP, tp);
 
   va_list args = {};
   va_start(args, fmt);
@@ -65,7 +65,7 @@ void TP_DIE_(Tpp tp, const char *fmt, va_list args)
 {
   TRACE_NO_INDENT();
 
-  verify(MTYPE_TP, tp);
+  VERIFY(MTYPE_TP, tp);
   char buf[ MAXLONGSTR ];
   int  len = 0;
 
@@ -84,7 +84,7 @@ void TP_DIE(Tpp tp, const char *fmt, ...)
 {
   TRACE_NO_INDENT();
 
-  verify(MTYPE_TP, tp);
+  VERIFY(MTYPE_TP, tp);
   va_list args = {};
 
   va_start(args, fmt);
@@ -96,7 +96,7 @@ void TP_CON_(Tpp tp, const char *fmt, va_list args)
 {
   TRACE_NO_INDENT();
 
-  verify(MTYPE_TP, tp);
+  VERIFY(MTYPE_TP, tp);
   char buf[ MAXLONGSTR ];
   int  len = 0;
 
@@ -122,7 +122,7 @@ void TP_CON(Tpp tp, const char *fmt, ...)
 {
   TRACE_NO_INDENT();
 
-  verify(MTYPE_TP, tp);
+  VERIFY(MTYPE_TP, tp);
   va_list args = {};
 
   va_start(args, fmt);

@@ -59,7 +59,7 @@ using ThingTextFlags = uint8_t;
 // Player state
 //
 #define PLAYER_STATE_ENUM(list_macro)                                                                                            \
-  clang_format_indent()                                                    /* dummy line for clang indentation fixup */          \
+  CLANG_FORMAT_INDENT()                                                    /* dummy line for clang indentation fixup */          \
       list_macro(PLAYER_STATE_INIT, "INIT"),                               /* newline */                                         \
       list_macro(PLAYER_STATE_DEAD, "DEAD"),                               /* newline */                                         \
       list_macro(PLAYER_STATE_NORMAL, "NORMAL"),                           /* newline */                                         \
@@ -73,7 +73,7 @@ ENUM_DEF_H(PLAYER_STATE_ENUM, PlayerState)
 // Monst state
 //
 #define MONST_STATE_ENUM(list_macro)                                                                                             \
-  clang_format_indent()                           /* dummy line for clang indentation fixup */                                   \
+  CLANG_FORMAT_INDENT()                           /* dummy line for clang indentation fixup */                                   \
       list_macro(MONST_STATE_INIT, "INIT"),       /* newline */                                                                  \
       list_macro(MONST_STATE_DEAD, "DEAD"),       /* newline */                                                                  \
       list_macro(MONST_STATE_NORMAL, "NORMAL"),   /* newline */                                                                  \

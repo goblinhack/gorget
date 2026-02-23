@@ -52,7 +52,7 @@ static void inline putPixel(SDL_Surface *surface, uint16_t x, uint16_t y, const 
   uint32_t rgb = 0;
 
 #ifdef _DEBUG_BUILD_
-  if (unlikely((x >= (uint32_t) surface->w) || (y >= (uint32_t) surface->h))) {
+  if (UNLIKELY((x >= (uint32_t) surface->w) || (y >= (uint32_t) surface->h))) {
     CROAK("putPixel out of range, pix %d,%d in size %d,%d", x, y, surface->w, surface->h);
   }
 #endif
@@ -76,7 +76,7 @@ static inline void getPixel(SDL_Surface *surface, uint16_t x, uint16_t y, color 
   uint32_t rgb = 0;
 
 #ifdef _DEBUG_BUILD_
-  if (unlikely((x >= (uint32_t) surface->w) || (y >= (uint32_t) surface->h))) {
+  if (UNLIKELY((x >= (uint32_t) surface->w) || (y >= (uint32_t) surface->h))) {
     CROAK("getPixel out of range, pix %d,%d in size %d,%d", x, y, surface->w, surface->h);
   }
 #endif

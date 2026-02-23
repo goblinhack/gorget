@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_GFX_H_
-#define MY_GFX_H_
+#ifndef MY_GFX_H
+#define MY_GFX_H
 
 extern void gfx_init();
 extern void gfx_fini();

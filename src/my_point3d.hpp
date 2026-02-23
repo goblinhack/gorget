@@ -28,4 +28,4 @@ template < typename T > auto operator/(MyApoint3d< T > const &a, T b) -> MyApoin
 
 using point3d = MyApoint3d< short >;
 
-#endif // _MY_POINT3D_HPP
+#endif // MY_POINT3D_HPP

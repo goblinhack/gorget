@@ -62,19 +62,19 @@ static bool mouse_found      = 0;
 
 auto ascii_ok(int x, int y) -> int
 {
-  if (unlikely(x < 0)) {
+  if (UNLIKELY(x < 0)) {
     return 0;
   }
 
-  if (unlikely(x >= TERM_WIDTH)) {
+  if (UNLIKELY(x >= TERM_WIDTH)) {
     return 0;
   }
 
-  if (unlikely(y < 0)) {
+  if (UNLIKELY(y < 0)) {
     return 0;
   }
 
-  if (unlikely(y >= TERM_HEIGHT)) {
+  if (UNLIKELY(y >= TERM_HEIGHT)) {
     return 0;
   }
 
@@ -83,11 +83,11 @@ auto ascii_ok(int x, int y) -> int
 
 auto ascii_x_ok(int x) -> int
 {
-  if (unlikely(x < 0)) {
+  if (UNLIKELY(x < 0)) {
     return 0;
   }
 
-  if (unlikely(x >= TERM_WIDTH)) {
+  if (UNLIKELY(x >= TERM_WIDTH)) {
     return 0;
   }
 
@@ -96,11 +96,11 @@ auto ascii_x_ok(int x) -> int
 
 auto ascii_y_ok(int y) -> int
 {
-  if (unlikely(y < 0)) {
+  if (UNLIKELY(y < 0)) {
     return 0;
   }
 
-  if (unlikely(y >= TERM_HEIGHT)) {
+  if (UNLIKELY(y >= TERM_HEIGHT)) {
     return 0;
   }
 
@@ -179,7 +179,7 @@ auto ascii_is_empty(int x, int y) -> bool
 
 void ascii_set(int depth, int x, int y, color col)
 {
-  if (unlikely(! ascii_ok_for_scissors(x, y))) {
+  if (UNLIKELY(! ascii_ok_for_scissors(x, y))) {
     return;
   }
 
@@ -197,7 +197,7 @@ void ascii_set_context(int x, int y, void *context)
     return;
   }
 
-  if (unlikely(! ascii_ok_for_scissors(x, y))) {
+  if (UNLIKELY(! ascii_ok_for_scissors(x, y))) {
     return;
   }
 
@@ -219,7 +219,7 @@ auto ascii_get_stat_context(int x, int y) -> void *
 
 void ascii_set(int depth, int x, int y, const Texp tex, float tx, float ty, float dx, float dy)
 {
-  if (unlikely(! ascii_ok_for_scissors(x, y))) {
+  if (UNLIKELY(! ascii_ok_for_scissors(x, y))) {
     return;
   }
 
@@ -235,7 +235,7 @@ void ascii_set(int depth, int x, int y, const Texp tex, float tx, float ty, floa
 
 void ascii_set(int depth, int x, int y, const Tilep tile)
 {
-  if (unlikely(! ascii_ok_for_scissors(x, y))) {
+  if (UNLIKELY(! ascii_ok_for_scissors(x, y))) {
     return;
   }
 
@@ -251,7 +251,7 @@ void ascii_set(int depth, int x, int y, const Tilep tile)
 
 void ascii_set(int depth, int x, int y, const Tilep tile, char ch)
 {
-  if (unlikely(! ascii_ok_for_scissors(x, y))) {
+  if (UNLIKELY(! ascii_ok_for_scissors(x, y))) {
     return;
   }
 
@@ -267,7 +267,7 @@ void ascii_set(int depth, int x, int y, const Tilep tile, char ch)
 
 void ascii_set(int depth, int x, int y, const Tilep tile, float tx, float ty, float dx, float dy)
 {
-  if (unlikely(! ascii_ok_for_scissors(x, y))) {
+  if (UNLIKELY(! ascii_ok_for_scissors(x, y))) {
     return;
   }
 
@@ -298,11 +298,11 @@ void ascii_putf_internal2(int x, int y, color fg, color bg, const std::string &t
   //
   // Check for out of bounds. Cannot check for x here as a message could start off screen and end on screen.
   //
-  if (unlikely(y < 0)) {
+  if (UNLIKELY(y < 0)) {
     return;
   }
 
-  if (unlikely(y >= TERM_HEIGHT)) {
+  if (UNLIKELY(y >= TERM_HEIGHT)) {
     return;
   }
 
@@ -330,7 +330,7 @@ void ascii_putf_internal2(int x, int y, color fg, color bg, const std::string &t
 
       auto len = text.end() - text_iter;
       if (len > 0) {
-        if (unlikely(ch == L'%')) {
+        if (UNLIKELY(ch == L'%')) {
           got_pct = true;
           if ((len > 3) && (std::string(text_iter, text_iter + 3) == "fg=")) {
             text_iter += 3;
@@ -386,7 +386,7 @@ void ascii_putf_internal2(int x, int y, color fg, color bg, const std::string &t
     //
     // Outside the scissors, ignore
     //
-    if (unlikely(! ascii_ok_for_scissors(x, y))) {
+    if (UNLIKELY(! ascii_ok_for_scissors(x, y))) {
       x++;
       continue;
     }
@@ -407,7 +407,7 @@ void ascii_putf_internal2(int x, int y, color fg, color bg, const std::string &t
     // Use a special char to represent the cursor. A bit of a hack.
     //
     auto is_cursor = (ch == (char) FONT_CHAR_CURSOR);
-    if (unlikely(is_cursor)) {
+    if (UNLIKELY(is_cursor)) {
       static uint32_t last;
       static bool     first = 1u;
 
@@ -450,7 +450,7 @@ void ascii_putf_internal2(int x, int y, color fg, color bg, const std::string &t
       if ((static_cast< bool >(bg.r)) || (static_cast< bool >(bg.g)) || (static_cast< bool >(bg.b))
           || (static_cast< bool >(bg.a))) {
         static Tilep block_tile;
-        if (unlikely(! block_tile)) {
+        if (UNLIKELY(! block_tile)) {
           block_tile = tile_find_mand(FONT_TILENAME_BLOCK_STR);
         }
         cell->tile[ bg_depth ] = block_tile;
@@ -468,7 +468,7 @@ void ascii_putf_internal2(int x, int y, color fg, color bg, const std::string &t
       cell->color_br[ bg_depth ] = bg;
     }
 
-    if (unlikely(is_cursor)) {
+    if (UNLIKELY(is_cursor)) {
       fg = saved_fg;
     }
 
@@ -1040,7 +1040,7 @@ static void ascii_put_box_(int style, const TileLayers tiles_in, int x1, int y1,
     }
   }
 
-  if (unlikely(y1 == y2)) {
+  if (UNLIKELY(y1 == y2)) {
     //
     // Horizontal
     //
@@ -1058,7 +1058,7 @@ static void ascii_put_box_(int style, const TileLayers tiles_in, int x1, int y1,
     return;
   }
 
-  if (unlikely(x1 == x2)) {
+  if (UNLIKELY(x1 == x2)) {
     //
     // Vertical
     //
@@ -1203,11 +1203,11 @@ void ascii_put_box(box_args b, int style, const TileLayers tiles, const char *fm
   y2 = y + h;
 
   for (x = x1; x <= x2; x++) {
-    if (unlikely(! ascii_x_ok(x))) {
+    if (UNLIKELY(! ascii_x_ok(x))) {
       continue;
     }
     for (y = y1; y <= y2; y++) {
-      if (unlikely(! ascii_y_ok(y))) {
+      if (UNLIKELY(! ascii_y_ok(y))) {
         continue;
       }
 

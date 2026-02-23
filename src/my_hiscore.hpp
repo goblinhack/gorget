@@ -56,4 +56,4 @@ public:
   auto place_str(int score) -> const char *;
 };
 
-#endif // _MY_HISCORE_HPP
+#endif // MY_HISCORE_HPP

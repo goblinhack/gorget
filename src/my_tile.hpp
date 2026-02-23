@@ -38,7 +38,7 @@ enum { TILE_HEIGHT = 12, TILE_WIDTH = 12 };
 // Frame buffer objects
 //
 #define TILE_LAYER_ENUM(list_macro)                                                                                              \
-  clang_format_indent()                               /* dummy line for clang indentation fixup */                               \
+  CLANG_FORMAT_INDENT()                               /* dummy line for clang indentation fixup */                               \
       list_macro(TILE_LAYER_BG_0, "TILE_LAYER_BG_0"), /* newline */                                                              \
       list_macro(TILE_LAYER_BG_1, "TILE_LAYER_BG_1"), /* newline */                                                              \
       list_macro(TILE_LAYER_FG_0, "TILE_LAYER_FG_0"), /* newline */                                                              \

@@ -245,7 +245,7 @@ void level_scroll_warp_to_focus(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  verify(MTYPE_LEVELS, v);
+  VERIFY(MTYPE_LEVELS, v);
 
   //
   // We focus on the current level if on the level select screen.

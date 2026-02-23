@@ -24,16 +24,16 @@ extern void stbi_image_free(void *retval_from_stbi_load);
 class Tex
 {
 public:
-  explicit Tex(std::string vname) : name(std::move(vname)) { newptr(MTYPE_TEX, this, "Tex"); }
+  explicit Tex(std::string vname) : name(std::move(vname)) { NEWPTR(MTYPE_TEX, this, "Tex"); }
 
   ~Tex()
   {
-    oldptr(MTYPE_TEX, this);
+    OLDPTR(MTYPE_TEX, this);
 
     if (surface != nullptr) {
-      verify(MTYPE_SDL, surface);
+      VERIFY(MTYPE_SDL, surface);
       SDL_FreeSurface(surface);
-      oldptr(MTYPE_SDL, surface);
+      OLDPTR(MTYPE_SDL, surface);
       surface = nullptr;
     }
 
@@ -156,13 +156,13 @@ static auto load_image(const std::string &filename) -> SDL_Surface *
 
   if (comp == 4) {
     surf = SDL_CreateRGBSurface(0, x, y, 32, rmask, gmask, bmask, amask);
-    newptr(MTYPE_SDL, surf, "SDL_CreateRGBSurface1");
+    NEWPTR(MTYPE_SDL, surf, "SDL_CreateRGBSurface1");
   } else if (comp == 3) {
     surf = SDL_CreateRGBSurface(0, x, y, 24, rmask, gmask, bmask, 0);
-    newptr(MTYPE_SDL, surf, "SDL_CreateRGBSurface2");
+    NEWPTR(MTYPE_SDL, surf, "SDL_CreateRGBSurface2");
   } else if (comp == 2) {
     surf = SDL_CreateRGBSurface(0, x, y, 32, 0, 0, 0, 0);
-    newptr(MTYPE_SDL, surf, "SDL_CreateRGBSurface3");
+    NEWPTR(MTYPE_SDL, surf, "SDL_CreateRGBSurface3");
   } else {
     ERR("Could not handle image with %d components", comp);
     free_raw_image(image_data);
@@ -175,8 +175,8 @@ static auto load_image(const std::string &filename) -> SDL_Surface *
     SDL_Surface *old_surf = surf;
     DBG2("- SDL_ConvertSurfaceFormat");
     surf = SDL_ConvertSurfaceFormat(old_surf, SDL_PIXELFORMAT_RGBA8888, 0);
-    newptr(MTYPE_SDL, surf, "SDL_CreateRGBSurface4");
-    oldptr(MTYPE_SDL, old_surf);
+    NEWPTR(MTYPE_SDL, surf, "SDL_CreateRGBSurface4");
+    OLDPTR(MTYPE_SDL, old_surf);
     SDL_FreeSurface(old_surf);
     SDL_SaveBMP(surf, filename.c_str());
   }
@@ -222,21 +222,21 @@ static void load_images(SDL_Surface **surf1_out, const std::string &filename)
       ERR("Could not create surface");
       return;
     }
-    newptr(MTYPE_SDL, surf1, "SDL_CreateRGBSurface5");
+    NEWPTR(MTYPE_SDL, surf1, "SDL_CreateRGBSurface5");
   } else if (comp == 3) {
     surf1 = SDL_CreateRGBSurface(0, x, y, 24, rmask, gmask, bmask, 0);
     if (surf1 == nullptr) {
       ERR("Could not create surface");
       return;
     }
-    newptr(MTYPE_SDL, surf1, "SDL_CreateRGBSurface6");
+    NEWPTR(MTYPE_SDL, surf1, "SDL_CreateRGBSurface6");
   } else if (comp == 2) {
     surf1 = SDL_CreateRGBSurface(0, x, y, 32, 0, 0, 0, 0);
     if (surf1 == nullptr) {
       ERR("Could not create surface");
       return;
     }
-    newptr(MTYPE_SDL, surf1, "SDL_CreateRGBSurface7");
+    NEWPTR(MTYPE_SDL, surf1, "SDL_CreateRGBSurface7");
   } else {
     ERR("Could not handle image with %d components", comp);
   }
@@ -251,8 +251,8 @@ static void load_images(SDL_Surface **surf1_out, const std::string &filename)
       ERR("Could not convert surface");
       return;
     }
-    newptr(MTYPE_SDL, surf1, "SDL_CreateRGBSurface14");
-    oldptr(MTYPE_SDL, old_surf);
+    NEWPTR(MTYPE_SDL, surf1, "SDL_CreateRGBSurface14");
+    OLDPTR(MTYPE_SDL, old_surf);
     SDL_FreeSurface(old_surf);
     SDL_SaveBMP(surf1, filename.c_str());
   }
@@ -340,13 +340,13 @@ static auto tex_create_masks_from_surface(SDL_Surface *src, const std::string &f
   uint32_t       src_y      = 0;
 
   SDL_Surface *dst_monochrome = SDL_CreateRGBSurface(0, src_width, src_height, 32, rmask, gmask, bmask, amask);
-  newptr(MTYPE_SDL, dst_monochrome, "SDL_CreateRGBSurface17");
+  NEWPTR(MTYPE_SDL, dst_monochrome, "SDL_CreateRGBSurface17");
 
   SDL_Surface *dst_mask = SDL_CreateRGBSurface(0, src_width, src_height, 32, rmask, gmask, bmask, amask);
-  newptr(MTYPE_SDL, dst_mask, "SDL_CreateRGBSurface18");
+  NEWPTR(MTYPE_SDL, dst_mask, "SDL_CreateRGBSurface18");
 
   SDL_Surface *dst_outline = SDL_CreateRGBSurface(0, src_width, src_height, 32, rmask, gmask, bmask, amask);
-  newptr(MTYPE_SDL, dst_outline, "SDL_CreateRGBSurface19");
+  NEWPTR(MTYPE_SDL, dst_outline, "SDL_CreateRGBSurface19");
 
   color const col_white(255, 255, 255, 255);
 

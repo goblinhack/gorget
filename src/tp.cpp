@@ -127,9 +127,9 @@ static bool tp_init_done;
 
 static void tp_fixup();
 
-Tp::Tp() { newptr(MTYPE_TP, this, "Tp"); }
+Tp::Tp() { NEWPTR(MTYPE_TP, this, "Tp"); }
 
-Tp::~Tp() { oldptr(MTYPE_TP, this); }
+Tp::~Tp() { OLDPTR(MTYPE_TP, this); }
 
 auto tp_find_mand(const std::string &val) -> Tpp
 {
@@ -138,7 +138,7 @@ auto tp_find_mand(const std::string &val) -> Tpp
   const std::string &name(val);
   auto               result = tp_name_map.find(name);
 
-  if (unlikely(result != tp_name_map.end())) {
+  if (UNLIKELY(result != tp_name_map.end())) {
     return result->second;
   }
 
@@ -153,7 +153,7 @@ auto tp_find_opt(const std::string &val) -> Tpp
   const std::string &name(val);
   auto               result = tp_name_map.find(name);
 
-  if (unlikely(result != tp_name_map.end())) {
+  if (UNLIKELY(result != tp_name_map.end())) {
     return result->second;
   }
 
@@ -378,7 +378,7 @@ auto tp_random_monst(int c) -> Tpp
     return nullptr;
   }
 
-  if (unlikely(tp_monst_vec[ c ].empty())) {
+  if (UNLIKELY(tp_monst_vec[ c ].empty())) {
     ERR("tp_random_monst: no rating %d monsters found", c);
     return nullptr;
   }
@@ -390,7 +390,7 @@ auto tp_random(ThingFlag f) -> Tpp
 {
   TRACE_NO_INDENT();
 
-  if (unlikely(tp_flag_vec[ f ].empty())) {
+  if (UNLIKELY(tp_flag_vec[ f ].empty())) {
     ERR("tp_random: no tp found for ThingFlag %d/%s", f, ThingFlag_to_c_str(f));
     return nullptr;
   }
@@ -415,7 +415,7 @@ auto tp_first(ThingFlag f) -> Tpp
 {
   TRACE_NO_INDENT();
 
-  if (unlikely(tp_flag_vec[ f ].empty())) {
+  if (UNLIKELY(tp_flag_vec[ f ].empty())) {
     ERR("tp_first: no tp found for ThingFlag %d/%s", f, ThingFlag_to_c_str(f));
     return nullptr;
   }

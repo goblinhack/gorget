@@ -33,7 +33,7 @@ auto strsub_(const char *in, const char *look_for, const char *replace_with, con
 
 auto ptrcheck_alloc(int mtype, const void *ptr, const char *what, int size, const char *func, const char *file, int line)
     -> void *;
-auto ptrcheck_verify(int mtype, const void *ptr, const char *func, const char *file, int line) -> int;
+auto ptrcheck_VERIFY(int mtype, const void *ptr, const char *func, const char *file, int line) -> int;
 auto ptrcheck_free(int mtype, void *ptr, const char *func, const char *file, int line) -> int;
 void ptrcheck_leak_print(int mtype);
 void ptrcheck_leak_print();
@@ -41,7 +41,7 @@ void ptrcheck_leak_print();
 //
 // MUST use DEBUG2 else "set debug on" gets confused as it never learned pointers.
 //
-#define newptr(__mtype__, __ptr__, __what__)                                                                                     \
+#define NEWPTR(__mtype__, __ptr__, __what__)                                                                                     \
   {                                                                                                                              \
     if (DEBUG2) {                                                                                                                \
       TRACE_NO_INDENT();                                                                                                         \
@@ -49,7 +49,7 @@ void ptrcheck_leak_print();
     }                                                                                                                            \
   }
 
-#define oldptr(__mtype__, __ptr__)                                                                                               \
+#define OLDPTR(__mtype__, __ptr__)                                                                                               \
   {                                                                                                                              \
     if (DEBUG2) {                                                                                                                \
       TRACE_NO_INDENT();                                                                                                         \
@@ -57,11 +57,11 @@ void ptrcheck_leak_print();
     }                                                                                                                            \
   }
 
-#define verify(__mtype__, __ptr__)                                                                                               \
+#define VERIFY(__mtype__, __ptr__)                                                                                               \
   {                                                                                                                              \
     if (DEBUG2) {                                                                                                                \
       TRACE_NO_INDENT();                                                                                                         \
-      ptrcheck_verify(__mtype__, __ptr__, SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM);                                           \
+      ptrcheck_VERIFY(__mtype__, __ptr__, SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM);                                           \
     }                                                                                                                            \
   }
 
@@ -78,4 +78,4 @@ enum {
   MTYPE_MAX,
 };
 
-#endif // _MY__PTRCHECK_HPP_
+#endif // MY__PTRCHECK_HPP_

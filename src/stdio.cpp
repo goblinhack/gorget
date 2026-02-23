@@ -25,7 +25,7 @@ auto redirect_stdout() -> FILE *
   g_log_stdout = stdout;
 #endif
 
-  if (likely(g_log_stdout != nullptr)) {
+  if (LIKELY(g_log_stdout != nullptr)) {
     return g_log_stdout;
   }
 
@@ -84,7 +84,7 @@ auto redirect_stderr() -> FILE *
   g_log_stderr = stderr;
 #endif
 
-  if (likely(g_log_stderr != nullptr)) {
+  if (LIKELY(g_log_stderr != nullptr)) {
     return g_log_stderr;
   }
 

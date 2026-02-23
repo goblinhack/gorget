@@ -120,7 +120,7 @@ static void level_tick(Gamep g, Levelsp v, Levelp l, bool tick_begin_requested)
 {
   TRACE_NO_INDENT();
 
-  verify(MTYPE_LEVELS, game_levels_get(g));
+  VERIFY(MTYPE_LEVELS, game_levels_get(g));
 
   //
   // First time tick for this level?
@@ -625,7 +625,7 @@ static void level_tick_update_frame_counter(Levelsp v)
     t = test_t;
   }
 
-  if (unlikely(! level_ts_begin)) {
+  if (UNLIKELY(! level_ts_begin)) {
     level_ts_begin = t;
   }
 

@@ -957,7 +957,7 @@ auto operator>>(std::istream &in, Bits< class Game & > my) -> std::istream &
   in >> bits(my.t.saved_dir);
 
   Levelsp tmp = (Levelsp) mymalloc(sizeof(Levels), "loaded level");
-  newptr(MTYPE_LEVELS, tmp, "loaded levels");
+  NEWPTR(MTYPE_LEVELS, tmp, "loaded levels");
   in.read(reinterpret_cast< char * >(tmp), sizeof(Levels));
   my.t.levels = tmp;
 
@@ -1014,7 +1014,7 @@ auto Game::load(const std::string &file_to_load, class Game &target) -> bool
   TRACE_AND_INDENT();
 
   TRACE_NO_INDENT();
-  verify(MTYPE_GAME, this);
+  VERIFY(MTYPE_GAME, this);
   game_load_error = "";
 
   //
@@ -1024,7 +1024,7 @@ auto Game::load(const std::string &file_to_load, class Game &target) -> bool
 
   TRACE_NO_INDENT();
   if (! game_headers_only) {
-    verify(MTYPE_GAME, this);
+    VERIFY(MTYPE_GAME, this);
     wid_progress_bar(this, "Loading...", 0.0);
   }
 
@@ -1036,7 +1036,7 @@ auto Game::load(const std::string &file_to_load, class Game &target) -> bool
     if (! game_headers_only) {
       wid_error(game, "load error, empty file [" + file_to_load + "] ?");
     }
-    verify(MTYPE_GAME, this);
+    VERIFY(MTYPE_GAME, this);
     wid_progress_bar_destroy(this);
     return false;
   }
@@ -1057,7 +1057,7 @@ auto Game::load(const std::string &file_to_load, class Game &target) -> bool
 
   TRACE_NO_INDENT();
   if (! game_headers_only) {
-    verify(MTYPE_GAME, this);
+    VERIFY(MTYPE_GAME, this);
     wid_progress_bar(this, "Decompressing...", 0.5);
   }
 
@@ -1100,14 +1100,14 @@ auto Game::load(const std::string &file_to_load, class Game &target) -> bool
         (long) dst_size,                 // newline
         time_ms() - start,               // newline
         file_to_load.c_str());
-    verify(MTYPE_GAME, this);
+    VERIFY(MTYPE_GAME, this);
     wid_progress_bar_destroy(this);
     return false;
   }
 
   TRACE_NO_INDENT();
   if (! game_headers_only) {
-    verify(MTYPE_GAME, this);
+    VERIFY(MTYPE_GAME, this);
     wid_progress_bar(this, "Reading...", 0.75);
   }
 
@@ -1136,7 +1136,7 @@ auto Game::load(const std::string &file_to_load, class Game &target) -> bool
   free(src);
 
   if (! game_headers_only) {
-    verify(MTYPE_GAME, this);
+    VERIFY(MTYPE_GAME, this);
     wid_progress_bar(this, "Loaded", 1.0);
   }
 
@@ -1450,7 +1450,7 @@ auto game_load_last_config(const char *appdata) -> bool
   CON("Load config");
 
   game = new Game(std::string(appdata));
-  newptr(MTYPE_GAME, game, "game");
+  NEWPTR(MTYPE_GAME, game, "game");
 
   auto config_error = game->load_config();
 
@@ -1464,10 +1464,10 @@ auto game_load_last_config(const char *appdata) -> bool
       sdl_msg_box("Config version change. Will need to reset config. Found version [%s]. Expected version [%s].",
                   game->config.version.c_str(), version.c_str());
     }
-    oldptr(MTYPE_GAME, game);
+    OLDPTR(MTYPE_GAME, game);
     delete game;
     game = new Game(std::string(appdata));
-    newptr(MTYPE_GAME, game, "game (1)");
+    NEWPTR(MTYPE_GAME, game, "game (1)");
     reset_globals();
     game_save_config(game);
     g_errored_thread_id = -1;
@@ -1477,11 +1477,11 @@ auto game_load_last_config(const char *appdata) -> bool
     } else {
       sdl_msg_box("Config error: %s. Will need to reset config.", config_error.c_str());
     }
-    oldptr(MTYPE_GAME, game);
+    OLDPTR(MTYPE_GAME, game);
     delete game;
     game = nullptr;
     game = new Game(std::string(appdata));
-    newptr(MTYPE_GAME, game, "game (2)");
+    NEWPTR(MTYPE_GAME, game, "game (2)");
     reset_globals();
     game_save_config(game);
     g_errored_thread_id = -1;

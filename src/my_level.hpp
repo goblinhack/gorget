@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_LEVEL_H_
-#define MY_LEVEL_H_
+#ifndef MY_LEVEL_H
+#define MY_LEVEL_H
 
 #include "my_game_defs.hpp"
 #include "my_ptrcheck.hpp"
@@ -776,4 +776,4 @@ using LevelType = enum LevelType_ {
   LEVEL_TYPE_MAX
 };
 
-#endif // _MY_LEVEL_H_
+#endif // MY_LEVEL_H

@@ -44,4 +44,4 @@ void game_popups_display(Gamep g, Levelsp v, Levelp l);
 auto game_popups_get(Gamep g, int x, int y) -> std::list< GamePopup * > *;
 void game_popups_set(Gamep g, int x, int y, std::list< GamePopup * > &l);
 
-#endif /* _MY_GAME_POPUP_HPP */
+#endif /* MY_GAME_POPUP_HPP */

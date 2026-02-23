@@ -45,4 +45,4 @@ static inline auto make_fpoint(const spoint f) -> fpoint { return fpoint(f.x, f.
 //
 static inline auto make_spoint(const fpoint &f) -> spoint { return spoint((int) roundf(f.x), (int) roundf(f.y)); }
 
-#endif // _MY_FPOINT_HPP
+#endif // MY_FPOINT_HPP

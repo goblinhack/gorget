@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_TP_CLASS_H_
-#define MY_TP_CLASS_H_
+#ifndef MY_TP_CLASS_H
+#define MY_TP_CLASS_H
 
 #include "my_color_defs.hpp"
 #include "my_dice_class.hpp"

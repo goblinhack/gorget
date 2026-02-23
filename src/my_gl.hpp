@@ -109,7 +109,7 @@
     gl_push_rgba(p, r1, g1, b1, a1);                                                                                             \
   }
 
-#define gl_push_point(p, p_end, x1, y1)                                                                                          \
+#define GL_PUSH_POINT(p, p_end, x1, y1)                                                                                          \
   {                                                                                                                              \
     gl_push_vertex(p, x1, y1);                                                                                                   \
   }
@@ -136,7 +136,7 @@
 
 #define push_point(x1, y1)                                                                                                       \
   {                                                                                                                              \
-    gl_push_point(bufp, bufp_end, x1, y1);                                                                                       \
+    GL_PUSH_POINT(bufp, bufp_end, x1, y1);                                                                                       \
   }
 
 #define push_tex_point(tx, ty, x1, y1, r1, g1, b1, a1)                                                                           \
@@ -324,7 +324,7 @@ void gl_clear();
 #define GL_ERROR_CHECK()                                                                                                         \
   {                                                                                                                              \
     auto errCode = glGetError();                                                                                                 \
-    if (likely(errCode == GL_NO_ERROR)) {                                                                                        \
+    if (LIKELY(errCode == GL_NO_ERROR)) {                                                                                        \
       /* LOG("GFX: ok at %s:%s line %u", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM); */                                         \
     } else {                                                                                                                     \
       LOG("GFX: error at %s:%s line %u", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM);                                            \

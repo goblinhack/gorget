@@ -182,7 +182,7 @@ auto levels_memory_alloc(Gamep g) -> Levelsp
   if (v == nullptr) {
     return nullptr;
   }
-  newptr(MTYPE_LEVELS, v, "levels");
+  NEWPTR(MTYPE_LEVELS, v, "levels");
 
   return v;
 }
@@ -192,9 +192,9 @@ static void levels_memory_free(Gamep g, Levelsp v)
   LOG("Levels free memory");
   TRACE_NO_INDENT();
 
-  verify(MTYPE_LEVELS, v);
+  VERIFY(MTYPE_LEVELS, v);
   myfree(v);
-  oldptr(MTYPE_LEVELS, v);
+  OLDPTR(MTYPE_LEVELS, v);
 
   (void) game_levels_set(g, nullptr);
 }
@@ -286,7 +286,7 @@ auto level_change(Gamep g, Levelsp v, LevelNum level_num) -> Levelp
   LOG("Level change to %u", level_num);
   TRACE_AND_INDENT();
 
-  verify(MTYPE_LEVELS, v);
+  VERIFY(MTYPE_LEVELS, v);
 
   //
   // Check we're not trying to jump off the end of the levels
@@ -317,7 +317,7 @@ auto level_change(Gamep g, Levelsp v, LevelNum level_num) -> Levelp
 
   Level *new_level = game_level_get(g, v);
 
-  verify(MTYPE_LEVELS, v);
+  VERIFY(MTYPE_LEVELS, v);
 
   if (old_level == new_level) {
     if (new_level->level_num == 0) {
@@ -673,7 +673,7 @@ void level_bounds_set(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  verify(MTYPE_LEVELS, v);
+  VERIFY(MTYPE_LEVELS, v);
 
   int const zoom = game_map_zoom_get(g);
   auto      dw   = TILE_WIDTH * zoom;

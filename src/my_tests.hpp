@@ -70,4 +70,4 @@ auto test_load_teleport() -> bool;
 auto test_load_trampled_grass() -> bool;
 auto test_load_wall() -> bool;
   /* end shell marker1 */
-#endif // _MY_TESTS_HPP
+#endif // MY_TESTS_HPP

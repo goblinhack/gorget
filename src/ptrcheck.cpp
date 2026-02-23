@@ -656,7 +656,7 @@ auto ptrcheck_free(int mtype, void *ptr, const char *func, const char *file, int
 //
 // Check a pointer for validity with no recording of history.
 //
-auto ptrcheck_verify(int mtype, const void *ptr, const char *func, const char *file, int line) -> int
+auto ptrcheck_VERIFY(int mtype, const void *ptr, const char *func, const char *file, int line) -> int
 {
   ptrcheck_mutex.lock();
   TRACE_NO_INDENT();

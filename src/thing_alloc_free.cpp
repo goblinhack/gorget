@@ -30,11 +30,11 @@ static bool memory_test = true;
   for (auto tries = 0; tries < THING_EXT_MAX; tries++) {
     ThingExtId ext_id = last_ext_id + tries;
     ext_id %= THING_EXT_MAX;
-    if (unlikely(! ext_id)) {
+    if (UNLIKELY(! ext_id)) {
       continue;
     }
 
-    if (unlikely(v->thing_ext[ ext_id ].in_use)) {
+    if (UNLIKELY(v->thing_ext[ ext_id ].in_use)) {
       continue;
     }
 
@@ -88,11 +88,11 @@ static void thing_ext_free(Levelsp v, Thingp t)
   for (auto tries = 0; tries < THING_FOV_MAX; tries++) {
     ThingFovId fov_id = last_fov_id + tries;
     fov_id %= THING_FOV_MAX;
-    if (unlikely(! fov_id)) {
+    if (UNLIKELY(! fov_id)) {
       continue;
     }
 
-    if (unlikely(v->thing_fov[ fov_id ].in_use)) {
+    if (UNLIKELY(v->thing_fov[ fov_id ].in_use)) {
       continue;
     }
 
@@ -154,7 +154,7 @@ static auto thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, ThingIdPacked i
   //
   auto  arr_index = id.c.arr_index;
   auto *t         = &v->thing_body[ arr_index ];
-  if (unlikely(t->tp_id)) {
+  if (UNLIKELY(t->tp_id)) {
     //
     // Some other thread grabbed it already?
     //
@@ -164,13 +164,13 @@ static auto thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, ThingIdPacked i
   //
   // If we need a mutex, lock the thing population for this slot
   //
-  if (unlikely(need_mutex)) {
+  if (UNLIKELY(need_mutex)) {
     thing_mutex.lock();
 
     //
     // Just in case someone else grabbed it while locking...
     //
-    if (unlikely(t->tp_id)) {
+    if (UNLIKELY(t->tp_id)) {
       thing_mutex.unlock();
       return nullptr;
     }
@@ -184,7 +184,7 @@ static auto thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, ThingIdPacked i
     //
     // No need to worry about other threads
     //
-    if (unlikely(t->tp_id)) {
+    if (UNLIKELY(t->tp_id)) {
       return nullptr;
     }
 
@@ -253,7 +253,7 @@ auto thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p) -> Thingp
 {
   TRACE_NO_INDENT();
 
-  if (unlikely(! tp)) {
+  if (UNLIKELY(! tp)) {
     CROAK("no template set for thing allocation");
   }
 

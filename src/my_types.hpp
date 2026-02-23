@@ -97,8 +97,8 @@
 //
 // GCC extensions
 //
-#define likely(x)   __builtin_expect((x), 1)
-#define unlikely(x) __builtin_expect((x), 0)
+#define LIKELY(x)   __builtin_expect((x), 1)
+#define UNLIKELY(x) __builtin_expect((x), 0)
 
 //
 // Types
@@ -217,4 +217,4 @@ using LevelNum     = unsigned char;
 #define NULL_THING ((Thingp) nullptr)
 #define NULL_TP    ((Tpp) nullptr)
 
-#endif // _MY_TYPES_HPP
+#endif // MY_TYPES_HPP

@@ -105,9 +105,9 @@ static std::map< std::string, class Test * > test_name_map;
 
 static bool test_init_done;
 
-Test::Test() { newptr(MTYPE_TP, this, "Test"); }
+Test::Test() { NEWPTR(MTYPE_TP, this, "Test"); }
 
-Test::~Test() { oldptr(MTYPE_TP, this); }
+Test::~Test() { OLDPTR(MTYPE_TP, this); }
 
 auto test_find(const char *name_in) -> Testp
 {
@@ -116,7 +116,7 @@ auto test_find(const char *name_in) -> Testp
   std::string const name(name_in);
   auto              result = test_name_map.find(name);
 
-  if (unlikely(result != test_name_map.end())) {
+  if (UNLIKELY(result != test_name_map.end())) {
     return result->second;
   }
 

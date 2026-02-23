@@ -93,10 +93,10 @@ void close_stdout();
   }
 #endif
 
-#define DEBUG       (unlikely(g_opt_debug1))
-#define DEBUG2      (unlikely(g_opt_debug2))
-#define NODEBUG     (likely(! g_opt_debug1))
-#define NODEBUG2    (likely(! g_opt_debug2))
+#define DEBUG       (UNLIKELY(g_opt_debug1))
+#define DEBUG2      (UNLIKELY(g_opt_debug2))
+#define NODEBUG     (LIKELY(! g_opt_debug1))
+#define NODEBUG2    (LIKELY(! g_opt_debug2))
 #define IF_DEBUG    if (DEBUG)
 #define IF_DEBUG2   if (DEBUG2)
 #define IF_NODEBUG  if (NODEBUG)

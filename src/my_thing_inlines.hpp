@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_THING_INLINES_H_
-#define MY_THING_INLINES_H_
+#ifndef MY_THING_INLINES_H
+#define MY_THING_INLINES_H
 
 #ifdef _DEBUG_BUILD_
 #include "my_callstack.hpp"
@@ -46,7 +46,7 @@ static inline auto thing_find(Gamep g, Levelsp v, ThingId id) -> Thingp
   }
 #endif
 
-  if (unlikely(! t || (t->id != id))) {
+  if (UNLIKELY(! t || (t->id != id))) {
     t = thing_find_non_inline(g, v, id);
   }
 
@@ -253,4 +253,4 @@ static inline auto thing_is_light_source(Thingp t) -> int
 #endif
   return tp_flag(thing_tp(t), is_light_source);
 }
-#endif // _MY_THING_INLINES_H_
+#endif // MY_THING_INLINES_H

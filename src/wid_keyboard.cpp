@@ -148,7 +148,7 @@ static void wid_keyboard_update_buttons(Gamep g, Widp w)
 {
   TRACE_NO_INDENT();
   auto *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
-  verify(MTYPE_MISC, ctx);
+  VERIFY(MTYPE_MISC, ctx);
 
   int const width  = 7;
   int const height = 5;
@@ -197,7 +197,7 @@ static void wid_keyboard_event(Gamep g, Widp w, int focusx, int focusy, const SD
 {
   TRACE_NO_INDENT();
   auto *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
-  verify(MTYPE_MISC, ctx);
+  VERIFY(MTYPE_MISC, ctx);
 
   const char *add = nullptr;
   if ((focusx == -1) && (focusy == -1)) {
@@ -356,7 +356,7 @@ static void wid_keyboard_set_focus(Gamep g, wid_keyboard_ctx *ctx, int focusx, i
 {
   TRACE_NO_INDENT();
   auto *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
-  verify(MTYPE_MISC, ctx);
+  VERIFY(MTYPE_MISC, ctx);
 
   /*
    * Don't process events too soon. Else the menu might not even have
@@ -401,7 +401,7 @@ static void wid_keyboard_set_focus(Gamep g, wid_keyboard_ctx *ctx, int focusx, i
 {
   TRACE_NO_INDENT();
   auto *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
-  verify(MTYPE_MISC, ctx);
+  VERIFY(MTYPE_MISC, ctx);
   int ret = 0;
 
   /*
@@ -478,7 +478,7 @@ static void wid_keyboard_set_focus(Gamep g, wid_keyboard_ctx *ctx, int focusx, i
 {
   TRACE_NO_INDENT();
   auto *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
-  verify(MTYPE_MISC, ctx);
+  VERIFY(MTYPE_MISC, ctx);
 
   /*
    * Don't process events too soon. Else the menu might not even have
@@ -516,7 +516,7 @@ static void wid_keyboard_set_focus(Gamep g, wid_keyboard_ctx *ctx, int focusx, i
 {
   TRACE_NO_INDENT();
   auto *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
-  verify(MTYPE_MISC, ctx);
+  VERIFY(MTYPE_MISC, ctx);
   int ret = 0;
 
   /*
@@ -595,7 +595,7 @@ static void wid_keyboard_set_focus(Gamep g, wid_keyboard_ctx *ctx, int focusx, i
 {
   TRACE_NO_INDENT();
   auto *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
-  verify(MTYPE_MISC, ctx);
+  VERIFY(MTYPE_MISC, ctx);
 
   //
   // Don't process events too soon. Else the menu might not even have appeared.
@@ -630,10 +630,10 @@ static void wid_keyboard_destroy(Gamep g, Widp w)
 {
   TRACE_NO_INDENT();
   auto *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
-  verify(MTYPE_MISC, ctx);
+  VERIFY(MTYPE_MISC, ctx);
 
   wid_set_void_context(w, nullptr);
-  oldptr(MTYPE_MISC, ctx);
+  OLDPTR(MTYPE_MISC, ctx);
 
   wid_keyboard_visible = 0;
 }
@@ -642,7 +642,7 @@ static void wid_keyboard_tick(Gamep g, Widp w)
 {
   TRACE_NO_INDENT();
   auto *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
-  verify(MTYPE_MISC, ctx);
+  VERIFY(MTYPE_MISC, ctx);
 
   static int       val;
   static int       delta = 1;

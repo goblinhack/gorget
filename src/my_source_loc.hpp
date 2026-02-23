@@ -16,4 +16,4 @@
 #define SRC_LINE_NUM  __LINE__
 #endif
 
-#endif // _MY_SOURCE_LOC_HPP
+#endif // MY_SOURCE_LOC_HPP

@@ -68,4 +68,4 @@ public:
 using isize = MyAsize< int16_t >;
 using fsize = MyAsize< float >;
 
-#endif // _MY_SIZE_HPP
+#endif // MY_SIZE_HPP

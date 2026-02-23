@@ -36,4 +36,4 @@ static inline auto make_spoint(short x, short y) -> spoint { return spoint(x, y)
 
 auto distance(spoint a, spoint b) -> float;
 
-#endif // _MY_SPOINT_HPP
+#endif // MY_SPOINT_HPP

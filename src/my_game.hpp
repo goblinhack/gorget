@@ -13,7 +13,7 @@
 #include <string>
 
 #define GAME_STATE_ENUM(list_macro)                                                                                              \
-  clang_format_indent()                                    /* dummy line for clang indentation fixup */                          \
+  CLANG_FORMAT_INDENT()                                    /* dummy line for clang indentation fixup */                          \
       list_macro(STATE_INIT, "INIT"),                      /* newline */                                                         \
       list_macro(STATE_MAIN_MENU, "MAIN-MENU"),            /* newline */                                                         \
       list_macro(STATE_GENERATING, "GENERATING"),          /* newline */                                                         \

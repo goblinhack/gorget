@@ -89,4 +89,4 @@ extern color YELLOW3;
 extern color YELLOW4;
 // end sort marker1 }
 
-#endif // _MY_COLOR_HPP
+#endif // MY_COLOR_HPP
