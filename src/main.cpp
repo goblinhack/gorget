@@ -109,8 +109,8 @@ static void parse_args(int argc, char *argv[])
       continue;
     }
 
-    if ((strcasecmp(argv[ i ], "--debug") == 0) || (strcasecmp(argv[ i ], "-debug") == 0)
-        || (strcasecmp(argv[ i ], "--debug1") == 0) || (strcasecmp(argv[ i ], "-debug1") == 0)) {
+    if ((strcasecmp(argv[ i ], "--debug") == 0) || (strcasecmp(argv[ i ], "-debug") == 0) || (strcasecmp(argv[ i ], "--debug1") == 0)
+        || (strcasecmp(argv[ i ], "-debug1") == 0)) {
       g_opt_debug1               = true;
       g_opt_override_debug_level = true;
       continue;

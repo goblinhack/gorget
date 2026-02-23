@@ -265,7 +265,7 @@ auto level_select_calculate_next_level_down(Gamep g, Levelsp v, Levelp l, bool r
     if (compiler_unused) {
       CON("level %d -> next (random)", l->level_num);
     }
-    spoint const random_p(pcg_random_range(0, LEVEL_ACROSS), pcg_random_range(0, LEVEL_DOWN));
+    spoint const random_p(PCG_RANDOM_RANGE(0, LEVEL_ACROSS), PCG_RANDOM_RANGE(0, LEVEL_DOWN));
 
     auto *cand = level_select_get_level_from_grid_coords(v, random_p);
     if ((cand != nullptr) && (cand != l)) {
@@ -448,8 +448,8 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
   TRACE_NO_INDENT();
 
   while (true) {
-    auto x = pcg_random_range(0, LEVEL_ACROSS);
-    auto y = pcg_random_range(0, LEVEL_DOWN);
+    auto x = PCG_RANDOM_RANGE(0, LEVEL_ACROSS);
+    auto y = PCG_RANDOM_RANGE(0, LEVEL_DOWN);
 
     if (s->data[ x ][ y ].is_set != 0U) {
       snake_dive(g, v, s, spoint(x, y), dive_chance);
@@ -521,8 +521,7 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
       //
       // If not visited, is it a next level for the current level?
       //
-      if ((player_level != nullptr)
-          && (player_level->player_completed_level_via_exit || player_level->player_fell_out_of_level)) {
+      if ((player_level != nullptr) && (player_level->player_completed_level_via_exit || player_level->player_fell_out_of_level)) {
         if (y > 0) {
           LevelSelectCell const *o = &s->data[ x ][ y - 1 ]; // limit to adjacent levels
           if ((o != nullptr) && (o->is_set != 0U) && (o->level_num == player_level->level_num)) {
@@ -760,7 +759,7 @@ static void level_select_create(Gamep g, Levelsp v, LevelSelect *s)
   // Use a consistent seed
   //
   uint32_t const seed_num = game_seed_num_get(g);
-  pcg_srand(seed_num);
+  PCG_SRAND(seed_num);
 
   snake_dive(g, v, s, spoint(0, 0), 90);
   snake_dive(g, v, s, 90);
@@ -827,8 +826,7 @@ void level_select_destroy(Gamep g, Levelsp v, Levelp l)
 //
 // Show a sorted list of vales
 //
-static void level_select_show_sorted_values(Gamep g, WidPopup *parent, std::map< std::string, int > &map_in,
-                                            const std::string &map_name)
+static void level_select_show_sorted_values(Gamep g, WidPopup *parent, std::map< std::string, int > &map_in, const std::string &map_name)
 {
   TRACE_NO_INDENT();
 

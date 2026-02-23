@@ -12,22 +12,22 @@
 #include <SDL.h>
 #include <string>
 
-#define GAME_STATE_ENUM(list_macro)                                                                                              \
-  CLANG_FORMAT_INDENT()                                    /* dummy line for clang indentation fixup */                          \
-      list_macro(STATE_INIT, "INIT"),                      /* newline */                                                         \
-      list_macro(STATE_MAIN_MENU, "MAIN-MENU"),            /* newline */                                                         \
-      list_macro(STATE_GENERATING, "GENERATING"),          /* newline */                                                         \
-      list_macro(STATE_GENERATED, "GENERATED"),            /* newline */                                                         \
-      list_macro(STATE_PLAYING, "PLAYING"),                /* newline */                                                         \
-      list_macro(STATE_MOVE_WARNING_MENU, "MOVE-WARNING"), /* newline */                                                         \
-      list_macro(STATE_QUITTING, "QUITTING"),              /* newline */                                                         \
-      list_macro(STATE_KEYBOARD_MENU, "KEYBOARD-MENU"),    /* newline */                                                         \
-      list_macro(STATE_LOAD_MENU, "LOAD-MENU"),            /* newline */                                                         \
-      list_macro(STATE_LOADED, "LOADED"),                  /* newline */                                                         \
-      list_macro(STATE_INVENTORY_MENU, "INVENTORY"),       /* newline */                                                         \
-      list_macro(STATE_ITEM_MENU, "ITEM-MENU"),            /* newline */                                                         \
-      list_macro(STATE_DEAD_MENU, "DEAD-MENU"),            /* newline */                                                         \
-      list_macro(STATE_SAVE_MENU, "SAVE-MENU"),            /* newline */                                                         \
+#define GAME_STATE_ENUM(list_macro)                                                                                                        \
+  CLANG_FORMAT_INDENT()                                    /* dummy line for clang indentation fixup */                                    \
+  list_macro(STATE_INIT, "INIT"),                          /* newline */                                                                   \
+      list_macro(STATE_MAIN_MENU, "MAIN-MENU"),            /* newline */                                                                   \
+      list_macro(STATE_GENERATING, "GENERATING"),          /* newline */                                                                   \
+      list_macro(STATE_GENERATED, "GENERATED"),            /* newline */                                                                   \
+      list_macro(STATE_PLAYING, "PLAYING"),                /* newline */                                                                   \
+      list_macro(STATE_MOVE_WARNING_MENU, "MOVE-WARNING"), /* newline */                                                                   \
+      list_macro(STATE_QUITTING, "QUITTING"),              /* newline */                                                                   \
+      list_macro(STATE_KEYBOARD_MENU, "KEYBOARD-MENU"),    /* newline */                                                                   \
+      list_macro(STATE_LOAD_MENU, "LOAD-MENU"),            /* newline */                                                                   \
+      list_macro(STATE_LOADED, "LOADED"),                  /* newline */                                                                   \
+      list_macro(STATE_INVENTORY_MENU, "INVENTORY"),       /* newline */                                                                   \
+      list_macro(STATE_ITEM_MENU, "ITEM-MENU"),            /* newline */                                                                   \
+      list_macro(STATE_DEAD_MENU, "DEAD-MENU"),            /* newline */                                                                   \
+      list_macro(STATE_SAVE_MENU, "SAVE-MENU"),            /* newline */                                                                   \
       list_macro(STATE_QUIT_MENU, "QUIT-MENU"),            /* newline */
 
 ENUM_DEF_H(GAME_STATE_ENUM, GameState)
@@ -50,8 +50,7 @@ enum {
 
 auto game_hiscores_get(Gamep g) -> class HiScores *;
 
-void game_visible_map_pix_get(Gamep g, int *visible_map_tl_x, int *visible_map_tl_y, int *visible_map_br_x,
-                              int *visible_map_br_y);
+void game_visible_map_pix_get(Gamep g, int *visible_map_tl_x, int *visible_map_tl_y, int *visible_map_br_x, int *visible_map_br_y);
 void game_visible_map_pix_set(Gamep g, int visible_map_tl_x, int visible_map_tl_y, int visible_map_br_x, int visible_map_br_y);
 
 [[nodiscard]] auto game_tiles_visible_across_get(Gamep g) -> int;

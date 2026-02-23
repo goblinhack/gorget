@@ -782,8 +782,7 @@ auto wid_ignore_scroll_events(Widp w) -> bool
     return true;
   }
 
-  if ((static_cast< bool >(w->ignore_scroll_events)) || (static_cast< bool >(w->hidden))
-      || (static_cast< bool >(w->being_destroyed))) {
+  if ((static_cast< bool >(w->ignore_scroll_events)) || (static_cast< bool >(w->hidden)) || (static_cast< bool >(w->being_destroyed))) {
     return true;
   }
 
@@ -3288,8 +3287,7 @@ static void wid_adjust_scrollbar(Widp scrollbar, Widp owner)
       if (trough_height - scrollbar_height == 0.0F) {
         pct = 0.0F;
       } else {
-        pct = (((float) wid_get_tl_y(scrollbar)) - ((float) wid_get_tl_y(scrollbar->parent)))
-            / ((trough_height - scrollbar_height));
+        pct = (((float) wid_get_tl_y(scrollbar)) - ((float) wid_get_tl_y(scrollbar->parent))) / ((trough_height - scrollbar_height));
       }
 
       owner->offset.y = (int) -miny;
@@ -3633,8 +3631,8 @@ auto wid_receive_input(Gamep g, Widp w, const SDL_Keysym *key) -> bool
             return true;
           }
 
-          command_handle(g, wid_get_text(w), &updatedtext, 0U /* show ambiguous */, 1U /* show complete */,
-                         0U /* execute command */, nullptr /* context */);
+          command_handle(g, wid_get_text(w), &updatedtext, 0U /* show ambiguous */, 1U /* show complete */, 0U /* execute command */,
+                         nullptr /* context */);
 
           if (! updatedtext.empty()) {
             wid_set_text(w, updatedtext);
@@ -3657,8 +3655,8 @@ auto wid_receive_input(Gamep g, Widp w, const SDL_Keysym *key) -> bool
             wid_scroll_text(w);
             wid_set_text(w->next, entered2);
 
-            if (command_handle(g, entered, &updatedtext, 1U /* show ambiguous */, 0U /* show complete */,
-                               1U /* execute command */, nullptr /* context */)
+            if (command_handle(g, entered, &updatedtext, 1U /* show ambiguous */, 0U /* show complete */, 1U /* execute command */,
+                               nullptr /* context */)
                 == 0) {
               return true;
             }

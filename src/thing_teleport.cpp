@@ -27,7 +27,7 @@
     return false;
   }
 
-  auto *other = pcg_rand_one_of(teleports);
+  auto *other = PCG_RAND_one_of(teleports);
 
   if (other != nullptr) {
     //

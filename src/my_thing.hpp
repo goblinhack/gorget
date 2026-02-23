@@ -58,13 +58,13 @@ using ThingTextFlags = uint8_t;
 //
 // Player state
 //
-#define PLAYER_STATE_ENUM(list_macro)                                                                                            \
-  CLANG_FORMAT_INDENT()                                                    /* dummy line for clang indentation fixup */          \
-      list_macro(PLAYER_STATE_INIT, "INIT"),                               /* newline */                                         \
-      list_macro(PLAYER_STATE_DEAD, "DEAD"),                               /* newline */                                         \
-      list_macro(PLAYER_STATE_NORMAL, "NORMAL"),                           /* newline */                                         \
-      list_macro(PLAYER_STATE_PATH_REQUESTED, "PATH-REQUESTED"),           /* newline */                                         \
-      list_macro(PLAYER_STATE_MOVE_CONFIRM_REQUESTED, "MOVE-CONFIRM-REQ"), /* newline */                                         \
+#define PLAYER_STATE_ENUM(list_macro)                                                                                                      \
+  CLANG_FORMAT_INDENT()                                                    /* dummy line for clang indentation fixup */                    \
+  list_macro(PLAYER_STATE_INIT, "INIT"),                                   /* newline */                                                   \
+      list_macro(PLAYER_STATE_DEAD, "DEAD"),                               /* newline */                                                   \
+      list_macro(PLAYER_STATE_NORMAL, "NORMAL"),                           /* newline */                                                   \
+      list_macro(PLAYER_STATE_PATH_REQUESTED, "PATH-REQUESTED"),           /* newline */                                                   \
+      list_macro(PLAYER_STATE_MOVE_CONFIRM_REQUESTED, "MOVE-CONFIRM-REQ"), /* newline */                                                   \
       list_macro(PLAYER_STATE_FOLLOWING_PATH, "FOLLOWING-PATH"),           /* newline */
 
 ENUM_DEF_H(PLAYER_STATE_ENUM, PlayerState)
@@ -72,12 +72,12 @@ ENUM_DEF_H(PLAYER_STATE_ENUM, PlayerState)
 //
 // Monst state
 //
-#define MONST_STATE_ENUM(list_macro)                                                                                             \
-  CLANG_FORMAT_INDENT()                           /* dummy line for clang indentation fixup */                                   \
-      list_macro(MONST_STATE_INIT, "INIT"),       /* newline */                                                                  \
-      list_macro(MONST_STATE_DEAD, "DEAD"),       /* newline */                                                                  \
-      list_macro(MONST_STATE_NORMAL, "NORMAL"),   /* newline */                                                                  \
-      list_macro(MONST_STATE_CHASING, "CHASING"), /* newline */                                                                  \
+#define MONST_STATE_ENUM(list_macro)                                                                                                       \
+  CLANG_FORMAT_INDENT()                           /* dummy line for clang indentation fixup */                                             \
+  list_macro(MONST_STATE_INIT, "INIT"),           /* newline */                                                                            \
+      list_macro(MONST_STATE_DEAD, "DEAD"),       /* newline */                                                                            \
+      list_macro(MONST_STATE_NORMAL, "NORMAL"),   /* newline */                                                                            \
+      list_macro(MONST_STATE_CHASING, "CHASING"), /* newline */                                                                            \
       list_macro(MONST_STATE_WANDER, "WANDER"),   /* newline */
 
 ENUM_DEF_H(MONST_STATE_ENUM, MonstState)
@@ -577,8 +577,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_broken_on_death(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_burnable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_burning(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_carried_try_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp player_or_monst, bool val = true)
-    -> bool;
+[[nodiscard]] auto thing_is_carried_try_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp player_or_monst, bool val = true) -> bool;
 [[nodiscard]] auto thing_is_carried_try_unset(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp player_or_monst) -> bool;
 [[nodiscard]] auto thing_is_carried(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_chasm(Thingp t) -> bool;
@@ -1070,8 +1069,8 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp t, WidPopup *parent, in
 void wid_unset_thing_context(Gamep g, Levelsp v, Widp w, Thingp t);
 // end sort marker2 }
 
-void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp_maybe_null, Thingp t_maybe_null, spoint *tl,
-                                 spoint *br, uint16_t *tile_index);
+void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp_maybe_null, Thingp t_maybe_null, spoint *tl, spoint *br,
+                                 uint16_t *tile_index);
 
 void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_maybe_null, spoint tl, spoint br, uint16_t tile_index,
                    FboEnum fbo);
@@ -1080,34 +1079,32 @@ void thing_blit_text(Gamep g, Levelsp v, Levelp l, spoint tl, spoint br, std::st
 
 auto astar_solve(Gamep g, Levelsp v, Levelp l, Thingp t, spoint src, spoint dst) -> std::vector< spoint >;
 
-#define FOR_ALL_MINION_SLOTS(_g_, _v_, _l_, _mob_, _slot_, _minion_)                                                             \
-  if ((_g_) && (_v_) && (_l_))                                                                                                   \
-    for (auto _ext_ = thing_ext_struct(_g_, _mob_); _ext_; _ext_ = nullptr)                                                      \
-      for (auto _n_ = 0; _n_ < THING_MINION_MAX; _n_++)                                                                          \
-        for (AUTO(_slot_) = &_ext_->minions.minion[ _n_ ]; _slot_; (_slot_) = nullptr)                                           \
-          for (AUTO(_minion_) = thing_find_optional(g, v, (_slot_)->minion_id), loop2 = (Thingp) 1; loop2 == (Thingp) 1;         \
-               loop2 = (Thingp) 0)
+#define FOR_ALL_MINION_SLOTS(_g_, _v_, _l_, _mob_, _slot_, _minion_)                                                                       \
+  if ((_g_) && (_v_) && (_l_))                                                                                                             \
+    for (auto _ext_ = thing_ext_struct(_g_, _mob_); _ext_; _ext_ = nullptr)                                                                \
+      for (auto _n_ = 0; _n_ < THING_MINION_MAX; _n_++)                                                                                    \
+        for (AUTO(_slot_) = &_ext_->minions.minion[ _n_ ]; _slot_; (_slot_) = nullptr)                                                     \
+          for (AUTO(_minion_) = thing_find_optional(g, v, (_slot_)->minion_id), loop2 = (Thingp) 1; loop2 == (Thingp) 1; loop2 = (Thingp) 0)
 
-#define FOR_ALL_MINIONS(_g_, _v_, _l_, _mob_, _minion_)                                                                          \
-  if ((_g_) && (_v_) && (_l_))                                                                                                   \
-    for (auto _ext_ = thing_ext_struct(_g_, _mob_); _ext_; _ext_ = nullptr)                                                      \
-      for (auto _n_ = 0; _n_ < THING_MINION_MAX; _n_++)                                                                          \
-        for (auto _slot_ = &_ext_->minions.minion[ _n_ ]; _slot_; _slot_ = nullptr)                                              \
+#define FOR_ALL_MINIONS(_g_, _v_, _l_, _mob_, _minion_)                                                                                    \
+  if ((_g_) && (_v_) && (_l_))                                                                                                             \
+    for (auto _ext_ = thing_ext_struct(_g_, _mob_); _ext_; _ext_ = nullptr)                                                                \
+      for (auto _n_ = 0; _n_ < THING_MINION_MAX; _n_++)                                                                                    \
+        for (auto _slot_ = &_ext_->minions.minion[ _n_ ]; _slot_; _slot_ = nullptr)                                                        \
           for (Thingp _minion_ = thing_find_optional(g, v, _slot_->minion_id); _minion_; (_minion_) = nullptr)
 
-#define FOR_ALL_INVENTORY_SLOTS(_g_, _v_, _l_, _owner_, _slot_, _item_)                                                          \
-  if ((_g_) && (_v_) && (_l_))                                                                                                   \
-    for (auto _ext_ = thing_player_struct(_g_); _ext_; _ext_ = nullptr)                                                          \
-      for (auto _n_ = 0; _n_ < THING_INVENTORY_MAX; _n_++)                                                                       \
-        for (AUTO(_slot_) = &_ext_->inventory.slots[ _n_ ]; _slot_; (_slot_) = nullptr)                                          \
-          for (AUTO(_item_) = thing_find_optional(g, v, (_slot_)->item_id), loop2 = (Thingp) 1; loop2 == (Thingp) 1;             \
-               loop2 = (Thingp) 0)
+#define FOR_ALL_INVENTORY_SLOTS(_g_, _v_, _l_, _owner_, _slot_, _item_)                                                                    \
+  if ((_g_) && (_v_) && (_l_))                                                                                                             \
+    for (auto _ext_ = thing_player_struct(_g_); _ext_; _ext_ = nullptr)                                                                    \
+      for (auto _n_ = 0; _n_ < THING_INVENTORY_MAX; _n_++)                                                                                 \
+        for (AUTO(_slot_) = &_ext_->inventory.slots[ _n_ ]; _slot_; (_slot_) = nullptr)                                                    \
+          for (AUTO(_item_) = thing_find_optional(g, v, (_slot_)->item_id), loop2 = (Thingp) 1; loop2 == (Thingp) 1; loop2 = (Thingp) 0)
 
-#define FOR_ALL_INVENTORY_ITEMS(_g_, _v_, _l_, _owner_, _item_)                                                                  \
-  if ((_g_) && (_v_) && (_l_))                                                                                                   \
-    for (auto _ext_ = thing_player_struct(_g_); _ext_; _ext_ = nullptr)                                                          \
-      for (auto _n_ = 0; _n_ < THING_INVENTORY_MAX; _n_++)                                                                       \
-        for (auto _slot_ = &_ext_->inventory.slots[ _n_ ]; _slot_; _slot_ = nullptr)                                             \
+#define FOR_ALL_INVENTORY_ITEMS(_g_, _v_, _l_, _owner_, _item_)                                                                            \
+  if ((_g_) && (_v_) && (_l_))                                                                                                             \
+    for (auto _ext_ = thing_player_struct(_g_); _ext_; _ext_ = nullptr)                                                                    \
+      for (auto _n_ = 0; _n_ < THING_INVENTORY_MAX; _n_++)                                                                                 \
+        for (auto _slot_ = &_ext_->inventory.slots[ _n_ ]; _slot_; _slot_ = nullptr)                                                       \
           for (AUTO(_item_) = thing_find_optional(g, v, _slot_->item_id); _item_; (_item_) = nullptr)
 
 #endif

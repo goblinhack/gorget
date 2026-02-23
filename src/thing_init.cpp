@@ -124,7 +124,4 @@ auto thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &real_at) -> 
   return t;
 }
 
-auto thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const spoint &at) -> Thingp
-{
-  return thing_init(g, v, l, tp, make_fpoint(at));
-}
+auto thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const spoint &at) -> Thingp { return thing_init(g, v, l, tp, make_fpoint(at)); }

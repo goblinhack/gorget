@@ -8,9 +8,9 @@
 #include <stdlib.h>
 
 #ifdef __APPLE__
-#define sincos(x, s, c)  __sincos(x, s, c)
-#define sincosf(x, s, c) __sincosf(x, s, c)
-#define sincos(x, s, c)  __sincos(x, s, c)
+#define SINCOS(x, s, c)  __sincos(x, s, c)
+#define SINCOSF(x, s, c) __sincosf(x, s, c)
+#define SINCOS(x, s, c)  __sincos(x, s, c)
 #endif
 
 #undef SQUARED

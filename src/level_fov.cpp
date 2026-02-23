@@ -141,8 +141,7 @@ void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
     //
     auto *light_blocker = level_light_blocker_at(g, v, l, p);
 
-    if ((angle * angle) + (distance_from_origin * distance_from_origin) <= radius_squared
-        && (light_walls || (light_blocker == nullptr))) {
+    if ((angle * angle) + (distance_from_origin * distance_from_origin) <= radius_squared && (light_walls || (light_blocker == nullptr))) {
 
       if (fov_can_see_tile != nullptr) {
         //
@@ -191,8 +190,8 @@ void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
       //
       // Get the last sequence of floors as a view and recurse into them.
       //
-      level_fov_do(g, v, l, me, fov_can_see_tile, fov_has_seen_tile, pov, distance_from_origin + 1, view_slope_high,
-                   tile_slope_high, max_radius, octant, light_walls, can_see_callback);
+      level_fov_do(g, v, l, me, fov_can_see_tile, fov_has_seen_tile, pov, distance_from_origin + 1, view_slope_high, tile_slope_high,
+                   max_radius, octant, light_walls, can_see_callback);
     }
 
     prev_tile_blocked = (light_blocker != nullptr);
@@ -207,8 +206,8 @@ void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
   }
 }
 
-void level_fov(Gamep g, Levelsp v, Levelp l, Thingp me, FovMap *fov_can_see_tile, FovMap *fov_has_seen_tile, spoint pov,
-               int max_radius, level_fov_can_see_callback_t can_see_callback)
+void level_fov(Gamep g, Levelsp v, Levelp l, Thingp me, FovMap *fov_can_see_tile, FovMap *fov_has_seen_tile, spoint pov, int max_radius,
+               level_fov_can_see_callback_t can_see_callback)
 {
   TRACE_NO_INDENT();
 
@@ -220,8 +219,7 @@ void level_fov(Gamep g, Levelsp v, Levelp l, Thingp me, FovMap *fov_can_see_tile
 
   // recursive shadow casting
   for (int octant = 0; octant < 8; ++octant) {
-    level_fov_do(g, v, l, me, fov_can_see_tile, fov_has_seen_tile, pov, 1, 1.0, 0.0, max_radius, octant, light_walls,
-                 can_see_callback);
+    level_fov_do(g, v, l, me, fov_can_see_tile, fov_has_seen_tile, pov, 1, 1.0, 0.0, max_radius, octant, light_walls, can_see_callback);
   }
 
   if (fov_can_see_tile != nullptr) {

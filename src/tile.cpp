@@ -258,7 +258,7 @@ void tile_load_arr(const char *file, const char *alias, uint32_t width, uint32_t
             spoint at((pixel_size.w * x) + x1, (pixel_size.h * y) + y1);
 
             color p;
-            getPixel(s, at.x, at.y, p);
+            GET_PIXEL(s, at.x, at.y, p);
 
             //
             // If solid...
@@ -321,8 +321,8 @@ void tile_load_arr(const char *file, const char *alias, uint32_t width, uint32_t
   }
 }
 
-void tile_load_arr_sprites(const char *file, const char *alias, uint32_t tile_width, uint32_t tile_height, int nargs,
-                           const char *arr[], int gl_mode)
+void tile_load_arr_sprites(const char *file, const char *alias, uint32_t tile_width, uint32_t tile_height, int nargs, const char *arr[],
+                           int gl_mode)
 {
   TRACE_NO_INDENT();
   Texp tex            = nullptr;
@@ -426,11 +426,11 @@ void tile_load_arr_sprites(const char *file, const char *alias, uint32_t tile_wi
             spoint at((pixel_size.w * x) + x1, (pixel_size.h * y) + y1);
 
             color p;
-            getPixel(s, at.x, at.y, p);
+            GET_PIXEL(s, at.x, at.y, p);
 
 #ifdef WRITE_TILED
             spoint at2(((pixel_size.w + 2) * x) + x1, ((pixel_size.h + 2) * y) + y1);
-            putPixel(tmp, at2.x, at2.y, p);
+            PUT_PIXEL(tmp, at2.x, at2.y, p);
 #endif
 
             //
@@ -882,8 +882,7 @@ void tile_blit_section(const Tilep &tile, const fpoint &tile_tl, const fpoint &t
 //
 // Outline only
 //
-void tile_blit_outline(const Tilep &tile, float x1, float x2, float y1, float y2, const spoint tl, const spoint br,
-                       const color &c)
+void tile_blit_outline(const Tilep &tile, float x1, float x2, float y1, float y2, const spoint tl, const spoint br, const color &c)
 {
   blit(tile->gl_binding_outline(), x1, y2, x2, y1, tl.x, br.y, br.x, tl.y, c);
 }
@@ -891,8 +890,8 @@ void tile_blit_outline(const Tilep &tile, float x1, float x2, float y1, float y2
 //
 // Add a black outline
 //
-void tile_blit_outlined(const Tilep &tile, float x1, float x2, float y1, float y2, const spoint tl, const spoint br,
-                        const color &c, const color &outline, int single_pix_size, bool square)
+void tile_blit_outlined(const Tilep &tile, float x1, float x2, float y1, float y2, const spoint tl, const spoint br, const color &c,
+                        const color &outline, int single_pix_size, bool square)
 {
   auto binding = tile->gl_binding_mask();
 
@@ -927,8 +926,7 @@ void tile_blit_outlined(const Tilep &tile, float x1, float x2, float y1, float y
 // Shift the coordinates of a tile by a given percentage, so the bottom is
 // trimmed and looks submerged.
 //
-void tile_blit_apply_submerge_pct(Gamep g, spoint &tl, spoint &br, float & /*x1*/, float & /*x2*/, float &y1, float &y2,
-                                  float percent)
+void tile_blit_apply_submerge_pct(Gamep g, spoint &tl, spoint &br, float & /*x1*/, float & /*x2*/, float &y1, float &y2, float percent)
 {
   float const h1 = br.y - tl.y;
   float const h2 = y2 - y1;

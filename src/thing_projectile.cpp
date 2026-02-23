@@ -17,7 +17,7 @@ static auto thing_projectile_get_delta_from_dt(Gamep g, Thingp t, float dt) -> f
 
   float s = 0;
   float c = 0;
-  sincosf(t->angle, &s, &c);
+  SINCOSF(t->angle, &s, &c);
 
   auto *player = thing_player(g);
   if (player == nullptr) {
@@ -59,7 +59,7 @@ auto thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what,
   auto  angle = angle_radians(delta);
   float s     = 0;
   float c     = 0;
-  sincosf(angle, &s, &c);
+  SINCOSF(angle, &s, &c);
 
   fpoint proj_at = thing_real_at(me);
 

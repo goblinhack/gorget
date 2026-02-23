@@ -690,8 +690,8 @@ static void wid_keyboard_tick(Gamep g, Widp w)
   }
 }
 
-auto wid_keyboard(Gamep g, const std::string &text, const std::string &title, wid_keyboard_event_t selected,
-                  wid_keyboard_event_t cancelled, size_t max_len) -> Widp
+auto wid_keyboard(Gamep g, const std::string &text, const std::string &title, wid_keyboard_event_t selected, wid_keyboard_event_t cancelled,
+                  size_t max_len) -> Widp
 {
   TRACE_NO_INDENT();
   wid_keyboard_visible = 1;

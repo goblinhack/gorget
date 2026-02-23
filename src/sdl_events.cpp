@@ -120,8 +120,7 @@ static void __attribute__((noinline)) sdl_event_keydown(Gamep g, SDL_Keysym *key
 
   sdl.event_count++;
 
-  DBG("SDL: Keyboard: Key pressed keycode 0x%08" PRIX32 " = %s %d", event->key.keysym.sym, to_string(event->key.keysym).c_str(),
-      key->mod);
+  DBG("SDL: Keyboard: Key pressed keycode 0x%08" PRIX32 " = %s %d", event->key.keysym.sym, to_string(event->key.keysym).c_str(), key->mod);
 
   //
   // SDL2 has no auto repeat.
@@ -192,8 +191,8 @@ static void __attribute__((noinline)) sdl_event_mousemotion(Gamep g, SDL_Event *
   last_mx = mx;
   last_my = my;
 
-  DBG2("SDL: Mouse: Moved to @%d,%d (rel %d,%d) state %d (actually at %d,%d)", event->motion.x, event->motion.y,
-       event->motion.xrel, event->motion.yrel, sdl.mouse_down, mx, my);
+  DBG2("SDL: Mouse: Moved to @%d,%d (rel %d,%d) state %d (actually at %d,%d)", event->motion.x, event->motion.y, event->motion.xrel,
+       event->motion.yrel, sdl.mouse_down, mx, my);
 
   wid_mouse_visible = true;
   sdl.mouse_tick++;
@@ -213,8 +212,7 @@ static void __attribute__((noinline)) sdl_event_mousedown(Gamep g, SDL_Event *ev
   sdl.held_mouse_x              = sdl.mouse_x;
   sdl.held_mouse_y              = sdl.mouse_y;
 
-  DBG("SDL: Mouse DOWN: button %d pressed at %d,%d state %X", event->button.button, event->button.x, event->button.y,
-      sdl.mouse_down);
+  DBG("SDL: Mouse DOWN: button %d pressed at %d,%d state %X", event->button.button, event->button.x, event->button.y, sdl.mouse_down);
 
   auto now             = time_ms();
   wid_mouse_visible    = true;
@@ -234,8 +232,7 @@ static void __attribute__((noinline)) sdl_event_mouseup(Gamep g, SDL_Event *even
   sdl.held_mouse_x              = 0;
   sdl.held_mouse_y              = 0;
 
-  DBG("SDL: Mouse UP: button %d released at %d,%d state %d", event->button.button, event->button.x, event->button.y,
-      sdl.mouse_down);
+  DBG("SDL: Mouse UP: button %d released at %d,%d state %d", event->button.button, event->button.x, event->button.y, sdl.mouse_down);
 
   wid_mouse_up(g, event->button.button, sdl.mouse_x, sdl.mouse_y);
 }
@@ -378,8 +375,7 @@ void sdl_event(Gamep g, SDL_Event *event, bool &processed_mouse_motion_event)
     case SDL_JOYBALLMOTION :
       {
         sdl.event_count++;
-        DBG("SDL: Joystick %d: Ball %d moved by %d,%d", event->jball.which, event->jball.ball, event->jball.xrel,
-            event->jball.yrel);
+        DBG("SDL: Joystick %d: Ball %d moved by %d,%d", event->jball.which, event->jball.ball, event->jball.xrel, event->jball.yrel);
         break;
       }
     case SDL_JOYHATMOTION :

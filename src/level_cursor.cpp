@@ -49,8 +49,8 @@ auto level_cursor_is_valid(Gamep g, Levelsp v) -> bool
 // For the 3rd pass, any tiles will do as long as not consecutive hazard tiles.
 // For the 4th pass, any tiles will do as long as not walls
 //
-static auto level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Thingp player, spoint start, spoint end,
-                                                int attempt) -> std::vector< spoint >
+static auto level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Thingp player, spoint start, spoint end, int attempt)
+    -> std::vector< spoint >
 {
   TRACE_AND_INDENT();
 

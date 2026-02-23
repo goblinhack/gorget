@@ -341,7 +341,7 @@ static auto tp_get_with_no_rarity_filter(TpVec &m) -> Tpp
 
   int tries = 1000;
   while (tries-- > 0) {
-    auto  index = pcg_rand() % m.size();
+    auto  index = PCG_RAND() % m.size();
     auto *tp    = m[ index ];
     if (tp == nullptr) {
       break;
@@ -364,7 +364,7 @@ static auto tp_get_with_no_rarity_filter(TpVec &m) -> Tpp
   //
   // Give in and return the first we find.
   //
-  auto  index = pcg_rand() % m.size();
+  auto  index = PCG_RAND() % m.size();
   auto *tp    = m[ index ];
   return tp;
 }
@@ -545,8 +545,7 @@ auto tp_tiles_get(Tpp tp, ThingAnim val, int index) -> Tilep
   }
 
   if (std::cmp_greater_equal(index, tp->tiles[ val ].size())) {
-    TP_ERR(tp, "tp_tiles_get: tile overflow tp %s class %s/%d index %d", tp->name.c_str(), ThingAnim_to_string(val).c_str(), val,
-           index);
+    TP_ERR(tp, "tp_tiles_get: tile overflow tp %s class %s/%d index %d", tp->name.c_str(), ThingAnim_to_string(val).c_str(), val, index);
   }
 
   return tp->tiles[ val ][ index ];

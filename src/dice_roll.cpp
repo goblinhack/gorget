@@ -199,7 +199,7 @@ auto stat_to_bonus_slash_str(int stat) -> std::string
 //
 auto d20_ge(int stat_total, const int dice_roll_to_exceed, bool &fumble, bool &critical) -> bool
 {
-  int const dice_roll = pcg_random_range_inclusive(1, 20);
+  int const dice_roll = PCG_RANDOM_RANGE_INCLUSIVE(1, 20);
 
   critical = false;
   fumble   = false;
@@ -222,7 +222,7 @@ auto d20_ge(int stat_total, const int dice_roll_to_exceed, bool &fumble, bool &c
 //
 auto d20_ge(int stat_total, const int dice_roll_to_exceed) -> bool
 {
-  int dice_roll = pcg_random_range_inclusive(1, 20);
+  int dice_roll = PCG_RANDOM_RANGE_INCLUSIVE(1, 20);
 
   if (dice_roll == 20) {
     DBG("d20: rolled a 20 => success");
@@ -234,8 +234,7 @@ auto d20_ge(int stat_total, const int dice_roll_to_exceed) -> bool
     return false;
   }
 
-  DBG("d20: %d(rolled %d+%d) >= %d", dice_roll + stat_to_bonus(stat_total), dice_roll, stat_to_bonus(stat_total),
-      dice_roll_to_exceed);
+  DBG("d20: %d(rolled %d+%d) >= %d", dice_roll + stat_to_bonus(stat_total), dice_roll, stat_to_bonus(stat_total), dice_roll_to_exceed);
 
   dice_roll += stat_to_bonus(stat_total);
 
@@ -290,7 +289,7 @@ auto Dice::roll() const -> int
   int tot = 0;
   // CON("roll %dd%d+%d", ndice, sides, modifier);
   while (n-- > 0) {
-    tot += pcg_random_range(0, sides) + 1;
+    tot += PCG_RANDOM_RANGE(0, sides) + 1;
   }
   tot += modifier;
   // CON("roll %dd%d+%d => %d", ndice, sides, modifier, tot);

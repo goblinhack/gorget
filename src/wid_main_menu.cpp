@@ -163,7 +163,7 @@ static void game_display_title_fg2(Gamep g)
   static int   delta = 10;
   static int   red   = 255;
 
-  if (pcg_random_range(0, 100) < 50) {
+  if (PCG_RANDOM_RANGE(0, 100) < 50) {
     red += delta;
     if (red > 255) {
       delta = -delta;
@@ -204,13 +204,12 @@ auto color_change_hue(const color &in, const float fHue) -> color
   const float cosA = cos(fHue * std::numbers::pi_v< float > / 180); // convert degrees to radians
   const float sinA = sin(fHue * std::numbers::pi_v< float > / 180); // convert degrees to radians
   // calculate the rotation matrix, only depends on Hue
-  float const matrix[ 3 ][ 3 ]
-      = {{cosA + ((1.0F - cosA) / 3.0F), (1.0F / 3.0F * (1.0F - cosA)) - (sqrtf(1.0F / 3.0F) * sinA),
-          (1.0F / 3.0F * (1.0F - cosA)) + (sqrtf(1.0F / 3.0F) * sinA)},
-         {(1.0F / 3.0F * (1.0F - cosA)) + (sqrtf(1.0F / 3.0F) * sinA), cosA + (1.0F / 3.0F * (1.0F - cosA)),
-          (1.0F / 3.0F * (1.0F - cosA)) - (sqrtf(1.0F / 3.0F) * sinA)},
-         {(1.0F / 3.0F * (1.0F - cosA)) - (sqrtf(1.0F / 3.0F) * sinA),
-          (1.0F / 3.0F * (1.0F - cosA)) + (sqrtf(1.0F / 3.0F) * sinA), cosA + (1.0F / 3.0F * (1.0F - cosA))}};
+  float const matrix[ 3 ][ 3 ] = {{cosA + ((1.0F - cosA) / 3.0F), (1.0F / 3.0F * (1.0F - cosA)) - (sqrtf(1.0F / 3.0F) * sinA),
+                                   (1.0F / 3.0F * (1.0F - cosA)) + (sqrtf(1.0F / 3.0F) * sinA)},
+                                  {(1.0F / 3.0F * (1.0F - cosA)) + (sqrtf(1.0F / 3.0F) * sinA), cosA + (1.0F / 3.0F * (1.0F - cosA)),
+                                   (1.0F / 3.0F * (1.0F - cosA)) - (sqrtf(1.0F / 3.0F) * sinA)},
+                                  {(1.0F / 3.0F * (1.0F - cosA)) - (sqrtf(1.0F / 3.0F) * sinA),
+                                   (1.0F / 3.0F * (1.0F - cosA)) + (sqrtf(1.0F / 3.0F) * sinA), cosA + (1.0F / 3.0F * (1.0F - cosA))}};
   // Use the rotation matrix to convert the RGB directly
   out.r = clamp((((float) in.r) * matrix[ 0 ][ 0 ]) + (((float) in.g) * matrix[ 0 ][ 1 ]) + (((float) in.b) * matrix[ 0 ][ 2 ]));
   out.g = clamp((((float) in.r) * matrix[ 1 ][ 0 ]) + (((float) in.g) * matrix[ 1 ][ 1 ]) + (((float) in.b) * matrix[ 1 ][ 2 ]));

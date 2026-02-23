@@ -39,10 +39,7 @@ static std::recursive_mutex backtrace_mutex;
 //
 // Inspired from https://github.com/nico/demumble/issues
 //
-[[nodiscard]] static auto starts_with(const char *s, const char *prefix) -> bool
-{
-  return strncmp(s, prefix, strlen(prefix)) == 0;
-}
+[[nodiscard]] static auto starts_with(const char *s, const char *prefix) -> bool { return strncmp(s, prefix, strlen(prefix)) == 0; }
 
 [[nodiscard]] static auto is_mangle_char_win(char c) -> bool
 {
@@ -233,8 +230,7 @@ std::string backtrace_string(void)
 #endif
 
     for (int i = 0; i < frames_to_capture; i++) {
-      BOOL result = StackWalk64(imageType, handle, thread, &stackframe, &context, NULL, SymFunctionTableAccess64,
-                                SymGetModuleBase64, NULL);
+      BOOL result = StackWalk64(imageType, handle, thread, &stackframe, &context, NULL, SymFunctionTableAccess64, SymGetModuleBase64, NULL);
       if (! result) {
         out += "StackWalk[end]\n";
         break;
@@ -264,7 +260,7 @@ std::string backtrace_string(void)
 
   std::array< void *, frames_to_capture > frames;
   int                                     frames_to_skip = 0;
-  int frame_count = CaptureStackBackTrace(frames_to_skip, frames_to_capture, frames.data(), NULL);
+  int                                     frame_count    = CaptureStackBackTrace(frames_to_skip, frames_to_capture, frames.data(), NULL);
 
   for (int i = 0; i < frame_count; i++) {
     DWORD64 addr = (DWORD64) frames[ i ];

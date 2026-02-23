@@ -232,8 +232,7 @@ void gl_clear()
   glClear(GL_COLOR_BUFFER_BIT);
 }
 
-static void gl_init_fbo_(FboEnum fbo, GLuint *render_buf_id, GLuint *fbo_id, GLuint *fbo_tex_id, GLuint tex_width,
-                         GLuint tex_height)
+static void gl_init_fbo_(FboEnum fbo, GLuint *render_buf_id, GLuint *fbo_id, GLuint *fbo_tex_id, GLuint tex_width, GLuint tex_height)
 {
   TRACE_AND_INDENT();
   DBG2("GFX: create FBO, size %dx%d", tex_width, tex_height);
@@ -632,8 +631,7 @@ void blit_fbo_unbind_locked()
 #define NUMBER_COMPONENTS_PER_COLOR 4
 
 uint32_t NUMBER_BYTES_PER_VERTICE_2D = (SIZEOF(GLfloat) * NUMBER_DIMENSIONS_PER_COORD_2D)
-                                     + (SIZEOF(GLshort) * NUMBER_DIMENSIONS_PER_COORD_2D)
-                                     + (SIZEOF(GLubyte) * NUMBER_COMPONENTS_PER_COLOR);
+                                     + (SIZEOF(GLshort) * NUMBER_DIMENSIONS_PER_COORD_2D) + (SIZEOF(GLubyte) * NUMBER_COMPONENTS_PER_COLOR);
 //
 // Two arrays, xy and uv.
 //
@@ -759,8 +757,7 @@ void blit_flush_colored_triangle_fan(float *b, const float *e)
 
   static long nvertices;
 
-  static const GLsizei stride
-      = (SIZEOF(GLshort) * NUMBER_DIMENSIONS_PER_COORD_2D) + (SIZEOF(GLubyte) * NUMBER_COMPONENTS_PER_COLOR);
+  static const GLsizei stride = (SIZEOF(GLshort) * NUMBER_DIMENSIONS_PER_COORD_2D) + (SIZEOF(GLubyte) * NUMBER_COMPONENTS_PER_COLOR);
 
   nvertices = ((char *) e - (char *) b) / stride;
 
@@ -1128,16 +1125,14 @@ static void gl_ext_load(void)
     LOG("OpenGl: - glRenderbufferStorage_EXT - present");
   }
 
-  glFramebufferRenderbuffer_EXT
-      = (__typeof__(glFramebufferRenderbuffer_EXT)) (void *) wglGetProcAddress("glFramebufferRenderbuffer");
+  glFramebufferRenderbuffer_EXT = (__typeof__(glFramebufferRenderbuffer_EXT)) (void *) wglGetProcAddress("glFramebufferRenderbuffer");
   if (! glFramebufferRenderbuffer_EXT) {
     LOG("OpenGl: - glFramebufferRenderbuffer_EXT - NOT present");
   } else {
     LOG("OpenGl: - glFramebufferRenderbuffer_EXT - present");
   }
 
-  glCheckFramebufferStatus_EXT
-      = (__typeof__(glCheckFramebufferStatus_EXT)) (void *) wglGetProcAddress("glCheckFramebufferStatus");
+  glCheckFramebufferStatus_EXT = (__typeof__(glCheckFramebufferStatus_EXT)) (void *) wglGetProcAddress("glCheckFramebufferStatus");
   if (! glCheckFramebufferStatus_EXT) {
     LOG("OpenGl: - glCheckFramebufferStatus_EXT - NOT present");
   } else {
@@ -1306,8 +1301,8 @@ void gl_ext_init(void)
   }
 
   LOG("OpenGl: - CreateWindowEx");
-  hwnd = CreateWindowEx(WS_EX_CLIENTEDGE, g_szClassName, "gorget startup", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 240,
-                        120, nullptr, nullptr, hInstance, nullptr);
+  hwnd = CreateWindowEx(WS_EX_CLIENTEDGE, g_szClassName, "gorget startup", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 240, 120,
+                        nullptr, nullptr, hInstance, nullptr);
 
   if (hwnd == nullptr) {
     MessageBox(nullptr, "Window Creation Failed!", "Error!", MB_ICONEXCLAMATION | MB_OK);
@@ -1364,10 +1359,9 @@ void gl_error(GLenum errCode)
   }
 }
 
-static void gl_push(float **P, const float *p_end, bool first_vertex, float tex_left, float tex_top, float tex_right,
-                    float tex_bottom, spoint tl, spoint tr, spoint bl, spoint br, uint8_t r1, uint8_t g1, uint8_t b1, uint8_t a1,
-                    uint8_t r2, uint8_t g2, uint8_t b2, uint8_t a2, uint8_t r3, uint8_t g3, uint8_t b3, uint8_t a3, uint8_t r4,
-                    uint8_t g4, uint8_t b4, uint8_t a4)
+static void gl_push(float **P, const float *p_end, bool first_vertex, float tex_left, float tex_top, float tex_right, float tex_bottom,
+                    spoint tl, spoint tr, spoint bl, spoint br, uint8_t r1, uint8_t g1, uint8_t b1, uint8_t a1, uint8_t r2, uint8_t g2,
+                    uint8_t b2, uint8_t a2, uint8_t r3, uint8_t g3, uint8_t b3, uint8_t a3, uint8_t r4, uint8_t g4, uint8_t b4, uint8_t a4)
 {
   float *p = *P;
 
@@ -1381,31 +1375,31 @@ static void gl_push(float **P, const float *p_end, bool first_vertex, float tex_
     // If there is a break in the triangle strip then make a degenerate triangle.
     //
     if ((glapi_last_right != bl.x) || (glapi_last_bottom != bl.y)) {
-      gl_push_texcoord(p, glapi_last_tex_right, glapi_last_tex_bottom);
-      gl_push_vertex(p, glapi_last_right, glapi_last_bottom);
-      gl_push_rgba(p, r4, g4, b4, a4);
+      GL_PUSH_TEXCOORD(p, glapi_last_tex_right, glapi_last_tex_bottom);
+      GL_PUSH_VERTEX(p, glapi_last_right, glapi_last_bottom);
+      GL_PUSH_RGBA(p, r4, g4, b4, a4);
 
-      gl_push_texcoord(p, tex_left, tex_top);
-      gl_push_vertex(p, tl.x, tl.y);
-      gl_push_rgba(p, r1, g1, b1, a1);
+      GL_PUSH_TEXCOORD(p, tex_left, tex_top);
+      GL_PUSH_VERTEX(p, tl.x, tl.y);
+      GL_PUSH_RGBA(p, r1, g1, b1, a1);
     }
   }
 
-  gl_push_texcoord(p, tex_left, tex_top);
-  gl_push_vertex(p, tl.x, tl.y);
-  gl_push_rgba(p, r1, g1, b1, a1);
+  GL_PUSH_TEXCOORD(p, tex_left, tex_top);
+  GL_PUSH_VERTEX(p, tl.x, tl.y);
+  GL_PUSH_RGBA(p, r1, g1, b1, a1);
 
-  gl_push_texcoord(p, tex_left, tex_bottom);
-  gl_push_vertex(p, bl.x, bl.y);
-  gl_push_rgba(p, r2, g2, b2, a2);
+  GL_PUSH_TEXCOORD(p, tex_left, tex_bottom);
+  GL_PUSH_VERTEX(p, bl.x, bl.y);
+  GL_PUSH_RGBA(p, r2, g2, b2, a2);
 
-  gl_push_texcoord(p, tex_right, tex_top);
-  gl_push_vertex(p, tr.x, tr.y);
-  gl_push_rgba(p, r3, g3, b3, a3);
+  GL_PUSH_TEXCOORD(p, tex_right, tex_top);
+  GL_PUSH_VERTEX(p, tr.x, tr.y);
+  GL_PUSH_RGBA(p, r3, g3, b3, a3);
 
-  gl_push_texcoord(p, tex_right, tex_bottom);
-  gl_push_vertex(p, br.x, br.y);
-  gl_push_rgba(p, r4, g4, b4, a4);
+  GL_PUSH_TEXCOORD(p, tex_right, tex_bottom);
+  GL_PUSH_VERTEX(p, br.x, br.y);
+  GL_PUSH_RGBA(p, r4, g4, b4, a4);
 
   glapi_last_tex_right  = tex_right;
   glapi_last_tex_bottom = tex_bottom;
@@ -1415,23 +1409,23 @@ static void gl_push(float **P, const float *p_end, bool first_vertex, float tex_
 }
 
 static void gl_push(float **P, float *p_end, bool first_vertex, float tex_left, float tex_top, float tex_right, float tex_bottom,
-                    GLshort left, GLshort top, GLshort right, GLshort bottom, uint8_t r1, uint8_t g1, uint8_t b1, uint8_t a1,
-                    uint8_t r2, uint8_t g2, uint8_t b2, uint8_t a2, uint8_t r3, uint8_t g3, uint8_t b3, uint8_t a3, uint8_t r4,
-                    uint8_t g4, uint8_t b4, uint8_t a4)
+                    GLshort left, GLshort top, GLshort right, GLshort bottom, uint8_t r1, uint8_t g1, uint8_t b1, uint8_t a1, uint8_t r2,
+                    uint8_t g2, uint8_t b2, uint8_t a2, uint8_t r3, uint8_t g3, uint8_t b3, uint8_t a3, uint8_t r4, uint8_t g4, uint8_t b4,
+                    uint8_t a4)
 {
   spoint const tl(left, top);
   spoint const tr(right, top);
   spoint const bl(left, bottom);
   spoint const br(right, bottom);
 
-  gl_push(P, p_end, first_vertex, tex_left, tex_top, tex_right, tex_bottom, tl, tr, bl, br, r1, g1, b1, a1, r2, g2, b2, a2, r3,
-          g3, b3, a3, r4, g4, b4, a4);
+  gl_push(P, p_end, first_vertex, tex_left, tex_top, tex_right, tex_bottom, tl, tr, bl, br, r1, g1, b1, a1, r2, g2, b2, a2, r3, g3, b3, a3,
+          r4, g4, b4, a4);
 }
 
 static bool first_vertex;
 
-void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLshort left, GLshort top, GLshort right,
-          GLshort bottom, const color &c)
+void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLshort left, GLshort top, GLshort right, GLshort bottom,
+          const color &c)
 {
   if (UNLIKELY(! buf_tex)) {
     blit_init();
@@ -1450,8 +1444,8 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
   uint8_t const b = c.b;
   uint8_t const a = c.a;
 
-  gl_push(&bufp, bufp_end, first_vertex, texMinX, texMinY, texMaxX, texMaxY, left, top, right, bottom, r, g, b, a, r, g, b, a, r,
-          g, b, a, r, g, b, a);
+  gl_push(&bufp, bufp_end, first_vertex, texMinX, texMinY, texMaxX, texMaxY, left, top, right, bottom, r, g, b, a, r, g, b, a, r, g, b, a,
+          r, g, b, a);
 }
 
 void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLshort pixMinX, GLshort pixMinY, GLshort pixMaxX,
@@ -1497,8 +1491,8 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
       auto        pixMinX2 = (GLshort) ((float) pixMinX + ((float) x * pixDiffX));
       auto        pixMaxX2 = (GLshort) ((float) pixMinX + ((float) (x + 1) * pixDiffX));
 
-      gl_push(&bufp, bufp_end, first_vertex, texMinX2, texMinY2, texMaxX2, texMaxY2, pixMinX2, pixMinY2, pixMaxX2, pixMaxY2, r, g,
-              b, a, r, g, b, a, r, g, b, a, r, g, b, a);
+      gl_push(&bufp, bufp_end, first_vertex, texMinX2, texMinY2, texMaxX2, texMaxY2, pixMinX2, pixMinY2, pixMaxX2, pixMaxY2, r, g, b, a, r,
+              g, b, a, r, g, b, a, r, g, b, a);
     }
 
     //
@@ -1512,8 +1506,8 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
   }
 }
 
-void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLshort left, GLshort top, GLshort right,
-          GLshort bottom, const color &color_bl, const color &color_br, const color &color_tl, const color &color_tr)
+void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLshort left, GLshort top, GLshort right, GLshort bottom,
+          const color &color_bl, const color &color_br, const color &color_tl, const color &color_tr)
 {
   if (UNLIKELY(! buf_tex)) {
     blit_init();
@@ -1527,9 +1521,9 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
 
   buf_tex = tex;
 
-  gl_push(&bufp, bufp_end, first_vertex, texMinX, texMinY, texMaxX, texMaxY, left, top, right, bottom, color_tl.r, color_tl.g,
-          color_tl.b, color_tl.a, color_bl.r, color_bl.g, color_bl.b, color_bl.a, color_tr.r, color_tr.g, color_tr.b, color_tr.a,
-          color_br.r, color_br.g, color_br.b, color_br.a);
+  gl_push(&bufp, bufp_end, first_vertex, texMinX, texMinY, texMaxX, texMaxY, left, top, right, bottom, color_tl.r, color_tl.g, color_tl.b,
+          color_tl.a, color_bl.r, color_bl.g, color_bl.b, color_bl.a, color_tr.r, color_tr.g, color_tr.b, color_tr.a, color_br.r,
+          color_br.g, color_br.b, color_br.a);
 }
 
 void blit(int tex, GLshort left, GLshort top, GLshort right, GLshort bottom, const color &c)

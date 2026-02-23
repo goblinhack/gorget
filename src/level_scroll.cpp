@@ -85,8 +85,7 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
       //
       return;
     }
-    if ((x < MAP_SCROLL_OUTER_EDGE) || (y < MAP_SCROLL_OUTER_EDGE) || (x > 1 - MAP_SCROLL_OUTER_EDGE)
-        || (y > 1 - MAP_SCROLL_OUTER_EDGE)) {
+    if ((x < MAP_SCROLL_OUTER_EDGE) || (y < MAP_SCROLL_OUTER_EDGE) || (x > 1 - MAP_SCROLL_OUTER_EDGE) || (y > 1 - MAP_SCROLL_OUTER_EDGE)) {
       //
       // Unless the player has wandered off screen
       //

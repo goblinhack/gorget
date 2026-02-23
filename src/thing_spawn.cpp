@@ -43,10 +43,7 @@ auto thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &at) -> Thin
   return t;
 }
 
-auto thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, const spoint &at) -> Thingp
-{
-  return thing_spawn(g, v, l, tp, make_fpoint(at));
-}
+auto thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, const spoint &at) -> Thingp { return thing_spawn(g, v, l, tp, make_fpoint(at)); }
 
 auto thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp at) -> Thingp
 {

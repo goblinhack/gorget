@@ -337,7 +337,7 @@ void Raycast::ray_lengths_precalculate(Gamep g, Levelsp v, Levelp l)
   for (int i = 0; i < LIGHT_MAX_RAYS_MAX; i++) {
     float cosr = 0;
     float sinr = 0;
-    sincosf(dr * (float) i, &sinr, &cosr);
+    SINCOSF(dr * (float) i, &sinr, &cosr);
     ray_pixel_line_draw(i, spoint(0, 0),
                         spoint((int) ((float) ray_max_length_in_pixels * cosr), (int) ((float) ray_max_length_in_pixels * sinr)));
   }
@@ -656,14 +656,14 @@ void Raycast::raycast_render(Gamep g, Levelsp v, Levelp l)
     //
     // Walk the light rays in a circle.
     //
-    push_point(light_pos.x, light_pos.y);
+    PUSH_POINT(light_pos.x, light_pos.y);
 
     for (auto i = 0; i < LIGHT_MAX_RAYS_MAX; i++) {
       auto         *ray = &rays[ i ];
       spoint const &p   = ray_pixels[ i ][ ray->depth_furthest ].p;
       int16_t const p1x = light_pos.x + p.x;
       int16_t const p1y = light_pos.y + p.y;
-      push_point(p1x, p1y);
+      PUSH_POINT(p1x, p1y);
     }
 
     //
@@ -674,7 +674,7 @@ void Raycast::raycast_render(Gamep g, Levelsp v, Levelp l)
       spoint const &p   = ray_pixels[ 0 ][ ray->depth_furthest ].p;
       int16_t const p1x = light_pos.x + p.x;
       int16_t const p1y = light_pos.y + p.y;
-      push_point(p1x, p1y);
+      PUSH_POINT(p1x, p1y);
     }
 
     auto sz = bufp - gl_array_buf;

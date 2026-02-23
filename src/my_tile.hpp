@@ -37,11 +37,11 @@ enum { TILE_HEIGHT = 12, TILE_WIDTH = 12 };
 //
 // Frame buffer objects
 //
-#define TILE_LAYER_ENUM(list_macro)                                                                                              \
-  CLANG_FORMAT_INDENT()                               /* dummy line for clang indentation fixup */                               \
-      list_macro(TILE_LAYER_BG_0, "TILE_LAYER_BG_0"), /* newline */                                                              \
-      list_macro(TILE_LAYER_BG_1, "TILE_LAYER_BG_1"), /* newline */                                                              \
-      list_macro(TILE_LAYER_FG_0, "TILE_LAYER_FG_0"), /* newline */                                                              \
+#define TILE_LAYER_ENUM(list_macro)                                                                                                        \
+  CLANG_FORMAT_INDENT()                               /* dummy line for clang indentation fixup */                                         \
+  list_macro(TILE_LAYER_BG_0, "TILE_LAYER_BG_0"),     /* newline */                                                                        \
+      list_macro(TILE_LAYER_BG_1, "TILE_LAYER_BG_1"), /* newline */                                                                        \
+      list_macro(TILE_LAYER_FG_0, "TILE_LAYER_FG_0"), /* newline */                                                                        \
       list_macro(TILE_LAYER_FG_1, "TILE_LAYER_FG_1"), /* newline */
 
 ENUM_DEF_H(TILE_LAYER_ENUM, TileLayerEnum);
@@ -81,8 +81,8 @@ void tile_from_fbo(Gamep g, FboEnum fbo);
 
 void tile_load_arr(const char *file, const char *alias, uint32_t w, uint32_t h, int nargs, const char *arr[]);
 void tile_blit_apply_submerge_pct(Gamep g, spoint &tl, spoint &br, float &x1, float &x2, float &y1, float &y2, float percent);
-void tile_load_arr_sprites(const char *file, const char *alias, uint32_t tile_width, uint32_t tile_height, int nargs,
-                           const char *arr[], int gl_mode = GL_NEAREST);
+void tile_load_arr_sprites(const char *file, const char *alias, uint32_t tile_width, uint32_t tile_height, int nargs, const char *arr[],
+                           int gl_mode = GL_NEAREST);
 
 struct LightPixels;
 
@@ -92,8 +92,8 @@ void tile_blit(const Tilep &tile, float x1, float x2, float y1, float y2, spoint
                struct LightPixels *light_pixels, bool blit_flush_per_line);
 void tile_blit(const Tilep &tile, spoint tl, spoint br, const color &color_tl, const color &color_tr, const color &color_bl,
                const color &color_br);
-void tile_blit_section(const Tilep &tile, const fpoint &tile_tl, const fpoint &tile_br, spoint tl, spoint br,
-                       const color &color_tl, const color &color_tr, const color &color_bl, const color &color_br);
+void tile_blit_section(const Tilep &tile, const fpoint &tile_tl, const fpoint &tile_br, spoint tl, spoint br, const color &color_tl,
+                       const color &color_tr, const color &color_bl, const color &color_br);
 void tile_blit_outlined(const Tilep &tile, float x1, float x2, float y1, float y2, spoint tl, spoint br, const color &c,
                         const color &outline, int single_pix_size, bool square);
 void tile_blit_outline(const Tilep &tile, float x1, float x2, float y1, float y2, spoint tl, spoint br, const color &c);

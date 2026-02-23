@@ -42,8 +42,7 @@ void push_back_if_unique(C< T > &c, const T &d)
   c.push_back(d);
 }
 
-template < class T, template < typename ELEM, typename ALLOC = std::allocator< ELEM > > class C >
-auto pcg_rand_one_of(C< T > &c) -> T
+template < class T, template < typename ELEM, typename ALLOC = std::allocator< ELEM > > class C > auto PCG_RAND_one_of(C< T > &c) -> T
 {
   auto so = c.begin();
   auto eo = c.end();
@@ -53,7 +52,7 @@ auto pcg_rand_one_of(C< T > &c) -> T
     return *so;
   }
 
-  return *(so + (pcg_rand() % sz));
+  return *(so + (PCG_RAND() % sz));
 }
 
 template < class T, template < typename ELEM, typename ALLOC = std::allocator< ELEM > > class C > auto rand_one_of(C< T > &c) -> T

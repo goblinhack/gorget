@@ -63,7 +63,7 @@ static void cave_generation(Cave *c, uint32_t fill_prob, uint8_t r1, uint8_t r2,
 
     for (x = 1; x < MAP_WIDTH - 1; x++) {
       for (y = 1; y < MAP_HEIGHT - 1; y++) {
-        if (pcg_random_range(0, 10000) < fill_prob) {
+        if (PCG_RANDOM_RANGE(0, 10000) < fill_prob) {
           c->curr[ x + MAP_LEVEL_CELLULAR_BORDER ][ y + MAP_LEVEL_CELLULAR_BORDER ] = 1;
         }
       }

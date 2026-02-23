@@ -16,8 +16,8 @@
 #include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp"
 
-void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp_maybe_null, Thingp t_maybe_null, spoint *tl,
-                                 spoint *br, uint16_t *tile_index)
+void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp_maybe_null, Thingp t_maybe_null, spoint *tl, spoint *br,
+                                 uint16_t *tile_index)
 {
   TRACE_NO_INDENT();
 
@@ -142,8 +142,7 @@ void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp_
 //
 // Solid black outline
 //
-static void thing_display_outlined_blit(Gamep g, Tpp tp, spoint tl, spoint br, Tilep tile, float x1, float x2, float y1, float y2,
-                                        color fg)
+static void thing_display_outlined_blit(Gamep g, Tpp tp, spoint tl, spoint br, Tilep tile, float x1, float x2, float y1, float y2, color fg)
 {
   TRACE_NO_INDENT();
 
@@ -171,9 +170,8 @@ static void thing_display_outlined_blit(Gamep g, Tpp tp, spoint tl, spoint br, T
 //
 // Show an outline if obscured? e.g. foliage and the player hiding in it
 //
-[[nodiscard]] static auto thing_display_outline_blit(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, spoint tl, spoint br,
-                                                     Tilep tile, float x1, float x2, float y1, float y2, FboEnum fbo, color fg)
-    -> bool
+[[nodiscard]] static auto thing_display_outline_blit(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, spoint tl, spoint br, Tilep tile,
+                                                     float x1, float x2, float y1, float y2, FboEnum fbo, color fg) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -189,9 +187,9 @@ static void thing_display_outlined_blit(Gamep g, Tpp tp, spoint tl, spoint br, T
   return false;
 }
 
-static void thing_display_blit(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_maybe_null, spoint tl, spoint br,
-                               Tilep tile, float x1, float x2, float y1, float y2, FboEnum fbo, color fg,
-                               LightPixels *light_pixels = nullptr, bool blit_flush_per_line = false)
+static void thing_display_blit(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_maybe_null, spoint tl, spoint br, Tilep tile,
+                               float x1, float x2, float y1, float y2, FboEnum fbo, color fg, LightPixels *light_pixels = nullptr,
+                               bool blit_flush_per_line = false)
 {
   TRACE_NO_INDENT();
 
@@ -229,8 +227,8 @@ static void thing_display_blit(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, T
 //
 // Display a spinning falling thing
 //
-static void thing_display_falling(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t, spoint tl, spoint br, Tilep tile,
-                                  float x1, float x2, float y1, float y2, FboEnum fbo, color fg)
+static void thing_display_falling(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t, spoint tl, spoint br, Tilep tile, float x1,
+                                  float x2, float y1, float y2, FboEnum fbo, color fg)
 {
   TRACE_NO_INDENT();
 
@@ -257,8 +255,8 @@ static void thing_display_falling(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp
 //
 // Display a spinning thing
 //
-static void thing_display_rotated(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t, spoint tl, spoint br, Tilep tile,
-                                  float x1, float x2, float y1, float y2, FboEnum fbo, color fg)
+static void thing_display_rotated(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t, spoint tl, spoint br, Tilep tile, float x1,
+                                  float x2, float y1, float y2, FboEnum fbo, color fg)
 {
   TRACE_NO_INDENT();
 

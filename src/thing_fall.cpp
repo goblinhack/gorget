@@ -71,9 +71,9 @@ static auto thing_fall_damage(Gamep g, Levelsp v, Levelp l, Thingp t) -> int
   int fall_dmg = 0;
 
   if (thing_is_player(t)) {
-    fall_dmg = pcg_random_range(6, 30);
+    fall_dmg = PCG_RANDOM_RANGE(6, 30);
   } else if (thing_is_mob(t) || thing_is_monst(t)) {
-    fall_dmg = pcg_random_range(6, thing_health(t) / 2);
+    fall_dmg = PCG_RANDOM_RANGE(6, thing_health(t) / 2);
   } else {
     fall_dmg = d4();
   }

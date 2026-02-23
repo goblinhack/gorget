@@ -84,8 +84,8 @@ static void thing_shoved_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
 //
 // Handle interactions for a thing at its location with an alive thing
 //
-[[nodiscard]] static auto thing_shove_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp shover, spoint to,
-                                                         spoint direction) -> bool
+[[nodiscard]] static auto thing_shove_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp shover, spoint to, spoint direction)
+    -> bool
 {
   TRACE_NO_INDENT();
 

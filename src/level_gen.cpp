@@ -857,7 +857,7 @@ static auto room_random_get(RoomType room_type) -> class Room *
     CROAK("no rooms of type %d", room_type);
   }
 
-  return room_all[ room_type ][ pcg_random_range(0, room_all[ room_type ].size()) ];
+  return room_all[ room_type ][ PCG_RANDOM_RANGE(0, room_all[ room_type ].size()) ];
 }
 
 //
@@ -1247,9 +1247,7 @@ auto fragment_alt_add(Gamep g, int chance, const char *file, int line, ...) -> b
         case CHARMAP_WALL :          break;
         case CHARMAP_WATER :         break;
         case CHARMAP_FIRE :          break;
-        default :
-          CROAK("fragment_alt has unknown char [%c] in fragment_alt @ %s:%d", fragment_alt_line[ i ], file, line);
-          return false;
+        default :                    CROAK("fragment_alt has unknown char [%c] in fragment_alt @ %s:%d", fragment_alt_line[ i ], file, line); return false;
       }
     }
 
@@ -1341,7 +1339,7 @@ static auto fragment_alt_random_get(Fragment *f) -> class FragmentAlt *
 
   int tries = 0;
   while (tries++ < MAX_LEVEL_GEN_FRAGMENT_TRIES) {
-    auto *a = f->fragment_alts[ pcg_random_range(0, f->fragment_alts.size()) ];
+    auto *a = f->fragment_alts[ PCG_RANDOM_RANGE(0, f->fragment_alts.size()) ];
     if (d10000() < a->chance) {
       return a;
     }
@@ -1636,7 +1634,7 @@ static auto fragment_random_get(Gamep g, class LevelGen *l) -> class Fragment *
 
   int tries = 0;
   while (tries++ < MAX_LEVEL_GEN_FRAGMENT_TRIES) {
-    auto *f = fragments_all[ pcg_random_range(0, fragments_all.size()) ];
+    auto *f = fragments_all[ PCG_RANDOM_RANGE(0, fragments_all.size()) ];
     if (d10000() < f->chance) {
       return f;
     }
@@ -1794,7 +1792,7 @@ static void level_gen_add_fragments(Gamep g, class LevelGen *l)
       continue;
     }
 
-    auto  cand = cands[ pcg_rand() % cands.size() ];
+    auto  cand = cands[ PCG_RAND() % cands.size() ];
     auto *alt  = fragment_put(g, l, f, cand);
     if (alt == nullptr) {
       continue;
@@ -2035,7 +2033,7 @@ static auto level_random_get(LevelType level_type) -> class LevelFixed *
     return nullptr;
   }
 
-  return level_fixed_all[ level_type ][ pcg_random_range(0, level_fixed_all[ level_type ].size()) ];
+  return level_fixed_all[ level_type ][ PCG_RANDOM_RANGE(0, level_fixed_all[ level_type ].size()) ];
 }
 
 //
@@ -2278,7 +2276,7 @@ void level_gen_stats_dump(Gamep g)
   //
   // Return a random door
   //
-  *door_out = l->doors_not_explored[ pcg_random_range(0, l->doors_not_explored.size()) ];
+  *door_out = l->doors_not_explored[ PCG_RANDOM_RANGE(0, l->doors_not_explored.size()) ];
   *room_out = l->data[ door_out->x ][ door_out->y ].room;
 
   //
@@ -2296,8 +2294,8 @@ void level_gen_stats_dump(Gamep g)
 //
 // Place a room of the given type at a specific door
 //
-[[nodiscard]] static auto level_gen_place_room_at_door_intersection(Gamep g, LevelGen *l, const spoint door_other,
-                                                                    const RoomType room_type) -> bool
+[[nodiscard]] static auto level_gen_place_room_at_door_intersection(Gamep g, LevelGen *l, const spoint door_other, const RoomType room_type)
+    -> bool
 {
   TRACE_NO_INDENT();
 
@@ -2448,8 +2446,8 @@ static void level_gen_create_remaining_rooms(Gamep g, LevelGen *l)
   //
   while (std::cmp_less(l->rooms_placed.size(), l->max_room_count)) {
     if (UNLIKELY(l->debug)) {
-      LOG("rooms placed %d (max %d) attempts %d doors-tried %d doors-not-tried %d", (int) l->rooms_placed.size(),
-          l->max_room_count, attempts, (int) l->doors_walked.size(), (int) l->doors_not_explored.size());
+      LOG("rooms placed %d (max %d) attempts %d doors-tried %d doors-not-tried %d", (int) l->rooms_placed.size(), l->max_room_count,
+          attempts, (int) l->doors_walked.size(), (int) l->doors_not_explored.size());
     }
 
     //
@@ -2554,8 +2552,8 @@ static void level_gen_create_remaining_rooms(Gamep g, LevelGen *l)
   //
   // Start somewhere central
   //
-  x = pcg_random_range(border, MAP_WIDTH - border);
-  y = pcg_random_range(border, MAP_HEIGHT - border);
+  x = PCG_RANDOM_RANGE(border, MAP_WIDTH - border);
+  y = PCG_RANDOM_RANGE(border, MAP_HEIGHT - border);
 
   spoint const at(x, y);
 
@@ -2804,7 +2802,7 @@ static auto level_gen_new_class(Gamep g, LevelNum level_num) -> class LevelGen *
   // Per thread seed that increments each time we fail. Hopefully this avoids dup levels.
   //
   uint32_t seed_num = (game_seed_num_get(g) * 1001) + ((level_num + 1) * LEVEL_MAX);
-  pcg_srand(seed_num);
+  PCG_SRAND(seed_num);
 
   auto *l = new LevelGen();
 
@@ -2812,7 +2810,7 @@ static auto level_gen_new_class(Gamep g, LevelNum level_num) -> class LevelGen *
   // Per thread seed that increments each time we fail. Hopefully this avoids dup levels.
   //
   seed_num = (game_seed_num_get(g) * 1001) + ((level_num + 1) * LEVEL_MAX);
-  pcg_srand(seed_num);
+  PCG_SRAND(seed_num);
   l->info.seed_num = seed_num;
 
   l->level_num      = level_num;
@@ -2861,7 +2859,7 @@ static auto level_proc_gen_create_rooms(Gamep g, LevelNum level_num) -> class Le
   // Per thread seed that increments each time we fail. Hopefully this avoids dup levels.
   //
   uint32_t seed_num = (game_seed_num_get(g) * 1001) + ((level_num + 1) * LEVEL_MAX);
-  pcg_srand(seed_num);
+  PCG_SRAND(seed_num);
 
   bool const add_blob = d100() < LEVEL_BLOB_GEN_PROB;
 
@@ -2880,7 +2878,7 @@ static auto level_proc_gen_create_rooms(Gamep g, LevelNum level_num) -> class Le
     // Per thread seed that increments each time we fail. Hopefully this avoids dup levels.
     //
     seed_num = (game_seed_num_get(g) * 1001) + ((level_num + 1) * LEVEL_MAX) + level_gen_tries;
-    pcg_srand(seed_num);
+    PCG_SRAND(seed_num);
     l->info.seed_num = seed_num;
 
     //
@@ -3611,10 +3609,7 @@ auto level_gen_is_room_entrance(Gamep g, class LevelGen *l, int x, int y) -> boo
 //
 // Is this tile in the entrance?
 //
-auto level_gen_is_room_entrance(Gamep g, class LevelGen *l, spoint at) -> bool
-{
-  return level_gen_is_room_entrance(g, l, at.x, at.y);
-}
+auto level_gen_is_room_entrance(Gamep g, class LevelGen *l, spoint at) -> bool { return level_gen_is_room_entrance(g, l, at.x, at.y); }
 
 //
 // Hide secret doors
@@ -4042,8 +4037,8 @@ static void level_gen_add_missing_monsts_and_treasure(class LevelGen *l, int nmo
   // Place all the monsters we can
   //
   while (nmonst-- > 0) {
-    auto x = pcg_random_range(border, MAP_WIDTH - border);
-    auto y = pcg_random_range(border, MAP_HEIGHT - border);
+    auto x = PCG_RANDOM_RANGE(border, MAP_WIDTH - border);
+    auto y = PCG_RANDOM_RANGE(border, MAP_HEIGHT - border);
     auto c = l->data[ x ][ y ].c;
 
     switch (c) {
@@ -4066,8 +4061,8 @@ static void level_gen_add_missing_monsts_and_treasure(class LevelGen *l, int nmo
   // Place all the treasure we can
   //
   while (ntreasure-- > 0) {
-    auto x = pcg_random_range(border, MAP_WIDTH - border);
-    auto y = pcg_random_range(border, MAP_HEIGHT - border);
+    auto x = PCG_RANDOM_RANGE(border, MAP_WIDTH - border);
+    auto y = PCG_RANDOM_RANGE(border, MAP_HEIGHT - border);
     auto c = l->data[ x ][ y ].c;
 
     switch (c) {
@@ -4108,8 +4103,8 @@ static void level_gen_add_missing_keys_do(class LevelGen *l)
       auto border = LEVEL_GEN_BORDER_FOR_ITEM_PLACEMENT;
 
       while (tries-- > 0) {
-        auto kx = pcg_random_range(border, MAP_WIDTH - border);
-        auto ky = pcg_random_range(border, MAP_HEIGHT - border);
+        auto kx = PCG_RANDOM_RANGE(border, MAP_WIDTH - border);
+        auto ky = PCG_RANDOM_RANGE(border, MAP_HEIGHT - border);
         auto c  = l->data[ kx ][ ky ].c;
         if (c == CHARMAP_FLOOR) {
           l->data[ kx ][ ky ].c = CHARMAP_KEY;
@@ -4161,7 +4156,7 @@ static void level_gen_remove_additional_keys_do(class LevelGen *l)
     return;
   }
 
-  auto cand                     = cands[ pcg_rand() % cands.size() ];
+  auto cand                     = cands[ PCG_RAND() % cands.size() ];
   l->data[ cand.x ][ cand.y ].c = CHARMAP_FLOOR;
 }
 
@@ -4210,7 +4205,7 @@ static void level_gen_add_missing_monsts_and_treasure(Gamep g, class LevelGen *l
   //
   auto tries = MAX_LEVEL_GEN_PLACE_ADDITIONAL_TELEPORT_TRIES;
   while (tries-- > 0) {
-    auto  cand = cands[ pcg_rand() % cands.size() ];
+    auto  cand = cands[ PCG_RAND() % cands.size() ];
     auto  x    = cand.x;
     auto  y    = cand.y;
     auto *r    = l->data[ x ][ y ].room;
@@ -4373,8 +4368,8 @@ static void level_gen_add_doors_do(class LevelGen *l)
   auto tries = MAX_LEVEL_GEN_LOOK_FOR_ROOM_TRIES;
   while (tries-- > 0) {
     auto border = LEVEL_GEN_BORDER_FOR_ITEM_PLACEMENT;
-    auto x      = pcg_random_range(border, MAP_WIDTH - border);
-    auto y      = pcg_random_range(border, MAP_HEIGHT - border);
+    auto x      = PCG_RANDOM_RANGE(border, MAP_WIDTH - border);
+    auto y      = PCG_RANDOM_RANGE(border, MAP_HEIGHT - border);
     r           = l->data[ x ][ y ].room;
 
     if (r == nullptr) {

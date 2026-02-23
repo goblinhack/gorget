@@ -183,8 +183,7 @@ static auto command_matches(Gamep g, const char *input, char *output, uint8_t sh
 
       cnt = strncmp(command->tokens.args[ t ], input_tokens.args[ t ], strlen(input_tokens.args[ t ]));
 
-      if (slre_match(&command->tokens.regexp[ t ], input_tokens.args[ t ], (int) strlen(input_tokens.args[ t ]),
-                     nullptr /* captures */)
+      if (slre_match(&command->tokens.regexp[ t ], input_tokens.args[ t ], (int) strlen(input_tokens.args[ t ]), nullptr /* captures */)
           != 0) {
         /*
          * Success
@@ -216,8 +215,7 @@ static auto command_matches(Gamep g, const char *input, char *output, uint8_t sh
 
       cnt = strncmp(command->tokens.args[ t ], input_tokens.args[ t ], strlen(input_tokens.args[ t ]));
 
-      if (slre_match(&command->tokens.regexp[ t ], input_tokens.args[ t ], (int) strlen(input_tokens.args[ t ]),
-                     nullptr /* captures */)
+      if (slre_match(&command->tokens.regexp[ t ], input_tokens.args[ t ], (int) strlen(input_tokens.args[ t ]), nullptr /* captures */)
           != 0) {
         /*
          * Success
@@ -276,8 +274,7 @@ static auto command_matches(Gamep g, const char *input, char *output, uint8_t sh
 
           cnt = strncmp(command->tokens.args[ t ], input_tokens.args[ t ], strlen(input_tokens.args[ t ]));
 
-          if (slre_match(&command->tokens.regexp[ t ], input_tokens.args[ t ], (int) strlen(input_tokens.args[ t ]),
-                         nullptr /* captures */)
+          if (slre_match(&command->tokens.regexp[ t ], input_tokens.args[ t ], (int) strlen(input_tokens.args[ t ]), nullptr /* captures */)
               != 0) {
             /*
              * Success
@@ -330,8 +327,8 @@ static auto command_matches(Gamep g, const char *input, char *output, uint8_t sh
   return matches;
 }
 
-auto command_handle(Gamep g, const char *input, char *expandedtext, uint8_t show_ambiguous, uint8_t show_complete,
-                    uint8_t execute_command, void *context) -> uint8_t
+auto command_handle(Gamep g, const char *input, char *expandedtext, uint8_t show_ambiguous, uint8_t show_complete, uint8_t execute_command,
+                    void *context) -> uint8_t
 {
   TRACE_NO_INDENT();
   int matches = 0;

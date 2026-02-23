@@ -71,8 +71,7 @@ auto thing_player_level(Gamep g) -> Levelp
 //
 // Pass the event to things for consumption e.g. doors
 //
-[[nodiscard]] static auto thing_player_pass_event_to_other_things(Gamep g, Levelsp v, Levelp l, int x, int y, uint32_t button)
-    -> bool
+[[nodiscard]] static auto thing_player_pass_event_to_other_things(Gamep g, Levelsp v, Levelp l, int x, int y, uint32_t button) -> bool
 {
   TRACE_NO_INDENT();
 

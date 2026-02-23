@@ -391,7 +391,7 @@ void Game::init()
   //
   // If no seed is specified, we do want to start from a different seed each time
   //
-  os_srand((unsigned int) std::time(nullptr));
+  OS_SRAND((unsigned int) std::time(nullptr));
 
   seed_set();
 
@@ -404,8 +404,7 @@ void game_init(Gamep g) { g->init(); }
 //
 // Create a level with the given contents and start the game into playing state
 //
-auto game_test_init(Gamep g, Levelp *l_out, LevelNum level_num, int w, int h, const char *contents, const Overrides &overrides)
-    -> Levelsp
+auto game_test_init(Gamep g, Levelp *l_out, LevelNum level_num, int w, int h, const char *contents, const Overrides &overrides) -> Levelsp
 {
   TRACE_NO_INDENT();
   game_cleanup(g);
@@ -443,8 +442,8 @@ auto game_test_init(Gamep g, Levelp *l_out, LevelNum level_num, int w, int h, co
 //
 // Create an additional level with the given contents and start the game into playing state
 //
-void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num, spoint level_at, int w, int h,
-                          const char *contents, const Overrides &overrides)
+void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num, spoint level_at, int w, int h, const char *contents,
+                          const Overrides &overrides)
 {
   TRACE_NO_INDENT();
 
@@ -660,7 +659,7 @@ void Game::seed_set(const char *maybe_seed)
   //
   // Limit to tested levels
   //
-  pcg_srand(config.seed_num % MAX_TESTED_LEVELS);
+  PCG_SRAND(config.seed_num % MAX_TESTED_LEVELS);
 }
 
 void game_seed_set(Gamep g, const char *maybe_seed)

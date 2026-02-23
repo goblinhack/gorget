@@ -72,7 +72,7 @@ auto rotate_radians(float angle, const fpoint &p, const fpoint &O) -> fpoint
 {
   float s = 0;
   float c = 0;
-  sincosf(angle, &s, &c);
+  SINCOSF(angle, &s, &c);
 
   // translate point back to origin:
   float const X = p.x - O.x;
@@ -90,7 +90,7 @@ auto rotate_radians(const fpoint &p, float angle) -> fpoint
 {
   float s = 0;
   float c = 0;
-  sincosf(angle, &s, &c);
+  SINCOSF(angle, &s, &c);
 
   float const X = p.x;
   float const Y = p.y;

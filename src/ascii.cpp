@@ -447,8 +447,7 @@ void ascii_putf_internal2(int x, int y, color fg, color bg, const std::string &t
       //
       auto bg_depth = TILE_LAYER_BG_0;
 
-      if ((static_cast< bool >(bg.r)) || (static_cast< bool >(bg.g)) || (static_cast< bool >(bg.b))
-          || (static_cast< bool >(bg.a))) {
+      if ((static_cast< bool >(bg.r)) || (static_cast< bool >(bg.g)) || (static_cast< bool >(bg.b)) || (static_cast< bool >(bg.a))) {
         static Tilep block_tile;
         if (UNLIKELY(! block_tile)) {
           block_tile = tile_find_mand(FONT_TILENAME_BLOCK_STR);
@@ -680,8 +679,7 @@ static void ascii_display_mouse(spoint mouse_tile_tl, spoint mouse_tile_br, spoi
   glcolor(WHITE);
 
   blit_init();
-  tile_blit(tile_find_mand(FONT_TILENAME_POINTER_STR), spoint(mouse_tile_tl.x, mouse_tile_tl.y),
-            spoint(mouse_tile_br.x, mouse_tile_br.y));
+  tile_blit(tile_find_mand(FONT_TILENAME_POINTER_STR), spoint(mouse_tile_tl.x, mouse_tile_tl.y), spoint(mouse_tile_br.x, mouse_tile_br.y));
   blit_flush();
   //
   // Save where we are at
@@ -863,8 +861,8 @@ static void ascii_blit(Gamep g)
           color const color_br = cell->color_br[ depth ];
 
           tile_blit_section(cell->tile[ depth ], fpoint(cell->tx[ depth ], cell->ty[ depth ]),
-                            fpoint(cell->tx[ depth ] + cell->dx[ depth ], cell->ty[ depth ] + cell->dy[ depth ]), tile_tl,
-                            tile_br, color_tl, color_tr, color_bl, color_br);
+                            fpoint(cell->tx[ depth ] + cell->dx[ depth ], cell->ty[ depth ] + cell->dy[ depth ]), tile_tl, tile_br,
+                            color_tl, color_tr, color_bl, color_br);
         }
       }
 
@@ -877,8 +875,8 @@ static void ascii_blit(Gamep g)
           color const color_br = cell->color_br[ depth ];
 
           tile_blit_section(tile, fpoint(cell->tx[ depth ], cell->ty[ depth ]),
-                            fpoint(cell->tx[ depth ] + cell->dx[ depth ], cell->ty[ depth ] + cell->dy[ depth ]), tile_tl,
-                            tile_br, color_tl, color_tr, color_bl, color_br);
+                            fpoint(cell->tx[ depth ] + cell->dx[ depth ], cell->ty[ depth ] + cell->dy[ depth ]), tile_tl, tile_br,
+                            color_tl, color_tr, color_bl, color_br);
         }
       }
 
@@ -981,14 +979,12 @@ void ascii_clear_display()
   }
 }
 
-static void ascii_put_box_(int style, const TileLayers tiles_in, int x1, int y1, int x2, int y2, color col_bg, color col_fg,
-                           void *context)
+static void ascii_put_box_(int style, const TileLayers tiles_in, int x1, int y1, int x2, int y2, color col_bg, color col_fg, void *context)
 {
   static bool      init;
   static const int MAX_UI_SIZE    = 16;
   static const int MAX_UI_BG_SIZE = MAX_UI_SIZE - 2;
-  static std::array< std::array< std::array< std::array< Tilep, MAX_UI_SIZE >, MAX_UI_SIZE >, UI_WID_STYLE_MAX >, UI_TYPES_MAX >
-      tiles = {};
+  static std::array< std::array< std::array< std::array< Tilep, MAX_UI_SIZE >, MAX_UI_SIZE >, UI_WID_STYLE_MAX >, UI_TYPES_MAX > tiles = {};
 
   if (style >= UI_WID_STYLE_MAX) {
     ERR("Unimplemented widget style %d", style);
@@ -1002,7 +998,7 @@ static void ascii_put_box_(int style, const TileLayers tiles_in, int x1, int y1,
     for (auto styles = 0; styles < UI_WID_STYLE_MAX; styles++) {
       for (auto x = 0; x < MAX_UI_SIZE; x++) {
         for (auto y = 0; y < MAX_UI_SIZE; y++) {
-          std::string const name = "ui." + std::to_string(styles) + "," + std::to_string(x) + "," + std::to_string(y);
+          std::string const name               = "ui." + std::to_string(styles) + "," + std::to_string(x) + "," + std::to_string(y);
           tiles[ ui_type ][ styles ][ x ][ y ] = tile_find_mand(name);
         }
       }

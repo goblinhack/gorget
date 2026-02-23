@@ -47,7 +47,4 @@ void spoint::unit()
   y /= len;
 }
 
-auto distance(const spoint a, const spoint b) -> float
-{
-  return (float) DISTANCEf((float) a.x, (float) a.y, (float) b.x, (float) b.y);
-}
+auto distance(const spoint a, const spoint b) -> float { return (float) DISTANCEf((float) a.x, (float) a.y, (float) b.x, (float) b.y); }

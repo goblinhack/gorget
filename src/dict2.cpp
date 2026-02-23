@@ -397,5 +397,5 @@ static const char *dict2_names[] = {
 auto os_rand_dict2_name() -> const char *
 {
   TRACE_NO_INDENT();
-  return dict2_names[ os_random_range(0, ARRAY_SIZE(dict2_names)) ];
+  return dict2_names[ OS_RANDOM_RANGE(0, ARRAY_SIZE(dict2_names)) ];
 }

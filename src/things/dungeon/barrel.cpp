@@ -31,8 +31,7 @@ static void tp_barrel_spawn_explosion(Gamep g, Levelsp v, Levelp l, Thingp t)
   TRACE_NO_INDENT();
 
   const std::initializer_list< spoint > points = {
-      spoint(-1, -1), spoint(1, -1), spoint(0, -1), spoint(-1, 0), spoint(1, 0),
-      spoint(0, 0),   spoint(-1, 1), spoint(1, 1),  spoint(0, 1),
+      spoint(-1, -1), spoint(1, -1), spoint(0, -1), spoint(-1, 0), spoint(1, 0), spoint(0, 0), spoint(-1, 1), spoint(1, 1), spoint(0, 1),
   };
 
   auto at = thing_at(t);

@@ -3,8 +3,7 @@
 //
 
 extern "C" {
-extern auto stbi_load_from_memory(const unsigned char *buffer, int len, int *x, int *y, int *comp, int req_comp)
-    -> unsigned char *;
+extern auto stbi_load_from_memory(const unsigned char *buffer, int len, int *x, int *y, int *comp, int req_comp) -> unsigned char *;
 extern void stbi_image_free(void *retval_from_stbi_load);
 };
 
@@ -353,13 +352,13 @@ static auto tex_create_masks_from_surface(SDL_Surface *src, const std::string &f
   for (src_y = 0; src_y < src_height; src_y++) {
     for (src_x = 0; src_x < src_width; src_x++) {
       color col_orig;
-      getPixel(src, src_x, src_y, col_orig);
+      GET_PIXEL(src, src_x, src_y, col_orig);
 
       //
       // Only copy solid black pixels for the outline.
       //
       if ((col_orig.a == 255) && (col_orig.r == 0) && (col_orig.g == 0) && (col_orig.b == 0)) {
-        putPixel(dst_outline, src_x, src_y, col_white);
+        PUT_PIXEL(dst_outline, src_x, src_y, col_white);
       }
 
       //
@@ -367,14 +366,14 @@ static auto tex_create_masks_from_surface(SDL_Surface *src, const std::string &f
       //
       if (col_orig.a > 0) {
         auto          col_monochrome = col_orig;
-        uint8_t const avg = ((int) col_monochrome.r + (int) col_monochrome.g + (int) col_monochrome.b) / UI_LIGHT_BACKGROUND;
-        col_monochrome.r  = avg;
-        col_monochrome.g  = avg;
-        col_monochrome.b  = avg;
+        uint8_t const avg            = ((int) col_monochrome.r + (int) col_monochrome.g + (int) col_monochrome.b) / UI_LIGHT_BACKGROUND;
+        col_monochrome.r             = avg;
+        col_monochrome.g             = avg;
+        col_monochrome.b             = avg;
         col_monochrome.r /= UI_LIGHT_BACKGROUND;
         col_monochrome.g /= UI_LIGHT_BACKGROUND;
 
-        putPixel(dst_monochrome, src_x, src_y, col_monochrome);
+        PUT_PIXEL(dst_monochrome, src_x, src_y, col_monochrome);
       }
 
       //
@@ -386,7 +385,7 @@ static auto tex_create_masks_from_surface(SDL_Surface *src, const std::string &f
         col_mask.g     = 255;
         col_mask.b     = 255;
         col_mask.a     = 255;
-        putPixel(dst_mask, src_x, src_y, col_mask);
+        PUT_PIXEL(dst_mask, src_x, src_y, col_mask);
       }
     }
   }
@@ -406,10 +405,10 @@ static auto tex_create_masks_from_surface(SDL_Surface *src, const std::string &f
           auto py = tile_y * tile_height + oy;
 
           color col_orig;
-          getPixel(src, px, py, col_orig);
+          GET_PIXEL(src, px, py, col_orig);
 
           if ((col_orig.a == 255) && (col_orig.r == 0) && (col_orig.g == 0) && (col_orig.b == 0)) {
-            putPixel(dst_outline, px + 0, py - 0, col_white);
+            PUT_PIXEL(dst_outline, px + 0, py - 0, col_white);
           }
         }
       }
@@ -430,8 +429,8 @@ static auto tex_create_masks_from_surface(SDL_Surface *src, const std::string &f
   return out;
 }
 
-void tex_load_sprites(Texp *tex, Texp *tex_monochrome, Texp *tex_mask, Texp *tex_outline, const std::string &file,
-                      const std::string &name, uint32_t tile_width, uint32_t tile_height, int mode)
+void tex_load_sprites(Texp *tex, Texp *tex_monochrome, Texp *tex_mask, Texp *tex_outline, const std::string &file, const std::string &name,
+                      uint32_t tile_width, uint32_t tile_height, int mode)
 {
   TRACE_NO_INDENT();
   Texp t = tex_find(name);

@@ -11,10 +11,10 @@
 
 #include <SDL.h>
 
-#define pixel_ANYw(s, y)             ((y) * ((s)->pitch / (s)->format->BytesPerPixel))
-#define pixel_32bpp(s, x, y)         ((uint32_t *) (s)->pixels + (x) + pixel_ANYw(s, y))
-#define putPixel_32bpp(s, x, y, rgb) *pixel_32bpp(s, x, y) = rgb
-#define getPixel_32bpp(s, x, y, rgb) *(rgb) = *pixel_32bpp(s, x, y)
+#define pixel_ANYw(s, y)              ((y) * ((s)->pitch / (s)->format->BytesPerPixel))
+#define pixel_32bpp(s, x, y)          ((uint32_t *) (s)->pixels + (x) + pixel_ANYw(s, y))
+#define PUT_PIXEL_32bpp(s, x, y, rgb) *pixel_32bpp(s, x, y) = rgb
+#define GET_PIXEL_32bpp(s, x, y, rgb) *(rgb) = *pixel_32bpp(s, x, y)
 
 //
 // Lock a SDL_Surface for safe color access
@@ -47,13 +47,13 @@ static inline void unlock(SDL_Surface *surface)
 // performed on the co-ordinates and the SDL_Surface is locked for you.
 // Safe, but slow. For more speed, try the lower level access function.
 //
-static void inline putPixel(SDL_Surface *surface, uint16_t x, uint16_t y, const color &col)
+static void inline PUT_PIXEL(SDL_Surface *surface, uint16_t x, uint16_t y, const color &col)
 {
   uint32_t rgb = 0;
 
 #ifdef _DEBUG_BUILD_
   if (UNLIKELY((x >= (uint32_t) surface->w) || (y >= (uint32_t) surface->h))) {
-    CROAK("putPixel out of range, pix %d,%d in size %d,%d", x, y, surface->w, surface->h);
+    CROAK("PUT_PIXEL out of range, pix %d,%d in size %d,%d", x, y, surface->w, surface->h);
   }
 #endif
 
@@ -63,7 +63,7 @@ static void inline putPixel(SDL_Surface *surface, uint16_t x, uint16_t y, const 
   rgb = (col.r | (col.g << 8) | (col.b << 16) | (col.a << 24));
 #endif
 
-  putPixel_32bpp(surface, x, y, rgb);
+  PUT_PIXEL_32bpp(surface, x, y, rgb);
 }
 
 //
@@ -71,13 +71,13 @@ static void inline putPixel(SDL_Surface *surface, uint16_t x, uint16_t y, const 
 // performed on the co-ordinates and the SDL_Surface is locked for you.
 // Safe, but slow. For more speed, try the lower level access function.
 //
-static inline void getPixel(SDL_Surface *surface, uint16_t x, uint16_t y, color &col)
+static inline void GET_PIXEL(SDL_Surface *surface, uint16_t x, uint16_t y, color &col)
 {
   uint32_t rgb = 0;
 
 #ifdef _DEBUG_BUILD_
   if (UNLIKELY((x >= (uint32_t) surface->w) || (y >= (uint32_t) surface->h))) {
-    CROAK("getPixel out of range, pix %d,%d in size %d,%d", x, y, surface->w, surface->h);
+    CROAK("GET_PIXEL out of range, pix %d,%d in size %d,%d", x, y, surface->w, surface->h);
   }
 #endif
 
@@ -85,7 +85,7 @@ static inline void getPixel(SDL_Surface *surface, uint16_t x, uint16_t y, color 
   lock(surface);
 #endif
 
-  getPixel_32bpp(surface, x, y, &rgb);
+  GET_PIXEL_32bpp(surface, x, y, &rgb);
 
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
   col.r = (rgb & 0xff000000) >> 24;

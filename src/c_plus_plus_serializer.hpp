@@ -306,8 +306,7 @@ static inline auto operator>>(std::istream &in, Bits< C< T, N > & > v) -> std::i
 // Read/write map
 ////////////////////////////////////////////////////////////////////////////
 
-template < template < class K, class V, class Compare = std::less< K >,
-                      class Alloc = std::allocator< std::pair< const K, V > > > class M,
+template < template < class K, class V, class Compare = std::less< K >, class Alloc = std::allocator< std::pair< const K, V > > > class M,
            class K, class V >
 
 static inline auto operator<<(std::ostream &out, Bits< M< K, V > & > const m) -> std::ostream &
@@ -323,8 +322,7 @@ static inline auto operator<<(std::ostream &out, Bits< M< K, V > & > const m) ->
   return out;
 }
 
-template < template < class K, class V, class Compare = std::less< K >,
-                      class Alloc = std::allocator< std::pair< const K, V > > > class M,
+template < template < class K, class V, class Compare = std::less< K >, class Alloc = std::allocator< std::pair< const K, V > > > class M,
            class K, class V >
 
 static inline auto operator<<(std::ostream &out, Bits< M< K, const V > & > const m) -> std::ostream &
@@ -340,8 +338,7 @@ static inline auto operator<<(std::ostream &out, Bits< M< K, const V > & > const
   return out;
 }
 
-template < template < class K, class V, class Compare = std::less< K >,
-                      class Alloc = std::allocator< std::pair< const K, V > > > class M,
+template < template < class K, class V, class Compare = std::less< K >, class Alloc = std::allocator< std::pair< const K, V > > > class M,
            class K, class V >
 
 static inline auto operator>>(std::istream &in, Bits< M< K, V > & > m) -> std::istream &
@@ -443,8 +440,7 @@ static inline auto operator<<(std::ostream &out, Bits< M< K > & > const m) -> st
   return out;
 }
 
-template < template < class K, class Compare = std::less< const K >, class Allocator = std::allocator< const K > > class M,
-           class K >
+template < template < class K, class Compare = std::less< const K >, class Allocator = std::allocator< const K > > class M, class K >
 
 static inline auto operator<<(std::ostream &out, Bits< M< K > & > const m) -> std::ostream &
 {
@@ -494,8 +490,7 @@ static inline auto operator<<(std::ostream &out, Bits< std::pair< K, V > & > con
   return out;
 }
 
-template < typename K, typename V >
-static inline auto operator>>(std::istream &in, Bits< std::pair< K, V > & > wrapped) -> std::istream &
+template < typename K, typename V > static inline auto operator>>(std::istream &in, Bits< std::pair< K, V > & > wrapped) -> std::istream &
 {
 #ifdef DEBUG_C_PLUS_PLUS_SERIALIZER
   std::cout << "write pair<K,V>" << std::endl;

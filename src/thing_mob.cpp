@@ -112,8 +112,7 @@ auto thing_mob_spawn_a_minion(Gamep g, Levelsp v, Levelp l, Thingp mob, Tpp tp_m
 //
 // Detach or kill all minions (or a specific one)
 //
-[[nodiscard]] static auto thing_mob_process_minions(Gamep g, Levelsp v, Levelp l, Thingp mob, Thingp specific_minion,
-                                                    ThingEvent &e) -> bool
+[[nodiscard]] static auto thing_mob_process_minions(Gamep g, Levelsp v, Levelp l, Thingp mob, Thingp specific_minion, ThingEvent &e) -> bool
 {
   TRACE_NO_INDENT();
 

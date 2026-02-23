@@ -15,16 +15,15 @@
 #include <cstring>
 #include <utility>
 
-auto level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int w, int h, const char *in,
-                    const Overrides &overrides) -> bool
+auto level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int w, int h, const char *in, const Overrides &overrides)
+    -> bool
 {
   TRACE_NO_INDENT();
 
   auto expected_len = w * h;
 
   if (std::cmp_not_equal(strlen(in), expected_len)) {
-    CROAK("bad map size, expected %d chars, got %d chars for map of expected size %dx%d", (int) expected_len, (int) strlen(in), w,
-          h);
+    CROAK("bad map size, expected %d chars, got %d chars for map of expected size %dx%d", (int) expected_len, (int) strlen(in), w, h);
   }
 
   auto *tp_wall       = tp_random(is_wall);
