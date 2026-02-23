@@ -37,7 +37,7 @@
 
 #include <inttypes.h>
 
-using pcg32_random_t = struct pcg_state_setseq_64;
+using pcg32_random_t = struct PcgStateSetseq64;
 
 auto pcg32_random_r(pcg32_random_t *rng) -> uint32_t;
 void pcg32_srandom_r(pcg32_random_t *rng, uint64_t initstate, uint64_t initseq);
