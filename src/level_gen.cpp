@@ -275,7 +275,7 @@ class Room
 private:
 public:
   Room() = default;
-  ~Room() { myfree(data); }
+  ~Room() { MYFREE(data); }
 
   //
   // Globally unique
@@ -337,7 +337,7 @@ class LevelFixed
 private:
 public:
   LevelFixed() = default;
-  ~LevelFixed() { myfree(data); }
+  ~LevelFixed() { MYFREE(data); }
 
   //
   // Globally unique
@@ -388,7 +388,7 @@ class FragmentAlt
 private:
 public:
   FragmentAlt() = default;
-  ~FragmentAlt() { myfree(data); }
+  ~FragmentAlt() { MYFREE(data); }
 
   //
   // Globally unique
@@ -427,7 +427,7 @@ class Fragment
 private:
 public:
   Fragment() = default;
-  ~Fragment() { myfree(data); }
+  ~Fragment() { MYFREE(data); }
 
   //
   // Globally unique
@@ -540,7 +540,7 @@ static auto room_rotate(Gamep g, class Room *r) -> class Room *
   n->width     = r->height;
   n->height    = r->width;
   n->flags     = r->flags;
-  n->data      = (char *) myzalloc(r->width * r->height, "room data");
+  n->data      = (char *) MYZALLOC(r->width * r->height, "room data");
 
   for (int y = 0; y < r->height; y++) {
     for (int x = 0; x < r->width; x++) {
@@ -573,7 +573,7 @@ static auto room_flip_horiz(Gamep g, class Room *r) -> class Room *
   n->width     = r->width;
   n->height    = r->height;
   n->flags     = r->flags;
-  n->data      = (char *) myzalloc(r->width * r->height, "room data");
+  n->data      = (char *) MYZALLOC(r->width * r->height, "room data");
 
   for (int y = 0; y < r->height; y++) {
     for (int x = 0; x < r->width; x++) {
@@ -741,7 +741,7 @@ void room_add(Gamep g, int chance, int room_flags, const char *file, int line, .
   r->width     = room_width;
   r->height    = room_height;
   r->flags     = room_flags;
-  r->data      = (char *) myzalloc(room_width * room_height, "room data");
+  r->data      = (char *) MYZALLOC(room_width * room_height, "room data");
 
   //
   // Keep track of exits so we can sanity check the edges of the room
@@ -1129,7 +1129,7 @@ static auto fragment_alt_rotate(class FragmentAlt *r) -> class FragmentAlt *
   n->line   = r->line;
   n->width  = r->height;
   n->height = r->width;
-  n->data   = (char *) myzalloc(r->width * r->height, "fragment_alt data");
+  n->data   = (char *) MYZALLOC(r->width * r->height, "fragment_alt data");
 
   for (int y = 0; y < r->height; y++) {
     for (int x = 0; x < r->width; x++) {
@@ -1159,7 +1159,7 @@ static auto fragment_alt_flip_horiz(class FragmentAlt *r) -> class FragmentAlt *
   n->line   = r->line;
   n->width  = r->width;
   n->height = r->height;
-  n->data   = (char *) myzalloc(r->width * r->height, "fragment_alt data");
+  n->data   = (char *) MYZALLOC(r->width * r->height, "fragment_alt data");
 
   for (int y = 0; y < r->height; y++) {
     for (int x = 0; x < r->width; x++) {
@@ -1291,7 +1291,7 @@ auto fragment_alt_add(Gamep g, int chance, const char *file, int line, ...) -> b
   f->line   = line;
   f->width  = fragment_alt_width;
   f->height = fragment_alt_height;
-  f->data   = (char *) myzalloc(fragment_alt_width * fragment_alt_height, "fragment_alt data");
+  f->data   = (char *) MYZALLOC(fragment_alt_width * fragment_alt_height, "fragment_alt data");
 
   //
   // Now read the fragment_alt again
@@ -1431,7 +1431,7 @@ static auto fragment_rotate(class Fragment *f) -> class Fragment *
   n->line   = f->line;
   n->width  = f->height;
   n->height = f->width;
-  n->data   = (char *) myzalloc(f->width * f->height, "fragment data");
+  n->data   = (char *) MYZALLOC(f->width * f->height, "fragment data");
 
   for (int y = 0; y < f->height; y++) {
     for (int x = 0; x < f->width; x++) {
@@ -1461,7 +1461,7 @@ static auto fragment_flip_horiz(class Fragment *f) -> class Fragment *
   n->line   = f->line;
   n->width  = f->width;
   n->height = f->height;
-  n->data   = (char *) myzalloc(f->width * f->height, "fragment data");
+  n->data   = (char *) MYZALLOC(f->width * f->height, "fragment data");
 
   for (int y = 0; y < f->height; y++) {
     for (int x = 0; x < f->width; x++) {
@@ -1594,7 +1594,7 @@ auto fragment_add(Gamep g, int chance, const char *file, int line, ...) -> bool
   f->line   = line;
   f->width  = fragment_width;
   f->height = fragment_height;
-  f->data   = (char *) myzalloc(fragment_width * fragment_height, "fragment data");
+  f->data   = (char *) MYZALLOC(fragment_width * fragment_height, "fragment data");
 
   //
   // Now read the fragment again
@@ -1972,7 +1972,7 @@ void level_fixed_add(Gamep g, int chance, LevelType level_type, const std::strin
   l->width      = level_width;
   l->height     = level_height;
   l->overrides  = overrides;
-  l->data       = (char *) myzalloc(MAP_WIDTH * MAP_HEIGHT, "level data");
+  l->data       = (char *) MYZALLOC(MAP_WIDTH * MAP_HEIGHT, "level data");
 
   //
   // Center the level if smaller

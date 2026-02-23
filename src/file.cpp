@@ -79,7 +79,7 @@ auto file_load(const char *filename, int *outlen) -> unsigned char *
       if (static_cast< bool >(file_exists_and_is_newer_than(alt_filename, g_exec_full_path_and_name))) {
         out = file_io_read_if_exists(alt_filename, outlen);
         if (out != nullptr) {
-          myfree(alt_filename);
+          MYFREE(alt_filename);
           alt_filename = nullptr;
 
           return out;
@@ -90,7 +90,7 @@ auto file_load(const char *filename, int *outlen) -> unsigned char *
       if (static_cast< bool >(file_exists_and_is_newer_than(alt_filename, ".o/file.o"))) {
         out = file_io_read_if_exists(alt_filename, outlen);
         if (out != nullptr) {
-          myfree(alt_filename);
+          MYFREE(alt_filename);
           alt_filename = nullptr;
 
           return out;
@@ -101,7 +101,7 @@ auto file_load(const char *filename, int *outlen) -> unsigned char *
       if (static_cast< bool >(file_exists_and_is_newer_than(alt_filename, "src/.o/file.o"))) {
         out = file_io_read_if_exists(alt_filename, outlen);
         if (out != nullptr) {
-          myfree(alt_filename);
+          MYFREE(alt_filename);
           alt_filename = nullptr;
 
           return out;
@@ -116,7 +116,7 @@ auto file_load(const char *filename, int *outlen) -> unsigned char *
     FILE_LOG("Read (ramdisk) %s, %dMb, %d bytes", filename, *outlen / (1024 * 1024), *outlen);
 
     if (alt_filename != nullptr) {
-      myfree(alt_filename);
+      MYFREE(alt_filename);
       alt_filename = nullptr;
     }
 
@@ -130,7 +130,7 @@ auto file_load(const char *filename, int *outlen) -> unsigned char *
   out = file_io_read_if_exists(filename, outlen);
   if (out != nullptr) {
     if (alt_filename != nullptr) {
-      myfree(alt_filename);
+      MYFREE(alt_filename);
       alt_filename = nullptr;
     }
 
@@ -141,7 +141,7 @@ auto file_load(const char *filename, int *outlen) -> unsigned char *
   out = file_io_read_if_exists(alt_filename, outlen);
   if (out != nullptr) {
     if (alt_filename != nullptr) {
-      myfree(alt_filename);
+      MYFREE(alt_filename);
       alt_filename = nullptr;
     }
 
@@ -149,7 +149,7 @@ auto file_load(const char *filename, int *outlen) -> unsigned char *
   }
 
   if (alt_filename != nullptr) {
-    myfree(alt_filename);
+    MYFREE(alt_filename);
     alt_filename = nullptr;
   }
 
@@ -168,7 +168,7 @@ auto file_load(const char *filename, int *outlen) -> unsigned char *
   char *popup_str = dynprintf("Filename was not found on ramdisk or "
                 "on the local disk, %s", filename);
 
-  myfree(popup_str);
+  MYFREE(popup_str);
    */
   LOG("File not found \"%s\"", filename);
 
@@ -210,7 +210,7 @@ auto file_io_read(const char *filename, int *out_len) -> unsigned char *
     return nullptr;
   }
 
-  buffer = (unsigned char *) mymalloc(len + SIZEOF((char) '\0'), "file read");
+  buffer = (unsigned char *) MYMALLOC(len + SIZEOF((char) '\0'), "file read");
   if (buffer == nullptr) {
     std::println(MY_STDERR, "Failed to alloc mem for file \"{}\": {}", filename, strerror(errno));
     fclose(file);
@@ -314,11 +314,11 @@ auto file_io_read_if_exists(const char *filename, int *out_len) -> unsigned char
 
   if (file_exists(mz_filename)) {
     ret = mzip_file_read(mz_filename, out_len);
-    myfree(mz_filename);
+    MYFREE(mz_filename);
     return ret;
   }
 
-  myfree(mz_filename);
+  MYFREE(mz_filename);
 #endif
 
   if (static_cast< bool >(file_exists(filename))) {

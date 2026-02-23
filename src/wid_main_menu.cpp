@@ -133,7 +133,7 @@ void wid_main_menu_hide(Gamep g)
 static void game_display_title_bg(Gamep g)
 {
   TRACE_NO_INDENT();
-  glcolor(WHITE);
+  GLCOLOR(WHITE);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
   std::string const t = "title_bg";
@@ -146,7 +146,7 @@ static void game_display_title_fg1(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  glcolor(WHITE);
+  GLCOLOR(WHITE);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
   std::string const t = "title_fg1_1";
@@ -176,7 +176,7 @@ static void game_display_title_fg2(Gamep g)
 
   fg.g = red;
   fg.b = red;
-  glcolor(fg);
+  GLCOLOR(fg);
 
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -247,7 +247,7 @@ static void game_display_title_fg3(Gamep g)
   b           = std::min(b, 255);
   fg.b        = b;
 
-  glcolor(fg);
+  GLCOLOR(fg);
 
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -261,7 +261,7 @@ static void game_display_title_fg4(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  glcolor(WHITE);
+  GLCOLOR(WHITE);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
   static int  frame = 1;

@@ -461,7 +461,7 @@ void level_blit(Gamep g)
   //
   blit_fbo_bind(FBO_FINAL);
   {
-    glcolor(WHITE);
+    GLCOLOR(WHITE);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     blit_fbo(g, FBO_MAP_BG_MERGED);
     blit_fbo(g, FBO_MAP_FG_MERGED);

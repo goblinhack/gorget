@@ -579,7 +579,7 @@ auto ptrcheck_alloc(int mtype, const void *ptr, const char *what, int size, cons
 
 //
 // Check a pointer is valid and if so add it to the ring buffer. If not,
-// return false and avert the myfree(), just in case.
+// return false and avert the MYFREE(), just in case.
 //
 static auto ptrcheck_free_(int mtype, void *ptr, const char *func, const char *file, int line) -> int
 {

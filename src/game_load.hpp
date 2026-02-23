@@ -956,7 +956,7 @@ auto operator>>(std::istream &in, Bits< class Game & > my) -> std::istream &
   in >> bits(my.t.appdata);
   in >> bits(my.t.saved_dir);
 
-  Levelsp tmp = (Levelsp) mymalloc(sizeof(Levels), "loaded level");
+  Levelsp tmp = (Levelsp) MYMALLOC(sizeof(Levels), "loaded level");
   NEWPTR(MTYPE_LEVELS, tmp, "loaded levels");
   in.read(reinterpret_cast< char * >(tmp), sizeof(Levels));
   my.t.levels = tmp;

@@ -24,7 +24,7 @@ auto ramdisk_load(const char *filename, int *outlen) -> unsigned char *
 
   auto ramfile = f->second;
 
-  auto *out = mymalloc(ramfile.len + 1, "ramdisk load");
+  auto *out = MYMALLOC(ramfile.len + 1, "ramdisk load");
   if (out == nullptr) {
     ERR("No memory for loading ramdisk out, %s", filename);
     return nullptr;

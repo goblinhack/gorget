@@ -26,7 +26,7 @@ auto dir_exists(const char *indir) -> bool
    * msys is crap and unless you remove the / from the end of the name
    * will not think it is a dir.
    */
-  dir = mydupstr(indir, "dir");
+  dir = MYDUPSTR(indir, "dir");
   strchopc(dir, DIR_SEP_CHAR);
 
   rc = 0;
@@ -34,7 +34,7 @@ auto dir_exists(const char *indir) -> bool
     rc = S_ISDIR(buf.st_mode);
   }
 
-  myfree(dir);
+  MYFREE(dir);
 
   return static_cast< bool >(rc);
 }

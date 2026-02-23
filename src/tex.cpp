@@ -112,7 +112,7 @@ static auto load_raw_image(const std::string &filename, int *x, int *y, int *com
 
   DBG2("loaded '%s', %ux%u", filename.c_str(), *x, *y);
 
-  myfree(file_data);
+  MYFREE(file_data);
 
   return image_data;
 }

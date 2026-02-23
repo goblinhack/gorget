@@ -109,27 +109,27 @@ void cleanup()
   test_fini();
 
   if (g_exec_full_path_and_name != nullptr) {
-    myfree(g_exec_full_path_and_name);
+    MYFREE(g_exec_full_path_and_name);
     g_exec_full_path_and_name = nullptr;
   }
 
   if (g_data_path != nullptr) {
-    myfree(g_data_path);
+    MYFREE(g_data_path);
     g_data_path = nullptr;
   }
 
   if (g_ttf_path != nullptr) {
-    myfree(g_ttf_path);
+    MYFREE(g_ttf_path);
     g_ttf_path = nullptr;
   }
 
   if (g_gfx_path != nullptr) {
-    myfree(g_gfx_path);
+    MYFREE(g_gfx_path);
     g_gfx_path = nullptr;
   }
 
   if (g_exec_dir != nullptr) {
-    myfree(g_exec_dir);
+    MYFREE(g_exec_dir);
     g_exec_dir = nullptr;
   }
 

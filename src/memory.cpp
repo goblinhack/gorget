@@ -10,7 +10,7 @@
 #include <cstdlib>
 #include <cstring>
 
-auto myzalloc_(int size, const char *what, const char *file, const char *func, int line) -> void *
+auto MYZALLOC_(int size, const char *what, const char *file, const char *func, int line) -> void *
 {
   TRACE_NO_INDENT();
 
@@ -31,7 +31,7 @@ auto myzalloc_(int size, const char *what, const char *file, const char *func, i
   return ptr;
 }
 
-auto mymalloc_(int size, const char *what, const char *file, const char *func, int line) -> void *
+auto MYMALLOC_(int size, const char *what, const char *file, const char *func, int line) -> void *
 {
   TRACE_NO_INDENT();
 
@@ -52,7 +52,7 @@ auto mymalloc_(int size, const char *what, const char *file, const char *func, i
   return ptr;
 }
 
-auto myrealloc_(void *ptr, int size, const char *what, const char *file, const char *func, int line) -> void *
+auto MYREALLOC_(void *ptr, int size, const char *what, const char *file, const char *func, int line) -> void *
 {
   TRACE_NO_INDENT();
   IF_DEBUG2
@@ -76,7 +76,7 @@ auto myrealloc_(void *ptr, int size, const char *what, const char *file, const c
   return ptr;
 }
 
-void myfree_(void *ptr, const char *file, const char *func, int line)
+void MYFREE_(void *ptr, const char *file, const char *func, int line)
 {
   TRACE_NO_INDENT();
 
@@ -91,7 +91,7 @@ void myfree_(void *ptr, const char *file, const char *func, int line)
   free(ptr);
 }
 
-auto mydupstr_(const char *in, const char *what, const char *file, const char *func, int line) -> char *
+auto MYDUPSTR_(const char *in, const char *what, const char *file, const char *func, int line) -> char *
 {
   TRACE_NO_INDENT();
 

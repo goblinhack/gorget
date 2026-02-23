@@ -11,25 +11,25 @@
 #define PTRCHECK_AT SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM
 
 void ptrcheck_fini();
-auto myzalloc_(int size, const char *what, const char *file, const char *func, int line) -> void *;
-auto mymalloc_(int size, const char *what, const char *file, const char *func, int line) -> void *;
-auto myrealloc_(void *ptr, int size, const char *what, const char *file, const char *func, int line) -> void *;
-void myfree_(void *ptr, const char *file, const char *func, int line);
-auto mydupstr_(const char *in, const char *what, const char *file, const char *func, int line) -> char *;
+auto MYZALLOC_(int size, const char *what, const char *file, const char *func, int line) -> void *;
+auto MYMALLOC_(int size, const char *what, const char *file, const char *func, int line) -> void *;
+auto MYREALLOC_(void *ptr, int size, const char *what, const char *file, const char *func, int line) -> void *;
+void MYFREE_(void *ptr, const char *file, const char *func, int line);
+auto MYDUPSTR_(const char *in, const char *what, const char *file, const char *func, int line) -> char *;
 auto strsub_(const char *in, const char *look_for, const char *replace_with, const char *what, const char *file, const char *func, int line)
     -> char *;
 
-#define myzalloc(__size__, __what__) myzalloc_((__size__), (__what__), PTRCHECK_AT)
+#define MYZALLOC(__size__, __what__) MYZALLOC_((__size__), (__what__), PTRCHECK_AT)
 
-#define mymalloc(__size__, __what__) mymalloc_((__size__), (__what__), PTRCHECK_AT)
+#define MYMALLOC(__size__, __what__) MYMALLOC_((__size__), (__what__), PTRCHECK_AT)
 
-#define myrealloc(__ptr__, __size__, __what__) myrealloc_((__ptr__), (__size__), (__what__), PTRCHECK_AT)
+#define MYREALLOC(__ptr__, __size__, __what__) MYREALLOC_((__ptr__), (__size__), (__what__), PTRCHECK_AT)
 
-#define myfree(__ptr__) myfree_((__ptr__), PTRCHECK_AT)
+#define MYFREE(__ptr__) MYFREE_((__ptr__), PTRCHECK_AT)
 
-#define mydupstr(__ptr__, __what__) mydupstr_((__ptr__), (__what__), PTRCHECK_AT)
+#define MYDUPSTR(__ptr__, __what__) MYDUPSTR_((__ptr__), (__what__), PTRCHECK_AT)
 
-#define strsub(a, b, c, __what__) strsub_(a, b, c, (__what__), PTRCHECK_AT)
+#define STRSUB(a, b, c, __what__) strsub_(a, b, c, (__what__), PTRCHECK_AT)
 
 auto ptrcheck_alloc(int mtype, const void *ptr, const char *what, int size, const char *func, const char *file, int line) -> void *;
 auto ptrcheck_VERIFY(int mtype, const void *ptr, const char *func, const char *file, int line) -> int;

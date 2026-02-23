@@ -66,7 +66,7 @@ void sdl_screenshot_do(Gamep g)
   stbi_write_png(png, w, h, components, pixels.data(), 3 * w);
   GL_ERROR_CHECK();
   TOPCON("Screenshot: %s", png);
-  myfree(png);
+  MYFREE(png);
   blit_fbo_unbind();
   GL_ERROR_CHECK();
 
@@ -157,6 +157,6 @@ void sdl_fbo_dump(Gamep g, FboEnum fbo, const std::string &name)
   char            *png        = dynprintf("screenshot.%s.%03d.png", name.c_str(), count);
   stbi_write_png(png, w, h, components, pixels.data(), 4 * w);
   CON("Screenshot: %s", png);
-  myfree(png);
+  MYFREE(png);
   //  count++;
 }

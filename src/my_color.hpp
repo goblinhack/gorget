@@ -35,6 +35,6 @@ void color_set(const std::string &name, color *c, uint8_t r, uint8_t g, uint8_t 
 auto color_eq(const color &col1, const color &col2) -> bool;
 auto color_neq(const color &col1, const color &col2) -> bool;
 
-#define glcolor(_c_) glColor4ub((_c_).r, (_c_).g, (_c_).b, (_c_).a)
+#define GLCOLOR(_c_) glColor4ub((_c_).r, (_c_).g, (_c_).b, (_c_).a)
 
 #endif // MY_COLOR_HPP

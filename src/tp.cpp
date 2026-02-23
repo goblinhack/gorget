@@ -719,7 +719,7 @@ void tp_light_color_apply(Tpp tp)
     TP_ERR(tp, "No thing template pointer set");
     return;
   }
-  glcolor(tp->light_color);
+  GLCOLOR(tp->light_color);
 }
 
 auto tp_light_color(Tpp tp) -> color

@@ -178,7 +178,7 @@ auto levels_memory_alloc(Gamep g) -> Levelsp
   // NOTE: if we use "new" here, the initialization is visibly slower.
   // DO NOT USE C++ classes or types
   //
-  v = (Levelsp) myzalloc(SIZEOF(*v), "v");
+  v = (Levelsp) MYZALLOC(SIZEOF(*v), "v");
   if (v == nullptr) {
     return nullptr;
   }
@@ -193,7 +193,7 @@ static void levels_memory_free(Gamep g, Levelsp v)
   TRACE_NO_INDENT();
 
   VERIFY(MTYPE_LEVELS, v);
-  myfree(v);
+  MYFREE(v);
   OLDPTR(MTYPE_LEVELS, v);
 
   (void) game_levels_set(g, nullptr);

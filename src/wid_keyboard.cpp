@@ -700,7 +700,7 @@ auto wid_keyboard(Gamep g, const std::string &text, const std::string &title, wi
    * Create a context to hold button info so we can update it when the focus
    * changes
    */
-  wid_keyboard_ctx *ctx = (wid_keyboard_ctx *) myzalloc(SIZEOF(*ctx), "wid keyboard");
+  wid_keyboard_ctx *ctx = (wid_keyboard_ctx *) MYZALLOC(SIZEOF(*ctx), "wid keyboard");
   ctx->focusx           = -1;
   ctx->focusy           = -1;
   ctx->cancelled        = cancelled;

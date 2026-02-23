@@ -74,7 +74,7 @@ static char *substr (const char *in, int pos, int len)
     len = slen - pos;
   }
 
-  out = (__typeof__(out)) mymalloc(len + SIZEOF((char)'\0'), "substr");
+  out = (__typeof__(out)) MYMALLOC(len + SIZEOF((char)'\0'), "substr");
   if (!out) {
     return 0;
   }
@@ -89,7 +89,7 @@ static char *substr (const char *in, int pos, int len)
 //
 // Recursively replace part of a string with another.
 //
-// strsub("foo.zip", ".zip", ""); -> "foo"
+// STRSUB("foo.zip", ".zip", ""); -> "foo"
 //
 auto strsub_(const char *in, const char *look_for, const char *replace_with, const char *what, const char *file, const char *func, int line)
     -> char *
@@ -110,7 +110,7 @@ auto strsub_(const char *in, const char *look_for, const char *replace_with, con
   // printf("  replace  %s\n", replace_with);
   at = strstr(in, look_for);
   if (at == nullptr) {
-    buf = mydupstr(in, what);
+    buf = MYDUPSTR(in, what);
     return buf;
   }
 
@@ -118,7 +118,7 @@ auto strsub_(const char *in, const char *look_for, const char *replace_with, con
   newlen = (uint32_t) strlen(replace_with);
 
   len = (uint32_t) strlen(in) - oldlen + newlen;
-  buf = (__typeof__(buf)) myzalloc_(len + SIZEOF((char) '\0'), what, file, func, line);
+  buf = (__typeof__(buf)) MYZALLOC_(len + SIZEOF((char) '\0'), what, file, func, line);
   if (buf == nullptr) {
     return nullptr;
   }
@@ -133,7 +133,7 @@ auto strsub_(const char *in, const char *look_for, const char *replace_with, con
   }
 
   auto *out = strsub_(buf, look_for, replace_with, what, file, func, line);
-  myfree(buf);
+  MYFREE(buf);
   return out;
 }
 
@@ -155,7 +155,7 @@ auto strappend(const char *in, const char *append) -> char *
 
   newlen = (uint32_t) strlen(append);
   len    = (uint32_t) strlen(in) + newlen;
-  buf    = (__typeof__(buf)) myzalloc(len + SIZEOF((char) '\0'), "strappend");
+  buf    = (__typeof__(buf)) MYZALLOC(len + SIZEOF((char) '\0'), "strappend");
   if (buf == nullptr) {
     return nullptr;
   }
@@ -184,7 +184,7 @@ auto strprepend(const char *in, const char *prepend) -> char *
 
   newlen = (uint32_t) strlen(prepend);
   len    = (uint32_t) strlen(in) + newlen;
-  buf    = (__typeof__(buf)) myzalloc(len + SIZEOF((char) '\0'), "strprepend");
+  buf    = (__typeof__(buf)) MYZALLOC(len + SIZEOF((char) '\0'), "strprepend");
   if (buf == nullptr) {
     return nullptr;
   }
@@ -372,7 +372,7 @@ auto dynprintf(const char *fmt, ...) -> char *
   ret = dynvprintf_(fmt, args);
   va_end(args);
 
-  return (mydupstr(ret, __FUNCTION__));
+  return (MYDUPSTR(ret, __FUNCTION__));
 }
 
 /*
@@ -383,9 +383,9 @@ auto dynprintf(const char *fmt, ...) -> char *
 auto mybasename(const char *in, const char *who) -> std::string
 {
   TRACE_NO_INDENT();
-  char       *tmp = mydupstr(in, who);
+  char       *tmp = MYDUPSTR(in, who);
   std::string tmp2(basename(tmp));
-  myfree(tmp);
+  MYFREE(tmp);
 
   return (tmp2);
 }
@@ -793,7 +793,7 @@ auto snprintf_realloc(char **str, int *size, int *used, const char *fmt, ...) ->
       *used = 0;
     }
 
-    *str = (char *) mymalloc(*size, "snprintf alloc");
+    *str = (char *) MYMALLOC(*size, "snprintf alloc");
     if (*str == nullptr) {
       *size = 0;
       return (-1);
@@ -830,7 +830,7 @@ auto snprintf_realloc(char **str, int *size, int *used, const char *fmt, ...) ->
 
     (*size) *= 2;
 
-    tmp = (char *) myrealloc(*str, *size, "snprintf realloc");
+    tmp = (char *) MYREALLOC(*str, *size, "snprintf realloc");
     if (tmp == nullptr) {
       free(*str);
       *str  = nullptr;

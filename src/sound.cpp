@@ -22,7 +22,7 @@ public:
   ~Sound()
   {
     Mix_FreeChunk(chunk);
-    myfree(data);
+    MYFREE(data);
   }
 
   //

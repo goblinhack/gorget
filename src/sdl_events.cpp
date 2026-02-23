@@ -341,7 +341,7 @@ void sdl_event(Gamep g, SDL_Event *event, bool &processed_mouse_motion_event)
         int const value = event->jaxis.value;
 
         if (sdl.joy_axes == nullptr) {
-          sdl.joy_axes = (int *) myzalloc(SIZEOF(int) * sdl.joy_naxes, "joy axes");
+          sdl.joy_axes = (int *) MYZALLOC(SIZEOF(int) * sdl.joy_naxes, "joy axes");
         }
 
         sdl.joy_axes[ axis ] = value;

@@ -227,7 +227,7 @@ void gl_clear()
 {
   TRACE_NO_INDENT();
 
-  glcolor(WHITE);
+  GLCOLOR(WHITE);
   glClearColor(0, 0, 0, 0);
   glClear(GL_COLOR_BUFFER_BIT);
 }
@@ -669,7 +669,7 @@ void blit_init()
   //
   gl_array_size_required = 32 * 1024 * 1024;
 
-  gl_array_buf = (__typeof__(gl_array_buf)) myzalloc(gl_array_size_required, "GL xy buffer");
+  gl_array_buf = (__typeof__(gl_array_buf)) MYZALLOC(gl_array_size_required, "GL xy buffer");
 
   //
   // Make the end a bit smaller so we have plenty of headroom.
@@ -684,7 +684,7 @@ void blit_fini()
 {
   TRACE_NO_INDENT();
   if (gl_array_buf != nullptr) {
-    myfree(gl_array_buf);
+    MYFREE(gl_array_buf);
     gl_array_buf = nullptr;
   }
 }

@@ -22,7 +22,7 @@ public:
   ~Music()
   {
     Mix_FreeMusic(m);
-    myfree(data);
+    MYFREE(data);
   }
 
   std::string    name_alias;

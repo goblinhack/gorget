@@ -164,5 +164,5 @@ void thing_blit_text(Gamep g, Levelsp v, Levelp l, spoint tl, spoint br, std::st
     tl.x += w;
     br.x += w;
   }
-  glcolor(WHITE);
+  GLCOLOR(WHITE);
 }

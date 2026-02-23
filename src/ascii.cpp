@@ -676,7 +676,7 @@ void ascii_putf(int x, int y, color fg, color bg, const char *fmt, ...)
 #ifdef ENABLE_UI_ASCII_MOUSE
 static void ascii_display_mouse(spoint mouse_tile_tl, spoint mouse_tile_br, spoint mouse_at)
 {
-  glcolor(WHITE);
+  GLCOLOR(WHITE);
 
   blit_init();
   tile_blit(tile_find_mand(FONT_TILENAME_POINTER_STR), spoint(mouse_tile_tl.x, mouse_tile_tl.y), spoint(mouse_tile_br.x, mouse_tile_br.y));
@@ -766,7 +766,7 @@ static void ascii_blit(Gamep g)
   int tile_x = 0;
   int tile_y = 0;
 
-  glcolor(WHITE);
+  GLCOLOR(WHITE);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 #ifdef ENABLE_UI_ASCII_MOUSE
