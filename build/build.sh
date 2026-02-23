@@ -584,25 +584,24 @@ COMMON_WARNING_FLAGS+=-Wformat=2
 #
 COMMON_WARNING_FLAGS+=-Wno-format-nonliteral
 #
-# To silence #emded for clang
-#
-COMMON_WARNING_FLAGS+=-Wno-c2x-extensions # needed on macos clang build
-#
 # A warning is generated if the precision of a value may change.
 #
 COMMON_WARNING_FLAGS+=-Wfloat-conversion
+
+#
+# To silence #emded for clang
+#
+CLANG_WARNING_FLAGS+=-Wno-c2x-extensions # needed on macos clang build
 #
 # Don't fail if a compiler option is unknown
 #
-COMMON_WARNING_FLAGS+=-Wno-unknown-warning-option
-
+CLANG_WARNING_FLAGS+=-Wno-unknown-warning-option
 #
-# Clang specific
+# Additional warnings
 #
 CLANG_WARNING_FLAGS+=-Wconditional-uninitialized 
 CLANG_WARNING_FLAGS+=-Wmaybe-uninitialized
 CLANG_WARNING_FLAGS+=-Wuninitialized=verbose
-
 #
 # To silence Xcode warning: "variable length arrays are a C99 feature [-Wvla-extension]"?
 #
