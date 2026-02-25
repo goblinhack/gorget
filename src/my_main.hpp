@@ -67,7 +67,7 @@ void close_stdout();
   cleanup();                                                                                                                               \
   exit(0);
 
-#ifdef _DEBUG_BUILD_
+#ifdef DEBUG_BUILD
 #define ERR CROAK
 #else
 #define ERR(...)                                                                                                                           \

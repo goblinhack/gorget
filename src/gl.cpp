@@ -647,7 +647,7 @@ int      buf_tex;
 
 void blit_init()
 {
-#ifdef _DEBUG_BUILD_
+#ifdef DEBUG_BUILD
   TRACE_NO_INDENT();
 #endif
 
@@ -691,7 +691,7 @@ void blit_fini()
 
 void blit_flush()
 {
-#ifdef _DEBUG_BUILD_
+#ifdef DEBUG_BUILD
   TRACE_NO_INDENT();
 #endif
 
@@ -726,7 +726,7 @@ void blit_flush()
                      + (static_cast< ptrdiff_t >(SIZEOF(GLfloat) * // skip (u,v)
                                                  NUMBER_DIMENSIONS_PER_COORD_2D)));
 
-#ifdef _DEBUG_BUILD_
+#ifdef DEBUG_BUILD
   GL_ERROR_CHECK();
 #endif
 

@@ -116,8 +116,8 @@ Build options:
 Usage: $0 [options]
 
   [--rel]    Release build (all optimizations) (DEFAULT)
-  [--dev]    Enable debugs
-  [--sanity] Enable stack checking
+  [--dev]    Enable additional debugging
+  [--sanity] Enable additional stack checking
   [--prof]   Enable gprof
   [--gcc]    Prefer g++ over clang
   [--github] CI/CD build (turns off modification of README)

@@ -256,7 +256,7 @@ void tests_run(Gamep g)
     buf[ 0 ] = '\0';
     get_timestamp(buf, MAXLONGSTR);
 
-#ifdef _GITHUB_BUILD_
+#ifdef GITHUB_BUILD
     std::string out(buf);
 
     //

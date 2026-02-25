@@ -5,7 +5,7 @@
 #ifndef MY_THING_INLINES_H
 #define MY_THING_INLINES_H
 
-#ifdef _DEBUG_BUILD_
+#ifdef DEBUG_BUILD
 #include "my_callstack.hpp"
 #include "my_globals.hpp"
 #include "my_main.hpp"
@@ -20,7 +20,7 @@
 //
 static inline auto thing_find(Gamep g, Levelsp v, ThingId id) -> Thingp
 {
-#ifdef _DEBUG_BUILD_
+#ifdef DEBUG_BUILD
   TRACE_NO_INDENT(); // expensive
                      //
   if (! g) {
@@ -55,7 +55,7 @@ static inline auto thing_find(Gamep g, Levelsp v, ThingId id) -> Thingp
 
 static inline auto thing_tp(Thingp t) -> Tpp
 {
-#ifdef _DEBUG_BUILD_
+#ifdef DEBUG_BUILD
   TRACE_NO_INDENT(); // expensive
                      //
   if (! t) {
@@ -69,7 +69,7 @@ static inline auto thing_tp(Thingp t) -> Tpp
 
 static inline auto thing_is_falling(Thingp t) -> int
 {
-#ifdef _DEBUG_BUILD_
+#ifdef DEBUG_BUILD
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
@@ -81,7 +81,7 @@ static inline auto thing_is_falling(Thingp t) -> int
 
 static inline auto thing_is_hit(Thingp t) -> int
 {
-#ifdef _DEBUG_BUILD_
+#ifdef DEBUG_BUILD
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
@@ -93,7 +93,7 @@ static inline auto thing_is_hit(Thingp t) -> int
 
 static inline auto thing_is_hot(Thingp t) -> int
 {
-#ifdef _DEBUG_BUILD_
+#ifdef DEBUG_BUILD
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
@@ -105,7 +105,7 @@ static inline auto thing_is_hot(Thingp t) -> int
 
 static inline auto thing_is_jumping(Thingp t) -> bool
 {
-#ifdef _DEBUG_BUILD_
+#ifdef DEBUG_BUILD
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
@@ -117,7 +117,7 @@ static inline auto thing_is_jumping(Thingp t) -> bool
 
 static inline auto thing_is_moving(Thingp t) -> bool
 {
-#ifdef _DEBUG_BUILD_
+#ifdef DEBUG_BUILD
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
@@ -129,7 +129,7 @@ static inline auto thing_is_moving(Thingp t) -> bool
 
 static inline auto thing_is_spawned(Thingp t) -> bool
 {
-#ifdef _DEBUG_BUILD_
+#ifdef DEBUG_BUILD
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
@@ -141,7 +141,7 @@ static inline auto thing_is_spawned(Thingp t) -> bool
 
 static inline auto thing_is_dead(Thingp t) -> bool
 {
-#ifdef _DEBUG_BUILD_
+#ifdef DEBUG_BUILD
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
@@ -153,7 +153,7 @@ static inline auto thing_is_dead(Thingp t) -> bool
 
 static inline auto thing_is_physics_temperature(Thingp t) -> bool
 {
-#ifdef _DEBUG_BUILD_
+#ifdef DEBUG_BUILD
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
@@ -165,7 +165,7 @@ static inline auto thing_is_physics_temperature(Thingp t) -> bool
 
 static inline auto thing_is_player(const Thingp t) -> bool
 {
-#ifdef _DEBUG_BUILD_
+#ifdef DEBUG_BUILD
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
@@ -177,7 +177,7 @@ static inline auto thing_is_player(const Thingp t) -> bool
 
 static inline auto thing_is_obs_to_vision(Thingp t) -> bool
 {
-#ifdef _DEBUG_BUILD_
+#ifdef DEBUG_BUILD
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
@@ -189,7 +189,7 @@ static inline auto thing_is_obs_to_vision(Thingp t) -> bool
 
 static inline auto thing_pix_at(Thingp t) -> spoint
 {
-#ifdef _DEBUG_BUILD_
+#ifdef DEBUG_BUILD
   TRACE_NO_INDENT();
   if (! t) {
     CROAK("No thing pointer set");
@@ -200,7 +200,7 @@ static inline auto thing_pix_at(Thingp t) -> spoint
 
 static inline auto thing_is_open(Thingp t) -> bool
 {
-#ifdef _DEBUG_BUILD_
+#ifdef DEBUG_BUILD
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
@@ -212,7 +212,7 @@ static inline auto thing_is_open(Thingp t) -> bool
 
 static inline auto thing_find_optional(Gamep g, Levelsp v, ThingId id) -> Thingp
 {
-#ifdef _DEBUG_BUILD_
+#ifdef DEBUG_BUILD
   TRACE_NO_INDENT(); // expensive
 #endif
 
@@ -244,7 +244,7 @@ static inline auto thing_find_optional(Gamep g, Levelsp v, ThingId id) -> Thingp
 
 static inline auto thing_is_light_source(Thingp t) -> int
 {
-#ifdef _DEBUG_BUILD_
+#ifdef DEBUG_BUILD
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");

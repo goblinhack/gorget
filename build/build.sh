@@ -475,13 +475,13 @@ if [[ $OPT_SANITY_BUILD != "" ]]; then
 fi
 
 if [[ $OPT_DEBUG_BUILD != "" || $OPT_SANITY_BUILD != "" ]]; then
-    C_FLAGS+=" -D_DEBUG_BUILD_"
+    C_FLAGS+=" -DDEBUG_BUILD"
 else
     C_FLAGS+=" -D_RELEASE_BUILD_"
 fi
 
 if [[ $OPT_GITHUB_BUILD != "" ]]; then
-    C_FLAGS+=" -D_GITHUB_BUILD_"
+    C_FLAGS+=" -DGITHUB_BUILD"
 fi
 
 OPT_LZ4=

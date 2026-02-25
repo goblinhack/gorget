@@ -1234,7 +1234,7 @@ auto game_wait_for_tick_to_finish(Gamep g, Levelsp v, Levelp l) -> bool
   TRACE_NO_INDENT();
 
   auto started = time_ms();
-#ifdef _GITHUB_BUILD_
+#ifdef GITHUB_BUILD
   auto max_time = 600;
 #else
   auto max_time = 60;

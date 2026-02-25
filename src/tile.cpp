@@ -682,7 +682,7 @@ auto tile_name(Tilep t) -> std::string
 
 auto tile_delay_ms(Tilep t) -> uint32_t
 {
-#ifdef _DEBUG_BUILD_
+#ifdef DEBUG_BUILD
   TRACE_NO_INDENT();
 #endif
 

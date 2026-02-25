@@ -162,7 +162,7 @@ auto tp_find_opt(const std::string &val) -> Tpp
 
 auto tp_find(TpId id) -> Tpp
 {
-#ifdef _DEBUG_BUILD_
+#ifdef DEBUG_BUILD
   TRACE_NO_INDENT(); // expensive
 
   if ((int) id - 1 >= (int) tp_vec.size()) {
@@ -172,7 +172,7 @@ auto tp_find(TpId id) -> Tpp
 #endif
 
   auto *result = tp_vec[ id - 1 ];
-#ifdef _DEBUG_BUILD_
+#ifdef DEBUG_BUILD
   if (! result) {
     CROAK("tp_find: thing template %" PRIX16 " not found", id);
     return nullptr;
@@ -184,7 +184,7 @@ auto tp_find(TpId id) -> Tpp
 
 auto tp_id_get(Tpp tp) -> TpId
 {
-#ifdef _DEBUG_BUILD_
+#ifdef DEBUG_BUILD
   TRACE_NO_INDENT(); // expensive
 #endif
 
@@ -724,7 +724,7 @@ void tp_light_color_apply(Tpp tp)
 
 auto tp_light_color(Tpp tp) -> color
 {
-#ifdef _DEBUG_BUILD_
+#ifdef DEBUG_BUILD
   TRACE_NO_INDENT();
   if (! tp) {
     TP_ERR(tp, "No thing template pointer set");
@@ -736,7 +736,7 @@ auto tp_light_color(Tpp tp) -> color
 
 auto tp_flag(Tpp tp, ThingFlag f) -> int
 {
-#ifdef _DEBUG_BUILD_
+#ifdef DEBUG_BUILD
   TRACE_NO_INDENT(); // expensive
 #endif
 
@@ -766,13 +766,16 @@ void tp_z_depth_set(Tpp tp, MapZDepth val)
   }
   tp->z_depth = val;
 }
+
 auto tp_z_depth_get(Tpp tp) -> uint8_t
 {
+#ifdef DEBUG_BUILD
   TRACE_NO_INDENT();
   if (tp == nullptr) {
     TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
+#endif
   return tp->z_depth;
 }
 

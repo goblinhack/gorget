@@ -13,7 +13,7 @@
 //
 auto thing_find_non_inline(Gamep g, Levelsp v, ThingId id) -> Thingp
 {
-#ifdef _DEBUG_BUILD_
+#ifdef DEBUG_BUILD
   TRACE_NO_INDENT(); // expensive
 #endif
 
