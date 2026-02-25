@@ -52,7 +52,7 @@ auto thing_mob_spawn_a_minion(Gamep g, Levelsp v, Levelp l, Thingp mob, Tpp tp_m
   //
   // Can't spawn over certain things
   //
-  if (level_is_obs_to_spawning(g, v, l, thing_at(mob))) {
+  if (level_is_obs_to_spawning(g, v, l, thing_at(mob)) != nullptr) {
     return nullptr;
   }
 

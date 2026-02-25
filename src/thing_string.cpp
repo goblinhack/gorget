@@ -147,15 +147,15 @@ auto to_death_reason_string(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &
   //
   // Add some more spice to the message
   //
-  if (level_is_lava(g, v, l, thing_at(t))) {
+  if (level_is_lava(g, v, l, thing_at(t)) != nullptr) {
     if ((source == nullptr) || ! thing_is_lava(source)) {
       s += " in lava";
     }
-  } else if (level_is_deep_water(g, v, l, thing_at(t))) {
+  } else if (level_is_deep_water(g, v, l, thing_at(t)) != nullptr) {
     if ((source == nullptr) || ! thing_is_water(source)) {
       s += " in the depths";
     }
-  } else if (level_is_water(g, v, l, thing_at(t))) {
+  } else if (level_is_water(g, v, l, thing_at(t)) != nullptr) {
     if ((source == nullptr) || ! thing_is_water(source)) {
       s += " in a puddle";
     }

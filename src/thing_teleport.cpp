@@ -65,19 +65,19 @@
     return true;
   }
 
-  if ((delta == fpoint(0, 0)) || level_is_obs_to_teleporting_onto(g, v, l, to)) {
+  if ((delta == fpoint(0, 0)) || (level_is_obs_to_teleporting_onto(g, v, l, to) != nullptr)) {
     delta = thing_get_direction(g, v, l, t);
     tof   = outf + delta;
     to    = make_spoint(tof);
   }
 
-  if ((delta == fpoint(0, 0)) || level_is_obs_to_teleporting_onto(g, v, l, to)) {
+  if ((delta == fpoint(0, 0)) || (level_is_obs_to_teleporting_onto(g, v, l, to) != nullptr)) {
     delta = thing_get_direction(g, v, l, t);
     tof   = outf + delta;
     to    = make_spoint(tof);
   }
 
-  if ((delta == fpoint(0, 0)) || level_is_obs_to_teleporting_onto(g, v, l, to)) {
+  if ((delta == fpoint(0, 0)) || (level_is_obs_to_teleporting_onto(g, v, l, to) != nullptr)) {
     const std::initializer_list< fpoint > deltas = {
         fpoint(1, 0), fpoint(-1, 0), fpoint(0, 1), fpoint(0, -1), fpoint(-1, -1), fpoint(-1, 1), fpoint(1, -1), fpoint(1, 1),
     };
@@ -89,7 +89,7 @@
       delta = d;
       tof   = outf + delta;
       to    = make_spoint(tof);
-      if (! level_is_obs_to_teleporting_onto(g, v, l, to)) {
+      if (level_is_obs_to_teleporting_onto(g, v, l, to) == nullptr) {
         break;
       }
     }
@@ -99,7 +99,7 @@
   to  = make_spoint(tof);
 
   THING_LOG(t, "delta %f,%f spoint %d,%d out %d,%d", delta.x, delta.y, to.x, to.y, out.x, out.y);
-  if (level_is_obs_to_teleporting_onto(g, v, l, to)) {
+  if (level_is_obs_to_teleporting_onto(g, v, l, to) != nullptr) {
     //
     // Not sure how this happens, but we need the teleport to take us somewhere.
     //
