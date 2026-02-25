@@ -157,7 +157,7 @@ void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
       view_slope_high = prev_tile_slope_low;    // Reduce the view size.
     }
 
-    if (! prev_tile_blocked && ! light_blocker) { // Floor -> wall.
+    if (! prev_tile_blocked && light_blocker) { // Floor -> wall.
       //
       // Get the last sequence of floors as a view and recurse into them.
       //
@@ -165,7 +165,7 @@ void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
                    max_radius, octant, light_walls, can_see_callback);
     }
 
-    prev_tile_blocked = ! light_blocker;
+    prev_tile_blocked = light_blocker;
   }
 
   if (! prev_tile_blocked) {
