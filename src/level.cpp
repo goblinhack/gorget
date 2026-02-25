@@ -16,57 +16,6 @@
 
 LevelOpt g_level_opt;
 
-auto is_oob(fpoint p) -> bool
-{
-  if (p.x < 0) {
-    return true;
-  }
-  if (p.y < 0) {
-    return true;
-  }
-  if (p.x >= (float) MAP_WIDTH) {
-    return true;
-  }
-  if (p.y >= (float) MAP_HEIGHT) {
-    return true;
-  }
-  return false;
-}
-
-auto is_oob(spoint p) -> bool
-{
-  if (p.x < 0) {
-    return true;
-  }
-  if (p.y < 0) {
-    return true;
-  }
-  if (p.x >= MAP_WIDTH) {
-    return true;
-  }
-  if (p.y >= MAP_HEIGHT) {
-    return true;
-  }
-  return false;
-}
-
-auto is_oob(int x, int y) -> bool
-{
-  if (x < 0) {
-    return true;
-  }
-  if (y < 0) {
-    return true;
-  }
-  if (x >= MAP_WIDTH) {
-    return true;
-  }
-  if (y >= MAP_HEIGHT) {
-    return true;
-  }
-  return false;
-}
-
 //
 // Are we on the level selection level?
 //
@@ -424,6 +373,31 @@ auto level_get_thing_id_at(Gamep g, Levelsp v, Levelp l, const spoint &p, int sl
 //
 // Additional level flag filters e.g. open doors are not obstacles
 //
+[[nodiscard]] static auto level_flag_filter_needed(ThingFlag f) -> bool
+{
+#ifdef DEBUG_BUILD
+  TRACE_NO_INDENT();
+#endif
+
+  switch (f) {
+    case is_obs_to_cursor_path :
+    case is_obs_to_explosion :
+    case is_obs_to_falling_onto :
+    case is_obs_to_fire :
+    case is_obs_to_jump_over :
+    case is_obs_to_jumping_onto :
+    case is_obs_to_teleporting_onto :
+    case is_obs_to_movement :
+    case is_able_to_fall :            return true;
+    default :                         break;
+  }
+
+  return false;
+}
+
+//
+// Additional level flag filters e.g. open doors are not obstacles
+//
 [[nodiscard]] static auto level_flag_filter(ThingFlag f, Thingp it) -> bool
 {
 #ifdef DEBUG_BUILD
@@ -466,14 +440,24 @@ auto level_find_all(Gamep g, Levelsp v, Levelp l, ThingFlag f) -> std::vector< T
 
   std::vector< Thingp > out;
 
-  FOR_ALL_THINGS_ON_LEVEL_UNSAFE(g, v, l, it)
-  {
-    if (level_flag_filter(f, it)) {
-      continue;
-    }
+  const auto filter_needed = level_flag_filter_needed(f);
+  if (filter_needed) {
+    FOR_ALL_THINGS_ON_LEVEL_UNSAFE(g, v, l, it)
+    {
+      if (level_flag_filter(f, it)) {
+        continue;
+      }
 
-    if (tp_flag(thing_tp(it), f) != 0) {
-      out.push_back(it);
+      if (tp_flag(thing_tp(it), f) != 0) {
+        out.push_back(it);
+      }
+    }
+  } else {
+    FOR_ALL_THINGS_ON_LEVEL_UNSAFE(g, v, l, it)
+    {
+      if (tp_flag(thing_tp(it), f) != 0) {
+        out.push_back(it);
+      }
     }
   }
 
@@ -486,14 +470,24 @@ auto level_find_all(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> std:
 
   std::vector< Thingp > out;
 
-  FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, p)
-  {
-    if (level_flag_filter(f, it)) {
-      continue;
-    }
+  const auto filter_needed = level_flag_filter_needed(f);
+  if (filter_needed) {
+    FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, p)
+    {
+      if (level_flag_filter(f, it)) {
+        continue;
+      }
 
-    if (tp_flag(thing_tp(it), f) != 0) {
-      out.push_back(it);
+      if (tp_flag(thing_tp(it), f) != 0) {
+        out.push_back(it);
+      }
+    }
+  } else {
+    FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, p)
+    {
+      if (tp_flag(thing_tp(it), f) != 0) {
+        out.push_back(it);
+      }
     }
   }
 
@@ -506,14 +500,24 @@ auto level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> Thingp
   TRACE_NO_INDENT();
 #endif
 
-  FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, p)
-  {
-    if (level_flag_filter(f, it)) {
-      continue;
-    }
+  const auto filter_needed = level_flag_filter_needed(f);
+  if (filter_needed) {
+    FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, p)
+    {
+      if (level_flag_filter(f, it)) {
+        continue;
+      }
 
-    if (tp_flag(thing_tp(it), f) != 0) {
-      return it;
+      if (tp_flag(thing_tp(it), f) != 0) {
+        return it;
+      }
+    }
+  } else {
+    FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, p)
+    {
+      if (tp_flag(thing_tp(it), f) != 0) {
+        return it;
+      }
     }
   }
 
@@ -539,18 +543,32 @@ auto level_alive(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> Thingp
 {
   TRACE_NO_INDENT();
 
-  FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, p)
-  {
-    if (level_flag_filter(f, it)) {
-      continue;
-    }
+  const auto filter_needed = level_flag_filter_needed(f);
+  if (filter_needed) {
+    FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, p)
+    {
+      if (level_flag_filter(f, it)) {
+        continue;
+      }
 
-    if (thing_is_dead(it)) {
-      continue;
-    }
+      if (thing_is_dead(it)) {
+        continue;
+      }
 
-    if (tp_flag(thing_tp(it), f) != 0) {
-      return it;
+      if (tp_flag(thing_tp(it), f) != 0) {
+        return it;
+      }
+    }
+  } else {
+    FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, p)
+    {
+      if (thing_is_dead(it)) {
+        continue;
+      }
+
+      if (tp_flag(thing_tp(it), f) != 0) {
+        return it;
+      }
     }
   }
 
@@ -576,18 +594,32 @@ auto level_open(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> Thingp
 {
   TRACE_NO_INDENT();
 
-  FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, p)
-  {
-    if (level_flag_filter(f, it)) {
-      continue;
-    }
+  const auto filter_needed = level_flag_filter_needed(f);
+  if (filter_needed) {
+    FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, p)
+    {
+      if (level_flag_filter(f, it)) {
+        continue;
+      }
 
-    if (! thing_is_open(it)) {
-      continue;
-    }
+      if (! thing_is_open(it)) {
+        continue;
+      }
 
-    if (tp_flag(thing_tp(it), f) != 0) {
-      return it;
+      if (tp_flag(thing_tp(it), f) != 0) {
+        return it;
+      }
+    }
+  } else {
+    FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, p)
+    {
+      if (! thing_is_open(it)) {
+        continue;
+      }
+
+      if (tp_flag(thing_tp(it), f) != 0) {
+        return it;
+      }
     }
   }
 
@@ -615,18 +647,32 @@ auto level_count(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> int
 
   int count = 0;
 
-  FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, p)
-  {
-    if (level_flag_filter(f, it)) {
-      continue;
-    }
+  const auto filter_needed = level_flag_filter_needed(f);
+  if (filter_needed) {
+    FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, p)
+    {
+      if (level_flag_filter(f, it)) {
+        continue;
+      }
 
-    if (thing_is_dead(it)) {
-      continue;
-    }
+      if (thing_is_dead(it)) {
+        continue;
+      }
 
-    if (tp_flag(thing_tp(it), f) != 0) {
-      count++;
+      if (tp_flag(thing_tp(it), f) != 0) {
+        count++;
+      }
+    }
+  } else {
+    FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, p)
+    {
+      if (thing_is_dead(it)) {
+        continue;
+      }
+
+      if (tp_flag(thing_tp(it), f) != 0) {
+        count++;
+      }
     }
   }
 

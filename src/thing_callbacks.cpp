@@ -668,7 +668,9 @@ void thing_display_get_tile_info_set(Tpp tp, thing_display_get_tile_info_t callb
 
 auto thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, const spoint &p, Tpp tp, Thingp t_maybe_null) -> Tilep
 {
+#ifdef DEBUG_BUILD
   TRACE_NO_INDENT();
+#endif
   if (tp == nullptr) {
     return nullptr;
   }

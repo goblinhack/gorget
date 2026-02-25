@@ -621,9 +621,6 @@ enum {
 // begin sort marker1 {
 [[nodiscard]] auto fragment_add(Gamep g, int chance, const char *file, int line, ...) -> bool;
 [[nodiscard]] auto fragment_alt_add(Gamep g, int chance, const char *file, int line, ...) -> bool;
-[[nodiscard]] auto is_oob(fpoint p) -> bool;
-[[nodiscard]] auto is_oob(int x, int y) -> bool;
-[[nodiscard]] auto is_oob(spoint p) -> bool;
 [[nodiscard]] auto level_alive(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> Thingp;
 [[nodiscard]] auto level_alive(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp at) -> Thingp;
 [[nodiscard]] auto level_change(Gamep g, Levelsp v, LevelNum level_num) -> Levelp;
@@ -1663,5 +1660,29 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_open_is_water(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_wood(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 // end sort marker6
+
+static inline auto is_oob(fpoint p) -> bool
+{
+  if (UNLIKELY(p.x < 0) || (p.y < 0) || (p.x >= (float) MAP_WIDTH) || (p.y >= (float) MAP_HEIGHT)) {
+    return true;
+  }
+  return false;
+}
+
+static inline auto is_oob(spoint p) -> bool
+{
+  if (UNLIKELY(p.x < 0) || (p.y < 0) || (p.x >= MAP_WIDTH) || (p.y >= MAP_HEIGHT)) {
+    return true;
+  }
+  return false;
+}
+
+static inline auto is_oob(int x, int y) -> bool
+{
+  if (UNLIKELY(x < 0) || (y < 0) || (x >= MAP_WIDTH) || (y >= MAP_HEIGHT)) {
+    return true;
+  }
+  return false;
+}
 
 #endif // MY_LEVEL_H
