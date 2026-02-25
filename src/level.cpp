@@ -426,7 +426,9 @@ auto level_get_thing_id_at(Gamep g, Levelsp v, Levelp l, const spoint &p, int sl
 //
 [[nodiscard]] static auto level_flag_filter(ThingFlag f, Thingp it) -> bool
 {
+#ifdef DEBUG_BUILD
   TRACE_NO_INDENT();
+#endif
 
   switch (f) {
     case is_obs_to_cursor_path :
@@ -500,7 +502,9 @@ auto level_find_all(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> std:
 
 auto level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> Thingp
 {
+#ifdef DEBUG_BUILD
   TRACE_NO_INDENT();
+#endif
 
   FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, p)
   {
