@@ -10,7 +10,7 @@
 
 #include <iostream>
 
-auto thing_get(Gamep g, Levelsp v, Levelp l, spoint p, int slot) -> Thingp
+auto thing_get(Gamep g, Levelsp v, Levelp l, const spoint &p, int slot) -> Thingp
 {
 #ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT(); // expensive
@@ -44,7 +44,7 @@ auto thing_get(Gamep g, Levelsp v, Levelp l, spoint p, int slot) -> Thingp
   return t;
 }
 
-auto thing_get_at_safe(Gamep g, Levelsp v, Levelp l, spoint p, int slot) -> Thingp
+auto thing_get_at_safe(Gamep g, Levelsp v, Levelp l, const spoint &p, int slot) -> Thingp
 {
 #ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT(); // expensive
@@ -64,7 +64,7 @@ auto thing_get_at_safe(Gamep g, Levelsp v, Levelp l, spoint p, int slot) -> Thin
   return t;
 }
 
-auto thing_and_tp_get_at_safe(Gamep g, Levelsp v, Levelp l, spoint p, int slot, Tpp *out) -> Thingp
+auto thing_and_tp_get_at_safe(Gamep g, Levelsp v, Levelp l, const spoint &p, int slot, Tpp *out) -> Thingp
 {
 #ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT(); // expensive
@@ -88,7 +88,7 @@ auto thing_and_tp_get_at_safe(Gamep g, Levelsp v, Levelp l, spoint p, int slot, 
   return t;
 }
 
-auto thing_and_tp_get_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot, Tpp *out) -> Thingp
+auto thing_and_tp_get_at(Gamep g, Levelsp v, Levelp l, const spoint &p, int slot, Tpp *out) -> Thingp
 {
 #ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT(); // expensive

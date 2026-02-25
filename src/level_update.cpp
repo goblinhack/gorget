@@ -13,7 +13,7 @@
 #include <cstring>
 #include <map>
 
-void level_update_paths_set(Gamep g, Levelsp v, Levelp l, spoint p)
+void level_update_paths_set(Gamep g, Levelsp v, Levelp l, const spoint &p)
 {
   TRACE_NO_INDENT();
 
@@ -30,6 +30,10 @@ void level_update_paths_set(Gamep g, Levelsp v, Levelp l, spoint p)
   }
 }
 
+//
+// Update dmaps to things like mobs, player etc...
+//
+
 void level_update_paths(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
@@ -43,4 +47,70 @@ void level_update_paths(Gamep g, Levelsp v, Levelp l)
   level_dmap(g, v, l);
 
   memset(l->is_modified_tile, 0, SIZEOF(l->is_modified_tile));
+}
+
+//
+// Update lighting and minimaps when things change substantially, like a teleport, or level change
+//
+void level_update_visibility(Gamep g, Levelsp v, Levelp l)
+{
+  TRACE_AND_INDENT();
+
+  auto *player = thing_player(g);
+  if (player == nullptr) {
+    return;
+  }
+
+  if ((g == nullptr) || (v == nullptr) || (l == nullptr)) {
+    return;
+  }
+
+  //
+  // If the player is not on the level being lit, then nothing to do
+  //
+  if (l->level_num != player->level_num) {
+    return;
+  }
+
+  bool update_visibiliy = false;
+
+  if (l->tick_in_progress) {
+    //
+    // Limit the updates unless asked (due to a moving thing likely) as this path
+    // is called many times per second.
+    //
+    if (l->request_to_update_visibility) {
+      l->request_to_update_visibility = false;
+      update_visibiliy                = true;
+    }
+  } else {
+    //
+    // Some event, like tick end or teleport occurred.
+    //
+    update_visibiliy = true;
+  }
+
+  if (! update_visibiliy) {
+    return;
+  }
+
+  //
+  // Per tick check what blocks light.
+  //
+  level_light_blocker_update(g, v, l);
+
+  //
+  // We only care about pixel moves.
+  //
+  level_light_calculate_all(g, v, l);
+
+  //
+  // What can monsters see?
+  //
+  level_vision_calculate_all(g, v, l);
+
+  //
+  // Update minimaps
+  //
+  level_minimaps_update(g, v, l);
 }

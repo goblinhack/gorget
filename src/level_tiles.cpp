@@ -70,7 +70,7 @@
 ENUM_DEF_H(IS_JOIN_ENUM, is_join_enum)
 ENUM_DEF_C(IS_JOIN_ENUM, is_join_enum)
 
-static void level_assign_tiles_at(Gamep g, Levelsp v, Levelp l, spoint p)
+static void level_assign_tiles_at(Gamep g, Levelsp v, Levelp l, const spoint &p)
 {
   TRACE_NO_INDENT();
 

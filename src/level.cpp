@@ -398,7 +398,7 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
   memset(l, 0, SIZEOF(*l));
 }
 
-auto level_populate_thing_id_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot, ThingId id) -> bool
+auto level_populate_thing_id_at(Gamep g, Levelsp v, Levelp l, const spoint &p, int slot, ThingId id) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -410,7 +410,7 @@ auto level_populate_thing_id_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot
   return true;
 }
 
-auto level_get_thing_id_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot) -> ThingId
+auto level_get_thing_id_at(Gamep g, Levelsp v, Levelp l, const spoint &p, int slot) -> ThingId
 {
   TRACE_NO_INDENT();
 
@@ -636,7 +636,7 @@ auto level_count(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp t) -> int
   return level_count(g, v, l, f, thing_at(t));
 }
 
-auto level_is_same_obj_type_at(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp) -> bool
+auto level_is_same_obj_type_at(Gamep g, Levelsp v, Levelp l, const spoint &p, Tpp tp) -> bool
 {
   TRACE_NO_INDENT();
 

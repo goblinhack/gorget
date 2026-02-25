@@ -12,7 +12,7 @@
 //
 // Ok to land on this spot?
 //
-[[nodiscard]] static auto thing_ok_landing_spot(Gamep g, Levelsp v, Levelp l, spoint p) -> bool
+[[nodiscard]] static auto thing_ok_landing_spot(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool
 {
   TRACE_NO_INDENT();
 

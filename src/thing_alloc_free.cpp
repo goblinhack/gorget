@@ -85,9 +85,9 @@ static void thing_ext_free(Levelsp v, Thingp t)
   // Continue from the last successful allocation
   //
   thing_mutex.lock();
-  for (auto tries = 0; tries < THING_FOV_MAX; tries++) {
+  for (auto tries = 0; tries < THING_LIGHT_MAX; tries++) {
     ThingLightId fov_id = last_fov_id + tries;
-    fov_id %= THING_FOV_MAX;
+    fov_id %= THING_LIGHT_MAX;
     if (UNLIKELY(! fov_id)) {
       continue;
     }
@@ -97,7 +97,7 @@ static void thing_ext_free(Levelsp v, Thingp t)
     }
 
     v->thing_fov[ fov_id ].in_use = true;
-    v->thing_fov_count++;
+    v->thing_light_count++;
     t->fov_id   = fov_id;
     last_fov_id = fov_id;
 
@@ -106,7 +106,7 @@ static void thing_ext_free(Levelsp v, Thingp t)
   }
 
   thing_mutex.unlock();
-  CROAK("out of Thing fov IDs: max is %d", THING_FOV_MAX);
+  CROAK("out of Thing fov IDs: max is %d", THING_LIGHT_MAX);
 
   return false;
 }
@@ -125,15 +125,15 @@ static void thing_fov_free(Levelsp v, Thingp t)
   }
 
   v->thing_fov[ fov_id ].in_use = false;
-  v->thing_fov_count--;
-  if (v->thing_fov_count < 0) {
+  v->thing_light_count--;
+  if (v->thing_light_count < 0) {
     CROAK("bad thing_fov count");
   }
 
   t->fov_id = 0;
 }
 
-static auto thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, ThingIdPacked id, bool needs_ext_memory, bool needs_fov_memory,
+static auto thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, ThingIdPacked id, bool needs_ext_memory, bool needs_light_memory,
                            bool need_mutex) -> Thingp
 {
   TRACE_NO_INDENT();
@@ -230,7 +230,7 @@ static auto thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, ThingIdPacked i
     }
   }
 
-  if (needs_fov_memory) {
+  if (needs_light_memory) {
     if (! thing_fov_alloc(v, t)) {
       thing_free(g, v, l, t);
       return nullptr;
@@ -262,7 +262,7 @@ auto thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p) -> Thingp
   //
   // Light source need to avoid foving the same cell more than once, hence their presence.
   //
-  auto needs_ext_memory = tp_is_mob(tp) || tp_is_monst(tp) || tp_is_player(tp);
+  auto needs_ext_memory = tp_is_mob(tp) || tp_is_monst(tp) || tp_is_player(tp) || (tp_distance_vision_get(tp) != 0);
   if (needs_ext_memory) {
     if (v->thing_ext_count >= THING_EXT_MAX - 1) {
       TP_LOG(tp, "out of ext thing memory");
@@ -270,10 +270,10 @@ auto thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p) -> Thingp
     }
   }
 
-  auto needs_fov_memory = tp_is_light_source(tp) || tp_is_player(tp) || (tp_distance_vision_get(tp) != 0);
-  if (needs_fov_memory) {
-    if (v->thing_fov_count >= THING_FOV_MAX - 1) {
-      TP_LOG(tp, "out of fov thing memory");
+  auto needs_light_memory = tp_is_light_source(tp) || tp_is_player(tp);
+  if (needs_light_memory) {
+    if (v->thing_light_count >= THING_LIGHT_MAX - 1) {
+      TP_LOG(tp, "out of light thing memory");
       return nullptr;
     }
   }
@@ -313,7 +313,7 @@ auto thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p) -> Thingp
     id.b.level_num    = level_num;
     id.b.per_level_id = per_level_id;
 
-    auto *t = thing_alloc_do(g, v, l, tp, id, needs_ext_memory, needs_fov_memory, false /* mutex */);
+    auto *t = thing_alloc_do(g, v, l, tp, id, needs_ext_memory, needs_light_memory, false /* mutex */);
     if (t != nullptr) {
       last_per_level_id[ level_num ] = per_level_id;
       return t;
@@ -336,7 +336,7 @@ auto thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p) -> Thingp
     ThingIdPacked id = {};
     id.c.arr_index   = arr_index;
 
-    auto *t = thing_alloc_do(g, v, l, tp, id, needs_ext_memory, needs_fov_memory, true /* mutex */);
+    auto *t = thing_alloc_do(g, v, l, tp, id, needs_ext_memory, needs_light_memory, true /* mutex */);
     if (t != nullptr) {
       last_arr_index = arr_index;
       return t;

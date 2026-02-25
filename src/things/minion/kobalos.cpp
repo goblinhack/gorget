@@ -33,7 +33,7 @@ static auto tp_kobalos_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std
       UI_INFO2_FMT_STR "Kobalos are vindictive, greedy little things and have a habit of thievery...";
 }
 
-auto tp_kobalos_assess_tile(Gamep g, Levelsp v, Levelp l, spoint at, Thingp t) -> ThingEnviron
+auto tp_kobalos_assess_tile(Gamep g, Levelsp v, Levelp l, const spoint &at, Thingp t) -> ThingEnviron
 {
   TRACE_NO_INDENT();
 

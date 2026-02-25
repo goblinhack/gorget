@@ -12,7 +12,7 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-static auto tp_cursor_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_maybe_null) -> Tilep
+static auto tp_cursor_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l, const spoint &p, Tpp tp, Thingp t_maybe_null) -> Tilep
 {
   TRACE_NO_INDENT();
 

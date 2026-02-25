@@ -34,7 +34,7 @@ static auto tp_door_locked_description_get(Gamep g, Levelsp v, Levelp l, Thingp 
   return "locked door";
 }
 
-static auto tp_door_locked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_maybe_null) -> Tilep
+static auto tp_door_locked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l, const spoint &p, Tpp tp, Thingp t_maybe_null) -> Tilep
 {
   TRACE_NO_INDENT();
 

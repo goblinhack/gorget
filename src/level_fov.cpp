@@ -110,9 +110,9 @@ void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
     //
     // Treat player and monster blocking differently so the player can use cover
     //
-    auto *light_blocker = level_light_blocker_at(g, v, l, p);
+    auto light_blocker = level_light_blocker_at_cached(g, v, l, p);
 
-    if ((angle * angle) + (distance_from_origin * distance_from_origin) <= radius_squared && (light_walls || (light_blocker == nullptr))) {
+    if ((angle * angle) + (distance_from_origin * distance_from_origin) <= radius_squared && (light_walls || ! light_blocker)) {
 
       if (fov_can_see_tile != nullptr) {
         //
@@ -153,11 +153,11 @@ void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
 #endif
     }
 
-    if (prev_tile_blocked && (light_blocker == nullptr)) { // Wall -> floor.
-      view_slope_high = prev_tile_slope_low;               // Reduce the view size.
+    if (prev_tile_blocked && ! light_blocker) { // Wall -> floor.
+      view_slope_high = prev_tile_slope_low;    // Reduce the view size.
     }
 
-    if (! prev_tile_blocked && (light_blocker != nullptr)) { // Floor -> wall.
+    if (! prev_tile_blocked && ! light_blocker) { // Floor -> wall.
       //
       // Get the last sequence of floors as a view and recurse into them.
       //
@@ -165,7 +165,7 @@ void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
                    max_radius, octant, light_walls, can_see_callback);
     }
 
-    prev_tile_blocked = (light_blocker != nullptr);
+    prev_tile_blocked = ! light_blocker;
   }
 
   if (! prev_tile_blocked) {

@@ -37,8 +37,8 @@ using ThingIdPacked = union {
 //
 // Essentially equates to the max number of monsters+light sources per level
 //
-#define THING_EXT_MAX (LEVEL_MAX * 500) // The size of thing_ext
-#define THING_FOV_MAX (LEVEL_MAX * 500) // The size of thing_ext
+#define THING_EXT_MAX   (LEVEL_MAX * 500) // The size of thing_ext
+#define THING_LIGHT_MAX (LEVEL_MAX * 200) // The size of thing_light
 enum {
   THING_DESCRIBE_MAX = 10 // The number of things we can show in the rightbar
 };
@@ -493,7 +493,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto immediate_owner(Gamep g, Levelsp v, Levelp l, Thingp t) -> Thingp;
 [[nodiscard]] auto monst_state_to_string(MonstState state) -> std::string;
 [[nodiscard]] auto monst_state(Gamep g, Levelsp v, Levelp l, Thingp me) -> MonstState;
-[[nodiscard]] auto player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, spoint to) -> bool;
+[[nodiscard]] auto player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, const spoint &to) -> bool;
 [[nodiscard]] auto player_jump(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool;
 [[nodiscard]] auto player_mouse_down(Gamep, Levelsp, Levelp, int x, int y, uint32_t button) -> bool;
 [[nodiscard]] auto player_move_request(Gamep g, bool up, bool down, bool left, bool right, bool fire) -> bool;
@@ -503,8 +503,8 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_age_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_age(Thingp t) -> int;
 [[nodiscard]] auto thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p) -> Thingp;
-[[nodiscard]] auto thing_and_tp_get_at_safe(Gamep g, Levelsp v, Levelp l, spoint p, int slot, Tpp *out) -> Thingp;
-[[nodiscard]] auto thing_and_tp_get_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot, Tpp *out) -> Thingp;
+[[nodiscard]] auto thing_and_tp_get_at_safe(Gamep g, Levelsp v, Levelp l, const spoint &p, int slot, Tpp *out) -> Thingp;
+[[nodiscard]] auto thing_and_tp_get_at(Gamep g, Levelsp v, Levelp l, const spoint &p, int slot, Tpp *out) -> Thingp;
 [[nodiscard]] auto thing_apostrophize_name(Thingp, ThingTextFlags) -> std::string;
 [[nodiscard]] auto thing_at(Thingp t) -> spoint;
 [[nodiscard]] auto thing_can_move_to_ai(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool;
@@ -535,10 +535,10 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp player_or_monst) -> bool;
 [[nodiscard]] auto thing_ext_struct(Gamep g, Thingp t) -> ThingExtp;
 [[nodiscard]] auto thing_find_non_inline(Gamep g, Levelsp v, ThingId id) -> Thingp;
-[[nodiscard]] auto thing_get_at_safe(Gamep g, Levelsp v, Levelp l, spoint p, int slot) -> Thingp;
+[[nodiscard]] auto thing_get_at_safe(Gamep g, Levelsp v, Levelp l, const spoint &p, int slot) -> Thingp;
 [[nodiscard]] auto thing_get_direction(Gamep g, Levelsp v, Levelp l, Thingp me) -> fpoint;
 [[nodiscard]] auto thing_get_dmap(Gamep g, Levelsp v, Levelp l, Thingp me) -> Dmap *;
-[[nodiscard]] auto thing_get(Gamep g, Levelsp v, Levelp l, spoint p, int slot) -> Thingp;
+[[nodiscard]] auto thing_get(Gamep g, Levelsp v, Levelp l, const spoint &p, int slot) -> Thingp;
 [[nodiscard]] auto thing_health_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_health_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_health_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
@@ -947,7 +947,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_variant_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_variant(Thingp t) -> int;
 [[nodiscard]] auto thing_vision_can_see_tile(Gamep g, Levelsp v, Levelp l, Thingp t, spoint p) -> bool;
-[[nodiscard]] auto thing_vision_player_has_seen_tile(Gamep g, Levelsp v, Levelp l, spoint p) -> bool;
+[[nodiscard]] auto thing_vision_player_has_seen_tile(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
 [[nodiscard]] auto thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp me, spoint to) -> bool;
 [[nodiscard]] auto thing_weight_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_weight(Thingp t) -> int;
@@ -959,6 +959,7 @@ using Thing = struct Thing {
 // end sort marker1 }
 
 // begin sort marker2 {
+auto astar_solve(Gamep g, Levelsp v, Levelp l, Thingp t, spoint src, spoint dst) -> std::vector< spoint >;
 void fov_map_set(FovMap *fov, uint8_t x, uint8_t y, uint8_t val);
 void fov_map_set(FovMap *m, const spoint &pov, bool val);
 void LEVEL_BOTCON(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
@@ -967,6 +968,7 @@ void LEVEL_DBG(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_
 void LEVEL_ERR(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
 void LEVEL_LOG(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
 void LEVEL_TOPCON(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
+void level_vision_calculate_all(Gamep g, Levelsp v, Levelp l);
 void LEVEL_WARN(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
 void monst_state_change(Gamep g, Levelsp v, Levelp l, Thingp me, MonstState new_state);
 void player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me);
@@ -982,6 +984,7 @@ void thing_anim_init(Gamep g, Levelsp v, Levelp l, Thingp t, ThingAnim anim_type
 void thing_anim_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, int time_step);
 void thing_at_set(Thingp t, const fpoint &val);
 void thing_at_set(Thingp t, const spoint &val);
+void thing_blit_text(Gamep g, Levelsp v, Levelp l, spoint tl, spoint br, std::string const &text, color fg, bool outline);
 void THING_BOTCON(Thingp t, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void thing_can_see_dump(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_chasm_handle(Gamep g, Levelsp v, Levelp l, Thingp t);
@@ -1069,7 +1072,6 @@ void thing_tick_end(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_tick_idle(Gamep g, Levelsp v, Levelp l, Thingp t);
 void THING_TOPCON(Thingp t, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void thing_update_pos(Gamep g, Levelsp v, Levelp l, Thingp me);
-void thing_vision_calculate_all(Gamep g, Levelsp v, Levelp l);
 void thing_vision_reset(Gamep g, Levelsp v, Levelp l, Thingp t);
 void THING_WARN(Thingp t, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void thing_water_handle(Gamep g, Levelsp v, Levelp l, Thingp t);
@@ -1080,15 +1082,11 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp t, WidPopup *parent, in
 void wid_unset_thing_context(Gamep g, Levelsp v, Widp w, Thingp t);
 // end sort marker2 }
 
-void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp_maybe_null, Thingp t_maybe_null, spoint *tl, spoint *br,
-                                 uint16_t *tile_index);
+void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, const spoint &p, Tpp tp_maybe_null, Thingp t_maybe_null, spoint *tl,
+                                 spoint *br, uint16_t *tile_index);
 
-void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_maybe_null, spoint tl, spoint br, uint16_t tile_index,
+void thing_display(Gamep g, Levelsp v, Levelp l, const spoint &p, Tpp tp, Thingp t_maybe_null, spoint tl, spoint br, uint16_t tile_index,
                    FboEnum fbo);
-
-void thing_blit_text(Gamep g, Levelsp v, Levelp l, spoint tl, spoint br, std::string const &text, color fg, bool outline);
-
-auto astar_solve(Gamep g, Levelsp v, Levelp l, Thingp t, spoint src, spoint dst) -> std::vector< spoint >;
 
 #define FOR_ALL_MINION_SLOTS(_g_, _v_, _l_, _mob_, _slot_, _minion_)                                                                       \
   if ((_g_) && (_v_) && (_l_))                                                                                                             \

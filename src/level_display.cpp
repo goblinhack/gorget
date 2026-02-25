@@ -14,7 +14,7 @@
 #include "my_sdl_proto.hpp"
 #include "my_thing_inlines.hpp"
 
-static void level_display_cursor(Gamep g, Levelsp v, Levelp l, spoint p, FboEnum fbo)
+static void level_display_cursor(Gamep g, Levelsp v, Levelp l, const spoint &p, FboEnum fbo)
 {
   TRACE_NO_INDENT();
 
@@ -97,7 +97,7 @@ static void level_display_cursor(Gamep g, Levelsp v, Levelp l, FboEnum fbo)
   }
 }
 
-static void level_display_slot(Gamep g, Levelsp v, Levelp l, spoint p, int slot, int depth, FboEnum fbo)
+static void level_display_slot(Gamep g, Levelsp v, Levelp l, const spoint &p, int slot, int depth, FboEnum fbo)
 {
   TRACE_NO_INDENT();
 

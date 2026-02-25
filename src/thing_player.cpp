@@ -432,7 +432,7 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
 //
 // Return true on the event being consumed
 //
-auto player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, spoint to) -> bool
+auto player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, const spoint &to) -> bool
 {
   auto *me = thing_player(g);
   if (me == nullptr) {

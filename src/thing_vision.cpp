@@ -27,7 +27,7 @@ auto thing_vision_can_see_tile(Gamep g, Levelsp v, Levelp l, Thingp t, spoint p)
   TRACE_NO_INDENT();
 
   auto *ext = thing_ext_struct(g, t);
-  if (ext == nullptr) {
+  if (UNLIKELY(ext == nullptr)) {
     return false;
   }
 
@@ -46,7 +46,7 @@ auto thing_vision_can_see_tile(Gamep g, Levelsp v, Levelp l, Thingp t, spoint p)
   return static_cast< unsigned int >(fov_map_get(&ext->can_see, p.x, p.y)) != 0U;
 }
 
-auto thing_vision_player_has_seen_tile(Gamep g, Levelsp v, Levelp l, spoint p) -> bool
+auto thing_vision_player_has_seen_tile(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -56,7 +56,7 @@ auto thing_vision_player_has_seen_tile(Gamep g, Levelsp v, Levelp l, spoint p) -
   }
 
   auto *ext = thing_ext_struct(g, player);
-  if (ext == nullptr) {
+  if (UNLIKELY(ext == nullptr)) {
     return false;
   }
 
@@ -70,7 +70,7 @@ auto thing_vision_player_has_seen_tile(Gamep g, Levelsp v, Levelp l, spoint p) -
 void thing_can_see_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   auto *ext = thing_ext_struct(g, t);
-  if (ext == nullptr) {
+  if (UNLIKELY(ext == nullptr)) {
     return;
   }
 
@@ -106,7 +106,7 @@ void thing_can_see_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
 void thing_has_seen_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   auto *ext = thing_ext_struct(g, t);
-  if (ext == nullptr) {
+  if (UNLIKELY(ext == nullptr)) {
     return;
   }
 
@@ -136,52 +136,5 @@ void thing_has_seen_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
     }
 
     THING_LOG(t, "has seen: %s", debug.c_str());
-  }
-}
-
-//
-// What can monsters see?
-//
-void thing_vision_calculate_all(Gamep g, Levelsp v, Levelp l)
-{
-  TRACE_NO_INDENT();
-
-  auto *player = thing_player(g);
-  if (player == nullptr) {
-    return;
-  }
-
-  if ((g == nullptr) || (v == nullptr) || (l == nullptr)) {
-    return;
-  }
-
-  //
-  // If the player is not on the level being lit, then nothing to do
-  //
-  if (l->level_num != player->level_num) {
-    return;
-  }
-
-  //
-  // Calculate all lit tiles for non player things
-  //
-  FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
-  {
-    auto max_radius = thing_distance_vision(t);
-    if (max_radius == 0) {
-      continue;
-    }
-
-    auto *ext = thing_ext_struct(g, t);
-    if (ext == nullptr) {
-      continue;
-    }
-
-    if (thing_is_player(t)) {
-      continue;
-    }
-
-    level_fov_can_see_callback_t callback = nullptr;
-    level_fov(g, v, l, t, &ext->can_see, &ext->has_seen, thing_at(t), max_radius, callback);
   }
 }

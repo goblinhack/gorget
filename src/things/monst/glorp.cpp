@@ -32,7 +32,7 @@ static auto tp_glorp_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::
       UI_INFO3_FMT_STR "Although they look like lime jelly, no one has yet confirmed how they taste..."; // newline
 }
 
-auto tp_glorp_assess_tile(Gamep g, Levelsp v, Levelp l, spoint at, Thingp t) -> ThingEnviron
+auto tp_glorp_assess_tile(Gamep g, Levelsp v, Levelp l, const spoint &at, Thingp t) -> ThingEnviron
 {
   TRACE_NO_INDENT();
 

@@ -261,6 +261,10 @@ using Level = struct Level {
   //
   uint8_t player_has_walked_tile[ MAP_WIDTH ][ MAP_HEIGHT ];
   //
+  // Updated per tick for things that block light
+  //
+  uint8_t is_light_blocker[ MAP_WIDTH ][ MAP_HEIGHT ];
+  //
   // Original character map when the level was generated
   //
   char debug[ MAP_WIDTH ][ MAP_HEIGHT ];
@@ -389,8 +393,8 @@ using Levels = struct Levels {
   //
   // For lighting memory
   //
-  ThingLight thing_fov[ THING_FOV_MAX ];
-  int        thing_fov_count;
+  ThingLight thing_fov[ THING_LIGHT_MAX ];
+  int        thing_light_count;
   //
   // Space for player memory
   //
@@ -635,19 +639,20 @@ enum {
 [[nodiscard]] auto level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp at) -> Thingp;
 [[nodiscard]] auto level_gen_is_room_entrance(Gamep g, class LevelGen *l, int x, int y) -> bool;
 [[nodiscard]] auto level_gen_is_room_entrance(Gamep g, class LevelGen *l, spoint at) -> bool;
-[[nodiscard]] auto level_get_thing_id_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot) -> ThingId;
+[[nodiscard]] auto level_get_thing_id_at(Gamep g, Levelsp v, Levelp l, const spoint &p, int slot) -> ThingId;
 [[nodiscard]] auto level_is_level_select(Gamep g, Levelsp v, Levelp l) -> bool;
 [[nodiscard]] auto level_is_player_level(Gamep g, Levelsp v, Levelp l) -> bool;
-[[nodiscard]] auto level_is_same_obj_type_at(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp) -> bool;
-[[nodiscard]] auto level_light_blocker_at(Gamep g, Levelsp v, Levelp l, spoint pov) -> Thingp;
+[[nodiscard]] auto level_is_same_obj_type_at(Gamep g, Levelsp v, Levelp l, const spoint &p, Tpp tp) -> bool;
+[[nodiscard]] auto level_light_blocker_at_cached(Gamep g, Levelsp v, Levelp l, const spoint &pov) -> bool;
+[[nodiscard]] auto level_light_blocker_at(Gamep g, Levelsp v, Levelp l, const spoint &pov) -> Thingp;
 [[nodiscard]] auto level_match_contents(Gamep g, Levelsp v, Levelp l, Testp t, int w, int h, const char *expected) -> bool;
 [[nodiscard]] auto level_open(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> Thingp;
 [[nodiscard]] auto level_open(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp at) -> Thingp;
-[[nodiscard]] auto level_populate_thing_id_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot, ThingId id) -> bool;
+[[nodiscard]] auto level_populate_thing_id_at(Gamep g, Levelsp v, Levelp l, const spoint &p, int slot, ThingId id) -> bool;
 [[nodiscard]] auto level_request_to_cleanup_things(Gamep g, Levelsp v, Levelp l) -> bool;
 [[nodiscard]] auto level_select_calculate_next_level_down(Gamep g, Levelsp v, Levelp l, bool redo = false) -> Levelp;
 [[nodiscard]] auto level_select_get_level_at_tile_coords(Gamep g, Levelsp v, spoint p) -> Levelp;
-[[nodiscard]] auto level_select_get_level(Gamep, Levelsp, Levelp, spoint) -> Levelp;
+[[nodiscard]] auto level_select_get_level(Gamep, Levelsp, Levelp l, const spoint &) -> Levelp;
 [[nodiscard]] auto level_select_get_next_level_down(Gamep g, Levelsp v, Levelp l) -> Levelp;
 [[nodiscard]] auto level_select_get(Gamep g, Levelsp v, spoint p) -> LevelSelectCell *;
 [[nodiscard]] auto level_select_IS_OOB(int x, int y) -> bool;
@@ -684,7 +689,7 @@ void level_cursor_path_reset(Gamep g);
 void level_cursor_set(Gamep g, Levelsp v, spoint p);
 void level_debug(Gamep g, Levelsp v, Levelp l);
 void level_destroy(Gamep g, Levelsp v, Levelp l);
-void level_display_obj(Gamep, Levelsp, Levelp, spoint, Tpp, Thingp);
+void level_display_obj(Gamep, Levelsp, Levelp l, const spoint &, Tpp, Thingp);
 void level_display(Gamep g, Levelsp v, Levelp l);
 void level_dmap(Gamep g, Levelsp v, Levelp l);
 void level_dump(Gamep g, Levelsp v, Levelp l, int w = MAP_WIDTH, int h = MAP_HEIGHT);
@@ -699,6 +704,7 @@ void level_is_completed_by_player_exiting(Gamep g, Levelsp v, Levelp l);
 void level_is_completed_by_player_falling(Gamep g, Levelsp v, Levelp l);
 void level_is_player_level_set(Gamep g, Levelsp v, Levelp l);
 void level_is_player_level_unset(Gamep g, Levelsp v, Levelp l);
+void level_light_blocker_update(Gamep g, Levelsp v, Levelp l);
 void level_light_calculate_all(Gamep g, Levelsp v, Levelp l);
 void level_light_per_pixel_lighting(Gamep g, Levelsp v, Levelp l, Thingp t, spoint pov, spoint p);
 void level_light_precalculate(Gamep g);
@@ -708,7 +714,7 @@ void level_minimaps_update(Gamep g, Levelsp v, Levelp l);
 void level_mouse_position_get(Gamep g, Levelsp v, Levelp l);
 void level_request_to_cleanup_things_set(Gamep g, Levelsp v, Levelp l);
 void level_request_to_cleanup_things_unset(Gamep g, Levelsp v, Levelp l);
-void level_scroll_delta(Gamep g, Levelsp v, Levelp l, spoint delta);
+void level_scroll_delta(Gamep g, Levelsp v, Levelp l, const spoint &delta);
 void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l);
 void level_scroll_warp_to_focus(Gamep g, Levelsp v, Levelp l);
 void level_select_assign_levels_to_grid(Gamep g, Levelsp v);
@@ -727,11 +733,11 @@ void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l);
 void level_tick_explosion(Gamep g, Levelsp v, Levelp l);
 void level_tick_teleport(Gamep g, Levelsp v, Levelp l);
 void level_tick_water(Gamep g, Levelsp v, Levelp l);
-void level_update_paths_set(Gamep g, Levelsp v, Levelp l, spoint p);
+void level_update_paths_set(Gamep g, Levelsp v, Levelp l, const spoint &p);
 void level_update_paths(Gamep g, Levelsp v, Levelp l);
 void level_update_tiles(Gamep g, Levelsp v, Levelp l);
 void level_update_visibility(Gamep g, Levelsp v, Levelp l);
-void level_water_display(Gamep, Levelsp, Levelp, spoint, int, int16_t, int16_t, int16_t, int16_t);
+void level_water_display(Gamep, Levelsp, Levelp l, const spoint &, int, int16_t, int16_t, int16_t, int16_t);
 void level_water_tick(Gamep, Levelsp, Levelp);
 void level_water_update(Gamep, Levelsp, Levelp);
 void levels_destroy(Gamep g, Levelsp v);

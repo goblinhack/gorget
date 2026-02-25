@@ -352,7 +352,7 @@ static auto level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Th
 //
 // Returns true on success
 //
-static auto level_cursor_path_draw_line(Gamep g, Levelsp v, Levelp l, spoint start, spoint end) -> std::vector< spoint >
+static auto level_cursor_path_draw_line(Gamep g, Levelsp v, Levelp l, const spoint &start, spoint end) -> std::vector< spoint >
 {
   static std::vector< spoint > const empty;
 
