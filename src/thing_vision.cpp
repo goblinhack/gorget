@@ -13,12 +13,12 @@ void thing_vision_reset(Gamep g, Levelsp v, Levelp l, Thingp t)
 
   auto *ext = thing_ext_struct(g, t);
   if (ext != nullptr) {
-    ext->has_seen = {{{0}}};
+    ext->has_seen = {{0}};
   }
 
   auto *light = thing_light_struct(g, t);
   if (light != nullptr) {
-    light->is_lit = {{{0}}};
+    light->is_lit = {{0}};
   }
 }
 
@@ -43,7 +43,7 @@ auto thing_vision_can_see_tile(Gamep g, Levelsp v, Levelp l, Thingp t, spoint p)
     return false;
   }
 
-  return ext->can_see.is_set[ p.x ][ p.y ] != 0U;
+  return fov_map_get(&ext->can_see, p.x, p.y) != 0U;
 }
 
 auto thing_vision_player_has_seen_tile(Gamep g, Levelsp v, Levelp l, spoint p) -> bool
@@ -64,7 +64,7 @@ auto thing_vision_player_has_seen_tile(Gamep g, Levelsp v, Levelp l, spoint p) -
     return false;
   }
 
-  return ext->has_seen.is_set[ p.x ][ p.y ] != 0U;
+  return fov_map_get(&ext->has_seen, p.x, p.y) != 0U;
 }
 
 void thing_can_see_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
@@ -91,7 +91,7 @@ void thing_can_see_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
         continue;
       }
 
-      if (ext->can_see.is_set[ x ][ y ] != 0U) {
+      if (fov_map_get(&ext->can_see, p.x, p.y) != 0U) {
         debug += "*";
         continue;
       }
@@ -127,7 +127,7 @@ void thing_has_seen_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
         continue;
       }
 
-      if (ext->has_seen.is_set[ x ][ y ] != 0U) {
+      if (fov_map_get(&ext->has_seen, p.x, p.y) != 0U) {
         debug += "*";
         continue;
       }

@@ -86,7 +86,7 @@ ENUM_DEF_H(MONST_STATE_ENUM, MonstState)
 // Field of view for a monster or player
 //
 using FovMap = struct FovMap {
-  uint8_t is_set[ MAP_WIDTH ][ MAP_HEIGHT ];
+  uint8_t bits[ (MAP_WIDTH * MAP_HEIGHT) / 8 ];
 };
 
 //
@@ -489,6 +489,8 @@ using Thing = struct Thing {
 
 // begin sort marker1 {
 [[nodiscard]] auto immediate_owner(Gamep g, Levelsp v, Levelp l, Thingp t) -> Thingp;
+[[nodiscard]] auto fov_map_get(const FovMap *m, const spoint &) -> bool;
+[[nodiscard]] bool fov_map_get(const FovMap *fov, const uint8_t x, const uint8_t);
 [[nodiscard]] auto monst_state_to_string(MonstState state) -> std::string;
 [[nodiscard]] auto monst_state(Gamep g, Levelsp v, Levelp l, Thingp me) -> MonstState;
 [[nodiscard]] auto player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, spoint to) -> bool;
@@ -980,6 +982,8 @@ void thing_at_set(Thingp t, const fpoint &val);
 void thing_at_set(Thingp t, const spoint &val);
 void THING_BOTCON(Thingp t, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void thing_can_see_dump(Gamep g, Levelsp v, Levelp l, Thingp t);
+void fov_map_set(FovMap *m, const spoint &pov, const bool val);
+void fov_map_set(FovMap *fov, const uint8_t x, const uint8_t y, const uint8_t val);
 void thing_chasm_handle(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint old_at);
 void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me);

@@ -355,10 +355,10 @@ static void player_light_tile(Gamep g, Levelsp v, Levelp l, Thingp t, ThingLight
   //
   // Only apply color to the tile once
   //
-  if (! static_cast< bool >(light->is_lit.is_set[ tile.x ][ tile.y ])) {
-    light->is_lit.is_set[ tile.x ][ tile.y ] = 1U;
-    ext->has_seen.is_set[ tile.x ][ tile.y ] = 1U;
-    ext->can_see.is_set[ tile.x ][ tile.y ]  = 1U;
+  if (! fov_map_get(&light->is_lit, tile.x, tile.y)) {
+    fov_map_set(&light->is_lit, tile.x, tile.y, 1U);
+    fov_map_set(&ext->has_seen, tile.x, tile.y, 1U);
+    fov_map_set(&ext->can_see, tile.x, tile.y, 1U);
     level_light_per_pixel_lighting(g, v, l, t, pov, tile);
   }
 }
@@ -433,12 +433,12 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
   //
   // Reset the fov ray lengths
   //
-  memset(rays, 0, sizeof(rays));
+  *rays = {};
 
   //
   // Reset what we can see
   //
-  memset(light->is_lit.is_set, 0, sizeof(light->is_lit.is_set));
+  light->is_lit = {};
 
   //
   // The light source
@@ -768,7 +768,7 @@ void level_light_calculate_all(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
-  memset(&v->light_map, 0, sizeof(v->light_map));
+  v->light_map = {};
 
   //
   // Now do the same for the player

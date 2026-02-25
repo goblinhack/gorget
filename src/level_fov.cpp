@@ -53,35 +53,6 @@ static const int matrix_table[ 8 ][ 4 ] = {
     {1, 0, 0, 1}, {0, 1, 1, 0}, {0, -1, 1, 0}, {-1, 0, 0, 1}, {-1, 0, 0, -1}, {0, -1, -1, 0}, {0, 1, -1, 0}, {1, 0, 0, -1},
 };
 
-static void level_fov_set(FovMap *m, spoint pov, bool val)
-{
-#ifdef _DEBUG_BUILD_
-  if (IS_OOB(pov)) {
-    ERR("overflow");
-    return;
-  }
-#endif
-
-  if (m != nullptr) {
-    m->is_set[ pov.x ][ pov.y ] = static_cast< uint8_t >(val);
-  }
-}
-
-[[nodiscard]] static auto level_fov_get(FovMap *m, spoint pov) -> bool
-{
-#ifdef _DEBUG_BUILD_
-  if (IS_OOB(pov)) {
-    ERR("overflow");
-    return false;
-  }
-#endif
-  if (m == nullptr) {
-    return false;
-  }
-
-  return static_cast< bool >(m->is_set[ pov.x ][ pov.y ]);
-}
-
 //
 // Cast visiblity using shadowcasting.
 //
@@ -147,8 +118,8 @@ void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
         //
         // Can see tile. If not seen already, light it
         //
-        if (! level_fov_get(fov_can_see_tile, p)) {
-          level_fov_set(fov_can_see_tile, p, true);
+        if (! fov_map_get(fov_can_see_tile, p)) {
+          fov_map_set(fov_can_see_tile, p, true);
 
           //
           // Per tile can see callback check
@@ -170,7 +141,7 @@ void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
         //
         // Has seen this tile
         //
-        level_fov_set(fov_has_seen_tile, p, true);
+        fov_map_set(fov_has_seen_tile, p, true);
       }
 
 #ifdef TODO
@@ -226,8 +197,8 @@ void level_fov(Gamep g, Levelsp v, Levelp l, Thingp me, FovMap *fov_can_see_tile
     //
     // If not seen already, light it
     //
-    if (! level_fov_get(fov_can_see_tile, pov)) {
-      level_fov_set(fov_can_see_tile, pov, true);
+    if (! fov_map_get(fov_can_see_tile, pov)) {
+      fov_map_set(fov_can_see_tile, pov, true);
 
       //
       // Per tile can see callback check
@@ -239,7 +210,7 @@ void level_fov(Gamep g, Levelsp v, Levelp l, Thingp me, FovMap *fov_can_see_tile
   }
 
   if (fov_has_seen_tile != nullptr) {
-    level_fov_set(fov_has_seen_tile, pov, true);
+    fov_map_set(fov_has_seen_tile, pov, true);
   }
 
   // me->can_see_you(point(pov_x, pov_y));
