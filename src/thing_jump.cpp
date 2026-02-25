@@ -69,7 +69,7 @@ auto thing_jump_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to, bool warn)
 {
   TRACE_NO_INDENT();
 
-  if (is_oob(to)) {
+  if (IS_OOB(to)) {
     return false;
   }
 

@@ -256,7 +256,7 @@ auto thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool
 {
   TRACE_NO_INDENT();
 
-  if (is_oob(to)) {
+  if (IS_OOB(to)) {
     return false;
   }
 
@@ -289,7 +289,7 @@ auto thing_shove_to(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool
 {
   TRACE_NO_INDENT();
 
-  if (is_oob(to)) {
+  if (IS_OOB(to)) {
     return false;
   }
 
@@ -315,7 +315,7 @@ auto thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp me, spoint to) -
 {
   TRACE_NO_INDENT();
 
-  if (is_oob(to)) {
+  if (IS_OOB(to)) {
     return false;
   }
 

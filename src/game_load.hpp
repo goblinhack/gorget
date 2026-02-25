@@ -931,11 +931,6 @@ auto operator>>(std::istream &in, Bits< class Game & > my) -> std::istream &
       return in;
     }
     in >> bits(tmp);
-    if (tmp != offsetof(Level, player_fov_has_seen_tile)) {
-      game_load_error = "Level structure changed: offsetof(Level, player_fov_has_seen_tile)";
-      return in;
-    }
-    in >> bits(tmp);
     if (tmp != offsetof(Level, player_has_walked_tile)) {
       game_load_error = "Level structure changed: offsetof(Level, player_has_walked_tile)";
       return in;
@@ -1064,7 +1059,7 @@ auto Game::load(const std::string &file_to_load, class Game &target) -> bool
   TRACE_NO_INDENT();
   auto start = time_ms();
 
-  LOG("Expect: %s, decompress %ld (%ld bytes) -> %ldMb (%ld bytes)", file_to_load.c_str(),
+  LOG("Expect: %s, decompress %ld (%ld bytes) -> %ld Mb (%ld bytes)", file_to_load.c_str(),
       src_size / (1024 * 1024), // newline
       src_size,                 // newline
       dst_size / (1024 * 1024), // newline
@@ -1083,7 +1078,7 @@ auto Game::load(const std::string &file_to_load, class Game &target) -> bool
 #endif
 
   {
-    LOG("%s decompress %ldMb (%ld bytes) -> %ldMb (%ld bytes) took %u ms (%s)",
+    LOG("%s decompress %ld Mb (%ld bytes) -> %ld Mb (%ld bytes) took %u ms (%s)",
         which,                    // newline
         src_size / (1024 * 1024), // newline
         src_size,                 // newline
@@ -1092,7 +1087,7 @@ auto Game::load(const std::string &file_to_load, class Game &target) -> bool
         time_ms() - start,        // newline
         file_to_load.c_str());
   } else {
-    ERR("%s decompress %ldMb (%ld bytes) -> %ldMb (%ld error code) took %u ms (%s)",
+    ERR("%s decompress %ld Mb (%ld bytes) -> %ld Mb (%ld error code) took %u ms (%s)",
         which,                           // newline
         (long) src_size / (1024 * 1024), // newline
         (long) src_size,                 // newline

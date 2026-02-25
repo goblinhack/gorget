@@ -1,6 +1,7 @@
 bugs
 ----
 monst chasing
+could use bitset for fov
 monst wandering
 need mob distance and lunging
 

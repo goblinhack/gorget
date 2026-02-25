@@ -86,7 +86,7 @@ static void thing_ext_free(Levelsp v, Thingp t)
   //
   thing_mutex.lock();
   for (auto tries = 0; tries < THING_FOV_MAX; tries++) {
-    ThingFovId fov_id = last_fov_id + tries;
+    ThingLightId fov_id = last_fov_id + tries;
     fov_id %= THING_FOV_MAX;
     if (UNLIKELY(! fov_id)) {
       continue;

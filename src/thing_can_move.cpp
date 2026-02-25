@@ -13,7 +13,7 @@ auto thing_can_move_to_attempt(Gamep g, Levelsp v, Levelp l, Thingp me, spoint t
 {
   TRACE_NO_INDENT();
 
-  if (is_oob(to)) {
+  if (IS_OOB(to)) {
     return false;
   }
 
@@ -147,7 +147,7 @@ auto thing_can_move_to_attempt_by_shoving(Gamep g, Levelsp v, Levelp l, Thingp m
 {
   TRACE_NO_INDENT();
 
-  if (is_oob(to)) {
+  if (IS_OOB(to)) {
     return false;
   }
 

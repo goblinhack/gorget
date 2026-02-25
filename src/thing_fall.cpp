@@ -16,7 +16,7 @@
 {
   TRACE_NO_INDENT();
 
-  if (is_oob(p)) {
+  if (IS_OOB(p)) {
     return false;
   }
 

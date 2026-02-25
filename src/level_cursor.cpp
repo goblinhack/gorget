@@ -26,7 +26,7 @@ void level_cursor_set(Gamep g, Levelsp v, spoint p)
     BOTCON("cursor %d,%d", v->cursor_at.x, v->cursor_at.y);
   }
 
-  if (! is_oob(p)) {
+  if (! IS_OOB(p)) {
     v->cursor_at       = p;
     v->cursor_at_valid = true;
   } else {

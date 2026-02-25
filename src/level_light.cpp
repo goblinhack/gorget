@@ -343,21 +343,22 @@ void Raycast::ray_lengths_precalculate(Gamep g, Levelsp v, Levelp l)
   }
 }
 
-static void light_tile(Gamep g, Levelsp v, Levelp l, Thingp t, ThingFovp fov, spoint pov, spoint tile)
+static void player_light_tile(Gamep g, Levelsp v, Levelp l, Thingp t, ThingLightp light, ThingExtp ext, spoint pov, spoint tile)
 {
   TRACE_NO_INDENT();
 
-  if (fov == nullptr) {
-    CROAK("missing ThingFovp for player");
+  if (light == nullptr) {
+    CROAK("missing ThingLightp for player");
     return;
   }
 
   //
   // Only apply color to the tile once
   //
-  if (! static_cast< bool >(fov->fov_can_see_tile.can_see[ tile.x ][ tile.y ])) {
-    fov->fov_can_see_tile.can_see[ tile.x ][ tile.y ]       = 1U;
-    l->player_fov_has_seen_tile.can_see[ tile.x ][ tile.y ] = 1U;
+  if (! static_cast< bool >(light->is_lit.is_set[ tile.x ][ tile.y ])) {
+    light->is_lit.is_set[ tile.x ][ tile.y ] = 1U;
+    ext->has_seen.is_set[ tile.x ][ tile.y ] = 1U;
+    ext->can_see.is_set[ tile.x ][ tile.y ]  = 1U;
     level_light_per_pixel_lighting(g, v, l, t, pov, tile);
   }
 }
@@ -424,8 +425,8 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
-  auto *fov = thing_fov_struct(g, player);
-  if (fov == nullptr) {
+  auto *light = thing_light_struct(g, player);
+  if (light == nullptr) {
     return;
   }
 
@@ -437,7 +438,7 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
   //
   // Reset what we can see
   //
-  memset(fov->fov_can_see_tile.can_see, 0, sizeof(fov->fov_can_see_tile.can_see));
+  memset(light->is_lit.is_set, 0, sizeof(light->is_lit.is_set));
 
   //
   // The light source
@@ -499,14 +500,14 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
       // Oob can happen in custom levels with no edges
       //
       spoint tile(tile_x, tile_y);
-      if (UNLIKELY(is_oob(tile))) {
+      if (IS_OOB(tile)) {
         break;
       }
 
       prev_tile_x = tile_x;
       prev_tile_y = tile_y;
 
-      light_tile(g, v, l, player, fov, pov, tile);
+      player_light_tile(g, v, l, player, light, ext, pov, tile);
 
       //
       // This is for foliage so we don't obscure too much where we stand
@@ -577,7 +578,7 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
           //
           tile.x = tile_x;
           tile.y = tile_y;
-          if (UNLIKELY(is_oob(tile))) {
+          if (IS_OOB(tile)) {
             break;
           }
 
@@ -599,7 +600,7 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
             break;
           }
 
-          light_tile(g, v, l, player, fov, pov, tile);
+          player_light_tile(g, v, l, player, light, ext, pov, tile);
           step_inside_wall++;
         }
 
@@ -791,8 +792,8 @@ void level_light_calculate_all(Gamep g, Levelsp v, Levelp l)
       continue;
     }
 
-    auto *ext = thing_ext_struct(g, t);
-    auto *fov = thing_fov_struct(g, t);
+    auto *ext   = thing_ext_struct(g, t);
+    auto *light = thing_light_struct(g, t);
 
     //
     // + here needed for light edges for smoothly moving things
@@ -808,9 +809,9 @@ void level_light_calculate_all(Gamep g, Levelsp v, Levelp l)
       callback = nullptr;
     }
 
-    level_fov(g, v, l, t,                                           // newline
-              (fov != nullptr) ? &fov->fov_can_see_tile : nullptr,  // newline
-              (ext != nullptr) ? &ext->fov_has_seen_tile : nullptr, // newline
+    level_fov(g, v, l, t,                                    // newline
+              (light != nullptr) ? &light->is_lit : nullptr, // newline
+              (ext != nullptr) ? &ext->has_seen : nullptr,   // newline
               thing_at(t), max_radius, callback);
   }
 }

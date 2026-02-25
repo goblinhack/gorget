@@ -98,7 +98,7 @@ auto thing_minion_detach_me_from_mob(Gamep g, Levelsp v, Levelp l, Thingp me) ->
   target.x = dmap_goal.x - radius + PCG_RANDOM_RANGE(0, radius * 2);
   target.y = dmap_goal.y - radius + PCG_RANDOM_RANGE(0, radius * 2);
 
-  if (is_oob(target)) {
+  if (IS_OOB(target)) {
     return false;
   }
 

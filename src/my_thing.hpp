@@ -86,7 +86,7 @@ ENUM_DEF_H(MONST_STATE_ENUM, MonstState)
 // Field of view for a monster or player
 //
 using FovMap = struct FovMap {
-  uint8_t can_see[ MAP_WIDTH ][ MAP_HEIGHT ];
+  uint8_t is_set[ MAP_WIDTH ][ MAP_HEIGHT ];
 };
 
 //
@@ -143,7 +143,11 @@ using ThingExt = struct ThingExt {
   //
   // What we have ever seen
   //
-  FovMap fov_has_seen_tile;
+  FovMap has_seen;
+  //
+  // What we can currently see
+  //
+  FovMap can_see;
   //
   // Holds the path as we or the monster walk it
   //
@@ -154,14 +158,14 @@ using ThingExt = struct ThingExt {
 };
 
 //
-// Per thing lighting memory
+// Per thing light source lighting memory
 //
-using ThingFov = struct ThingFov {
+using ThingLight = struct ThingLight {
   uint8_t in_use : 1;
   //
-  // What we can currently see (monst) or is lit (light source)
+  // Used to avoid lighting the same tile multiple times.
   //
-  FovMap fov_can_see_tile;
+  FovMap is_lit;
 };
 
 //
@@ -444,7 +448,7 @@ using Thing = struct Thing {
   //
   // For light sources and player and monsters
   //
-  ThingFovId fov_id;
+  ThingLightId fov_id;
   //
   // Interpolated co-ords in pixels
   //
@@ -529,7 +533,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp player_or_monst) -> bool;
 [[nodiscard]] auto thing_ext_struct(Gamep g, Thingp t) -> ThingExtp;
 [[nodiscard]] auto thing_find_non_inline(Gamep g, Levelsp v, ThingId id) -> Thingp;
-[[nodiscard]] auto thing_fov_struct(Gamep g, Thingp t) -> ThingFovp;
+[[nodiscard]] auto thing_light_struct(Gamep g, Thingp t) -> ThingLightp;
 [[nodiscard]] auto thing_get_at_safe(Gamep g, Levelsp v, Levelp l, spoint p, int slot) -> Thingp;
 [[nodiscard]] auto thing_get_direction(Gamep g, Levelsp v, Levelp l, Thingp me) -> fpoint;
 [[nodiscard]] auto thing_get_dmap(Gamep g, Levelsp v, Levelp l, Thingp me) -> Dmap *;
@@ -975,6 +979,7 @@ void thing_anim_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, int ti
 void thing_at_set(Thingp t, const fpoint &val);
 void thing_at_set(Thingp t, const spoint &val);
 void THING_BOTCON(Thingp t, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void thing_can_see_dump(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_chasm_handle(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint old_at);
 void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me);
@@ -999,6 +1004,8 @@ void thing_fall_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step)
 void thing_fall(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_fini(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_free(Gamep g, Levelsp v, Levelp l, Thingp t);
+void thing_has_seen_dump(Gamep g, Levelsp v, Levelp l, Thingp t);
+void thing_vision_calculate_all(Gamep g, Levelsp v, Levelp l);
 void thing_hit_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step);
 void thing_hot_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step);
 void thing_interpolate(Gamep g, Levelsp v, Levelp l, Thingp t, float dt);

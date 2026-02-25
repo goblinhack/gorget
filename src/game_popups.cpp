@@ -20,7 +20,7 @@ void game_popup_text_add(Gamep g, int x, int y, const std::string &text, color c
     return;
   }
 
-  if (is_oob(x, y)) {
+  if (IS_OOB(x, y)) {
     ERR("Text is oob");
     return;
   }

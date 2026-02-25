@@ -66,7 +66,7 @@ auto thing_can_move_to_attempt_by_opening(Gamep g, Levelsp v, Levelp l, Thingp m
 {
   TRACE_NO_INDENT();
 
-  if (is_oob(to)) {
+  if (IS_OOB(to)) {
     return false;
   }
 

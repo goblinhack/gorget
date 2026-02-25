@@ -118,7 +118,7 @@ void thing_projectile_move(Gamep g, Levelsp v, Levelp l, Thingp t, float dt)
   at.x += delta.x;
   at.y += delta.y;
 
-  if (is_oob(at)) {
+  if (IS_OOB(at)) {
     ThingEvent e {
         .reason     = "oob",                        //
         .event_type = THING_EVENT_LIFESPAN_EXPIRED, //

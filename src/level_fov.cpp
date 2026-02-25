@@ -56,21 +56,21 @@ static const int matrix_table[ 8 ][ 4 ] = {
 static void level_fov_set(FovMap *m, spoint pov, bool val)
 {
 #ifdef _DEBUG_BUILD_
-  if (is_oob(pov)) {
+  if (IS_OOB(pov)) {
     ERR("overflow");
     return;
   }
 #endif
 
   if (m != nullptr) {
-    m->can_see[ pov.x ][ pov.y ] = static_cast< uint8_t >(val);
+    m->is_set[ pov.x ][ pov.y ] = static_cast< uint8_t >(val);
   }
 }
 
 [[nodiscard]] static auto level_fov_get(FovMap *m, spoint pov) -> bool
 {
 #ifdef _DEBUG_BUILD_
-  if (is_oob(pov)) {
+  if (IS_OOB(pov)) {
     ERR("overflow");
     return false;
   }
@@ -79,7 +79,7 @@ static void level_fov_set(FovMap *m, spoint pov, bool val)
     return false;
   }
 
-  return static_cast< bool >(m->can_see[ pov.x ][ pov.y ]);
+  return static_cast< bool >(m->is_set[ pov.x ][ pov.y ]);
 }
 
 //
@@ -111,7 +111,7 @@ void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
     return; // Distance is out-of-range.
   }
 
-  if (is_oob(pov.x + (distance_from_origin * xy), pov.y + (distance_from_origin * yy))) {
+  if (IS_OOB(pov.x + (distance_from_origin * xy), pov.y + (distance_from_origin * yy))) {
     return; // Distance is out-of-bounds.
   }
 
@@ -132,7 +132,7 @@ void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
     // Current tile is in view.
     const spoint p(pov.x + (angle * xx) + (distance_from_origin * xy), pov.y + (angle * yx) + (distance_from_origin * yy));
 
-    if (is_oob(p)) {
+    if (IS_OOB(p)) {
       continue; // Angle is out-of-bounds.
     }
 

@@ -25,7 +25,7 @@ void game_debug_info(Gamep g)
   LOG("- sizeof(Thing):                   %" PRI_SIZE_T " b", sizeof(Thing));
   LOG("- sizeof(ThingInventory):          %" PRI_SIZE_T " b", sizeof(ThingInventory));
   LOG("- sizeof(ThingExt)                 %" PRI_SIZE_T " b", sizeof(ThingExt));
-  LOG("- sizeof(ThingFov)                 %" PRI_SIZE_T " b", sizeof(ThingFov));
+  LOG("- sizeof(ThingLight)               %" PRI_SIZE_T " b", sizeof(ThingLight));
   LOG("- sizeof(ThingPlayer):             %" PRI_SIZE_T " b", sizeof(ThingPlayer));
   LOG("- MAP_HEIGHT                       %u", MAP_HEIGHT);
   LOG("- MAP_WIDTH                        %u", MAP_WIDTH);

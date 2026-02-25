@@ -113,7 +113,7 @@ auto file_load(const char *filename, int *outlen) -> unsigned char *
   TRACE_NO_INDENT();
   auto *r = ramdisk_load(filename, outlen);
   if (r != nullptr) {
-    FILE_LOG("Read (ramdisk) %s, %dMb, %d bytes", filename, *outlen / (1024 * 1024), *outlen);
+    FILE_LOG("Read (ramdisk) %s, %d Mb, %d bytes", filename, *outlen / (1024 * 1024), *outlen);
 
     if (alt_filename != nullptr) {
       MYFREE(alt_filename);
@@ -227,7 +227,7 @@ auto file_io_read(const char *filename, int *out_len) -> unsigned char *
     *out_len = len;
   }
 
-  FILE_LOG("Read %s, %dMb, %d bytes", filename, len / (1024 * 1024), len);
+  FILE_LOG("Read %s, %d Mb, %d bytes", filename, len / (1024 * 1024), len);
 
   fclose(file);
 

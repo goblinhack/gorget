@@ -227,7 +227,7 @@ static void room_gen_draw_rectangle(RoomGen *grid, int x, int y, int width, int 
   for (auto i = x; i < x + width; i++) {
     for (auto j = y; j < y + height; j++) {
       spoint const p(i, j);
-      if (is_oob(p)) {
+      if (IS_OOB(p)) {
         continue;
       }
       grid->data[ i ][ j ] = c;
@@ -246,7 +246,7 @@ static void room_gen_draw_circle(RoomGen *grid, int x, int y, int radius, char v
     for (j = std::max(0, y - radius - 1); j < std::max((int) MAP_HEIGHT, y + radius); j++) {
       if (((i - x) * (i - x)) + ((j - y) * (j - y)) < (radius * radius) + radius) {
         spoint const p(i, j);
-        if (is_oob(p)) {
+        if (IS_OOB(p)) {
           continue;
         }
         grid->data[ i ][ j ] = value;

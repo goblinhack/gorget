@@ -257,10 +257,6 @@ using Level = struct Level {
   //
   ThingId thing_id[ MAP_WIDTH ][ MAP_HEIGHT ][ MAP_SLOTS ];
   //
-  // What we have ever seen
-  //
-  FovMap player_fov_has_seen_tile;
-  //
   // Has the player been on this tile?
   //
   uint8_t player_has_walked_tile[ MAP_WIDTH ][ MAP_HEIGHT ];
@@ -393,8 +389,8 @@ using Levels = struct Levels {
   //
   // For lighting memory
   //
-  ThingFov thing_fov[ THING_FOV_MAX ];
-  int      thing_fov_count;
+  ThingLight thing_fov[ THING_FOV_MAX ];
+  int        thing_fov_count;
   //
   // Space for player memory
   //
@@ -566,7 +562,7 @@ struct MyIter {
 #define FOR_ALL_THINGS_AT_UNSAFE(_g_, _v_, _l_, _t_, _p_)                                                                                  \
   if ((_g_) && (_v_) && (_l_))                                                                                                             \
     if (spoint _at_ = make_spoint(_p_); true)                                                                                              \
-      if (! is_oob(_at_))                                                                                                                  \
+      if (! IS_OOB(_at_))                                                                                                                  \
         for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                                                \
           if (ThingId _id_ = 0; (_id_ = (_l_)->thing_id[ _at_.x ][ _at_.y ][ _slot_ ]))                                                    \
             if (Thingp _t_ = nullptr; ((_t_) = thing_find(_g_, _v_, _id_)))
@@ -574,7 +570,7 @@ struct MyIter {
 #define FOR_ALL_THINGS_AT(_g_, _v_, _l_, _t_, _p_)                                                                                         \
   if ((_g_) && (_v_) && (_l_))                                                                                                             \
     if (spoint _at_ = make_spoint(_p_); true)                                                                                              \
-      if (! is_oob(_at_))                                                                                                                  \
+      if (! IS_OOB(_at_))                                                                                                                  \
         if (int _iter_index_ = 0; true)                                                                                                    \
           if (MyIter _iter_(_g_, _v_, &_iter_index_, __FUNCTION__, __LINE__); true)                                                        \
             for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                                            \
@@ -616,6 +612,8 @@ enum {
   LEVEL_TEST_FLAG = 1,
 };
 
+#define IS_OOB(...) UNLIKELY(is_oob(__VA_ARGS__))
+
 // begin sort marker1 {
 [[nodiscard]] auto fragment_add(Gamep g, int chance, const char *file, int line, ...) -> bool;
 [[nodiscard]] auto fragment_alt_add(Gamep g, int chance, const char *file, int line, ...) -> bool;
@@ -652,8 +650,8 @@ enum {
 [[nodiscard]] auto level_select_get_level(Gamep, Levelsp, Levelp, spoint) -> Levelp;
 [[nodiscard]] auto level_select_get_next_level_down(Gamep g, Levelsp v, Levelp l) -> Levelp;
 [[nodiscard]] auto level_select_get(Gamep g, Levelsp v, spoint p) -> LevelSelectCell *;
-[[nodiscard]] auto level_select_is_oob(int x, int y) -> bool;
-[[nodiscard]] auto level_select_is_oob(spoint p) -> bool;
+[[nodiscard]] auto level_select_IS_OOB(int x, int y) -> bool;
+[[nodiscard]] auto level_select_IS_OOB(spoint p) -> bool;
 [[nodiscard]] auto level_string(Gamep g, Levelsp v, Levelp l, int w, int h) -> std::string;
 [[nodiscard]] auto level_tick_is_in_progress(Gamep g, Levelsp v, Levelp l) -> bool;
 [[nodiscard]] auto levels_memory_alloc(Gamep g) -> Levelsp;

@@ -1918,7 +1918,7 @@ void level_fixed_add(Gamep g, int chance, LevelType level_type, const std::strin
           }
           break;
         default :
-          if (overrides.contains(c)) {
+          if (! overrides.contains(c)) {
             CROAK("level has unknown char [%c] in level @ %s:%d", level_line[ i ], file, line);
             return;
           }
@@ -3598,7 +3598,7 @@ auto level_gen_is_room_entrance(Gamep g, class LevelGen *l, int x, int y) -> boo
     return false;
   }
 
-  if (is_oob(x, y)) {
+  if (IS_OOB(x, y)) {
     return false;
   }
 
@@ -4552,7 +4552,7 @@ static void level_gen_mark_tiles_on_path_entrance_to_exit(Gamep g, class LevelGe
     x += lr;
     y += ud;
 
-    if (is_oob(x, y)) {
+    if (IS_OOB(x, y)) {
       return false;
     }
 
@@ -4567,7 +4567,7 @@ static void level_gen_mark_tiles_on_path_entrance_to_exit(Gamep g, class LevelGe
 //
 static void level_gen_extend_bridges_do(Gamep g, class LevelGen *l, int x, int y, int lr, int ud)
 {
-  if (is_oob(x, y)) {
+  if (IS_OOB(x, y)) {
     return;
   }
 

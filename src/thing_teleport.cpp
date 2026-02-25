@@ -147,7 +147,7 @@ auto thing_teleport_handle(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool
     return false;
   }
 
-  if (is_oob(to)) {
+  if (IS_OOB(to)) {
     THING_LOG(t, "teleport, no; oob");
     return false;
   }

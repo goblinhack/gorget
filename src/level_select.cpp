@@ -27,7 +27,7 @@ static auto car_to_iso(spoint car) -> spoint
   return iso;
 }
 
-auto level_select_is_oob(spoint p) -> bool
+auto level_select_IS_OOB(spoint p) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -46,7 +46,7 @@ auto level_select_is_oob(spoint p) -> bool
   return false;
 }
 
-auto level_select_is_oob(int x, int y) -> bool
+auto level_select_IS_OOB(int x, int y) -> bool
 {
   TRACE_NO_INDENT();
 
@@ -109,7 +109,7 @@ static auto level_select_get_level_from_grid_coords(Levelsp v, spoint p) -> Leve
     return nullptr;
   }
 
-  if (level_select_is_oob(p)) {
+  if (level_select_IS_OOB(p)) {
     return nullptr;
   }
 
@@ -383,7 +383,7 @@ auto level_select_get(Gamep g, Levelsp v, spoint p) -> LevelSelectCell *
     return nullptr;
   }
 
-  if (level_select_is_oob(p)) {
+  if (level_select_IS_OOB(p)) {
     ERR("level select out of range");
     return nullptr;
   }
@@ -624,7 +624,7 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
         spoint at(x * 2, y * 2);
         at = car_to_iso(at);
         at += map_offset;
-        if (is_oob(at)) {
+        if (IS_OOB(at)) {
           continue;
         }
 
@@ -678,7 +678,7 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
       spoint at((x * 2) + 1, y * 2);
       at = car_to_iso(at);
       at += map_offset;
-      if (is_oob(at)) {
+      if (IS_OOB(at)) {
         continue;
       }
 
@@ -707,7 +707,7 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
       spoint at(x * 2, (y * 2) + 1);
       at = car_to_iso(at);
       at += map_offset;
-      if (is_oob(at)) {
+      if (IS_OOB(at)) {
         continue;
       }
 

@@ -402,7 +402,7 @@ auto level_populate_thing_id_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot
 {
   TRACE_NO_INDENT();
 
-  if (is_oob(p)) {
+  if (IS_OOB(p)) {
     return false;
   }
 
@@ -414,7 +414,7 @@ auto level_get_thing_id_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot) -> 
 {
   TRACE_NO_INDENT();
 
-  if (is_oob(p)) {
+  if (IS_OOB(p)) {
     return 0;
   }
 
@@ -644,7 +644,7 @@ auto level_is_same_obj_type_at(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp) -
     return false;
   }
 
-  if (is_oob(p)) {
+  if (IS_OOB(p)) {
     return false;
   }
 

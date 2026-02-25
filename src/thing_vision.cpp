@@ -5,6 +5,7 @@
 #include "my_callstack.hpp"
 #include "my_game.hpp"
 #include "my_level.hpp"
+#include "my_thing_inlines.hpp"
 
 void thing_vision_reset(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
@@ -12,12 +13,12 @@ void thing_vision_reset(Gamep g, Levelsp v, Levelp l, Thingp t)
 
   auto *ext = thing_ext_struct(g, t);
   if (ext != nullptr) {
-    ext->fov_has_seen_tile = {{{0}}};
+    ext->has_seen = {{{0}}};
   }
 
-  auto *fov = thing_fov_struct(g, t);
-  if (fov != nullptr) {
-    fov->fov_can_see_tile = {{{0}}};
+  auto *light = thing_light_struct(g, t);
+  if (light != nullptr) {
+    light->is_lit = {{{0}}};
   }
 }
 
@@ -25,13 +26,12 @@ auto thing_vision_can_see_tile(Gamep g, Levelsp v, Levelp l, Thingp t, spoint p)
 {
   TRACE_NO_INDENT();
 
-  auto *fov = thing_fov_struct(g, t);
-  if (fov == nullptr) {
-    THING_ERR(t, "missing fov struct");
+  auto *ext = thing_ext_struct(g, t);
+  if (ext == nullptr) {
     return false;
   }
 
-  if (is_oob(p)) {
+  if (IS_OOB(p)) {
     return false;
   }
 
@@ -43,16 +43,145 @@ auto thing_vision_can_see_tile(Gamep g, Levelsp v, Levelp l, Thingp t, spoint p)
     return false;
   }
 
-  return fov->fov_can_see_tile.can_see[ p.x ][ p.y ] != 0U;
+  return ext->can_see.is_set[ p.x ][ p.y ] != 0U;
 }
 
 auto thing_vision_player_has_seen_tile(Gamep g, Levelsp v, Levelp l, spoint p) -> bool
 {
   TRACE_NO_INDENT();
 
-  if (is_oob(p)) {
+  auto *player = thing_player(g);
+  if (! player) {
     return false;
   }
 
-  return l->player_fov_has_seen_tile.can_see[ p.x ][ p.y ] != 0U;
+  auto *ext = thing_ext_struct(g, player);
+  if (ext == nullptr) {
+    return false;
+  }
+
+  if (IS_OOB(p)) {
+    return false;
+  }
+
+  return ext->has_seen.is_set[ p.x ][ p.y ] != 0U;
+}
+
+void thing_can_see_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  auto *ext = thing_ext_struct(g, t);
+  if (ext == nullptr) {
+    return;
+  }
+
+  THING_LOG(t, "can see:");
+
+  for (auto y = 0; y < MAP_HEIGHT; y++) {
+    std::string debug;
+    for (auto x = 0; x < MAP_WIDTH; x++) {
+      spoint p(x, y);
+
+      if (p == thing_at(t)) {
+        debug += "@";
+        continue;
+      }
+
+      if (level_is_wall(g, v, l, p)) {
+        debug += "#";
+        continue;
+      }
+
+      if (ext->can_see.is_set[ x ][ y ] != 0U) {
+        debug += "*";
+        continue;
+      }
+
+      debug += ".";
+    }
+
+    THING_LOG(t, "can see: %s", debug.c_str());
+  }
+}
+
+void thing_has_seen_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  auto *ext = thing_ext_struct(g, t);
+  if (ext == nullptr) {
+    return;
+  }
+
+  THING_LOG(t, "has seen:");
+
+  for (auto y = 0; y < MAP_HEIGHT; y++) {
+    std::string debug;
+    for (auto x = 0; x < MAP_WIDTH; x++) {
+      spoint p(x, y);
+
+      if (p == thing_at(t)) {
+        debug += "@";
+        continue;
+      }
+
+      if (level_is_wall(g, v, l, p)) {
+        debug += "#";
+        continue;
+      }
+
+      if (ext->has_seen.is_set[ x ][ y ] != 0U) {
+        debug += "*";
+        continue;
+      }
+
+      debug += ".";
+    }
+
+    THING_LOG(t, "has seen: %s", debug.c_str());
+  }
+}
+
+//
+// What can monsters see?
+//
+void thing_vision_calculate_all(Gamep g, Levelsp v, Levelp l)
+{
+  TRACE_NO_INDENT();
+
+  auto *player = thing_player(g);
+  if (player == nullptr) {
+    return;
+  }
+
+  if ((g == nullptr) || (v == nullptr) || (l == nullptr)) {
+    return;
+  }
+
+  //
+  // If the player is not on the level being lit, then nothing to do
+  //
+  if (l->level_num != player->level_num) {
+    return;
+  }
+
+  //
+  // Calculate all lit tiles for non player things
+  //
+  FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
+  {
+    auto max_radius = thing_distance_vision(t);
+    if (max_radius == 0) {
+      continue;
+    }
+
+    auto *ext = thing_ext_struct(g, t);
+    if (! ext) {
+      continue;
+    }
+
+    if (thing_is_player(t)) {
+      continue;
+    }
+
+    level_fov_can_see_callback_t callback = nullptr;
+    level_fov(g, v, l, t, &ext->can_see, &ext->has_seen, thing_at(t), max_radius, callback);
+  }
 }

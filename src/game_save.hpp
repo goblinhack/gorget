@@ -430,8 +430,6 @@ auto operator<<(std::ostream &out, Bits< const class Game & > const my) -> std::
     out << bits(tmp);
     tmp = offsetof(Level, thing_id);
     out << bits(tmp);
-    tmp = offsetof(Level, player_fov_has_seen_tile);
-    out << bits(tmp);
     tmp = offsetof(Level, player_has_walked_tile);
     out << bits(tmp);
     tmp = offsetof(Level, debug);
@@ -552,7 +550,7 @@ auto Game::save(const std::string &file_to_save) -> bool
 #endif
 
   {
-    LOG("%s compressed %ldMb (%ld bytes) -> %ldMb (%ld bytes) took %u ms",
+    LOG("%s compressed %ld Mb (%ld bytes) -> %ld Mb (%ld bytes) took %u ms",
         which,                    // newline
         src_size / (1024 * 1024), // newline
         src_size,                 // newline
@@ -560,7 +558,7 @@ auto Game::save(const std::string &file_to_save) -> bool
         dst_size,                 // newline
         time_ms() - start);
   } else {
-    ERR("%s compressed failed %ldMb (%ld bytes) -> %ldMb (%ld error code) took %u ms",
+    ERR("%s compressed failed %ld Mb (%ld bytes) -> %ld Mb (%ld error code) took %u ms",
         which,                           // newline
         (long) src_size / (1024 * 1024), // newline
         src_size,                        // newline

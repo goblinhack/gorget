@@ -21,7 +21,7 @@ auto thing_get(Gamep g, Levelsp v, Levelp l, spoint p, int slot) -> Thingp
     return nullptr;
   }
 
-  if (is_oob(p)) {
+  if (IS_OOB(p)) {
     ERR("out of bounds thing_get %d,%d, slot %d", p.x, p.y, slot);
     return nullptr;
   }
@@ -101,7 +101,7 @@ auto thing_and_tp_get_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot, Tpp *
     return nullptr;
   }
 
-  if (is_oob(p)) {
+  if (IS_OOB(p)) {
     ERR("out of bounds thing_and_tp_get_at %d,%d, slot %d", p.x, p.y, slot);
     return nullptr;
   }
@@ -174,7 +174,7 @@ auto thing_ext_struct(Gamep g, Thingp t) -> ThingExtp
   return &v->thing_ext[ ext_id ];
 }
 
-auto thing_fov_struct(Gamep g, Thingp t) -> ThingFovp
+auto thing_light_struct(Gamep g, Thingp t) -> ThingLightp
 {
   TRACE_NO_INDENT();
 

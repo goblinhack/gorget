@@ -58,6 +58,11 @@ void level_update_visibility(Gamep g, Levelsp v, Levelp l)
   level_light_calculate_all(g, v, l);
 
   //
+  // What can monsters see?
+  //
+  thing_vision_calculate_all(g, v, l);
+
+  //
   // Update minimaps
   //
   level_minimaps_update(g, v, l);
