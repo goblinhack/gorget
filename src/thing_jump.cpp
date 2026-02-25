@@ -24,7 +24,7 @@ static void thing_jump_truncate(Gamep g, Levelsp v, Levelp l, Thingp t, spoint &
   //
   // Cannot jump in lava for example
   //
-  if (level_is_obs_to_jumping_out_of(g, v, l, curr_at)) {
+  if (level_is_obs_to_jumping_out_of(g, v, l, curr_at) != nullptr) {
     how_far_i_can_jump = 1;
   }
 
@@ -106,7 +106,7 @@ auto thing_jump_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to, bool warn)
   //
   // No landing in solid obstacles
   //
-  if (level_is_obs_to_jumping_onto(g, v, l, to)) {
+  if (level_is_obs_to_jumping_onto(g, v, l, to) != nullptr) {
     if (thing_is_player(t)) {
       if (warn) {
         TOPCON("There is something in the way of jumping there.");

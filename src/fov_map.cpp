@@ -12,7 +12,7 @@ void fov_map_set(FovMap *fov, const uint8_t x, const uint8_t y, const uint8_t va
   const uint16_t bit    = (((uint16_t) y * MAP_WIDTH) + (uint16_t) x);
   const uint8_t  index  = bit / 8U;
   const uint8_t  offset = bit % 8U;
-  if (val != 0u) {
+  if (val != 0U) {
     fov->bits[ index ] |= 1U << offset;
   } else {
     fov->bits[ index ] &= ~(1U << offset);

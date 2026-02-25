@@ -26,6 +26,7 @@ obj_name = $(addsuffix .o,$(subst /,__,$(subst ../,,$(basename $1))))
 
 # recursively search all src/ subdirectories for cpp source files
 CPP_SOURCES := $(subst ./,,$(shell find $(SRC_DIR) -name \*.cpp -not -path "*3rdparty*"))
+CPP_SOURCES_NO_TESTS := $(wildcard *.cpp)
 CPP_3RD_PARTY_SOURCES := $(subst ./,,$(shell find $(SRC_DIR)/3rdparty -name \*.cpp))
 ASM_SOURCES := $(wildcard *.S)
 SOURCES := $(CPP_3RD_PARTY_SOURCES) $(CPP_SOURCES) $(ASM_SOURCES)
@@ -98,7 +99,7 @@ $(TARGET_GAME): $(OBJ_FILES)
 #			// NOLINTEND
 #####################################################
 tidy:
-	$(foreach x,$(CPP_SOURCES),\
+	$(foreach x,$(CPP_SOURCES_NO_TESTS),\
 		echo "Running tidy on $x..." ; \
 		clang-tidy \
 			-fix \

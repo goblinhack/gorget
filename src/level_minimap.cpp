@@ -214,68 +214,68 @@ static void level_minimap_levels_update(Gamep g, Levelsp v, Levelp l, const bool
           }
         }
 
-        if (level_is_dirt(g, v, l, p)) {
+        if (level_is_dirt(g, v, l, p) != nullptr) {
           c = GRAY10;
         }
-        if (level_is_floor(g, v, l, p)) {
+        if (level_is_floor(g, v, l, p) != nullptr) {
           c = GRAY30;
         }
-        if (level_is_corridor(g, v, l, p)) {
+        if (level_is_corridor(g, v, l, p) != nullptr) {
           c = GRAY30;
         }
-        if (level_is_wall(g, v, l, p)) {
+        if (level_is_wall(g, v, l, p) != nullptr) {
           c = GRAY50;
         }
-        if (level_is_rock(g, v, l, p)) {
+        if (level_is_rock(g, v, l, p) != nullptr) {
           c = BROWN4;
         }
-        if (level_is_bridge(g, v, l, p)) {
+        if (level_is_bridge(g, v, l, p) != nullptr) {
           c = BROWN;
         }
-        if (level_is_chasm(g, v, l, p)) {
+        if (level_is_chasm(g, v, l, p) != nullptr) {
           c = BLACK;
         }
-        if (level_is_water(g, v, l, p)) {
+        if (level_is_water(g, v, l, p) != nullptr) {
           c = BLUE;
         }
-        if (level_is_deep_water(g, v, l, p)) {
+        if (level_is_deep_water(g, v, l, p) != nullptr) {
           c = BLUE4;
         }
-        if (level_is_door_locked(g, v, l, p)) {
-          if (level_open_is_door_locked(g, v, l, p)) {
+        if (level_is_door_locked(g, v, l, p) != nullptr) {
+          if (level_open_is_door_locked(g, v, l, p) != nullptr) {
             // ignore
           } else {
             c = BROWN;
           }
         }
-        if (level_is_door_secret(g, v, l, p)) {
-          if (level_open_is_door_secret(g, v, l, p)) {
+        if (level_is_door_secret(g, v, l, p) != nullptr) {
+          if (level_open_is_door_secret(g, v, l, p) != nullptr) {
             // ignore
           } else {
             c = GRAY40;
           }
         }
-        if (level_is_lava(g, v, l, p)) {
+        if (level_is_lava(g, v, l, p) != nullptr) {
           c = ORANGE;
         }
-        if (level_is_teleport(g, v, l, p)) {
+        if (level_is_teleport(g, v, l, p) != nullptr) {
           // ignore
           c = RED;
         }
-        if (level_is_entrance(g, v, l, p)) {
+        if (level_is_entrance(g, v, l, p) != nullptr) {
           c = PINK;
         }
-        if (level_is_exit(g, v, l, p)) {
+        if (level_is_exit(g, v, l, p) != nullptr) {
           c = YELLOW;
         }
-        if (level_is_fire(g, v, l, p)) {
+        if (level_is_fire(g, v, l, p) != nullptr) {
           c = ORANGE2;
         }
-        if (level_is_player(g, v, l, p)) {
+        if (level_is_player(g, v, l, p) != nullptr) {
           c = CYAN;
         }
 
-        if (level_is_blit_shown_in_overlay(g, v, l, p)) {
+        if (level_is_blit_shown_in_overlay(g, v, l, p) != nullptr) {
           //
           // Keep bright colors
           //

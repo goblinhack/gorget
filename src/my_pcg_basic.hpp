@@ -42,9 +42,9 @@ using pcg32_random_t = struct PcgStateSetseq64;
 auto pcg32_random_r(pcg32_random_t *rng) -> uint32_t;
 void pcg32_srandom_r(pcg32_random_t *rng, uint64_t initstate, uint64_t initseq);
 void pcg32_srandom(uint64_t seed, uint64_t seq);
-auto pcg32_random(const char *, int) -> uint32_t;
+auto pcg32_random(const char * /*func*/, int /*line*/) -> uint32_t;
 auto pcg32_boundedrand_r(pcg32_random_t *rng, uint32_t bound) -> uint32_t;
-auto pcg32_boundedrand(const char *, int, uint32_t bound) -> uint32_t;
+auto pcg32_boundedrand(const char * /*func*/, int /*line*/, uint32_t bound) -> uint32_t;
 
 void game_pcg_lock();
 void game_pcg_unlock();

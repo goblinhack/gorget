@@ -23,7 +23,7 @@ void level_tick_chasm(Gamep g, Levelsp v, Levelp l)
   FOR_ALL_MAP_POINTS(g, v, l, x, y)
   {
     spoint p(x, y);
-    if (level_is_chasm(g, v, l, p)) {
+    if (level_is_chasm(g, v, l, p) != nullptr) {
       FOR_ALL_THINGS_AT(g, v, l, t, p)
       {
         if (! thing_is_able_to_fall(t)) {

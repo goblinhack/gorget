@@ -263,7 +263,7 @@ auto game_event_descend(Gamep g) -> bool
     return false;
   }
 
-  if (! level_is_exit(g, v, l, thing_at(player))) {
+  if (level_is_exit(g, v, l, thing_at(player)) == nullptr) {
     TOPCON(UI_WARNING_FMT_STR "There is no level exit here to descend." UI_RESET_FMT);
     sound_play(g, "error");
     return false;
@@ -298,7 +298,7 @@ auto game_event_ascend(Gamep g) -> bool
     return false;
   }
 
-  if (! level_is_entrance(g, v, l, thing_at(player))) {
+  if (level_is_entrance(g, v, l, thing_at(player)) == nullptr) {
     TOPCON(UI_WARNING_FMT_STR "There is no level entrance here to ascend." UI_RESET_FMT);
     sound_play(g, "error");
     return false;
@@ -333,7 +333,7 @@ auto game_event_jump(Gamep g) -> bool
     return false;
   }
 
-  if (level_is_cursor_path_hazard(g, v, l, v->cursor_at)) {
+  if (level_is_cursor_path_hazard(g, v, l, v->cursor_at) != nullptr) {
     //
     // If there is a hazard at the target, then go through the normal mouse
     // code which will walk up to the edge of the chasm and then jump, and

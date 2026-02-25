@@ -209,7 +209,7 @@ void level_cursor_describe(Gamep g, Levelsp v, Levelp l)
     //
     // Water and deep water exist at the same tile. Don't describe twice.
     //
-    if (thing_is_water(it) && level_is_deep_water(g, v, l, at)) {
+    if (thing_is_water(it) && (level_is_deep_water(g, v, l, at) != nullptr)) {
       continue;
     }
 

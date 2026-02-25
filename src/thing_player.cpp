@@ -446,9 +446,9 @@ auto player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, spo
   //
   // Double check before jumping in chasms or lava
   //
-  if (level_is_needs_move_confirm(g, v, l, to)) {
+  if (level_is_needs_move_confirm(g, v, l, to) != nullptr) {
     if (! thing_is_ethereal(me) && ! thing_is_floating(me) && ! thing_is_flying(me)) {
-      if (level_is_chasm(g, v, l, to)) {
+      if (level_is_chasm(g, v, l, to) != nullptr) {
         std::string const msg = "Do you really want to leap into a chasm?";
         player_state_change(g, v, l, PLAYER_STATE_MOVE_CONFIRM_REQUESTED);
         game_state_change(g, STATE_MOVE_WARNING_MENU, "need warning confirmation");
@@ -460,7 +460,7 @@ auto player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, spo
         return false;
       }
 
-      if (level_alive_is_brazier(g, v, l, to)) {
+      if (level_alive_is_brazier(g, v, l, to) != nullptr) {
         std::string const msg = "Do you really want to kick over the brazier?";
         player_state_change(g, v, l, PLAYER_STATE_MOVE_CONFIRM_REQUESTED);
         game_state_change(g, STATE_MOVE_WARNING_MENU, "need warning confirmation");
@@ -475,8 +475,8 @@ auto player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, spo
       //
       // If not already in lava, warn about moving into it
       //
-      if (! level_is_lava(g, v, l, thing_at(me))) {
-        if (level_is_lava(g, v, l, to)) {
+      if (level_is_lava(g, v, l, thing_at(me)) == nullptr) {
+        if (level_is_lava(g, v, l, to) != nullptr) {
           if (! thing_is_immune_to(me, THING_EVENT_HEAT_DAMAGE) && ! thing_is_immune_to(me, THING_EVENT_FIRE_DAMAGE)) {
             std::string const msg = "Do you really want to leap into lava?";
             player_state_change(g, v, l, PLAYER_STATE_MOVE_CONFIRM_REQUESTED);
@@ -1035,7 +1035,7 @@ auto player_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
 
   spoint move_destination = {};
   if (thing_move_path_target(g, v, l, me, move_destination)) {
-    if (level_is_cursor_path_hazard(g, v, l, move_next)) {
+    if (level_is_cursor_path_hazard(g, v, l, move_next) != nullptr) {
       if (thing_jump_to(g, v, l, me, move_destination)) {
         //
         // If could jump, then abort the path walk

@@ -43,7 +43,7 @@ auto thing_vision_can_see_tile(Gamep g, Levelsp v, Levelp l, Thingp t, spoint p)
     return false;
   }
 
-  return fov_map_get(&ext->can_see, p.x, p.y) != 0U;
+  return static_cast< unsigned int >(fov_map_get(&ext->can_see, p.x, p.y)) != 0U;
 }
 
 auto thing_vision_player_has_seen_tile(Gamep g, Levelsp v, Levelp l, spoint p) -> bool
@@ -51,7 +51,7 @@ auto thing_vision_player_has_seen_tile(Gamep g, Levelsp v, Levelp l, spoint p) -
   TRACE_NO_INDENT();
 
   auto *player = thing_player(g);
-  if (! player) {
+  if (player == nullptr) {
     return false;
   }
 
@@ -64,7 +64,7 @@ auto thing_vision_player_has_seen_tile(Gamep g, Levelsp v, Levelp l, spoint p) -
     return false;
   }
 
-  return fov_map_get(&ext->has_seen, p.x, p.y) != 0U;
+  return static_cast< unsigned int >(fov_map_get(&ext->has_seen, p.x, p.y)) != 0U;
 }
 
 void thing_can_see_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
@@ -79,19 +79,19 @@ void thing_can_see_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
   for (auto y = 0; y < MAP_HEIGHT; y++) {
     std::string debug;
     for (auto x = 0; x < MAP_WIDTH; x++) {
-      spoint p(x, y);
+      spoint const p(x, y);
 
       if (p == thing_at(t)) {
         debug += "@";
         continue;
       }
 
-      if (level_is_wall(g, v, l, p)) {
+      if (level_is_wall(g, v, l, p) != nullptr) {
         debug += "#";
         continue;
       }
 
-      if (fov_map_get(&ext->can_see, p.x, p.y) != 0U) {
+      if (static_cast< unsigned int >(fov_map_get(&ext->can_see, p.x, p.y)) != 0U) {
         debug += "*";
         continue;
       }
@@ -115,19 +115,19 @@ void thing_has_seen_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
   for (auto y = 0; y < MAP_HEIGHT; y++) {
     std::string debug;
     for (auto x = 0; x < MAP_WIDTH; x++) {
-      spoint p(x, y);
+      spoint const p(x, y);
 
       if (p == thing_at(t)) {
         debug += "@";
         continue;
       }
 
-      if (level_is_wall(g, v, l, p)) {
+      if (level_is_wall(g, v, l, p) != nullptr) {
         debug += "#";
         continue;
       }
 
-      if (fov_map_get(&ext->has_seen, p.x, p.y) != 0U) {
+      if (static_cast< unsigned int >(fov_map_get(&ext->has_seen, p.x, p.y)) != 0U) {
         debug += "*";
         continue;
       }
@@ -173,7 +173,7 @@ void thing_vision_calculate_all(Gamep g, Levelsp v, Levelp l)
     }
 
     auto *ext = thing_ext_struct(g, t);
-    if (! ext) {
+    if (ext == nullptr) {
       continue;
     }
 

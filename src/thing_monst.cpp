@@ -142,7 +142,7 @@ auto thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thingp me) -
 
   spoint move_destination = {};
   if (thing_move_path_target(g, v, l, me, move_destination)) {
-    if (level_is_cursor_path_hazard(g, v, l, move_next)) {
+    if (level_is_cursor_path_hazard(g, v, l, move_next) != nullptr) {
       if (thing_jump_to(g, v, l, me, move_destination)) {
         //
         // If could jump, then abort the path walk
