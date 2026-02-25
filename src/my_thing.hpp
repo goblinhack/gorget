@@ -448,7 +448,7 @@ using Thing = struct Thing {
   //
   // For light sources and player and monsters
   //
-  ThingLightId fov_id;
+  ThingLightId light_id;
   //
   // Interpolated co-ords in pixels
   //

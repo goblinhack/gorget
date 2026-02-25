@@ -393,7 +393,7 @@ using Levels = struct Levels {
   //
   // For lighting memory
   //
-  ThingLight thing_fov[ THING_LIGHT_MAX ];
+  ThingLight thing_light[ THING_LIGHT_MAX ];
   int        thing_light_count;
   //
   // Space for player memory

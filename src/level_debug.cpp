@@ -21,7 +21,7 @@ void game_debug_info(Gamep g)
   LOG("Level info:");
   LOG("- Levels memory:                   %" PRI_SIZE_T " Mb", sizeof(Levels) / (1024 * 1024));
   LOG("- Thing ext memory:                %" PRI_SIZE_T " Mb", sizeof(v->thing_ext) / (1024 * 1024));
-  LOG("- Thing fov memory:                %" PRI_SIZE_T " Mb", sizeof(v->thing_fov) / (1024 * 1024));
+  LOG("- Thing fov memory:                %" PRI_SIZE_T " Mb", sizeof(v->thing_light) / (1024 * 1024));
   LOG("- sizeof(Thing):                   %" PRI_SIZE_T " b", sizeof(Thing));
   LOG("- sizeof(ThingInventory):          %" PRI_SIZE_T " b", sizeof(ThingInventory));
   LOG("- sizeof(ThingExt)                 %" PRI_SIZE_T " b", sizeof(ThingExt));

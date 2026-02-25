@@ -183,12 +183,12 @@ auto thing_light_struct(Gamep g, Thingp t) -> ThingLightp
     return nullptr;
   }
 
-  auto fov_id = t->fov_id;
-  if (fov_id == 0U) {
+  auto light_id = t->light_id;
+  if (light_id == 0U) {
     return nullptr;
   }
 
-  return &v->thing_fov[ fov_id ];
+  return &v->thing_light[ light_id ];
 }
 
 auto thing_player_struct(Gamep g) -> ThingPlayerp

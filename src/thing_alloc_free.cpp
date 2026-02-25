@@ -75,31 +75,31 @@ static void thing_ext_free(Levelsp v, Thingp t)
   t->ext_id = 0;
 }
 
-[[nodiscard]] static auto thing_fov_alloc(Levelsp v, Thingp t) -> bool
+[[nodiscard]] static auto thing_light_alloc(Levelsp v, Thingp t) -> bool
 {
   TRACE_NO_INDENT();
 
-  static uint32_t last_fov_id;
+  static uint32_t last_light_id;
 
   //
   // Continue from the last successful allocation
   //
   thing_mutex.lock();
   for (auto tries = 0; tries < THING_LIGHT_MAX; tries++) {
-    ThingLightId fov_id = last_fov_id + tries;
-    fov_id %= THING_LIGHT_MAX;
-    if (UNLIKELY(! fov_id)) {
+    ThingLightId light_id = last_light_id + tries;
+    light_id %= THING_LIGHT_MAX;
+    if (UNLIKELY(! light_id)) {
       continue;
     }
 
-    if (UNLIKELY(v->thing_fov[ fov_id ].in_use)) {
+    if (UNLIKELY(v->thing_light[ light_id ].in_use)) {
       continue;
     }
 
-    v->thing_fov[ fov_id ].in_use = true;
+    v->thing_light[ light_id ].in_use = true;
     v->thing_light_count++;
-    t->fov_id   = fov_id;
-    last_fov_id = fov_id;
+    t->light_id   = light_id;
+    last_light_id = light_id;
 
     thing_mutex.unlock();
     return true;
@@ -111,26 +111,26 @@ static void thing_ext_free(Levelsp v, Thingp t)
   return false;
 }
 
-static void thing_fov_free(Levelsp v, Thingp t)
+static void thing_light_free(Levelsp v, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  auto fov_id = t->fov_id;
-  if (fov_id == 0U) {
+  auto light_id = t->light_id;
+  if (light_id == 0U) {
     return;
   }
 
-  if (! v->thing_fov[ fov_id ].in_use) {
-    ERR("freeing unused Thing fov ID is not in use, %" PRIX32 "", fov_id);
+  if (! v->thing_light[ light_id ].in_use) {
+    ERR("freeing unused Thing fov ID is not in use, %" PRIX32 "", light_id);
   }
 
-  v->thing_fov[ fov_id ].in_use = false;
+  v->thing_light[ light_id ].in_use = false;
   v->thing_light_count--;
   if (v->thing_light_count < 0) {
-    CROAK("bad thing_fov count");
+    CROAK("bad thing_light count");
   }
 
-  t->fov_id = 0;
+  t->light_id = 0;
 }
 
 static auto thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, ThingIdPacked id, bool needs_ext_memory, bool needs_light_memory,
@@ -231,7 +231,7 @@ static auto thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, ThingIdPacked i
   }
 
   if (needs_light_memory) {
-    if (! thing_fov_alloc(v, t)) {
+    if (! thing_light_alloc(v, t)) {
       thing_free(g, v, l, t);
       return nullptr;
     }
@@ -380,7 +380,7 @@ void thing_free(Gamep g, Levelsp v, Levelp l, Thingp t)
   (void) thing_pop(g, v, t);
 
   thing_ext_free(v, t);
-  thing_fov_free(v, t);
+  thing_light_free(v, t);
   memset((void *) t, 0, SIZEOF(*t));
 
 #ifdef ENABLE_PER_THING_MEMORY
