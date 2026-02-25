@@ -1754,4 +1754,3 @@ auto level_count_is_wood(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint3
 #endif
   return level_count(g, v, l, is_wood, p);
 }
-

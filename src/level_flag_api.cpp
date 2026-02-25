@@ -1754,4 +1754,3 @@ auto level_is_wood(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp
 #endif
   return level_flag(g, v, l, is_wood, p);
 }
-

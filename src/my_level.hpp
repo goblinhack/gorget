@@ -1663,26 +1663,11 @@ using LevelType = enum LevelType_ {
 
 static inline auto is_oob(fpoint p) -> bool
 {
-  if (UNLIKELY(p.x < 0) || (p.y < 0) || (p.x >= (float) MAP_WIDTH) || (p.y >= (float) MAP_HEIGHT)) {
-    return true;
-  }
-  return false;
+  return UNLIKELY(p.x < 0) || (p.y < 0) || (p.x >= (float) MAP_WIDTH) || (p.y >= (float) MAP_HEIGHT);
 }
 
-static inline auto is_oob(spoint p) -> bool
-{
-  if (UNLIKELY(p.x < 0) || (p.y < 0) || (p.x >= MAP_WIDTH) || (p.y >= MAP_HEIGHT)) {
-    return true;
-  }
-  return false;
-}
+static inline auto is_oob(spoint p) -> bool { return UNLIKELY(p.x < 0) || (p.y < 0) || (p.x >= MAP_WIDTH) || (p.y >= MAP_HEIGHT); }
 
-static inline auto is_oob(int x, int y) -> bool
-{
-  if (UNLIKELY(x < 0) || (y < 0) || (x >= MAP_WIDTH) || (y >= MAP_HEIGHT)) {
-    return true;
-  }
-  return false;
-}
+static inline auto is_oob(int x, int y) -> bool { return UNLIKELY(x < 0) || (y < 0) || (x >= MAP_WIDTH) || (y >= MAP_HEIGHT); }
 
 #endif // MY_LEVEL_H
