@@ -56,7 +56,7 @@
     TRACE_AND_INDENT();
 
     auto *player = thing_player(g);
-    if (player == nullptr) {
+    if (UNLIKELY(player == nullptr)) {
       TEST_FAILED(t, "no player");
       goto exit;
     }

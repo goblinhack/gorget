@@ -311,7 +311,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool tick_is
   }
 
   auto *player = thing_player(g);
-  if (player == nullptr) {
+  if (UNLIKELY(player == nullptr)) {
     return;
   }
   const int player_speed = thing_speed(player);

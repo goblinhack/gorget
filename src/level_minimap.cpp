@@ -29,7 +29,7 @@ static void level_minimap_world_update(Gamep g, Levelsp v, const bool level_sele
   // at the player
   //
   auto *player = thing_player(g);
-  if (player == nullptr) {
+  if (UNLIKELY(player == nullptr)) {
     return;
   }
 
@@ -183,7 +183,7 @@ static void level_minimap_levels_update(Gamep g, Levelsp v, Levelp l, const bool
   TRACE_NO_INDENT();
 
   auto *player = thing_player(g);
-  if (player == nullptr) {
+  if (UNLIKELY(player == nullptr)) {
     return;
   }
 

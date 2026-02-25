@@ -30,7 +30,7 @@ static WidPopup *wid_leftbar;
   wid_leftbar = new WidPopup(g, "left bar", tl, br, nullptr, "", false, false);
 
   auto *player = thing_player(g);
-  if (player == nullptr) {
+  if (UNLIKELY(player == nullptr)) {
     return false;
   }
 

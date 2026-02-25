@@ -281,7 +281,7 @@ void level_light_calculate_all(Gamep g, Levelsp v, Levelp l)
   TRACE_AND_INDENT();
 
   auto *player = thing_player(g);
-  if (player == nullptr) {
+  if (UNLIKELY(player == nullptr)) {
     return;
   }
 

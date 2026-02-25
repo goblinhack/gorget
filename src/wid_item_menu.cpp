@@ -36,7 +36,7 @@ static Thingp g_item;
   }
 
   auto *player = thing_player(g);
-  if (player == nullptr) {
+  if (UNLIKELY(player == nullptr)) {
     return false;
   }
 
@@ -70,7 +70,7 @@ static Thingp g_item;
   }
 
   auto *player = thing_player(g);
-  if (player == nullptr) {
+  if (UNLIKELY(player == nullptr)) {
     return false;
   }
 
@@ -160,7 +160,7 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item)
   }
 
   auto *player = thing_player(g);
-  if (player == nullptr) {
+  if (UNLIKELY(player == nullptr)) {
     return;
   }
 

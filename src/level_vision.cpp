@@ -19,7 +19,7 @@ void level_vision_calculate_all(Gamep g, Levelsp v, Levelp l)
   }
 
   auto *player = thing_player(g);
-  if (player == nullptr) {
+  if (UNLIKELY(player == nullptr)) {
     return;
   }
 

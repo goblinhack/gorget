@@ -51,7 +51,7 @@ auto thing_vision_player_has_seen_tile(Gamep g, Levelsp v, Levelp l, const spoin
   TRACE_NO_INDENT();
 
   auto *player = thing_player(g);
-  if (player == nullptr) {
+  if (UNLIKELY(player == nullptr)) {
     return false;
   }
 

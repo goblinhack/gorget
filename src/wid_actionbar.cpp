@@ -542,7 +542,7 @@ auto wid_actionbar_create_window(Gamep g) -> bool
   }
 
   auto *player = thing_player(g);
-  if (player == nullptr) {
+  if (UNLIKELY(player == nullptr)) {
     return false;
   }
 

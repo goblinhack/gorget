@@ -828,7 +828,7 @@ void Game::create_levels()
   }
 
   auto *player = thing_player(g);
-  if (player == nullptr) {
+  if (UNLIKELY(player == nullptr)) {
     ERR("No player found");
     return;
   }

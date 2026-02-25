@@ -43,7 +43,7 @@
   tp_damage_set(tp_fireball, THING_EVENT_FIRE_DAMAGE, "1d4");
 
   auto *player = thing_player(g);
-  if (player == nullptr) {
+  if (UNLIKELY(player == nullptr)) {
     TEST_FAILED(t, "no player");
     goto exit;
   }

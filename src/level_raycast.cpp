@@ -186,7 +186,7 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
   TRACE_NO_INDENT();
 
   auto *player = thing_player(g);
-  if (player == nullptr) {
+  if (UNLIKELY(player == nullptr)) {
     return;
   }
 
@@ -403,7 +403,7 @@ void Raycast::raycast_render(Gamep g, Levelsp v, Levelp l)
   }
 
   auto *player = thing_player(g);
-  if (player == nullptr) {
+  if (UNLIKELY(player == nullptr)) {
     return;
   }
 
@@ -486,7 +486,7 @@ void level_light_raycast(Gamep g, Levelsp v, Levelp l, FboEnum fbo)
   }
 
   auto *player = thing_player(g);
-  if (player == nullptr) {
+  if (UNLIKELY(player == nullptr)) {
     return;
   }
 

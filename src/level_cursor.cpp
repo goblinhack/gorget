@@ -357,7 +357,7 @@ static auto level_cursor_path_draw_line(Gamep g, Levelsp v, Levelp l, const spoi
   static std::vector< spoint > const empty;
 
   auto *player = thing_player(g);
-  if (player == nullptr) {
+  if (UNLIKELY(player == nullptr)) {
     return empty;
   }
 
@@ -395,7 +395,7 @@ static auto level_cursor_path_draw_line(Gamep g, Levelsp v, Levelp l, const spoi
 void level_cursor_path_reset(Gamep g, Levelsp v, Levelp l)
 {
   auto *player = thing_player(g);
-  if (player == nullptr) {
+  if (UNLIKELY(player == nullptr)) {
     //
     // If no player, clear the cursor
     //
@@ -441,7 +441,7 @@ void level_cursor_path_reset(Gamep g)
 void level_cursor_copy_path_to_player(Gamep g, Levelsp v, Levelp l, std::vector< spoint > &move_path)
 {
   auto *player = thing_player(g);
-  if (player == nullptr) {
+  if (UNLIKELY(player == nullptr)) {
     //
     // If no player, clear the cursor
     //
@@ -512,7 +512,7 @@ void level_cursor_copy_path_to_player(Gamep g, Levelsp v, Levelp l, std::vector<
 static void level_cursor_path_create(Gamep g, Levelsp v, Levelp l)
 {
   auto *player = thing_player(g);
-  if (player == nullptr) {
+  if (UNLIKELY(player == nullptr)) {
     //
     // If no player, clear the cursor
     //

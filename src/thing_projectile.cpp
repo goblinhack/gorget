@@ -20,7 +20,7 @@ static auto thing_projectile_get_delta_from_dt(Gamep g, Thingp t, float dt) -> f
   SINCOSF(t->angle, &s, &c);
 
   auto *player = thing_player(g);
-  if (player == nullptr) {
+  if (UNLIKELY(player == nullptr)) {
     CROAK("No player struct found");
     return fpoint(0, 0);
   }
@@ -109,7 +109,7 @@ void thing_projectile_move(Gamep g, Levelsp v, Levelp l, Thingp t, float dt)
   auto         at     = old_at;
 
   auto *player = thing_player(g);
-  if (player == nullptr) {
+  if (UNLIKELY(player == nullptr)) {
     ERR("No player struct found");
     return;
   }

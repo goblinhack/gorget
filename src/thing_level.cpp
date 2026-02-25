@@ -28,7 +28,7 @@ auto thing_on_same_level_as_player(Gamep g, Levelsp v, Thingp t) -> bool
   TRACE_NO_INDENT();
 
   auto *player = thing_player(g);
-  if (player == nullptr) {
+  if (UNLIKELY(player == nullptr)) {
     return false;
   }
 
