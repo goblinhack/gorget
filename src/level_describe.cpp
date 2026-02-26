@@ -161,7 +161,8 @@ void level_cursor_describe(Gamep g, Levelsp v, Levelp l)
   }
 
   auto *player = thing_player(g);
-  UNLIKELY if (player == nullptr) {
+  UNLIKELY if (player == nullptr)
+  {
     ERR("No player pointer set");
     return;
   }

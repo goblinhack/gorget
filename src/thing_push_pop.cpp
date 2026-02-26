@@ -15,9 +15,7 @@ auto thing_push(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool
   TRACE();
 
   auto at = thing_at(t);
-  UNLIKELY if (is_oob(at)) {
-    return false;
-  }
+  UNLIKELY if (is_oob(at)) { return false; }
 
   //
   // Already at this location?
@@ -158,9 +156,7 @@ auto thing_pop(Gamep g, Levelsp v, Thingp t) -> bool
     THING_DBG(t, "is on the map, last pushed %u,%u", at.x, at.y);
   }
 
-  UNLIKELY if (is_oob(at)) {
-    return false;
-  }
+  UNLIKELY if (is_oob(at)) { return false; }
 
   for (auto slot = 0; slot < MAP_SLOTS; slot++) {
     auto o_id = l->thing_id[ at.x ][ at.y ][ slot ];

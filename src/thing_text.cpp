@@ -38,9 +38,7 @@ auto thing_long_name(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) -
 {
   TRACE();
 
-  UNLIKELY if((! t)) {
-    return "<no name>";
-  }
+  UNLIKELY if ((! t)) { return "<no name>"; }
 
   auto *tp = thing_tp(t);
 
@@ -152,9 +150,7 @@ auto thing_short_name(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) 
 {
   TRACE();
 
-  UNLIKELY if((! t)) {
-    return "<no name>";
-  }
+  UNLIKELY if ((! t)) { return "<no name>"; }
 
   auto *tp = thing_tp(t);
 

@@ -36,9 +36,7 @@ static Thingp g_item;
   }
 
   auto *player = thing_player(g);
-  UNLIKELY if (player == nullptr) {
-    return false;
-  }
+  UNLIKELY if (player == nullptr) { return false; }
 
   if (thing_inventory_is_empty(g, v, l, player)) {
     //
@@ -70,9 +68,7 @@ static Thingp g_item;
   }
 
   auto *player = thing_player(g);
-  UNLIKELY if (player == nullptr) {
-    return false;
-  }
+  UNLIKELY if (player == nullptr) { return false; }
 
   auto *item = g_item;
   if (item == nullptr) {
@@ -160,9 +156,7 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item)
   }
 
   auto *player = thing_player(g);
-  UNLIKELY if (player == nullptr) {
-    return;
-  }
+  UNLIKELY if (player == nullptr) { return; }
 
   g_item = item;
 

@@ -20,9 +20,7 @@ auto thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thingp me) -
   TRACE();
 
   auto *player = thing_player(g);
-  UNLIKELY if (player == nullptr) {
-    return false;
-  }
+  UNLIKELY if (player == nullptr) { return false; }
 
   auto *player_level = game_level_get(g, v, player->level_num);
   auto *monst_level  = game_level_get(g, v, me->level_num);
@@ -347,9 +345,7 @@ void thing_monst_tick(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 
   auto *player = thing_player(g);
-  UNLIKELY if (player == nullptr) {
-    return;
-  }
+  UNLIKELY if (player == nullptr) { return; }
 
   const int player_speed = thing_speed(player);
 

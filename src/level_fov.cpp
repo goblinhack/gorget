@@ -82,7 +82,8 @@ void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
     return; // Distance is out-of-range.
   }
 
-  UNLIKELY if (is_oob(pov.x + (distance_from_origin * xy), pov.y + (distance_from_origin * yy))) {
+  UNLIKELY if (is_oob(pov.x + (distance_from_origin * xy), pov.y + (distance_from_origin * yy)))
+  {
     return; // Distance is out-of-bounds.
   }
 
@@ -103,7 +104,8 @@ void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
     // Current tile is in view.
     const spoint p(pov.x + (angle * xx) + (distance_from_origin * xy), pov.y + (angle * yx) + (distance_from_origin * yy));
 
-    UNLIKELY if (is_oob(p)) {
+    UNLIKELY if (is_oob(p))
+    {
       continue; // Angle is out-of-bounds.
     }
 

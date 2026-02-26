@@ -17,9 +17,7 @@ void thing_sound_play(Gamep g, Levelsp v, Levelp l, Thingp t, const std::string 
   }
 
   auto *player = thing_player(g);
-  UNLIKELY if (player == nullptr) {
-    return;
-  }
+  UNLIKELY if (player == nullptr) { return; }
 
   Levelp player_level = thing_player_level(g);
   if (player_level == nullptr) {

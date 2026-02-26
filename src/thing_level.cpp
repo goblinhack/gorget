@@ -28,9 +28,7 @@ auto thing_on_same_level_as_player(Gamep g, Levelsp v, Thingp t) -> bool
   TRACE();
 
   auto *player = thing_player(g);
-  UNLIKELY if (player == nullptr) {
-    return false;
-  }
+  UNLIKELY if (player == nullptr) { return false; }
 
   Levelp player_level = thing_player_level(g);
   if (player_level == nullptr) {

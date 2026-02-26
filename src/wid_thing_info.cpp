@@ -261,9 +261,7 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp t, WidPopup *parent, in
   }
 
   auto *tp = thing_tp(t);
-  UNLIKELY if (tp == nullptr) {
-    return;
-  }
+  UNLIKELY if (tp == nullptr) { return; }
 
   if (wid_thing_info_icon(g, tp, parent)) {
     parent->log_empty_line(g);

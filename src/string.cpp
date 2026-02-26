@@ -1017,9 +1017,7 @@ auto string2tp(const char **s, int *len) -> Tpp
   }
 
   Tpp tp = tp_find_mand(tmp);
-  UNLIKELY if((! tp)) {
-    ERR("Tp name [%s] not found", tmp);
-  }
+  UNLIKELY if ((! tp)) { ERR("Tp name [%s] not found", tmp); }
 
   return tp;
 }

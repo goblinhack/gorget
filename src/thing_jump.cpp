@@ -69,9 +69,7 @@ auto thing_jump_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to, bool warn)
 {
   TRACE();
 
-  UNLIKELY if (is_oob(to)) {
-    return false;
-  }
+  UNLIKELY if (is_oob(to)) { return false; }
 
   auto at = thing_at(t);
   if (to == at) {

@@ -311,9 +311,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool tick_is
   }
 
   auto *player = thing_player(g);
-  UNLIKELY if (player == nullptr) {
-    return;
-  }
+  UNLIKELY if (player == nullptr) { return; }
   const int player_speed = thing_speed(player);
 
   if (compiler_unused) {
@@ -625,9 +623,7 @@ static void level_tick_update_frame_counter(Levelsp v)
     t = test_t;
   }
 
-  UNLIKELY if((! level_ts_begin)) {
-    level_ts_begin = t;
-  }
+  UNLIKELY if ((! level_ts_begin)) { level_ts_begin = t; }
 
   level_ts_now = t;
   v->frame += level_ts_now - level_ts_begin;

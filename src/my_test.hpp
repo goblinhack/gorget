@@ -24,7 +24,7 @@ void tests_run(Gamep g);
 
 #define TEST_FAILED(test, why)                                                                                                             \
   {                                                                                                                                        \
-    TRACE();                                                                                                                     \
+    TRACE();                                                                                                                               \
     LOG("Test %s: failed at %s:%u, reason: %s", test_name(test), __FUNCTION__, __LINE__, why);                                             \
     result = false;                                                                                                                        \
     goto exit;                                                                                                                             \
@@ -32,7 +32,7 @@ void tests_run(Gamep g);
 
 #define TEST_ASSERT(test, what, why)                                                                                                       \
   {                                                                                                                                        \
-    TRACE();                                                                                                                     \
+    TRACE();                                                                                                                               \
     if (! (what)) {                                                                                                                        \
       LOG("Test %s: assertion failed at %s:%u, reason: %s", test_name(test), __FUNCTION__, __LINE__, why);                                 \
       result = false;                                                                                                                      \

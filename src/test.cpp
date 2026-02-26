@@ -116,9 +116,7 @@ auto test_find(const char *name_in) -> Testp
   std::string const name(name_in);
   auto              result = test_name_map.find(name);
 
-  UNLIKELY if((result != test_name_map.end())) {
-    return result->second;
-  }
+  UNLIKELY if ((result != test_name_map.end())) { return result->second; }
 
   return nullptr;
 }

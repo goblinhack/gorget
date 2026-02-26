@@ -60,9 +60,7 @@ static auto tp_door_unlocked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp
   TRACE();
 
   auto *player = thing_player(g);
-  UNLIKELY if (player == nullptr) {
-    return false;
-  }
+  UNLIKELY if (player == nullptr) { return false; }
 
   if (thing_is_dead(player)) {
     return false;

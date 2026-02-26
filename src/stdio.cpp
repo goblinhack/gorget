@@ -25,9 +25,7 @@ auto redirect_stdout() -> FILE *
   g_log_stdout = stdout;
 #endif
 
-  LIKELY if((g_log_stdout != nullptr)) {
-    return g_log_stdout;
-  }
+  LIKELY if ((g_log_stdout != nullptr)) { return g_log_stdout; }
 
   TRACE();
 
@@ -84,9 +82,7 @@ auto redirect_stderr() -> FILE *
   g_log_stderr = stderr;
 #endif
 
-  LIKELY if((g_log_stderr != nullptr)) {
-    return g_log_stderr;
-  }
+  LIKELY if ((g_log_stderr != nullptr)) { return g_log_stderr; }
 
   TRACE();
 

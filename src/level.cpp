@@ -351,9 +351,7 @@ auto level_populate_thing_id_at(Gamep g, Levelsp v, Levelp l, const spoint &p, i
 {
   TRACE();
 
-  UNLIKELY if (is_oob(p)) {
-    return false;
-  }
+  UNLIKELY if (is_oob(p)) { return false; }
 
   l->thing_id[ p.x ][ p.y ][ slot ] = id;
   return true;
@@ -363,9 +361,7 @@ auto level_get_thing_id_at(Gamep g, Levelsp v, Levelp l, const spoint &p, int sl
 {
   TRACE();
 
-  UNLIKELY if (is_oob(p)) {
-    return 0;
-  }
+  UNLIKELY if (is_oob(p)) { return 0; }
 
   return l->thing_id[ p.x ][ p.y ][ slot ];
 }
@@ -679,9 +675,7 @@ auto level_is_same_obj_type_at(Gamep g, Levelsp v, Levelp l, const spoint &p, Tp
     return false;
   }
 
-  UNLIKELY if (is_oob(p)) {
-    return false;
-  }
+  UNLIKELY if (is_oob(p)) { return false; }
 
   for (auto slot = 0; slot < MAP_SLOTS; slot++) {
     Tpp    it_tp = nullptr;

@@ -48,7 +48,8 @@ void sdl_display(Gamep g)
   //
   // Screenshot?
   //
-  UNLIKELY if((g_do_screenshot)) {
+  UNLIKELY if ((g_do_screenshot))
+  {
     g_do_screenshot = false;
     sdl_screenshot_do(g);
   }

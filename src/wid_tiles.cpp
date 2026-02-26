@@ -65,9 +65,7 @@ auto wid_tiles_load(const std::string &name, float scale) -> wid_tilesp
 
   snprintf(tmp, SIZEOF(tmp) - 1, "%s_tl", name.c_str());
   Tilep a_tile = tile_find(tmp);
-  UNLIKELY if((! a_tile)) {
-    CROAK("Did not find wid %s tile %s", name.c_str(), tmp);
-  }
+  UNLIKELY if ((! a_tile)) { CROAK("Did not find wid %s tile %s", name.c_str(), tmp); }
 
   Texp tex = tile_tex(a_tile);
 
@@ -92,9 +90,7 @@ auto wid_tiles_load(const std::string &name, float scale) -> wid_tilesp
       for (i = 1; i < t->across - 1; i++) {
         snprintf(tmp, SIZEOF(tmp) - 1, "%s_%d", name.c_str(), c);
         Tilep tile = tile_find(tmp);
-        UNLIKELY if((! tile)) {
-          CROAK("Did not find wid %s tile %s", name.c_str(), tmp);
-        }
+        UNLIKELY if ((! tile)) { CROAK("Did not find wid %s tile %s", name.c_str(), tmp); }
         t->tile[ i ][ j ] = tile;
         c++;
       }
@@ -107,9 +103,7 @@ auto wid_tiles_load(const std::string &name, float scale) -> wid_tilesp
       j = 0;
       snprintf(tmp, SIZEOF(tmp) - 1, "%s_top%d", name.c_str(), c);
       Tilep tile = tile_find(tmp);
-      UNLIKELY if((! tile)) {
-        CROAK("Did not find wid %s tile %s", name.c_str(), tmp);
-      }
+      UNLIKELY if ((! tile)) { CROAK("Did not find wid %s tile %s", name.c_str(), tmp); }
 
       t->tile[ i ][ j ] = tile;
       c++;
@@ -123,9 +117,7 @@ auto wid_tiles_load(const std::string &name, float scale) -> wid_tilesp
       ;
       snprintf(tmp, SIZEOF(tmp) - 1, "%s_bot%d", name.c_str(), c);
       Tilep tile = tile_find(tmp);
-      UNLIKELY if((! tile)) {
-        CROAK("Did not find wid %s tile %s", name.c_str(), tmp);
-      }
+      UNLIKELY if ((! tile)) { CROAK("Did not find wid %s tile %s", name.c_str(), tmp); }
 
       t->tile[ i ][ j ] = tile;
       c++;
@@ -138,9 +130,7 @@ auto wid_tiles_load(const std::string &name, float scale) -> wid_tilesp
       i = 0;
       snprintf(tmp, SIZEOF(tmp) - 1, "%s_left%d", name.c_str(), c);
       Tilep tile = tile_find(tmp);
-      UNLIKELY if((! tile)) {
-        CROAK("Did not find wid %s tile %s", name.c_str(), tmp);
-      }
+      UNLIKELY if ((! tile)) { CROAK("Did not find wid %s tile %s", name.c_str(), tmp); }
 
       t->tile[ i ][ j ] = tile;
       c++;
@@ -153,9 +143,7 @@ auto wid_tiles_load(const std::string &name, float scale) -> wid_tilesp
       i = t->across - 1;
       snprintf(tmp, SIZEOF(tmp) - 1, "%s_right%d", name.c_str(), c);
       Tilep tile = tile_find(tmp);
-      UNLIKELY if((! tile)) {
-        CROAK("Did not find wid %s tile %s", name.c_str(), tmp);
-      }
+      UNLIKELY if ((! tile)) { CROAK("Did not find wid %s tile %s", name.c_str(), tmp); }
 
       t->tile[ i ][ j ] = tile;
       c++;
@@ -167,9 +155,7 @@ auto wid_tiles_load(const std::string &name, float scale) -> wid_tilesp
     j = 0;
     snprintf(tmp, SIZEOF(tmp) - 1, "%s_tl", name.c_str());
     auto *tile = tile_find(tmp);
-    UNLIKELY if((! tile)) {
-      CROAK("Did not find wid %s tile %s", name.c_str(), tmp);
-    }
+    UNLIKELY if ((! tile)) { CROAK("Did not find wid %s tile %s", name.c_str(), tmp); }
 
     t->tile[ i ][ j ] = tile;
   }
@@ -179,9 +165,7 @@ auto wid_tiles_load(const std::string &name, float scale) -> wid_tilesp
     j = t->down - 1;
     snprintf(tmp, SIZEOF(tmp) - 1, "%s_bl", name.c_str());
     auto *tile = tile_find(tmp);
-    UNLIKELY if((! tile)) {
-      CROAK("Did not find wid %s tile %s", name.c_str(), tmp);
-    }
+    UNLIKELY if ((! tile)) { CROAK("Did not find wid %s tile %s", name.c_str(), tmp); }
 
     t->tile[ i ][ j ] = tile;
   }
@@ -191,9 +175,7 @@ auto wid_tiles_load(const std::string &name, float scale) -> wid_tilesp
     j = 0;
     snprintf(tmp, SIZEOF(tmp) - 1, "%s_tr", name.c_str());
     auto *tile = tile_find(tmp);
-    UNLIKELY if((! tile)) {
-      CROAK("Did not find wid %s tile %s", name.c_str(), tmp);
-    }
+    UNLIKELY if ((! tile)) { CROAK("Did not find wid %s tile %s", name.c_str(), tmp); }
 
     t->tile[ i ][ j ] = tile;
   }
@@ -203,9 +185,7 @@ auto wid_tiles_load(const std::string &name, float scale) -> wid_tilesp
     j = t->down - 1;
     snprintf(tmp, SIZEOF(tmp) - 1, "%s_br", name.c_str());
     auto *tile = tile_find(tmp);
-    UNLIKELY if((! tile)) {
-      CROAK("Did not find wid %s tile %s", name.c_str(), tmp);
-    }
+    UNLIKELY if ((! tile)) { CROAK("Did not find wid %s tile %s", name.c_str(), tmp); }
 
     t->tile[ i ][ j ] = tile;
   }

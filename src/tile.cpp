@@ -667,9 +667,7 @@ auto string2tile(std::string &s, int *len) -> Tilep
 
 auto tile_index_to_tile(int i) -> Tilep
 {
-  UNLIKELY if((! i)) {
-    return nullptr;
-  }
+  UNLIKELY if ((! i)) { return nullptr; }
 
   return all_tiles_array[ i - 1 ];
 }

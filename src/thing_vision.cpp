@@ -27,13 +27,9 @@ auto thing_vision_can_see_tile(Gamep g, Levelsp v, Levelp l, Thingp t, spoint p)
   TRACE();
 
   auto *ext = thing_ext_struct(g, t);
-  UNLIKELY if (ext == nullptr) {
-    return false;
-  }
+  UNLIKELY if (ext == nullptr) { return false; }
 
-  UNLIKELY if (is_oob(p)) {
-    return false;
-  }
+  UNLIKELY if (is_oob(p)) { return false; }
 
   //
   // Check the thing is on the same level.
@@ -51,18 +47,12 @@ auto thing_vision_player_has_seen_tile(Gamep g, Levelsp v, Levelp l, const spoin
   TRACE();
 
   auto *player = thing_player(g);
-  UNLIKELY if (player == nullptr) {
-    return false;
-  }
+  UNLIKELY if (player == nullptr) { return false; }
 
   auto *ext = thing_ext_struct(g, player);
-  UNLIKELY if (ext == nullptr) {
-    return false;
-  }
+  UNLIKELY if (ext == nullptr) { return false; }
 
-  UNLIKELY if (is_oob(p)) {
-    return false;
-  }
+  UNLIKELY if (is_oob(p)) { return false; }
 
   return static_cast< unsigned int >(fov_map_get(&ext->has_seen, p.x, p.y)) != 0U;
 }
@@ -70,9 +60,7 @@ auto thing_vision_player_has_seen_tile(Gamep g, Levelsp v, Levelp l, const spoin
 void thing_can_see_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   auto *ext = thing_ext_struct(g, t);
-  UNLIKELY if (ext == nullptr) {
-    return;
-  }
+  UNLIKELY if (ext == nullptr) { return; }
 
   THING_LOG(t, "can see:");
 
@@ -106,9 +94,7 @@ void thing_can_see_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
 void thing_has_seen_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   auto *ext = thing_ext_struct(g, t);
-  UNLIKELY if (ext == nullptr) {
-    return;
-  }
+  UNLIKELY if (ext == nullptr) { return; }
 
   THING_LOG(t, "has seen:");
 

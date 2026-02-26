@@ -465,9 +465,7 @@ static auto dmap_solve_(const Dmap *D, const spoint start, const std::vector< sp
     auto x = at.x;
     auto y = at.y;
 
-    UNLIKELY if(((x >= MAP_WIDTH - 1) || (y >= MAP_HEIGHT - 1) || (x < 1) || (y < 1))) {
-      return out;
-    }
+    UNLIKELY if (((x >= MAP_WIDTH - 1) || (y >= MAP_HEIGHT - 1) || (x < 1) || (y < 1))) { return out; }
 
     uint8_t lowest = D->val[ x ][ y ];
     bool    got    = false;

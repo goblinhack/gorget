@@ -103,9 +103,7 @@ static void level_display_slot(Gamep g, Levelsp v, Levelp l, const spoint &p, in
 
   Tpp   tp = nullptr;
   auto *t  = thing_and_tp_get_at(g, v, l, p, slot, &tp);
-  UNLIKELY if((! tp)) {
-    return;
-  }
+  UNLIKELY if ((! tp)) { return; }
 
   if (std::cmp_not_equal(tp_z_depth_get(tp), depth)) {
     return;
@@ -128,9 +126,7 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp l, Levelp level_abov
   const bool is_level_select = level_is_level_select(g, v, l);
 
   auto *player = thing_player(g);
-  UNLIKELY if (player == nullptr) {
-    return;
-  }
+  UNLIKELY if (player == nullptr) { return; }
 
   auto *player_level = thing_player_level(g);
   if (player_level == nullptr) {
@@ -242,9 +238,7 @@ static void level_display_fbo(Gamep g, Levelsp v, Levelp l, Levelp level_below, 
   // What level is the player on?
   //
   auto *player = thing_player(g);
-  UNLIKELY if (player == nullptr) {
-    return;
-  }
+  UNLIKELY if (player == nullptr) { return; }
 
   blit_fbo_bind(fbo);
   {

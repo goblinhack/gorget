@@ -29,9 +29,7 @@ static void level_minimap_world_update(Gamep g, Levelsp v, const bool level_sele
   // at the player
   //
   auto *player = thing_player(g);
-  UNLIKELY if (player == nullptr) {
-    return;
-  }
+  UNLIKELY if (player == nullptr) { return; }
 
   int w = 0;
   int h = 0;
@@ -183,9 +181,7 @@ static void level_minimap_levels_update(Gamep g, Levelsp v, Levelp l, const bool
   TRACE();
 
   auto *player = thing_player(g);
-  UNLIKELY if (player == nullptr) {
-    return;
-  }
+  UNLIKELY if (player == nullptr) { return; }
 
   const FboEnum fbo = FBO_MINIMAP_LEVEL;
   const auto    dx  = 1;

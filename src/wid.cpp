@@ -197,9 +197,7 @@ void wid_dump(Widp w, int depth)
     return;
   }
 
-  UNLIKELY if((! w)) {
-    return;
-  }
+  UNLIKELY if ((! w)) { return; }
 
   int tlx = 0;
   int tly = 0;
@@ -230,9 +228,7 @@ auto wid_count(Widp w, int depth) -> int
     return 0;
   }
 
-  UNLIKELY if((! w)) {
-    return 0;
-  }
+  UNLIKELY if ((! w)) { return 0; }
 
   int count = 1;
 
@@ -575,9 +571,7 @@ void wid_set_prev(Widp w, Widp prev)
 {
   TRACE();
 
-  UNLIKELY if((! w)) {
-    CROAK("No wid");
-  }
+  UNLIKELY if ((! w)) { CROAK("No wid"); }
 
   if (w == prev) {
     CROAK("Wid list loop");
@@ -594,9 +588,7 @@ auto wid_get_prev(Widp w) -> Widp
 {
   TRACE();
 
-  UNLIKELY if((! w)) {
-    CROAK("No wid");
-  }
+  UNLIKELY if ((! w)) { CROAK("No wid"); }
 
   if (w->prev == w) {
     CROAK("Wid list get prev loop");
@@ -609,9 +601,7 @@ auto wid_get_next(Widp w) -> Widp
 {
   TRACE();
 
-  UNLIKELY if((! w)) {
-    CROAK("No wid");
-  }
+  UNLIKELY if ((! w)) { CROAK("No wid"); }
 
   if (w->next == w) {
     ERR("Wid list get next loop");
@@ -660,9 +650,7 @@ auto wid_get_top_parent(Widp w) -> Widp
 {
   TRACE();
 
-  UNLIKELY if((! w)) {
-    return w;
-  }
+  UNLIKELY if ((! w)) { return w; }
 
   if (w->parent == nullptr) {
     return w;
@@ -730,9 +718,7 @@ auto wid_ignore_events(Widp w) -> bool
 
   Widp top {};
 
-  UNLIKELY if((! w)) {
-    return true;
-  }
+  UNLIKELY if ((! w)) { return true; }
 
   if ((static_cast< bool >(w->ignore_events)) || (static_cast< bool >(w->hidden)) || (static_cast< bool >(w->being_destroyed))) {
     return true;
@@ -757,9 +743,7 @@ auto wid_ignore_events_only(Widp w) -> bool
     return true;
   }
 
-  UNLIKELY if((! w)) {
-    return true;
-  }
+  UNLIKELY if ((! w)) { return true; }
 
   if (static_cast< bool >(w->ignore_events)) {
     return true;
@@ -778,9 +762,7 @@ auto wid_ignore_scroll_events(Widp w) -> bool
 
   Widp top {};
 
-  UNLIKELY if((! w)) {
-    return true;
-  }
+  UNLIKELY if ((! w)) { return true; }
 
   if ((static_cast< bool >(w->ignore_scroll_events)) || (static_cast< bool >(w->hidden)) || (static_cast< bool >(w->being_destroyed))) {
     return true;
@@ -1511,13 +1493,9 @@ void wid_set_tilename(int depth, Widp w, const std::string &name)
   }
 
   Tilep tile = tile_find(name);
-  UNLIKELY if((! tile)) {
-    ERR("Failed to find wid tile [%s]", name.c_str());
-  }
+  UNLIKELY if ((! tile)) { ERR("Failed to find wid tile [%s]", name.c_str()); }
 
-  UNLIKELY if((! w)) {
-    CROAK("Widget does not exist to set tile %s", name.c_str());
-  }
+  UNLIKELY if ((! w)) { CROAK("Widget does not exist to set tile %s", name.c_str()); }
 
   w->tiles[ depth ] = tile;
 }
@@ -2177,9 +2155,7 @@ static void wid_destroy_delay(Gamep g, Widp *wp, int delay)
 
   auto *w = *wp;
 
-  UNLIKELY if((! w)) {
-    return;
-  }
+  UNLIKELY if ((! w)) { return; }
 
   WID_DBG(w, "destroy delay");
 
@@ -3141,9 +3117,7 @@ void wid_visible(Gamep g, Widp w)
     return;
   }
 
-  UNLIKELY if((! w)) {
-    return;
-  }
+  UNLIKELY if ((! w)) { return; }
 
   w->visible = 1U;
   w->hidden  = 0U;
@@ -3161,9 +3135,7 @@ auto wid_is_visible(Widp w) -> bool
 {
   TRACE();
 
-  UNLIKELY if((! w)) {
-    return false;
-  }
+  UNLIKELY if ((! w)) { return false; }
 
   return static_cast< bool >(w->visible);
 }
@@ -3176,9 +3148,7 @@ void wid_hide(Gamep g, Widp w)
     return;
   }
 
-  UNLIKELY if((! w)) {
-    return;
-  }
+  UNLIKELY if ((! w)) { return; }
 
   w->hidden  = 1U;
   w->visible = 0U;
@@ -3886,9 +3856,7 @@ auto wid_find_at(int x, int y) -> Widp
   TRACE();
 
   auto *w = wid_on_screen_at[ x ][ y ];
-  UNLIKELY if((! w)) {
-    return nullptr;
-  }
+  UNLIKELY if ((! w)) { return nullptr; }
 
   if (wid_ignore_being_destroyed(w)) {
     return nullptr;
@@ -3901,9 +3869,7 @@ static auto wid_key_down_handler_at(Gamep g, Widp w, int x, int y, uint8_t stric
 {
   TRACE();
 
-  UNLIKELY if((! w)) {
-    return nullptr;
-  }
+  UNLIKELY if ((! w)) { return nullptr; }
 
   if (! static_cast< bool >(w->visible)) {
     return nullptr;
@@ -3982,9 +3948,7 @@ static auto wid_key_up_handler_at(Gamep g, Widp w, int x, int y, uint8_t strict)
 {
   TRACE();
 
-  UNLIKELY if((! w)) {
-    return nullptr;
-  }
+  UNLIKELY if ((! w)) { return nullptr; }
 
   if (! static_cast< bool >(w->visible)) {
     return nullptr;
@@ -4050,9 +4014,7 @@ static auto wid_joy_button_handler_at(Gamep g, Widp w, int x, int y, uint8_t str
 {
   TRACE();
 
-  UNLIKELY if((! w)) {
-    return nullptr;
-  }
+  UNLIKELY if ((! w)) { return nullptr; }
 
   if (! static_cast< bool >(w->visible)) {
     return nullptr;
@@ -4334,9 +4296,7 @@ static auto wid_joy_button_handler(Gamep g, int x, int y) -> Widp
     }
 
     w = wid_joy_button_handler_at(g, w, x, y, 0U /* strict */);
-    UNLIKELY if((! w)) {
-      continue;
-    }
+    UNLIKELY if ((! w)) { continue; }
 
     return w;
   }
@@ -4444,7 +4404,8 @@ void wid_joy_button(Gamep g, int x, int y)
   Widp w {};
 
   w = wid_joy_button_handler(g, x, y);
-  UNLIKELY if((! w)) {
+  UNLIKELY if ((! w))
+  {
     wid_fake_joy_button(g, x, y);
     return;
   }
@@ -4463,7 +4424,8 @@ void wid_joy_button(Gamep g, int x, int y)
         w = w->parent;
       }
 
-      UNLIKELY if((! w)) {
+      UNLIKELY if ((! w))
+      {
         wid_fake_joy_button(g, x, y);
         return;
       }
@@ -4534,9 +4496,7 @@ static auto wid_key_down_handler(Gamep g, int x, int y) -> Widp
       }
 
       c = wid_key_down_handler_at(g, c, x, y, 1U /* strict */);
-      UNLIKELY if((! c)) {
-        continue;
-      }
+      UNLIKELY if ((! c)) { continue; }
       // CON("     got top level strict handler%s.",to_string(c).c_str());
 
       return c;
@@ -4553,9 +4513,7 @@ static auto wid_key_down_handler(Gamep g, int x, int y) -> Widp
       }
 
       c = wid_key_down_handler_at(g, c, x, y, 0U /* strict */);
-      UNLIKELY if((! c)) {
-        continue;
-      }
+      UNLIKELY if ((! c)) { continue; }
 
       // CON("     got top level loose handler%s.",to_string(c));
       return c;
@@ -4600,9 +4558,7 @@ static auto wid_key_up_handler(Gamep g, int x, int y) -> Widp
       }
 
       c = wid_key_up_handler_at(g, c, x, y, 1U /* strict */);
-      UNLIKELY if((! c)) {
-        continue;
-      }
+      UNLIKELY if ((! c)) { continue; }
 
       return c;
     }
@@ -4617,9 +4573,7 @@ static auto wid_key_up_handler(Gamep g, int x, int y) -> Widp
       }
 
       c = wid_key_up_handler_at(g, c, x, y, 0U /* strict */);
-      UNLIKELY if((! c)) {
-        continue;
-      }
+      UNLIKELY if ((! c)) { continue; }
 
       return c;
     }
@@ -4746,7 +4700,8 @@ void wid_key_down(Gamep g, const struct SDL_Keysym *key, int x, int y)
   }
 
   w = wid_key_down_handler(g, x, y);
-  UNLIKELY if((! w)) {
+  UNLIKELY if ((! w))
+  {
     //
     // If no-one handles it, feed it to the default handler, the console.
     //
@@ -4832,7 +4787,8 @@ void wid_key_up(Gamep g, const struct SDL_Keysym *key, int x, int y)
   }
 
   w = wid_key_up_handler(g, x, y);
-  UNLIKELY if((! w)) {
+  UNLIKELY if ((! w))
+  {
     //
     // If no-one handles it, drop it. We only hand key down to the
     // console.
@@ -5203,13 +5159,9 @@ static void wid_display(Gamep g, Widp w, uint8_t disable_scissor, uint8_t *updat
     //
     // CON("%d,%d to @%d,%d %s %p", tl.x, tl.y, br.x, br.y, w->name.c_str(), w);
     for (auto x = tl.x; x < br.x; x++) {
-      UNLIKELY if((! ascii_x_ok(x))) {
-        continue;
-      }
+      UNLIKELY if ((! ascii_x_ok(x))) { continue; }
       for (auto y = tl.y; y < br.y; y++) {
-        UNLIKELY if((! ascii_y_ok(y))) {
-          continue;
-        }
+        UNLIKELY if ((! ascii_y_ok(y))) { continue; }
 
         if (ascii_ok_for_scissors(x, y) != 0) {
           wid_on_screen_at[ x ][ y ] = w;
@@ -5491,9 +5443,7 @@ auto wid_is_hidden(Widp w) -> bool
 {
   TRACE();
 
-  UNLIKELY if((! w)) {
-    return false;
-  }
+  UNLIKELY if ((! w)) { return false; }
 
   if (static_cast< bool >(w->hidden)) {
     return true;

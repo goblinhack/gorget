@@ -30,13 +30,9 @@ static bool memory_test = true;
   for (auto tries = 0; tries < THING_EXT_MAX; tries++) {
     ThingExtId ext_id = last_ext_id + tries;
     ext_id %= THING_EXT_MAX;
-    UNLIKELY if((! ext_id)) {
-      continue;
-    }
+    UNLIKELY if ((! ext_id)) { continue; }
 
-    UNLIKELY if((v->thing_ext[ ext_id ].in_use)) {
-      continue;
-    }
+    UNLIKELY if ((v->thing_ext[ ext_id ].in_use)) { continue; }
 
     v->thing_ext[ ext_id ].in_use = true;
     v->thing_ext_count++;
@@ -88,13 +84,9 @@ static void thing_ext_free(Levelsp v, Thingp t)
   for (auto tries = 0; tries < THING_LIGHT_MAX; tries++) {
     ThingLightId light_id = last_light_id + tries;
     light_id %= THING_LIGHT_MAX;
-    UNLIKELY if((! light_id)) {
-      continue;
-    }
+    UNLIKELY if ((! light_id)) { continue; }
 
-    UNLIKELY if((v->thing_light[ light_id ].in_use)) {
-      continue;
-    }
+    UNLIKELY if ((v->thing_light[ light_id ].in_use)) { continue; }
 
     v->thing_light[ light_id ].in_use = true;
     v->thing_light_count++;
@@ -154,7 +146,8 @@ static auto thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, ThingIdPacked i
   //
   auto  arr_index = id.c.arr_index;
   auto *t         = &v->thing_body[ arr_index ];
-  UNLIKELY if((t->tp_id)) {
+  UNLIKELY if ((t->tp_id))
+  {
     //
     // Some other thread grabbed it already?
     //
@@ -164,13 +157,15 @@ static auto thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, ThingIdPacked i
   //
   // If we need a mutex, lock the thing population for this slot
   //
-  UNLIKELY if((need_mutex)) {
+  UNLIKELY if ((need_mutex))
+  {
     thing_mutex.lock();
 
     //
     // Just in case someone else grabbed it while locking...
     //
-    UNLIKELY if((t->tp_id)) {
+    UNLIKELY if ((t->tp_id))
+    {
       thing_mutex.unlock();
       return nullptr;
     }
@@ -180,13 +175,13 @@ static auto thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, ThingIdPacked i
     //
     t->tp_id = tp_id;
     thing_mutex.unlock();
-  } else {
+  }
+  else
+  {
     //
     // No need to worry about other threads
     //
-    UNLIKELY if((t->tp_id)) {
-      return nullptr;
-    }
+    UNLIKELY if ((t->tp_id)) { return nullptr; }
 
     t->tp_id = tp_id;
   }
@@ -253,9 +248,7 @@ auto thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p) -> Thingp
 {
   TRACE();
 
-  UNLIKELY if((! tp)) {
-    CROAK("no template set for thing allocation");
-  }
+  UNLIKELY if ((! tp)) { CROAK("no template set for thing allocation"); }
 
   //
   // Check we cannot overflow on monsters

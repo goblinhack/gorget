@@ -75,7 +75,8 @@ auto level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int
       auto o = overrides.find(c);
       if (o != overrides.end()) {
         tp = (o->second)(c, at);
-        UNLIKELY if (tp == nullptr) {
+        UNLIKELY if (tp == nullptr)
+        {
           ERR("could not find a template for override char %c", c);
           return false;
         }

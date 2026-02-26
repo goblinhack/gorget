@@ -13,9 +13,7 @@ auto thing_can_move_to_attempt(Gamep g, Levelsp v, Levelp l, Thingp me, spoint t
 {
   TRACE();
 
-  UNLIKELY if (is_oob(to)) {
-    return false;
-  }
+  UNLIKELY if (is_oob(to)) { return false; }
 
   auto at = thing_at(me);
   if (to == at) {
@@ -147,9 +145,7 @@ auto thing_can_move_to_attempt_by_shoving(Gamep g, Levelsp v, Levelp l, Thingp m
 {
   TRACE();
 
-  UNLIKELY if (is_oob(to)) {
-    return false;
-  }
+  UNLIKELY if (is_oob(to)) { return false; }
 
   auto at = thing_at(me);
   if (to == at) {

@@ -256,9 +256,7 @@ auto thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool
 {
   TRACE();
 
-  UNLIKELY if (is_oob(to)) {
-    return false;
-  }
+  UNLIKELY if (is_oob(to)) { return false; }
 
   auto at = thing_at(me);
   if (to == at) {
@@ -289,9 +287,7 @@ auto thing_shove_to(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool
 {
   TRACE();
 
-  UNLIKELY if (is_oob(to)) {
-    return false;
-  }
+  UNLIKELY if (is_oob(to)) { return false; }
 
   auto at = thing_at(me);
   if (to == at) {
@@ -315,9 +311,7 @@ auto thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp me, spoint to) -
 {
   TRACE();
 
-  UNLIKELY if (is_oob(to)) {
-    return false;
-  }
+  UNLIKELY if (is_oob(to)) { return false; }
 
   THING_LOG(me, "pre teleport");
 

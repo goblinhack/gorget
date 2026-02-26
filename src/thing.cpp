@@ -19,7 +19,8 @@ auto thing_get(Gamep g, Levelsp v, Levelp l, const spoint &p, int slot) -> Thing
     return nullptr;
   }
 
-  UNLIKELY if (is_oob(p)) {
+  UNLIKELY if (is_oob(p))
+  {
     ERR("out of bounds thing_get %d,%d, slot %d", p.x, p.y, slot);
     return nullptr;
   }
@@ -93,7 +94,8 @@ auto thing_and_tp_get_at(Gamep g, Levelsp v, Levelp l, const spoint &p, int slot
     return nullptr;
   }
 
-  UNLIKELY if (is_oob(p)) {
+  UNLIKELY if (is_oob(p))
+  {
     ERR("out of bounds thing_and_tp_get_at %d,%d, slot %d", p.x, p.y, slot);
     return nullptr;
   }
