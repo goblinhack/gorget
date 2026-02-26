@@ -14,7 +14,7 @@
 //
 void level_tick_teleport(Gamep g, Levelsp v, Levelp l)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   int x = 0;
   int y = 0;

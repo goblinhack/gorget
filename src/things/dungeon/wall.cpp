@@ -11,7 +11,7 @@
 
 static void tp_wall_melt(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   ThingEvent e {
       .reason     = "by melting",     //
@@ -24,7 +24,7 @@ static void tp_wall_melt(Gamep g, Levelsp v, Levelp l, Thingp t)
 
 auto tp_load_wall() -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   for (auto variant = 1; variant <= WALL_VARIANTS; variant++) {
     std::string const name = "wall" + std::to_string(variant);

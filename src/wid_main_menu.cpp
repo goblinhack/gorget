@@ -19,7 +19,7 @@ WidPopup *wid_main_menu_window;
 
 void wid_main_menu_destroy(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   delete wid_main_menu_window;
   wid_main_menu_window = nullptr;
@@ -27,7 +27,7 @@ void wid_main_menu_destroy(Gamep g)
 
 void wid_main_menu_hide(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (wid_main_menu_window == nullptr) {
     return;
@@ -38,14 +38,14 @@ void wid_main_menu_hide(Gamep g)
 
 [[nodiscard]] static auto wid_main_menu_load(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   wid_load_select(g);
   return true;
 }
 
 [[nodiscard]] static auto wid_main_menu_cfg(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   wid_options_menu_select(g);
   wid_main_menu_hide(g);
   return true;
@@ -53,7 +53,7 @@ void wid_main_menu_hide(Gamep g)
 
 [[nodiscard]] static auto wid_main_menu_more(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   wid_more_select(g);
   wid_main_menu_hide(g);
   return true;
@@ -61,7 +61,7 @@ void wid_main_menu_hide(Gamep g)
 
 [[nodiscard]] static auto game_menu_new_game(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   wid_main_menu_hide(g);
   wid_main_menu_destroy(g);
   wid_new_game(g);
@@ -70,7 +70,7 @@ void wid_main_menu_hide(Gamep g)
 
 [[nodiscard]] static auto wid_main_menu_quit(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   wid_quit_select(g);
   wid_main_menu_destroy(g);
   return true;
@@ -78,7 +78,7 @@ void wid_main_menu_hide(Gamep g)
 
 [[nodiscard]] static auto wid_main_menu_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
     sound_play(g, "keypress");
@@ -92,7 +92,7 @@ void wid_main_menu_hide(Gamep g)
       switch (key->sym) {
         default :
           {
-            TRACE_NO_INDENT();
+            TRACE();
             auto c = wid_event_to_char(key);
             switch (c) {
               case SDLK_RETURN :
@@ -132,7 +132,7 @@ void wid_main_menu_hide(Gamep g)
 
 static void game_display_title_bg(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   GLCOLOR(WHITE);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -144,7 +144,7 @@ static void game_display_title_bg(Gamep g)
 
 static void game_display_title_fg1(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   GLCOLOR(WHITE);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -157,7 +157,7 @@ static void game_display_title_fg1(Gamep g)
 
 static void game_display_title_fg2(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   static color fg    = WHITE;
   static int   delta = 10;
@@ -219,7 +219,7 @@ auto color_change_hue(const color &in, const float fHue) -> color
 
 static void game_display_title_fg3(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   static color fg  = RED;
   static int   hue = 0;
@@ -259,7 +259,7 @@ static void game_display_title_fg3(Gamep g)
 
 static void game_display_title_fg4(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   GLCOLOR(WHITE);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -283,7 +283,7 @@ static void game_display_title_fg4(Gamep g)
 
 static void wid_main_menu_tick(Gamep g, Widp w)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (compiler_unused) {
     game_display_title_bg(g);
@@ -313,7 +313,7 @@ static void wid_main_menu_tick(Gamep g, Widp w)
 void wid_main_menu_select(Gamep g)
 {
   LOG("Main menu");
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (wid_main_menu_window != nullptr) {
     wid_main_menu_destroy(g);
@@ -334,14 +334,14 @@ void wid_main_menu_select(Gamep g)
   auto button_width = outer_br.x - outer_tl.x - 2;
 
   {
-    TRACE_NO_INDENT();
+    TRACE();
     Widp w = wid_main_menu_window->wid_popup_container;
     wid_set_on_key_down(w, wid_main_menu_key_down);
     wid_set_on_tick(w, wid_main_menu_tick);
   }
 
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_main_menu_window->wid_text_area->wid_text_area;
     auto *w = wid_new_menu_button(g, p, "New Game");
 
@@ -353,7 +353,7 @@ void wid_main_menu_select(Gamep g)
   }
   y_at += button_step;
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_main_menu_window->wid_text_area->wid_text_area;
     auto *w = wid_new_menu_button(g, p, "Load Game");
 
@@ -365,7 +365,7 @@ void wid_main_menu_select(Gamep g)
   }
   y_at += button_step;
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_main_menu_window->wid_text_area->wid_text_area;
     auto *w = wid_new_menu_button(g, p, "Options");
 
@@ -377,7 +377,7 @@ void wid_main_menu_select(Gamep g)
   }
   y_at += button_step;
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_main_menu_window->wid_text_area->wid_text_area;
     auto *w = wid_new_menu_button(g, p, "More");
 
@@ -389,7 +389,7 @@ void wid_main_menu_select(Gamep g)
   }
   y_at += button_step;
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_main_menu_window->wid_text_area->wid_text_area;
     auto *w = wid_new_cancel_button(g, p, "Quit Game");
 
@@ -406,7 +406,7 @@ void wid_main_menu_select(Gamep g)
 void wid_new_game(Gamep g)
 {
   LOG("New game");
-  TRACE_NO_INDENT();
+  TRACE();
 
   game_state_reset(g, "new game");
   game_create_levels(g);

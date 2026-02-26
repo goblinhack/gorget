@@ -13,7 +13,7 @@ static Widp wid_choose_player_name;
 
 static void selected(Gamep g, Widp w, const std::string &text)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (! text.empty()) {
     game_player_name_set(g, text.c_str());
@@ -27,7 +27,7 @@ static void selected(Gamep g, Widp w, const std::string &text)
 
 void wid_player_name_select(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   CON("Choose player name menu");
 

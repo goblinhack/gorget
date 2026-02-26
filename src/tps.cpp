@@ -7,7 +7,7 @@
 
 auto templates_init() -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   // clang-format off
   /* begin shell marker1 */

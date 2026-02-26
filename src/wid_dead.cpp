@@ -16,7 +16,7 @@ static WidPopup *wid_dead_window;
 
 void wid_dead_fini(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   delete wid_dead_window;
   wid_dead_window = nullptr;
@@ -24,19 +24,19 @@ void wid_dead_fini(Gamep g)
 
 static void wid_dead_selected(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   wid_dead_fini(g);
 
-  TRACE_NO_INDENT();
+  TRACE();
   game_cleanup(g);
 
-  TRACE_NO_INDENT();
+  TRACE();
   game_state_reset(g, "finished game");
 }
 
 [[nodiscard]] static auto wid_dead_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
     sound_play(g, "keypress");
@@ -50,13 +50,13 @@ static void wid_dead_selected(Gamep g)
       switch (key->sym) {
         default :
           {
-            TRACE_NO_INDENT();
+            TRACE();
             auto c = wid_event_to_char(key);
             switch (c) {
               case 'q' :
               case SDLK_ESCAPE :
                 {
-                  TRACE_NO_INDENT();
+                  TRACE();
                   sound_play(g, "keypress");
                   wid_dead_selected(g);
                   return true;
@@ -74,7 +74,7 @@ static void wid_dead_selected(Gamep g)
 
 [[nodiscard]] static auto wid_dead_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   wid_dead_selected(g);
 
   return true;
@@ -82,7 +82,7 @@ static void wid_dead_selected(Gamep g)
 
 void wid_dead_select(Gamep g, const std::string &reason)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   LOG("Open dead select: %s", reason.c_str());
 

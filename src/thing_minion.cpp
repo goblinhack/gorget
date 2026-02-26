@@ -40,7 +40,7 @@ auto thing_minion_mob_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> Thingp
 //
 auto thing_minion_get_mob_dmap(Gamep g, Levelsp v, Levelp l, Thingp me) -> Dmap *
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *mob = thing_minion_mob_get(g, v, l, me);
   if (mob == nullptr) {
@@ -61,7 +61,7 @@ auto thing_minion_get_mob_dmap(Gamep g, Levelsp v, Levelp l, Thingp me) -> Dmap 
 //
 auto thing_minion_detach_me_from_mob(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (me == nullptr) {
     return false;
@@ -90,7 +90,7 @@ auto thing_minion_detach_me_from_mob(Gamep g, Levelsp v, Levelp l, Thingp me) ->
 [[nodiscard]] static auto thing_minion_get_mob_dmap_target_cand(Gamep g, Levelsp v, Levelp l, Thingp me, spoint dmap_goal, Dmap *dmap,
                                                                 int radius, spoint &target) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   //
   // Look at tiles surrounding the mob for somewhere to wander to
@@ -98,7 +98,7 @@ auto thing_minion_detach_me_from_mob(Gamep g, Levelsp v, Levelp l, Thingp me) ->
   target.x = dmap_goal.x - radius + PCG_RANDOM_RANGE(0, radius * 2);
   target.y = dmap_goal.y - radius + PCG_RANDOM_RANGE(0, radius * 2);
 
-  if (IS_OOB(target)) {
+  UNLIKELY if (is_oob(target)) {
     return false;
   }
 
@@ -126,7 +126,7 @@ auto thing_minion_detach_me_from_mob(Gamep g, Levelsp v, Levelp l, Thingp me) ->
 //
 auto thing_minion_choose_target_near_mob(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *mob = thing_minion_mob_get(g, v, l, me);
   if (mob == nullptr) {

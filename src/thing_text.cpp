@@ -8,7 +8,7 @@
 
 auto thing_pluralize_name(Thingp t) -> std::string
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *tp  = thing_tp(t);
   auto  out = tp_pluralize_name(tp);
@@ -22,7 +22,7 @@ auto thing_pluralize_name(Thingp t) -> std::string
 
 auto thing_apostrophize_name(Thingp t) -> std::string
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *tp  = thing_tp(t);
   auto  out = tp_apostrophize_name(tp);
@@ -36,9 +36,9 @@ auto thing_apostrophize_name(Thingp t) -> std::string
 
 auto thing_long_name(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) -> std::string
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
-  if (UNLIKELY(! t)) {
+  UNLIKELY if((! t)) {
     return "<no name>";
   }
 
@@ -143,16 +143,16 @@ auto thing_long_name(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) -
 
 auto thing_the_long_name(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) -> std::string
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   return "the " + thing_long_name(g, v, l, t, f);
 }
 
 auto thing_short_name(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) -> std::string
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
-  if (UNLIKELY(! t)) {
+  UNLIKELY if((! t)) {
     return "<no name>";
   }
 
@@ -212,7 +212,7 @@ auto thing_short_name(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) 
 
 auto thing_the_short_name(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) -> std::string
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   return "the " + thing_short_name(g, v, l, t, f);
 }

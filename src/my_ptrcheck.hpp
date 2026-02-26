@@ -43,7 +43,7 @@ void ptrcheck_leak_print();
 #define NEWPTR(__mtype__, __ptr__, __what__)                                                                                               \
   {                                                                                                                                        \
     if (DEBUG2) {                                                                                                                          \
-      TRACE_NO_INDENT();                                                                                                                   \
+      TRACE();                                                                                                                   \
       ptrcheck_alloc(__mtype__, __ptr__, __what__, sizeof(*(__ptr__)), PTRCHECK_AT);                                                       \
     }                                                                                                                                      \
   }
@@ -51,7 +51,7 @@ void ptrcheck_leak_print();
 #define OLDPTR(__mtype__, __ptr__)                                                                                                         \
   {                                                                                                                                        \
     if (DEBUG2) {                                                                                                                          \
-      TRACE_NO_INDENT();                                                                                                                   \
+      TRACE();                                                                                                                   \
       ptrcheck_free(__mtype__, __ptr__, PTRCHECK_AT);                                                                                      \
     }                                                                                                                                      \
   }
@@ -59,7 +59,7 @@ void ptrcheck_leak_print();
 #define VERIFY(__mtype__, __ptr__)                                                                                                         \
   {                                                                                                                                        \
     if (DEBUG2) {                                                                                                                          \
-      TRACE_NO_INDENT();                                                                                                                   \
+      TRACE();                                                                                                                   \
       ptrcheck_VERIFY(__mtype__, __ptr__, SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM);                                                     \
     }                                                                                                                                      \
   }

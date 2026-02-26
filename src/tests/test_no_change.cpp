@@ -10,7 +10,7 @@
 [[nodiscard]] static auto test_no_change(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
-  TRACE_AND_INDENT();
+  TRACE();
 
   LevelNum const level_num = 0;
   auto           w         = 7;
@@ -53,7 +53,7 @@
   TEST_PROGRESS(t);
   for (auto tries = 0; tries < 10; tries++) {
     TEST_LOG(t, "try: %d", tries);
-    TRACE_NO_INDENT();
+    TRACE();
     TEST_ASSERT(t, game_event_wait(g), "failed to wait");
     if (! game_wait_for_tick_to_finish(g, v, l)) {
       TEST_FAILED(t, "wait loop failed");
@@ -70,7 +70,7 @@
 
   TEST_PASSED(t);
 exit:
-  TRACE_NO_INDENT();
+  TRACE();
   game_cleanup(g);
 
   return result;
@@ -78,7 +78,7 @@ exit:
 
 auto test_load_no_change() -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   Testp test = test_load("no_change");
 

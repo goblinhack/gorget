@@ -20,7 +20,7 @@ static Thingp g_item;
 
 [[nodiscard]] static auto wid_item_menu_destroy(Gamep g) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   delete wid_item_menu_window;
   wid_item_menu_window = nullptr;
@@ -36,7 +36,7 @@ static Thingp g_item;
   }
 
   auto *player = thing_player(g);
-  if (UNLIKELY(player == nullptr)) {
+  UNLIKELY if (player == nullptr) {
     return false;
   }
 
@@ -57,7 +57,7 @@ static Thingp g_item;
 
 [[nodiscard]] static auto wid_item_menu_drop(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *v = game_levels_get(g);
   if (v == nullptr) {
@@ -70,7 +70,7 @@ static Thingp g_item;
   }
 
   auto *player = thing_player(g);
-  if (UNLIKELY(player == nullptr)) {
+  UNLIKELY if (player == nullptr) {
     return false;
   }
 
@@ -95,20 +95,20 @@ static Thingp g_item;
 
 [[nodiscard]] static auto wid_item_menu_equip(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   TOPCON("TODO equip");
   return wid_item_menu_destroy(g);
 }
 
 [[nodiscard]] static auto wid_item_menu_back(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   return wid_item_menu_destroy(g);
 }
 
 [[nodiscard]] static auto wid_item_menu_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
     sound_play(g, "keypress");
@@ -122,7 +122,7 @@ static Thingp g_item;
       switch (key->sym) {
         default :
           {
-            TRACE_NO_INDENT();
+            TRACE();
             auto c = wid_event_to_char(key);
             switch (c) {
               case 'd' :
@@ -151,7 +151,7 @@ static Thingp g_item;
 
 void wid_item_menu_select(Gamep g, Levelsp v, Thingp item)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   LOG("Item menu");
 
   auto *l = game_level_get(g, v);
@@ -160,7 +160,7 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item)
   }
 
   auto *player = thing_player(g);
-  if (UNLIKELY(player == nullptr)) {
+  UNLIKELY if (player == nullptr) {
     return;
   }
 
@@ -195,7 +195,7 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item)
   auto button_width = outer_br.x - outer_tl.x - 2;
 
   {
-    TRACE_NO_INDENT();
+    TRACE();
     Widp w = wid_item_menu_window->wid_popup_container;
     wid_set_on_key_down(w, wid_item_menu_key_down);
   }
@@ -203,7 +203,7 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item)
   int y_at = 0;
 
   if (thing_is_item_droppable(item)) {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_item_menu_window->wid_text_area->wid_text_area;
     auto *w = wid_new_menu_button(g, p, "Drop");
 
@@ -221,7 +221,7 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item)
   }
 
   if (thing_is_item_equipable(item)) {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_item_menu_window->wid_text_area->wid_text_area;
     auto *w = wid_new_menu_button(g, p, "Equip");
 
@@ -234,7 +234,7 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item)
   }
 
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_item_menu_window->wid_text_area->wid_text_area;
     auto *w = wid_new_back_button(g, p, "BACK");
 

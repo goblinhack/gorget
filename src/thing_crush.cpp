@@ -12,7 +12,7 @@
 //
 auto thing_crush(Gamep g, Levelsp v, Levelp l, Thingp it, Thingp me) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (! thing_is_crushable(it)) {
     return false;

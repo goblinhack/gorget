@@ -30,7 +30,7 @@ static std::map< unsigned int, std::string > wid_console_lines;
 
 void wid_console_fini(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   wid_console_exiting = 1;
 
   if (wid_console_inited != 0) {
@@ -46,7 +46,7 @@ void wid_console_fini(Gamep g)
 
 auto wid_console_init(Gamep g) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (wid_console_commands_inited == 0) {
     command_add(g, config_debug_set, "set debug [012]", "set debug level");
@@ -74,7 +74,7 @@ auto wid_console_init(Gamep g) -> bool
 //
 static void wid_console_reset_scroll(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   if (wid_console_vert_scroll == nullptr) {
     return;
   }
@@ -87,7 +87,7 @@ static void wid_console_reset_scroll(Gamep g)
 //
 static void wid_console_log_(Gamep g, const std::string &s)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   static int log_wid_console_buffered_lines;
 
   if (wid_console_exiting != 0) {
@@ -131,7 +131,7 @@ void wid_console_log(const std::string &s)
     return;
   }
 
-  TRACE_NO_INDENT();
+  TRACE();
 
   extern Gamep game;
   auto        *g = game;
@@ -153,7 +153,7 @@ void wid_console_log(const std::string &s)
 //
 auto wid_console_receive_input(Gamep g, Widp w, const SDL_Keysym *key) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   wid_console_reset_scroll(g);
 
@@ -177,7 +177,7 @@ auto wid_console_receive_input(Gamep g, Widp w, const SDL_Keysym *key) -> bool
 //
 static void wid_console_wid_create(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   spoint const outer_tl(0, 0);
   spoint const outer_br(TERM_WIDTH - 1, TERM_HEIGHT - 1);
@@ -260,7 +260,7 @@ static void wid_console_wid_create(Gamep g)
 
 auto wid_console_serialize() -> std::vector< std::string >
 {
-  TRACE_NO_INDENT();
+  TRACE();
   std::vector< std::string > r;
   auto                      *tmp = wid_get_head(wid_console_input_line);
   while (tmp != nullptr) {
@@ -276,7 +276,7 @@ auto wid_console_serialize() -> std::vector< std::string >
 
 void wid_console_deserialize(const std::vector< std::string > &r)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   DBG2("Start of replaying old logs");
   DBG2("Vvvvvvvvvvvvvvvvvvvvvvvvvvv");
   for (const auto &s : r) {
@@ -294,7 +294,7 @@ void wid_console_flush(Gamep g)
     return;
   }
 
-  TRACE_NO_INDENT();
+  TRACE();
 
   //
   // Easier to see progress on windows where there is no console
@@ -311,7 +311,7 @@ void wid_console_raise(Gamep g)
     return;
   }
 
-  TRACE_NO_INDENT();
+  TRACE();
   if (wid_console_window == nullptr) {
     return;
   }

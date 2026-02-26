@@ -15,7 +15,7 @@
 //
 static void thing_killed_player(Gamep g, Levelsp v, Levelp l, ThingEvent &e)
 {
-  TRACE_AND_INDENT();
+  TRACE();
 
   auto *it = e.source;
 
@@ -111,7 +111,7 @@ static void thing_killed_player(Gamep g, Levelsp v, Levelp l, ThingEvent &e)
 //
 static void thing_killed_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 {
-  TRACE_AND_INDENT();
+  TRACE();
   auto *it = e.source;
 
   if ((it != nullptr) && thing_is_loggable(t)) {
@@ -161,7 +161,7 @@ static void thing_killed_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
 //
 void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (thing_is_dead(t)) {
     return;
@@ -247,7 +247,7 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 //
 void thing_is_dead_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   //
   // Update the animation, for example, flattened grass

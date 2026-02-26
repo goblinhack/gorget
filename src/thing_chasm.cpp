@@ -7,7 +7,7 @@
 
 void thing_chasm_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   thing_fall(g, v, l, t);
 }

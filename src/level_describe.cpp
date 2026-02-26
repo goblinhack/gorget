@@ -17,7 +17,7 @@
 //
 void level_cursor_describe_update(Gamep g, Levelsp v)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (g == nullptr) {
     ERR("No game pointer set");
@@ -43,7 +43,7 @@ void level_cursor_describe_update(Gamep g, Levelsp v)
 //
 auto level_cursor_describe_add(Gamep g, Levelsp v, Thingp t) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (g == nullptr) {
     ERR("No game pointer set");
@@ -85,7 +85,7 @@ auto level_cursor_describe_add(Gamep g, Levelsp v, Thingp t) -> bool
 //
 auto level_cursor_describe_remove(Gamep g, Levelsp v, Thingp t) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (g == nullptr) {
     ERR("No game pointer set");
@@ -119,7 +119,7 @@ auto level_cursor_describe_remove(Gamep g, Levelsp v, Thingp t) -> bool
 //
 void level_cursor_describe_clear(Gamep g, Levelsp v)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (g == nullptr) {
     ERR("No game pointer set");
@@ -143,7 +143,7 @@ void level_cursor_describe_clear(Gamep g, Levelsp v)
 //
 void level_cursor_describe(Gamep g, Levelsp v, Levelp l)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (g == nullptr) {
     ERR("No game pointer set");
@@ -161,7 +161,7 @@ void level_cursor_describe(Gamep g, Levelsp v, Levelp l)
   }
 
   auto *player = thing_player(g);
-  if (UNLIKELY(player == nullptr)) {
+  UNLIKELY if (player == nullptr) {
     ERR("No player pointer set");
     return;
   }

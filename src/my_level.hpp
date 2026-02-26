@@ -566,7 +566,7 @@ struct MyIter {
 #define FOR_ALL_THINGS_AT_UNSAFE(_g_, _v_, _l_, _t_, _p_)                                                                                  \
   if ((_g_) && (_v_) && (_l_))                                                                                                             \
     if (spoint _at_ = make_spoint(_p_); true)                                                                                              \
-      if (! IS_OOB(_at_))                                                                                                                  \
+      if (! is_oob(_at_))                                                                                                                  \
         for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                                                \
           if (ThingId _id_ = 0; (_id_ = (_l_)->thing_id[ _at_.x ][ _at_.y ][ _slot_ ]))                                                    \
             if (Thingp _t_ = nullptr; ((_t_) = thing_find(_g_, _v_, _id_)))
@@ -574,7 +574,7 @@ struct MyIter {
 #define FOR_ALL_THINGS_AT(_g_, _v_, _l_, _t_, _p_)                                                                                         \
   if ((_g_) && (_v_) && (_l_))                                                                                                             \
     if (spoint _at_ = make_spoint(_p_); true)                                                                                              \
-      if (! IS_OOB(_at_))                                                                                                                  \
+      if (! is_oob(_at_))                                                                                                                  \
         if (int _iter_index_ = 0; true)                                                                                                    \
           if (MyIter _iter_(_g_, _v_, &_iter_index_, __FUNCTION__, __LINE__); true)                                                        \
             for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                                            \
@@ -616,8 +616,6 @@ enum {
   LEVEL_TEST_FLAG = 1,
 };
 
-#define IS_OOB(...) UNLIKELY(is_oob(__VA_ARGS__))
-
 // begin sort marker1 {
 [[nodiscard]] auto fragment_add(Gamep g, int chance, const char *file, int line, ...) -> bool;
 [[nodiscard]] auto fragment_alt_add(Gamep g, int chance, const char *file, int line, ...) -> bool;
@@ -652,8 +650,8 @@ enum {
 [[nodiscard]] auto level_select_get_level(Gamep, Levelsp, Levelp l, const spoint &) -> Levelp;
 [[nodiscard]] auto level_select_get_next_level_down(Gamep g, Levelsp v, Levelp l) -> Levelp;
 [[nodiscard]] auto level_select_get(Gamep g, Levelsp v, spoint p) -> LevelSelectCell *;
-[[nodiscard]] auto level_select_IS_OOB(int x, int y) -> bool;
-[[nodiscard]] auto level_select_IS_OOB(spoint p) -> bool;
+[[nodiscard]] auto level_select_is_oob(int x, int y) -> bool;
+[[nodiscard]] auto level_select_is_oob(spoint p) -> bool;
 [[nodiscard]] auto level_string(Gamep g, Levelsp v, Levelp l, int w, int h) -> std::string;
 [[nodiscard]] auto level_tick_is_in_progress(Gamep g, Levelsp v, Levelp l) -> bool;
 [[nodiscard]] auto levels_memory_alloc(Gamep g) -> Levelsp;
@@ -1661,13 +1659,8 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_open_is_wood(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 // end sort marker6
 
-static inline auto is_oob(fpoint p) -> bool
-{
-  return UNLIKELY(p.x < 0) || (p.y < 0) || (p.x >= (float) MAP_WIDTH) || (p.y >= (float) MAP_HEIGHT);
-}
-
-static inline auto is_oob(spoint p) -> bool { return UNLIKELY(p.x < 0) || (p.y < 0) || (p.x >= MAP_WIDTH) || (p.y >= MAP_HEIGHT); }
-
-static inline auto is_oob(int x, int y) -> bool { return UNLIKELY(x < 0) || (y < 0) || (x >= MAP_WIDTH) || (y >= MAP_HEIGHT); }
+static inline auto is_oob(fpoint p) -> bool { return (p.x < 0) || (p.y < 0) || (p.x >= (float) MAP_WIDTH) || (p.y >= (float) MAP_HEIGHT); }
+static inline auto is_oob(spoint p) -> bool { return (p.x < 0) || (p.y < 0) || (p.x >= MAP_WIDTH) || (p.y >= MAP_HEIGHT); }
+static inline auto is_oob(int x, int y) -> bool { return (x < 0) || (y < 0) || (x >= MAP_WIDTH) || (y >= MAP_HEIGHT); }
 
 #endif // MY_LEVEL_H

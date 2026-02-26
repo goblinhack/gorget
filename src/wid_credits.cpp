@@ -14,7 +14,7 @@ static WidPopup *wid_credits_window;
 
 static void wid_credits_destroy(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   delete wid_credits_window;
   wid_credits_window = nullptr;
   wid_main_menu_select(g);
@@ -22,7 +22,7 @@ static void wid_credits_destroy(Gamep g)
 
 [[nodiscard]] static auto wid_credits_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
     sound_play(g, "keypress");
@@ -36,14 +36,14 @@ static void wid_credits_destroy(Gamep g)
       switch (key->sym) {
         default :
           {
-            TRACE_NO_INDENT();
+            TRACE();
             auto c = wid_event_to_char(key);
             switch (c) {
               case 'b' :
               case 'B' :
               case SDLK_ESCAPE :
                 {
-                  TRACE_NO_INDENT();
+                  TRACE();
                   sound_play(g, "keypress");
                   wid_credits_destroy(g);
                   return true;
@@ -58,14 +58,14 @@ static void wid_credits_destroy(Gamep g)
 
 [[nodiscard]] static auto wid_credits_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   wid_credits_destroy(g);
   return true;
 }
 
 void wid_credits_select(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   CON("Credits");
 
   if (wid_credits_window != nullptr) {
@@ -95,7 +95,7 @@ void wid_credits_select(Gamep g)
   wid_credits_window->log(g, "See README.md");
 
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_credits_window->wid_text_area->wid_text_area;
     auto *w = wid_new_back_button(g, p, "credits");
 

@@ -570,7 +570,7 @@ static auto ptrcheck_alloc_(int mtype, const void *ptr, const char *what, int si
 auto ptrcheck_alloc(int mtype, const void *ptr, const char *what, int size, const char *func, const char *file, int line) -> void *
 {
   ptrcheck_mutex.lock();
-  TRACE_NO_INDENT();
+  TRACE();
   auto *ret = ptrcheck_alloc_(mtype, ptr, what, size, func, file, line);
   ptrcheck_mutex.unlock();
 
@@ -643,7 +643,7 @@ static auto ptrcheck_free_(int mtype, void *ptr, const char *func, const char *f
 auto ptrcheck_free(int mtype, void *ptr, const char *func, const char *file, int line) -> int
 {
   ptrcheck_mutex.lock();
-  TRACE_NO_INDENT();
+  TRACE();
   auto ret = ptrcheck_free_(mtype, ptr, func, file, line);
   ptrcheck_mutex.unlock();
 
@@ -656,7 +656,7 @@ auto ptrcheck_free(int mtype, void *ptr, const char *func, const char *file, int
 auto ptrcheck_VERIFY(int mtype, const void *ptr, const char *func, const char *file, int line) -> int
 {
   ptrcheck_mutex.lock();
-  TRACE_NO_INDENT();
+  TRACE();
 
   //
   // Handy if things get too slow, to see what is firing most

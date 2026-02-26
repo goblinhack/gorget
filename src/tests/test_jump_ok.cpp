@@ -10,7 +10,7 @@
 [[nodiscard]] static auto test_jump_ok(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
-  TRACE_AND_INDENT();
+  TRACE();
 
   LevelNum const level_num = 0;
   auto           w         = 7;
@@ -53,10 +53,10 @@
   TEST_PROGRESS(t);
   {
     TEST_LOG(t, "jump");
-    TRACE_AND_INDENT();
+    TRACE();
 
     auto *player = thing_player(g);
-    if (UNLIKELY(player == nullptr)) {
+    UNLIKELY if (player == nullptr) {
       TEST_FAILED(t, "no player");
       goto exit;
     }
@@ -81,7 +81,7 @@
 
   TEST_PASSED(t);
 exit:
-  TRACE_NO_INDENT();
+  TRACE();
   game_cleanup(g);
 
   return result;
@@ -89,7 +89,7 @@ exit:
 
 auto test_load_jump_ok() -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   Testp test = test_load("jump_ok");
 

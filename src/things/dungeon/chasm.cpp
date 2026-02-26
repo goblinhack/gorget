@@ -11,14 +11,14 @@
 
 static auto tp_chasm_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   return "gaping chasm";
 }
 
 auto tp_load_chasm() -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *tp   = tp_load("chasm"); // keep as string for scripts
   auto  name = tp_name(tp);

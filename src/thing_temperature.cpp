@@ -11,7 +11,7 @@
 //
 void thing_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thingp t, int n)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *tp = thing_tp(t);
 
@@ -47,7 +47,7 @@ void thing_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thing
 
 static void thing_temperature_damage_apply(Gamep g, Levelsp v, Levelp l, Thingp source, Thingp t, int n)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto     *tp        = thing_tp(t);
   int       damage    = d6();
@@ -93,7 +93,7 @@ static void thing_temperature_damage_apply(Gamep g, Levelsp v, Levelp l, Thingp 
 //
 void thing_temperature_damage_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thingp t, int n)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *tp = thing_tp(t);
 
@@ -111,7 +111,7 @@ void thing_temperature_damage_handle(Gamep g, Levelsp v, Levelp l, Thingp source
 
 void tp_temperature_init(Tpp tp)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   bool heat_exchange_set {};
   if (tp_is_stone(tp) || tp_is_lava(tp)) {

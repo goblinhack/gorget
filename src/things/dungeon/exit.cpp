@@ -14,21 +14,21 @@
 
 static auto tp_exit_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   return "slime covered stairs leading down";
 }
 
 static auto tp_exit_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   return UI_INFO1_FMT_STR "Exit here to exit the level.";
 }
 
 auto tp_load_exit() -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *tp   = tp_load("exit"); // keep as string for scripts
   auto  name = tp_name(tp);

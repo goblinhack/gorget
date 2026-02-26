@@ -13,7 +13,7 @@
 
 static auto tp_cursor_path_display_get_tile_info(Gamep g, Levelsp v, Levelp l, const spoint &p, Tpp tp, Thingp t_maybe_null) -> Tilep
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   //
   // Default tile

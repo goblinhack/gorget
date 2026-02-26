@@ -17,7 +17,7 @@
 //
 auto level_scroll_target(Gamep g, Levelsp v) -> Thingp
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   //
   // If on the select level, do we have a current level?
@@ -38,7 +38,7 @@ auto level_scroll_target(Gamep g, Levelsp v) -> Thingp
 //
 void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   //
   // We focus on the current level if on the level select screen.
@@ -216,7 +216,7 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
 //
 void level_scroll_delta(Gamep g, Levelsp v, Levelp l, const spoint &delta)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   v->pixel_map_at += delta;
   v->requested_auto_scroll = false;
@@ -230,7 +230,7 @@ void level_scroll_delta(Gamep g, Levelsp v, Levelp l, const spoint &delta)
 //
 void level_forced_auto_scroll(Gamep g, Levelsp v, Levelp l)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   v->requested_forced_auto_scroll = time_ms();
 
@@ -242,7 +242,7 @@ void level_forced_auto_scroll(Gamep g, Levelsp v, Levelp l)
 //
 void level_scroll_warp_to_focus(Gamep g, Levelsp v, Levelp l)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   VERIFY(MTYPE_LEVELS, v);
 

@@ -13,7 +13,7 @@
 
 static inline void term_puts_fg(unsigned char a)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   // NOLINTBEGIN
   static const char *data[] = {
@@ -30,7 +30,7 @@ static inline void term_puts_fg(unsigned char a)
 
 static void term_puts_fgbg(unsigned char fg, unsigned char bg)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   // NOLINTBEGIN
   static const char *data[] = {
@@ -56,7 +56,7 @@ static void term_puts_fgbg(unsigned char fg, unsigned char bg)
 
 static auto term_color_string_to_index(const char **s) -> term_color
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (strncmp(*s, "black$", SIZEOF("black$") - 1) == 0) {
     *s += SIZEOF("black$") - 1;
@@ -106,7 +106,7 @@ static auto term_color_string_to_index(const char **s) -> term_color
 
 void term_log(const char *s)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   char c = 0;
 
   int fg = TERM_COLOR_WHITE;

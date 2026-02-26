@@ -10,7 +10,7 @@
 [[nodiscard]] static auto test_large_fire_water(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
-  TRACE_AND_INDENT();
+  TRACE();
 
   LevelNum const level_num = 0;
   auto           w         = 7;
@@ -60,16 +60,16 @@
   // Push the mob into lava
   //
   TEST_LOG(t, "spawn fire over water");
-  TRACE_AND_INDENT();
+  TRACE();
 
   //
   // Find the player
   //
   TEST_PROGRESS(t);
   {
-    TRACE_NO_INDENT();
+    TRACE();
     player = thing_player(g);
-    if (UNLIKELY(player == nullptr)) {
+    UNLIKELY if (player == nullptr) {
       TEST_FAILED(t, "no player");
       goto exit;
     }
@@ -86,7 +86,7 @@
   TEST_PROGRESS(t);
   for (auto tries = 0; tries < 3; tries++) {
     TEST_LOG(t, "try: %d", tries);
-    TRACE_NO_INDENT();
+    TRACE();
     // level_dump(g, v, l, w, h);
     TEST_ASSERT(t, game_event_wait(g), "failed to wait");
     if (! game_wait_for_tick_to_finish(g, v, l)) {
@@ -100,7 +100,7 @@
   //
   TEST_PROGRESS(t);
   {
-    TRACE_NO_INDENT();
+    TRACE();
     if (! (result = level_match_contents(g, v, l, t, w, h, expect1.c_str()))) {
       TEST_FAILED(t, "unexpected contents");
       goto exit;
@@ -110,7 +110,7 @@
   TEST_PROGRESS(t);
   for (auto tries = 0; tries < 10; tries++) {
     TEST_LOG(t, "try: %d", tries);
-    TRACE_NO_INDENT();
+    TRACE();
     // level_dump(g, v, l, w, h);
     TEST_ASSERT(t, game_event_wait(g), "failed to wait");
     if (! game_wait_for_tick_to_finish(g, v, l)) {
@@ -124,7 +124,7 @@
   //
   TEST_PROGRESS(t);
   {
-    TRACE_NO_INDENT();
+    TRACE();
     if (! (result = level_match_contents(g, v, l, t, w, h, expect2.c_str()))) {
       TEST_FAILED(t, "unexpected contents");
       goto exit;
@@ -141,7 +141,7 @@
 
   TEST_PASSED(t);
 exit:
-  TRACE_NO_INDENT();
+  TRACE();
   game_cleanup(g);
 
   return result;
@@ -149,7 +149,7 @@ exit:
 
 auto test_load_large_fire_water() -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   Testp test = test_load("large_fire_water");
 

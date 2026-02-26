@@ -13,7 +13,7 @@
 
 void level_dmap(Gamep g, Levelsp v, Levelp l)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   auto started = time_ms();
   FOR_ALL_THINGS_ON_LEVEL_UNSAFE(g, v, l, t) { thing_dmap(g, v, l, t); }
   LEVEL_DBG(g, v, l, "dmap generation took %u ms", time_ms() - started);
@@ -22,7 +22,7 @@ void level_dmap(Gamep g, Levelsp v, Levelp l)
 void levels_dmap(Gamep g, Levelsp v)
 {
   LOG("Levels dmap");
-  TRACE_AND_INDENT();
+  TRACE();
 
   if (g == nullptr) {
     CROAK("no game pointer");
@@ -34,7 +34,7 @@ void levels_dmap(Gamep g, Levelsp v)
 
   FOR_ALL_LEVELS(g, v, iter)
   {
-    TRACE_NO_INDENT();
+    TRACE();
     level_dmap(g, v, iter);
   }
 }

@@ -11,7 +11,7 @@
 
 void game_debug_info(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *v = game_levels_get(g);
   if (v == nullptr) {
@@ -57,7 +57,7 @@ void game_debug_info(Gamep g)
 
 auto levels_thing_count(Gamep g, Levelsp v) -> int
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   int thing_count = 0;
   for (auto &arr_index : v->thing_body) {
@@ -82,14 +82,14 @@ auto levels_thing_count(Gamep g, Levelsp v) -> int
 
 auto levels_thing_ext_count(Gamep g, Levelsp v) -> int
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   return v->thing_ext_count;
 }
 
 void level_debug(Gamep g, Levelsp v, Levelp l)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   LOG("Level         : %d", l->level_num);
   LOG("Seed          : %u", l->info.seed_num);

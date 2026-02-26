@@ -7,7 +7,7 @@
 
 auto thing_is_immune_to(Thingp t, ThingEventType val) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *tp = thing_tp(t);
 

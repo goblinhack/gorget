@@ -10,7 +10,7 @@
 //
 void rooms_start(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   room_add(g, CHANCE_NORMAL, ROOM_FLAG_CHECK_EXITS, __FUNCTION__, __LINE__,
            /* line */ (const char *) "    ^      ",

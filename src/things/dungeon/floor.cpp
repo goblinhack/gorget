@@ -10,7 +10,7 @@
 
 auto tp_load_floor() -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   for (auto variant = 1; variant <= FLOOR_VARIANTS; variant++) {
     std::string const name = "floor" + std::to_string(variant);

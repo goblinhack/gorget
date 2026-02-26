@@ -11,7 +11,7 @@
 
 static void tp_rock_melt(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   ThingEvent e {
       .reason     = "by melting",     //
@@ -24,7 +24,7 @@ static void tp_rock_melt(Gamep g, Levelsp v, Levelp l, Thingp t)
 
 auto tp_load_rock() -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   for (auto variant = 1; variant <= 1; variant++) {
     std::string const name = "rock" + std::to_string(variant);

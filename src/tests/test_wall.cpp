@@ -10,7 +10,7 @@
 [[nodiscard]] static auto test_wall(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
-  TRACE_AND_INDENT();
+  TRACE();
 
   LevelNum const level_num = 0;
   auto           w         = 7;
@@ -50,7 +50,7 @@
   TEST_PROGRESS(t);
   {
     TEST_LOG(t, "move right");
-    TRACE_AND_INDENT();
+    TRACE();
     up = down = left = right = false;
     right                    = true;
 
@@ -76,7 +76,7 @@
   TEST_PROGRESS(t);
   {
     TEST_LOG(t, "move down");
-    TRACE_AND_INDENT();
+    TRACE();
     up = down = left = right = false;
     down                     = true;
 
@@ -102,7 +102,7 @@
   TEST_PROGRESS(t);
   {
     TEST_LOG(t, "move left");
-    TRACE_AND_INDENT();
+    TRACE();
     up = down = left = right = false;
     left                     = true;
 
@@ -128,7 +128,7 @@
   TEST_PROGRESS(t);
   {
     TEST_LOG(t, "move up");
-    TRACE_AND_INDENT();
+    TRACE();
     up = down = left = right = false;
     up                       = true;
 
@@ -152,7 +152,7 @@
 
   TEST_PASSED(t);
 exit:
-  TRACE_NO_INDENT();
+  TRACE();
   game_cleanup(g);
 
   return result;
@@ -160,7 +160,7 @@ exit:
 
 auto test_load_wall() -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   Testp test = test_load("wall");
 

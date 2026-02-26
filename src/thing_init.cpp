@@ -9,7 +9,7 @@
 
 auto thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &real_at) -> Thingp
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto at = make_spoint(real_at);
 

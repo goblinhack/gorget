@@ -21,7 +21,7 @@
 //
 [[nodiscard]] static auto wid_thing_info_icon(Gamep g, Tpp tp, WidPopup *parent) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *text = parent->wid_text_area;
   auto *b    = parent->wid_text_area->wid_text_area;
@@ -43,7 +43,7 @@
 
 [[nodiscard]] static auto wid_thing_info_keys(Gamep g, Thingp t, WidPopup *parent) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *text = parent->wid_text_area;
   auto *b    = parent->wid_text_area->wid_text_area;
@@ -86,7 +86,7 @@
 //
 [[nodiscard]] static auto wid_thing_info_name(Gamep g, Thingp t, Tpp tp, WidPopup *parent) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   std::string name_str;
   if (thing_is_player(t)) {
@@ -106,7 +106,7 @@
 //
 [[nodiscard]] static auto wid_thing_info_detail(Gamep g, Levelsp v, Levelp l, Thingp t, WidPopup *parent) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   parent->log(g, thing_detail_get(g, v, l, t), TEXT_FORMAT_LHS);
 
@@ -118,7 +118,7 @@
 //
 [[nodiscard]] static auto wid_thing_info_health_bar(Gamep g, Thingp t, Tpp tp, WidPopup *parent, int width) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (! tp_is_health_bar_shown(tp)) {
     return false;
@@ -175,7 +175,7 @@
 //
 [[nodiscard]] static auto wid_thing_info_immunities(Gamep g, Thingp t, WidPopup *parent, int width) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   bool printed_something = false;
 
@@ -232,7 +232,7 @@
 //
 [[nodiscard]] static auto wid_thing_info_special_damage(Gamep g, Thingp t, WidPopup *parent) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   bool printed_something = false;
 
@@ -254,14 +254,14 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp t, WidPopup *parent, in
   // off tests.
   ////////////////////////////////////////////////////////////////////////////////
 
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (t == nullptr) {
     return;
   }
 
   auto *tp = thing_tp(t);
-  if (tp == nullptr) {
+  UNLIKELY if (tp == nullptr) {
     return;
   }
 

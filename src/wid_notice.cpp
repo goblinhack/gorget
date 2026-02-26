@@ -10,28 +10,28 @@ static WidPopup *wid_notice_window;
 
 void wid_notice_destroy()
 {
-  TRACE_NO_INDENT();
+  TRACE();
   delete wid_notice_window;
   wid_notice_window = nullptr;
 }
 
 [[nodiscard]] static auto wid_notice_ok(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   wid_notice_destroy();
   return true;
 }
 
 [[nodiscard]] static auto wid_notice_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   (void) wid_notice_ok(g, nullptr, 0, 0, 0);
   return true;
 }
 
 void wid_notice(const std::string &s)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   extern Gamep game;
   auto        *g = game;
@@ -53,14 +53,14 @@ void wid_notice(const std::string &s)
 
   wid_notice_window = new WidPopup(g, "Game notice", tl, br, nullptr, "", false, false);
   {
-    TRACE_NO_INDENT();
+    TRACE();
     Widp w = wid_notice_window->wid_popup_container;
     wid_set_on_key_down(w, wid_notice_key_down);
   }
 
   int y_at = 0;
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_notice_window->wid_text_area->wid_text_area;
     auto *w = wid_new_square_button(g, p, "notice");
 
@@ -75,7 +75,7 @@ void wid_notice(const std::string &s)
 
   y_at = 3;
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_notice_window->wid_text_area->wid_text_area;
     auto *w = wid_new_square_button(g, p, "ok");
 

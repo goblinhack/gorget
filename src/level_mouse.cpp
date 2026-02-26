@@ -13,7 +13,7 @@
 //
 void level_mouse_position_get(Gamep g, Levelsp v, Levelp l)
 {
-  TRACE_AND_INDENT();
+  TRACE();
 
   if ((v == nullptr) || (l == nullptr)) {
     return;

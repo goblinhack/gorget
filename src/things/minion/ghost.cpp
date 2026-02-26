@@ -12,14 +12,14 @@
 
 static auto tp_ghost_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   return "vengeful spirit";
 }
 
 static auto tp_ghost_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   return                                                              // newline
       UI_INFO1_FMT_STR "The spirit of one less fortunate than you.\n" // newline

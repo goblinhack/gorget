@@ -17,7 +17,7 @@ static WidPopup *wid_hiscore_window;
 
 static void wid_hiscore_destroy(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   delete wid_hiscore_window;
   wid_hiscore_window = nullptr;
   wid_main_menu_select(g);
@@ -25,7 +25,7 @@ static void wid_hiscore_destroy(Gamep g)
 
 [[nodiscard]] static auto wid_hiscore_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
     sound_play(g, "keypress");
@@ -39,7 +39,7 @@ static void wid_hiscore_destroy(Gamep g)
       switch (key->sym) {
         default :
           {
-            TRACE_NO_INDENT();
+            TRACE();
             auto c = wid_event_to_char(key);
             switch (c) {
               case '\n' :
@@ -47,7 +47,7 @@ static void wid_hiscore_destroy(Gamep g)
               case 'B' :
               case SDLK_ESCAPE :
                 {
-                  TRACE_NO_INDENT();
+                  TRACE();
                   sound_play(g, "keypress");
                   wid_hiscore_destroy(g);
                   return true;
@@ -65,14 +65,14 @@ static void wid_hiscore_destroy(Gamep g)
 
 [[nodiscard]] static auto wid_hiscore_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   wid_hiscore_destroy(g);
   return true;
 }
 
 void wid_hiscores_show(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (wid_hiscore_window != nullptr) {
     wid_hiscore_destroy(g);
@@ -98,7 +98,7 @@ void wid_hiscores_show(Gamep g)
   wid_hiscore_window = new WidPopup(g, "hiscores", outer_tl, outer_br, nullptr, "", false, false);
 
   {
-    TRACE_NO_INDENT();
+    TRACE();
     Widp w = wid_hiscore_window->wid_popup_container;
     wid_set_on_key_down(w, wid_hiscore_key_down);
   }
@@ -169,7 +169,7 @@ void wid_hiscores_show(Gamep g)
   }
 
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_hiscore_window->wid_text_area->wid_text_area;
     auto *w = wid_new_back_button(g, p, "hiscore");
 

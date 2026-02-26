@@ -23,7 +23,7 @@ static auto file_io_read(const char *filename, int *len) -> unsigned char *;
 
 auto file_load(const char *filename, int *outlen) -> unsigned char *
 {
-  TRACE_NO_INDENT();
+  TRACE();
   unsigned char *out          = nullptr; // NOLINT
   char          *alt_filename = nullptr;
 
@@ -35,7 +35,7 @@ auto file_load(const char *filename, int *outlen) -> unsigned char *
    */
   if (static_cast< bool >(file_exists(filename))) {
     if (strstr(filename, "data/") != nullptr) {
-      TRACE_NO_INDENT();
+      TRACE();
       if (static_cast< bool >(file_exists_and_is_newer_than(filename, g_exec_full_path_and_name))) {
         out = file_io_read_if_exists(filename, outlen);
         if (out != nullptr) {
@@ -44,7 +44,7 @@ auto file_load(const char *filename, int *outlen) -> unsigned char *
         }
       }
 
-      TRACE_NO_INDENT();
+      TRACE();
       if (static_cast< bool >(file_exists_and_is_newer_than(filename, ".o/file.o"))) {
         out = file_io_read_if_exists(filename, outlen);
         if (out != nullptr) {
@@ -53,7 +53,7 @@ auto file_load(const char *filename, int *outlen) -> unsigned char *
         }
       }
 
-      TRACE_NO_INDENT();
+      TRACE();
       if (static_cast< bool >(file_exists_and_is_newer_than(filename, "src/.o/file.o"))) {
         out = file_io_read_if_exists(filename, outlen);
         if (out != nullptr) {
@@ -62,7 +62,7 @@ auto file_load(const char *filename, int *outlen) -> unsigned char *
         }
       }
     } else {
-      TRACE_NO_INDENT();
+      TRACE();
       out = file_io_read_if_exists(filename, outlen);
       if (out != nullptr) {
         FILE_LOG("Read file %s (exists locally)", filename);
@@ -75,7 +75,7 @@ auto file_load(const char *filename, int *outlen) -> unsigned char *
     alt_filename = strprepend(filename, g_exec_dir);
 
     if (static_cast< bool >(file_exists(alt_filename))) {
-      TRACE_NO_INDENT();
+      TRACE();
       if (static_cast< bool >(file_exists_and_is_newer_than(alt_filename, g_exec_full_path_and_name))) {
         out = file_io_read_if_exists(alt_filename, outlen);
         if (out != nullptr) {
@@ -86,7 +86,7 @@ auto file_load(const char *filename, int *outlen) -> unsigned char *
         }
       }
 
-      TRACE_NO_INDENT();
+      TRACE();
       if (static_cast< bool >(file_exists_and_is_newer_than(alt_filename, ".o/file.o"))) {
         out = file_io_read_if_exists(alt_filename, outlen);
         if (out != nullptr) {
@@ -97,7 +97,7 @@ auto file_load(const char *filename, int *outlen) -> unsigned char *
         }
       }
 
-      TRACE_NO_INDENT();
+      TRACE();
       if (static_cast< bool >(file_exists_and_is_newer_than(alt_filename, "src/.o/file.o"))) {
         out = file_io_read_if_exists(alt_filename, outlen);
         if (out != nullptr) {
@@ -110,7 +110,7 @@ auto file_load(const char *filename, int *outlen) -> unsigned char *
     }
   }
 
-  TRACE_NO_INDENT();
+  TRACE();
   auto *r = ramdisk_load(filename, outlen);
   if (r != nullptr) {
     FILE_LOG("Read (ramdisk) %s, %d Mb, %d bytes", filename, *outlen / (1024 * 1024), *outlen);
@@ -126,7 +126,7 @@ auto file_load(const char *filename, int *outlen) -> unsigned char *
   /*
    * Fallback to the disk.
    */
-  TRACE_NO_INDENT();
+  TRACE();
   out = file_io_read_if_exists(filename, outlen);
   if (out != nullptr) {
     if (alt_filename != nullptr) {
@@ -137,7 +137,7 @@ auto file_load(const char *filename, int *outlen) -> unsigned char *
     return out;
   }
 
-  TRACE_NO_INDENT();
+  TRACE();
   out = file_io_read_if_exists(alt_filename, outlen);
   if (out != nullptr) {
     if (alt_filename != nullptr) {
@@ -154,7 +154,7 @@ auto file_load(const char *filename, int *outlen) -> unsigned char *
   }
 
   {
-    TRACE_NO_INDENT();
+    TRACE();
     std::string const base_alt_filename = mybasename(filename, "strip dir");
 
     out = file_io_read_if_exists(base_alt_filename.c_str(), outlen);
@@ -177,7 +177,7 @@ auto file_load(const char *filename, int *outlen) -> unsigned char *
 
 auto file_io_read(const char *filename, int *out_len) -> unsigned char *
 {
-  TRACE_NO_INDENT();
+  TRACE();
   unsigned char *buffer = nullptr;
   FILE          *file   = nullptr;
   int            len    = 0;
@@ -236,7 +236,7 @@ auto file_io_read(const char *filename, int *out_len) -> unsigned char *
 
 auto file_write(const char *filename, unsigned char *buffer, int len) -> int
 {
-  TRACE_NO_INDENT();
+  TRACE();
   FILE   *file = nullptr;
   uint8_t rc   = 0;
 
@@ -274,7 +274,7 @@ auto file_write(const char *filename, unsigned char *buffer, int len) -> int
  */
 auto file_exists(const char *filename) -> uint8_t
 {
-  TRACE_NO_INDENT();
+  TRACE();
   struct stat buf {};
 
   if (filename == nullptr) {
@@ -293,7 +293,7 @@ auto file_exists(const char *filename) -> uint8_t
 
 auto file_io_read_if_exists(const char *filename, int *out_len) -> unsigned char *
 {
-  TRACE_NO_INDENT();
+  TRACE();
 #if 0
   unsigned char *ret;
   char *mz_filename;
@@ -333,7 +333,7 @@ auto file_io_read_if_exists(const char *filename, int *out_len) -> unsigned char
  */
 auto file_size(const char *filename) -> int
 {
-  TRACE_NO_INDENT();
+  TRACE();
   struct stat buf {};
 
   if (stat(filename, &buf) >= 0) {
@@ -348,7 +348,7 @@ auto file_size(const char *filename) -> int
  */
 auto file_non_zero_size_exists(const char *filename) -> uint8_t
 {
-  TRACE_NO_INDENT();
+  TRACE();
   if (! static_cast< bool >(file_exists(filename))) {
     return 0;
   }
@@ -365,7 +365,7 @@ auto file_non_zero_size_exists(const char *filename) -> uint8_t
  */
 auto file_unlink(const char *filename) -> uint8_t
 {
-  TRACE_NO_INDENT();
+  TRACE();
   if (! static_cast< bool >(file_exists(filename))) {
     return 0;
   }
@@ -380,7 +380,7 @@ auto file_unlink(const char *filename) -> uint8_t
  */
 auto file_age(const char *filename) -> double
 {
-  TRACE_NO_INDENT();
+  TRACE();
   struct stat buf {};
 
   if (stat(filename, &buf) < 0) {
@@ -397,7 +397,7 @@ auto file_age(const char *filename) -> double
  */
 auto file_exists_and_is_newer_than(const char *filename1, const char *filename2) -> uint8_t
 {
-  TRACE_NO_INDENT();
+  TRACE();
   struct stat buf1 {};
   struct stat buf2 {};
   double      delta = 0;

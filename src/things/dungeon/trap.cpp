@@ -13,7 +13,7 @@
 
 static auto tp_trap_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (thing_is_open(t)) {
     return "sprung trap";
@@ -24,7 +24,7 @@ static auto tp_trap_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> s
 
 auto tp_load_trap() -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *tp   = tp_load("trap"); // keep as string for scripts
   auto  name = tp_name(tp);

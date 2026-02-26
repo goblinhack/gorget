@@ -23,7 +23,7 @@ static void level_tick_check_running_time(Gamep g, Levelsp v, Levelp l);
 //
 static void level_cleanup_things(Gamep g, Levelsp v, Levelp l)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (! level_request_to_cleanup_things(g, v, l)) {
     return;
@@ -47,7 +47,7 @@ static void level_cleanup_things(Gamep g, Levelsp v, Levelp l)
 //
 static void level_tick_ok_to_end_check(Gamep g, Levelsp v, Levelp l)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   l->tick_wait_on_things = false;
   l->tick_wait_on_anim   = false;
@@ -118,7 +118,7 @@ static void level_tick_ok_to_end_check(Gamep g, Levelsp v, Levelp l)
 //
 static void level_tick(Gamep g, Levelsp v, Levelp l, bool tick_begin_requested)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   VERIFY(MTYPE_LEVELS, game_levels_get(g));
 
@@ -292,7 +292,7 @@ static void level_tick_check_running_time(Gamep g, Levelsp v, Levelp l)
 
 static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool tick_is_about_to_end)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (dt < 0) {
     CROAK("negative dt %f", dt);
@@ -311,7 +311,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool tick_is
   }
 
   auto *player = thing_player(g);
-  if (UNLIKELY(player == nullptr)) {
+  UNLIKELY if (player == nullptr) {
     return;
   }
   const int player_speed = thing_speed(player);
@@ -397,7 +397,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool tick_is
 
 static void level_tick_begin(Gamep g, Levelsp v, Levelp l)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   LEVEL_DBG(g, v, l, "Tick %u: begin", v->tick);
 
@@ -415,7 +415,7 @@ static void level_tick_begin(Gamep g, Levelsp v, Levelp l)
 
 static void level_tick_idle(Gamep g, Levelsp v, Levelp l)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
   {
@@ -427,13 +427,13 @@ static void level_tick_idle(Gamep g, Levelsp v, Levelp l)
 
 void level_tick_begin_requested(Gamep g, Levelsp v, Levelp l, const char *why)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   LEVEL_DBG(g, v, l, "Tick %u: requested new tick: %s", v->tick, why);
 
   FOR_ALL_LEVELS(g, v, iter)
   {
-    TRACE_NO_INDENT();
+    TRACE();
     iter->tick_begin_requested = true;
   }
 
@@ -446,7 +446,7 @@ void level_tick_begin_requested(Gamep g, Levelsp v, Levelp l, const char *why)
 
 static void level_tick_end(Gamep g, Levelsp v, Levelp l)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (level_is_player_level(g, v, l)) {
     LEVEL_DBG(g, v, l, "Tick %u: ending", v->tick);
@@ -482,7 +482,7 @@ static void level_tick_end(Gamep g, Levelsp v, Levelp l)
 
 auto level_tick_is_in_progress(Gamep g, Levelsp v, Levelp l) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   return l->tick_in_progress;
 }
@@ -492,7 +492,7 @@ auto level_tick_is_in_progress(Gamep g, Levelsp v, Levelp l) -> bool
 //
 static void level_tick_select_reset(Gamep g, Levelsp v, Levelp current_level)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   //
   // Reset the ticking levels
@@ -512,7 +512,7 @@ static void level_tick_select_reset(Gamep g, Levelsp v, Levelp current_level)
 //
 static void level_tick_select(Gamep g, Levelsp v, Levelp current_level)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *player_level = thing_player_level(g);
 
@@ -566,7 +566,7 @@ static void level_tick_select(Gamep g, Levelsp v, Levelp current_level)
 //
 static auto level_tick_process_pending_request(Gamep g, Levelsp v, Levelp current_level) -> uint32_t
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   //
   // Reset counters
@@ -610,7 +610,7 @@ static auto level_tick_process_pending_request(Gamep g, Levelsp v, Levelp curren
 //
 static void level_tick_update_frame_counter(Levelsp v)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   static uint32_t level_ts_begin;
   static uint32_t level_ts_now;
@@ -625,7 +625,7 @@ static void level_tick_update_frame_counter(Levelsp v)
     t = test_t;
   }
 
-  if (UNLIKELY(! level_ts_begin)) {
+  UNLIKELY if((! level_ts_begin)) {
     level_ts_begin = t;
   }
 
@@ -639,7 +639,7 @@ static void level_tick_update_frame_counter(Levelsp v)
 //
 static void level_tick_time_step(Gamep g, Levelsp v, Levelp current_level)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   //
   // Calculate the time step, for animation
@@ -660,7 +660,7 @@ static void level_tick_time_step(Gamep g, Levelsp v, Levelp current_level)
 //
 static void level_tick_all(Gamep g, Levelsp v, Levelp current_level)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   //
   // Record if a level wants to start ticking, prior to processing the levels in case a level
@@ -673,7 +673,7 @@ static void level_tick_all(Gamep g, Levelsp v, Levelp current_level)
   //
   FOR_ALL_TICKING_LEVELS(g, v, iter)
   {
-    TRACE_NO_INDENT();
+    TRACE();
     level_tick(g, v, iter, tick_begin_requested);
   }
 }
@@ -684,7 +684,7 @@ static void level_tick_all(Gamep g, Levelsp v, Levelp current_level)
 //
 static void level_tick_monitor_progress(Gamep g, Levelsp v, Levelp current_level)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   v->level_tick_done_count        = 0;
   v->level_tick_in_progress_count = 0;
@@ -722,7 +722,7 @@ static void level_tick_monitor_progress(Gamep g, Levelsp v, Levelp current_level
 //
 void levels_tick(Gamep g, Levelsp v)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *current_level = game_level_get(g, v);
   if (current_level == nullptr) {

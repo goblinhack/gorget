@@ -33,7 +33,7 @@ auto thing_mob_minion_count_get(Gamep g, Levelsp v, Levelp l, Thingp mob) -> int
 //
 auto thing_mob_spawn_a_minion(Gamep g, Levelsp v, Levelp l, Thingp mob, Tpp tp_minion) -> Thingp
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (mob == nullptr) {
     return nullptr;
@@ -114,7 +114,7 @@ auto thing_mob_spawn_a_minion(Gamep g, Levelsp v, Levelp l, Thingp mob, Tpp tp_m
 //
 [[nodiscard]] static auto thing_mob_process_minions(Gamep g, Levelsp v, Levelp l, Thingp mob, Thingp specific_minion, ThingEvent &e) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (mob == nullptr) {
     return false;
@@ -172,7 +172,7 @@ auto thing_mob_spawn_a_minion(Gamep g, Levelsp v, Levelp l, Thingp mob, Tpp tp_m
 //
 auto thing_mob_detach_all_minions(Gamep g, Levelsp v, Levelp l, Thingp mob) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   ThingEvent e = {};
   return thing_mob_process_minions(g, v, l, mob, nullptr, e);
@@ -183,7 +183,7 @@ auto thing_mob_detach_all_minions(Gamep g, Levelsp v, Levelp l, Thingp mob) -> b
 //
 auto thing_mob_kill_all_minions(Gamep g, Levelsp v, Levelp l, Thingp mob, ThingEvent &e) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   return thing_mob_process_minions(g, v, l, mob, nullptr, e);
 }
@@ -193,7 +193,7 @@ auto thing_mob_kill_all_minions(Gamep g, Levelsp v, Levelp l, Thingp mob, ThingE
 //
 auto thing_mob_detach_minion(Gamep g, Levelsp v, Levelp l, Thingp mob, Thingp minion) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   ThingEvent e = {};
   return thing_mob_process_minions(g, v, l, mob, minion, e);
@@ -204,7 +204,7 @@ auto thing_mob_detach_minion(Gamep g, Levelsp v, Levelp l, Thingp mob, Thingp mi
 //
 void thing_mob_dump_minions(Gamep g, Levelsp v, Levelp l, Thingp mob)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (mob == nullptr) {
     return;

@@ -10,7 +10,7 @@
 //
 void levels_init(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   levels_test(g);
   levels_fixed(g);

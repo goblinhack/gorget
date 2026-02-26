@@ -19,7 +19,7 @@ static Widp wid_icon[ THING_INVENTORY_MAX ];
 
 static void wid_inventory_destroy(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (wid_inventory_window != nullptr) {
     wid_destroy(g, &wid_inventory_window);
@@ -30,7 +30,7 @@ static void wid_inventory_destroy(Gamep g)
 
 static void wid_inventory_mouse_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   for (auto &n : wid_item) {
     w = n;
@@ -55,7 +55,7 @@ static void wid_inventory_mouse_over_begin(Gamep g, Widp w, int relx, int rely, 
 
 static void wid_inventory_mouse_over_end(Gamep g, Widp w)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *v = game_levels_get(g);
   if (v == nullptr) {
@@ -72,7 +72,7 @@ static void wid_inventory_mouse_over_end(Gamep g, Widp w)
 
 [[nodiscard]] static auto wid_inventory_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *v = game_levels_get(g);
   if (v == nullptr) {
@@ -92,7 +92,7 @@ static void wid_inventory_mouse_over_end(Gamep g, Widp w)
 
 [[nodiscard]] static auto wid_inventory_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
     sound_play(g, "keypress");
@@ -106,7 +106,7 @@ static void wid_inventory_mouse_over_end(Gamep g, Widp w)
       switch (key->sym) {
         default :
           {
-            TRACE_NO_INDENT();
+            TRACE();
             auto c = wid_event_to_char(key);
             switch (c) {
               case 'a' :
@@ -160,7 +160,7 @@ static void wid_inventory_mouse_over_end(Gamep g, Widp w)
               case '\n' :
               case SDLK_ESCAPE :
                 {
-                  TRACE_NO_INDENT();
+                  TRACE();
                   sound_play(g, "keypress");
                   wid_inventory_destroy(g);
                   return true;
@@ -178,14 +178,14 @@ static void wid_inventory_mouse_over_end(Gamep g, Widp w)
 
 [[nodiscard]] static auto wid_inventory_back(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   wid_inventory_destroy(g);
   return true;
 }
 
 void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (wid_inventory_window != nullptr) {
     wid_inventory_destroy(g);
@@ -216,7 +216,7 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
   const int bot_half   = inventory_height - top_half;
 
   {
-    TRACE_NO_INDENT();
+    TRACE();
     spoint const tl((TERM_WIDTH / 2) - left_half, (TERM_HEIGHT / 2) - top_half);
     spoint const br((TERM_WIDTH / 2) + right_half - 1, (TERM_HEIGHT / 2) + bot_half - 1);
 
@@ -230,7 +230,7 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
   }
 
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto        *w = wid_new_square_button(g, wid_inventory_window, "text");
     spoint const tl(0, y_at);
     spoint const br(inventory_width, y_at);
@@ -256,7 +256,7 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
     if (tp != nullptr) {
       Tilep tile = tp_tiles_get(tp, THING_ANIM_IDLE, 0);
       if (tile != nullptr) {
-        TRACE_NO_INDENT();
+        TRACE();
         auto        *w = wid_new_square_button(g, wid_inventory_window, "Icon");
         spoint const tl(1, y_at);
         spoint const br(2, y_at + button_height);
@@ -280,7 +280,7 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
     // Key shortcut
     //
     {
-      TRACE_NO_INDENT();
+      TRACE();
       auto *w = wid_new_square_button(g, wid_inventory_window, "Key");
 
       std::string s;
@@ -326,7 +326,7 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
       }
 
       {
-        TRACE_NO_INDENT();
+        TRACE();
         auto *w = wid_new_button(g, wid_inventory_window, "Item");
 
         spoint const tl(6, y_at);
@@ -351,7 +351,7 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
   }
 
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *w = wid_new_back_button(g, wid_inventory_window, "BACK");
 
     spoint const tl((inventory_width / 2) - 4, inventory_height - 4);

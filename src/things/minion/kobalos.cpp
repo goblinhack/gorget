@@ -16,7 +16,7 @@
 
 static auto tp_kobalos_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (thing_is_dead(t)) {
     return "dead kobalos";
@@ -26,7 +26,7 @@ static auto tp_kobalos_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -
 
 static auto tp_kobalos_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   return                                                                                                                   // newline
       UI_INFO1_FMT_STR "Kobalos are small green-skinned creatures that are identical in every possible way to a goblin.\n" // newline
@@ -35,7 +35,7 @@ static auto tp_kobalos_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std
 
 auto tp_kobalos_assess_tile(Gamep g, Levelsp v, Levelp l, const spoint &at, Thingp t) -> ThingEnviron
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (level_is_lava(g, v, l, at)) {
     return THING_ENVIRON_HATES;

@@ -11,7 +11,7 @@
 [[nodiscard]] static auto test_mob_shove_into_lava(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
-  TRACE_AND_INDENT();
+  TRACE();
 
   LevelNum const level_num = 0;
   auto           w         = 7;
@@ -61,7 +61,7 @@
   // Push the mob into lava
   //
   TEST_LOG(t, "push mob into lava");
-  TRACE_AND_INDENT();
+  TRACE();
   up = down = left = right = false;
   right                    = true;
 
@@ -70,9 +70,9 @@
   //
   TEST_PROGRESS(t);
   {
-    TRACE_NO_INDENT();
+    TRACE();
     player = thing_player(g);
-    if (UNLIKELY(player == nullptr)) {
+    UNLIKELY if (player == nullptr) {
       TEST_FAILED(t, "no player");
       goto exit;
     }
@@ -83,7 +83,7 @@
   //
   TEST_PROGRESS(t);
   {
-    TRACE_NO_INDENT();
+    TRACE();
     p        = thing_at(player) + spoint(1, 0);
     found_it = false;
     FOR_ALL_THINGS_AT(g, v, l, it, p)
@@ -101,7 +101,7 @@
   //
   TEST_PROGRESS(t);
   {
-    TRACE_NO_INDENT();
+    TRACE();
     if (! (result = player_move_request(g, up, down, left, right, false /* fire */))) {
       TEST_FAILED(t, "move failed");
       goto exit;
@@ -113,7 +113,7 @@
   //
   TEST_PROGRESS(t);
   {
-    TRACE_NO_INDENT();
+    TRACE();
     if (! game_wait_for_tick_to_finish(g, v, l)) {
       TEST_FAILED(t, "wait loop failed");
       goto exit;
@@ -125,7 +125,7 @@
   //
   TEST_PROGRESS(t);
   {
-    TRACE_NO_INDENT();
+    TRACE();
     if (! (result = level_match_contents(g, v, l, t, w, h, expect1.c_str()))) {
       TEST_FAILED(t, "unexpected contents");
       goto exit;
@@ -137,7 +137,7 @@
   //
   TEST_PROGRESS(t);
   {
-    TRACE_NO_INDENT();
+    TRACE();
     TEST_LOG(t, "check mob is dead when shoved into lava");
     p        = thing_at(player) + spoint(1, 0);
     found_it = false;
@@ -161,7 +161,7 @@
   //
   TEST_PROGRESS(t);
   {
-    TRACE_NO_INDENT();
+    TRACE();
     if (thing_find_optional(g, v, mob_id) != nullptr) {
       TEST_FAILED(t, "found mob, but it should have been freed");
       goto exit;
@@ -178,7 +178,7 @@
 
   TEST_PASSED(t);
 exit:
-  TRACE_NO_INDENT();
+  TRACE();
   game_cleanup(g);
 
   return result;
@@ -186,7 +186,7 @@ exit:
 
 auto test_load_mob_shove_into_lava() -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   Testp test = test_load("mob_shove_into_lava");
 

@@ -11,7 +11,7 @@
 
 HiScores::HiScores()
 {
-  TRACE_NO_INDENT();
+  TRACE();
   if ((int) hiscores.size() > HiScore::max) {
     hiscores.resize(HiScore::max);
   } else {
@@ -24,11 +24,11 @@ HiScores::HiScores()
   }
 }
 
-HiScores::~HiScores() { TRACE_NO_INDENT(); }
+HiScores::~HiScores() { TRACE(); }
 
 void HiScores::add_new_hiscore(Gamep g, int score, LevelNum level_num, const std::string &name, const std::string &reason)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   auto        h = hiscores.begin();
   std::string hiscore_name;
 
@@ -51,7 +51,7 @@ void HiScores::add_new_hiscore(Gamep g, int score, LevelNum level_num, const std
 
 auto HiScores::is_new_hiscore(int score) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   auto h = hiscores.begin();
 
   if (score == 0) {
@@ -116,7 +116,7 @@ auto HiScores::place_str(int score) -> const char *
 
 auto operator>>(std::istream &in, Bits< HiScore & > my) -> std::istream &
 {
-  TRACE_NO_INDENT();
+  TRACE();
   in >> bits(my.t.name);
   in >> bits(my.t.reason);
   in >> bits(my.t.when);
@@ -128,7 +128,7 @@ auto operator>>(std::istream &in, Bits< HiScore & > my) -> std::istream &
 
 auto operator<<(std::ostream &out, Bits< const HiScore & > const my) -> std::ostream &
 {
-  TRACE_NO_INDENT();
+  TRACE();
   out << bits(my.t.name);
   out << bits(my.t.reason);
   out << bits(my.t.when);
@@ -151,7 +151,7 @@ auto operator<<(std::ostream &out, Bits< const HiScore & > const my) -> std::ost
 //////////////////////////////////////////////////////////////////////////////////////
 auto operator<<(std::ostream &out, Bits< HiScore & > const my) -> std::ostream &
 {
-  TRACE_NO_INDENT();
+  TRACE();
   out << bits(my.t.name);
   out << bits(my.t.reason);
   out << bits(my.t.when);
@@ -174,7 +174,7 @@ auto operator<<(std::ostream &out, Bits< HiScore & > const my) -> std::ostream &
 
 auto operator>>(std::istream &in, Bits< HiScores & > my) -> std::istream &
 {
-  TRACE_NO_INDENT();
+  TRACE();
   my.t.hiscores.resize(0);
   in >> bits(my.t.hiscores);
 
@@ -183,7 +183,7 @@ auto operator>>(std::istream &in, Bits< HiScores & > my) -> std::istream &
 
 auto operator<<(std::ostream &out, Bits< const HiScores & > const my) -> std::ostream &
 {
-  TRACE_NO_INDENT();
+  TRACE();
   out << bits(my.t.hiscores);
   return out;
 }

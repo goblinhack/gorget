@@ -25,11 +25,11 @@ auto redirect_stdout() -> FILE *
   g_log_stdout = stdout;
 #endif
 
-  if (LIKELY(g_log_stdout != nullptr)) {
+  LIKELY if((g_log_stdout != nullptr)) {
     return g_log_stdout;
   }
 
-  TRACE_NO_INDENT();
+  TRACE();
 
   const char *appdata = nullptr;
   appdata             = getenv("APPDATA");
@@ -84,11 +84,11 @@ auto redirect_stderr() -> FILE *
   g_log_stderr = stderr;
 #endif
 
-  if (LIKELY(g_log_stderr != nullptr)) {
+  LIKELY if((g_log_stderr != nullptr)) {
     return g_log_stderr;
   }
 
-  TRACE_NO_INDENT();
+  TRACE();
 
   const char *appdata = nullptr;
   appdata             = getenv("APPDATA");

@@ -13,7 +13,7 @@
 //
 auto thing_level(Gamep g, Levelsp v, Thingp t) -> Levelp
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *o = thing_find(g, v, t->id);
   if (t != o) {
@@ -25,10 +25,10 @@ auto thing_level(Gamep g, Levelsp v, Thingp t) -> Levelp
 
 auto thing_on_same_level_as_player(Gamep g, Levelsp v, Thingp t) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *player = thing_player(g);
-  if (UNLIKELY(player == nullptr)) {
+  UNLIKELY if (player == nullptr) {
     return false;
   }
 
@@ -46,7 +46,7 @@ auto thing_on_same_level_as_player(Gamep g, Levelsp v, Thingp t) -> bool
 //
 void thing_level_warp_to_entrance(Gamep g, Levelsp v, Levelp new_level, Thingp t)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (t == nullptr) {
     return;
@@ -70,7 +70,7 @@ void thing_level_warp_to_entrance(Gamep g, Levelsp v, Levelp new_level, Thingp t
 //
 void thing_level_warp_to_exit(Gamep g, Levelsp v, Levelp new_level, Thingp t)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (t == nullptr) {
     return;

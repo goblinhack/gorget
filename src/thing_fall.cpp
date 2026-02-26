@@ -14,9 +14,9 @@
 //
 [[nodiscard]] static auto thing_ok_landing_spot(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
-  if (IS_OOB(p)) {
+  UNLIKELY if (is_oob(p)) {
     return false;
   }
 
@@ -33,7 +33,7 @@
 //
 static auto thing_choose_landing_spot(Gamep g, Levelsp v, Levelp l, Thingp t) -> spoint
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto at   = thing_at(t);
   int  dist = 1;
@@ -66,7 +66,7 @@ static auto thing_choose_landing_spot(Gamep g, Levelsp v, Levelp l, Thingp t) ->
 //
 static auto thing_fall_damage(Gamep g, Levelsp v, Levelp l, Thingp t) -> int
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   int fall_dmg = 0;
 
@@ -127,7 +127,7 @@ static auto thing_fall_damage(Gamep g, Levelsp v, Levelp l, Thingp t) -> int
 //
 static void thing_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   THING_LOG(t, "fall end");
 
@@ -230,7 +230,7 @@ static void thing_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
 //
 void thing_fall_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   (void) thing_is_falling_incr(g, v, l, t, time_step);
 
@@ -244,7 +244,7 @@ void thing_fall_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step)
 //
 void thing_fall_end_check(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (compiler_unused) {
     THING_LOG(t, "fall %u", thing_is_falling(t));
@@ -283,7 +283,7 @@ void thing_fall_end_check(Gamep g, Levelsp v, Levelp l, Thingp t)
 //
 void thing_fall(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   //
   // Fall at the end of the move, or it just looks odd with things falling

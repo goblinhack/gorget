@@ -6,19 +6,18 @@
 #include "my_globals.hpp"
 #include "my_main.hpp"
 #include "my_ptrcheck.hpp"
+#include "my_types.hpp"
 
 #include <cstdlib>
 #include <cstring>
 
 auto MYZALLOC_(int size, const char *what, const char *file, const char *func, int line) -> void *
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   void *ptr = calloc(1, size); // NOLINT
 
-  if (UNLIKELY(! ptr)) {
-    CROAK("No memory, %s:%s:%u, size %u", file, func, line, size);
-  }
+  UNLIKELY if ((! ptr)) { CROAK("No memory, %s:%s:%u, size %u", file, func, line, size); }
 
   IF_DEBUG2
   { // newline
@@ -33,13 +32,11 @@ auto MYZALLOC_(int size, const char *what, const char *file, const char *func, i
 
 auto MYMALLOC_(int size, const char *what, const char *file, const char *func, int line) -> void *
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   void *ptr = malloc(size); // NOLINT
 
-  if (UNLIKELY(! ptr)) {
-    CROAK("No memory, %s:%s:%u", file, func, line);
-  }
+  UNLIKELY if ((! ptr)) { CROAK("No memory, %s:%s:%u", file, func, line); }
 
   IF_DEBUG2
   { // newline
@@ -54,16 +51,14 @@ auto MYMALLOC_(int size, const char *what, const char *file, const char *func, i
 
 auto MYREALLOC_(void *ptr, int size, const char *what, const char *file, const char *func, int line) -> void *
 {
-  TRACE_NO_INDENT();
+  TRACE();
   IF_DEBUG2
   { // newline
     ptrcheck_free(MTYPE_MISC, ptr, file, func, line);
   }
 
   ptr = realloc(ptr, size);
-  if (UNLIKELY(! ptr)) {
-    CROAK("No memory, %s:%s:%u", file, func, line);
-  }
+  UNLIKELY if ((! ptr)) { CROAK("No memory, %s:%s:%u", file, func, line); }
 
   IF_DEBUG2
   { // newline
@@ -78,7 +73,7 @@ auto MYREALLOC_(void *ptr, int size, const char *what, const char *file, const c
 
 void MYFREE_(void *ptr, const char *file, const char *func, int line)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   IF_DEBUG2
   { // newline
@@ -93,17 +88,16 @@ void MYFREE_(void *ptr, const char *file, const char *func, int line)
 
 auto MYDUPSTR_(const char *in, const char *what, const char *file, const char *func, int line) -> char *
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
-  if (UNLIKELY(! in)) {
+  UNLIKELY if ((! in))
+  {
     ERR("No string to duplicate");
     return nullptr;
   }
 
   char *ptr = strdup(in); // NOLINT
-  if (UNLIKELY(! ptr)) {
-    CROAK("No memory, %s:%s:%u", file, func, line);
-  }
+  UNLIKELY if ((! ptr)) { CROAK("No memory, %s:%s:%u", file, func, line); }
 
   IF_DEBUG2
   {

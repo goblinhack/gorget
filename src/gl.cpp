@@ -39,7 +39,7 @@ void MessageCallback(GLenum /*source*/, GLenum type, GLuint id, GLenum severity,
 void gl_init_2d_mode(Gamep g)
 {
   LOG("SDL: Init 2d mode");
-  TRACE_AND_INDENT();
+  TRACE();
 
   GL_ERROR_CHECK();
   gl_leave_2d_mode(g);
@@ -86,7 +86,7 @@ void gl_init_2d_mode(Gamep g)
 void gl_fini_2d_mode(Gamep g)
 {
   LOG("SDL: fini 2d mode");
-  TRACE_AND_INDENT();
+  TRACE();
   GL_ERROR_CHECK();
 
   gl_leave_2d_mode(g);
@@ -99,7 +99,7 @@ void gl_enter_2d_mode(Gamep g)
   if (compiler_unused) {
     LOG("SDL: enter 2d mode");
   }
-  TRACE_AND_INDENT();
+  TRACE();
   GL_ERROR_CHECK();
 
   gl_leave_2d_mode(g);
@@ -154,7 +154,7 @@ void gl_enter_2d_mode(Gamep g, int w, int h)
   if (compiler_unused) {
     LOG("SDL: enter 2d mode %ux%u", w, h);
   }
-  TRACE_AND_INDENT();
+  TRACE();
   GL_ERROR_CHECK();
 
   gl_leave_2d_mode(g);
@@ -211,7 +211,7 @@ void gl_leave_2d_mode(Gamep g)
     LOG("SDL: leave 2d mode");
   }
   in_2d_mode = false;
-  TRACE_AND_INDENT();
+  TRACE();
   glMatrixMode(GL_MODELVIEW);
   GL_ERROR_CHECK();
   glPopMatrix();
@@ -225,7 +225,7 @@ void gl_leave_2d_mode(Gamep g)
 
 void gl_clear()
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   GLCOLOR(WHITE);
   glClearColor(0, 0, 0, 0);
@@ -234,7 +234,7 @@ void gl_clear()
 
 static void gl_init_fbo_(FboEnum fbo, GLuint *render_buf_id, GLuint *fbo_id, GLuint *fbo_tex_id, GLuint tex_width, GLuint tex_height)
 {
-  TRACE_AND_INDENT();
+  TRACE();
   DBG2("GFX: create FBO, size %dx%d", tex_width, tex_height);
   GL_ERROR_CHECK();
 
@@ -413,7 +413,7 @@ static void gl_init_fbo_(FboEnum fbo, GLuint *render_buf_id, GLuint *fbo_id, GLu
 
 static void gl_fini_fbo_(GLuint *fbo_id, GLuint *fbo_tex_id, GLuint tex_width, GLuint tex_height)
 {
-  TRACE_AND_INDENT();
+  TRACE();
   DBG2("GFX: destroy FBO, size %dx%d", tex_width, tex_height);
   GL_ERROR_CHECK();
 
@@ -647,9 +647,7 @@ int      buf_tex;
 
 void blit_init()
 {
-#ifdef DEBUG_BUILD
-  TRACE_NO_INDENT();
-#endif
+  TRACE_DEBUG();
 
   buf_tex = 0;
 
@@ -682,7 +680,7 @@ void blit_init()
 
 void blit_fini()
 {
-  TRACE_NO_INDENT();
+  TRACE();
   if (gl_array_buf != nullptr) {
     MYFREE(gl_array_buf);
     gl_array_buf = nullptr;
@@ -691,13 +689,9 @@ void blit_fini()
 
 void blit_flush()
 {
-#ifdef DEBUG_BUILD
-  TRACE_NO_INDENT();
-#endif
+  TRACE_DEBUG();
 
-  if (UNLIKELY(gl_array_buf == bufp)) {
-    return;
-  }
+  UNLIKELY if (gl_array_buf == bufp) { return; }
 
   glEnableClientState(GL_VERTEX_ARRAY);
   glEnableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -744,13 +738,13 @@ void blit_flush_triangle_fan() { blit_flush_triangle_fan(gl_array_buf, bufp); }
 
 void blit_flush_colored_triangle_fan()
 {
-  TRACE_NO_INDENT();
+  TRACE();
   blit_flush_colored_triangle_fan(gl_array_buf, bufp);
 }
 
 void blit_flush_colored_triangle_fan(float *b, const float *e)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   glEnableClientState(GL_VERTEX_ARRAY);
   glEnableClientState(GL_COLOR_ARRAY);
@@ -781,7 +775,7 @@ void blit_flush_colored_triangle_fan(float *b, const float *e)
 
 void blit_flush_triangle_fan(float *b, const float *e)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   glEnableClientState(GL_VERTEX_ARRAY);
 
@@ -922,7 +916,7 @@ PFNGLDELETEBUFFERSARBPROC        glDeleteBuffersARB_EXT;
 
 static void gl_ext_load(void)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   glDebugMessageCallback_EXT = (__typeof__(glDebugMessageCallback_EXT)) (void *) wglGetProcAddress("glDebugMessageCallback");
   if (! glDebugMessageCallback_EXT) {
     LOG("OpenGl: - glDebugMessageCallback_EXT - NOT present");
@@ -935,7 +929,7 @@ static void gl_ext_load(void)
     glDebugMessageCallback_EXT(MessageCallback, 0);
   }
 
-  TRACE_NO_INDENT();
+  TRACE();
   glCreateProgram_EXT = (__typeof__(glCreateProgram_EXT)) (void *) wglGetProcAddress("glCreateProgram");
   if (! glCreateProgram_EXT) {
     LOG("OpenGl: - glCreateProgram_EXT - NOT present");
@@ -1177,7 +1171,7 @@ static void gl_ext_load(void)
 
 static void setupPixelFormat(HDC this_hdc)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   PIXELFORMATDESCRIPTOR pfd = {
       SIZEOF(PIXELFORMATDESCRIPTOR),                              // size
       1,                                                          // version
@@ -1222,7 +1216,7 @@ static void setupPixelFormat(HDC this_hdc)
 
 static void setupPalette(HDC this_hdc)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   int                   pixelFormat = GetPixelFormat(this_hdc);
   PIXELFORMATDESCRIPTOR pfd;
   LOGPALETTE           *pPal;
@@ -1266,13 +1260,13 @@ static void setupPalette(HDC this_hdc)
 
 static LRESULT APIENTRY WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   return DefWindowProc(hWnd, message, wParam, lParam);
 }
 
 void gl_ext_init(void)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   WNDCLASSEX wc;
   HWND       hwnd;
 
@@ -1335,7 +1329,7 @@ void gl_ext_init(void)
   ReleaseDC(hwnd, hDC);
 }
 #else
-void gl_ext_init() { TRACE_NO_INDENT(); }
+void gl_ext_init() { TRACE(); }
 #endif
 
 void gl_error(GLenum errCode)
@@ -1365,12 +1359,14 @@ static void gl_push(float **P, const float *p_end, bool first_vertex, float tex_
 {
   float *p = *P;
 
-  if (UNLIKELY(p >= p_end)) {
+  UNLIKELY if ((p >= p_end))
+  {
     LOG("overflow on gl bug %s", __FUNCTION__);
     return;
   }
 
-  if (LIKELY(! first_vertex)) {
+  LIKELY if ((! first_vertex))
+  {
     //
     // If there is a break in the triangle strip then make a degenerate triangle.
     //
@@ -1427,15 +1423,17 @@ static bool first_vertex;
 void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLshort left, GLshort top, GLshort right, GLshort bottom,
           const color &c)
 {
-  if (UNLIKELY(! buf_tex)) {
+  UNLIKELY if ((! buf_tex))
+  {
     blit_init();
     first_vertex = true;
-  } else if (UNLIKELY(buf_tex != tex)) {
+  }
+  else UNLIKELY if ((buf_tex != tex))
+  {
     blit_flush();
     first_vertex = true;
-  } else {
-    first_vertex = false;
   }
+  else { first_vertex = false; }
 
   buf_tex = tex;
 
@@ -1451,15 +1449,17 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
 void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLshort pixMinX, GLshort pixMinY, GLshort pixMaxX,
           GLshort pixMaxY, const color &c, LightPixels *light_pixels, bool blit_flush_per_line)
 {
-  if (UNLIKELY(! buf_tex)) {
+  UNLIKELY if ((! buf_tex))
+  {
     blit_init();
     first_vertex = true;
-  } else if (UNLIKELY(buf_tex != tex)) {
+  }
+  else UNLIKELY if ((buf_tex != tex))
+  {
     blit_flush();
     first_vertex = true;
-  } else {
-    first_vertex = false;
   }
+  else { first_vertex = false; }
 
   buf_tex = tex;
 
@@ -1509,15 +1509,17 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
 void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLshort left, GLshort top, GLshort right, GLshort bottom,
           const color &color_bl, const color &color_br, const color &color_tl, const color &color_tr)
 {
-  if (UNLIKELY(! buf_tex)) {
+  UNLIKELY if ((! buf_tex))
+  {
     blit_init();
     first_vertex = true;
-  } else if (UNLIKELY(buf_tex != tex)) {
+  }
+  else UNLIKELY if ((buf_tex != tex))
+  {
     blit_flush();
     first_vertex = true;
-  } else {
-    first_vertex = false;
   }
+  else { first_vertex = false; }
 
   buf_tex = tex;
 

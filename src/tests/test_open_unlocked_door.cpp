@@ -10,7 +10,7 @@
 [[nodiscard]] static auto test_open_unlocked_door(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
-  TRACE_AND_INDENT();
+  TRACE();
 
   LevelNum const level_num = 0;
   auto           w         = 7;
@@ -73,7 +73,7 @@
   TEST_PROGRESS(t);
   {
     TEST_LOG(t, "move right, collecting key");
-    TRACE_AND_INDENT();
+    TRACE();
     up = down = left = right = false;
     right                    = true;
 
@@ -99,7 +99,7 @@
   TEST_PROGRESS(t);
   {
     TEST_LOG(t, "move right open door");
-    TRACE_AND_INDENT();
+    TRACE();
 
     if (! (result = player_move_request(g, up, down, left, right, false /* fire */))) {
       TEST_FAILED(t, "move failed");
@@ -123,7 +123,7 @@
   TEST_PROGRESS(t);
   {
     TEST_LOG(t, "move right into room");
-    TRACE_AND_INDENT();
+    TRACE();
 
     if (! (result = player_move_request(g, up, down, left, right, false /* fire */))) {
       TEST_FAILED(t, "move failed");
@@ -145,7 +145,7 @@
 
   TEST_PASSED(t);
 exit:
-  TRACE_NO_INDENT();
+  TRACE();
   game_cleanup(g);
 
   return result;
@@ -153,7 +153,7 @@ exit:
 
 auto test_load_open_unlocked_door() -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   Testp test = test_load("open_unlocked_door");
 

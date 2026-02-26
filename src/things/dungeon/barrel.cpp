@@ -14,21 +14,21 @@
 
 static auto tp_barrel_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   return "barrel of oil";
 }
 
 static auto tp_barrel_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   return UI_INFO1_FMT_STR "A not-out-of-place-in-a-dungeon, barrel of oil.";
 }
 
 static void tp_barrel_spawn_explosion(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   const std::initializer_list< spoint > points = {
       spoint(-1, -1), spoint(1, -1), spoint(0, -1), spoint(-1, 0), spoint(1, 0), spoint(0, 0), spoint(-1, 1), spoint(1, 1), spoint(0, 1),
@@ -61,14 +61,14 @@ static void tp_barrel_spawn_explosion(Gamep g, Levelsp v, Levelp l, Thingp t)
 
 static void tp_barrel_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   tp_barrel_spawn_explosion(g, v, l, t);
 }
 
 static void tp_barrel_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   //
   // If we fell into another chasm, don't kill the thing yet
@@ -86,7 +86,7 @@ static void tp_barrel_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
 
 auto tp_load_barrel() -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *tp   = tp_load("barrel"); // keep as string for scripts
   auto  name = tp_name(tp);

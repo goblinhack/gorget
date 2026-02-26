@@ -12,7 +12,7 @@
 //
 void fragments_init(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (fragment_add(g, CHANCE_NORMAL, __FUNCTION__, __LINE__,
                    /* frag   */ (const char *) "     ",

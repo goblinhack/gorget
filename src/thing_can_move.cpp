@@ -11,9 +11,9 @@
 //
 auto thing_can_move_to_attempt(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
-  if (IS_OOB(to)) {
+  UNLIKELY if (is_oob(to)) {
     return false;
   }
 
@@ -36,7 +36,7 @@ auto thing_can_move_to_attempt(Gamep g, Levelsp v, Levelp l, Thingp me, spoint t
 //
 auto thing_can_move_to_ai(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, to)
   {
@@ -97,7 +97,7 @@ auto thing_can_move_to_ai(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) ->
 //
 auto thing_can_move_to_check_if_is_possible(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, to)
   {
@@ -145,9 +145,9 @@ auto thing_can_move_to_check_if_is_possible(Gamep g, Levelsp v, Levelp l, Thingp
 //
 auto thing_can_move_to_attempt_by_shoving(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
-  if (IS_OOB(to)) {
+  UNLIKELY if (is_oob(to)) {
     return false;
   }
 

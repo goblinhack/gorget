@@ -33,7 +33,7 @@ bool compiler_unused;
 
 static void usage()
 {
-  TRACE_NO_INDENT();
+  TRACE();
   static int whinged;
 
   if (whinged != 0) {
@@ -74,7 +74,7 @@ static void usage()
 
 static void parse_args(int argc, char *argv[])
 {
-  TRACE_NO_INDENT();
+  TRACE();
   int i = 0;
 
   //
@@ -240,7 +240,7 @@ static void parse_args(int argc, char *argv[])
 
 auto main(int argc, char *argv[]) -> int
 {
-  TRACE_NO_INDENT();
+  TRACE();
   Gamep g = nullptr;
   g_argv  = argv;
   g_argc  = argc;
@@ -251,20 +251,20 @@ auto main(int argc, char *argv[]) -> int
   // Call parse_args before any memory allocations, in case debug2 is enabled
   //////////////////////////////////////////////////////////////////////////////
   {
-    TRACE_NO_INDENT();
+    TRACE();
     parse_args(argc, argv);
   }
 
-  TRACE_NO_INDENT();
+  TRACE();
   auto appdata = log_dir_create(); // Want this first so we get all logs
 
-  TRACE_NO_INDENT();
+  TRACE();
   redirect_stdout();
 
-  TRACE_NO_INDENT();
+  TRACE();
   redirect_stderr();
 
-  TRACE_NO_INDENT();
+  TRACE();
   LOG("Will use STDOUT as '%s'", g_log_stdout_filename.c_str());
   LOG("Will use STDERR as '%s'", g_log_stderr_filename.c_str());
 
@@ -272,7 +272,7 @@ auto main(int argc, char *argv[]) -> int
   // Use LOG instead of CON until we set stdout or you see two logs
   // v v v v v v v v v v v v v v v v v v v v v v v v v v v v v v v
   //////////////////////////////////////////////////////////////////////////////
-  TRACE_NO_INDENT();
+  TRACE();
 #ifdef _WIN32
   LOG("Platform is _WIN32");
 #endif
@@ -295,19 +295,19 @@ auto main(int argc, char *argv[]) -> int
   //////////////////////////////////////////////////////////////////////////////
 
   {
-    TRACE_NO_INDENT();
+    TRACE();
     find_file_locations();
   }
 
   {
     LOG("Ramdisk init");
-    TRACE_NO_INDENT();
+    TRACE();
     ramdisk_init();
   }
 
   {
     LOG("Create console");
-    TRACE_NO_INDENT();
+    TRACE();
     ascii_init();
   }
 
@@ -360,21 +360,21 @@ auto main(int argc, char *argv[]) -> int
   game_init(g);
 
   if (! g_opt_tests) {
-    TRACE_NO_INDENT();
+    TRACE();
     if (! sdl_init()) {
       ERR("SDL: Init");
     }
   }
 
   if (! g_opt_tests) {
-    TRACE_NO_INDENT();
+    TRACE();
     if (! sdl_display_init(g)) {
       ERR("SDL: Display init");
     }
   }
 
   if (! g_opt_tests) {
-    TRACE_NO_INDENT();
+    TRACE();
     sdl_config_update_all(g);
   }
 
@@ -392,12 +392,12 @@ auto main(int argc, char *argv[]) -> int
   }
 
   if (! g_need_restart_with_given_arguments.empty()) {
-    TRACE_NO_INDENT();
+    TRACE();
     restart(g, g_need_restart_with_given_arguments);
   }
 
   {
-    TRACE_NO_INDENT();
+    TRACE();
     if (g_opt_debug1) {
       CON("Load early gfx tiles, text, UI etc...");
     } else {
@@ -410,7 +410,7 @@ auto main(int argc, char *argv[]) -> int
   // Disable vsync so the console is faster
   //
   if (! g_opt_tests) {
-    TRACE_NO_INDENT();
+    TRACE();
     SDL_GL_SetSwapInterval(0);
   }
 
@@ -424,7 +424,7 @@ auto main(int argc, char *argv[]) -> int
   color_init();
 
   if (! g_skip_audio_and_gfx) {
-    TRACE_NO_INDENT();
+    TRACE();
     if (g_opt_debug1) {
       CON("Load fonts");
     } else {
@@ -436,7 +436,7 @@ auto main(int argc, char *argv[]) -> int
   }
 
   if (! g_skip_audio_and_gfx) {
-    TRACE_NO_INDENT();
+    TRACE();
     if (g_opt_debug1) {
       CON("Load console");
     } else {
@@ -474,7 +474,7 @@ auto main(int argc, char *argv[]) -> int
   // Need to preserve spaces for restarting via exec
   //
   if (! g_skip_audio_and_gfx) {
-    TRACE_NO_INDENT();
+    TRACE();
     g_program_name = std::string(argv[ 0 ]);
     if (g_opt_debug1) {
       CON("Original program name: %s", g_program_name.c_str());
@@ -485,7 +485,7 @@ auto main(int argc, char *argv[]) -> int
   }
 
   if (! g_skip_audio_and_gfx) {
-    TRACE_NO_INDENT();
+    TRACE();
     if (g_opt_debug1) {
       CON("Load tiles");
     } else {
@@ -497,7 +497,7 @@ auto main(int argc, char *argv[]) -> int
   }
 
   if (! g_skip_audio_and_gfx) {
-    TRACE_NO_INDENT();
+    TRACE();
     if (! tile_init()) {
       ERR("Tile init");
     }
@@ -505,7 +505,7 @@ auto main(int argc, char *argv[]) -> int
   }
 
   if (! g_skip_audio_and_gfx) {
-    TRACE_NO_INDENT();
+    TRACE();
     if (g_opt_debug1) {
       CON("Load textures");
     } else {
@@ -518,7 +518,7 @@ auto main(int argc, char *argv[]) -> int
   }
 
   if (! g_skip_audio_and_gfx) {
-    TRACE_NO_INDENT();
+    TRACE();
     if (g_opt_debug1) {
       CON("Init audio");
     } else {
@@ -531,7 +531,7 @@ auto main(int argc, char *argv[]) -> int
   }
 
   if (! g_skip_audio_and_gfx) {
-    TRACE_NO_INDENT();
+    TRACE();
     if (g_opt_debug1) {
       CON("Init music");
     } else {
@@ -544,7 +544,7 @@ auto main(int argc, char *argv[]) -> int
   }
 
   if (! g_skip_audio_and_gfx) {
-    TRACE_NO_INDENT();
+    TRACE();
     if (g_opt_debug1) {
       CON("Load sounds");
     } else {
@@ -559,7 +559,7 @@ auto main(int argc, char *argv[]) -> int
   }
 
   {
-    TRACE_NO_INDENT();
+    TRACE();
 
     LOG("Load templates");
     if (! tp_init()) {
@@ -569,7 +569,7 @@ auto main(int argc, char *argv[]) -> int
   }
 
   {
-    TRACE_NO_INDENT();
+    TRACE();
     LOG("Load commands");
     if (! command_init()) {
       ERR("Command init");
@@ -616,13 +616,13 @@ auto main(int argc, char *argv[]) -> int
   }
 
   {
-    TRACE_NO_INDENT();
+    TRACE();
     wid_console_flush(g);
 
     //
     // Main menu
     //
-    TRACE_NO_INDENT();
+    TRACE();
     if (AN_ERROR_OCCURRED()) {
       wid_console_raise(g);
     } else if (g_opt_restarted_in_gfx_menu) {
@@ -660,13 +660,13 @@ auto main(int argc, char *argv[]) -> int
 
   g_opt_no_slow_log_flush = false;
 
-  TRACE_NO_INDENT();
+  TRACE();
   sdl_loop(g);
   LOG("SDL loop finished");
   wid_console_flush(g);
 
   if (! g_need_restart_with_given_arguments.empty()) {
-    TRACE_NO_INDENT();
+    TRACE();
     restart(g, g_need_restart_with_given_arguments);
   }
 

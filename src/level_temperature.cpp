@@ -17,7 +17,7 @@
 //
 void level_tick_begin_temperature(Gamep g, Levelsp v, Levelp l)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   int x = 0;
   int y = 0;
@@ -116,7 +116,7 @@ void level_tick_begin_temperature(Gamep g, Levelsp v, Levelp l)
 //
 static void thing_heat_exchange(Levelsp v, Thingp a, Thingp b, int &finalT)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto       *tpA = thing_tp(a);
   float const Ta  = thing_temperature(a);
@@ -186,7 +186,7 @@ static void thing_heat_exchange(Levelsp v, Thingp a, Thingp b, int &finalT)
 
 void level_thing_pair_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp a, Thingp b)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   //
   // It could be dead now.
@@ -243,7 +243,7 @@ void level_thing_pair_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp a,
 
 void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   int x = 0;
   int y = 0;

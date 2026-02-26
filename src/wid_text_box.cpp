@@ -12,7 +12,7 @@
 
 WidTextBox::~WidTextBox()
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   extern Gamep game;
   auto        *g = game;
@@ -30,7 +30,7 @@ WidTextBox::~WidTextBox()
 WidTextBox::WidTextBox(Gamep g, spoint vtl, spoint vbr, Widp vparent, bool horiz_scroll, bool vert_scroll, int vscroll_height_in)
     : scroll_height(vscroll_height_in), tl(vtl), br(vbr), wid_parent(vparent)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   int w = br.x - tl.x;
   int h = br.y - tl.y;
@@ -137,7 +137,7 @@ WidTextBox::WidTextBox(Gamep g, spoint vtl, spoint vbr, Widp vparent, bool horiz
 //
 auto WidTextBox::log_(Gamep g, const std::string &str, wid_text_format format, const std::string &col) -> Widp
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   Widp tmp {};
   Widp text_wid {};
@@ -200,7 +200,7 @@ auto WidTextBox::log_(Gamep g, const std::string &str, wid_text_format format, c
 //
 auto WidTextBox::log(Gamep g, const std::string &s, wid_text_format format, const std::string &col) -> Widp
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   int const chars_per_line = wid_get_width(wid_text_area);
   Widp      w              = nullptr;
@@ -223,7 +223,7 @@ auto WidTextBox::log(Gamep g, const std::string &s, wid_text_format format, cons
 //
 auto WidTextBox::log_empty_line(Gamep g) -> Widp
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   return log_(g, " ");
 }

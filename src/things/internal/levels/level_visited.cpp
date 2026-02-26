@@ -10,7 +10,7 @@
 
 auto tp_load_level_visited() -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *tp   = tp_load("level_visited"); // keep as string for scripts
   auto  name = tp_name(tp);

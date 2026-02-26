@@ -15,7 +15,7 @@ static WidPopup *wid_error_window;
 
 static void wid_error_destroy(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   delete wid_error_window;
   wid_error_window = nullptr;
 
@@ -25,7 +25,7 @@ static void wid_error_destroy(Gamep g)
 
 [[nodiscard]] static auto wid_error_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
     sound_play(g, "keypress");
@@ -39,7 +39,7 @@ static void wid_error_destroy(Gamep g)
       switch (key->sym) {
         default :
           {
-            TRACE_NO_INDENT();
+            TRACE();
             auto c = wid_event_to_char(key);
             switch (c) {
               case '\n' :
@@ -47,7 +47,7 @@ static void wid_error_destroy(Gamep g)
               case 'B' :
               case SDLK_ESCAPE :
                 {
-                  TRACE_NO_INDENT();
+                  TRACE();
                   sound_play(g, "keypress");
                   wid_error_destroy(g);
                   return true;
@@ -62,7 +62,7 @@ static void wid_error_destroy(Gamep g)
 
 void wid_error(Gamep g, const std::string &error)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   CON("ERROR: %s", error.c_str());
 
   if (wid_error_window != nullptr) {

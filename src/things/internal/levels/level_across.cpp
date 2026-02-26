@@ -10,7 +10,7 @@
 
 auto tp_load_level_across() -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *tp   = tp_load("level_across"); // keep as string for scripts
   auto  name = tp_name(tp);

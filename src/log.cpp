@@ -25,7 +25,7 @@ extern Game *game;
 //
 auto log_dir_create() -> std::string
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   const char *appdata = nullptr;
   appdata             = getenv("APPDATA");
@@ -52,7 +52,7 @@ auto log_dir_create() -> std::string
 
 void log_(const char *fmt, va_list args)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (MY_STDOUT == stdout) {
     return;
@@ -64,7 +64,7 @@ void log_(const char *fmt, va_list args)
 
   get_timestamp(buf, MAXLONGSTR);
   len = (int) strlen(buf);
-  snprintf(buf + len, MAXLONGSTR - len, "%s%*s", "", g_callframes_indent, "");
+  snprintf(buf + len, MAXLONGSTR - len, "%s%*s", "", g_callframes_depth, "");
 
   len = (int) strlen(buf);
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
@@ -74,7 +74,7 @@ void log_(const char *fmt, va_list args)
 
 void LOG(const char *fmt, ...)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   va_list args = {};
   va_start(args, fmt);
@@ -84,7 +84,7 @@ void LOG(const char *fmt, ...)
 
 static void warn_(const char *fmt, va_list args)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   char buf[ MAXLONGSTR ];
   buf[ 0 ] = '\0';
@@ -101,7 +101,7 @@ static void warn_(const char *fmt, va_list args)
 
 void WARN(const char *fmt, ...)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   va_list args = {};
 
@@ -112,7 +112,7 @@ void WARN(const char *fmt, ...)
 
 static void con_(const char *fmt, va_list args)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   char buf[ MAXLONGSTR ];
   buf[ 0 ] = '\0';
@@ -136,7 +136,7 @@ static void con_(const char *fmt, va_list args)
 
 void CON(const char *fmt, ...)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   va_list args = {};
   va_start(args, fmt);
@@ -146,7 +146,7 @@ void CON(const char *fmt, ...)
 
 void CON_NEW_LINE()
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   va_list args = {};
   con_(nullptr, args);
@@ -154,7 +154,7 @@ void CON_NEW_LINE()
 
 static void croak_handle(bool clean, const char *fmt, va_list args)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *g = game;
 
@@ -199,7 +199,7 @@ static void croak_handle(bool clean, const char *fmt, va_list args)
 
 void CROAK_HANDLE(bool clean, const char *fmt, ...)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   va_list args = {};
 
@@ -214,7 +214,7 @@ void CROAK_HANDLE(bool clean, const char *fmt, ...)
 
 static void err_handle(Gamep g, const char *fmt, va_list args)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   char buf[ MAXLONGSTR * 10 ];
   buf[ 0 ] = '\0';
@@ -237,7 +237,7 @@ static void err_handle(Gamep g, const char *fmt, va_list args)
 
 void ERR_HANDLE(const char *fmt, ...)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (g_err_count++ > ENABLE_MAX_ERR_COUNT) {
     CROAK("Too many errors: %d, max %d", g_err_count, ENABLE_MAX_ERR_COUNT);
@@ -272,7 +272,7 @@ void putf(FILE *fp, const char *s)
 
 static void topcon_(const char *fmt, va_list args)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   char buf[ MAXLONGSTR ];
   buf[ 0 ] = '\0';
@@ -299,7 +299,7 @@ static void topcon_(const char *fmt, va_list args)
 
 void TOPCON(const char *fmt, ...)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   va_list args = {};
 
@@ -310,7 +310,7 @@ void TOPCON(const char *fmt, ...)
 
 void TOPCON_NEW_LINE()
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   va_list args = {};
   topcon_(nullptr, args);
@@ -318,7 +318,7 @@ void TOPCON_NEW_LINE()
 
 static void botcon_(const char *fmt, va_list args)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   char buf[ MAXLONGSTR ];
   buf[ 0 ] = '\0';
@@ -332,7 +332,7 @@ static void botcon_(const char *fmt, va_list args)
 
 void BOTCON(const char *fmt, ...)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   va_list args = {};
 
@@ -343,7 +343,7 @@ void BOTCON(const char *fmt, ...)
 
 void BOTCON_NEW_LINE()
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   va_list args = {};
 

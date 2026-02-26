@@ -11,11 +11,18 @@
 #define CAT2(A, B) CAT(A, B)
 
 #ifdef ENABLE_DEBUG_TRACE
-#define TRACE_AND_INDENT() const TracerT CAT2(__my_trace__, __LINE__)(SRC_FUNC_NAME, SRC_LINE_NUM);
-#define TRACE_NO_INDENT()  const TracerNoIndentT CAT2(__my_trace__, __LINE__)(SRC_FUNC_NAME, SRC_LINE_NUM);
+
+#ifdef DEBUG_BUILD
+#define TRACE_DEBUG() const TracerT CAT2(__my_trace__, __LINE__)(SRC_FUNC_NAME, SRC_LINE_NUM);
 #else
-#define TRACE_AND_INDENT()
-#define TRACE_NO_INDENT()
+#define TRACE_DEBUG()
+#endif
+
+#define TRACE() const TracerT CAT2(__my_trace__, __LINE__)(SRC_FUNC_NAME, SRC_LINE_NUM);
+
+#else
+#define TRACE_DEBUG()
+#define TRACE()
 #endif
 
 struct Callframe {
@@ -37,48 +44,18 @@ enum { MAXCALLFRAME = 256 };
 
 extern thread_local struct Callframe callframes[ MAXCALLFRAME ];
 extern thread_local unsigned char    g_callframes_depth;
-extern thread_local unsigned char    g_callframes_indent;
 
-struct TracerT {
+class TracerT
+{
+public:
   TracerT(const char *func, const unsigned short line)
   {
-// useful for code tracing in real time
-// fprintf(stderr, "%s %s() line %d\n", file, func, line);
-#ifdef ENABLE_DEBUG_TRACE
-    g_callframes_indent++;
     Callframe *c = &callframes[ g_callframes_depth++ ];
     c->func      = func;
     c->line      = line;
-#endif
   }
 
-  ~TracerT()
-  {
-#ifdef ENABLE_DEBUG_TRACE
-    g_callframes_indent--;
-    g_callframes_depth--;
-#endif
-  }
-};
-
-struct TracerNoIndentT {
-  TracerNoIndentT(const char *func, const unsigned short line)
-  {
-// useful for code tracing in real time
-// fprintf(stderr, "%s %s() line %d\n", file, func, line);
-#ifdef ENABLE_DEBUG_TRACE
-    Callframe *c = &callframes[ g_callframes_depth++ ];
-    c->func      = func;
-    c->line      = line;
-#endif
-  }
-
-  ~TracerNoIndentT()
-  {
-#ifdef ENABLE_DEBUG_TRACE
-    g_callframes_depth--;
-#endif
-  }
+  ~TracerT() { g_callframes_depth--; }
 };
 
 extern void callstack_dump(FILE *fp);

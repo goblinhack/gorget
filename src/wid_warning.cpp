@@ -16,7 +16,7 @@ WidPopup *wid_warning_window;
 
 static void wid_warning_destroy()
 {
-  TRACE_NO_INDENT();
+  TRACE();
   delete wid_warning_window;
   wid_warning_window = nullptr;
 }
@@ -24,7 +24,7 @@ static void wid_warning_destroy()
 [[nodiscard]] static auto wid_warning_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
 {
   DBG("Key press for wid warning");
-  TRACE_AND_INDENT();
+  TRACE();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
     sound_play(g, "keypress");
@@ -84,7 +84,7 @@ static void wid_warning_destroy()
 [[nodiscard]] static auto wid_warning_yes(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   DBG("Wid warning: yes");
-  TRACE_AND_INDENT();
+  TRACE();
 
   auto callback = (wid_warning_callback_t) wid_get_void_context(w);
   if (callback != nullptr) {
@@ -97,7 +97,7 @@ static void wid_warning_destroy()
 [[nodiscard]] static auto wid_warning_no(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   DBG("Wid warning: no");
-  TRACE_AND_INDENT();
+  TRACE();
 
   auto callback = (wid_warning_callback_t) wid_get_void_context(w);
   if (callback != nullptr) {
@@ -109,7 +109,7 @@ static void wid_warning_destroy()
 
 void wid_warning(Gamep g, const std::string &warning, wid_warning_callback_t callback)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (wid_warning_window != nullptr) {
     wid_warning_destroy();
@@ -132,7 +132,7 @@ void wid_warning(Gamep g, const std::string &warning, wid_warning_callback_t cal
 
   auto y_at = 4;
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_warning_window->wid_text_area->wid_text_area;
     auto *w = wid_new_red_button(g, p, "No");
 
@@ -145,7 +145,7 @@ void wid_warning(Gamep g, const std::string &warning, wid_warning_callback_t cal
   }
 
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_warning_window->wid_text_area->wid_text_area;
     auto *w = wid_new_green_button(g, p, "Yes");
 

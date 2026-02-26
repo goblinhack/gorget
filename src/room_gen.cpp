@@ -69,7 +69,7 @@ public:
 //
 static void room_gen_dump(RoomGen *grid)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   std::println(grid->out, "  room_add(g, CHANCE_NORMAL, ROOM_FLAG_CHECK_EXITS, __FUNCTION__, __LINE__,");
 
@@ -89,7 +89,7 @@ static void room_gen_dump(RoomGen *grid)
 //
 static void room_gen_room_only_dump(RoomGen *grid)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   std::println(grid->out, "  room_add(g, CHANCE_NORMAL, NO_FLAGS, __FUNCTION__, __LINE__,");
 
@@ -106,7 +106,7 @@ static void room_gen_room_only_dump(RoomGen *grid)
 
 static void room_gen_clear(RoomGen *grid)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   memset(grid->data, CHARMAP_EMPTY, SIZEOF(grid->data));
 }
@@ -222,12 +222,12 @@ static void room_gen_keep_largest_chunk(Gamep g, class RoomGen *grid)
 //
 static void room_gen_draw_rectangle(RoomGen *grid, int x, int y, int width, int height, char c)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   for (auto i = x; i < x + width; i++) {
     for (auto j = y; j < y + height; j++) {
       spoint const p(i, j);
-      if (IS_OOB(p)) {
+      UNLIKELY if (is_oob(p)) {
         continue;
       }
       grid->data[ i ][ j ] = c;
@@ -237,7 +237,7 @@ static void room_gen_draw_rectangle(RoomGen *grid, int x, int y, int width, int 
 
 static void room_gen_draw_circle(RoomGen *grid, int x, int y, int radius, char value)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   int i = 0;
   int j = 0;
@@ -246,7 +246,7 @@ static void room_gen_draw_circle(RoomGen *grid, int x, int y, int radius, char v
     for (j = std::max(0, y - radius - 1); j < std::max((int) MAP_HEIGHT, y + radius); j++) {
       if (((i - x) * (i - x)) + ((j - y) * (j - y)) < (radius * radius) + radius) {
         spoint const p(i, j);
-        if (IS_OOB(p)) {
+        UNLIKELY if (is_oob(p)) {
           continue;
         }
         grid->data[ i ][ j ] = value;
@@ -260,7 +260,7 @@ static void room_gen_draw_circle(RoomGen *grid, int x, int y, int radius, char v
 //
 static void room_gen_add_exits(RoomGen *grid)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   int x = 0;
   int y = 0;
@@ -327,7 +327,7 @@ static void room_gen_add_exits(RoomGen *grid)
 //
 static void room_gen_add_corridor(RoomGen *grid)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   int x = 0;
   int y = 0;
@@ -386,7 +386,7 @@ static void room_gen_add_corridor(RoomGen *grid)
 //
 static void room_gen_design_cross_room(Gamep g, RoomGen *grid)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   int room_width   = 0;
   int room_height  = 0;
@@ -417,7 +417,7 @@ static void room_gen_design_cross_room(Gamep g, RoomGen *grid)
 //
 static void room_gen_design_cross_room_symmetrical(Gamep g, RoomGen *grid)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   int major_width  = 0;
   int major_height = 0;
@@ -443,7 +443,7 @@ static void room_gen_design_cross_room_symmetrical(Gamep g, RoomGen *grid)
 
 static void room_gen_design_small_room(Gamep g, RoomGen *grid)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   int width  = 0;
   int height = 0;
@@ -456,7 +456,7 @@ static void room_gen_design_small_room(Gamep g, RoomGen *grid)
 
 static void room_gen_design_medium_room(Gamep g, RoomGen *grid)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   int width  = 0;
   int height = 0;
@@ -486,7 +486,7 @@ static void room_gen_design_circular_room(Gamep g, RoomGen *grid)
 
 static void room_gen_design_chunky_room(Gamep g, RoomGen *grid)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   int       i          = 0;
   int       x          = 0;
@@ -525,7 +525,7 @@ static void room_gen_design_chunky_room(Gamep g, RoomGen *grid)
 //
 [[nodiscard]] static auto rooms_dump_one(Gamep g, FILE *out, int which) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   RoomGen grid;
 
@@ -598,7 +598,7 @@ static void room_gen_design_chunky_room(Gamep g, RoomGen *grid)
 //
 static void rooms_write_source_file_for_n_rooms(Gamep g, int n, int which, const char *name)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   std::string const f = "src/rooms_" + std::string(name) + ".cpp";
 
@@ -622,7 +622,7 @@ static void rooms_write_source_file_for_n_rooms(Gamep g, int n, int which, const
   std::println(out, "//");
   std::println(out, "void rooms_{}(Gamep g)", name);
   std::println(out, "{{");
-  std::println(out, "  TRACE_NO_INDENT();");
+  std::println(out, "  TRACE();");
   std::println(out, "");
 
   for (auto r = 0; r < n; r++) {
@@ -636,7 +636,7 @@ static void rooms_write_source_file_for_n_rooms(Gamep g, int n, int which, const
 
 void rooms_test(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   rooms_write_source_file_for_n_rooms(g, 500, ROOM_TYPE_CROSS, "cross");
   rooms_write_source_file_for_n_rooms(g, 500, ROOM_TYPE_CROSS_SYM, "cross_sym");

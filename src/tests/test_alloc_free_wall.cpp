@@ -11,7 +11,7 @@
 [[nodiscard]] static auto test_alloc_free_walls(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
-  TRACE_AND_INDENT();
+  TRACE();
 
   LevelNum level_num = 0;
   auto     w         = 0;
@@ -109,7 +109,7 @@
 
   TEST_PASSED(t);
 exit:
-  TRACE_NO_INDENT();
+  TRACE();
   game_cleanup(g);
 
   return result;
@@ -117,7 +117,7 @@ exit:
 
 auto test_load_alloc_free_walls() -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   Testp test = test_load("alloc_free_walls");
 

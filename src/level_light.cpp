@@ -184,9 +184,7 @@ void level_light_per_pixel_lighting(Gamep g, Levelsp v, Levelp l, Thingp t, spoi
           = DISTANCEf(light_pixel_at_x, light_pixel_at_y, (float) thing_at_in_pixels.x, (float) thing_at_in_pixels.y);
 
       auto light_fade_index = (uint8_t) (int) ((dist_in_pixels / light_strength_in_pixels) * (float) MAP_WIDTH);
-      if (UNLIKELY(light_fade_index >= MAP_WIDTH)) {
-        light_fade_index = MAP_WIDTH - 1;
-      }
+      UNLIKELY if ((light_fade_index >= MAP_WIDTH)) { light_fade_index = MAP_WIDTH - 1; }
 
       auto       *light_pixel = &light_tile->pixels.pixel[ pixx ][ pixy ];
       float const fade        = light_fade_map[ light_fade_index ];
@@ -257,7 +255,7 @@ auto level_light_blocker_at_cached(Gamep g, Levelsp v, Levelp l, const spoint &p
 //
 void level_light_blocker_update(Gamep g, Levelsp v, Levelp l)
 {
-  TRACE_AND_INDENT();
+  TRACE();
 
   for (auto x = 0; x < MAP_WIDTH; x++) {
     for (auto y = 0; y < MAP_HEIGHT; y++) {
@@ -275,16 +273,13 @@ void level_light_blocker_update(Gamep g, Levelsp v, Levelp l)
 //
 void level_light_calculate_all(Gamep g, Levelsp v, Levelp l)
 {
-  TRACE_AND_INDENT();
+  TRACE();
 
   auto *player = thing_player(g);
-  if (UNLIKELY(player == nullptr)) {
-    return;
-  }
 
-  if ((g == nullptr) || (v == nullptr) || (l == nullptr)) {
-    return;
-  }
+  UNLIKELY if (player == nullptr) { return; }
+
+  UNLIKELY if ((g == nullptr) || (v == nullptr) || (l == nullptr)) { return; }
 
   //
   // If the player is not on the level being lit, then nothing to do

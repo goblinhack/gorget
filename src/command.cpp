@@ -107,7 +107,7 @@ static bool command_inited;
 
 void command_fini()
 {
-  TRACE_NO_INDENT();
+  TRACE();
   if (command_inited) {
     command_inited = false;
     for (const auto &iter : commands_map) {
@@ -119,7 +119,7 @@ void command_fini()
 
 auto command_init() -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   command_inited = true;
 
   return true;
@@ -127,7 +127,7 @@ auto command_init() -> bool
 
 void command_add(Gamep g, command_fn_t callback, const std::string &input, const std::string &readable)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *command = new class CommandT();
   auto  result  = commands_map.insert(std::make_pair(input, command));
@@ -150,7 +150,7 @@ void command_add(Gamep g, command_fn_t callback, const std::string &input, const
 static auto command_matches(Gamep g, const char *input, char *output, uint8_t show_ambiguous, uint8_t show_complete,
                             uint8_t execute_command, void *context) -> int
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   char         cand_expand_to[ MAXSTR ];
   commandp     matched_command = nullptr;
@@ -330,7 +330,7 @@ static auto command_matches(Gamep g, const char *input, char *output, uint8_t sh
 auto command_handle(Gamep g, const char *input, char *expandedtext, uint8_t show_ambiguous, uint8_t show_complete, uint8_t execute_command,
                     void *context) -> uint8_t
 {
-  TRACE_NO_INDENT();
+  TRACE();
   int matches = 0;
 
   if (expandedtext != nullptr) {

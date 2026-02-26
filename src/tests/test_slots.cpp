@@ -11,7 +11,7 @@
 [[nodiscard]] static auto test_slots(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
-  TRACE_AND_INDENT();
+  TRACE();
 
   LevelNum const level_num = 0;
   auto           w         = 7;
@@ -51,7 +51,7 @@
   TEST_PROGRESS(t);
 
   auto *player = thing_player(g);
-  if (UNLIKELY(player == nullptr)) {
+  UNLIKELY if (player == nullptr) {
     TEST_FAILED(t, "no player");
     goto exit;
   }
@@ -100,7 +100,7 @@
 
   TEST_PASSED(t);
 exit:
-  TRACE_NO_INDENT();
+  TRACE();
   game_cleanup(g);
 
   return result;
@@ -108,7 +108,7 @@ exit:
 
 auto test_load_slots() -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   Testp test = test_load("slots");
 

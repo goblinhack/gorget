@@ -10,7 +10,7 @@
 //
 auto thing_collect_key(Gamep g, Levelsp v, Levelp l, Thingp it, Thingp player_or_monst) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (! thing_is_key(it)) {
     return false;

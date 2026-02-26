@@ -52,7 +52,7 @@ std::array< bool, UI_MAX_SAVE_SLOTS > slot_valid;
 
 auto operator>>(std::istream &in, Bits< SDL_Keysym & > my) -> std::istream &
 {
-  TRACE_NO_INDENT();
+  TRACE();
   in >> bits(my.t.scancode);
   in >> bits(my.t.sym);
   in >> bits(my.t.mod);
@@ -62,7 +62,7 @@ auto operator>>(std::istream &in, Bits< SDL_Keysym & > my) -> std::istream &
 
 auto operator>>(std::istream &in, Bits< Config & > my) -> std::istream &
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   in >> bits(my.t.version);
   LOG("Read config: version                = [%s]", my.t.version.c_str());
@@ -520,7 +520,7 @@ auto operator>>(std::istream &in, Bits< Config & > my) -> std::istream &
 
 auto operator>>(std::istream &in, Bits< class Game & > my) -> std::istream &
 {
-  TRACE_NO_INDENT();
+  TRACE();
   in >> bits(my.t.version);
   in >> bits(my.t.serialized_size);
 
@@ -963,7 +963,7 @@ auto operator>>(std::istream &in, Bits< class Game & > my) -> std::istream &
 // ios::ate, open at end
 auto read_file(const std::string &filename) -> std::vector< char >
 {
-  TRACE_NO_INDENT();
+  TRACE();
   std::ifstream ifs(filename, std::ios::in | std::ios::binary | std::ios::ate);
   if (ifs.is_open()) {
     ifs.unsetf(std::ios::skipws);
@@ -981,7 +981,7 @@ auto read_file(const std::string &filename) -> std::vector< char >
 
 static auto read_lzo_file(const std::string &filename, long *uncompressed_sz) -> std::vector< char >
 {
-  TRACE_NO_INDENT();
+  TRACE();
   std::ifstream ifs(filename, std::ios::in | std::ios::binary | std::ios::ate);
   if (ifs.is_open()) {
     // tellg is not ideal, look into <filesystem> post mojave
@@ -1006,9 +1006,9 @@ static auto read_lzo_file(const std::string &filename, long *uncompressed_sz) ->
 auto Game::load(const std::string &file_to_load, class Game &target) -> bool
 {
   LOG("Load: %s", file_to_load.c_str());
-  TRACE_AND_INDENT();
+  TRACE();
 
-  TRACE_NO_INDENT();
+  TRACE();
   VERIFY(MTYPE_GAME, this);
   game_load_error = "";
 
@@ -1017,16 +1017,16 @@ auto Game::load(const std::string &file_to_load, class Game &target) -> bool
   //
   long dst_size = 0;
 
-  TRACE_NO_INDENT();
+  TRACE();
   if (! game_headers_only) {
     VERIFY(MTYPE_GAME, this);
     wid_progress_bar(this, "Loading...", 0.0);
   }
 
-  TRACE_NO_INDENT();
+  TRACE();
   auto vec = read_lzo_file(file_to_load, &dst_size);
 
-  TRACE_NO_INDENT();
+  TRACE();
   if (vec.empty()) {
     if (! game_headers_only) {
       wid_error(game, "load error, empty file [" + file_to_load + "] ?");
@@ -1036,7 +1036,7 @@ auto Game::load(const std::string &file_to_load, class Game &target) -> bool
     return false;
   }
 
-  TRACE_NO_INDENT();
+  TRACE();
   auto      *data     = vec.data();
   long const src_size = vec.size();
 
@@ -1050,13 +1050,13 @@ auto Game::load(const std::string &file_to_load, class Game &target) -> bool
   }
   memcpy(src, data, src_size);
 
-  TRACE_NO_INDENT();
+  TRACE();
   if (! game_headers_only) {
     VERIFY(MTYPE_GAME, this);
     wid_progress_bar(this, "Decompressing...", 0.5);
   }
 
-  TRACE_NO_INDENT();
+  TRACE();
   auto start = time_ms();
 
   LOG("Expect: %s, decompress %ld (%ld bytes) -> %ld Mb (%ld bytes)", file_to_load.c_str(),
@@ -1100,7 +1100,7 @@ auto Game::load(const std::string &file_to_load, class Game &target) -> bool
     return false;
   }
 
-  TRACE_NO_INDENT();
+  TRACE();
   if (! game_headers_only) {
     VERIFY(MTYPE_GAME, this);
     wid_progress_bar(this, "Reading...", 0.75);
@@ -1116,10 +1116,10 @@ auto Game::load(const std::string &file_to_load, class Game &target) -> bool
   std::string const  s((const char *) dst, (size_t) dst_size);
   std::istringstream in(s);
 
-  TRACE_NO_INDENT();
+  TRACE();
   game_load_error = "";
   in >> bits(target);
-  TRACE_NO_INDENT();
+  TRACE();
   if (! game_load_error.empty()) {
     if (! game_headers_only) {
       wid_error(game, "load error, " + game_load_error);
@@ -1142,14 +1142,14 @@ auto Game::load(const std::string &file_to_load, class Game &target) -> bool
 
 auto game_load(Gamep g, const std::string &file_to_load) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   return g->load(file_to_load, *g);
 }
 
 auto Game::load_config() const -> std::string
 {
-  TRACE_NO_INDENT();
+  TRACE();
   game_load_error = "";
 
   auto          filename = saved_dir + "config";
@@ -1164,7 +1164,7 @@ auto Game::load_config() const -> std::string
 auto Game::load(int slot) -> bool
 {
   LOG("Load slot: %d", slot);
-  TRACE_AND_INDENT();
+  TRACE();
 
   if (slot < 0) {
     CON("No game at that slot; bad slot.");
@@ -1214,7 +1214,7 @@ auto Game::load(int slot) -> bool
 auto Game::load_snapshot() -> bool
 {
   LOG("Load snapshot");
-  TRACE_AND_INDENT();
+  TRACE();
 
   game->fini();
 
@@ -1239,7 +1239,7 @@ void wid_load_destroy(Gamep g)
   }
 
   LOG("Wid load destroy");
-  TRACE_AND_INDENT();
+  TRACE();
 
   delete wid_load;
   wid_load = nullptr;
@@ -1247,7 +1247,7 @@ void wid_load_destroy(Gamep g)
 
 static auto wid_load_key_up(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (sdlk_eq(*key, game->config.key_console)) {
     return false;
@@ -1288,7 +1288,7 @@ static auto wid_load_key_up(Gamep g, Widp w, const struct SDL_Keysym *key) -> bo
               case 'B' :
               case SDLK_ESCAPE :
                 {
-                  TRACE_NO_INDENT();
+                  TRACE();
                   LOG("Load game cancelled");
                   wid_load_destroy(game);
                   game_state_reset(game, "load cancel");
@@ -1304,7 +1304,7 @@ static auto wid_load_key_up(Gamep g, Widp w, const struct SDL_Keysym *key) -> bo
 
 static auto wid_load_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (sdlk_eq(*key, game->config.key_console)) {
     sound_play(g, "keypress");
@@ -1318,7 +1318,7 @@ static auto wid_load_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> 
 static auto wid_load_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   LOG("Load selected slot");
-  TRACE_AND_INDENT();
+  TRACE();
 
   auto slot = wid_get_int_context(w);
   game->load(slot);
@@ -1329,7 +1329,7 @@ static auto wid_load_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button) ->
 static auto wid_load_saved_snapshot(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   LOG("Load snapshot");
-  TRACE_AND_INDENT();
+  TRACE();
 
   game->load_snapshot();
   wid_load_destroy(game);
@@ -1339,7 +1339,7 @@ static auto wid_load_saved_snapshot(Gamep g, Widp w, int x, int y, uint32_t butt
 static auto wid_load_cancel(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   LOG("Load cancel");
-  TRACE_AND_INDENT();
+  TRACE();
 
   wid_load_destroy(game);
   game_state_reset(g, "load cancel");
@@ -1349,7 +1349,7 @@ static auto wid_load_cancel(Gamep g, Widp w, int x, int y, uint32_t button) -> b
 void Game::load_select()
 {
   LOG("Load menu");
-  TRACE_AND_INDENT();
+  TRACE();
 
   if (wid_load != nullptr) {
     return;
@@ -1367,7 +1367,7 @@ void Game::load_select()
   wid_set_on_key_down(wid_load->wid_popup_container, wid_load_key_down);
 
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_load->wid_text_area->wid_text_area;
     auto *w = wid_new_back_button(game, p, "back");
 
@@ -1440,7 +1440,7 @@ void wid_load_select(Gamep g) { g->load_select(); }
 
 auto game_load_last_config(const char *appdata) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   CON("Load config");
 

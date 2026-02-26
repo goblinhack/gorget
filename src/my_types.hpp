@@ -94,11 +94,8 @@
 #define FOR_ALL_IN_ARRAY(my_iterator, my_array)                                                                                            \
   for (AUTO(my_iterator) = (my_array); (my_iterator) < ((my_array) + ARRAY_SIZE(my_array)); (my_iterator)++)
 
-//
-// GCC extensions
-//
-#define LIKELY(x)   __builtin_expect((x), 1)
-#define UNLIKELY(x) __builtin_expect((x), 0)
+#define LIKELY   [[likely]]
+#define UNLIKELY [[unlikely]]
 
 //
 // Types

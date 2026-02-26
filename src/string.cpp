@@ -24,7 +24,7 @@
  */
 void strrepc(char *s, const char *replace_set, char replace_with)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   char *c = nullptr;
 
   for (c = s; *c != 0; c++) {
@@ -41,7 +41,7 @@ void strrepc(char *s, const char *replace_set, char replace_with)
  */
 #if 0
 static char *substr (const char *in, int pos, int len)
-{ TRACE_NO_INDENT();
+{ TRACE();
   int slen;
   char *out;
 
@@ -94,7 +94,7 @@ static char *substr (const char *in, int pos, int len)
 auto strsub_(const char *in, const char *look_for, const char *replace_with, const char *what, const char *file, const char *func, int line)
     -> char *
 {
-  TRACE_NO_INDENT();
+  TRACE();
   char       *buf    = nullptr;
   const char *at     = nullptr;
   int         newlen = 0;
@@ -144,7 +144,7 @@ auto strsub_(const char *in, const char *look_for, const char *replace_with, con
  */
 auto strappend(const char *in, const char *append) -> char *
 {
-  TRACE_NO_INDENT();
+  TRACE();
   char *buf    = nullptr;
   int   newlen = 0;
   int   len    = 0;
@@ -173,7 +173,7 @@ auto strappend(const char *in, const char *append) -> char *
  */
 auto strprepend(const char *in, const char *prepend) -> char *
 {
-  TRACE_NO_INDENT();
+  TRACE();
   char *buf    = nullptr;
   int   newlen = 0;
   int   len    = 0;
@@ -200,7 +200,7 @@ auto strprepend(const char *in, const char *prepend) -> char *
  */
 auto strcommon(const char *a, const char *b) -> uint32_t
 {
-  TRACE_NO_INDENT();
+  TRACE();
   const char *o = nullptr;
 
   o = a;
@@ -218,7 +218,7 @@ auto strcommon(const char *a, const char *b) -> uint32_t
  */
 void strchop(char *s)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   uint32_t size = 0;
   char    *end  = nullptr;
 
@@ -240,7 +240,7 @@ void strchop(char *s)
  */
 void strchopc(char *s, char c)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   uint32_t size = 0;
   char    *end  = nullptr;
 
@@ -259,7 +259,7 @@ void strchopc(char *s, char c)
 
 auto strisregexp(const char *in) -> int
 {
-  TRACE_NO_INDENT();
+  TRACE();
   const char *a = in;
   char        c = 0;
 
@@ -282,7 +282,7 @@ auto strisregexp(const char *in) -> int
 
 auto my_strlcpy(char *dst, const char *src, size_t max_len) -> size_t
 {
-  TRACE_NO_INDENT();
+  TRACE();
   size_t const srclen = strlen(src);
   if (max_len > 0) {
     uint32_t const len = std::min(srclen, max_len - 1);
@@ -294,7 +294,7 @@ auto my_strlcpy(char *dst, const char *src, size_t max_len) -> size_t
 
 auto my_strlcat(char *dst, const char *src, size_t max_len) -> size_t
 {
-  TRACE_NO_INDENT();
+  TRACE();
   uint32_t const dstlen = strlen(dst);
   uint32_t const srclen = strlen(src);
   if (dstlen < max_len) {
@@ -308,7 +308,7 @@ auto my_strlcat(char *dst, const char *src, size_t max_len) -> size_t
  */
 void strnoescape(char *uncompressed)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   char *t = uncompressed;
   char *s = uncompressed;
   char  c = 0;
@@ -349,7 +349,7 @@ void strnoescape(char *uncompressed)
 
 static auto dynvprintf_(const char *fmt, va_list args) -> const char *
 {
-  TRACE_NO_INDENT();
+  TRACE();
   static char buf[ MAXSTR ];
 
   buf[ 0 ] = '\0';
@@ -364,7 +364,7 @@ static auto dynvprintf_(const char *fmt, va_list args) -> const char *
  */
 auto dynprintf(const char *fmt, ...) -> char *
 {
-  TRACE_NO_INDENT();
+  TRACE();
   const char *ret  = nullptr;
   va_list     args = {};
 
@@ -382,7 +382,7 @@ auto dynprintf(const char *fmt, ...) -> char *
  */
 auto mybasename(const char *in, const char *who) -> std::string
 {
-  TRACE_NO_INDENT();
+  TRACE();
   char       *tmp = MYDUPSTR(in, who);
   std::string tmp2(basename(tmp));
   MYFREE(tmp);
@@ -431,7 +431,7 @@ auto mybasename(const char *in, const char *who) -> std::string
  */
 auto my_strcasestr(const char *s, const char *find) -> char *
 {
-  TRACE_NO_INDENT();
+  TRACE();
   char   c   = 0;
   char   sc  = 0;
   size_t len = 0;
@@ -453,7 +453,7 @@ auto my_strcasestr(const char *s, const char *find) -> char *
 
 auto split(const std::string &text, int max_line_len) -> std::vector< std::string >
 {
-  TRACE_NO_INDENT();
+  TRACE();
   bool found_format_string = false;
   int  line_len            = 0;
   char c                   = 0;
@@ -661,7 +661,7 @@ auto split(const std::string &text, int max_line_len) -> std::vector< std::strin
 
 auto length_without_format(const std::string &text) -> int
 {
-  TRACE_NO_INDENT();
+  TRACE();
   bool found_format_string = false;
   char c                   = 0;
   auto text_start          = text.begin();
@@ -769,7 +769,7 @@ auto length_without_format(const std::string &text) -> int
  */
 auto snprintf_realloc(char **str, int *size, int *used, const char *fmt, ...) -> int
 {
-  TRACE_NO_INDENT();
+  TRACE();
   int     freespace = 0;
   int     needspace = 0;
   int     usedspace = 0;
@@ -923,7 +923,7 @@ auto strerror_to_string(const int err) -> std::string
 //
 auto capitalize(std::string in) -> std::string
 {
-  TRACE_NO_INDENT();
+  TRACE();
   std::string out = std::move(in);
 
   char       *b          = (char *) out.c_str();
@@ -951,7 +951,7 @@ auto capitalize(std::string in) -> std::string
 //
 auto capitalize_first(const std::string &in) -> std::string
 {
-  TRACE_NO_INDENT();
+  TRACE();
   std::string out = in;
 
   char       *b          = (char *) out.c_str();
@@ -990,7 +990,7 @@ void replace(std::string &input, const std::string &pattern, const std::string &
 
 auto string2tp(const char **s, int *len) -> Tpp
 {
-  TRACE_NO_INDENT();
+  TRACE();
   static char        tmp[ MAXSHORTSTR ];
   static const char *eo_tmp = tmp + MAXSHORTSTR;
   const char        *c      = *s;
@@ -1017,7 +1017,7 @@ auto string2tp(const char **s, int *len) -> Tpp
   }
 
   Tpp tp = tp_find_mand(tmp);
-  if (UNLIKELY(! tp)) {
+  UNLIKELY if((! tp)) {
     ERR("Tp name [%s] not found", tmp);
   }
 

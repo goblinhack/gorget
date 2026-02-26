@@ -11,7 +11,7 @@
 //
 auto thing_carry_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp player_or_monst) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (! thing_is_item(item)) {
     return false;
@@ -56,7 +56,7 @@ auto thing_carry_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp player_o
 //
 auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp player_or_monst) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (! thing_is_item(item)) {
     return false;

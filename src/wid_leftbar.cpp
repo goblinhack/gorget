@@ -14,7 +14,7 @@ static WidPopup *wid_leftbar;
 
 [[nodiscard]] static auto wid_leftbar_create_window(Gamep g) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   DBG2("Remake leftbar");
 
   wid_leftbar_fini(g);
@@ -30,7 +30,7 @@ static WidPopup *wid_leftbar;
   wid_leftbar = new WidPopup(g, "left bar", tl, br, nullptr, "", false, false);
 
   auto *player = thing_player(g);
-  if (UNLIKELY(player == nullptr)) {
+  UNLIKELY if (player == nullptr) {
     return false;
   }
 
@@ -40,7 +40,7 @@ static WidPopup *wid_leftbar;
   }
 
   auto *tp = thing_tp(player);
-  if (tp == nullptr) {
+  UNLIKELY if (tp == nullptr) {
     return false;
   }
 
@@ -51,7 +51,7 @@ static WidPopup *wid_leftbar;
 
 void wid_leftbar_fini(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   delete wid_leftbar;
   wid_leftbar = nullptr;
@@ -59,6 +59,6 @@ void wid_leftbar_fini(Gamep g)
 
 auto wid_leftbar_init(Gamep g) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   return wid_leftbar_create_window(g);
 }

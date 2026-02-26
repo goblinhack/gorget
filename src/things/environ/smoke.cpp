@@ -13,14 +13,14 @@
 
 static auto tp_smoke_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   return "thick smoke";
 }
 
 auto tp_load_smoke() -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *tp   = tp_load("smoke"); // keep as string for scripts
   auto  name = tp_name(tp);

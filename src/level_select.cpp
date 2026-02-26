@@ -27,9 +27,9 @@ static auto car_to_iso(spoint car) -> spoint
   return iso;
 }
 
-auto level_select_IS_OOB(spoint p) -> bool
+auto level_select_is_oob(spoint p) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (p.x < 0) {
     return true;
@@ -46,9 +46,9 @@ auto level_select_IS_OOB(spoint p) -> bool
   return false;
 }
 
-auto level_select_IS_OOB(int x, int y) -> bool
+auto level_select_is_oob(int x, int y) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (x < 0) {
     return true;
@@ -70,7 +70,7 @@ auto level_select_IS_OOB(int x, int y) -> bool
 //
 auto level_select_get_level_at_tile_coords(Gamep g, Levelsp v, spoint p) -> Levelp
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto  *level_select = game_level_get(g, v, LEVEL_SELECT_ID);
   Levelp level_over   = nullptr;
@@ -103,13 +103,13 @@ auto level_select_get_level_at_tile_coords(Gamep g, Levelsp v, spoint p) -> Leve
 //
 static auto level_select_get_level_from_grid_coords(Levelsp v, spoint p) -> Levelp
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (v == nullptr) {
     return nullptr;
   }
 
-  if (level_select_IS_OOB(p)) {
+  if (level_select_is_oob(p)) {
     return nullptr;
   }
 
@@ -132,7 +132,7 @@ static auto level_select_get_level_from_grid_coords(Levelsp v, spoint p) -> Leve
 //
 auto level_select_get_next_level_down(Gamep g, Levelsp v, Levelp l) -> Levelp
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (l->level_num_next_set) {
     return game_level_get(g, v, l->level_num_next);
@@ -146,7 +146,7 @@ auto level_select_get_next_level_down(Gamep g, Levelsp v, Levelp l) -> Levelp
 //
 auto level_select_calculate_next_level_down(Gamep g, Levelsp v, Levelp l, bool redo) -> Levelp
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   LevelSelect *s = &v->level_select;
   if (s == nullptr) {
@@ -298,7 +298,7 @@ got_level:
 //
 auto thing_level_select(Gamep g) -> Thingp
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *v = game_levels_get(g);
   if (v == nullptr) {
@@ -317,7 +317,7 @@ auto thing_level_select(Gamep g) -> Thingp
 //
 static void level_select_dump(LevelSelect *s)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   IF_NODEBUG { return; }
 
@@ -338,7 +338,7 @@ static void level_select_dump(LevelSelect *s)
 //
 void level_select_assign_levels_to_grid(Gamep g, Levelsp v)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   LevelSelect *s = &v->level_select;
 
@@ -375,7 +375,7 @@ void level_select_assign_levels_to_grid(Gamep g, Levelsp v)
 //
 auto level_select_get(Gamep g, Levelsp v, spoint p) -> LevelSelectCell *
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   LevelSelect *s = &v->level_select;
   if (s == nullptr) {
@@ -383,7 +383,7 @@ auto level_select_get(Gamep g, Levelsp v, spoint p) -> LevelSelectCell *
     return nullptr;
   }
 
-  if (level_select_IS_OOB(p)) {
+  if (level_select_is_oob(p)) {
     ERR("level select out of range");
     return nullptr;
   }
@@ -396,7 +396,7 @@ auto level_select_get(Gamep g, Levelsp v, spoint p) -> LevelSelectCell *
 //
 static auto level_select_count_levels(LevelSelect *s) -> int
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   s->level_count = 0;
 
@@ -412,7 +412,7 @@ static auto level_select_count_levels(LevelSelect *s) -> int
 
 static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, spoint at, int dive_chance)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   spoint const end(LEVEL_ACROSS - 1, LEVEL_DOWN - 1);
 
@@ -445,7 +445,7 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, spoint at, int dive_c
 
 static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   while (true) {
     auto x = PCG_RANDOM_RANGE(0, LEVEL_ACROSS);
@@ -465,7 +465,7 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
 [[nodiscard]] static auto level_select_map_set(Gamep g, Levelsp v) -> bool
 {
   LOG("Level select map");
-  TRACE_NO_INDENT();
+  TRACE();
 
   LevelSelect const *s            = &v->level_select;
   auto               level_num    = LEVEL_SELECT_ID;
@@ -624,7 +624,7 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
         spoint at(x * 2, y * 2);
         at = car_to_iso(at);
         at += map_offset;
-        if (IS_OOB(at)) {
+        UNLIKELY if (is_oob(at)) {
           continue;
         }
 
@@ -678,7 +678,7 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
       spoint at((x * 2) + 1, y * 2);
       at = car_to_iso(at);
       at += map_offset;
-      if (IS_OOB(at)) {
+      UNLIKELY if (is_oob(at)) {
         continue;
       }
 
@@ -707,7 +707,7 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
       spoint at(x * 2, (y * 2) + 1);
       at = car_to_iso(at);
       at += map_offset;
-      if (IS_OOB(at)) {
+      UNLIKELY if (is_oob(at)) {
         continue;
       }
 
@@ -749,7 +749,7 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
 //
 static void level_select_create(Gamep g, Levelsp v, LevelSelect *s)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (s->is_populated != 0U) {
     return;
@@ -779,7 +779,7 @@ static void level_select_create(Gamep g, Levelsp v, LevelSelect *s)
 //
 void level_select_update_grid_tiles(Gamep g, Levelsp v)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto  level_num = LEVEL_SELECT_ID;
   auto *l         = game_level_get(g, v, level_num);
@@ -796,7 +796,7 @@ void level_select_update_grid_tiles(Gamep g, Levelsp v)
 void level_select_grid_of_empty_levels(Gamep g)
 {
   LOG("Level select generate");
-  TRACE_AND_INDENT();
+  TRACE();
 
   auto *v = levels_memory_alloc(g);
   (void) game_levels_set(g, v);
@@ -813,7 +813,7 @@ void level_select_grid_of_empty_levels(Gamep g)
 void level_select_destroy(Gamep g, Levelsp v, Levelp l)
 {
   LOG("Level select destroy");
-  TRACE_AND_INDENT();
+  TRACE();
 
   if ((l == nullptr) || ! l->is_initialized) {
     return;
@@ -828,7 +828,7 @@ void level_select_destroy(Gamep g, Levelsp v, Levelp l)
 //
 static void level_select_show_sorted_values(Gamep g, WidPopup *parent, std::map< std::string, int > &map_in, const std::string &map_name)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (map_in.empty()) {
     return;
@@ -852,7 +852,7 @@ static void level_select_show_sorted_values(Gamep g, WidPopup *parent, std::map<
     }
 
     {
-      TRACE_NO_INDENT();
+      TRACE();
       auto             *tp   = tp_find_mand(highest);
       std::string const name = tp_short_name(tp);
 
@@ -869,7 +869,7 @@ static void level_select_show_sorted_values(Gamep g, WidPopup *parent, std::map<
 //
 void level_select_rightbar_show_contents(Gamep g, Levelsp v, Levelp l, WidPopup *parent)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (! level_is_level_select(g, v, l)) {
     return;
@@ -946,7 +946,7 @@ void level_select_rightbar_show_contents(Gamep g, Levelsp v, Levelp l, WidPopup 
 //
 void level_select_mouse_motion(Gamep g, Levelsp v, Levelp l)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (! level_is_level_select(g, v, l)) {
     return;
@@ -965,7 +965,7 @@ void level_select_mouse_motion(Gamep g, Levelsp v, Levelp l)
 //
 void level_select_mouse_down(Gamep g, Levelsp v, Levelp l)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (! level_is_level_select(g, v, l)) {
     return;
@@ -1015,7 +1015,7 @@ void level_select_mouse_down(Gamep g, Levelsp v, Levelp l)
 
 void level_select_test(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *v = levels_memory_alloc(g);
   (void) game_levels_set(g, v);

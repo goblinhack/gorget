@@ -72,7 +72,7 @@ ENUM_DEF_C(IS_JOIN_ENUM, is_join_enum)
 
 static void level_assign_tiles_at(Gamep g, Levelsp v, Levelp l, const spoint &p)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto x = p.x;
   auto y = p.y;
@@ -190,7 +190,7 @@ static void level_assign_tiles_at(Gamep g, Levelsp v, Levelp l, const spoint &p)
 
 void level_assign_tiles(Gamep g, Levelsp v, Levelp l)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   for (auto y = 0; y < MAP_HEIGHT; y++) {
     for (auto x = 0; x < MAP_WIDTH; x++) {
@@ -202,7 +202,7 @@ void level_assign_tiles(Gamep g, Levelsp v, Levelp l)
 
 void level_update_tiles(Gamep g, Levelsp v, Levelp l)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   for (auto y = 0; y < MAP_HEIGHT; y++) {
     for (auto x = 0; x < MAP_WIDTH; x++) {

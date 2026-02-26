@@ -11,7 +11,7 @@
 //
 void level_count_items(Gamep g, Levelsp v, Levelp l)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   l->info.monst_count            = 0;
   l->info.monst_group_mob_count  = 0;

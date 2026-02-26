@@ -13,7 +13,7 @@ Overrides no_overrides;
 //
 void levels_test(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "simple", __FUNCTION__, __LINE__, no_overrides, 0,
                   /* line */ (const char *) "xxxxxxxxxxx",

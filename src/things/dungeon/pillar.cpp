@@ -11,14 +11,14 @@
 
 static auto tp_pillar_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   return "ancient moss covered pillar";
 }
 
 auto tp_load_pillar() -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *tp   = tp_load("pillar"); // keep as string for scripts
   auto  name = tp_name(tp);

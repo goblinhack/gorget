@@ -16,7 +16,7 @@
 //
 void thing_melt(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (! thing_is_meltable(t)) {
     return;

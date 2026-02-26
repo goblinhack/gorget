@@ -10,7 +10,7 @@
 
 auto tp_load_dirt() -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *tp   = tp_load("dirt"); // keep as string for scripts
   auto  name = tp_name(tp);

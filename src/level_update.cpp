@@ -15,7 +15,7 @@
 
 void level_update_paths_set(Gamep g, Levelsp v, Levelp l, const spoint &p)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   l->request_to_update_paths = true;
 
@@ -23,7 +23,7 @@ void level_update_paths_set(Gamep g, Levelsp v, Levelp l, const spoint &p)
     for (auto dy = -1; dy <= 1; dy++) {
       auto x = p.x + dx;
       auto y = p.y + dy;
-      if (! IS_OOB(x, y)) {
+      if (! is_oob(x, y)) {
         l->is_modified_tile[ x ][ y ] = 1U;
       }
     }
@@ -36,7 +36,7 @@ void level_update_paths_set(Gamep g, Levelsp v, Levelp l, const spoint &p)
 
 void level_update_paths(Gamep g, Levelsp v, Levelp l)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (! l->request_to_update_paths) {
     return;
@@ -54,10 +54,10 @@ void level_update_paths(Gamep g, Levelsp v, Levelp l)
 //
 void level_update_visibility(Gamep g, Levelsp v, Levelp l)
 {
-  TRACE_AND_INDENT();
+  TRACE();
 
   auto *player = thing_player(g);
-  if (UNLIKELY(player == nullptr)) {
+  UNLIKELY if (player == nullptr) {
     return;
   }
 

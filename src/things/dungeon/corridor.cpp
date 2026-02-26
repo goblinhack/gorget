@@ -10,7 +10,7 @@
 
 auto tp_load_corridor() -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *tp   = tp_load("corridor"); // keep as string for scripts
   auto  name = tp_name(tp);

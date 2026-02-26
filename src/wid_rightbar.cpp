@@ -21,7 +21,7 @@ static auto      minimap_size = 14;
 
 static void wid_rightbar_create_minimap_level(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   {
     auto        *w = wid_new_square_button(g, wid_rightbar->wid_popup_container, "level map text");
@@ -56,7 +56,7 @@ static void wid_rightbar_create_minimap_level(Gamep g)
 
 static void wid_rightbar_create_minimap_world(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   {
     auto        *w = wid_new_square_button(g, wid_rightbar->wid_popup_container, "world map text");
@@ -89,7 +89,7 @@ static void wid_rightbar_create_minimap_world(Gamep g)
 
 [[nodiscard]] static auto wid_rightbar_create_window(Gamep g) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   DBG2("Remake rightbar");
 
   wid_rightbar_fini(g);
@@ -155,7 +155,7 @@ static void wid_rightbar_create_minimap_world(Gamep g)
 
 void wid_rightbar_fini(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   delete wid_rightbar;
   wid_rightbar = nullptr;
@@ -163,6 +163,6 @@ void wid_rightbar_fini(Gamep g)
 
 auto wid_rightbar_init(Gamep g) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   return wid_rightbar_create_window(g);
 }

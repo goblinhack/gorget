@@ -14,28 +14,28 @@
 
 static void tp_fireball_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   thing_sound_play(g, v, l, t, "fireball");
 }
 
 static void tp_fireball_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   thing_sound_play(g, v, l, t, "explosion");
 }
 
 static auto tp_fireball_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   return "burning fireball";
 }
 
 static void tp_fireball_on_moved(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   //
   // The fireball doesn't heat water up quick enough, so add this cheap effect

@@ -13,7 +13,7 @@
 
 void sdl_screenshot(Gamep g)
 {
-  TRACE_AND_INDENT();
+  TRACE();
 
   if (sdl.window != nullptr) {
     g_do_screenshot = true;
@@ -22,7 +22,7 @@ void sdl_screenshot(Gamep g)
 
 void sdl_screenshot_do(Gamep g)
 {
-  TRACE_AND_INDENT();
+  TRACE();
 
   if (sdl.window == nullptr) {
     return;
@@ -75,7 +75,7 @@ void sdl_screenshot_do(Gamep g)
 
 auto sdl_fbo_save(Gamep g, FboEnum fbo) -> std::vector< uint8_t >
 {
-  TRACE_AND_INDENT();
+  TRACE();
   int w = 0;
   int h = 0;
   fbo_get_size(g, fbo, w, h);
@@ -101,7 +101,7 @@ auto sdl_fbo_save(Gamep g, FboEnum fbo) -> std::vector< uint8_t >
 
 void sdl_fbo_load(Gamep g, FboEnum fbo, const std::vector< uint8_t > &pixels)
 {
-  TRACE_AND_INDENT();
+  TRACE();
   if (pixels.empty()) {
     return;
   }
@@ -126,7 +126,7 @@ void sdl_fbo_load(Gamep g, FboEnum fbo, const std::vector< uint8_t > &pixels)
 
 void sdl_fbo_dump(Gamep g, FboEnum fbo, const std::string &name)
 {
-  TRACE_AND_INDENT();
+  TRACE();
 
   if (g_thread_id != MAIN_THREAD) {
     return;

@@ -17,10 +17,10 @@
 //
 auto thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *player = thing_player(g);
-  if (UNLIKELY(player == nullptr)) {
+  UNLIKELY if (player == nullptr) {
     return false;
   }
 
@@ -76,7 +76,7 @@ auto thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thingp me) -
 {
   THING_DBG(me, "move try");
 
-  TRACE_AND_INDENT();
+  TRACE();
 
   if (thing_can_move_to_attempt(g, v, l, me, to)) {
     return true;
@@ -118,7 +118,7 @@ auto thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thingp me) -
 //
 [[nodiscard]] static auto thing_monst_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   THING_DBG(me, "move to next");
 
@@ -175,7 +175,7 @@ auto thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thingp me) -
 
 [[nodiscard]] static auto thing_monst_choose_target(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (thing_monst_choose_target_player(g, v, l, me)) {
     monst_state_change(g, v, l, me, MONST_STATE_CHASING);
@@ -201,7 +201,7 @@ auto thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thingp me) -
 //
 void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   //
   // Early state check
@@ -255,19 +255,19 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me)
 
 auto monst_state_to_string(MonstState state) -> std::string
 {
-  TRACE_NO_INDENT();
+  TRACE();
   return MonstState_to_string(state);
 }
 
 auto monst_state(Gamep g, Levelsp v, Levelp l, Thingp me) -> MonstState
 {
-  TRACE_NO_INDENT();
+  TRACE();
   return me->_monst_state;
 }
 
 void monst_state_change(Gamep g, Levelsp v, Levelp l, Thingp me, MonstState new_state)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto old_state = me->_monst_state;
 
@@ -332,7 +332,7 @@ void monst_state_change(Gamep g, Levelsp v, Levelp l, Thingp me, MonstState new_
 //
 void thing_monst_tick(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (thing_is_dead(me)) {
     return;
@@ -347,7 +347,7 @@ void thing_monst_tick(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 
   auto *player = thing_player(g);
-  if (UNLIKELY(player == nullptr)) {
+  UNLIKELY if (player == nullptr) {
     return;
   }
 

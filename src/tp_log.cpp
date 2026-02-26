@@ -17,7 +17,7 @@
 
 void TP_LOG_(Tpp tp, const char *fmt, va_list args)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   VERIFY(MTYPE_TP, tp);
   char buf[ MAXLONGSTR ];
@@ -27,7 +27,7 @@ void TP_LOG_(Tpp tp, const char *fmt, va_list args)
   get_timestamp(buf, MAXLONGSTR);
   len = (int) strlen(buf);
 
-  snprintf(buf + len, MAXLONGSTR - len, "[%-50s]: %*s", tp_name(tp).c_str(), g_callframes_indent, "");
+  snprintf(buf + len, MAXLONGSTR - len, "[%-50s]: %*s", tp_name(tp).c_str(), g_callframes_depth, "");
 
   len = (int) strlen(buf);
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
@@ -37,7 +37,7 @@ void TP_LOG_(Tpp tp, const char *fmt, va_list args)
 
 void TP_LOG(Tpp tp, const char *fmt, ...)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   VERIFY(MTYPE_TP, tp);
 
@@ -49,7 +49,7 @@ void TP_LOG(Tpp tp, const char *fmt, ...)
 
 void TP_DBG_(Tpp tp, const char *fmt, ...)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   IF_NODEBUG { return; }
 
@@ -63,7 +63,7 @@ void TP_DBG_(Tpp tp, const char *fmt, ...)
 
 void TP_DIE_(Tpp tp, const char *fmt, va_list args)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   VERIFY(MTYPE_TP, tp);
   char buf[ MAXLONGSTR ];
@@ -82,7 +82,7 @@ void TP_DIE_(Tpp tp, const char *fmt, va_list args)
 
 void TP_DIE(Tpp tp, const char *fmt, ...)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   VERIFY(MTYPE_TP, tp);
   va_list args = {};
@@ -94,7 +94,7 @@ void TP_DIE(Tpp tp, const char *fmt, ...)
 
 void TP_CON_(Tpp tp, const char *fmt, va_list args)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   VERIFY(MTYPE_TP, tp);
   char buf[ MAXLONGSTR ];
@@ -120,7 +120,7 @@ void TP_CON_(Tpp tp, const char *fmt, va_list args)
 
 void TP_CON(Tpp tp, const char *fmt, ...)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   VERIFY(MTYPE_TP, tp);
   va_list args = {};
@@ -145,7 +145,7 @@ void TP_ERR_(Tpp tp, const char *fmt, va_list args)
 
 void TP_ERR(Tpp tp, const char *fmt, ...)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   va_list args = {};
   va_start(args, fmt);

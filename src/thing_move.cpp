@@ -24,7 +24,7 @@ auto thing_is_dir_left(Thingp me) -> bool { return (me->dir == THING_DIR_LEFT); 
 //
 void thing_dir_set_none(Thingp me)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (tp_is_animated_no_dir(thing_tp(me))) {
     return;
@@ -41,7 +41,7 @@ void thing_dir_set_none(Thingp me)
 //
 void thing_dir_set_down(Thingp me)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (tp_is_animated_no_dir(thing_tp(me))) {
     return;
@@ -58,7 +58,7 @@ void thing_dir_set_down(Thingp me)
 //
 void thing_dir_set_up(Thingp me)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (tp_is_animated_no_dir(thing_tp(me))) {
     return;
@@ -75,7 +75,7 @@ void thing_dir_set_up(Thingp me)
 //
 void thing_dir_set_left(Thingp me)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (tp_is_animated_no_dir(thing_tp(me))) {
     return;
@@ -92,7 +92,7 @@ void thing_dir_set_left(Thingp me)
 //
 void thing_dir_set_right(Thingp me)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (tp_is_animated_no_dir(thing_tp(me))) {
     return;
@@ -109,7 +109,7 @@ void thing_dir_set_right(Thingp me)
 //
 void thing_dir_set_tl(Thingp me)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (tp_is_animated_no_dir(thing_tp(me))) {
     return;
@@ -126,7 +126,7 @@ void thing_dir_set_tl(Thingp me)
 //
 void thing_dir_set_bl(Thingp me)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (tp_is_animated_no_dir(thing_tp(me))) {
     return;
@@ -143,7 +143,7 @@ void thing_dir_set_bl(Thingp me)
 //
 void thing_dir_set_tr(Thingp me)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (tp_is_animated_no_dir(thing_tp(me))) {
     return;
@@ -160,7 +160,7 @@ void thing_dir_set_tr(Thingp me)
 //
 void thing_dir_set_br(Thingp me)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (tp_is_animated_no_dir(thing_tp(me))) {
     return;
@@ -177,7 +177,7 @@ void thing_dir_set_br(Thingp me)
 //
 void thing_set_dir_from_delta(Thingp me, int dx, int dy)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (dx < 0) {
     if (dy > 0) {
@@ -229,7 +229,7 @@ void thing_set_dir_from_delta(Thingp me, int dx, int dy)
 //
 auto thing_get_direction(Gamep g, Levelsp v, Levelp l, Thingp me) -> fpoint
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (thing_is_projectile(me)) {
     return thing_projectile_get_direction(g, v, l, me);
@@ -254,9 +254,9 @@ auto thing_get_direction(Gamep g, Levelsp v, Levelp l, Thingp me) -> fpoint
 //
 auto thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
-  if (IS_OOB(to)) {
+  UNLIKELY if (is_oob(to)) {
     return false;
   }
 
@@ -287,9 +287,9 @@ auto thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool
 //
 auto thing_shove_to(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
-  if (IS_OOB(to)) {
+  UNLIKELY if (is_oob(to)) {
     return false;
   }
 
@@ -313,9 +313,9 @@ auto thing_shove_to(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool
 //
 auto thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp me, spoint to) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
-  if (IS_OOB(to)) {
+  UNLIKELY if (is_oob(to)) {
     return false;
   }
 
@@ -419,7 +419,7 @@ auto thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp me, spoint to) -
 //
 void thing_move_or_jump_finish(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *player_struct = thing_player_struct(g);
   if (player_struct == nullptr) {
@@ -453,7 +453,7 @@ void thing_move_or_jump_finish(Gamep g, Levelsp v, Levelp l, Thingp me)
 //
 void thing_update_pos(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto   real_at = thing_real_at(me);
   spoint pix_at;

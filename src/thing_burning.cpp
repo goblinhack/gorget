@@ -12,7 +12,7 @@
 //
 void thing_is_burning_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (thing_is_burning(t)) {
     if (thing_is_player(t)) {
@@ -23,7 +23,7 @@ void thing_is_burning_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
 
 void thing_continue_to_burn_check(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *tp = thing_tp(t);
 

@@ -443,7 +443,7 @@ void Astar::dump()
 
 auto astar_solve(Gamep g, Levelsp v, Levelp l, Thingp t, spoint src, spoint dst) -> std::vector< spoint >
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   Astar a;
   a.g   = g;

@@ -40,7 +40,7 @@ static bool music_init_done;
 
 auto music_init() -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   //
   // MP3 is a pain to use, use OGG instead
@@ -60,7 +60,7 @@ auto music_init() -> bool
 void music_fini()
 {
   LOG("Music fini");
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (music_init_done) {
     music_init_done = false;
@@ -80,7 +80,7 @@ void music_fini()
 
 auto music_load(uint32_t rate, const char *file, const char *name_alias) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   if ((name_alias != nullptr) && (*name_alias != 0)) {
     auto m = music_find(name_alias);
     if (m) {
@@ -134,21 +134,21 @@ auto music_load(uint32_t rate, const char *file, const char *name_alias) -> bool
  */
 auto music_find(const char *name_alias) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   auto result = all_music.find(name_alias);
   return result != all_music.end();
 }
 
 void music_update_volume(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   Mix_VolumeMusic(game_music_volume_get(g));
   SDL_ClearError();
 }
 
 auto music_play(Gamep g, const char *name) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (name == music_current) {
     return true;
@@ -175,7 +175,7 @@ auto music_play(Gamep g, const char *name) -> bool
 
 auto music_halt() -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   music_current = "";
 
   Mix_FadeOutMusic(1500);

@@ -12,10 +12,10 @@
 //
 auto thing_push(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto at = thing_at(t);
-  if (IS_OOB(at)) {
+  UNLIKELY if (is_oob(at)) {
     return false;
   }
 
@@ -138,7 +138,7 @@ auto thing_push(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool
 //
 auto thing_pop(Gamep g, Levelsp v, Thingp t) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *l = thing_level(g, v, t);
   if (l == nullptr) {
@@ -158,7 +158,7 @@ auto thing_pop(Gamep g, Levelsp v, Thingp t) -> bool
     THING_DBG(t, "is on the map, last pushed %u,%u", at.x, at.y);
   }
 
-  if (IS_OOB(at)) {
+  UNLIKELY if (is_oob(at)) {
     return false;
   }
 

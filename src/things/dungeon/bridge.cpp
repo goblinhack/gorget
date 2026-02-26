@@ -15,14 +15,14 @@
 
 static auto tp_bridge_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   return "rickety bridge";
 }
 
 static void tp_bridge_destroy_adj(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   //
   // Replace the bridge with the most populous surrounding hazard
@@ -88,7 +88,7 @@ static void tp_bridge_destroy_adj(Gamep g, Levelsp v, Levelp l, Thingp t)
 
 static void tp_bridge_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   tp_bridge_destroy_adj(g, v, l, t);
 
@@ -109,14 +109,14 @@ static void tp_bridge_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEven
 
 static void tp_bridge_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   tp_bridge_destroy_adj(g, v, l, t);
 }
 
 static void tp_bridge_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   //
   // If we fell into another chasm, don't kill the thing yet
@@ -134,7 +134,7 @@ static void tp_bridge_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
 
 auto tp_load_bridge() -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *tp   = tp_load("bridge"); // keep as string for scripts
   auto  name = tp_name(tp);

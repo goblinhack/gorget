@@ -19,7 +19,7 @@ static bool memory_test = true;
 
 [[nodiscard]] static auto thing_ext_alloc(Levelsp v, Thingp t) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   static uint32_t last_ext_id;
 
@@ -30,11 +30,11 @@ static bool memory_test = true;
   for (auto tries = 0; tries < THING_EXT_MAX; tries++) {
     ThingExtId ext_id = last_ext_id + tries;
     ext_id %= THING_EXT_MAX;
-    if (UNLIKELY(! ext_id)) {
+    UNLIKELY if((! ext_id)) {
       continue;
     }
 
-    if (UNLIKELY(v->thing_ext[ ext_id ].in_use)) {
+    UNLIKELY if((v->thing_ext[ ext_id ].in_use)) {
       continue;
     }
 
@@ -55,7 +55,7 @@ static bool memory_test = true;
 
 static void thing_ext_free(Levelsp v, Thingp t)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto ext_id = t->ext_id;
   if (ext_id == 0U) {
@@ -77,7 +77,7 @@ static void thing_ext_free(Levelsp v, Thingp t)
 
 [[nodiscard]] static auto thing_light_alloc(Levelsp v, Thingp t) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   static uint32_t last_light_id;
 
@@ -88,11 +88,11 @@ static void thing_ext_free(Levelsp v, Thingp t)
   for (auto tries = 0; tries < THING_LIGHT_MAX; tries++) {
     ThingLightId light_id = last_light_id + tries;
     light_id %= THING_LIGHT_MAX;
-    if (UNLIKELY(! light_id)) {
+    UNLIKELY if((! light_id)) {
       continue;
     }
 
-    if (UNLIKELY(v->thing_light[ light_id ].in_use)) {
+    UNLIKELY if((v->thing_light[ light_id ].in_use)) {
       continue;
     }
 
@@ -113,7 +113,7 @@ static void thing_ext_free(Levelsp v, Thingp t)
 
 static void thing_light_free(Levelsp v, Thingp t)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto light_id = t->light_id;
   if (light_id == 0U) {
@@ -136,7 +136,7 @@ static void thing_light_free(Levelsp v, Thingp t)
 static auto thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, ThingIdPacked id, bool needs_ext_memory, bool needs_light_memory,
                            bool need_mutex) -> Thingp
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   const auto tp_id = tp_id_get(tp);
 
@@ -154,7 +154,7 @@ static auto thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, ThingIdPacked i
   //
   auto  arr_index = id.c.arr_index;
   auto *t         = &v->thing_body[ arr_index ];
-  if (UNLIKELY(t->tp_id)) {
+  UNLIKELY if((t->tp_id)) {
     //
     // Some other thread grabbed it already?
     //
@@ -164,13 +164,13 @@ static auto thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, ThingIdPacked i
   //
   // If we need a mutex, lock the thing population for this slot
   //
-  if (UNLIKELY(need_mutex)) {
+  UNLIKELY if((need_mutex)) {
     thing_mutex.lock();
 
     //
     // Just in case someone else grabbed it while locking...
     //
-    if (UNLIKELY(t->tp_id)) {
+    UNLIKELY if((t->tp_id)) {
       thing_mutex.unlock();
       return nullptr;
     }
@@ -184,7 +184,7 @@ static auto thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, ThingIdPacked i
     //
     // No need to worry about other threads
     //
-    if (UNLIKELY(t->tp_id)) {
+    UNLIKELY if((t->tp_id)) {
       return nullptr;
     }
 
@@ -251,9 +251,9 @@ static auto thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, ThingIdPacked i
 
 auto thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p) -> Thingp
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
-  if (UNLIKELY(! tp)) {
+  UNLIKELY if((! tp)) {
     CROAK("no template set for thing allocation");
   }
 
@@ -349,7 +349,7 @@ auto thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p) -> Thingp
 
 void thing_free(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *o = thing_find(g, v, t->id);
   if (t != o) {

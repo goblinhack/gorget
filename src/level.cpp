@@ -21,7 +21,7 @@ LevelOpt g_level_opt;
 //
 auto level_is_level_select(Gamep g, Levelsp v, Levelp l) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if ((g == nullptr) || (v == nullptr) || (l == nullptr)) {
     return false;
@@ -35,7 +35,7 @@ auto level_is_level_select(Gamep g, Levelsp v, Levelp l) -> bool
 //
 static void level_dump(Levelp l, int w, int h, std::string s)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   CON("Level: %u", l->level_num + 1);
   for (int y = 0; y < h; y++) {
@@ -60,7 +60,7 @@ static void level_dump(Levelp l, int w, int h, std::string s)
 //
 void level_dump(Gamep g, Levelsp v, Levelp l, int w, int h)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   std::string const s = level_string(g, v, l, w, h);
 
@@ -72,7 +72,7 @@ void level_dump(Gamep g, Levelsp v, Levelp l, int w, int h)
 //
 auto level_match_contents(Gamep g, Levelsp v, Levelp l, Testp t, int w, int h, const char *expected) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   LEVEL_LOG(g, v, l, "match");
   std::string found = level_string(g, v, l, w, h);
@@ -103,7 +103,7 @@ auto level_match_contents(Gamep g, Levelsp v, Levelp l, Testp t, int w, int h, c
 
 void level_init(Gamep g, Levelsp v, Levelp l, LevelNum n)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   memset(l, 0, SIZEOF(*l));
 
@@ -114,7 +114,7 @@ void level_init(Gamep g, Levelsp v, Levelp l, LevelNum n)
 auto levels_memory_alloc(Gamep g) -> Levelsp
 {
   LOG("Levels alloc memory");
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *v = game_levels_get(g);
   if (v != nullptr) {
@@ -139,7 +139,7 @@ auto levels_memory_alloc(Gamep g) -> Levelsp
 static void levels_memory_free(Gamep g, Levelsp v)
 {
   LOG("Levels free memory");
-  TRACE_NO_INDENT();
+  TRACE();
 
   VERIFY(MTYPE_LEVELS, v);
   MYFREE(v);
@@ -151,11 +151,11 @@ static void levels_memory_free(Gamep g, Levelsp v)
 void levels_destroy(Gamep g, Levelsp v)
 {
   LOG("Levels destroy");
-  TRACE_AND_INDENT();
+  TRACE();
 
   FOR_ALL_LEVELS(g, v, iter)
   {
-    TRACE_NO_INDENT();
+    TRACE();
     level_destroy(g, v, iter);
   }
 
@@ -164,7 +164,7 @@ void levels_destroy(Gamep g, Levelsp v)
 
 void level_finalize(Gamep g, Levelsp v, Levelp l)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   (void) level_select_calculate_next_level_down(g, v, l, true);
   v->level_count++;
@@ -173,7 +173,7 @@ void level_finalize(Gamep g, Levelsp v, Levelp l)
 void levels_finalize(Gamep g, Levelsp v)
 {
   LOG("Levels finalize");
-  TRACE_AND_INDENT();
+  TRACE();
 
   if (g == nullptr) {
     CROAK("no game pointer");
@@ -186,7 +186,7 @@ void levels_finalize(Gamep g, Levelsp v)
   v->level_count = 0;
   FOR_ALL_LEVELS(g, v, iter)
   {
-    TRACE_NO_INDENT();
+    TRACE();
     level_finalize(g, v, iter);
   }
 }
@@ -194,7 +194,7 @@ void levels_finalize(Gamep g, Levelsp v)
 void level_enter(Gamep g, Levelsp v, Levelp l)
 {
   LEVEL_LOG(g, v, l, "Level entered");
-  TRACE_AND_INDENT();
+  TRACE();
 
   l->player_has_entered_level = true;
 }
@@ -212,7 +212,7 @@ void level_is_completed_by_player_exiting(Gamep g, Levelsp v, Levelp l)
   l->player_completed_level_via_exit = true;
 
   LEVEL_LOG(g, v, l, "Level completed");
-  TRACE_AND_INDENT();
+  TRACE();
 
   auto *player_struct = thing_player_struct(g);
   if (player_struct != nullptr) {
@@ -233,7 +233,7 @@ void level_is_completed_by_player_falling(Gamep g, Levelsp v, Levelp l)
 auto level_change(Gamep g, Levelsp v, LevelNum level_num) -> Levelp
 {
   LOG("Level change to %u", level_num);
-  TRACE_AND_INDENT();
+  TRACE();
 
   VERIFY(MTYPE_LEVELS, v);
 
@@ -302,7 +302,7 @@ auto level_change(Gamep g, Levelsp v, LevelNum level_num) -> Levelp
 
 void level_destroy(Gamep g, Levelsp v, Levelp l)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if ((l == nullptr) || ! l->is_initialized) {
     return;
@@ -324,7 +324,7 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
   DBG("Level destroy %u", l->level_num);
   FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
   {
-    TRACE_NO_INDENT();
+    TRACE();
     thing_fini(g, v, l, t);
   }
 
@@ -349,9 +349,9 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
 
 auto level_populate_thing_id_at(Gamep g, Levelsp v, Levelp l, const spoint &p, int slot, ThingId id) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
-  if (IS_OOB(p)) {
+  UNLIKELY if (is_oob(p)) {
     return false;
   }
 
@@ -361,9 +361,9 @@ auto level_populate_thing_id_at(Gamep g, Levelsp v, Levelp l, const spoint &p, i
 
 auto level_get_thing_id_at(Gamep g, Levelsp v, Levelp l, const spoint &p, int slot) -> ThingId
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
-  if (IS_OOB(p)) {
+  UNLIKELY if (is_oob(p)) {
     return 0;
   }
 
@@ -375,9 +375,7 @@ auto level_get_thing_id_at(Gamep g, Levelsp v, Levelp l, const spoint &p, int sl
 //
 [[nodiscard]] static auto level_flag_filter(ThingFlag f, Thingp it_maybe_null) -> bool
 {
-#ifdef DEBUG_BUILD
-  TRACE_NO_INDENT();
-#endif
+  TRACE_DEBUG();
 
   switch (f) {
     case is_obs_to_cursor_path :
@@ -425,7 +423,7 @@ auto level_get_thing_id_at(Gamep g, Levelsp v, Levelp l, const spoint &p, int sl
 
 auto level_find_all(Gamep g, Levelsp v, Levelp l, ThingFlag f) -> std::vector< Thingp >
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   std::vector< Thingp > out;
 
@@ -455,7 +453,7 @@ auto level_find_all(Gamep g, Levelsp v, Levelp l, ThingFlag f) -> std::vector< T
 
 auto level_find_all(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> std::vector< Thingp >
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   std::vector< Thingp > out;
 
@@ -485,9 +483,7 @@ auto level_find_all(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> std:
 
 auto level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> Thingp
 {
-#ifdef DEBUG_BUILD
-  TRACE_NO_INDENT();
-#endif
+  TRACE_DEBUG();
 
   const auto filter_needed = level_flag_filter_needed(f);
   if (filter_needed) {
@@ -515,7 +511,7 @@ auto level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> Thingp
 
 auto level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp at) -> Thingp
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (at == nullptr) {
     ERR("No thing pointer");
@@ -530,7 +526,7 @@ auto level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp at) -> Thingp
 //
 auto level_alive(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> Thingp
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   const auto filter_needed = level_flag_filter_needed(f);
   if (filter_needed) {
@@ -566,7 +562,7 @@ auto level_alive(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> Thingp
 
 auto level_alive(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp at) -> Thingp
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (at == nullptr) {
     ERR("No thing pointer");
@@ -581,7 +577,7 @@ auto level_alive(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp at) -> Thingp
 //
 auto level_open(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> Thingp
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   const auto filter_needed = level_flag_filter_needed(f);
   if (filter_needed) {
@@ -617,7 +613,7 @@ auto level_open(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> Thingp
 
 auto level_open(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp at) -> Thingp
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (at == nullptr) {
     ERR("No thing pointer");
@@ -632,7 +628,7 @@ auto level_open(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp at) -> Thingp
 //
 auto level_count(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> int
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   int count = 0;
 
@@ -670,20 +666,20 @@ auto level_count(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> int
 
 auto level_count(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp t) -> int
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   return level_count(g, v, l, f, thing_at(t));
 }
 
 auto level_is_same_obj_type_at(Gamep g, Levelsp v, Levelp l, const spoint &p, Tpp tp) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (l == nullptr) {
     return false;
   }
 
-  if (IS_OOB(p)) {
+  UNLIKELY if (is_oob(p)) {
     return false;
   }
 
@@ -710,7 +706,7 @@ auto level_is_same_obj_type_at(Gamep g, Levelsp v, Levelp l, const spoint &p, Tp
 
 void level_bounds_set(Gamep g, Levelsp v, Levelp l)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   VERIFY(MTYPE_LEVELS, v);
 

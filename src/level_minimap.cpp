@@ -18,7 +18,7 @@ static int  solid_tex_id;
 
 static void level_minimap_world_update(Gamep g, Levelsp v, const bool level_select)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   const FboEnum fbo = FBO_MINIMAP_WORLD;
   const auto    dx  = MAP_WORLD_MAP_PIXEL_SIZE_PER_LEVEL * LEVEL_SCALE;
@@ -29,7 +29,7 @@ static void level_minimap_world_update(Gamep g, Levelsp v, const bool level_sele
   // at the player
   //
   auto *player = thing_player(g);
-  if (UNLIKELY(player == nullptr)) {
+  UNLIKELY if (player == nullptr) {
     return;
   }
 
@@ -136,7 +136,7 @@ static void level_minimap_world_update(Gamep g, Levelsp v, const bool level_sele
 
 static void level_minimap_world_update_rotated(Gamep g, Levelsp v, Levelp l)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   const FboEnum fbo = FBO_MINIMAP_WORLD_ROTATED;
 
@@ -180,10 +180,10 @@ static void level_minimap_world_update_rotated(Gamep g, Levelsp v, Levelp l)
 
 static void level_minimap_levels_update(Gamep g, Levelsp v, Levelp l, const bool level_select)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *player = thing_player(g);
-  if (UNLIKELY(player == nullptr)) {
+  UNLIKELY if (player == nullptr) {
     return;
   }
 
@@ -315,7 +315,7 @@ static void level_minimap_levels_update(Gamep g, Levelsp v, Levelp l, const bool
 
 void level_minimaps_update(Gamep g, Levelsp v, Levelp l)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (g_opt_tests) {
     return;

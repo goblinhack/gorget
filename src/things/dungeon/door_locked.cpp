@@ -19,7 +19,7 @@ static Tilep door_locked_open;
 
 static auto tp_door_locked_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (thing_is_open(t)) {
     return "open door";
@@ -36,7 +36,7 @@ static auto tp_door_locked_description_get(Gamep g, Levelsp v, Levelp l, Thingp 
 
 static auto tp_door_locked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l, const spoint &p, Tpp tp, Thingp t_maybe_null) -> Tilep
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (t_maybe_null == nullptr) {
     return nullptr;
@@ -65,10 +65,10 @@ static auto tp_door_locked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l
 //
 [[nodiscard]] static auto tp_door_locked_mouse_down(Gamep g, Levelsp v, Levelp l, Thingp t, int x, int y, int button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *player = thing_player(g);
-  if (UNLIKELY(player == nullptr)) {
+  UNLIKELY if (player == nullptr) {
     return false;
   }
 
@@ -99,7 +99,7 @@ static auto tp_door_locked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l
 
 [[nodiscard]] static auto tp_door_locked_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *tp = thing_tp(t);
 
@@ -164,7 +164,7 @@ static auto tp_door_locked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l
 
 [[nodiscard]] static auto tp_door_locked_on_close_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (thing_is_player(opener)) {
     TOPCON("The locked door closes.");
@@ -177,7 +177,7 @@ static auto tp_door_locked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l
 
 static void tp_door_locked_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *player = thing_player(g);
   if (player != nullptr) {
@@ -196,7 +196,7 @@ static void tp_door_locked_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, Thin
 
 auto tp_load_door_locked() -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *tp   = tp_load("door_locked"); // keep as string for scripts
   auto  name = tp_name(tp);

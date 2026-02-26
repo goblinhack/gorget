@@ -16,7 +16,7 @@
 //
 static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 {
-  TRACE_AND_INDENT();
+  TRACE();
 
   auto *it = e.source;
 
@@ -113,7 +113,7 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
 //
 static void thing_damage_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 {
-  TRACE_AND_INDENT();
+  TRACE();
   auto *the_player = e.source;
 
   std::string const msg = "-" + std::to_string(e.damage);
@@ -184,7 +184,7 @@ static void thing_damage_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
 //
 static void thing_damage_cap_for_this_event(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto      *tp = thing_tp(t);
   const auto h  = tp_health_max_get(tp);
@@ -207,7 +207,7 @@ static void thing_damage_cap_for_this_event(Gamep g, Levelsp v, Levelp l, Thingp
 //
 static void thing_damage_cap_for_this_tick(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto      *tp = thing_tp(t);
   const auto h  = tp_health_max_get(tp);
@@ -231,7 +231,7 @@ static void thing_damage_cap_for_this_tick(Gamep g, Levelsp v, Levelp l, Thingp 
 //
 static void thing_damage_cap(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (! thing_is_damage_capped(t)) {
     return;
@@ -246,7 +246,7 @@ static void thing_damage_cap(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent 
 //
 void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 {
-  TRACE_AND_INDENT();
+  TRACE();
 
   auto *tp = thing_tp(t);
 

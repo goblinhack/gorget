@@ -13,7 +13,7 @@
 
 static auto tp_grass_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (thing_is_dead(t)) {
     return "trampled grass";
@@ -23,7 +23,7 @@ static auto tp_grass_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> 
 
 auto tp_load_grass() -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *tp   = tp_load("grass"); // keep as string for scripts
   auto  name = tp_name(tp);

@@ -12,7 +12,7 @@ extern Gamep game;
 [[nodiscard]] static auto test_save_load(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
-  TRACE_AND_INDENT();
+  TRACE();
 
   LevelNum const level_num = 0;
   auto           w         = 7;
@@ -61,7 +61,7 @@ extern Gamep game;
   TEST_PROGRESS(t);
   {
     TEST_LOG(t, "move right");
-    TRACE_AND_INDENT();
+    TRACE();
     up = down = left = right = false;
     right                    = true;
 
@@ -94,7 +94,7 @@ extern Gamep game;
 
   TEST_PASSED(t);
 exit:
-  TRACE_NO_INDENT();
+  TRACE();
   game_cleanup(g);
 
   return result;
@@ -102,7 +102,7 @@ exit:
 
 auto test_load_save_load() -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   Testp test = test_load("save_load");
 

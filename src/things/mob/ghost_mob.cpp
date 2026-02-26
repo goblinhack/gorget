@@ -15,14 +15,14 @@
 
 static auto tp_ghost_mob_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   return "pile of bones";
 }
 
 static auto tp_ghost_mob_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   return                                                                                                       // newline
       UI_INFO1_FMT_STR "This large pile of bones, whispers and moans as spectral creations dance around it.\n" // newline
@@ -31,14 +31,14 @@ static auto tp_ghost_mob_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> s
 
 static void tp_ghost_mob_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   thing_sound_play(g, v, l, t, "explosion");
 }
 
 static void tp_ghost_mob_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (d100() < 90) {
     return;

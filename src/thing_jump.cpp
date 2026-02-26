@@ -67,9 +67,9 @@ static auto thing_jump_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thingp
 //
 auto thing_jump_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to, bool warn) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
-  if (IS_OOB(to)) {
+  UNLIKELY if (is_oob(to)) {
     return false;
   }
 

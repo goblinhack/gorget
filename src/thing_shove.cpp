@@ -13,7 +13,7 @@
 //
 static void thing_shoved_player(Gamep g, Levelsp v, Levelp l, ThingEvent &e)
 {
-  TRACE_AND_INDENT();
+  TRACE();
 
   auto *it = e.source;
 
@@ -29,7 +29,7 @@ static void thing_shoved_player(Gamep g, Levelsp v, Levelp l, ThingEvent &e)
 //
 static void thing_shoved_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 {
-  TRACE_AND_INDENT();
+  TRACE();
   auto *it = e.source;
 
   if ((it != nullptr) && thing_is_loggable(t)) {
@@ -45,7 +45,7 @@ static void thing_shoved_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
 //
 [[nodiscard]] static auto thing_shove_handle_dead_thing(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp shover, spoint to) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   bool shoved = false;
 
@@ -87,7 +87,7 @@ static void thing_shoved_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
 [[nodiscard]] static auto thing_shove_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp shover, spoint to, spoint direction)
     -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   bool shoved = false;
 
@@ -140,7 +140,7 @@ static void thing_shoved_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
 //
 auto thing_shove_handle(Gamep g, Levelsp v, Levelp l, Thingp shover, spoint at) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   bool         ret       = false;
   auto         direction = at - thing_at(shover);

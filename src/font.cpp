@@ -14,11 +14,11 @@ Fontp font_ui;
 
 static std::unordered_map< std::string, Fontp > fonts;
 
-void font_fini() { TRACE_NO_INDENT(); }
+void font_fini() { TRACE(); }
 
 static auto font_load(const std::string &name) -> Fontp
 {
-  TRACE_NO_INDENT();
+  TRACE();
   auto *f = font_find(name);
 
   if (f != nullptr) {
@@ -57,7 +57,7 @@ static auto font_load(const std::string &name) -> Fontp
 
 auto font_find(const std::string &file) -> Fontp
 {
-  TRACE_NO_INDENT();
+  TRACE();
   if (file.empty()) {
     ERR("No filename given for font find %s", __FUNCTION__);
     return nullptr;
@@ -74,7 +74,7 @@ auto font_find(const std::string &file) -> Fontp
 auto Font::font_get_tile(int u) -> Tilep
 {
   Font const *me = this;
-  if (UNLIKELY(! me)) {
+  UNLIKELY if((! me)) {
     CROAK("No font");
   }
 
@@ -111,7 +111,7 @@ auto Font::font_get_tile(int u) -> Tilep
   snprintf(tile_name, SIZEOF(tile_name), "%d.%d", tile_index, index);
 
   tile = tile_find(tile_name);
-  if (UNLIKELY(! tile)) {
+  UNLIKELY if((! tile)) {
     if (u == '?') {
       CROAK("char 0x%X/%d -> not found as tile %s", u, u, tile_name);
       return font_get_tile('?');
@@ -127,7 +127,7 @@ auto Font::font_get_tile(int u) -> Tilep
 
 auto font_init() -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   font_ui             = font_load("font");
   font_ui->tile_index = 1;

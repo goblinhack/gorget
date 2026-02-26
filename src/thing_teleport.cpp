@@ -8,7 +8,7 @@
 
 [[nodiscard]] static auto teleport_find_other(Gamep g, Levelsp v, Levelp l, const spoint &in, spoint &out) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   std::vector< Thingp > teleports;
 
@@ -45,7 +45,7 @@
 //
 [[nodiscard]] static auto teleport_find_landing_spot(Gamep g, Levelsp v, Levelp l, Thingp t, spoint &out) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto   outf  = make_fpoint(out);
   fpoint delta = thing_real_at(t) - make_fpoint(thing_old_at(t));
@@ -122,7 +122,7 @@
 //
 auto thing_teleport_handle(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   THING_LOG(t, "teleport, try");
 
@@ -147,7 +147,7 @@ auto thing_teleport_handle(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool
     return false;
   }
 
-  if (IS_OOB(to)) {
+  UNLIKELY if (is_oob(to)) {
     THING_LOG(t, "teleport, no; oob");
     return false;
   }

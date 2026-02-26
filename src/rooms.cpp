@@ -10,7 +10,7 @@
 //
 void rooms_init(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   rooms_start(g);
   rooms_blend1(g);

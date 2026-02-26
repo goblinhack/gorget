@@ -12,14 +12,14 @@
 
 static auto tp_steam_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   return "thick steam";
 }
 
 auto tp_load_steam() -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *tp   = tp_load("steam"); // keep as string for scripts
   auto  name = tp_name(tp);

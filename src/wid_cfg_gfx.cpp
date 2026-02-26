@@ -23,14 +23,14 @@ static bool            pending_mode_set;
 
 static void wid_cfg_gfx_destroy()
 {
-  TRACE_NO_INDENT();
+  TRACE();
   delete wid_cfg_gfx_window;
   wid_cfg_gfx_window = nullptr;
 }
 
 [[nodiscard]] static auto wid_cfg_gfx_save(Gamep g, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   CON("Save config for gfx");
   game_save_config(g);
@@ -45,7 +45,7 @@ static void wid_cfg_gfx_destroy()
 
 [[nodiscard]] static auto wid_cfg_gfx_cancel(Gamep g, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   CON("Reload config");
   wid_cfg_gfx_destroy();
   wid_options_menu_select(g);
@@ -54,7 +54,7 @@ static void wid_cfg_gfx_destroy()
 
 [[nodiscard]] static auto wid_cfg_gfx_back(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   wid_cfg_gfx_destroy();
   wid_options_menu_select(g);
   return true;
@@ -62,7 +62,7 @@ static void wid_cfg_gfx_destroy()
 
 [[nodiscard]] static auto wid_cfg_gfx_vsync_enable_toggle(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   CON("Toggle vsync");
   if (game_gfx_vsync_enable_get(g)) {
     game_gfx_vsync_enable_unset(g);
@@ -77,7 +77,7 @@ static void wid_cfg_gfx_destroy()
 
 [[nodiscard]] static auto wid_cfg_gfx_fullscreen_toggle(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   CON("Toggle gfx fullscreen");
   if (game_gfx_fullscreen_get(g)) {
     game_gfx_fullscreen_unset(g);
@@ -103,7 +103,7 @@ static void wid_cfg_gfx_destroy()
 
 [[nodiscard]] static auto wid_cfg_gfx_fullscreen_desktop_toggle(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   CON("Toggle gfx fullscreen desktop");
 
   if (game_gfx_fullscreen_desktop_get(g)) {
@@ -130,7 +130,7 @@ static void wid_cfg_gfx_destroy()
 
 [[nodiscard]] static auto wid_cfg_gfx_borderless_toggle(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   CON("Toggle gfx borderless");
 
   if (game_gfx_borderless_get(g)) {
@@ -147,7 +147,7 @@ static void wid_cfg_gfx_destroy()
 
 [[nodiscard]] static auto wid_cfg_other_fps_counter_toggle(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   CON("Toggle fps counter");
 
   if (game_fps_counter_get(g)) {
@@ -163,7 +163,7 @@ static void wid_cfg_gfx_destroy()
 
 [[nodiscard]] static auto wid_cfg_gfx_resolution_apply(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   SDL_DisplayMode const mode = pending_mode;
   pending_mode_set           = false;
@@ -184,7 +184,7 @@ static void wid_cfg_gfx_destroy()
 //
 static auto wid_cfg_gfx_find_closest_resolution(Gamep g) -> std::string
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto w           = game_window_pix_width_get(g);
   auto h           = game_window_pix_height_get(g);
@@ -237,7 +237,7 @@ static auto wid_cfg_gfx_find_closest_resolution(Gamep g) -> std::string
 
 [[nodiscard]] static auto wid_cfg_gfx_resolution_incr(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   //
   // What is the starting resolution?
@@ -293,7 +293,7 @@ static auto wid_cfg_gfx_find_closest_resolution(Gamep g) -> std::string
 
 [[nodiscard]] static auto wid_cfg_gfx_resolution_decr(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   //
   // What is the starting resolution?
@@ -349,7 +349,7 @@ static auto wid_cfg_gfx_find_closest_resolution(Gamep g) -> std::string
 
 [[nodiscard]] static auto wid_cfg_gfx_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
     sound_play(g, "keypress");
@@ -363,7 +363,7 @@ static auto wid_cfg_gfx_find_closest_resolution(Gamep g) -> std::string
       switch (key->sym) {
         default :
           {
-            TRACE_NO_INDENT();
+            TRACE();
             auto c = wid_event_to_char(key);
             switch (c) {
               case 'c' :
@@ -392,7 +392,7 @@ static auto wid_cfg_gfx_find_closest_resolution(Gamep g) -> std::string
 
 void wid_cfg_gfx_select(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   if (wid_cfg_gfx_window != nullptr) {
     wid_cfg_gfx_destroy();
   }
@@ -406,14 +406,14 @@ void wid_cfg_gfx_select(Gamep g)
 
   wid_cfg_gfx_window = new WidPopup(g, "Gfx select", outer_tl, outer_br, nullptr, "", false, false);
   {
-    TRACE_NO_INDENT();
+    TRACE();
     Widp w = wid_cfg_gfx_window->wid_popup_container;
     wid_set_on_key_down(w, wid_cfg_gfx_key_down);
   }
 
   int y_at = 0;
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto *w = wid_new_square_button(g, p, "configuration");
 
@@ -426,7 +426,7 @@ void wid_cfg_gfx_select(Gamep g)
 
   y_at = 3;
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto *w = wid_new_back_button(g, p, "BACK");
 
@@ -437,7 +437,7 @@ void wid_cfg_gfx_select(Gamep g)
   }
 
   if (pending_mode_set) {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto *w = wid_new_menu_button(g, p, "Apply");
 
@@ -453,7 +453,7 @@ void wid_cfg_gfx_select(Gamep g)
   /////////////////////////////////////////////////////////////////////////
   y_at += 4;
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto *w = wid_new_square_button(g, p, "Resolution");
 
@@ -465,7 +465,7 @@ void wid_cfg_gfx_select(Gamep g)
     wid_set_text(w, "Resolution");
   }
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto *w = wid_new_square_button(g, p, "Resolution value");
 
@@ -485,7 +485,7 @@ void wid_cfg_gfx_select(Gamep g)
 
   if (! game_gfx_fullscreen_desktop_get(g)) {
     {
-      TRACE_NO_INDENT();
+      TRACE();
       auto *p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
       auto *w = wid_new_menu_button(g, p, "Resolution value +");
 
@@ -496,7 +496,7 @@ void wid_cfg_gfx_select(Gamep g)
       wid_set_text(w, "+");
     }
     {
-      TRACE_NO_INDENT();
+      TRACE();
       auto *p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
       auto *w = wid_new_menu_button(g, p, "Resolution value -");
 
@@ -513,7 +513,7 @@ void wid_cfg_gfx_select(Gamep g)
   // Terminal
   /////////////////////////////////////////////////////////////////////////
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto *w = wid_new_square_button(g, p, "Terminal");
 
@@ -525,7 +525,7 @@ void wid_cfg_gfx_select(Gamep g)
     wid_set_text(w, "Terminal");
   }
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto *w = wid_new_square_button(g, p, "Terminal value");
 
@@ -544,7 +544,7 @@ void wid_cfg_gfx_select(Gamep g)
   // ascii font
   /////////////////////////////////////////////////////////////////////////
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto *w = wid_new_square_button(g, p, "Font size");
 
@@ -556,7 +556,7 @@ void wid_cfg_gfx_select(Gamep g)
     wid_set_text(w, "Font size");
   }
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto *w = wid_new_square_button(g, p, "Font size value");
 
@@ -578,7 +578,7 @@ void wid_cfg_gfx_select(Gamep g)
   /////////////////////////////////////////////////////////////////////////
   y_at++;
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto *w = wid_new_square_button(g, p, "Full desktop");
 
@@ -590,7 +590,7 @@ void wid_cfg_gfx_select(Gamep g)
     wid_set_text(w, "Full desktop");
   }
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto *w = wid_new_menu_button(g, p, "Fullscreen value");
 
@@ -609,7 +609,7 @@ void wid_cfg_gfx_select(Gamep g)
   if (game_gfx_fullscreen_desktop_get(g)) {
     y_at += 4;
     {
-      TRACE_NO_INDENT();
+      TRACE();
       auto *p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
       auto *w = wid_new_square_button(g, p, "Notice");
 
@@ -627,7 +627,7 @@ void wid_cfg_gfx_select(Gamep g)
   /////////////////////////////////////////////////////////////////////////
   y_at += 3;
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto *w = wid_new_square_button(g, p, "Fullscreen");
 
@@ -639,7 +639,7 @@ void wid_cfg_gfx_select(Gamep g)
     wid_set_text(w, "Fullscreen");
   }
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto *w = wid_new_menu_button(g, p, "Fullscreen value");
 
@@ -660,7 +660,7 @@ void wid_cfg_gfx_select(Gamep g)
   /////////////////////////////////////////////////////////////////////////
   y_at += 3;
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto *w = wid_new_square_button(g, p, "Borderless");
 
@@ -672,7 +672,7 @@ void wid_cfg_gfx_select(Gamep g)
     wid_set_text(w, "Borderless window");
   }
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto *w = wid_new_menu_button(g, p, "Borderless");
 
@@ -693,7 +693,7 @@ void wid_cfg_gfx_select(Gamep g)
   /////////////////////////////////////////////////////////////////////////
   y_at += 3;
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto *w = wid_new_square_button(g, p, "Vertical sync");
 
@@ -705,7 +705,7 @@ void wid_cfg_gfx_select(Gamep g)
     wid_set_text(w, "Vertical sync");
   }
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto *w = wid_new_menu_button(g, p, "Vertical sync value");
 
@@ -726,7 +726,7 @@ void wid_cfg_gfx_select(Gamep g)
   //////////////////////////////////////////////////////////////////////
   y_at += 3;
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto *w = wid_new_square_button(g, p, "FPS counter");
 
@@ -738,7 +738,7 @@ void wid_cfg_gfx_select(Gamep g)
     wid_set_text(w, "FPS counter");
   }
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto *w = wid_new_menu_button(g, p, "FPS counter value");
 

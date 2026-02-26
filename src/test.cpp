@@ -111,12 +111,12 @@ Test::~Test() { OLDPTR(MTYPE_TP, this); }
 
 auto test_find(const char *name_in) -> Testp
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   std::string const name(name_in);
   auto              result = test_name_map.find(name);
 
-  if (UNLIKELY(result != test_name_map.end())) {
+  UNLIKELY if((result != test_name_map.end())) {
     return result->second;
   }
 
@@ -125,7 +125,7 @@ auto test_find(const char *name_in) -> Testp
 
 void test_init()
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   test_init_done = 1u;
 
@@ -134,7 +134,7 @@ void test_init()
 
 void test_fini()
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (! test_init_done) {
     return;
@@ -150,7 +150,7 @@ void test_fini()
 
 void test_callback_set(Testp test, test_callback_t callback)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   if (test == nullptr) {
     ERR("no test for %s", __FUNCTION__);
     return;
@@ -160,7 +160,7 @@ void test_callback_set(Testp test, test_callback_t callback)
 
 auto test_load(const char *name_in) -> Testp
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   std::string const name(name_in);
 
@@ -183,14 +183,14 @@ auto test_load(const char *name_in) -> Testp
 
 auto test_name(Testp test) -> const char *
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   return test->name.c_str();
 }
 
 void tests_run(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   int passed = 0;
   int failed = 0;

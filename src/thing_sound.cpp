@@ -10,14 +10,14 @@
 
 void thing_sound_play(Gamep g, Levelsp v, Levelp l, Thingp t, const std::string &alias)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (g_opt_tests) {
     return;
   }
 
   auto *player = thing_player(g);
-  if (UNLIKELY(player == nullptr)) {
+  UNLIKELY if (player == nullptr) {
     return;
   }
 

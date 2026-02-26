@@ -21,7 +21,7 @@ static struct SDL_Keysym last_key_pressed;
 
 auto sdl_filter_events(void * /*userdata*/, SDL_Event *event) -> int
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   switch (event->type) {
     // This is important!  Queue it if we want to quit.
@@ -52,7 +52,7 @@ auto sdl_filter_events(void * /*userdata*/, SDL_Event *event) -> int
 
 static void __attribute__((noinline)) sdl_event_keydown_repeat(SDL_Keysym *key, SDL_Event *event)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   //
   // Pressing the same key
@@ -79,7 +79,7 @@ static void __attribute__((noinline)) sdl_event_keydown_repeat(SDL_Keysym *key, 
 
 [[nodiscard]] static auto __attribute__((noinline)) sdl_event_keydown_same_key(SDL_Keysym *key) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   //
   // SDL2 has no auto repeat.
@@ -103,7 +103,7 @@ static void __attribute__((noinline)) sdl_event_keydown_repeat(SDL_Keysym *key, 
 
 static void __attribute__((noinline)) sdl_event_keydown_handler(Gamep g, SDL_Keysym *key)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   last_key_pressed.scancode = key->scancode;
   last_key_pressed.sym      = key->sym;
@@ -116,7 +116,7 @@ static void __attribute__((noinline)) sdl_event_keydown_handler(Gamep g, SDL_Key
 
 static void __attribute__((noinline)) sdl_event_keydown(Gamep g, SDL_Keysym *key, SDL_Event *event)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   sdl.event_count++;
 
@@ -139,7 +139,7 @@ static void __attribute__((noinline)) sdl_event_keydown(Gamep g, SDL_Keysym *key
 
 static void __attribute__((noinline)) sdl_event_keyup(Gamep g, SDL_Keysym *key, SDL_Event *event)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   sdl.event_count++;
   if (g_grab_next_key) {
@@ -171,7 +171,7 @@ static void __attribute__((noinline)) sdl_event_keyup(Gamep g, SDL_Keysym *key, 
 
 static void __attribute__((noinline)) sdl_event_mousemotion(Gamep g, SDL_Event *event, bool &processed_mouse_motion_event)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   sdl.event_count++;
   sdl.mouse_down = sdl_get_mouse();
@@ -204,7 +204,7 @@ static void __attribute__((noinline)) sdl_event_mousemotion(Gamep g, SDL_Event *
 
 static void __attribute__((noinline)) sdl_event_mousedown(Gamep g, SDL_Event *event)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   sdl.event_count++;
   sdl.mouse_down                = sdl_get_mouse();
@@ -224,7 +224,7 @@ static void __attribute__((noinline)) sdl_event_mousedown(Gamep g, SDL_Event *ev
 
 static void __attribute__((noinline)) sdl_event_mouseup(Gamep g, SDL_Event *event)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   sdl.event_count++;
   sdl.mouse_down                = sdl_get_mouse();
@@ -239,7 +239,7 @@ static void __attribute__((noinline)) sdl_event_mouseup(Gamep g, SDL_Event *even
 
 void sdl_event(Gamep g, SDL_Event *event, bool &processed_mouse_motion_event)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   SDL_Keysym *key = &event->key.keysym;
 
@@ -485,7 +485,7 @@ void sdl_event(Gamep g, SDL_Event *event, bool &processed_mouse_motion_event)
 
 void sdl_key_repeat_events(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (game_state(g) != STATE_PLAYING) {
     return;

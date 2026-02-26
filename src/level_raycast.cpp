@@ -64,14 +64,14 @@ static Raycast *player_raycast;
 
 Raycast::Raycast()
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   NEWPTR(MTYPE_LIGHT, this, "Raycast");
 }
 
 Raycast::~Raycast()
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   OLDPTR(MTYPE_LIGHT, this);
 }
@@ -149,7 +149,7 @@ void Raycast::ray_pixel_line_draw(int16_t index, const spoint p0, const spoint p
 //
 void Raycast::ray_lengths_precalculate(Gamep g, Levelsp v, Levelp l)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   float const dr = (float) RAD_360 / ((float) LIGHT_MAX_RAYS_MAX);
   for (int i = 0; i < LIGHT_MAX_RAYS_MAX; i++) {
@@ -163,7 +163,7 @@ void Raycast::ray_lengths_precalculate(Gamep g, Levelsp v, Levelp l)
 
 static void player_light_tile(Gamep g, Levelsp v, Levelp l, Thingp t, ThingLightp light, ThingExtp ext, spoint pov, spoint tile)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (light == nullptr) {
     CROAK("missing ThingLightp for player");
@@ -183,17 +183,13 @@ static void player_light_tile(Gamep g, Levelsp v, Levelp l, Thingp t, ThingLight
 
 void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *player = thing_player(g);
-  if (UNLIKELY(player == nullptr)) {
-    return;
-  }
+  UNLIKELY if (player == nullptr) { return; }
 
   auto *ext = thing_ext_struct(g, player);
-  if (UNLIKELY(ext == nullptr)) {
-    return;
-  }
+  UNLIKELY if (ext == nullptr) { return; }
 
   auto *light = thing_light_struct(g, player);
   if (light == nullptr) {
@@ -242,16 +238,12 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
       //
       // oob?
       //
-      if (UNLIKELY(step >= end_of_points)) {
-        break;
-      }
+      UNLIKELY if ((step >= end_of_points)) { break; }
 
       //
       // Beyond vision limits?
       //
-      if (UNLIKELY(ray_pixel->distance > ray_max_length_in_pixels)) {
-        break;
-      }
+      UNLIKELY if ((ray_pixel->distance > ray_max_length_in_pixels)) { break; }
 
       int16_t p1x    = light_pos.x + ray_pixel->p.x;
       int16_t p1y    = light_pos.y + ray_pixel->p.y;
@@ -262,17 +254,13 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
       //
       // Ignore the same tile. i.e. do not light it more than once.
       //
-      if (LIKELY((tile_x == prev_tile_x) && (tile_y == prev_tile_y))) {
-        continue;
-      }
+      LIKELY if (((tile_x == prev_tile_x) && (tile_y == prev_tile_y))) { continue; }
 
       //
       // Oob can happen in custom levels with no edges
       //
       spoint tile(tile_x, tile_y);
-      if (IS_OOB(tile)) {
-        break;
-      }
+      UNLIKELY if (is_oob(tile)) { break; }
 
       prev_tile_x = tile_x;
       prev_tile_y = tile_y;
@@ -318,16 +306,12 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
           //
           // oob?
           //
-          if (UNLIKELY(step_inside_wall >= end_of_points)) {
-            break;
-          }
+          UNLIKELY if ((step_inside_wall >= end_of_points)) { break; }
 
           //
           // Check if we've progressed far enough into the wall
           //
-          if (UNLIKELY(ray_pixel->distance > obs_to_vision_penetration_distance)) {
-            break;
-          }
+          UNLIKELY if ((ray_pixel->distance > obs_to_vision_penetration_distance)) { break; }
 
           p1x    = light_pos.x + ray_pixel->p.x;
           p1y    = light_pos.y + ray_pixel->p.y;
@@ -338,7 +322,8 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
           //
           // Ignore the same tile. i.e. do not light it more than once.
           //
-          if (LIKELY((tile_x == prev_tile_x) && (tile_y == prev_tile_y))) {
+          LIKELY if (((tile_x == prev_tile_x) && (tile_y == prev_tile_y)))
+          {
             step_inside_wall++;
             continue;
           }
@@ -348,9 +333,7 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
           //
           tile.x = tile_x;
           tile.y = tile_y;
-          if (IS_OOB(tile)) {
-            break;
-          }
+          UNLIKELY if (is_oob(tile)) { break; }
 
           prev_tile_x = tile_x;
           prev_tile_y = tile_y;
@@ -396,16 +379,14 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
 //
 void Raycast::raycast_render(Gamep g, Levelsp v, Levelp l)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (g_opt_tests) {
     return;
   }
 
   auto *player = thing_player(g);
-  if (UNLIKELY(player == nullptr)) {
-    return;
-  }
+  UNLIKELY if (player == nullptr) { return; }
 
   spoint light_pos = thing_pix_at(player);
 
@@ -458,7 +439,7 @@ void Raycast::raycast_render(Gamep g, Levelsp v, Levelp l)
 
 static auto raycast_new(int ray_max_length_in_pixels, FboEnum fbo) -> Raycast *
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *l = new Raycast();
 
@@ -486,9 +467,7 @@ void level_light_raycast(Gamep g, Levelsp v, Levelp l, FboEnum fbo)
   }
 
   auto *player = thing_player(g);
-  if (UNLIKELY(player == nullptr)) {
-    return;
-  }
+  UNLIKELY if (player == nullptr) { return; }
 
   //
   // First time init

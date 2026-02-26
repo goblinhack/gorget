@@ -7,7 +7,7 @@
 
 void thing_explosion_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (thing_is_ethereal(t)) {
     return;

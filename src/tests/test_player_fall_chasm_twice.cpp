@@ -10,7 +10,7 @@
 [[nodiscard]] static auto test_player_fall_chasm_twice(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
-  TRACE_AND_INDENT();
+  TRACE();
 
   LevelNum const level_num = 0;
   auto           w         = 7;
@@ -94,9 +94,9 @@
   //
   TEST_PROGRESS(t);
   {
-    TRACE_NO_INDENT();
+    TRACE();
     player = thing_player(g);
-    if (UNLIKELY(player == nullptr)) {
+    UNLIKELY if (player == nullptr) {
       TEST_FAILED(t, "no player");
       goto exit;
     }
@@ -108,7 +108,7 @@
   TEST_PROGRESS(t);
   {
     TEST_LOG(t, "move right");
-    TRACE_AND_INDENT();
+    TRACE();
     up = down = left = right = false;
     right                    = true;
 
@@ -124,7 +124,7 @@
     TEST_PROGRESS(t);
     for (auto tries = 0; tries < 2; tries++) {
       TEST_LOG(t, "try: %d", tries);
-      TRACE_NO_INDENT();
+      TRACE();
       // level_dump(g, v, l, w, h);
       TEST_ASSERT(t, game_event_wait(g), "failed to wait");
       TEST_ASSERT(t, game_wait_for_tick_to_finish(g, v, l1), "failed to wait for tick to finish");
@@ -160,7 +160,7 @@
 
   TEST_PASSED(t);
 exit:
-  TRACE_NO_INDENT();
+  TRACE();
   game_cleanup(g);
 
   return result;
@@ -168,7 +168,7 @@ exit:
 
 auto test_load_player_fall_chasm_twice() -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   Testp test = test_load("player_fall_chasm_twice");
 

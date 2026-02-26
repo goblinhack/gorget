@@ -15,7 +15,7 @@
 
 auto thing_player(Gamep g) -> Thingp
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *v = game_levels_get(g);
   if (v == nullptr) {
@@ -31,7 +31,7 @@ auto thing_player(Gamep g) -> Thingp
 
 auto thing_player_level(Gamep g) -> Levelp
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *me = thing_player(g);
   if (me == nullptr) {
@@ -51,7 +51,7 @@ auto thing_player_level(Gamep g) -> Levelp
 //
 [[nodiscard]] static auto thing_player_replace_current_mouse_path(Gamep g, Levelsp v, Levelp l) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   //
   // Need to recreate the path first, as the me may have moved since the last mouse move
@@ -73,7 +73,7 @@ auto thing_player_level(Gamep g) -> Levelp
 //
 [[nodiscard]] static auto thing_player_pass_event_to_other_things(Gamep g, Levelsp v, Levelp l, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   FOR_ALL_THINGS_AT(g, v, l, it, v->cursor_at)
   {
@@ -94,7 +94,7 @@ auto thing_player_level(Gamep g) -> Levelp
 auto thing_player_mouse_down(Gamep g, Levelsp v, Levelp l, int x, int y, uint32_t button) -> bool
 {
   LOG("Thing mouse down");
-  TRACE_NO_INDENT();
+  TRACE();
 
   switch (player_state(g, v)) {
     case PLAYER_STATE_INIT :
@@ -150,7 +150,7 @@ auto thing_player_mouse_down(Gamep g, Levelsp v, Levelp l, int x, int y, uint32_
 //
 static void thing_player_cursor_loop(Gamep g, Levelsp v, Levelp l)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   //
   // If the cursor moved, update what we see
@@ -167,7 +167,7 @@ static void thing_player_cursor_loop(Gamep g, Levelsp v, Levelp l)
 //
 void thing_player_event_loop(Gamep g, Levelsp v, Levelp l)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   switch (game_state(g)) {
     case STATE_INIT :      break;
@@ -240,19 +240,19 @@ void thing_player_event_loop(Gamep g, Levelsp v, Levelp l)
 
 auto player_state_to_string(PlayerState state) -> std::string
 {
-  TRACE_NO_INDENT();
+  TRACE();
   return PlayerState_to_string(state);
 }
 
 auto player_state(Gamep g, Levelsp v) -> PlayerState
 {
-  TRACE_NO_INDENT();
+  TRACE();
   return v->_player_state;
 }
 
 void player_state_change(Gamep g, Levelsp v, Levelp l, PlayerState new_state)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *me = thing_player(g);
   if (me == nullptr) {
@@ -441,7 +441,7 @@ auto player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, con
 
   THING_LOG(me, "me move");
 
-  TRACE_AND_INDENT();
+  TRACE();
 
   //
   // Double check before jumping in chasms or lava
@@ -503,7 +503,7 @@ auto player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, con
 {
   THING_LOG(me, "move try");
 
-  TRACE_AND_INDENT();
+  TRACE();
 
   if (thing_can_move_to_attempt(g, v, l, me, to)) {
     //
@@ -575,7 +575,7 @@ auto player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, con
 
 static void player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (game_state(g) != STATE_PLAYING) {
     player_move_reset(g, v, l);
@@ -609,7 +609,7 @@ static void player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy)
 
 void player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *me = thing_player(g);
   if (me == nullptr) {
@@ -677,7 +677,7 @@ void player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what)
 //
 void player_move_reset(Gamep g, Levelsp v, Levelp l)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   v->requested_fire       = false;
   v->requested_move_up    = false;
@@ -691,7 +691,7 @@ void player_move_reset(Gamep g, Levelsp v, Levelp l)
 //
 void player_move_accum(Gamep g, Levelsp v, Levelp l, bool up, bool down, bool left, bool right, bool fire)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (fire) {
     v->requested_fire = fire;
@@ -719,7 +719,7 @@ void player_move_accum(Gamep g, Levelsp v, Levelp l, bool up, bool down, bool le
 //
 auto player_move_request(Gamep g, bool up, bool down, bool left, bool right, bool fire) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *v = game_levels_get(g);
   if (v == nullptr) {
@@ -801,7 +801,7 @@ auto player_move_request(Gamep g, bool up, bool down, bool left, bool right, boo
 //
 static void player_leave_current_level_and_change_to_level_num(Gamep g, Levelsp v, LevelNum level_num = LEVEL_SELECT_ID)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   level_select_update_grid_tiles(g, v);
   level_cursor_path_reset(g, v, game_level_get(g, v));
@@ -814,7 +814,7 @@ static void player_leave_current_level_and_change_to_level_num(Gamep g, Levelsp 
 //
 void player_warp_to_specific_level(Gamep g, Levelsp v, LevelNum level_num)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   player_leave_current_level_and_change_to_level_num(g, v, level_num);
 
@@ -838,7 +838,7 @@ void player_warp_to_specific_level(Gamep g, Levelsp v, LevelNum level_num)
 //
 void player_reached_exit(Gamep g, Levelsp v, Levelp l)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   level_is_completed_by_player_exiting(g, v, l);
   player_leave_current_level_and_change_to_level_num(g, v, LEVEL_SELECT_ID);
@@ -849,7 +849,7 @@ void player_reached_exit(Gamep g, Levelsp v, Levelp l)
 //
 void player_reached_entrance(Gamep g, Levelsp v, Levelp l)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   player_leave_current_level_and_change_to_level_num(g, v, LEVEL_SELECT_ID);
 }
@@ -859,7 +859,7 @@ void player_reached_entrance(Gamep g, Levelsp v, Levelp l)
 //
 void player_fell(Gamep g, Levelsp v, Levelp l, Levelp next_level, Thingp me)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   level_cursor_path_reset(g, v, l);
   level_is_completed_by_player_falling(g, v, l);
@@ -875,7 +875,7 @@ void player_fell(Gamep g, Levelsp v, Levelp l, Levelp next_level, Thingp me)
 //
 void player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *ext_struct = thing_ext_struct(g, me);
   if (ext_struct == nullptr) {
@@ -946,7 +946,7 @@ void player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
 //
 auto player_jump(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *player_struct = thing_player_struct(g);
   if (player_struct == nullptr) {
@@ -975,7 +975,7 @@ auto player_jump(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool
 //
 auto player_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   //
   // If already moving, do not pop the next path tile

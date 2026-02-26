@@ -465,7 +465,7 @@ static auto dmap_solve_(const Dmap *D, const spoint start, const std::vector< sp
     auto x = at.x;
     auto y = at.y;
 
-    if (UNLIKELY((x >= MAP_WIDTH - 1) || (y >= MAP_HEIGHT - 1) || (x < 1) || (y < 1))) {
+    UNLIKELY if(((x >= MAP_WIDTH - 1) || (y >= MAP_HEIGHT - 1) || (x < 1) || (y < 1))) {
       return out;
     }
 

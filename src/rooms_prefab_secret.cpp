@@ -10,7 +10,7 @@
 //
 void rooms_prefab_secret(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   room_add(g, CHANCE_NORMAL, NO_FLAGS, __FUNCTION__, __LINE__,
            /* line */ (const char *) "       ^     ",

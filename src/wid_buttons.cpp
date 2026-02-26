@@ -8,7 +8,7 @@
 
 void wid_gray_out_button(Gamep g, Widp w)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   wid_set_mode(w, WID_MODE_OVER);
   wid_set_style(w, UI_WID_STYLE_SOLID_GRAY);
@@ -21,7 +21,7 @@ void wid_gray_out_button(Gamep g, Widp w)
 
 auto wid_new_back_button(Gamep g, Widp parent, const std::string &name) -> Widp
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *w = wid_new_square_button(g, parent, name);
   wid_set_text(w, "BACK");
@@ -35,7 +35,7 @@ auto wid_new_back_button(Gamep g, Widp parent, const std::string &name) -> Widp
 
 auto wid_new_menu_button(Gamep g, Widp parent, const std::string &name) -> Widp
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *w = wid_new_square_button(g, parent, name);
   wid_set_mode(w, WID_MODE_OVER);
@@ -48,7 +48,7 @@ auto wid_new_menu_button(Gamep g, Widp parent, const std::string &name) -> Widp
 
 auto wid_new_button(Gamep g, Widp parent, const std::string &name) -> Widp
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *w = wid_new_square_button(g, parent, name);
   wid_set_mode(w, WID_MODE_OVER);
@@ -63,7 +63,7 @@ auto wid_new_button(Gamep g, Widp parent, const std::string &name) -> Widp
 
 auto wid_new_green_button(Gamep g, Widp parent, const std::string &name) -> Widp
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *w = wid_new_square_button(g, parent, name);
   wid_set_mode(w, WID_MODE_OVER);
@@ -77,7 +77,7 @@ auto wid_new_green_button(Gamep g, Widp parent, const std::string &name) -> Widp
 
 auto wid_new_red_button(Gamep g, Widp parent, const std::string &name) -> Widp
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *w = wid_new_square_button(g, parent, name);
   wid_set_mode(w, WID_MODE_OVER);
@@ -91,14 +91,14 @@ auto wid_new_red_button(Gamep g, Widp parent, const std::string &name) -> Widp
 
 auto wid_new_save_button(Gamep g, Widp parent, const std::string &name) -> Widp
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   return wid_new_green_button(g, parent, name);
 }
 
 auto wid_new_cancel_button(Gamep g, Widp parent, const std::string &name) -> Widp
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   return wid_new_red_button(g, parent, name);
 }

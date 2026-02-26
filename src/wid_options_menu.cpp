@@ -14,14 +14,14 @@ static WidPopup *wid_options_menu_window;
 
 static void wid_options_menu_destroy()
 {
-  TRACE_NO_INDENT();
+  TRACE();
   delete wid_options_menu_window;
   wid_options_menu_window = nullptr;
 }
 
 [[nodiscard]] static auto wid_options_menu_gfx(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   wid_options_menu_destroy();
   wid_cfg_gfx_select(g);
   return true;
@@ -29,7 +29,7 @@ static void wid_options_menu_destroy()
 
 [[nodiscard]] static auto wid_options_menu_seed(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   wid_options_menu_destroy();
   wid_seed_select(g);
   return true;
@@ -37,7 +37,7 @@ static void wid_options_menu_destroy()
 
 [[nodiscard]] static auto wid_options_menu_player_name(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   wid_options_menu_destroy();
   wid_player_name_select(g);
   return true;
@@ -45,7 +45,7 @@ static void wid_options_menu_destroy()
 
 [[nodiscard]] static auto wid_options_menu_mouse(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   wid_options_menu_destroy();
   wid_cfg_mouse_select(g);
   return true;
@@ -53,7 +53,7 @@ static void wid_options_menu_destroy()
 
 [[nodiscard]] static auto wid_options_menu_keyboard(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   wid_options_menu_destroy();
   wid_cfg_help_select(g);
   return true;
@@ -61,7 +61,7 @@ static void wid_options_menu_destroy()
 
 [[nodiscard]] static auto wid_options_menu_sound(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   wid_options_menu_destroy();
   wid_cfg_sound_select(g);
   return true;
@@ -69,7 +69,7 @@ static void wid_options_menu_destroy()
 
 [[nodiscard]] static auto wid_options_menu_back(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   wid_options_menu_destroy();
   wid_main_menu_select(g);
   return true;
@@ -77,7 +77,7 @@ static void wid_options_menu_destroy()
 
 [[nodiscard]] static auto wid_options_menu_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
     sound_play(g, "keypress");
@@ -91,7 +91,7 @@ static void wid_options_menu_destroy()
       switch (key->sym) {
         default :
           {
-            TRACE_NO_INDENT();
+            TRACE();
             auto c = wid_event_to_char(key);
             switch (c) {
               case 'g' :
@@ -140,7 +140,7 @@ static void wid_options_menu_destroy()
 
 void wid_options_menu_select(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   LOG("Options menu");
 
   if (wid_options_menu_window != nullptr) {
@@ -159,14 +159,14 @@ void wid_options_menu_select(Gamep g)
   auto button_width = outer_br.x - outer_tl.x - 2;
 
   {
-    TRACE_NO_INDENT();
+    TRACE();
     Widp w = wid_options_menu_window->wid_popup_container;
     wid_set_on_key_down(w, wid_options_menu_key_down);
   }
 
   int y_at = 0;
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_options_menu_window->wid_text_area->wid_text_area;
     auto *w = wid_new_menu_button(g, p, "Choose seed");
 
@@ -178,7 +178,7 @@ void wid_options_menu_select(Gamep g)
   }
   y_at += box_step;
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_options_menu_window->wid_text_area->wid_text_area;
     auto *w = wid_new_menu_button(g, p, "Choose player name");
 
@@ -190,7 +190,7 @@ void wid_options_menu_select(Gamep g)
   }
   y_at += box_step;
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_options_menu_window->wid_text_area->wid_text_area;
     auto *w = wid_new_menu_button(g, p, "gfx");
 
@@ -202,7 +202,7 @@ void wid_options_menu_select(Gamep g)
   }
   y_at += box_step;
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_options_menu_window->wid_text_area->wid_text_area;
     auto *w = wid_new_menu_button(g, p, "mouse");
 
@@ -214,7 +214,7 @@ void wid_options_menu_select(Gamep g)
   }
   y_at += box_step;
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_options_menu_window->wid_text_area->wid_text_area;
     auto *w = wid_new_menu_button(g, p, "sound");
 
@@ -226,7 +226,7 @@ void wid_options_menu_select(Gamep g)
   }
   y_at += box_step;
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_options_menu_window->wid_text_area->wid_text_area;
     auto *w = wid_new_menu_button(g, p, "keyboard");
 
@@ -238,7 +238,7 @@ void wid_options_menu_select(Gamep g)
   }
   y_at += box_step;
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_options_menu_window->wid_text_area->wid_text_area;
     auto *w = wid_new_back_button(g, p, "BACK");
 

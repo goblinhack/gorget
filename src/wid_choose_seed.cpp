@@ -14,7 +14,7 @@ static Widp wid_choose_seed;
 
 static void selected(Gamep g, Widp w, const std::string &text)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   CON("Manually set seed to '%s'", text.c_str());
 
@@ -38,7 +38,7 @@ static void selected(Gamep g, Widp w, const std::string &text)
 
 void wid_seed_select(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   CON("Choose seed menu");
 

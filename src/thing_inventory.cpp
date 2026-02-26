@@ -12,7 +12,7 @@
 //
 auto thing_inventory_is_empty(Gamep g, Levelsp v, Levelp l, Thingp player_or_monst) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (! thing_is_player(player_or_monst) && ! thing_is_monst(player_or_monst)) {
     THING_ERR(player_or_monst, "unexpected thing for %s", __FUNCTION__);
@@ -49,7 +49,7 @@ auto thing_inventory_item_mergeable(Gamep g, Levelsp v, Levelp l, Thingp a, Thin
 //
 auto thing_inventory_add(Gamep g, Levelsp v, Levelp l, Thingp new_item, Thingp player_or_monst) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (! thing_is_player(player_or_monst) && ! thing_is_monst(player_or_monst)) {
     THING_ERR(player_or_monst, "unexpected thing for %s", __FUNCTION__);
@@ -117,7 +117,7 @@ auto thing_inventory_add(Gamep g, Levelsp v, Levelp l, Thingp new_item, Thingp p
 //
 auto thing_inventory_remove(Gamep g, Levelsp v, Levelp l, Thingp drop_item, Thingp player_or_monst) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (! thing_is_player(player_or_monst) && ! thing_is_monst(player_or_monst)) {
     THING_ERR(player_or_monst, "unexpected thing for %s", __FUNCTION__);
@@ -160,7 +160,7 @@ auto thing_inventory_remove(Gamep g, Levelsp v, Levelp l, Thingp drop_item, Thin
 //
 void thing_inventory_dump(Gamep g, Levelsp v, Levelp l, Thingp player_or_monst)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (! thing_is_player(player_or_monst) && ! thing_is_monst(player_or_monst)) {
     THING_ERR(player_or_monst, "unexpected thing for %s", __FUNCTION__);

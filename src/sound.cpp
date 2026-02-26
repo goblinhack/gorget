@@ -63,7 +63,7 @@ static void sound_finished(int channel)
 
 auto sound_init() -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   Mix_AllocateChannels(8);
   Mix_ChannelFinished(sound_finished);
 
@@ -74,7 +74,7 @@ auto sound_init() -> bool
 
 void sound_fini()
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   LOG("Sound fini");
 
@@ -95,7 +95,7 @@ void sound_fini()
 
 auto sound_load(float volume, const char *file_in, const char *alias_in) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   auto file  = std::string(file_in);
   auto alias = std::string(alias_in);
 
@@ -104,7 +104,7 @@ auto sound_load(float volume, const char *file_in, const char *alias_in) -> bool
 
 auto sound_load(float volume, const std::string &file, const std::string &alias, int concurrent_max) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   if (alias.empty()) {
     auto s = sound_find(alias);
     if (s) {
@@ -161,14 +161,14 @@ auto sound_load(float volume, const std::string &file, const std::string &alias,
 //
 auto sound_find(const std::string &alias) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   auto result = all_sound.find(alias);
   return result != all_sound.end();
 }
 
 [[nodiscard]] static auto sound_play_internal(Game *g, const std::string &alias, class Sound *s, float scale) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (s->chunk == nullptr) {
     ERR("Cannot find sound chunk %s", s->alias.c_str());
@@ -216,7 +216,7 @@ auto sound_find(const std::string &alias) -> bool
 
 auto sound_play(Gamep g, const std::string &alias, float scale) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (scale <= 0) {
     return false;
@@ -238,4 +238,4 @@ auto sound_play(Gamep g, const std::string &alias, float scale) -> bool
   return sound_play_internal(g, alias, sound->second, scale);
 }
 
-void sound_halt() { TRACE_NO_INDENT(); }
+void sound_halt() { TRACE(); }

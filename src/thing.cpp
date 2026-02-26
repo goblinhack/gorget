@@ -12,16 +12,14 @@
 
 auto thing_get(Gamep g, Levelsp v, Levelp l, const spoint &p, int slot) -> Thingp
 {
-#ifdef DEBUG_BUILD
-  TRACE_NO_INDENT(); // expensive
-#endif
+  TRACE_DEBUG();
 
   if (l == nullptr) {
     ERR("trying to get a thing on a null level");
     return nullptr;
   }
 
-  if (IS_OOB(p)) {
+  UNLIKELY if (is_oob(p)) {
     ERR("out of bounds thing_get %d,%d, slot %d", p.x, p.y, slot);
     return nullptr;
   }
@@ -46,9 +44,7 @@ auto thing_get(Gamep g, Levelsp v, Levelp l, const spoint &p, int slot) -> Thing
 
 auto thing_get_at_safe(Gamep g, Levelsp v, Levelp l, const spoint &p, int slot) -> Thingp
 {
-#ifdef DEBUG_BUILD
-  TRACE_NO_INDENT(); // expensive
-#endif
+  TRACE_DEBUG();
 
   ThingId const id = l->thing_id[ p.x ][ p.y ][ slot ];
 
@@ -66,9 +62,7 @@ auto thing_get_at_safe(Gamep g, Levelsp v, Levelp l, const spoint &p, int slot) 
 
 auto thing_and_tp_get_at_safe(Gamep g, Levelsp v, Levelp l, const spoint &p, int slot, Tpp *out) -> Thingp
 {
-#ifdef DEBUG_BUILD
-  TRACE_NO_INDENT(); // expensive
-#endif
+  TRACE_DEBUG();
 
   ThingId const id = l->thing_id[ p.x ][ p.y ][ slot ];
 
@@ -90,9 +84,7 @@ auto thing_and_tp_get_at_safe(Gamep g, Levelsp v, Levelp l, const spoint &p, int
 
 auto thing_and_tp_get_at(Gamep g, Levelsp v, Levelp l, const spoint &p, int slot, Tpp *out) -> Thingp
 {
-#ifdef DEBUG_BUILD
-  TRACE_NO_INDENT(); // expensive
-#endif
+  TRACE_DEBUG();
 
   *out = nullptr;
 
@@ -101,7 +93,7 @@ auto thing_and_tp_get_at(Gamep g, Levelsp v, Levelp l, const spoint &p, int slot
     return nullptr;
   }
 
-  if (IS_OOB(p)) {
+  UNLIKELY if (is_oob(p)) {
     ERR("out of bounds thing_and_tp_get_at %d,%d, slot %d", p.x, p.y, slot);
     return nullptr;
   }
@@ -129,7 +121,7 @@ auto thing_and_tp_get_at(Gamep g, Levelsp v, Levelp l, const spoint &p, int slot
 
 void thing_stats_dump(Gamep g, Levelsp v)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   int in_use_things = 0;
   int free_things   = 0;
@@ -159,7 +151,7 @@ void thing_stats_dump(Gamep g, Levelsp v)
 
 auto thing_ext_struct(Gamep g, Thingp t) -> ThingExtp
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *v = game_levels_get(g);
   if (v == nullptr) {
@@ -176,7 +168,7 @@ auto thing_ext_struct(Gamep g, Thingp t) -> ThingExtp
 
 auto thing_light_struct(Gamep g, Thingp t) -> ThingLightp
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *v = game_levels_get(g);
   if (v == nullptr) {
@@ -193,7 +185,7 @@ auto thing_light_struct(Gamep g, Thingp t) -> ThingLightp
 
 auto thing_player_struct(Gamep g) -> ThingPlayerp
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *v = game_levels_get(g);
   if (v == nullptr) {

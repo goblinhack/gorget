@@ -26,7 +26,7 @@ static std::map< unsigned int, std::string > wid_botcon_lines;
 
 void wid_botcon_fini(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   wid_destroy(g, &wid_botcon_container);
   wid_destroy(g, &wid_botcon_vert_scroll);
   wid_destroy(g, &wid_botcon_input_line);
@@ -35,7 +35,7 @@ void wid_botcon_fini(Gamep g)
 
 auto wid_botcon_init(Gamep g) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   wid_botcon_wid_create(g);
 
   last_msg       = "";
@@ -49,7 +49,7 @@ auto wid_botcon_init(Gamep g) -> bool
 //
 static void wid_botcon_reset_scroll(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (wid_botcon_vert_scroll == nullptr) {
     return;
@@ -60,7 +60,7 @@ static void wid_botcon_reset_scroll(Gamep g)
 
 static void wid_botcon_scroll(Widp w, const std::string &str)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   Widp tmp {};
 
   wid_scroll_text(w);
@@ -76,7 +76,7 @@ static void wid_botcon_scroll(Widp w, const std::string &str)
 
 static void wid_botcon_replace(Widp w, const std::string &str)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   Widp tmp {};
 
   //
@@ -93,7 +93,7 @@ static void wid_botcon_replace(Widp w, const std::string &str)
 //
 static void wid_botcon_log_(const std::string &s)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   static int log_wid_botcon_buffered_lines;
 
   if (s.empty()) {
@@ -143,7 +143,7 @@ static void wid_botcon_log_(const std::string &s)
 
 void wid_botcon_flush(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   auto iter = wid_botcon_lines.begin();
 
   while (iter != wid_botcon_lines.end()) {
@@ -159,7 +159,7 @@ void wid_botcon_flush(Gamep g)
 //
 void wid_botcon_log(const std::string &s)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (g_opt_tests) {
     return;
@@ -188,14 +188,14 @@ void wid_botcon_log(const std::string &s)
 //
 static void wid_botcon_wid_create(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   int const h = UI_BOTCON_HEIGHT;
 
   if (wid_botcon_window != nullptr) {
     wid_botcon_fini(g);
   }
 
-  TRACE_NO_INDENT();
+  TRACE();
   {
     auto tl = spoint(UI_LEFTBAR_WIDTH, TERM_HEIGHT - h);
     auto br = spoint(UI_LEFTBAR_WIDTH + UI_BOTCON_WIDTH - 1, TERM_HEIGHT - 1);
@@ -206,7 +206,7 @@ static void wid_botcon_wid_create(Gamep g)
     wid_set_shape_none(wid_botcon_window);
   }
 
-  TRACE_NO_INDENT();
+  TRACE();
   {
     auto tl = spoint(0, 0);
     auto br = spoint(UI_BOTCON_WIDTH - 1, h - 1);
@@ -217,7 +217,7 @@ static void wid_botcon_wid_create(Gamep g)
     wid_set_style(wid_botcon_container, UI_WID_STYLE_CONSOLE);
   }
 
-  TRACE_NO_INDENT();
+  TRACE();
   {
     int row        = 0;
     int row_bottom = h;
@@ -230,7 +230,7 @@ static void wid_botcon_wid_create(Gamep g)
       auto tl = spoint(0, row_bottom);
       auto br = spoint(UI_BOTCON_WIDTH - 1, row_bottom);
 
-      TRACE_NO_INDENT();
+      TRACE();
       child = wid_new_container(g, wid_botcon_container, "");
 
       wid_set_shape_none(child);
@@ -250,7 +250,7 @@ static void wid_botcon_wid_create(Gamep g)
     }
   }
 
-  TRACE_NO_INDENT();
+  TRACE();
   wid_botcon_vert_scroll = wid_new_vert_scroll_bar(g, wid_botcon_window, "", wid_botcon_container);
   wid_visible(g, wid_get_parent(wid_botcon_vert_scroll));
   wid_update(g, wid_botcon_window);

@@ -11,14 +11,14 @@
 
 static auto tp_foliage_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   return "sickly looking foliage";
 }
 
 auto tp_load_foliage() -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *tp   = tp_load("foliage"); // keep as string for scripts
   auto  name = tp_name(tp);

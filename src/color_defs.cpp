@@ -90,7 +90,7 @@ extern bool color_init_done;
 
 void color_init()
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   color_init_done = true;
 

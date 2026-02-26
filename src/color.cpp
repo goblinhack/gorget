@@ -18,7 +18,7 @@ bool   color_init_done;
 
 void color_set(const std::string &name, color *c, uint8_t r, uint8_t g, uint8_t b, uint8_t a)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   c->r = r;
   c->g = g;
   c->b = b;
@@ -32,7 +32,7 @@ void color_set(const std::string &name, color *c, uint8_t r, uint8_t g, uint8_t 
 
 void color_fini()
 {
-  TRACE_NO_INDENT();
+  TRACE();
   //
   // Do not clear the color map - else an error during shutdown will fail to find
   // error colors
@@ -42,7 +42,7 @@ void color_fini()
 
 auto string2color(const char **s) -> color
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   char        tmp[ MAXSHORTSTR ];
   const char *eo_tmp = tmp + SIZEOF(tmp);
@@ -82,7 +82,7 @@ auto string2color(const char **s) -> color
 
 auto string2colorname(std::string &s, int *len) -> std::string
 {
-  TRACE_NO_INDENT();
+  TRACE();
   auto        iter = s.begin();
   std::string out;
 
@@ -106,7 +106,7 @@ auto string2colorname(std::string &s, int *len) -> std::string
 
 auto string2color(std::string &s, int *len) -> color
 {
-  TRACE_NO_INDENT();
+  TRACE();
   auto        iter = s.begin();
   std::string out;
 
@@ -175,7 +175,7 @@ auto string2color(std::string &s) -> color
 
 auto color_find(const char *s) -> color
 {
-  TRACE_NO_INDENT();
+  TRACE();
   if (s == nullptr) {
     return WHITE;
   }

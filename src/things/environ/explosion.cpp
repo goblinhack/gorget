@@ -12,14 +12,14 @@
 
 static void tp_explosion_spawned(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   thing_sound_play(g, v, l, t, "explosion");
 }
 
 auto tp_load_explosion() -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *tp   = tp_load("explosion"); // keep as string for scripts
   auto  name = tp_name(tp);

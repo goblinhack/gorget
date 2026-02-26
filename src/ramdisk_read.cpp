@@ -15,7 +15,7 @@ std::unordered_map< std::string, RamdiskT > ramdisk_data;
 
 auto ramdisk_load(const char *filename, int *outlen) -> unsigned char *
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto f = ramdisk_data.find(filename);
   if (f == ramdisk_data.end()) {

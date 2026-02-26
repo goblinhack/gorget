@@ -58,13 +58,13 @@ static std::unordered_map< std::string, Texp > textures_outline;
 
 auto tex_init() -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   return true;
 }
 
 void tex_fini()
 {
-  TRACE_NO_INDENT();
+  TRACE();
   for (auto &t : textures) {
     delete t.second;
   }
@@ -85,7 +85,7 @@ void tex_fini()
 
 void tex_free(Texp tex)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   textures.erase(tex->name);
   textures_monochrome.erase(tex->name);
   textures_mask.erase(tex->name);
@@ -95,7 +95,7 @@ void tex_free(Texp tex)
 
 static auto load_raw_image(const std::string &filename, int *x, int *y, int *comp) -> unsigned char *
 {
-  TRACE_NO_INDENT();
+  TRACE();
   unsigned char *file_data  = nullptr;
   unsigned char *image_data = nullptr; // NOLINT
   int            len        = 0;
@@ -119,13 +119,13 @@ static auto load_raw_image(const std::string &filename, int *x, int *y, int *com
 
 static void free_raw_image(unsigned char *image_data)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   stbi_image_free(image_data);
 }
 
 static auto load_image(const std::string &filename) -> SDL_Surface *
 {
-  TRACE_NO_INDENT();
+  TRACE();
   uint32_t       rmask      = 0;
   uint32_t       gmask      = 0;
   uint32_t       bmask      = 0;
@@ -187,7 +187,7 @@ static auto load_image(const std::string &filename) -> SDL_Surface *
 
 static void load_images(SDL_Surface **surf1_out, const std::string &filename)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   uint32_t       rmask      = 0;
   uint32_t       gmask      = 0;
   uint32_t       bmask      = 0;
@@ -266,7 +266,7 @@ static void load_images(SDL_Surface **surf1_out, const std::string &filename)
 //
 auto tex_load(const std::string &file, const std::string &name, int mode) -> Texp
 {
-  TRACE_NO_INDENT();
+  TRACE();
   Texp t = tex_find(name);
 
   if (t != nullptr) {
@@ -432,7 +432,7 @@ static auto tex_create_masks_from_surface(SDL_Surface *src, const std::string &f
 void tex_load_sprites(Texp *tex, Texp *tex_monochrome, Texp *tex_mask, Texp *tex_outline, const std::string &file, const std::string &name,
                       uint32_t tile_width, uint32_t tile_height, int mode)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   Texp t = tex_find(name);
   if (t != nullptr) {
     ERR("Tex name already exists '%s'", name.c_str());
@@ -470,7 +470,7 @@ void tex_load_sprites(Texp *tex, Texp *tex_monochrome, Texp *tex_mask, Texp *tex
 //
 auto tex_find(const std::string &file) -> Texp
 {
-  TRACE_NO_INDENT();
+  TRACE();
   if (file.empty()) {
     ERR("No filename given for tex find");
   }
@@ -488,7 +488,7 @@ auto tex_find(const std::string &file) -> Texp
 //
 auto tex_from_surface(SDL_Surface *surface, const std::string &file, const std::string &name, int mode) -> Texp
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (surface == nullptr) {
     ERR("Could not make surface from file, '%s'", file.c_str());
@@ -585,7 +585,7 @@ auto tex_from_surface(SDL_Surface *surface, const std::string &file, const std::
 //
 auto tex_from_fbo(Gamep g, FboEnum fbo) -> Texp
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   int w = 0;
   int h = 0;
@@ -611,13 +611,13 @@ auto tex_from_fbo(Gamep g, FboEnum fbo) -> Texp
 
 auto tex_get_gl_binding(Texp tex) -> int
 {
-  TRACE_NO_INDENT();
+  TRACE();
   return tex->gl_surface_binding;
 }
 
 auto tex_get_width(Texp tex) -> uint32_t
 {
-  TRACE_NO_INDENT();
+  TRACE();
   if (tex == nullptr) {
     ERR("No texture");
   }
@@ -627,7 +627,7 @@ auto tex_get_width(Texp tex) -> uint32_t
 
 auto tex_get_height(Texp tex) -> uint32_t
 {
-  TRACE_NO_INDENT();
+  TRACE();
   if (tex == nullptr) {
     ERR("No texture");
   }
@@ -637,13 +637,13 @@ auto tex_get_height(Texp tex) -> uint32_t
 
 auto tex_get_surface(Texp tex) -> SDL_Surface *
 {
-  TRACE_NO_INDENT();
+  TRACE();
   return tex->surface;
 }
 
 auto string2tex(const char **s) -> Texp
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   static char              tmp[ MAXSHORTSTR ];
   static std::string const eo_tmp = tmp + MAXSHORTSTR - 1;
@@ -675,7 +675,7 @@ auto string2tex(const char **s) -> Texp
 
 auto string2tex(std::string &s, int *len) -> Texp
 {
-  TRACE_NO_INDENT();
+  TRACE();
   auto        iter = s.begin();
   std::string out;
 

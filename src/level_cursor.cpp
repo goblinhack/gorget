@@ -14,7 +14,7 @@ static std::vector< spoint > cursor_path;
 
 void level_cursor_set(Gamep g, Levelsp v, spoint p)
 {
-  TRACE_AND_INDENT();
+  TRACE();
 
   //
   // Need to update what is under the cursor
@@ -26,7 +26,7 @@ void level_cursor_set(Gamep g, Levelsp v, spoint p)
     BOTCON("cursor %d,%d", v->cursor_at.x, v->cursor_at.y);
   }
 
-  if (! IS_OOB(p)) {
+  if (! is_oob(p)) {
     v->cursor_at       = p;
     v->cursor_at_valid = true;
   } else {
@@ -36,7 +36,7 @@ void level_cursor_set(Gamep g, Levelsp v, spoint p)
 
 auto level_cursor_is_valid(Gamep g, Levelsp v) -> bool
 {
-  TRACE_AND_INDENT();
+  TRACE();
 
   return v->cursor_at_valid;
 }
@@ -52,7 +52,7 @@ auto level_cursor_is_valid(Gamep g, Levelsp v) -> bool
 static auto level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Thingp player, spoint start, spoint end, int attempt)
     -> std::vector< spoint >
 {
-  TRACE_AND_INDENT();
+  TRACE();
 
   static std::vector< spoint > const empty;
 
@@ -357,7 +357,7 @@ static auto level_cursor_path_draw_line(Gamep g, Levelsp v, Levelp l, const spoi
   static std::vector< spoint > const empty;
 
   auto *player = thing_player(g);
-  if (UNLIKELY(player == nullptr)) {
+  UNLIKELY if (player == nullptr) {
     return empty;
   }
 
@@ -395,7 +395,7 @@ static auto level_cursor_path_draw_line(Gamep g, Levelsp v, Levelp l, const spoi
 void level_cursor_path_reset(Gamep g, Levelsp v, Levelp l)
 {
   auto *player = thing_player(g);
-  if (UNLIKELY(player == nullptr)) {
+  UNLIKELY if (player == nullptr) {
     //
     // If no player, clear the cursor
     //
@@ -441,7 +441,7 @@ void level_cursor_path_reset(Gamep g)
 void level_cursor_copy_path_to_player(Gamep g, Levelsp v, Levelp l, std::vector< spoint > &move_path)
 {
   auto *player = thing_player(g);
-  if (UNLIKELY(player == nullptr)) {
+  UNLIKELY if (player == nullptr) {
     //
     // If no player, clear the cursor
     //
@@ -512,7 +512,7 @@ void level_cursor_copy_path_to_player(Gamep g, Levelsp v, Levelp l, std::vector<
 static void level_cursor_path_create(Gamep g, Levelsp v, Levelp l)
 {
   auto *player = thing_player(g);
-  if (UNLIKELY(player == nullptr)) {
+  UNLIKELY if (player == nullptr) {
     //
     // If no player, clear the cursor
     //

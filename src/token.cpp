@@ -11,7 +11,7 @@
 
 static auto tokens_parse(const char *input, class Tokens *tokens) -> class Tokens *
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   const char *in  = nullptr;
   char       *out = nullptr;
@@ -131,7 +131,7 @@ static auto tokens_parse(const char *input, class Tokens *tokens) -> class Token
 
 static void tokens_compile(class Tokens *tokens)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   uint32_t cnt = 0;
 
   cnt = 0;
@@ -147,7 +147,7 @@ static void tokens_compile(class Tokens *tokens)
 
 void tokens_print(class Tokens *tokens)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   uint32_t cnt = 0;
 
   std::print("tokens {}: ", tokens->cnt);
@@ -163,7 +163,7 @@ void tokens_print(class Tokens *tokens)
 
 void tokens_print_to(class Tokens *tokens, char *output, int output_size)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   uint32_t cnt = 0;
 
   cnt     = 0;
@@ -181,7 +181,7 @@ void tokens_print_to(class Tokens *tokens, char *output, int output_size)
 
 void tokens_test()
 {
-  TRACE_NO_INDENT();
+  TRACE();
   class Tokens tmp {};
 
   tokens_print(tokens_to_string("s  ", &tmp));
@@ -191,7 +191,7 @@ void tokens_test()
 
 auto tokens_to_string(const char *input, class Tokens *tokens) -> class Tokens *
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   class Tokens *t = nullptr; // NOLINT
   t               = tokens_parse(input, tokens);

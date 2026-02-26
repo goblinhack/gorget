@@ -15,7 +15,7 @@
 
 static auto tp_brazier_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (thing_is_dead(t)) {
     return "extinguished brazier";
@@ -26,7 +26,7 @@ static auto tp_brazier_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -
 
 static void tp_brazier_on_shoved(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp shover)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   //
   // If extinguished, do not generate more smoke
@@ -79,7 +79,7 @@ static void tp_brazier_on_shoved(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp 
 
 static void tp_brazier_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   //
   // Allow things to continue to burn if we still have some burnable material
@@ -112,7 +112,7 @@ static void tp_brazier_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEve
 
 auto tp_load_brazier() -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *tp   = tp_load("brazier"); // keep as string for scripts
   auto  name = tp_name(tp);

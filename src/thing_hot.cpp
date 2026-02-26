@@ -14,7 +14,7 @@
 //
 void thing_hot_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto T = thing_temperature(t);
   if (! thing_is_physics_temperature(t)) {

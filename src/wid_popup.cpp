@@ -11,7 +11,7 @@
 
 WidPopup::~WidPopup()
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   extern Gamep game;
   auto        *g = game;
@@ -25,7 +25,7 @@ WidPopup::WidPopup(Gamep g, std::string vname, spoint vtl, spoint vbr, Tilep vti
     : tl(vtl), br(vbr), title_tile(vtitle_tile), background(std::move(vbackground)), outer_w(br.x - tl.x), outer_h(br.y - tl.y),
       name(std::move(vname))
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   int const width  = outer_w;
   int const height = outer_h;
@@ -82,7 +82,7 @@ WidPopup::WidPopup(Gamep g, std::string vname, spoint vtl, spoint vbr, Tilep vti
 //
 auto WidPopup::log(Gamep g, const std::string &s, wid_text_format format, const std::string &col) const -> Widp
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   return wid_text_area->log(g, s, format, col);
 }
@@ -92,7 +92,7 @@ auto WidPopup::log(Gamep g, const std::string &s, wid_text_format format, const 
 //
 auto WidPopup::log_empty_line(Gamep g) const -> Widp
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   return wid_text_area->log_empty_line(g);
 }
@@ -102,7 +102,7 @@ auto WidPopup::log_empty_line(Gamep g) const -> Widp
 //
 void WidPopup::compress(Gamep g) const
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   int const utilized = wid_text_area->line_count;
 

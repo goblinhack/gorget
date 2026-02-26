@@ -14,7 +14,7 @@
 
 static auto tp_cursor_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l, const spoint &p, Tpp tp, Thingp t_maybe_null) -> Tilep
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   //
   // Default tile
@@ -22,7 +22,7 @@ static auto tp_cursor_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l, con
   Tilep tile = tp_tiles_get(tp, THING_ANIM_CURSOR_NOPATH, 0);
 
   auto *player = thing_player(g);
-  if (UNLIKELY(player == nullptr)) {
+  UNLIKELY if (player == nullptr) {
     return tile;
   }
 

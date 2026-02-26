@@ -11,7 +11,7 @@
 [[nodiscard]] static auto test_path_dmap_reverse(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
-  TRACE_AND_INDENT();
+  TRACE();
 
   LevelNum const level_num = 0;
   auto           w         = MAP_WIDTH;
@@ -153,7 +153,7 @@
 
   TEST_PASSED(t);
 exit:
-  TRACE_NO_INDENT();
+  TRACE();
   game_cleanup(g);
 
   return result;
@@ -161,7 +161,7 @@ exit:
 
 auto test_load_path_dmap_reverse() -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   Testp test = test_load("path_dmap_reverse");
 

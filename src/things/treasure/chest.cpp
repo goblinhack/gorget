@@ -14,7 +14,7 @@
 
 static auto tp_chest_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (thing_is_open(t)) {
     return "open chest";
@@ -27,7 +27,7 @@ static auto tp_chest_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> 
 
 static auto tp_chest_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (thing_is_open(t)) {
     return UI_INFO1_FMT_STR "An open chest.";
@@ -40,7 +40,7 @@ static auto tp_chest_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::
 
 auto tp_load_treasure() -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *tp   = tp_load("chest"); // keep as string for scripts
   auto  name = tp_name(tp);

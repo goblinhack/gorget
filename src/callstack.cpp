@@ -13,7 +13,6 @@
 
 thread_local struct Callframe callframes[ MAXCALLFRAME ];
 thread_local unsigned char    g_callframes_depth;
-thread_local unsigned char    g_callframes_indent;
 
 auto callstack_string() -> std::string
 {

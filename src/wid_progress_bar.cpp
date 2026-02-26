@@ -19,7 +19,7 @@ WidPopup *wid_progress_bar_window;
 
 void wid_progress_bar_destroy(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   delete wid_progress_bar_window;
   wid_progress_bar_window = nullptr;
 }
@@ -28,7 +28,7 @@ void wid_progress_bar(Gamep g, const std::string &title, float pct)
 {
   VERIFY(MTYPE_GAME, g);
   LOG("Progress bar: %s, %.2f pct", title.c_str(), pct);
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (wid_progress_bar_window != nullptr) {
     wid_progress_bar_destroy(g);
@@ -49,7 +49,7 @@ void wid_progress_bar(Gamep g, const std::string &title, float pct)
 
   int y_at = 0;
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_progress_bar_window->wid_text_area->wid_text_area;
     auto *w = wid_new_square_button(g, p, "Title");
 
@@ -62,7 +62,7 @@ void wid_progress_bar(Gamep g, const std::string &title, float pct)
 
   y_at = 2;
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_progress_bar_window->wid_text_area->wid_text_area;
     auto *w = wid_new_square_button(g, p, "Progress");
 

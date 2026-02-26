@@ -19,7 +19,7 @@
 //
 static void find_executable()
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   char       *parent_dir = nullptr;
   char       *curr_dir   = nullptr;
@@ -156,7 +156,7 @@ cleanup:
 //
 static void find_exec_dir()
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   find_executable();
 
@@ -185,7 +185,7 @@ static void find_exec_dir()
 //
 static void find_data_dir()
 {
-  TRACE_NO_INDENT();
+  TRACE();
   g_data_path = dynprintf("%sdata" DIR_SEP, g_exec_dir);
   if (dir_exists(g_data_path)) {
     return;
@@ -206,7 +206,7 @@ static void find_data_dir()
 //
 static void find_ttf_dir()
 {
-  TRACE_NO_INDENT();
+  TRACE();
   g_ttf_path = dynprintf("%sdata" DIR_SEP "ttf" DIR_SEP, g_exec_dir);
   if (dir_exists(g_ttf_path)) {
     return;
@@ -227,7 +227,7 @@ static void find_ttf_dir()
 //
 static void find_gfx_dir()
 {
-  TRACE_NO_INDENT();
+  TRACE();
   g_gfx_path = dynprintf("%sdata" DIR_SEP "gfx" DIR_SEP, g_exec_dir);
   if (dir_exists(g_gfx_path)) {
     return;
@@ -248,7 +248,7 @@ static void find_gfx_dir()
 //
 void find_file_locations()
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   find_exec_dir();
   find_data_dir();

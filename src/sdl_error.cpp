@@ -21,7 +21,7 @@
 
 static void sdl_msgerr_(const char *fmt, va_list args)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   char buf[ MAXLONGSTR ];
   buf[ 0 ] = '\0';
@@ -56,7 +56,7 @@ static void sdl_msgerr_(const char *fmt, va_list args)
 
 void sdl_msg_box(const char *fmt, ...)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   va_list args = {};
 

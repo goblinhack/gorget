@@ -14,14 +14,14 @@ static WidPopup *wid_more_window;
 
 static void wid_more_destroy()
 {
-  TRACE_NO_INDENT();
+  TRACE();
   delete wid_more_window;
   wid_more_window = nullptr;
 }
 
 [[nodiscard]] static auto wid_more_credits(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   wid_more_destroy();
   wid_credits_select(g);
   return true;
@@ -29,7 +29,7 @@ static void wid_more_destroy()
 
 [[nodiscard]] static auto wid_more_hiscores(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   wid_more_destroy();
   wid_hiscores_show(g);
   return true;
@@ -37,7 +37,7 @@ static void wid_more_destroy()
 
 [[nodiscard]] static auto wid_more_back(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   wid_more_destroy();
   wid_main_menu_select(g);
   return true;
@@ -45,7 +45,7 @@ static void wid_more_destroy()
 
 [[nodiscard]] static auto wid_more_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
     sound_play(g, "keypress");
@@ -59,7 +59,7 @@ static void wid_more_destroy()
       switch (key->sym) {
         default :
           {
-            TRACE_NO_INDENT();
+            TRACE();
             auto c = wid_event_to_char(key);
             switch (c) {
               case 'c' :
@@ -88,7 +88,7 @@ static void wid_more_destroy()
 
 void wid_more_select(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   LOG("More menu");
 
   if (wid_more_window != nullptr) {
@@ -107,7 +107,7 @@ void wid_more_select(Gamep g)
   auto button_width = outer_br.x - outer_tl.x - 2;
 
   {
-    TRACE_NO_INDENT();
+    TRACE();
     Widp w = wid_more_window->wid_popup_container;
     wid_set_on_key_down(w, wid_more_key_down);
   }
@@ -116,7 +116,7 @@ void wid_more_select(Gamep g)
 
   y_at += box_step;
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_more_window->wid_text_area->wid_text_area;
     auto *w = wid_new_menu_button(g, p, "Credits");
 
@@ -128,7 +128,7 @@ void wid_more_select(Gamep g)
   }
   y_at += box_step;
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_more_window->wid_text_area->wid_text_area;
     auto *w = wid_new_menu_button(g, p, "Hiscores");
 
@@ -140,7 +140,7 @@ void wid_more_select(Gamep g)
   }
   y_at += box_step;
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_more_window->wid_text_area->wid_text_area;
     auto *w = wid_new_back_button(g, p, "BACK");
 

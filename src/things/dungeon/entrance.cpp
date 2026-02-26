@@ -14,21 +14,21 @@
 
 static auto tp_entrance_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   return "the way back up";
 }
 
 static auto tp_entrance_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   return UI_INFO1_FMT_STR "Enter here to cowardly return to level selection.";
 }
 
 auto tp_load_entrance() -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *tp   = tp_load("entrance"); // keep as string for scripts
   auto  name = tp_name(tp);

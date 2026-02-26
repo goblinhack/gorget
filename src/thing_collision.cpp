@@ -15,7 +15,7 @@
 //
 static void thing_collision_handle_common(Gamep g, Levelsp v, Levelp l, Thingp obstacle, Thingp me, bool &stop)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   //
   // Handle walking into a teleport
@@ -49,7 +49,7 @@ static void thing_collision_handle_common(Gamep g, Levelsp v, Levelp l, Thingp o
 //
 static void thing_collision_handle_dead_thing(Gamep g, Levelsp v, Levelp l, Thingp obstacle, Thingp me, bool &stop)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   thing_collision_handle_common(g, v, l, obstacle, me, stop);
 }
@@ -59,7 +59,7 @@ static void thing_collision_handle_dead_thing(Gamep g, Levelsp v, Levelp l, Thin
 //
 static void thing_collision_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thingp obstacle, Thingp me, bool &stop)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   thing_collision_handle_common(g, v, l, obstacle, me, stop);
   if (stop) {
@@ -125,7 +125,7 @@ static void thing_collision_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thi
 //
 static void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp obstacle, Thingp me, bool &stop)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (obstacle == me) {
     return;
@@ -152,7 +152,7 @@ static void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp obstacle
 //
 void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (compiler_unused) {
     THING_LOG(me, "thing_collision_handle");
@@ -317,42 +317,42 @@ auto thing_collision_check_circle_circle(Gamep g, Levelsp v, Levelp l, Thingp A,
 [[nodiscard]] static auto thing_collision_check_circle_small_circle_small(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint me_at, Thingp o,
                                                                           fpoint o_at) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   return thing_collision_check_circle_circle(g, v, l, me, me_at, o, o_at);
 }
 
 [[nodiscard]] static auto thing_collision_check_circle_small_circle_large(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint me_at, Thingp o,
                                                                           fpoint o_at) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   return thing_collision_check_circle_circle(g, v, l, me, me_at, o, o_at);
 }
 
 [[nodiscard]] static auto thing_collision_check_circle_small_square(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint me_at, Thingp o,
                                                                     fpoint o_at) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   return thing_collision_check_circle_square(me, me_at, o, o_at);
 }
 
 [[nodiscard]] static auto thing_collision_check_circle_large_circle_large(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint me_at, Thingp o,
                                                                           fpoint o_at) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   return thing_collision_check_circle_circle(g, v, l, me, me_at, o, o_at);
 }
 
 [[nodiscard]] static auto thing_collision_check_circle_large_square(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint me_at, Thingp o,
                                                                     fpoint o_at) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   return thing_collision_check_circle_square(me, me_at, o, o_at);
 }
 
 [[nodiscard]] static auto thing_collision_check_square_square(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint me_at, Thingp o, fpoint o_at)
     -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   return thing_collision_check_squares(me_at, o_at);
 }
 
@@ -362,7 +362,7 @@ auto thing_collision_check_circle_circle(Gamep g, Levelsp v, Levelp l, Thingp A,
 //
 void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint old_at)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (compiler_unused) {
     THING_LOG(me, "thing_collision_handle_interpolated");
@@ -515,7 +515,7 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
 
 void tp_collision_init(Tpp tp)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (tp_is_collision_circle_small(tp) || // newline
       tp_is_collision_circle_large(tp) || // newline

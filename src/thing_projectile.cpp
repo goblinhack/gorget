@@ -13,14 +13,14 @@
 
 static auto thing_projectile_get_delta_from_dt(Gamep g, Thingp t, float dt) -> fpoint
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   float s = 0;
   float c = 0;
   SINCOSF(t->angle, &s, &c);
 
   auto *player = thing_player(g);
-  if (UNLIKELY(player == nullptr)) {
+  UNLIKELY if (player == nullptr) {
     CROAK("No player struct found");
     return fpoint(0, 0);
   }
@@ -39,14 +39,14 @@ static auto thing_projectile_get_delta_from_dt(Gamep g, Thingp t, float dt) -> f
 
 auto thing_projectile_get_direction(Gamep g, Levelsp v, Levelp l, Thingp t) -> fpoint
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   return unit(thing_projectile_get_delta_from_dt(g, t, 1.0));
 }
 
 auto thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const fpoint target) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   THING_LOG(me, "fire projectile");
 
@@ -103,13 +103,13 @@ auto thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what,
 
 void thing_projectile_move(Gamep g, Levelsp v, Levelp l, Thingp t, float dt)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   fpoint const old_at = thing_real_at(t);
   auto         at     = old_at;
 
   auto *player = thing_player(g);
-  if (UNLIKELY(player == nullptr)) {
+  UNLIKELY if (player == nullptr) {
     ERR("No player struct found");
     return;
   }
@@ -118,7 +118,7 @@ void thing_projectile_move(Gamep g, Levelsp v, Levelp l, Thingp t, float dt)
   at.x += delta.x;
   at.y += delta.y;
 
-  if (IS_OOB(at)) {
+  UNLIKELY if (is_oob(at)) {
     ThingEvent e {
         .reason     = "oob",                        //
         .event_type = THING_EVENT_LIFESPAN_EXPIRED, //

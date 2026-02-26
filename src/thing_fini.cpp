@@ -8,7 +8,7 @@
 
 void thing_fini(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (compiler_unused) {
     THING_DBG(t, "fini");

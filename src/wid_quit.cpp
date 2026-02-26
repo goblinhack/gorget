@@ -14,7 +14,7 @@ static WidPopup *wid_quit_window;
 
 void wid_quit_destroy(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (wid_quit_window != nullptr) {
     delete wid_quit_window;
@@ -25,7 +25,7 @@ void wid_quit_destroy(Gamep g)
 
 [[nodiscard]] static auto wid_quit_yes(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   LOG("Quit, yes");
 
   if (game_levels_get(g) != nullptr) {
@@ -45,7 +45,7 @@ void wid_quit_destroy(Gamep g)
 
 [[nodiscard]] static auto wid_quit_no(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   LOG("Quit, no");
 
   wid_quit_destroy(g);
@@ -58,7 +58,7 @@ void wid_quit_destroy(Gamep g)
 
 [[nodiscard]] static auto wid_quit_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
     sound_play(g, "keypress");
@@ -72,7 +72,7 @@ void wid_quit_destroy(Gamep g)
       switch (key->sym) {
         default :
           {
-            TRACE_NO_INDENT();
+            TRACE();
             auto c = wid_event_to_char(key);
             switch (c) {
               case 'y' :
@@ -101,7 +101,7 @@ void wid_quit_destroy(Gamep g)
 
 void wid_quit_select(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   LOG("Quit select");
 
   if (wid_quit_window != nullptr) {
@@ -121,14 +121,14 @@ void wid_quit_select(Gamep g)
 
   wid_quit_window = new WidPopup(g, "Game quit", outer_tl, outer_br, nullptr, "", false, false);
   {
-    TRACE_NO_INDENT();
+    TRACE();
     Widp w = wid_quit_window->wid_popup_container;
     wid_set_on_key_down(w, wid_quit_key_down);
   }
 
   int y_at = 0;
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_quit_window->wid_text_area->wid_text_area;
     auto *w = wid_new_square_button(g, p, "Quit");
 
@@ -141,7 +141,7 @@ void wid_quit_select(Gamep g)
 
   y_at = 2;
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_quit_window->wid_text_area->wid_text_area;
     auto *w = wid_new_red_button(g, p, "Yes");
 
@@ -153,7 +153,7 @@ void wid_quit_select(Gamep g)
   }
 
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_quit_window->wid_text_area->wid_text_area;
     auto *w = wid_new_green_button(g, p, "No");
 

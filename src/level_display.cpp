@@ -16,9 +16,7 @@
 
 static void level_display_cursor(Gamep g, Levelsp v, Levelp l, const spoint &p, FboEnum fbo)
 {
-#ifdef DEBUG_BUILD
-  TRACE_NO_INDENT();
-#endif
+  TRACE_DEBUG();
 
   Tpp tp = nullptr;
 
@@ -85,9 +83,7 @@ static void level_display_cursor(Gamep g, Levelsp v, Levelp l, const spoint &p, 
 //
 static void level_display_cursor(Gamep g, Levelsp v, Levelp l, FboEnum fbo)
 {
-#ifdef DEBUG_BUILD
-  TRACE_NO_INDENT();
-#endif
+  TRACE_DEBUG();
 
   if (! level_is_player_level(g, v, l)) {
     return;
@@ -103,13 +99,11 @@ static void level_display_cursor(Gamep g, Levelsp v, Levelp l, FboEnum fbo)
 
 static void level_display_slot(Gamep g, Levelsp v, Levelp l, const spoint &p, int slot, int depth, FboEnum fbo)
 {
-#ifdef DEBUG_BUILD
-  TRACE_NO_INDENT();
-#endif
+  TRACE_DEBUG();
 
   Tpp   tp = nullptr;
   auto *t  = thing_and_tp_get_at(g, v, l, p, slot, &tp);
-  if (UNLIKELY(! tp)) {
+  UNLIKELY if((! tp)) {
     return;
   }
 
@@ -129,14 +123,12 @@ static void level_display_slot(Gamep g, Levelsp v, Levelp l, const spoint &p, in
 //
 static void level_display_fbo_do(Gamep g, Levelsp v, Levelp l, Levelp level_above, FboEnum fbo)
 {
-#ifdef DEBUG_BUILD
-  TRACE_NO_INDENT();
-#endif
+  TRACE_DEBUG();
 
   const bool is_level_select = level_is_level_select(g, v, l);
 
   auto *player = thing_player(g);
-  if (UNLIKELY(player == nullptr)) {
+  UNLIKELY if (player == nullptr) {
     return;
   }
 
@@ -244,15 +236,13 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp l, Levelp level_abov
 //
 static void level_display_fbo(Gamep g, Levelsp v, Levelp l, Levelp level_below, FboEnum fbo)
 {
-#ifdef DEBUG_BUILD
-  TRACE_NO_INDENT();
-#endif
+  TRACE_DEBUG();
 
   //
   // What level is the player on?
   //
   auto *player = thing_player(g);
-  if (UNLIKELY(player == nullptr)) {
+  UNLIKELY if (player == nullptr) {
     return;
   }
 
@@ -282,9 +272,7 @@ static void level_display_fbo(Gamep g, Levelsp v, Levelp l, Levelp level_below, 
 
 void level_display(Gamep g, Levelsp v, Levelp l)
 {
-#ifdef DEBUG_BUILD
-  TRACE_NO_INDENT();
-#endif
+  TRACE_DEBUG();
 
   //
   // Set later
@@ -321,9 +309,7 @@ void level_display(Gamep g, Levelsp v, Levelp l)
 
 static void level_blit_light(Gamep g, Levelsp v, Levelp l, color c)
 {
-#ifdef DEBUG_BUILD
-  TRACE_NO_INDENT();
-#endif
+  TRACE_DEBUG();
 
   //
   // Get the pixel extents of the map on screen
@@ -388,9 +374,7 @@ static void level_blit_light(Gamep g, Levelsp v, Levelp l, color c)
 
 void level_blit(Gamep g)
 {
-#ifdef DEBUG_BUILD
-  TRACE_NO_INDENT();
-#endif
+  TRACE_DEBUG();
 
   if (g == nullptr) {
     return;

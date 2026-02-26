@@ -13,7 +13,7 @@
 //
 void thing_anim_init(Gamep g, Levelsp v, Levelp l, Thingp t, ThingAnim anim_type)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   Tpp tp = thing_tp(t);
 
@@ -123,9 +123,7 @@ void thing_anim_init(Gamep g, Levelsp v, Levelp l, Thingp t, ThingAnim anim_type
 //
 void thing_anim_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, int time_step)
 {
-#ifdef DEBUG_BUILD
-  TRACE_NO_INDENT();
-#endif
+  TRACE_DEBUG();
 
   auto tile_index = t->tile_index;
   if (! static_cast< bool >(tile_index)) {

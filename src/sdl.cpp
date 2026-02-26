@@ -23,7 +23,7 @@ void sdl_fini(Gamep g)
   }
 
   LOG("SDL: Fini");
-  TRACE_AND_INDENT();
+  TRACE();
 
   sdl_display_fini(g);
 
@@ -33,7 +33,7 @@ void sdl_fini(Gamep g)
 
 void sdl_joy_rumble(float strength, uint32_t ms)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   if (sdl.haptic == nullptr) {
     return;
   }
@@ -44,7 +44,7 @@ void sdl_joy_rumble(float strength, uint32_t ms)
 static void sdl_init_rumble()
 {
   LOG("SDL: Init rumble:");
-  TRACE_AND_INDENT();
+  TRACE();
 
   if (sdl.haptic == nullptr) {
     sdl.haptic = SDL_HapticOpenFromJoystick(sdl.joy);
@@ -73,7 +73,7 @@ static void sdl_init_rumble()
 static void sdl_init_joystick()
 {
   LOG("SDL: Init input:");
-  TRACE_NO_INDENT();
+  TRACE();
 
   SDL_GameController const *controller = nullptr;
 
@@ -126,7 +126,7 @@ auto sdl_init() -> bool
   gl_ext_init();
 
   LOG("SDL: Version: %u.%u", SDL_MAJOR_VERSION, SDL_MINOR_VERSION);
-  TRACE_AND_INDENT();
+  TRACE();
 
   LOG("SDL: Init audio and video");
   if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
@@ -153,7 +153,7 @@ auto sdl_init() -> bool
 
 auto sdl_get_mouse() -> int
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (! wid_mouse_visible) {
     return 0;
@@ -175,7 +175,7 @@ auto sdl_get_mouse() -> int
 
 void sdl_mouse_center(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   int x = 0;
   int y = 0;
@@ -188,7 +188,7 @@ void sdl_mouse_center(Gamep g)
 
 void sdl_mouse_warp(Gamep g, int x, int y)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   int const border = 10;
 
@@ -211,7 +211,7 @@ void sdl_mouse_warp(Gamep g, int x, int y)
 
 void sdl_tick(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   sdl.left_fire = 0;
   sdl.left_fire = 1;
 
@@ -334,7 +334,7 @@ void sdl_prepare_to_exit(Gamep g)
   }
 
   LOG("Finishing: SDL main loop is exiting...");
-  TRACE_AND_INDENT();
+  TRACE();
 
 #ifdef ENABLE_UI_ASCII_MOUSE
   SDL_ShowCursor(1);
@@ -348,7 +348,7 @@ void sdl_prepare_to_exit(Gamep g)
 //
 auto config_fps_counter_set(Gamep g, class Tokens *tokens, void *context) -> uint8_t
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   char const *s = tokens->args[ 2 ];
 
@@ -376,7 +376,7 @@ auto config_fps_counter_set(Gamep g, class Tokens *tokens, void *context) -> uin
 //
 auto config_debug_set(Gamep g, class Tokens *tokens, void *context) -> uint8_t
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   char const *s = tokens->args[ 2 ];
 
@@ -406,7 +406,7 @@ auto config_debug_set(Gamep g, class Tokens *tokens, void *context) -> uint8_t
 //
 auto config_gfx_vsync_enable(Gamep g, class Tokens *tokens, void *context) -> uint8_t
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   char const *s = tokens->args[ 2 ];
 
@@ -434,7 +434,7 @@ auto config_gfx_vsync_enable(Gamep g, class Tokens *tokens, void *context) -> ui
 
 void config_gfx_vsync_update(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (game_gfx_vsync_enable_get(g)) {
     SDL_GL_SetSwapInterval(1);
@@ -449,7 +449,7 @@ void config_gfx_vsync_update(Gamep g)
 //
 auto config_errored_clear(Gamep g, class Tokens *tokens, void *context) -> uint8_t
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   error_clear(g);
 
@@ -469,7 +469,7 @@ auto config_errored_clear(Gamep g, class Tokens *tokens, void *context) -> uint8
 
 auto show_error(Gamep g, class Tokens *tokens, void *context) -> uint8_t
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (AN_ERROR_OCCURRED()) {
     CON("Last error: %s", g_error_last.c_str());
@@ -486,7 +486,7 @@ auto show_error(Gamep g, class Tokens *tokens, void *context) -> uint8_t
 void sdl_config_update_all(Gamep g)
 {
   LOG("SDL: Update config");
-  TRACE_AND_INDENT();
+  TRACE();
 
   config_game_gfx_update(g);
   config_gfx_vsync_update(g);
@@ -500,7 +500,7 @@ void sdl_config_update_all(Gamep g)
 //
 auto sdl_user_exit(Gamep g, class Tokens *tokens, void *context) -> uint8_t
 {
-  TRACE_NO_INDENT();
+  TRACE();
   sdl_prepare_to_exit(g);
 
   return 1U;
@@ -509,7 +509,7 @@ auto sdl_user_exit(Gamep g, class Tokens *tokens, void *context) -> uint8_t
 void config_game_gfx_update(Gamep g)
 {
   LOG("SDL: Update");
-  TRACE_AND_INDENT();
+  TRACE();
 
   //
   // Display ratio

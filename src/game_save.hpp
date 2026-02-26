@@ -33,7 +33,7 @@ int         GAME_SAVE_MARKER_CONFIG = 987654;
 
 auto operator<<(std::ostream &out, Bits< const SDL_Keysym & > const my) -> std::ostream &
 {
-  TRACE_NO_INDENT();
+  TRACE();
   out << bits(my.t.scancode);
   out << bits(my.t.sym);
   out << bits(my.t.mod);
@@ -43,7 +43,7 @@ auto operator<<(std::ostream &out, Bits< const SDL_Keysym & > const my) -> std::
 
 auto operator<<(std::ostream &out, Bits< const Config & > const my) -> std::ostream &
 {
-  TRACE_NO_INDENT();
+  TRACE();
   out << bits(my.t.version);
   uint32_t serialized_size = sizeof(Config);
   out << bits(serialized_size);
@@ -257,7 +257,7 @@ auto operator<<(std::ostream &out, Bits< const Config & > const my) -> std::ostr
 
 auto operator<<(std::ostream &out, Bits< const class Game & > const my) -> std::ostream &
 {
-  TRACE_NO_INDENT();
+  TRACE();
   auto serialized_size = (uint32_t) (sizeof(Game));
   out << bits(my.t.version);
   out << bits(serialized_size);
@@ -452,7 +452,7 @@ auto operator<<(std::ostream &out, Bits< const class Game & > const my) -> std::
 auto Game::save(const std::string &file_to_save) -> bool
 {
   LOG("Save: %s", file_to_save.c_str());
-  TRACE_AND_INDENT();
+  TRACE();
 
   //
   // Not sur why I needed this
@@ -630,7 +630,7 @@ auto game_save(Gamep g, const std::string &file_to_save) -> bool
 auto Game::save(int slot) -> bool
 {
   LOG("Save slot: %d", slot);
-  TRACE_AND_INDENT();
+  TRACE();
 
   if (slot < 0) {
     return false;
@@ -660,7 +660,7 @@ auto Game::save(int slot) -> bool
 auto Game::save_snapshot() -> bool
 {
   LOG("Save snapshot");
-  TRACE_AND_INDENT();
+  TRACE();
 
   auto this_save_file = saved_dir + "saved-snapshot-info";
 
@@ -680,7 +680,7 @@ auto Game::save_snapshot() -> bool
 
 auto Game::save_config() -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   //
   // Stops clang tidy adding const for this function
@@ -706,7 +706,7 @@ void wid_save_destroy(Gamep g)
   }
 
   LOG("Wid save destroy");
-  TRACE_AND_INDENT();
+  TRACE();
 
   delete wid_save;
   wid_save = nullptr;
@@ -715,7 +715,7 @@ void wid_save_destroy(Gamep g)
 
 static auto wid_save_key_up(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (sdlk_eq(*key, game->config.key_console)) {
     return false;
@@ -728,7 +728,7 @@ static auto wid_save_key_up(Gamep g, Widp w, const struct SDL_Keysym *key) -> bo
       switch (key->sym) {
         default :
           {
-            TRACE_NO_INDENT();
+            TRACE();
             auto c = wid_event_to_char(key);
             switch (c) {
               case '0' :
@@ -742,7 +742,7 @@ static auto wid_save_key_up(Gamep g, Widp w, const struct SDL_Keysym *key) -> bo
               case '8' :
               case '9' :
                 {
-                  TRACE_NO_INDENT();
+                  TRACE();
                   int const slot = c - '0';
                   game->save(slot);
                   wid_save_destroy(game);
@@ -752,7 +752,7 @@ static auto wid_save_key_up(Gamep g, Widp w, const struct SDL_Keysym *key) -> bo
               case 'B' :
               case SDLK_ESCAPE :
                 {
-                  TRACE_NO_INDENT();
+                  TRACE();
                   LOG("Save game cancelled");
                   wid_save_destroy(game);
                   return true;
@@ -767,7 +767,7 @@ static auto wid_save_key_up(Gamep g, Widp w, const struct SDL_Keysym *key) -> bo
 
 static auto wid_save_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (sdlk_eq(*key, game->config.key_console)) {
     sound_play(g, "keypress");
@@ -780,7 +780,7 @@ static auto wid_save_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> 
 
 static auto wid_save_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   auto slot = wid_get_int_context(w);
   game->save(slot);
   wid_save_destroy(game);
@@ -789,7 +789,7 @@ static auto wid_save_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button) ->
 
 static auto wid_save_cancel(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   wid_save_destroy(game);
   return true;
 }
@@ -797,7 +797,7 @@ static auto wid_save_cancel(Gamep g, Widp w, int x, int y, uint32_t button) -> b
 auto Game::save_select() -> bool
 {
   LOG("Save menu");
-  TRACE_AND_INDENT();
+  TRACE();
 
   if (wid_save != nullptr) {
     return false;
@@ -813,7 +813,7 @@ auto Game::save_select() -> bool
   wid_set_on_key_down(wid_save->wid_popup_container, wid_save_key_down);
 
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_save->wid_text_area->wid_text_area;
     auto *w = wid_new_back_button(game, p, "back");
 

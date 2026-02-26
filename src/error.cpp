@@ -25,7 +25,7 @@
 
 static void error_message_do(Gamep g, std::string &tech_support)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   tech_support += "\n";
 
@@ -110,7 +110,7 @@ void error_message(Gamep g, const std::string &error_msg)
     return;
   }
 
-  TRACE_NO_INDENT();
+  TRACE();
 
   std::string tech_support = "An error has occurred:\n";
   tech_support += error_msg;
@@ -120,7 +120,7 @@ void error_message(Gamep g, const std::string &error_msg)
 
 void error_clear(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   g_errored_thread_id = -1;
   g_err_count         = 0;

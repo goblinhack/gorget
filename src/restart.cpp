@@ -24,7 +24,7 @@
 void restart(Gamep g, const std::string &restart_arg)
 {
   CON("Exiting, restart called");
-  TRACE_NO_INDENT();
+  TRACE();
 
   char const *executable = nullptr;
   const char *argv[ MAXSHORTSTR /* in pointers, should be enough */ ];

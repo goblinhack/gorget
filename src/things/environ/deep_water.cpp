@@ -11,14 +11,14 @@
 
 static auto tp_deep_water_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   return "deep water";
 }
 
 auto tp_load_deep_water() -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *tp   = tp_load("deep_water"); // keep as string for scripts
   auto  name = tp_name(tp);

@@ -26,7 +26,7 @@ static std::map< unsigned int, std::string > wid_topcon_lines;
 
 void wid_topcon_fini(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   wid_destroy(g, &wid_topcon_container);
   wid_destroy(g, &wid_topcon_vert_scroll);
   wid_destroy(g, &wid_topcon_input_line);
@@ -35,7 +35,7 @@ void wid_topcon_fini(Gamep g)
 
 auto wid_topcon_init(Gamep g) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   wid_topcon_wid_create(g);
 
   last_msg       = "";
@@ -49,7 +49,7 @@ auto wid_topcon_init(Gamep g) -> bool
 //
 static void wid_topcon_reset_scroll(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (wid_topcon_vert_scroll == nullptr) {
     return;
@@ -60,7 +60,7 @@ static void wid_topcon_reset_scroll(Gamep g)
 
 static void wid_topcon_scroll(Widp w, const std::string &str)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   Widp tmp {};
 
   wid_scroll_text(w);
@@ -76,7 +76,7 @@ static void wid_topcon_scroll(Widp w, const std::string &str)
 
 static void wid_topcon_replace(Widp w, const std::string &str)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   Widp tmp {};
 
   //
@@ -93,7 +93,7 @@ static void wid_topcon_replace(Widp w, const std::string &str)
 //
 static void wid_topcon_log_(std::string s)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   static int log_wid_topcon_buffered_lines;
 
   if (s.empty()) {
@@ -147,7 +147,7 @@ static void wid_topcon_log_(std::string s)
 
 void wid_topcon_flush(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   auto iter = wid_topcon_lines.begin();
 
   while (iter != wid_topcon_lines.end()) {
@@ -163,7 +163,7 @@ void wid_topcon_flush(Gamep g)
 //
 void wid_topcon_log(const std::string &s)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (g_opt_tests) {
     return;
@@ -192,14 +192,14 @@ void wid_topcon_log(const std::string &s)
 //
 static void wid_topcon_wid_create(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   int const h = UI_TOPCON_HEIGHT;
 
   if (wid_topcon_window != nullptr) {
     wid_topcon_fini(g);
   }
 
-  TRACE_NO_INDENT();
+  TRACE();
   {
     auto tl = spoint(UI_LEFTBAR_WIDTH, 0);
     auto br = spoint(UI_LEFTBAR_WIDTH + UI_TOPCON_WIDTH - 1, h - 1);
@@ -210,7 +210,7 @@ static void wid_topcon_wid_create(Gamep g)
     wid_set_shape_none(wid_topcon_window);
   }
 
-  TRACE_NO_INDENT();
+  TRACE();
   {
     auto tl = spoint(0, 0);
     auto br = spoint(UI_TOPCON_WIDTH - 1, h - 1);
@@ -221,7 +221,7 @@ static void wid_topcon_wid_create(Gamep g)
     wid_set_style(wid_topcon_container, UI_WID_STYLE_CONSOLE);
   }
 
-  TRACE_NO_INDENT();
+  TRACE();
   {
     int row        = 0;
     int row_bottom = h;
@@ -234,7 +234,7 @@ static void wid_topcon_wid_create(Gamep g)
       auto tl = spoint(0, row_bottom);
       auto br = spoint(UI_TOPCON_WIDTH - 1, row_bottom);
 
-      TRACE_NO_INDENT();
+      TRACE();
       child = wid_new_container(g, wid_topcon_container, "");
 
       wid_set_shape_none(child);
@@ -254,7 +254,7 @@ static void wid_topcon_wid_create(Gamep g)
     }
   }
 
-  TRACE_NO_INDENT();
+  TRACE();
   wid_topcon_vert_scroll = wid_new_vert_scroll_bar(g, wid_topcon_window, "", wid_topcon_container);
   wid_visible(g, wid_get_parent(wid_topcon_vert_scroll));
   wid_update(g, wid_topcon_window);

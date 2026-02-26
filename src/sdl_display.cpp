@@ -15,7 +15,7 @@
 
 void sdl_display(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (sdl.window == nullptr) {
     return;
@@ -48,7 +48,7 @@ void sdl_display(Gamep g)
   //
   // Screenshot?
   //
-  if (UNLIKELY(g_do_screenshot)) {
+  UNLIKELY if((g_do_screenshot)) {
     g_do_screenshot = false;
     sdl_screenshot_do(g);
   }
@@ -63,7 +63,7 @@ void sdl_display(Gamep g)
 
 void sdl_flush_display(Gamep g, bool force)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (sdl.window == nullptr) {
     return;
@@ -83,7 +83,7 @@ void sdl_flush_display(Gamep g, bool force)
 
 void sdl_display_reset(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (sdl.window == nullptr) {
     return;
@@ -115,7 +115,7 @@ void sdl_display_reset(Gamep g)
 
 static inline void sdl_list_video_size()
 {
-  TRACE_NO_INDENT();
+  TRACE();
   int i = 0;
 
   if (! g_opt_debug1) {
@@ -305,7 +305,7 @@ auto sdl_display_init(Gamep g) -> bool
 void sdl_display_fini(Gamep g)
 {
   LOG("SDL: Video fini");
-  TRACE_AND_INDENT();
+  TRACE();
 
   if (sdl.init_video == 0) {
     return;

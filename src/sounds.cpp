@@ -7,7 +7,7 @@
 
 void sounds_init()
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (! sound_load(0.1F, "data/sounds/interface/keypress.ogg", "keypress")) {
     return;

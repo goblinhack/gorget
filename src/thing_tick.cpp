@@ -12,7 +12,7 @@
 //
 void thing_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   //
   // Reset damage counts.
@@ -58,7 +58,7 @@ void thing_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
 //
 void thing_tick_idle(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   //
   // Per thing callback
@@ -71,7 +71,7 @@ void thing_tick_idle(Gamep g, Levelsp v, Levelp l, Thingp t)
 //
 void thing_tick_end(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   //
   // Per thing callback

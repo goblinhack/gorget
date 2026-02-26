@@ -10,7 +10,7 @@
 
 auto thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &at) -> Thingp
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *t = thing_init(g, v, l, tp, at);
   if (t == nullptr) {

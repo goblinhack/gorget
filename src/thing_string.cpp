@@ -13,7 +13,7 @@
 
 auto to_string(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (t == nullptr) {
     ERR("No thing pointer set");
@@ -64,7 +64,7 @@ auto to_string(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 
 auto to_string(Gamep g, Levelsp v, Levelp l, ThingEvent &e) -> std::string
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   std::string s = "ev:";
 
@@ -95,7 +95,7 @@ auto to_string(Gamep g, Levelsp v, Levelp l, ThingEvent &e) -> std::string
 
 auto to_death_reason_string(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e) -> std::string
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   std::string s;
   auto       *source = e.source;

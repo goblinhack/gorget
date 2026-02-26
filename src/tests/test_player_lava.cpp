@@ -11,7 +11,7 @@
 [[nodiscard]] static auto test_player_lava(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
-  TRACE_AND_INDENT();
+  TRACE();
 
   LevelNum const level_num = 0;
   auto           w         = 7;
@@ -60,7 +60,7 @@
   // Move into the lava. The player should die.
   //
   TEST_LOG(t, "move player into lava right");
-  TRACE_AND_INDENT();
+  TRACE();
   up = down = left = right = false;
   right                    = true;
 
@@ -69,9 +69,9 @@
   //
   TEST_PROGRESS(t);
   {
-    TRACE_NO_INDENT();
+    TRACE();
     player = thing_player(g);
-    if (UNLIKELY(player == nullptr)) {
+    UNLIKELY if (player == nullptr) {
       TEST_FAILED(t, "no player");
       goto exit;
     }
@@ -82,7 +82,7 @@
   //
   TEST_PROGRESS(t);
   {
-    TRACE_NO_INDENT();
+    TRACE();
     if (! (result = player_move_request(g, up, down, left, right, false /* fire */))) {
       TEST_FAILED(t, "move failed");
       goto exit;
@@ -94,7 +94,7 @@
   //
   TEST_PROGRESS(t);
   {
-    TRACE_NO_INDENT();
+    TRACE();
     if (! game_wait_for_tick_to_finish(g, v, l)) {
       TEST_FAILED(t, "wait loop failed");
       goto exit;
@@ -106,7 +106,7 @@
   //
   TEST_PROGRESS(t);
   {
-    TRACE_NO_INDENT();
+    TRACE();
     if (! (result = level_match_contents(g, v, l, t, w, h, expect1.c_str()))) {
       TEST_FAILED(t, "unexpected contents");
       goto exit;
@@ -116,7 +116,7 @@
   TEST_PROGRESS(t);
   for (auto tries = 0; tries < 10; tries++) {
     TEST_LOG(t, "try: %d", tries);
-    TRACE_NO_INDENT();
+    TRACE();
     TEST_ASSERT(t, game_event_wait(g), "failed to wait");
     if (! game_wait_for_tick_to_finish(g, v, l)) {
       TEST_FAILED(t, "wait loop failed");
@@ -133,7 +133,7 @@
   //
   TEST_PROGRESS(t);
   {
-    TRACE_NO_INDENT();
+    TRACE();
     TEST_LOG(t, "check player is dead when in lava");
     p            = thing_at(player);
     found_corpse = false;
@@ -160,7 +160,7 @@
 
   TEST_PASSED(t);
 exit:
-  TRACE_NO_INDENT();
+  TRACE();
   game_cleanup(g);
 
   return result;
@@ -168,7 +168,7 @@ exit:
 
 auto test_load_player_lava() -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   Testp test = test_load("player_lava");
 

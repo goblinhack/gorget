@@ -10,7 +10,7 @@
 //
 void rooms_key(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   room_add(g, CHANCE_NORMAL, ROOM_FLAG_HAS_KEY, __FUNCTION__, __LINE__,
            /* line */ (const char *) "    ^       ",

@@ -12,7 +12,7 @@
 //
 void thing_interpolate(Gamep g, Levelsp v, Levelp l, Thingp t, float dt)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto at          = thing_at(t);
   auto moving_from = thing_moving_from(t);

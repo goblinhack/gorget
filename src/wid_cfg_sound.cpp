@@ -18,7 +18,7 @@ static bool      local_g_config_changed;
 
 static void wid_cfg_sound_destroy()
 {
-  TRACE_NO_INDENT();
+  TRACE();
   delete wid_cfg_sound_window;
   wid_cfg_sound_window   = nullptr;
   local_g_config_changed = false;
@@ -26,7 +26,7 @@ static void wid_cfg_sound_destroy()
 
 [[nodiscard]] static auto wid_cfg_sound_cancel(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   CON("Reload config");
   if (local_g_config_changed) {
     local_g_config_changed = false;
@@ -40,7 +40,7 @@ static void wid_cfg_sound_destroy()
 
 [[nodiscard]] static auto wid_cfg_sound_save(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   CON("Save config for sound");
   game_save_config(g);
@@ -52,7 +52,7 @@ static void wid_cfg_sound_destroy()
 
 [[nodiscard]] static auto wid_cfg_sound_back(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   wid_cfg_sound_destroy();
   wid_options_menu_select(g);
   return true;
@@ -60,7 +60,7 @@ static void wid_cfg_sound_destroy()
 
 [[nodiscard]] static auto wid_cfg_sound_effects_volume_incr(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   local_g_config_changed = true;
   CON("Increment sound volume");
   auto vol = game_sound_volume_get(g);
@@ -74,7 +74,7 @@ static void wid_cfg_sound_destroy()
 
 [[nodiscard]] static auto wid_cfg_sound_effects_volume_decr(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   local_g_config_changed = true;
   CON("Decrement sound volume");
   auto vol = game_sound_volume_get(g);
@@ -88,7 +88,7 @@ static void wid_cfg_sound_destroy()
 
 [[nodiscard]] static auto wid_cfg_sound_music_volume_incr(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   local_g_config_changed = true;
   CON("Increment music volume");
   auto vol = game_music_volume_get(g);
@@ -103,7 +103,7 @@ static void wid_cfg_sound_destroy()
 
 [[nodiscard]] static auto wid_cfg_sound_music_volume_decr(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
   local_g_config_changed = true;
   CON("Decrement music volume");
   auto vol = game_music_volume_get(g);
@@ -118,7 +118,7 @@ static void wid_cfg_sound_destroy()
 
 [[nodiscard]] static auto wid_cfg_sound_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
     sound_play(g, "keypress");
@@ -132,7 +132,7 @@ static void wid_cfg_sound_destroy()
       switch (key->sym) {
         default :
           {
-            TRACE_NO_INDENT();
+            TRACE();
             auto c = wid_event_to_char(key);
             switch (c) {
               case 'c' :
@@ -161,7 +161,7 @@ static void wid_cfg_sound_destroy()
 
 void wid_cfg_sound_select(Gamep g)
 {
-  TRACE_NO_INDENT();
+  TRACE();
   if (wid_cfg_sound_window != nullptr) {
     wid_cfg_sound_destroy();
   }
@@ -176,14 +176,14 @@ void wid_cfg_sound_select(Gamep g)
   wid_cfg_sound_window = new WidPopup(g, "Config sound select", outer_tl, outer_br, nullptr, "", false, false);
 
   {
-    TRACE_NO_INDENT();
+    TRACE();
     Widp w = wid_cfg_sound_window->wid_popup_container;
     wid_set_on_key_down(w, wid_cfg_sound_key_down);
   }
 
   int y_at = 0;
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_cfg_sound_window->wid_text_area->wid_text_area;
     auto *w = wid_new_square_button(g, p, "configuration");
 
@@ -196,7 +196,7 @@ void wid_cfg_sound_select(Gamep g)
 
   y_at = 3;
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_cfg_sound_window->wid_text_area->wid_text_area;
     auto *w = wid_new_back_button(g, p, "BACK");
 
@@ -206,7 +206,7 @@ void wid_cfg_sound_select(Gamep g)
     wid_set_pos(w, tl, br);
   }
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_cfg_sound_window->wid_text_area->wid_text_area;
     auto *w = wid_new_save_button(g, p, "Save");
 
@@ -217,7 +217,7 @@ void wid_cfg_sound_select(Gamep g)
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "S" UI_RESET_FMT "ave");
   }
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_cfg_sound_window->wid_text_area->wid_text_area;
     auto *w = wid_new_cancel_button(g, p, "Cancel");
 
@@ -230,7 +230,7 @@ void wid_cfg_sound_select(Gamep g)
 
   y_at += 4;
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_cfg_sound_window->wid_text_area->wid_text_area;
     auto *w = wid_new_square_button(g, p, "Effects volume");
 
@@ -242,7 +242,7 @@ void wid_cfg_sound_select(Gamep g)
     wid_set_text(w, "Effects");
   }
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_cfg_sound_window->wid_text_area->wid_text_area;
     auto *w = wid_new_button(g, p, "Effects volume value");
 
@@ -252,7 +252,7 @@ void wid_cfg_sound_select(Gamep g)
     wid_set_text(w, std::to_string(game_sound_volume_get(g)));
   }
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_cfg_sound_window->wid_text_area->wid_text_area;
     auto *w = wid_new_menu_button(g, p, "Effects value +");
 
@@ -264,7 +264,7 @@ void wid_cfg_sound_select(Gamep g)
     wid_set_text(w, "+");
   }
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_cfg_sound_window->wid_text_area->wid_text_area;
     auto *w = wid_new_menu_button(g, p, "Effects value -");
 
@@ -278,7 +278,7 @@ void wid_cfg_sound_select(Gamep g)
 
   y_at += 4;
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_cfg_sound_window->wid_text_area->wid_text_area;
     auto *w = wid_new_square_button(g, p, "Music volume");
 
@@ -290,7 +290,7 @@ void wid_cfg_sound_select(Gamep g)
     wid_set_text(w, "Music");
   }
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_cfg_sound_window->wid_text_area->wid_text_area;
     auto *w = wid_new_button(g, p, "Music volume value");
 
@@ -300,7 +300,7 @@ void wid_cfg_sound_select(Gamep g)
     wid_set_text(w, std::to_string(game_music_volume_get(g)));
   }
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_cfg_sound_window->wid_text_area->wid_text_area;
     auto *w = wid_new_menu_button(g, p, "Music value +");
 
@@ -312,7 +312,7 @@ void wid_cfg_sound_select(Gamep g)
     wid_set_text(w, "+");
   }
   {
-    TRACE_NO_INDENT();
+    TRACE();
     auto *p = wid_cfg_sound_window->wid_text_area->wid_text_area;
     auto *w = wid_new_menu_button(g, p, "Music value -");
 

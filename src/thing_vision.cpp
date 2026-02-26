@@ -9,7 +9,7 @@
 
 void thing_vision_reset(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *ext = thing_ext_struct(g, t);
   if (ext != nullptr) {
@@ -24,14 +24,14 @@ void thing_vision_reset(Gamep g, Levelsp v, Levelp l, Thingp t)
 
 auto thing_vision_can_see_tile(Gamep g, Levelsp v, Levelp l, Thingp t, spoint p) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *ext = thing_ext_struct(g, t);
-  if (UNLIKELY(ext == nullptr)) {
+  UNLIKELY if (ext == nullptr) {
     return false;
   }
 
-  if (IS_OOB(p)) {
+  UNLIKELY if (is_oob(p)) {
     return false;
   }
 
@@ -48,19 +48,19 @@ auto thing_vision_can_see_tile(Gamep g, Levelsp v, Levelp l, Thingp t, spoint p)
 
 auto thing_vision_player_has_seen_tile(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool
 {
-  TRACE_NO_INDENT();
+  TRACE();
 
   auto *player = thing_player(g);
-  if (UNLIKELY(player == nullptr)) {
+  UNLIKELY if (player == nullptr) {
     return false;
   }
 
   auto *ext = thing_ext_struct(g, player);
-  if (UNLIKELY(ext == nullptr)) {
+  UNLIKELY if (ext == nullptr) {
     return false;
   }
 
-  if (IS_OOB(p)) {
+  UNLIKELY if (is_oob(p)) {
     return false;
   }
 
@@ -70,7 +70,7 @@ auto thing_vision_player_has_seen_tile(Gamep g, Levelsp v, Levelp l, const spoin
 void thing_can_see_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   auto *ext = thing_ext_struct(g, t);
-  if (UNLIKELY(ext == nullptr)) {
+  UNLIKELY if (ext == nullptr) {
     return;
   }
 
@@ -106,7 +106,7 @@ void thing_can_see_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
 void thing_has_seen_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   auto *ext = thing_ext_struct(g, t);
-  if (UNLIKELY(ext == nullptr)) {
+  UNLIKELY if (ext == nullptr) {
     return;
   }
 
