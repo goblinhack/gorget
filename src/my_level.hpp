@@ -263,7 +263,7 @@ using Level = struct Level {
   //
   // Updated per tick for things that block light
   //
-  uint8_t is_light_blocker[ MAP_WIDTH ][ MAP_HEIGHT ];
+  uint8_t is_light_blocker_cache[ MAP_WIDTH ][ MAP_HEIGHT ];
   //
   // Original character map when the level was generated
   //
