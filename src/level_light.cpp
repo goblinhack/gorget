@@ -249,7 +249,10 @@ auto level_light_blocker_at(Gamep g, Levelsp v, Levelp l, const spoint &pov) -> 
 //
 // Something blocking the fov?
 //
-auto level_light_blocker_at_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool { return l->is_light_blocker_cache[ p.x ][ p.y ] != 0; }
+auto level_light_blocker_at_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool
+{
+  return l->is_light_blocker_cache[ p.x ][ p.y ] != 0;
+}
 
 //
 // Update all light blockers. This is done per tick to avoid having to redo this

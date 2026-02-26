@@ -33,6 +33,7 @@ static FboEnum fbo_last   = FBO_NONE;
 void MessageCallback(GLenum /*source*/, GLenum type, GLuint id, GLenum severity, GLsizei /*length*/, const GLchar *message,
                      const void * /*userParam*/)
 {
+  TRACE();
   CON("GL CALLBACK: type = 0x%x, severity = 0x%x, message = %s\n", type, severity, message);
 }
 
@@ -443,6 +444,8 @@ static void gl_fini_fbo_(GLuint *fbo_id, GLuint *fbo_tex_id, GLuint tex_width, G
 
 void gl_init_fbo(Gamep g, FboEnum fbo)
 {
+  TRACE();
+
   LOG("GFX: OpenGL create FBOs");
   GL_ERROR_CHECK();
 
@@ -507,6 +510,8 @@ void gl_init_fbo(Gamep g, FboEnum fbo)
 
 void gl_fini_fbo(Gamep g)
 {
+  TRACE();
+
   LOG("GFX: OpenGL destroy FBOs");
   GL_ERROR_CHECK();
 
@@ -527,6 +532,8 @@ void gl_fini_fbo(Gamep g)
 
 void fbo_get_size(Gamep g, FboEnum fbo, int &w, int &h)
 {
+  TRACE();
+
   switch (fbo) {
     case FBO_MAP_BG :
     case FBO_MAP_FG :
@@ -571,6 +578,8 @@ void fbo_get_curr_size(Gamep g, int &w, int &h) { fbo_get_size(g, fbo_last, w, h
 
 void blit_fbo(Gamep g, FboEnum fbo)
 {
+  TRACE_DEBUG();
+
   int tex_width  = 0;
   int tex_height = 0;
   fbo_get_size(g, fbo, tex_width, tex_height);
@@ -581,17 +590,29 @@ void blit_fbo(Gamep g, FboEnum fbo)
 
 void blit_fbo(Gamep g, FboEnum fbo, int tl_x, int tl_y, int br_x, int br_y)
 {
+  TRACE_DEBUG();
+
   blit_init();
   blit(g_fbo_tex_id[ fbo ], 0.0, 1.0, 1.0, 0.0, tl_x, tl_y, br_x, br_y, WHITE);
   blit_flush();
 }
 
-void blit_fbo_push(FboEnum fbo) { glBindFramebuffer_EXT(GL_FRAMEBUFFER, g_fbo_id[ fbo ]); }
+void blit_fbo_push(FboEnum fbo)
+{
+  TRACE_DEBUG();
+  glBindFramebuffer_EXT(GL_FRAMEBUFFER, g_fbo_id[ fbo ]);
+}
 
-void blit_fbo_pop() { glBindFramebuffer_EXT(GL_FRAMEBUFFER, g_fbo_id[ fbo_last ]); }
+void blit_fbo_pop()
+{
+  TRACE_DEBUG();
+  glBindFramebuffer_EXT(GL_FRAMEBUFFER, g_fbo_id[ fbo_last ]);
+}
 
 void blit_fbo_bind(FboEnum fbo)
 {
+  TRACE_DEBUG();
+
   fbo_last = fbo;
   if (fbo_locked != FBO_NONE) {
     CROAK("Attempt to bind to another FBO %d when locked", fbo);
@@ -601,6 +622,8 @@ void blit_fbo_bind(FboEnum fbo)
 
 void blit_fbo_unbind()
 {
+  TRACE_DEBUG();
+
   if (fbo_locked != FBO_NONE) {
     CROAK("Attempt to unbind when locked");
   }
@@ -609,6 +632,8 @@ void blit_fbo_unbind()
 
 void blit_fbo_bind_locked(FboEnum fbo)
 {
+  TRACE_DEBUG();
+
   fbo_last   = fbo;
   fbo_locked = fbo;
   glBindFramebuffer_EXT(GL_FRAMEBUFFER, g_fbo_id[ fbo ]);
@@ -616,6 +641,8 @@ void blit_fbo_bind_locked(FboEnum fbo)
 
 void blit_fbo_unbind_locked()
 {
+  TRACE_DEBUG();
+
   fbo_locked = FBO_NONE;
   glBindFramebuffer_EXT(GL_FRAMEBUFFER, 0);
 }
@@ -680,7 +707,8 @@ void blit_init()
 
 void blit_fini()
 {
-  TRACE();
+  TRACE_DEBUG();
+
   if (gl_array_buf != nullptr) {
     MYFREE(gl_array_buf);
     gl_array_buf = nullptr;
@@ -740,13 +768,14 @@ void blit_flush_triangle_fan() { blit_flush_triangle_fan(gl_array_buf, bufp); }
 
 void blit_flush_colored_triangle_fan()
 {
-  TRACE();
+  TRACE_DEBUG();
+
   blit_flush_colored_triangle_fan(gl_array_buf, bufp);
 }
 
 void blit_flush_colored_triangle_fan(float *b, const float *e)
 {
-  TRACE();
+  TRACE_DEBUG();
 
   glEnableClientState(GL_VERTEX_ARRAY);
   glEnableClientState(GL_COLOR_ARRAY);
@@ -777,7 +806,7 @@ void blit_flush_colored_triangle_fan(float *b, const float *e)
 
 void blit_flush_triangle_fan(float *b, const float *e)
 {
-  TRACE();
+  TRACE_DEBUG();
 
   glEnableClientState(GL_VERTEX_ARRAY);
 
@@ -800,6 +829,8 @@ void blit_flush_triangle_fan(float *b, const float *e)
 
 void gl_blitquad(GLshort left, GLshort top, GLshort right, GLshort bottom)
 {
+  TRACE_DEBUG();
+
   GLshort  xy[ 4 * 2 ];
   GLshort *xyp = xy; // NOLINT
 
@@ -819,6 +850,8 @@ void gl_blitquad(GLshort left, GLshort top, GLshort right, GLshort bottom)
 
 void gl_blitquad(const spoint tl, const spoint tr, const spoint bl, const spoint br)
 {
+  TRACE_DEBUG();
+
   GLshort  xy[ 4 * 2 ];
   GLshort *xyp = xy; // NOLINT
 
@@ -838,6 +871,8 @@ void gl_blitquad(const spoint tl, const spoint tr, const spoint bl, const spoint
 
 void gl_blitsquare(GLshort left, GLshort top, GLshort right, GLshort bottom)
 {
+  TRACE_DEBUG();
+
   GLshort  xy[ 4 * 2 ];
   GLshort *xyp = xy; // NOLINT
 
@@ -857,6 +892,8 @@ void gl_blitsquare(GLshort left, GLshort top, GLshort right, GLshort bottom)
 
 void gl_blitline(GLshort left, GLshort top, GLshort right, GLshort bottom)
 {
+  TRACE_DEBUG();
+
   GLshort  xy[ 2 * 2 ];
   GLshort *xyp = xy; // NOLINT
 
@@ -1336,6 +1373,8 @@ void gl_ext_init() { TRACE(); }
 
 void gl_error(GLenum errCode)
 {
+  TRACE();
+
   if (errCode == GL_INVALID_ENUM) {
     LOG("GFX: error, GL_INVALID_ENUM");
   } else if (errCode == GL_INVALID_VALUE) {
@@ -1359,6 +1398,8 @@ static void gl_push(float **P, const float *p_end, bool first_vertex, float tex_
                     spoint tl, spoint tr, spoint bl, spoint br, uint8_t r1, uint8_t g1, uint8_t b1, uint8_t a1, uint8_t r2, uint8_t g2,
                     uint8_t b2, uint8_t a2, uint8_t r3, uint8_t g3, uint8_t b3, uint8_t a3, uint8_t r4, uint8_t g4, uint8_t b4, uint8_t a4)
 {
+  TRACE_DEBUG();
+
   float *p = *P;
 
   if ((p >= p_end)) [[unlikely]] {
@@ -1409,6 +1450,8 @@ static void gl_push(float **P, float *p_end, bool first_vertex, float tex_left, 
                     uint8_t g2, uint8_t b2, uint8_t a2, uint8_t r3, uint8_t g3, uint8_t b3, uint8_t a3, uint8_t r4, uint8_t g4, uint8_t b4,
                     uint8_t a4)
 {
+  TRACE_DEBUG();
+
   spoint const tl(left, top);
   spoint const tr(right, top);
   spoint const bl(left, bottom);
@@ -1423,10 +1466,12 @@ static bool first_vertex;
 void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLshort left, GLshort top, GLshort right, GLshort bottom,
           const color &c)
 {
-  if ((! buf_tex)) [[unlikely]] {
+  TRACE_DEBUG();
+
+  if (buf_tex == 0) [[unlikely]] {
     blit_init();
     first_vertex = true;
-  } else if ((buf_tex != tex)) [[unlikely]] {
+  } else if (buf_tex != tex) [[unlikely]] {
     blit_flush();
     first_vertex = true;
   } else {
@@ -1447,10 +1492,12 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
 void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLshort pixMinX, GLshort pixMinY, GLshort pixMaxX,
           GLshort pixMaxY, const color &c, LightPixels *light_pixels, bool blit_flush_per_line)
 {
-  if ((! buf_tex)) [[unlikely]] {
+  TRACE_DEBUG();
+
+  if (buf_tex == 0) [[unlikely]] {
     blit_init();
     first_vertex = true;
-  } else if ((buf_tex != tex)) [[unlikely]] {
+  } else if (buf_tex != tex) [[unlikely]] {
     blit_flush();
     first_vertex = true;
   } else {
@@ -1505,10 +1552,12 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
 void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLshort left, GLshort top, GLshort right, GLshort bottom,
           const color &color_bl, const color &color_br, const color &color_tl, const color &color_tr)
 {
-  if ((! buf_tex)) [[unlikely]] {
+  TRACE_DEBUG();
+
+  if (buf_tex == 0) [[unlikely]] {
     blit_init();
     first_vertex = true;
-  } else if ((buf_tex != tex)) [[unlikely]] {
+  } else if (buf_tex != tex) [[unlikely]] {
     blit_flush();
     first_vertex = true;
   } else {
@@ -1524,5 +1573,7 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
 
 void blit(int tex, GLshort left, GLshort top, GLshort right, GLshort bottom, const color &c)
 {
+  TRACE_DEBUG();
+
   blit(tex, 0.0, 1.0, 1.0, 0.0, left, top, right, bottom, c);
 }

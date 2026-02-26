@@ -37,7 +37,7 @@ void wid_mouse_focus_end(Gamep g_maybe_null)
   wid_focus        = nullptr;
   wid_focus_locked = nullptr;
 
-  if ((! w)) [[unlikely]] {
+  if (w == nullptr) [[unlikely]] {
     return;
   }
 
@@ -52,7 +52,7 @@ void wid_mouse_focus_begin(Gamep g, Widp w)
 
   Widp top {};
 
-  if ((! w)) [[unlikely]] {
+  if (w == nullptr) [[unlikely]] {
     wid_mouse_focus_end(g);
     wid_focus = nullptr;
 
@@ -98,7 +98,7 @@ void wid_mouse_over_end(Gamep g)
   }
   wid_over = nullptr;
 
-  if ((! w)) [[unlikely]] {
+  if (w == nullptr) [[unlikely]] {
     return;
   }
 
@@ -388,7 +388,7 @@ static auto wid_mouse_down_handler_at(Gamep g, Widp w, int x, int y, uint8_t str
 {
   TRACE();
 
-  if ((! w)) [[unlikely]] {
+  if (w == nullptr) [[unlikely]] {
     return nullptr;
   }
 
@@ -467,7 +467,7 @@ static auto wid_mouse_held_handler_at(Gamep g, Widp w, int x, int y, uint8_t str
 {
   TRACE();
 
-  if ((! w)) [[unlikely]] {
+  if (w == nullptr) [[unlikely]] {
     return nullptr;
   }
 
@@ -542,7 +542,7 @@ static auto wid_mouse_up_handler_at(Gamep g, Widp w, int x, int y, uint8_t stric
 {
   TRACE();
 
-  if ((! w)) [[unlikely]] {
+  if (w == nullptr) [[unlikely]] {
     return nullptr;
   }
 
@@ -638,7 +638,7 @@ static auto wid_mouse_down_handler(Gamep g, int x, int y) -> Widp
       }
 
       c = wid_mouse_down_handler_at(g, c, x, y, 1U /* strict */);
-      if ((! c)) [[unlikely]] {
+      if (c == nullptr) [[unlikely]] {
         continue;
       }
 
@@ -655,7 +655,7 @@ static auto wid_mouse_down_handler(Gamep g, int x, int y) -> Widp
       }
 
       c = wid_mouse_down_handler_at(g, c, x, y, 0U /* strict */);
-      if ((! c)) [[unlikely]] {
+      if (c == nullptr) [[unlikely]] {
         continue;
       }
 
@@ -691,7 +691,7 @@ static auto wid_mouse_held_handler(Gamep g, int x, int y) -> Widp
       }
 
       c = wid_mouse_held_handler_at(g, c, x, y, 1U /* strict */);
-      if ((! c)) [[unlikely]] {
+      if (c == nullptr) [[unlikely]] {
         continue;
       }
 
@@ -708,7 +708,7 @@ static auto wid_mouse_held_handler(Gamep g, int x, int y) -> Widp
       }
 
       c = wid_mouse_held_handler_at(g, c, x, y, 0U /* strict */);
-      if ((! c)) [[unlikely]] {
+      if (c == nullptr) [[unlikely]] {
         continue;
       }
 
@@ -744,7 +744,7 @@ static auto wid_mouse_up_handler(Gamep g, int x, int y) -> Widp
       }
 
       c = wid_mouse_up_handler_at(g, c, x, y, 1U /* strict */);
-      if ((! c)) [[unlikely]] {
+      if (c == nullptr) [[unlikely]] {
         continue;
       }
 
@@ -761,7 +761,7 @@ static auto wid_mouse_up_handler(Gamep g, int x, int y) -> Widp
       }
 
       c = wid_mouse_up_handler_at(g, c, x, y, 0U /* strict */);
-      if ((! c)) [[unlikely]] {
+      if (c == nullptr) [[unlikely]] {
         continue;
       }
 
@@ -834,7 +834,7 @@ void wid_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx, int
     //
     if ((wheelx == 0) && (wheely == 0)) {
       w = wid_find_at(x, y);
-      if ((! w)) [[unlikely]] {
+      if (w == nullptr) [[unlikely]] {
         continue;
       }
     }
@@ -851,7 +851,7 @@ void wid_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx, int
         w = w->parent;
       }
 
-      if ((! w)) [[unlikely]] {
+      if (w == nullptr) [[unlikely]] {
         continue;
       }
     }
@@ -866,7 +866,7 @@ void wid_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx, int
 
     bool done = 0u;
 
-    if ((! w)) [[unlikely]] {
+    if (w == nullptr) [[unlikely]] {
       //
       // Allow scrollbar to grab.
       //
@@ -992,7 +992,7 @@ void wid_mouse_down(Gamep g, uint32_t button, int x, int y)
   ascii_mouse_y = y;
 
   w = wid_mouse_down_handler(g, x, y);
-  if ((! w)) [[unlikely]] {
+  if (w == nullptr) [[unlikely]] {
     LOG("Wid mouse down, ignore, no handler");
     return;
   }
@@ -1055,7 +1055,7 @@ void wid_mouse_held(Gamep g, uint32_t button, int x, int y)
   ascii_mouse_y = y;
 
   w = wid_mouse_held_handler(g, x, y);
-  if ((! w)) [[unlikely]] {
+  if (w == nullptr) [[unlikely]] {
     return;
   }
 
@@ -1103,7 +1103,7 @@ void wid_mouse_up(Gamep g, uint32_t button, int x, int y)
   wid_mouse_motion_end(g);
 
   w = wid_mouse_up_handler(g, x, y);
-  if ((! w)) [[unlikely]] {
+  if (w == nullptr) [[unlikely]] {
     return;
   }
 

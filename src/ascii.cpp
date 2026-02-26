@@ -179,7 +179,7 @@ auto ascii_is_empty(int x, int y) -> bool
 
 void ascii_set(int depth, int x, int y, color col)
 {
-  if ((! ascii_ok_for_scissors(x, y))) [[unlikely]] {
+  if ((ascii_ok_for_scissors(x, y) == 0)) [[unlikely]] {
     return;
   }
 
@@ -197,7 +197,7 @@ void ascii_set_context(int x, int y, void *context)
     return;
   }
 
-  if ((! ascii_ok_for_scissors(x, y))) [[unlikely]] {
+  if ((ascii_ok_for_scissors(x, y) == 0)) [[unlikely]] {
     return;
   }
 
@@ -219,7 +219,7 @@ auto ascii_get_stat_context(int x, int y) -> void *
 
 void ascii_set(int depth, int x, int y, const Texp tex, float tx, float ty, float dx, float dy)
 {
-  if ((! ascii_ok_for_scissors(x, y))) [[unlikely]] {
+  if ((ascii_ok_for_scissors(x, y) == 0)) [[unlikely]] {
     return;
   }
 
@@ -235,7 +235,7 @@ void ascii_set(int depth, int x, int y, const Texp tex, float tx, float ty, floa
 
 void ascii_set(int depth, int x, int y, const Tilep tile)
 {
-  if ((! ascii_ok_for_scissors(x, y))) [[unlikely]] {
+  if ((ascii_ok_for_scissors(x, y) == 0)) [[unlikely]] {
     return;
   }
 
@@ -251,7 +251,7 @@ void ascii_set(int depth, int x, int y, const Tilep tile)
 
 void ascii_set(int depth, int x, int y, const Tilep tile, char ch)
 {
-  if ((! ascii_ok_for_scissors(x, y))) [[unlikely]] {
+  if ((ascii_ok_for_scissors(x, y) == 0)) [[unlikely]] {
     return;
   }
 
@@ -267,7 +267,7 @@ void ascii_set(int depth, int x, int y, const Tilep tile, char ch)
 
 void ascii_set(int depth, int x, int y, const Tilep tile, float tx, float ty, float dx, float dy)
 {
-  if ((! ascii_ok_for_scissors(x, y))) [[unlikely]] {
+  if ((ascii_ok_for_scissors(x, y) == 0)) [[unlikely]] {
     return;
   }
 
@@ -386,7 +386,7 @@ void ascii_putf_internal2(int x, int y, color fg, color bg, const std::string &t
     //
     // Outside the scissors, ignore
     //
-    if ((! ascii_ok_for_scissors(x, y))) [[unlikely]] {
+    if ((ascii_ok_for_scissors(x, y) == 0)) [[unlikely]] {
       x++;
       continue;
     }
@@ -449,7 +449,7 @@ void ascii_putf_internal2(int x, int y, color fg, color bg, const std::string &t
 
       if ((static_cast< bool >(bg.r)) || (static_cast< bool >(bg.g)) || (static_cast< bool >(bg.b)) || (static_cast< bool >(bg.a))) {
         static Tilep block_tile;
-        if (! block_tile) [[unlikely]] {
+        if (block_tile == nullptr) [[unlikely]] {
           block_tile = tile_find_mand(FONT_TILENAME_BLOCK_STR);
         }
         cell->tile[ bg_depth ] = block_tile;
@@ -1199,11 +1199,11 @@ void ascii_put_box(box_args b, int style, const TileLayers tiles, const char *fm
   y2 = y + h;
 
   for (x = x1; x <= x2; x++) {
-    if ((! ascii_x_ok(x))) [[unlikely]] {
+    if ((ascii_x_ok(x) == 0)) [[unlikely]] {
       continue;
     }
     for (y = y1; y <= y2; y++) {
-      if ((! ascii_y_ok(y))) [[unlikely]] {
+      if ((ascii_y_ok(y) == 0)) [[unlikely]] {
         continue;
       }
 

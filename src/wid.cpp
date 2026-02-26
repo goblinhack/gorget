@@ -197,7 +197,7 @@ void wid_dump(Widp w, int depth)
     return;
   }
 
-  if ((! w)) [[unlikely]] {
+  if (w == nullptr) [[unlikely]] {
     return;
   }
 
@@ -230,7 +230,7 @@ auto wid_count(Widp w, int depth) -> int
     return 0;
   }
 
-  if ((! w)) [[unlikely]] {
+  if (w == nullptr) [[unlikely]] {
     return 0;
   }
 
@@ -575,7 +575,7 @@ void wid_set_prev(Widp w, Widp prev)
 {
   TRACE();
 
-  if ((! w)) [[unlikely]] {
+  if (w == nullptr) [[unlikely]] {
     CROAK("No wid");
   }
 
@@ -594,7 +594,7 @@ auto wid_get_prev(Widp w) -> Widp
 {
   TRACE();
 
-  if ((! w)) [[unlikely]] {
+  if (w == nullptr) [[unlikely]] {
     CROAK("No wid");
   }
 
@@ -609,7 +609,7 @@ auto wid_get_next(Widp w) -> Widp
 {
   TRACE();
 
-  if ((! w)) [[unlikely]] {
+  if (w == nullptr) [[unlikely]] {
     CROAK("No wid");
   }
 
@@ -660,7 +660,7 @@ auto wid_get_top_parent(Widp w) -> Widp
 {
   TRACE();
 
-  if ((! w)) [[unlikely]] {
+  if (w == nullptr) [[unlikely]] {
     return w;
   }
 
@@ -730,7 +730,7 @@ auto wid_ignore_events(Widp w) -> bool
 
   Widp top {};
 
-  if ((! w)) [[unlikely]] {
+  if (w == nullptr) [[unlikely]] {
     return true;
   }
 
@@ -757,7 +757,7 @@ auto wid_ignore_events_only(Widp w) -> bool
     return true;
   }
 
-  if ((! w)) [[unlikely]] {
+  if (w == nullptr) [[unlikely]] {
     return true;
   }
 
@@ -778,7 +778,7 @@ auto wid_ignore_scroll_events(Widp w) -> bool
 
   Widp top {};
 
-  if ((! w)) [[unlikely]] {
+  if (w == nullptr) [[unlikely]] {
     return true;
   }
 
@@ -1511,11 +1511,11 @@ void wid_set_tilename(int depth, Widp w, const std::string &name)
   }
 
   Tilep tile = tile_find(name);
-  if ((! tile)) [[unlikely]] {
+  if (tile == nullptr) [[unlikely]] {
     ERR("Failed to find wid tile [%s]", name.c_str());
   }
 
-  if ((! w)) [[unlikely]] {
+  if (w == nullptr) [[unlikely]] {
     CROAK("Widget does not exist to set tile %s", name.c_str());
   }
 
@@ -2177,7 +2177,7 @@ static void wid_destroy_delay(Gamep g, Widp *wp, int delay)
 
   auto *w = *wp;
 
-  if ((! w)) [[unlikely]] {
+  if (w == nullptr) [[unlikely]] {
     return;
   }
 
@@ -3141,7 +3141,7 @@ void wid_visible(Gamep g, Widp w)
     return;
   }
 
-  if ((! w)) [[unlikely]] {
+  if (w == nullptr) [[unlikely]] {
     return;
   }
 
@@ -3161,7 +3161,7 @@ auto wid_is_visible(Widp w) -> bool
 {
   TRACE();
 
-  if ((! w)) [[unlikely]] {
+  if (w == nullptr) [[unlikely]] {
     return false;
   }
 
@@ -3176,7 +3176,7 @@ void wid_hide(Gamep g, Widp w)
     return;
   }
 
-  if ((! w)) [[unlikely]] {
+  if (w == nullptr) [[unlikely]] {
     return;
   }
 
@@ -3886,7 +3886,7 @@ auto wid_find_at(int x, int y) -> Widp
   TRACE();
 
   auto *w = wid_on_screen_at[ x ][ y ];
-  if ((! w)) [[unlikely]] {
+  if (w == nullptr) [[unlikely]] {
     return nullptr;
   }
 
@@ -3901,7 +3901,7 @@ static auto wid_key_down_handler_at(Gamep g, Widp w, int x, int y, uint8_t stric
 {
   TRACE();
 
-  if ((! w)) [[unlikely]] {
+  if (w == nullptr) [[unlikely]] {
     return nullptr;
   }
 
@@ -3982,7 +3982,7 @@ static auto wid_key_up_handler_at(Gamep g, Widp w, int x, int y, uint8_t strict)
 {
   TRACE();
 
-  if ((! w)) [[unlikely]] {
+  if (w == nullptr) [[unlikely]] {
     return nullptr;
   }
 
@@ -4050,7 +4050,7 @@ static auto wid_joy_button_handler_at(Gamep g, Widp w, int x, int y, uint8_t str
 {
   TRACE();
 
-  if ((! w)) [[unlikely]] {
+  if (w == nullptr) [[unlikely]] {
     return nullptr;
   }
 
@@ -4334,7 +4334,7 @@ static auto wid_joy_button_handler(Gamep g, int x, int y) -> Widp
     }
 
     w = wid_joy_button_handler_at(g, w, x, y, 0U /* strict */);
-    if ((! w)) [[unlikely]] {
+    if (w == nullptr) [[unlikely]] {
       continue;
     }
 
@@ -4444,7 +4444,7 @@ void wid_joy_button(Gamep g, int x, int y)
   Widp w {};
 
   w = wid_joy_button_handler(g, x, y);
-  if ((! w)) [[unlikely]] {
+  if (w == nullptr) [[unlikely]] {
     wid_fake_joy_button(g, x, y);
     return;
   }
@@ -4463,7 +4463,7 @@ void wid_joy_button(Gamep g, int x, int y)
         w = w->parent;
       }
 
-      if ((! w)) [[unlikely]] {
+      if (w == nullptr) [[unlikely]] {
         wid_fake_joy_button(g, x, y);
         return;
       }
@@ -4534,7 +4534,7 @@ static auto wid_key_down_handler(Gamep g, int x, int y) -> Widp
       }
 
       c = wid_key_down_handler_at(g, c, x, y, 1U /* strict */);
-      if ((! c)) [[unlikely]] {
+      if (c == nullptr) [[unlikely]] {
         continue;
       }
       // CON("     got top level strict handler%s.",to_string(c).c_str());
@@ -4553,7 +4553,7 @@ static auto wid_key_down_handler(Gamep g, int x, int y) -> Widp
       }
 
       c = wid_key_down_handler_at(g, c, x, y, 0U /* strict */);
-      if ((! c)) [[unlikely]] {
+      if (c == nullptr) [[unlikely]] {
         continue;
       }
 
@@ -4600,7 +4600,7 @@ static auto wid_key_up_handler(Gamep g, int x, int y) -> Widp
       }
 
       c = wid_key_up_handler_at(g, c, x, y, 1U /* strict */);
-      if ((! c)) [[unlikely]] {
+      if (c == nullptr) [[unlikely]] {
         continue;
       }
 
@@ -4617,7 +4617,7 @@ static auto wid_key_up_handler(Gamep g, int x, int y) -> Widp
       }
 
       c = wid_key_up_handler_at(g, c, x, y, 0U /* strict */);
-      if ((! c)) [[unlikely]] {
+      if (c == nullptr) [[unlikely]] {
         continue;
       }
 
@@ -4746,7 +4746,7 @@ void wid_key_down(Gamep g, const struct SDL_Keysym *key, int x, int y)
   }
 
   w = wid_key_down_handler(g, x, y);
-  if ((! w)) [[unlikely]] {
+  if (w == nullptr) [[unlikely]] {
     //
     // If no-one handles it, feed it to the default handler, the console.
     //
@@ -4832,7 +4832,7 @@ void wid_key_up(Gamep g, const struct SDL_Keysym *key, int x, int y)
   }
 
   w = wid_key_up_handler(g, x, y);
-  if ((! w)) [[unlikely]] {
+  if (w == nullptr) [[unlikely]] {
     //
     // If no-one handles it, drop it. We only hand key down to the
     // console.
@@ -5203,11 +5203,11 @@ static void wid_display(Gamep g, Widp w, uint8_t disable_scissor, uint8_t *updat
     //
     // CON("%d,%d to @%d,%d %s %p", tl.x, tl.y, br.x, br.y, w->name.c_str(), w);
     for (auto x = tl.x; x < br.x; x++) {
-      if ((! ascii_x_ok(x))) [[unlikely]] {
+      if ((ascii_x_ok(x) == 0)) [[unlikely]] {
         continue;
       }
       for (auto y = tl.y; y < br.y; y++) {
-        if ((! ascii_y_ok(y))) [[unlikely]] {
+        if ((ascii_y_ok(y) == 0)) [[unlikely]] {
           continue;
         }
 
@@ -5491,7 +5491,7 @@ auto wid_is_hidden(Widp w) -> bool
 {
   TRACE();
 
-  if ((! w)) [[unlikely]] {
+  if (w == nullptr) [[unlikely]] {
     return false;
   }
 

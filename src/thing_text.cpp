@@ -38,7 +38,7 @@ auto thing_long_name(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) -
 {
   TRACE();
 
-  if ((! t)) [[unlikely]] {
+  if (t == nullptr) [[unlikely]] {
     return "<no name>";
   }
 
@@ -152,7 +152,7 @@ auto thing_short_name(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) 
 {
   TRACE();
 
-  if ((! t)) [[unlikely]] {
+  if (t == nullptr) [[unlikely]] {
     return "<no name>";
   }
 

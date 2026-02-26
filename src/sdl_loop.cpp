@@ -152,7 +152,7 @@ void sdl_loop(Gamep g)
       //
       // Mouse held?
       //
-      if ((! found)) [[unlikely]] {
+      if (found == 0) [[unlikely]] {
         auto mouse_down = sdl_get_mouse();
         if (mouse_down != 0) {
           if (static_cast< bool >(sdl.last_mouse_held_down_when)) {
@@ -228,7 +228,7 @@ void sdl_loop(Gamep g)
       static uint32_t fps_ts_begin;
       static uint32_t fps_ts_now;
 
-      if ((! fps_ts_begin)) [[unlikely]] {
+      if (fps_ts_begin == 0u) [[unlikely]] {
         fps_ts_begin = time_ms();
       }
 

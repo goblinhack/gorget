@@ -30,11 +30,11 @@ static bool memory_test = true;
   for (auto tries = 0; tries < THING_EXT_MAX; tries++) {
     ThingExtId ext_id = last_ext_id + tries;
     ext_id %= THING_EXT_MAX;
-    if ((! ext_id)) [[unlikely]] {
+    if (ext_id == 0u) [[unlikely]] {
       continue;
     }
 
-    if ((v->thing_ext[ ext_id ].in_use)) [[unlikely]] {
+    if ((v->thing_ext[ ext_id ].in_use) != 0u) [[unlikely]] {
       continue;
     }
 
@@ -88,11 +88,11 @@ static void thing_ext_free(Levelsp v, Thingp t)
   for (auto tries = 0; tries < THING_LIGHT_MAX; tries++) {
     ThingLightId light_id = last_light_id + tries;
     light_id %= THING_LIGHT_MAX;
-    if ((! light_id)) [[unlikely]] {
+    if (light_id == 0u) [[unlikely]] {
       continue;
     }
 
-    if ((v->thing_light[ light_id ].in_use)) [[unlikely]] {
+    if ((v->thing_light[ light_id ].in_use) != 0u) [[unlikely]] {
       continue;
     }
 
@@ -154,7 +154,7 @@ static auto thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, ThingIdPacked i
   //
   auto  arr_index = id.c.arr_index;
   auto *t         = &v->thing_body[ arr_index ];
-  if ((t->tp_id)) [[unlikely]] {
+  if ((t->tp_id) != 0u) [[unlikely]] {
     //
     // Some other thread grabbed it already?
     //
@@ -170,7 +170,7 @@ static auto thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, ThingIdPacked i
     //
     // Just in case someone else grabbed it while locking...
     //
-    if ((t->tp_id)) [[unlikely]] {
+    if ((t->tp_id) != 0u) [[unlikely]] {
       thing_mutex.unlock();
       return nullptr;
     }
@@ -184,7 +184,7 @@ static auto thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, ThingIdPacked i
     //
     // No need to worry about other threads
     //
-    if ((t->tp_id)) [[unlikely]] {
+    if ((t->tp_id) != 0u) [[unlikely]] {
       return nullptr;
     }
 
@@ -253,7 +253,7 @@ auto thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p) -> Thingp
 {
   TRACE();
 
-  if ((! tp)) [[unlikely]] {
+  if (tp == nullptr) [[unlikely]] {
     CROAK("no template set for thing allocation");
   }
 

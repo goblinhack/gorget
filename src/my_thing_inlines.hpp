@@ -46,7 +46,7 @@ static inline auto thing_find(Gamep g, Levelsp v, ThingId id) -> Thingp
   }
 #endif
 
-  [[unlikely]] if (! t || (t->id != id)) {
+  [[unlikely]] if ((t == nullptr) || (t->id != id)) {
     t = thing_find_non_inline(g, v, id);
   }
 

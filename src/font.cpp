@@ -74,7 +74,7 @@ auto font_find(const std::string &file) -> Fontp
 auto Font::font_get_tile(int u) -> Tilep
 {
   Font const *me = this;
-  if ((! me)) [[unlikely]] {
+  if (me == nullptr) [[unlikely]] {
     CROAK("No font");
   }
 
@@ -111,7 +111,7 @@ auto Font::font_get_tile(int u) -> Tilep
   snprintf(tile_name, SIZEOF(tile_name), "%d.%d", tile_index, index);
 
   tile = tile_find(tile_name);
-  if ((! tile)) [[unlikely]] {
+  if (tile == nullptr) [[unlikely]] {
     if (u == '?') {
       CROAK("char 0x%X/%d -> not found as tile %s", u, u, tile_name);
       return font_get_tile('?');

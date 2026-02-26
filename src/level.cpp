@@ -386,7 +386,7 @@ auto level_get_thing_id_at(Gamep g, Levelsp v, Levelp l, const spoint &p, int sl
     case is_obs_to_jumping_onto :
     case is_obs_to_teleporting_onto :
     case is_obs_to_movement :
-      if (! it_maybe_null) {
+      if (it_maybe_null == nullptr) {
         return true;
       }
 
@@ -402,7 +402,7 @@ auto level_get_thing_id_at(Gamep g, Levelsp v, Levelp l, const spoint &p, int sl
       break;
 
     case is_able_to_fall :
-      if (! it_maybe_null) {
+      if (it_maybe_null == nullptr) {
         return true;
       }
 

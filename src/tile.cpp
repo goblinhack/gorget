@@ -161,6 +161,8 @@ Tile::Tile(const class Tile *tile)
       is_end_of_anim(tile->is_end_of_anim),                       // newline
       is_loggable(tile->is_loggable)                              // newline
 {
+  TRACE();
+
   NEWPTR(MTYPE_TILE, this, "Tile copy");
 
 #ifdef ENABLE_TILE_BOUNDS
@@ -325,6 +327,7 @@ void tile_load_arr_sprites(const char *file, const char *alias, uint32_t tile_wi
                            int gl_mode)
 {
   TRACE();
+
   Texp tex            = nullptr;
   Texp tex_monochrome = nullptr;
   Texp tex_mask       = nullptr;
@@ -505,6 +508,8 @@ void tile_load_arr_sprites(const char *file, const char *alias, uint32_t tile_wi
 //
 void tile_from_fbo(Gamep g, FboEnum fbo)
 {
+  TRACE();
+
   int w = 0;
   int h = 0;
   fbo_get_size(g, fbo, w, h);
@@ -580,16 +585,34 @@ auto tile_find_mand(const std::string &name) -> Tilep
   return result->second;
 }
 
-auto tile_width(Tilep tile) -> int { return tile->pix_width; }
+auto tile_width(Tilep tile) -> int
+{
+  TRACE_DEBUG();
+  return tile->pix_width;
+}
 
-auto tile_height(Tilep tile) -> int { return tile->pix_height; }
+auto tile_height(Tilep tile) -> int
+{
+  TRACE_DEBUG();
+  return tile->pix_height;
+}
 
-auto tile_tex(Tilep tile) -> Texp { return tile->tex; }
+auto tile_tex(Tilep tile) -> Texp
+{
+  TRACE_DEBUG();
+  return tile->tex;
+}
 
-auto tile_index(Tilep tile) -> uint32_t { return tile->index; }
+auto tile_index(Tilep tile) -> uint32_t
+{
+  TRACE_DEBUG();
+  return tile->index;
+}
 
 void tile_coords(Tilep tile, float *x1, float *y1, float *x2, float *y2)
 {
+  TRACE_DEBUG();
+
   *x1 = tile->x1;
   *y1 = tile->y1;
   *x2 = tile->x2;
@@ -667,7 +690,9 @@ auto string2tile(std::string &s, int *len) -> Tilep
 
 auto tile_index_to_tile(int i) -> Tilep
 {
-  if ((! i)) [[unlikely]] {
+  TRACE_DEBUG();
+
+  if (i == 0) [[unlikely]] {
     return nullptr;
   }
 
@@ -682,9 +707,7 @@ auto tile_name(Tilep t) -> std::string
 
 auto tile_delay_ms(Tilep t) -> uint32_t
 {
-#ifdef DEBUG_BUILD
-  TRACE();
-#endif
+  TRACE_DEBUG();
 
   if (! static_cast< bool >(t->delay_ms)) {
     return 5000;
@@ -821,6 +844,8 @@ void Tile::set_gl_binding_outline(int v)
 
 void tile_blit(const Tilep &tile, const spoint tl, const spoint br, const color &c)
 {
+  TRACE_DEBUG();
+
   float x1 = 0;
   float x2 = 0;
   float y1 = 0;
@@ -837,12 +862,16 @@ void tile_blit(const Tilep &tile, const spoint tl, const spoint br, const color 
 
 void tile_blit(const Tilep &tile, float x1, float x2, float y1, float y2, const spoint tl, const spoint br, const color &c)
 {
+  TRACE_DEBUG();
+
   blit(tile->gl_binding(), x1, y2, x2, y1, tl.x, br.y, br.x, tl.y, c);
 }
 
 void tile_blit(const Tilep &tile, float x1, float x2, float y1, float y2, const spoint tl, const spoint br, const color &c,
                LightPixels *light_pixels, bool is_blit_flush_per_line)
 {
+  TRACE_DEBUG();
+
   if (light_pixels != nullptr) {
     blit(tile->gl_binding(), x1, y2, x2, y1, tl.x, br.y, br.x, tl.y, c, light_pixels, is_blit_flush_per_line);
   } else {
@@ -853,6 +882,8 @@ void tile_blit(const Tilep &tile, float x1, float x2, float y1, float y2, const 
 void tile_blit(const Tilep &tile, spoint tl, spoint br, const color &color_tl, const color &color_tr, const color &color_bl,
                const color &color_br)
 {
+  TRACE_DEBUG();
+
   float const x1 = tile->x1;
   float const x2 = tile->x2;
   float const y1 = tile->y1;
@@ -864,6 +895,8 @@ void tile_blit(const Tilep &tile, spoint tl, spoint br, const color &color_tl, c
 void tile_blit_section(const Tilep &tile, const fpoint &tile_tl, const fpoint &tile_br, const spoint tl, const spoint br,
                        const color &color_tl, const color &color_tr, const color &color_bl, const color &color_br)
 {
+  TRACE_DEBUG();
+
   float       x1 = 0;
   float       x2 = 0;
   float       y1 = 0;
@@ -884,6 +917,8 @@ void tile_blit_section(const Tilep &tile, const fpoint &tile_tl, const fpoint &t
 //
 void tile_blit_outline(const Tilep &tile, float x1, float x2, float y1, float y2, const spoint tl, const spoint br, const color &c)
 {
+  TRACE_DEBUG();
+
   blit(tile->gl_binding_outline(), x1, y2, x2, y1, tl.x, br.y, br.x, tl.y, c);
 }
 
@@ -893,6 +928,8 @@ void tile_blit_outline(const Tilep &tile, float x1, float x2, float y1, float y2
 void tile_blit_outlined(const Tilep &tile, float x1, float x2, float y1, float y2, const spoint tl, const spoint br, const color &c,
                         const color &outline, int single_pix_size, bool square)
 {
+  TRACE_DEBUG();
+
   auto binding = tile->gl_binding_mask();
 
   if (single_pix_size != 0) {
@@ -928,6 +965,8 @@ void tile_blit_outlined(const Tilep &tile, float x1, float x2, float y1, float y
 //
 void tile_blit_apply_submerge_pct(Gamep g, spoint &tl, spoint &br, float & /*x1*/, float & /*x2*/, float &y1, float &y2, float percent)
 {
+  TRACE_DEBUG();
+
   float const h1 = br.y - tl.y;
   float const h2 = y2 - y1;
 

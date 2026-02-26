@@ -103,7 +103,7 @@ static void level_display_slot(Gamep g, Levelsp v, Levelp l, const spoint &p, in
 
   Tpp   tp = nullptr;
   auto *t  = thing_and_tp_get_at(g, v, l, p, slot, &tp);
-  if ((! tp)) [[unlikely]] {
+  if (tp == nullptr) [[unlikely]] {
     return;
   }
 
