@@ -373,7 +373,7 @@ auto level_get_thing_id_at(Gamep g, Levelsp v, Levelp l, const spoint &p, int sl
 //
 // Additional level flag filters e.g. open doors are not obstacles
 //
-[[nodiscard]] static auto level_flag_filter_needed(ThingFlag f) -> bool
+[[nodiscard]] static auto level_flag_filter(ThingFlag f, Thingp it_maybe_null) -> bool
 {
 #ifdef DEBUG_BUILD
   TRACE_NO_INDENT();
@@ -388,43 +388,27 @@ auto level_get_thing_id_at(Gamep g, Levelsp v, Levelp l, const spoint &p, int sl
     case is_obs_to_jumping_onto :
     case is_obs_to_teleporting_onto :
     case is_obs_to_movement :
-    case is_able_to_fall :            return true;
-    default :                         break;
-  }
+      if (! it_maybe_null) {
+        return true;
+      }
 
-  return false;
-}
-
-//
-// Additional level flag filters e.g. open doors are not obstacles
-//
-[[nodiscard]] static auto level_flag_filter(ThingFlag f, Thingp it) -> bool
-{
-#ifdef DEBUG_BUILD
-  TRACE_NO_INDENT();
-#endif
-
-  switch (f) {
-    case is_obs_to_cursor_path :
-    case is_obs_to_explosion :
-    case is_obs_to_falling_onto :
-    case is_obs_to_fire :
-    case is_obs_to_jump_over :
-    case is_obs_to_jumping_onto :
-    case is_obs_to_teleporting_onto :
-    case is_obs_to_movement :
-      if (thing_is_dead(it)) {
-        if (! thing_is_obs_when_dead(it)) {
+      if (thing_is_dead(it_maybe_null)) {
+        if (! thing_is_obs_when_dead(it_maybe_null)) {
           return true; // filter out
         }
       }
 
-      if (thing_is_open(it)) {
+      if (thing_is_open(it_maybe_null)) {
         return true; // filter out
       }
       break;
+
     case is_able_to_fall :
-      if (thing_is_falling(it) != 0) {
+      if (! it_maybe_null) {
+        return true;
+      }
+
+      if (thing_is_falling(it_maybe_null) != 0) {
         return true; // filter out
       }
       break;
@@ -433,6 +417,11 @@ auto level_get_thing_id_at(Gamep g, Levelsp v, Levelp l, const spoint &p, int sl
 
   return false;
 }
+
+//
+// Additional level flag filters e.g. open doors are not obstacles
+//
+[[nodiscard]] static auto level_flag_filter_needed(ThingFlag f) -> bool { return level_flag_filter(f, nullptr); }
 
 auto level_find_all(Gamep g, Levelsp v, Levelp l, ThingFlag f) -> std::vector< Thingp >
 {
