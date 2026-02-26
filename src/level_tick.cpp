@@ -625,7 +625,7 @@ static void level_tick_update_frame_counter(Levelsp v)
     t = test_t;
   }
 
-  if (level_ts_begin == 0u) [[unlikely]] {
+  if (level_ts_begin == 0U) [[unlikely]] {
     level_ts_begin = t;
   }
 

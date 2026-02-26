@@ -698,6 +698,7 @@ void level_forced_auto_scroll(Gamep g, Levelsp v, Levelp l);
 void level_gen_create_levels(Gamep g, Levelsp v);
 void level_gen_stats_dump(Gamep g);
 void level_gen_test(Gamep g);
+void level_has_seen_update(Gamep g, Levelsp v, Levelp l);
 void level_init(Gamep g, Levelsp v, Levelp l, LevelNum n);
 void level_is_completed_by_player_exiting(Gamep g, Levelsp v, Levelp l);
 void level_is_completed_by_player_falling(Gamep g, Levelsp v, Levelp l);
@@ -736,7 +737,6 @@ void level_update_paths_set(Gamep g, Levelsp v, Levelp l, const spoint &p);
 void level_update_paths(Gamep g, Levelsp v, Levelp l);
 void level_update_tiles(Gamep g, Levelsp v, Levelp l);
 void level_update_visibility(Gamep g, Levelsp v, Levelp l);
-void level_has_seen_update(Gamep g, Levelsp v, Levelp l);
 void level_water_display(Gamep, Levelsp, Levelp l, const spoint &, int, int16_t, int16_t, int16_t, int16_t);
 void level_water_tick(Gamep, Levelsp, Levelp);
 void level_water_update(Gamep, Levelsp, Levelp);
@@ -1444,6 +1444,8 @@ using LevelType = enum LevelType_ {
 // end sort marker5
 
 // begin sort marker6
+[[nodiscard]] auto level_has_seen_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_has_seen(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
 [[nodiscard]] auto level_open_is_able_to_collect_items(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_able_to_collect_keys(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_able_to_crush_grass(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
@@ -1616,7 +1618,6 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_open_is_unused30(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused31(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused32(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
-[[nodiscard]] auto level_has_seen(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
 [[nodiscard]] auto level_open_is_unused33(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused34(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused35(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
@@ -1653,7 +1654,6 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_open_is_unused63(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused64(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused65(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
-[[nodiscard]] auto level_has_seen_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
 [[nodiscard]] auto level_open_is_unused66(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused67(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused68(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;

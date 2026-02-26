@@ -228,7 +228,7 @@ void sdl_loop(Gamep g)
       static uint32_t fps_ts_begin;
       static uint32_t fps_ts_now;
 
-      if (fps_ts_begin == 0u) [[unlikely]] {
+      if (fps_ts_begin == 0U) [[unlikely]] {
         fps_ts_begin = time_ms();
       }
 
