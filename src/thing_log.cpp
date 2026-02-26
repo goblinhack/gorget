@@ -24,8 +24,11 @@ static void thing_log_(Thingp t, const char *fmt, va_list args)
   buf[ 0 ] = '\0';
   get_timestamp(buf, MAXLONGSTR);
   len = (int) strlen(buf);
-  snprintf(buf + len, MAXLONGSTR - len, "[%-50s]: %*s", to_string(nullptr, nullptr, nullptr, t).c_str(), g_callframes_depth, "");
-  len = (int) strlen(buf);
+  IF_DEBUG
+  {
+    snprintf(buf + len, MAXLONGSTR - len, "[%-50s]: %*s", to_string(nullptr, nullptr, nullptr, t).c_str(), g_callframes_depth, "");
+    len = (int) strlen(buf);
+  }
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
   putf(MY_STDOUT, buf);
