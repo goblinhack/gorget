@@ -109,7 +109,7 @@ static auto level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Th
       //
       // For the 4th pass, any tiles will do as long as not walls
       //
-      if (thing_vision_player_has_seen_tile(g, v, l, end)) {
+      if (level_has_seen(g, v, l, end)) {
         for (auto y = miny; y < maxy; y++) {
           for (auto x = minx; x < maxx; x++) {
             spoint const p(x, y);
@@ -291,7 +291,7 @@ static auto level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Th
         //
         // If we've NEVER seen this tile, skip it
         //
-        if (! thing_vision_player_has_seen_tile(g, v, l, p)) {
+        if (! level_has_seen(g, v, l, p)) {
           dmap.val[ x ][ y ] = DMAP_IS_WALL;
           continue;
         }

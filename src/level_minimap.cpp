@@ -209,7 +209,7 @@ static void level_minimap_levels_update(Gamep g, Levelsp v, Levelp l, const bool
         spoint const p(x, y);
 
         if (! g_opt_debug1) {
-          if (! thing_vision_player_has_seen_tile(g, v, l, p)) {
+          if (! level_has_seen_cached(g, v, l, p)) {
             continue;
           }
         }

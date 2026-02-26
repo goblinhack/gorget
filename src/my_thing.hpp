@@ -947,7 +947,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_variant_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_variant(Thingp t) -> int;
 [[nodiscard]] auto thing_vision_can_see_tile(Gamep g, Levelsp v, Levelp l, Thingp t, spoint p) -> bool;
-[[nodiscard]] auto thing_vision_player_has_seen_tile(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
 [[nodiscard]] auto thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp me, spoint to) -> bool;
 [[nodiscard]] auto thing_weight_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_weight(Thingp t) -> int;

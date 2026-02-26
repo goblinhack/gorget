@@ -46,27 +46,6 @@ auto thing_vision_can_see_tile(Gamep g, Levelsp v, Levelp l, Thingp t, spoint p)
   return static_cast< unsigned int >(fov_map_get(&ext->can_see, p.x, p.y)) != 0U;
 }
 
-auto thing_vision_player_has_seen_tile(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool
-{
-  TRACE();
-
-  auto *player = thing_player(g);
-  if (player == nullptr) [[unlikely]] {
-    return false;
-  }
-
-  auto *ext = thing_ext_struct(g, player);
-  if (ext == nullptr) [[unlikely]] {
-    return false;
-  }
-
-  if (is_oob(p)) [[unlikely]] {
-    return false;
-  }
-
-  return static_cast< unsigned int >(fov_map_get(&ext->has_seen, p.x, p.y)) != 0U;
-}
-
 void thing_can_see_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   auto *ext = thing_ext_struct(g, t);

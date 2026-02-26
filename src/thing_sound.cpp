@@ -56,7 +56,7 @@ void thing_sound_play(Gamep g, Levelsp v, Levelp l, Thingp t, const std::string 
       scale /= 5;
     }
 
-    if (! thing_vision_player_has_seen_tile(g, v, l, at)) {
+    if (! level_has_seen_cached(g, v, l, at)) {
       scale /= 5;
     }
   }

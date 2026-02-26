@@ -153,7 +153,7 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp l, Levelp level_abov
             display_tile = false;
             g_monochrome = true;
 
-            if (thing_vision_player_has_seen_tile(g, v, l, p)) {
+            if (level_has_seen_cached(g, v, l, p)) {
               //
               // Has seen previously
               //
@@ -186,7 +186,7 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp l, Levelp level_abov
             //
             // Only show things we have seen previously
             //
-            if (thing_vision_player_has_seen_tile(g, v, l, p)) {
+            if (level_has_seen_cached(g, v, l, p)) {
               //
               // Certain things, like exits, once seen, are always lit above the light
               //

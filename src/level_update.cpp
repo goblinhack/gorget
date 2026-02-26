@@ -100,6 +100,11 @@ void level_update_visibility(Gamep g, Levelsp v, Levelp l)
   level_light_blocker_update(g, v, l);
 
   //
+  // Per tick check what the player can see.
+  //
+  level_has_seen_update(g, v, l);
+
+  //
   // We only care about pixel moves.
   //
   level_light_calculate_all(g, v, l);
