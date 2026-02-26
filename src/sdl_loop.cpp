@@ -58,11 +58,12 @@ void sdl_loop(Gamep g)
     //
     // Reset joystick handling before we poll and update.
     //
-    UNLIKELY if ((sdl.joy_axes != nullptr)) { sdl_tick(g); }
+    if ((sdl.joy_axes != nullptr)) [[unlikely]] {
+      sdl_tick(g);
+    }
 
     static int old_g_errored_thread_id;
-    UNLIKELY if ((AN_ERROR_OCCURRED()))
-    {
+    if ((AN_ERROR_OCCURRED())) [[unlikely]] {
       if (g_errored_thread_id != old_g_errored_thread_id) {
         if (g_errored_thread_id == MAIN_THREAD) {
           CON(UI_IMPORTANT_FMT_STR "An error occurred on the main thread. Check the logs." UI_RESET_FMT);
@@ -97,8 +98,7 @@ void sdl_loop(Gamep g)
     //
     // This is for when in pixel art mode and between levels and waiting for level fade in
     //
-    UNLIKELY if ((update_very_slow))
-    {
+    if ((update_very_slow)) [[unlikely]] {
       ui_ts_very_slow_last = ts_now;
       wid_display_all(g);
     }
@@ -106,13 +106,14 @@ void sdl_loop(Gamep g)
     //
     // Less frequent updates like updating the FPS
     //
-    UNLIKELY if ((update_slow)) { ui_ts_slow_last = ts_now; }
+    if ((update_slow)) [[unlikely]] {
+      ui_ts_slow_last = ts_now;
+    }
 
     //
     // Do faster processing of events, like reading the keyboard and updating widgets.
     //
-    UNLIKELY if ((update_fast))
-    {
+    if ((update_fast)) {
       ui_ts_fast_last = ts_now;
 
       //
@@ -151,8 +152,7 @@ void sdl_loop(Gamep g)
       //
       // Mouse held?
       //
-      UNLIKELY if ((! found))
-      {
+      if ((! found)) [[unlikely]] {
         auto mouse_down = sdl_get_mouse();
         if (mouse_down != 0) {
           if (static_cast< bool >(sdl.last_mouse_held_down_when)) {
@@ -175,10 +175,8 @@ void sdl_loop(Gamep g)
       //
       // Screenshot?
       //
-      UNLIKELY if ((! g_do_screenshot))
-      {
-        UNLIKELY if ((! g_main_loop_running))
-        {
+      if ((! g_do_screenshot)) [[unlikely]] {
+        if ((! g_main_loop_running)) [[unlikely]] {
           DBG("Exit main loop");
           break;
         }
@@ -196,7 +194,7 @@ void sdl_loop(Gamep g)
       //
       // Per tick state handling
       //
-      if (NO_ERROR_OCCURRED()) {
+      if (NO_ERROR_OCCURRED()) [[likely]] {
         game_tick(g);
       }
     }
@@ -218,8 +216,7 @@ void sdl_loop(Gamep g)
     //
     // Config change?
     //
-    UNLIKELY if ((! g_need_restart_with_given_arguments.empty()))
-    {
+    if ((! g_need_restart_with_given_arguments.empty())) [[unlikely]] {
       LOG("Restart needed");
       break;
     }
@@ -227,15 +224,15 @@ void sdl_loop(Gamep g)
     //
     // Update FPS counter.
     //
-    UNLIKELY if ((game_fps_counter_get(g)))
-    {
+    if ((game_fps_counter_get(g))) [[unlikely]] {
       static uint32_t fps_ts_begin;
       static uint32_t fps_ts_now;
 
-      UNLIKELY if ((! fps_ts_begin)) { fps_ts_begin = time_ms(); }
+      if ((! fps_ts_begin)) [[unlikely]] {
+        fps_ts_begin = time_ms();
+      }
 
-      UNLIKELY if ((frames >= 100))
-      {
+      if ((frames >= 100)) [[unlikely]] {
         fps_ts_now          = time_ms();
         uint32_t const diff = fps_ts_now - fps_ts_begin;
         if (diff != 0) {

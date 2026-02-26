@@ -97,10 +97,10 @@ void close_stdout();
 #define DEBUG2      (g_opt_debug2)
 #define NODEBUG     (! g_opt_debug1)
 #define NODEBUG2    (! g_opt_debug2)
-#define IF_DEBUG    UNLIKELY if (DEBUG)
-#define IF_DEBUG2   UNLIKELY if (DEBUG2)
-#define IF_NODEBUG  UNLIKELY if (NODEBUG)
-#define IF_NODEBUG2 UNLIKELY if (NODEBUG2)
+#define IF_DEBUG    if (DEBUG) [[unlikely]]
+#define IF_DEBUG2   if (DEBUG2) [[unlikely]]
+#define IF_NODEBUG  if (NODEBUG) [[unlikely]]
+#define IF_NODEBUG2 if (NODEBUG2) [[unlikely]]
 
 #define DBG                                                                                                                                \
   if (DEBUG)                                                                                                                               \

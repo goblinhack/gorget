@@ -471,10 +471,18 @@ static std::vector< class Fragment * > fragments_curr;
 //
 static auto room_char(class Room *r, int x, int y) -> char
 {
-  UNLIKELY if ((x < 0)) { return CHARMAP_EMPTY; }
-  UNLIKELY if ((y < 0)) { return CHARMAP_EMPTY; }
-  UNLIKELY if ((x >= r->width)) { return CHARMAP_EMPTY; }
-  UNLIKELY if ((y >= r->height)) { return CHARMAP_EMPTY; }
+  if ((x < 0)) [[unlikely]] {
+    return CHARMAP_EMPTY;
+  }
+  if ((y < 0)) [[unlikely]] {
+    return CHARMAP_EMPTY;
+  }
+  if ((x >= r->width)) [[unlikely]] {
+    return CHARMAP_EMPTY;
+  }
+  if ((y >= r->height)) [[unlikely]] {
+    return CHARMAP_EMPTY;
+  }
 
   return r->data[ (y * r->width) + x ];
 }
@@ -897,7 +905,9 @@ void rooms_dump(Gamep g)
   // Check we have something to place here.
   //
   char const room_c = r->data[ (ry * r->width) + rx ];
-  UNLIKELY if ((room_c == CHARMAP_EMPTY)) { return true; }
+  if ((room_c == CHARMAP_EMPTY)) [[unlikely]] {
+    return true;
+  }
 
   //
   // Where we're placing tiles
@@ -907,16 +917,23 @@ void rooms_dump(Gamep g)
   //
   // We need one tile of edge around rooms.
   //
-  UNLIKELY if ((p.x <= 0)) { return false; }
-  UNLIKELY if ((p.x >= MAP_WIDTH - 1)) { return false; }
-  UNLIKELY if ((p.y <= 0)) { return false; }
-  UNLIKELY if ((p.y >= MAP_HEIGHT - 1)) { return false; }
+  if ((p.x <= 0)) [[unlikely]] {
+    return false;
+  }
+  if ((p.x >= MAP_WIDTH - 1)) [[unlikely]] {
+    return false;
+  }
+  if ((p.y <= 0)) [[unlikely]] {
+    return false;
+  }
+  if ((p.y >= MAP_HEIGHT - 1)) [[unlikely]] {
+    return false;
+  }
 
   //
   // Special door handling
   //
-  UNLIKELY if ((room_c == CHARMAP_JOIN))
-  {
+  if ((room_c == CHARMAP_JOIN)) [[unlikely]] {
     //
     // Doors can overlap.
     //
@@ -1674,10 +1691,18 @@ void fragments_dump(Gamep g)
 
       spoint const p(rx + at.x, ry + at.y);
 
-      UNLIKELY if ((p.x <= 0)) { return false; }
-      UNLIKELY if ((p.x >= MAP_WIDTH - 1)) { return false; }
-      UNLIKELY if ((p.y <= 0)) { return false; }
-      UNLIKELY if ((p.y >= MAP_HEIGHT - 1)) { return false; }
+      if ((p.x <= 0)) [[unlikely]] {
+        return false;
+      }
+      if ((p.x >= MAP_WIDTH - 1)) [[unlikely]] {
+        return false;
+      }
+      if ((p.y <= 0)) [[unlikely]] {
+        return false;
+      }
+      if ((p.y >= MAP_HEIGHT - 1)) [[unlikely]] {
+        return false;
+      }
       if (c != l->data[ p.x ][ p.y ].c) {
         return false;
       }
@@ -1718,10 +1743,18 @@ static auto fragment_put(Gamep g, class LevelGen *l, class Fragment *f, spoint a
 
       spoint const p(rx + at.x, ry + at.y);
 
-      UNLIKELY if ((p.x <= 0)) { continue; }
-      UNLIKELY if ((p.x >= MAP_WIDTH - 1)) { continue; }
-      UNLIKELY if ((p.y <= 0)) { continue; }
-      UNLIKELY if ((p.y >= MAP_HEIGHT - 1)) { continue; }
+      if ((p.x <= 0)) [[unlikely]] {
+        continue;
+      }
+      if ((p.x >= MAP_WIDTH - 1)) [[unlikely]] {
+        continue;
+      }
+      if ((p.y <= 0)) [[unlikely]] {
+        continue;
+      }
+      if ((p.y >= MAP_HEIGHT - 1)) [[unlikely]] {
+        continue;
+      }
 
       l->data[ p.x ][ p.y ].c = c;
     }
@@ -1765,8 +1798,7 @@ static void level_gen_add_fragments(Gamep g, class LevelGen *l)
       continue;
     }
 
-    UNLIKELY if ((l->debug))
-    {
+    if (l->debug) [[unlikely]] {
       auto fragment_name = std::format("placed another fragment {}:{} with {}:{}", f->file, f->line, alt->file, alt->line);
       level_gen_dump(l, fragment_name.c_str());
     }
@@ -2235,7 +2267,9 @@ void level_gen_stats_dump(Gamep g)
   // Did we find any new doors?
   //
   if (l->doors_not_explored.empty()) {
-    UNLIKELY if ((l->debug)) { LOG("no more doors"); }
+    if (l->debug) [[unlikely]] {
+      LOG("no more doors");
+    }
     return false;
   }
 
@@ -2411,8 +2445,7 @@ static void level_gen_create_remaining_rooms(Gamep g, LevelGen *l)
   // Keep placing rooms until we hit the max allowed
   //
   while (std::cmp_less(l->rooms_placed.size(), l->max_room_count)) {
-    UNLIKELY if ((l->debug))
-    {
+    if (l->debug) [[unlikely]] {
       LOG("rooms placed %d (max %d) attempts %d doors-tried %d doors-not-tried %d", (int) l->rooms_placed.size(), l->max_room_count,
           attempts, (int) l->doors_walked.size(), (int) l->doors_not_explored.size());
     }
@@ -2421,7 +2454,9 @@ static void level_gen_create_remaining_rooms(Gamep g, LevelGen *l)
     // Ensure we loop only so many times
     //
     if (attempts++ > MAX_LEVEL_GEN_TRIES_CREATE_ROOM) {
-      UNLIKELY if ((l->debug)) { LOG("have tried enough times to place a room"); }
+      if (l->debug) [[unlikely]] {
+        LOG("have tried enough times to place a room");
+      }
       break;
     }
 
@@ -2430,7 +2465,9 @@ static void level_gen_create_remaining_rooms(Gamep g, LevelGen *l)
     //
     if (((int) l->doors_walked.size()) != 0) {
       if (l->doors_not_explored.empty()) {
-        UNLIKELY if ((l->debug)) { LOG("have tried all doors"); }
+        if (l->debug) [[unlikely]] {
+          LOG("have tried all doors");
+        }
         break;
       }
     }
@@ -2478,7 +2515,9 @@ static void level_gen_create_remaining_rooms(Gamep g, LevelGen *l)
       }
     }
 
-    UNLIKELY if ((l->debug)) { level_gen_dump(l, "placed another room"); }
+    if (l->debug) [[unlikely]] {
+      level_gen_dump(l, "placed another room");
+    }
 
     //
     // Create another room if possible
@@ -2531,7 +2570,9 @@ static void level_gen_create_remaining_rooms(Gamep g, LevelGen *l)
   //
   // Placed the first room
   //
-  UNLIKELY if ((l->debug)) { level_gen_dump(l, "placed first room"); }
+  if (l->debug) [[unlikely]] {
+    level_gen_dump(l, "placed first room");
+  }
 
   return true;
 }
@@ -2914,7 +2955,9 @@ static auto level_proc_gen_create_rooms(Gamep g, LevelNum level_num) -> class Le
 
   level_create_fail++;
 
-  UNLIKELY if ((l->debug)) { LOG("Failed to create room with seed: %s", game_seed_name_get(g)); }
+  if (l->debug) [[unlikely]] {
+    LOG("Failed to create room with seed: %s", game_seed_name_get(g));
+  }
 
   return nullptr;
 }
@@ -3555,7 +3598,9 @@ auto level_gen_is_room_entrance(Gamep g, class LevelGen *l, int x, int y) -> boo
     return false;
   }
 
-  UNLIKELY if (is_oob(x, y)) { return false; }
+  if (is_oob(x, y)) [[unlikely]] {
+    return false;
+  }
 
   auto *r = l->data[ x ][ y ].room;
   return (r != nullptr) && (l->room_entrance == r);
@@ -4507,7 +4552,9 @@ static void level_gen_mark_tiles_on_path_entrance_to_exit(Gamep g, class LevelGe
     x += lr;
     y += ud;
 
-    UNLIKELY if (is_oob(x, y)) { return false; }
+    if (is_oob(x, y)) [[unlikely]] {
+      return false;
+    }
 
     if (l->info.on_path_entrance_to_exit[ x ][ y ] != 0U) {
       return true;
@@ -4520,9 +4567,13 @@ static void level_gen_mark_tiles_on_path_entrance_to_exit(Gamep g, class LevelGe
 //
 static void level_gen_extend_bridges_do(Gamep g, class LevelGen *l, int x, int y, int lr, int ud)
 {
-  UNLIKELY if (is_oob(x, y)) { return; }
+  if (is_oob(x, y)) [[unlikely]] {
+    return;
+  }
 
-  UNLIKELY if ((l->debug)) { level_gen_dump(l, "extend bridge"); }
+  if (l->debug) [[unlikely]] {
+    level_gen_dump(l, "extend bridge");
+  }
 
   //
   // Already walked?
@@ -4834,37 +4885,49 @@ static auto level_gen_create_proc_gen_level(Gamep g, Levelsp v, LevelNum level_n
   // Make bridges dramatic by adding chasms around them
   //
   level_gen_add_chasms_around_bridges(l);
-  UNLIKELY if ((l->debug)) { level_gen_dump(l, "add chasms around bridges"); }
+  if (l->debug) [[unlikely]] {
+    level_gen_dump(l, "add chasms around bridges");
+  }
 
   //
   // Add islands of safety
   //
   level_gen_add_islands(l);
-  UNLIKELY if ((l->debug)) { level_gen_dump(l, "add islands"); }
+  if (l->debug) [[unlikely]] {
+    level_gen_dump(l, "add islands");
+  }
 
   //
   // Grow lakes, chasms etc...
   //
   level_gen_grow_hazards(l);
-  UNLIKELY if ((l->debug)) { level_gen_dump(l, "grow hazards"); }
+  if (l->debug) [[unlikely]] {
+    level_gen_dump(l, "grow hazards");
+  }
 
   //
   // Make islands bigger
   //
   level_gen_grow_islands(l);
-  UNLIKELY if ((l->debug)) { level_gen_dump(l, "grown islands"); }
+  if (l->debug) [[unlikely]] {
+    level_gen_dump(l, "grown islands");
+  }
 
   //
   // Add some doors
   //
   level_gen_add_doors(g, l);
-  UNLIKELY if ((l->debug)) { level_gen_dump(l, "add doors"); }
+  if (l->debug) [[unlikely]] {
+    level_gen_dump(l, "add doors");
+  }
 
   //
   // Remove some doors!
   //
   level_gen_remove_doors_next_to_each_other(l);
-  UNLIKELY if ((l->debug)) { level_gen_dump(l, "remove doors next to each other"); }
+  if (l->debug) [[unlikely]] {
+    level_gen_dump(l, "remove doors next to each other");
+  }
 
   //
   // Add fragments before we add walls
@@ -4875,7 +4938,9 @@ static auto level_gen_create_proc_gen_level(Gamep g, Levelsp v, LevelNum level_n
   // Add walls
   //
   level_gen_add_walls_around_rooms(l);
-  UNLIKELY if ((l->debug)) { level_gen_dump(l, "add walls around rooms"); }
+  if (l->debug) [[unlikely]] {
+    level_gen_dump(l, "add walls around rooms");
+  }
 
   //
   // And add again after, in case some can now match

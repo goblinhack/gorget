@@ -17,7 +17,9 @@ auto MYZALLOC_(int size, const char *what, const char *file, const char *func, i
 
   void *ptr = calloc(1, size); // NOLINT
 
-  UNLIKELY if ((! ptr)) { CROAK("No memory, %s:%s:%u, size %u", file, func, line, size); }
+  if ((! ptr)) [[unlikely]] {
+    CROAK("No memory, %s:%s:%u, size %u", file, func, line, size);
+  }
 
   IF_DEBUG2
   { // newline
@@ -36,7 +38,9 @@ auto MYMALLOC_(int size, const char *what, const char *file, const char *func, i
 
   void *ptr = malloc(size); // NOLINT
 
-  UNLIKELY if ((! ptr)) { CROAK("No memory, %s:%s:%u", file, func, line); }
+  if ((! ptr)) [[unlikely]] {
+    CROAK("No memory, %s:%s:%u", file, func, line);
+  }
 
   IF_DEBUG2
   { // newline
@@ -58,7 +62,9 @@ auto MYREALLOC_(void *ptr, int size, const char *what, const char *file, const c
   }
 
   ptr = realloc(ptr, size);
-  UNLIKELY if ((! ptr)) { CROAK("No memory, %s:%s:%u", file, func, line); }
+  if ((! ptr)) [[unlikely]] {
+    CROAK("No memory, %s:%s:%u", file, func, line);
+  }
 
   IF_DEBUG2
   { // newline
@@ -90,14 +96,15 @@ auto MYDUPSTR_(const char *in, const char *what, const char *file, const char *f
 {
   TRACE();
 
-  UNLIKELY if ((! in))
-  {
+  if ((! in)) [[unlikely]] {
     ERR("No string to duplicate");
     return nullptr;
   }
 
   char *ptr = strdup(in); // NOLINT
-  UNLIKELY if ((! ptr)) { CROAK("No memory, %s:%s:%u", file, func, line); }
+  if ((! ptr)) [[unlikely]] {
+    CROAK("No memory, %s:%s:%u", file, func, line);
+  }
 
   IF_DEBUG2
   {

@@ -145,7 +145,9 @@ auto game_event_save(Gamep g) -> bool
   }
 
   auto *player = thing_player(g);
-  UNLIKELY if (player == nullptr) { return false; }
+  if (player == nullptr) [[unlikely]] {
+    return false;
+  }
 
   if (thing_is_dead(player)) {
     return false;
@@ -198,7 +200,9 @@ auto game_event_wait(Gamep g) -> bool
   }
 
   auto *player = thing_player(g);
-  UNLIKELY if (player == nullptr) { return false; }
+  if (player == nullptr) [[unlikely]] {
+    return false;
+  }
 
   if (thing_is_dead(player)) {
     return false;
@@ -226,7 +230,9 @@ auto game_event_inventory(Gamep g) -> bool
   }
 
   auto *player = thing_player(g);
-  UNLIKELY if (player == nullptr) { return false; }
+  if (player == nullptr) [[unlikely]] {
+    return false;
+  }
 
   wid_inventory_show(g, v, l, player);
 
@@ -249,7 +255,9 @@ auto game_event_descend(Gamep g) -> bool
   }
 
   auto *player = thing_player(g);
-  UNLIKELY if (player == nullptr) { return false; }
+  if (player == nullptr) [[unlikely]] {
+    return false;
+  }
 
   if (thing_is_dead(player)) {
     return false;
@@ -282,7 +290,9 @@ auto game_event_ascend(Gamep g) -> bool
   }
 
   auto *player = thing_player(g);
-  UNLIKELY if (player == nullptr) { return false; }
+  if (player == nullptr) [[unlikely]] {
+    return false;
+  }
 
   if (thing_is_dead(player)) {
     return false;
@@ -315,7 +325,9 @@ auto game_event_jump(Gamep g) -> bool
   }
 
   auto *player = thing_player(g);
-  UNLIKELY if (player == nullptr) { return false; }
+  if (player == nullptr) [[unlikely]] {
+    return false;
+  }
 
   if (thing_is_dead(player)) {
     return false;
@@ -343,7 +355,9 @@ auto game_event_help(Gamep g) -> bool
   TRACE();
 
   auto *player = thing_player(g);
-  UNLIKELY if (player == nullptr) { return false; }
+  if (player == nullptr) [[unlikely]] {
+    return false;
+  }
 
   if (thing_is_dead(player)) {
     return false;
@@ -393,8 +407,7 @@ auto game_input(Gamep g, const SDL_Keysym *key) -> bool
   }
 
   auto *player = thing_player(g);
-  UNLIKELY if (player == nullptr)
-  {
+  if (player == nullptr) [[unlikely]] {
     DBG("Pressed a key; no player");
     return false;
   }

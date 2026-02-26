@@ -79,8 +79,7 @@
   {
     TRACE();
     player = thing_player(g);
-    UNLIKELY if (player == nullptr)
-    {
+    if (player == nullptr) [[unlikely]] {
       TEST_FAILED(t, "no player");
       goto exit;
     }

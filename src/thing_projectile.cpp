@@ -20,8 +20,7 @@ static auto thing_projectile_get_delta_from_dt(Gamep g, Thingp t, float dt) -> f
   SINCOSF(t->angle, &s, &c);
 
   auto *player = thing_player(g);
-  UNLIKELY if (player == nullptr)
-  {
+  if (player == nullptr) [[unlikely]] {
     CROAK("No player struct found");
     return fpoint(0, 0);
   }
@@ -110,8 +109,7 @@ void thing_projectile_move(Gamep g, Levelsp v, Levelp l, Thingp t, float dt)
   auto         at     = old_at;
 
   auto *player = thing_player(g);
-  UNLIKELY if (player == nullptr)
-  {
+  if (player == nullptr) [[unlikely]] {
     ERR("No player struct found");
     return;
   }
@@ -120,8 +118,7 @@ void thing_projectile_move(Gamep g, Levelsp v, Levelp l, Thingp t, float dt)
   at.x += delta.x;
   at.y += delta.y;
 
-  UNLIKELY if (is_oob(at))
-  {
+  if (is_oob(at)) [[unlikely]] {
     ThingEvent e {
         .reason     = "oob",                        //
         .event_type = THING_EVENT_LIFESPAN_EXPIRED, //

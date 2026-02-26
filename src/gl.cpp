@@ -691,7 +691,9 @@ void blit_flush()
 {
   TRACE_DEBUG();
 
-  UNLIKELY if (gl_array_buf == bufp) { return; }
+  if (gl_array_buf == bufp) [[unlikely]] {
+    return;
+  }
 
   glEnableClientState(GL_VERTEX_ARRAY);
   glEnableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -1359,14 +1361,12 @@ static void gl_push(float **P, const float *p_end, bool first_vertex, float tex_
 {
   float *p = *P;
 
-  UNLIKELY if ((p >= p_end))
-  {
+  if ((p >= p_end)) [[unlikely]] {
     LOG("overflow on gl bug %s", __FUNCTION__);
     return;
   }
 
-  LIKELY if ((! first_vertex))
-  {
+  [[likely]] if ((! first_vertex)) {
     //
     // If there is a break in the triangle strip then make a degenerate triangle.
     //
@@ -1423,17 +1423,15 @@ static bool first_vertex;
 void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLshort left, GLshort top, GLshort right, GLshort bottom,
           const color &c)
 {
-  UNLIKELY if ((! buf_tex))
-  {
+  if ((! buf_tex)) [[unlikely]] {
     blit_init();
     first_vertex = true;
-  }
-  else UNLIKELY if ((buf_tex != tex))
-  {
+  } else if ((buf_tex != tex)) [[unlikely]] {
     blit_flush();
     first_vertex = true;
+  } else {
+    first_vertex = false;
   }
-  else { first_vertex = false; }
 
   buf_tex = tex;
 
@@ -1449,17 +1447,15 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
 void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLshort pixMinX, GLshort pixMinY, GLshort pixMaxX,
           GLshort pixMaxY, const color &c, LightPixels *light_pixels, bool blit_flush_per_line)
 {
-  UNLIKELY if ((! buf_tex))
-  {
+  if ((! buf_tex)) [[unlikely]] {
     blit_init();
     first_vertex = true;
-  }
-  else UNLIKELY if ((buf_tex != tex))
-  {
+  } else if ((buf_tex != tex)) [[unlikely]] {
     blit_flush();
     first_vertex = true;
+  } else {
+    first_vertex = false;
   }
-  else { first_vertex = false; }
 
   buf_tex = tex;
 
@@ -1509,17 +1505,15 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
 void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLshort left, GLshort top, GLshort right, GLshort bottom,
           const color &color_bl, const color &color_br, const color &color_tl, const color &color_tr)
 {
-  UNLIKELY if ((! buf_tex))
-  {
+  if ((! buf_tex)) [[unlikely]] {
     blit_init();
     first_vertex = true;
-  }
-  else UNLIKELY if ((buf_tex != tex))
-  {
+  } else if ((buf_tex != tex)) [[unlikely]] {
     blit_flush();
     first_vertex = true;
+  } else {
+    first_vertex = false;
   }
-  else { first_vertex = false; }
 
   buf_tex = tex;
 

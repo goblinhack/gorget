@@ -62,31 +62,47 @@ static bool mouse_found      = 0;
 
 auto ascii_ok(int x, int y) -> int
 {
-  UNLIKELY if ((x < 0)) { return 0; }
+  if ((x < 0)) [[unlikely]] {
+    return 0;
+  }
 
-  UNLIKELY if ((x >= TERM_WIDTH)) { return 0; }
+  if ((x >= TERM_WIDTH)) [[unlikely]] {
+    return 0;
+  }
 
-  UNLIKELY if ((y < 0)) { return 0; }
+  if ((y < 0)) [[unlikely]] {
+    return 0;
+  }
 
-  UNLIKELY if ((y >= TERM_HEIGHT)) { return 0; }
+  if ((y >= TERM_HEIGHT)) [[unlikely]] {
+    return 0;
+  }
 
   return 1;
 }
 
 auto ascii_x_ok(int x) -> int
 {
-  UNLIKELY if ((x < 0)) { return 0; }
+  if ((x < 0)) [[unlikely]] {
+    return 0;
+  }
 
-  UNLIKELY if ((x >= TERM_WIDTH)) { return 0; }
+  if ((x >= TERM_WIDTH)) [[unlikely]] {
+    return 0;
+  }
 
   return 1;
 }
 
 auto ascii_y_ok(int y) -> int
 {
-  UNLIKELY if ((y < 0)) { return 0; }
+  if ((y < 0)) [[unlikely]] {
+    return 0;
+  }
 
-  UNLIKELY if ((y >= TERM_HEIGHT)) { return 0; }
+  if ((y >= TERM_HEIGHT)) [[unlikely]] {
+    return 0;
+  }
 
   return 1;
 }
@@ -163,7 +179,9 @@ auto ascii_is_empty(int x, int y) -> bool
 
 void ascii_set(int depth, int x, int y, color col)
 {
-  UNLIKELY if ((! ascii_ok_for_scissors(x, y))) { return; }
+  if ((! ascii_ok_for_scissors(x, y))) [[unlikely]] {
+    return;
+  }
 
   AsciiCell *cell = &(*cells)[ x ][ y ];
 
@@ -179,7 +197,9 @@ void ascii_set_context(int x, int y, void *context)
     return;
   }
 
-  UNLIKELY if ((! ascii_ok_for_scissors(x, y))) { return; }
+  if ((! ascii_ok_for_scissors(x, y))) [[unlikely]] {
+    return;
+  }
 
   AsciiCell *cell = &(*cells)[ x ][ y ];
 
@@ -199,7 +219,9 @@ auto ascii_get_stat_context(int x, int y) -> void *
 
 void ascii_set(int depth, int x, int y, const Texp tex, float tx, float ty, float dx, float dy)
 {
-  UNLIKELY if ((! ascii_ok_for_scissors(x, y))) { return; }
+  if ((! ascii_ok_for_scissors(x, y))) [[unlikely]] {
+    return;
+  }
 
   AsciiCell *cell = &(*cells)[ x ][ y ];
 
@@ -213,7 +235,9 @@ void ascii_set(int depth, int x, int y, const Texp tex, float tx, float ty, floa
 
 void ascii_set(int depth, int x, int y, const Tilep tile)
 {
-  UNLIKELY if ((! ascii_ok_for_scissors(x, y))) { return; }
+  if ((! ascii_ok_for_scissors(x, y))) [[unlikely]] {
+    return;
+  }
 
   AsciiCell *cell = &(*cells)[ x ][ y ];
 
@@ -227,7 +251,9 @@ void ascii_set(int depth, int x, int y, const Tilep tile)
 
 void ascii_set(int depth, int x, int y, const Tilep tile, char ch)
 {
-  UNLIKELY if ((! ascii_ok_for_scissors(x, y))) { return; }
+  if ((! ascii_ok_for_scissors(x, y))) [[unlikely]] {
+    return;
+  }
 
   AsciiCell *cell = &(*cells)[ x ][ y ];
 
@@ -241,7 +267,9 @@ void ascii_set(int depth, int x, int y, const Tilep tile, char ch)
 
 void ascii_set(int depth, int x, int y, const Tilep tile, float tx, float ty, float dx, float dy)
 {
-  UNLIKELY if ((! ascii_ok_for_scissors(x, y))) { return; }
+  if ((! ascii_ok_for_scissors(x, y))) [[unlikely]] {
+    return;
+  }
 
   AsciiCell *cell = &(*cells)[ x ][ y ];
 
@@ -270,9 +298,13 @@ void ascii_putf_internal2(int x, int y, color fg, color bg, const std::string &t
   //
   // Check for out of bounds. Cannot check for x here as a message could start off screen and end on screen.
   //
-  UNLIKELY if ((y < 0)) { return; }
+  if ((y < 0)) [[unlikely]] {
+    return;
+  }
 
-  UNLIKELY if ((y >= TERM_HEIGHT)) { return; }
+  if ((y >= TERM_HEIGHT)) [[unlikely]] {
+    return;
+  }
 
   if (color_eq(bg, COLOR_NONE)) {
     bg_set = 1;
@@ -298,8 +330,7 @@ void ascii_putf_internal2(int x, int y, color fg, color bg, const std::string &t
 
       auto len = text.end() - text_iter;
       if (len > 0) {
-        UNLIKELY if (ch == L'%')
-        {
+        if (ch == L'%') [[unlikely]] {
           got_pct = true;
           if ((len > 3) && (std::string(text_iter, text_iter + 3) == "fg=")) {
             text_iter += 3;
@@ -355,8 +386,7 @@ void ascii_putf_internal2(int x, int y, color fg, color bg, const std::string &t
     //
     // Outside the scissors, ignore
     //
-    UNLIKELY if ((! ascii_ok_for_scissors(x, y)))
-    {
+    if ((! ascii_ok_for_scissors(x, y))) [[unlikely]] {
       x++;
       continue;
     }
@@ -377,8 +407,7 @@ void ascii_putf_internal2(int x, int y, color fg, color bg, const std::string &t
     // Use a special char to represent the cursor. A bit of a hack.
     //
     auto is_cursor = (ch == (char) FONT_CHAR_CURSOR);
-    UNLIKELY if ((is_cursor))
-    {
+    if ((is_cursor)) [[unlikely]] {
       static uint32_t last;
       static bool     first = 1u;
 
@@ -420,7 +449,9 @@ void ascii_putf_internal2(int x, int y, color fg, color bg, const std::string &t
 
       if ((static_cast< bool >(bg.r)) || (static_cast< bool >(bg.g)) || (static_cast< bool >(bg.b)) || (static_cast< bool >(bg.a))) {
         static Tilep block_tile;
-        UNLIKELY if ((! block_tile)) { block_tile = tile_find_mand(FONT_TILENAME_BLOCK_STR); }
+        if (! block_tile) [[unlikely]] {
+          block_tile = tile_find_mand(FONT_TILENAME_BLOCK_STR);
+        }
         cell->tile[ bg_depth ] = block_tile;
       } else {
         //
@@ -436,7 +467,9 @@ void ascii_putf_internal2(int x, int y, color fg, color bg, const std::string &t
       cell->color_br[ bg_depth ] = bg;
     }
 
-    UNLIKELY if ((is_cursor)) { fg = saved_fg; }
+    if ((is_cursor)) [[unlikely]] {
+      fg = saved_fg;
+    }
 
     tile = nullptr;
   }
@@ -1166,9 +1199,13 @@ void ascii_put_box(box_args b, int style, const TileLayers tiles, const char *fm
   y2 = y + h;
 
   for (x = x1; x <= x2; x++) {
-    UNLIKELY if ((! ascii_x_ok(x))) { continue; }
+    if ((! ascii_x_ok(x))) [[unlikely]] {
+      continue;
+    }
     for (y = y1; y <= y2; y++) {
-      UNLIKELY if ((! ascii_y_ok(y))) { continue; }
+      if ((! ascii_y_ok(y))) [[unlikely]] {
+        continue;
+      }
 
       ascii.sdl_mod[ x ][ y ]      = b.sdl_mod;
       ascii.sdl_key[ x ][ y ]      = b.sdl_key;

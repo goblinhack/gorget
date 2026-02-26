@@ -48,8 +48,7 @@ void sdl_display(Gamep g)
   //
   // Screenshot?
   //
-  UNLIKELY if ((g_do_screenshot))
-  {
+  if ((g_do_screenshot)) [[unlikely]] {
     g_do_screenshot = false;
     sdl_screenshot_do(g);
   }

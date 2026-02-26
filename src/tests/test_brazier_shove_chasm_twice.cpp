@@ -166,8 +166,7 @@
   }
 
   player = thing_player(g);
-  UNLIKELY if (player == nullptr)
-  {
+  if (player == nullptr) [[unlikely]] {
     level_dump(g, v, l1, w, h);
     level_dump(g, v, l2, w, h);
     level_dump(g, v, l3, w, h);

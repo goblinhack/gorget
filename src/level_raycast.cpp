@@ -186,10 +186,14 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
   TRACE();
 
   auto *player = thing_player(g);
-  UNLIKELY if (player == nullptr) { return; }
+  if (player == nullptr) [[unlikely]] {
+    return;
+  }
 
   auto *ext = thing_ext_struct(g, player);
-  UNLIKELY if (ext == nullptr) { return; }
+  if (ext == nullptr) [[unlikely]] {
+    return;
+  }
 
   auto *light = thing_light_struct(g, player);
   if (light == nullptr) {
@@ -238,12 +242,16 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
       //
       // oob?
       //
-      UNLIKELY if ((step >= end_of_points)) { break; }
+      if ((step >= end_of_points)) [[unlikely]] {
+        break;
+      }
 
       //
       // Beyond vision limits?
       //
-      UNLIKELY if ((ray_pixel->distance > ray_max_length_in_pixels)) { break; }
+      if ((ray_pixel->distance > ray_max_length_in_pixels)) [[unlikely]] {
+        break;
+      }
 
       int16_t p1x    = light_pos.x + ray_pixel->p.x;
       int16_t p1y    = light_pos.y + ray_pixel->p.y;
@@ -254,13 +262,17 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
       //
       // Ignore the same tile. i.e. do not light it more than once.
       //
-      LIKELY if (((tile_x == prev_tile_x) && (tile_y == prev_tile_y))) { continue; }
+      [[likely]] if (((tile_x == prev_tile_x) && (tile_y == prev_tile_y))) {
+        continue;
+      }
 
       //
       // Oob can happen in custom levels with no edges
       //
       spoint tile(tile_x, tile_y);
-      UNLIKELY if (is_oob(tile)) { break; }
+      if (is_oob(tile)) [[unlikely]] {
+        break;
+      }
 
       prev_tile_x = tile_x;
       prev_tile_y = tile_y;
@@ -306,12 +318,16 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
           //
           // oob?
           //
-          UNLIKELY if ((step_inside_wall >= end_of_points)) { break; }
+          if ((step_inside_wall >= end_of_points)) [[unlikely]] {
+            break;
+          }
 
           //
           // Check if we've progressed far enough into the wall
           //
-          UNLIKELY if ((ray_pixel->distance > obs_to_vision_penetration_distance)) { break; }
+          if ((ray_pixel->distance > obs_to_vision_penetration_distance)) [[unlikely]] {
+            break;
+          }
 
           p1x    = light_pos.x + ray_pixel->p.x;
           p1y    = light_pos.y + ray_pixel->p.y;
@@ -322,8 +338,7 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
           //
           // Ignore the same tile. i.e. do not light it more than once.
           //
-          LIKELY if (((tile_x == prev_tile_x) && (tile_y == prev_tile_y)))
-          {
+          [[likely]] if (((tile_x == prev_tile_x) && (tile_y == prev_tile_y))) {
             step_inside_wall++;
             continue;
           }
@@ -333,7 +348,9 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
           //
           tile.x = tile_x;
           tile.y = tile_y;
-          UNLIKELY if (is_oob(tile)) { break; }
+          if (is_oob(tile)) [[unlikely]] {
+            break;
+          }
 
           prev_tile_x = tile_x;
           prev_tile_y = tile_y;
@@ -386,7 +403,9 @@ void Raycast::raycast_render(Gamep g, Levelsp v, Levelp l)
   }
 
   auto *player = thing_player(g);
-  UNLIKELY if (player == nullptr) { return; }
+  if (player == nullptr) [[unlikely]] {
+    return;
+  }
 
   spoint light_pos = thing_pix_at(player);
 
@@ -467,7 +486,9 @@ void level_light_raycast(Gamep g, Levelsp v, Levelp l, FboEnum fbo)
   }
 
   auto *player = thing_player(g);
-  UNLIKELY if (player == nullptr) { return; }
+  if (player == nullptr) [[unlikely]] {
+    return;
+  }
 
   //
   // First time init

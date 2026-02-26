@@ -57,7 +57,9 @@ void level_update_visibility(Gamep g, Levelsp v, Levelp l)
   TRACE();
 
   auto *player = thing_player(g);
-  UNLIKELY if (player == nullptr) { return; }
+  if (player == nullptr) [[unlikely]] {
+    return;
+  }
 
   if ((g == nullptr) || (v == nullptr) || (l == nullptr)) {
     return;

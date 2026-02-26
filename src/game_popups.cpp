@@ -15,14 +15,12 @@ void game_popup_text_add(Gamep g, int x, int y, const std::string &text, color c
 {
   TRACE();
 
-  UNLIKELY if ((! g))
-  {
+  if ((! g)) [[unlikely]] {
     ERR("No game pointer set");
     return;
   }
 
-  UNLIKELY if (is_oob(x, y))
-  {
+  if (is_oob(x, y)) [[unlikely]] {
     ERR("Text is oob");
     return;
   }
@@ -39,8 +37,7 @@ void game_popups_age(Gamep g)
 {
   TRACE();
 
-  UNLIKELY if ((! g))
-  {
+  if ((! g)) [[unlikely]] {
     ERR("No game pointer set");
     return;
   }
@@ -72,8 +69,7 @@ void game_popups_display(Gamep g, Levelsp v, Levelp l)
 {
   TRACE();
 
-  UNLIKELY if ((! g))
-  {
+  if ((! g)) [[unlikely]] {
     ERR("No game pointer set");
     return;
   }
@@ -184,8 +180,7 @@ void game_popups_display(Gamep g, Levelsp v, Levelp l)
 void game_popups_clear(Gamep g)
 {
   TRACE();
-  UNLIKELY if ((! g))
-  {
+  if ((! g)) [[unlikely]] {
     ERR("No game pointer set");
     return;
   }

@@ -16,7 +16,9 @@
 {
   TRACE();
 
-  UNLIKELY if (is_oob(p)) { return false; }
+  if (is_oob(p)) [[unlikely]] {
+    return false;
+  }
 
   if (level_is_obs_to_falling_onto(g, v, l, p) != nullptr) {
     return false;

@@ -283,7 +283,9 @@ void thing_display(Gamep g, Levelsp v, Levelp l, const spoint &p, Tpp tp, Thingp
   bool is_falling = false;
 
   auto *player = thing_player(g);
-  UNLIKELY if ((! player)) { return; }
+  if ((! player)) [[unlikely]] {
+    return;
+  }
 
   //
   // What level are we currently displaying?
@@ -303,7 +305,9 @@ void thing_display(Gamep g, Levelsp v, Levelp l, const spoint &p, Tpp tp, Thingp
     // What level is the player on?
     //
     auto *player_level = game_level_get(g, v, player->level_num);
-    UNLIKELY if ((! player_level)) { return; }
+    if ((! player_level)) [[unlikely]] {
+      return;
+    }
 
     //
     // If we're blitting the level below, filter to only things we can see through chasms

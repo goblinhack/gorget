@@ -624,7 +624,9 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
         spoint at(x * 2, y * 2);
         at = car_to_iso(at);
         at += map_offset;
-        UNLIKELY if (is_oob(at)) { continue; }
+        if (is_oob(at)) [[unlikely]] {
+          continue;
+        }
 
         //
         // Save debugging
@@ -676,7 +678,9 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
       spoint at((x * 2) + 1, y * 2);
       at = car_to_iso(at);
       at += map_offset;
-      UNLIKELY if (is_oob(at)) { continue; }
+      if (is_oob(at)) [[unlikely]] {
+        continue;
+      }
 
       level_select->debug[ at.x ][ at.y ] = '-';
 
@@ -703,7 +707,9 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
       spoint at(x * 2, (y * 2) + 1);
       at = car_to_iso(at);
       at += map_offset;
-      UNLIKELY if (is_oob(at)) { continue; }
+      if (is_oob(at)) [[unlikely]] {
+        continue;
+      }
 
       level_select->debug[ at.x ][ at.y ] = '|';
 

@@ -66,7 +66,9 @@ auto thing_can_move_to_attempt_by_opening(Gamep g, Levelsp v, Levelp l, Thingp m
 {
   TRACE();
 
-  UNLIKELY if (is_oob(to)) { return false; }
+  if (is_oob(to)) [[unlikely]] {
+    return false;
+  }
 
   if (to == thing_at(me)) {
     return true;

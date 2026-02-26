@@ -30,7 +30,9 @@ static WidPopup *wid_leftbar;
   wid_leftbar = new WidPopup(g, "left bar", tl, br, nullptr, "", false, false);
 
   auto *player = thing_player(g);
-  UNLIKELY if (player == nullptr) { return false; }
+  if (player == nullptr) [[unlikely]] {
+    return false;
+  }
 
   auto *l = game_level_get(g, v);
   if (l == nullptr) {
@@ -38,7 +40,9 @@ static WidPopup *wid_leftbar;
   }
 
   auto *tp = thing_tp(player);
-  UNLIKELY if (tp == nullptr) { return false; }
+  if (tp == nullptr) [[unlikely]] {
+    return false;
+  }
 
   wid_thing_info(g, v, l, player, wid_leftbar, UI_LEFTBAR_WIDTH);
 

@@ -43,8 +43,7 @@
   tp_damage_set(tp_fireball, THING_EVENT_FIRE_DAMAGE, "100");
 
   auto *player = thing_player(g);
-  UNLIKELY if (player == nullptr)
-  {
+  if (player == nullptr) [[unlikely]] {
     TEST_FAILED(t, "no player");
     goto exit;
   }

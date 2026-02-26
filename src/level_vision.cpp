@@ -14,10 +14,14 @@ void level_vision_calculate_all(Gamep g, Levelsp v, Levelp l)
 {
   TRACE();
 
-  UNLIKELY if (((g == nullptr) || (v == nullptr) || (l == nullptr))) { return; }
+  if (((g == nullptr) || (v == nullptr) || (l == nullptr))) [[unlikely]] {
+    return;
+  }
 
   auto *player = thing_player(g);
-  UNLIKELY if (player == nullptr) { return; }
+  if (player == nullptr) [[unlikely]] {
+    return;
+  }
 
   //
   // If the player is not on the level being lit, then nothing to do
@@ -37,9 +41,13 @@ void level_vision_calculate_all(Gamep g, Levelsp v, Levelp l)
     }
 
     auto *ext = thing_ext_struct(g, t);
-    UNLIKELY if (ext == nullptr) { continue; }
+    if (ext == nullptr) [[unlikely]] {
+      continue;
+    }
 
-    UNLIKELY if ((thing_is_player(t))) { continue; }
+    if ((thing_is_player(t))) [[unlikely]] {
+      continue;
+    }
 
     level_fov_can_see_callback_t callback = nullptr;
     level_fov(g, v, l, t, &ext->can_see, &ext->has_seen, thing_at(t), max_radius, callback);

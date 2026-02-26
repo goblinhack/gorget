@@ -22,7 +22,9 @@ static auto tp_cursor_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l, con
   Tilep tile = tp_tiles_get(tp, THING_ANIM_CURSOR_NOPATH, 0);
 
   auto *player = thing_player(g);
-  UNLIKELY if (player == nullptr) { return tile; }
+  if (player == nullptr) [[unlikely]] {
+    return tile;
+  }
 
   //
   // Non zero cursor path, change the cursor to a positive color

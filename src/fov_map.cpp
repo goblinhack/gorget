@@ -30,8 +30,7 @@ void fov_map_set(FovMap *fov, const uint8_t x, const uint8_t y, const uint8_t va
 void fov_map_set(FovMap *m, const spoint &pov, const bool val)
 {
 #ifdef DEBUG_BUILD
-  UNLIKELY if (is_oob(pov))
-  {
+  if (is_oob(pov)) [[unlikely]] {
     ERR("overflow");
     return;
   }
@@ -45,8 +44,7 @@ void fov_map_set(FovMap *m, const spoint &pov, const bool val)
 [[nodiscard]] auto fov_map_get(const FovMap *m, const spoint &pov) -> bool
 {
 #ifdef DEBUG_BUILD
-  UNLIKELY if (is_oob(pov))
-  {
+  if (is_oob(pov)) [[unlikely]] {
     ERR("overflow");
     return false;
   }

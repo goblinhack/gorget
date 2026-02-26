@@ -542,7 +542,9 @@ auto wid_actionbar_create_window(Gamep g) -> bool
   }
 
   auto *player = thing_player(g);
-  UNLIKELY if (player == nullptr) { return false; }
+  if (player == nullptr) [[unlikely]] {
+    return false;
+  }
 
   if (thing_is_dead(player)) {
     return false;
