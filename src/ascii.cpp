@@ -42,7 +42,7 @@ int TERM_HEIGHT;
 int ascii_mouse_x;
 int ascii_mouse_y;
 
-std::array< std::array< AsciiCell, TERM_HEIGHT_MAX >, TERM_WIDTH_MAX > *cells;
+static std::array< std::array< AsciiCell, TERM_HEIGHT_MAX >, TERM_WIDTH_MAX > *cells;
 
 void ascii_init() { ascii_clear_display(); }
 
@@ -281,7 +281,9 @@ void ascii_set(int depth, int x, int y, const Tilep tile, float tx, float ty, fl
   cell->dy[ depth ]   = dy;
 }
 
-void ascii_set(int depth, int x, int y, const char *tilename) { ascii_set(depth, x, y, tile_find(tilename)); }
+#if 0
+static void ascii_set(int depth, int x, int y, const char *tilename) { ascii_set(depth, x, y, tile_find(tilename)); }
+#endif
 
 void ascii_set(int depth, int x, int y, const char ch) { ascii_set(depth, x, y, font_ui->font_get_tile(ch), ch); }
 
@@ -720,7 +722,7 @@ static void ascii_map_thing_replace(int depth, int x, int y, Tilep tile, color c
 using ascii_draw_char_fn = void (*)(int depth, int x, int y, char ch);
 using ascii_draw_col_fn  = void (*)(int depth, int x, int y, color col);
 
-void ascii_draw_line(int depth, int x0, int y0, int x1, int y1, Tilep tile, color col)
+static void ascii_draw_line(int depth, int x0, int y0, int x1, int y1, Tilep tile, color col)
 {
   int const dx  = abs(x1 - x0);
   int const sx  = x0 < x1 ? 1 : -1;
@@ -751,10 +753,12 @@ void ascii_draw_line(int depth, int x0, int y0, int x1, int y1, char what, color
   ascii_draw_line(depth, x0, y0, x1, y1, font_ui->font_get_tile(what), col);
 }
 
-void ascii_draw_line(int depth, int x0, int y0, int x1, int y1, const char *tilename, color col)
+#if 0
+static void ascii_draw_line(int depth, int x0, int y0, int x1, int y1, const char *tilename, color col)
 {
   ascii_draw_line(depth, x0, y0, x1, y1, tile_find(tilename), col);
 }
+#endif
 
 //
 // Display one z layer of the ascii.

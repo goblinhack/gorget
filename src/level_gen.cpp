@@ -885,7 +885,9 @@ static void room_dump(class Room *r)
 //
 // Dump all rooms
 //
+// NOLINTBEGIN
 void rooms_dump(Gamep g)
+// NOLINTEND
 {
   TRACE();
 
@@ -1372,7 +1374,9 @@ static void fragment_alt_dump(class FragmentAlt *f)
 //
 // Dump all fragment_alts
 //
+// NOLINTBEGIN
 void fragment_alts_dump(Gamep g)
+// NOLINTEND
 {
   TRACE();
 
@@ -1667,7 +1671,9 @@ static void fragment_dump(class Fragment *f)
 //
 // Dump all fragments
 //
+// NOLINTBEGIN
 void fragments_dump(Gamep g)
+// NOLINTEND
 {
   TRACE();
 

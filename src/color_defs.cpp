@@ -3,6 +3,7 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_color.hpp"
 #include "my_color_defs.hpp"
 
 // begin sort marker1 {
@@ -86,7 +87,7 @@ color YELLOW3;
 color YELLOW4;
 // end sort marker1 }
 
-extern bool color_init_done;
+bool color_init_done;
 
 void color_init()
 {

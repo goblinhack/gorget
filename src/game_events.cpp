@@ -309,7 +309,7 @@ auto game_event_ascend(Gamep g) -> bool
   return true;
 }
 
-auto game_event_jump(Gamep g) -> bool
+static auto game_event_jump(Gamep g) -> bool
 {
   DBG("Jump");
   TRACE();

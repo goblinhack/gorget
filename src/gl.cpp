@@ -22,20 +22,22 @@ float   glapi_last_tex_bottom;
 GLshort glapi_last_right;
 GLshort glapi_last_bottom;
 
-GLuint g_fbo_id[ FBO_ENUM_MAX ];
-GLuint g_fbo_tex_id[ FBO_ENUM_MAX ];
-GLuint g_render_buf_id[ FBO_ENUM_MAX ];
-isize  g_fbo_size[ FBO_ENUM_MAX ];
+GLuint       g_fbo_id[ FBO_ENUM_MAX ];
+GLuint       g_fbo_tex_id[ FBO_ENUM_MAX ];
+GLuint       g_render_buf_id[ FBO_ENUM_MAX ];
+static isize g_fbo_size[ FBO_ENUM_MAX ];
 
 static FboEnum fbo_locked = FBO_NONE;
 static FboEnum fbo_last   = FBO_NONE;
 
+// NOLINTBEGIN
 void MessageCallback(GLenum /*source*/, GLenum type, GLuint id, GLenum severity, GLsizei /*length*/, const GLchar *message,
                      const void * /*userParam*/)
 {
   TRACE();
   CON("GL CALLBACK: type = 0x%x, severity = 0x%x, message = %s\n", type, severity, message);
 }
+// NOLINTEND
 
 void gl_init_2d_mode(Gamep g)
 {

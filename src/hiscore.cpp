@@ -149,7 +149,7 @@ auto operator<<(std::ostream &out, Bits< const HiScore & > const my) -> std::ost
 // vvvvvvvvvvvvvvvvvvvvvvvvvvvv
 //
 //////////////////////////////////////////////////////////////////////////////////////
-auto operator<<(std::ostream &out, Bits< HiScore & > const my) -> std::ostream &
+static auto operator<<(std::ostream &out, Bits< HiScore & > const my) -> std::ostream &
 {
   TRACE();
   out << bits(my.t.name);

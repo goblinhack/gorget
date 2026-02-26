@@ -56,7 +56,7 @@ static const int matrix_table[ 8 ][ 4 ] = {
 //
 // Cast visiblity using shadowcasting.
 //
-void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
+static void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
                   FovMap                      *fov_can_see_tile,     //
                   FovMap                      *fov_has_seen_tile,    //
                   const spoint                 pov,                  //

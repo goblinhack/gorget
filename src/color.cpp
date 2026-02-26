@@ -13,8 +13,8 @@
 
 using colors = std::unordered_map< std::string, color >;
 
-colors color_map;
-bool   color_init_done;
+static colors color_map;
+static bool   color_init_done;
 
 void color_set(const std::string &name, color *c, uint8_t r, uint8_t g, uint8_t b, uint8_t a)
 {

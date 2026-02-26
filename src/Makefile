@@ -118,6 +118,8 @@ tidy:
 			misc-misleading-bidirectional,\
 			misc-misleading-identifier,\
 			misc-confusable-identifiers,\
+			misc-use-internal-linkage,\
+			misc-confusable-identifiers,\
 			modernize-*,\
 			performance-*,\
 			readability-*\

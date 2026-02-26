@@ -2,6 +2,7 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_globals.hpp"
 #include "my_level.hpp"
 
 #include <string>

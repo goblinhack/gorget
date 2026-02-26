@@ -93,7 +93,8 @@ void sound_fini()
   all_sound.clear();
 }
 
-auto sound_load(float volume, const char *file_in, const char *alias_in) -> bool
+#if 0
+static auto sound_load(float volume, const char *file_in, const char *alias_in) -> bool
 {
   TRACE();
   auto file  = std::string(file_in);
@@ -101,6 +102,7 @@ auto sound_load(float volume, const char *file_in, const char *alias_in) -> bool
 
   return sound_load(volume, file, alias);
 }
+#endif
 
 auto sound_load(float volume, const std::string &file, const std::string &alias, int concurrent_max) -> bool
 {

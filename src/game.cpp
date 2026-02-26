@@ -299,7 +299,9 @@ public:
 
 static void game_map_zoom_update(Gamep g);
 
+// NOLINTBEGIN
 class Game *game;
+// NOLINTEND
 
 #include "game_load.hpp"
 #include "game_save.hpp"
@@ -915,7 +917,7 @@ void Game::destroy_levels()
 }
 void game_destroy_levels(Gamep g) { g->destroy_levels(); }
 
-auto game_state_to_string(GameState state) -> std::string
+static auto game_state_to_string(GameState state) -> std::string
 {
   TRACE();
   return GameState_to_string(state);

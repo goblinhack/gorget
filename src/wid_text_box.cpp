@@ -135,7 +135,7 @@ WidTextBox::WidTextBox(Gamep g, spoint vtl, spoint vbr, Widp vparent, bool horiz
 //
 // Get the wid on the bottom of the list/screen.
 //
-auto WidTextBox::log_(Gamep g, const std::string &str, wid_text_format format, const std::string &col) -> Widp
+auto WidTextBox::log_internal(Gamep g, const std::string &str, wid_text_format format, const std::string &col) -> Widp
 {
   TRACE();
 
@@ -212,7 +212,7 @@ auto WidTextBox::log(Gamep g, const std::string &s, wid_text_format format, cons
     // Handles %%fg=...$ with no text due to a split
     //
     if (length_without_format(c) != 0) {
-      w = log_(g, c, format, col);
+      w = log_internal(g, c, format, col);
     }
   }
   return w;
@@ -225,5 +225,5 @@ auto WidTextBox::log_empty_line(Gamep g) -> Widp
 {
   TRACE();
 
-  return log_(g, " ");
+  return log_internal(g, " ");
 }

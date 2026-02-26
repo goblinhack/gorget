@@ -2,6 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_math.hpp"
+
 auto nextpoweroftwo(unsigned int val) -> unsigned int
 {
   val--;

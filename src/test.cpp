@@ -16,7 +16,7 @@
 #include <print>
 
 /* clang-format off */
-std::initializer_list< std::string > tests = {
+static std::initializer_list< std::string > tests = {
     /* begin shell marker1 */
     /* shell for i in $(find . -name "*.cpp" | xargs grep -h "test_load(\"" | sort | awk '{print $4}' | cut -d\" -f2) */
     /* shell do */
@@ -109,7 +109,7 @@ Test::Test() { NEWPTR(MTYPE_TP, this, "Test"); }
 
 Test::~Test() { OLDPTR(MTYPE_TP, this); }
 
-auto test_find(const char *name_in) -> Testp
+static auto test_find(const char *name_in) -> Testp
 {
   TRACE();
 

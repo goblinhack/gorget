@@ -9,6 +9,7 @@
 #include "my_main.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_sdl_event.hpp"
+#include "my_sdl_proto.hpp"
 #include "my_string.hpp"
 
 void sdl_screenshot(Gamep g)

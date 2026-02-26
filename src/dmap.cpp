@@ -541,15 +541,17 @@ static auto dmap_solve_(const Dmap *D, const spoint start, const std::vector< sp
   return out;
 }
 
-auto dmap_solve_allow_diagonal(const Dmap *D, const spoint start) -> std::vector< spoint >
+#if 0
+static auto dmap_solve_allow_diagonal(const Dmap *D, const spoint start) -> std::vector< spoint >
 {
   static const std::vector< spoint > all_deltas = {
       spoint(-1, -1), spoint(1, -1), spoint(-1, 1), spoint(1, 1), spoint(0, -1), spoint(-1, 0), spoint(1, 0), spoint(0, 1),
   };
   return dmap_solve_(D, start, all_deltas, true);
 }
+#endif
 
-auto dmap_solve_manhattan(const Dmap *D, const spoint start) -> std::vector< spoint >
+static auto dmap_solve_manhattan(const Dmap *D, const spoint start) -> std::vector< spoint >
 {
   static const std::vector< spoint > all_deltas = {
       spoint(0, -1),

@@ -4,6 +4,7 @@
 
 #include "my_main.hpp"
 #include "my_sdl_event.hpp"
+#include "my_sdl_proto.hpp"
 
 auto to_string_ignoring_mods(const SDL_Keysym &k) -> std::string
 {

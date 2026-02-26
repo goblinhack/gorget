@@ -186,7 +186,7 @@ void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 }
 
-auto thing_collision_check_circle_circle(Gamep g, Levelsp v, Levelp l, Thingp A, fpoint A_at, Thingp B, fpoint B_at) -> bool
+static auto thing_collision_check_circle_circle(Gamep g, Levelsp v, Levelp l, Thingp A, fpoint A_at, Thingp B, fpoint B_at) -> bool
 {
   float const A_radius = thing_collision_radius(A);
   float const B_radius = thing_collision_radius(B);

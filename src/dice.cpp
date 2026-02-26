@@ -2,6 +2,7 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_dice_rolls.hpp"
 #include "my_random.hpp"
 
 auto d10000() -> int { return PCG_RANDOM_RANGE_INCLUSIVE(1, 10000); }

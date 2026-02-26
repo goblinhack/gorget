@@ -2,13 +2,14 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_audio.hpp"
 #include "my_callstack.hpp"
 #include "my_globals.hpp"
 #include "my_main.hpp"
 
 #include <SDL_mixer.h>
 
-bool audio_init_done;
+static bool audio_init_done;
 
 void audio_fini()
 {
