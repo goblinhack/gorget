@@ -143,7 +143,7 @@ static void wid_cfg_check_for_conflicts(Gamep g, SDL_Keysym code)
   }
 }
 
-void wid_cfg_help_destroy(Gamep g)
+static void wid_cfg_help_destroy(Gamep g)
 {
   TRACE();
   local_g_config_changed = false;

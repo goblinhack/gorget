@@ -109,17 +109,16 @@ tidy:
 			--system-headers=0 \
 			-header-filter="*.hpp" \
 			-checks="-*,\
-			hicpp-*,\
 			bugprone-*,\
 			cppcoreguidelines-*,\
+			hicpp-*,\
+			misc-confusable-identifiers,\
 			misc-const-correctness,\
-			misc-redundant-expression,\
-			misc-static-assert,\
 			misc-misleading-bidirectional,\
 			misc-misleading-identifier,\
-			misc-confusable-identifiers,\
+			misc-redundant-expression,\
+			misc-static-assert,\
 			misc-use-internal-linkage,\
-			misc-confusable-identifiers,\
 			modernize-*,\
 			performance-*,\
 			readability-*\

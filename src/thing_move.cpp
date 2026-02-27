@@ -14,7 +14,6 @@ auto thing_is_dir_tr(Thingp me) -> bool { return (me->dir == THING_DIR_TR); }
 auto thing_is_dir_bl(Thingp me) -> bool { return (me->dir == THING_DIR_BL); }
 auto thing_is_dir_tl(Thingp me) -> bool { return (me->dir == THING_DIR_TL); }
 auto thing_is_dir_right(Thingp me) -> bool { return (me->dir == THING_DIR_RIGHT); }
-auto thing_is_dir_none(Thingp me) -> bool { return (me->dir == THING_DIR_NONE); }
 auto thing_is_dir_down(Thingp me) -> bool { return (me->dir == THING_DIR_DOWN); }
 auto thing_is_dir_up(Thingp me) -> bool { return (me->dir == THING_DIR_UP); }
 auto thing_is_dir_left(Thingp me) -> bool { return (me->dir == THING_DIR_LEFT); }
@@ -22,24 +21,7 @@ auto thing_is_dir_left(Thingp me) -> bool { return (me->dir == THING_DIR_LEFT); 
 //
 // Set thing direction
 //
-void thing_dir_set_none(Thingp me)
-{
-  TRACE();
-
-  if (tp_is_animated_no_dir(thing_tp(me))) {
-    return;
-  }
-
-  if (me->dir != THING_DIR_NONE) {
-    me->dir = THING_DIR_NONE;
-    // move_carried_items();
-  }
-}
-
-//
-// Set thing direction
-//
-void thing_dir_set_down(Thingp me)
+static void thing_dir_set_down(Thingp me)
 {
   TRACE();
 
@@ -56,7 +38,7 @@ void thing_dir_set_down(Thingp me)
 //
 // Set thing direction
 //
-void thing_dir_set_up(Thingp me)
+static void thing_dir_set_up(Thingp me)
 {
   TRACE();
 
@@ -73,7 +55,7 @@ void thing_dir_set_up(Thingp me)
 //
 // Set thing direction
 //
-void thing_dir_set_left(Thingp me)
+static void thing_dir_set_left(Thingp me)
 {
   TRACE();
 
@@ -90,7 +72,7 @@ void thing_dir_set_left(Thingp me)
 //
 // Set thing direction
 //
-void thing_dir_set_right(Thingp me)
+static void thing_dir_set_right(Thingp me)
 {
   TRACE();
 
@@ -107,7 +89,7 @@ void thing_dir_set_right(Thingp me)
 //
 // Set thing direction
 //
-void thing_dir_set_tl(Thingp me)
+static void thing_dir_set_tl(Thingp me)
 {
   TRACE();
 
@@ -124,7 +106,7 @@ void thing_dir_set_tl(Thingp me)
 //
 // Set thing direction
 //
-void thing_dir_set_bl(Thingp me)
+static void thing_dir_set_bl(Thingp me)
 {
   TRACE();
 
@@ -141,7 +123,7 @@ void thing_dir_set_bl(Thingp me)
 //
 // Set thing direction
 //
-void thing_dir_set_tr(Thingp me)
+static void thing_dir_set_tr(Thingp me)
 {
   TRACE();
 
@@ -158,7 +140,7 @@ void thing_dir_set_tr(Thingp me)
 //
 // Set thing direction
 //
-void thing_dir_set_br(Thingp me)
+static void thing_dir_set_br(Thingp me)
 {
   TRACE();
 

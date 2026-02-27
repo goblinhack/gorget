@@ -22,7 +22,7 @@
 // to be in this list
 //
 /* clang-format off */
-std::initializer_list< std::string > tps = {
+static std::initializer_list< std::string > tps = {
     // clang-format off
     "", // ID 0 means unused
     "floor1", // Update FLOOR_VARIANTS
@@ -114,7 +114,7 @@ std::initializer_list< std::string > tps = {
 /* clang-format on */
 
 using TpVec = std::vector< class Tp * >;
-TpVec tp_vec;
+static TpVec tp_vec;
 
 // begin sort marker3 {
 static TpVec tp_flag_vec[ THING_FLAG_ENUM_MAX ];

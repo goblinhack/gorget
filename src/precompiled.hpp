@@ -108,7 +108,6 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 #include "my_wid.hpp"
-#include "my_wid_error.hpp"
 #include "my_wid_keyboard.hpp"
 #include "my_wid_popup.hpp"
 #include "my_wid_text_box.hpp"

@@ -6,7 +6,7 @@
 #include "my_game.hpp"
 #include "my_thing_inlines.hpp"
 
-auto thing_pluralize_name(Thingp t) -> std::string
+static auto thing_pluralize_name(Thingp t) -> std::string
 {
   TRACE();
 
@@ -20,7 +20,7 @@ auto thing_pluralize_name(Thingp t) -> std::string
   return out;
 }
 
-auto thing_apostrophize_name(Thingp t) -> std::string
+static auto thing_apostrophize_name(Thingp t) -> std::string
 {
   TRACE();
 

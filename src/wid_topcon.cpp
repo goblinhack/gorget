@@ -15,7 +15,7 @@
 static void wid_topcon_wid_create(Gamep g);
 
 Widp wid_topcon_container {};
-Widp wid_topcon_vert_scroll {};
+static Widp wid_topcon_vert_scroll {};
 Widp wid_topcon_input_line {};
 Widp wid_topcon_window {};
 

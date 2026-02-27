@@ -404,15 +404,6 @@ static auto wid_mouse_down_handler_at(Gamep g, Widp w, int x, int y, uint8_t str
     return nullptr;
   }
 
-  //
-  // Prevent newly created widgets grabbing events too soon; like
-  // for example a scancode causes a widget to be created but the
-  // same keypress is taken by the widget.
-  //
-  if (! time_have_x_tenths_passed_since(1, wid_ignore_events_briefly_ts)) {
-    return nullptr;
-  }
-
   if (static_cast< bool >(strict)) {
     if ((x < w->abs_tl.x) || (y < w->abs_tl.y) || (x > w->abs_br.x) || (y > w->abs_br.y)) {
       return nullptr;
@@ -479,15 +470,6 @@ static auto wid_mouse_held_handler_at(Gamep g, Widp w, int x, int y, uint8_t str
     return nullptr;
   }
 
-  //
-  // Prevent newly created widgets grabbing events too soon; like
-  // for example a scancode causes a widget to be created but the
-  // same keypress is taken by the widget.
-  //
-  if (! time_have_x_tenths_passed_since(1, wid_ignore_events_briefly_ts)) {
-    return nullptr;
-  }
-
   if (static_cast< bool >(strict)) {
     if ((x < w->abs_tl.x) || (y < w->abs_tl.y) || (x > w->abs_br.x) || (y > w->abs_br.y)) {
       return nullptr;
@@ -551,15 +533,6 @@ static auto wid_mouse_up_handler_at(Gamep g, Widp w, int x, int y, uint8_t stric
   }
 
   if (wid_ignore_events(w)) {
-    return nullptr;
-  }
-
-  //
-  // Prevent newly created widgets grabbing events too soon; like
-  // for example a scancode causes a widget to be created but the
-  // same keypress is taken by the widget.
-  //
-  if (! time_have_x_tenths_passed_since(1, wid_ignore_events_briefly_ts)) {
     return nullptr;
   }
 

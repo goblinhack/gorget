@@ -94,8 +94,6 @@ public:
 using wid_key_map_location = std::map< TreeWidKey, Widp, TreeWidKeyCmp >;
 using wid_key_map_int      = std::map< WidKeyType, Widp >;
 
-auto wid_unsorted_get_key(Gamep g, Widp w) -> WidKeyType;
-
 class Wid
 {
 public:

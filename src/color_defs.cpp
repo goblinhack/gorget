@@ -87,7 +87,7 @@ color YELLOW3;
 color YELLOW4;
 // end sort marker1 }
 
-bool color_init_done;
+static bool color_init_done;
 
 void color_init()
 {

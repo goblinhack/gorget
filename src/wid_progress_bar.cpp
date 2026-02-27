@@ -12,10 +12,11 @@
 #include "my_ptrcheck.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_wid_popup.hpp"
+#include "my_wids.hpp"
 
 static int progress_steps = 32;
 
-WidPopup *wid_progress_bar_window;
+static WidPopup *wid_progress_bar_window;
 
 void wid_progress_bar_destroy(Gamep g)
 {

@@ -5,6 +5,7 @@
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
 #include "my_wid_popup.hpp"
+#include "my_wids.hpp"
 
 static WidPopup *wid_notice_window;
 

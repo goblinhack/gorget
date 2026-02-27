@@ -527,7 +527,7 @@ static void wid_actionbar_help_over_end(Gamep g, Widp w)
   wid_over_help = nullptr;
 }
 
-auto wid_actionbar_create_window(Gamep g) -> bool
+static auto wid_actionbar_create_window(Gamep g) -> bool
 {
   TRACE();
 

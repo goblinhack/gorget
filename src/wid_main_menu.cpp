@@ -15,7 +15,7 @@
 #include "my_sound.hpp"
 #include "my_wids.hpp"
 
-WidPopup *wid_main_menu_window;
+static WidPopup *wid_main_menu_window;
 
 void wid_main_menu_destroy(Gamep g)
 {
@@ -25,7 +25,7 @@ void wid_main_menu_destroy(Gamep g)
   wid_main_menu_window = nullptr;
 }
 
-void wid_main_menu_hide(Gamep g)
+static void wid_main_menu_hide(Gamep g)
 {
   TRACE();
 

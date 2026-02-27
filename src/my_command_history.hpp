@@ -5,6 +5,9 @@
 #ifndef MY_COMMAND_HISTORY_HPP
 #define MY_COMMAND_HISTORY_HPP
 
+#include <array>
+#include <string>
+
 //
 // History for all text widgets.
 //

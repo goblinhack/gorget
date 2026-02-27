@@ -5,6 +5,7 @@
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
 #include "my_command.hpp"
+#include "my_command_history.hpp"
 #include "my_font.hpp"
 #include "my_game.hpp"
 #include "my_globals.hpp"
@@ -68,12 +69,6 @@ static wid_key_map_int wid_top_level4;
 static wid_key_map_int wid_tick_top_level;
 
 //
-// Ignore events to avoid processing the same event twice if we
-// look at scancodes and bypass wid events
-//
-ts_t wid_ignore_events_briefly_ts;
-
-//
 // Last time we changed what we were over.
 //
 ts_t wid_last_over_event;
@@ -111,8 +106,7 @@ static void wid_tree_detach(Widp w);
 static void wid_tree_insert(Widp w);
 static void wid_tree_attach(Widp w);
 
-void WID_LOG(Widp w, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
-void WID_DBG(Widp w, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+static void WID_DBG(Widp w, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 
 //
 // Child sort priority
@@ -175,18 +169,17 @@ void wid_fini(Gamep g_maybe_null)
     wid_destroy_immediate(g_maybe_null, child);
   }
 
-  wid_top_level                = {};
-  wid_global                   = {};
-  wid_top_level2               = {};
-  wid_top_level3               = {};
-  wid_top_level4               = {};
-  wid_tick_top_level           = {};
-  wid_ignore_events_briefly_ts = {};
-  wid_last_over_event          = {};
-  wid_focus_locked             = {};
-  wid_focus                    = {};
-  wid_over                     = {};
-  wid_time                     = {};
+  wid_top_level       = {};
+  wid_global          = {};
+  wid_top_level2      = {};
+  wid_top_level3      = {};
+  wid_top_level4      = {};
+  wid_tick_top_level  = {};
+  wid_last_over_event = {};
+  wid_focus_locked    = {};
+  wid_focus           = {};
+  wid_over            = {};
+  wid_time            = {};
 }
 
 void wid_dump(Widp w, int depth)
@@ -1943,22 +1936,6 @@ static void wid_tree_global_unsorted_remove(Widp w)
   root->erase(w->tree_global_key);
 
   w->in_tree_global_unsorted_root = nullptr;
-}
-
-auto wid_unsorted_get_key(Widp w) -> WidKeyType
-{
-  TRACE();
-
-  auto *root = &wid_global;
-
-  auto result = root->find(w->tree_global_key);
-  if (result == root->end()) {
-    CROAK("Wid unsorted did not find wid");
-  }
-
-  w = result->second;
-
-  return w->tree_global_key;
 }
 
 static void wid_tree4_wids_being_destroyed_remove(Widp w)
@@ -3913,15 +3890,6 @@ static auto wid_key_down_handler_at(Gamep g, Widp w, int x, int y, uint8_t stric
     return nullptr;
   }
 
-  //
-  // Prevent newly created widgets grabbing events too soon; like
-  // for example a scancode causes a widget to be created but the
-  // same keypress is taken by the widget.
-  //
-  if (! time_have_x_tenths_passed_since(1, wid_ignore_events_briefly_ts)) {
-    return nullptr;
-  }
-
   if (static_cast< bool >(strict)) {
     if ((x < w->abs_tl.x) || (y < w->abs_tl.y) || (x > w->abs_br.x) || (y > w->abs_br.y)) {
       return nullptr;
@@ -3994,15 +3962,6 @@ static auto wid_key_up_handler_at(Gamep g, Widp w, int x, int y, uint8_t strict)
     return nullptr;
   }
 
-  //
-  // Prevent newly created widgets grabbing events too soon; like
-  // for example a scancode causes a widget to be created but the
-  // same keypress is taken by the widget.
-  //
-  if (! time_have_x_tenths_passed_since(1, wid_ignore_events_briefly_ts)) {
-    return nullptr;
-  }
-
   if (static_cast< bool >(strict)) {
     if ((x < w->abs_tl.x) || (y < w->abs_tl.y) || (x > w->abs_br.x) || (y > w->abs_br.y)) {
       return nullptr;
@@ -4059,15 +4018,6 @@ static auto wid_joy_button_handler_at(Gamep g, Widp w, int x, int y, uint8_t str
   }
 
   if (wid_ignore_events(w)) {
-    return nullptr;
-  }
-
-  //
-  // Prevent newly created widgets grabbing events too soon; like
-  // for example a scancode causes a widget to be created but the
-  // same keypress is taken by the widget.
-  //
-  if (! time_have_x_tenths_passed_since(1, wid_ignore_events_briefly_ts)) {
     return nullptr;
   }
 
@@ -5596,17 +5546,6 @@ void wid_move_to_abs_centered(Gamep g, Widp w, int x, int y)
   wid_move_delta(g, w, dx, dy);
 }
 
-void wid_ignore_events_briefly()
-{
-  TRACE();
-
-  if (! time_have_x_tenths_passed_since(10, wid_ignore_events_briefly_ts)) {
-    return;
-  }
-
-  wid_ignore_events_briefly_ts = time_ms_cached();
-}
-
 auto wid_some_recent_event_occurred() -> bool
 {
   TRACE();
@@ -5618,11 +5557,6 @@ auto wid_some_recent_event_occurred() -> bool
   //
   if (! time_have_x_tenths_passed_since(2, wid_last_over_event)) {
     // DBG("wid_some_recent_event_occurred: Too soon since last wid over event");
-    return true;
-  }
-
-  if (! time_have_x_tenths_passed_since(1, wid_ignore_events_briefly_ts)) {
-    // DBG("wid_some_recent_event_occurred: Too soon since last ignore event");
     return true;
   }
 
@@ -5643,21 +5577,6 @@ static void wid_log_(Widp w, const char *fmt, va_list args)
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
   putf(MY_STDOUT, buf);
-}
-
-void WID_LOG(Widp w, const char *fmt, ...)
-{
-  va_list args = {};
-
-  if (! wid_safe()) {
-    return;
-  }
-
-  VERIFY(MTYPE_WID, w);
-
-  va_start(args, fmt);
-  wid_log_(w, fmt, args);
-  va_end(args);
 }
 
 void WID_DBG(Widp w, const char *fmt, ...)

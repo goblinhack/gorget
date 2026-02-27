@@ -25,8 +25,8 @@
 #endif
 #include <vector>
 
-std::unordered_map< std::string, class Tile * > all_tiles;
-std::vector< class Tile * >                     all_tiles_array;
+static std::unordered_map< std::string, class Tile * > all_tiles;
+static std::vector< class Tile * >                     all_tiles_array;
 
 static bool tile_init_done;
 

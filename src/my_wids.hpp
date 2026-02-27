@@ -11,6 +11,7 @@
 #include "my_wid_popup.hpp"
 
 #include <string>
+#include <vector>
 
 auto wid_actionbar_init(Gamep g) -> bool;
 auto wid_leftbar_init(Gamep g) -> bool;
@@ -68,6 +69,7 @@ void wid_progress_bar(Gamep, const std::string &title, float pct);
 void wid_progress_bar_destroy(Gamep);
 auto wid_console_receive_input(Gamep g, Widp w, const SDL_Keysym *key) -> bool;
 void wid_console_deserialize(const std::vector< std::string > &r);
+void wid_error(Gamep, const std::string &error);
 
 auto wid_console_serialize() -> std::vector< std::string >;
 

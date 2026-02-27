@@ -140,7 +140,6 @@ void wid_get_children_size(Widp owner, int *width, int *height);
 void wid_get_pct(Widp w, float *x, float *y);
 void wid_get_tl_x_tl_y_br_x_br_y(Widp w, int *tl_x, int *tl_y, int *br_x, int *br_y);
 void wid_hide(Gamep g, Widp w);
-void wid_ignore_events_briefly(Gamep);
 void wid_joy_button(Gamep g, int x, int y);
 void wid_key_down(Gamep g, const struct SDL_Keysym *key, int x, int y);
 void wid_key_up(Gamep g, const struct SDL_Keysym *key, int x, int y);
@@ -248,7 +247,6 @@ extern bool wid_mouse_visible;
 
 extern const int wid_destroy_delay_ms;
 
-extern ts_t wid_ignore_events_briefly_ts;
 extern ts_t wid_last_mouse_motion;
 extern ts_t wid_last_over_event;
 
