@@ -39,8 +39,10 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_fov_map_inlines.hpp"
 #include "my_globals.hpp"
 #include "my_level.hpp"
+#include "my_level_inlines.hpp"
 #include "my_main.hpp"
 
 #include <algorithm>
@@ -57,16 +59,16 @@ static const int matrix_table[ 8 ][ 4 ] = {
 // Cast visiblity using shadowcasting.
 //
 static void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
-                  FovMap                      *fov_can_see_tile,     //
-                  FovMap                      *fov_has_seen_tile,    //
-                  const spoint                 pov,                  //
-                  const short                  distance_from_origin, // Polar distance_from_origin from POV.
-                  float                        view_slope_high,      //
-                  float                        view_slope_low,       //
-                  const short                  max_radius,           //
-                  const short                  octant,               //
-                  const bool                   light_walls,          //
-                  level_fov_can_see_callback_t can_see_callback)
+                         FovMap                      *fov_can_see_tile,     //
+                         FovMap                      *fov_has_seen_tile,    //
+                         const spoint                 pov,                  //
+                         const short                  distance_from_origin, // Polar distance_from_origin from POV.
+                         float                        view_slope_high,      //
+                         float                        view_slope_low,       //
+                         const short                  max_radius,           //
+                         const short                  octant,               //
+                         const bool                   light_walls,          //
+                         level_fov_can_see_callback_t can_see_callback)
 {
   const short xx             = matrix_table[ octant ][ 0 ];
   const short xy             = matrix_table[ octant ][ 1 ];
@@ -118,8 +120,8 @@ static void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
         //
         // Can see tile. If not seen already, light it
         //
-        if (! fov_map_get(fov_can_see_tile, p)) {
-          fov_map_set(fov_can_see_tile, p, true);
+        if (! fov_map_get(fov_can_see_tile, p.x, p.y)) {
+          fov_map_set(fov_can_see_tile, p.x, p.y, true);
 
           //
           // Per tile can see callback check
@@ -197,8 +199,8 @@ void level_fov(Gamep g, Levelsp v, Levelp l, Thingp me, FovMap *fov_can_see_tile
     //
     // If not seen already, light it
     //
-    if (! fov_map_get(fov_can_see_tile, pov)) {
-      fov_map_set(fov_can_see_tile, pov, true);
+    if (! fov_map_get(fov_can_see_tile, pov.x, pov.y)) {
+      fov_map_set(fov_can_see_tile, pov.x, pov.y, true);
 
       //
       // Per tile can see callback check
@@ -210,7 +212,7 @@ void level_fov(Gamep g, Levelsp v, Levelp l, Thingp me, FovMap *fov_can_see_tile
   }
 
   if (fov_has_seen_tile != nullptr) {
-    fov_map_set(fov_has_seen_tile, pov, true);
+    fov_map_set(fov_has_seen_tile, pov.x, pov.y, true);
   }
 
   // me->can_see_you(point(pov_x, pov_y));

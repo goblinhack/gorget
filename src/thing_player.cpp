@@ -2,16 +2,17 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include <ranges>
-
 #include "my_callstack.hpp"
 #include "my_game.hpp"
 #include "my_globals.hpp"
+#include "my_level_inlines.hpp"
 #include "my_line.hpp"
 #include "my_main.hpp"
 #include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp"
 #include "my_wid_warning.hpp"
+
+#include <ranges>
 
 auto thing_player(Gamep g) -> Thingp
 {

@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_THING_TEMPLATE_H
-#define MY_THING_TEMPLATE_H
+#ifndef MY_THING_TEMPLATE_HPP
+#define MY_THING_TEMPLATE_HPP
 
 #include "my_color.hpp"
 #include "my_enum.hpp"
@@ -903,4 +903,4 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup val);
 [[nodiscard]] auto tp_is_wood(Tpp tp) -> bool;
 // end sort marker1 }
 
-#endif // MY_THING_TEMPLATE_H
+#endif // MY_THING_TEMPLATE_HPP

@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_LEVEL_H
-#define MY_LEVEL_H
+#ifndef MY_LEVEL_HPP
+#define MY_LEVEL_HPP
 
 #include "my_game_defs.hpp"
 #include "my_ptrcheck.hpp"
@@ -642,7 +642,6 @@ enum {
 [[nodiscard]] auto level_is_level_select(Gamep g, Levelsp v, Levelp l) -> bool;
 [[nodiscard]] auto level_is_player_level(Gamep g, Levelsp v, Levelp l) -> bool;
 [[nodiscard]] auto level_is_same_obj_type_at(Gamep g, Levelsp v, Levelp l, const spoint &p, Tpp tp) -> bool;
-[[nodiscard]] auto level_light_blocker_at_cached(Gamep g, Levelsp v, Levelp l, const spoint &pov) -> bool;
 [[nodiscard]] auto level_light_blocker_at(Gamep g, Levelsp v, Levelp l, const spoint &pov) -> Thingp;
 [[nodiscard]] auto level_match_contents(Gamep g, Levelsp v, Levelp l, Testp t, int w, int h, const char *expected) -> bool;
 [[nodiscard]] auto level_open(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> Thingp;
@@ -1444,7 +1443,6 @@ using LevelType = enum LevelType_ {
 // end sort marker5
 
 // begin sort marker6
-[[nodiscard]] auto level_has_seen_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
 [[nodiscard]] auto level_has_seen(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
 [[nodiscard]] auto level_open_is_able_to_collect_items(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_able_to_collect_keys(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
@@ -1666,8 +1664,4 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_open_is_wood(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 // end sort marker6
 
-static inline auto is_oob(fpoint p) -> bool { return (p.x < 0) || (p.y < 0) || (p.x >= (float) MAP_WIDTH) || (p.y >= (float) MAP_HEIGHT); }
-static inline auto is_oob(spoint p) -> bool { return (p.x < 0) || (p.y < 0) || (p.x >= MAP_WIDTH) || (p.y >= MAP_HEIGHT); }
-static inline auto is_oob(int x, int y) -> bool { return (x < 0) || (y < 0) || (x >= MAP_WIDTH) || (y >= MAP_HEIGHT); }
-
-#endif // MY_LEVEL_H
+#endif // MY_LEVEL_HPP

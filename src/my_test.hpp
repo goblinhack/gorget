@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_TEST_H
-#define MY_TEST_H
+#ifndef MY_TEST_HPP
+#define MY_TEST_HPP
 
 #include "my_callstack.hpp"
 #include "my_game.hpp"
@@ -84,4 +84,4 @@ void game_test_init_level(Gamep g, Levelsp v, Levelp *out, LevelNum level_num, i
 void game_test_init_level(Gamep g, Levelsp v, Levelp *out, LevelNum level_num, spoint level_at, int w, int h, const char *contents,
                           const Overrides &overrides = no_overrides);
 
-#endif // MY_TEST_H
+#endif // MY_TEST_HPP

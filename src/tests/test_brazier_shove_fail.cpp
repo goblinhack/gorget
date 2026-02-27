@@ -4,6 +4,7 @@
 
 #include "../my_game.hpp"
 #include "../my_level.hpp"
+#include "../my_level_inlines.hpp"
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 #include "../my_thing_inlines.hpp"

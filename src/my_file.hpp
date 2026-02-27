@@ -5,6 +5,8 @@
 #ifndef MY_FILE_HPP
 #define MY_FILE_HPP
 
+#include "my_types.hpp"
+
 auto file_write(const char *filename, unsigned char *buffer, int len) -> int;
 auto file_exists(const char *filename) -> uint8_t;
 auto file_size(const char *filename) -> int;

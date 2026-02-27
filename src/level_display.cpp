@@ -10,6 +10,7 @@
 #include "my_gl.hpp"
 #include "my_globals.hpp"
 #include "my_level.hpp"
+#include "my_level_inlines.hpp"
 #include "my_main.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_thing_inlines.hpp"

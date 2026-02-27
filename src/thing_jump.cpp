@@ -2,12 +2,13 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include <ranges>
-
 #include "my_callstack.hpp"
+#include "my_level_inlines.hpp"
 #include "my_line.hpp"
 #include "my_main.hpp"
 #include "my_thing_inlines.hpp"
+
+#include <ranges>
 
 //
 // If jumping too far, truncate the jump

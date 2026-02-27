@@ -10,6 +10,7 @@
 #include "my_globals.hpp"
 #include "my_level.hpp"
 #include "my_level_ext.hpp"
+#include "my_level_inlines.hpp"
 #include "my_main.hpp"
 #include "my_random.hpp"
 #include "my_sprintf.hpp"
@@ -18,13 +19,12 @@
 #include <array>
 #include <functional>
 #include <map>
+#include <mutex>
 #include <print>
 #include <thread>
 #include <unordered_map>
 #include <utility>
 #include <vector>
-
-#include <mutex>
 
 static std::mutex level_gen_mutex;
 

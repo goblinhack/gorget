@@ -4,6 +4,7 @@
 
 #include "my_callstack.hpp"
 #include "my_cpp_template.hpp"
+#include "my_level_inlines.hpp"
 #include "my_thing_inlines.hpp"
 
 [[nodiscard]] static auto teleport_find_other(Gamep g, Levelsp v, Levelp l, const spoint &in, spoint &out) -> bool

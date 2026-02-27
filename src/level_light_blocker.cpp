@@ -5,15 +5,15 @@
 #include "my_callstack.hpp"
 #include "my_globals.hpp"
 #include "my_level.hpp"
+#include "my_level_inlines.hpp"
 #include "my_main.hpp"
 #include "my_math.hpp"
 #include "my_thing_inlines.hpp"
 #include "my_tile.hpp"
 #include "my_ui.hpp"
 
-#include <cmath>
-
 #include <array>
+#include <cmath>
 #include <cstring>
 
 //
@@ -62,14 +62,6 @@ auto level_light_blocker_at(Gamep g, Levelsp v, Levelp l, const spoint &pov) -> 
       }
     }
 #endif
-}
-
-//
-// Something blocking the fov?
-//
-auto level_light_blocker_at_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool
-{
-  return l->is_light_blocker_cache[ p.x ][ p.y ] != 0;
 }
 
 //

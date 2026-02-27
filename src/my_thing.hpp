@@ -7,6 +7,7 @@
 
 #include "my_color.hpp"
 #include "my_dmap.hpp"
+#include "my_fov_map.hpp"
 #include "my_fpoint.hpp"
 #include "my_game_defs.hpp"
 #include "my_gl.hpp"
@@ -81,13 +82,6 @@ ENUM_DEF_H(PLAYER_STATE_ENUM, PlayerState)
       list_macro(MONST_STATE_WANDER, "WANDER"),   /* newline */
 
 ENUM_DEF_H(MONST_STATE_ENUM, MonstState)
-
-//
-// Field of view for a monster or player
-//
-using FovMap = struct FovMap {
-  uint8_t bits[ (MAP_WIDTH * MAP_HEIGHT) / 8 ];
-};
 
 //
 // Some kind of event that befalls a thing. Usually an attack
@@ -488,8 +482,6 @@ using Thing = struct Thing {
 };
 
 // begin sort marker1 {
-[[nodiscard]] auto fov_map_get(const FovMap *fov, uint8_t x, uint8_t /*y*/) -> bool;
-[[nodiscard]] auto fov_map_get(const FovMap *m, const spoint & /*pov*/) -> bool;
 [[nodiscard]] auto immediate_owner(Gamep g, Levelsp v, Levelp l, Thingp t) -> Thingp;
 [[nodiscard]] auto monst_state_to_string(MonstState state) -> std::string;
 [[nodiscard]] auto monst_state(Gamep g, Levelsp v, Levelp l, Thingp me) -> MonstState;
@@ -959,8 +951,6 @@ using Thing = struct Thing {
 
 // begin sort marker2 {
 auto astar_solve(Gamep g, Levelsp v, Levelp l, Thingp t, spoint src, spoint dst) -> std::vector< spoint >;
-void fov_map_set(FovMap *fov, uint8_t x, uint8_t y, uint8_t val);
-void fov_map_set(FovMap *m, const spoint &pov, bool val);
 void LEVEL_BOTCON(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
 void LEVEL_CON(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
 void LEVEL_DBG(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);

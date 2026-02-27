@@ -23,6 +23,7 @@
 #include "my_sdl_proto.hpp"
 #include "my_serialize.hpp"
 #include "my_sound.hpp"
+#include "my_ui.hpp"
 #include "my_wid_popup.hpp"
 #include "my_wids.hpp"
 

@@ -5,6 +5,8 @@
 #ifndef MY_WID_KEYBOARD_HPP
 #define MY_WID_KEYBOARD_HPP
 
+#include "my_wid.hpp"
+
 using wid_keyboard_event_t = void (*)(Gamep, Widp, const std::string &text);
 
 #define WID_KEYBOARD_ACROSS 12

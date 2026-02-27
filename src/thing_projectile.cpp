@@ -2,14 +2,15 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include <cmath>
-
 #include "my_callstack.hpp"
 #include "my_globals.hpp"
 #include "my_level.hpp"
+#include "my_level_inlines.hpp"
 #include "my_main.hpp"
 #include "my_math.hpp"
 #include "my_thing_callbacks.hpp"
+
+#include <cmath>
 
 static auto thing_projectile_get_delta_from_dt(Gamep g, Thingp t, float dt) -> fpoint
 {

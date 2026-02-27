@@ -5,6 +5,8 @@
 #ifndef MY_MUSIC_HPP
 #define MY_MUSIC_HPP
 
+#include "my_types.hpp"
+
 auto music_init() -> bool;
 void music_fini();
 auto music_load(uint32_t rate, const char *file, const char *name) -> bool;

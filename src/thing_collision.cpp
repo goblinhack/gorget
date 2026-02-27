@@ -3,12 +3,12 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_level_inlines.hpp"
 #include "my_main.hpp"
 #include "my_thing_inlines.hpp"
 
-#include <cmath>
-
 #include <algorithm>
+#include <cmath>
 
 //
 // Handle common interactions for a thing at its location with a thing

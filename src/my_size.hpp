@@ -5,6 +5,8 @@
 #ifndef MY_SIZE_HPP
 #define MY_SIZE_HPP
 
+#include "my_types.hpp"
+
 template < class T > class MyAsize
 {
 public:

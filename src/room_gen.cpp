@@ -2,9 +2,6 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include <algorithm>
-#include <print>
-
 #include "my_callstack.hpp"
 #include "my_cave.hpp"
 #include "my_charmap.hpp"
@@ -12,8 +9,12 @@
 #include "my_game.hpp"
 #include "my_globals.hpp"
 #include "my_level.hpp"
+#include "my_level_inlines.hpp"
 #include "my_main.hpp"
 #include "my_random.hpp"
+
+#include <algorithm>
+#include <print>
 
 static const int MAX_ROOM_CORRIDOR = 3;
 static const int ROOM_BORDER       = 2;

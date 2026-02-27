@@ -3,8 +3,11 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_fov_map.hpp"
+#include "my_fov_map_inlines.hpp"
 #include "my_game.hpp"
 #include "my_level.hpp"
+#include "my_level_inlines.hpp"
 #include "my_thing_inlines.hpp"
 
 void thing_vision_reset(Gamep g, Levelsp v, Levelp l, Thingp t)

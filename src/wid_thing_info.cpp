@@ -6,6 +6,7 @@
 #include "my_callstack.hpp"
 #include "my_game.hpp"
 #include "my_globals.hpp"
+#include "my_level_inlines.hpp"
 #include "my_main.hpp"
 #include "my_sprintf.hpp"
 #include "my_string.hpp"

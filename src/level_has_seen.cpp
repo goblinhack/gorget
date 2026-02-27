@@ -3,8 +3,11 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_fov_map.hpp"
+#include "my_fov_map_inlines.hpp"
 #include "my_game.hpp"
 #include "my_level.hpp"
+#include "my_level_inlines.hpp"
 #include "my_thing_inlines.hpp"
 
 auto level_has_seen(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool
@@ -26,14 +29,6 @@ auto level_has_seen(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool
   }
 
   return static_cast< unsigned int >(fov_map_get(&ext->has_seen, p.x, p.y)) != 0U;
-}
-
-//
-// Has the player seen this tile?
-//
-auto level_has_seen_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool
-{
-  return l->player_has_seen_tile_cache[ p.x ][ p.y ] != 0;
 }
 
 //

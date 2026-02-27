@@ -2,13 +2,14 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include <algorithm>
-
 #include "my_callstack.hpp"
 #include "my_dmap.hpp"
 #include "my_globals.hpp"
 #include "my_level.hpp"
+#include "my_level_inlines.hpp"
 #include "my_main.hpp"
+
+#include <algorithm>
 
 static std::vector< spoint > cursor_path;
 

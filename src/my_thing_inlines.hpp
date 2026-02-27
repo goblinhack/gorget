@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#ifndef MY_THING_INLINES_H
-#define MY_THING_INLINES_H
+#ifndef MY_THING_INLINES_HPP
+#define MY_THING_INLINES_HPP
 
 #ifdef DEBUG_BUILD
 #include "my_callstack.hpp"
@@ -266,4 +266,5 @@ static inline auto thing_is_light_source(Thingp t) -> int
 
   return tp_flag(thing_tp(t), is_light_source);
 }
-#endif // MY_THING_INLINES_H
+
+#endif // MY_THING_INLINES_HPP

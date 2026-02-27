@@ -3,17 +3,18 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_fov_map_inlines.hpp"
 #include "my_globals.hpp"
 #include "my_level.hpp"
+#include "my_level_inlines.hpp"
 #include "my_main.hpp"
 #include "my_math.hpp"
 #include "my_thing_inlines.hpp"
 #include "my_tile.hpp"
 #include "my_ui.hpp"
 
-#include <cmath>
-
 #include <array>
+#include <cmath>
 #include <cstring>
 
 using Ray = struct Ray {
