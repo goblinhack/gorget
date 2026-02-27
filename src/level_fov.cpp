@@ -143,7 +143,7 @@ static void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
         //
         // Has seen this tile
         //
-        fov_map_set(fov_has_seen_tile, p, true);
+        fov_map_set(fov_has_seen_tile, p.x, p.y, true);
       }
 
 #ifdef TODO
