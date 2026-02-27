@@ -162,14 +162,9 @@ void Raycast::ray_lengths_precalculate(Gamep g, Levelsp v, Levelp l)
   }
 }
 
-static void player_light_tile(Gamep g, Levelsp v, Levelp l, Thingp t, ThingLightp light, ThingExtp ext, spoint pov, spoint tile)
+static void level_raycast_light_tile(Gamep g, Levelsp v, Levelp l, Thingp t, ThingLightp light, ThingExtp ext, spoint pov, spoint tile)
 {
-  TRACE();
-
-  if (light == nullptr) {
-    CROAK("missing ThingLightp for player");
-    return;
-  }
+  TRACE_DEBUG();
 
   //
   // Only apply color to the tile once
@@ -278,7 +273,7 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
       prev_tile_x = tile_x;
       prev_tile_y = tile_y;
 
-      player_light_tile(g, v, l, player, light, ext, pov, tile);
+      level_raycast_light_tile(g, v, l, player, light, ext, pov, tile);
 
       //
       // This is for foliage so we don't obscure too much where we stand
@@ -371,7 +366,7 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
             break;
           }
 
-          player_light_tile(g, v, l, player, light, ext, pov, tile);
+          level_raycast_light_tile(g, v, l, player, light, ext, pov, tile);
           step_inside_wall++;
         }
 

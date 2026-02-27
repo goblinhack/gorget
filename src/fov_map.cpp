@@ -6,6 +6,7 @@
 #include "my_fov_map_inlines.hpp"
 #include "my_globals.hpp"
 #include "my_level.hpp"
+#include "my_level_inlines.hpp"
 #include "my_main.hpp"
 
 void fov_map_set(FovMap *m, const spoint &pov, const bool val)

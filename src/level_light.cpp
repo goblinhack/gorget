@@ -157,9 +157,11 @@ void level_light_per_pixel_lighting(Gamep g, Levelsp v, Levelp l, Thingp t, spoi
   const float *light_fade_map           = nullptr;
   const spoint thing_at_in_pixels       = thing_pix_at(t);
 
+#ifdef DEBUG_BUILD
   if (light_strength_in_pixels == 0.0F) {
     THING_ERR(t, "thing has no light source");
   }
+#endif
 
   float const col_r = light_color.r;
   float const col_g = light_color.g;
