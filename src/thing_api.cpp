@@ -19,7 +19,7 @@ auto thing_at(Thingp t) -> spoint
   return make_spoint(t->_at);
 }
 
-void thing_at_set(Thingp t, const spoint &val)
+void thing_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, const spoint &val)
 {
   TRACE_DEBUG();
 
@@ -27,8 +27,17 @@ void thing_at_set(Thingp t, const spoint &val)
     CROAK("No thing pointer set");
   }
 
+  auto valf = make_fpoint(val);
+
+  if (thing_is_player(t)) {
+    if (t->_at != valf) {
+      l->request_to_update_per_tile_visibility = true;
+      // THING_TOPCON(t, "spoint");
+    }
+  }
+
   t->_old_at = t->_at;
-  t->_at     = make_fpoint(val);
+  t->_at     = valf;
 }
 
 auto thing_real_at(Thingp t) -> fpoint
@@ -41,12 +50,19 @@ auto thing_real_at(Thingp t) -> fpoint
   return t->_at;
 }
 
-void thing_at_set(Thingp t, const fpoint &val)
+void thing_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, const fpoint &val)
 {
   TRACE_DEBUG();
 
   if (t == nullptr) {
     CROAK("No thing pointer set");
+  }
+
+  if (thing_is_player(t)) {
+    if (t->_at != val) {
+      l->request_to_update_per_tile_visibility = true;
+      // THING_TOPCON(t, "fpoint");
+    }
   }
 
   t->_old_at = t->_at;
@@ -91,8 +107,10 @@ void thing_pix_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, const spoint &val)
     CROAK("No thing pointer set");
   }
 
-  if (t->_curr_pix_at != val) {
-    l->request_to_update_visibility = true;
+  if (thing_is_player(t)) {
+    if (t->_curr_pix_at != val) {
+      l->request_to_update_per_pixel_visibility = true;
+    }
   }
 
   t->_prev_pix_at = t->_curr_pix_at;
@@ -109,8 +127,10 @@ void thing_pix_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, short x, short y)
 
   spoint const val(x, y);
 
-  if (t->_curr_pix_at != val) {
-    l->request_to_update_visibility = true;
+  if (thing_is_player(t)) {
+    if (t->_curr_pix_at != val) {
+      l->request_to_update_per_pixel_visibility = true;
+    }
   }
 
   t->_prev_pix_at = t->_curr_pix_at;

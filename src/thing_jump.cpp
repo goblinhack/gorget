@@ -124,7 +124,7 @@ auto thing_jump_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to, bool warn)
 
   thing_pix_at_set(g, v, l, t, pix_at);
   thing_moving_from_set(t, at);
-  thing_at_set(t, to);
+  thing_at_set(g, v, l, t, to);
   (void) thing_push(g, v, l, t);
 
   thing_is_jumping_set(g, v, l, t);

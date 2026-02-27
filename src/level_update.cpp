@@ -73,50 +73,76 @@ void level_update_visibility(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
-  bool update_visibiliy = false;
+  //
+  // Per tile visibility changes
+  //
+  bool update_per_pixel_visibility = false;
 
   if (l->tick_in_progress) {
     //
     // Limit the updates unless asked (due to a moving thing likely) as this path
     // is called many times per second.
     //
-    if (l->request_to_update_visibility) {
-      l->request_to_update_visibility = false;
-      update_visibiliy                = true;
+    if (l->request_to_update_per_pixel_visibility) {
+      l->request_to_update_per_pixel_visibility = false;
+      update_per_pixel_visibility               = true;
     }
   } else {
     //
     // Some event, like tick end or teleport occurred.
     //
-    update_visibiliy = true;
+    update_per_pixel_visibility = true;
   }
 
-  if (! update_visibiliy) {
-    return;
+  if (update_per_pixel_visibility) {
+    // TOPCON("P");
+    //
+    // We only care about pixel moves.
+    //
+    level_light_calculate_all(g, v, l);
   }
 
   //
-  // Per tick check what blocks light.
+  // Per pixel visibility changes
   //
-  level_light_blocker_update(g, v, l);
+  bool update_per_tile_visibility = false;
 
-  //
-  // Per tick check what the player can see.
-  //
-  level_has_seen_update(g, v, l);
+  if (l->tick_in_progress) {
+    //
+    // Limit the updates unless asked (due to a moving thing likely) as this path
+    // is called many times per second.
+    //
+    if (l->request_to_update_per_tile_visibility) {
+      l->request_to_update_per_tile_visibility = false;
+      update_per_tile_visibility               = true;
+    }
+  } else {
+    //
+    // Some event, like tick end or teleport occurred.
+    //
+    update_per_tile_visibility = true;
+  }
 
-  //
-  // We only care about pixel moves.
-  //
-  level_light_calculate_all(g, v, l);
+  if (update_per_tile_visibility) {
+    // TOPCON("T");
+    //
+    // Per tick check what blocks light.
+    //
+    level_light_blocker_update(g, v, l);
 
-  //
-  // What can monsters see?
-  //
-  level_vision_calculate_all(g, v, l);
+    //
+    // Per tick check what the player can see.
+    //
+    level_has_seen_update(g, v, l);
 
-  //
-  // Update minimaps
-  //
-  level_minimaps_update(g, v, l);
+    //
+    // What can monsters see?
+    //
+    level_vision_calculate_all(g, v, l);
+
+    //
+    // Update minimaps
+    //
+    level_minimaps_update(g, v, l);
+  }
 }

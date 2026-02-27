@@ -226,9 +226,13 @@ using Level = struct Level {
   //
   uint8_t request_to_cleanup_things : 1;
   //
-  // Update lighting during ticks
+  // Update lighting during ticks when the player moves a pixel
   //
-  uint8_t request_to_update_visibility : 1;
+  uint8_t request_to_update_per_pixel_visibility : 1;
+  //
+  // Update lighting during ticks when the player moves a tile
+  //
+  uint8_t request_to_update_per_tile_visibility : 1;
   //
   // We have to interpolate movement and this indicates that is in progress.
   //

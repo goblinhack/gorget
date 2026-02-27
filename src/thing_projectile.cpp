@@ -134,13 +134,13 @@ void thing_projectile_move(Gamep g, Levelsp v, Levelp l, Thingp t, float dt)
   //
   if (at != old_at) {
     (void) thing_pop(g, v, t);
-    thing_at_set(t, at);
+    thing_at_set(g, v, l, t, at);
     thing_update_pos(g, v, l, t);
     if (! thing_push(g, v, l, t)) {
       return;
     }
   } else {
-    thing_at_set(t, at);
+    thing_at_set(g, v, l, t, at);
     thing_update_pos(g, v, l, t);
   }
 
