@@ -49,7 +49,18 @@ void level_vision_calculate_all(Gamep g, Levelsp v, Levelp l)
       continue;
     }
 
-    level_fov_can_see_callback_t callback = nullptr;
-    level_fov(g, v, l, t, &ext->can_see, &ext->has_seen, thing_at(t), max_radius, callback);
+    FovContext ctx;
+
+    ctx.g                  = g;
+    ctx.v                  = v;
+    ctx.l                  = l;
+    ctx.me                 = t;
+    ctx.pov                = thing_at(t);
+    ctx.thing_at_in_pixels = thing_pix_at(t);
+    ctx.max_radius         = max_radius;
+    ctx.fov_can_see_tile   = &ext->can_see;
+    ctx.fov_has_seen_tile  = &ext->has_seen;
+
+    level_fov(ctx);
   }
 }

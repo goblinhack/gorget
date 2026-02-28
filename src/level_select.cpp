@@ -480,7 +480,7 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
   //
   FOR_ALL_THINGS_ON_LEVEL(g, v, level_select, t)
   {
-    // newline
+    //
     thing_fini(g, v, level_select, t);
   }
 

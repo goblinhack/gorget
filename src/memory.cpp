@@ -22,7 +22,7 @@ auto MYZALLOC_(int size, const char *what, const char *file, const char *func, i
   }
 
   IF_DEBUG2
-  { // newline
+  { //
     ptrcheck_alloc(MTYPE_MISC, ptr, what, size, file, func, line);
   }
 
@@ -43,7 +43,7 @@ auto MYMALLOC_(int size, const char *what, const char *file, const char *func, i
   }
 
   IF_DEBUG2
-  { // newline
+  { //
     ptrcheck_alloc(MTYPE_MISC, ptr, what, size, file, func, line);
   }
 
@@ -57,7 +57,7 @@ auto MYREALLOC_(void *ptr, int size, const char *what, const char *file, const c
 {
   TRACE();
   IF_DEBUG2
-  { // newline
+  { //
     ptrcheck_free(MTYPE_MISC, ptr, file, func, line);
   }
 
@@ -67,7 +67,7 @@ auto MYREALLOC_(void *ptr, int size, const char *what, const char *file, const c
   }
 
   IF_DEBUG2
-  { // newline
+  { //
     ptrcheck_alloc(MTYPE_MISC, ptr, what, size, file, func, line);
   }
 
@@ -82,7 +82,7 @@ void MYFREE_(void *ptr, const char *file, const char *func, int line)
   TRACE();
 
   IF_DEBUG2
-  { // newline
+  { //
     ptrcheck_free(MTYPE_MISC, ptr, file, func, line);
   }
 

@@ -207,14 +207,14 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me)
   // Early state check
   //
   switch (monst_state(g, v, l, me)) {
-    case MONST_STATE_INIT : // newline
+    case MONST_STATE_INIT : //
       monst_state_change(g, v, l, me, MONST_STATE_NORMAL);
       [[fallthrough]];
-    case MONST_STATE_NORMAL : // newline
+    case MONST_STATE_NORMAL : //
       (void) thing_monst_choose_target(g, v, l, me);
       break;
     case MONST_STATE_DEAD :
-      // newline
+      //
       break;
     case MONST_STATE_CHASING :
       //
@@ -226,7 +226,7 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me)
       }
       break;
     case MONST_STATE_WANDER :
-      // newline
+      //
       break;
     case MONST_STATE_ENUM_MAX : break;
   }
@@ -235,12 +235,12 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me)
   // Post thinking state check
   //
   switch (monst_state(g, v, l, me)) {
-    case MONST_STATE_INIT : // newline
+    case MONST_STATE_INIT : //
       break;
-    case MONST_STATE_NORMAL : // newline
+    case MONST_STATE_NORMAL : //
       break;
     case MONST_STATE_DEAD :
-      // newline
+      //
       break;
     case MONST_STATE_CHASING : [[fallthrough]];
     case MONST_STATE_WANDER :
@@ -273,19 +273,19 @@ void monst_state_change(Gamep g, Levelsp v, Levelp l, Thingp me, MonstState new_
 
   switch (old_state) {
     case MONST_STATE_INIT :
-      // newline
+      //
       break;
     case MONST_STATE_DEAD :
-      // newline
+      //
       return;
     case MONST_STATE_NORMAL :
-      // newline
+      //
       break;
     case MONST_STATE_CHASING :
-      // newline
+      //
       break;
     case MONST_STATE_WANDER :
-      // newline
+      //
       break;
     case MONST_STATE_ENUM_MAX : break;
   }
@@ -306,19 +306,19 @@ void monst_state_change(Gamep g, Levelsp v, Levelp l, Thingp me, MonstState new_
 
   switch (new_state) {
     case MONST_STATE_INIT :
-      // newline
+      //
       break;
     case MONST_STATE_DEAD :
-      // newline
+      //
       break;
     case MONST_STATE_NORMAL :
-      // newline
+      //
       break;
     case MONST_STATE_CHASING :
-      // newline
+      //
       break;
     case MONST_STATE_WANDER :
-      // newline
+      //
       break;
     case MONST_STATE_ENUM_MAX : break;
   }

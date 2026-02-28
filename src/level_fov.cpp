@@ -44,6 +44,8 @@
 #include "my_level.hpp"
 #include "my_level_inlines.hpp"
 #include "my_main.hpp"
+#include "my_thing.hpp"
+#include "my_thing_inlines.hpp"
 
 #include <algorithm>
 #include <cmath>
@@ -58,33 +60,27 @@ static const int matrix_table[ 8 ][ 4 ] = {
 //
 // Cast visiblity using shadowcasting.
 //
-static void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
-                         FovMap                      *fov_can_see_tile,     //
-                         FovMap                      *fov_has_seen_tile,    //
-                         const spoint                 pov,                  //
-                         const short                  distance_from_origin, // Polar distance_from_origin from POV.
-                         float                        view_slope_high,      //
-                         float                        view_slope_low,       //
-                         const short                  max_radius,           //
-                         const short                  octant,               //
-                         const bool                   light_walls,          //
-                         level_fov_can_see_callback_t can_see_callback)
+static void level_fov_do(const short       distance_from_origin, // Polar distance_from_origin from POV.
+                         float             view_slope_high,      //
+                         float             view_slope_low,       //
+                         const short       octant,               //
+                         const FovContext &ctx)
 {
   const short xx             = matrix_table[ octant ][ 0 ];
   const short xy             = matrix_table[ octant ][ 1 ];
   const short yx             = matrix_table[ octant ][ 2 ];
   const short yy             = matrix_table[ octant ][ 3 ];
-  const short radius_squared = max_radius * max_radius;
+  const short radius_squared = ctx.max_radius * ctx.max_radius;
 
   if (view_slope_high < view_slope_low) {
     return; // View is invalid.
   }
 
-  if (distance_from_origin > max_radius) {
+  if (distance_from_origin > ctx.max_radius) {
     return; // Distance is out-of-range.
   }
 
-  if (is_oob(pov.x + (distance_from_origin * xy), pov.y + (distance_from_origin * yy))) [[unlikely]] {
+  if (is_oob(ctx.pov.x + (distance_from_origin * xy), ctx.pov.y + (distance_from_origin * yy))) [[unlikely]] {
     return; // Distance is out-of-bounds.
   }
 
@@ -98,12 +94,13 @@ static void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
     if (tile_slope_low > view_slope_high) {
       continue; // Tile is not in the view yet.
     }
+
     if (tile_slope_high < view_slope_low) {
       break; // Tiles will no longer be in view.
     }
 
     // Current tile is in view.
-    const spoint p(pov.x + (angle * xx) + (distance_from_origin * xy), pov.y + (angle * yx) + (distance_from_origin * yy));
+    const spoint p(ctx.pov.x + (angle * xx) + (distance_from_origin * xy), ctx.pov.y + (angle * yx) + (distance_from_origin * yy));
 
     if (is_oob(p)) [[unlikely]] {
       continue; // Angle is out-of-bounds.
@@ -112,47 +109,39 @@ static void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
     //
     // Treat player and monster blocking differently so the player can use cover
     //
-    auto light_blocker = level_light_blocker_at_cached(g, v, l, p);
+    auto light_blocker = level_light_blocker_at_cached(ctx.g, ctx.v, ctx.l, p);
 
-    if ((angle * angle) + (distance_from_origin * distance_from_origin) <= radius_squared && (light_walls || ! light_blocker)) {
+    if ((angle * angle) + (distance_from_origin * distance_from_origin) <= radius_squared && (ctx.light_walls || ! light_blocker)) {
 
-      if (fov_can_see_tile != nullptr) {
+      if (ctx.fov_can_see_tile != nullptr) {
         //
         // Can see tile. If not seen already, light it
         //
-        if (! fov_map_get(fov_can_see_tile, p.x, p.y)) {
-          fov_map_set(fov_can_see_tile, p.x, p.y, 1u);
+        if (! fov_map_get(ctx.fov_can_see_tile, p.x, p.y)) {
+          fov_map_set(ctx.fov_can_see_tile, p.x, p.y, 1u);
 
           //
           // Per tile can see callback check
           //
-          if (can_see_callback != nullptr) {
-            (can_see_callback)(g, v, l, me, pov, p);
+          if (ctx.can_see_callback != nullptr) {
+            (ctx.can_see_callback)(ctx, p);
           }
         }
       } else {
         //
         // Can see tile. Could be a repeat of this tile.
         //
-        if (can_see_callback != nullptr) {
-          (can_see_callback)(g, v, l, me, pov, p);
+        if (ctx.can_see_callback != nullptr) {
+          (ctx.can_see_callback)(ctx, p);
         }
       }
 
-      if (fov_has_seen_tile != nullptr) {
+      if (ctx.fov_has_seen_tile != nullptr) {
         //
         // Has seen this tile
         //
-        fov_map_set(fov_has_seen_tile, p.x, p.y, 1u);
+        fov_map_set(ctx.fov_has_seen_tile, p.x, p.y, 1u);
       }
-
-#ifdef TODO
-      //
-      // Always call this, even for cells we can see, as a monster may have just walked onto
-      // a cell that was empty that we have already seen.
-      //
-      // me->can_see_you(p);
-#endif
     }
 
     if (prev_tile_blocked && ! light_blocker) { // Wall -> floor.
@@ -163,8 +152,11 @@ static void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
       //
       // Get the last sequence of floors as a view and recurse into them.
       //
-      level_fov_do(g, v, l, me, fov_can_see_tile, fov_has_seen_tile, pov, distance_from_origin + 1, view_slope_high, tile_slope_high,
-                   max_radius, octant, light_walls, can_see_callback);
+      level_fov_do(distance_from_origin + 1, // newline
+                   view_slope_high,          // newline
+                   tile_slope_high,          // newline
+                   octant,                   // newline
+                   ctx);
     }
 
     prev_tile_blocked = light_blocker;
@@ -174,46 +166,44 @@ static void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
     //
     // Tail-recurse into the current view.
     //
-    level_fov_do(g, v, l, me, fov_can_see_tile, fov_has_seen_tile, pov, distance_from_origin + 1, view_slope_high, view_slope_low,
-                 max_radius, octant, light_walls, can_see_callback);
+    level_fov_do(distance_from_origin + 1, // newline
+                 view_slope_high,          // newline
+                 view_slope_low,           // newline
+                 octant,                   // newline
+                 ctx);
   }
 }
 
-void level_fov(Gamep g, Levelsp v, Levelp l, Thingp me, FovMap *fov_can_see_tile, FovMap *fov_has_seen_tile, spoint pov, int max_radius,
-               level_fov_can_see_callback_t can_see_callback)
+void level_fov(const FovContext &ctx)
 {
   TRACE();
 
-  const bool light_walls = true;
-
-  if (fov_can_see_tile != nullptr) {
-    memset(fov_can_see_tile, 0, sizeof(*fov_can_see_tile));
+  if (ctx.fov_can_see_tile != nullptr) {
+    *ctx.fov_can_see_tile = {};
   }
 
   // recursive shadow casting
   for (int octant = 0; octant < 8; ++octant) {
-    level_fov_do(g, v, l, me, fov_can_see_tile, fov_has_seen_tile, pov, 1, 1.0, 0.0, max_radius, octant, light_walls, can_see_callback);
+    level_fov_do(1, 1.0, 0.0, octant, ctx);
   }
 
-  if (fov_can_see_tile != nullptr) {
+  if (ctx.fov_can_see_tile != nullptr) {
     //
     // If not seen already, light it
     //
-    if (! fov_map_get(fov_can_see_tile, pov.x, pov.y)) {
-      fov_map_set(fov_can_see_tile, pov.x, pov.y, 1u);
+    if (! fov_map_get(ctx.fov_can_see_tile, ctx.pov.x, ctx.pov.y)) {
+      fov_map_set(ctx.fov_can_see_tile, ctx.pov.x, ctx.pov.y, 1u);
 
       //
       // Per tile can see callback check
       //
-      if (can_see_callback != nullptr) {
-        (can_see_callback)(g, v, l, me, pov, pov);
+      if (ctx.can_see_callback != nullptr) {
+        (ctx.can_see_callback)(ctx, ctx.pov);
       }
     }
   }
 
-  if (fov_has_seen_tile != nullptr) {
-    fov_map_set(fov_has_seen_tile, pov.x, pov.y, 1u);
+  if (ctx.fov_has_seen_tile != nullptr) {
+    fov_map_set(ctx.fov_has_seen_tile, ctx.pov.x, ctx.pov.y, 1u);
   }
-
-  // me->can_see_you(point(pov_x, pov_y));
 }

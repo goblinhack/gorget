@@ -517,8 +517,8 @@ void tp_collision_init(Tpp tp)
 {
   TRACE();
 
-  if (tp_is_collision_circle_small(tp) || // newline
-      tp_is_collision_circle_large(tp) || // newline
+  if (tp_is_collision_circle_small(tp) || //
+      tp_is_collision_circle_large(tp) || //
       tp_is_collision_square(tp)) {
     tp_flag_set(tp, is_collision_detection_enabled);
   }

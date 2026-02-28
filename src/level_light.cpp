@@ -87,18 +87,6 @@ void level_light_precalculate(Gamep g)
 //
 // All light from all light sources, combined.
 //
-void level_light_per_pixel_lighting(Gamep g, Levelsp v, Levelp l, Thingp t, spoint /*pov*/, spoint tile)
-{
-  const color  light_color              = tp_light_color(thing_tp(t));
-  const float  light_strength_in_pixels = thing_is_light_source(t) * TILE_WIDTH;
-  const spoint thing_at_in_pixels       = thing_pix_at(t);
-
-  level_light_per_pixel(g, v, l, t, tile, light_color, light_strength_in_pixels, thing_at_in_pixels, light_fade);
-}
-
-//
-// All light from all light sources, combined.
-//
 void level_light_calculate_all(Gamep g, Levelsp v, Levelp l)
 {
   TRACE();
@@ -133,34 +121,39 @@ void level_light_calculate_all(Gamep g, Levelsp v, Levelp l)
   FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
   {
     int max_radius = thing_is_light_source(t);
-    if (max_radius == 0) {
+    if (max_radius == 0) [[likely]] {
       continue;
     }
 
-    if (thing_is_player(t)) {
+    if (thing_is_player(t)) [[unlikely]] {
       continue;
     }
 
-    auto *ext   = thing_ext_struct(g, t);
     auto *light = thing_light_struct(g, t);
 
     //
     // + here needed for light edges for smoothly moving things
     //
-    if (thing_is_projectile(t)) {
+    if (thing_is_projectile(t)) [[unlikely]] {
       max_radius += 2;
     }
 
-    level_fov_can_see_callback_t callback = nullptr;
-    if (thing_is_light_source(t) != 0) {
-      callback = level_light_per_pixel_lighting;
-    } else {
-      callback = nullptr;
-    }
+    FovContext ctx;
 
-    level_fov(g, v, l, t,                                    // newline
-              (light != nullptr) ? &light->is_lit : nullptr, // newline
-              (ext != nullptr) ? &ext->has_seen : nullptr,   // newline
-              thing_at(t), max_radius, callback);
+    ctx.g                        = g;
+    ctx.v                        = v;
+    ctx.l                        = l;
+    ctx.me                       = t;
+    ctx.pov                      = thing_at(t);
+    ctx.light_color              = tp_light_color(thing_tp(t));
+    ctx.light_strength_in_pixels = thing_is_light_source(t) * TILE_WIDTH;
+    ctx.thing_at_in_pixels       = thing_pix_at(t);
+    ctx.light_fade_map           = light_fade;
+    ctx.can_see_callback         = level_light_per_pixel;
+    ctx.max_radius               = max_radius;
+    ctx.fov_can_see_tile         = &light->is_lit;
+    ctx.fov_has_seen_tile        = nullptr;
+
+    level_fov(ctx);
   }
 }

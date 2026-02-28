@@ -295,7 +295,7 @@ auto sdl_display_init(Gamep g) -> bool
   }
 
   IF_DEBUG
-  { // newline
+  { //
     DBG("SDL: OpenGL Exts     : %s", glGetString(GL_EXTENSIONS));
   }
 

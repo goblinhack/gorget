@@ -3165,10 +3165,10 @@ static void level_gen_connect_adjacent_rooms_with_distance_and_chance(class Leve
                   switch (l->data[ adj.x + delta.x ][ adj.y + delta.y ].c) {
                     case CHARMAP_WATER :
                     case CHARMAP_DEEP_WATER :
-                    case CHARMAP_CHASM : // newline
+                    case CHARMAP_CHASM : //
                       bridge_candidate = true;
                       break;
-                    case CHARMAP_BRIDGE : // newline
+                    case CHARMAP_BRIDGE : //
                       has_clear_path = false;
                       break;
                     default : break;
@@ -4699,10 +4699,10 @@ static void level_gen_extend_bridges(Gamep g, class LevelGen *l)
       //
       // Get the bridge direction
       //
-      bool const lr = (l->data[ x - 1 ][ y ].c == CHARMAP_BRIDGE) || // newline
+      bool const lr = (l->data[ x - 1 ][ y ].c == CHARMAP_BRIDGE) || //
                       (l->data[ x + 1 ][ y ].c == CHARMAP_BRIDGE);
 
-      bool const ud = (l->data[ x ][ y - 1 ].c == CHARMAP_BRIDGE) || // newline
+      bool const ud = (l->data[ x ][ y - 1 ].c == CHARMAP_BRIDGE) || //
                       (l->data[ x ][ y + 1 ].c == CHARMAP_BRIDGE);
 
       if (lr && ud) {

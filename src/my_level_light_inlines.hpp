@@ -14,20 +14,15 @@
 //
 // A player specific version of this function that has less overhead
 //
-static void level_light_per_pixel(Gamep g, Levelsp v, Levelp l, Thingp t, // newline
-                                  const spoint &p,                        // newline
-                                  const color  &light_color,              // newline
-                                  const float   light_strength_in_pixels, // newline
-                                  const spoint &thing_at_in_pixels,       // newline
-                                  const float  *light_fade_map)
+static void level_light_per_pixel(const FovContext &ctx, const spoint &p)
 {
   TRACE_DEBUG();
 
-  auto *const light_tile = &v->light_map.tile[ p.x ][ p.y ];
+  auto *const light_tile = &ctx.v->light_map.tile[ p.x ][ p.y ];
 
-  float const col_r = light_color.r;
-  float const col_g = light_color.g;
-  float const col_b = light_color.b;
+  float const col_r = ctx.light_color.r;
+  float const col_g = ctx.light_color.g;
+  float const col_b = ctx.light_color.b;
 
   uint16_t light_pixel_at_y = (p.y * TILE_WIDTH) - (TILE_WIDTH / 2);
   for (uint8_t pixy = 0; pixy < LIGHT_PIXEL; pixy++, light_pixel_at_y++) {
@@ -35,17 +30,17 @@ static void level_light_per_pixel(Gamep g, Levelsp v, Levelp l, Thingp t, // new
     uint16_t light_pixel_at_x = (p.x * TILE_WIDTH) - (TILE_WIDTH / 2);
     for (uint8_t pixx = 0; pixx < LIGHT_PIXEL; pixx++, light_pixel_at_x++) {
 
-      float const dist_in_pixels
-          = DISTANCEf(light_pixel_at_x, light_pixel_at_y, (float) thing_at_in_pixels.x, (float) thing_at_in_pixels.y);
+      float const dist_in_pixels = DISTANCEf(light_pixel_at_x, light_pixel_at_y, // newline
+                                             (float) ctx.thing_at_in_pixels.x, (float) ctx.thing_at_in_pixels.y);
 
       //
       // No point in calculating beyond the maximum light distance.
       //
-      if (dist_in_pixels >= light_strength_in_pixels) [[unlikely]] {
+      if (dist_in_pixels >= ctx.light_strength_in_pixels) [[unlikely]] {
         continue;
       }
 
-      auto light_fade_index = (uint8_t) (int) ((dist_in_pixels / light_strength_in_pixels) * (float) MAP_WIDTH);
+      auto light_fade_index = (uint8_t) (int) ((dist_in_pixels / ctx.light_strength_in_pixels) * (float) MAP_WIDTH);
 
 #ifdef DEBUG_BUILD
       //
@@ -58,7 +53,7 @@ static void level_light_per_pixel(Gamep g, Levelsp v, Levelp l, Thingp t, // new
 #endif
 
       auto       *light_pixel = &light_tile->pixels.pixel[ pixx ][ pixy ];
-      float const fade        = light_fade_map[ light_fade_index ];
+      float const fade        = ctx.light_fade_map[ light_fade_index ];
 
       light_pixel->r += fade * col_r;
       light_pixel->g += fade * col_g;

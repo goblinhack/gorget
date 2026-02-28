@@ -70,7 +70,7 @@ static void level_tick_ok_to_end_check(Gamep g, Levelsp v, Levelp l)
     if (thing_is_moving(t)) {
       l->tick_wait_on_things = true;
       IF_DEBUG
-      { // newline
+      { //
         LEVEL_DBG(g, v, l, "waiting on moving %s", to_string(g, v, l, t).c_str());
       }
     }
@@ -78,7 +78,7 @@ static void level_tick_ok_to_end_check(Gamep g, Levelsp v, Levelp l)
     if (thing_is_jumping(t)) {
       l->tick_wait_on_things = true;
       IF_DEBUG2
-      { // newline
+      { //
         LEVEL_DBG(g, v, l, "waiting on jumping %s", to_string(g, v, l, t).c_str());
       }
     }
@@ -91,7 +91,7 @@ static void level_tick_ok_to_end_check(Gamep g, Levelsp v, Levelp l)
       if (thing_is_falling(t) != 0) {
         l->tick_wait_on_things = true;
         IF_DEBUG2
-        { // newline
+        { //
           LEVEL_DBG(g, v, l, "waiting on falling %s", to_string(g, v, l, t).c_str());
         }
       }
@@ -354,12 +354,12 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool tick_is
 
     if (true) {
       THING_LOG(t, "level dt %f old_thing_dt %f thing_dt %f thing_dt_change %f speed %d v %d",
-                dt,              // newline
-                old_thing_dt,    // newline
-                t->thing_dt,     // newline
-                thing_dt_change, // newline
-                thing_speed(t),  // newline
-                player_speed     // newline
+                dt,              //
+                old_thing_dt,    //
+                t->thing_dt,     //
+                thing_dt_change, //
+                thing_speed(t),  //
+                player_speed     //
       );
     }
 
@@ -648,7 +648,7 @@ static void level_tick_time_step(Gamep g, Levelsp v, Levelp current_level)
   v->time_step      = ((float) (v->frame - v->frame_begin)) / (float) TICK_DURATION_MS;
 
   IF_DEBUG2
-  { // newline
+  { //
     if (level_is_player_level(g, v, current_level)) {
       LEVEL_DBG(g, v, current_level, "Tick %u: tick-count %u %f", v->tick, v->level_ticking_count, v->time_step);
     }

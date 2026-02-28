@@ -331,7 +331,7 @@ auto level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, con
 
   FOR_ALL_THINGS_ON_LEVEL_UNSAFE(g, v, l, t)
   {
-    // newline
+    //
     thing_on_level_populated(g, v, l, t);
   }
 

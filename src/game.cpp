@@ -539,23 +539,18 @@ void Game::cleanup()
   LOG("Game cleanup");
   TRACE();
 
-  TRACE();
   state_change(STATE_QUITTING, "quitting");
 
-  TRACE();
   destroy_levels();
 
-  TRACE();
   level_raycast_fini();
 
-  TRACE();
   state_change(STATE_INIT, "init");
 
   //
   // Clear previous test error
   //
   if (g_opt_tests) {
-    TRACE();
     error_clear(this);
   }
 }
@@ -1255,7 +1250,7 @@ auto game_wait_for_tick_to_finish(Gamep g, Levelsp v, Levelp l) -> bool
     TRACE();
 
     IF_DEBUG2
-    { // newline
+    { //
       LEVEL_LOG(g, v, l, "Test: waiting for tick %u to finish", v->tick);
     }
 

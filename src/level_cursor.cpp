@@ -499,7 +499,7 @@ void level_cursor_copy_path_to_player(Gamep g, Levelsp v, Levelp l, std::vector<
   // Copy the latest mouse path to the player
   //
   IF_DEBUG2
-  { // newline
+  { //
     THING_DBG(player, "apply cursor path size: %d", (int) move_path.size());
   }
   if (thing_move_path_apply(g, v, l, player, move_path)) {
@@ -549,14 +549,14 @@ static void level_cursor_path_create(Gamep g, Levelsp v, Levelp l)
   cursor_path = level_cursor_path_draw_line(g, v, l, thing_at(player), v->cursor_at);
 
   IF_DEBUG2
-  { // newline
+  { //
     THING_DBG(player, "cursor path size: %d", (int) cursor_path.size());
   }
 
   for (auto p : cursor_path) {
     v->cursor[ p.x ][ p.y ] = CURSOR_PATH;
     IF_DEBUG2
-    { // newline
+    { //
       THING_DBG(player, " - cursor path: %d,%d", p.x, p.y);
     }
   }

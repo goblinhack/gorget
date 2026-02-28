@@ -512,7 +512,7 @@ auto Game::save(const std::string &file_to_save) -> bool
   }
 
 #if 0
-  IF_DEBUG2 { // newline
+  IF_DEBUG2 { //
 
     std::cout << "before compression ";
     (void) hexdump((const unsigned char*)src, src_size);
@@ -551,19 +551,19 @@ auto Game::save(const std::string &file_to_save) -> bool
 
   {
     LOG("%s compressed %ld Mb (%ld bytes) -> %ld Mb (%ld bytes) took %u ms",
-        which,                    // newline
-        src_size / (1024 * 1024), // newline
-        src_size,                 // newline
-        dst_size / (1024 * 1024), // newline
-        dst_size,                 // newline
+        which,                    //
+        src_size / (1024 * 1024), //
+        src_size,                 //
+        dst_size / (1024 * 1024), //
+        dst_size,                 //
         time_ms() - start);
   } else {
     ERR("%s compressed failed %ld Mb (%ld bytes) -> %ld Mb (%ld error code) took %u ms",
-        which,                           // newline
-        (long) src_size / (1024 * 1024), // newline
-        src_size,                        // newline
-        (long) dst_size / (1024 * 1024), // newline
-        dst_size,                        // newline
+        which,                           //
+        (long) src_size / (1024 * 1024), //
+        src_size,                        //
+        (long) dst_size / (1024 * 1024), //
+        dst_size,                        //
         time_ms() - start);
     wid_progress_bar_destroy(this);
     return false;
@@ -573,7 +573,7 @@ auto Game::save(const std::string &file_to_save) -> bool
   // Dump the post compress buffer
   //
 #if 0
-  IF_DEBUG2 { // newline
+  IF_DEBUG2 { //
 
     std::cout << "after compression ";
     (void) hexdump((const unsigned char *)dst, dst_size);

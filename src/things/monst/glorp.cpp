@@ -26,10 +26,10 @@ static auto tp_glorp_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::
 {
   TRACE();
 
-  return                                                                                                 // newline
-      UI_INFO1_FMT_STR "Glorps are voracious masses of sentient slime.\n"                                // newline
-      UI_INFO2_FMT_STR "Luckily, glorps move slowly and should hence be avoided easily.\n"               // newline
-      UI_INFO3_FMT_STR "Although they look like lime jelly, no one has yet confirmed how they taste..."; // newline
+  return                                                                                                 //
+      UI_INFO1_FMT_STR "Glorps are voracious masses of sentient slime.\n"                                //
+      UI_INFO2_FMT_STR "Luckily, glorps move slowly and should hence be avoided easily.\n"               //
+      UI_INFO3_FMT_STR "Although they look like lime jelly, no one has yet confirmed how they taste..."; //
 }
 
 auto tp_glorp_assess_tile(Gamep g, Levelsp v, Levelp l, const spoint &at, Thingp t) -> ThingEnviron

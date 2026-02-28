@@ -518,7 +518,7 @@ auto thing_temperature_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> i
   }
 
   IF_DEBUG2
-  { // newline
+  { //
     THING_DBG(t, "temperature set to %u degrees", val);
   }
 

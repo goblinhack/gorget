@@ -26,10 +26,10 @@ static auto tp_mantisman_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> s
 {
   TRACE();
 
-  return                                                                                                // newline
-      UI_INFO1_FMT_STR "MantisMan: half-mantis, half-man but which half?\n"                             // newline
-      UI_INFO2_FMT_STR "These tall bipedal insectoids linger in the spaces that nature forgets.\n"      // newline
-      UI_INFO3_FMT_STR "They hunger for human flesh especially and hang around in chittering groups.\n" // newline
+  return                                                                                                //
+      UI_INFO1_FMT_STR "MantisMan: half-mantis, half-man but which half?\n"                             //
+      UI_INFO2_FMT_STR "These tall bipedal insectoids linger in the spaces that nature forgets.\n"      //
+      UI_INFO3_FMT_STR "They hunger for human flesh especially and hang around in chittering groups.\n" //
       UI_INFO4_FMT_STR "The one thing they do not do... is pray.";
 }
 

@@ -1,12 +1,13 @@
 bugs
 ----
 monst chasing
-could use bitset for fov
 monst wandering
 need mob distance and lunging
+monsts do not move after firing
 
 basic features
 --------------
+projectile collision with projectile
 squeal noises for monsters
 stamina needed to avoid fast jump loops
 score is hard coded to 666

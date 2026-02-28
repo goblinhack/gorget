@@ -14,7 +14,7 @@ static void tp_key_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &
 {
   TRACE();
 
-  if ((e.event_type == THING_EVENT_CARRIED) || // newline
+  if ((e.event_type == THING_EVENT_CARRIED) || //
       (e.event_type == THING_EVENT_CARRIED_MERGED)) {
     thing_sound_play(g, v, l, t, "key");
   }

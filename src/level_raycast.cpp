@@ -232,8 +232,7 @@ void Raycast::ray_lengths_precalculate(Gamep g, Levelsp v, Levelp l)
   }
 }
 
-static void level_raycast_light_tile(Gamep g, Levelsp v, Levelp l, Thingp t, ThingLightp light, ThingExtp ext, spoint pov, spoint tile,
-                                     const color &light_color, const float light_strength_in_pixels, const spoint thing_at_in_pixels)
+static void level_raycast_light_tile(const FovContext &ctx, const spoint &tile, ThingLightp light, ThingExtp ext)
 {
   TRACE_DEBUG();
 
@@ -244,7 +243,7 @@ static void level_raycast_light_tile(Gamep g, Levelsp v, Levelp l, Thingp t, Thi
     fov_map_set(&light->is_lit, tile.x, tile.y, 1U);
     fov_map_set(&ext->has_seen, tile.x, tile.y, 1U);
     fov_map_set(&ext->can_see, tile.x, tile.y, 1U);
-    level_light_per_pixel(g, v, l, t, tile, light_color, light_strength_in_pixels, thing_at_in_pixels, player_light_fade);
+    level_light_per_pixel(ctx, tile);
   }
 }
 
@@ -280,15 +279,22 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
   //
   // The light source
   //
-  auto pov = thing_at(player);
-
   const int tile_w = TILE_WIDTH;
   const int tile_h = TILE_HEIGHT;
 
-  auto       tp                       = thing_tp(player);
-  const auto light_color              = tp_light_color(tp);
-  const auto light_strength_in_pixels = thing_is_light_source(player) * TILE_WIDTH;
-  const auto thing_at_in_pixels       = thing_pix_at(player);
+  auto tp = thing_tp(player);
+
+  FovContext ctx;
+
+  ctx.g                        = g;
+  ctx.v                        = v;
+  ctx.l                        = l;
+  ctx.me                       = player;
+  ctx.pov                      = thing_at(player);
+  ctx.light_color              = tp_light_color(tp);
+  ctx.light_strength_in_pixels = thing_is_light_source(player) * TILE_WIDTH;
+  ctx.thing_at_in_pixels       = thing_pix_at(player);
+  ctx.light_fade_map           = player_light_fade;
 
   //
   // Center the light on the player
@@ -349,7 +355,7 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
       prev_tile_x = tile_x;
       prev_tile_y = tile_y;
 
-      level_raycast_light_tile(g, v, l, player, light, ext, pov, tile, light_color, light_strength_in_pixels, thing_at_in_pixels);
+      level_raycast_light_tile(ctx, tile, light, ext);
 
       //
       // This is for foliage so we don't obscure too much where we stand
@@ -442,7 +448,7 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
             break;
           }
 
-          level_raycast_light_tile(g, v, l, player, light, ext, pov, tile, light_color, light_strength_in_pixels, thing_at_in_pixels);
+          level_raycast_light_tile(ctx, tile, light, ext);
           step_inside_wall++;
         }
 

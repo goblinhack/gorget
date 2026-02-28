@@ -570,7 +570,7 @@ void fbo_get_size(Gamep g, FboEnum fbo, int &w, int &h)
       w = game_window_pix_width_get(g);
       h = game_window_pix_height_get(g);
       break;
-    default : // newline
+    default : //
       CROAK("Need size for fbo %d", fbo);
       break;
   }

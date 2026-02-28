@@ -314,7 +314,7 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
     DBG("Level destroy %u dump all", l->level_num);
     FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
     {
-      // newline
+      //
       THING_DBG(t, "dump");
     }
   }
@@ -334,7 +334,7 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
   //
   FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
   {
-    // newline
+    //
     THING_ERR(t, "thing still on level after destroying it");
   }
 

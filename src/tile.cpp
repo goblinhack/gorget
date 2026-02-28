@@ -141,25 +141,25 @@ void tile_fini()
 }
 
 Tile::Tile(const class Tile *tile)
-    :                                                             // newline
-      global_index(all_tiles_array.size() + 1),                   // newline
-      pix_width(tile->pix_width),                                 // newline
-      pix_height(tile->pix_height),                               // newline
-      x1(tile->x1),                                               // newline
-      y1(tile->y1),                                               // newline
-      x2(tile->x2),                                               // newline
-      y2(tile->y2),                                               // newline
-      tex(tile->tex),                                             // newline
-      tex_monochrome(tile->tex_monochrome),                       // newline
-      tex_mask(tile->tex_mask),                                   // newline
-      tex_outline(tile->tex_outline),                             // newline
-      delay_ms(tile->delay_ms),                                   // newline
-      dir(tile->dir),                                             // newline
-      internal_has_dir_anim(tile->internal_has_dir_anim),         // newline
-      is_alive_on_end_of_anim(tile->is_alive_on_end_of_anim),     // newline
-      is_cleanup_on_end_of_anim(tile->is_cleanup_on_end_of_anim), // newline
-      is_end_of_anim(tile->is_end_of_anim),                       // newline
-      is_loggable(tile->is_loggable)                              // newline
+    :                                                             //
+      global_index(all_tiles_array.size() + 1),                   //
+      pix_width(tile->pix_width),                                 //
+      pix_height(tile->pix_height),                               //
+      x1(tile->x1),                                               //
+      y1(tile->y1),                                               //
+      x2(tile->x2),                                               //
+      y2(tile->y2),                                               //
+      tex(tile->tex),                                             //
+      tex_monochrome(tile->tex_monochrome),                       //
+      tex_mask(tile->tex_mask),                                   //
+      tex_outline(tile->tex_outline),                             //
+      delay_ms(tile->delay_ms),                                   //
+      dir(tile->dir),                                             //
+      internal_has_dir_anim(tile->internal_has_dir_anim),         //
+      is_alive_on_end_of_anim(tile->is_alive_on_end_of_anim),     //
+      is_cleanup_on_end_of_anim(tile->is_cleanup_on_end_of_anim), //
+      is_end_of_anim(tile->is_end_of_anim),                       //
+      is_loggable(tile->is_loggable)                              //
 {
   TRACE();
 
@@ -372,7 +372,7 @@ void tile_load_arr_sprites(const char *file, const char *alias, uint32_t tile_wi
       }
 
       IF_DEBUG2
-      { // newline
+      { //
         LOG("Add tile name [%s]", name.c_str());
       }
 

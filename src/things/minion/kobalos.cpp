@@ -28,8 +28,8 @@ static auto tp_kobalos_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std
 {
   TRACE();
 
-  return                                                                                                                   // newline
-      UI_INFO1_FMT_STR "Kobalos are small green-skinned creatures that are identical in every possible way to a goblin.\n" // newline
+  return                                                                                                                   //
+      UI_INFO1_FMT_STR "Kobalos are small green-skinned creatures that are identical in every possible way to a goblin.\n" //
       UI_INFO2_FMT_STR "Kobalos are vindictive, greedy little things and have a habit of thievery...";
 }
 
