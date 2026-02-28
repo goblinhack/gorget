@@ -16,7 +16,7 @@ using FovMap = struct FovMap {
   uint8_t bits[ (MAP_WIDTH * MAP_HEIGHT) / 8 ];
 };
 
-void               fov_map_set(FovMap *m, const spoint &pov, const bool val);
+void               fov_map_set(FovMap *m, const spoint &pov, bool val);
 [[nodiscard]] auto fov_map_get(const FovMap *m, const spoint &pov) -> bool;
 
 #endif // MY_FOV_MAP_HPP

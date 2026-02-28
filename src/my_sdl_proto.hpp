@@ -13,6 +13,7 @@
 #include <vector>
 
 auto sdlk_eq(const SDL_Keysym &a, const SDL_Keysym &b) -> bool;
+auto sdlk_eq(const SDL_Scancode s, const SDL_Keysym &k) -> bool;
 
 auto sdl_filter_events(void *userdata, SDL_Event *event) -> int;
 auto sdl_get_mouse() -> int;

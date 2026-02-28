@@ -121,7 +121,7 @@ static void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
         // Can see tile. If not seen already, light it
         //
         if (! fov_map_get(fov_can_see_tile, p.x, p.y)) {
-          fov_map_set(fov_can_see_tile, p.x, p.y, true);
+          fov_map_set(fov_can_see_tile, p.x, p.y, 1u);
 
           //
           // Per tile can see callback check
@@ -143,7 +143,7 @@ static void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
         //
         // Has seen this tile
         //
-        fov_map_set(fov_has_seen_tile, p.x, p.y, true);
+        fov_map_set(fov_has_seen_tile, p.x, p.y, 1u);
       }
 
 #ifdef TODO
@@ -200,7 +200,7 @@ void level_fov(Gamep g, Levelsp v, Levelp l, Thingp me, FovMap *fov_can_see_tile
     // If not seen already, light it
     //
     if (! fov_map_get(fov_can_see_tile, pov.x, pov.y)) {
-      fov_map_set(fov_can_see_tile, pov.x, pov.y, true);
+      fov_map_set(fov_can_see_tile, pov.x, pov.y, 1u);
 
       //
       // Per tile can see callback check
@@ -212,7 +212,7 @@ void level_fov(Gamep g, Levelsp v, Levelp l, Thingp me, FovMap *fov_can_see_tile
   }
 
   if (fov_has_seen_tile != nullptr) {
-    fov_map_set(fov_has_seen_tile, pov.x, pov.y, true);
+    fov_map_set(fov_has_seen_tile, pov.x, pov.y, 1u);
   }
 
   // me->can_see_you(point(pov_x, pov_y));

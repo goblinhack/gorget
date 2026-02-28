@@ -119,6 +119,7 @@ tidy:
 			misc-redundant-expression,\
 			misc-static-assert,\
 			misc-use-internal-linkage,\
+			misc-unconventional-assign-operator,\
 			modernize-*,\
 			performance-*,\
 			readability-*\

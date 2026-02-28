@@ -58,18 +58,18 @@ void wid_topcon_fini(Gamep g);
 auto wid_topcon_init(Gamep g) -> bool;
 void wid_topcon_log(const std::string &s);
 void wid_topcon_flush(Gamep g);
-void wid_notice(const std::string &notice);
+void wid_notice(const std::string &s);
 void wid_notice_destroy();
 void wid_console_fini(Gamep g);
 auto wid_console_init(Gamep g) -> bool;
 void wid_console_log(const std::string &s);
 void wid_console_raise(Gamep g);
 void wid_console_flush(Gamep g);
-void wid_progress_bar(Gamep, const std::string &title, float pct);
-void wid_progress_bar_destroy(Gamep);
+void wid_progress_bar(Gamep /*g*/, const std::string &title, float pct);
+void wid_progress_bar_destroy(Gamep /*g*/);
 auto wid_console_receive_input(Gamep g, Widp w, const SDL_Keysym *key) -> bool;
 void wid_console_deserialize(const std::vector< std::string > &r);
-void wid_error(Gamep, const std::string &error);
+void wid_error(Gamep /*g*/, const std::string &error);
 
 auto wid_console_serialize() -> std::vector< std::string >;
 
