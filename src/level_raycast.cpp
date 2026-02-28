@@ -267,9 +267,9 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
   }
 
   //
-  // Reset the fov ray lengths
+  // Reset the fov ray lengths. I don't think we need this.
   //
-  *rays = {};
+  //  memset(rays, 0, sizeof(rays));
 
   //
   // Reset what we can see
@@ -283,6 +283,17 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
   const int tile_h = TILE_HEIGHT;
 
   auto tp = thing_tp(player);
+
+  //
+  // Local cache of things blocking light
+  //
+  Thingp light_blocker_cache[ MAP_WIDTH ][ MAP_HEIGHT ];
+
+  for (auto x = 0; x < MAP_WIDTH; x++) {
+    for (auto y = 0; y < MAP_HEIGHT; y++) {
+      light_blocker_cache[ x ][ y ] = level_light_blocker_at(g, v, l, spoint(x, y));
+    }
+  }
 
   FovContext ctx;
 
@@ -380,7 +391,7 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
       //
       // Did the light ray hit an obstacle?
       //
-      obs_to_vision = level_light_blocker_at(g, v, l, tile);
+      obs_to_vision = light_blocker_cache[ tile.x ][ tile.y ];
       if (obs_to_vision != nullptr) {
         //
         // What type of obstacle?
@@ -436,7 +447,7 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
           //
           // If we've left the wall, we're done
           //
-          next_obs_to_vision = level_light_blocker_at(g, v, l, tile);
+          next_obs_to_vision = light_blocker_cache[ tile.x ][ tile.y ];
           if (next_obs_to_vision == nullptr) {
             break;
           }
