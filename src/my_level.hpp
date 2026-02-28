@@ -772,11 +772,11 @@ void rooms_start(Gamep g);
 void rooms_test(Gamep g);
 // end sort marker2 }
 
-struct FovContext_;
+struct FovContext;
 
-using level_fov_can_see_callback_t = void (*)(const struct FovContext_ &, const spoint &p);
+using level_fov_can_see_callback_t = void (*)(const struct FovContext &, const spoint &p);
 
-using FovContext = struct FovContext_ {
+using FovContext = struct FovContext {
   Gamep                        g                        = {};
   Levelsp                      v                        = {};
   Levelp                       l                        = {};

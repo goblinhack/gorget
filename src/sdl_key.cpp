@@ -1135,7 +1135,7 @@ auto sdlk_eq(const SDL_Keysym &a, const SDL_Keysym &b) -> bool
   return (k1.sym == k2.sym) && (k1.mod == k2.mod);
 }
 
-auto sdlk_eq(const SDL_Scancode s, const SDL_Keysym &k) -> bool
+auto sdlk_eq(const SDL_Scancode &s, const SDL_Keysym &k) -> bool
 {
   if ((k.scancode == s) || ((s == SDL_SCANCODE_0) && (k.sym == SDLK_0))) {
     return true;
