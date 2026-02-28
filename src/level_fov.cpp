@@ -53,7 +53,7 @@
 
 // Octant transformation matrixes.
 // {xx, xy, yx, yy}
-static const int matrix_table[ 8 ][ 4 ] = {
+static const short matrix_table[ 8 ][ 4 ] = {
     {1, 0, 0, 1}, {0, 1, 1, 0}, {0, -1, 1, 0}, {-1, 0, 0, 1}, {-1, 0, 0, -1}, {0, -1, -1, 0}, {0, 1, -1, 0}, {1, 0, 0, -1},
 };
 
@@ -183,7 +183,7 @@ void level_fov(const FovContext &ctx)
   }
 
   // recursive shadow casting
-  for (int octant = 0; octant < 8; ++octant) {
+  for (auto octant = 0; octant < 8; ++octant) {
     level_fov_do(1, 1.0, 0.0, octant, ctx);
   }
 
