@@ -282,7 +282,7 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
   const int tile_w = TILE_WIDTH;
   const int tile_h = TILE_HEIGHT;
 
-  auto tp = thing_tp(player);
+  auto *tp = thing_tp(player);
 
   //
   // Local cache of things blocking light

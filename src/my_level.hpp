@@ -793,7 +793,7 @@ using FovContext = struct FovContext {
   level_fov_can_see_callback_t can_see_callback         = {};
 };
 
-void level_fov(const FovContext &);
+void level_fov(const FovContext & /*ctx*/);
 
 using LevelType = enum LevelType_ {
   LEVEL_TYPE_NORMAL,

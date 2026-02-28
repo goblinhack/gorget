@@ -118,7 +118,7 @@ static void level_fov_do(const short       distance_from_origin, // Polar distan
         // Can see tile. If not seen already, light it
         //
         if (! fov_map_get(ctx.fov_can_see_tile, p.x, p.y)) {
-          fov_map_set(ctx.fov_can_see_tile, p.x, p.y, 1u);
+          fov_map_set(ctx.fov_can_see_tile, p.x, p.y, 1U);
 
           //
           // Per tile can see callback check
@@ -140,7 +140,7 @@ static void level_fov_do(const short       distance_from_origin, // Polar distan
         //
         // Has seen this tile
         //
-        fov_map_set(ctx.fov_has_seen_tile, p.x, p.y, 1u);
+        fov_map_set(ctx.fov_has_seen_tile, p.x, p.y, 1U);
       }
     }
 
@@ -192,7 +192,7 @@ void level_fov(const FovContext &ctx)
     // If not seen already, light it
     //
     if (! fov_map_get(ctx.fov_can_see_tile, ctx.pov.x, ctx.pov.y)) {
-      fov_map_set(ctx.fov_can_see_tile, ctx.pov.x, ctx.pov.y, 1u);
+      fov_map_set(ctx.fov_can_see_tile, ctx.pov.x, ctx.pov.y, 1U);
 
       //
       // Per tile can see callback check
@@ -204,6 +204,6 @@ void level_fov(const FovContext &ctx)
   }
 
   if (ctx.fov_has_seen_tile != nullptr) {
-    fov_map_set(ctx.fov_has_seen_tile, ctx.pov.x, ctx.pov.y, 1u);
+    fov_map_set(ctx.fov_has_seen_tile, ctx.pov.x, ctx.pov.y, 1U);
   }
 }
