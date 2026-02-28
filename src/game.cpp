@@ -397,6 +397,8 @@ void Game::init()
 
   seed_set();
 
+  level_raycast_init(this);
+
   level_light_precalculate(this);
 
   player_name_set(nullptr);
@@ -544,7 +546,7 @@ void Game::cleanup()
   destroy_levels();
 
   TRACE();
-  level_light_raycast_fini();
+  level_raycast_fini();
 
   TRACE();
   state_change(STATE_INIT, "init");

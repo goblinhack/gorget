@@ -7,6 +7,7 @@
 #include "my_globals.hpp"
 #include "my_level.hpp"
 #include "my_level_inlines.hpp"
+#include "my_level_light_inlines.hpp"
 #include "my_main.hpp"
 #include "my_math.hpp"
 #include "my_thing_inlines.hpp"
@@ -75,6 +76,75 @@ Raycast::~Raycast()
   TRACE();
 
   OLDPTR(MTYPE_LIGHT, this);
+}
+
+static float player_light_fade[ MAP_WIDTH ];
+
+static void level_raycast_precalculate(Gamep g)
+{
+  static const char player_light_fade_map[]
+      = "xx                                              " //
+        "  xx                                            " //
+        "    x                                           " //
+        "     x                                          " //
+        "      x                                         " //
+        "       x                                        " //
+        "        x                                       " //
+        "        x                                       " //
+        "         x                                      " //
+        "         x                                      " //
+        "          x                                     " //
+        "          x                                     " //
+        "           x                                    " //
+        "           x                                    " //
+        "            x                                   " //
+        "            x                                   " //
+        "             x                                  " //
+        "             x                                  " //
+        "              x                                 " //
+        "              x                                 " //
+        "               x                                " //
+        "               x                                " //
+        "               x                                " //
+        "                x                               " //
+        "                x                               " //
+        "                x                               " //
+        "                 x                              " //
+        "                 x                              " //
+        "                 x                              " //
+        "                 x                              " //
+        "                 x                              " //
+        "                  x                             " //
+        "                  x                             " //
+        "                  x                             " //
+        "                   x                            " //
+        "                   x                            " //
+        "                   x                            " //
+        "                    x                           " //
+        "                    x                           " //
+        "                     x                          " //
+        "                     x                          " //
+        "                      x                         " //
+        "                       x                        " //
+        "                        x                       " //
+        "                         x                      " //
+        "                          xx                    " //
+        "                            xxxxxxxxxxxxxxxxxxxx" //
+        "                                                " //
+      ;
+
+  for (auto x = 0; x < MAP_WIDTH; x++) {
+    for (auto y = 0; y < MAP_HEIGHT; y++) {
+      {
+        auto c = player_light_fade_map[ (MAP_WIDTH * y) + x ];
+        if (c == 'x') {
+          if (player_light_fade[ x ] == 0) {
+            player_light_fade[ x ] = 1.0F - ((float) y / (float) MAP_HEIGHT);
+          }
+        }
+      }
+    }
+  }
 }
 
 void Raycast::ray_pixel_add(int16_t index, const spoint p0, const spoint p1)
@@ -162,7 +232,8 @@ void Raycast::ray_lengths_precalculate(Gamep g, Levelsp v, Levelp l)
   }
 }
 
-static void level_raycast_light_tile(Gamep g, Levelsp v, Levelp l, Thingp t, ThingLightp light, ThingExtp ext, spoint pov, spoint tile)
+static void level_raycast_light_tile(Gamep g, Levelsp v, Levelp l, Thingp t, ThingLightp light, ThingExtp ext, spoint pov, spoint tile,
+                                     const color &light_color, const float light_strength_in_pixels, const spoint thing_at_in_pixels)
 {
   TRACE_DEBUG();
 
@@ -173,7 +244,7 @@ static void level_raycast_light_tile(Gamep g, Levelsp v, Levelp l, Thingp t, Thi
     fov_map_set(&light->is_lit, tile.x, tile.y, 1U);
     fov_map_set(&ext->has_seen, tile.x, tile.y, 1U);
     fov_map_set(&ext->can_see, tile.x, tile.y, 1U);
-    level_light_per_pixel_lighting(g, v, l, t, pov, tile);
+    level_light_per_pixel(g, v, l, t, tile, light_color, light_strength_in_pixels, thing_at_in_pixels, player_light_fade);
   }
 }
 
@@ -213,6 +284,11 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
 
   const int tile_w = TILE_WIDTH;
   const int tile_h = TILE_HEIGHT;
+
+  auto       tp                       = thing_tp(player);
+  const auto light_color              = tp_light_color(tp);
+  const auto light_strength_in_pixels = thing_is_light_source(player) * TILE_WIDTH;
+  const auto thing_at_in_pixels       = thing_pix_at(player);
 
   //
   // Center the light on the player
@@ -273,7 +349,7 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
       prev_tile_x = tile_x;
       prev_tile_y = tile_y;
 
-      level_raycast_light_tile(g, v, l, player, light, ext, pov, tile);
+      level_raycast_light_tile(g, v, l, player, light, ext, pov, tile, light_color, light_strength_in_pixels, thing_at_in_pixels);
 
       //
       // This is for foliage so we don't obscure too much where we stand
@@ -366,7 +442,7 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
             break;
           }
 
-          level_raycast_light_tile(g, v, l, player, light, ext, pov, tile);
+          level_raycast_light_tile(g, v, l, player, light, ext, pov, tile, light_color, light_strength_in_pixels, thing_at_in_pixels);
           step_inside_wall++;
         }
 
@@ -468,7 +544,7 @@ static auto raycast_new(int ray_max_length_in_pixels, FboEnum fbo) -> Raycast *
   return l;
 }
 
-void level_light_raycast(Gamep g, Levelsp v, Levelp l, FboEnum fbo)
+void level_raycast(Gamep g, Levelsp v, Levelp l, FboEnum fbo)
 {
   //
   // Do not generate open gl stuff on any other thread
@@ -505,8 +581,15 @@ void level_light_raycast(Gamep g, Levelsp v, Levelp l, FboEnum fbo)
   player_raycast->raycast_do(g, v, l);
 }
 
-void level_light_raycast_fini()
+void level_raycast_init(Gamep g)
 {
+  TRACE();
+  level_raycast_precalculate(g);
+}
+
+void level_raycast_fini()
+{
+  TRACE();
   delete player_raycast;
   player_raycast = nullptr;
 }

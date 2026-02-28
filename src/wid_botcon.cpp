@@ -14,10 +14,10 @@
 
 static void wid_botcon_wid_create(Gamep g);
 
-Widp wid_botcon_container {};
+Widp        wid_botcon_container {};
 static Widp wid_botcon_vert_scroll {};
-Widp wid_botcon_input_line {};
-Widp wid_botcon_window {};
+Widp        wid_botcon_input_line {};
+Widp        wid_botcon_window {};
 
 static std::string last_msg;
 static int         last_msg_count;

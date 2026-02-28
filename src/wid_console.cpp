@@ -20,11 +20,11 @@ static int wid_console_exiting;
 
 static void wid_console_wid_create(Gamep g);
 
-Widp wid_console_container {};
+Widp        wid_console_container {};
 static Widp wid_console_vert_scroll {};
 static Widp wid_console_horiz_scroll {};
-Widp wid_console_input_line {};
-Widp wid_console_window {};
+Widp        wid_console_input_line {};
+Widp        wid_console_window {};
 
 static std::map< unsigned int, std::string > wid_console_lines;
 
