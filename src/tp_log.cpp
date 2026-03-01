@@ -25,12 +25,12 @@ void TP_LOG_(Tpp tp, const char *fmt, va_list args)
 
   buf[ 0 ] = '\0';
   get_timestamp(buf, MAXLONGSTR);
-  len = (int) strlen(buf);
+  len = static_cast< int >(strlen(buf));
 
   IF_DEBUG
   {
     snprintf(buf + len, MAXLONGSTR - len, "[%-50s]: %*s", tp_name(tp).c_str(), g_callframes_indent, "");
-    len = (int) strlen(buf);
+    len = static_cast< int >(strlen(buf));
   }
 
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
@@ -74,10 +74,10 @@ void TP_DIE_(Tpp tp, const char *fmt, va_list args)
 
   buf[ 0 ] = '\0';
   get_timestamp(buf, MAXLONGSTR);
-  len = (int) strlen(buf);
+  len = static_cast< int >(strlen(buf));
   snprintf(buf + len, MAXLONGSTR - len, "%s: ", tp_name(tp).c_str());
 
-  len = (int) strlen(buf);
+  len = static_cast< int >(strlen(buf));
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
   CROAK("%s", buf);
@@ -105,10 +105,10 @@ void TP_CON_(Tpp tp, const char *fmt, va_list args)
 
   buf[ 0 ] = '\0';
   get_timestamp(buf, MAXLONGSTR);
-  len = (int) strlen(buf);
+  len = static_cast< int >(strlen(buf));
   snprintf(buf + len, MAXLONGSTR - len, "%s: ", tp_name(tp).c_str());
 
-  len = (int) strlen(buf);
+  len = static_cast< int >(strlen(buf));
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
   putf(MY_STDOUT, buf);
@@ -140,7 +140,7 @@ void TP_ERR_(Tpp tp, const char *fmt, va_list args)
 
   buf[ 0 ] = '\0';
   snprintf(buf + len, MAXLONGSTR - len, "%s: ", tp_name(tp).c_str());
-  len = (int) strlen(buf);
+  len = static_cast< int >(strlen(buf));
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
   ERR("%s", buf);

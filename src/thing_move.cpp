@@ -441,7 +441,7 @@ void thing_update_pos(Gamep g, Levelsp v, Levelp l, Thingp me)
 
   auto   real_at = thing_real_at(me);
   spoint pix_at;
-  pix_at.x = (int) (real_at.x * (float) TILE_WIDTH);
-  pix_at.y = (int) (real_at.y * (float) TILE_HEIGHT);
+  pix_at.x = static_cast< int >(real_at.x * static_cast< float >(TILE_WIDTH));
+  pix_at.y = static_cast< int >(real_at.y * static_cast< float >(TILE_HEIGHT));
   thing_pix_at_set(g, v, l, me, pix_at);
 }

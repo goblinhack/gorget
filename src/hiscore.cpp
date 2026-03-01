@@ -12,10 +12,10 @@
 HiScores::HiScores()
 {
   TRACE();
-  if ((int) hiscores.size() > HiScore::max) {
+  if (static_cast< int >(hiscores.size()) > HiScore::max) {
     hiscores.resize(HiScore::max);
   } else {
-    while ((int) hiscores.size() < HiScore::max) {
+    while (static_cast< int >(hiscores.size()) < HiScore::max) {
       hiscores.emplace_back("AAA", "", "",
                             0, // score
                             0  // levels_completed

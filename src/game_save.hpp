@@ -261,18 +261,18 @@ auto operator<<(std::ostream &out, Bits< const class Game & > const my) -> std::
 {
   TRACE();
 
-  auto serialized_size = (uint32_t) (sizeof(Game));
+  auto serialized_size = static_cast< uint32_t >(sizeof(Game));
   out << bits(my.t.version);
   out << bits(serialized_size);
 
   //
   // Save various structure sizes
   //
-  serialized_size = (uint32_t) (sizeof(Thing));
+  serialized_size = static_cast< uint32_t >(sizeof(Thing));
   out << bits(serialized_size);
-  serialized_size = (uint32_t) (sizeof(Level));
+  serialized_size = static_cast< uint32_t >(sizeof(Level));
   out << bits(serialized_size);
-  serialized_size = (uint32_t) (sizeof(Levels));
+  serialized_size = static_cast< uint32_t >(sizeof(Levels));
   out << bits(serialized_size);
 
   //
@@ -537,7 +537,7 @@ auto Game::save(const std::string &file_to_save) -> bool
 
 #ifdef USE_LZ4
   const auto *which = "LZ4";
-  dst_size          = LZ4_compress_default((const char *) src, (char *) dst, src_size, src_size);
+  dst_size          = LZ4_compress_default(static_cast< const char * >(src), static_cast< char * >(dst), src_size, src_size);
   if (dst_size != 0)
 #else
   auto which  = "LZ0";
@@ -599,7 +599,7 @@ auto Game::save(const std::string &file_to_save) -> bool
 
   LOG("Opened: %s for writing", file_to_save.c_str());
 
-  fwrite((char *) &src_size, sizeof(src_size), 1, ofile);
+  fwrite(reinterpret_cast< char * >(&src_size), sizeof(src_size), 1, ofile);
   fwrite(dst, dst_size, 1, ofile);
   fclose(ofile);
 

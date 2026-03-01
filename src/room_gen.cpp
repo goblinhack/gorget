@@ -243,8 +243,8 @@ static void room_gen_draw_circle(RoomGen *grid, int x, int y, int radius, char v
   int i = 0;
   int j = 0;
 
-  for (i = std::max(0, x - radius - 1); i < std::max((int) MAP_WIDTH, x + radius); i++) {
-    for (j = std::max(0, y - radius - 1); j < std::max((int) MAP_HEIGHT, y + radius); j++) {
+  for (i = std::max(0, x - radius - 1); i < std::max(static_cast< int >(MAP_WIDTH), x + radius); i++) {
+    for (j = std::max(0, y - radius - 1); j < std::max(static_cast< int >(MAP_HEIGHT), y + radius); j++) {
       if (((i - x) * (i - x)) + ((j - y) * (j - y)) < (radius * radius) + radius) {
         spoint const p(i, j);
         if (is_oob(p)) [[unlikely]] {

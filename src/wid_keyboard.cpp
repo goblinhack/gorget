@@ -147,7 +147,7 @@ static void               wid_keyboard_set_focus(Gamep g, wid_keyboard_ctx *ctx,
 static void wid_keyboard_update_buttons(Gamep g, Widp w)
 {
   TRACE();
-  auto *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
+  auto *ctx = static_cast< wid_keyboard_ctx * >(wid_get_void_context(w));
   VERIFY(MTYPE_MISC, ctx);
 
   int const width  = 7;
@@ -196,7 +196,7 @@ static void wid_keyboard_update_buttons(Gamep g, Widp w)
 static void wid_keyboard_event(Gamep g, Widp w, int focusx, int focusy, const SDL_Keysym *key_in)
 {
   TRACE();
-  auto *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
+  auto *ctx = static_cast< wid_keyboard_ctx * >(wid_get_void_context(w));
   VERIFY(MTYPE_MISC, ctx);
 
   const char *add = nullptr;
@@ -355,7 +355,7 @@ static void wid_keyboard_set_focus(Gamep g, wid_keyboard_ctx *ctx, int focusx, i
 [[nodiscard]] static auto wid_keyboard_parent_key_down(Gamep g, Widp w, const SDL_Keysym *key) -> bool
 {
   TRACE();
-  auto *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
+  auto *ctx = static_cast< wid_keyboard_ctx * >(wid_get_void_context(w));
   VERIFY(MTYPE_MISC, ctx);
 
   /*
@@ -400,7 +400,7 @@ static void wid_keyboard_set_focus(Gamep g, wid_keyboard_ctx *ctx, int focusx, i
 [[nodiscard]] static auto wid_keyboard_parent_joy_button(Gamep g, Widp w, int x, int y) -> bool
 {
   TRACE();
-  auto *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
+  auto *ctx = static_cast< wid_keyboard_ctx * >(wid_get_void_context(w));
   VERIFY(MTYPE_MISC, ctx);
   int ret = 0;
 
@@ -477,7 +477,7 @@ static void wid_keyboard_set_focus(Gamep g, wid_keyboard_ctx *ctx, int focusx, i
 [[nodiscard]] static auto wid_keyboard_button_key_event(Gamep g, Widp w, const SDL_Keysym *key) -> bool
 {
   TRACE();
-  auto *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
+  auto *ctx = static_cast< wid_keyboard_ctx * >(wid_get_void_context(w));
   VERIFY(MTYPE_MISC, ctx);
 
   /*
@@ -515,7 +515,7 @@ static void wid_keyboard_set_focus(Gamep g, wid_keyboard_ctx *ctx, int focusx, i
 [[nodiscard]] static auto wid_keyboard_button_joy_button_event(Gamep g, Widp w, int x, int y) -> bool
 {
   TRACE();
-  auto *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
+  auto *ctx = static_cast< wid_keyboard_ctx * >(wid_get_void_context(w));
   VERIFY(MTYPE_MISC, ctx);
   int ret = 0;
 
@@ -594,7 +594,7 @@ static void wid_keyboard_set_focus(Gamep g, wid_keyboard_ctx *ctx, int focusx, i
 [[nodiscard]] static auto wid_keyboard_text_input_key_event(Gamep g, Widp w, const SDL_Keysym *key) -> bool
 {
   TRACE();
-  auto *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
+  auto *ctx = static_cast< wid_keyboard_ctx * >(wid_get_void_context(w));
   VERIFY(MTYPE_MISC, ctx);
 
   //
@@ -629,7 +629,7 @@ static void wid_keyboard_set_focus(Gamep g, wid_keyboard_ctx *ctx, int focusx, i
 static void wid_keyboard_destroy(Gamep g, Widp w)
 {
   TRACE();
-  auto *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
+  auto *ctx = static_cast< wid_keyboard_ctx * >(wid_get_void_context(w));
   VERIFY(MTYPE_MISC, ctx);
 
   wid_set_void_context(w, nullptr);
@@ -641,7 +641,7 @@ static void wid_keyboard_destroy(Gamep g, Widp w)
 static void wid_keyboard_tick(Gamep g, Widp w)
 {
   TRACE();
-  auto *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
+  auto *ctx = static_cast< wid_keyboard_ctx * >(wid_get_void_context(w));
   VERIFY(MTYPE_MISC, ctx);
 
   static int       val;
@@ -681,11 +681,11 @@ static void wid_keyboard_tick(Gamep g, Widp w)
        */
       int mode = 0;
       for (mode = WID_MODE_NORMAL; mode < WID_MODE_LAST; mode++) {
-        wid_set_mode(b, (wid_mode) mode);
+        wid_set_mode(b, static_cast< wid_mode >(mode));
         wid_set_color(b, WID_COLOR_TEXT_FG, c);
       }
 
-      wid_set_mode(w, (wid_mode) WID_MODE_NORMAL);
+      wid_set_mode(w, static_cast< wid_mode >(WID_MODE_NORMAL));
     }
   }
 }
@@ -700,7 +700,7 @@ auto wid_keyboard(Gamep g, const std::string &text, const std::string &title, wi
    * Create a context to hold button info so we can update it when the focus
    * changes
    */
-  wid_keyboard_ctx *ctx = (wid_keyboard_ctx *) MYZALLOC(SIZEOF(*ctx), "wid keyboard");
+  wid_keyboard_ctx *ctx = static_cast< wid_keyboard_ctx * >(MYZALLOC(SIZEOF(*ctx), "wid keyboard"));
   ctx->focusx           = -1;
   ctx->focusy           = -1;
   ctx->cancelled        = cancelled;

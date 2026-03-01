@@ -49,7 +49,7 @@ void fpoint::unit()
   y /= len;
 }
 
-auto distance(const fpoint &a, const fpoint &b) -> float { return (((float) DISTANCEf(a.x, a.y, b.x, b.y))); }
+auto distance(const fpoint &a, const fpoint &b) -> float { return ((DISTANCEf(a.x, a.y, b.x, b.y))); }
 
 //
 // Yields an angle between 0 and 360 deg radians - essentially, how much
@@ -63,7 +63,7 @@ auto angle_radians(const fpoint &p) -> float
     if (p.y > 0) {
       return theta;
     }
-    return (float) RAD_360 + theta;
+    return static_cast< float > RAD_360 + theta;
   }
   return std::numbers::pi_v< float > - theta;
 }

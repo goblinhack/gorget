@@ -43,6 +43,9 @@ static inline auto make_fpoint(const spoint f) -> fpoint { return fpoint(f.x, f.
 // round() is better than floor() as if we do a jump on a diagonal, that is 0.707
 // units. We want to round to 1.0 so the diagonal move works and not 0.0.
 //
-static inline auto make_spoint(const fpoint &f) -> spoint { return spoint((int) roundf(f.x), (int) roundf(f.y)); }
+static inline auto make_spoint(const fpoint &f) -> spoint
+{
+  return spoint(static_cast< int >(roundf(f.x)), static_cast< int >(roundf(f.y)));
+}
 
 #endif // MY_FPOINT_HPP

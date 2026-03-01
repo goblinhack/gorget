@@ -31,7 +31,7 @@ static void wid_warning_destroy()
     return false;
   }
 
-  auto callback = (wid_warning_callback_t) wid_get_void_context(w);
+  auto callback = reinterpret_cast< wid_warning_callback_t >(wid_get_void_context(w));
 
   switch (key->mod) {
     case KMOD_LCTRL :
@@ -86,7 +86,7 @@ static void wid_warning_destroy()
   DBG("Wid warning: yes");
   TRACE();
 
-  auto callback = (wid_warning_callback_t) wid_get_void_context(w);
+  auto callback = reinterpret_cast< wid_warning_callback_t >(wid_get_void_context(w));
   if (callback != nullptr) {
     (callback)(g, true);
   }
@@ -99,7 +99,7 @@ static void wid_warning_destroy()
   DBG("Wid warning: no");
   TRACE();
 
-  auto callback = (wid_warning_callback_t) wid_get_void_context(w);
+  auto callback = reinterpret_cast< wid_warning_callback_t >(wid_get_void_context(w));
   if (callback != nullptr) {
     (callback)(g, false);
   }
@@ -124,7 +124,7 @@ void wid_warning(Gamep g, const std::string &warning, wid_warning_callback_t cal
   wid_warning_window = new WidPopup(g, "Game warning", tl, br, nullptr, "", false, false);
   wid_set_on_key_down(wid_warning_window->wid_popup_container, wid_warning_key_down);
   wid_set_do_not_lower(wid_warning_window->wid_popup_container);
-  wid_set_void_context(wid_warning_window->wid_popup_container, (void *) callback);
+  wid_set_void_context(wid_warning_window->wid_popup_container, reinterpret_cast< void * >(callback));
 
   wid_warning_window->log_empty_line(g);
   wid_warning_window->log(g, warning);
@@ -139,7 +139,7 @@ void wid_warning(Gamep g, const std::string &warning, wid_warning_callback_t cal
     spoint const tl1((width / 2) - 12, y_at + 2);
     spoint const br1((width / 2) - 2, y_at + 4);
     wid_set_on_mouse_down(w, wid_warning_no);
-    wid_set_void_context(w, (void *) callback);
+    wid_set_void_context(w, reinterpret_cast< void * >(callback));
     wid_set_pos(w, tl1, br1);
     wid_set_text(w, "No");
   }
@@ -152,7 +152,7 @@ void wid_warning(Gamep g, const std::string &warning, wid_warning_callback_t cal
     spoint const tl2((width / 2) + 0, y_at + 2);
     spoint const br2((width / 2) + 10, y_at + 4);
     wid_set_on_mouse_down(w, wid_warning_yes);
-    wid_set_void_context(w, (void *) callback);
+    wid_set_void_context(w, reinterpret_cast< void * >(callback));
     wid_set_pos(w, tl2, br2);
     wid_set_text(w, "Yes");
   }

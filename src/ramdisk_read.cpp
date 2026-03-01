@@ -30,9 +30,9 @@ auto ramdisk_load(const char *filename, int *outlen) -> unsigned char *
     return nullptr;
   }
 
-  memcpy(out, (unsigned char *) ramfile.data, ramfile.len);
-  *((unsigned char *) out + ramfile.len) = 0;
+  memcpy(out, const_cast<unsigned char *>(ramfile.data), ramfile.len);
+  *(static_cast<unsigned char *>(out) + ramfile.len) = 0;
   *outlen                                = ramfile.len;
 
-  return (unsigned char *) out;
+  return static_cast<unsigned char *>(out);
 }

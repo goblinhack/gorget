@@ -306,12 +306,12 @@ void sdl_tick(Gamep g)
   if ((mx != 0) || (my != 0)) {
     ts = time_ms();
 
-    accel *= (float) UI_SCROLL_JOY_SCALE;
+    accel *= static_cast< float >(UI_SCROLL_JOY_SCALE);
 
-    accel = std::min(accel, (float) UI_SCROLL_JOY_SCALE_MAX);
+    accel = std::min(accel, static_cast< float >(UI_SCROLL_JOY_SCALE_MAX));
 
-    int x = (int) (sdl.mouse_x + ((float) mx * accel));
-    int y = (int) (sdl.mouse_y + ((float) my * accel));
+    int x = static_cast< int >(sdl.mouse_x + (static_cast< float >(mx) * accel));
+    int y = static_cast< int >(sdl.mouse_y + (static_cast< float >(my) * accel));
 
     x = std::max(x, 0);
 
@@ -514,7 +514,7 @@ void config_game_gfx_update(Gamep g)
   //
   // Display ratio
   //
-  game_aspect_ratio_set(g, (float) game_window_pix_width_get(g) / (float) game_window_pix_height_get(g));
+  game_aspect_ratio_set(g, static_cast< float >(game_window_pix_width_get(g)) / static_cast< float >(game_window_pix_height_get(g)));
 
   TERM_WIDTH  = game_ui_term_width_get(g);
   TERM_HEIGHT = game_ui_term_height_get(g);
@@ -703,12 +703,12 @@ void config_game_gfx_update(Gamep g)
   int const map_w = visible_map_br_x - visible_map_tl_x;
   int const map_h = visible_map_br_y - visible_map_tl_y;
 
-  int const max_fbo_w = (int) TILE_WIDTH * (int) MAP_WIDTH;
-  int const max_fbo_h = (int) TILE_HEIGHT * (int) MAP_HEIGHT;
+  int const max_fbo_w = static_cast< int >(TILE_WIDTH) * static_cast< int >(MAP_WIDTH);
+  int const max_fbo_h = static_cast< int >(TILE_HEIGHT) * static_cast< int >(MAP_HEIGHT);
 
-  double const map_w_h_ratio = (double) map_w / (double) map_h;
+  double const map_w_h_ratio = static_cast< double >(map_w) / static_cast< double >(map_h);
   int          fbo_w         = TILE_WIDTH * game_tiles_visible_across_get(g);
-  int          fbo_h         = (int) ceil(fbo_w / map_w_h_ratio);
+  int          fbo_h         = static_cast< int >(ceil(fbo_w / map_w_h_ratio));
 
   fbo_w = std::min(fbo_w, max_fbo_w);
 
@@ -749,14 +749,14 @@ void config_game_gfx_update(Gamep g)
     //
     // Used in outlines.
     //
-    game_map_single_pix_size_set(g, (int) (ceil(map_w / fbo_w)));
+    game_map_single_pix_size_set(g, static_cast< int >(ceil(map_w / fbo_w)));
   }
 
   //
   // The map within the game fbo. Use the height of the screen so the width is pixel perfect.
   //
-  int const tiles_across = (int) ceil(game_map_fbo_width_get(g) / (TILE_WIDTH * zoom));
-  int const tiles_down   = (int) ceil(game_map_fbo_height_get(g) / (TILE_HEIGHT * zoom));
+  int const tiles_across = static_cast< int >(ceil(game_map_fbo_width_get(g) / (TILE_WIDTH * zoom)));
+  int const tiles_down   = static_cast< int >(ceil(game_map_fbo_height_get(g) / (TILE_HEIGHT * zoom)));
 
   game_tiles_visible_across_set(g, tiles_across);
   game_tiles_visible_down_set(g, tiles_down);

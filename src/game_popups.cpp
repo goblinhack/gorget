@@ -107,7 +107,7 @@ void game_popups_display(Gamep g, Levelsp v, Levelp l)
         //
         // Fade out and raise the text up with a percentage
         //
-        float const pct = (float) (time_ms_cached() - i->created) / (float) POPUP_DURATION_MS;
+        float const pct = static_cast< float >(time_ms_cached() - i->created) / static_cast< float >(POPUP_DURATION_MS);
 
         //
         // Fade out
@@ -115,14 +115,14 @@ void game_popups_display(Gamep g, Levelsp v, Levelp l)
         color fg = i->fg;
         color bg = BLACK;
 
-        fg.a = 255 - (int) (255.0 * pct / 2);
-        bg.a = 255 - (int) (255.0 * pct);
+        fg.a = 255 - static_cast< int >(255.0 * pct / 2);
+        bg.a = 255 - static_cast< int >(255.0 * pct);
 
         //
         // Rise up
         //
-        const auto tile_height   = br.y - tl.y;
-        auto       ascend_height = (int) (pct * (float) tile_height * (float) POPUP_DURATION_TILE_HEIGHT);
+        const auto tile_height = br.y - tl.y;
+        auto ascend_height = static_cast< int >(pct * static_cast< float >(tile_height) * static_cast< float >(POPUP_DURATION_TILE_HEIGHT));
         tl.y -= ascend_height;
         br.y -= ascend_height;
 

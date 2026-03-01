@@ -61,8 +61,8 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
   //
   int const    zoom = game_map_zoom_get(g);
   spoint const pix_at(thing_pix_at(target));
-  float const  x = ((pix_at.x * zoom) - v->pixel_map_at.x) / (float) w;
-  float const  y = ((pix_at.y * zoom) - v->pixel_map_at.y) / (float) h;
+  float const  x = ((pix_at.x * zoom) - v->pixel_map_at.x) / static_cast< float >(w);
+  float const  y = ((pix_at.y * zoom) - v->pixel_map_at.y) / static_cast< float >(h);
 
   const auto scroll_border = MAP_SCROLL_EDGE;
 
@@ -148,19 +148,19 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
   // If too close to the edges, scroll.
   //
   if (x > 1.0 - scroll_border) {
-    dx = (int) ((x - scroll_border) * v->scroll_speed);
+    dx = static_cast< int >((x - scroll_border) * v->scroll_speed);
     v->pixel_map_at.x += dx;
   }
   if (x < scroll_border) {
-    dy = (int) ((scroll_border - x) * v->scroll_speed);
+    dy = static_cast< int >((scroll_border - x) * v->scroll_speed);
     v->pixel_map_at.x -= dy;
   }
   if (y > 1.0 - scroll_border) {
-    dy = (int) ((y - scroll_border) * v->scroll_speed);
+    dy = static_cast< int >((y - scroll_border) * v->scroll_speed);
     v->pixel_map_at.y += dy;
   }
   if (y < scroll_border) {
-    dx = (int) ((scroll_border - y) * v->scroll_speed);
+    dx = static_cast< int >((scroll_border - y) * v->scroll_speed);
     v->pixel_map_at.y -= dx;
   }
 

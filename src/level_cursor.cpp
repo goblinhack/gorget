@@ -342,7 +342,7 @@ static auto level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Th
   }
 
   if (compiler_unused) {
-    TOPCON("attempt %d len %d", attempt, (int) p.size());
+    TOPCON("attempt %d len %d", attempt, static_cast< int >(p.size()));
   }
 
   return p;
@@ -500,7 +500,7 @@ void level_cursor_copy_path_to_player(Gamep g, Levelsp v, Levelp l, std::vector<
   //
   IF_DEBUG2
   { //
-    THING_DBG(player, "apply cursor path size: %d", (int) move_path.size());
+    THING_DBG(player, "apply cursor path size: %d", static_cast< int >(move_path.size()));
   }
   if (thing_move_path_apply(g, v, l, player, move_path)) {
     move_path.clear();
@@ -550,7 +550,7 @@ static void level_cursor_path_create(Gamep g, Levelsp v, Levelp l)
 
   IF_DEBUG2
   { //
-    THING_DBG(player, "cursor path size: %d", (int) cursor_path.size());
+    THING_DBG(player, "cursor path size: %d", static_cast< int >(cursor_path.size()));
   }
 
   for (auto p : cursor_path) {
@@ -609,4 +609,4 @@ void level_cursor_copy_mouse_path_to_player(Gamep g, Levelsp v, Levelp l)
   level_select_mouse_motion(g, v, l);
 }
 
-auto level_cursor_path_size(Gamep g) -> int { return (int) cursor_path.size(); }
+auto level_cursor_path_size(Gamep g) -> int { return static_cast< int >(cursor_path.size()); }

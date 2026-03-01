@@ -194,7 +194,7 @@ static auto clamp(float v) -> uint8_t // define a function to bound and round th
   if (v > 255) {
     return 255;
   }
-  return (uint8_t) v;
+  return static_cast< uint8_t >(v);
 }
 
 // https://stackoverflow.com/questions/8507885/shift-hue-of-an-rgb-color#8509802
@@ -211,9 +211,12 @@ auto color_change_hue(const color &in, const float fHue) -> color
                                   {(1.0F / 3.0F * (1.0F - cosA)) - (sqrtf(1.0F / 3.0F) * sinA),
                                    (1.0F / 3.0F * (1.0F - cosA)) + (sqrtf(1.0F / 3.0F) * sinA), cosA + (1.0F / 3.0F * (1.0F - cosA))}};
   // Use the rotation matrix to convert the RGB directly
-  out.r = clamp((((float) in.r) * matrix[ 0 ][ 0 ]) + (((float) in.g) * matrix[ 0 ][ 1 ]) + (((float) in.b) * matrix[ 0 ][ 2 ]));
-  out.g = clamp((((float) in.r) * matrix[ 1 ][ 0 ]) + (((float) in.g) * matrix[ 1 ][ 1 ]) + (((float) in.b) * matrix[ 1 ][ 2 ]));
-  out.b = clamp((((float) in.r) * matrix[ 2 ][ 0 ]) + (((float) in.g) * matrix[ 2 ][ 1 ]) + (((float) in.b) * matrix[ 2 ][ 2 ]));
+  out.r = clamp(((static_cast< float >(in.r)) * matrix[ 0 ][ 0 ]) + ((static_cast< float >(in.g)) * matrix[ 0 ][ 1 ])
+                + ((static_cast< float >(in.b)) * matrix[ 0 ][ 2 ]));
+  out.g = clamp(((static_cast< float >(in.r)) * matrix[ 1 ][ 0 ]) + ((static_cast< float >(in.g)) * matrix[ 1 ][ 1 ])
+                + ((static_cast< float >(in.b)) * matrix[ 1 ][ 2 ]));
+  out.b = clamp(((static_cast< float >(in.r)) * matrix[ 2 ][ 0 ]) + ((static_cast< float >(in.g)) * matrix[ 2 ][ 1 ])
+                + ((static_cast< float >(in.b)) * matrix[ 2 ][ 2 ]));
   return out;
 }
 
@@ -236,14 +239,14 @@ static void game_display_title_fg3(Gamep g)
     fg = RED;
   }
 
-  auto bright = (float) 1.01;
-  int  r      = (int) (((float) fg.r) * bright);
+  auto bright = static_cast< float >(1.01);
+  int  r      = static_cast< int >((static_cast< float >(fg.r)) * bright);
   r           = std::min(r, 255);
   fg.r        = r;
-  int green   = (int) (((float) fg.g) * bright);
+  int green   = static_cast< int >((static_cast< float >(fg.g)) * bright);
   green       = std::min(green, 255);
   fg.g        = green;
-  int b       = (int) (((float) fg.b) * bright);
+  int b       = static_cast< int >((static_cast< float >(fg.b)) * bright);
   b           = std::min(b, 255);
   fg.b        = b;
 

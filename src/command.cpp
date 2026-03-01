@@ -185,7 +185,8 @@ static auto command_matches(Gamep g, const char *input, char *output, uint8_t sh
 
       cnt = strncmp(command->tokens.args[ t ], input_tokens.args[ t ], strlen(input_tokens.args[ t ]));
 
-      if (slre_match(&command->tokens.regexp[ t ], input_tokens.args[ t ], (int) strlen(input_tokens.args[ t ]), nullptr /* captures */)
+      if (slre_match(&command->tokens.regexp[ t ], input_tokens.args[ t ], static_cast< int >(strlen(input_tokens.args[ t ])),
+                     nullptr /* captures */)
           != 0) {
         /*
          * Success
@@ -217,7 +218,8 @@ static auto command_matches(Gamep g, const char *input, char *output, uint8_t sh
 
       cnt = strncmp(command->tokens.args[ t ], input_tokens.args[ t ], strlen(input_tokens.args[ t ]));
 
-      if (slre_match(&command->tokens.regexp[ t ], input_tokens.args[ t ], (int) strlen(input_tokens.args[ t ]), nullptr /* captures */)
+      if (slre_match(&command->tokens.regexp[ t ], input_tokens.args[ t ], static_cast< int >(strlen(input_tokens.args[ t ])),
+                     nullptr /* captures */)
           != 0) {
         /*
          * Success
@@ -276,7 +278,8 @@ static auto command_matches(Gamep g, const char *input, char *output, uint8_t sh
 
           cnt = strncmp(command->tokens.args[ t ], input_tokens.args[ t ], strlen(input_tokens.args[ t ]));
 
-          if (slre_match(&command->tokens.regexp[ t ], input_tokens.args[ t ], (int) strlen(input_tokens.args[ t ]), nullptr /* captures */)
+          if (slre_match(&command->tokens.regexp[ t ], input_tokens.args[ t ], static_cast< int >(strlen(input_tokens.args[ t ])),
+                         nullptr /* captures */)
               != 0) {
             /*
              * Success

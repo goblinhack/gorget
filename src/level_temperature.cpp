@@ -71,7 +71,7 @@ void level_tick_begin_temperature(Gamep g, Levelsp v, Levelp l)
       float const heat_capacity = tp_temperature_heat_capacity_get(tp);
       float const diff          = Ta - To;
       float const ndiff         = diff * (1.0F - ((HEAT_CAPACITY_MAX - heat_capacity) / HEAT_CAPACITY_MAX));
-      int const   Tn            = (int) Ta - (int) ndiff;
+      int const   Tn            = static_cast< int >(Ta) - static_cast< int >(ndiff);
 
       //
       // No ice yet
@@ -123,7 +123,7 @@ static void thing_heat_exchange(Levelsp v, Thingp a, Thingp b, int &finalT)
   float const Ta  = thing_temperature(a);
   float const Tb  = thing_temperature(b);
 
-  finalT = (int) Ta;
+  finalT = static_cast< int >(Ta);
 
   //
   // Projectiles only heat up things they hit.
@@ -168,17 +168,17 @@ static void thing_heat_exchange(Levelsp v, Thingp a, Thingp b, int &finalT)
   // Take care not to give too much weight or you end up with steam able to heat up a
   // tile of water, which seems wrong.
   //
-  if (((int) m) == 0) {
+  if ((static_cast< int >(m)) == 0) {
     if (thing_is_gaseous(a) || thing_is_projectile(a)) {
       m = 1;
     }
-    if (((int) m) == 0) {
+    if ((static_cast< int >(m)) == 0) {
       return;
     }
   }
 
   float const final_dT = (Q / (m * c));
-  finalT               = (int) ceilf((Ta) + final_dT);
+  finalT               = static_cast< int >(ceilf((Ta) + final_dT));
 
   //  THING_DBG(a, "b");
   // THING_DBG(b, "b");
@@ -281,7 +281,7 @@ void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
     //
     std::set< std::pair< Thingp, Thingp > > pairs;
 
-    auto sz = (int) things.size();
+    auto sz = static_cast< int >(things.size());
     for (auto i = 0; i < sz; i++) {
       for (auto j = 0; j < sz; j++) {
         auto *Ti = things[ i ];

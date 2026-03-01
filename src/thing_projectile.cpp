@@ -28,7 +28,7 @@ static auto thing_projectile_get_delta_from_dt(Gamep g, Thingp t, float dt) -> f
 
   const int   player_speed = thing_speed(player);
   const float t_speed      = thing_speed(t);
-  const auto  tile_speed   = (t_speed / (float) player_speed);
+  const auto  tile_speed   = (t_speed / static_cast< float >(player_speed));
 
   auto delta = fpoint(c * dt * tile_speed, s * dt * tile_speed);
   if ((delta.x == 0) && (delta.y == 0)) {

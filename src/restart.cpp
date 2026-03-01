@@ -36,7 +36,7 @@ void restart(Gamep g, const std::string &restart_arg)
   //
   // Original program name
   //
-  executable     = (char *) g_program_name.c_str();
+  executable     = const_cast< char * >(g_program_name.c_str());
   argv[ argc++ ] = executable;
 
   //

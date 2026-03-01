@@ -130,7 +130,7 @@ auto levels_memory_alloc(Gamep g) -> Levelsp
   // NOTE: if we use "new" here, the initialization is visibly slower.
   // DO NOT USE C++ classes or types
   //
-  v = (Levelsp) MYZALLOC(SIZEOF(*v), "v");
+  v = static_cast< Levelsp >(MYZALLOC(SIZEOF(*v), "v"));
   if (v == nullptr) {
     return nullptr;
   }
@@ -755,8 +755,8 @@ void level_bounds_set(Gamep g, Levelsp v, Levelp l)
   tmp_maxx += clipping_border;
   tmp_maxy += clipping_border;
 
-  tmp_maxx = std::min(tmp_maxx, (int) MAP_WIDTH);
-  tmp_maxy = std::min(tmp_maxy, (int) MAP_HEIGHT);
+  tmp_maxx = std::min(tmp_maxx, static_cast< int >(MAP_WIDTH));
+  tmp_maxy = std::min(tmp_maxy, static_cast< int >(MAP_HEIGHT));
 
   v->minx = tmp_minx;
   v->miny = tmp_miny;

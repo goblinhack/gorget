@@ -65,7 +65,7 @@ auto dir_dotdot(char *s) -> char *
   uint32_t size = 0;
   char    *end  = nullptr;
 
-  size = (uint32_t) strlen(s);
+  size = static_cast< uint32_t >(strlen(s));
   if (size <= 1) {
     return s;
   }

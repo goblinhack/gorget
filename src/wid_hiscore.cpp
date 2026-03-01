@@ -116,7 +116,7 @@ void wid_hiscores_show(Gamep g)
 
   while (h != hiscores->hiscores.end()) {
 
-    if (index >= (int) ARRAY_SIZE(colors)) {
+    if (index >= ARRAY_SIZE(colors)) {
       break;
     }
 

@@ -70,7 +70,7 @@ void pcg32_srandom_r(pcg32_random_t *rng, uint64_t initstate, uint64_t initseq)
 void pcg32_srandom(uint64_t seed, uint64_t seq)
 {
   if (compiler_unused) {
-    LOG("seed %d", (int) seed);
+    LOG("seed %d", static_cast< int >(seed));
   }
   pcg32_srandom_r(&pcg32_global, seed, seq);
 }

@@ -137,8 +137,8 @@ void pixel_to_ascii(Gamep g, int *x, int *y)
 
   my = std::min< float >(my, TERM_HEIGHT - 1);
 
-  *x = (int) mx;
-  *y = (int) my;
+  *x = static_cast< int >(mx);
+  *y = static_cast< int >(my);
 
   // TOPCON("%d,%d", *x, *y);
 }
@@ -408,7 +408,7 @@ void ascii_putf_internal2(int x, int y, color fg, color bg, const std::string &t
     //
     // Use a special char to represent the cursor. A bit of a hack.
     //
-    auto is_cursor = (ch == (char) FONT_CHAR_CURSOR);
+    auto is_cursor = (ch == static_cast< char > FONT_CHAR_CURSOR);
     if ((is_cursor)) [[unlikely]] {
       static uint32_t last;
       static bool     first = 1u;
@@ -1010,13 +1010,13 @@ static void ascii_put_box_(int style, const TileLayers tiles_in, int x1, int y1,
   }
 
   {
-    float const dx = (float) 1.0 / (((float) x2) - ((float) x1) + 1);
-    float const dy = (float) 1.0 / (((float) y2) - ((float) y1) + 1);
+    float const dx = static_cast< float >(1.0) / ((static_cast< float >(x2)) - (static_cast< float >(x1)) + 1);
+    float const dy = static_cast< float >(1.0) / ((static_cast< float >(y2)) - (static_cast< float >(y1)) + 1);
 
     for (auto x = x1; x <= x2; x++) {
       for (auto y = y1; y <= y2; y++) {
-        float const tx = ((float) (x) -x1) * dx;
-        float const ty = ((float) (y) -y1) * dy;
+        float const tx = (static_cast< float >(x) - x1) * dx;
+        float const ty = (static_cast< float >(y) - y1) * dy;
 
         {
           auto depth = TILE_LAYER_BG_0;

@@ -227,7 +227,7 @@ void level_cursor_describe(Gamep g, Levelsp v, Levelp l)
 
   BOTCON_NEW_LINE();
 
-  if (((int) all_things_description.empty()) != 0) {
+  if ((static_cast< int >(all_things_description.empty())) != 0) {
     if (compiler_unused) {
       BOTCON("Nothing here.");
     }
@@ -235,7 +235,7 @@ void level_cursor_describe(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
-  if ((int) all_things_description.size() > UI_BOTCON_WIDTH - 1) {
+  if (static_cast< int >(all_things_description.size()) > UI_BOTCON_WIDTH - 1) {
     BOTCON("Multiple items here.");
     return;
   }

@@ -104,7 +104,7 @@ void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, const spoint &p, 
   }
 
   if ((t_maybe_null != nullptr) && thing_is_jumping(t_maybe_null)) {
-    auto jump_height = (int) ((sin(std::numbers::pi_v< float > * t_maybe_null->thing_dt)) * (float) dh);
+    auto jump_height = static_cast< int >((sin(std::numbers::pi_v< float > * t_maybe_null->thing_dt)) * static_cast< float >(dh));
     tl->y -= jump_height;
     br->y -= jump_height;
   }
@@ -233,14 +233,14 @@ static void thing_display_falling(Gamep g, Levelsp v, Levelp l, const spoint &p,
   TRACE_DEBUG();
 
   int const fall_height = thing_is_falling(t);
-  int const dh          = (int) (((0.5F * ((float) (br.y - tl.y))) / (float) MAX_FALL_TIME_MS) * fall_height);
+  int const dh = static_cast< int >(((0.5F * (static_cast< float >(br.y - tl.y))) / static_cast< float >(MAX_FALL_TIME_MS)) * fall_height);
 
   tl.x += dh;
   tl.y += dh;
   br.x -= dh;
   br.y -= dh;
 
-  auto mid = (tl + br) / (short) 2;
+  auto mid = (tl + br) / static_cast< short >(2);
   blit_flush();
   glPushMatrix();
   glTranslatef(mid.x, mid.y, 0);
@@ -260,7 +260,7 @@ static void thing_display_rotated(Gamep g, Levelsp v, Levelp l, const spoint &p,
 {
   TRACE_DEBUG();
 
-  auto mid = (tl + br) / (short) 2;
+  auto mid = (tl + br) / static_cast< short >(2);
   blit_flush();
   glPushMatrix();
   glTranslatef(mid.x, mid.y, 0);
@@ -368,9 +368,9 @@ void thing_display(Gamep g, Levelsp v, Levelp l, const spoint &p, Tpp tp, Thingp
     //
     if (fbo == FBO_MAP_FG) {
       auto *pixel = &v->light_map.tile[ p.x ][ p.y ].pixels.pixel[ 0 ][ 0 ];
-      fg.r        = pixel->r > 255 ? 255 : (uint8_t) (int) pixel->r;
-      fg.g        = pixel->g > 255 ? 255 : (uint8_t) (int) pixel->g;
-      fg.b        = pixel->b > 255 ? 255 : (uint8_t) (int) pixel->b;
+      fg.r        = pixel->r > 255 ? 255 : static_cast< uint8_t >(static_cast< int >(pixel->r));
+      fg.g        = pixel->g > 255 ? 255 : static_cast< uint8_t >(static_cast< int >(pixel->g));
+      fg.b        = pixel->b > 255 ? 255 : static_cast< uint8_t >(static_cast< int >(pixel->b));
 
       //
       // Too many tiny tiles
@@ -497,9 +497,9 @@ void thing_display(Gamep g, Levelsp v, Levelp l, const spoint &p, Tpp tp, Thingp
     //
     if (thing_is_hit(t_maybe_null) != 0) {
       color outline = RED;
-      int   a       = (int) (((float) thing_is_hit(t_maybe_null) / (float) MAX_HIT_TIME_MS) * 255.0);
-      a             = std::min(a, 255);
-      outline.a     = (uint8_t) a;
+      int   a   = static_cast< int >((static_cast< float >(thing_is_hit(t_maybe_null)) / static_cast< float >(MAX_HIT_TIME_MS)) * 255.0);
+      a         = std::min(a, 255);
+      outline.a = static_cast< uint8_t >(a);
       tile_blit_outline(tile, x1, x2, y1, y2, tl, br, outline);
     }
   } else {

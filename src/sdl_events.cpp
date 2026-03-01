@@ -321,8 +321,8 @@ void sdl_event(Gamep g, SDL_Event *event, bool &processed_mouse_motion_event)
           sdl.wheel_y = -sdl.wheel_y;
         }
 
-        sdl.wheel_x = (int) ((float) sdl.wheel_x * accel);
-        sdl.wheel_y = (int) ((float) sdl.wheel_y * accel);
+        sdl.wheel_x = static_cast< int >(static_cast< float >(sdl.wheel_x) * accel);
+        sdl.wheel_y = static_cast< int >(static_cast< float >(sdl.wheel_y) * accel);
 
         wid_mouse_visible = true;
         sdl.mouse_tick++;
@@ -341,7 +341,7 @@ void sdl_event(Gamep g, SDL_Event *event, bool &processed_mouse_motion_event)
         int const value = event->jaxis.value;
 
         if (sdl.joy_axes == nullptr) {
-          sdl.joy_axes = (int *) MYZALLOC(SIZEOF(int) * sdl.joy_naxes, "joy axes");
+          sdl.joy_axes = static_cast< int * >(MYZALLOC(SIZEOF(int) * sdl.joy_naxes, "joy axes"));
         }
 
         sdl.joy_axes[ axis ] = value;

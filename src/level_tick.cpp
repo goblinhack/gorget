@@ -340,7 +340,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool tick_is
     if (thing_is_projectile(t)) {
       t->thing_dt = v->time_step;
     } else {
-      t->thing_dt += dt * (t_speed / (float) player_speed);
+      t->thing_dt += dt * (t_speed / static_cast< float >(player_speed));
     }
 
     if (tick_is_about_to_end || (t->thing_dt >= 1.0)) {
@@ -644,7 +644,7 @@ static void level_tick_time_step(Gamep g, Levelsp v, Levelp current_level)
   // Calculate the time step, for animation
   //
   v->last_time_step = v->time_step;
-  v->time_step      = ((float) (v->frame - v->frame_begin)) / (float) TICK_DURATION_MS;
+  v->time_step      = (static_cast< float >(v->frame - v->frame_begin)) / static_cast< float >(TICK_DURATION_MS);
 
   IF_DEBUG2
   { //

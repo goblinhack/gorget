@@ -156,7 +156,8 @@
   //
   auto *w = parent->log(g, std::string(tmp));
   if (w != nullptr) {
-    int health_how_much = (int) (((float) thing_health(t) / (float) health_max) * ((float) UI_HEALTH_BAR_STEPS - 1));
+    int health_how_much = static_cast< int >((static_cast< float >(thing_health(t)) / static_cast< float >(health_max))
+                                             * (static_cast< float > UI_HEALTH_BAR_STEPS - 1));
     health_how_much     = std::min(health_how_much, UI_HEALTH_BAR_STEPS - 1);
     health_how_much     = std::max(health_how_much, 0);
     auto icon           = "health_bar." + std::to_string(health_how_much + 1);

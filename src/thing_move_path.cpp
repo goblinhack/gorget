@@ -80,7 +80,7 @@ auto thing_move_path_apply(Gamep g, Levelsp v, Levelp l, Thingp t, std::vector< 
 
   IF_DEBUG2
   {
-    THING_DBG(t, "apply path size: %d", (int) move_path.size());
+    THING_DBG(t, "apply path size: %d", static_cast< int >(move_path.size()));
     for (auto p : move_path) {
       THING_DBG(t, " - path: %d,%d", p.x, p.y);
     }

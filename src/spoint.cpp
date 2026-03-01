@@ -38,13 +38,13 @@ void spoint::operator/=(short b)
   y /= b;
 }
 
-auto spoint::length() const -> float { return ((float) sqrt((x * x) + (y * y))); }
+auto spoint::length() const -> float { return (static_cast< float >(sqrt((x * x) + (y * y)))); }
 
 void spoint::unit()
 {
-  short const len = (int) sqrt((x * x) + (y * y));
+  short const len = static_cast< int >(sqrt((x * x) + (y * y)));
   x /= len;
   y /= len;
 }
 
-auto distance(const spoint a, const spoint b) -> float { return (float) DISTANCEf((float) a.x, (float) a.y, (float) b.x, (float) b.y); }
+auto distance(const spoint a, const spoint b) -> float { return DISTANCEf((float) a.x, (float) a.y, (float) b.x, (float) b.y); }

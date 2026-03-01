@@ -115,6 +115,7 @@ tidy:
 			misc-confusable-identifiers,\
 			misc-const-correctness,\
 			misc-definitions-in-headers,\
+			google-*,\
 			misc-misleading-bidirectional,\
 			misc-misleading-identifier,\
 			misc-misplaced-const,\

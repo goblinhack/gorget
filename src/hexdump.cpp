@@ -26,7 +26,7 @@ void hexdump(const unsigned char *addr, size_t len)
   int           skipping_blanks         = 0;
   unsigned char empty[ HEX_DUMP_WIDTH ] = {0};
   unsigned char buf[ HEX_DUMP_WIDTH + 1 ];
-  auto         *pc = (unsigned char *) addr;
+  auto         *pc = const_cast< unsigned char * >(addr);
   size_t        i  = 0;
   unsigned int  x  = 0;
 
@@ -65,7 +65,7 @@ void hexdump(const unsigned char *addr, size_t len)
 
     skipping_blanks = 0;
 
-    std::cout << " " << std::setfill('0') << std::setw(2) << std::hex << (int) pc[ i ];
+    std::cout << " " << std::setfill('0') << std::setw(2) << std::hex << static_cast< int >(pc[ i ]);
 
     if ((pc[ i ] < ' ') || (pc[ i ] > '~')) {
       buf[ i % HEX_DUMP_WIDTH ] = '.';

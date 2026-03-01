@@ -322,7 +322,7 @@ static auto wid_cfg_gfx_find_closest_resolution(Gamep g) -> std::string
   for (int i = 0; std::cmp_less(i, cands.size()); ++i) {
     const auto &cand = cands[ i ];
     if (current_res == cand) {
-      if (i < (int) cands.size() - 1) {
+      if (i < static_cast< int >(cands.size()) - 1) {
         chosen = cands[ i + 1 ];
         LOG(" - candidate: %s (current)", cand.c_str());
       } else {

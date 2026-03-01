@@ -540,7 +540,7 @@ static auto room_rotate(Gamep g, class Room *r) -> class Room *
   n->width     = r->height;
   n->height    = r->width;
   n->flags     = r->flags;
-  n->data      = (char *) MYZALLOC(r->width * r->height, "room data");
+  n->data      = static_cast< char * >(MYZALLOC(r->width * r->height, "room data"));
 
   for (int y = 0; y < r->height; y++) {
     for (int x = 0; x < r->width; x++) {
@@ -573,7 +573,7 @@ static auto room_flip_horiz(Gamep g, class Room *r) -> class Room *
   n->width     = r->width;
   n->height    = r->height;
   n->flags     = r->flags;
-  n->data      = (char *) MYZALLOC(r->width * r->height, "room data");
+  n->data      = static_cast< char * >(MYZALLOC(r->width * r->height, "room data"));
 
   for (int y = 0; y < r->height; y++) {
     for (int x = 0; x < r->width; x++) {
@@ -622,7 +622,7 @@ void room_add(Gamep g, int chance, int room_flags, const char *file, int line, .
       break;
     }
 
-    int const this_line_width = (int) strlen(room_line);
+    int const this_line_width = static_cast< int >(strlen(room_line));
 
     if (room_width == 0) {
       //
@@ -741,7 +741,7 @@ void room_add(Gamep g, int chance, int room_flags, const char *file, int line, .
   r->width     = room_width;
   r->height    = room_height;
   r->flags     = room_flags;
-  r->data      = (char *) MYZALLOC(room_width * room_height, "room data");
+  r->data      = static_cast< char * >(MYZALLOC(room_width * room_height, "room data"));
 
   //
   // Keep track of exits so we can sanity check the edges of the room
@@ -892,7 +892,7 @@ void rooms_dump(Gamep g)
 {
   TRACE();
 
-  for (auto room_type = (int) ROOM_TYPE_FIRST; room_type < (int) ROOM_TYPE_MAX; room_type++) {
+  for (auto room_type = static_cast< int >(ROOM_TYPE_FIRST); room_type < static_cast< int >(ROOM_TYPE_MAX); room_type++) {
     for (auto *r : room_all[ room_type ]) {
       room_dump(r);
     }
@@ -1077,7 +1077,7 @@ static void room_place_at(class LevelGen *l, class Room *r, spoint at)
   }
 
   l->rooms_placed[ r ] = true;
-  l->info.room_count   = (int) l->rooms_placed.size();
+  l->info.room_count   = static_cast< int >(l->rooms_placed.size());
 }
 
 //
@@ -1087,7 +1087,7 @@ void rooms_fini(Gamep g)
 {
   TRACE();
 
-  for (auto room_type = (int) ROOM_TYPE_FIRST; room_type < (int) ROOM_TYPE_MAX; room_type++) {
+  for (auto room_type = static_cast< int >(ROOM_TYPE_FIRST); room_type < static_cast< int >(ROOM_TYPE_MAX); room_type++) {
     for (auto *r : room_all[ room_type ]) {
       delete r;
     }
@@ -1132,7 +1132,7 @@ static auto fragment_alt_rotate(class FragmentAlt *r) -> class FragmentAlt *
   n->line   = r->line;
   n->width  = r->height;
   n->height = r->width;
-  n->data   = (char *) MYZALLOC(r->width * r->height, "fragment_alt data");
+  n->data   = static_cast< char * >(MYZALLOC(r->width * r->height, "fragment_alt data"));
 
   for (int y = 0; y < r->height; y++) {
     for (int x = 0; x < r->width; x++) {
@@ -1162,7 +1162,7 @@ static auto fragment_alt_flip_horiz(class FragmentAlt *r) -> class FragmentAlt *
   n->line   = r->line;
   n->width  = r->width;
   n->height = r->height;
-  n->data   = (char *) MYZALLOC(r->width * r->height, "fragment_alt data");
+  n->data   = static_cast< char * >(MYZALLOC(r->width * r->height, "fragment_alt data"));
 
   for (int y = 0; y < r->height; y++) {
     for (int x = 0; x < r->width; x++) {
@@ -1197,7 +1197,7 @@ auto fragment_alt_add(Gamep g, int chance, const char *file, int line, ...) -> b
       break;
     }
 
-    int const this_line_width = (int) strlen(fragment_alt_line);
+    int const this_line_width = static_cast< int >(strlen(fragment_alt_line));
 
     if (fragment_alt_width == 0) {
       //
@@ -1294,7 +1294,7 @@ auto fragment_alt_add(Gamep g, int chance, const char *file, int line, ...) -> b
   f->line   = line;
   f->width  = fragment_alt_width;
   f->height = fragment_alt_height;
-  f->data   = (char *) MYZALLOC(fragment_alt_width * fragment_alt_height, "fragment_alt data");
+  f->data   = static_cast< char * >(MYZALLOC(fragment_alt_width * fragment_alt_height, "fragment_alt data"));
 
   //
   // Now read the fragment_alt again
@@ -1437,7 +1437,7 @@ static auto fragment_rotate(class Fragment *f) -> class Fragment *
   n->line   = f->line;
   n->width  = f->height;
   n->height = f->width;
-  n->data   = (char *) MYZALLOC(f->width * f->height, "fragment data");
+  n->data   = static_cast< char * >(MYZALLOC(f->width * f->height, "fragment data"));
 
   for (int y = 0; y < f->height; y++) {
     for (int x = 0; x < f->width; x++) {
@@ -1467,7 +1467,7 @@ static auto fragment_flip_horiz(class Fragment *f) -> class Fragment *
   n->line   = f->line;
   n->width  = f->width;
   n->height = f->height;
-  n->data   = (char *) MYZALLOC(f->width * f->height, "fragment data");
+  n->data   = static_cast< char * >(MYZALLOC(f->width * f->height, "fragment data"));
 
   for (int y = 0; y < f->height; y++) {
     for (int x = 0; x < f->width; x++) {
@@ -1502,7 +1502,7 @@ auto fragment_add(Gamep g, int chance, const char *file, int line, ...) -> bool
       break;
     }
 
-    int const this_line_width = (int) strlen(fragment_line);
+    int const this_line_width = static_cast< int >(strlen(fragment_line));
 
     if (fragment_width == 0) {
       //
@@ -1600,7 +1600,7 @@ auto fragment_add(Gamep g, int chance, const char *file, int line, ...) -> bool
   f->line   = line;
   f->width  = fragment_width;
   f->height = fragment_height;
-  f->data   = (char *) MYZALLOC(fragment_width * fragment_height, "fragment data");
+  f->data   = static_cast< char * >(MYZALLOC(fragment_width * fragment_height, "fragment data"));
 
   //
   // Now read the fragment again
@@ -1860,7 +1860,7 @@ void level_fixed_add(Gamep g, int chance, LevelType level_type, const std::strin
       break;
     }
 
-    int const this_line_width = (int) strlen(level_line);
+    int const this_line_width = static_cast< int >(strlen(level_line));
 
     if (level_width == 0) {
       //
@@ -1981,13 +1981,13 @@ void level_fixed_add(Gamep g, int chance, LevelType level_type, const std::strin
   l->width      = level_width;
   l->height     = level_height;
   l->overrides  = overrides;
-  l->data       = (char *) MYZALLOC(MAP_WIDTH * MAP_HEIGHT, "level data");
+  l->data       = static_cast< char * >(MYZALLOC(MAP_WIDTH * MAP_HEIGHT, "level data"));
 
   //
   // Center the level if smaller
   //
-  auto pad_w = (int) (floor((MAP_WIDTH - level_width) / 2));
-  auto pad_h = (int) (floor((MAP_HEIGHT - level_height) / 2));
+  auto pad_w = static_cast< int >(floor((MAP_WIDTH - level_width) / 2));
+  auto pad_h = static_cast< int >(floor((MAP_HEIGHT - level_height) / 2));
 
   //
   // Now read the level again
@@ -2023,7 +2023,7 @@ void levels_fini(Gamep g)
 {
   TRACE();
 
-  for (auto level_type = (int) LEVEL_TYPE_FIRST; level_type < (int) LEVEL_TYPE_MAX; level_type++) {
+  for (auto level_type = static_cast< int >(LEVEL_TYPE_FIRST); level_type < static_cast< int >(LEVEL_TYPE_MAX); level_type++) {
     for (auto *l : level_fixed_all[ level_type ]) {
       delete l;
     }
@@ -2055,7 +2055,7 @@ static auto level_fixed_find_by_name(const std::string &alias, LevelNum level_nu
   //
   // Add the level number to allow specification of specific depths
   //
-  auto alt = alias + "." + std::to_string((int) level_num + 1);
+  auto alt = alias + "." + std::to_string(static_cast< int >(level_num) + 1);
   if (level_alias_all.contains(alt)) {
     return level_alias_all[ alt ];
   }
@@ -2456,8 +2456,8 @@ static void level_gen_create_remaining_rooms(Gamep g, LevelGen *l)
   //
   while (std::cmp_less(l->rooms_placed.size(), l->max_room_count)) {
     if (l->debug) [[unlikely]] {
-      LOG("rooms placed %d (max %d) attempts %d doors-tried %d doors-not-tried %d", (int) l->rooms_placed.size(), l->max_room_count,
-          attempts, (int) l->doors_walked.size(), (int) l->doors_not_explored.size());
+      LOG("rooms placed %d (max %d) attempts %d doors-tried %d doors-not-tried %d", static_cast< int >(l->rooms_placed.size()),
+          l->max_room_count, attempts, static_cast< int >(l->doors_walked.size()), static_cast< int >(l->doors_not_explored.size()));
     }
 
     //
@@ -2473,7 +2473,7 @@ static void level_gen_create_remaining_rooms(Gamep g, LevelGen *l)
     //
     // Ran out of doors to try?
     //
-    if (((int) l->doors_walked.size()) != 0) {
+    if ((static_cast< int >(l->doors_walked.size())) != 0) {
       if (l->doors_not_explored.empty()) {
         if (l->debug) [[unlikely]] {
           LOG("have tried all doors");

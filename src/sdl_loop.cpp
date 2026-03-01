@@ -236,9 +236,9 @@ void sdl_loop(Gamep g)
         fps_ts_now          = time_ms();
         uint32_t const diff = fps_ts_now - fps_ts_begin;
         if (diff != 0) {
-          float const fps = (float) (frames * ONESEC) / (float) diff;
+          float const fps = static_cast< float >(frames * ONESEC) / static_cast< float >(diff);
           CON("FPS %f", fps);
-          game_fps_value_set(g, (int) fps);
+          game_fps_value_set(g, static_cast< int >(fps));
         } else {
           CON("FPS calculating...");
           game_fps_value_set(g, 0);

@@ -171,7 +171,7 @@ static void level_assign_tiles_at(Gamep g, Levelsp v, Levelp l, const spoint &p)
         CROAK("no block type found for %s", tile_name.c_str());
       }
 
-      auto which = tile_name + "." + is_join_enum_to_string((is_join_enum) block_type);
+      auto which = tile_name + "." + is_join_enum_to_string(static_cast< is_join_enum >(block_type));
 
       if (tp_is_animated(tp)) {
         which += ".0";
@@ -180,7 +180,7 @@ static void level_assign_tiles_at(Gamep g, Levelsp v, Levelp l, const spoint &p)
       auto *tile = tile_find_mand(which);
       if (tile != nullptr) {
         t->tile_index        = tile_global_index(tile);
-        t->anim_type         = (ThingAnim) block_type;
+        t->anim_type         = static_cast< ThingAnim >(block_type);
         t->anim_index        = PCG_RANDOM_RANGE_INCLUSIVE(0, tp_tiles_size(tp, t->anim_type) - 1);
         t->anim_ms_remaining = PCG_RANDOM_RANGE_INCLUSIVE(0, tile_delay_ms(tile));
       }

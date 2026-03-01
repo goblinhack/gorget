@@ -284,7 +284,7 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
       auto *w = wid_new_square_button(g, wid_inventory_window, "Key");
 
       std::string s;
-      s += (char) ('a' + _n_);
+      s += static_cast< char >('a' + _n_);
       s += ')';
 
       spoint const tl(3, y_at);

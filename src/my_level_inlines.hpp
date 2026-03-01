@@ -7,7 +7,10 @@
 
 #include "my_level.hpp"
 
-static inline auto is_oob(fpoint p) -> bool { return (p.x < 0) || (p.y < 0) || (p.x >= (float) MAP_WIDTH) || (p.y >= (float) MAP_HEIGHT); }
+static inline auto is_oob(fpoint p) -> bool
+{
+  return (p.x < 0) || (p.y < 0) || (p.x >= static_cast< float >(MAP_WIDTH)) || (p.y >= static_cast< float >(MAP_HEIGHT));
+}
 static inline auto is_oob(spoint p) -> bool { return (p.x < 0) || (p.y < 0) || (p.x >= MAP_WIDTH) || (p.y >= MAP_HEIGHT); }
 static inline auto is_oob(int x, int y) -> bool { return (x < 0) || (y < 0) || (x >= MAP_WIDTH) || (y >= MAP_HEIGHT); }
 

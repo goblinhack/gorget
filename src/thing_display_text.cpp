@@ -28,8 +28,8 @@ void thing_blit_text(Gamep g, Levelsp v, Levelp l, spoint tl, spoint br, std::st
   auto h  = br.y - tl.y;
   auto oh = h;
 
-  w = (int) (((float) w) / (float) POPUP_TEXT_SCALE_ACROSS);
-  h = (int) (((float) h) / (float) POPUP_TEXT_SCALE_DOWN);
+  w = static_cast< int >((static_cast< float >(w)) / static_cast< float >(POPUP_TEXT_SCALE_ACROSS));
+  h = static_cast< int >((static_cast< float >(h)) / static_cast< float >(POPUP_TEXT_SCALE_DOWN));
 
   auto pix_w = w * len;
   tl.x -= pix_w / 2;

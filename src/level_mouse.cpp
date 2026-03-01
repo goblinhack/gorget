@@ -59,11 +59,11 @@ void level_mouse_position_get(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
-  float const scale_x = (float) map_pix_width / (float) game_map_fbo_width_get(g);
-  float const scale_y = (float) map_pix_height / (float) game_map_fbo_height_get(g);
+  float const scale_x = static_cast< float >(map_pix_width) / static_cast< float >(game_map_fbo_width_get(g));
+  float const scale_y = static_cast< float >(map_pix_height) / static_cast< float >(game_map_fbo_height_get(g));
 
-  map_mouse_x = (int) ((float) map_mouse_x / scale_x);
-  map_mouse_y = (int) ((float) map_mouse_y / scale_y);
+  map_mouse_x = static_cast< int >(static_cast< float >(map_mouse_x) / scale_x);
+  map_mouse_y = static_cast< int >(static_cast< float >(map_mouse_y) / scale_y);
 
   map_mouse_x += v->pixel_map_at.x;
   map_mouse_y += v->pixel_map_at.y;

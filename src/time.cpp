@@ -104,7 +104,7 @@ auto time_have_x_hundredths_passed_since(ts_t val, ts_t since) -> bool
   //
   ts_t const delay = time_now - since;
 
-  return (ts_t) (delay / 10) > val;
+  return static_cast< ts_t >(delay / 10) > val;
 }
 
 auto time_have_x_ms_passed_since(ts_t val, ts_t since) -> bool
@@ -128,7 +128,7 @@ auto time_have_x_tenths_passed_since(ts_t val, ts_t since) -> bool
   //
   ts_t const delay = time_now - since;
 
-  return (ts_t) (delay / 100) >= val;
+  return static_cast< ts_t >(delay / 100) >= val;
 }
 
 auto time_have_x_secs_passed_since(ts_t val, ts_t since) -> bool
@@ -140,7 +140,7 @@ auto time_have_x_secs_passed_since(ts_t val, ts_t since) -> bool
   //
   ts_t const delay = time_now - since;
 
-  return (ts_t) (delay / ONESEC) >= val;
+  return static_cast< ts_t >(delay / ONESEC) >= val;
 }
 
 void get_timestamp(char *buf, int len)

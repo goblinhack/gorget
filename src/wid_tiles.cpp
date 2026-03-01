@@ -76,10 +76,10 @@ auto wid_tiles_load(const std::string &name, float scale) -> wid_tilesp
   float const tex_w  = tex_get_width(tex);
   float const tex_h  = tex_get_height(tex);
 
-  t->across = (int) (tex_w / tile_w);
-  t->down   = (int) (tex_h / tile_h);
-  t->tile_w = (int) tile_w;
-  t->tile_h = (int) tile_h;
+  t->across = static_cast< int >(tex_w / tile_w);
+  t->down   = static_cast< int >(tex_h / tile_h);
+  t->tile_w = static_cast< int >(tile_w);
+  t->tile_h = static_cast< int >(tile_h);
   t->scale  = scale;
 
   int i = 0;

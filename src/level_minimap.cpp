@@ -163,7 +163,7 @@ static void level_minimap_world_update_rotated(Gamep g, Levelsp v, Levelp l)
       float const ox = w / 2;
       float const oy = h / 2;
       glTranslatef(ox, oy, 0);
-      glRotatef((float) -135, 0.0F, 0.0F, 1.0F);
+      glRotatef(static_cast< float >(-135), 0.0F, 0.0F, 1.0F);
       glTranslatef(-ox, -oy, 0);
 
       //
@@ -171,7 +171,7 @@ static void level_minimap_world_update_rotated(Gamep g, Levelsp v, Levelp l)
       //
       // As we map this into a widget that is composed of text chars, it ends up slightly vertically stretched
       //
-      int const shrink = (int) ((float) w / 6.6); // hack hack
+      int const shrink = static_cast< int >(static_cast< float >(w) / 6.6); // hack hack
       blit_fbo(g, FBO_MINIMAP_WORLD, 0 + shrink, 0 + shrink, w - shrink, h - shrink);
     }
     glPopMatrix();

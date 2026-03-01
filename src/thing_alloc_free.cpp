@@ -194,7 +194,7 @@ static auto thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, ThingIdPacked i
   //
   // Zero the thing out. TAKE CARE not to zero tp_id
   //
-  memset((char *) t + SIZEOF(t->tp_id), 0, SIZEOF(*t) - SIZEOF(t->tp_id));
+  memset(reinterpret_cast< char * >(t) + SIZEOF(t->tp_id), 0, SIZEOF(*t) - SIZEOF(t->tp_id));
 
   //
   // Create the final ID with some rando entropy

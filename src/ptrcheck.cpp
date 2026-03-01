@@ -183,7 +183,7 @@ static auto ptr2hash(hash_t *hash_table, void *ptr) -> hash_elem_t **
   //
   // Knock lower 2 bits off of pointer - these are always 0.
   //
-  slot = (int) ((((uintptr_t) (ptr)) >> 2) % hash_table->hash_size);
+  slot = static_cast< int >((((uintptr_t) (ptr)) >> 2) % hash_table->hash_size);
 
   return &hash_table->elements[ slot ];
 }
@@ -195,11 +195,11 @@ static auto hash_init(int hash_size) -> hash_t *
 {
   hash_t *hash_table = nullptr;
 
-  hash_table = (__typeof__(hash_table)) local_zalloc(SIZEOF(hash_t));
+  hash_table = static_cast< __typeof__(hash_table) >(local_zalloc(SIZEOF(hash_t)));
 
   hash_table->hash_size = hash_size;
 
-  hash_table->elements = (__typeof__(hash_table->elements)) local_zalloc(hash_size * SIZEOF(hash_elem_t *));
+  hash_table->elements = static_cast< __typeof__(hash_table->elements) >(local_zalloc(hash_size * SIZEOF(hash_elem_t *)));
 
   return hash_table;
 }
@@ -239,7 +239,7 @@ static void hash_add(hash_t *hash_table, Ptrcheck *pc)
     return;
   }
 
-  elem       = (__typeof__(elem)) local_zalloc(SIZEOF(*elem));
+  elem       = static_cast< __typeof__(elem) >(local_zalloc(SIZEOF(*elem)));
   elem->pc   = pc;
   elem->next = *slot;
   *slot      = elem;
@@ -313,7 +313,7 @@ static auto ptrcheck_describe_pointer(int mtype, const void *ptr) -> Ptrcheck *
   //
   // Currently active pointer?
   //
-  auto *elem = hash_find(ptrcheck_hash[ mtype ], (void *) ptr);
+  auto *elem = hash_find(ptrcheck_hash[ mtype ], const_cast< void * >(ptr));
   if (elem != nullptr) {
     auto *pc = elem->pc;
 
@@ -429,7 +429,7 @@ static auto ptrcheck_verify_pointer(int mtype, const void *ptr, const char *func
   //
   // Check the robust handle is valid.
   //
-  e = hash_find(ptrcheck_hash[ mtype ], (void *) ptr);
+  e = hash_find(ptrcheck_hash[ mtype ], const_cast< void * >(ptr));
   if (e != nullptr) {
     pc = e->pc;
 
@@ -519,7 +519,7 @@ static auto ptrcheck_alloc_(int mtype, const void *ptr, const char *what, int si
     ptrcheck_hash[ mtype ] = hash_init(1046527 /* prime */);
 
     if (ptrcheck_hash[ mtype ] == nullptr) {
-      return (void *) ptr;
+      return const_cast< void * >(ptr);
     }
 
     //
@@ -533,10 +533,10 @@ static auto ptrcheck_alloc_(int mtype, const void *ptr, const char *what, int si
   //
   // Missing an earlier free?
   //
-  if (hash_find(ptrcheck_hash[ mtype ], (void *) ptr) != nullptr) {
+  if (hash_find(ptrcheck_hash[ mtype ], const_cast< void * >(ptr)) != nullptr) {
     ERR("Pointer %p already exists and attempting to add again", ptr);
     ptrcheck_describe_pointer(mtype, ptr);
-    return (void *) ptr;
+    return const_cast< void * >(ptr);
   }
 
   //
@@ -547,7 +547,7 @@ static auto ptrcheck_alloc_(int mtype, const void *ptr, const char *what, int si
   //
   // Populate the data block.
   //
-  pc->ptr  = (void *) ptr;
+  pc->ptr  = const_cast< void * >(ptr);
   pc->what = what;
   pc->size = size;
 
@@ -564,7 +564,7 @@ static auto ptrcheck_alloc_(int mtype, const void *ptr, const char *what, int si
   //
   hash_add(ptrcheck_hash[ mtype ], pc);
 
-  return (void *) ptr;
+  return const_cast< void * >(ptr);
 }
 
 auto ptrcheck_alloc(int mtype, const void *ptr, const char *what, int size, const char *func, const char *file, int line) -> void *

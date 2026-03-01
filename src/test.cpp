@@ -247,7 +247,7 @@ void tests_run(Gamep g)
       result = t->callback(g, t);
     }
     auto elapsed  = time_ms() - started;
-    auto how_long = std::format("(took {:.2f} secs, {} ms)", (float) elapsed / 1000.0, elapsed);
+    auto how_long = std::format("(took {:.2f} secs, {} ms)", static_cast< float >(elapsed) / 1000.0, elapsed);
 
     //
     // Print the timestamp

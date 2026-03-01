@@ -40,7 +40,8 @@ static void level_light_per_pixel(const FovContext &ctx, const spoint &p)
         continue;
       }
 
-      auto light_fade_index = (uint8_t) (int) ((dist_in_pixels / ctx.light_strength_in_pixels) * (float) MAP_WIDTH);
+      auto light_fade_index
+          = static_cast< uint8_t >(static_cast< int >((dist_in_pixels / ctx.light_strength_in_pixels) * static_cast< float >(MAP_WIDTH)));
 
 #ifdef DEBUG_BUILD
       //

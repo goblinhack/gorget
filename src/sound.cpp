@@ -177,7 +177,7 @@ auto sound_find(const std::string &alias) -> bool
     return false;
   }
 
-  float volume = s->volume * scale * (((float) game_sound_volume_get(g)) / ((float) MIX_MAX_VOLUME));
+  float volume = s->volume * scale * ((static_cast< float >(game_sound_volume_get(g))) / (static_cast< float >(MIX_MAX_VOLUME)));
   volume *= MIX_MAX_VOLUME;
 
   if (volume <= 0) {
@@ -199,7 +199,7 @@ auto sound_find(const std::string &alias) -> bool
     return true;
   }
 
-  Mix_VolumeChunk(s->chunk, (int) volume);
+  Mix_VolumeChunk(s->chunk, static_cast< int >(volume));
 
   auto chan = Mix_PlayChannel(-1, s->chunk, 0 /* loops */);
   if (chan == -1) {
@@ -208,10 +208,10 @@ auto sound_find(const std::string &alias) -> bool
 
   Playing p;
   p.alias                 = s->alias;
-  p.volume                = (int) volume;
+  p.volume                = static_cast< int >(volume);
   already_playing[ chan ] = p;
 
-  DBG("Play sound %s volume %d channel %d", alias.c_str(), (int) volume, chan);
+  DBG("Play sound %s volume %d channel %d", alias.c_str(), static_cast< int >(volume), chan);
 
   return false;
 }

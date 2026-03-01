@@ -366,10 +366,12 @@ static auto tex_create_masks_from_surface(SDL_Surface *src, const std::string &f
       //
       if (col_orig.a > 0) {
         auto          col_monochrome = col_orig;
-        uint8_t const avg            = ((int) col_monochrome.r + (int) col_monochrome.g + (int) col_monochrome.b) / UI_LIGHT_BACKGROUND;
-        col_monochrome.r             = avg;
-        col_monochrome.g             = avg;
-        col_monochrome.b             = avg;
+        uint8_t const avg
+            = (static_cast< int >(col_monochrome.r) + static_cast< int >(col_monochrome.g) + static_cast< int >(col_monochrome.b))
+            / UI_LIGHT_BACKGROUND;
+        col_monochrome.r = avg;
+        col_monochrome.g = avg;
+        col_monochrome.b = avg;
         col_monochrome.r /= UI_LIGHT_BACKGROUND;
         col_monochrome.g /= UI_LIGHT_BACKGROUND;
 

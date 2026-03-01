@@ -139,7 +139,7 @@ static void level_raycast_precalculate(Gamep g)
         auto c = player_light_fade_map[ (MAP_WIDTH * y) + x ];
         if (c == 'x') {
           if (player_light_fade[ x ] == 0) {
-            player_light_fade[ x ] = 1.0F - ((float) y / (float) MAP_HEIGHT);
+            player_light_fade[ x ] = 1.0F - (static_cast< float >(y) / static_cast< float >(MAP_HEIGHT));
           }
         }
       }
@@ -222,13 +222,14 @@ void Raycast::ray_lengths_precalculate(Gamep g, Levelsp v, Levelp l)
 {
   TRACE();
 
-  float const dr = (float) RAD_360 / ((float) LIGHT_MAX_RAYS_MAX);
+  float const dr = static_cast< float > RAD_360 / (static_cast< float >(LIGHT_MAX_RAYS_MAX));
   for (int i = 0; i < LIGHT_MAX_RAYS_MAX; i++) {
     float cosr = 0;
     float sinr = 0;
     SINCOSF(dr * (float) i, &sinr, &cosr);
     ray_pixel_line_draw(i, spoint(0, 0),
-                        spoint((int) ((float) ray_max_length_in_pixels * cosr), (int) ((float) ray_max_length_in_pixels * sinr)));
+                        spoint(static_cast< int >(static_cast< float >(ray_max_length_in_pixels) * cosr),
+                               static_cast< int >(static_cast< float >(ray_max_length_in_pixels) * sinr)));
   }
 }
 
@@ -379,7 +380,7 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
       // Once we hit an obstacle to vision, how far do we allow the ray of light to penetrate
       //
       auto obs_to_vision_start_distance       = ray_pixel->distance;
-      auto obs_to_vision_penetration_distance = (obs_to_vision_start_distance + (float) TILE_WIDTH) - 2;
+      auto obs_to_vision_penetration_distance = (obs_to_vision_start_distance + static_cast< float >(TILE_WIDTH)) - 2;
 
       //
       // Keep track of the type of object we hit

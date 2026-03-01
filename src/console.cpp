@@ -51,7 +51,7 @@ static void term_puts_fgbg(unsigned char fg, unsigned char bg)
     return;
   }
 
-  fputs((char *) data[ ((bg & 7) * 8) + (fg & 7) ], stdout);
+  fputs(const_cast< char * >(data[ ((bg & 7) * 8) + (fg & 7) ]), stdout);
 }
 
 static auto term_color_string_to_index(const char **s) -> term_color

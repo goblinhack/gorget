@@ -63,12 +63,12 @@ void log_(const char *fmt, va_list args)
   int len  = 0;
 
   get_timestamp(buf, MAXLONGSTR);
-  len = (int) strlen(buf);
+  len = static_cast< int >(strlen(buf));
 
   IF_DEBUG
   {
     snprintf(buf + len, MAXLONGSTR - len, "%s%*s", "", g_callframes_indent, "");
-    len = (int) strlen(buf);
+    len = static_cast< int >(strlen(buf));
   }
 
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
@@ -95,7 +95,7 @@ static void warn_(const char *fmt, va_list args)
   int len  = 0;
 
   get_timestamp(buf, MAXLONGSTR);
-  len = (int) strlen(buf);
+  len = static_cast< int >(strlen(buf));
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
   putf(MY_STDOUT, buf);
@@ -123,7 +123,7 @@ static void con_(const char *fmt, va_list args)
   int len  = 0;
 
   get_timestamp(buf, MAXLONGSTR);
-  len = (int) strlen(buf);
+  len = static_cast< int >(strlen(buf));
   if (fmt != nullptr) {
     vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
   }
@@ -176,11 +176,11 @@ static void croak_handle(bool clean, const char *fmt, va_list args)
   int len  = 0;
 
   get_timestamp(buf, MAXLONGSTR);
-  len = (int) strlen(buf);
+  len = static_cast< int >(strlen(buf));
 
   if (! g_opt_test_current.empty()) {
     snprintf(buf + len, MAXLONGSTR - len, "Test %s: ", g_opt_test_current.c_str());
-    len = (int) strlen(buf);
+    len = static_cast< int >(strlen(buf));
   }
 
   if (clean) {
@@ -188,7 +188,7 @@ static void croak_handle(bool clean, const char *fmt, va_list args)
   } else {
     snprintf(buf + len, MAXLONGSTR - len, "FATAL ERROR: ");
   }
-  len = (int) strlen(buf);
+  len = static_cast< int >(strlen(buf));
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
   if (clean) {
@@ -227,15 +227,15 @@ static void err_handle(Gamep g, const char *fmt, va_list args)
   int len  = 0;
 
   get_timestamp(buf, MAXLONGSTR);
-  len = (int) strlen(buf);
+  len = static_cast< int >(strlen(buf));
 
   if (! g_opt_test_current.empty()) {
     snprintf(buf + len, MAXLONGSTR - len, "Test %s: ", g_opt_test_current.c_str());
-    len = (int) strlen(buf);
+    len = static_cast< int >(strlen(buf));
   }
 
   snprintf(buf + len, MAXLONGSTR - len, "ERROR: ");
-  len = (int) strlen(buf);
+  len = static_cast< int >(strlen(buf));
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
   error_message(g, buf);
@@ -290,7 +290,7 @@ static void topcon_(const char *fmt, va_list args)
 
   get_timestamp(ts, MAXLONGSTR);
   snprintf(buf, SIZEOF(buf) - 1, "%s", ts);
-  len = (int) strlen(buf);
+  len = static_cast< int >(strlen(buf));
   if (fmt != nullptr) {
     vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
   }

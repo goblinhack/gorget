@@ -114,11 +114,11 @@ auto strsub_(const char *in, const char *look_for, const char *replace_with, con
     return buf;
   }
 
-  oldlen = (uint32_t) strlen(look_for);
-  newlen = (uint32_t) strlen(replace_with);
+  oldlen = static_cast< uint32_t >(strlen(look_for));
+  newlen = static_cast< uint32_t >(strlen(replace_with));
 
-  len = (uint32_t) strlen(in) - oldlen + newlen;
-  buf = (__typeof__(buf)) MYZALLOC_(len + SIZEOF((char) '\0'), what, file, func, line);
+  len = static_cast< uint32_t >(strlen(in)) - oldlen + newlen;
+  buf = static_cast< __typeof__(buf) >(MYZALLOC_(len + SIZEOF((char) '\0'), what, file, func, line));
   if (buf == nullptr) {
     return nullptr;
   }
@@ -153,9 +153,9 @@ auto strappend(const char *in, const char *append) -> char *
     return nullptr;
   }
 
-  newlen = (uint32_t) strlen(append);
-  len    = (uint32_t) strlen(in) + newlen;
-  buf    = (__typeof__(buf)) MYZALLOC(len + SIZEOF((char) '\0'), "strappend");
+  newlen = static_cast< uint32_t >(strlen(append));
+  len    = static_cast< uint32_t >(strlen(in)) + newlen;
+  buf    = static_cast< __typeof__(buf) >(MYZALLOC(len + SIZEOF((char) '\0'), "strappend"));
   if (buf == nullptr) {
     return nullptr;
   }
@@ -182,9 +182,9 @@ auto strprepend(const char *in, const char *prepend) -> char *
     return nullptr;
   }
 
-  newlen = (uint32_t) strlen(prepend);
-  len    = (uint32_t) strlen(in) + newlen;
-  buf    = (__typeof__(buf)) MYZALLOC(len + SIZEOF((char) '\0'), "strprepend");
+  newlen = static_cast< uint32_t >(strlen(prepend));
+  len    = static_cast< uint32_t >(strlen(in)) + newlen;
+  buf    = static_cast< __typeof__(buf) >(MYZALLOC(len + SIZEOF((char) '\0'), "strprepend"));
   if (buf == nullptr) {
     return nullptr;
   }
@@ -210,7 +210,7 @@ auto strcommon(const char *a, const char *b) -> uint32_t
     b++;
   }
 
-  return (uint32_t) (a - o);
+  return static_cast< uint32_t >(a - o);
 }
 
 /*
@@ -222,7 +222,7 @@ void strchop(char *s)
   uint32_t size = 0;
   char    *end  = nullptr;
 
-  size = (uint32_t) strlen(s);
+  size = static_cast< uint32_t >(strlen(s));
   if (! static_cast< bool >(size)) {
     return;
   }
@@ -244,7 +244,7 @@ void strchopc(char *s, char c)
   uint32_t size = 0;
   char    *end  = nullptr;
 
-  size = (uint32_t) strlen(s);
+  size = static_cast< uint32_t >(strlen(s));
   if (! static_cast< bool >(size)) {
     return;
   }
@@ -437,18 +437,18 @@ auto my_strcasestr(const char *s, const char *find) -> char *
   size_t len = 0;
 
   if ((c = *find++) != 0) {
-    c   = tolower((unsigned char) c);
+    c   = tolower(static_cast< unsigned char >(c));
     len = strlen(find);
     do {
       do {
         if ((sc = *s++) == 0) {
           return nullptr;
         }
-      } while ((char) tolower((unsigned char) sc) != c);
+      } while (static_cast< char >(tolower(static_cast< unsigned char >(sc))) != c);
     } while (strncasecmp(s, find, len) != 0);
     s--;
   }
-  return ((char *) s);
+  return (const_cast< char * >(s));
 }
 
 auto split(const std::string &text, int max_line_len) -> std::vector< std::string >
@@ -635,7 +635,7 @@ auto split(const std::string &text, int max_line_len) -> std::vector< std::strin
       break;
     }
 
-    line_len = (int) (line_end - line_start);
+    line_len = static_cast< int >(line_end - line_start);
     auto tmp = std::string(line_start, line_start + line_len);
 
     // printf("OUT [%s] max_line_len %d\n", tmp.c_str(), line_len);
@@ -793,7 +793,7 @@ auto snprintf_realloc(char **str, int *size, int *used, const char *fmt, ...) ->
       *used = 0;
     }
 
-    *str = (char *) MYMALLOC(*size, "snprintf alloc");
+    *str = static_cast< char * >(MYMALLOC(*size, "snprintf alloc"));
     if (*str == nullptr) {
       *size = 0;
       return (-1);
@@ -803,7 +803,7 @@ auto snprintf_realloc(char **str, int *size, int *used, const char *fmt, ...) ->
   }
 
   if ((used == nullptr) || (*used == 0)) {
-    usedspace = (uint32_t) strlen(*str);
+    usedspace = static_cast< uint32_t >(strlen(*str));
   } else {
     usedspace = *used;
   }
@@ -830,7 +830,7 @@ auto snprintf_realloc(char **str, int *size, int *used, const char *fmt, ...) ->
 
     (*size) *= 2;
 
-    tmp = (char *) MYREALLOC(*str, *size, "snprintf realloc");
+    tmp = static_cast< char * >(MYREALLOC(*str, *size, "snprintf realloc"));
     if (tmp == nullptr) {
       free(*str);
       *str  = nullptr;
@@ -926,7 +926,7 @@ auto capitalize(std::string in) -> std::string
   TRACE();
   std::string out = std::move(in);
 
-  char       *b          = (char *) out.c_str();
+  char       *b          = const_cast< char * >(out.c_str());
   char const *e          = b + out.size();
   char       *c          = b;
   bool        word_start = true;
@@ -954,7 +954,7 @@ auto capitalize_first(const std::string &in) -> std::string
   TRACE();
   std::string out = in;
 
-  char       *b          = (char *) out.c_str();
+  char       *b          = const_cast< char * >(out.c_str());
   char const *e          = b + out.size();
   char       *c          = b;
   bool        word_start = true;

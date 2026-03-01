@@ -374,10 +374,10 @@ static void wid_set_pos_pct(Widp w, fpoint tl, fpoint br)
     br.y = wid_get_height(w->parent) - 1;
   }
 
-  int key_tl_x = (int) tl.x;
-  int key_tl_y = (int) tl.y;
-  int key_br_x = (int) br.x;
-  int key_br_y = (int) br.y;
+  int key_tl_x = static_cast< int >(tl.x);
+  int key_tl_y = static_cast< int >(tl.y);
+  int key_br_x = static_cast< int >(br.x);
+  int key_br_y = static_cast< int >(br.y);
 
   //
   // Child postion is relative from the parent.
@@ -390,10 +390,10 @@ static void wid_set_pos_pct(Widp w, fpoint tl, fpoint br)
     key_br_y += wid_get_tl_y(p);
   }
 
-  w->key.tl.x = (int) round(key_tl_x);
-  w->key.tl.y = (int) round(key_tl_y);
-  w->key.br.x = (int) round(key_br_x);
-  w->key.br.y = (int) round(key_br_y);
+  w->key.tl.x = static_cast< int >(round(key_tl_x));
+  w->key.tl.y = static_cast< int >(round(key_tl_y));
+  w->key.br.x = static_cast< int >(round(key_br_x));
+  w->key.br.y = static_cast< int >(round(key_br_y));
 
   wid_tree_attach(w);
 }
@@ -1114,11 +1114,11 @@ static auto wid_get_text_with_cursor(Widp w) -> std::string
   TRACE();
 
   if (! static_cast< bool >(w->received_input)) {
-    w->cursor = (uint32_t) w->text.length();
+    w->cursor = static_cast< uint32_t >(w->text.length());
   }
 
   std::string const t = w->text;
-  std::string       o = t.substr(0, w->cursor) + (char) FONT_CHAR_CURSOR + t.substr(w->cursor);
+  std::string o       = t.substr(0, w->cursor) + static_cast< char > FONT_CHAR_CURSOR + t.substr(w->cursor);
 
   return o;
 }
@@ -1194,7 +1194,7 @@ void wid_set_text(Widp w, const std::string &text)
     }
   }
 
-  w->cursor = std::min(w->cursor, (uint16_t) w->text.size());
+  w->cursor = std::min(w->cursor, static_cast< uint16_t >(w->text.size()));
 }
 
 void wid_set_text(Widp w, int v)
@@ -3259,22 +3259,23 @@ static void wid_adjust_scrollbar(Widp scrollbar, Widp owner)
   if (owner->scrollbar_vert != nullptr) {
     if (wid_get_moveable_vert(scrollbar)) {
       trough_height    = wid_get_height(owner->scrollbar_vert->parent);
-      scrollbar_height = (int) (trough_height * (height / child_height));
+      scrollbar_height = static_cast< int >(trough_height * (height / child_height));
 
       if (trough_height - scrollbar_height == 0.0F) {
         pct = 0.0F;
       } else {
-        pct = (((float) wid_get_tl_y(scrollbar)) - ((float) wid_get_tl_y(scrollbar->parent))) / ((trough_height - scrollbar_height));
+        pct = ((static_cast< float >(wid_get_tl_y(scrollbar))) - (static_cast< float >(wid_get_tl_y(scrollbar->parent))))
+            / ((trough_height - scrollbar_height));
       }
 
-      owner->offset.y = (int) -miny;
-      owner->offset.y -= (int) ((pct * (child_height - height)));
+      owner->offset.y = static_cast< int >(-miny);
+      owner->offset.y -= static_cast< int >((pct * (child_height - height)));
 
-      float const n       = ((float) wid_get_tl_y(scrollbar->parent)) + (pct * ((trough_height - scrollbar_height)));
-      scrollbar->key.tl.y = (int) ceil(n);
+      float const n       = (static_cast< float >(wid_get_tl_y(scrollbar->parent))) + (pct * ((trough_height - scrollbar_height)));
+      scrollbar->key.tl.y = static_cast< int >(ceil(n));
 
       wid_tree_detach(scrollbar);
-      scrollbar->key.br.y = wid_get_tl_y(scrollbar) + (int) scrollbar_height - 1;
+      scrollbar->key.br.y = wid_get_tl_y(scrollbar) + static_cast< int >(scrollbar_height) - 1;
       wid_tree_attach(scrollbar);
 
       wid_set_mode(scrollbar, WID_MODE_ACTIVE);
@@ -3284,7 +3285,7 @@ static void wid_adjust_scrollbar(Widp scrollbar, Widp owner)
   if (owner->scrollbar_horiz != nullptr) {
     if (wid_get_moveable_horiz(scrollbar)) {
       trough_width    = wid_get_width(owner->scrollbar_horiz->parent);
-      scrollbar_width = (int) (trough_width * (width / child_width));
+      scrollbar_width = static_cast< int >(trough_width * (width / child_width));
 
       if (trough_width - scrollbar_width == 0.0F) {
         pct = 0.0F;
@@ -3292,14 +3293,14 @@ static void wid_adjust_scrollbar(Widp scrollbar, Widp owner)
         pct = (wid_get_tl_x(scrollbar) - wid_get_tl_x(scrollbar->parent)) / (trough_width - scrollbar_width);
       }
 
-      owner->offset.x = (int) -minx;
-      owner->offset.x -= (int) (pct * (child_width - width));
+      owner->offset.x = static_cast< int >(-minx);
+      owner->offset.x -= static_cast< int >(pct * (child_width - width));
 
-      float const n       = ((float) wid_get_tl_x(scrollbar->parent)) + (pct * ((trough_width - scrollbar_width)));
-      scrollbar->key.tl.x = (int) ceil(n);
+      float const n       = (static_cast< float >(wid_get_tl_x(scrollbar->parent))) + (pct * ((trough_width - scrollbar_width)));
+      scrollbar->key.tl.x = static_cast< int >(ceil(n));
 
       wid_tree_detach(scrollbar);
-      scrollbar->key.br.x = wid_get_tl_x(scrollbar) + (int) scrollbar_width - 1;
+      scrollbar->key.br.x = wid_get_tl_x(scrollbar) + static_cast< int >(scrollbar_width) - 1;
       wid_tree_attach(scrollbar);
 
       wid_set_mode(scrollbar, WID_MODE_ACTIVE);
@@ -3366,11 +3367,11 @@ void wid_get_children_size(Widp owner, int *w, int *h)
   }
 
   if (w != nullptr) {
-    *w = (int) child_width;
+    *w = static_cast< int >(child_width);
   }
 
   if (h != nullptr) {
-    *h = (int) child_height;
+    *h = static_cast< int >(child_height);
   }
 }
 
@@ -3545,11 +3546,11 @@ auto wid_receive_input(Gamep g, Widp w, const SDL_Keysym *key) -> bool
 
   newchar += wid_event_to_char(key);
   origtext = wid_get_text(w);
-  origlen  = (uint32_t) origtext.length();
+  origlen  = static_cast< uint32_t >(origtext.length());
 
   if (! static_cast< bool >(w->received_input)) {
     wid_set_received_input(w);
-    w->cursor = (uint32_t) origtext.length();
+    w->cursor = static_cast< uint32_t >(origtext.length());
   }
 
   if (origtext.empty()) {
@@ -3571,7 +3572,7 @@ auto wid_receive_input(Gamep g, Widp w, const SDL_Keysym *key) -> bool
           }
 
           wid_set_text(w, history[ g_history_walk ]);
-          w->cursor = (uint32_t) wid_get_text(w).length();
+          w->cursor = static_cast< uint32_t >(wid_get_text(w).length());
           break;
 
         case 'n' :
@@ -3581,7 +3582,7 @@ auto wid_receive_input(Gamep g, Widp w, const SDL_Keysym *key) -> bool
           }
 
           wid_set_text(w, history[ g_history_walk ]);
-          w->cursor = (uint32_t) wid_get_text(w).length();
+          w->cursor = static_cast< uint32_t >(wid_get_text(w).length());
           break;
 
         case 'a' : w->cursor = 0; break;
@@ -3687,7 +3688,7 @@ auto wid_receive_input(Gamep g, Widp w, const SDL_Keysym *key) -> bool
               continue;
             }
 
-            w->cursor = (uint32_t) wid_get_text(w).length();
+            w->cursor = static_cast< uint32_t >(wid_get_text(w).length());
             break;
           }
           break;
@@ -3707,7 +3708,7 @@ auto wid_receive_input(Gamep g, Widp w, const SDL_Keysym *key) -> bool
               continue;
             }
 
-            w->cursor = (uint32_t) wid_get_text(w).length();
+            w->cursor = static_cast< uint32_t >(wid_get_text(w).length());
             break;
           }
           break;
@@ -3814,7 +3815,7 @@ auto wid_receive_input(Gamep g, Widp w, const SDL_Keysym *key) -> bool
     return true;
   }
 
-  switch ((int) key->sym) {
+  switch (static_cast< int >(key->sym)) {
     case '?' :
       if (AN_ERROR_OCCURRED()) {
         wid_console_raise(g);
@@ -4173,14 +4174,14 @@ void wid_move_delta_pct(Gamep g, Widp w, float dx, float dy)
   TRACE();
 
   if (w->parent == nullptr) {
-    dx *= (float) TERM_WIDTH;
-    dy *= (float) TERM_HEIGHT;
+    dx *= static_cast< float >(TERM_WIDTH);
+    dy *= static_cast< float >(TERM_HEIGHT);
   } else {
     dx *= wid_get_width(w->parent);
     dy *= wid_get_height(w->parent);
   }
 
-  wid_move_delta_internal(g, w, (int) dx, (int) dy);
+  wid_move_delta_internal(g, w, static_cast< int >(dx), static_cast< int >(dy));
 
   wid_update_internal(g, w);
 }
@@ -4247,7 +4248,7 @@ void wid_move_to_vert_pct(Gamep g, Widp w, float pct)
   float const at      = (wid_get_tl_y(w) - wid_get_tl_y(w->parent)) / pheight;
   float const delta   = (pct - at) * pheight;
 
-  wid_move_delta(g, w, 0, (int) delta);
+  wid_move_delta(g, w, 0, static_cast< int >(delta));
 }
 
 void wid_move_to_horiz_pct(Gamep g, Widp w, float pct)
@@ -4258,7 +4259,7 @@ void wid_move_to_horiz_pct(Gamep g, Widp w, float pct)
   float const at     = (wid_get_tl_x(w) - wid_get_tl_x(w->parent)) / pwidth;
   float const delta  = (pct - at) * pwidth;
 
-  wid_move_delta(g, w, (int) delta, 0);
+  wid_move_delta(g, w, static_cast< int >(delta), 0);
 }
 
 void wid_move_to_top(Gamep g, Widp w)
@@ -4908,8 +4909,8 @@ void wid_get_pct(Widp w, float *px, float *py)
 
   wid_get_abs(w, &x, &y);
 
-  *px = (float) x / (float) TERM_WIDTH;
-  *py = (float) y / (float) TERM_HEIGHT;
+  *px = static_cast< float >(x) / static_cast< float >(TERM_WIDTH);
+  *py = static_cast< float >(y) / static_cast< float >(TERM_HEIGHT);
 }
 
 //
@@ -5199,7 +5200,7 @@ static void wid_display(Gamep g, Widp w, uint8_t disable_scissor, uint8_t *updat
         //
         x = ((owidth - width) / 2) + otlx;
 
-        uint32_t const c_width = (int) (width / (float) text.length());
+        uint32_t const c_width = static_cast< int >(width / static_cast< float >(text.length()));
 
         x -= (w->cursor - (text.length() / 2)) * c_width;
       } else if (wid_get_text_lhs(w)) {
@@ -5288,22 +5289,22 @@ void wid_sanity_check(Gamep g)
   //
   IF_DEBUG
   {
-    if ((int) wid_top_level.size() > 1000) {
+    if (static_cast< int >(wid_top_level.size()) > 1000) {
       CROAK("Widget size getting large for: wid_top_level %d", (int) wid_top_level.size());
     }
-    if ((int) wid_global.size() > 1000) {
+    if (static_cast< int >(wid_global.size()) > 1000) {
       CROAK("Widget size getting large for: wid_global %d", (int) wid_global.size());
     }
-    if ((int) wid_top_level2.size() > 1000) {
+    if (static_cast< int >(wid_top_level2.size()) > 1000) {
       CROAK("Widget size getting large for: wid_top_level2 %d", (int) wid_top_level2.size());
     }
-    if ((int) wid_top_level3.size() > 1000) {
+    if (static_cast< int >(wid_top_level3.size()) > 1000) {
       CROAK("Widget size getting large for: wid_top_level3 %d", (int) wid_top_level3.size());
     }
-    if ((int) wid_top_level4.size() > 1000) {
+    if (static_cast< int >(wid_top_level4.size()) > 1000) {
       CROAK("Widget size getting large for: wid_top_level4 %d", (int) wid_top_level4.size());
     }
-    if ((int) wid_tick_top_level.size() > 1000) {
+    if (static_cast< int >(wid_tick_top_level.size()) > 1000) {
       CROAK("Widget size getting large for: wid_tick_top_level %d", (int) wid_tick_top_level.size());
     }
   }
@@ -5472,8 +5473,8 @@ void wid_move_to_pct(Gamep g, Widp w, float x, float y)
   TRACE();
 
   if (w->parent == nullptr) {
-    x *= (float) TERM_WIDTH;
-    y *= (float) TERM_HEIGHT;
+    x *= static_cast< float >(TERM_WIDTH);
+    y *= static_cast< float >(TERM_HEIGHT);
   } else {
     x *= wid_get_width(w->parent);
     y *= wid_get_height(w->parent);
@@ -5482,7 +5483,7 @@ void wid_move_to_pct(Gamep g, Widp w, float x, float y)
   float const dx = x - wid_get_tl_x(w);
   float const dy = y - wid_get_tl_y(w);
 
-  wid_move_delta(g, w, (int) dx, (int) dy);
+  wid_move_delta(g, w, static_cast< int >(dx), static_cast< int >(dy));
 }
 
 void wid_move_to_abs(Gamep g, Widp w, int x, int y)
@@ -5527,8 +5528,8 @@ void wid_move_to_pct_centered(Gamep g, Widp w, float ox, float oy)
   auto ph     = (pbry - ptly) + 1;
   auto height = (bry - tly) + 1;
 
-  auto nx = ptlx + (int) floor((float) (pw - width) * x);
-  auto ny = ptly + (int) floor((float) (ph - height) * y);
+  auto nx = ptlx + static_cast< int >(floor(static_cast< float >(pw - width) * x));
+  auto ny = ptly + static_cast< int >(floor(static_cast< float >(ph - height) * y));
 
   wid_move_to(g, w, nx, ny);
 }
@@ -5540,8 +5541,8 @@ void wid_move_to_abs_centered(Gamep g, Widp w, int x, int y)
   int dx = x - wid_get_tl_x(w);
   int dy = y - wid_get_tl_y(w);
 
-  dx -= (int) ceil((wid_get_br_x(w) - wid_get_tl_x(w)) / 2);
-  dy -= (int) ceil((wid_get_br_y(w) - wid_get_tl_y(w)) / 2);
+  dx -= static_cast< int >(ceil((wid_get_br_x(w) - wid_get_tl_x(w)) / 2));
+  dy -= static_cast< int >(ceil((wid_get_br_y(w) - wid_get_tl_y(w)) / 2));
 
   wid_move_delta(g, w, dx, dy);
 }
@@ -5571,9 +5572,9 @@ static void wid_log_(Widp w, const char *fmt, va_list args)
   VERIFY(MTYPE_WID, w);
   buf[ 0 ] = '\0';
   get_timestamp(buf, MAXLONGSTR);
-  len = (int) strlen(buf);
+  len = static_cast< int >(strlen(buf));
   snprintf(buf + len, MAXLONGSTR - len, "WID [%p/%s]: ", (void *) w, to_string(w).c_str());
-  len = (int) strlen(buf);
+  len = static_cast< int >(strlen(buf));
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
   putf(MY_STDOUT, buf);

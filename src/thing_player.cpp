@@ -621,7 +621,7 @@ void player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what)
   }
 
   //
-  // TODO
+  // TODO(nmcgill):
   //
   static Tpp tp_fireball;
   if (tp_fireball == nullptr) {

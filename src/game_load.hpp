@@ -953,7 +953,7 @@ auto operator>>(std::istream &in, Bits< class Game & > my) -> std::istream &
   in >> bits(my.t.appdata);
   in >> bits(my.t.saved_dir);
 
-  Levelsp tmp = (Levelsp) MYMALLOC(sizeof(Levels), "loaded level");
+  Levelsp tmp = static_cast< Levelsp >(MYMALLOC(sizeof(Levels), "loaded level"));
   NEWPTR(MTYPE_LEVELS, tmp, "loaded levels");
   in.read(reinterpret_cast< char * >(tmp), sizeof(Levels));
   my.t.levels = tmp;
@@ -996,9 +996,9 @@ static auto read_lzo_file(const std::string &filename, long *uncompressed_sz) ->
 
     ifs.seekg(0, std::ios::beg);
     ifs.unsetf(std::ios::skipws);
-    ifs.read((char *) uncompressed_sz, sizeof(*uncompressed_sz));
+    ifs.read(reinterpret_cast< char * >(uncompressed_sz), sizeof(*uncompressed_sz));
 
-    sz -= (int) sizeof(*uncompressed_sz);
+    sz -= static_cast< int >(sizeof(*uncompressed_sz));
     std::vector< char > bytes(sz);
     ifs.read(bytes.data(), sz);
     return bytes;
@@ -1065,7 +1065,7 @@ auto Game::load(const std::string &file_to_load, class Game &target) -> bool
 #ifdef USE_LZ4
   const auto *which   = "LZ4";
   long        new_len = 0;
-  new_len             = LZ4_decompress_safe((const char *) src, (char *) dst, src_size, dst_size);
+  new_len             = LZ4_decompress_safe(static_cast< const char * >(src), static_cast< char * >(dst), src_size, dst_size);
   if (new_len >= 0)
 #else
   auto     which   = "LZ0";
@@ -1109,7 +1109,7 @@ auto Game::load(const std::string &file_to_load, class Game &target) -> bool
   }
 #endif
 
-  std::string const  s((const char *) dst, (size_t) dst_size);
+  std::string const  s(static_cast< const char * >(dst), static_cast< size_t >(dst_size));
   std::istringstream in(s);
 
   game_load_error = "";

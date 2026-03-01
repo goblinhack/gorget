@@ -572,7 +572,7 @@ auto tp_tiles_size(Tpp tp, ThingAnim val) -> int
     TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
-  return (int) tp->tiles[ val ].size();
+  return static_cast< int >(tp->tiles[ val ].size());
 }
 
 auto tp_name(Tpp tp) -> std::string
@@ -823,7 +823,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup val)
     return;
   }
 
-  if ((int) val >= (int) MONST_GROUP_ENUM_MAX) {
+  if (static_cast< int >(val) >= static_cast< int >(MONST_GROUP_ENUM_MAX)) {
     TP_ERR(tp, "bad value in tp for %s, %d", __FUNCTION__, val);
     return;
   }
@@ -863,7 +863,7 @@ void tp_is_immunity_add(Tpp tp, ThingEventType val)
     return;
   }
 
-  if ((int) val >= (int) THING_EVENT_ENUM_MAX) {
+  if (static_cast< int >(val) >= static_cast< int >(THING_EVENT_ENUM_MAX)) {
     TP_ERR(tp, "bad value in tp for %s, %d", __FUNCTION__, val);
     return;
   }
@@ -883,7 +883,7 @@ auto tp_is_immune_to(Tpp tp, ThingEventType val) -> bool
     return false;
   }
 
-  if ((int) val >= (int) THING_EVENT_ENUM_MAX) {
+  if (static_cast< int >(val) >= static_cast< int >(THING_EVENT_ENUM_MAX)) {
     TP_ERR(tp, "bad value in tp for %s, %d", __FUNCTION__, val);
     return false;
   }

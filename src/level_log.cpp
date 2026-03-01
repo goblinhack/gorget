@@ -23,9 +23,9 @@ static void level_log_(Gamep g, Levelsp v, Levelp l, const char *fmt, va_list ar
 
   buf[ 0 ] = '\0';
   get_timestamp(buf, MAXLONGSTR);
-  len = (int) strlen(buf);
+  len = static_cast< int >(strlen(buf));
   snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_string(g, v, l).c_str());
-  len = (int) strlen(buf);
+  len = static_cast< int >(strlen(buf));
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
   putf(MY_STDOUT, buf);
@@ -62,9 +62,9 @@ static void level_warn_(Gamep g, Levelsp v, Levelp l, const char *fmt, va_list a
 
   buf[ 0 ] = '\0';
   get_timestamp(buf, MAXLONGSTR);
-  len = (int) strlen(buf);
+  len = static_cast< int >(strlen(buf));
   snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_string(g, v, l).c_str());
-  len = (int) strlen(buf);
+  len = static_cast< int >(strlen(buf));
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
   putf(MY_STDOUT, buf);
@@ -91,9 +91,9 @@ static void level_con_(Gamep g, Levelsp v, Levelp l, const char *fmt, va_list ar
 
   buf[ 0 ] = '\0';
   get_timestamp(buf, MAXLONGSTR);
-  len = (int) strlen(buf);
+  len = static_cast< int >(strlen(buf));
   snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_string(g, v, l).c_str());
-  len = (int) strlen(buf);
+  len = static_cast< int >(strlen(buf));
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
   putf(MY_STDOUT, buf);
 
@@ -122,7 +122,7 @@ static void level_err_(Gamep g, Levelsp v, Levelp l, const char *fmt, va_list ar
 
   buf[ 0 ] = '\0';
   snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_string(g, v, l).c_str());
-  len = (int) strlen(buf);
+  len = static_cast< int >(strlen(buf));
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
   ERR("%s", buf);
@@ -147,9 +147,9 @@ static void level_topcon_(Gamep g, Levelsp v, Levelp l, const char *fmt, va_list
 
   buf[ 0 ] = '\0';
   get_timestamp(buf, MAXLONGSTR);
-  len = (int) strlen(buf);
+  len = static_cast< int >(strlen(buf));
   snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_string(g, v, l).c_str());
-  len = (int) strlen(buf);
+  len = static_cast< int >(strlen(buf));
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
   putf(MY_STDOUT, buf);
@@ -183,9 +183,9 @@ static void level_botcon_(Gamep g, Levelsp v, Levelp l, const char *fmt, va_list
 
   buf[ 0 ] = '\0';
   get_timestamp(buf, MAXLONGSTR);
-  len = (int) strlen(buf);
+  len = static_cast< int >(strlen(buf));
   snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_string(g, v, l).c_str());
-  len = (int) strlen(buf);
+  len = static_cast< int >(strlen(buf));
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
   wid_botcon_log(buf);

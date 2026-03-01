@@ -552,8 +552,8 @@ void fbo_get_size(Gamep g, FboEnum fbo, int &w, int &h)
       h = game_map_fbo_height_get(g);
       break;
     case FBO_MAP_LIGHT :
-      w = (int) MAP_WIDTH * (int) TILE_WIDTH;
-      h = (int) MAP_HEIGHT * (int) TILE_HEIGHT;
+      w = static_cast< int >(MAP_WIDTH) * static_cast< int >(TILE_WIDTH);
+      h = static_cast< int >(MAP_HEIGHT) * static_cast< int >(TILE_HEIGHT);
       break;
     case FBO_MAP_BG_MERGED :
     case FBO_MAP_FG_MERGED :
@@ -704,12 +704,13 @@ void blit_init()
   //
   gl_array_size_required = 32 * 1024 * 1024;
 
-  gl_array_buf = (__typeof__(gl_array_buf)) MYZALLOC(gl_array_size_required, "GL xy buffer");
+  gl_array_buf = static_cast< __typeof__(gl_array_buf) >(MYZALLOC(gl_array_size_required, "GL xy buffer"));
 
   //
   // Make the end a bit smaller so we have plenty of headroom.
   //
-  gl_array_buf_end = (__typeof__(gl_array_buf_end)) ((char *) gl_array_buf) + ((gl_array_size_required * 2) / 3);
+  gl_array_buf_end
+      = reinterpret_cast< __typeof__(gl_array_buf_end) >(reinterpret_cast< char * >(gl_array_buf)) + ((gl_array_size_required * 2) / 3);
 
   bufp     = gl_array_buf;
   bufp_end = gl_array_buf_end;
@@ -739,7 +740,7 @@ void blit_flush()
 
   static long nvertices;
 
-  nvertices = ((char *) bufp - (char *) gl_array_buf) / NUMBER_BYTES_PER_VERTICE_2D;
+  nvertices = (reinterpret_cast< char * >(bufp) - reinterpret_cast< char * >(gl_array_buf)) / NUMBER_BYTES_PER_VERTICE_2D;
 
   glBindTexture(GL_TEXTURE_2D, buf_tex);
 
@@ -748,13 +749,13 @@ void blit_flush()
 
   glVertexPointer(NUMBER_DIMENSIONS_PER_COORD_2D, // (x,y)
                   GL_SHORT, NUMBER_BYTES_PER_VERTICE_2D,
-                  ((char *) gl_array_buf)
+                  (reinterpret_cast< char * >(gl_array_buf))
                       + (static_cast< ptrdiff_t >(SIZEOF(GLfloat) * // skip (u,v)
                                                   NUMBER_DIMENSIONS_PER_COORD_2D)));
 
   glColorPointer(NUMBER_COMPONENTS_PER_COLOR, // (r,g,b,a)
                  GL_UNSIGNED_BYTE, NUMBER_BYTES_PER_VERTICE_2D,
-                 ((char *) gl_array_buf)
+                 (reinterpret_cast< char * >(gl_array_buf))
                      + (static_cast< ptrdiff_t >(SIZEOF(GLshort) * // skip (x,y)
                                                  NUMBER_DIMENSIONS_PER_COORD_2D))
                      + (static_cast< ptrdiff_t >(SIZEOF(GLfloat) * // skip (u,v)
@@ -764,7 +765,7 @@ void blit_flush()
   GL_ERROR_CHECK();
 #endif
 
-  glDrawArrays(GL_TRIANGLE_STRIP, 0, (GLsizei) nvertices);
+  glDrawArrays(GL_TRIANGLE_STRIP, 0, static_cast< GLsizei >(nvertices));
   glBindTexture(GL_TEXTURE_2D, 0);
 
   glDisableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -794,19 +795,19 @@ void blit_flush_colored_triangle_fan(float *b, const float *e)
 
   static const GLsizei stride = (SIZEOF(GLshort) * NUMBER_DIMENSIONS_PER_COORD_2D) + (SIZEOF(GLubyte) * NUMBER_COMPONENTS_PER_COLOR);
 
-  nvertices = ((char *) e - (char *) b) / stride;
+  nvertices = ((char *) e - reinterpret_cast< char * >(b)) / stride;
 
   glVertexPointer(NUMBER_DIMENSIONS_PER_COORD_2D, // (x,y)
                   GL_SHORT, stride, b);
 
   glColorPointer(NUMBER_COMPONENTS_PER_COLOR, // (r,g,b,a)
                  GL_UNSIGNED_BYTE, stride,
-                 ((char *) b)
+                 (reinterpret_cast< char * >(b))
                      + (static_cast< ptrdiff_t >(SIZEOF(GLshort) * // skip (x,y)
                                                  NUMBER_DIMENSIONS_PER_COORD_2D)));
 
   GL_ERROR_CHECK();
-  glDrawArrays(GL_TRIANGLE_FAN, 0, (GLsizei) nvertices);
+  glDrawArrays(GL_TRIANGLE_FAN, 0, static_cast< GLsizei >(nvertices));
 
   glDisableClientState(GL_VERTEX_ARRAY);
   glDisableClientState(GL_COLOR_ARRAY);
@@ -824,13 +825,13 @@ void blit_flush_triangle_fan(float *b, const float *e)
 
   static const GLsizei stride = SIZEOF(GLshort) * NUMBER_DIMENSIONS_PER_COORD_2D;
 
-  nvertices = ((char *) e - (char *) b) / stride;
+  nvertices = ((char *) e - reinterpret_cast< char * >(b)) / stride;
 
   glVertexPointer(NUMBER_DIMENSIONS_PER_COORD_2D, // (x,y)
                   GL_SHORT, stride, b);
 
   GL_ERROR_CHECK();
-  glDrawArrays(GL_TRIANGLE_FAN, 0, (GLsizei) nvertices);
+  glDrawArrays(GL_TRIANGLE_FAN, 0, static_cast< GLsizei >(nvertices));
 
   glDisableClientState(GL_VERTEX_ARRAY);
 
@@ -1516,11 +1517,11 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
 
   buf_tex = tex;
 
-  const float   texDiffX = (texMaxX - texMinX) / (float) LIGHT_PIXEL;
-  const float   texDiffY = (texMinY - texMaxY) / (float) LIGHT_PIXEL;
-  const float   pixDiffX = ((float) pixMaxX - (float) pixMinX) / (float) LIGHT_PIXEL;
-  const float   pixDiffY = ((float) pixMinY - (float) pixMaxY) / (float) LIGHT_PIXEL;
-  const uint8_t a        = 255;
+  const float texDiffX = (texMaxX - texMinX) / static_cast< float > LIGHT_PIXEL;
+  const float texDiffY = (texMinY - texMaxY) / static_cast< float > LIGHT_PIXEL;
+  const float pixDiffX = (static_cast< float >(pixMaxX) - static_cast< float >(pixMinX)) / static_cast< float > LIGHT_PIXEL;
+  const float pixDiffY = (static_cast< float >(pixMinY) - static_cast< float >(pixMaxY)) / static_cast< float > LIGHT_PIXEL;
+  const uint8_t                                                                                                 a = 255;
 
   //
   // Fewer triangle breaks doing y rows first
@@ -1529,20 +1530,20 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
 
     const float texMaxY2 = texMaxY + (y * texDiffY);
     const float texMinY2 = texMaxY + ((y + 1) * texDiffY);
-    const auto  pixMaxY2 = (GLshort) ((float) pixMaxY + ((float) y * pixDiffY));
-    const auto  pixMinY2 = (GLshort) ((float) pixMaxY + ((float) (y + 1) * pixDiffY));
+    const auto  pixMaxY2 = static_cast< GLshort >(static_cast< float >(pixMaxY) + (static_cast< float >(y) * pixDiffY));
+    const auto  pixMinY2 = static_cast< GLshort >(static_cast< float >(pixMaxY) + (static_cast< float >(y + 1) * pixDiffY));
 
     for (auto x = 0; x < LIGHT_PIXEL; x++) {
 
       auto *const   pixel = &light_pixels->pixel[ x ][ y ];
-      uint8_t const r     = pixel->r > 255 ? 255 : (uint8_t) (int) pixel->r;
-      uint8_t const g     = pixel->g > 255 ? 255 : (uint8_t) (int) pixel->g;
-      uint8_t const b     = pixel->b > 255 ? 255 : (uint8_t) (int) pixel->b;
+      uint8_t const r     = pixel->r > 255 ? 255 : static_cast< uint8_t >(static_cast< int >(pixel->r));
+      uint8_t const g     = pixel->g > 255 ? 255 : static_cast< uint8_t >(static_cast< int >(pixel->g));
+      uint8_t const b     = pixel->b > 255 ? 255 : static_cast< uint8_t >(static_cast< int >(pixel->b));
 
       float const texMinX2 = texMinX + (x * texDiffX);
       float const texMaxX2 = texMinX + ((x + 1) * texDiffX);
-      auto        pixMinX2 = (GLshort) ((float) pixMinX + ((float) x * pixDiffX));
-      auto        pixMaxX2 = (GLshort) ((float) pixMinX + ((float) (x + 1) * pixDiffX));
+      auto        pixMinX2 = static_cast< GLshort >(static_cast< float >(pixMinX) + (static_cast< float >(x) * pixDiffX));
+      auto        pixMaxX2 = static_cast< GLshort >(static_cast< float >(pixMinX) + (static_cast< float >(x + 1) * pixDiffX));
 
       gl_push(&bufp, bufp_end, first_vertex, texMinX2, texMinY2, texMaxX2, texMaxY2, pixMinX2, pixMinY2, pixMaxX2, pixMaxY2, r, g, b, a, r,
               g, b, a, r, g, b, a, r, g, b, a);

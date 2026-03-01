@@ -35,7 +35,7 @@ void wid_progress_bar(Gamep g, const std::string &title, float pct)
     wid_progress_bar_destroy(g);
   }
 
-  int tile_num = (int) ((float) progress_steps * pct);
+  int tile_num = static_cast< int >(static_cast< float >(progress_steps) * pct);
   tile_num     = std::min(tile_num, progress_steps);
   tile_num     = std::max(tile_num, 1);
 

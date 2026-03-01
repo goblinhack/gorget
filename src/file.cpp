@@ -189,7 +189,7 @@ auto file_io_read(const char *filename, int *out_len) -> unsigned char *
     return nullptr;
   }
 
-  len = (unsigned int) ftell(file);
+  len = static_cast< unsigned int >(ftell(file));
   if (len == -1) {
     std::println(MY_STDERR, "Failed to get size of file \"{}\": {}", filename, strerror(errno));
     fclose(file);
@@ -202,7 +202,7 @@ auto file_io_read(const char *filename, int *out_len) -> unsigned char *
     return nullptr;
   }
 
-  buffer = (unsigned char *) MYMALLOC(len + SIZEOF((char) '\0'), "file read");
+  buffer = static_cast< unsigned char * >(MYMALLOC(len + SIZEOF((char) '\0'), "file read"));
   if (buffer == nullptr) {
     std::println(MY_STDERR, "Failed to alloc mem for file \"{}\": {}", filename, strerror(errno));
     fclose(file);
@@ -333,7 +333,7 @@ auto file_size(const char *filename) -> int
   struct stat buf {};
 
   if (stat(filename, &buf) >= 0) {
-    return int(buf.st_size);
+    return static_cast< int >(buf.st_size);
   }
 
   return -1;

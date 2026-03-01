@@ -194,8 +194,8 @@ void tile_load_arr(const char *file, const char *alias, uint32_t width, uint32_t
 
   Texp tex = tex_load(file, alias, GL_NEAREST);
 
-  float const fw = (float) 1.0 / ((((float) tex_get_width(tex))) / (((float) width)));
-  float const fh = (float) 1.0 / ((((float) tex_get_height(tex))) / (((float) height)));
+  float const fw = static_cast< float >(1.0) / (((static_cast< float >(tex_get_width(tex)))) / ((static_cast< float >(width))));
+  float const fh = static_cast< float >(1.0) / (((static_cast< float >(tex_get_height(tex)))) / ((static_cast< float >(height))));
 
   int x   = 0;
   int y   = 0;
@@ -233,8 +233,8 @@ void tile_load_arr(const char *file, const char *alias, uint32_t width, uint32_t
       t->tex        = tex;
       t->set_gl_binding(tex_get_gl_binding(tex));
 
-      t->x1 = fw * ((float) (x));
-      t->y1 = fh * ((float) (y));
+      t->x1 = fw * (static_cast< float >(x));
+      t->y1 = fh * (static_cast< float >(y));
       t->x2 = t->x1 + fw;
       t->y2 = t->y1 + fh;
 
@@ -335,8 +335,8 @@ void tile_load_arr_sprites(const char *file, const char *alias, uint32_t tile_wi
 
   tex_load_sprites(&tex, &tex_monochrome, &tex_mask, &tex_outline, file, alias, tile_width, tile_height, gl_mode);
 
-  float const fw = (float) 1.0 / ((((float) tex_get_width(tex))) / (((float) tile_width)));
-  float const fh = (float) 1.0 / ((((float) tex_get_height(tex))) / (((float) tile_height)));
+  float const fw = static_cast< float >(1.0) / (((static_cast< float >(tex_get_width(tex)))) / ((static_cast< float >(tile_width))));
+  float const fh = static_cast< float >(1.0) / (((static_cast< float >(tex_get_height(tex)))) / ((static_cast< float >(tile_height))));
 
   int x   = 0;
   int y   = 0;
@@ -402,8 +402,8 @@ void tile_load_arr_sprites(const char *file, const char *alias, uint32_t tile_wi
       t->set_gl_binding_mask(tex_get_gl_binding(t->tex_mask));
       t->set_gl_binding_outline(tex_get_gl_binding(t->tex_outline));
 
-      t->x1 = fw * ((float) (x));
-      t->y1 = fh * ((float) (y));
+      t->x1 = fw * (static_cast< float >(x));
+      t->y1 = fh * (static_cast< float >(y));
       t->x2 = t->x1 + fw;
       t->y2 = t->y1 + fh;
 
@@ -724,12 +724,12 @@ void tile_size_set(Tilep t, uint32_t w, uint32_t h)
 {
   TRACE();
 
-  float const dx = (t->x2 - t->x1) / (float) t->pix_width;
+  float const dx = (t->x2 - t->x1) / static_cast< float >(t->pix_width);
   float const cx = (t->pix_width - w) / 2;
   t->x1 += cx * dx;
   t->x2 -= cx * dx;
 
-  float const dy = (t->y2 - t->y1) / (float) t->pix_width;
+  float const dy = (t->y2 - t->y1) / static_cast< float >(t->pix_width);
   float const cy = (t->pix_width - w) / 2;
   t->y1 += cy * dy;
   t->y2 -= cy * dy;
@@ -973,17 +973,17 @@ void tile_blit_apply_submerge_pct(Gamep g, spoint &tl, spoint &br, float & /*x1*
   float const off1 = ((h1 / 100) * percent);
   float const off2 = ((h2 / 100) * percent);
 
-  tl.y += (int) off1;
+  tl.y += static_cast< int >(off1);
   y2 -= off2;
 
-  tl.y -= ((int) off1) / 2;
-  br.y -= ((int) off1) / 2;
+  tl.y -= (static_cast< int >(off1)) / 2;
+  br.y -= (static_cast< int >(off1)) / 2;
 
   //
   // Round back to the nearest pixel size
   //
   float const pix = game_map_single_pix_size_get(g);
   auto        h   = br.y - tl.y;
-  tl.y            = (int) (floor((float) tl.y / pix) * pix);
+  tl.y            = static_cast< int >(floor(static_cast< float >(tl.y) / pix) * pix);
   br.y            = tl.y + h;
 }
