@@ -111,58 +111,27 @@ tidy:
 			-checks="-*,\
 			bugprone-*,\
 			cppcoreguidelines-*,\
+			google-*,\
 			hicpp-*,\
 			misc-confusable-identifiers,\
 			misc-const-correctness,\
 			misc-definitions-in-headers,\
-			google-*,\
 			misc-misleading-bidirectional,\
 			misc-misleading-identifier,\
 			misc-misplaced-const,\
 			misc-new-delete-overloads,\
 			misc-non-copyable-objectsl,\
 			misc-redundant-expression,\
-			misc-unused-alias-decls,\
 			misc-static-assert,\
 			misc-unconventional-assign-operator,\
+			misc-unused-alias-decls,\
 			misc-use-internal-linkage,\
 			modernize-*,\
 			performance-*,\
-			readability-*\
-			" \
+			readability-*" \
 			-header-filter=".*" \
 			$x -- $(CFLAGS); \
 	)
-	git checkout 3rdparty
-	@echo "Done"
-
-tidy_old:
-	for src in $(CPP_SOURCES) ; do \
-		echo "Running tidy on $$src..." ; \
-		clang-tidy \
-			-fix \
-			-fix-errors \
-			-fix-notes \
-			--quiet \
-			--system-headers=0 \
-			-header-filter="*.hpp" \
-			-checks="-*,\
-			hicpp-*,\
-			bugprone-*,\
-			cppcoreguidelines-*,\
-			misc-const-correctness,\
-			misc-redundant-expression,\
-			misc-static-assert,\
-			misc-misleading-bidirectional,\
-			misc-misleading-identifier,\
-			misc-confusable-identifiers,\
-			modernize-*,\
-			performance-*,\
-			readability-*\
-			" \
-			-header-filter=".*" \
-			"$(SRC_DIR)/$$src" -- $(CFLAGS); \
-	done
 	git checkout 3rdparty
 	@echo "Done"
 
