@@ -114,12 +114,17 @@ tidy:
 			hicpp-*,\
 			misc-confusable-identifiers,\
 			misc-const-correctness,\
+			misc-definitions-in-headers,\
 			misc-misleading-bidirectional,\
 			misc-misleading-identifier,\
+			misc-misplaced-const,\
+			misc-new-delete-overloads,\
+			misc-non-copyable-objectsl,\
 			misc-redundant-expression,\
+			misc-unused-alias-decls,\
 			misc-static-assert,\
-			misc-use-internal-linkage,\
 			misc-unconventional-assign-operator,\
+			misc-use-internal-linkage,\
 			modernize-*,\
 			performance-*,\
 			readability-*\
