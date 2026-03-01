@@ -5,7 +5,7 @@
 #ifndef MY_CHARMAP_HPP
 #define MY_CHARMAP_HPP
 
-enum {
+enum : char {
   // begin sort marker1 {
   CHARMAP_BARREL        = 'b',
   CHARMAP_BORDER        = 'X',

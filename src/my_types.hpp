@@ -164,7 +164,6 @@ typedef unsigned long int uint64_t;
 #define CHECK_FORMAT_STR(a, b, c)
 #endif
 
-class Charmap;
 class Font;
 class Game;
 class HiScore;

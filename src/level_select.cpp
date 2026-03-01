@@ -327,7 +327,13 @@ static void level_select_dump(LevelSelect *s)
   for (int y = 0; y < LEVEL_DOWN; y++) {
     std::string out;
     for (auto &x : s->data) {
-      out += std::to_string((x[ y ].is_set != 0U) ? CHARMAP_FLOOR : CHARMAP_EMPTY);
+      auto is_set = x[ y ].is_set != 0U;
+
+      if (is_set) {
+        out += CHARMAP_FLOOR;
+      } else {
+        out += CHARMAP_EMPTY;
+      }
     }
     LOG("%s", out.c_str());
   }
