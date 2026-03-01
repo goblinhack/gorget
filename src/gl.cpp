@@ -41,7 +41,7 @@ void MessageCallback(GLenum /*source*/, GLenum type, GLuint id, GLenum severity,
 
 void gl_init_2d_mode(Gamep g)
 {
-  LOG("SDL: Init 2d mode");
+  DBG("SDL: Init 2d mode");
   TRACE_INDENT();
 
   GL_ERROR_CHECK();
@@ -50,14 +50,14 @@ void gl_init_2d_mode(Gamep g)
   //
   // Enable Textures
   //
-  LOG("GFX: OpenGL enable textures");
+  DBG("GFX: OpenGL enable textures");
   glEnable(GL_TEXTURE_2D);
   GL_ERROR_CHECK();
 
   //
   // Enable alpha blending for sprites
   //
-  LOG("GFX: OpenGL enable blending");
+  DBG("GFX: OpenGL enable blending");
   glEnable(GL_BLEND);
   GL_ERROR_CHECK();
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -66,7 +66,7 @@ void gl_init_2d_mode(Gamep g)
   //
   // Setup our viewport
   //
-  LOG("GFX: OpenGL enable viewport");
+  DBG("GFX: OpenGL enable viewport");
   glViewport(0, 0, game_window_pix_width_get(g), game_window_pix_height_get(g));
   GL_ERROR_CHECK();
 
@@ -88,7 +88,7 @@ void gl_init_2d_mode(Gamep g)
 
 void gl_fini_2d_mode(Gamep g)
 {
-  LOG("SDL: fini 2d mode");
+  DBG("SDL: fini 2d mode");
   TRACE_INDENT();
 
   GL_ERROR_CHECK();
@@ -101,7 +101,7 @@ void gl_fini_2d_mode(Gamep g)
 void gl_enter_2d_mode(Gamep g)
 {
   if (compiler_unused) {
-    LOG("SDL: enter 2d mode");
+    DBG("SDL: enter 2d mode");
   }
   TRACE();
 
@@ -157,7 +157,7 @@ void gl_enter_2d_mode(Gamep g)
 void gl_enter_2d_mode(Gamep g, int w, int h)
 {
   if (compiler_unused) {
-    LOG("SDL: enter 2d mode %ux%u", w, h);
+    DBG("SDL: enter 2d mode %ux%u", w, h);
   }
   TRACE();
 
@@ -215,7 +215,7 @@ void gl_leave_2d_mode(Gamep g)
   }
 
   if (compiler_unused) {
-    LOG("SDL: leave 2d mode");
+    DBG("SDL: leave 2d mode");
   }
   TRACE();
 
@@ -368,7 +368,7 @@ static void gl_init_fbo_(FboEnum fbo, GLuint *render_buf_id, GLuint *fbo_id, GLu
   DBG2("OpenGl: - glCheckFramebufferStatus_EXT");
   auto status = glCheckFramebufferStatus_EXT(GL_FRAMEBUFFER);
   if ((static_cast< bool >(status)) && (status != GL_FRAMEBUFFER_COMPLETE)) {
-    LOG("Failed to create framebuffer, error: %d/0x%x", status, status);
+    ERR("Failed to create framebuffer, error: %d/0x%x", status, status);
 
 #ifdef GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT
     if (status == GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT) {
@@ -399,7 +399,7 @@ static void gl_init_fbo_(FboEnum fbo, GLuint *render_buf_id, GLuint *fbo_id, GLu
           "violates an implementation-dependent set of restrictions.");
     }
 #endif
-#ifdef GL_FRAMEBUFFER_UNSUPPORTED
+#ifdef GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER
     if (status == GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER) {
       LOG("OpenGl: - GFX: GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER");
     }
@@ -454,7 +454,7 @@ static void gl_fini_fbo_(GLuint *fbo_id, GLuint *fbo_tex_id, GLuint tex_width, G
 
 void gl_init_fbo(Gamep g, FboEnum fbo)
 {
-  LOG("GFX: OpenGL create FBOs");
+  LOG("GFX: OpenGL create FBO %s", FboEnum_to_string(fbo).c_str());
   TRACE_INDENT();
 
   GL_ERROR_CHECK();
@@ -482,13 +482,13 @@ void gl_init_fbo(Gamep g, FboEnum fbo)
     // If no change in size then do not reset the FBO
     //
     if (g_fbo_size[ i ] == isize(tex_width, tex_height)) {
-      LOG("No change in size for FBO %u, %ux%u", i, tex_width, tex_height);
+      DBG("No change in size for FBO %u, %ux%u", i, tex_width, tex_height);
       // continue;
     }
     if (g_fbo_size[ i ].w != 0) {
-      LOG("Change in size for FBO %u, %ux%u -> %ux%u", i, g_fbo_size[ i ].w, g_fbo_size[ i ].h, tex_width, tex_height);
+      DBG("Change in size for FBO %u, %ux%u -> %ux%u", i, g_fbo_size[ i ].w, g_fbo_size[ i ].h, tex_width, tex_height);
     } else {
-      LOG("Init FBO %u, %ux%u", i, tex_width, tex_height);
+      DBG("Init FBO %u, %ux%u", i, tex_width, tex_height);
     }
 
     gl_init_fbo_(i, &g_render_buf_id[ i ], &g_fbo_id[ i ], &g_fbo_tex_id[ i ], tex_width, tex_height);
@@ -510,7 +510,7 @@ void gl_init_fbo(Gamep g, FboEnum fbo)
     }
   }
 
-  LOG("GFX: OpenGL created FBOs");
+  DBG("GFX: OpenGL created FBOs");
   GL_ERROR_CHECK();
 
   if (fbo == FBO_NONE) {
@@ -536,7 +536,7 @@ void gl_fini_fbo(Gamep g)
     g_fbo_size[ i ] = isize(0, 0);
   }
 
-  LOG("GFX: OpenGL destroyed FBOs");
+  DBG("GFX: OpenGL destroyed FBOs");
   GL_ERROR_CHECK();
 }
 
@@ -1321,7 +1321,7 @@ void gl_ext_init(void)
 
   LOG("GFX: extensions");
 
-  LOG("OpenGl: - GetModuleHandle");
+  DBG("OpenGl: - GetModuleHandle");
   HINSTANCE hInstance = GetModuleHandle(0);
 
   wc.cbSize        = SIZEOF(WNDCLASSEX);
@@ -1337,13 +1337,13 @@ void gl_ext_init(void)
   wc.lpszClassName = g_szClassName;
   wc.hIconSm       = LoadIcon(nullptr, IDI_APPLICATION);
 
-  LOG("OpenGl: - RegisterClassEx");
+  DBG("OpenGl: - RegisterClassEx");
   if (! RegisterClassEx(&wc)) {
     MessageBox(nullptr, "Window Registration Failed!", "Error!", MB_ICONEXCLAMATION | MB_OK);
     return;
   }
 
-  LOG("OpenGl: - CreateWindowEx");
+  DBG("OpenGl: - CreateWindowEx");
   hwnd = CreateWindowEx(WS_EX_CLIENTEDGE, g_szClassName, "gorget startup", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 240, 120,
                         nullptr, nullptr, hInstance, nullptr);
 

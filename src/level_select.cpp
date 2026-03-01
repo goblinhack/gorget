@@ -331,9 +331,9 @@ static void level_select_dump(LevelSelect *s)
       auto is_set = x[ y ].is_set != 0U;
 
       if (is_set) {
-        out += CHARMAP_FLOOR;
+        out += std::to_string(CHARMAP_FLOOR);
       } else {
-        out += CHARMAP_EMPTY;
+        out += std::to_string(CHARMAP_EMPTY);
       }
     }
     LOG("%s", out.c_str());

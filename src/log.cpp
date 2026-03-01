@@ -158,7 +158,6 @@ void CON_NEW_LINE()
 
 static void croak_handle(bool clean, const char *fmt, va_list args)
 {
-  LOG("CROAK_HANDLE");
   TRACE();
 
   auto *g = game;
