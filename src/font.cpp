@@ -19,6 +19,7 @@ void font_fini() { TRACE(); }
 static auto font_load(const std::string &name) -> Fontp
 {
   TRACE();
+
   auto *f = font_find(name);
 
   if (f != nullptr) {
@@ -58,6 +59,7 @@ static auto font_load(const std::string &name) -> Fontp
 auto font_find(const std::string &file) -> Fontp
 {
   TRACE();
+
   if (file.empty()) {
     ERR("No filename given for font find %s", __FUNCTION__);
     return nullptr;

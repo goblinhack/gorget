@@ -260,7 +260,7 @@ auto thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool
   (void) thing_push(g, v, l, me);
 
   thing_is_moving_set(g, v, l, me);
-  THING_DBG(me, "move to");
+  THING_DBG(me, "is moving to set");
 
   return true;
 }
@@ -303,6 +303,7 @@ auto thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp me, spoint to) -
   }
 
   THING_LOG(me, "pre teleport");
+  TRACE_INDENT();
 
   bool  level_changed = false;
   auto *old_level     = thing_level(g, v, me);

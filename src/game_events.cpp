@@ -19,7 +19,7 @@
 auto game_mouse_down(Gamep g, int x, int y, uint32_t button) -> bool
 {
   DBG("Game mouse down");
-  TRACE();
+  TRACE_INDENT();
 
   if (wid_some_recent_event_occurred()) {
     DBG("Game mouse down, ignore, some event occurred");
@@ -81,7 +81,7 @@ auto game_mouse_up(Gamep g, int x, int y, uint32_t button) -> bool { return fals
 auto game_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx, int wheely) -> bool
 {
   DBG2("Game mouse motion");
-  TRACE();
+  TRACE_INDENT();
 
   if (wid_some_recent_event_occurred()) {
     return false;
@@ -177,7 +177,7 @@ auto game_event_save(Gamep g) -> bool
 auto game_event_load(Gamep g) -> bool
 {
   DBG("Loading");
-  TRACE();
+  TRACE_INDENT();
 
   wid_load_select(g);
 
@@ -187,7 +187,7 @@ auto game_event_load(Gamep g) -> bool
 auto game_event_wait(Gamep g) -> bool
 {
   DBG("Wait");
-  TRACE();
+  TRACE_INDENT();
 
   auto *v = game_levels_get(g);
   if (v == nullptr) {
@@ -217,7 +217,7 @@ auto game_event_wait(Gamep g) -> bool
 auto game_event_inventory(Gamep g) -> bool
 {
   DBG("Inventory");
-  TRACE();
+  TRACE_INDENT();
 
   auto *v = game_levels_get(g);
   if (v == nullptr) {
@@ -242,7 +242,7 @@ auto game_event_inventory(Gamep g) -> bool
 auto game_event_descend(Gamep g) -> bool
 {
   DBG("Descend");
-  TRACE();
+  TRACE_INDENT();
 
   auto *v = game_levels_get(g);
   if (v == nullptr) {
@@ -277,7 +277,7 @@ auto game_event_descend(Gamep g) -> bool
 auto game_event_ascend(Gamep g) -> bool
 {
   DBG("Ascend");
-  TRACE();
+  TRACE_INDENT();
 
   auto *v = game_levels_get(g);
   if (v == nullptr) {
@@ -312,7 +312,7 @@ auto game_event_ascend(Gamep g) -> bool
 static auto game_event_jump(Gamep g) -> bool
 {
   DBG("Jump");
-  TRACE();
+  TRACE_INDENT();
 
   auto *v = game_levels_get(g);
   if (v == nullptr) {
@@ -352,7 +352,7 @@ static auto game_event_jump(Gamep g) -> bool
 auto game_event_help(Gamep g) -> bool
 {
   DBG("Help");
-  TRACE();
+  TRACE_INDENT();
 
   auto *player = thing_player(g);
   if (player == nullptr) [[unlikely]] {
@@ -371,7 +371,7 @@ auto game_event_help(Gamep g) -> bool
 auto game_event_quit(Gamep g) -> bool
 {
   DBG("Quitting");
-  TRACE();
+  TRACE_INDENT();
 
   if (g_opt_quick_start) {
     DIE_CLEAN("Quick quit");
@@ -389,7 +389,7 @@ auto game_event_quit(Gamep g) -> bool
 auto game_input(Gamep g, const SDL_Keysym *key) -> bool
 {
   DBG("Pressed a key");
-  TRACE();
+  TRACE_INDENT();
 
   if (g == nullptr) {
     DBG("Pressed a key; no game");
@@ -460,7 +460,7 @@ auto game_input(Gamep g, const SDL_Keysym *key) -> bool
 
   if (sdlk_eq(*key, game_key_help_get(g))) {
     DBG("Pressed help key");
-    TRACE();
+    TRACE_INDENT();
     sound_play(g, "keypress");
     (void) game_event_help(g);
     return true;
@@ -468,7 +468,7 @@ auto game_input(Gamep g, const SDL_Keysym *key) -> bool
 
   if (sdlk_eq(*key, game_key_load_get(g))) {
     DBG("Pressed load key");
-    TRACE();
+    TRACE_INDENT();
     DBG("Loading game");
     sound_play(g, "keypress");
     (void) game_event_load(g);
@@ -477,7 +477,7 @@ auto game_input(Gamep g, const SDL_Keysym *key) -> bool
 
   if (sdlk_eq(*key, game_key_save_get(g))) {
     DBG("Pressed save key");
-    TRACE();
+    TRACE_INDENT();
     sound_play(g, "keypress");
     (void) game_event_save(g);
     return true;
@@ -485,7 +485,7 @@ auto game_input(Gamep g, const SDL_Keysym *key) -> bool
 
   if (sdlk_eq(*key, game_key_jump_get(g))) {
     DBG("Pressed jump key");
-    TRACE();
+    TRACE_INDENT();
     game_event_jump(g);
     return true;
   }

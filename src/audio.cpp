@@ -14,7 +14,8 @@ static bool audio_init_done;
 void audio_fini()
 {
   LOG("Audio fini");
-  TRACE();
+  TRACE_INDENT();
+
   Mix_CloseAudio();
   audio_init_done = 0u;
 }
@@ -22,6 +23,7 @@ void audio_fini()
 auto audio_init() -> bool
 {
   TRACE();
+
   //
   // Output sampling freq in samples per second (Hz).
   // you might use MIX_DEFAULT_FREQUENCY(22050) since that is a good value

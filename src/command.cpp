@@ -108,6 +108,7 @@ static bool command_inited;
 void command_fini()
 {
   TRACE();
+
   if (command_inited) {
     command_inited = false;
     for (const auto &iter : commands_map) {
@@ -120,6 +121,7 @@ void command_fini()
 auto command_init() -> bool
 {
   TRACE();
+
   command_inited = true;
 
   return true;
@@ -331,6 +333,7 @@ auto command_handle(Gamep g, const char *input, char *expandedtext, uint8_t show
                     void *context) -> uint8_t
 {
   TRACE();
+
   int matches = 0;
 
   if (expandedtext != nullptr) {

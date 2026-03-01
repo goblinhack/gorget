@@ -869,6 +869,7 @@ static void room_dump(class Room *r)
 
   level_gen_mutex.lock();
   LOG("Room %d @ %s:%d", r->id, r->file, r->line);
+  TRACE_INDENT();
 
   for (int y = 0; y < r->height; y++) {
     std::string tmp;
@@ -1358,6 +1359,7 @@ static void fragment_alt_dump(class FragmentAlt *f)
 
   level_gen_mutex.lock();
   LOG("FragmentAlt %d @ %s:%d", f->id, f->file, f->line);
+  TRACE_INDENT();
 
   for (int y = 0; y < f->height; y++) {
     std::string tmp;
@@ -1655,6 +1657,7 @@ static void fragment_dump(class Fragment *f)
 
   level_gen_mutex.lock();
   LOG("Fragment %d @ %s:%d", f->id, f->file, f->line);
+  TRACE_INDENT();
 
   for (int y = 0; y < f->height; y++) {
     std::string tmp;
@@ -2122,6 +2125,7 @@ static void level_gen_dump(class LevelGen *l, const char *msg)
   } else {
     LOG("Level: %u", l->level_num + 1);
   }
+  TRACE_INDENT();
 
   LOG("Seed              : %u", l->info.seed_num);
   LOG("Room count        : %d", l->info.room_count);
@@ -5121,8 +5125,6 @@ static void level_gen_create_fixed_or_proc_gen_level(Gamep g, LevelNum level_num
 //
 void level_gen_create_levels(Gamep g, Levelsp v)
 {
-  TRACE();
-
   LevelSelect *s           = &v->level_select;
   int const    max_threads = s->level_count;
 
@@ -5131,7 +5133,7 @@ void level_gen_create_levels(Gamep g, Levelsp v)
   //
   auto start = time_ms();
   LOG("Level generation (max %u)", s->level_count);
-  TRACE();
+  TRACE_INDENT();
 
   std::vector< std::thread > threads;
 
@@ -5157,6 +5159,7 @@ void level_gen_create_levels(Gamep g, Levelsp v)
 
   s->create_time = time_ms() - start;
   LOG("Level generation completed, took %u ms", s->create_time);
+  TRACE_INDENT();
 
   level_gen_stats_dump(g);
 }
@@ -5192,6 +5195,7 @@ void level_gen_test(Gamep g)
 
     CON("Created %u levels for dungeon seed %u (took %u ms)", s->level_count, seed, s->create_time);
     LOG("------------------------------------------------------");
+    TRACE_INDENT();
 
     //
     // Free the levels memory

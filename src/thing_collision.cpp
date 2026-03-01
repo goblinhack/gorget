@@ -23,6 +23,7 @@ static void thing_collision_handle_common(Gamep g, Levelsp v, Levelp l, Thingp o
   if (thing_is_teleport(obstacle)) {
     if (! thing_is_teleport_blocked(me)) {
       THING_LOG(me, "over teleport");
+      TRACE_INDENT();
       if (thing_warp_to(g, v, l, me, thing_at(obstacle))) {
         (void) thing_teleport_handle(g, v, l, me);
         stop = true;
@@ -37,6 +38,7 @@ static void thing_collision_handle_common(Gamep g, Levelsp v, Levelp l, Thingp o
   if (thing_is_chasm(obstacle)) {
     if (thing_is_able_to_fall(me)) {
       THING_LOG(me, "over chasm");
+      TRACE_INDENT();
       thing_chasm_handle(g, v, l, me);
       stop = true;
       return;

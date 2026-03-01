@@ -239,5 +239,6 @@ static const char *dict1_names[] = {
 auto os_rand_dict1_name() -> const char *
 {
   TRACE();
+
   return dict1_names[ OS_RANDOM_RANGE(0, ARRAY_SIZE(dict1_names)) ];
 }

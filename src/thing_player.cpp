@@ -95,7 +95,7 @@ auto thing_player_level(Gamep g) -> Levelp
 auto thing_player_mouse_down(Gamep g, Levelsp v, Levelp l, int x, int y, uint32_t button) -> bool
 {
   LOG("Thing mouse down");
-  TRACE();
+  TRACE_INDENT();
 
   switch (player_state(g, v)) {
     case PLAYER_STATE_INIT :
@@ -309,6 +309,7 @@ void player_state_change(Gamep g, Levelsp v, Levelp l, PlayerState new_state)
   // Why oh why change state
   //
   THING_LOG(me, "state change: %s -> %s", player_state_to_string(old_state).c_str(), player_state_to_string(new_state).c_str());
+  TRACE_INDENT();
 
   switch (new_state) {
     case PLAYER_STATE_INIT :
@@ -415,9 +416,11 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
       //
       if (val) {
         THING_LOG(me, "confirmed move");
+        TRACE_INDENT();
         player_state_change(g, v, l, PLAYER_STATE_FOLLOWING_PATH);
       } else {
         THING_LOG(me, "declined move");
+        TRACE_INDENT();
         player_state_change(g, v, l, PLAYER_STATE_NORMAL);
       }
       break;
@@ -440,9 +443,8 @@ auto player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, con
     return false;
   }
 
-  THING_LOG(me, "me move");
-
-  TRACE();
+  THING_LOG(me, "player move");
+  TRACE_INDENT();
 
   //
   // Double check before jumping in chasms or lava
@@ -502,15 +504,14 @@ auto player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, con
 //
 [[nodiscard]] static auto player_move_try(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to, bool need_path) -> bool
 {
-  THING_LOG(me, "move try");
-
-  TRACE();
+  THING_DBG(me, "move try");
 
   if (thing_can_move_to_attempt(g, v, l, me, to)) {
     //
     // Fake a mouse path for movement
     //
-    THING_LOG(me, "move try: can move to");
+    THING_DBG(me, "move try: can move to");
+
     if (need_path) {
       std::vector< spoint > move_path;
       move_path.push_back(to);
@@ -528,7 +529,7 @@ auto player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, con
     //
     // Can we shove it out of the way to move?
     //
-    THING_LOG(me, "move try: can move to by shoving");
+    THING_DBG(me, "move try: can move to by shoving");
 
     if (need_path) {
       std::vector< spoint > move_path;
@@ -548,28 +549,29 @@ auto player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, con
     }
 
     if (thing_shove_to(g, v, l, me, to)) {
-      level_tick_begin_requested(g, v, l, "me shoved");
+      level_tick_begin_requested(g, v, l, "player shoved");
 
       //
       // Do not step onto the thing we just shoved.
       //
       return level_is_dead_on_shoving(g, v, l, to) == nullptr;
     }
-    level_tick_begin_requested(g, v, l, "me failed to shove");
+    level_tick_begin_requested(g, v, l, "player failed to shove");
 
   } else if (thing_can_move_to_attempt_by_opening(g, v, l, me, to)) {
     //
     // Can we open it allow movement?
     //
-    THING_LOG(me, "move try: can move to by opening");
+    THING_DBG(me, "move try: can move to by opening");
+
     if (thing_move_to(g, v, l, me, to)) {
-      level_tick_begin_requested(g, v, l, "me opened a door to move");
+      level_tick_begin_requested(g, v, l, "player opened a door to move");
       return true;
     }
-    level_tick_begin_requested(g, v, l, "me failed to open something in the way");
+    level_tick_begin_requested(g, v, l, "player failed to open something in the way");
 
   } else {
-    level_tick_begin_requested(g, v, l, "me bumped into obstacle");
+    level_tick_begin_requested(g, v, l, "player bumped into obstacle");
   }
   return false;
 }
@@ -670,7 +672,7 @@ void player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what)
     return;
   }
 
-  level_tick_begin_requested(g, v, l, "me fired");
+  level_tick_begin_requested(g, v, l, "player fired");
 }
 
 //
@@ -961,7 +963,7 @@ auto player_jump(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool
 
   for (auto intermediate : std::ranges::reverse_view(jump_path)) {
     if (thing_jump_to(g, v, l, me, intermediate, warn)) {
-      level_tick_begin_requested(g, v, l, "me jumped");
+      level_tick_begin_requested(g, v, l, "player jumped");
       player_state_change(g, v, l, PLAYER_STATE_FOLLOWING_PATH);
       return true;
     }
@@ -1041,7 +1043,7 @@ auto player_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
         //
         // If could jump, then abort the path walk
         //
-        level_tick_begin_requested(g, v, l, "me jumped to avoid a hazard");
+        level_tick_begin_requested(g, v, l, "player jumped to avoid a hazard");
         player_state_change(g, v, l, PLAYER_STATE_NORMAL);
         return false;
       }
@@ -1050,7 +1052,7 @@ auto player_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
       // Something was in the way of jumping. Best to stop rather than accidentally
       // walk into a chasm.
       //
-      level_tick_begin_requested(g, v, l, "me fail to jump to avoid a hazard");
+      level_tick_begin_requested(g, v, l, "player fail to jump to avoid a hazard");
       player_state_change(g, v, l, PLAYER_STATE_NORMAL);
       return false;
     }
@@ -1066,11 +1068,11 @@ auto player_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
 
   if (thing_move_to(g, v, l, me, move_next)) {
     if (thing_is_player(me)) {
-      level_tick_begin_requested(g, v, l, "me moved to next");
+      level_tick_begin_requested(g, v, l, "player moved to next");
     }
   } else {
     if (thing_is_player(me)) {
-      level_tick_begin_requested(g, v, l, "me faled moved to next location");
+      level_tick_begin_requested(g, v, l, "player faled moved to next location");
     }
   }
 

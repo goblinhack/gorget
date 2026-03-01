@@ -42,7 +42,7 @@ void MessageCallback(GLenum /*source*/, GLenum type, GLuint id, GLenum severity,
 void gl_init_2d_mode(Gamep g)
 {
   LOG("SDL: Init 2d mode");
-  TRACE();
+  TRACE_INDENT();
 
   GL_ERROR_CHECK();
   gl_leave_2d_mode(g);
@@ -89,7 +89,8 @@ void gl_init_2d_mode(Gamep g)
 void gl_fini_2d_mode(Gamep g)
 {
   LOG("SDL: fini 2d mode");
-  TRACE();
+  TRACE_INDENT();
+
   GL_ERROR_CHECK();
 
   gl_leave_2d_mode(g);
@@ -103,6 +104,7 @@ void gl_enter_2d_mode(Gamep g)
     LOG("SDL: enter 2d mode");
   }
   TRACE();
+
   GL_ERROR_CHECK();
 
   gl_leave_2d_mode(g);
@@ -158,6 +160,7 @@ void gl_enter_2d_mode(Gamep g, int w, int h)
     LOG("SDL: enter 2d mode %ux%u", w, h);
   }
   TRACE();
+
   GL_ERROR_CHECK();
 
   gl_leave_2d_mode(g);
@@ -210,11 +213,14 @@ void gl_leave_2d_mode(Gamep g)
   if (! in_2d_mode) {
     return;
   }
+
   if (compiler_unused) {
     LOG("SDL: leave 2d mode");
   }
-  in_2d_mode = false;
   TRACE();
+
+  in_2d_mode = false;
+
   glMatrixMode(GL_MODELVIEW);
   GL_ERROR_CHECK();
   glPopMatrix();
@@ -239,6 +245,7 @@ static void gl_init_fbo_(FboEnum fbo, GLuint *render_buf_id, GLuint *fbo_id, GLu
 {
   TRACE();
   DBG2("GFX: create FBO, size %dx%d", tex_width, tex_height);
+
   GL_ERROR_CHECK();
 
   DBG2("OpenGl: - glGenTextures");
@@ -418,6 +425,7 @@ static void gl_fini_fbo_(GLuint *fbo_id, GLuint *fbo_tex_id, GLuint tex_width, G
 {
   TRACE();
   DBG2("GFX: destroy FBO, size %dx%d", tex_width, tex_height);
+
   GL_ERROR_CHECK();
 
   DBG2("OpenGl: - glGenTextures");
@@ -446,9 +454,9 @@ static void gl_fini_fbo_(GLuint *fbo_id, GLuint *fbo_tex_id, GLuint tex_width, G
 
 void gl_init_fbo(Gamep g, FboEnum fbo)
 {
-  TRACE();
-
   LOG("GFX: OpenGL create FBOs");
+  TRACE_INDENT();
+
   GL_ERROR_CHECK();
 
   static bool first = true;
@@ -512,9 +520,9 @@ void gl_init_fbo(Gamep g, FboEnum fbo)
 
 void gl_fini_fbo(Gamep g)
 {
-  TRACE();
-
   LOG("GFX: OpenGL destroy FBOs");
+  TRACE_INDENT();
+
   GL_ERROR_CHECK();
 
   FOR_ALL_FBO(i)

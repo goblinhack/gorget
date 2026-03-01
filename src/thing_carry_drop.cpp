@@ -28,9 +28,11 @@ auto thing_carry_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp player_o
 
   auto s = to_string(g, v, l, item);
   THING_LOG(player_or_monst, "carry: %s", s.c_str());
+  TRACE_INDENT();
 
   if (! thing_is_carried_try_set(g, v, l, item, player_or_monst)) {
     THING_LOG(player_or_monst, "carry: %s (failed)", s.c_str());
+    TRACE_INDENT();
 
     if (thing_is_player(player_or_monst)) {
       auto the_thing = thing_the_long_name(g, v, l, item);
@@ -73,9 +75,11 @@ auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp player_or
 
   auto s = to_string(g, v, l, item);
   THING_LOG(player_or_monst, "drop: %s", s.c_str());
+  TRACE_INDENT();
 
   if (! thing_is_carried_try_unset(g, v, l, item, player_or_monst)) {
     THING_LOG(player_or_monst, "drop: %s (failed)", s.c_str());
+    TRACE_INDENT();
 
     if (thing_is_player(player_or_monst)) {
       auto the_thing = thing_the_long_name(g, v, l, item);

@@ -107,6 +107,7 @@ static auto term_color_string_to_index(const char **s) -> term_color
 void term_log(const char *s)
 {
   TRACE();
+
   char c = 0;
 
   int fg = TERM_COLOR_WHITE;

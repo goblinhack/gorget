@@ -76,6 +76,8 @@ auto level_match_contents(Gamep g, Levelsp v, Levelp l, Testp t, int w, int h, c
   TRACE();
 
   LEVEL_LOG(g, v, l, "match");
+  TRACE_INDENT();
+
   std::string found = level_string(g, v, l, w, h);
 
   for (int y = 0; y < h; y++) {
@@ -115,7 +117,7 @@ void level_init(Gamep g, Levelsp v, Levelp l, LevelNum n)
 auto levels_memory_alloc(Gamep g) -> Levelsp
 {
   LOG("Levels alloc memory");
-  TRACE();
+  TRACE_INDENT();
 
   auto *v = game_levels_get(g);
   if (v != nullptr) {
@@ -140,7 +142,7 @@ auto levels_memory_alloc(Gamep g) -> Levelsp
 static void levels_memory_free(Gamep g, Levelsp v)
 {
   LOG("Levels free memory");
-  TRACE();
+  TRACE_INDENT();
 
   VERIFY(MTYPE_LEVELS, v);
   MYFREE(v);
@@ -152,7 +154,7 @@ static void levels_memory_free(Gamep g, Levelsp v)
 void levels_destroy(Gamep g, Levelsp v)
 {
   LOG("Levels destroy");
-  TRACE();
+  TRACE_INDENT();
 
   FOR_ALL_LEVELS(g, v, iter)
   {
@@ -174,7 +176,7 @@ void level_finalize(Gamep g, Levelsp v, Levelp l)
 void levels_finalize(Gamep g, Levelsp v)
 {
   LOG("Levels finalize");
-  TRACE();
+  TRACE_INDENT();
 
   if (g == nullptr) {
     CROAK("no game pointer");
@@ -195,7 +197,7 @@ void levels_finalize(Gamep g, Levelsp v)
 void level_enter(Gamep g, Levelsp v, Levelp l)
 {
   LEVEL_LOG(g, v, l, "Level entered");
-  TRACE();
+  TRACE_INDENT();
 
   l->player_has_entered_level = true;
 }
@@ -213,7 +215,7 @@ void level_is_completed_by_player_exiting(Gamep g, Levelsp v, Levelp l)
   l->player_completed_level_via_exit = true;
 
   LEVEL_LOG(g, v, l, "Level completed");
-  TRACE();
+  TRACE_INDENT();
 
   auto *player_struct = thing_player_struct(g);
   if (player_struct != nullptr) {
@@ -234,7 +236,7 @@ void level_is_completed_by_player_falling(Gamep g, Levelsp v, Levelp l)
 auto level_change(Gamep g, Levelsp v, LevelNum level_num) -> Levelp
 {
   LOG("Level change to %u", level_num);
-  TRACE();
+  TRACE_INDENT();
 
   VERIFY(MTYPE_LEVELS, v);
 

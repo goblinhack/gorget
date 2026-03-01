@@ -47,9 +47,8 @@ auto thing_projectile_get_direction(Gamep g, Levelsp v, Levelp l, Thingp t) -> f
 
 auto thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const fpoint target) -> bool
 {
-  TRACE();
-
   THING_LOG(me, "fire projectile");
+  TRACE_INDENT();
 
   auto delta = target - make_fpoint(thing_at(me));
 

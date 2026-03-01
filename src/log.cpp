@@ -67,7 +67,7 @@ void log_(const char *fmt, va_list args)
 
   IF_DEBUG
   {
-    snprintf(buf + len, MAXLONGSTR - len, "%s%*s", "", g_callframes_depth, "");
+    snprintf(buf + len, MAXLONGSTR - len, "%s%*s", "", g_callframes_indent, "");
     len = (int) strlen(buf);
   }
 

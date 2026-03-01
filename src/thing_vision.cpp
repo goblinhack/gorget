@@ -57,6 +57,7 @@ void thing_can_see_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 
   THING_LOG(t, "can see:");
+  TRACE_INDENT();
 
   for (auto y = 0; y < MAP_HEIGHT; y++) {
     std::string debug;
@@ -93,6 +94,7 @@ void thing_has_seen_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 
   THING_LOG(t, "has seen:");
+  TRACE_INDENT();
 
   for (auto y = 0; y < MAP_HEIGHT; y++) {
     std::string debug;

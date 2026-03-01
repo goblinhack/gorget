@@ -106,6 +106,7 @@ auto thing_mob_spawn_a_minion(Gamep g, Levelsp v, Levelp l, Thingp mob, Tpp tp_m
   // Out of slots; but we checked above
   //
   THING_ERR(mob, "unexpectedly out of minion slots");
+
   return nullptr;
 }
 

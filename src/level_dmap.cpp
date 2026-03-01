@@ -22,7 +22,7 @@ void level_dmap(Gamep g, Levelsp v, Levelp l)
 void levels_dmap(Gamep g, Levelsp v)
 {
   LOG("Levels dmap");
-  TRACE();
+  TRACE_INDENT();
 
   if (g == nullptr) {
     CROAK("no game pointer");
@@ -32,9 +32,5 @@ void levels_dmap(Gamep g, Levelsp v)
     CROAK("no levels pointer");
   }
 
-  FOR_ALL_LEVELS(g, v, iter)
-  {
-    TRACE();
-    level_dmap(g, v, iter);
-  }
+  FOR_ALL_LEVELS(g, v, iter) { level_dmap(g, v, iter); }
 }

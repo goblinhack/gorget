@@ -69,16 +69,14 @@ static void level_tick_ok_to_end_check(Gamep g, Levelsp v, Levelp l)
     //
     if (thing_is_moving(t)) {
       l->tick_wait_on_things = true;
-      IF_DEBUG
-      { //
+      if (compiler_unused) { //
         LEVEL_DBG(g, v, l, "waiting on moving %s", to_string(g, v, l, t).c_str());
       }
     }
 
     if (thing_is_jumping(t)) {
       l->tick_wait_on_things = true;
-      IF_DEBUG2
-      { //
+      if (compiler_unused) { //
         LEVEL_DBG(g, v, l, "waiting on jumping %s", to_string(g, v, l, t).c_str());
       }
     }
@@ -90,8 +88,7 @@ static void level_tick_ok_to_end_check(Gamep g, Levelsp v, Levelp l)
       thing_fall_end_check(g, v, l, t);
       if (thing_is_falling(t) != 0) {
         l->tick_wait_on_things = true;
-        IF_DEBUG2
-        { //
+        if (compiler_unused) { //
           LEVEL_DBG(g, v, l, "waiting on falling %s", to_string(g, v, l, t).c_str());
         }
       }
@@ -352,7 +349,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool tick_is
 
     auto thing_dt_change = t->thing_dt - old_thing_dt;
 
-    if (true) {
+    if (compiler_unused) {
       THING_LOG(t, "level dt %f old_thing_dt %f thing_dt %f thing_dt_change %f speed %d v %d",
                 dt,              //
                 old_thing_dt,    //
@@ -399,7 +396,8 @@ static void level_tick_begin(Gamep g, Levelsp v, Levelp l)
 {
   TRACE();
 
-  LEVEL_DBG(g, v, l, "Tick %u: begin", v->tick);
+  LEVEL_LOG(g, v, l, "Tick %u: begin", v->tick);
+  TRACE_INDENT();
 
   l->tick_begin_requested = false;
   l->tick_in_progress     = true;
@@ -429,7 +427,8 @@ void level_tick_begin_requested(Gamep g, Levelsp v, Levelp l, const char *why)
 {
   TRACE();
 
-  LEVEL_DBG(g, v, l, "Tick %u: requested new tick: %s", v->tick, why);
+  LEVEL_LOG(g, v, l, "Tick %u: requested new tick: %s", v->tick, why);
+  TRACE_INDENT();
 
   FOR_ALL_LEVELS(g, v, iter)
   {

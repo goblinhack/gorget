@@ -76,8 +76,6 @@ auto thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thingp me) -
 {
   THING_DBG(me, "move try");
 
-  TRACE();
-
   if (thing_can_move_to_attempt(g, v, l, me, to)) {
     return true;
   }
@@ -119,7 +117,6 @@ auto thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thingp me) -
 [[nodiscard]] static auto thing_monst_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
 {
   TRACE();
-
   THING_DBG(me, "move to next");
 
   //

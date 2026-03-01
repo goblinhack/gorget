@@ -29,7 +29,7 @@ void TP_LOG_(Tpp tp, const char *fmt, va_list args)
 
   IF_DEBUG
   {
-    snprintf(buf + len, MAXLONGSTR - len, "[%-50s]: %*s", tp_name(tp).c_str(), g_callframes_depth, "");
+    snprintf(buf + len, MAXLONGSTR - len, "[%-50s]: %*s", tp_name(tp).c_str(), g_callframes_indent, "");
     len = (int) strlen(buf);
   }
 

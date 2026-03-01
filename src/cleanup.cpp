@@ -29,7 +29,7 @@
 void cleanup()
 {
   LOG("Cleanup, thread %d", g_thread_id);
-  TRACE();
+  TRACE_INDENT();
 
   if (g_thread_id != MAIN_THREAD) {
     return;

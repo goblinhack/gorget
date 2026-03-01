@@ -99,7 +99,10 @@
   tof = outf + delta;
   to  = make_spoint(tof);
 
-  THING_LOG(t, "delta %f,%f spoint %d,%d out %d,%d", delta.x, delta.y, to.x, to.y, out.x, out.y);
+  if (compiler_unused) {
+    THING_LOG(t, "delta %f,%f spoint %d,%d out %d,%d", delta.x, delta.y, to.x, to.y, out.x, out.y);
+  }
+
   if (level_is_obs_to_teleporting_onto(g, v, l, to) != nullptr) {
     //
     // Not sure how this happens, but we need the teleport to take us somewhere.
@@ -123,9 +126,8 @@
 //
 auto thing_teleport_handle(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool
 {
-  TRACE();
-
   THING_LOG(t, "teleport, try");
+  TRACE_INDENT();
 
   if (t->tick_teleport == v->tick) {
     THING_LOG(t, "teleport, no; too frequent");
@@ -166,6 +168,7 @@ auto thing_teleport_handle(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool
   }
 
   THING_LOG(t, "pre teleport, warp to %d,%d", to.x, to.y);
+  TRACE_INDENT();
 
   if (! thing_warp_to(g, v, l, t, to)) {
     THING_LOG(t, "pre teleport, warp to %d,%d failed", to.x, to.y);
@@ -179,6 +182,7 @@ auto thing_teleport_handle(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool
   thing_is_teleporting_set(g, v, l, t, false);
 
   THING_LOG(t, "post teleport");
+  TRACE_INDENT();
 
   thing_sound_play(g, v, l, t, "teleport");
 

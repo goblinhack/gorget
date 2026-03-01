@@ -181,6 +181,7 @@ void game_popups_display(Gamep g, Levelsp v, Levelp l)
 void game_popups_clear(Gamep g)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;

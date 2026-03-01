@@ -309,13 +309,13 @@ class Game *game;
 void Config::fini()
 {
   LOG("Game fini");
-  TRACE();
+  TRACE_INDENT();
 }
 
 void Config::reset()
 {
   LOG("Game reset");
-  TRACE();
+  TRACE_INDENT();
 
   config_pix_height      = {};
   config_pix_width       = {};
@@ -367,7 +367,7 @@ void game_config_reset(Gamep g) { g->config.reset(); }
 Game::Game(const std::string &vappdata) : save_slot(1)
 {
   LOG("Game load %s", vappdata.c_str());
-  TRACE();
+  TRACE_INDENT();
 
   auto *g = this;
 
@@ -388,7 +388,7 @@ Game::Game(const std::string &vappdata) : save_slot(1)
 void Game::init()
 {
   CON("Game init");
-  TRACE();
+  TRACE_INDENT();
 
   //
   // If no seed is specified, we do want to start from a different seed each time
@@ -410,34 +410,28 @@ void game_init(Gamep g) { g->init(); }
 //
 auto game_test_init(Gamep g, Levelp *l_out, LevelNum level_num, int w, int h, const char *contents, const Overrides &overrides) -> Levelsp
 {
-  TRACE();
+  LOG("Test init");
+  TRACE_INDENT();
+
   game_cleanup(g);
 
-  TRACE();
   game_state_change(g, STATE_INIT, "init test");
 
   //
   // We need a consistent seed for all tests, so damage doesn't vary
   //
-  TRACE();
   g->seed_set(TEST_SEED);
 
-  TRACE();
   g->player_name_set("Ser Testalot");
 
-  TRACE();
   auto *v = game_levels_set(g, levels_memory_alloc(g));
 
-  TRACE();
   game_test_init_level(g, v, l_out, level_num, w, h, contents, overrides);
 
-  TRACE();
   game_state_reset(g, "new game");
 
-  TRACE();
   game_start_playing(g);
 
-  TRACE();
   game_state_change(g, STATE_PLAYING, "new game");
 
   return v;
@@ -449,32 +443,28 @@ auto game_test_init(Gamep g, Levelp *l_out, LevelNum level_num, int w, int h, co
 void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num, spoint level_at, int w, int h, const char *contents,
                           const Overrides &overrides)
 {
-  TRACE();
+  LOG("Test init level");
+  TRACE_INDENT();
 
   auto *l = game_level_get(g, v, level_num);
   if (l_out != nullptr) {
     *l_out = l;
   }
 
-  TRACE();
   level_init(g, v, l, level_num);
 
-  TRACE();
   if (! level_populate(g, v, l, nullptr, w, h, contents, overrides)) {
     CROAK("level populate failed");
   }
 
-  TRACE();
   if (level_num >= LEVEL_MAX) {
     CROAK("too many levels deep, level_num %d", level_num);
   }
 
-  TRACE();
   if (level_at.x >= LEVEL_ACROSS) {
     CROAK("level oob (%d,%d)", level_at.x, level_at.y);
   }
 
-  TRACE();
   if (level_at.y >= LEVEL_DOWN) {
     CROAK("level oob (%d,%d)", level_at.x, level_at.y);
   }
@@ -482,10 +472,8 @@ void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num,
   //
   // Assign the level into the level select grid
   //
-  TRACE();
   l->level_select_at = level_at;
 
-  TRACE();
   auto *s            = &v->level_select.data[ level_at.x ][ level_at.y ];
   s->level_num       = l->level_num;
   s->is_set          = 1U;
@@ -505,15 +493,13 @@ void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num,
 void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num, int w, int h, const char *contents,
                           const Overrides &overrides)
 {
-  TRACE();
-
   game_test_init_level(g, v, l_out, level_num, spoint(0, level_num), w, h, contents, overrides);
 }
 
 void Game::fini()
 {
   LOG("Game fini");
-  TRACE();
+  TRACE_INDENT();
 
   cleanup();
 }
@@ -527,7 +513,6 @@ void game_fini(Gamep g)
 
   g->fini();
 
-  TRACE();
   OLDPTR(MTYPE_GAME, g);
   delete g;
   g    = nullptr;
@@ -537,7 +522,7 @@ void game_fini(Gamep g)
 void Game::cleanup()
 {
   LOG("Game cleanup");
-  TRACE();
+  TRACE_INDENT();
 
   state_change(STATE_QUITTING, "quitting");
 
@@ -778,7 +763,7 @@ auto game_player_name_get(Gamep g) -> const char *
 void Game::create_levels()
 {
   LOG("Create levels");
-  TRACE();
+  TRACE_INDENT();
 
   auto *g = this;
   destroy_levels();
@@ -898,7 +883,7 @@ void Game::destroy_levels()
   }
 
   LOG("Levels destroy all");
-  TRACE();
+  TRACE_INDENT();
 
   levels_destroy(g, v);
 
@@ -926,7 +911,7 @@ static auto game_state_to_string(GameState state) -> std::string
 void Game::state_reset(const std::string &why)
 {
   LOG("State reset: %s", why.c_str());
-  TRACE();
+  TRACE_INDENT();
 
   auto *g = this;
   auto *v = game_levels_get(g);
@@ -947,8 +932,6 @@ auto game_state(Gamep g) -> GameState { return g->state; }
 
 void Game::state_change(GameState new_state, const std::string &why)
 {
-  TRACE();
-
   auto *g = this;
   if (g->state == new_state) {
     return;
@@ -966,7 +949,7 @@ void Game::state_change(GameState new_state, const std::string &why)
   //
   LOG("Game state change: %s -> %s, reason: %s", game_state_to_string(old_state).c_str(), game_state_to_string(new_state).c_str(),
       why.c_str());
-  TRACE();
+  TRACE_INDENT();
 
   //
   // Cleanup actions for the new state
@@ -1097,6 +1080,7 @@ void Game::state_change(GameState new_state, const std::string &why)
 void game_state_change(Gamep g, GameState new_state, const char *why)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -1204,6 +1188,7 @@ void Game::tick()
 void game_tick(Gamep g)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -1214,6 +1199,7 @@ void game_tick(Gamep g)
 auto game_tick_get(Gamep g, Levelsp v) -> uint32_t
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return 0;
@@ -1320,6 +1306,7 @@ void Game::display()
 void game_display(Gamep g)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -1330,6 +1317,7 @@ void game_display(Gamep g)
 auto game_load_config(Gamep g) -> bool
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return false;
@@ -1340,6 +1328,7 @@ auto game_load_config(Gamep g) -> bool
 auto game_hiscores_get(Gamep g) -> class HiScores *
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return nullptr;
@@ -1350,6 +1339,7 @@ auto game_hiscores_get(Gamep g) -> class HiScores *
 void game_add_new_hiscore(Gamep g, int score, LevelNum level_num, const char *name, const char *reason)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -1360,6 +1350,7 @@ void game_add_new_hiscore(Gamep g, int score, LevelNum level_num, const char *na
 auto game_is_new_hiscore(Gamep g, int score) -> bool
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return false;
@@ -1370,6 +1361,7 @@ auto game_is_new_hiscore(Gamep g, int score) -> bool
 auto game_is_new_highest_hiscore(Gamep g, int score) -> bool
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return false;
@@ -1380,6 +1372,7 @@ auto game_is_new_highest_hiscore(Gamep g, int score) -> bool
 auto game_place_str(Gamep g, int score) -> const char *
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return "";
@@ -1390,6 +1383,7 @@ auto game_place_str(Gamep g, int score) -> const char *
 void game_visible_map_pix_get(Gamep g, int *visible_map_tl_x, int *visible_map_tl_y, int *visible_map_br_x, int *visible_map_br_y)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     *visible_map_tl_x = 0;
     *visible_map_tl_y = 0;
@@ -1407,6 +1401,7 @@ void game_visible_map_pix_get(Gamep g, int *visible_map_tl_x, int *visible_map_t
 void game_visible_map_pix_set(Gamep g, int visible_map_tl_x, int visible_map_tl_y, int visible_map_br_x, int visible_map_br_y)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     g->visible_map_tl_x = 0;
     g->visible_map_tl_y = 0;
@@ -1424,6 +1419,7 @@ void game_visible_map_pix_set(Gamep g, int visible_map_tl_x, int visible_map_tl_
 auto game_tiles_visible_across_get(Gamep g) -> int
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return MAP_TILES_ACROSS_DEF;
@@ -1433,6 +1429,7 @@ auto game_tiles_visible_across_get(Gamep g) -> int
 void game_tiles_visible_across_set(Gamep g, int val)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -1443,6 +1440,7 @@ void game_tiles_visible_across_set(Gamep g, int val)
 auto game_tiles_visible_down_get(Gamep g) -> int
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return MAP_TILES_DOWN_DEF;
@@ -1452,6 +1450,7 @@ auto game_tiles_visible_down_get(Gamep g) -> int
 void game_tiles_visible_down_set(Gamep g, int val)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -1462,6 +1461,7 @@ void game_tiles_visible_down_set(Gamep g, int val)
 auto game_last_mouse_down_get(Gamep g) -> int
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return 0;
@@ -1490,6 +1490,7 @@ auto game_aspect_ratio_get(Gamep g) -> float
 void game_aspect_ratio_set(Gamep g, float val)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -1500,6 +1501,7 @@ void game_aspect_ratio_set(Gamep g, float val)
 auto game_ui_term_height_get(Gamep g) -> int
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return TERM_HEIGHT_DEF;
@@ -1509,6 +1511,7 @@ auto game_ui_term_height_get(Gamep g) -> int
 void game_ui_term_height_set(Gamep g, int val)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -1519,6 +1522,7 @@ void game_ui_term_height_set(Gamep g, int val)
 auto game_ui_term_width_get(Gamep g) -> int
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return TERM_WIDTH_DEF;
@@ -1528,6 +1532,7 @@ auto game_ui_term_width_get(Gamep g) -> int
 void game_ui_term_width_set(Gamep g, int val)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -1538,6 +1543,7 @@ void game_ui_term_width_set(Gamep g, int val)
 auto game_debug_mode_get(Gamep g) -> bool
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return false;
@@ -1547,6 +1553,7 @@ auto game_debug_mode_get(Gamep g) -> bool
 void game_debug_mode_set(Gamep g, bool val)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -1557,6 +1564,7 @@ void game_debug_mode_set(Gamep g, bool val)
 auto game_fps_counter_get(Gamep g) -> bool
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return false;
@@ -1566,6 +1574,7 @@ auto game_fps_counter_get(Gamep g) -> bool
 void game_fps_counter_set(Gamep g)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -1575,6 +1584,7 @@ void game_fps_counter_set(Gamep g)
 void game_fps_counter_unset(Gamep g)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -1585,6 +1595,7 @@ void game_fps_counter_unset(Gamep g)
 auto game_fps_value_get(Gamep g) -> int
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return 0;
@@ -1594,6 +1605,7 @@ auto game_fps_value_get(Gamep g) -> int
 void game_fps_value_set(Gamep g, int val)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -1604,6 +1616,7 @@ void game_fps_value_set(Gamep g, int val)
 auto game_gfx_borderless_get(Gamep g) -> bool
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return false;
@@ -1613,6 +1626,7 @@ auto game_gfx_borderless_get(Gamep g) -> bool
 void game_gfx_borderless_set(Gamep g)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -1622,6 +1636,7 @@ void game_gfx_borderless_set(Gamep g)
 void game_gfx_borderless_unset(Gamep g)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -1632,6 +1647,7 @@ void game_gfx_borderless_unset(Gamep g)
 auto game_gfx_fullscreen_get(Gamep g) -> bool
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return false;
@@ -1641,6 +1657,7 @@ auto game_gfx_fullscreen_get(Gamep g) -> bool
 void game_gfx_fullscreen_set(Gamep g)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -1650,6 +1667,7 @@ void game_gfx_fullscreen_set(Gamep g)
 void game_gfx_fullscreen_unset(Gamep g)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -1660,6 +1678,7 @@ void game_gfx_fullscreen_unset(Gamep g)
 auto game_gfx_fullscreen_desktop_get(Gamep g) -> bool
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return false;
@@ -1669,6 +1688,7 @@ auto game_gfx_fullscreen_desktop_get(Gamep g) -> bool
 void game_gfx_fullscreen_desktop_set(Gamep g)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -1678,6 +1698,7 @@ void game_gfx_fullscreen_desktop_set(Gamep g)
 void game_gfx_fullscreen_desktop_unset(Gamep g)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -1688,6 +1709,7 @@ void game_gfx_fullscreen_desktop_unset(Gamep g)
 auto game_gfx_vsync_enable_get(Gamep g) -> bool
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return false;
@@ -1725,6 +1747,7 @@ auto game_mouse_wheel_lr_negated_get(Gamep g) -> bool
 void game_mouse_wheel_lr_negated_set(Gamep g)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -1734,6 +1757,7 @@ void game_mouse_wheel_lr_negated_set(Gamep g)
 void game_mouse_wheel_lr_negated_unset(Gamep g)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -1744,6 +1768,7 @@ void game_mouse_wheel_lr_negated_unset(Gamep g)
 auto game_mouse_wheel_ud_negated_get(Gamep g) -> bool
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return false;
@@ -1753,6 +1778,7 @@ auto game_mouse_wheel_ud_negated_get(Gamep g) -> bool
 void game_mouse_wheel_ud_negated_set(Gamep g)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -1762,6 +1788,7 @@ void game_mouse_wheel_ud_negated_set(Gamep g)
 void game_mouse_wheel_ud_negated_unset(Gamep g)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -1772,6 +1799,7 @@ void game_mouse_wheel_ud_negated_unset(Gamep g)
 auto game_config_pix_height_get(Gamep g) -> int
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return 0;
@@ -1781,6 +1809,7 @@ auto game_config_pix_height_get(Gamep g) -> int
 void game_config_pix_height_set(Gamep g, int val)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -1791,6 +1820,7 @@ void game_config_pix_height_set(Gamep g, int val)
 auto game_config_pix_width_get(Gamep g) -> int
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return 0;
@@ -1800,6 +1830,7 @@ auto game_config_pix_width_get(Gamep g) -> int
 void game_config_pix_width_set(Gamep g, int val)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -1810,6 +1841,7 @@ void game_config_pix_width_set(Gamep g, int val)
 auto game_map_fbo_height_get(Gamep g) -> int
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return 0;
@@ -1820,6 +1852,7 @@ auto game_map_fbo_height_get(Gamep g) -> int
 auto game_map_fbo_width_get(Gamep g) -> int
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return 0;
@@ -1830,6 +1863,7 @@ auto game_map_fbo_width_get(Gamep g) -> int
 void game_map_fbo_height_set(Gamep g, int val)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -1840,6 +1874,7 @@ void game_map_fbo_height_set(Gamep g, int val)
 void game_map_fbo_width_set(Gamep g, int val)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -1850,6 +1885,7 @@ void game_map_fbo_width_set(Gamep g, int val)
 auto game_window_pix_height_get(Gamep g) -> int
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return 0;
@@ -1859,6 +1895,7 @@ auto game_window_pix_height_get(Gamep g) -> int
 void game_window_pix_height_set(Gamep g, int val)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -1878,6 +1915,7 @@ auto game_window_pix_width_get(Gamep g) -> int
 void game_window_pix_width_set(Gamep g, int val)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -1888,6 +1926,7 @@ void game_window_pix_width_set(Gamep g, int val)
 auto game_ascii_pix_height_get(Gamep g) -> int
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return 0;
@@ -1897,6 +1936,7 @@ auto game_ascii_pix_height_get(Gamep g) -> int
 void game_ascii_pix_height_set(Gamep g, int val)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -1907,6 +1947,7 @@ void game_ascii_pix_height_set(Gamep g, int val)
 auto game_ascii_pix_width_get(Gamep g) -> int
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return 0;
@@ -1916,6 +1957,7 @@ auto game_ascii_pix_width_get(Gamep g) -> int
 void game_ascii_pix_width_set(Gamep g, int val)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -1926,6 +1968,7 @@ void game_ascii_pix_width_set(Gamep g, int val)
 auto game_music_volume_get(Gamep g) -> int
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return 0;
@@ -1935,6 +1978,7 @@ auto game_music_volume_get(Gamep g) -> int
 void game_music_volume_set(Gamep g, int val)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -1945,6 +1989,7 @@ void game_music_volume_set(Gamep g, int val)
 auto game_sdl_delay_get(Gamep g) -> int
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return 0;
@@ -1954,6 +1999,7 @@ auto game_sdl_delay_get(Gamep g) -> int
 void game_sdl_delay_set(Gamep g, int val)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -1964,6 +2010,7 @@ void game_sdl_delay_set(Gamep g, int val)
 auto game_sound_volume_get(Gamep g) -> int
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return 0;
@@ -1973,6 +2020,7 @@ auto game_sound_volume_get(Gamep g) -> int
 void game_sound_volume_set(Gamep g, int val)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -1983,6 +2031,7 @@ void game_sound_volume_set(Gamep g, int val)
 auto game_levels_get(Gamep g) -> Levelsp
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return nullptr;
@@ -1995,6 +2044,7 @@ auto game_levels_get(Gamep g) -> Levelsp
 auto game_levels_set(Gamep g, Levelsp val) -> Levelsp
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return nullptr;
@@ -2005,6 +2055,7 @@ auto game_levels_set(Gamep g, Levelsp val) -> Levelsp
 auto game_level_get(Gamep g, Levelsp v) -> Levelp
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return nullptr;
@@ -2020,6 +2071,7 @@ auto game_level_get(Gamep g, Levelsp v) -> Levelp
 auto game_level_get(Gamep g, Levelsp v, LevelNum n) -> Levelp
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("game_level_get: No game pointer set");
     return nullptr;
@@ -2038,6 +2090,7 @@ auto game_level_get(Gamep g, Levelsp v, LevelNum n) -> Levelp
 auto game_level_populate(Gamep g, Levelsp v, LevelNum n) -> Levelp
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("game_level_populate: No game pointer set");
     return nullptr;
@@ -2057,6 +2110,7 @@ auto game_level_populate(Gamep g, Levelsp v, LevelNum n) -> Levelp
 auto game_key_wait_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
+
   if (g == nullptr) {
     return no_key;
   }
@@ -2065,6 +2119,7 @@ auto game_key_wait_get(Gamep g) -> SDL_Keysym
 void game_key_wait_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
+
   if (g == nullptr) {
     return;
   }
@@ -2074,6 +2129,7 @@ void game_key_wait_set(Gamep g, SDL_Keysym key)
 auto game_key_console_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
+
   if (g == nullptr) {
     return no_key;
   }
@@ -2082,6 +2138,7 @@ auto game_key_console_get(Gamep g) -> SDL_Keysym
 void game_key_console_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
+
   if (g == nullptr) {
     return;
   }
@@ -2091,6 +2148,7 @@ void game_key_console_set(Gamep g, SDL_Keysym key)
 auto game_key_help_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
+
   if (g == nullptr) {
     return no_key;
   }
@@ -2099,6 +2157,7 @@ auto game_key_help_get(Gamep g) -> SDL_Keysym
 void game_key_help_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
+
   if (g == nullptr) {
     return;
   }
@@ -2108,6 +2167,7 @@ void game_key_help_set(Gamep g, SDL_Keysym key)
 auto game_key_load_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
+
   if (g == nullptr) {
     return no_key;
   }
@@ -2116,6 +2176,7 @@ auto game_key_load_get(Gamep g) -> SDL_Keysym
 void game_key_load_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
+
   if (g == nullptr) {
     return;
   }
@@ -2125,6 +2186,7 @@ void game_key_load_set(Gamep g, SDL_Keysym key)
 auto game_key_move_down_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
+
   if (g == nullptr) {
     return no_key;
   }
@@ -2133,6 +2195,7 @@ auto game_key_move_down_get(Gamep g) -> SDL_Keysym
 void game_key_move_down_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
+
   if (g == nullptr) {
     return;
   }
@@ -2142,6 +2205,7 @@ void game_key_move_down_set(Gamep g, SDL_Keysym key)
 auto game_key_move_left_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
+
   if (g == nullptr) {
     return no_key;
   }
@@ -2150,6 +2214,7 @@ auto game_key_move_left_get(Gamep g) -> SDL_Keysym
 void game_key_move_left_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
+
   if (g == nullptr) {
     return;
   }
@@ -2159,6 +2224,7 @@ void game_key_move_left_set(Gamep g, SDL_Keysym key)
 auto game_key_move_right_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
+
   if (g == nullptr) {
     return no_key;
   }
@@ -2167,6 +2233,7 @@ auto game_key_move_right_get(Gamep g) -> SDL_Keysym
 void game_key_move_right_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
+
   if (g == nullptr) {
     return;
   }
@@ -2176,6 +2243,7 @@ void game_key_move_right_set(Gamep g, SDL_Keysym key)
 auto game_key_move_up_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
+
   if (g == nullptr) {
     return no_key;
   }
@@ -2184,6 +2252,7 @@ auto game_key_move_up_get(Gamep g) -> SDL_Keysym
 void game_key_move_up_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
+
   if (g == nullptr) {
     return;
   }
@@ -2193,6 +2262,7 @@ void game_key_move_up_set(Gamep g, SDL_Keysym key)
 auto game_key_quit_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
+
   if (g == nullptr) {
     return no_key;
   }
@@ -2201,6 +2271,7 @@ auto game_key_quit_get(Gamep g) -> SDL_Keysym
 void game_key_quit_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
+
   if (g == nullptr) {
     return;
   }
@@ -2210,6 +2281,7 @@ void game_key_quit_set(Gamep g, SDL_Keysym key)
 auto game_key_save_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
+
   if (g == nullptr) {
     return no_key;
   }
@@ -2218,6 +2290,7 @@ auto game_key_save_get(Gamep g) -> SDL_Keysym
 void game_key_save_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
+
   if (g == nullptr) {
     return;
   }
@@ -2227,6 +2300,7 @@ void game_key_save_set(Gamep g, SDL_Keysym key)
 auto game_key_screenshot_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
+
   if (g == nullptr) {
     return no_key;
   }
@@ -2235,6 +2309,7 @@ auto game_key_screenshot_get(Gamep g) -> SDL_Keysym
 void game_key_screenshot_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
+
   if (g == nullptr) {
     return;
   }
@@ -2244,6 +2319,7 @@ void game_key_screenshot_set(Gamep g, SDL_Keysym key)
 auto game_key_unused1_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
+
   if (g == nullptr) {
     return no_key;
   }
@@ -2252,6 +2328,7 @@ auto game_key_unused1_get(Gamep g) -> SDL_Keysym
 void game_key_unused1_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -2262,6 +2339,7 @@ void game_key_unused1_set(Gamep g, SDL_Keysym key)
 auto game_key_unused2_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
+
   if (g == nullptr) {
     return no_key;
   }
@@ -2270,6 +2348,7 @@ auto game_key_unused2_get(Gamep g) -> SDL_Keysym
 void game_key_unused2_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -2280,6 +2359,7 @@ void game_key_unused2_set(Gamep g, SDL_Keysym key)
 auto game_key_unused3_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
+
   if (g == nullptr) {
     return no_key;
   }
@@ -2288,6 +2368,7 @@ auto game_key_unused3_get(Gamep g) -> SDL_Keysym
 void game_key_unused3_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -2298,6 +2379,7 @@ void game_key_unused3_set(Gamep g, SDL_Keysym key)
 auto game_key_unused4_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
+
   if (g == nullptr) {
     return no_key;
   }
@@ -2306,6 +2388,7 @@ auto game_key_unused4_get(Gamep g) -> SDL_Keysym
 void game_key_unused4_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -2316,6 +2399,7 @@ void game_key_unused4_set(Gamep g, SDL_Keysym key)
 auto game_key_unused5_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
+
   if (g == nullptr) {
     return no_key;
   }
@@ -2324,6 +2408,7 @@ auto game_key_unused5_get(Gamep g) -> SDL_Keysym
 void game_key_unused5_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -2334,6 +2419,7 @@ void game_key_unused5_set(Gamep g, SDL_Keysym key)
 auto game_key_unused6_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
+
   if (g == nullptr) {
     return no_key;
   }
@@ -2342,6 +2428,7 @@ auto game_key_unused6_get(Gamep g) -> SDL_Keysym
 void game_key_unused6_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -2352,6 +2439,7 @@ void game_key_unused6_set(Gamep g, SDL_Keysym key)
 auto game_key_unused7_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
+
   if (g == nullptr) {
     return no_key;
   }
@@ -2360,6 +2448,7 @@ auto game_key_unused7_get(Gamep g) -> SDL_Keysym
 void game_key_unused7_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -2370,6 +2459,7 @@ void game_key_unused7_set(Gamep g, SDL_Keysym key)
 auto game_key_unused8_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
+
   if (g == nullptr) {
     return no_key;
   }
@@ -2378,6 +2468,7 @@ auto game_key_unused8_get(Gamep g) -> SDL_Keysym
 void game_key_unused8_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -2388,6 +2479,7 @@ void game_key_unused8_set(Gamep g, SDL_Keysym key)
 auto game_key_unused9_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
+
   if (g == nullptr) {
     return no_key;
   }
@@ -2396,6 +2488,7 @@ auto game_key_unused9_get(Gamep g) -> SDL_Keysym
 void game_key_unused9_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -2406,6 +2499,7 @@ void game_key_unused9_set(Gamep g, SDL_Keysym key)
 auto game_key_unused10_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
+
   if (g == nullptr) {
     return no_key;
   }
@@ -2414,6 +2508,7 @@ auto game_key_unused10_get(Gamep g) -> SDL_Keysym
 void game_key_unused10_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -2424,6 +2519,7 @@ void game_key_unused10_set(Gamep g, SDL_Keysym key)
 auto game_key_unused11_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
+
   if (g == nullptr) {
     return no_key;
   }
@@ -2432,6 +2528,7 @@ auto game_key_unused11_get(Gamep g) -> SDL_Keysym
 void game_key_unused11_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -2442,6 +2539,7 @@ void game_key_unused11_set(Gamep g, SDL_Keysym key)
 auto game_key_unused12_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
+
   if (g == nullptr) {
     return no_key;
   }
@@ -2450,6 +2548,7 @@ auto game_key_unused12_get(Gamep g) -> SDL_Keysym
 void game_key_unused12_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -2460,6 +2559,7 @@ void game_key_unused12_set(Gamep g, SDL_Keysym key)
 auto game_key_unused13_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
+
   if (g == nullptr) {
     return no_key;
   }
@@ -2468,6 +2568,7 @@ auto game_key_unused13_get(Gamep g) -> SDL_Keysym
 void game_key_unused13_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -2478,6 +2579,7 @@ void game_key_unused13_set(Gamep g, SDL_Keysym key)
 auto game_key_unused14_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
+
   if (g == nullptr) {
     return no_key;
   }
@@ -2486,6 +2588,7 @@ auto game_key_unused14_get(Gamep g) -> SDL_Keysym
 void game_key_unused14_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -2496,6 +2599,7 @@ void game_key_unused14_set(Gamep g, SDL_Keysym key)
 auto game_key_fire_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
+
   if (g == nullptr) {
     return no_key;
   }
@@ -2504,6 +2608,7 @@ auto game_key_fire_get(Gamep g) -> SDL_Keysym
 void game_key_fire_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -2514,6 +2619,7 @@ void game_key_fire_set(Gamep g, SDL_Keysym key)
 auto game_key_inventory_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
+
   if (g == nullptr) {
     return no_key;
   }
@@ -2522,6 +2628,7 @@ auto game_key_inventory_get(Gamep g) -> SDL_Keysym
 void game_key_inventory_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -2532,6 +2639,7 @@ void game_key_inventory_set(Gamep g, SDL_Keysym key)
 auto game_key_jump_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
+
   if (g == nullptr) {
     return no_key;
   }
@@ -2540,6 +2648,7 @@ auto game_key_jump_get(Gamep g) -> SDL_Keysym
 void game_key_jump_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -2550,6 +2659,7 @@ void game_key_jump_set(Gamep g, SDL_Keysym key)
 auto game_key_ascend_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
+
   if (g == nullptr) {
     return no_key;
   }
@@ -2558,6 +2668,7 @@ auto game_key_ascend_get(Gamep g) -> SDL_Keysym
 void game_key_ascend_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -2568,6 +2679,7 @@ void game_key_ascend_set(Gamep g, SDL_Keysym key)
 auto game_key_descend_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
+
   if (g == nullptr) {
     return no_key;
   }
@@ -2576,6 +2688,7 @@ auto game_key_descend_get(Gamep g) -> SDL_Keysym
 void game_key_descend_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -2586,6 +2699,7 @@ void game_key_descend_set(Gamep g, SDL_Keysym key)
 auto game_key_zoom_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
+
   if (g == nullptr) {
     return no_key;
   }
@@ -2594,6 +2708,7 @@ auto game_key_zoom_get(Gamep g) -> SDL_Keysym
 void game_key_zoom_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -2604,6 +2719,7 @@ void game_key_zoom_set(Gamep g, SDL_Keysym key)
 auto game_map_zoom_get(Gamep g) -> int
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return MAP_ZOOM_DEF;
@@ -2616,6 +2732,7 @@ auto game_map_zoom_get(Gamep g) -> int
 void game_map_zoom_set(Gamep g, int val)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -2630,6 +2747,7 @@ void game_map_zoom_set(Gamep g, int val)
 auto game_map_zoom_is_full_map_visible(Gamep g) -> bool
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return false;
@@ -2640,6 +2758,7 @@ auto game_map_zoom_is_full_map_visible(Gamep g) -> bool
 auto game_map_zoom_def_get(Gamep g) -> int
 {
   TRACE();
+
   int visible_map_tl_x = 0;
   int visible_map_tl_y = 0;
   int visible_map_br_x = 0;
@@ -2664,8 +2783,8 @@ auto game_map_zoom_def_get(Gamep g) -> int
 //
 static void game_map_zoom_update(Gamep g)
 {
-  TRACE();
   DBG("Zoom update");
+  TRACE_INDENT();
 
   auto *v = game_levels_get(g);
   if (v == nullptr) {
@@ -2698,8 +2817,8 @@ static void game_map_zoom_update(Gamep g)
 //
 void game_map_zoom_toggle(Gamep g)
 {
-  TRACE();
   DBG("Zoom alt");
+  TRACE_INDENT();
 
   if (game_map_zoom_is_full_map_visible(g)) {
     game_map_zoom_set(g, game_map_zoom_def_get(g));
@@ -2729,8 +2848,8 @@ void game_map_zoom_toggle(Gamep g)
 //
 void game_map_zoom_in(Gamep g)
 {
-  TRACE();
   DBG("Zoom in");
+  TRACE_INDENT();
 
   game_map_zoom_set(g, game_map_zoom_def_get(g));
   game_map_zoom_update(g);
@@ -2741,8 +2860,8 @@ void game_map_zoom_in(Gamep g)
 //
 void game_map_zoom_out(Gamep g)
 {
-  TRACE();
   DBG("Zoom out");
+  TRACE_INDENT();
 
   game_map_zoom_set(g, MAP_ZOOM_FULL_MAP);
   game_map_zoom_update(g);
@@ -2751,6 +2870,7 @@ void game_map_zoom_out(Gamep g)
 auto game_map_single_pix_size_get(Gamep g) -> int
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return 1;
@@ -2765,6 +2885,7 @@ auto game_map_single_pix_size_get(Gamep g) -> int
 void game_map_single_pix_size_set(Gamep g, int val)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -2775,6 +2896,7 @@ void game_map_single_pix_size_set(Gamep g, int val)
 auto game_request_to_remake_ui_get(Gamep g) -> bool
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return false;
@@ -2785,6 +2907,7 @@ auto game_request_to_remake_ui_get(Gamep g) -> bool
 void game_request_to_remake_ui_set(Gamep g)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -2794,6 +2917,7 @@ void game_request_to_remake_ui_set(Gamep g)
 void game_request_to_remake_ui_unset(Gamep g)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -2804,6 +2928,7 @@ void game_request_to_remake_ui_unset(Gamep g)
 auto game_request_to_save_game_get(Gamep g) -> bool
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return true;
@@ -2814,6 +2939,7 @@ auto game_request_to_save_game_get(Gamep g) -> bool
 void game_request_to_save_game_set(Gamep g)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -2823,6 +2949,7 @@ void game_request_to_save_game_set(Gamep g)
 void game_request_to_save_game_unset(Gamep g)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -2833,6 +2960,7 @@ void game_request_to_save_game_unset(Gamep g)
 auto game_request_to_update_cursor_get(Gamep g) -> bool
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return true;
@@ -2843,6 +2971,7 @@ auto game_request_to_update_cursor_get(Gamep g) -> bool
 void game_request_to_update_cursor_set(Gamep g)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -2852,6 +2981,7 @@ void game_request_to_update_cursor_set(Gamep g)
 void game_request_to_update_cursor_unset(Gamep g)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -2862,6 +2992,7 @@ void game_request_to_update_cursor_unset(Gamep g)
 auto game_request_to_end_game_get(Gamep g) -> bool
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return true;
@@ -2872,6 +3003,7 @@ auto game_request_to_end_game_get(Gamep g) -> bool
 void game_request_to_end_game_set(Gamep g)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -2881,6 +3013,7 @@ void game_request_to_end_game_set(Gamep g)
 void game_request_to_end_game_unset(Gamep g)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;
@@ -2891,6 +3024,7 @@ void game_request_to_end_game_unset(Gamep g)
 auto game_request_to_end_game_reason_get(Gamep g) -> std::string
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return "";
@@ -2901,6 +3035,7 @@ auto game_request_to_end_game_reason_get(Gamep g) -> std::string
 void game_request_to_end_game_reason_set(Gamep g, const std::string &val)
 {
   TRACE();
+
   if (g == nullptr) [[unlikely]] {
     ERR("No game pointer set");
     return;

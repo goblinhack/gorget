@@ -18,11 +18,13 @@
 #define TRACE_DEBUG()
 #endif
 
-#define TRACE() const TracerT CAT2(__my_trace__, __LINE__)(SRC_FUNC_NAME, SRC_LINE_NUM);
+#define TRACE()        const TracerT CAT2(__my_trace__, __LINE__)(SRC_FUNC_NAME, SRC_LINE_NUM);
+#define TRACE_INDENT() const TracerIndentT CAT2(__my_trace__, __LINE__)(SRC_FUNC_NAME, SRC_LINE_NUM);
 
 #else
 #define TRACE_DEBUG()
 #define TRACE()
+#define TRACE_INDENT()
 #endif
 
 struct Callframe {
@@ -44,6 +46,7 @@ enum { MAXCALLFRAME = 256 };
 
 extern thread_local struct Callframe callframes[ MAXCALLFRAME ];
 extern thread_local unsigned char    g_callframes_depth;
+extern thread_local unsigned char    g_callframes_indent;
 
 class TracerT
 {
@@ -56,6 +59,24 @@ public:
   }
 
   ~TracerT() { g_callframes_depth--; }
+};
+
+class TracerIndentT
+{
+public:
+  TracerIndentT(const char *func, const unsigned short line)
+  {
+    Callframe *c = &callframes[ g_callframes_depth++ ];
+    g_callframes_indent++;
+    c->func = func;
+    c->line = line;
+  }
+
+  ~TracerIndentT()
+  {
+    g_callframes_depth--;
+    g_callframes_indent--;
+  }
 };
 
 extern void callstack_dump(FILE *fp);

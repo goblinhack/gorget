@@ -291,6 +291,7 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
   // Log the reason for attack?
   //
   THING_LOG(t, "%s: apply damage", to_string(g, v, l, e).c_str());
+  TRACE_INDENT();
 
   if (thing_is_player(t)) {
     thing_damage_to_player(g, v, l, t, e);

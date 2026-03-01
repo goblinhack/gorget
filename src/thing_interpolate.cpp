@@ -17,7 +17,7 @@ void thing_interpolate(Gamep g, Levelsp v, Levelp l, Thingp t, float dt)
   auto at          = thing_at(t);
   auto moving_from = thing_moving_from(t);
 
-  {
+  if (compiler_unused) {
     THING_LOG(t, "from %d,%d to %d,%d dt %f", moving_from.x, moving_from.y, at.x, at.y, dt);
   }
 

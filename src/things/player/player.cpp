@@ -206,6 +206,7 @@ auto tp_load_player() -> bool
   tp_flag_set(tp, is_health_bar_shown);
   tp_flag_set(tp, is_light_source, MAP_WIDTH / 2);
   tp_flag_set(tp, is_loggable);
+  tp_flag_set(tp, is_obs_to_movement);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_player);
