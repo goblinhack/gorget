@@ -38,6 +38,7 @@
 // Changed by goblinhack@gmail.com
 //
 
+#include "my_age_map_inlines.hpp"
 #include "my_callstack.hpp"
 #include "my_fov_map_inlines.hpp"
 #include "my_globals.hpp"
@@ -71,6 +72,14 @@ static void level_fov_do(const short       distance_from_origin, // Polar distan
   const short yx             = matrix_table[ octant ][ 2 ];
   const short yy             = matrix_table[ octant ][ 3 ];
   const short radius_squared = ctx.max_radius * ctx.max_radius;
+
+  //
+  // If the player is used here then we need to avoid incrementing the age map
+  // Player age map is set to 1
+  //
+  if (thing_is_player(ctx.me)) {
+    CROAK("unexpected");
+  }
 
   if (view_slope_high < view_slope_low) {
     return; // View is invalid.
@@ -113,12 +122,12 @@ static void level_fov_do(const short       distance_from_origin, // Polar distan
 
     if ((angle * angle) + (distance_from_origin * distance_from_origin) <= radius_squared && (ctx.light_walls || ! light_blocker)) {
 
-      if (ctx.fov_can_see_tile != nullptr) {
+      if (ctx.can_see_tile != nullptr) {
         //
         // Can see tile. If not seen already, light it
         //
-        if (! fov_map_get(ctx.fov_can_see_tile, p.x, p.y)) {
-          fov_map_set(ctx.fov_can_see_tile, p.x, p.y, 1U);
+        if (! fov_map_get(ctx.can_see_tile, p.x, p.y)) {
+          fov_map_set(ctx.can_see_tile, p.x, p.y, 1U);
 
           //
           // Per tile can see callback check
@@ -136,11 +145,11 @@ static void level_fov_do(const short       distance_from_origin, // Polar distan
         }
       }
 
-      if (ctx.fov_has_seen_tile != nullptr) {
+      if (ctx.has_seen_tile != nullptr) {
         //
         // Has seen this tile
         //
-        fov_map_set(ctx.fov_has_seen_tile, p.x, p.y, 1U);
+        age_map_incr(ctx.has_seen_tile, p.x, p.y, 1U);
       }
     }
 
@@ -178,8 +187,8 @@ void level_fov(const FovContext &ctx)
 {
   TRACE();
 
-  if (ctx.fov_can_see_tile != nullptr) {
-    *ctx.fov_can_see_tile = {};
+  if (ctx.can_see_tile != nullptr) {
+    *ctx.can_see_tile = {};
   }
 
   // recursive shadow casting
@@ -187,12 +196,12 @@ void level_fov(const FovContext &ctx)
     level_fov_do(1, 1.0, 0.0, octant, ctx);
   }
 
-  if (ctx.fov_can_see_tile != nullptr) {
+  if (ctx.can_see_tile != nullptr) {
     //
     // If not seen already, light it
     //
-    if (! fov_map_get(ctx.fov_can_see_tile, ctx.pov.x, ctx.pov.y)) {
-      fov_map_set(ctx.fov_can_see_tile, ctx.pov.x, ctx.pov.y, 1U);
+    if (! fov_map_get(ctx.can_see_tile, ctx.pov.x, ctx.pov.y)) {
+      fov_map_set(ctx.can_see_tile, ctx.pov.x, ctx.pov.y, 1U);
 
       //
       // Per tile can see callback check
@@ -203,7 +212,7 @@ void level_fov(const FovContext &ctx)
     }
   }
 
-  if (ctx.fov_has_seen_tile != nullptr) {
-    fov_map_set(ctx.fov_has_seen_tile, ctx.pov.x, ctx.pov.y, 1U);
+  if (ctx.has_seen_tile != nullptr) {
+    age_map_incr(ctx.has_seen_tile, ctx.pov.x, ctx.pov.y, 1U);
   }
 }

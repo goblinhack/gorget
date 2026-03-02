@@ -2,6 +2,7 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_age_map_inlines.hpp"
 #include "my_callstack.hpp"
 #include "my_fov_map.hpp"
 #include "my_fov_map_inlines.hpp"
@@ -16,7 +17,7 @@ void thing_vision_reset(Gamep g, Levelsp v, Levelp l, Thingp t)
 
   auto *ext = thing_ext_struct(g, t);
   if (ext != nullptr) {
-    ext->has_seen = {{0}};
+    ext->has_seen = {{{0}}};
     ext->can_see  = {{0}};
   }
 
@@ -112,7 +113,7 @@ void thing_has_seen_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
         continue;
       }
 
-      if (static_cast< unsigned int >(fov_map_get(&ext->has_seen, p.x, p.y)) != 0U) {
+      if (static_cast< unsigned int >(age_map_get(&ext->has_seen, p.x, p.y)) != 0U) {
         debug += "*";
         continue;
       }

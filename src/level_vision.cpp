@@ -60,8 +60,8 @@ void level_vision_calculate_all(Gamep g, Levelsp v, Levelp l)
     ctx.pov                = thing_at(t);
     ctx.thing_at_in_pixels = thing_pix_at(t);
     ctx.max_radius         = max_radius;
-    ctx.fov_can_see_tile   = &ext->can_see;
-    ctx.fov_has_seen_tile  = &ext->has_seen;
+    ctx.can_see_tile   = &ext->can_see;
+    ctx.has_seen_tile  = &ext->has_seen;
 
     level_fov(ctx);
   }

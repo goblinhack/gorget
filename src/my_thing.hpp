@@ -5,6 +5,7 @@
 #ifndef MY_THING_HPP
 #define MY_THING_HPP
 
+#include "my_age_map.hpp"
 #include "my_color.hpp"
 #include "my_dmap.hpp"
 #include "my_fov_map.hpp"
@@ -137,7 +138,7 @@ using ThingExt = struct ThingExt {
   //
   // What we have ever seen
   //
-  FovMap has_seen;
+  AgeMap has_seen;
   //
   // What we can currently see
   //

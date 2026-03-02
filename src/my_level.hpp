@@ -788,8 +788,8 @@ using FovContext = struct FovContext {
   float                       *light_fade_map           = {};
   spoint                       thing_at_in_pixels       = {};
   int                          max_radius               = {};
-  FovMap                      *fov_can_see_tile         = {};
-  FovMap                      *fov_has_seen_tile        = {};
+  FovMap                      *can_see_tile             = {};
+  AgeMap                      *has_seen_tile            = {};
   level_fov_can_see_callback_t can_see_callback         = {};
 };
 

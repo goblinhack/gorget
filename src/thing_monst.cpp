@@ -2,6 +2,7 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_age_map_inlines.hpp"
 #include "my_callstack.hpp"
 #include "my_cpp_template.hpp"
 #include "my_fov_map_inlines.hpp"
@@ -124,6 +125,14 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
       // Just choose anywhere
       //
     } else {
+      //
+      // Prefer older tiles, so the monster explores more
+      //
+      auto age = age_map_get(&ext->has_seen, x, y);
+      if (age > 1) {
+        continue;
+      }
+
       //
       // Prefer further away tiles for exploration
       //

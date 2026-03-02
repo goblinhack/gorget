@@ -151,8 +151,8 @@ void level_light_calculate_all(Gamep g, Levelsp v, Levelp l)
     ctx.light_fade_map           = light_fade;
     ctx.can_see_callback         = level_light_per_pixel;
     ctx.max_radius               = max_radius;
-    ctx.fov_can_see_tile         = &light->is_lit;
-    ctx.fov_has_seen_tile        = nullptr;
+    ctx.can_see_tile         = &light->is_lit;
+    ctx.has_seen_tile        = nullptr;
 
     level_fov(ctx);
   }

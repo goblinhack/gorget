@@ -2,6 +2,7 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_age_map_inlines.hpp"
 #include "my_callstack.hpp"
 #include "my_fov_map_inlines.hpp"
 #include "my_globals.hpp"
@@ -242,7 +243,7 @@ static void level_raycast_light_tile(const FovContext &ctx, const spoint &tile, 
   //
   if (! fov_map_get(&light->is_lit, tile.x, tile.y)) {
     fov_map_set(&light->is_lit, tile.x, tile.y, 1U);
-    fov_map_set(&ext->has_seen, tile.x, tile.y, 1U);
+    age_map_set(&ext->has_seen, tile.x, tile.y, 1U);
     fov_map_set(&ext->can_see, tile.x, tile.y, 1U);
     level_light_per_pixel(ctx, tile);
   }

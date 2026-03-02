@@ -2,6 +2,7 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_age_map_inlines.hpp"
 #include "my_callstack.hpp"
 #include "my_fov_map.hpp"
 #include "my_fov_map_inlines.hpp"
@@ -28,7 +29,7 @@ auto level_has_seen(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool
     return false;
   }
 
-  return static_cast< unsigned int >(fov_map_get(&ext->has_seen, p.x, p.y)) != 0U;
+  return static_cast< unsigned int >(age_map_get(&ext->has_seen, p.x, p.y)) != 0U;
 }
 
 //
@@ -50,7 +51,7 @@ void level_has_seen_update(Gamep g, Levelsp v, Levelp l)
 
   for (auto x = 0; x < MAP_WIDTH; x++) {
     for (auto y = 0; y < MAP_HEIGHT; y++) {
-      if (static_cast< unsigned int >(fov_map_get(&ext->has_seen, x, y)) != 0U) {
+      if (static_cast< unsigned int >(age_map_get(&ext->has_seen, x, y)) != 0U) {
         l->player_has_seen_tile_cache[ x ][ y ] = 1U;
       } else {
         l->player_has_seen_tile_cache[ x ][ y ] = 0U;
