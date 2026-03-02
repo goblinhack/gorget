@@ -112,7 +112,7 @@ static void wid_topcon_log_(std::string s)
     auto result = wid_topcon_lines.insert(std::make_pair(log_wid_topcon_buffered_lines++, s));
 
     if (! result.second) {
-      CROAK("Wid topcon lines insert name [%s] failed", s.c_str());
+      CROAK("widget topcon lines insert name [%s] failed", s.c_str());
     }
 
     return;
@@ -172,7 +172,7 @@ void wid_topcon_log(const std::string &s)
   int const chars_per_line = UI_TOPCON_WIDTH;
 
   if (TERM_WIDTH == 0) {
-    CROAK("No TERM_WIDTH set");
+    CROAK("no TERM_WIDTH set");
   }
 
   if (s.empty()) {
@@ -204,8 +204,8 @@ static void wid_topcon_wid_create(Gamep g)
     auto tl = spoint(UI_LEFTBAR_WIDTH, 0);
     auto br = spoint(UI_LEFTBAR_WIDTH + UI_TOPCON_WIDTH - 1, h - 1);
 
-    wid_topcon_window = wid_new_window(g, "wid topcon");
-    wid_set_name(wid_topcon_window, "wid topcon window");
+    wid_topcon_window = wid_new_window(g, "widget topcon");
+    wid_set_name(wid_topcon_window, "widget topcon window");
     wid_set_pos(wid_topcon_window, tl, br);
     wid_set_shape_none(wid_topcon_window);
   }
@@ -215,7 +215,7 @@ static void wid_topcon_wid_create(Gamep g)
     auto tl = spoint(0, 0);
     auto br = spoint(UI_TOPCON_WIDTH - 1, h - 1);
 
-    wid_topcon_container = wid_new_container(g, wid_topcon_window, "wid topcon container");
+    wid_topcon_container = wid_new_container(g, wid_topcon_window, "widget topcon container");
     wid_set_pos(wid_topcon_container, tl, br);
     wid_set_shape_none(wid_topcon_container);
     wid_set_style(wid_topcon_container, UI_WID_STYLE_CONSOLE);

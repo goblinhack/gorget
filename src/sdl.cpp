@@ -95,7 +95,7 @@ static void sdl_init_joystick()
         LOG("- Found gamecontroller");
         break;
       }
-      WARN("Could not open gamecontroller %i: %s", sdl.joy_index, SDL_GetError());
+      WARN("could not open gamecontroller %i: %s", sdl.joy_index, SDL_GetError());
       SDL_ClearError();
     }
   }
@@ -477,7 +477,7 @@ auto show_error(Gamep g, class Tokens *tokens, void *context) -> uint8_t
     CON("To continue playing at your own risk, 'clear errored' and then press <%s>", key.c_str());
     wid_console_raise(g);
   } else {
-    CON("No error.");
+    CON("no error.");
   }
 
   return 1U;

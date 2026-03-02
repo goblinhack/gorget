@@ -592,7 +592,7 @@ auto Game::save(const std::string &file_to_save) -> bool
   //
   auto *ofile = fopen(file_to_save.c_str(), "wb");
   if (ofile == nullptr) {
-    ERR("Failed to open %s for writing: %s", file_to_save.c_str(), strerror(errno));
+    ERR("failed to open %s for writing: %s", file_to_save.c_str(), strerror(errno));
     wid_progress_bar_destroy(this);
     return false;
   }
@@ -693,7 +693,7 @@ auto Game::save_config() -> bool
   auto          filename = saved_dir + "config";
   std::ofstream out(filename, std::ios::binary);
   if (! out) {
-    ERR("Failed to open %s for writing: %s", filename.c_str(), strerror(errno));
+    ERR("failed to open %s for writing: %s", filename.c_str(), strerror(errno));
     return false;
   }
   LOG("Opened [%s] for writing", filename.c_str());
@@ -708,12 +708,12 @@ void wid_save_destroy(Gamep g)
     return;
   }
 
-  LOG("Wid save destroy");
+  LOG("widget save destroy");
   TRACE_INDENT();
 
   delete wid_save;
   wid_save = nullptr;
-  g->state_reset("wid save destroy");
+  g->state_reset("widget save destroy");
 }
 
 static auto wid_save_key_up(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool

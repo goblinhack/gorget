@@ -128,7 +128,7 @@ void Astar::add_to_open(Node *n)
   auto  p = n->at;
   auto *o = &open[ p.x ][ p.y ];
   if (*o != nullptr) {
-    THING_ERR(t, "Already in open");
+    THING_ERR(t, "already in open");
     return;
   }
   *o = n;
@@ -145,7 +145,7 @@ void Astar::add_to_closed(Node *n)
   auto  p = n->at;
   auto *o = &closed[ p.x ][ p.y ];
   if (*o != nullptr) {
-    THING_ERR(t, "Already in closed");
+    THING_ERR(t, "already in closed");
     return;
   }
   *o = n;
@@ -162,7 +162,7 @@ void Astar::remove_from_open(Node *n)
   auto  p = n->at;
   auto *o = &open[ p.x ][ p.y ];
   if (*o == nullptr) {
-    THING_ERR(t, "Not in open");
+    THING_ERR(t, "not in open");
     return;
   }
   *o = nullptr;

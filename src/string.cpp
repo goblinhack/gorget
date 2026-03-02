@@ -915,7 +915,7 @@ auto strerror_to_string(const int err) -> std::string
     return {err_out};
   }
 #endif
-  return "Could not decode errno: " + std::to_string(err) + " strerror_r errno=" + std::to_string(errno);
+  return "could not decode errno: " + std::to_string(err) + " strerror_r errno=" + std::to_string(errno);
 }
 
 //
@@ -1005,7 +1005,7 @@ auto string2tp(const char **s, int *len) -> Tpp
   }
 
   if (c == eo_tmp) {
-    ERR("Tp name %s is too long", tmp);
+    ERR("thing template name %s is too long", tmp);
     return nullptr;
   }
 
@@ -1018,7 +1018,7 @@ auto string2tp(const char **s, int *len) -> Tpp
 
   Tpp tp = tp_find_mand(tmp);
   if (tp == nullptr) [[unlikely]] {
-    ERR("Tp name [%s] not found", tmp) [[unlikely]];
+    ERR("thing template name [%s] not found", tmp) [[unlikely]];
   }
 
   return tp;

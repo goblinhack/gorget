@@ -49,7 +49,7 @@ auto wid_tiles_load(const std::string &name, float scale) -> wid_tilesp
   }
 
   if (name.empty()) {
-    CROAK("No name for wid_tiles");
+    CROAK("no name for wid_tiles");
     return nullptr;
   }
 
@@ -58,7 +58,7 @@ auto wid_tiles_load(const std::string &name, float scale) -> wid_tilesp
   auto result = wid_tiles_all.insert(std::make_pair(name, t));
 
   if (! result.second) {
-    CROAK("Wid_tiles insert name [%s] failed", name.c_str());
+    CROAK("wid_tiles_all insert name [%s] failed", name.c_str());
   }
 
   char tmp[ 32 ];
@@ -66,7 +66,7 @@ auto wid_tiles_load(const std::string &name, float scale) -> wid_tilesp
   snprintf(tmp, SIZEOF(tmp) - 1, "%s_tl", name.c_str());
   Tilep a_tile = tile_find(tmp);
   if (a_tile == nullptr) [[unlikely]] {
-    CROAK("Did not find wid %s tile %s", name.c_str(), tmp);
+    CROAK("did not find wid %s tile %s", name.c_str(), tmp);
   }
 
   Texp tex = tile_tex(a_tile);
@@ -93,7 +93,7 @@ auto wid_tiles_load(const std::string &name, float scale) -> wid_tilesp
         snprintf(tmp, SIZEOF(tmp) - 1, "%s_%d", name.c_str(), c);
         Tilep tile = tile_find(tmp);
         if (tile == nullptr) [[unlikely]] {
-          CROAK("Did not find wid %s tile %s", name.c_str(), tmp);
+          CROAK("did not find wid %s tile %s", name.c_str(), tmp);
         }
         t->tile[ i ][ j ] = tile;
         c++;
@@ -108,7 +108,7 @@ auto wid_tiles_load(const std::string &name, float scale) -> wid_tilesp
       snprintf(tmp, SIZEOF(tmp) - 1, "%s_top%d", name.c_str(), c);
       Tilep tile = tile_find(tmp);
       if (tile == nullptr) [[unlikely]] {
-        CROAK("Did not find wid %s tile %s", name.c_str(), tmp);
+        CROAK("did not find wid %s tile %s", name.c_str(), tmp);
       }
 
       t->tile[ i ][ j ] = tile;
@@ -124,7 +124,7 @@ auto wid_tiles_load(const std::string &name, float scale) -> wid_tilesp
       snprintf(tmp, SIZEOF(tmp) - 1, "%s_bot%d", name.c_str(), c);
       Tilep tile = tile_find(tmp);
       if (tile == nullptr) [[unlikely]] {
-        CROAK("Did not find wid %s tile %s", name.c_str(), tmp);
+        CROAK("did not find wid %s tile %s", name.c_str(), tmp);
       }
 
       t->tile[ i ][ j ] = tile;
@@ -139,7 +139,7 @@ auto wid_tiles_load(const std::string &name, float scale) -> wid_tilesp
       snprintf(tmp, SIZEOF(tmp) - 1, "%s_left%d", name.c_str(), c);
       Tilep tile = tile_find(tmp);
       if (tile == nullptr) [[unlikely]] {
-        CROAK("Did not find wid %s tile %s", name.c_str(), tmp);
+        CROAK("did not find wid %s tile %s", name.c_str(), tmp);
       }
 
       t->tile[ i ][ j ] = tile;
@@ -154,7 +154,7 @@ auto wid_tiles_load(const std::string &name, float scale) -> wid_tilesp
       snprintf(tmp, SIZEOF(tmp) - 1, "%s_right%d", name.c_str(), c);
       Tilep tile = tile_find(tmp);
       if (tile == nullptr) [[unlikely]] {
-        CROAK("Did not find wid %s tile %s", name.c_str(), tmp);
+        CROAK("did not find wid %s tile %s", name.c_str(), tmp);
       }
 
       t->tile[ i ][ j ] = tile;
@@ -168,7 +168,7 @@ auto wid_tiles_load(const std::string &name, float scale) -> wid_tilesp
     snprintf(tmp, SIZEOF(tmp) - 1, "%s_tl", name.c_str());
     auto *tile = tile_find(tmp);
     if (tile == nullptr) [[unlikely]] {
-      CROAK("Did not find wid %s tile %s", name.c_str(), tmp);
+      CROAK("did not find wid %s tile %s", name.c_str(), tmp);
     }
 
     t->tile[ i ][ j ] = tile;
@@ -180,7 +180,7 @@ auto wid_tiles_load(const std::string &name, float scale) -> wid_tilesp
     snprintf(tmp, SIZEOF(tmp) - 1, "%s_bl", name.c_str());
     auto *tile = tile_find(tmp);
     if (tile == nullptr) [[unlikely]] {
-      CROAK("Did not find wid %s tile %s", name.c_str(), tmp);
+      CROAK("did not find wid %s tile %s", name.c_str(), tmp);
     }
 
     t->tile[ i ][ j ] = tile;
@@ -192,7 +192,7 @@ auto wid_tiles_load(const std::string &name, float scale) -> wid_tilesp
     snprintf(tmp, SIZEOF(tmp) - 1, "%s_tr", name.c_str());
     auto *tile = tile_find(tmp);
     if (tile == nullptr) [[unlikely]] {
-      CROAK("Did not find wid %s tile %s", name.c_str(), tmp);
+      CROAK("did not find wid %s tile %s", name.c_str(), tmp);
     }
 
     t->tile[ i ][ j ] = tile;
@@ -204,7 +204,7 @@ auto wid_tiles_load(const std::string &name, float scale) -> wid_tilesp
     snprintf(tmp, SIZEOF(tmp) - 1, "%s_br", name.c_str());
     auto *tile = tile_find(tmp);
     if (tile == nullptr) [[unlikely]] {
-      CROAK("Did not find wid %s tile %s", name.c_str(), tmp);
+      CROAK("did not find wid %s tile %s", name.c_str(), tmp);
     }
 
     t->tile[ i ][ j ] = tile;
@@ -217,7 +217,7 @@ auto wid_tiles_find(const std::string &file) -> wid_tilesp
 {
   TRACE();
   if (file.empty()) {
-    CROAK("No filename given for wid_tiles find");
+    CROAK("no filename given for wid_tiles find");
   }
 
   auto result = wid_tiles_all.find(file);

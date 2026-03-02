@@ -135,7 +135,7 @@ void command_add(Gamep g, command_fn_t callback, const std::string &input, const
   auto  result  = commands_map.insert(std::make_pair(input, command));
 
   if (! result.second) {
-    ERR("Command insert name [%s] failed", input.c_str());
+    ERR("command insert name [%s] failed", input.c_str());
     return;
   }
 
@@ -348,7 +348,7 @@ auto command_handle(Gamep g, const char *input, char *expandedtext, uint8_t show
    */
   matches = command_matches(g, input, expandedtext, 0U, 0U, execute_command, context);
   if (matches == 0) {
-    CON(">" UI_IMPORTANT_FMT_STR "Unknown command: \"%s\"" UI_RESET_FMT "", input);
+    CON(">" UI_IMPORTANT_FMT_STR "unknown command: \"%s\"" UI_RESET_FMT "", input);
     return 0U;
   }
 

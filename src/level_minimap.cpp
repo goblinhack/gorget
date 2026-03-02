@@ -57,7 +57,7 @@ static void level_minimap_world_update(Gamep g, Levelsp v, const bool level_sele
         auto        *s = level_select_get(g, v, p);
         if (s->is_set == 0U) {
           //
-          // No level here
+          // no level here
           //
           continue;
         }

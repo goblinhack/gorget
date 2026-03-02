@@ -700,13 +700,13 @@ auto wid_keyboard(Gamep g, const std::string &text, const std::string &title, wi
    * Create a context to hold button info so we can update it when the focus
    * changes
    */
-  wid_keyboard_ctx *ctx = static_cast< wid_keyboard_ctx * >(MYZALLOC(SIZEOF(*ctx), "wid keyboard"));
+  wid_keyboard_ctx *ctx = static_cast< wid_keyboard_ctx * >(MYZALLOC(SIZEOF(*ctx), "widget keyboard"));
   ctx->focusx           = -1;
   ctx->focusy           = -1;
   ctx->cancelled        = cancelled;
   ctx->selected         = selected;
 
-  Widp window  = wid_new_window(g, "wid keyboard");
+  Widp window  = wid_new_window(g, "widget keyboard");
   ctx->w       = window;
   ctx->is_new  = 1;
   ctx->max_len = max_len;
@@ -738,7 +738,7 @@ auto wid_keyboard(Gamep g, const std::string &text, const std::string &title, wi
    * Create the title
    */
   {
-    Widp w = wid_new_square_button(g, window, "wid keyboard title");
+    Widp w = wid_new_square_button(g, window, "widget keyboard title");
 
     spoint const tl = {5, 1};
     spoint const br = {width - 5, 1};
@@ -753,7 +753,7 @@ auto wid_keyboard(Gamep g, const std::string &text, const std::string &title, wi
    * Create the text input container
    */
   {
-    Widp w = wid_new_square_button(g, window, "wid keyboard input");
+    Widp w = wid_new_square_button(g, window, "widget keyboard input");
 
     ctx->input = w;
 
@@ -786,7 +786,7 @@ auto wid_keyboard(Gamep g, const std::string &text, const std::string &title, wi
    * Create the button container
    */
   {
-    Widp button_container = wid_new_square_button(g, window, "wid keyboard buttons");
+    Widp button_container = wid_new_square_button(g, window, "widget keyboard buttons");
     wid_set_shape_none(button_container);
     wid_set_on_tick(button_container, wid_keyboard_tick);
 
@@ -807,13 +807,13 @@ auto wid_keyboard(Gamep g, const std::string &text, const std::string &title, wi
         Widp b = nullptr;
 
         if (strcasecmp(keys[ y ][ x ], "CLEAR") == 0) {
-          b = wid_new_cancel_button(g, button_container, "wid keyboard button");
+          b = wid_new_cancel_button(g, button_container, "widget keyboard button");
         } else if (strcasecmp(keys[ y ][ x ], "CANCL") == 0) {
-          b = wid_new_cancel_button(g, button_container, "wid keyboard button");
+          b = wid_new_cancel_button(g, button_container, "widget keyboard button");
         } else if (strcasecmp(keys[ y ][ x ], "OK") == 0) {
-          b = wid_new_green_button(g, button_container, "wid keyboard button");
+          b = wid_new_green_button(g, button_container, "widget keyboard button");
         } else {
-          b = wid_new_menu_button(g, button_container, "wid keyboard button");
+          b = wid_new_menu_button(g, button_container, "widget keyboard button");
         }
         ctx->buttons[ y ][ x ] = b;
 

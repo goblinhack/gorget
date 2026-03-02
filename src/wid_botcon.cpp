@@ -112,7 +112,7 @@ static void wid_botcon_log_(const std::string &s)
     auto result = wid_botcon_lines.insert(std::make_pair(log_wid_botcon_buffered_lines++, s));
 
     if (! result.second) {
-      CROAK("Wid botcon lines insert name [%s] failed", s.c_str());
+      CROAK("widget botcon lines insert name [%s] failed", s.c_str());
     }
 
     return;
@@ -168,7 +168,7 @@ void wid_botcon_log(const std::string &s)
   int const chars_per_line = UI_BOTCON_WIDTH;
 
   if (TERM_WIDTH == 0) {
-    CROAK("No TERM_WIDTH set");
+    CROAK("no TERM_WIDTH set");
   }
 
   if (s.empty()) {
@@ -200,8 +200,8 @@ static void wid_botcon_wid_create(Gamep g)
     auto tl = spoint(UI_LEFTBAR_WIDTH, TERM_HEIGHT - h);
     auto br = spoint(UI_LEFTBAR_WIDTH + UI_BOTCON_WIDTH - 1, TERM_HEIGHT - 1);
 
-    wid_botcon_window = wid_new_window(g, "wid botcon");
-    wid_set_name(wid_botcon_window, "wid botcon window");
+    wid_botcon_window = wid_new_window(g, "widget botcon");
+    wid_set_name(wid_botcon_window, "widget botcon window");
     wid_set_pos(wid_botcon_window, tl, br);
     wid_set_shape_none(wid_botcon_window);
   }
@@ -211,7 +211,7 @@ static void wid_botcon_wid_create(Gamep g)
     auto tl = spoint(0, 0);
     auto br = spoint(UI_BOTCON_WIDTH - 1, h - 1);
 
-    wid_botcon_container = wid_new_container(g, wid_botcon_window, "wid botcon container");
+    wid_botcon_container = wid_new_container(g, wid_botcon_window, "widget botcon container");
     wid_set_pos(wid_botcon_container, tl, br);
     wid_set_shape_none(wid_botcon_container);
     wid_set_style(wid_botcon_container, UI_WID_STYLE_CONSOLE);

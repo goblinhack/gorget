@@ -44,7 +44,7 @@ static void wid_warning_destroy()
             switch (c) {
               case 'y' :
               case 'Y' :
-                DBG("Wid warning: yes");
+                DBG("widget warning: yes");
                 if (callback != nullptr) {
                   sound_play(g, "keypress");
                   (callback)(g, true);
@@ -53,7 +53,7 @@ static void wid_warning_destroy()
                 break;
               case 'n' :
               case 'N' :
-                DBG("Wid warning: no");
+                DBG("widget warning: no");
                 if (callback != nullptr) {
                   sound_play(g, "keypress");
                   (callback)(g, false);
@@ -66,7 +66,7 @@ static void wid_warning_destroy()
               case SDLK_ESCAPE :
                 {
                   if (callback != nullptr) {
-                    DBG("Wid warning: default, no");
+                    DBG("widget warning: default, no");
                     sound_play(g, "keypress");
                     (callback)(g, false);
                   }
@@ -83,7 +83,7 @@ static void wid_warning_destroy()
 
 [[nodiscard]] static auto wid_warning_yes(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  DBG("Wid warning: yes");
+  DBG("widget warning: yes");
   TRACE();
 
   auto callback = reinterpret_cast< wid_warning_callback_t >(wid_get_void_context(w));
@@ -96,7 +96,7 @@ static void wid_warning_destroy()
 
 [[nodiscard]] static auto wid_warning_no(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  DBG("Wid warning: no");
+  DBG("widget warning: no");
   TRACE();
 
   auto callback = reinterpret_cast< wid_warning_callback_t >(wid_get_void_context(w));

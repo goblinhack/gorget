@@ -18,7 +18,7 @@ auto MYZALLOC_(int size, const char *what, const char *file, const char *func, i
   void *ptr = calloc(1, size); // NOLINT
 
   if (ptr == nullptr) [[unlikely]] {
-    CROAK("No memory, %s:%s:%u, size %u", file, func, line, size);
+    CROAK("no memory, %s:%s:%u, size %u", file, func, line, size);
   }
 
   IF_DEBUG2
@@ -39,7 +39,7 @@ auto MYMALLOC_(int size, const char *what, const char *file, const char *func, i
   void *ptr = malloc(size); // NOLINT
 
   if (ptr == nullptr) [[unlikely]] {
-    CROAK("No memory, %s:%s:%u", file, func, line);
+    CROAK("no memory, %s:%s:%u", file, func, line);
   }
 
   IF_DEBUG2
@@ -63,7 +63,7 @@ auto MYREALLOC_(void *ptr, int size, const char *what, const char *file, const c
 
   ptr = realloc(ptr, size);
   if (ptr == nullptr) [[unlikely]] {
-    CROAK("No memory, %s:%s:%u", file, func, line);
+    CROAK("no memory, %s:%s:%u", file, func, line);
   }
 
   IF_DEBUG2
@@ -97,13 +97,13 @@ auto MYDUPSTR_(const char *in, const char *what, const char *file, const char *f
   TRACE();
 
   if (in == nullptr) [[unlikely]] {
-    ERR("No string to duplicate");
+    ERR("no string to duplicate");
     return nullptr;
   }
 
   char *ptr = strdup(in); // NOLINT
   if (ptr == nullptr) [[unlikely]] {
-    CROAK("No memory, %s:%s:%u", file, func, line);
+    CROAK("no memory, %s:%s:%u", file, func, line);
   }
 
   IF_DEBUG2

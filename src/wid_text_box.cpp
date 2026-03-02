@@ -48,10 +48,10 @@ WidTextBox::WidTextBox(Gamep g, spoint vtl, spoint vbr, Widp vparent, bool horiz
 
   {
     if (vparent != nullptr) {
-      wid_text_box_container = wid_new_square_button(g, vparent, "wid text box");
+      wid_text_box_container = wid_new_square_button(g, vparent, "widget text box");
       wid_set_shape_none(wid_text_box_container);
     } else {
-      wid_text_box_container = wid_new_window(g, "wid text box");
+      wid_text_box_container = wid_new_window(g, "widget text box");
       wid_set_style(wid_text_box_container, UI_WID_STYLE_GREEN);
     }
     wid_set_pos(wid_text_box_container, tl, br);
@@ -61,7 +61,7 @@ WidTextBox::WidTextBox(Gamep g, spoint vtl, spoint vbr, Widp vparent, bool horiz
     spoint const inner_tl(1, 1);
     spoint const inner_br(w - 1, h - 1);
 
-    wid_text_area = wid_new_square_button(g, wid_text_box_container, "wid text inner area");
+    wid_text_area = wid_new_square_button(g, wid_text_box_container, "widget text inner area");
     wid_set_pos(wid_text_area, inner_tl, inner_br);
     wid_set_shape_none(wid_text_area);
     // wid_set_style( wid_text_area, UI_WID_STYLE_RED);
@@ -149,7 +149,7 @@ auto WidTextBox::log_internal(Gamep g, const std::string &str, wid_text_format f
       line_count++;
       wid_update(g, wid_text_box_container);
     } else {
-      ERR("Text box overflow on [%s] height %d line_count %d", str.c_str(), height, line_count);
+      ERR("text box overflow on [%s] height %d line_count %d", str.c_str(), height, line_count);
       return nullptr;
     }
   } else {

@@ -19,7 +19,7 @@ void wid_quit_destroy(Gamep g)
   if (wid_quit_window != nullptr) {
     delete wid_quit_window;
     wid_quit_window = nullptr;
-    game_state_reset(g, "wid quit destroy");
+    game_state_reset(g, "widget quit destroy");
   }
 }
 

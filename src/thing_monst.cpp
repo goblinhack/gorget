@@ -4,8 +4,11 @@
 
 #include "my_callstack.hpp"
 #include "my_cpp_template.hpp"
+#include "my_fov_map_inlines.hpp"
 #include "my_game.hpp"
 #include "my_globals.hpp"
+#include "my_level.hpp"
+#include "my_level_inlines.hpp"
 #include "my_line.hpp"
 #include "my_main.hpp"
 #include "my_thing_callbacks.hpp"
@@ -15,7 +18,7 @@
 //
 // Can we chase the player?
 //
-auto thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
+static auto thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
 {
   TRACE();
 
@@ -66,6 +69,79 @@ auto thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thingp me) -
   }
 
   THING_DBG(me, "choose target: failed to apply path to player");
+  return false;
+}
+
+//
+// Choose somewhere random that we can see
+//
+static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
+{
+  TRACE();
+
+  auto at = thing_at(me);
+
+  auto *ext = thing_ext_struct(g, me);
+  if (ext == nullptr) {
+    THING_ERR(me, "no ext pointer");
+    return false;
+  }
+
+  //
+  // How far to look for a target?
+  //
+  auto radius = thing_distance_vision(me);
+  if (radius == 0) {
+    THING_ERR(me, "unexpected value for radius");
+    return false;
+  }
+
+  auto radius_sq = radius * radius;
+  auto tries     = 0;
+  auto max_tries = radius_sq;
+
+  //
+  // Keep trying to find a target
+  //
+  while (tries++ < max_tries) {
+    auto x = at.x - radius + PCG_RANDOM_RANGE(0, radius_sq);
+    auto y = at.y - radius + PCG_RANDOM_RANGE(0, radius_sq);
+
+    if (is_oob(x, y)) {
+      continue;
+    }
+
+    if (! fov_map_get(&ext->can_see, x, y)) {
+      continue;
+    }
+
+    spoint target(x, y);
+
+    if (tries > max_tries / 2) {
+      //
+      // Just choose anywhere
+      //
+    } else {
+      //
+      // Prefer further away tiles
+      //
+      if (distance(target, at) < radius / 2) {
+        continue;
+      }
+    }
+
+    auto p = astar_solve(g, v, l, me, at, target);
+    if (p.empty()) {
+      continue;
+    }
+
+    if (thing_move_path_apply(g, v, l, me, p)) {
+      thing_target_set(g, v, l, me, target);
+      THING_DBG(me, "choose target: wander to (%u,%u)", target.x, target.y);
+      return true;
+    }
+  }
+
   return false;
 }
 
@@ -184,9 +260,11 @@ auto thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thingp me) -
       monst_state_change(g, v, l, me, MONST_STATE_WANDER);
       return true;
     }
+  }
 
-    THING_DBG(me, "choose target: minion has no target");
-    return false;
+  if (thing_minion_choose_target_can_see(g, v, l, me)) {
+    monst_state_change(g, v, l, me, MONST_STATE_WANDER);
+    return true;
   }
 
   THING_DBG(me, "choose target: none");

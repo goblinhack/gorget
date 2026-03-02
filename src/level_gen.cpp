@@ -2080,17 +2080,17 @@ static auto level_gen_string(class LevelGen *o, class LevelFixed *l) -> std::str
   std::string out;
 
   if (l == nullptr) {
-    ERR("No fixed level provided");
+    ERR("no fixed level provided");
     return "";
   }
 
   if (l->data == nullptr) {
-    ERR("No fixed level data provided");
+    ERR("no fixed level data provided");
     return "";
   }
 
   if (o == nullptr) {
-    ERR("No destination level provided");
+    ERR("no destination level provided");
     return "";
   }
 
@@ -2295,7 +2295,7 @@ void level_gen_stats_dump(Gamep g)
   l->doors_walked[ *door_out ] = true;
 
   if (*room_out == nullptr) {
-    ERR("Found a door with no room");
+    ERR("found a door with no room");
   }
 
   return true;
@@ -2966,7 +2966,7 @@ static auto level_proc_gen_create_rooms(Gamep g, LevelNum level_num) -> class Le
   level_create_fail++;
 
   if (l->debug) [[unlikely]] {
-    LOG("Failed to create room with seed: %s", game_seed_name_get(g));
+    LOG("failed to create room with seed: %s", game_seed_name_get(g));
   }
 
   return nullptr;
@@ -4736,7 +4736,7 @@ static void level_gen_extend_bridges(Gamep g, class LevelGen *l)
 
   auto *v = game_levels_get(g);
   if (v == nullptr) {
-    ERR("No levels created");
+    ERR("no levels created");
     return false;
   }
 
@@ -4761,7 +4761,7 @@ static void level_gen_extend_bridges(Gamep g, class LevelGen *l)
       //
       // Unknown level
       //
-      ERR("No fixed level \"%s\" created", g_level_opt.level_name.c_str());
+      ERR("no fixed level \"%s\" created", g_level_opt.level_name.c_str());
       return false;
     }
 
@@ -4774,7 +4774,7 @@ static void level_gen_extend_bridges(Gamep g, class LevelGen *l)
     //
     fixed_level = level_random_get(LEVEL_TYPE_BOSS);
     if (fixed_level == nullptr) {
-      ERR("No fixed boss level \"%u\" created", l->level_num);
+      ERR("no fixed boss level \"%u\" created", l->level_num);
       return false;
     }
 
@@ -5054,9 +5054,9 @@ static void level_gen_create_fixed_or_proc_gen_level(Gamep g, LevelNum level_num
     auto *v = game_levels_get(g);
     if (v == nullptr) {
       if (! g_level_opt.level_name.empty()) {
-        ERR("No levels generate for level %s", g_level_opt.level_name.c_str());
+        ERR("no levels generate for level %s", g_level_opt.level_name.c_str());
       } else {
-        ERR("No levels generate for level num %u", level_num);
+        ERR("no levels generate for level num %u", level_num);
       }
       break;
     }
@@ -5080,9 +5080,9 @@ static void level_gen_create_fixed_or_proc_gen_level(Gamep g, LevelNum level_num
     //
     if (l == nullptr) {
       if (! g_level_opt.level_name.empty()) {
-        ERR("No level generated for level %s", g_level_opt.level_name.c_str());
+        ERR("no level generated for level %s", g_level_opt.level_name.c_str());
       } else {
-        ERR("No level generated for level num %u", level_num);
+        ERR("no level generated for level num %u", level_num);
       }
       break;
     }
@@ -5093,9 +5093,9 @@ static void level_gen_create_fixed_or_proc_gen_level(Gamep g, LevelNum level_num
     TRACE();
     if (! level_gen_populate_for_fixed_or_proc_gen_level(g, l)) {
       if (! g_level_opt.level_name.empty()) {
-        ERR("No level created for level %s", g_level_opt.level_name.c_str());
+        ERR("no level created for level %s", g_level_opt.level_name.c_str());
       } else {
-        ERR("No level created for level num %u", level_num);
+        ERR("no level created for level num %u", level_num);
       }
       break;
     }
@@ -5109,9 +5109,9 @@ static void level_gen_create_fixed_or_proc_gen_level(Gamep g, LevelNum level_num
     auto *level = game_level_get(g, v, level_num);
     if (level == nullptr) {
       if (! g_level_opt.level_name.empty()) {
-        ERR("No level populated for level %s", g_level_opt.level_name.c_str());
+        ERR("no level populated for level %s", g_level_opt.level_name.c_str());
       } else {
-        ERR("No level populated for level num %u", level_num);
+        ERR("no level populated for level num %u", level_num);
       }
     }
   } while (false);

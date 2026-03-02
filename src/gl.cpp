@@ -127,7 +127,7 @@ void gl_enter_2d_mode(Gamep g)
   // 2D projection
   //
   if ((game_map_fbo_width_get(g) == 0) || (game_map_fbo_height_get(g) == 0)) {
-    LOG("Cannot call glOrtho(%d,%d)", game_map_fbo_width_get(g), game_map_fbo_height_get(g));
+    LOG("cannot call glOrtho(%d,%d)", game_map_fbo_width_get(g), game_map_fbo_height_get(g));
     return;
   }
 
@@ -368,7 +368,7 @@ static void gl_init_fbo_(FboEnum fbo, GLuint *render_buf_id, GLuint *fbo_id, GLu
   DBG2("OpenGl: - glCheckFramebufferStatus_EXT");
   auto status = glCheckFramebufferStatus_EXT(GL_FRAMEBUFFER);
   if ((static_cast< bool >(status)) && (status != GL_FRAMEBUFFER_COMPLETE)) {
-    ERR("Failed to create framebuffer, error: %d/0x%x", status, status);
+    ERR("failed to create framebuffer, error: %d/0x%x", status, status);
 
 #ifdef GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT
     if (status == GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT) {
@@ -482,7 +482,7 @@ void gl_init_fbo(Gamep g, FboEnum fbo)
     // If no change in size then do not reset the FBO
     //
     if (g_fbo_size[ i ] == isize(tex_width, tex_height)) {
-      DBG("No change in size for FBO %u, %ux%u", i, tex_width, tex_height);
+      DBG("no change in size for FBO %u, %ux%u", i, tex_width, tex_height);
       // continue;
     }
     if (g_fbo_size[ i ].w != 0) {

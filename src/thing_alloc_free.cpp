@@ -212,7 +212,7 @@ static auto thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, ThingIdPacked i
   t->id = id.a.val;
 
   if (compiler_unused) {
-    LOG("Thing alloc %08" PRIX32 //
+    LOG("thing alloc %08" PRIX32 //
         " (level: %" PRIu32      //
         " id: %08" PRIX32        //
         " entropy: %08" PRIX32   //
@@ -353,7 +353,7 @@ void thing_free(Gamep g, Levelsp v, Levelp l, Thingp t)
 
   auto *o = thing_find(g, v, t->id);
   if (t != o) {
-    CROAK("Thing mismatch found for id, %p %08" PRIX32 "", (void *) t, t->id);
+    CROAK("thing mismatch found for id, %p %08" PRIX32 "", (void *) t, t->id);
   }
 
   auto *tp = thing_tp(t);

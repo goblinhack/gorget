@@ -48,7 +48,7 @@ auto thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, const spoint &at) -> Thin
 auto thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp at) -> Thingp
 {
   if (at == nullptr) {
-    ERR("No thing pointer");
+    ERR("no thing pointer");
     return nullptr;
   }
   return thing_spawn(g, v, l, tp, thing_at(at));

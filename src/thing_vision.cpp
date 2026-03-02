@@ -17,6 +17,7 @@ void thing_vision_reset(Gamep g, Levelsp v, Levelp l, Thingp t)
   auto *ext = thing_ext_struct(g, t);
   if (ext != nullptr) {
     ext->has_seen = {{0}};
+    ext->can_see  = {{0}};
   }
 
   auto *light = thing_light_struct(g, t);

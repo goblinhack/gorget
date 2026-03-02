@@ -102,12 +102,12 @@ static auto load_raw_image(const std::string &filename, int *x, int *y, int *com
 
   file_data = file_load(filename.c_str(), &len);
   if (file_data == nullptr) {
-    CROAK("Could not read file, '%s'", filename.c_str());
+    CROAK("could not read file, '%s'", filename.c_str());
   }
 
   image_data = stbi_load_from_memory(file_data, len, x, y, comp, 0);
   if (image_data == nullptr) {
-    CROAK("Could not read memory for file, '%s'", filename.c_str());
+    CROAK("could not read memory for file, '%s'", filename.c_str());
   }
 
   DBG2("loaded '%s', %ux%u", filename.c_str(), *x, *y);
@@ -138,7 +138,7 @@ static auto load_image(const std::string &filename) -> SDL_Surface *
 
   image_data = load_raw_image(filename, &x, &y, &comp);
   if (image_data == nullptr) {
-    ERR("Could not read memory for file, '%s'", filename.c_str());
+    ERR("could not read memory for file, '%s'", filename.c_str());
   }
 
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
@@ -163,7 +163,7 @@ static auto load_image(const std::string &filename) -> SDL_Surface *
     surf = SDL_CreateRGBSurface(0, x, y, 32, 0, 0, 0, 0);
     NEWPTR(MTYPE_SDL, surf, "SDL_CreateRGBSurface3");
   } else {
-    ERR("Could not handle image with %d components", comp);
+    ERR("could not handle image with %d components", comp);
     free_raw_image(image_data);
     return nullptr;
   }
@@ -200,7 +200,7 @@ static void load_images(SDL_Surface **surf1_out, const std::string &filename)
 
   image_data = load_raw_image(filename, &x, &y, &comp);
   if (image_data == nullptr) {
-    ERR("Could not read memory for file, '%s'", filename.c_str());
+    ERR("could not read memory for file, '%s'", filename.c_str());
   }
 
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
@@ -218,26 +218,26 @@ static void load_images(SDL_Surface **surf1_out, const std::string &filename)
   if (comp == 4) {
     surf1 = SDL_CreateRGBSurface(0, x, y, 32, rmask, gmask, bmask, amask);
     if (surf1 == nullptr) {
-      ERR("Could not create surface");
+      ERR("could not create surface");
       return;
     }
     NEWPTR(MTYPE_SDL, surf1, "SDL_CreateRGBSurface5");
   } else if (comp == 3) {
     surf1 = SDL_CreateRGBSurface(0, x, y, 24, rmask, gmask, bmask, 0);
     if (surf1 == nullptr) {
-      ERR("Could not create surface");
+      ERR("could not create surface");
       return;
     }
     NEWPTR(MTYPE_SDL, surf1, "SDL_CreateRGBSurface6");
   } else if (comp == 2) {
     surf1 = SDL_CreateRGBSurface(0, x, y, 32, 0, 0, 0, 0);
     if (surf1 == nullptr) {
-      ERR("Could not create surface");
+      ERR("could not create surface");
       return;
     }
     NEWPTR(MTYPE_SDL, surf1, "SDL_CreateRGBSurface7");
   } else {
-    ERR("Could not handle image with %d components", comp);
+    ERR("could not handle image with %d components", comp);
   }
 
   memcpy(surf1->pixels, image_data, comp * x * y);
@@ -247,7 +247,7 @@ static void load_images(SDL_Surface **surf1_out, const std::string &filename)
     DBG2("- SDL_ConvertSurfaceFormat");
     surf1 = SDL_ConvertSurfaceFormat(old_surf, SDL_PIXELFORMAT_RGBA8888, 0);
     if (surf1 == nullptr) {
-      ERR("Could not convert surface");
+      ERR("could not convert surface");
       return;
     }
     NEWPTR(MTYPE_SDL, surf1, "SDL_CreateRGBSurface14");
@@ -276,10 +276,10 @@ auto tex_load(const std::string &file, const std::string &name, int mode) -> Tex
   DBG2("Loading texture '%s', '%s'", file.c_str(), name.c_str());
   if (file.empty()) {
     if (name.empty()) {
-      ERR("No file for tex");
+      ERR("no file for tex");
       return nullptr;
     }
-    ERR("No file for tex loading '%s'", name.c_str());
+    ERR("no file for tex loading '%s'", name.c_str());
     return nullptr;
   }
 
@@ -287,7 +287,7 @@ auto tex_load(const std::string &file, const std::string &name, int mode) -> Tex
   surface              = load_image(file);
 
   if (surface == nullptr) {
-    ERR("Could not make surface from file '%s'", file.c_str());
+    ERR("could not make surface from file '%s'", file.c_str());
   }
 
   t = tex_from_surface(surface, file, name, mode);
@@ -437,15 +437,15 @@ void tex_load_sprites(Texp *tex, Texp *tex_monochrome, Texp *tex_mask, Texp *tex
   TRACE();
   Texp t = tex_find(name);
   if (t != nullptr) {
-    ERR("Tex name already exists '%s'", name.c_str());
+    ERR("tex name already exists '%s'", name.c_str());
   }
 
   DBG2("Loading texture '%s', '%s'", file.c_str(), name.c_str());
   if (file.empty()) {
     if (name.empty()) {
-      ERR("No file for tex");
+      ERR("no file for tex");
     } else {
-      ERR("No file for tex loading '%s'", name.c_str());
+      ERR("no file for tex loading '%s'", name.c_str());
     }
   }
 
@@ -455,7 +455,7 @@ void tex_load_sprites(Texp *tex, Texp *tex_monochrome, Texp *tex_mask, Texp *tex
   load_images(&surface, file);
 
   if (surface == nullptr) {
-    ERR("Could not make surface from file '%s'", file.c_str());
+    ERR("could not make surface from file '%s'", file.c_str());
   }
 
   *tex            = tex_from_surface(surface, file, name, mode);
@@ -474,7 +474,7 @@ auto tex_find(const std::string &file) -> Texp
 {
   TRACE();
   if (file.empty()) {
-    ERR("No filename given for tex find");
+    ERR("no filename given for tex find");
   }
 
   auto result = textures.find(file);
@@ -493,7 +493,7 @@ auto tex_from_surface(SDL_Surface *surface, const std::string &file, const std::
   TRACE();
 
   if (surface == nullptr) {
-    ERR("Could not make surface from file, '%s'", file.c_str());
+    ERR("could not make surface from file, '%s'", file.c_str());
   }
 
   DBG2("Texture: '%s', %dx%d", file.c_str(), surface->w, surface->h);
@@ -571,7 +571,7 @@ auto tex_from_surface(SDL_Surface *surface, const std::string &file, const std::
   auto result = textures.insert(std::make_pair(name, t));
 
   if (! result.second) {
-    CROAK("Tex insert surface name '%s' failed", name.c_str());
+    CROAK("texture insert surface name '%s' failed", name.c_str());
   }
 
   t->width              = surface->w;
@@ -600,7 +600,7 @@ auto tex_from_fbo(Gamep g, FboEnum fbo) -> Texp
   auto result = textures.insert(std::make_pair(name, t));
 
   if (! result.second) {
-    ERR("Tex insert name '%s' failed", name.c_str());
+    ERR("tex insert name '%s' failed", name.c_str());
   }
 
   t->width              = w;
@@ -621,7 +621,7 @@ auto tex_get_width(Texp tex) -> uint32_t
 {
   TRACE();
   if (tex == nullptr) {
-    ERR("No texture");
+    ERR("no texture");
   }
 
   return tex->width;
@@ -631,7 +631,7 @@ auto tex_get_height(Texp tex) -> uint32_t
 {
   TRACE();
   if (tex == nullptr) {
-    ERR("No texture");
+    ERR("no texture");
   }
 
   return tex->height;
@@ -669,7 +669,7 @@ auto string2tex(const char **s) -> Texp
 
   auto result = textures.find(tmp);
   if (result == textures.end()) {
-    ERR("Unknown tex '%s'", tmp);
+    ERR("unknown tex '%s'", tmp);
   }
 
   return result->second;
@@ -697,12 +697,12 @@ auto string2tex(std::string &s, int *len) -> Texp
   }
 
   if (iter == s.end()) {
-    ERR("Unknown tex '%s'", out.c_str());
+    ERR("unknown tex '%s'", out.c_str());
   }
 
   auto result = textures.find(out);
   if (result == textures.end()) {
-    ERR("Unknown tex '%s'", out.c_str());
+    ERR("unknown tex '%s'", out.c_str());
   }
 
   return result->second;

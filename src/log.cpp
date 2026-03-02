@@ -179,7 +179,7 @@ static void croak_handle(bool clean, const char *fmt, va_list args)
   len = static_cast< int >(strlen(buf));
 
   if (! g_opt_test_current.empty()) {
-    snprintf(buf + len, MAXLONGSTR - len, "Test %s: ", g_opt_test_current.c_str());
+    snprintf(buf + len, MAXLONGSTR - len, "test %s: ", g_opt_test_current.c_str());
     len = static_cast< int >(strlen(buf));
   }
 
@@ -230,7 +230,7 @@ static void err_handle(Gamep g, const char *fmt, va_list args)
   len = static_cast< int >(strlen(buf));
 
   if (! g_opt_test_current.empty()) {
-    snprintf(buf + len, MAXLONGSTR - len, "Test %s: ", g_opt_test_current.c_str());
+    snprintf(buf + len, MAXLONGSTR - len, "test %s: ", g_opt_test_current.c_str());
     len = static_cast< int >(strlen(buf));
   }
 

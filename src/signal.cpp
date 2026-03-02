@@ -60,12 +60,12 @@ static void debug_crash_handler(int sig)
 #elif defined __linux__
   int ret = readlink("/proc/self/exe", prog_name, max_path - 1);
   if (ret == -1) {
-    ERR("debug_crash_handler: Read process name failed");
+    ERR("debug_crash_handler: read process name failed");
     return;
   }
 
   if ((size_t) ret >= max_path) {
-    ERR("debug_crash_handler: Symlink too long");
+    ERR("debug_crash_handler: symlink too long");
     return;
   }
 #endif
@@ -89,7 +89,7 @@ static void debug_crash_handler(int sig)
     if (system("which gdb")) {
       // ignore
     }
-    ERR("Debugger failed to exec");
+    ERR("debugger failed to exec");
     assert(false && "Debugger failed to exec");
   } else {
     //
@@ -199,7 +199,7 @@ static auto signal_str(int sig) -> const char *
 #endif
   }
 
-  return "Unknown signal";
+  return "unknown signal";
 }
 
 void crash_handler(int sig)
@@ -243,7 +243,7 @@ void crash_handler(int sig)
   debug_crash_handler(sig);
 #endif
 
-  CROAK("Crashed due to signal %d(%s)\n", sig, signal_str(sig));
+  CROAK("crashed due to signal %d(%s)\n", sig, signal_str(sig));
 }
 
 void ctrlc_handler(int sig)

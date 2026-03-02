@@ -49,6 +49,8 @@ void level_vision_calculate_all(Gamep g, Levelsp v, Levelp l)
       continue;
     }
 
+    ext->can_see = {};
+
     FovContext ctx;
 
     ctx.g                  = g;

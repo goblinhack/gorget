@@ -59,7 +59,7 @@ WidPopup::WidPopup(Gamep g, std::string vname, spoint vtl, spoint vbr, Tilep vti
   }
 
   if (title_tile != nullptr) {
-    auto *w      = wid_new_square_button(g, wid_popup_container, "wid title " + this->name);
+    auto *w      = wid_new_square_button(g, wid_popup_container, "widget title " + this->name);
     wid_title    = w;
     auto title_x = (outer_w - tile_size) / 2;
     wid_set_pos(w, spoint(title_x + 0, 1), spoint(title_x + tile_size - 1, tile_size));

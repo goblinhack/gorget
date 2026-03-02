@@ -554,7 +554,7 @@ static auto raycast_new(int ray_max_length_in_pixels, FboEnum fbo) -> Raycast *
 
   l->ray_max_length_in_pixels = ray_max_length_in_pixels;
   if (ray_max_length_in_pixels == 0) {
-    CROAK("No light power");
+    CROAK("no light power");
   }
 
   l->fbo = fbo;

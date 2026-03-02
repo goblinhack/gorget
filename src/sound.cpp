@@ -120,7 +120,7 @@ auto sound_load(float volume, const std::string &file, const std::string &alias,
   s->concurrent_max = concurrent_max;
   s->data           = file_load(file.c_str(), &s->len);
   if (s->data == nullptr) {
-    ERR("Cannot load sound [%s]", file.c_str());
+    ERR("cannot load sound [%s]", file.c_str());
     delete s;
     return false;
   }
@@ -146,7 +146,7 @@ auto sound_load(float volume, const std::string &file, const std::string &alias,
 
   auto result = all_sound.insert(std::make_pair(alias, s));
   if (! result.second) {
-    ERR("Cannot insert sound name [%s]", alias.c_str());
+    ERR("cannot insert sound name [%s]", alias.c_str());
     SDL_RWclose(rw);
     delete s;
     return false;
@@ -173,7 +173,7 @@ auto sound_find(const std::string &alias) -> bool
   TRACE();
 
   if (s->chunk == nullptr) {
-    ERR("Cannot find sound chunk %s", s->alias.c_str());
+    ERR("cannot find sound chunk %s", s->alias.c_str());
     return false;
   }
 
@@ -227,13 +227,13 @@ auto sound_play(Gamep g, const std::string &alias, float scale) -> bool
   auto sound = all_sound.find(alias);
   if (sound == all_sound.end()) {
     if (! g_opt_tests) {
-      ERR("Cannot find sound %s", alias.c_str());
+      ERR("cannot find sound %s", alias.c_str());
     }
     return false;
   }
 
   if (sound->second == nullptr) {
-    ERR("Cannot find sound data %s", alias.c_str());
+    ERR("cannot find sound data %s", alias.c_str());
     return false;
   }
 

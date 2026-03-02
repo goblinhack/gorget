@@ -102,7 +102,7 @@ static void parse_args(int argc, char *argv[])
     if ((strcasecmp(argv[ i ], "--seed") == 0) || (strcasecmp(argv[ i ], "-seed") == 0)) {
       if (i == argc - 1) {
         usage();
-        CROAK("Missing parameter for argument, %s", argv[ i ]);
+        CROAK("missing parameter for argument, %s", argv[ i ]);
       }
       g_opt_seed_name = argv[ i + 1 ];
       i++;
@@ -136,7 +136,7 @@ static void parse_args(int argc, char *argv[])
     if ((strcasecmp(argv[ i ], "--level") == 0) || (strcasecmp(argv[ i ], "-level") == 0)) {
       if (i == argc - 1) {
         usage();
-        CROAK("Missing parameter for argument, %s", argv[ i ]);
+        CROAK("missing parameter for argument, %s", argv[ i ]);
       }
 
       //
@@ -166,7 +166,7 @@ static void parse_args(int argc, char *argv[])
     if ((strcasecmp(argv[ i ], "--test") == 0) || (strcasecmp(argv[ i ], "-test") == 0)) {
       if (i == argc - 1) {
         usage();
-        CROAK("Missing parameter for argument, %s", argv[ i ]);
+        CROAK("missing parameter for argument, %s", argv[ i ]);
       }
       g_opt_test_name_filter = argv[ i + 1 ];
       g_opt_tests            = true;
@@ -220,7 +220,7 @@ static void parse_args(int argc, char *argv[])
       // Win32 puts spaces in argv when we restart the process. I'm not sure
       // how to handle that, so don't fail the program. Warn and continue.
       //
-      CON("Unknown format argument, %s", argv[ i ]);
+      CON("unknown format argument, %s", argv[ i ]);
 #ifdef _WIN32
       return;
 #else
@@ -229,7 +229,7 @@ static void parse_args(int argc, char *argv[])
     }
 
     usage();
-    CON("Unknown format argument, %s", argv[ i ]);
+    CON("unknown format argument, %s", argv[ i ]);
 #ifdef _WIN32
     return;
 #else
@@ -417,7 +417,7 @@ auto main(int argc, char *argv[]) -> int
   }
 
   if (! wid_init()) {
-    ERR("Wid init");
+    ERR("widget init");
   }
 
   //
@@ -433,7 +433,7 @@ auto main(int argc, char *argv[]) -> int
       LOG("Load fonts");
     }
     if (! font_init()) {
-      ERR("Font init");
+      ERR("font init");
     }
   }
 
@@ -445,7 +445,7 @@ auto main(int argc, char *argv[]) -> int
       LOG("Load console");
     }
     if (! wid_console_init(g)) {
-      ERR("Wid_console init");
+      ERR("wid_console init");
     }
     wid_console_flush(g);
   }
@@ -494,14 +494,14 @@ auto main(int argc, char *argv[]) -> int
       LOG("Load tiles");
     }
     if (! wid_tiles_init()) {
-      ERR("Wid tiles init");
+      ERR("widget tiles init");
     }
   }
 
   if (! g_skip_audio_and_gfx) {
     TRACE_DEBUG();
     if (! tile_init()) {
-      ERR("Tile init");
+      ERR("tile init");
     }
     wid_console_flush(g);
   }
@@ -514,7 +514,7 @@ auto main(int argc, char *argv[]) -> int
       LOG("Load textures");
     }
     if (! tex_init()) {
-      ERR("Tex init");
+      ERR("tex init");
     }
     wid_console_flush(g);
   }
@@ -527,7 +527,7 @@ auto main(int argc, char *argv[]) -> int
       LOG("Init audio");
     }
     if (! audio_init()) {
-      ERR("Audio init");
+      ERR("audio init");
     }
     wid_console_flush(g);
   }
@@ -540,7 +540,7 @@ auto main(int argc, char *argv[]) -> int
       LOG("Init music");
     }
     if (! music_init()) {
-      ERR("Music init");
+      ERR("music init");
     }
     wid_console_flush(g);
   }
@@ -553,7 +553,7 @@ auto main(int argc, char *argv[]) -> int
       LOG("Load sounds");
     }
     if (! sound_init()) {
-      ERR("Sound init");
+      ERR("sound init");
     } else {
       sounds_init();
     }
@@ -565,7 +565,7 @@ auto main(int argc, char *argv[]) -> int
 
     LOG("Load templates");
     if (! tp_init()) {
-      ERR("Templates init");
+      ERR("templates init");
     }
     LOG("Loaded templates");
   }
@@ -574,7 +574,7 @@ auto main(int argc, char *argv[]) -> int
     TRACE_DEBUG();
     LOG("Load commands");
     if (! command_init()) {
-      ERR("Command init");
+      ERR("command init");
     }
     LOG("Loaded commands");
     wid_console_flush(g);

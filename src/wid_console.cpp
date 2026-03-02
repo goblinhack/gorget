@@ -103,7 +103,7 @@ static void wid_console_log_(Gamep g, const std::string &s)
     auto result = wid_console_lines.insert(std::make_pair(log_wid_console_buffered_lines++, s));
 
     if (! result.second) {
-      CROAK("Wid console lines insert name [%s] failed", s.c_str());
+      CROAK("widget console lines insert name [%s] failed", s.c_str());
     }
 
     return;
@@ -184,7 +184,7 @@ static void wid_console_wid_create(Gamep g)
   int const    w = outer_br.x - outer_tl.x;
   int const    h = outer_br.y - outer_tl.y;
 
-  wid_console_window = wid_new_window(g, "wid console");
+  wid_console_window = wid_new_window(g, "widget console");
   wid_set_pos(wid_console_window, outer_tl, outer_br);
   wid_set_color(wid_console_window, WID_COLOR_BG, WHITE);
   wid_set_color(wid_console_window, WID_COLOR_TEXT_FG, WHITE);
@@ -193,7 +193,7 @@ static void wid_console_wid_create(Gamep g)
     spoint const tl(0, 0);
     spoint const br(w - 1, h);
 
-    wid_console_container = wid_new_container(g, wid_console_window, "wid console inner area");
+    wid_console_container = wid_new_container(g, wid_console_window, "widget console inner area");
     wid_set_pos(wid_console_container, tl, br);
     wid_set_style(wid_console_container, UI_WID_STYLE_CONSOLE);
   }

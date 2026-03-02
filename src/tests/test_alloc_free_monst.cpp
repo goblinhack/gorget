@@ -71,7 +71,7 @@
   }
 
   //
-  // No player, so 0
+  // no player, so 0
   //
   TEST_ASSERT(t, game_tick_get(g, v) == 0, "final tick counter value");
 

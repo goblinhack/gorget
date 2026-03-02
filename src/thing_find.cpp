@@ -21,7 +21,7 @@ auto thing_find_non_inline(Gamep g, Levelsp v, ThingId id) -> Thingp
 
   auto *t = &v->thing_body[ arr_index ];
   if (t == nullptr) [[unlikely]] {
-    CROAK("Thing not found as id 08%" PRIX32 //
+    CROAK("thing not found as id 08%" PRIX32 //
           " (level: %" PRIu32                //
           " id: %08" PRIX32                  //
           " entropy: %08" PRIX32             //
@@ -36,7 +36,7 @@ auto thing_find_non_inline(Gamep g, Levelsp v, ThingId id) -> Thingp
     ThingIdPacked id_found = {};
     id_found.a.val         = t->id;
 
-    CROAK("Thing %p found as id 08%" PRIX32                      //
+    CROAK("thing %p found as id 08%" PRIX32                      //
           " (level: %" PRIu32                                    //
           " id: %08" PRIX32                                      //
           " entropy: %08" PRIX32                                 //

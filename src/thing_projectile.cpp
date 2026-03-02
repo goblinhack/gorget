@@ -22,7 +22,7 @@ static auto thing_projectile_get_delta_from_dt(Gamep g, Thingp t, float dt) -> f
 
   auto *player = thing_player(g);
   if (player == nullptr) [[unlikely]] {
-    CROAK("No player struct found");
+    CROAK("no player struct found");
     return fpoint(0, 0);
   }
 
@@ -32,7 +32,7 @@ static auto thing_projectile_get_delta_from_dt(Gamep g, Thingp t, float dt) -> f
 
   auto delta = fpoint(c * dt * tile_speed, s * dt * tile_speed);
   if ((delta.x == 0) && (delta.y == 0)) {
-    CROAK("No delta for projectile sin %f cos %f dt %f tile_speed %f", s, c, dt, tile_speed);
+    CROAK("no delta for projectile sin %f cos %f dt %f tile_speed %f", s, c, dt, tile_speed);
   }
 
   return delta;
@@ -110,7 +110,7 @@ void thing_projectile_move(Gamep g, Levelsp v, Levelp l, Thingp t, float dt)
 
   auto *player = thing_player(g);
   if (player == nullptr) [[unlikely]] {
-    ERR("No player struct found");
+    ERR("no player struct found");
     return;
   }
 

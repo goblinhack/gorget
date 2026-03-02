@@ -228,7 +228,7 @@ static void anyof(struct Slre *r, const char **re)
       default : store_char_in_data(r, (*re)[ -1 ]); break;
     }
 
-  r->err_str = "No closing ']' bracket";
+  r->err_str = "no closing ']' bracket";
 }
 
 static void relocate(struct Slre *r, int begin, int shift)
@@ -310,7 +310,7 @@ static void compile(struct Slre *r, const char **re)
 
         compile(r, re);
         if (*(*re)++ != ')') {
-          r->err_str = "No closing bracket";
+          r->err_str = "no closing bracket";
           return;
         }
 

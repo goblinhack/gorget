@@ -27,7 +27,7 @@ void color_set(const std::string &name, color *c, uint8_t r, uint8_t g, uint8_t 
 
   auto result = color_map.insert(std::make_pair(name, *c));
   if (! result.second) {
-    ERR("Color insert name [%s] failed", name.c_str());
+    ERR("color insert name [%s] failed", name.c_str());
   }
 }
 

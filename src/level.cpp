@@ -245,7 +245,7 @@ auto level_change(Gamep g, Levelsp v, LevelNum level_num) -> Levelp
   //
   LevelSelect const *s = &v->level_select;
   if (s == nullptr) {
-    ERR("No level selection created");
+    ERR("no level selection created");
     return nullptr;
   }
 
@@ -517,7 +517,7 @@ auto level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp at) -> Thingp
   TRACE();
 
   if (at == nullptr) {
-    ERR("No thing pointer");
+    ERR("no thing pointer");
     return nullptr;
   }
 
@@ -568,7 +568,7 @@ auto level_alive(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp at) -> Thingp
   TRACE();
 
   if (at == nullptr) {
-    ERR("No thing pointer");
+    ERR("no thing pointer");
     return nullptr;
   }
 
@@ -619,7 +619,7 @@ auto level_open(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp at) -> Thingp
   TRACE();
 
   if (at == nullptr) {
-    ERR("No thing pointer");
+    ERR("no thing pointer");
     return nullptr;
   }
 

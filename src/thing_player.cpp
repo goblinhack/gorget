@@ -94,7 +94,7 @@ auto thing_player_level(Gamep g) -> Levelp
 //
 auto thing_player_mouse_down(Gamep g, Levelsp v, Levelp l, int x, int y, uint32_t button) -> bool
 {
-  LOG("Thing mouse down");
+  LOG("thing mouse down");
   TRACE_INDENT();
 
   switch (player_state(g, v)) {
@@ -105,7 +105,7 @@ auto thing_player_mouse_down(Gamep g, Levelsp v, Levelp l, int x, int y, uint32_
       break;
     case PLAYER_STATE_DEAD :
       //
-      // No me mouse events when dead
+      // No player mouse events when dead
       //
       break;
     case PLAYER_STATE_NORMAL :
@@ -616,7 +616,7 @@ void player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what)
 
   auto *me = thing_player(g);
   if (me == nullptr) {
-    ERR("No me found");
+    ERR("no thing pointer");
     return;
   }
 
@@ -634,12 +634,12 @@ void player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what)
 
   auto *ext_struct = thing_ext_struct(g, me);
   if (ext_struct == nullptr) {
-    ERR("No me struct found");
+    ERR("no ext struct found");
     return;
   }
 
   if (fire_what == nullptr) {
-    ERR("Nothing to fire");
+    ERR("nothing to fire");
     return;
   }
 
@@ -823,7 +823,7 @@ void player_warp_to_specific_level(Gamep g, Levelsp v, LevelNum level_num)
 
   auto *me = thing_player(g);
   if (me == nullptr) {
-    ERR("No me found");
+    ERR("no thing pointer");
     return;
   }
 
@@ -953,7 +953,7 @@ auto player_jump(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool
 
   auto *player_struct = thing_player_struct(g);
   if (player_struct == nullptr) {
-    ERR("No me struct found");
+    ERR("no player struct found");
     return false;
   }
 

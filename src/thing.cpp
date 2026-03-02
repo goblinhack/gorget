@@ -143,7 +143,7 @@ void thing_stats_dump(Gamep g, Levelsp v)
     }
   }
 
-  LOG("Thing stats:");
+  LOG("thing stats:");
   LOG("- Total things        %u out of max %u", in_use_things + free_things, THING_ID_MAX);
   LOG("- In use things       %u", in_use_things);
   LOG("- Free things         %u", free_things);

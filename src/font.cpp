@@ -27,7 +27,7 @@ static auto font_load(const std::string &name) -> Fontp
   }
 
   if (name.empty()) {
-    ERR("No name for font %s", __FUNCTION__);
+    ERR("no name for font %s", __FUNCTION__);
     return nullptr;
   }
 
@@ -36,7 +36,7 @@ static auto font_load(const std::string &name) -> Fontp
   auto result = fonts.insert(std::make_pair(name, f));
 
   if (! result.second) {
-    ERR("Font insert name [%s] failed", name.c_str());
+    ERR("font insert name [%s] failed", name.c_str());
     return f;
   }
 
@@ -61,7 +61,7 @@ auto font_find(const std::string &file) -> Fontp
   TRACE();
 
   if (file.empty()) {
-    ERR("No filename given for font find %s", __FUNCTION__);
+    ERR("no filename given for font find %s", __FUNCTION__);
     return nullptr;
   }
 
@@ -77,7 +77,7 @@ auto Font::font_get_tile(int u) -> Tilep
 {
   Font const *me = this;
   if (me == nullptr) [[unlikely]] {
-    CROAK("No font");
+    CROAK("no font");
   }
 
   if ((u < 0) || (u >= FONT_CHAR_MAX)) {

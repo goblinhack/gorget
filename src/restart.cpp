@@ -95,5 +95,5 @@ void restart(Gamep g, const std::string &restart_arg)
   CON("execve(%s%s)", executable, argument_line.c_str());
   execve(executable, (char *const *) argv, nullptr);
 
-  CROAK("Failed to restart");
+  CROAK("failed to restart");
 }

@@ -157,7 +157,7 @@ static void wid_cfg_help_destroy(Gamep g)
 
   delete wid_cfg_help_window;
   wid_cfg_help_window = nullptr;
-  game_state_reset(g, "wid keyboard destroy");
+  game_state_reset(g, "widget keyboard destroy");
 }
 
 [[nodiscard]] static auto wid_cfg_help_cancel(Gamep g, Widp w, int x, int y, uint32_t button) -> bool

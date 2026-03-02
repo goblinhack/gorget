@@ -17,7 +17,7 @@ auto to_string(Gamep g, Levelsp v, Levelp l) -> std::string
   TRACE();
 
   if (l == nullptr) {
-    ERR("No level pointer set");
+    ERR("no level pointer");
     return "<no level>";
   }
 

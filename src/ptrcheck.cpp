@@ -506,7 +506,7 @@ static auto ptrcheck_alloc_(int mtype, const void *ptr, const char *what, int si
 #endif
 
   if (ptr == nullptr) {
-    ERR("Null pointer");
+    ERR("NULL pointer");
   }
 
   //
@@ -593,13 +593,13 @@ static auto ptrcheck_free_(int mtype, void *ptr, const char *func, const char *f
 #endif
 
   if (ptr == nullptr) {
-    ERR("Null pointer");
+    ERR("NULL pointer");
     return 0;
   }
 
   pc = ptrcheck_verify_pointer(mtype, ptr, file, func, line, 1 /* don't store */);
   if (pc == nullptr) {
-    CROAK("Failed to save pointer history");
+    CROAK("failed to save pointer history");
     return 0;
   }
 

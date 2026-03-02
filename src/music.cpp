@@ -93,7 +93,7 @@ auto music_load(uint32_t rate, const char *file, const char *name_alias) -> bool
   m->rate = rate;
   m->data = file_load(file, &m->len);
   if (m->data == nullptr) {
-    CROAK("Cannot load music [%s]", file);
+    CROAK("cannot load music [%s]", file);
     return false;
   }
 
@@ -117,7 +117,7 @@ auto music_load(uint32_t rate, const char *file, const char *name_alias) -> bool
 
   auto result = all_music.insert(std::make_pair(name_alias, m));
   if (! result.second) {
-    ERR("Cannot insert music name [%s]", name_alias);
+    ERR("cannot insert music name [%s]", name_alias);
     SDL_RWclose(rw);
     delete m;
     return false;
@@ -159,13 +159,13 @@ auto music_play(Gamep g, const char *name) -> bool
 
   auto music = all_music.find(name);
   if (music == all_music.end()) {
-    CROAK("Cannot find music %s: %s", name, Mix_GetError());
+    CROAK("cannot find music %s: %s", name, Mix_GetError());
     SDL_ClearError();
     return false;
   }
 
   if (Mix_FadeInMusicPos(music->second->m, -1, 2000, 0) == -1) {
-    ERR("Cannot play music %s: %s", name, Mix_GetError());
+    ERR("cannot play music %s: %s", name, Mix_GetError());
     SDL_ClearError();
     return false;
   }

@@ -22,7 +22,7 @@ static inline void term_puts_fg(unsigned char a)
   // NOLINTEND
 
   if (a >= ARRAY_SIZE(data)) {
-    ERR("Overflow");
+    ERR("terminal overflow");
   }
 
   fputs(data[ a ], stdout);

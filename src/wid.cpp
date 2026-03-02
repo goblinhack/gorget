@@ -283,7 +283,7 @@ void wid_get_tl_x_tl_y_br_x_br_y(Widp w, int *tl_x, int *tl_y, int *br_x, int *b
     *tl_y = 0;
     *br_x = 0;
     *br_y = 0;
-    ERR("NULL wid");
+    ERR("no wid");
     return;
   }
 
@@ -403,7 +403,7 @@ void wid_set_string_context(Widp w, std::string string_context)
   TRACE();
 
   if (w == nullptr) {
-    ERR("NULL pointer");
+    ERR("no widget pointer");
     return;
   }
   w->string_context = std::move(string_context);
@@ -414,7 +414,7 @@ auto wid_get_string_context(Widp w) -> std::string
   TRACE();
 
   if (w == nullptr) {
-    ERR("NULL pointer");
+    ERR("no widget pointer");
     return "";
   }
   return w->string_context;
@@ -425,7 +425,7 @@ void wid_set_int_context(Widp w, int int_context)
   TRACE();
 
   if (w == nullptr) {
-    ERR("NULL pointer");
+    ERR("no widget pointer");
     return;
   }
   w->int_context = int_context;
@@ -436,7 +436,7 @@ auto wid_get_int_context(Widp w) -> int
   TRACE();
 
   if (w == nullptr) {
-    ERR("NULL pointer");
+    ERR("no widget pointer");
     return 0;
   }
   return w->int_context;
@@ -447,7 +447,7 @@ void wid_set_void_context(Widp w, void *void_context)
   TRACE();
 
   if (w == nullptr) {
-    ERR("NULL pointer");
+    ERR("no widget pointer");
     return;
   }
   w->void_context = void_context;
@@ -458,7 +458,7 @@ auto wid_get_void_context(Widp w) -> void *
   TRACE();
 
   if (w == nullptr) {
-    ERR("NULL pointer");
+    ERR("no widget pointer");
     return nullptr;
   }
   return w->void_context;
@@ -469,22 +469,22 @@ void wid_set_thing_context(Gamep g, Levelsp v, Widp w, Thingp t)
   TRACE();
 
   if (g == nullptr) {
-    ERR("NULL game pointer");
+    ERR("no game pointer");
     return;
   }
 
   if (v == nullptr) {
-    ERR("NULL levels pointer");
+    ERR("no levels pointer");
     return;
   }
 
   if (w == nullptr) {
-    ERR("NULL pointer");
+    ERR("no widget pointer");
     return;
   }
 
   if (t == nullptr) {
-    ERR("NULL thing pointer");
+    ERR("no thing pointer");
     return;
   }
 
@@ -509,22 +509,22 @@ void wid_unset_thing_context(Gamep g, Levelsp v, Widp w, Thingp t)
   TRACE();
 
   if (g == nullptr) {
-    ERR("NULL game pointer");
+    ERR("no game pointer");
     return;
   }
 
   if (v == nullptr) {
-    ERR("NULL levels pointer");
+    ERR("no levels pointer");
     return;
   }
 
   if (w == nullptr) {
-    ERR("NULL pointer");
+    ERR("no widget pointer");
     return;
   }
 
   if (t == nullptr) {
-    ERR("NULL thing pointer");
+    ERR("no thing pointer");
     return;
   }
 
@@ -542,17 +542,17 @@ auto wid_get_thing_context(Gamep g, Levelsp v, Widp w, int which) -> Thingp
   TRACE();
 
   if (g == nullptr) {
-    ERR("NULL game pointer");
+    ERR("no game pointer");
     return nullptr;
   }
 
   if (v == nullptr) {
-    ERR("NULL levels pointer");
+    ERR("no levels pointer");
     return nullptr;
   }
 
   if (w == nullptr) {
-    ERR("NULL pointer");
+    ERR("no widget pointer");
     return nullptr;
   }
 
@@ -569,11 +569,11 @@ void wid_set_prev(Widp w, Widp prev)
   TRACE();
 
   if (w == nullptr) [[unlikely]] {
-    CROAK("No wid");
+    CROAK("no widget");
   }
 
   if (w == prev) {
-    CROAK("Wid list loop");
+    CROAK("widget list loop");
   }
 
   w->prev = prev;
@@ -588,11 +588,11 @@ auto wid_get_prev(Widp w) -> Widp
   TRACE();
 
   if (w == nullptr) [[unlikely]] {
-    CROAK("No wid");
+    CROAK("no widget");
   }
 
   if (w->prev == w) {
-    CROAK("Wid list get prev loop");
+    CROAK("widget list get prev loop");
   }
 
   return w->prev;
@@ -603,11 +603,11 @@ auto wid_get_next(Widp w) -> Widp
   TRACE();
 
   if (w == nullptr) [[unlikely]] {
-    CROAK("No wid");
+    CROAK("no widget");
   }
 
   if (w->next == w) {
-    ERR("Wid list get next loop");
+    ERR("widget list get next loop");
   }
 
   return w->next;
@@ -1505,11 +1505,11 @@ void wid_set_tilename(int depth, Widp w, const std::string &name)
 
   Tilep tile = tile_find(name);
   if (tile == nullptr) [[unlikely]] {
-    ERR("Failed to find wid tile [%s]", name.c_str());
+    ERR("failed to find wid tile [%s]", name.c_str());
   }
 
   if (w == nullptr) [[unlikely]] {
-    CROAK("Widget does not exist to set tile %s", name.c_str());
+    CROAK("widget does not exist to set tile %s", name.c_str());
   }
 
   w->tiles[ depth ] = tile;
@@ -1729,7 +1729,7 @@ static void wid_tree_attach(Widp w)
   wid_key_map_location *root = nullptr;
 
   if (w->in_tree_root != nullptr) {
-    CROAK("Wid is already attached");
+    CROAK("widget is already attached");
   }
 
   if (w->parent == nullptr) {
@@ -1739,12 +1739,12 @@ static void wid_tree_attach(Widp w)
   }
 
   if (root == nullptr) {
-    CROAK("No root");
+    CROAK("no root");
   }
 
   auto result = root->insert(std::make_pair(w->key, w));
   if (! result.second) {
-    CROAK("Wid insert name [%s] failed", wid_get_name(w).c_str());
+    CROAK("widget insert name [%s] failed", wid_get_name(w).c_str());
   }
 
   w->in_tree_root = root;
@@ -1755,7 +1755,7 @@ static void wid_tree_insert(Widp w)
   TRACE();
 
   if (w->in_tree_root != nullptr) {
-    CROAK("Wid is already inserted");
+    CROAK("widget is already inserted");
   }
 
   wid_key_map_location *root = nullptr;
@@ -1772,12 +1772,12 @@ static void wid_tree_insert(Widp w)
   }
 
   if (root == nullptr) {
-    CROAK("No root");
+    CROAK("no root");
   }
 
   auto result = root->insert(std::make_pair(w->key, w));
   if (! result.second) {
-    CROAK("Wid insert name [%s] failed", wid_get_name(w).c_str());
+    CROAK("widget insert name [%s] failed", wid_get_name(w).c_str());
   }
 
   w->in_tree_root = root;
@@ -1790,7 +1790,7 @@ static void wid_tree_global_unsorted_insert(Widp w)
   static WidKeyType key;
 
   if (w->in_tree_global_unsorted_root != nullptr) {
-    CROAK("Wid is already in the global tree");
+    CROAK("widget is already in the global tree");
   }
 
   auto *root = &wid_global;
@@ -1800,7 +1800,7 @@ static void wid_tree_global_unsorted_insert(Widp w)
   w->tree_global_key = key;
   auto result        = root->insert(std::make_pair(w->tree_global_key, w));
   if (! result.second) {
-    CROAK("Wid insert name [%s] tree_global failed", wid_get_name(w).c_str());
+    CROAK("widget insert name [%s] tree_global failed", wid_get_name(w).c_str());
   }
 
   w->in_tree_global_unsorted_root = root;
@@ -1811,7 +1811,7 @@ static void wid_tree2_unsorted_insert(Widp w)
   TRACE();
 
   if (w->in_tree2_unsorted_root != nullptr) {
-    CROAK("Wid is already in the in_tree2_unsorted_root");
+    CROAK("widget is already in the in_tree2_unsorted_root");
   }
 
   wid_key_map_int *root = nullptr;
@@ -1825,7 +1825,7 @@ static void wid_tree2_unsorted_insert(Widp w)
   w->tree2_key.val = ++wid_unique_key;
   auto result      = root->insert(std::make_pair(w->tree2_key, w));
   if (! result.second) {
-    CROAK("Wid insert name [%s] tree2 failed", wid_get_name(w).c_str());
+    CROAK("widget insert name [%s] tree2 failed", wid_get_name(w).c_str());
   }
 
   w->in_tree2_unsorted_root = root;
@@ -1850,7 +1850,7 @@ static void wid_tree4_wids_being_destroyed_insert(Widp w)
   w->tree4_key.val = ++wid_unique_key;
   auto result      = root->insert(std::make_pair(w->tree4_key, w));
   if (! result.second) {
-    CROAK("Wid insert name [%s] tree4 failed", wid_get_name(w).c_str());
+    CROAK("widget insert name [%s] tree4 failed", wid_get_name(w).c_str());
   }
 
   w->in_tree4_wids_being_destroyed = root;
@@ -1875,7 +1875,7 @@ static void wid_tree5_tick_wids_insert(Widp w)
   w->tree5_key.val = ++wid_unique_key;
   auto result      = root->insert(std::make_pair(w->tree5_key, w));
   if (! result.second) {
-    CROAK("Wid insert name [%s] tree5 failed", wid_get_name(w).c_str());
+    CROAK("widget insert name [%s] tree5 failed", wid_get_name(w).c_str());
   }
 
   w->in_tree5_tick_wids = root;
@@ -1894,7 +1894,7 @@ static void wid_tree_remove(Widp w)
 
   auto result = root->find(w->key);
   if (result == root->end()) {
-    CROAK("Wid tree did not find wid %s hence cannot remove it", wid_get_name(w).c_str());
+    CROAK("widget tree did not find wid %s hence cannot remove it", wid_get_name(w).c_str());
   }
 
   root->erase(w->key);
@@ -1913,7 +1913,7 @@ static void wid_tree2_unsorted_remove(Widp w)
 
   auto result = root->find(w->tree2_key);
   if (result == root->end()) {
-    CROAK("Wid tree2 did not find wid");
+    CROAK("widget tree2 did not find wid");
   }
   root->erase(w->tree2_key);
 
@@ -1931,7 +1931,7 @@ static void wid_tree_global_unsorted_remove(Widp w)
 
   auto result = root->find(w->tree_global_key);
   if (result == root->end()) {
-    CROAK("Wid tree_global did not find wid");
+    CROAK("widget tree_global did not find wid");
   }
   root->erase(w->tree_global_key);
 
@@ -1949,7 +1949,7 @@ static void wid_tree4_wids_being_destroyed_remove(Widp w)
 
   auto result = root->find(w->tree4_key);
   if (result == root->end()) {
-    CROAK("Wid tree4 did not find wid");
+    CROAK("widget tree4 did not find wid");
   }
   root->erase(w->tree4_key);
 
@@ -1967,7 +1967,7 @@ static void wid_tree5_tick_wids_remove(Widp w)
 
   auto result = root->find(w->tree5_key);
   if (result == root->end()) {
-    CROAK("Wid tree5 did not find wid");
+    CROAK("widget tree5 did not find wid");
   }
   root->erase(w->tree5_key);
 
@@ -2303,7 +2303,7 @@ auto wid_new_square_button(Gamep g, Widp parent, const std::string &name) -> Wid
   }
 
   if (parent == nullptr) {
-    ERR("No parent");
+    ERR("no parent widget");
   }
 
   Widp w = wid_new(parent);
@@ -2348,7 +2348,7 @@ auto wid_new_plain(Gamep g, Widp parent, const std::string &name) -> Widp
   }
 
   if (parent == nullptr) {
-    ERR("No parent");
+    ERR("no parent widget");
   }
 
   Widp w = wid_new(parent);
@@ -2394,7 +2394,7 @@ static auto wid_new_scroll_trough(Gamep g, Widp parent) -> Widp
   }
 
   if (parent == nullptr) {
-    ERR("No parent");
+    ERR("no parent widget");
   }
 
   Widp w = wid_new(parent);
@@ -2439,7 +2439,7 @@ static auto wid_new_scroll_bar(Gamep g, Widp parent, const std::string &name, Wi
   }
 
   if (parent == nullptr) {
-    ERR("No parent");
+    ERR("no parent widget");
   }
 
   Widp w = wid_new(parent);
@@ -2506,7 +2506,7 @@ auto wid_new_vert_scroll_bar(Gamep g, Widp parent, const std::string &name, Widp
   }
 
   if (parent == nullptr) {
-    ERR("No parent");
+    ERR("no parent widget");
   }
 
   spoint vert_tl = {};
@@ -2568,7 +2568,7 @@ auto wid_new_horiz_scroll_bar(Gamep g, Widp parent, const std::string &name, Wid
   }
 
   if (parent == nullptr) {
-    ERR("No parent");
+    ERR("no parent widget");
   }
 
   spoint horiz_tl = {};
@@ -3106,7 +3106,7 @@ auto wid_find(const std::string &name) -> Widp
       return r;
     }
   }
-  // DBG2("Wid [%s] not found", name.c_str());
+  // DBG2("widget [%s] not found", name.c_str());
   return nullptr;
 }
 
@@ -4660,7 +4660,7 @@ void wid_key_down(Gamep g, const struct SDL_Keysym *key, int x, int y)
       g_blend_b++;
       if (g_blend_b >= (int) ARRAY_SIZE(vals)) {
         g_blend_b = 0;
-        ERR("Wrapped");
+        ERR("wrapped");
       }
     }
     return;
@@ -4713,7 +4713,7 @@ void wid_key_down(Gamep g, const struct SDL_Keysym *key, int x, int y)
       //
       // Do not raise, gets in the way of popups the callback creates.
       //
-      // CON("wid did not handle");
+      // CON("widget did not handle");
       return;
     }
   }
@@ -5290,22 +5290,22 @@ void wid_sanity_check(Gamep g)
   IF_DEBUG
   {
     if (static_cast< int >(wid_top_level.size()) > 1000) {
-      CROAK("Widget size getting large for: wid_top_level %d", (int) wid_top_level.size());
+      CROAK("widget size getting large for: wid_top_level %d", (int) wid_top_level.size());
     }
     if (static_cast< int >(wid_global.size()) > 1000) {
-      CROAK("Widget size getting large for: wid_global %d", (int) wid_global.size());
+      CROAK("widget size getting large for: wid_global %d", (int) wid_global.size());
     }
     if (static_cast< int >(wid_top_level2.size()) > 1000) {
-      CROAK("Widget size getting large for: wid_top_level2 %d", (int) wid_top_level2.size());
+      CROAK("widget size getting large for: wid_top_level2 %d", (int) wid_top_level2.size());
     }
     if (static_cast< int >(wid_top_level3.size()) > 1000) {
-      CROAK("Widget size getting large for: wid_top_level3 %d", (int) wid_top_level3.size());
+      CROAK("widget size getting large for: wid_top_level3 %d", (int) wid_top_level3.size());
     }
     if (static_cast< int >(wid_top_level4.size()) > 1000) {
-      CROAK("Widget size getting large for: wid_top_level4 %d", (int) wid_top_level4.size());
+      CROAK("widget size getting large for: wid_top_level4 %d", (int) wid_top_level4.size());
     }
     if (static_cast< int >(wid_tick_top_level.size()) > 1000) {
-      CROAK("Widget size getting large for: wid_tick_top_level %d", (int) wid_tick_top_level.size());
+      CROAK("widget size getting large for: wid_tick_top_level %d", (int) wid_tick_top_level.size());
     }
   }
 }
@@ -5345,7 +5345,7 @@ static void wid_tick_all(Gamep g)
 
   for (auto &w : work) {
     if (w->on_tick == nullptr) {
-      ERR("Wid on ticker tree, but no callback set");
+      ERR("widget on ticker tree, but no callback set");
     }
 
     (w->on_tick)(g, w);
@@ -5393,7 +5393,7 @@ printf("========================================= %d\n", wid_total_count);
 #endif
 
   if (wid_total_count > 5000) {
-    ERR("Too many widgets %d", wid_total_count);
+    TOPCON("too many widgets %d", wid_total_count);
   }
 
 #if 0

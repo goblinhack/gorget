@@ -175,7 +175,7 @@ auto test_load(const char *name_in) -> Testp
 
   auto result = test_name_map.insert(std::make_pair(name, test));
   if (! result.second) {
-    CROAK("Test insert name [%s] failed", name_in);
+    CROAK("test insert name [%s] failed", name_in);
   }
 
   return test;
@@ -275,7 +275,7 @@ void tests_run(Gamep g)
     } else {
       failed++;
       out += "FAILED";
-      LOG("Failed");
+      LOG("failed");
     }
     printf("%s\n", out.c_str());
 #else
@@ -296,7 +296,7 @@ void tests_run(Gamep g)
     } else {
       failed++;
       term_log("%%fg=red$FAILED%%fg=reset$\n");
-      LOG("Failed");
+      LOG("failed");
     }
 #endif
 

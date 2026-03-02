@@ -424,7 +424,7 @@ void tp_damage_set(Tpp tp, ThingEventType ev, const std::string &val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
 
@@ -443,7 +443,7 @@ auto tp_damage(Tpp tp, ThingEventType val) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return 0;
   }
 
@@ -459,7 +459,7 @@ void tp_chance_set(Tpp tp, ThingChanceType ev, const std::string &val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
 
@@ -478,7 +478,7 @@ auto tp_chance(Tpp tp, ThingChanceType val) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return 0;
   }
 
@@ -497,7 +497,7 @@ auto tp_chance_success(Tpp tp, ThingChanceType val) -> bool
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return false;
   }
 
@@ -521,7 +521,7 @@ auto tp_chance_fail(Tpp tp, ThingChanceType val) -> bool
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return false;
   }
 
@@ -538,7 +538,7 @@ auto tp_tiles_get(Tpp tp, ThingAnim val, int index) -> Tilep
   TRACE();
 
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return nullptr;
   }
 
@@ -553,7 +553,7 @@ void tp_tiles_push_back(Tpp tp, ThingAnim val, Tilep tile)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
 
@@ -569,7 +569,7 @@ auto tp_tiles_size(Tpp tp, ThingAnim val) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return 0;
   }
   return static_cast< int >(tp->tiles[ val ].size());
@@ -579,7 +579,7 @@ auto tp_name(Tpp tp) -> std::string
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return "<noname>";
   }
   return tp->name;
@@ -589,7 +589,7 @@ void tp_short_name_set(Tpp tp, const std::string &val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   tp->short_name = std::string(val);
@@ -599,7 +599,7 @@ auto tp_short_name(Tpp tp) -> std::string
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return "<noshortname>";
   }
   if (tp->short_name.empty()) {
@@ -612,7 +612,7 @@ void tp_long_name_set(Tpp tp, const std::string &val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   tp->long_name = std::string(val);
@@ -622,7 +622,7 @@ auto tp_long_name(Tpp tp) -> std::string
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return "<nolongname>";
   }
   if (tp->long_name.empty()) {
@@ -635,7 +635,7 @@ void tp_apostrophize_name_set(Tpp tp, const std::string &val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   tp->apostrophize_name = std::string(val);
@@ -645,7 +645,7 @@ auto tp_apostrophize_name(Tpp tp) -> std::string
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return "<noapostrophizename>";
   }
   if (tp->apostrophize_name.empty()) {
@@ -658,7 +658,7 @@ void tp_pluralize_name_set(Tpp tp, const std::string &val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   tp->pluralize_name = std::string(val);
@@ -668,7 +668,7 @@ auto tp_pluralize_name(Tpp tp) -> std::string
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return "<nopluralizename>";
   }
   if (tp->pluralize_name.empty()) {
@@ -681,7 +681,7 @@ void tp_real_name_set(Tpp tp, const std::string &val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   tp->real_name = std::string(val);
@@ -691,7 +691,7 @@ auto tp_real_name(Tpp tp) -> std::string
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return "<norealname>";
   }
   if (tp->real_name.empty()) {
@@ -704,7 +704,7 @@ void tp_light_color_set(Tpp tp, const std::string &val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   tp->light_color = color_find(val.c_str());
@@ -714,7 +714,7 @@ void tp_light_color_apply(Tpp tp)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   GLCOLOR(tp->light_color);
@@ -725,7 +725,7 @@ auto tp_light_color(Tpp tp) -> color
 #ifdef DEBUG_BUILD
   TRACE();
   if (! tp) {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return WHITE;
   }
 #endif
@@ -737,7 +737,7 @@ auto tp_flag(Tpp tp, ThingFlag f) -> int
   TRACE_DEBUG(); // expensive
 
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return 0;
   }
   return tp->flag[ f ];
@@ -747,7 +747,7 @@ void tp_flag_set(Tpp tp, ThingFlag f, int val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   tp->flag[ f ] = val;
@@ -757,7 +757,7 @@ void tp_z_depth_set(Tpp tp, MapZDepth val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   tp->z_depth = val;
@@ -768,7 +768,7 @@ auto tp_z_depth_get(Tpp tp) -> uint8_t
 #ifdef DEBUG_BUILD
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return 0;
   }
 #endif
@@ -779,7 +779,7 @@ void tp_speed_set(Tpp tp, int val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   tp->speed = val;
@@ -789,7 +789,7 @@ auto tp_speed_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return 0;
   }
   return tp->speed;
@@ -799,7 +799,7 @@ void tp_weight_set(Tpp tp, int val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   tp->weight = val;
@@ -809,7 +809,7 @@ auto tp_weight_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return 0;
   }
   return tp->weight;
@@ -819,7 +819,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
 
@@ -859,7 +859,7 @@ void tp_is_immunity_add(Tpp tp, ThingEventType val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
 
@@ -879,7 +879,7 @@ auto tp_is_immune_to(Tpp tp, ThingEventType val) -> bool
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return false;
   }
 
@@ -895,7 +895,7 @@ void tp_health_set(Tpp tp, const std::string &val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   tp->health_initial = Dice(std::string(val));
@@ -905,7 +905,7 @@ auto tp_health_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return 0;
   }
   return tp->health_initial.roll();
@@ -915,7 +915,7 @@ auto tp_health_max_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return 0;
   }
   return tp->health_initial.max_roll();
@@ -925,7 +925,7 @@ void tp_temperature_initial_set(Tpp tp, int val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   tp->temperature_initial = val;
@@ -935,7 +935,7 @@ auto tp_temperature_initial_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return 0;
   }
   return tp->temperature_initial;
@@ -945,7 +945,7 @@ void tp_temperature_burns_at_set(Tpp tp, int val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   tp->temperature_burns_at = val;
@@ -955,7 +955,7 @@ auto tp_temperature_burns_at_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return 0;
   }
   return tp->temperature_burns_at;
@@ -965,7 +965,7 @@ void tp_temperature_melts_at_set(Tpp tp, int val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   tp->temperature_melts_at = val;
@@ -975,7 +975,7 @@ auto tp_temperature_melts_at_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return 0;
   }
   return tp->temperature_melts_at;
@@ -985,7 +985,7 @@ void tp_temperature_damage_at_set(Tpp tp, int val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   tp->temperature_damage_at = val;
@@ -995,7 +995,7 @@ auto tp_temperature_damage_at_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return 0;
   }
   return tp->temperature_damage_at;
@@ -1005,7 +1005,7 @@ void tp_value1_set(Tpp tp, int val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   tp->value1 = val;
@@ -1015,7 +1015,7 @@ auto tp_value1_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return 0;
   }
   return tp->value1;
@@ -1025,7 +1025,7 @@ void tp_value2_set(Tpp tp, int val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   tp->value2 = val;
@@ -1035,7 +1035,7 @@ auto tp_value2_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return 0;
   }
   return tp->value2;
@@ -1045,7 +1045,7 @@ void tp_value3_set(Tpp tp, int val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   tp->value3 = val;
@@ -1055,7 +1055,7 @@ auto tp_value3_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return 0;
   }
   return tp->value3;
@@ -1065,7 +1065,7 @@ void tp_value4_set(Tpp tp, int val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   tp->value4 = val;
@@ -1075,7 +1075,7 @@ auto tp_value4_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return 0;
   }
   return tp->value4;
@@ -1085,7 +1085,7 @@ void tp_value5_set(Tpp tp, int val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   tp->value5 = val;
@@ -1095,7 +1095,7 @@ auto tp_value5_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return 0;
   }
   return tp->value5;
@@ -1105,7 +1105,7 @@ void tp_value6_set(Tpp tp, int val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   tp->value6 = val;
@@ -1115,7 +1115,7 @@ auto tp_value6_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return 0;
   }
   return tp->value6;
@@ -1125,7 +1125,7 @@ void tp_value7_set(Tpp tp, int val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   tp->value7 = val;
@@ -1135,7 +1135,7 @@ auto tp_value7_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return 0;
   }
   return tp->value7;
@@ -1145,7 +1145,7 @@ void tp_value8_set(Tpp tp, int val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   tp->value8 = val;
@@ -1155,7 +1155,7 @@ auto tp_value8_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return 0;
   }
   return tp->value8;
@@ -1165,7 +1165,7 @@ void tp_value9_set(Tpp tp, int val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   tp->value9 = val;
@@ -1175,7 +1175,7 @@ auto tp_value9_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return 0;
   }
   return tp->value9;
@@ -1185,7 +1185,7 @@ void tp_value10_set(Tpp tp, int val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   tp->value10 = val;
@@ -1195,7 +1195,7 @@ auto tp_value10_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return 0;
   }
   return tp->value10;
@@ -1205,7 +1205,7 @@ void tp_value11_set(Tpp tp, int val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   tp->value11 = val;
@@ -1215,7 +1215,7 @@ auto tp_value11_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return 0;
   }
   return tp->value11;
@@ -1225,7 +1225,7 @@ void tp_value12_set(Tpp tp, int val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   tp->value12 = val;
@@ -1235,7 +1235,7 @@ auto tp_value12_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return 0;
   }
   return tp->value12;
@@ -1245,7 +1245,7 @@ void tp_value13_set(Tpp tp, int val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   tp->value13 = val;
@@ -1255,7 +1255,7 @@ auto tp_value13_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return 0;
   }
   return tp->value13;
@@ -1265,7 +1265,7 @@ void tp_value14_set(Tpp tp, int val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   tp->value14 = val;
@@ -1275,7 +1275,7 @@ auto tp_value14_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return 0;
   }
   return tp->value14;
@@ -1285,7 +1285,7 @@ void tp_value15_set(Tpp tp, int val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   tp->value15 = val;
@@ -1295,7 +1295,7 @@ auto tp_value15_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return 0;
   }
   return tp->value15;
@@ -1305,7 +1305,7 @@ void tp_value16_set(Tpp tp, int val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   tp->value16 = val;
@@ -1315,7 +1315,7 @@ auto tp_value16_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return 0;
   }
   return tp->value16;
@@ -1325,7 +1325,7 @@ void tp_value17_set(Tpp tp, int val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   tp->value17 = val;
@@ -1335,7 +1335,7 @@ auto tp_value17_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return 0;
   }
   return tp->value17;
@@ -1345,7 +1345,7 @@ void tp_value18_set(Tpp tp, int val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   tp->value18 = val;
@@ -1355,7 +1355,7 @@ auto tp_value18_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return 0;
   }
   return tp->value18;
@@ -1365,7 +1365,7 @@ void tp_value19_set(Tpp tp, int val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   tp->value19 = val;
@@ -1375,7 +1375,7 @@ auto tp_value19_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return 0;
   }
   return tp->value19;
@@ -1385,7 +1385,7 @@ void tp_value20_set(Tpp tp, int val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   tp->value20 = val;
@@ -1395,7 +1395,7 @@ auto tp_value20_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return 0;
   }
   return tp->value20;
@@ -1405,7 +1405,7 @@ void tp_minion_max_set(Tpp tp, int val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   if (val > THING_MINION_MAX) {
@@ -1420,7 +1420,7 @@ auto tp_minion_max_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return 0;
   }
   return tp->minion_max;
@@ -1430,7 +1430,7 @@ void tp_distance_minion_from_mob_max_set(Tpp tp, int val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   tp->distance_minion_from_mob_max = val;
@@ -1440,7 +1440,7 @@ auto tp_distance_minion_from_mob_max_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return 0;
   }
   return tp->distance_minion_from_mob_max;
@@ -1450,7 +1450,7 @@ void tp_distance_vision_set(Tpp tp, int val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   tp->distance_vision = val;
@@ -1460,7 +1460,7 @@ auto tp_distance_vision_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return 0;
   }
   return tp->distance_vision;
@@ -1470,7 +1470,7 @@ void tp_temperature_thermal_conductivity_set(Tpp tp, float val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   tp->temperature_thermal_conductivity = val;
@@ -1480,7 +1480,7 @@ auto tp_temperature_thermal_conductivity_get(Tpp tp) -> float
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return 0;
   }
   return tp->temperature_thermal_conductivity;
@@ -1490,7 +1490,7 @@ void tp_temperature_heat_capacity_set(Tpp tp, float val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   tp->temperature_heat_capacity = val;
@@ -1500,7 +1500,7 @@ auto tp_temperature_heat_capacity_get(Tpp tp) -> float
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return 0;
   }
   return tp->temperature_heat_capacity;
@@ -1510,7 +1510,7 @@ void tp_variant_set(Tpp tp, int val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   tp->variant = val;
@@ -1520,7 +1520,7 @@ auto tp_variant_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return 0;
   }
   return tp->variant;
@@ -1530,7 +1530,7 @@ void tp_priority_set(Tpp tp, ThingPriorityType val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   tp->priority = val;
@@ -1540,7 +1540,7 @@ auto tp_priority_get(Tpp tp) -> ThingPriorityType
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return THING_PRIORITY_LOW;
   }
   return tp->priority;
@@ -1550,7 +1550,7 @@ void tp_distance_jump_set(Tpp tp, int val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   tp->distance_jump = val;
@@ -1560,7 +1560,7 @@ auto tp_distance_jump_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return 0;
   }
   return tp->distance_jump;
@@ -1570,7 +1570,7 @@ void tp_lifespan_set(Tpp tp, const std::string &val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return;
   }
   tp->lifespan = Dice(std::string(val));
@@ -1580,7 +1580,7 @@ auto tp_lifespan_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return 0;
   }
   return tp->lifespan.roll();
@@ -1590,7 +1590,7 @@ auto tp_lifespan_max_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    TP_ERR(tp, "No thing template pointer set");
+    TP_ERR(tp, "no thing template pointer");
     return 0;
   }
   return tp->lifespan.max_roll();
