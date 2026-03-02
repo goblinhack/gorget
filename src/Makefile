@@ -132,7 +132,7 @@ tidy:
 			-header-filter=".*" \
 			$x -- $(CFLAGS); \
 	)
-	splat "if (ext == nullptr) {" "if (ext == nullptr) [[unlikely]] {" "*" do
+	splat "if (ext == nullptr) [[unlikely]] {" "if (ext == nullptr) [[unlikely]] {" "*" do
 	git checkout 3rdparty
 	@echo "Done"
 

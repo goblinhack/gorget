@@ -9,7 +9,7 @@
 
 static inline void age_map_incr(AgeMap *age, const uint8_t x, const uint8_t y, const uint8_t val)
 {
-  if (val) {
+  if (val != 0U) {
     age->val[ x ][ y ] += val;
   } else {
     age->val[ x ][ y ] = val;

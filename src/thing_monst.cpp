@@ -84,7 +84,7 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
 
   THING_LOG(me, "wander");
   auto *ext = thing_ext_struct(g, me);
-  if (ext == nullptr) {
+  if (ext == nullptr) [[unlikely]] {
     THING_ERR(me, "no ext pointer");
     return false;
   }
@@ -108,8 +108,8 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
   // Keep trying to find a target
   //
   while (tries++ < max_tries) {
-    uint8_t x;
-    uint8_t y;
+    uint8_t x = 0;
+    uint8_t y = 0;
 
     //
     // Get a valid tile.
@@ -123,7 +123,7 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
       continue;
     }
 
-    spoint target(x, y);
+    spoint const target(x, y);
 
     if (tries > max_tries / 2) {
       //
@@ -162,7 +162,7 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
     //
     // If we get here for a minion, make sure the minion stays close to the mob
     //
-    if (mob) {
+    if (mob != nullptr) {
       if (distance(target, thing_at(mob)) >= thing_distance_minion_from_mob_max(me)) {
         continue;
       }
