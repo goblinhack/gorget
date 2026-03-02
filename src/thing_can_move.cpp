@@ -14,7 +14,7 @@ auto thing_can_move_to_attempt(Gamep g, Levelsp v, Levelp l, Thingp me, spoint t
 {
   TRACE();
 
-  if (is_oob(to)) [[unlikely]] {
+  if (is_oob_or_border(to)) [[unlikely]] {
     return false;
   }
 
@@ -148,7 +148,7 @@ auto thing_can_move_to_attempt_by_shoving(Gamep g, Levelsp v, Levelp l, Thingp m
 {
   TRACE();
 
-  if (is_oob(to)) [[unlikely]] {
+  if (is_oob_or_border(to)) [[unlikely]] {
     return false;
   }
 

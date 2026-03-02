@@ -239,7 +239,7 @@ auto thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool
 {
   TRACE();
 
-  if (is_oob(to)) [[unlikely]] {
+  if (is_oob_or_border(to)) [[unlikely]] {
     return false;
   }
 
@@ -272,7 +272,7 @@ auto thing_shove_to(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool
 {
   TRACE();
 
-  if (is_oob(to)) [[unlikely]] {
+  if (is_oob_or_border(to)) [[unlikely]] {
     return false;
   }
 
@@ -298,7 +298,7 @@ auto thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp me, spoint to) -
 {
   TRACE();
 
-  if (is_oob(to)) [[unlikely]] {
+  if (is_oob_or_border(to)) [[unlikely]] {
     return false;
   }
 

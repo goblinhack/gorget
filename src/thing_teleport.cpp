@@ -150,7 +150,7 @@ auto thing_teleport_handle(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool
     return false;
   }
 
-  if (is_oob(to)) [[unlikely]] {
+  if (is_oob_or_border(to)) [[unlikely]] {
     THING_LOG(t, "teleport, no; oob");
     return false;
   }

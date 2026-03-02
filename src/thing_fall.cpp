@@ -17,7 +17,7 @@
 {
   TRACE();
 
-  if (is_oob(p)) [[unlikely]] {
+  if (is_oob_or_border(p)) [[unlikely]] {
     return false;
   }
 

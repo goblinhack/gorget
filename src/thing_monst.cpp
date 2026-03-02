@@ -107,7 +107,7 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
     auto x = at.x - radius + PCG_RANDOM_RANGE(0, radius_sq);
     auto y = at.y - radius + PCG_RANDOM_RANGE(0, radius_sq);
 
-    if (is_oob(x, y)) {
+    if (is_oob_or_border(x, y)) {
       continue;
     }
 

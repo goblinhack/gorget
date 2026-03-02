@@ -70,7 +70,7 @@ auto thing_jump_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to, bool warn)
 {
   TRACE();
 
-  if (is_oob(to)) [[unlikely]] {
+  if (is_oob_or_border(to)) [[unlikely]] {
     return false;
   }
 

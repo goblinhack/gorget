@@ -67,7 +67,7 @@ auto thing_can_move_to_attempt_by_opening(Gamep g, Levelsp v, Levelp l, Thingp m
 {
   TRACE();
 
-  if (is_oob(to)) [[unlikely]] {
+  if (is_oob_or_border(to)) [[unlikely]] {
     return false;
   }
 
