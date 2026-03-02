@@ -66,7 +66,7 @@ static void thing_ext_free(Levelsp v, Thingp t)
     ERR("freeing unused Thing ext ID is not in use, %" PRIX32 "", ext_id);
   }
 
-  v->thing_ext[ ext_id ].in_use = false;
+  v->thing_ext[ ext_id ] = {};
   v->thing_ext_count--;
   if (v->thing_ext_count < 0) {
     CROAK("bad thing_ext count");
@@ -124,7 +124,7 @@ static void thing_light_free(Levelsp v, Thingp t)
     ERR("freeing unused Thing fov ID is not in use, %" PRIX32 "", light_id);
   }
 
-  v->thing_light[ light_id ].in_use = false;
+  v->thing_light[ light_id ] = {};
   v->thing_light_count--;
   if (v->thing_light_count < 0) {
     CROAK("bad thing_light count");

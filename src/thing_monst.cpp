@@ -38,9 +38,6 @@ static auto thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thing
   auto target = thing_at(player);
   if (! thing_vision_can_see_tile(g, v, l, me, target)) {
     THING_DBG(me, "choose target: cannot see player");
-    if (compiler_unused) {
-      thing_can_see_dump(g, v, l, me);
-    }
     return false;
   }
 
@@ -84,7 +81,7 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
 
   THING_LOG(me, "wander");
   auto *ext = thing_ext_struct(g, me);
-  if (ext == nullptr) [[unlikely]] {
+  if (ext == nullptr) {
     THING_ERR(me, "no ext pointer");
     return false;
   }
@@ -104,12 +101,15 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
   auto tries     = 0;
   auto max_tries = radius_sq;
 
+  int  best_lowest_score = 999;
+  bool found_path        = false;
+
   //
   // Keep trying to find a target
   //
   while (tries++ < max_tries) {
-    uint8_t x = 0;
-    uint8_t y = 0;
+    uint8_t x;
+    uint8_t y;
 
     //
     // Get a valid tile.
@@ -123,65 +123,61 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
       continue;
     }
 
-    spoint const target(x, y);
-
-    if (tries > max_tries / 2) {
-      //
-      // Just choose anywhere
-      //
-      THING_LOG(me, "wander try %d,%d last resort cand", x, y);
-    } else {
-      //
-      // Prefer older tiles, so the monster explores more
-      //
-      auto age = age_map_get(&ext->has_seen, x, y);
-      if (age > 1) {
-        THING_LOG(me, "wander try %d,%d age %d too new", x, y, age);
-        continue;
-      }
-
-      //
-      // Prefer further away tiles for exploration
-      //
-      if (distance(target, at) < radius / 2) {
-        THING_LOG(me, "wander try %d,%d age %d too close", x, y, age);
-        continue;
-      }
-      THING_LOG(me, "wander try %d,%d age %d cand", x, y, age);
-    }
+    spoint target(x, y);
 
     //
     // Check this is a tile we want to potentially walk to.
     // Just because we can see it, doesn't mean it's somewhere we want to go.
     //
     if (! thing_can_move_to_ai(g, v, l, me, target)) {
-      THING_LOG(me, "wander try %d,%d ai failed", x, y);
       continue;
     }
 
     //
     // If we get here for a minion, make sure the minion stays close to the mob
     //
-    if (mob != nullptr) {
+    if (mob) {
       if (distance(target, thing_at(mob)) >= thing_distance_minion_from_mob_max(me)) {
         continue;
       }
     }
 
-    auto p = astar_solve(g, v, l, me, at, target);
-    if (p.empty()) {
-      THING_LOG(me, "wander try %d,%d astar failed", x, y);
+    //
+    // Prefer older tiles, so the monster explores more
+    //
+    int score = age_map_get(&ext->has_seen, x, y);
+
+    //
+    // Prefer further away tiles for exploration
+    //
+    score += 100 - (int) distance(target, at);
+
+    THING_LOG(me, "%d,%d score %d best %d", x, y, score, best_lowest_score);
+    if (score >= best_lowest_score) {
       continue;
     }
 
-    if (thing_move_path_apply(g, v, l, me, p)) {
-      thing_target_set(g, v, l, me, target);
-      THING_DBG(me, "choose target: wander to (%u,%u)", target.x, target.y);
-      return true;
+    auto p = astar_solve(g, v, l, me, at, target);
+    if (p.empty()) {
+      continue;
     }
-  }
-  THING_LOG(me, "failed");
 
+    if (! thing_move_path_apply(g, v, l, me, p)) {
+      continue;
+    }
+
+    THING_LOG(me, "%d,%d score %d best %d GOT", x, y, score, best_lowest_score);
+    thing_target_set(g, v, l, me, target);
+    best_lowest_score = score;
+    found_path        = true;
+  }
+
+  if (found_path) {
+    THING_LOG(me, "passed");
+    return true;
+  }
+
+  THING_LOG(me, "failed");
   return false;
 }
 
@@ -308,6 +304,11 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
   }
 
   THING_DBG(me, "choose target: none");
+
+  if (compiler_unused) {
+    thing_can_see_dump(g, v, l, me);
+  }
+
   return false;
 }
 
