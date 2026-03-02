@@ -3,6 +3,7 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_level.hpp"
 #include "my_thing_callbacks.hpp"
 #include "my_tile.hpp"
 #include "my_tp.hpp"
@@ -26,6 +27,17 @@ static auto tp_ghost_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::
       UI_INFO2_FMT_STR "Beware, such spirits can traverse chasms and float through solid rock.";
 }
 
+auto tp_ghost_assess_tile(Gamep g, Levelsp v, Levelp l, const spoint &at, Thingp t) -> ThingEnviron
+{
+  TRACE();
+
+  if (level_is_water(g, v, l, at)) {
+    return THING_ENVIRON_HATES;
+  }
+
+  return THING_ENVIRON_NEUTRAL;
+}
+
 auto tp_load_ghost() -> bool
 {
   auto *tp   = tp_load("ghost"); // keep as string for scripts
@@ -34,6 +46,7 @@ auto tp_load_ghost() -> bool
   // begin sort marker1 {
   thing_description_set(tp, tp_ghost_description_get);
   thing_detail_set(tp, tp_ghost_detail_get);
+  thing_assess_tile_set(tp, tp_ghost_assess_tile);
   tp_distance_minion_from_mob_max_set(tp, 6);
   tp_distance_vision_set(tp, 10);
   tp_flag_set(tp, is_able_to_move_diagonally);

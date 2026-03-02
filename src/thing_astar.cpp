@@ -265,7 +265,7 @@ auto Astar::can_move_to(const spoint &to) -> bool
 
   if (! can_move_to_tile_set[ to.x ][ to.y ]) {
     can_move_to_tile_set[ to.x ][ to.y ]    = true;
-    return can_move_to_tile[ to.x ][ to.y ] = thing_can_move_to_check_if_is_possible(g, v, l, t, to);
+    return can_move_to_tile[ to.x ][ to.y ] = thing_can_move_to_ai(g, v, l, t, to);
   }
 
   return can_move_to_tile[ to.x ][ to.y ];

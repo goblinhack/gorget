@@ -82,6 +82,7 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
 
   auto at = thing_at(me);
 
+  THING_LOG(me, "wander");
   auto *ext = thing_ext_struct(g, me);
   if (ext == nullptr) {
     THING_ERR(me, "no ext pointer");
@@ -107,12 +108,16 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
   // Keep trying to find a target
   //
   while (tries++ < max_tries) {
-    auto x = at.x - radius + PCG_RANDOM_RANGE(0, radius_sq);
-    auto y = at.y - radius + PCG_RANDOM_RANGE(0, radius_sq);
+    uint8_t x;
+    uint8_t y;
 
-    if (is_oob_or_border(x, y)) {
-      continue;
-    }
+    //
+    // Get a valid tile.
+    //
+    do {
+      x = at.x - radius + PCG_RANDOM_RANGE(0, radius_sq);
+      y = at.y - radius + PCG_RANDOM_RANGE(0, radius_sq);
+    } while (is_oob_or_border(x, y));
 
     if (! fov_map_get(&ext->can_see, x, y)) {
       continue;
@@ -124,12 +129,14 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
       //
       // Just choose anywhere
       //
+      THING_LOG(me, "wander try %d,%d last resort cand", x, y);
     } else {
       //
       // Prefer older tiles, so the monster explores more
       //
       auto age = age_map_get(&ext->has_seen, x, y);
       if (age > 1) {
+        THING_LOG(me, "wander try %d,%d age %d too new", x, y, age);
         continue;
       }
 
@@ -137,8 +144,19 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
       // Prefer further away tiles for exploration
       //
       if (distance(target, at) < radius / 2) {
+        THING_LOG(me, "wander try %d,%d age %d too close", x, y, age);
         continue;
       }
+      THING_LOG(me, "wander try %d,%d age %d cand", x, y, age);
+    }
+
+    //
+    // Check this is a tile we want to potentially walk to.
+    // Just because we can see it, doesn't mean it's somewhere we want to go.
+    //
+    if (! thing_can_move_to_ai(g, v, l, me, target)) {
+      THING_LOG(me, "wander try %d,%d ai failed", x, y);
+      continue;
     }
 
     //
@@ -152,6 +170,7 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
 
     auto p = astar_solve(g, v, l, me, at, target);
     if (p.empty()) {
+      THING_LOG(me, "wander try %d,%d astar failed", x, y);
       continue;
     }
 
@@ -161,6 +180,7 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
       return true;
     }
   }
+  THING_LOG(me, "failed");
 
   return false;
 }
@@ -342,6 +362,9 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me)
       if (! thing_monst_move_to_next(g, v, l, me)) {
         THING_DBG(me, "end of move");
         monst_state_change(g, v, l, me, MONST_STATE_NORMAL);
+        if (thing_monst_choose_target(g, v, l, me)) {
+          (void) thing_monst_move_to_next(g, v, l, me);
+        }
       }
       break;
     case MONST_STATE_ENUM_MAX : break;

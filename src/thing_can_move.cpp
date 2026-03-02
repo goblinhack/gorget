@@ -35,6 +35,9 @@ auto thing_can_move_to_attempt(Gamep g, Levelsp v, Levelp l, Thingp me, spoint t
 // to this location. For a chasm, it is unlikely a monst would want to if
 // it means falling to its demise.
 //
+// True - can move here
+// False - cannot move here, or don't want to move here
+//
 auto thing_can_move_to_ai(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool
 {
   TRACE();
@@ -83,6 +86,17 @@ auto thing_can_move_to_ai(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) ->
     //
     if (thing_is_obs_to_movement(it)) {
       return false;
+    }
+
+    //
+    // Avoid tiles we do not like
+    //
+    switch (thing_assess_tile(g, v, l, to, me)) {
+      case THING_ENVIRON_HATES :
+      case THING_ENVIRON_DISLIKES : return false;
+      case THING_ENVIRON_NEUTRAL :
+      case THING_ENVIRON_LIKES :
+      case THING_ENVIRON_ENUM_MAX : break;
     }
   }
 
