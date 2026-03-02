@@ -87,6 +87,8 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
     return false;
   }
 
+  auto *mob = thing_minion_mob_get(g, v, l, me);
+
   //
   // How far to look for a target?
   //
@@ -123,9 +125,18 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
       //
     } else {
       //
-      // Prefer further away tiles
+      // Prefer further away tiles for exploration
       //
       if (distance(target, at) < radius / 2) {
+        continue;
+      }
+    }
+
+    //
+    // If we get here for a minion, make sure the minion stays close to the mob
+    //
+    if (mob) {
+      if (distance(target, thing_at(mob)) >= thing_distance_minion_from_mob_max(me)) {
         continue;
       }
     }
