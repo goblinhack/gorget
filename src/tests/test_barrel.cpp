@@ -115,7 +115,7 @@ exit:
   return result;
 }
 
-auto test_load_barrel() -> bool
+auto test_load_barrel() -> bool // NOLINT
 {
   TRACE();
 

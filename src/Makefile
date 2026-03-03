@@ -99,7 +99,7 @@ $(TARGET_GAME): $(OBJ_FILES)
 #			// NOLINTEND
 #####################################################
 tidy:
-	$(foreach x,$(CPP_SOURCES_NO_TESTS),\
+	$(foreach x,$(CPP_SOURCES),\
 		echo "Running tidy on $x..." ; \
 		clang-tidy \
 			-fix \

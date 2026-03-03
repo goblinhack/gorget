@@ -76,7 +76,7 @@ exit:
   return result;
 }
 
-auto test_load_no_change() -> bool
+auto test_load_no_change() -> bool // NOLINT
 {
   TRACE();
 

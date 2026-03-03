@@ -106,7 +106,7 @@ exit:
   return result;
 }
 
-auto test_load_slots() -> bool
+auto test_load_slots() -> bool // NOLINT
 {
   TRACE();
 

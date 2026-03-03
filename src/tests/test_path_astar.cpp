@@ -168,7 +168,7 @@ exit:
   return result;
 }
 
-auto test_load_path_astar() -> bool
+auto test_load_path_astar() -> bool // NOLINT
 {
   TRACE();
 

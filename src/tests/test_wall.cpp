@@ -158,7 +158,7 @@ exit:
   return result;
 }
 
-auto test_load_wall() -> bool
+auto test_load_wall() -> bool // NOLINT
 {
   TRACE();
 

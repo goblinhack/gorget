@@ -151,7 +151,7 @@ exit:
   return result;
 }
 
-auto test_load_open_locked_door_fail() -> bool
+auto test_load_open_locked_door_fail() -> bool // NOLINT
 {
   TRACE();
 

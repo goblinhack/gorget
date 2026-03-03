@@ -115,7 +115,7 @@ exit:
   return result;
 }
 
-auto test_load_fire_on_water() -> bool
+auto test_load_fire_on_water() -> bool // NOLINT
 {
   TRACE();
 

@@ -84,7 +84,7 @@ exit:
   return result;
 }
 
-auto test_load_projectile() -> bool
+auto test_load_projectile() -> bool // NOLINT
 {
   TRACE();
 

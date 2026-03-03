@@ -84,7 +84,7 @@ exit:
   return result;
 }
 
-auto test_load_projectile_secret_door() -> bool
+auto test_load_projectile_secret_door() -> bool // NOLINT
 {
   TRACE();
 

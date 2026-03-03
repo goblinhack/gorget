@@ -84,7 +84,7 @@ exit:
   return result;
 }
 
-auto test_load_projectile_locked_door() -> bool
+auto test_load_projectile_locked_door() -> bool // NOLINT
 {
   TRACE();
 

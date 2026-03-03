@@ -115,7 +115,7 @@ exit:
   return result;
 }
 
-auto test_load_fire_over_chasm() -> bool
+auto test_load_fire_over_chasm() -> bool // NOLINT
 {
   TRACE();
 

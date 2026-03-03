@@ -89,7 +89,7 @@ exit:
   return result;
 }
 
-auto test_load_teleport_shove_brazier() -> bool
+auto test_load_teleport_shove_brazier() -> bool // NOLINT
 {
   TRACE();
 

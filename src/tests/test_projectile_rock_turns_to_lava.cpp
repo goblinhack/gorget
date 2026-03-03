@@ -84,7 +84,7 @@ exit:
   return result;
 }
 
-auto test_load_projectile_rock_turns_to_lava() -> bool
+auto test_load_projectile_rock_turns_to_lava() -> bool // NOLINT
 {
   TRACE();
 

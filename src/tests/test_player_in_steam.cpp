@@ -118,7 +118,7 @@ exit:
   return result;
 }
 
-auto test_load_player_in_steam() -> bool
+auto test_load_player_in_steam() -> bool // NOLINT
 {
   TRACE();
 

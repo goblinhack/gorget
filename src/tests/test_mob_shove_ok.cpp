@@ -115,7 +115,7 @@ exit:
   return result;
 }
 
-auto test_load_mob() -> bool
+auto test_load_mob() -> bool // NOLINT
 {
   TRACE();
 

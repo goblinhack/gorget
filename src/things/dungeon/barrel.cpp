@@ -38,8 +38,8 @@ static void tp_barrel_spawn_explosion(Gamep g, Levelsp v, Levelp l, Thingp t)
 
   for (auto delta : points) {
     auto p = at + delta;
-    if (! level_is_obs_to_explosion(g, v, l, p)) {
-      if (! level_is_explosion(g, v, l, p)) {
+    if (level_is_obs_to_explosion(g, v, l, p) == nullptr) {
+      if (level_is_explosion(g, v, l, p) == nullptr) {
         (void) thing_spawn(g, v, l, tp_first(is_explosion), p);
       }
     }
@@ -73,7 +73,7 @@ static void tp_barrel_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // If we fell into another chasm, don't kill the thing yet
   //
-  if (level_is_chasm(g, v, l, thing_at(t))) {
+  if (level_is_chasm(g, v, l, thing_at(t)) != nullptr) {
     return;
   }
 

@@ -100,7 +100,7 @@ exit:
   return result;
 }
 
-auto test_load_save_load() -> bool
+auto test_load_save_load() -> bool // NOLINT
 {
   TRACE();
 

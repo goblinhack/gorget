@@ -46,7 +46,7 @@
       // No need to test all slots for level select. Additionally, we've filled
       // all the other levels, so not a lot of space to alloc IDs from.
       //
-      auto slot_depth_to_test = (int) MAP_SLOTS;
+      auto slot_depth_to_test = static_cast<int>(MAP_SLOTS);
       if (level_num == LEVEL_SELECT_ID) {
         //
         // There's just no space in other levels if we fully allocate them!
@@ -115,7 +115,7 @@ exit:
   return result;
 }
 
-auto test_load_alloc_free_walls() -> bool
+auto test_load_alloc_free_walls() -> bool // NOLINT
 {
   TRACE();
 

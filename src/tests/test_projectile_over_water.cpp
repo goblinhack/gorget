@@ -79,7 +79,7 @@ exit:
   return result;
 }
 
-auto test_load_projectile_over_water() -> bool
+auto test_load_projectile_over_water() -> bool // NOLINT
 {
   TRACE();
 

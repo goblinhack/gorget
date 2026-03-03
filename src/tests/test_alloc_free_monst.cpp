@@ -83,7 +83,7 @@ exit:
   return result;
 }
 
-auto test_load_alloc_free_monsts() -> bool
+auto test_load_alloc_free_monsts() -> bool // NOLINT
 {
   TRACE();
 

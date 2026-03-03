@@ -89,7 +89,7 @@ exit:
   return result;
 }
 
-auto test_load_ghost_avoids_water() -> bool
+auto test_load_ghost_avoids_water() -> bool // NOLINT
 {
   TRACE();
 

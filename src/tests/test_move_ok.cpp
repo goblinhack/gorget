@@ -189,7 +189,7 @@ exit:
   return result;
 }
 
-auto test_load_move_ok() -> bool
+auto test_load_move_ok() -> bool // NOLINT
 {
   TRACE();
 

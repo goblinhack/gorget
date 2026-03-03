@@ -142,7 +142,7 @@ exit:
   return result;
 }
 
-auto test_load_bridge_on_fire() -> bool
+auto test_load_bridge_on_fire() -> bool // NOLINT
 {
   TRACE();
 

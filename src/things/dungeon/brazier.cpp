@@ -36,7 +36,7 @@ static void tp_brazier_on_shoved(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp 
     // Only if recently dead
     //
     if (v->tick - t->tick_dead < 5) {
-      if (! level_is_smoke(g, v, l, thing_at(t))) {
+      if (level_is_smoke(g, v, l, thing_at(t)) == nullptr) {
         (void) thing_spawn(g, v, l, tp_first(is_smoke), t);
       }
     }
@@ -51,19 +51,19 @@ static void tp_brazier_on_shoved(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp 
     auto direction = at - thing_at(shover);
     auto fire_at   = at + direction;
 
-    if (level_is_obs_to_fire(g, v, l, fire_at)) {
+    if (level_is_obs_to_fire(g, v, l, fire_at) != nullptr) {
       //
       // If we can't, then spawn over the brazier
       //
-      if (! level_is_fire(g, v, l, thing_at(t))) {
+      if (level_is_fire(g, v, l, thing_at(t)) == nullptr) {
         (void) thing_spawn(g, v, l, tp_first(is_fire), t);
       }
     } else {
-      if (! level_is_fire(g, v, l, fire_at)) {
+      if (level_is_fire(g, v, l, fire_at) == nullptr) {
         (void) thing_spawn(g, v, l, tp_first(is_fire), fire_at);
       }
 
-      if (! level_is_smoke(g, v, l, thing_at(t))) {
+      if (level_is_smoke(g, v, l, thing_at(t)) == nullptr) {
         (void) thing_spawn(g, v, l, tp_first(is_smoke), t);
       }
     }
@@ -71,7 +71,7 @@ static void tp_brazier_on_shoved(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp 
     //
     // Spawn over the brazier
     //
-    if (! level_is_fire(g, v, l, thing_at(t))) {
+    if (level_is_fire(g, v, l, thing_at(t)) == nullptr) {
       (void) thing_spawn(g, v, l, tp_first(is_fire), t);
     }
   }
@@ -85,12 +85,12 @@ static void tp_brazier_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEve
   // Allow things to continue to burn if we still have some burnable material
   //
   if (e.event_type != THING_EVENT_SHOVED) {
-    if (! level_is_fire(g, v, l, thing_at(t))) {
+    if (level_is_fire(g, v, l, thing_at(t)) == nullptr) {
       (void) thing_spawn(g, v, l, tp_first(is_fire), t);
     }
   }
 
-  if (! level_is_smoke(g, v, l, thing_at(t))) {
+  if (level_is_smoke(g, v, l, thing_at(t)) == nullptr) {
     (void) thing_spawn(g, v, l, tp_first(is_smoke), t);
   }
 

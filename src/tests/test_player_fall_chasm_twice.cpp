@@ -166,7 +166,7 @@ exit:
   return result;
 }
 
-auto test_load_player_fall_chasm_twice() -> bool
+auto test_load_player_fall_chasm_twice() -> bool // NOLINT
 {
   TRACE();
 

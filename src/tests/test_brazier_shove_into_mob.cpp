@@ -165,7 +165,7 @@ exit:
   return result;
 }
 
-auto test_load_brazier_shove_into_mob() -> bool
+auto test_load_brazier_shove_into_mob() -> bool // NOLINT
 {
   TRACE();
 

@@ -147,7 +147,7 @@ exit:
   return result;
 }
 
-auto test_load_large_fire_water() -> bool
+auto test_load_large_fire_water() -> bool // NOLINT
 {
   TRACE();
 

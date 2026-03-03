@@ -115,7 +115,7 @@ exit:
   return result;
 }
 
-auto test_load_trampled_grass() -> bool
+auto test_load_trampled_grass() -> bool // NOLINT
 {
   TRACE();
 

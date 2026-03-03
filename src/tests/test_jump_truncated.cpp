@@ -87,7 +87,7 @@ exit:
   return result;
 }
 
-auto test_load_jump_truncated() -> bool
+auto test_load_jump_truncated() -> bool // NOLINT
 {
   TRACE();
 

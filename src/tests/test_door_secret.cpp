@@ -151,7 +151,7 @@ exit:
   return result;
 }
 
-auto test_load_door_secret() -> bool
+auto test_load_door_secret() -> bool // NOLINT
 {
   TRACE();
 

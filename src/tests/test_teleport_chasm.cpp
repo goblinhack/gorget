@@ -89,7 +89,7 @@ exit:
   return result;
 }
 
-auto test_load_teleport_chasm() -> bool
+auto test_load_teleport_chasm() -> bool // NOLINT
 {
   TRACE();
 

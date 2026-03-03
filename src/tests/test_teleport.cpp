@@ -89,7 +89,7 @@ exit:
   return result;
 }
 
-auto test_load_teleport() -> bool
+auto test_load_teleport() -> bool // NOLINT
 {
   TRACE();
 

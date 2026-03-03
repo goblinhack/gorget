@@ -165,7 +165,7 @@ exit:
   return result;
 }
 
-auto test_load_brazier_shove_ok() -> bool
+auto test_load_brazier_shove_ok() -> bool // NOLINT
 {
   TRACE();
 
