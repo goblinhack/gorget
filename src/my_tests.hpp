@@ -36,6 +36,7 @@ auto test_load_large_fire_water() -> bool;
 auto test_load_mob_shove_into_lava() -> bool;
 auto test_load_mob_water() -> bool;
 auto test_load_mob() -> bool;
+auto test_load_monster_maze() -> bool;
 auto test_load_move_ok() -> bool;
 auto test_load_no_change() -> bool;
 auto test_load_open_locked_door_fail() -> bool;

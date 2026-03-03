@@ -45,6 +45,7 @@ static std::initializer_list< std::string > tests = {
     "mob_shove_into_lava",
     "mob_shove_ok",
     "mob_water",
+    "monster_maze",
     "move_ok",
     "no_change",
     "open_locked_door_fail",

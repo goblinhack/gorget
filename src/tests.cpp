@@ -38,6 +38,7 @@ auto tests_init() -> bool
   if (!test_load_mob_shove_into_lava()) { return false; }
   if (!test_load_mob_water()) { return false; }
   if (!test_load_mob()) { return false; }
+  if (!test_load_monster_maze()) { return false; }
   if (!test_load_move_ok()) { return false; }
   if (!test_load_no_change()) { return false; }
   if (!test_load_open_locked_door_fail()) { return false; }
