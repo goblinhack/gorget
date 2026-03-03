@@ -2546,7 +2546,7 @@ auto thing_is_unused67(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused67) != 0;
 }
 
-auto thing_is_unused68(Thingp t) -> bool
+auto thing_is_obs_to_paths(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2554,7 +2554,7 @@ auto thing_is_unused68(Thingp t) -> bool
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused68) != 0;
+  return tp_flag(thing_tp(t), is_obs_to_paths) != 0;
 }
 
 auto thing_is_removable_when_dead_on_err(Thingp t) -> bool

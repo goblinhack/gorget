@@ -504,7 +504,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_can_move_to_attempt_by_opening(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool;
 [[nodiscard]] auto thing_can_move_to_attempt_by_shoving(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool;
 [[nodiscard]] auto thing_can_move_to_attempt(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool;
-[[nodiscard]] auto thing_can_move_to_check_if_is_possible(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool;
+[[nodiscard]] auto thing_can_move_to_possible(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool;
 [[nodiscard]] auto thing_carry_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp player_or_monst) -> bool;
 [[nodiscard]] auto thing_close(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp player_or_monst) -> bool;
 [[nodiscard]] auto thing_collect_key(Gamep g, Levelsp v, Levelp l, Thingp it, Thingp player_or_monst) -> bool;
@@ -678,6 +678,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_obs_to_jumping_onto(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_jumping_out_of(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_movement(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_obs_to_paths(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_spawning(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_teleporting_onto(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_when_dead(Thingp t) -> bool;
@@ -775,7 +776,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused65(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused66(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused67(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused68(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused7(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused8(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused9(Thingp t) -> bool;

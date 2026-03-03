@@ -1271,10 +1271,10 @@ auto tp_is_unused67(Tpp tp) -> bool
   return tp_flag(tp, is_unused67) != 0;
 }
 
-auto tp_is_unused68(Tpp tp) -> bool
+auto tp_is_obs_to_paths(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused68) != 0;
+  return tp_flag(tp, is_obs_to_paths) != 0;
 }
 
 auto tp_is_unused7(Tpp tp) -> bool

@@ -27,7 +27,7 @@ auto thing_can_move_to_attempt(Gamep g, Levelsp v, Levelp l, Thingp me, spoint t
   auto dy = to.y - at.y;
   thing_set_dir_from_delta(me, dx, dy);
 
-  return thing_can_move_to_check_if_is_possible(g, v, l, me, to);
+  return thing_can_move_to_possible(g, v, l, me, to);
 }
 
 //
@@ -73,18 +73,9 @@ auto thing_can_move_to_ai(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) ->
     }
 
     //
-    // No stacking of monsters
-    //
-    if (thing_is_monst(me)) {
-      if (thing_is_monst(it)) {
-        return false;
-      }
-    }
-
-    //
     // A wall or pillar or somesuch?
     //
-    if (thing_is_obs_to_movement(it)) {
+    if (thing_is_obs_to_paths(it)) {
       return false;
     }
 
@@ -110,7 +101,7 @@ auto thing_can_move_to_ai(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) ->
 //
 // We do not change direction upon this attempt; purely a check only
 //
-auto thing_can_move_to_check_if_is_possible(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool
+auto thing_can_move_to_possible(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool
 {
   TRACE();
 

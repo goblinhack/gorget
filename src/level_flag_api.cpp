@@ -1271,10 +1271,10 @@ auto level_is_unused67(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp
   return level_flag(g, v, l, is_unused67, p);
 }
 
-auto level_is_unused68(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp
+auto level_is_obs_to_paths(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused68, p);
+  return level_flag(g, v, l, is_obs_to_paths, p);
 }
 
 auto level_is_unused7(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp
