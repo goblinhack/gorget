@@ -101,6 +101,32 @@ auto level_match_contents(Gamep g, Levelsp v, Levelp l, Testp t, int w, int h, c
     }
   }
 
+  //
+  // Check for stuff outside the level
+  //
+  for (int y = 0; y < MAP_HEIGHT; y++) {
+    std::string const line;
+
+    if (y < h) {
+      continue;
+    }
+
+    for (int x = 0; x < MAP_WIDTH; x++) {
+      if (x < w) {
+        continue;
+      }
+      spoint p(x, y);
+
+      FOR_ALL_THINGS_AT(g, v, l, unused, p)
+      {
+        level_dump(g, v, l, MAP_WIDTH, MAP_HEIGHT);
+        CON_NEW_LINE();
+        TEST_CON(t, "Level contents found outside of test area");
+        return false;
+      }
+    }
+  }
+
   return true;
 }
 

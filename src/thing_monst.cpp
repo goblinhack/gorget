@@ -56,7 +56,7 @@ static auto thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thing
 
   auto p = astar_solve(g, v, l, me, monst_at, target);
   if (p.empty()) {
-    THING_DBG(me, "choose target: no path to player");
+    THING_DBG(me, "choose target: no path to player at %d,%d", target.x, target.y);
     return false;
   }
 

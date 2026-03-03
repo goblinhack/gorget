@@ -28,6 +28,7 @@ auto test_load_door_secret() -> bool;
 auto test_load_fire_on_water() -> bool;
 auto test_load_fire_over_chasm() -> bool;
 auto test_load_foliage_on_fire() -> bool;
+auto test_load_ghost_avoids_water() -> bool;
 auto test_load_jump_ok() -> bool;
 auto test_load_jump_truncated() -> bool;
 auto test_load_large_fire_water() -> bool;
