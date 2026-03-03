@@ -92,7 +92,7 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
   // How far to look for a target? We want to look beyond normal vision
   // when wandering as we want to explore uncharted areas
   //
-  int radius;
+  int radius = 0;
   if (mob == nullptr) {
     radius = thing_distance_vision(me) * 2;
   } else {
@@ -177,11 +177,7 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
     found_path        = true;
   }
 
-  if (found_path) {
-    return true;
-  }
-
-  return false;
+  return found_path;
 }
 
 //
