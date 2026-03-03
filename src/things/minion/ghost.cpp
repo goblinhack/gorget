@@ -44,9 +44,9 @@ auto tp_load_ghost() -> bool
   auto  name = tp_name(tp);
 
   // begin sort marker1 {
+  thing_assess_tile_set(tp, tp_ghost_assess_tile);
   thing_description_set(tp, tp_ghost_description_get);
   thing_detail_set(tp, tp_ghost_detail_get);
-  thing_assess_tile_set(tp, tp_ghost_assess_tile);
   tp_distance_minion_from_mob_max_set(tp, 6);
   tp_distance_vision_set(tp, 10);
   tp_flag_set(tp, is_able_to_move_diagonally);

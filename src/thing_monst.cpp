@@ -89,9 +89,16 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
   auto *mob = thing_minion_mob_get(g, v, l, me);
 
   //
-  // How far to look for a target?
+  // How far to look for a target? We want to look beyond normal vision
+  // when wandering as we want to explore uncharted areas
   //
-  auto radius = thing_distance_vision(me);
+  int radius;
+  if (mob == nullptr) {
+    radius = thing_distance_vision(me) * 2;
+  } else {
+    radius = thing_distance_minion_from_mob_max(me);
+  }
+
   if (radius == 0) {
     THING_ERR(me, "unexpected value for radius");
     return false;
@@ -99,17 +106,17 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
 
   auto radius_sq = radius * radius;
   auto tries     = 0;
-  auto max_tries = radius_sq;
+  auto max_tries = 100;
 
-  int  best_lowest_score = 999;
+  int  best_lowest_score = 999999;
   bool found_path        = false;
 
   //
   // Keep trying to find a target
   //
   while (tries++ < max_tries) {
-    uint8_t x;
-    uint8_t y;
+    uint8_t x = 0;
+    uint8_t y = 0;
 
     //
     // Get a valid tile.
@@ -119,11 +126,7 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
       y = at.y - radius + PCG_RANDOM_RANGE(0, radius_sq);
     } while (is_oob_or_border(x, y));
 
-    if (! fov_map_get(&ext->can_see, x, y)) {
-      continue;
-    }
-
-    spoint target(x, y);
+    spoint const target(x, y);
 
     //
     // Check this is a tile we want to potentially walk to.
@@ -136,7 +139,7 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
     //
     // If we get here for a minion, make sure the minion stays close to the mob
     //
-    if (mob) {
+    if (mob != nullptr) {
       if (distance(target, thing_at(mob)) >= thing_distance_minion_from_mob_max(me)) {
         continue;
       }
@@ -145,14 +148,13 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
     //
     // Prefer older tiles, so the monster explores more
     //
-    int score = age_map_get(&ext->has_seen, x, y);
+    int score = age_map_get(&ext->has_seen, x, y) * 100;
 
     //
     // Prefer further away tiles for exploration
     //
-    score += 100 - (int) distance(target, at);
+    score += 100 - static_cast< int >(distance(target, at));
 
-    THING_LOG(me, "%d,%d score %d best %d", x, y, score, best_lowest_score);
     if (score >= best_lowest_score) {
       continue;
     }
@@ -166,18 +168,19 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
       continue;
     }
 
-    THING_LOG(me, "%d,%d score %d best %d GOT", x, y, score, best_lowest_score);
+    if (compiler_unused) {
+      THING_LOG(me, "best %d,%d score %d", x, y, score);
+    }
+
     thing_target_set(g, v, l, me, target);
     best_lowest_score = score;
     found_path        = true;
   }
 
   if (found_path) {
-    THING_LOG(me, "passed");
     return true;
   }
 
-  THING_LOG(me, "failed");
   return false;
 }
 
@@ -286,6 +289,10 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
 {
   TRACE();
 
+  if (compiler_unused) {
+    thing_can_see_dump(g, v, l, me);
+  }
+
   if (thing_monst_choose_target_player(g, v, l, me)) {
     monst_state_change(g, v, l, me, MONST_STATE_CHASING);
     return true;
@@ -304,10 +311,6 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
   }
 
   THING_DBG(me, "choose target: none");
-
-  if (compiler_unused) {
-    thing_can_see_dump(g, v, l, me);
-  }
 
   return false;
 }
@@ -334,15 +337,23 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me)
       break;
     case MONST_STATE_CHASING :
       //
-      // Might need to rething the target if it has moved
+      // Might need to rething the target if it has moved. If we can no longer
+      // see the player, keep going as it might have moved and we could be able
+      // to see them again.
       //
-      if (! thing_monst_choose_target(g, v, l, me)) {
-        THING_DBG(me, "lost target");
-        monst_state_change(g, v, l, me, MONST_STATE_NORMAL);
+      if (! thing_monst_choose_target_player(g, v, l, me)) {
+        THING_DBG(me, "lost target, but keep going");
       }
       break;
     case MONST_STATE_WANDER :
       //
+      // While wandering, if we see the player, change direction, but keep wandering
+      // to the original target if we can't reach them
+      //
+      if (thing_monst_choose_target_player(g, v, l, me)) {
+        THING_DBG(me, "sighted player");
+        monst_state_change(g, v, l, me, MONST_STATE_CHASING);
+      }
       break;
     case MONST_STATE_ENUM_MAX : break;
   }
@@ -360,9 +371,18 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me)
       break;
     case MONST_STATE_CHASING : [[fallthrough]];
     case MONST_STATE_WANDER :
+      //
+      // If we are unable to move, or we reach the target, move back
+      // to normal state so we can decide what to do.
+      //
       if (! thing_monst_move_to_next(g, v, l, me)) {
         THING_DBG(me, "end of move");
         monst_state_change(g, v, l, me, MONST_STATE_NORMAL);
+
+        //
+        // To avoid one move of sitting idle, can we choose a new target and
+        // keep on moving?
+        //
         if (thing_monst_choose_target(g, v, l, me)) {
           (void) thing_monst_move_to_next(g, v, l, me);
         }

@@ -81,6 +81,11 @@ void thing_can_see_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
         continue;
       }
 
+      if (static_cast< unsigned int >(age_map_get(&ext->has_seen, p.x, p.y)) != 0U) {
+        debug += "o";
+        continue;
+      }
+
       debug += ".";
     }
 

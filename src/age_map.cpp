@@ -32,7 +32,7 @@ void age_map_incr(AgeMap *m, const spoint &pov, const uint8_t val)
   }
 #endif
   if (m == nullptr) {
-    return 0u;
+    return 0U;
   }
 
   return age_map_get(m, pov.x, pov.y);
