@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static auto test_ghost_avoids_water(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_monst_avoids_water(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -153,14 +153,14 @@ exit:
   return result;
 }
 
-auto test_load_ghost_avoids_water() -> bool // NOLINT
+auto test_load_monst_avoids_water() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("ghost_avoids_water");
+  Testp test = test_load("monst_avoids_water");
 
   // begin sort marker1 {
-  test_callback_set(test, test_ghost_avoids_water);
+  test_callback_set(test, test_monst_avoids_water);
   // end sort marker1 }
 
   return true;
