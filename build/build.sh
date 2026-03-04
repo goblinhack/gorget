@@ -471,13 +471,13 @@ if [[ $OPT_PROFILE_BUILD != "" ]]; then
 fi
 
 if [[ $OPT_SANITY_BUILD != "" ]]; then
-    C_FLAGS+=" -D_SANITY_BUILD_"
+    C_FLAGS+=" -DSANITY_BUILD"
 fi
 
 if [[ $OPT_DEBUG_BUILD != "" || $OPT_SANITY_BUILD != "" ]]; then
     C_FLAGS+=" -DDEBUG_BUILD"
 else
-    C_FLAGS+=" -D_RELEASE_BUILD_"
+    C_FLAGS+=" -DRELEASE_BUILD"
 fi
 
 if [[ $OPT_GITHUB_BUILD != "" ]]; then

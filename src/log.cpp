@@ -45,7 +45,8 @@ auto log_dir_create() -> std::string
 #else
   mkdir(dir, 0700);
 #endif
-  free(dir);
+
+  MYFREE(dir);
 
   return {appdata};
 }

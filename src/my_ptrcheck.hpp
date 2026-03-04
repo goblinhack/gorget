@@ -57,7 +57,7 @@ void ptrcheck_leak_print();
   }
 
 #define VERIFY(__mtype__, __ptr__)                                                                                                         \
-  ((DEBUG2) ? (ptrcheck_verify(__mtype__, __ptr__, SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM) ? __ptr__ : nullptr) : __ptr__)
+  ((DEBUG2) ? (ptrcheck_verify(__mtype__, __ptr__, SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM) ? (__ptr__) : nullptr) : (__ptr__))
 
 enum {
   MTYPE_SDL,

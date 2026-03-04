@@ -28,7 +28,7 @@ void age_map_incr(AgeMap *m, const spoint &pov, const uint8_t val)
 #ifdef DEBUG_BUILD
   if (is_oob(pov)) [[unlikely]] {
     ERR("overflow");
-    return false;
+    return 0u;
   }
 #endif
   if (m == nullptr) {

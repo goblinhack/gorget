@@ -28,7 +28,6 @@ auto  strappend(const char *in, const char *append) -> char *;
 auto  strprepend(const char *in, const char *prepend) -> char *;
 
 auto length_without_format(const std::string &text) -> int;
-auto snprintf_realloc(char **str, int *size, int *used, const char *fmt, ...) -> int;
 auto strisregexp(const char *in) -> int;
 
 auto split(const std::string &text, int max_line_len) -> std::vector< std::string >;

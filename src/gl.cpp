@@ -1284,7 +1284,7 @@ static void setupPalette(HDC this_hdc)
   pPal->palVersion    = 0x300;
   pPal->palNumEntries = paletteSize;
 
-  // build a simple RGB color palette */
+  // build a simple RGB color palette
   {
     int redMask   = (1 << pfd.cRedBits) - 1;
     int greenMask = (1 << pfd.cGreenBits) - 1;
