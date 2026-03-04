@@ -511,14 +511,14 @@ struct MyIter {
 };
 
 #define FOR_ALL_LEVELS(_g_, _v_, _l_)                                                                                                      \
-  if ((_g_) && (_v_))                                                                                                                      \
+  if ((VERIFY(MTYPE_GAME, _g_)) && (VERIFY(MTYPE_LEVELS, _v_)))                                                                            \
     if (Levelp _l_ = nullptr; true)                                                                                                        \
       for (auto _n_ = 0; _n_ < LEVEL_MAX; _n_++)                                                                                           \
         if (((_l_) = &v->level[ _n_ ]))                                                                                                    \
           if ((_l_)->is_initialized)
 
 #define FOR_ALL_TICKING_LEVELS(_g_, _v_, _l_)                                                                                              \
-  if ((_g_) && (_v_))                                                                                                                      \
+  if ((VERIFY(MTYPE_GAME, _g_)) && (VERIFY(MTYPE_LEVELS, _v_)))                                                                            \
     if (Levelp _l_ = nullptr; true)                                                                                                        \
       for (auto _n_ = 0; _n_ < LEVEL_MAX; _n_++)                                                                                           \
         if (((_l_) = &v->level[ _n_ ]))                                                                                                    \
@@ -528,9 +528,10 @@ struct MyIter {
 // For all things on the map
 //
 #define FOR_ALL_MAP_POINTS(_g_, _v_, _l_, _x_, _y_)                                                                                        \
-  if ((_g_) && (_v_) && (_l_))                                                                                                             \
-    for ((_x_) = 0; (_x_) < MAP_WIDTH; (_x_)++)                                                                                            \
-      for ((_y_) = 0; (_y_) < MAP_HEIGHT; (_y_)++)
+  if ((VERIFY(MTYPE_GAME, _g_)) && (VERIFY(MTYPE_LEVELS, _v_)))                                                                            \
+    if ((_l_))                                                                                                                             \
+      for ((_x_) = 0; (_x_) < MAP_WIDTH; (_x_)++)                                                                                          \
+        for ((_y_) = 0; (_y_) < MAP_HEIGHT; (_y_)++)
 
 //
 // For all things on this level
@@ -547,29 +548,31 @@ struct MyIter {
             if (Thingp _t_ = nullptr; ((_t_) = thing_find(_g_, _v_, _id_)))
 
 #define FOR_ALL_THINGS_ON_LEVEL(_g_, _v_, _l_, _t_)                                                                                        \
-  if ((_g_) && (_v_) && (_l_))                                                                                                             \
-    if (int _iter_index_ = 0; true)                                                                                                        \
-      if (MyIter _iter_(_g_, _v_, &_iter_index_, __FUNCTION__, __LINE__); true)                                                            \
-        for (auto _x_ = 0; _x_ < MAP_WIDTH; _x_++)                                                                                         \
-          for (auto _y_ = 0; _y_ < MAP_HEIGHT; _y_++)                                                                                      \
-            for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                                            \
-              if (ThingId _id_ = 0; (_id_ = (_l_)->thing_id[ _x_ ][ _y_ ][ _slot_ ]))                                                      \
-                if (Thingp _t_ = nullptr; ((_t_) = thing_find(_g_, _v_, _id_)))                                                            \
-                  if ((_t_)->iter[ _iter_index_ ] != (_v_)->iter[ _iter_index_ ])                                                          \
-                    if ((((_t_)->iter[ _iter_index_ ] = (_v_)->iter[ _iter_index_ ])) || 1)
-
-#define FOR_ALL_THINGS_ON_LEVEL_DEBUG(_g_, _v_, _l_, _t_)                                                                                  \
-  if ((_g_) && (_v_) && (_l_))                                                                                                             \
-    if (int _iter_index_ = 0; true)                                                                                                        \
-      if (MyIter _iter_(_g_, _v_, &_iter_index_, __FUNCTION__, __LINE__); true)                                                            \
-        for (auto _x_ = 0; _x_ < MAP_WIDTH; _x_++)                                                                                         \
-          for (auto _y_ = 0; _y_ < MAP_HEIGHT; _y_++)                                                                                      \
-            for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                                            \
-              if (ThingId _id_ = 0; (_id_ = (_l_)->thing_id[ _x_ ][ _y_ ][ _slot_ ]))                                                      \
-                if (Thingp _t_ = nullptr; ((_t_) = thing_find(_g_, _v_, _id_)))                                                            \
-                  if (thing_debug(_g_, _v_, _l_, _t_, _iter_index_))                                                                       \
+  if ((VERIFY(MTYPE_GAME, _g_)) && (VERIFY(MTYPE_LEVELS, _v_)))                                                                            \
+    if ((_l_))                                                                                                                             \
+      if (int _iter_index_ = 0; true)                                                                                                      \
+        if (MyIter _iter_(_g_, _v_, &_iter_index_, __FUNCTION__, __LINE__); true)                                                          \
+          for (auto _x_ = 0; _x_ < MAP_WIDTH; _x_++)                                                                                       \
+            for (auto _y_ = 0; _y_ < MAP_HEIGHT; _y_++)                                                                                    \
+              for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                                          \
+                if (ThingId _id_ = 0; (_id_ = (_l_)->thing_id[ _x_ ][ _y_ ][ _slot_ ]))                                                    \
+                  if (Thingp _t_ = nullptr; ((_t_) = thing_find(_g_, _v_, _id_)))                                                          \
                     if ((_t_)->iter[ _iter_index_ ] != (_v_)->iter[ _iter_index_ ])                                                        \
                       if ((((_t_)->iter[ _iter_index_ ] = (_v_)->iter[ _iter_index_ ])) || 1)
+
+#define FOR_ALL_THINGS_ON_LEVEL_DEBUG(_g_, _v_, _l_, _t_)                                                                                  \
+  if ((VERIFY(MTYPE_GAME, _g_)) && (VERIFY(MTYPE_LEVELS, _v_)))                                                                            \
+    if ((_l_))                                                                                                                             \
+      if (int _iter_index_ = 0; true)                                                                                                      \
+        if (MyIter _iter_(_g_, _v_, &_iter_index_, __FUNCTION__, __LINE__); true)                                                          \
+          for (auto _x_ = 0; _x_ < MAP_WIDTH; _x_++)                                                                                       \
+            for (auto _y_ = 0; _y_ < MAP_HEIGHT; _y_++)                                                                                    \
+              for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                                          \
+                if (ThingId _id_ = 0; (_id_ = (_l_)->thing_id[ _x_ ][ _y_ ][ _slot_ ]))                                                    \
+                  if (Thingp _t_ = nullptr; ((_t_) = thing_find(_g_, _v_, _id_)))                                                          \
+                    if (thing_debug(_g_, _v_, _l_, _t_, _iter_index_))                                                                     \
+                      if ((_t_)->iter[ _iter_index_ ] != (_v_)->iter[ _iter_index_ ])                                                      \
+                        if ((((_t_)->iter[ _iter_index_ ] = (_v_)->iter[ _iter_index_ ])) || 1)
 
 #define FOR_ALL_THINGS_AT_UNSAFE(_g_, _v_, _l_, _t_, _p_)                                                                                  \
   if ((_g_) && (_v_) && (_l_))                                                                                                             \
@@ -580,16 +583,17 @@ struct MyIter {
             if (Thingp _t_ = nullptr; ((_t_) = thing_find(_g_, _v_, _id_)))
 
 #define FOR_ALL_THINGS_AT(_g_, _v_, _l_, _t_, _p_)                                                                                         \
-  if ((_g_) && (_v_) && (_l_))                                                                                                             \
-    if (spoint _at_ = make_spoint(_p_); true)                                                                                              \
-      if (! is_oob(_at_))                                                                                                                  \
-        if (int _iter_index_ = 0; true)                                                                                                    \
-          if (MyIter _iter_(_g_, _v_, &_iter_index_, __FUNCTION__, __LINE__); true)                                                        \
-            for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                                            \
-              if (ThingId _id_ = 0; (_id_ = (_l_)->thing_id[ _at_.x ][ _at_.y ][ _slot_ ]))                                                \
-                if (Thingp _t_ = nullptr; ((_t_) = thing_find(_g_, _v_, _id_)))                                                            \
-                  if ((_t_)->iter[ _iter_index_ ] != (_v_)->iter[ _iter_index_ ])                                                          \
-                    if ((((_t_)->iter[ _iter_index_ ] = (_v_)->iter[ _iter_index_ ])) || 1)
+  if ((VERIFY(MTYPE_GAME, _g_)) && (VERIFY(MTYPE_LEVELS, _v_)))                                                                            \
+    if ((_l_))                                                                                                                             \
+      if (spoint _at_ = make_spoint(_p_); true)                                                                                            \
+        if (! is_oob(_at_))                                                                                                                \
+          if (int _iter_index_ = 0; true)                                                                                                  \
+            if (MyIter _iter_(_g_, _v_, &_iter_index_, __FUNCTION__, __LINE__); true)                                                      \
+              for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                                          \
+                if (ThingId _id_ = 0; (_id_ = (_l_)->thing_id[ _at_.x ][ _at_.y ][ _slot_ ]))                                              \
+                  if (Thingp _t_ = nullptr; ((_t_) = thing_find(_g_, _v_, _id_)))                                                          \
+                    if ((_t_)->iter[ _iter_index_ ] != (_v_)->iter[ _iter_index_ ])                                                        \
+                      if ((((_t_)->iter[ _iter_index_ ] = (_v_)->iter[ _iter_index_ ])) || 1)
 
 enum {
   CHANCE_VVV_UNLIKELY = 1,
@@ -695,6 +699,7 @@ void level_display_obj(Gamep, Levelsp, Levelp l, const spoint &, Tpp, Thingp);
 void level_display(Gamep g, Levelsp v, Levelp l);
 void level_dmap(Gamep g, Levelsp v, Levelp l);
 void level_dump(Gamep g, Levelsp v, Levelp l, int w = MAP_WIDTH, int h = MAP_HEIGHT);
+void level_verify(Gamep g, Levelsp v, Levelp l);
 void level_enter(Gamep g, Levelsp v, Levelp l);
 void level_finalize(Gamep g, Levelsp v, Levelp l);
 void level_forced_auto_scroll(Gamep g, Levelsp v, Levelp l);

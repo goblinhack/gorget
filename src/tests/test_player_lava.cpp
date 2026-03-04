@@ -68,7 +68,7 @@
   //
   // Find the player
   //
-level_dump(g, v, l, w, h);
+  level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   {
     TRACE();
@@ -82,7 +82,7 @@ level_dump(g, v, l, w, h);
   //
   // Move right
   //
-level_dump(g, v, l, w, h);
+  level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   {
     TRACE();
@@ -95,7 +95,7 @@ level_dump(g, v, l, w, h);
   //
   // Wait for the end of tick
   //
-level_dump(g, v, l, w, h);
+  level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   {
     TRACE();
@@ -108,7 +108,7 @@ level_dump(g, v, l, w, h);
   //
   // Check the level contents
   //
-level_dump(g, v, l, w, h);
+  level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   {
     TRACE();
@@ -118,7 +118,7 @@ level_dump(g, v, l, w, h);
     }
   }
 
-level_dump(g, v, l, w, h);
+  level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   for (auto tries = 0; tries < 10; tries++) {
     TEST_LOG(t, "try: %d", tries);
@@ -137,7 +137,7 @@ level_dump(g, v, l, w, h);
   //
   // Check player is dead when shoved into lava. It should be popped off the level.
   //
-level_dump(g, v, l, w, h);
+  level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   {
     TRACE();
@@ -162,11 +162,11 @@ level_dump(g, v, l, w, h);
   //
   // Check the tick is as expected
   //
-level_dump(g, v, l, w, h);
+  level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   TEST_ASSERT(t, game_tick_get(g, v) == 5, "final tick counter value");
 
-level_dump(g, v, l, w, h);
+  level_dump(g, v, l, w, h);
   TEST_PASSED(t);
 exit:
   TRACE();

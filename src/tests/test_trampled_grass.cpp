@@ -56,7 +56,7 @@
   //
   // Walk over grass and then check it is crushed/dead
   //
-level_dump(g, v, l, w, h);
+  level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   {
     TEST_LOG(t, "move right");
@@ -108,7 +108,7 @@ level_dump(g, v, l, w, h);
 
   TEST_ASSERT(t, game_tick_get(g, v) == 1, "final tick counter value");
 
-level_dump(g, v, l, w, h);
+  level_dump(g, v, l, w, h);
   TEST_PASSED(t);
 exit:
   TRACE();

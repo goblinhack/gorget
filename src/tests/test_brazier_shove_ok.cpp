@@ -64,7 +64,7 @@
   //
   // Bump into a brazier. It should be knocked over.
   //
-level_dump(g, v, l, w, h);
+  level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   {
     TEST_LOG(t, "move right");
@@ -117,7 +117,7 @@ level_dump(g, v, l, w, h);
   //
   // Second shove, we should be able to move the dead brazier
   //
-level_dump(g, v, l, w, h);
+  level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   {
     TEST_LOG(t, "move right");
@@ -131,7 +131,7 @@ level_dump(g, v, l, w, h);
     }
   }
 
-level_dump(g, v, l, w, h);
+  level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   for (auto tries = 0; tries < 10; tries++) {
     TEST_LOG(t, "try: %d", tries);
@@ -144,7 +144,7 @@ level_dump(g, v, l, w, h);
     }
   }
 
-level_dump(g, v, l, w, h);
+  level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   {
     if (! (result = level_match_contents(g, v, l, t, w, h, expect2.c_str()))) {
@@ -161,7 +161,7 @@ level_dump(g, v, l, w, h);
 
   TEST_ASSERT(t, game_tick_get(g, v) == 12, "final tick counter value");
 
-level_dump(g, v, l, w, h);
+  level_dump(g, v, l, w, h);
   TEST_PASSED(t);
 exit:
   TRACE();

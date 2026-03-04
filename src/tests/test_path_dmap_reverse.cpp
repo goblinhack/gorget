@@ -151,7 +151,7 @@
 
   TEST_ASSERT(t, game_tick_get(g, v) == 0, "final tick counter value");
 
-level_dump(g, v, l, w, h);
+  level_dump(g, v, l, w, h);
   TEST_PASSED(t);
 exit:
   TRACE();

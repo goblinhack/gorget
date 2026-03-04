@@ -117,7 +117,7 @@ static void level_tick(Gamep g, Levelsp v, Levelp l, bool tick_begin_requested)
 {
   TRACE();
 
-  VERIFY(MTYPE_LEVELS, game_levels_get(g));
+  level_verify(g, v, l);
 
   //
   // First time tick for this level?

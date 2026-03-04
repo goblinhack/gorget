@@ -50,7 +50,7 @@
   //
   // Wait
   //
-level_dump(g, v, l, w, h);
+  level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   for (auto tries = 0; tries < 10; tries++) {
     TEST_LOG(t, "try: %d", tries);
@@ -69,7 +69,7 @@ level_dump(g, v, l, w, h);
 
   TEST_ASSERT(t, game_tick_get(g, v) == 10, "final tick counter value");
 
-level_dump(g, v, l, w, h);
+  level_dump(g, v, l, w, h);
   TEST_PASSED(t);
 exit:
   TRACE();

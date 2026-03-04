@@ -48,7 +48,7 @@
   //
   bool result = false;
 
-level_dump(g, v, l, w, h);
+  level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
 
   auto *player = thing_player(g);
@@ -57,7 +57,7 @@ level_dump(g, v, l, w, h);
     goto exit;
   }
 
-level_dump(g, v, l, w, h);
+  level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
 
   for (auto slot = 0; slot < MAP_SLOTS * 10; slot++) {
@@ -100,7 +100,7 @@ level_dump(g, v, l, w, h);
 
   TEST_ASSERT(t, game_tick_get(g, v) == 1, "final tick counter value");
 
-level_dump(g, v, l, w, h);
+  level_dump(g, v, l, w, h);
   TEST_PASSED(t);
 exit:
   TRACE();

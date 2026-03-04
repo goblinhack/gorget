@@ -17,6 +17,23 @@
 
 LevelOpt g_level_opt;
 
+void level_verify(Gamep g, Levelsp v, Levelp l)
+{
+  TRACE();
+
+  VERIFY(MTYPE_GAME, g);
+  VERIFY(MTYPE_LEVELS, v);
+
+  FOR_ALL_LEVELS(g, v, o)
+  {
+    if (o == l) {
+      return;
+    }
+  }
+
+  CROAK("unknown level pointer %p", (void *) l);
+}
+
 //
 // Are we on the level selection level?
 //
@@ -34,7 +51,7 @@ auto level_is_level_select(Gamep g, Levelsp v, Levelp l) -> bool
 //
 // Print a level string
 //
-static void level_dump(Levelp l, int w, int h, std::string s)
+static void level_dump(Gamep g, Levelp l, int w, int h, std::string s)
 {
   TRACE();
 
@@ -65,7 +82,7 @@ void level_dump(Gamep g, Levelsp v, Levelp l, int w, int h)
 
   std::string const s = level_string(g, v, l, w, h);
 
-  level_dump(l, w, h, s);
+  level_dump(g, l, w, h, s);
 }
 
 //
@@ -90,7 +107,7 @@ auto level_match_contents(Gamep g, Levelsp v, Levelp l, Testp t, int w, int h, c
       if (c != e) {
         CON_NEW_LINE();
         CON("Expected:");
-        level_dump(l, w, h, expected);
+        level_dump(g, l, w, h, expected);
         CON_NEW_LINE();
         CON("Found:");
         level_dump(g, v, l, w, h);
@@ -293,9 +310,9 @@ auto level_change(Gamep g, Levelsp v, LevelNum level_num) -> Levelp
     return old_level;
   }
 
-  Level *new_level = game_level_get(g, v);
-
   VERIFY(MTYPE_LEVELS, v);
+
+  Level *new_level = game_level_get(g, v);
 
   if (old_level == new_level) {
     if (new_level->level_num == 0) {

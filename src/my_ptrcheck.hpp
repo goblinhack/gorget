@@ -32,7 +32,7 @@ auto strsub_(const char *in, const char *look_for, const char *replace_with, con
 #define STRSUB(a, b, c, __what__) strsub_(a, b, c, (__what__), PTRCHECK_AT)
 
 auto ptrcheck_alloc(int mtype, const void *ptr, const char *what, int size, const char *func, const char *file, int line) -> void *;
-auto ptrcheck_VERIFY(int mtype, const void *ptr, const char *func, const char *file, int line) -> int;
+auto ptrcheck_verify(int mtype, const void *ptr, const char *func, const char *file, int line) -> int;
 auto ptrcheck_free(int mtype, void *ptr, const char *func, const char *file, int line) -> int;
 void ptrcheck_leak_print(int mtype);
 void ptrcheck_leak_print();
@@ -57,12 +57,7 @@ void ptrcheck_leak_print();
   }
 
 #define VERIFY(__mtype__, __ptr__)                                                                                                         \
-  {                                                                                                                                        \
-    if (DEBUG2) {                                                                                                                          \
-      TRACE();                                                                                                                             \
-      ptrcheck_VERIFY(__mtype__, __ptr__, SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM);                                                     \
-    }                                                                                                                                      \
-  }
+  ((DEBUG2) ? (ptrcheck_verify(__mtype__, __ptr__, SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM) ? __ptr__ : nullptr) : __ptr__)
 
 enum {
   MTYPE_SDL,

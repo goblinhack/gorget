@@ -30,8 +30,6 @@ auto tests_init() -> bool
   if (!test_load_fire_on_water()) { return false; }
   if (!test_load_fire_over_chasm()) { return false; }
   if (!test_load_foliage_on_fire()) { return false; }
-  if (!test_load_monst_avoids_water_chasm_lava()) { return false; }
-  if (!test_load_monst_avoids_water()) { return false; }
   if (!test_load_ghost_no_water()) { return false; }
   if (!test_load_jump_ok()) { return false; }
   if (!test_load_jump_truncated()) { return false; }
@@ -39,6 +37,10 @@ auto tests_init() -> bool
   if (!test_load_mob_shove_into_lava()) { return false; }
   if (!test_load_mob_water()) { return false; }
   if (!test_load_mob()) { return false; }
+  if (!test_load_monst_avoids_water_chasm_lava()) { return false; }
+  if (!test_load_monst_avoids_water()) { return false; }
+  if (!test_load_monst_mobbing()) { return false; }
+  if (!test_load_monst_pass_through_walls()) { return false; }
   if (!test_load_monster_maze()) { return false; }
   if (!test_load_move_ok()) { return false; }
   if (!test_load_no_change()) { return false; }

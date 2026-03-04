@@ -57,7 +57,7 @@
   //
   // Find the player
   //
-level_dump(g, v, l, w, h);
+  level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   {
     TRACE();
@@ -71,7 +71,7 @@ level_dump(g, v, l, w, h);
   //
   // Spawn fire on the player
   //
-level_dump(g, v, l, w, h);
+  level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   {
     if (thing_spawn(g, v, l, tp_first(is_fire), player) == nullptr) {
@@ -96,7 +96,7 @@ level_dump(g, v, l, w, h);
   //
   // Move right
   //
-level_dump(g, v, l, w, h);
+  level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   {
     TEST_LOG(t, "move right");
@@ -118,7 +118,7 @@ level_dump(g, v, l, w, h);
   //
   // Player should be in the water now
   //
-level_dump(g, v, l, w, h);
+  level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   {
     if (! (result = level_match_contents(g, v, l, t, w, h, expect.c_str()))) {
@@ -131,7 +131,7 @@ level_dump(g, v, l, w, h);
   TEST_ASSERT(t, ! thing_is_dead(player), "player is dead");
   TEST_ASSERT(t, game_tick_get(g, v) == 2, "final tick counter value");
 
-level_dump(g, v, l, w, h);
+  level_dump(g, v, l, w, h);
   TEST_PASSED(t);
 exit:
   TRACE();
