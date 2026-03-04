@@ -70,6 +70,7 @@
   //
   // Move right, collecting key
   //
+level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   {
     TEST_LOG(t, "move right, collecting key");
@@ -96,6 +97,7 @@
   //
   // Move right again, open door
   //
+level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   {
     TEST_LOG(t, "move right open door");
@@ -120,6 +122,7 @@
   //
   // Move right into room
   //
+level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   {
     TEST_LOG(t, "move right into room");
@@ -143,6 +146,7 @@
 
   TEST_ASSERT(t, game_tick_get(g, v) == 4, "final tick counter value");
 
+level_dump(g, v, l, w, h);
   TEST_PASSED(t);
 exit:
   TRACE();

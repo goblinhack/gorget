@@ -98,7 +98,6 @@
       TEST_FAILED(t, "spawn failed");
       goto exit;
     }
-    // level_dump(g, v, l, w, h);
     TEST_ASSERT(t, game_event_wait(g), "failed to wait");
     TEST_ASSERT(t, game_wait_for_tick_to_finish(g, v, l1), "failed to wait for tick to finish");
 

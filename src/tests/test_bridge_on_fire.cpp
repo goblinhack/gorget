@@ -97,7 +97,7 @@
   for (auto tries = 0; tries < 3; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE();
-    // level_dump(g, v, l1, w, h);
+    level_dump(g, v, l1, w, h);
     TEST_ASSERT(t, game_event_wait(g), "failed to wait");
     if (! game_wait_for_tick_to_finish(g, v, l1)) {
       TEST_FAILED(t, "wait loop failed");

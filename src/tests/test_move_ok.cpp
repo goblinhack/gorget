@@ -78,6 +78,7 @@
   //
   // Move right
   //
+level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   {
     TEST_LOG(t, "move right");
@@ -104,6 +105,7 @@
   //
   // Move down
   //
+level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   {
     TEST_LOG(t, "move down");
@@ -130,6 +132,7 @@
   //
   // Move left
   //
+level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   {
     TEST_LOG(t, "move left");
@@ -156,6 +159,7 @@
   //
   // Move up
   //
+level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   {
     TEST_LOG(t, "move up");
@@ -181,6 +185,7 @@
 
   TEST_ASSERT(t, game_tick_get(g, v) == 4, "final tick counter value");
 
+level_dump(g, v, l, w, h);
   TEST_PASSED(t);
 exit:
   TRACE();

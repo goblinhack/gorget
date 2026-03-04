@@ -48,6 +48,7 @@
   //
   // Spawn fire. This should be enough to blow up all the barrels
   //
+level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   if (thing_spawn(g, v, l, tp_first(is_fire), thing_at(player) + spoint(1, 0)) == nullptr) {
     TEST_FAILED(t, "spawn failed");
@@ -57,6 +58,7 @@
   //
   // Wait for the fire to ignite a barrel
   //
+level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   for (auto tries = 0; tries < 5; tries++) {
     TEST_LOG(t, "try: %d", tries);
@@ -68,6 +70,7 @@
     }
   }
 
+level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   if (! (result = level_match_contents(g, v, l, t, w, h, expect1.c_str()))) {
     TEST_FAILED(t, "unexpected contents");
@@ -76,6 +79,7 @@
 
   TEST_ASSERT(t, game_tick_get(g, v) == 5, "final tick counter value");
 
+level_dump(g, v, l, w, h);
   TEST_PASSED(t);
 exit:
   TRACE();

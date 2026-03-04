@@ -69,6 +69,7 @@
   //
   // Find the player
   //
+level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   {
     TRACE();
@@ -82,6 +83,7 @@
   //
   // Find the mob before shoving it via the player
   //
+level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   {
     TRACE();
@@ -100,6 +102,7 @@
   //
   // Move right, shoving the mob
   //
+level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   {
     TRACE();
@@ -112,6 +115,7 @@
   //
   // Wait for the end of tick
   //
+level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   {
     TRACE();
@@ -124,6 +128,7 @@
   //
   // Check the level contents
   //
+level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   {
     TRACE();
@@ -136,6 +141,7 @@
   //
   // Check mob is dead when shoved into lava. It should be popped off the level.
   //
+level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   {
     TRACE();
@@ -160,6 +166,7 @@
   //
   // Check the mob has been cleaned up
   //
+level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   {
     TRACE();
@@ -172,11 +179,13 @@
   //
   // Check the tick is as expected
   //
+level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   {
     TEST_ASSERT(t, game_tick_get(g, v) == 2, "final tick counter value");
   }
 
+level_dump(g, v, l, w, h);
   TEST_PASSED(t);
 exit:
   TRACE();

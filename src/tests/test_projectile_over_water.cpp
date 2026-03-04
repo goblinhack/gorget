@@ -51,6 +51,7 @@
   //
   // Wait for the projectile to ignite a barrel
   //
+level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   for (auto tries = 0; tries < 5; tries++) {
     TEST_LOG(t, "try: %d", tries);
@@ -63,6 +64,7 @@
     }
   }
 
+level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   if (! (result = level_match_contents(g, v, l, t, w, h, expect1.c_str()))) {
     TEST_FAILED(t, "unexpected contents");
@@ -71,6 +73,7 @@
 
   TEST_ASSERT(t, game_tick_get(g, v) == 5, "final tick counter value");
 
+level_dump(g, v, l, w, h);
   TEST_PASSED(t);
 exit:
   TRACE();

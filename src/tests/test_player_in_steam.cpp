@@ -41,6 +41,7 @@
   //
   // Find the player
   //
+level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   {
     TRACE();
@@ -54,6 +55,7 @@
   //
   // Spawn steam on the player
   //
+level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   if (thing_spawn(g, v, l, tp_first(is_steam), player) == nullptr) {
     TEST_FAILED(t, "spawn failed");
@@ -72,11 +74,12 @@
     goto exit;
   }
 
+level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   for (auto tries = 0; tries < 7; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE();
-    // level_dump(g, v, l, w, h);
+    level_dump(g, v, l, w, h);
     TEST_ASSERT(t, game_event_wait(g), "failed to wait");
     if (! game_wait_for_tick_to_finish(g, v, l)) {
       TEST_FAILED(t, "wait loop failed");
@@ -89,11 +92,12 @@
   //
   // Wait until the player is dead
   //
+level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   for (auto tries = 0; tries < 100; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE();
-    // level_dump(g, v, l, w, h);
+    level_dump(g, v, l, w, h);
     TEST_ASSERT(t, game_event_wait(g), "failed to wait");
     if (! game_wait_for_tick_to_finish(g, v, l)) {
       TEST_FAILED(t, "wait loop failed");
@@ -108,6 +112,7 @@
   TEST_ASSERT(t, thing_is_dead(player), "player is expected to be dead");
   TEST_ASSERT(t, game_tick_get(g, v) == 8, "final tick counter value");
 
+level_dump(g, v, l, w, h);
   TEST_PASSED(t);
 
   result = true;

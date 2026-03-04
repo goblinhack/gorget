@@ -128,7 +128,6 @@
   for (auto tries = 0; tries < 6; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE();
-    // level_dump(g, v, l, w, h);
 
     //
     // Player could be dead, so cannot wait

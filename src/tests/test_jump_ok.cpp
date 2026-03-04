@@ -50,6 +50,7 @@
   //
   // Jump
   //
+level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   {
     TEST_LOG(t, "jump");
@@ -79,6 +80,7 @@
 
   TEST_ASSERT(t, game_tick_get(g, v) == 1, "final tick counter value");
 
+level_dump(g, v, l, w, h);
   TEST_PASSED(t);
 exit:
   TRACE();

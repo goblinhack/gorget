@@ -65,6 +65,7 @@
   //
   bool result = false;
 
+level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   for (auto tries = 0; tries < 7; tries++) {
     TEST_LOG(t, "try: %d", tries);
@@ -80,6 +81,7 @@
   //
   // Check the level contents
   //
+level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   {
     TRACE();
@@ -89,6 +91,7 @@
     }
   }
 
+level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   for (auto tries = 0; tries < 7; tries++) {
     TEST_LOG(t, "try: %d", tries);
@@ -104,6 +107,7 @@
   //
   // Check the level contents
   //
+level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   {
     TRACE();
@@ -113,6 +117,7 @@
     }
   }
 
+level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   for (auto tries = 0; tries < 7; tries++) {
     TEST_LOG(t, "try: %d", tries);
@@ -128,6 +133,7 @@
   //
   // Check the level contents
   //
+level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   {
     TRACE();
@@ -140,11 +146,13 @@
   //
   // Check the tick is as expected
   //
+level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   {
     TEST_ASSERT(t, game_tick_get(g, v) == 21, "final tick counter value");
   }
 
+level_dump(g, v, l, w, h);
   TEST_PASSED(t);
 exit:
   TRACE();
