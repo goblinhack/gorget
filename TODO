@@ -2,7 +2,8 @@ bugs
 ----
 minion leash test
 slow monst test
-need mob distance and lunging
+ghosts / monsts should not leave flames from fireballs
+need monst lunging
 limit firing to 1
 
 basic features

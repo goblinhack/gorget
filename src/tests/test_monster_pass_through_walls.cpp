@@ -7,56 +7,56 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static auto test_monst_avoids_water_chasm_lava(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_monster_pass_through_walls(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
 
   LevelNum const level_num = 0;
-  auto           w         = 15;
+  auto           w         = 7;
   auto           h         = 7;
 
   //
   // How the dungeon starts out, and how we expect it to change
   //
   std::string const start
-      = "XXXXXXXXXXXXXXX"
-        "X.~~~.CCC.LLL.X"
-        "X.===.CCC.===.X"
-        "X.~~~.CCC.LLL.X"
-        "X.~~~.===.LLL.X"
-        "X@~~~.CCC.LLLmX"
-        "XXXXXXXXXXXXXXX";
+      = "XXXXXXX"
+        "X..x.mX"
+        "X..x..X"
+        "X..x..X"
+        "X..x..X"
+        "X@.x..X"
+        "XXXXXXX";
   std::string const expect1
-      = "XXXXXXXXXXXXXXX"
-        "X.~~~.CCC.LLL.X"
-        "X.===.CCCm===.X"
-        "X.~~~.CCC.LLL.X"
-        "X.~~~.===.LLL.X"
-        "X@~~~.CCC.LLL.X"
-        "XXXXXXXXXXXXXXX";
+      = "XXXXXXX"
+        "X..x..X"
+        "X..x..X"
+        "X..m..X"
+        "X..x..X"
+        "X@.x..X"
+        "XXXXXXX";
   std::string const expect2
-      = "XXXXXXXXXXXXXXX"
-        "X.~~~.CCC.LLL.X"
-        "X.===.CCC.===.X"
-        "X.~~~mCCC.LLL.X"
-        "X.~~~.===.LLL.X"
-        "X@~~~.CCC.LLL.X"
-        "XXXXXXXXXXXXXXX";
+      = "XXXXXXX"
+        "X..x..X"
+        "X..x..X"
+        "X..x..X"
+        "X.mx..X"
+        "X@.x..X"
+        "XXXXXXX";
   std::string const expect3
-      = "XXXXXXXXXXXXXXX"
-        "X.~~~.CCC.LLL.X"
-        "X.===.CCC.===.X"
-        "X.~~~.CCC.LLL.X"
-        "Xm~~~.===.LLL.X"
-        "X@~~~.CCC.LLL.X"
-        "XXXXXXXXXXXXXXX";
+      = "XXXXXXX"
+        "X..x..X"
+        "X..x..X"
+        "X..x..X"
+        "X.mx..X"
+        "X@.x..X"
+        "XXXXXXX";
 
   //
   // Create the level and start playing
   //
   Overrides overrides;
-  overrides[ 'm' ] = [](char c, spoint p) -> Tpp { return tp_find_mand("mantisman"); };
+  overrides[ 'm' ] = [](char c, spoint p) -> Tpp { return tp_find_mand("ghost"); };
   Levelp  l        = nullptr;
   Levelsp v        = game_test_init(g, &l, level_num, w, h, start.c_str(), overrides);
 
@@ -67,7 +67,7 @@
 
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 7; tries++) {
+  for (auto tries = 0; tries < 1; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE();
     level_dump(g, v, l, w, h);
@@ -93,7 +93,7 @@
 
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 7; tries++) {
+  for (auto tries = 0; tries < 1; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE();
     level_dump(g, v, l, w, h);
@@ -119,7 +119,7 @@
 
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 7; tries++) {
+  for (auto tries = 0; tries < 1; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE();
     level_dump(g, v, l, w, h);
@@ -149,7 +149,7 @@
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   {
-    TEST_ASSERT(t, game_tick_get(g, v) == 21, "final tick counter value");
+    TEST_ASSERT(t, game_tick_get(g, v) == 3, "final tick counter value");
   }
 
   level_dump(g, v, l, w, h);
@@ -161,14 +161,14 @@ exit:
   return result;
 }
 
-auto test_load_monst_avoids_water_chasm_lava() -> bool // NOLINT
+auto test_load_monst_pass_through_walls() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("monst_avoids_water_chasm_lava");
+  Testp test = test_load("monst_pass_through_walls");
 
   // begin sort marker1 {
-  test_callback_set(test, test_monst_avoids_water_chasm_lava);
+  test_callback_set(test, test_monster_pass_through_walls);
   // end sort marker1 }
 
   return true;

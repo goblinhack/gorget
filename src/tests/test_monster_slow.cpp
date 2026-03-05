@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static auto test_monst_avoids_water(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_monster_slow(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -22,33 +22,33 @@
   std::string const start
       = "XXXXXXX"
         "X.....X"
-        "X.~~~.X"
-        "X@~~~mX"
-        "X.~~~.X"
+        "X.....X"
+        "X@...mX"
+        "X.....X"
         "X.....X"
         "XXXXXXX";
   std::string const expect1
       = "XXXXXXX"
-        "X...m.X"
-        "X.~~~.X"
-        "X@~~~.X"
-        "X.~~~.X"
+        "X.....X"
+        "X.....X"
+        "X@..M.X"
+        "X.....X"
         "X.....X"
         "XXXXXXX";
   std::string const expect2
       = "XXXXXXX"
-        "X.m...X"
-        "X.~~~.X"
-        "X@~~~.X"
-        "X.~~~.X"
+        "X.....X"
+        "X.....X"
+        "X@.M..X"
+        "X.....X"
         "X.....X"
         "XXXXXXX";
   std::string const expect3
       = "XXXXXXX"
         "X.....X"
-        "Xm~~~.X"
-        "X@~~~.X"
-        "X.~~~.X"
+        "X.....X"
+        "X@M...X"
+        "X.....X"
         "X.....X"
         "XXXXXXX";
 
@@ -56,7 +56,7 @@
   // Create the level and start playing
   //
   Overrides overrides;
-  overrides[ 'm' ] = [](char c, spoint p) -> Tpp { return tp_find_mand("ghost"); };
+  overrides[ 'm' ] = [](char c, spoint p) -> Tpp { return tp_find_mand("glorp"); };
   Levelp  l        = nullptr;
   Levelsp v        = game_test_init(g, &l, level_num, w, h, start.c_str(), overrides);
 
@@ -67,7 +67,7 @@
 
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 1; tries++) {
+  for (auto tries = 0; tries < 2; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE();
     level_dump(g, v, l, w, h);
@@ -93,7 +93,7 @@
 
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 1; tries++) {
+  for (auto tries = 0; tries < 2; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE();
     level_dump(g, v, l, w, h);
@@ -119,7 +119,7 @@
 
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 1; tries++) {
+  for (auto tries = 0; tries < 2; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE();
     level_dump(g, v, l, w, h);
@@ -149,7 +149,7 @@
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   {
-    TEST_ASSERT(t, game_tick_get(g, v) == 3, "final tick counter value");
+    TEST_ASSERT(t, game_tick_get(g, v) == 6, "final tick counter value");
   }
 
   level_dump(g, v, l, w, h);
@@ -161,14 +161,14 @@ exit:
   return result;
 }
 
-auto test_load_monst_avoids_water() -> bool // NOLINT
+auto test_load_monster_slow() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("monst_avoids_water");
+  Testp test = test_load("monster_slow");
 
   // begin sort marker1 {
-  test_callback_set(test, test_monst_avoids_water);
+  test_callback_set(test, test_monster_slow);
   // end sort marker1 }
 
   return true;

@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static auto test_open_locked_door_fail(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_player_open_locked_door_fail(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -162,7 +162,7 @@ auto test_load_open_locked_door_fail() -> bool // NOLINT
   Testp test = test_load("open_locked_door_fail");
 
   // begin sort marker1 {
-  test_callback_set(test, test_open_locked_door_fail);
+  test_callback_set(test, test_player_open_locked_door_fail);
   // end sort marker1 }
 
   return true;

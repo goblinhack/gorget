@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static auto test_move_ok(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_player_move_ok(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -201,7 +201,7 @@ auto test_load_move_ok() -> bool // NOLINT
   Testp test = test_load("move_ok");
 
   // begin sort marker1 {
-  test_callback_set(test, test_move_ok);
+  test_callback_set(test, test_player_move_ok);
   // end sort marker1 }
 
   return true;

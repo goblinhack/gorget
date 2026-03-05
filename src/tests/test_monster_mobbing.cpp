@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static auto test_monst_mobbing(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_monster_mobbing(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -100,7 +100,7 @@ auto test_load_monst_mobbing() -> bool // NOLINT
   Testp test = test_load("monst_mobbing");
 
   // begin sort marker1 {
-  test_callback_set(test, test_monst_mobbing);
+  test_callback_set(test, test_monster_mobbing);
   // end sort marker1 }
 
   return true;

@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static auto test_monst_pass_through_walls(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_monster_avoids_water(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -21,35 +21,35 @@
   //
   std::string const start
       = "XXXXXXX"
-        "X..x.mX"
-        "X..x..X"
-        "X..x..X"
-        "X..x..X"
-        "X@.x..X"
+        "X.....X"
+        "X.~~~.X"
+        "X@~~~mX"
+        "X.~~~.X"
+        "X.....X"
         "XXXXXXX";
   std::string const expect1
       = "XXXXXXX"
-        "X..x..X"
-        "X..x..X"
-        "X..m..X"
-        "X..x..X"
-        "X@.x..X"
+        "X...m.X"
+        "X.~~~.X"
+        "X@~~~.X"
+        "X.~~~.X"
+        "X.....X"
         "XXXXXXX";
   std::string const expect2
       = "XXXXXXX"
-        "X..x..X"
-        "X..x..X"
-        "X..x..X"
-        "X.mx..X"
-        "X@.x..X"
+        "X.m...X"
+        "X.~~~.X"
+        "X@~~~.X"
+        "X.~~~.X"
+        "X.....X"
         "XXXXXXX";
   std::string const expect3
       = "XXXXXXX"
-        "X..x..X"
-        "X..x..X"
-        "X..x..X"
-        "X.mx..X"
-        "X@.x..X"
+        "X.....X"
+        "Xm~~~.X"
+        "X@~~~.X"
+        "X.~~~.X"
+        "X.....X"
         "XXXXXXX";
 
   //
@@ -161,14 +161,14 @@ exit:
   return result;
 }
 
-auto test_load_monst_pass_through_walls() -> bool // NOLINT
+auto test_load_monst_avoids_water() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("monst_pass_through_walls");
+  Testp test = test_load("monst_avoids_water");
 
   // begin sort marker1 {
-  test_callback_set(test, test_monst_pass_through_walls);
+  test_callback_set(test, test_monster_avoids_water);
   // end sort marker1 }
 
   return true;

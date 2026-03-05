@@ -49,6 +49,7 @@ static std::initializer_list< std::string > tests = {
     "monst_mobbing",
     "monst_pass_through_walls",
     "monster_maze",
+    "monster_slow",
     "move_ok",
     "no_change",
     "open_locked_door_fail",
