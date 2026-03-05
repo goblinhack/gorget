@@ -172,9 +172,11 @@ static void croak_handle(bool clean, const char *fmt, va_list args)
   }
   g_dying = true;
 
-  char buf[ MAXLONGSTR * 10 ];
-  buf[ 0 ] = '\0';
-  int len  = 0;
+  //
+  // std::println seems to need the whoel buffer initialized
+  //
+  char buf[ MAXLONGSTR * 10 ] = {};
+  int  len                    = 0;
 
   get_timestamp(buf, MAXLONGSTR);
   len = static_cast< int >(strlen(buf));
