@@ -190,6 +190,7 @@ auto tp_load_player() -> bool
   tp_flag_set(tp, is_able_to_move_diagonally);
   tp_flag_set(tp, is_able_to_open);
   tp_flag_set(tp, is_able_to_shove);
+  tp_flag_set(tp, is_combustible);
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);

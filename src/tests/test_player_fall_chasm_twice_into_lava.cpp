@@ -125,7 +125,7 @@
   }
 
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 6; tries++) {
+  for (auto tries = 0; tries < 3; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE();
 
@@ -161,7 +161,7 @@
     }
   }
 
-  TEST_ASSERT(t, game_tick_get(g, v) == 7, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 6, "final tick counter value");
 
   //
   // Check player is dead.

@@ -124,14 +124,14 @@
   }
 
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 5; tries++) {
+  for (auto tries = 0; tries < 2; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE();
     TEST_ASSERT(t, game_event_wait(g), "failed to wait");
     TEST_ASSERT(t, game_wait_for_tick_to_finish(g, v, l2), "failed to wait for tick to finish");
   }
 
-  TEST_ASSERT(t, game_tick_get(g, v) == 7, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 4, "final tick counter value");
 
   //
   // Check player is dead when shoved into lava. It should be popped off the level.

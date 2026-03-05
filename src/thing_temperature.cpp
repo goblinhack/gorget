@@ -25,10 +25,21 @@ void thing_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thing
       // You don't continue to burn with steam
       //
     } else if (level_is_fire(g, v, l, thing_at(t)) == nullptr) {
-      THING_DBG(t, "set on fire");
-      (void) thing_spawn(g, v, l, tp_random(is_fire), t);
-      thing_is_burning_set(g, v, l, t);
+      //
+      // No fire here. Set it on fire.
+      //
+      if (thing_is_combustible(t)) {
+        //
+        // But only if combustible.
+        //
+        THING_DBG(t, "set on fire");
+        (void) thing_spawn(g, v, l, tp_random(is_fire), t);
+        thing_is_burning_set(g, v, l, t);
+      }
     } else {
+      //
+      // Fire is here already.
+      //
       thing_is_burning_set(g, v, l, t);
     }
   }

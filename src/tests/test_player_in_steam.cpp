@@ -76,7 +76,7 @@
 
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 7; tries++) {
+  for (auto tries = 0; tries < 3; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE();
     level_dump(g, v, l, w, h);
@@ -110,7 +110,7 @@
   }
 
   TEST_ASSERT(t, thing_is_dead(player), "player is expected to be dead");
-  TEST_ASSERT(t, game_tick_get(g, v) == 8, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 5, "final tick counter value");
 
   level_dump(g, v, l, w, h);
   TEST_PASSED(t);
