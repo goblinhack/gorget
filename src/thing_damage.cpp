@@ -341,8 +341,10 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
         break;
       case THING_EVENT_FIRE_DAMAGE :
         if (level_is_fire(g, v, l, thing_at(t)) == nullptr) {
-          THING_DBG(t, "spawn flames due to fire damage");
-          (void) thing_spawn(g, v, l, tp_first(is_fire), t);
+          if (level_is_combustible(g, v, l, thing_at(t)) != nullptr) {
+            THING_DBG(t, "spawn flames due to fire damage");
+            (void) thing_spawn(g, v, l, tp_first(is_fire), t);
+          }
         }
 
         if (level_is_water(g, v, l, thing_at(t)) != nullptr) {
