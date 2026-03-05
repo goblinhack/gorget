@@ -105,6 +105,15 @@ auto thing_can_move_to_possible(Gamep g, Levelsp v, Levelp l, Thingp me, spoint 
 {
   TRACE();
 
+  //
+  // If a minion, check we're not moving too far from the mob
+  //
+  if (thing_is_minion(me)) {
+    if (! thing_minion_can_move_to_possible(g, v, l, me, to)) {
+      return false;
+    }
+  }
+
   FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, to)
   {
     //

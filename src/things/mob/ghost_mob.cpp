@@ -40,7 +40,7 @@ static void tp_ghost_mob_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE();
 
-  if (d100() < 90) {
+  if (d100() < 70) {
     return;
   }
 

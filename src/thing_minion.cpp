@@ -178,3 +178,36 @@ auto thing_minion_choose_target_near_mob(Gamep g, Levelsp v, Levelp l, Thingp me
 
   return false;
 }
+
+//
+// Returns true if it is POSSIBLE for this thing to move to this location.
+// e.g. it is possible for a chasm or monst to move into a chasm. Does not
+// mean the monst wants to do that.
+//
+// We do not change direction upon this attempt; purely a check only
+//
+auto thing_minion_can_move_to_possible(Gamep g, Levelsp v, Levelp l, Thingp me, const spoint &to) -> bool
+{
+  TRACE();
+
+  if (! thing_is_minion(me)) {
+    return true;
+  }
+
+  //
+  // If a minion, check we're not moving too far from the mob
+  //
+  auto *mob = thing_minion_mob_get(g, v, l, me);
+  if (! mob) {
+    //
+    // If unleashed, ignore
+    //
+    return true;
+  }
+
+  if (distance(thing_at(mob), to) > thing_distance_minion_from_mob_max(me)) {
+    return false;
+  }
+
+  return true;
+}

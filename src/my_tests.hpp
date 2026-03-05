@@ -40,6 +40,7 @@ auto test_load_monst_avoids_water() -> bool;
 auto test_load_monst_mobbing() -> bool;
 auto test_load_monst_pass_through_walls() -> bool;
 auto test_load_monster_maze() -> bool;
+auto test_load_monster_mob_leash() -> bool;
 auto test_load_monster_slow() -> bool;
 auto test_load_move_ok() -> bool;
 auto test_load_no_change() -> bool;

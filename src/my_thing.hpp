@@ -889,6 +889,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_value16_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_value16(Thingp t) -> int;
 [[nodiscard]] auto thing_value17_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
+[[nodiscard]] auto thing_minion_can_move_to_possible(Gamep g, Levelsp v, Levelp l, Thingp me, const spoint &to) -> bool;
 [[nodiscard]] auto thing_value17_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_value17_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_value17(Thingp t) -> int;

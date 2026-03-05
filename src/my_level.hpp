@@ -7,6 +7,7 @@
 
 #include "my_game_defs.hpp"
 #include "my_globals.hpp"
+#include "my_main.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_string.hpp"
 #include "my_thing.hpp"
