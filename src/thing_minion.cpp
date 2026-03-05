@@ -198,7 +198,7 @@ auto thing_minion_can_move_to_possible(Gamep g, Levelsp v, Levelp l, Thingp me, 
   // If a minion, check we're not moving too far from the mob
   //
   auto *mob = thing_minion_mob_get(g, v, l, me);
-  if (! mob) {
+  if (mob == nullptr) {
     //
     // If unleashed, ignore
     //

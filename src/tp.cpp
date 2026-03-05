@@ -165,7 +165,7 @@ auto tp_find(TpId id) -> Tpp
 #ifdef DEBUG_BUILD
   TRACE(); // expensive
 
-  if ((int) id - 1 >= (int) tp_vec.size()) {
+  if (static_cast<int>(id) - 1 >= static_cast<int>(tp_vec.size())) {
     CROAK("tp_find: thing template %" PRIX16 " bad id, beyond size of tp_vec", id);
     return nullptr;
   }
@@ -173,7 +173,7 @@ auto tp_find(TpId id) -> Tpp
 
   auto *result = tp_vec[ id - 1 ];
 #ifdef DEBUG_BUILD
-  if (! result) {
+  if (result == nullptr) {
     CROAK("tp_find: thing template %" PRIX16 " not found", id);
     return nullptr;
   }
@@ -724,7 +724,7 @@ auto tp_light_color(Tpp tp) -> color
 {
 #ifdef DEBUG_BUILD
   TRACE();
-  if (! tp) {
+  if (tp == nullptr) {
     TP_ERR(tp, "no thing template pointer");
     return WHITE;
   }
