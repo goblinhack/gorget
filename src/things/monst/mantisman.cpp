@@ -87,6 +87,7 @@ auto tp_load_mantisman() -> bool
   tp_flag_set(tp, is_removable_when_dead_on_err);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_tickable);
+  tp_flag_set(tp, is_able_to_lunge);
   tp_health_set(tp, "1d6");
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_long_name_set(tp, "mantisman");

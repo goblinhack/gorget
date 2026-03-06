@@ -62,6 +62,7 @@ enum {
 
   MAX_FALL_TILE_HEIGHT       = 4,
   MAX_FALL_TIME_MS           = 250,
+  MAX_LUNGE_TIME_MS          = 150,
   MAX_HIT_TIME_MS            = 250,
   MAX_TESTED_LEVELS          = 1000,
   POPUP_DURATION_MS          = 2000,

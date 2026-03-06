@@ -124,6 +124,8 @@ static void thing_shoved_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
     //
     thing_on_shoved(g, v, l, t, shover);
 
+    (void) thing_lunge(g, v, l, shover, to);
+
     if (thing_is_player(t)) {
       thing_shoved_player(g, v, l, e);
     } else if ((e.source != nullptr) && thing_is_player(e.source)) {

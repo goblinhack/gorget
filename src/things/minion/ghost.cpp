@@ -53,6 +53,7 @@ auto tp_load_ghost() -> bool
   tp_flag_set(tp, is_able_to_move_through_walls);
   tp_flag_set(tp, is_able_to_walk_through_walls);
   tp_flag_set(tp, is_animated_can_hflip);
+  tp_flag_set(tp, is_able_to_lunge);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_shown_in_chasms);

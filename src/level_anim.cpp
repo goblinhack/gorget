@@ -44,5 +44,9 @@ void level_anim(Gamep g, Levelsp v, Levelp l)
     if (thing_is_falling(t) != 0) {
       thing_fall_time_step(g, v, l, t, time_step);
     }
+
+    if (thing_is_lunging(t) != 0) {
+      thing_lunge_time_step(g, v, l, t, time_step);
+    }
   }
 }

@@ -15,6 +15,7 @@ auto thing_can_move_to_attempt(Gamep g, Levelsp v, Levelp l, Thingp me, spoint t
   TRACE();
 
   if (is_oob_or_border(to)) [[unlikely]] {
+    (void) thing_lunge(g, v, l, me, to);
     return false;
   }
 
@@ -27,7 +28,11 @@ auto thing_can_move_to_attempt(Gamep g, Levelsp v, Levelp l, Thingp me, spoint t
   auto dy = to.y - at.y;
   thing_set_dir_from_delta(me, dx, dy);
 
-  return thing_can_move_to_possible(g, v, l, me, to);
+  auto ret = thing_can_move_to_possible(g, v, l, me, to);
+  if (! ret) {
+    (void) thing_lunge(g, v, l, me, to);
+  }
+  return ret;
 }
 
 //
@@ -176,6 +181,7 @@ auto thing_can_move_to_attempt_by_shoving(Gamep g, Levelsp v, Levelp l, Thingp m
   thing_set_dir_from_delta(me, dx, dy);
 
   if (! thing_is_able_to_shove(me)) {
+    (void) thing_lunge(g, v, l, me, to);
     return false;
   }
 

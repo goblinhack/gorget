@@ -400,6 +400,7 @@ void Game::init()
   level_raycast_init(this);
 
   level_light_precalculate(this);
+  level_lunge_precalculate(this);
 
   player_name_set(nullptr);
 }

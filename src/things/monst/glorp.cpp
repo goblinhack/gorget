@@ -87,6 +87,7 @@ auto tp_load_glorp() -> bool
   tp_flag_set(tp, is_removable_when_dead_on_err);
   tp_flag_set(tp, is_slime);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
+  tp_flag_set(tp, is_able_to_lunge);
   tp_flag_set(tp, is_tickable);
   tp_health_set(tp, "1d10+4");
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);

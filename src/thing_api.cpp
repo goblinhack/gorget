@@ -269,18 +269,18 @@ void thing_is_falling_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
     //
     // Start falling if not doing do
     //
-    if (static_cast< bool >(t->_is_falling_ms)) {
+    if (static_cast< bool >(t->_fall_ms)) {
       return;
     }
   } else {
     //
     // Stop falling
     //
-    if (! static_cast< bool >(t->_is_falling_ms)) {
+    if (! static_cast< bool >(t->_fall_ms)) {
       return;
     }
   }
-  t->_is_falling_ms = static_cast< uint16_t >(val);
+  t->_fall_ms = static_cast< uint16_t >(val);
 
   if (val) {
     thing_on_fall_begin(g, v, l, t);
@@ -298,11 +298,11 @@ auto thing_is_falling_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> i
     return 0;
   }
 
-  if (t->_is_falling_ms + val > MAX_FALL_TIME_MS) {
-    return t->_is_falling_ms = MAX_FALL_TIME_MS;
+  if (t->_fall_ms + val > MAX_FALL_TIME_MS) {
+    return t->_fall_ms = MAX_FALL_TIME_MS;
   }
 
-  return t->_is_falling_ms += val;
+  return t->_fall_ms += val;
 }
 
 auto thing_is_falling_continues(Thingp t) -> bool
@@ -892,6 +892,11 @@ void thing_is_moving_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
     return;
   }
   t->_is_moving = val;
+
+  //
+  // Just in case we are still mid lunge, stop it.
+  //
+  (void) thing_is_lunging_set(g, v, l, t, false);
 
   if (val) {
     thing_on_moved(g, v, l, t);
@@ -2535,7 +2540,7 @@ auto thing_is_unused66(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused66) != 0;
 }
 
-auto thing_is_unused67(Thingp t) -> bool
+auto thing_is_able_to_lunge(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2543,7 +2548,7 @@ auto thing_is_unused67(Thingp t) -> bool
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused67) != 0;
+  return tp_flag(thing_tp(t), is_able_to_lunge) != 0;
 }
 
 auto thing_is_obs_to_paths(Thingp t) -> bool

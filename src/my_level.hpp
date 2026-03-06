@@ -678,6 +678,7 @@ enum {
 
 // begin sort marker2 {
 void fragment_alts_fini(Gamep g);
+void thing_lunge_modify_position(Gamep g, Levelsp v, Levelp l, Thingp t, spoint &tl, spoint &br);
 void fragments_fini(Gamep g);
 void fragments_init(Gamep g);
 void game_debug_info(Gamep g);
@@ -717,6 +718,7 @@ void level_light_blocker_update(Gamep g, Levelsp v, Levelp l);
 void level_light_calculate_all(Gamep g, Levelsp v, Levelp l);
 void level_light_per_pixel_lighting(Gamep g, Levelsp v, Levelp l, Thingp t, spoint pov, spoint p);
 void level_light_precalculate(Gamep g);
+void level_lunge_precalculate(Gamep g);
 void level_minimaps_update(Gamep g, Levelsp v, Levelp l);
 void level_mouse_position_get(Gamep g, Levelsp v, Levelp l);
 void level_raycast_fini();
@@ -1021,7 +1023,7 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_is_unused64(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_unused65(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_unused66(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
-[[nodiscard]] auto level_is_unused67(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
+[[nodiscard]] auto level_is_able_to_lunge(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_unused7(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_unused8(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_unused9(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
@@ -1242,7 +1244,7 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_alive_is_unused64(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_unused65(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_unused66(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
-[[nodiscard]] auto level_alive_is_unused67(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
+[[nodiscard]] auto level_alive_is_able_to_lunge(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_unused7(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_unused8(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_unused9(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
@@ -1463,7 +1465,7 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_count_is_unused64(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_unused65(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_unused66(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
-[[nodiscard]] auto level_count_is_unused67(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
+[[nodiscard]] auto level_count_is_able_to_lunge(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_unused7(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_unused8(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_unused9(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
@@ -1685,7 +1687,7 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_open_is_unused64(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused65(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused66(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
-[[nodiscard]] auto level_open_is_unused67(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
+[[nodiscard]] auto level_open_is_able_to_lunge(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused7(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused8(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused9(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;

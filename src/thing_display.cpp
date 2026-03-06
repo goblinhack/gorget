@@ -16,8 +16,8 @@
 #include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp"
 
-void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, const spoint &p, Tpp tp_maybe_null, Thingp t_maybe_null, spoint *tl,
-                                 spoint *br, uint16_t *tile_index)
+void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, const spoint &p, Tpp tp_maybe_null, Thingp t_maybe_null, spoint &tl,
+                                 spoint &br, uint16_t *tile_index)
 {
   TRACE_DEBUG();
 
@@ -74,18 +74,18 @@ void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, const spoint &p, 
     //
     // All things
     //
-    *tl = thing_pix_at(t_maybe_null);
-    tl->x *= zoom;
-    tl->y *= zoom;
+    tl = thing_pix_at(t_maybe_null);
+    tl.x *= zoom;
+    tl.y *= zoom;
   } else {
     //
     // Cursor
     //
-    tl->x = p.x * dw;
-    tl->y = p.y * dh;
+    tl.x = p.x * dw;
+    tl.y = p.y * dh;
   }
 
-  *tl -= v->pixel_map_at;
+  tl -= v->pixel_map_at;
 
   auto pix_height = tile_height(tile) * zoom;
   auto pix_width  = tile_width(tile) * zoom;
@@ -94,33 +94,33 @@ void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, const spoint &p, 
   // Centered
   //
   if ((tp_maybe_null != nullptr) && tp_is_blit_centered(tp_maybe_null)) {
-    tl->x -= (pix_width - dw) / 2;
-    tl->y -= (pix_height - dh) / 2;
+    tl.x -= (pix_width - dw) / 2;
+    tl.y -= (pix_height - dh) / 2;
   }
 
   if ((tp_maybe_null != nullptr) && tp_is_blit_on_ground(tp_maybe_null)) {
-    tl->x -= (pix_width - dw) / 2;
-    tl->y -= (pix_height - dh);
+    tl.x -= (pix_width - dw) / 2;
+    tl.y -= (pix_height - dh);
   }
 
   if ((t_maybe_null != nullptr) && thing_is_jumping(t_maybe_null)) {
     auto jump_height = static_cast< int >((sin(std::numbers::pi_v< float > * t_maybe_null->thing_dt)) * static_cast< float >(dh));
-    tl->y -= jump_height;
-    br->y -= jump_height;
+    tl.y -= jump_height;
+    br.y -= jump_height;
   }
 
   //
   // Update the br coords if we changed the position
   //
-  br->x = tl->x + pix_width;
-  br->y = tl->y + pix_height;
+  br.x = tl.x + pix_width;
+  br.y = tl.y + pix_height;
 
   //
   // Flippable?
   //
   if ((t_maybe_null != nullptr) && tp_is_animated_can_hflip(tp_maybe_null)) {
     if (thing_is_dir_left(t_maybe_null) || thing_is_dir_tl(t_maybe_null) || thing_is_dir_bl(t_maybe_null)) {
-      std::swap(tl->x, br->x);
+      std::swap(tl.x, br.x);
     }
   }
 
@@ -136,6 +136,10 @@ void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, const spoint &p, 
     } else if (level_is_lava(g, v, l, p) != nullptr) {
       (void) thing_submerged_pct_set(g, v, l, t_maybe_null, 40);
     }
+  }
+
+  if (t_maybe_null != nullptr) {
+    thing_lunge_modify_position(g, v, l, t_maybe_null, tl, br);
   }
 }
 

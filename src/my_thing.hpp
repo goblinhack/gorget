@@ -398,7 +398,11 @@ using Thing = struct Thing {
   //
   // Accumulates and holds the amount of time we've been falling.
   //
-  uint16_t _is_falling_ms;
+  uint16_t _fall_ms;
+  //
+  // Accumulates and holds the amount of time we've been lunging.
+  //
+  uint16_t _lunge_ms;
   //
   // Weight in grams. Impacts things like grass being crushed.
   //
@@ -459,6 +463,10 @@ using Thing = struct Thing {
   //
   spoint last_pushed_at;
   //
+  // Where we're lunging
+  //
+  spoint lunging_to;
+  //
   // Increases per tick and when it reaches 1, allows the thing to move
   //
   float thing_dt;
@@ -485,6 +493,7 @@ using Thing = struct Thing {
 // begin sort marker1 {
 [[nodiscard]] auto immediate_owner(Gamep g, Levelsp v, Levelp l, Thingp t) -> Thingp;
 [[nodiscard]] auto monst_state_to_string(MonstState state) -> std::string;
+[[nodiscard]] bool thing_lunge(Gamep g, Levelsp v, Levelp l, Thingp t, const spoint &to);
 [[nodiscard]] auto monst_state(Gamep g, Levelsp v, Levelp l, Thingp me) -> MonstState;
 [[nodiscard]] auto player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, const spoint &to) -> bool;
 [[nodiscard]] auto player_jump(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool;
@@ -775,7 +784,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused64(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused65(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused66(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused67(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_able_to_lunge(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused7(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused8(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused9(Thingp t) -> bool;
@@ -954,6 +963,7 @@ using Thing = struct Thing {
 auto astar_solve(Gamep g, Levelsp v, Levelp l, Thingp t, spoint src, spoint dst) -> std::vector< spoint >;
 void LEVEL_BOTCON(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
 void LEVEL_CON(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
+void thing_is_lunging_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val);
 void LEVEL_DBG(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
 void LEVEL_ERR(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
 void LEVEL_LOG(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
@@ -997,7 +1007,9 @@ void thing_dmap(Gamep g, Levelsp v, Levelp l, Thingp me, bool reverse = false);
 void THING_ERR(Thingp t, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void thing_explosion_handle(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_fall_end_check(Gamep g, Levelsp v, Levelp l, Thingp t);
+void thing_lunge_end_check(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_fall_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step);
+void thing_lunge_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step);
 void thing_fall(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_fini(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_free(Gamep g, Levelsp v, Levelp l, Thingp t);
@@ -1072,8 +1084,8 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp t, WidPopup *parent, in
 void wid_unset_thing_context(Gamep g, Levelsp v, Widp w, Thingp t);
 // end sort marker2 }
 
-void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, const spoint &p, Tpp tp_maybe_null, Thingp t_maybe_null, spoint *tl,
-                                 spoint *br, uint16_t *tile_index);
+void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, const spoint &p, Tpp tp_maybe_null, Thingp t_maybe_null, spoint &tl,
+                                 spoint &br, uint16_t *tile_index);
 
 void thing_display(Gamep g, Levelsp v, Levelp l, const spoint &p, Tpp tp, Thingp t_maybe_null, spoint tl, spoint br, uint16_t tile_index,
                    FboEnum fbo);

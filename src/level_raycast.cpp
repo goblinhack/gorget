@@ -84,54 +84,54 @@ static float player_light_fade[ MAP_WIDTH ];
 static void level_raycast_precalculate(Gamep g)
 {
   static const char player_light_fade_map[]
-      = "xx                                              " //
-        "  xx                                            " //
-        "    x                                           " //
-        "     x                                          " //
-        "      x                                         " //
-        "       x                                        " //
-        "        x                                       " //
-        "        x                                       " //
-        "         x                                      " //
-        "         x                                      " //
-        "          x                                     " //
-        "          x                                     " //
-        "           x                                    " //
-        "           x                                    " //
-        "            x                                   " //
-        "            x                                   " //
-        "             x                                  " //
-        "             x                                  " //
-        "              x                                 " //
-        "              x                                 " //
-        "               x                                " //
-        "               x                                " //
-        "               x                                " //
-        "                x                               " //
-        "                x                               " //
-        "                x                               " //
-        "                 x                              " //
-        "                 x                              " //
-        "                 x                              " //
-        "                 x                              " //
-        "                 x                              " //
-        "                  x                             " //
-        "                  x                             " //
-        "                  x                             " //
-        "                   x                            " //
-        "                   x                            " //
-        "                   x                            " //
-        "                    x                           " //
-        "                    x                           " //
-        "                     x                          " //
-        "                     x                          " //
-        "                      x                         " //
-        "                       x                        " //
-        "                        x                       " //
-        "                         x                      " //
-        "                          xx                    " //
-        "                            xxxxxxxxxxxxxxxxxxxx" //
-        "                                                " //
+      = "xx                                              " // light strength
+        "  xx                                            " //       |
+        "    x                                           " //       |
+        "     x                                          " //       |
+        "      x                                         " //       |
+        "       x                                        " //       |
+        "        x                                       " //       |
+        "        x                                       " //       |
+        "         x                                      " //       |
+        "         x                                      " //       |
+        "          x                                     " //       |
+        "          x                                     " //       |
+        "           x                                    " //       |
+        "           x                                    " //       |
+        "            x                                   " //       |
+        "            x                                   " //       |
+        "             x                                  " //       |
+        "             x                                  " //       |
+        "              x                                 " //       |
+        "              x                                 " //       |
+        "               x                                " //       |
+        "               x                                " //       |
+        "               x                                " //       |
+        "                x                               " //       |
+        "                x                               " //       |
+        "                x                               " //       |
+        "                 x                              " //       |
+        "                 x                              " //       |
+        "                 x                              " //       |
+        "                 x                              " //       |
+        "                 x                              " //       |
+        "                  x                             " //       |
+        "                  x                             " //       |
+        "                  x                             " //       |
+        "                   x                            " //       |
+        "                   x                            " //       |
+        "                   x                            " //       |
+        "                    x                           " //       |
+        "                    x                           " //       |
+        "                     x                          " //       |
+        "                     x                          " //       |
+        "                      x                         " //       |
+        "                       x                        " //       |
+        "                        x                       " //       |
+        "                         x                      " //       |
+        "                          xx                    " //       |
+        "                            xxxxxxxxxxxxxxxxxxxx" //       |
+        "                                                " //       v
       ;
 
   for (auto x = 0; x < MAP_WIDTH; x++) {

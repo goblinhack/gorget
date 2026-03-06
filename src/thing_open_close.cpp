@@ -81,6 +81,7 @@ auto thing_can_move_to_attempt_by_opening(Gamep g, Levelsp v, Levelp l, Thingp m
   thing_set_dir_from_delta(me, dx, dy);
 
   if (! thing_is_able_to_open(me)) {
+    (void) thing_lunge(g, v, l, me, to);
     return false;
   }
 

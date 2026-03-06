@@ -102,7 +102,7 @@ void game_popups_display(Gamep g, Levelsp v, Levelp l)
         if (tp_once == nullptr) {
           tp_once = tp_find_mand("cursor_path");
         }
-        thing_display_get_tile_info(g, v, l, p, tp_once, NULL_THING, &tl, &br, &tile_index);
+        thing_display_get_tile_info(g, v, l, p, tp_once, NULL_THING, tl, br, &tile_index);
 
         //
         // Fade out and raise the text up with a percentage

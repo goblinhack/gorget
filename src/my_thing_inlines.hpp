@@ -77,7 +77,20 @@ static inline auto thing_is_falling(Thingp t) -> int
   }
 #endif
 
-  return t->_is_falling_ms;
+  return t->_fall_ms;
+}
+
+static inline auto thing_is_lunging(Thingp t) -> int
+{
+#ifdef DEBUG_BUILD
+  TRACE();
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return 0;
+  }
+#endif
+
+  return t->_lunge_ms;
 }
 
 static inline auto thing_is_hit(Thingp t) -> int

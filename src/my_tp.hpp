@@ -198,7 +198,7 @@
       list_macro(is_unused64, "is_unused64"),                                       /* newline */                                          \
       list_macro(is_unused65, "is_unused65"),                                       /* newline */                                          \
       list_macro(is_unused66, "is_unused66"),                                       /* newline */                                          \
-      list_macro(is_unused67, "is_unused67"),                                       /* newline */                                          \
+      list_macro(is_able_to_lunge, "is_able_to_lunge"),                                       /* newline */                                          \
       list_macro(is_obs_to_paths, "is_obs_to_paths"),                               /* newline */                                          \
       list_macro(is_removable_when_dead_on_err, "is_removable_when_dead_on_err"),   /* newline */                                          \
       list_macro(is_removable_on_err, "is_removable_on_err"),                       /* newline */                                          \
@@ -893,7 +893,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup val);
 [[nodiscard]] auto tp_is_unused64(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused65(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused66(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused67(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_able_to_lunge(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused7(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused8(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused9(Tpp tp) -> bool;
