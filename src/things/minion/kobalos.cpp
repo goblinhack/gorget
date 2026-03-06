@@ -63,6 +63,7 @@ auto tp_load_kobalos() -> bool
   tp_distance_vision_set(tp, 10);
   tp_flag_set(tp, is_able_to_crush_grass);
   tp_flag_set(tp, is_able_to_fall);
+  tp_flag_set(tp, is_able_to_lunge);
   tp_flag_set(tp, is_able_to_move_diagonally);
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
@@ -85,7 +86,6 @@ auto tp_load_kobalos() -> bool
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_removable_when_dead_on_err);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
-  tp_flag_set(tp, is_able_to_lunge);
   tp_flag_set(tp, is_tickable);
   tp_health_set(tp, "1d4");
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);

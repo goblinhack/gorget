@@ -252,7 +252,7 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
 
   spoint move_destination = {};
   if (thing_move_path_target(g, v, l, me, move_destination)) {
-    if (level_is_cursor_path_hazard(g, v, l, move_next) != nullptr) {
+    if (! thing_can_move_to_possible(g, v, l, me, move_next)) {
       if (thing_jump_to(g, v, l, me, move_destination)) {
         //
         // If could jump, then abort the path walk

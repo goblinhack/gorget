@@ -493,7 +493,6 @@ using Thing = struct Thing {
 // begin sort marker1 {
 [[nodiscard]] auto immediate_owner(Gamep g, Levelsp v, Levelp l, Thingp t) -> Thingp;
 [[nodiscard]] auto monst_state_to_string(MonstState state) -> std::string;
-[[nodiscard]] bool thing_lunge(Gamep g, Levelsp v, Levelp l, Thingp t, const spoint &to);
 [[nodiscard]] auto monst_state(Gamep g, Levelsp v, Levelp l, Thingp me) -> MonstState;
 [[nodiscard]] auto player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, const spoint &to) -> bool;
 [[nodiscard]] auto player_jump(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool;
@@ -557,6 +556,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_able_to_fall_repeatedly(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_fall(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_jump(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_able_to_lunge(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_move_diagonally(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_move_through_walls(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_open(Thingp t) -> bool;
@@ -784,7 +784,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused64(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused65(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused66(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_able_to_lunge(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused7(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused8(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused9(Thingp t) -> bool;
@@ -804,6 +803,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_lifespan(Thingp t) -> int;
 [[nodiscard]] auto thing_light_struct(Gamep g, Thingp t) -> ThingLightp;
 [[nodiscard]] auto thing_long_name(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags flags = 0) -> std::string;
+[[nodiscard]] auto thing_minion_can_move_to_possible(Gamep g, Levelsp v, Levelp l, Thingp me, const spoint &to) -> bool;
 [[nodiscard]] auto thing_minion_choose_target_near_mob(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
 [[nodiscard]] auto thing_minion_detach_me_from_mob(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
 [[nodiscard]] auto thing_minion_get_mob_dmap(Gamep g, Levelsp v, Levelp l, Thingp me) -> Dmap *;
@@ -898,7 +898,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_value16_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_value16(Thingp t) -> int;
 [[nodiscard]] auto thing_value17_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
-[[nodiscard]] auto thing_minion_can_move_to_possible(Gamep g, Levelsp v, Levelp l, Thingp me, const spoint &to) -> bool;
 [[nodiscard]] auto thing_value17_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_value17_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_value17(Thingp t) -> int;
@@ -957,13 +956,13 @@ using Thing = struct Thing {
 [[nodiscard]] auto to_string(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string;
 [[nodiscard]] auto top_owner(Gamep g, Levelsp v, Levelp l, Thingp t) -> Thingp;
 [[nodiscard]] auto wid_get_thing_context(Gamep g, Levelsp v, Widp w, int which) -> Thingp;
+[[nodiscard]] bool thing_lunge(Gamep g, Levelsp v, Levelp l, Thingp t, const spoint &to);
 // end sort marker1 }
 
 // begin sort marker2 {
 auto astar_solve(Gamep g, Levelsp v, Levelp l, Thingp t, spoint src, spoint dst) -> std::vector< spoint >;
 void LEVEL_BOTCON(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
 void LEVEL_CON(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
-void thing_is_lunging_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val);
 void LEVEL_DBG(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
 void LEVEL_ERR(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
 void LEVEL_LOG(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
@@ -1007,9 +1006,7 @@ void thing_dmap(Gamep g, Levelsp v, Levelp l, Thingp me, bool reverse = false);
 void THING_ERR(Thingp t, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void thing_explosion_handle(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_fall_end_check(Gamep g, Levelsp v, Levelp l, Thingp t);
-void thing_lunge_end_check(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_fall_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step);
-void thing_lunge_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step);
 void thing_fall(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_fini(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_free(Gamep g, Levelsp v, Levelp l, Thingp t);
@@ -1033,6 +1030,7 @@ void thing_is_hit_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val);
 void thing_is_hot_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val);
 void thing_is_jumping_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val = true);
 void thing_is_jumping_unset(Gamep g, Levelsp v, Levelp l, Thingp t);
+void thing_is_lunging_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val);
 void thing_is_moving_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val = true);
 void thing_is_moving_unset(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_is_on_map_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val = true);
@@ -1050,6 +1048,8 @@ void thing_is_unlocked_unset(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_level_warp_to_entrance(Gamep g, Levelsp v, Levelp new_level, Thingp t);
 void thing_level_warp_to_exit(Gamep g, Levelsp v, Levelp new_level, Thingp t);
 void THING_LOG(Thingp t, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void thing_lunge_end_check(Gamep g, Levelsp v, Levelp l, Thingp t);
+void thing_lunge_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step);
 void thing_melt(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_mob_dump_minions(Gamep g, Levelsp v, Levelp l, Thingp mob);
 void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me);

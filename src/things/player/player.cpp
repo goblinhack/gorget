@@ -187,10 +187,10 @@ auto tp_load_player() -> bool
   tp_flag_set(tp, is_able_to_fall_repeatedly);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_able_to_jump);
+  tp_flag_set(tp, is_able_to_lunge);
   tp_flag_set(tp, is_able_to_move_diagonally);
   tp_flag_set(tp, is_able_to_open);
   tp_flag_set(tp, is_able_to_shove);
-  tp_flag_set(tp, is_combustible);
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
@@ -199,6 +199,7 @@ auto tp_load_player() -> bool
   tp_flag_set(tp, is_blit_when_obscured);
   tp_flag_set(tp, is_burnable); // is capable of being burned by fire
   tp_flag_set(tp, is_collision_circle_large);
+  tp_flag_set(tp, is_combustible);
   tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_damage_capped);
   tp_flag_set(tp, is_described_cursor);
@@ -213,7 +214,6 @@ auto tp_load_player() -> bool
   tp_flag_set(tp, is_player);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_tickable);
-  tp_flag_set(tp, is_able_to_lunge);
   tp_health_set(tp, "100");
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_light_color_set(tp, "white");

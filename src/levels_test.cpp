@@ -49,13 +49,13 @@ void levels_test(Gamep g)
     overrides[ 'm' ] = [](char c, spoint p) -> Tpp { return tp_find_mand("ghost"); };
 
     level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "test", __FUNCTION__, __LINE__, overrides, 0,
-                    /* line */ (const char *) "XXXXXXX",
-                    /* line */ (const char *) "X.....X",
-                    /* line */ (const char *) "X.....X",
-                    /* line */ (const char *) "X@...mX",
-                    /* line */ (const char *) "X.....X",
-                    /* line */ (const char *) "X.....X",
-                    /* line */ (const char *) "XXXXXXX",
+                    /* line */ (const char *) "XXXXXXXXXX",
+                    /* line */ (const char *) "X..C.~~~.X",
+                    /* line */ (const char *) "X..C.~~~.X",
+                    /* line */ (const char *) "X@.C.~~~mX",
+                    /* line */ (const char *) "X..C.~~~.X",
+                    /* line */ (const char *) "X..C.....X",
+                    /* line */ (const char *) "XXXXXXXXXX",
                     /* end */ nullptr);
   }
 

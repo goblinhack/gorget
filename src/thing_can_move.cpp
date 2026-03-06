@@ -141,6 +141,15 @@ auto thing_can_move_to_possible(Gamep g, Levelsp v, Levelp l, Thingp me, spoint 
     }
 
     //
+    // Chasms are obstacles only if you can fall into them
+    //
+    if (thing_is_chasm(it)) {
+      if (! thing_is_able_to_fall(me)) {
+        continue;
+      }
+    }
+
+    //
     // No stacking of monsters
     //
     if (thing_is_monst(me)) {

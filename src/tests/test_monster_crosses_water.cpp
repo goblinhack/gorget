@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static auto test_monster_avoids_water(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_monster_crosses_water(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -30,33 +30,25 @@
   std::string const expect1
       = "XXXXXXXXXXXXXXX"
         "X.~~~.~~~.~~~.X"
-        "X.===.~~~.=m=.X"
+        "X.===.~~~.===.X"
         "X.~~~.~~~.~~~.X"
         "X.~~~.===.~~~.X"
-        "X@~~~.~~~.~~~.X"
+        "X@~~~.m~~.~~~.X"
         "XXXXXXXXXXXXXXX";
   std::string const expect2
       = "XXXXXXXXXXXXXXX"
         "X.~~~.~~~.~~~.X"
         "X.===.~~~.===.X"
         "X.~~~.~~~.~~~.X"
-        "X.~~~.=m=.~~~.X"
-        "X@~~~.~~~.~~~.X"
-        "XXXXXXXXXXXXXXX";
-  std::string const expect3
-      = "XXXXXXXXXXXXXXX"
-        "X.~~~.~~~.~~~.X"
-        "X.=m=.~~~.===.X"
-        "X.~~~.~~~.~~~.X"
         "X.~~~.===.~~~.X"
-        "X@~~~.~~~.~~~.X"
+        "X@m~~.~~~.~~~.X"
         "XXXXXXXXXXXXXXX";
 
   //
   // Create the level and start playing
   //
   Overrides overrides;
-  overrides[ 'm' ] = [](char c, spoint p) -> Tpp { return tp_find_mand("ghost"); };
+  overrides[ 'm' ] = [](char c, spoint p) -> Tpp { return tp_find_mand("kobalos"); };
   Levelp  l        = nullptr;
   Levelsp v        = game_test_init(g, &l, level_num, w, h, start.c_str(), overrides);
 
@@ -67,7 +59,7 @@
 
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 2; tries++) {
+  for (auto tries = 0; tries < 7; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE();
     level_dump(g, v, l, w, h);
@@ -93,7 +85,7 @@
 
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 2; tries++) {
+  for (auto tries = 0; tries < 7; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE();
     level_dump(g, v, l, w, h);
@@ -117,39 +109,13 @@
     }
   }
 
-  level_dump(g, v, l, w, h);
-  TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 2; tries++) {
-    TEST_LOG(t, "try: %d", tries);
-    TRACE();
-    level_dump(g, v, l, w, h);
-    TEST_ASSERT(t, game_event_wait(g), "failed to wait");
-    if (! game_wait_for_tick_to_finish(g, v, l)) {
-      TEST_FAILED(t, "wait loop failed");
-      goto exit;
-    }
-  }
-
-  //
-  // Check the level contents
-  //
-  level_dump(g, v, l, w, h);
-  TEST_PROGRESS(t);
-  {
-    TRACE();
-    if (! (result = level_match_contents(g, v, l, t, w, h, expect3.c_str()))) {
-      TEST_FAILED(t, "unexpected contents");
-      goto exit;
-    }
-  }
-
   //
   // Check the tick is as expected
   //
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   {
-    TEST_ASSERT(t, game_tick_get(g, v) == 6, "final tick counter value");
+    TEST_ASSERT(t, game_tick_get(g, v) == 14, "final tick counter value");
   }
 
   level_dump(g, v, l, w, h);
@@ -161,14 +127,14 @@ exit:
   return result;
 }
 
-auto test_load_monst_avoids_water() -> bool // NOLINT
+auto test_load_monst_crosses_water() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("monst_avoids_water");
+  Testp test = test_load("monst_crosses_water");
 
   // begin sort marker1 {
-  test_callback_set(test, test_monster_avoids_water);
+  test_callback_set(test, test_monster_crosses_water);
   // end sort marker1 }
 
   return true;
