@@ -46,6 +46,7 @@ static std::initializer_list< std::string > tests = {
     "mob_water",
     "monst_avoids_chasm",
     "monst_avoids_lava",
+    "monst_avoids_water_usually",
     "monst_avoids_water",
     "monst_crosses_chasm",
     "monst_crosses_lava",

@@ -37,6 +37,7 @@ auto test_load_mob_water() -> bool;
 auto test_load_mob() -> bool;
 auto test_load_monst_avoids_chasm() -> bool;
 auto test_load_monst_avoids_lava() -> bool;
+auto test_load_monst_avoids_water_usually() -> bool;
 auto test_load_monst_avoids_water() -> bool;
 auto test_load_monst_crosses_chasm() -> bool;
 auto test_load_monst_crosses_lava() -> bool;
