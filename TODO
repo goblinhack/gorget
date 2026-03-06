@@ -1,17 +1,19 @@
 bugs
 ----
+dead foliage should be behind
+foliage and monster visibility
+monster direction and fov
+projectile collision with projectile
+stamina needed to avoid fast jump loops
 limit firing to 1
-chasm monst lunge test
 
 basic features
 --------------
-projectile collision with projectile
+hard coded to fire fireball
+stealth
 squeal noises for monsters
-stamina needed to avoid fast jump loops
 score is hard coded to 666
 chests need to contain something and those items destroyed when the chest is
-hard coded to fire fireball
-a better name like dungenator / gobliette / sacrecant ?
 
 later features
 --------------

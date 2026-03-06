@@ -179,7 +179,10 @@ static void thing_display_outlined_blit(Gamep g, Tpp tp, spoint tl, spoint br, T
 {
   TRACE_DEBUG();
 
-  if (level_is_blit_obscures(g, v, l, p) != nullptr) {
+  //
+  // Ensure dead foliage does not block
+  //
+  if (level_alive_is_blit_obscures(g, v, l, p) != nullptr) {
     if (tp_is_blit_when_obscured(tp)) {
       color c = CYAN;
       c.a     = 230;
