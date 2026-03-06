@@ -778,7 +778,7 @@ void rooms_prefab(Gamep g);
 void rooms_small(Gamep g);
 void rooms_start(Gamep g);
 void rooms_test(Gamep g);
-void thing_lunge_modify_position(Gamep g, Levelsp v, Levelp l, Thingp t, spoint &tl, spoint &br);
+void thing_lunge_modify_position(Gamep g, Levelsp v, Levelp l, Thingp me, spoint &tl, spoint &br);
 // end sort marker2 }
 
 struct FovContext;

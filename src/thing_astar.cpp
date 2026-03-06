@@ -313,8 +313,8 @@ auto Astar::can_move_to_cost(const spoint &to) -> uint8_t
     return 0;
   }
 
-  if (! can_move_to_cost_cached_set[ to.x ][ to.y ]) {
-    can_move_to_cost_cached_set[ to.x ][ to.y ] = true;
+  if (can_move_to_cost_cached_set[ to.x ][ to.y ] == 0u) {
+    can_move_to_cost_cached_set[ to.x ][ to.y ] = 1u;
     uint8_t cost                                = 0;
 
     switch (thing_assess_tile(g, v, l, to, me)) {

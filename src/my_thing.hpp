@@ -803,6 +803,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_lifespan(Thingp t) -> int;
 [[nodiscard]] auto thing_light_struct(Gamep g, Thingp t) -> ThingLightp;
 [[nodiscard]] auto thing_long_name(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags flags = 0) -> std::string;
+[[nodiscard]] auto thing_lunge(Gamep g, Levelsp v, Levelp l, Thingp me, const spoint &to) -> bool;
 [[nodiscard]] auto thing_minion_can_move_to_possible(Gamep g, Levelsp v, Levelp l, Thingp me, const spoint &to) -> bool;
 [[nodiscard]] auto thing_minion_choose_target_near_mob(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
 [[nodiscard]] auto thing_minion_detach_me_from_mob(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
@@ -956,11 +957,10 @@ using Thing = struct Thing {
 [[nodiscard]] auto to_string(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string;
 [[nodiscard]] auto top_owner(Gamep g, Levelsp v, Levelp l, Thingp t) -> Thingp;
 [[nodiscard]] auto wid_get_thing_context(Gamep g, Levelsp v, Widp w, int which) -> Thingp;
-[[nodiscard]] auto thing_lunge(Gamep g, Levelsp v, Levelp l, Thingp t, const spoint &to) -> bool;
 // end sort marker1 }
 
 // begin sort marker2 {
-auto astar_solve(Gamep g, Levelsp v, Levelp l, Thingp t, spoint src, spoint dst) -> std::vector< spoint >;
+auto astar_solve(Gamep g, Levelsp v, Levelp l, Thingp me, spoint src, spoint dst) -> std::vector< spoint >;
 void LEVEL_BOTCON(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
 void LEVEL_CON(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
 void LEVEL_DBG(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
@@ -1030,7 +1030,7 @@ void thing_is_hit_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val);
 void thing_is_hot_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val);
 void thing_is_jumping_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val = true);
 void thing_is_jumping_unset(Gamep g, Levelsp v, Levelp l, Thingp t);
-void thing_is_lunging_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val);
+void thing_is_lunging_set(Gamep g, Levelsp v, Levelp l, Thingp me, bool val);
 void thing_is_moving_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val = true);
 void thing_is_moving_unset(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_is_on_map_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val = true);
@@ -1048,8 +1048,8 @@ void thing_is_unlocked_unset(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_level_warp_to_entrance(Gamep g, Levelsp v, Levelp new_level, Thingp t);
 void thing_level_warp_to_exit(Gamep g, Levelsp v, Levelp new_level, Thingp t);
 void THING_LOG(Thingp t, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
-void thing_lunge_end_check(Gamep g, Levelsp v, Levelp l, Thingp t);
-void thing_lunge_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step);
+void thing_lunge_end_check(Gamep g, Levelsp v, Levelp l, Thingp me);
+void thing_lunge_time_step(Gamep g, Levelsp v, Levelp l, Thingp me, int time_step);
 void thing_melt(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_mob_dump_minions(Gamep g, Levelsp v, Levelp l, Thingp mob);
 void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me);

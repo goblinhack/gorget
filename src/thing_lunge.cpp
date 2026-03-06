@@ -68,7 +68,7 @@ void level_lunge_precalculate(Gamep g)
       auto c = lunge_map[ (MAP_WIDTH * y) + x ];
       if (c == 'x') {
         if (lunge_amount[ y ] == 0) {
-          lunge_amount[ y ] = 0.5f * (static_cast< float >(y) / static_cast< float >(MAP_HEIGHT));
+          lunge_amount[ y ] = 0.5F * (static_cast< float >(y) / static_cast< float >(MAP_HEIGHT));
         }
       }
     }
@@ -105,7 +105,7 @@ void thing_is_lunging_set(Gamep g, Levelsp v, Levelp l, Thingp me, bool val)
   me->_lunge_ms = static_cast< uint16_t >(val);
 }
 
-auto thing_is_lunging_incr(Gamep g, Levelsp v, Levelp l, Thingp me, int val) -> int
+static auto thing_is_lunging_incr(Gamep g, Levelsp v, Levelp l, Thingp me, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -133,7 +133,7 @@ void thing_lunge_time_step(Gamep g, Levelsp v, Levelp l, Thingp me, int time_ste
   thing_lunge_end_check(g, v, l, me);
 }
 
-bool thing_lunge(Gamep g, Levelsp v, Levelp l, Thingp me, const spoint &to)
+auto thing_lunge(Gamep g, Levelsp v, Levelp l, Thingp me, const spoint &to) -> bool
 {
   TRACE();
 
@@ -153,7 +153,7 @@ bool thing_lunge(Gamep g, Levelsp v, Levelp l, Thingp me, const spoint &to)
     return false;
   }
 
-  if (thing_is_lunging(me)) {
+  if (thing_is_lunging(me) != 0) {
     return false;
   }
 
@@ -188,33 +188,33 @@ void thing_lunge_modify_position(Gamep g, Levelsp v, Levelp l, Thingp me, spoint
 {
   TRACE();
 
-  if (! thing_is_lunging(me)) {
+  if (thing_is_lunging(me) == 0) {
     return;
   }
 
   auto dir = me->lunging_to - thing_at(me);
 
-  auto pct  = (float) me->_lunge_ms / (float) MAX_LUNGE_TIME_MS;
+  auto pct  = static_cast< float >(me->_lunge_ms) / static_cast< float >(MAX_LUNGE_TIME_MS);
   auto idxs = ARRAY_SIZE(lunge_amount);
-  auto idx  = (int) (idxs * pct);
+  auto idx  = static_cast< int >(idxs * pct);
 
   if (idx >= idxs) {
     return;
   }
 
-  float w = abs(br.x - tl.x);
+  float const w = abs(br.x - tl.x);
 
-  float amount = lunge_amount[ idx ];
+  float const amount = lunge_amount[ idx ];
 
-  auto off_x = (float) dir.x * w * amount;
-  auto off_y = (float) dir.y * w * amount;
+  auto off_x = static_cast< float >(dir.x) * w * amount;
+  auto off_y = static_cast< float >(dir.y) * w * amount;
 
   if (compiler_unused) {
     THING_LOG(me, "lunge to @%d,%d idx %d off %f,%f am %f w %f", me->lunging_to.x, me->lunging_to.y, idx, off_x, off_y, amount, w);
   }
 
-  tl.x += (short) off_x;
-  tl.y += (short) off_y;
-  br.x += (short) off_x;
-  br.y += (short) off_y;
+  tl.x += static_cast< short >(off_x);
+  tl.y += static_cast< short >(off_y);
+  br.x += static_cast< short >(off_x);
+  br.y += static_cast< short >(off_y);
 }
