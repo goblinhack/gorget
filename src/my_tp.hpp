@@ -508,7 +508,7 @@ void tp_get_id(const char *, int *id);
 void               tp_flag_set(Tpp tp, ThingFlag f, int val = 1);
 
 void               tp_z_depth_set(Tpp tp, MapZDepth val);
-[[nodiscard]] auto tp_z_depth_get(Tpp tp) -> uint8_t;
+[[nodiscard]] auto tp_z_depth_get(Tpp tp) -> MapZDepth;
 
 void               tp_speed_set(Tpp tp, int val);
 [[nodiscard]] auto tp_speed_get(Tpp tp) -> int;

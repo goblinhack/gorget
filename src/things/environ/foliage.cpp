@@ -4,6 +4,7 @@
 
 #include "my_callstack.hpp"
 #include "my_thing_callbacks.hpp"
+#include "my_thing_inlines.hpp"
 #include "my_tile.hpp"
 #include "my_tp.hpp"
 #include "my_tps.hpp"
@@ -16,6 +17,16 @@ static auto tp_foliage_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -
   return "sickly looking foliage";
 }
 
+static auto tp_foliage_z_depth_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> MapZDepth
+{
+  TRACE();
+
+  if (thing_is_dead(t)) {
+    return MAP_Z_DEPTH_GRASS;
+  }
+  return MAP_Z_DEPTH_FOLIAGE;
+}
+
 auto tp_load_foliage() -> bool
 {
   TRACE();
@@ -25,6 +36,7 @@ auto tp_load_foliage() -> bool
 
   // begin sort marker1 {
   thing_description_set(tp, tp_foliage_description_get);
+  thing_z_depth_set(tp, tp_foliage_z_depth_get);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // roll max to continue burning
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // roll max to continue burning
   tp_flag_set(tp, is_able_to_fall);

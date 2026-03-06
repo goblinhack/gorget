@@ -22,7 +22,7 @@ public:
   //
   // This allows us to draw floors, then objs and walls in order
   //
-  uint8_t z_depth {};
+  MapZDepth z_depth {};
 
   //
   // This is for objects at the same z depth
@@ -210,6 +210,7 @@ public:
   //
   thing_description_get_t       description_get       = {};
   thing_detail_get_t            detail_get            = {};
+  thing_z_depth_get_t           z_depth_get           = {};
   thing_mouse_down_t            mouse_down            = {};
   thing_on_spawned_t            on_spawned            = {};
   thing_on_level_populated_t    on_level_populated    = {};

@@ -763,13 +763,13 @@ void tp_z_depth_set(Tpp tp, MapZDepth val)
   tp->z_depth = val;
 }
 
-auto tp_z_depth_get(Tpp tp) -> uint8_t
+auto tp_z_depth_get(Tpp tp) -> MapZDepth
 {
 #ifdef DEBUG_BUILD
   TRACE();
   if (tp == nullptr) [[unlikely]] {
     TP_ERR(tp, "no thing template pointer");
-    return 0;
+    return MAP_Z_DEPTH_FLOOR;
   }
 #endif
   return tp->z_depth;

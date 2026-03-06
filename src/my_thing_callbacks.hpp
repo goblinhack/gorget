@@ -22,6 +22,10 @@ using thing_description_get_t = std::string (*)(Gamep, Levelsp, Levelp, Thingp m
 void thing_description_set(Tpp tp, thing_description_get_t callback);
 auto thing_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string;
 
+using thing_z_depth_get_t = MapZDepth (*)(Gamep, Levelsp, Levelp, Thingp me);
+void thing_z_depth_set(Tpp tp, thing_z_depth_get_t callback);
+auto thing_z_depth_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> MapZDepth;
+
 using thing_detail_get_t = std::string (*)(Gamep, Levelsp, Levelp, Thingp me);
 void thing_detail_set(Tpp tp, thing_detail_get_t callback);
 auto thing_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string;

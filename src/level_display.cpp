@@ -2,8 +2,6 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include <utility>
-
 #include "my_callstack.hpp"
 #include "my_game.hpp"
 #include "my_game_popups.hpp"
@@ -13,7 +11,10 @@
 #include "my_level_inlines.hpp"
 #include "my_main.hpp"
 #include "my_sdl_proto.hpp"
+#include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp"
+
+#include <utility>
 
 static void level_display_cursor(Gamep g, Levelsp v, Levelp l, const spoint &p, FboEnum fbo)
 {
@@ -98,7 +99,7 @@ static void level_display_cursor(Gamep g, Levelsp v, Levelp l, FboEnum fbo)
   }
 }
 
-static void level_display_slot(Gamep g, Levelsp v, Levelp l, const spoint &p, int slot, int depth, FboEnum fbo)
+static void level_display_slot(Gamep g, Levelsp v, Levelp l, const spoint &p, int slot, MapZDepth depth, FboEnum fbo)
 {
   TRACE_DEBUG();
 
@@ -108,7 +109,7 @@ static void level_display_slot(Gamep g, Levelsp v, Levelp l, const spoint &p, in
     return;
   }
 
-  if (std::cmp_not_equal(tp_z_depth_get(tp), depth)) {
+  if (std::cmp_not_equal((int) thing_z_depth_get(g, v, l, t), (int) depth)) {
     return;
   }
 
