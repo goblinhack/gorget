@@ -68,7 +68,7 @@ void level_lunge_precalculate(Gamep g)
       auto c = lunge_map[ (MAP_WIDTH * y) + x ];
       if (c == 'x') {
         if (lunge_amount[ y ] == 0) {
-          lunge_amount[ y ] = 0.5 * (static_cast< float >(y) / static_cast< float >(MAP_HEIGHT));
+          lunge_amount[ y ] = 0.5f * (static_cast< float >(y) / static_cast< float >(MAP_HEIGHT));
         }
       }
     }
