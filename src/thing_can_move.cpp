@@ -69,30 +69,10 @@ auto thing_can_move_to_ai(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) ->
     }
 
     //
-    // Chasms are obstacles only if you can fall into them
-    //
-    if (thing_is_chasm(it)) {
-      if (! thing_is_able_to_fall(me)) {
-        continue;
-      }
-    }
-
-    //
     // A wall or pillar or somesuch?
     //
     if (thing_is_obs_to_paths(it)) {
       return false;
-    }
-
-    //
-    // Avoid tiles we do not like
-    //
-    switch (thing_assess_tile(g, v, l, to, me)) {
-      case THING_ENVIRON_HATES :
-      case THING_ENVIRON_DISLIKES : return false;
-      case THING_ENVIRON_NEUTRAL :
-      case THING_ENVIRON_LIKES :
-      case THING_ENVIRON_ENUM_MAX : break;
     }
   }
 
@@ -144,8 +124,28 @@ auto thing_can_move_to_possible(Gamep g, Levelsp v, Levelp l, Thingp me, spoint 
     // Chasms are obstacles only if you can fall into them
     //
     if (thing_is_chasm(it)) {
-      if (! thing_is_able_to_fall(me)) {
-        continue;
+      if (thing_is_monst(me)) {
+        if (! thing_is_able_to_fall(me)) {
+          continue;
+        }
+        if (! thing_is_able_to_jump(me)) {
+          return false;
+        }
+      }
+    }
+
+    //
+    // Lava is only an obstacle if you can burn
+    //
+    if (thing_is_lava(it)) {
+      if (thing_is_monst(me)) {
+        if (thing_is_burnable(me)) {
+          return false;
+        }
+
+        if (thing_is_combustible(me)) {
+          return false;
+        }
       }
     }
 
@@ -163,6 +163,17 @@ auto thing_can_move_to_possible(Gamep g, Levelsp v, Levelp l, Thingp me, spoint 
     //
     if (thing_is_obs_to_movement(it)) {
       return false;
+    }
+
+    //
+    // Avoid tiles we do not like
+    //
+    switch (thing_assess_tile(g, v, l, to, me)) {
+      case THING_ENVIRON_HATES :    return false;
+      case THING_ENVIRON_DISLIKES :
+      case THING_ENVIRON_NEUTRAL :
+      case THING_ENVIRON_LIKES :
+      case THING_ENVIRON_ENUM_MAX : break;
     }
   }
 

@@ -265,6 +265,7 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
       // Something was in the way of jumping. Best to stop rather than accidentally
       // walk into a chasm.
       //
+      (void) thing_lunge(g, v, l, me, move_next);
       THING_DBG(me, "move to next: something in the way");
       return false;
     }

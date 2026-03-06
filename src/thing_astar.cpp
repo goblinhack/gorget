@@ -67,10 +67,10 @@ class Astar
 public:
   Astar() = default;
 
-  Gamep   g = {};
-  Levelsp v = {};
-  Levelp  l = {};
-  Thingp  t = {};
+  Gamep   g  = {};
+  Levelsp v  = {};
+  Levelp  l  = {};
+  Thingp  me = {};
 
   //
   // These are the nodes still to evaluate
@@ -112,8 +112,12 @@ public:
   std::array< std::array< bool, MAP_HEIGHT >, MAP_WIDTH > can_move_to_possible_cached     = {};
   std::array< std::array< bool, MAP_HEIGHT >, MAP_WIDTH > can_move_to_possible_cached_set = {};
 
+  std::array< std::array< uint8_t, MAP_HEIGHT >, MAP_WIDTH > can_move_to_cost_cached     = {};
+  std::array< std::array< uint8_t, MAP_HEIGHT >, MAP_WIDTH > can_move_to_cost_cached_set = {};
+
   [[nodiscard]] auto        can_move_to_ai(const spoint &to) -> bool;
   [[nodiscard]] auto        can_move_to_possible(const spoint &to) -> bool;
+  [[nodiscard]] auto        can_move_to_cost(const spoint &to) -> uint8_t;
   [[nodiscard]] auto        heuristic(spoint at) const -> Cost;
   [[nodiscard]] auto        node_init(spoint next_hop, Nodecost cost) -> Node *;
   [[nodiscard]] auto        solve(bool allow_diagonal) -> std::vector< spoint >;
@@ -133,14 +137,14 @@ void Astar::add_to_open(Node *n)
   auto  p = n->at;
   auto *o = &open[ p.x ][ p.y ];
   if (*o != nullptr) {
-    THING_ERR(t, "already in open");
+    THING_ERR(me, "already in open");
     return;
   }
   *o = n;
 
   auto result = open_nodes.insert(std::make_pair(n->cost, n));
   if (! result.second) {
-    THING_ERR(t, "open insert fail");
+    THING_ERR(me, "open insert fail");
     return;
   }
 }
@@ -150,14 +154,14 @@ void Astar::add_to_closed(Node *n)
   auto  p = n->at;
   auto *o = &closed[ p.x ][ p.y ];
   if (*o != nullptr) {
-    THING_ERR(t, "already in closed");
+    THING_ERR(me, "already in closed");
     return;
   }
   *o = n;
 
   auto result = closed_nodes.insert(std::make_pair(n->cost, n));
   if (! result.second) {
-    THING_ERR(t, "closed insert fail");
+    THING_ERR(me, "closed insert fail");
     return;
   }
 }
@@ -167,7 +171,7 @@ void Astar::remove_from_open(Node *n)
   auto  p = n->at;
   auto *o = &open[ p.x ][ p.y ];
   if (*o == nullptr) {
-    THING_ERR(t, "not in open");
+    THING_ERR(me, "not in open");
     return;
   }
   *o = nullptr;
@@ -212,14 +216,14 @@ void Astar::eval_neighbor(Node *current, const spoint &delta)
     return;
   }
 
+  Cost cost = current->cost.cost + heuristic(next_hop);
+
   //
   // These are hard obstacles that the AI cannot see past
   //
   if (! can_move_to_ai(next_hop)) {
     return;
   }
-
-  Cost cost = current->cost.cost + heuristic(next_hop);
 
   //
   // If there is something in the way that would block us moving here,
@@ -228,6 +232,8 @@ void Astar::eval_neighbor(Node *current, const spoint &delta)
   if (! can_move_to_possible(next_hop)) {
     cost += 20;
   }
+
+  cost += can_move_to_cost(next_hop);
 
   Node *neighbor = open[ next_hop.x ][ next_hop.y ];
   if (neighbor == nullptr) {
@@ -281,7 +287,7 @@ auto Astar::can_move_to_ai(const spoint &to) -> bool
 
   if (! can_move_to_ai_cached_set[ to.x ][ to.y ]) {
     can_move_to_ai_cached_set[ to.x ][ to.y ]    = true;
-    return can_move_to_ai_cached[ to.x ][ to.y ] = thing_can_move_to_ai(g, v, l, t, to);
+    return can_move_to_ai_cached[ to.x ][ to.y ] = thing_can_move_to_ai(g, v, l, me, to);
   }
 
   return can_move_to_ai_cached[ to.x ][ to.y ];
@@ -295,10 +301,33 @@ auto Astar::can_move_to_possible(const spoint &to) -> bool
 
   if (! can_move_to_possible_cached_set[ to.x ][ to.y ]) {
     can_move_to_possible_cached_set[ to.x ][ to.y ]    = true;
-    return can_move_to_possible_cached[ to.x ][ to.y ] = thing_can_move_to_possible(g, v, l, t, to);
+    return can_move_to_possible_cached[ to.x ][ to.y ] = thing_can_move_to_possible(g, v, l, me, to);
   }
 
   return can_move_to_possible_cached[ to.x ][ to.y ];
+}
+
+auto Astar::can_move_to_cost(const spoint &to) -> uint8_t
+{
+  if (to == dst) {
+    return 0;
+  }
+
+  if (! can_move_to_cost_cached_set[ to.x ][ to.y ]) {
+    can_move_to_cost_cached_set[ to.x ][ to.y ] = true;
+    uint8_t cost                                = 0;
+
+    switch (thing_assess_tile(g, v, l, to, me)) {
+      case THING_ENVIRON_HATES :    cost = 100; break;
+      case THING_ENVIRON_DISLIKES : cost = 50; break;
+      case THING_ENVIRON_NEUTRAL :  cost = 1; break;
+      case THING_ENVIRON_LIKES :    cost = -1; break;
+      case THING_ENVIRON_ENUM_MAX : break;
+    }
+    return can_move_to_cost_cached[ to.x ][ to.y ] = cost;
+  }
+
+  return can_move_to_cost_cached[ to.x ][ to.y ];
 }
 
 auto Astar::solve(bool allow_diagonal) -> std::vector< spoint >
@@ -342,7 +371,7 @@ auto Astar::solve(bool allow_diagonal) -> std::vector< spoint >
     eval_neighbor(current, spoint(0, 1));
 
     if (allow_diagonal) {
-      if (thing_is_able_to_move_through_walls(t)) {
+      if (thing_is_able_to_move_through_walls(me)) {
         //
         // Can move through walls in any direction
         //
@@ -354,7 +383,9 @@ auto Astar::solve(bool allow_diagonal) -> std::vector< spoint >
         //
         // Don't allow shortcuts through diagonal walls
         //
-        if (! can_move_to_ai(spoint(at.x - 1, at.y)) || ! can_move_to_ai(spoint(at.x, at.y - 1))) {
+        // Don't allow shortcuts across chasms, hence _possible instead of _ai
+        //
+        if (! can_move_to_possible(spoint(at.x - 1, at.y)) || ! can_move_to_possible(spoint(at.x, at.y - 1))) {
           //
           // Block these paths
           //
@@ -374,7 +405,7 @@ auto Astar::solve(bool allow_diagonal) -> std::vector< spoint >
           eval_neighbor(current, spoint(-1, -1));
         }
 
-        if (! can_move_to_ai(spoint(at.x - 1, at.y)) || ! can_move_to_ai(spoint(at.x, at.y + 1))) {
+        if (! can_move_to_possible(spoint(at.x - 1, at.y)) || ! can_move_to_possible(spoint(at.x, at.y + 1))) {
           //
           // Block these paths
           //
@@ -394,7 +425,7 @@ auto Astar::solve(bool allow_diagonal) -> std::vector< spoint >
           eval_neighbor(current, spoint(-1, 1));
         }
 
-        if (! can_move_to_ai(spoint(at.x + 1, at.y)) || ! can_move_to_ai(spoint(at.x, at.y - 1))) {
+        if (! can_move_to_possible(spoint(at.x + 1, at.y)) || ! can_move_to_possible(spoint(at.x, at.y - 1))) {
           //
           // Block these paths
           //
@@ -414,7 +445,7 @@ auto Astar::solve(bool allow_diagonal) -> std::vector< spoint >
           eval_neighbor(current, spoint(1, -1));
         }
 
-        if (! can_move_to_ai(spoint(at.x + 1, at.y)) || ! can_move_to_ai(spoint(at.x, at.y + 1))) {
+        if (! can_move_to_possible(spoint(at.x + 1, at.y)) || ! can_move_to_possible(spoint(at.x, at.y + 1))) {
           //
           // Block these paths
           //
@@ -443,7 +474,7 @@ auto Astar::solve(bool allow_diagonal) -> std::vector< spoint >
 
 void Astar::dump()
 {
-  THING_LOG(t, "ASTAR:");
+  THING_LOG(me, "ASTAR:");
   TRACE_INDENT();
 
   for (auto y = 0; y < MAP_HEIGHT; y++) {
@@ -472,11 +503,11 @@ void Astar::dump()
 
       s += buf;
     }
-    THING_LOG(t, "ASTAR:%s", s.c_str());
+    THING_LOG(me, "ASTAR:%s", s.c_str());
   }
 }
 
-auto astar_solve(Gamep g, Levelsp v, Levelp l, Thingp t, spoint src, spoint dst) -> std::vector< spoint >
+auto astar_solve(Gamep g, Levelsp v, Levelp l, Thingp me, spoint src, spoint dst) -> std::vector< spoint >
 {
   TRACE();
 
@@ -484,11 +515,11 @@ auto astar_solve(Gamep g, Levelsp v, Levelp l, Thingp t, spoint src, spoint dst)
   a.g   = g;
   a.v   = v;
   a.l   = l;
-  a.t   = t;
+  a.me  = me;
   a.src = src;
   a.dst = dst;
 
-  auto allow_diagonal = thing_is_able_to_move_diagonally(t);
+  auto allow_diagonal = thing_is_able_to_move_diagonally(me);
   auto path           = a.solve(allow_diagonal);
 
 #ifdef ENABLE_DEBUG_AI_ASTAR
