@@ -109,7 +109,7 @@ static void level_display_slot(Gamep g, Levelsp v, Levelp l, const spoint &p, in
     return;
   }
 
-  if (std::cmp_not_equal((int) thing_z_depth_get(g, v, l, t), (int) depth)) {
+  if (std::cmp_not_equal(static_cast<int>(thing_z_depth_get(g, v, l, t)), static_cast<int>(depth))) {
     return;
   }
 

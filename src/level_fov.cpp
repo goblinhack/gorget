@@ -204,7 +204,7 @@ void level_fov(const FovContext &ctx)
   }
 
   // recursive shadow casting
-  if (ctx.me) {
+  if (ctx.me != nullptr) {
     /* */
     /* \ 4|7 / */
     /* 5\ | /6 */
