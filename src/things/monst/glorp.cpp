@@ -68,6 +68,7 @@ auto tp_load_glorp() -> bool
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_able_to_jump);
   tp_flag_set(tp, is_able_to_lunge);
+  tp_flag_set(tp, is_able_to_see_360_degrees);
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);

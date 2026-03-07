@@ -52,6 +52,7 @@ auto tp_load_ghost() -> bool
   tp_flag_set(tp, is_able_to_lunge);
   tp_flag_set(tp, is_able_to_move_diagonally);
   tp_flag_set(tp, is_able_to_move_through_walls);
+  tp_flag_set(tp, is_able_to_see_180_degrees);
   tp_flag_set(tp, is_able_to_walk_through_walls);
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);

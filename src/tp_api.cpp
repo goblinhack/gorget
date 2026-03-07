@@ -1253,16 +1253,16 @@ auto tp_is_unused64(Tpp tp) -> bool
   return tp_flag(tp, is_unused64) != 0;
 }
 
-auto tp_is_unused65(Tpp tp) -> bool
+auto tp_is_able_to_see_360_degrees(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused65) != 0;
+  return tp_flag(tp, is_able_to_see_360_degrees) != 0;
 }
 
-auto tp_is_unused66(Tpp tp) -> bool
+auto tp_is_able_to_see_180_degrees(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused66) != 0;
+  return tp_flag(tp, is_able_to_see_180_degrees) != 0;
 }
 
 auto tp_is_able_to_lunge(Tpp tp) -> bool

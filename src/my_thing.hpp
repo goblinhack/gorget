@@ -215,7 +215,7 @@ using Thing = struct Thing {
   //
   // Direction
   //
-  uint8_t dir;
+  ThingDir dir;
   //
   // The current tiles[] index for this object
   //
@@ -560,6 +560,8 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_able_to_move_diagonally(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_move_through_walls(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_open(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_able_to_see_180_degrees(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_able_to_see_360_degrees(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_shove(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_walk_through_walls(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_animated_can_hflip(Thingp t) -> bool;
@@ -782,8 +784,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused62(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused63(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused64(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused65(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused66(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused7(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused8(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused9(Thingp t) -> bool;

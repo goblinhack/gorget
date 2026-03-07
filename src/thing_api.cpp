@@ -2518,7 +2518,7 @@ auto thing_is_unused64(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused64) != 0;
 }
 
-auto thing_is_unused65(Thingp t) -> bool
+auto thing_is_able_to_see_360_degrees(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2526,10 +2526,10 @@ auto thing_is_unused65(Thingp t) -> bool
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused65) != 0;
+  return tp_flag(thing_tp(t), is_able_to_see_360_degrees) != 0;
 }
 
-auto thing_is_unused66(Thingp t) -> bool
+auto thing_is_able_to_see_180_degrees(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2537,7 +2537,7 @@ auto thing_is_unused66(Thingp t) -> bool
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused66) != 0;
+  return tp_flag(thing_tp(t), is_able_to_see_180_degrees) != 0;
 }
 
 auto thing_is_able_to_lunge(Thingp t) -> bool

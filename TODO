@@ -1,10 +1,11 @@
 bugs
 ----
+player visibility
 foliage and monster visibility
-monster direction and fov
 projectile collision with projectile
 stamina needed to avoid fast jump loops
 limit firing to 1
+fov threads?
 
 basic features
 --------------

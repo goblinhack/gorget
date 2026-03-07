@@ -68,6 +68,7 @@ auto tp_load_mantisman() -> bool
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_able_to_lunge);
   tp_flag_set(tp, is_able_to_move_diagonally);
+  tp_flag_set(tp, is_able_to_see_180_degrees);
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);

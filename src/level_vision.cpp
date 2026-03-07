@@ -6,6 +6,7 @@
 #include "my_game.hpp"
 #include "my_level.hpp"
 #include "my_thing_inlines.hpp"
+#include "my_tp.hpp"
 
 //
 // What can monsters see?
@@ -62,5 +63,10 @@ void level_vision_calculate_all(Gamep g, Levelsp v, Levelp l)
     ctx.has_seen_tile      = &ext->has_seen;
 
     level_fov(ctx);
+
+    if (compiler_unused) {
+      THING_LOG(t, "dir %s", ThingDir_to_string(t->dir).c_str());
+      thing_can_see_dump(g, v, l, t);
+    }
   }
 }

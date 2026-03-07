@@ -823,6 +823,8 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_is_able_to_move_diagonally(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_able_to_move_through_walls(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_able_to_open(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
+[[nodiscard]] auto level_is_able_to_see_180_degrees(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
+[[nodiscard]] auto level_is_able_to_see_360_degrees(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_able_to_shove(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_able_to_walk_through_walls(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_animated_can_hflip(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
@@ -1022,8 +1024,6 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_is_unused62(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_unused63(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_unused64(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
-[[nodiscard]] auto level_is_unused65(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
-[[nodiscard]] auto level_is_unused66(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_unused7(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_unused8(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_unused9(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
@@ -1044,6 +1044,8 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_alive_is_able_to_move_diagonally(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_able_to_move_through_walls(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_able_to_open(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
+[[nodiscard]] auto level_alive_is_able_to_see_180_degrees(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
+[[nodiscard]] auto level_alive_is_able_to_see_360_degrees(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_able_to_shove(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_able_to_walk_through_walls(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_animated_can_hflip(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
@@ -1243,8 +1245,6 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_alive_is_unused62(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_unused63(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_unused64(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
-[[nodiscard]] auto level_alive_is_unused65(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
-[[nodiscard]] auto level_alive_is_unused66(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_unused7(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_unused8(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_unused9(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
@@ -1265,6 +1265,8 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_count_is_able_to_move_diagonally(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_able_to_move_through_walls(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_able_to_open(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
+[[nodiscard]] auto level_count_is_able_to_see_180_degrees(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
+[[nodiscard]] auto level_count_is_able_to_see_360_degrees(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_able_to_shove(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_able_to_walk_through_walls(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_animated_can_hflip(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
@@ -1464,8 +1466,6 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_count_is_unused62(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_unused63(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_unused64(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
-[[nodiscard]] auto level_count_is_unused65(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
-[[nodiscard]] auto level_count_is_unused66(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_unused7(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_unused8(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_unused9(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
@@ -1487,6 +1487,8 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_open_is_able_to_move_diagonally(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_able_to_move_through_walls(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_able_to_open(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
+[[nodiscard]] auto level_open_is_able_to_see_180_degrees(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
+[[nodiscard]] auto level_open_is_able_to_see_360_degrees(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_able_to_shove(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_able_to_walk_through_walls(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_animated_can_hflip(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
@@ -1686,8 +1688,6 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_open_is_unused62(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused63(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused64(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
-[[nodiscard]] auto level_open_is_unused65(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
-[[nodiscard]] auto level_open_is_unused66(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused7(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused8(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused9(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;

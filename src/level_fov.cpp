@@ -183,6 +183,18 @@ static void level_fov_do(const short       distance_from_origin, // Polar distan
   }
 }
 
+//
+// Cast visiblity using shadowcasting.
+//
+static void level_fov_do(const short octant, const FovContext &ctx)
+{
+  const short distance_from_origin = 1;
+  const float view_slope_high      = 1;
+  const float view_slope_low       = 0;
+
+  level_fov_do(distance_from_origin, view_slope_high, view_slope_low, octant, ctx);
+}
+
 void level_fov(const FovContext &ctx)
 {
   TRACE();
@@ -192,8 +204,131 @@ void level_fov(const FovContext &ctx)
   }
 
   // recursive shadow casting
-  for (auto octant = 0; octant < 8; ++octant) {
-    level_fov_do(1, 1.0, 0.0, octant, ctx);
+  if (ctx.me) {
+    //
+    // \ 4|7 /
+    // 5\ | /6
+    // --   --
+    // 2/ | \1
+    // / 3|0 \
+    //
+    if (thing_is_able_to_see_180_degrees(ctx.me)) {
+      switch (ctx.me->dir) {
+        case THING_DIR_BR :
+          //
+          // \ .|. /
+          // .\ | /6
+          // --   --
+          // ./ | \1
+          // / 3|0 \
+          //
+          level_fov_do(3, ctx);
+          level_fov_do(0, ctx);
+          level_fov_do(1, ctx);
+          level_fov_do(6, ctx);
+          break;
+        case THING_DIR_TR :
+          //
+          // \ 4|7 /
+          // .\ | /6
+          // --   --
+          // ./ | \1
+          // / .|. \
+          //
+          level_fov_do(4, ctx);
+          level_fov_do(7, ctx);
+          level_fov_do(6, ctx);
+          level_fov_do(1, ctx);
+          break;
+        case THING_DIR_BL :
+          //
+          // \ .|. /
+          // 5\ | /.
+          // --   --
+          // 2/ | \.
+          // / 3|0 \
+          //
+          level_fov_do(5, ctx);
+          level_fov_do(2, ctx);
+          level_fov_do(3, ctx);
+          level_fov_do(0, ctx);
+          break;
+        case THING_DIR_TL :
+          //
+          // \ 4|7 /
+          // 5\ | /.
+          // --   --
+          // 2/ | \.
+          // / .|. \
+          //
+          level_fov_do(2, ctx);
+          level_fov_do(5, ctx);
+          level_fov_do(4, ctx);
+          level_fov_do(7, ctx);
+          break;
+        case THING_DIR_RIGHT :
+          //
+          // \ .|7 /
+          // .\ | /6
+          // --   --
+          // ./ | \1
+          // / .|0 \
+          //
+          level_fov_do(7, ctx);
+          level_fov_do(6, ctx);
+          level_fov_do(1, ctx);
+          level_fov_do(0, ctx);
+          break;
+        case THING_DIR_DOWN :
+          //
+          // \ .|. /
+          // .\ | /.
+          // --   --
+          // 2/ | \1
+          // / 3|0 \
+          //
+          level_fov_do(2, ctx);
+          level_fov_do(3, ctx);
+          level_fov_do(0, ctx);
+          level_fov_do(1, ctx);
+          break;
+        case THING_DIR_UP :
+          //
+          // \ 4|7 /
+          // 5\ | /6
+          // --   --
+          // ./ | \.
+          // / .|. \
+          //
+          level_fov_do(5, ctx);
+          level_fov_do(4, ctx);
+          level_fov_do(7, ctx);
+          level_fov_do(6, ctx);
+          break;
+        case THING_DIR_LEFT :
+          //
+          // \ 4|. /
+          // 5\ | /.
+          // --   --
+          // 2/ | \.
+          // / 3|. \
+          //
+          level_fov_do(4, ctx);
+          level_fov_do(5, ctx);
+          level_fov_do(2, ctx);
+          level_fov_do(3, ctx);
+          break;
+        default :
+        case THING_DIR_NONE :
+          for (auto octant = 0; octant < 8; ++octant) {
+            level_fov_do(octant, ctx);
+          }
+      }
+    } else {
+      for (auto octant = 0; octant < 8; ++octant) {
+        level_fov_do(octant, ctx);
+      }
+    }
   }
 
   if (ctx.can_see_tile != nullptr) {

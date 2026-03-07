@@ -1253,16 +1253,16 @@ auto level_open_is_unused64(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Th
   return level_open(g, v, l, is_unused64, p);
 }
 
-auto level_open_is_unused65(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp
+auto level_open_is_able_to_see_360_degrees(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_open(g, v, l, is_unused65, p);
+  return level_open(g, v, l, is_able_to_see_360_degrees, p);
 }
 
-auto level_open_is_unused66(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp
+auto level_open_is_able_to_see_180_degrees(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_open(g, v, l, is_unused66, p);
+  return level_open(g, v, l, is_able_to_see_180_degrees, p);
 }
 
 auto level_open_is_able_to_lunge(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp
