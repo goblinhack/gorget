@@ -963,6 +963,7 @@ using Thing = struct Thing {
 auto astar_solve(Gamep g, Levelsp v, Levelp l, Thingp me, spoint src, spoint dst) -> std::vector< spoint >;
 void LEVEL_BOTCON(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
 void LEVEL_CON(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
+void thing_vision_calculate(Gamep g, Levelsp v, Levelp l, Thingp me);
 void LEVEL_DBG(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
 void LEVEL_ERR(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
 void LEVEL_LOG(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);

@@ -79,7 +79,6 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
 
   auto at = thing_at(me);
 
-  THING_LOG(me, "wander");
   auto *ext = thing_ext_struct(g, me);
   if (ext == nullptr) {
     THING_ERR(me, "no ext pointer");

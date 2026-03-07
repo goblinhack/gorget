@@ -205,114 +205,114 @@ void level_fov(const FovContext &ctx)
 
   // recursive shadow casting
   if (ctx.me) {
-    //
-    // \ 4|7 /
-    // 5\ | /6
-    // --   --
-    // 2/ | \1
-    // / 3|0 \
-    //
+    /* */
+    /* \ 4|7 / */
+    /* 5\ | /6 */
+    /* --   -- */
+    /* 2/ | \1 */
+    /* / 3|0 \ */
+    /* */
     if (thing_is_able_to_see_180_degrees(ctx.me)) {
       switch (ctx.me->dir) {
         case THING_DIR_BR :
-          //
-          // \ .|. /
-          // .\ | /6
-          // --   --
-          // ./ | \1
-          // / 3|0 \
-          //
+          /* */
+          /* \ .|. / */
+          /* .\ | /6 */
+          /* --   -- */
+          /* ./ | \1 */
+          /* / 3|0 \ */
+          /* */
           level_fov_do(3, ctx);
           level_fov_do(0, ctx);
           level_fov_do(1, ctx);
           level_fov_do(6, ctx);
           break;
         case THING_DIR_TR :
-          //
-          // \ 4|7 /
-          // .\ | /6
-          // --   --
-          // ./ | \1
-          // / .|. \
-          //
+          /* */
+          /* \ 4|7 / */
+          /* .\ | /6 */
+          /* --   -- */
+          /* ./ | \1 */
+          /* / .|. \ */
+          /* */
           level_fov_do(4, ctx);
           level_fov_do(7, ctx);
           level_fov_do(6, ctx);
           level_fov_do(1, ctx);
           break;
         case THING_DIR_BL :
-          //
-          // \ .|. /
-          // 5\ | /.
-          // --   --
-          // 2/ | \.
-          // / 3|0 \
-          //
+          /* */
+          /* \ .|. / */
+          /* 5\ | /. */
+          /* --   -- */
+          /* 2/ | \. */
+          /* / 3|0 \ */
+          /* */
           level_fov_do(5, ctx);
           level_fov_do(2, ctx);
           level_fov_do(3, ctx);
           level_fov_do(0, ctx);
           break;
         case THING_DIR_TL :
-          //
-          // \ 4|7 /
-          // 5\ | /.
-          // --   --
-          // 2/ | \.
-          // / .|. \
-          //
+          /* */
+          /* \ 4|7 / */
+          /* 5\ | /. */
+          /* --   -- */
+          /* 2/ | \. */
+          /* / .|. \ */
+          /* */
           level_fov_do(2, ctx);
           level_fov_do(5, ctx);
           level_fov_do(4, ctx);
           level_fov_do(7, ctx);
           break;
         case THING_DIR_RIGHT :
-          //
-          // \ .|7 /
-          // .\ | /6
-          // --   --
-          // ./ | \1
-          // / .|0 \
-          //
+          /* */
+          /* \ .|7 / */
+          /* .\ | /6 */
+          /* --   -- */
+          /* ./ | \1 */
+          /* / .|0 \ */
+          /* */
           level_fov_do(7, ctx);
           level_fov_do(6, ctx);
           level_fov_do(1, ctx);
           level_fov_do(0, ctx);
           break;
         case THING_DIR_DOWN :
-          //
-          // \ .|. /
-          // .\ | /.
-          // --   --
-          // 2/ | \1
-          // / 3|0 \
-          //
+          /* */
+          /* \ .|. / */
+          /* .\ | /. */
+          /* --   -- */
+          /* 2/ | \1 */
+          /* / 3|0 \ */
+          /* */
           level_fov_do(2, ctx);
           level_fov_do(3, ctx);
           level_fov_do(0, ctx);
           level_fov_do(1, ctx);
           break;
         case THING_DIR_UP :
-          //
-          // \ 4|7 /
-          // 5\ | /6
-          // --   --
-          // ./ | \.
-          // / .|. \
-          //
+          /* */
+          /* \ 4|7 / */
+          /* 5\ | /6 */
+          /* --   -- */
+          /* ./ | \. */
+          /* / .|. \ */
+          /* */
           level_fov_do(5, ctx);
           level_fov_do(4, ctx);
           level_fov_do(7, ctx);
           level_fov_do(6, ctx);
           break;
         case THING_DIR_LEFT :
-          //
-          // \ 4|. /
-          // 5\ | /.
-          // --   --
-          // 2/ | \.
-          // / 3|. \
-          //
+          /* */
+          /* \ 4|. / */
+          /* 5\ | /. */
+          /* --   -- */
+          /* 2/ | \. */
+          /* / 3|. \ */
+          /* */
           level_fov_do(4, ctx);
           level_fov_do(5, ctx);
           level_fov_do(2, ctx);

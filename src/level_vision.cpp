@@ -8,6 +8,8 @@
 #include "my_thing_inlines.hpp"
 #include "my_tp.hpp"
 
+#include <thread>
+
 //
 // What can monsters see?
 //
@@ -31,6 +33,8 @@ void level_vision_calculate_all(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
+  std::vector< std::thread > threads;
+
   //
   // Calculate all lit tiles for non player things
   //
@@ -41,32 +45,14 @@ void level_vision_calculate_all(Gamep g, Levelsp v, Levelp l)
       continue;
     }
 
-    auto *ext = thing_ext_struct(g, t);
-    if (ext == nullptr) [[unlikely]] {
-      continue;
-    }
-
     if ((thing_is_player(t))) [[unlikely]] {
       continue;
     }
 
-    FovContext ctx;
+    threads.emplace_back(thing_vision_calculate, g, v, l, t);
+  }
 
-    ctx.g                  = g;
-    ctx.v                  = v;
-    ctx.l                  = l;
-    ctx.me                 = t;
-    ctx.pov                = thing_at(t);
-    ctx.thing_at_in_pixels = thing_pix_at(t);
-    ctx.max_radius         = max_radius;
-    ctx.can_see_tile       = &ext->can_see;
-    ctx.has_seen_tile      = &ext->has_seen;
-
-    level_fov(ctx);
-
-    if (compiler_unused) {
-      THING_LOG(t, "dir %s", ThingDir_to_string(t->dir).c_str());
-      thing_can_see_dump(g, v, l, t);
-    }
+  for (auto &i : threads) {
+    i.join();
   }
 }

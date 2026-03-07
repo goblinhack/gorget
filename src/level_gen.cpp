@@ -14,6 +14,8 @@
 #include "my_main.hpp"
 #include "my_random.hpp"
 #include "my_sprintf.hpp"
+#include "my_thing.hpp"
+#include "my_thing_inlines.hpp"
 #include "my_time.hpp"
 
 #include <array>
@@ -5204,5 +5206,39 @@ void level_gen_test(Gamep g)
     if (AN_ERROR_OCCURRED()) {
       CROAK("failed");
     }
+  }
+}
+
+void thing_vision_calculate(Gamep g, Levelsp v, Levelp l, Thingp me)
+{
+  TRACE();
+
+  auto max_radius = thing_distance_vision(me);
+  if (max_radius == 0) {
+    return;
+  }
+
+  auto *ext = thing_ext_struct(g, me);
+  if (ext == nullptr) [[unlikely]] {
+    return;
+  }
+
+  FovContext ctx;
+
+  ctx.g                  = g;
+  ctx.v                  = v;
+  ctx.l                  = l;
+  ctx.me                 = me;
+  ctx.pov                = thing_at(me);
+  ctx.thing_at_in_pixels = thing_pix_at(me);
+  ctx.max_radius         = max_radius;
+  ctx.can_see_tile       = &ext->can_see;
+  ctx.has_seen_tile      = &ext->has_seen;
+
+  level_fov(ctx);
+
+  if (compiler_unused) {
+    THING_LOG(me, "dir %s", ThingDir_to_string(me->dir).c_str());
+    thing_can_see_dump(g, v, l, me);
   }
 }
