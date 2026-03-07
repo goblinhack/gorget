@@ -54,11 +54,11 @@ void thing_sound_play(Gamep g, Levelsp v, Levelp l, Thingp t, const std::string 
     auto at = thing_at(t);
 
     if (! thing_vision_can_see_tile(g, v, l, player, at)) {
-      scale /= 5;
+      scale /= 2;
     }
 
     if (! level_has_seen_cached(g, v, l, at)) {
-      scale /= 5;
+      scale /= 2;
     }
   }
 

@@ -277,6 +277,7 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
   // Reset what we can see
   //
   light->is_lit = {};
+  ext->can_see  = {};
 
   //
   // The light source
