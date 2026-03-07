@@ -13,7 +13,7 @@
 
 std::unordered_map< std::string, RamdiskT > ramdisk_data;
 
-auto ramdisk_load(const char *filename, int *outlen) -> unsigned char *
+auto ramdisk_load(const char *filename, int *outlen) -> uint8_t *
 {
   TRACE();
 
@@ -30,9 +30,9 @@ auto ramdisk_load(const char *filename, int *outlen) -> unsigned char *
     return nullptr;
   }
 
-  memcpy(out, const_cast<unsigned char *>(ramfile.data), ramfile.len);
-  *(static_cast<unsigned char *>(out) + ramfile.len) = 0;
+  memcpy(out, const_cast<uint8_t *>(ramfile.data), ramfile.len);
+  *(static_cast<uint8_t *>(out) + ramfile.len) = 0;
   *outlen                                = ramfile.len;
 
-  return static_cast<unsigned char *>(out);
+  return static_cast<uint8_t *>(out);
 }

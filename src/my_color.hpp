@@ -13,10 +13,10 @@
 // Must be a struct and not a class as we save this structure as is
 //
 using color = struct Color {
-  unsigned char r;
-  unsigned char g;
-  unsigned char b;
-  unsigned char a;
+  uint8_t r;
+  uint8_t g;
+  uint8_t b;
+  uint8_t a;
 };
 
 auto color_change_hue(const color &in, float fHue) -> color;

@@ -36,7 +36,7 @@ public:
   int concurrent_max = {1};
 
   Mix_Chunk     *chunk = {};
-  unsigned char *data  = {};
+  uint8_t *data  = {};
   int            len   = {};
   float          volume {};
 };

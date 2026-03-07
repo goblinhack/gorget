@@ -110,6 +110,7 @@ tidy:
 			-header-filter="*.hpp" \
 			-checks="-*,\
 			bugprone-*,\
+			clang-analyzer-*,\
 			cppcoreguidelines-*,\
 			google-*,\
 			hicpp-*,\

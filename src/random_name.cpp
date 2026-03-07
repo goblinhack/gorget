@@ -20,10 +20,10 @@ auto os_random_name(int len) -> std::string
 }
 
 // https://stackoverflow.com/questions/7666509/hash-function-for-string
-static auto hash(const char *s) -> unsigned long
+static auto hash(const char *s) -> uint32_t
 {
-  unsigned long hash = 5381;
-  char          c    = 0;
+  uint32_t hash = 5381;
+  char     c    = 0;
 
   while ((c = *s++) != 0) {
     hash = ((hash << 5) + hash) + c; /* hash * 33 + c */

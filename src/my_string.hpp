@@ -44,8 +44,8 @@ auto trim(std::string &s) -> std::string &;
 auto trim_ws(const std::string &s) -> std::string;
 
 auto strcommon(const char *a, const char *b) -> uint32_t;
-void hexdump(const unsigned char *addr, size_t len);
-void hexdump(std::vector< unsigned char > &v);
+void hexdump(const uint8_t *addr, size_t len);
+void hexdump(std::vector< uint8_t > &v);
 void strchop(char *s);
 void strchopc(char *s, char c);
 void strnoescape(char *uncompressed);

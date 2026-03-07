@@ -2,11 +2,6 @@
 // Copyright goblinhack@gmail.com
 //
 
-extern "C" {
-extern auto stbi_load_from_memory(const unsigned char *buffer, int len, int *x, int *y, int *comp, int req_comp) -> unsigned char *;
-extern void stbi_image_free(void *retval_from_stbi_load);
-};
-
 // #include "3rdparty/stb_image.hpp"
 #include "my_callstack.hpp"
 #include "my_file.hpp"
@@ -19,6 +14,11 @@ extern void stbi_image_free(void *retval_from_stbi_load);
 
 #include <unordered_map>
 #include <utility>
+
+extern "C" {
+extern auto stbi_load_from_memory(const uint8_t *buffer, int len, int *x, int *y, int *comp, int req_comp) -> uint8_t *;
+extern void stbi_image_free(void *retval_from_stbi_load);
+};
 
 class Tex
 {
@@ -93,12 +93,12 @@ void tex_free(Texp tex)
   delete (tex);
 }
 
-static auto load_raw_image(const std::string &filename, int *x, int *y, int *comp) -> unsigned char *
+static auto load_raw_image(const std::string &filename, int *x, int *y, int *comp) -> uint8_t *
 {
   TRACE();
-  unsigned char *file_data  = nullptr;
-  unsigned char *image_data = nullptr; // NOLINT
-  int            len        = 0;
+  uint8_t *file_data  = nullptr;
+  uint8_t *image_data = nullptr; // NOLINT
+  int      len        = 0;
 
   file_data = file_load(filename.c_str(), &len);
   if (file_data == nullptr) {
@@ -117,7 +117,7 @@ static auto load_raw_image(const std::string &filename, int *x, int *y, int *com
   return image_data;
 }
 
-static void free_raw_image(unsigned char *image_data)
+static void free_raw_image(uint8_t *image_data)
 {
   TRACE();
   stbi_image_free(image_data);
@@ -126,15 +126,15 @@ static void free_raw_image(unsigned char *image_data)
 static auto load_image(const std::string &filename) -> SDL_Surface *
 {
   TRACE();
-  uint32_t       rmask      = 0;
-  uint32_t       gmask      = 0;
-  uint32_t       bmask      = 0;
-  uint32_t       amask      = 0;
-  unsigned char *image_data = nullptr;
-  SDL_Surface   *surf       = nullptr;
-  int            x          = 0;
-  int            y          = 0;
-  int            comp       = 0;
+  uint32_t     rmask      = 0;
+  uint32_t     gmask      = 0;
+  uint32_t     bmask      = 0;
+  uint32_t     amask      = 0;
+  uint8_t     *image_data = nullptr;
+  SDL_Surface *surf       = nullptr;
+  int          x          = 0;
+  int          y          = 0;
+  int          comp       = 0;
 
   image_data = load_raw_image(filename, &x, &y, &comp);
   if (image_data == nullptr) {
@@ -188,15 +188,15 @@ static auto load_image(const std::string &filename) -> SDL_Surface *
 static void load_images(SDL_Surface **surf1_out, const std::string &filename)
 {
   TRACE();
-  uint32_t       rmask      = 0;
-  uint32_t       gmask      = 0;
-  uint32_t       bmask      = 0;
-  uint32_t       amask      = 0;
-  unsigned char *image_data = nullptr;
-  SDL_Surface   *surf1      = nullptr;
-  int            x          = 0;
-  int            y          = 0;
-  int            comp       = 0;
+  uint32_t     rmask      = 0;
+  uint32_t     gmask      = 0;
+  uint32_t     bmask      = 0;
+  uint32_t     amask      = 0;
+  uint8_t     *image_data = nullptr;
+  SDL_Surface *surf1      = nullptr;
+  int          x          = 0;
+  int          y          = 0;
+  int          comp       = 0;
 
   image_data = load_raw_image(filename, &x, &y, &comp);
   if (image_data == nullptr) {

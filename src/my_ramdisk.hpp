@@ -9,13 +9,13 @@
 #include <unordered_map>
 
 using ramdisk_t = struct RamdiskT {
-  const unsigned char *data;
+  const uint8_t *data;
   int                  len;
 };
 
 extern std::unordered_map< std::string, RamdiskT > ramdisk_data;
 
-extern auto ramdisk_load(const char *filename, int *outlen) -> unsigned char *;
+extern auto ramdisk_load(const char *filename, int *outlen) -> uint8_t *;
 extern void           ramdisk_init();
 
 #endif

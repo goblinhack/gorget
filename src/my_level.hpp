@@ -508,7 +508,7 @@ struct MyIter {
   const char *func;
   int         line;
 
-  MyIter(Gamep g, Levelsp v, int *iter, const char *func, unsigned short line);
+  MyIter(Gamep g, Levelsp v, int *iter, const char *func, uint16_t line);
   ~MyIter();
 };
 

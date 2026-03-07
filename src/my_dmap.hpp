@@ -15,7 +15,7 @@ using Dmap = struct Dmap {
   //
   // memset is used to initialize this, so be careful if changing the size
   //
-  unsigned char val[ MAP_WIDTH ][ MAP_HEIGHT ];
+  uint8_t val[ MAP_WIDTH ][ MAP_HEIGHT ];
 };
 
 void dmap_process(Dmap *D, spoint tl, spoint br);
@@ -25,9 +25,9 @@ void dmap_print(const Dmap *d);
 
 [[nodiscard]] auto dmap_solve(Gamep g, Levelsp v, Levelp l, Thingp t, const Dmap *d, spoint start) -> std::vector< spoint >;
 
-#define DMAP_IS_WALL         ((unsigned char) 255)
-#define DMAP_IS_PASSABLE     ((unsigned char) 254)
-#define DMAP_IS_GOAL_REVERSE ((unsigned char) 252)
-#define DMAP_IS_GOAL         ((unsigned char) 0)
+#define DMAP_IS_WALL         ((uint8_t) 255)
+#define DMAP_IS_PASSABLE     ((uint8_t) 254)
+#define DMAP_IS_GOAL_REVERSE ((uint8_t) 252)
+#define DMAP_IS_GOAL         ((uint8_t) 0)
 
 #endif

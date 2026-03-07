@@ -1110,7 +1110,7 @@ auto Game::load(const std::string &file_to_load, class Game &target) -> bool
 #if 0
   IF_DEBUG2 {
     std::cout << "decompressed as ";
-    hexdump((const unsigned char *)dst, dst_size);
+    hexdump((const uint8_t *)dst, dst_size);
   }
 #endif
 

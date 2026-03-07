@@ -29,7 +29,7 @@
 
 struct Callframe {
   const char    *func;
-  unsigned short line;
+  uint16_t line;
 };
 
 //
@@ -37,7 +37,7 @@ struct Callframe {
 // this was unreliable for tracing classes as they are destroyed after
 // the callstack vector
 //
-// No needs for bounds checking if we use unsigned char as the size, as
+// No needs for bounds checking if we use uint8_t as the size, as
 // the index will wrap around to 0 if we hit some endless recursion.
 //
 enum { MAXCALLFRAME = 256 };
@@ -45,13 +45,13 @@ enum { MAXCALLFRAME = 256 };
 #define USE_THREADS
 
 extern thread_local struct Callframe callframes[ MAXCALLFRAME ];
-extern thread_local unsigned char    g_callframes_depth;
-extern thread_local unsigned char    g_callframes_indent;
+extern thread_local uint8_t    g_callframes_depth;
+extern thread_local uint8_t    g_callframes_indent;
 
 class TracerT
 {
 public:
-  TracerT(const char *func, const unsigned short line)
+  TracerT(const char *func, const uint16_t line)
   {
     Callframe *c = &callframes[ g_callframes_depth++ ];
     c->func      = func;
@@ -64,7 +64,7 @@ public:
 class TracerIndentT
 {
 public:
-  TracerIndentT(const char *func, const unsigned short line)
+  TracerIndentT(const char *func, const uint16_t line)
   {
     Callframe *c = &callframes[ g_callframes_depth++ ];
     g_callframes_indent++;

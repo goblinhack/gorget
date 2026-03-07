@@ -437,14 +437,14 @@ auto my_strcasestr(const char *s, const char *find) -> char *
   size_t len = 0;
 
   if ((c = *find++) != 0) {
-    c   = tolower(static_cast< unsigned char >(c));
+    c   = tolower(static_cast< uint8_t >(c));
     len = strlen(find);
     do {
       do {
         if ((sc = *s++) == 0) {
           return nullptr;
         }
-      } while (static_cast< char >(tolower(static_cast< unsigned char >(sc))) != c);
+      } while (static_cast< char >(tolower(static_cast< uint8_t >(sc))) != c);
     } while (strncasecmp(s, find, len) != 0);
     s--;
   }

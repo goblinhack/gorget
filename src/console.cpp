@@ -11,7 +11,7 @@
 #include <cstdlib>
 #include <cstring>
 
-static inline void term_puts_fg(unsigned char a)
+static inline void term_puts_fg(uint8_t a)
 {
   TRACE();
 
@@ -28,7 +28,7 @@ static inline void term_puts_fg(unsigned char a)
   fputs(data[ a ], stdout);
 }
 
-static void term_puts_fgbg(unsigned char fg, unsigned char bg)
+static void term_puts_fgbg(uint8_t fg, uint8_t bg)
 {
   TRACE();
 

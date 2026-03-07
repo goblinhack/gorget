@@ -19,14 +19,14 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-static auto file_io_read_if_exists(const char *filename, int *out_len) -> unsigned char *;
-static auto file_io_read(const char *filename, int *len) -> unsigned char *;
+static auto file_io_read_if_exists(const char *filename, int *out_len) -> uint8_t *;
+static auto file_io_read(const char *filename, int *len) -> uint8_t *;
 
-auto file_load(const char *filename, int *outlen) -> unsigned char *
+auto file_load(const char *filename, int *outlen) -> uint8_t *
 {
   TRACE();
 
-  unsigned char *out          = nullptr; // NOLINT
+  uint8_t *out          = nullptr; // NOLINT
   char          *alt_filename = nullptr;
 
   alt_filename = nullptr;
@@ -166,11 +166,11 @@ auto file_load(const char *filename, int *outlen) -> unsigned char *
   return nullptr;
 }
 
-auto file_io_read(const char *filename, int *out_len) -> unsigned char *
+auto file_io_read(const char *filename, int *out_len) -> uint8_t *
 {
   TRACE();
 
-  unsigned char *buffer = nullptr;
+  uint8_t *buffer = nullptr;
   FILE          *file   = nullptr;
   int            len    = 0;
 
@@ -202,7 +202,7 @@ auto file_io_read(const char *filename, int *out_len) -> unsigned char *
     return nullptr;
   }
 
-  buffer = static_cast< unsigned char * >(MYMALLOC(len + SIZEOF((char) '\0'), "file read"));
+  buffer = static_cast< uint8_t * >(MYMALLOC(len + SIZEOF((char) '\0'), "file read"));
   if (buffer == nullptr) {
     std::println(MY_STDERR, "failed to alloc mem for file \"{}\": {}", filename, strerror(errno));
     fclose(file);
@@ -226,7 +226,7 @@ auto file_io_read(const char *filename, int *out_len) -> unsigned char *
   return buffer;
 }
 
-auto file_write(const char *filename, unsigned char *buffer, int len) -> int
+auto file_write(const char *filename, uint8_t *buffer, int len) -> int
 {
   TRACE();
 
@@ -285,12 +285,12 @@ auto file_exists(const char *filename) -> uint8_t
   return 0;
 }
 
-auto file_io_read_if_exists(const char *filename, int *out_len) -> unsigned char *
+auto file_io_read_if_exists(const char *filename, int *out_len) -> uint8_t *
 {
   TRACE();
 
 #if 0
-  unsigned char *ret;
+  uint8_t *ret;
   char *mz_filename;
 
   if (!filename) {
