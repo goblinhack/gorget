@@ -113,6 +113,8 @@ tidy:
 			clang-analyzer-*,\
 			cppcoreguidelines-*,\
 			google-*,\
+			conc*,\
+			cert*,\
 			hicpp-*,\
 			misc-confusable-identifiers,\
 			misc-const-correctness,\
