@@ -126,11 +126,11 @@ auto thing_push(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool
     auto dump_id = l->thing_id[ at.x ][ at.y ][ slot ];
     if (dump_id != 0U) {
       auto *it = thing_find(g, v, dump_id);
-      THING_CON(it, "DUMP: is using slot %u", slot);
+      thing_con(it, "DUMP: is using slot %u", slot);
     }
   }
 
-  THING_ERR(t, "out of thing slots");
+  thing_err(t, "out of thing slots");
   return false;
 }
 
@@ -182,10 +182,10 @@ auto thing_pop(Gamep g, Levelsp v, Thingp t) -> bool
     auto dump_id = l->thing_id[ at.x ][ at.y ][ slot ];
     if (dump_id != 0U) {
       auto *it = thing_find(g, v, dump_id);
-      THING_CON(it, "DUMP: is using slot %u", slot);
+      thing_con(it, "DUMP: is using slot %u", slot);
     }
   }
 
-  THING_ERR(t, "could not pop thing that is on the map");
+  thing_err(t, "could not pop thing that is on the map");
   return false;
 }

@@ -15,7 +15,7 @@
 
 static auto tp_door_secret_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE();
+  TRACE_INDENT();
 
   if (thing_is_open(t)) {
     return "secret door";
@@ -26,7 +26,7 @@ static auto tp_door_secret_description_get(Gamep g, Levelsp v, Levelp l, Thingp 
 
 [[nodiscard]] static auto tp_door_secret_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener) -> bool
 {
-  TRACE();
+  TRACE_INDENT();
 
   ThingEvent e {
       .reason     = "by opening",     //
@@ -46,7 +46,7 @@ static auto tp_door_secret_description_get(Gamep g, Levelsp v, Levelp l, Thingp 
 
 auto tp_load_door_secret() -> bool
 {
-  TRACE();
+  TRACE_INDENT();
 
   for (auto variant = 1; variant <= WALL_VARIANTS; variant++) {
     std::string const name = "door_secret" + std::to_string(variant);

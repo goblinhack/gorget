@@ -13,35 +13,35 @@
 
 static auto tp_potion_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE();
+  TRACE_INDENT();
 
   return "potion";
 }
 
 static auto tp_potion_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE();
+  TRACE_INDENT();
 
   return UI_INFO1_FMT_STR "A mysterious purple potion.";
 }
 
 [[nodiscard]] static auto tp_potion_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp collector) -> bool
 {
-  TRACE();
+  TRACE_INDENT();
 
   return true;
 }
 
 [[nodiscard]] static auto tp_potion_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp dropper) -> bool
 {
-  TRACE();
+  TRACE_INDENT();
 
   return true;
 }
 
 auto tp_load_potion() -> bool
 {
-  TRACE();
+  TRACE_INDENT();
 
   auto *tp   = tp_load("potion"); // keep as string for scripts
   auto  name = tp_name(tp);

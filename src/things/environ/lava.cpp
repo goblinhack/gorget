@@ -11,14 +11,14 @@
 
 static auto tp_lava_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE();
+  TRACE_INDENT();
 
   return "lovely lava";
 }
 
 auto tp_load_lava() -> bool
 {
-  TRACE();
+  TRACE_INDENT();
 
   auto *tp   = tp_load("lava"); // keep as string for scripts
   auto  name = tp_name(tp);

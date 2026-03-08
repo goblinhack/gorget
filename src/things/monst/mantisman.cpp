@@ -14,7 +14,7 @@
 
 static auto tp_mantisman_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE();
+  TRACE_INDENT();
 
   if (thing_is_dead(t)) {
     return "dead mantisman";
@@ -24,7 +24,7 @@ static auto tp_mantisman_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 
 static auto tp_mantisman_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE();
+  TRACE_INDENT();
 
   return                                                                                                //
       UI_INFO1_FMT_STR "MantisMan: half-mantis, half-man but which half?\n"                             //
@@ -35,7 +35,7 @@ static auto tp_mantisman_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> s
 
 static auto tp_mantisman_assess_tile(Gamep g, Levelsp v, Levelp l, const spoint &at, Thingp t) -> ThingEnviron
 {
-  TRACE();
+  TRACE_INDENT();
 
   if (level_is_lava(g, v, l, at) != nullptr) {
     return THING_ENVIRON_HATES;

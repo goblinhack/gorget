@@ -62,7 +62,7 @@
     tof   = outf + delta;
     to    = make_spoint(tof);
     out   = to;
-    THING_LOG(t, "teleport projectile, delta %f,%f spoint %d,%d", delta.x, delta.y, to.x, to.y);
+    THING_DBG(t, "teleport projectile, delta %f,%f spoint %d,%d", delta.x, delta.y, to.x, to.y);
     return true;
   }
 
@@ -100,7 +100,7 @@
   to  = make_spoint(tof);
 
   if (compiler_unused) {
-    THING_LOG(t, "delta %f,%f spoint %d,%d out %d,%d", delta.x, delta.y, to.x, to.y, out.x, out.y);
+    THING_DBG(t, "delta %f,%f spoint %d,%d out %d,%d", delta.x, delta.y, to.x, to.y, out.x, out.y);
   }
 
   if (level_is_obs_to_teleporting_onto(g, v, l, to) != nullptr) {
@@ -126,32 +126,32 @@
 //
 auto thing_teleport_handle(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool
 {
-  THING_LOG(t, "teleport, try");
+  THING_DBG(t, "teleport, try");
   TRACE_INDENT();
 
   if (t->tick_teleport == v->tick) {
-    THING_LOG(t, "teleport, no; too frequent");
+    THING_DBG(t, "teleport, no; too frequent");
     return false;
   }
 
   if (thing_is_teleporting(t)) {
-    THING_LOG(t, "teleport, no; already teleporting");
+    THING_DBG(t, "teleport, no; already teleporting");
     return false;
   }
 
   if (thing_is_teleport_blocked(t)) {
-    THING_LOG(t, "teleport, no; blocked");
+    THING_DBG(t, "teleport, no; blocked");
     return false;
   }
 
   spoint to;
   if (! teleport_find_other(g, v, l, thing_at(t), to)) {
-    THING_LOG(t, "teleport, no; none found");
+    THING_DBG(t, "teleport, no; none found");
     return false;
   }
 
   if (is_oob_or_border(to)) [[unlikely]] {
-    THING_LOG(t, "teleport, no; oob");
+    THING_DBG(t, "teleport, no; oob");
     return false;
   }
 
@@ -159,19 +159,19 @@ auto thing_teleport_handle(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool
   // Where do we spawn?
   //
   if (! teleport_find_landing_spot(g, v, l, t, to)) {
-    THING_LOG(t, "failed to find landing spot next to chosen teleport");
+    THING_DBG(t, "failed to find landing spot next to chosen teleport");
   }
 
   if (to == thing_at(t)) {
-    THING_LOG(t, "teleport, no; same location");
+    THING_DBG(t, "teleport, no; same location");
     return false;
   }
 
-  THING_LOG(t, "pre teleport, warp to %d,%d", to.x, to.y);
+  THING_DBG(t, "pre teleport, warp to %d,%d", to.x, to.y);
   TRACE_INDENT();
 
   if (! thing_warp_to(g, v, l, t, to)) {
-    THING_LOG(t, "pre teleport, warp to %d,%d failed", to.x, to.y);
+    THING_DBG(t, "pre teleport, warp to %d,%d failed", to.x, to.y);
     return false;
   }
 
@@ -181,7 +181,7 @@ auto thing_teleport_handle(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool
 
   thing_is_teleporting_set(g, v, l, t, false);
 
-  THING_LOG(t, "post teleport");
+  THING_DBG(t, "post teleport");
   TRACE_INDENT();
 
   thing_sound_play(g, v, l, t, "teleport");

@@ -12,7 +12,7 @@
 
 static void tp_key_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 {
-  TRACE();
+  TRACE_INDENT();
 
   if ((e.event_type == THING_EVENT_CARRIED) || //
       (e.event_type == THING_EVENT_CARRIED_MERGED)) {
@@ -22,14 +22,14 @@ static void tp_key_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &
 
 static auto tp_key_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE();
+  TRACE_INDENT();
 
   return "a... key";
 }
 
 auto tp_load_key() -> bool
 {
-  TRACE();
+  TRACE_INDENT();
 
   auto *tp   = tp_load("key"); // keep as string for scripts
   auto  name = tp_name(tp);

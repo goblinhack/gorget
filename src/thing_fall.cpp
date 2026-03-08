@@ -128,15 +128,15 @@ static auto thing_fall_damage(Gamep g, Levelsp v, Levelp l, Thingp t) -> int
 //
 static void thing_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  THING_LOG(t, "fall end");
+  THING_DBG(t, "fall end");
   TRACE_INDENT();
 
   auto *next_level = level_select_get_next_level_down(g, v, l);
   if (next_level == nullptr) {
     if (g_opt_tests) {
-      THING_LOG(t, "no level to fall onto");
+      THING_DBG(t, "no level to fall onto");
     } else {
-      THING_ERR(t, "no level to fall onto");
+      thing_err(t, "no level to fall onto");
     }
     return;
   }
@@ -184,7 +184,7 @@ static void thing_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
   if (t_level != nullptr) {
     l = t_level;
   } else {
-    THING_ERR(t, "fell into nothing");
+    thing_err(t, "fell into nothing");
   }
 
   if (level_is_chasm(g, v, t_level, thing_at(t)) != nullptr) {
@@ -202,7 +202,7 @@ static void thing_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
     //
     // Keep falling with no damage if over a chasm.
     //
-    THING_LOG(t, "over a chasm again; keep falling");
+    THING_DBG(t, "over a chasm again; keep falling");
     TRACE_INDENT();
     thing_is_falling_continues_set(g, v, l, t);
     thing_is_spawned_set(g, v, l, t);
@@ -236,7 +236,7 @@ void thing_fall_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step)
   (void) thing_is_falling_incr(g, v, l, t, time_step);
 
   if (compiler_unused) {
-    THING_LOG(t, "fall incr %u", thing_is_falling(t));
+    THING_DBG(t, "fall incr %u", thing_is_falling(t));
   }
 }
 
@@ -248,7 +248,7 @@ void thing_fall_end_check(Gamep g, Levelsp v, Levelp l, Thingp t)
   TRACE();
 
   if (compiler_unused) {
-    THING_LOG(t, "fall %u", thing_is_falling(t));
+    THING_DBG(t, "fall %u", thing_is_falling(t));
     TRACE_INDENT();
   }
 
@@ -258,14 +258,14 @@ void thing_fall_end_check(Gamep g, Levelsp v, Levelp l, Thingp t)
 
     auto *t_level = game_level_get(g, v, t->level_num);
     if (t_level == nullptr) {
-      THING_ERR(t, "fell into nothing");
+      thing_err(t, "fell into nothing");
     }
 
     thing_is_falling_set(g, v, t_level, t, false);
 
     if (thing_is_player(t)) {
       if (level_is_chasm(g, v, t_level, thing_at(t)) != nullptr) {
-        THING_LOG(t, "fell again");
+        THING_DBG(t, "fell again");
         TRACE_INDENT();
         level_tick_begin_requested(g, v, t_level, "player fell again");
       }
@@ -274,7 +274,7 @@ void thing_fall_end_check(Gamep g, Levelsp v, Levelp l, Thingp t)
       // This seems rather cruel, but...
       //
       if (level_is_lava(g, v, t_level, thing_at(t)) != nullptr) {
-        THING_LOG(t, "fell into lava");
+        THING_DBG(t, "fell into lava");
         TRACE_INDENT();
         level_tick_begin_requested(g, v, t_level, "player fell into lava");
       }
@@ -302,11 +302,4 @@ void thing_fall(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 
   thing_is_falling_set(g, v, l, t, true);
-
-  //
-  // This is for bridges, so a chasm "appears".
-  //
-  if (level_is_chasm(g, v, l, thing_at(t)) == nullptr) {
-    (void) thing_spawn(g, v, l, tp_first(is_chasm), t);
-  }
 }

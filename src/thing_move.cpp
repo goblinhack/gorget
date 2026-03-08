@@ -283,9 +283,9 @@ auto thing_shove_to(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool
 
   auto ret = thing_shove_handle(g, v, l, me, to);
   if (ret) {
-    THING_LOG(me, "shoved");
+    THING_DBG(me, "shoved");
   } else {
-    THING_LOG(me, "failed to shove");
+    THING_DBG(me, "failed to shove");
   }
 
   return ret;
@@ -294,6 +294,8 @@ auto thing_shove_to(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool
 //
 // Handles immediate moves even across levels.
 //
+// This is used for teleporting, falling etc...
+//
 auto thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp me, spoint to) -> bool
 {
   TRACE();
@@ -301,9 +303,6 @@ auto thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp me, spoint to) -
   if (is_oob_or_border(to)) [[unlikely]] {
     return false;
   }
-
-  THING_LOG(me, "pre teleport");
-  TRACE_INDENT();
 
   bool  level_changed = false;
   auto *old_level     = thing_level(g, v, me);
@@ -392,7 +391,7 @@ auto thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp me, spoint to) -
 
   new_level->is_tick_requested = true;
 
-  THING_LOG(me, "teleported");
+  THING_DBG(me, "moved to new location");
 
   return true;
 }
@@ -411,7 +410,7 @@ void thing_move_or_jump_finish(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 
   if (thing_is_dead(me)) {
-    THING_LOG(me, "finish moving when dead");
+    THING_DBG(me, "finish moving when dead");
   }
 
   //

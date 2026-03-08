@@ -15,15 +15,15 @@ auto thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &at) -> Thin
   auto *t = thing_init(g, v, l, tp, at);
   if (t == nullptr) {
     if (g_opt_test_current == "test_alloc_free_monsts") {
-      TP_LOG(tp, "failed to init thing");
+      tp_log(tp, "failed to init thing");
     } else {
-      TP_ERR(tp, "failed to init thing");
+      tp_err(tp, "failed to init thing");
     }
     return nullptr;
   }
 
   if (! thing_push(g, v, l, t)) {
-    THING_ERR(t, "failed to push");
+    thing_err(t, "failed to push");
     return nullptr;
   }
 

@@ -12,14 +12,14 @@
 
 static auto tp_foliage_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE();
+  TRACE_INDENT();
 
   return "sickly looking foliage";
 }
 
 static auto tp_foliage_z_depth_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> MapZDepth
 {
-  TRACE();
+  TRACE_INDENT();
 
   if (thing_is_dead(t)) {
     return MAP_Z_DEPTH_GRASS;
@@ -29,7 +29,7 @@ static auto tp_foliage_z_depth_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> Ma
 
 auto tp_load_foliage() -> bool
 {
-  TRACE();
+  TRACE_INDENT();
 
   auto *tp   = tp_load("foliage"); // keep as string for scripts
   auto  name = tp_name(tp);

@@ -491,15 +491,15 @@ void tp_real_name_set(Tpp tp, const std::string &val);
 void tp_short_name_set(Tpp tp, const std::string &val);
 void tp_tiles_push_back(Tpp tp, ThingAnim val, Tilep tile_p);
 
-void TP_CON(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
-void TP_CON_(Tpp tp, const char *fmt, va_list args); // compile error without
-void TP_DBG_(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
-void TP_DIE(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
-void TP_DIE_(Tpp tp, const char *fmt, va_list args); // compile error without
-void TP_ERR(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
-void TP_ERR_(Tpp tp, const char *fmt, va_list args); // compile error without
-void TP_LOG(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
-void TP_LOG_(Tpp tp, const char *fmt, va_list args); // compile error without
+void tp_con(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void tp_con_(Tpp tp, const char *fmt, va_list args); // compile error without
+void tp_dbg_(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void tp_die(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void tp_die_(Tpp tp, const char *fmt, va_list args); // compile error without
+void tp_err(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void tp_err_(Tpp tp, const char *fmt, va_list args); // compile error without
+void tp_log(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void tp_log_(Tpp tp, const char *fmt, va_list args); // compile error without
                                                      //
 void tp_fini();
 void tp_get_id(const char *, int *id);

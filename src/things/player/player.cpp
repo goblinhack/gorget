@@ -18,7 +18,7 @@
 
 static auto tp_player_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE();
+  TRACE_INDENT();
 
   if (thing_is_dead(t)) {
     return "dead you";
@@ -28,14 +28,14 @@ static auto tp_player_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) ->
 
 static auto tp_player_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE();
+  TRACE_INDENT();
 
   return UI_INFO1_FMT_STR "You: a luckless wizard hoping to reclaim forgotten skills.";
 }
 
 static void tp_player_on_moved(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE();
+  TRACE_INDENT();
 
   //
   // If we fell into another chasm, don't make an oof sound
@@ -56,7 +56,7 @@ static void tp_player_on_moved(Gamep g, Levelsp v, Levelp l, Thingp t)
 
 static void tp_player_on_jump_end(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE();
+  TRACE_INDENT();
 
   if (level_is_water(g, v, l, thing_at(t)) != nullptr) {
     thing_sound_play(g, v, l, t, "splash");
@@ -80,7 +80,7 @@ static void tp_player_on_jump_end(Gamep g, Levelsp v, Levelp l, Thingp t)
 
 static void tp_player_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE();
+  TRACE_INDENT();
 
   thing_sound_play(g, v, l, t, "fall");
 
@@ -90,7 +90,7 @@ static void tp_player_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
 
 static void tp_player_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE();
+  TRACE_INDENT();
 
   //
   // If we fell into another chasm, don't make an oof sound
@@ -108,13 +108,13 @@ static void tp_player_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
 
 static void tp_player_level_leave(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE();
+  TRACE_INDENT();
   thing_vision_reset(g, v, l, t);
 }
 
 static void tp_player_level_enter(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE();
+  TRACE_INDENT();
 
   //
   // Needed to make sure the light resets as it looks for pixel changes.
@@ -122,13 +122,13 @@ static void tp_player_level_enter(Gamep g, Levelsp v, Levelp l, Thingp t)
   thing_prev_pix_at_set(g, v, l, t, spoint(-1, -1));
 }
 
-static void tp_player_level_populated(Gamep g, Levelsp v, Levelp l, Thingp t) { TRACE(); }
+static void tp_player_level_populated(Gamep g, Levelsp v, Levelp l, Thingp t) { TRACE_INDENT(); }
 
-static void tp_player_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t) { TRACE(); }
+static void tp_player_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t) { TRACE_INDENT(); }
 
 static void tp_player_on_teleported(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE();
+  TRACE_INDENT();
 
   auto at = thing_at(t);
   game_popup_text_add(g, at.x, at.y, std::string("Urgh"));
@@ -136,7 +136,7 @@ static void tp_player_on_teleported(Gamep g, Levelsp v, Levelp l, Thingp t)
 
 static void tp_player_tick_idle(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE();
+  TRACE_INDENT();
 
   //
   // If asked to follow the mouse path, start walking
@@ -146,7 +146,7 @@ static void tp_player_tick_idle(Gamep g, Levelsp v, Levelp l, Thingp t)
 
 static void tp_player_tick_end(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE();
+  TRACE_INDENT();
 
   //
   // If asked to follow the mouse path, start walking

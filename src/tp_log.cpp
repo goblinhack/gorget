@@ -15,7 +15,7 @@
 
 #include <cstring>
 
-void TP_LOG_(Tpp tp, const char *fmt, va_list args)
+void tp_log_(Tpp tp, const char *fmt, va_list args)
 {
   TRACE();
 
@@ -38,7 +38,7 @@ void TP_LOG_(Tpp tp, const char *fmt, va_list args)
   putf(MY_STDOUT, buf);
 }
 
-void TP_LOG(Tpp tp, const char *fmt, ...)
+void tp_log(Tpp tp, const char *fmt, ...)
 {
   TRACE();
 
@@ -46,11 +46,11 @@ void TP_LOG(Tpp tp, const char *fmt, ...)
 
   va_list args = {};
   va_start(args, fmt);
-  TP_LOG_(tp, fmt, args);
+  tp_log_(tp, fmt, args);
   va_end(args);
 }
 
-void TP_DBG_(Tpp tp, const char *fmt, ...)
+void tp_dbg_(Tpp tp, const char *fmt, ...)
 {
   TRACE();
 
@@ -60,11 +60,11 @@ void TP_DBG_(Tpp tp, const char *fmt, ...)
 
   va_list args = {};
   va_start(args, fmt);
-  TP_LOG_(tp, fmt, args);
+  tp_log_(tp, fmt, args);
   va_end(args);
 }
 
-void TP_DIE_(Tpp tp, const char *fmt, va_list args)
+void tp_die_(Tpp tp, const char *fmt, va_list args)
 {
   TRACE();
 
@@ -83,7 +83,7 @@ void TP_DIE_(Tpp tp, const char *fmt, va_list args)
   CROAK("%s", buf);
 }
 
-void TP_DIE(Tpp tp, const char *fmt, ...)
+void tp_die(Tpp tp, const char *fmt, ...)
 {
   TRACE();
 
@@ -91,11 +91,11 @@ void TP_DIE(Tpp tp, const char *fmt, ...)
   va_list args = {};
 
   va_start(args, fmt);
-  TP_DIE_(tp, fmt, args);
+  tp_die_(tp, fmt, args);
   va_end(args);
 }
 
-void TP_CON_(Tpp tp, const char *fmt, va_list args)
+void tp_con_(Tpp tp, const char *fmt, va_list args)
 {
   TRACE();
 
@@ -121,7 +121,7 @@ void TP_CON_(Tpp tp, const char *fmt, va_list args)
   wid_console_log(buf);
 }
 
-void TP_CON(Tpp tp, const char *fmt, ...)
+void tp_con(Tpp tp, const char *fmt, ...)
 {
   TRACE();
 
@@ -129,11 +129,11 @@ void TP_CON(Tpp tp, const char *fmt, ...)
   va_list args = {};
 
   va_start(args, fmt);
-  TP_CON_(tp, fmt, args);
+  tp_con_(tp, fmt, args);
   va_end(args);
 }
 
-void TP_ERR_(Tpp tp, const char *fmt, va_list args)
+void tp_err_(Tpp tp, const char *fmt, va_list args)
 {
   char buf[ MAXLONGSTR ];
   int  len = 0;
@@ -146,12 +146,12 @@ void TP_ERR_(Tpp tp, const char *fmt, va_list args)
   ERR("%s", buf);
 }
 
-void TP_ERR(Tpp tp, const char *fmt, ...)
+void tp_err(Tpp tp, const char *fmt, ...)
 {
   TRACE();
 
   va_list args = {};
   va_start(args, fmt);
-  TP_ERR_(tp, fmt, args);
+  tp_err_(tp, fmt, args);
   va_end(args);
 }

@@ -961,15 +961,15 @@ using Thing = struct Thing {
 
 // begin sort marker2 {
 auto astar_solve(Gamep g, Levelsp v, Levelp l, Thingp me, spoint src, spoint dst) -> std::vector< spoint >;
-void LEVEL_BOTCON(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
-void LEVEL_CON(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
+void level_botcon(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
+void level_con(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
 void thing_vision_calculate(Gamep g, Levelsp v, Levelp l, Thingp me);
-void LEVEL_DBG(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
-void LEVEL_ERR(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
-void LEVEL_LOG(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
-void LEVEL_TOPCON(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
+void level_dbg(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
+void level_err(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
+void level_log(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
+void level_topcon(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
 void level_vision_calculate_all(Gamep g, Levelsp v, Levelp l);
-void LEVEL_WARN(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
+void level_warn(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
 void monst_state_change(Gamep g, Levelsp v, Levelp l, Thingp me, MonstState new_state);
 void player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me);
 void player_fell(Gamep g, Levelsp v, Levelp l, Levelp next_level, Thingp me);
@@ -985,15 +985,15 @@ void thing_anim_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, int ti
 void thing_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, const fpoint &val);
 void thing_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, const spoint &val);
 void thing_blit_text(Gamep g, Levelsp v, Levelp l, spoint tl, spoint br, std::string const &text, color fg, bool outline);
-void THING_BOTCON(Thingp t, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void thing_botcon(Thingp t, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void thing_can_see_dump(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_chasm_handle(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint old_at);
 void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me);
-void THING_CON(Thingp t, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void thing_con(Thingp t, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void thing_continue_to_burn_check(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e);
-void THING_DBG(Thingp t, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void thing_dbg(Thingp t, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e);
 void thing_dir_bl_set(Thingp, uint8_t);
 void thing_dir_br_set(Thingp, uint8_t);
@@ -1004,7 +1004,7 @@ void thing_dir_tl_set(Thingp, uint8_t);
 void thing_dir_tr_set(Thingp, uint8_t);
 void thing_dir_up_set(Thingp, uint8_t);
 void thing_dmap(Gamep g, Levelsp v, Levelp l, Thingp me, bool reverse = false);
-void THING_ERR(Thingp t, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void thing_err(Thingp t, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void thing_explosion_handle(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_fall_end_check(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_fall_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step);
@@ -1048,7 +1048,7 @@ void thing_is_unlocked_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val = tr
 void thing_is_unlocked_unset(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_level_warp_to_entrance(Gamep g, Levelsp v, Levelp new_level, Thingp t);
 void thing_level_warp_to_exit(Gamep g, Levelsp v, Levelp new_level, Thingp t);
-void THING_LOG(Thingp t, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void thing_log(Thingp t, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void thing_lunge_end_check(Gamep g, Levelsp v, Levelp l, Thingp me);
 void thing_lunge_time_step(Gamep g, Levelsp v, Levelp l, Thingp me, int time_step);
 void thing_melt(Gamep g, Levelsp v, Levelp l, Thingp t);
@@ -1073,10 +1073,10 @@ void thing_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thing
 void thing_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_tick_end(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_tick_idle(Gamep g, Levelsp v, Levelp l, Thingp t);
-void THING_TOPCON(Thingp t, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void thing_topcon(Thingp t, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void thing_update_pos(Gamep g, Levelsp v, Levelp l, Thingp me);
 void thing_vision_reset(Gamep g, Levelsp v, Levelp l, Thingp t);
-void THING_WARN(Thingp t, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void thing_warn(Thingp t, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void thing_water_handle(Gamep g, Levelsp v, Levelp l, Thingp t);
 void tp_collision_init(Tpp tp);
 void tp_temperature_init(Tpp tp);
@@ -1118,5 +1118,7 @@ void thing_display(Gamep g, Levelsp v, Levelp l, const spoint &p, Tpp tp, Thingp
       for (auto _n_ = 0; _n_ < THING_INVENTORY_MAX; _n_++)                                                                                 \
         for (auto _slot_ = &_ext_->inventory.slots[ _n_ ]; _slot_; _slot_ = nullptr)                                                       \
           for (AUTO(_item_) = thing_find_optional(g, v, _slot_->item_id); _item_; (_item_) = nullptr)
+
+#define THING_DBG IF_DEBUG thing_dbg
 
 #endif

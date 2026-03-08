@@ -27,7 +27,7 @@ void level_anim(Gamep g, Levelsp v, Levelp l)
 
     if (compiler_unused) {
       if (thing_is_level_curr(t)) {
-        THING_LOG(t, "anim");
+        THING_DBG(t, "anim");
       }
     }
 

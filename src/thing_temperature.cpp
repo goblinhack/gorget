@@ -182,7 +182,7 @@ void tp_temperature_init(Tpp tp)
   }
   if (tp_is_physics_temperature(tp)) {
     if (! heat_exchange_set) {
-      TP_ERR(tp, "tp has heat physics set but no conductivity type set");
+      tp_err(tp, "tp has heat physics set but no conductivity type set");
     }
   }
 }

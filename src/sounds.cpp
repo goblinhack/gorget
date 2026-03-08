@@ -15,19 +15,19 @@ void sounds_init()
   if (! sound_load(0.2F, "data/sounds/interface/mouse-click.ogg", "click")) {
     return;
   }
-  if (! sound_load(0.1F, "data/sounds/impacts/player-oof.ogg", "oof")) {
-    return;
-  }
-  if (! sound_load(0.5F, "data/sounds/impacts/player-ouch.ogg", "ouch")) {
-    return;
-  }
-  if (! sound_load(0.2F, "data/sounds/misc/fall.ogg", "fall")) {
-    return;
-  }
-  if (! sound_load(0.2F, "data/sounds/misc/teleport.ogg", "teleport")) {
-    return;
-  }
   if (! sound_load(0.5F, "data/sounds/interface/error.ogg", "error")) {
+    return;
+  }
+  if (! sound_load(1.0F, "data/sounds/impacts/player-oof.ogg", "oof")) {
+    return;
+  }
+  if (! sound_load(1.0F, "data/sounds/impacts/player-ouch.ogg", "ouch")) {
+    return;
+  }
+  if (! sound_load(1.0F, "data/sounds/misc/fall.ogg", "fall")) {
+    return;
+  }
+  if (! sound_load(1.0F, "data/sounds/misc/teleport.ogg", "teleport")) {
     return;
   }
   if (! sound_load(1.0F, "data/sounds/impacts/explosion.ogg", "explosion", 10 /* concurrent_max */)) {

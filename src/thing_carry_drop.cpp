@@ -22,16 +22,16 @@ auto thing_carry_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp player_o
   }
 
   if (! thing_is_player(player_or_monst) && ! thing_is_monst(player_or_monst)) {
-    THING_ERR(player_or_monst, "unexpected thing for %s", __FUNCTION__);
+    thing_err(player_or_monst, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
 
   auto s = to_string(g, v, l, item);
-  THING_LOG(player_or_monst, "carry: %s", s.c_str());
+  THING_DBG(player_or_monst, "carry: %s", s.c_str());
   TRACE_INDENT();
 
   if (! thing_is_carried_try_set(g, v, l, item, player_or_monst)) {
-    THING_LOG(player_or_monst, "carry: %s (failed)", s.c_str());
+    THING_DBG(player_or_monst, "carry: %s (failed)", s.c_str());
     TRACE_INDENT();
 
     if (thing_is_player(player_or_monst)) {
@@ -69,16 +69,16 @@ auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp player_or
   }
 
   if (! thing_is_player(player_or_monst) && ! thing_is_monst(player_or_monst)) {
-    THING_ERR(player_or_monst, "unexpected thing for %s", __FUNCTION__);
+    thing_err(player_or_monst, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
 
   auto s = to_string(g, v, l, item);
-  THING_LOG(player_or_monst, "drop: %s", s.c_str());
+  THING_DBG(player_or_monst, "drop: %s", s.c_str());
   TRACE_INDENT();
 
   if (! thing_is_carried_try_unset(g, v, l, item, player_or_monst)) {
-    THING_LOG(player_or_monst, "drop: %s (failed)", s.c_str());
+    THING_DBG(player_or_monst, "drop: %s (failed)", s.c_str());
     TRACE_INDENT();
 
     if (thing_is_player(player_or_monst)) {

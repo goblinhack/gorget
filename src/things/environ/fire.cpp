@@ -17,14 +17,14 @@
 
 static auto tp_fire_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE();
+  TRACE_INDENT();
 
   return "brightly burning fire";
 }
 
 static void tp_fire_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE();
+  TRACE_INDENT();
 
   //
   // Don't spawn fire too soon after creation or we get a firestorm
@@ -97,7 +97,7 @@ static void tp_fire_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
     FOR_ALL_THINGS_AT(g, v, l, it, p)
     {
       if (tp_chance_success(thing_tp(it), THING_CHANCE_START_BURNING)) {
-        THING_LOG(it, "can spawn fire here");
+        THING_DBG(it, "can spawn fire here");
         something_to_burn_here = true;
       }
     }
@@ -113,7 +113,7 @@ static void tp_fire_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
 
 static void tp_fire_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 {
-  TRACE();
+  TRACE_INDENT();
 
   //
   // Allow things to continue to burn if we still have some burnable material
@@ -135,7 +135,7 @@ static void tp_fire_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent 
 
 static void tp_fire_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE();
+  TRACE_INDENT();
 
   //
   // I quite like the idea of fire falling to the level below
@@ -163,7 +163,7 @@ static void tp_fire_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
 
 auto tp_load_fire() -> bool
 {
-  TRACE();
+  TRACE_INDENT();
 
   auto *tp   = tp_load("fire"); // keep as string for scripts
   auto  name = tp_name(tp);

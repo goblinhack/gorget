@@ -10,7 +10,7 @@
 
 auto tp_load_border() -> bool
 {
-  TRACE();
+  TRACE_INDENT();
 
   std::string const name = "border";
   auto             *tp   = tp_load(name);

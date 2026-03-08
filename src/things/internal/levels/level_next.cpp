@@ -10,7 +10,7 @@
 
 auto tp_load_level_next() -> bool
 {
-  TRACE();
+  TRACE_INDENT();
 
   auto *tp   = tp_load("level_next"); // keep as string for scripts
   auto  name = tp_name(tp);

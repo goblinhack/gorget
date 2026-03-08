@@ -31,7 +31,7 @@ static void level_log_(Gamep g, Levelsp v, Levelp l, const char *fmt, va_list ar
   putf(MY_STDOUT, buf);
 }
 
-void LEVEL_LOG(Gamep g, Levelsp v, Levelp l, const char *fmt, ...)
+void level_log(Gamep g, Levelsp v, Levelp l, const char *fmt, ...)
 {
   TRACE();
 
@@ -41,7 +41,7 @@ void LEVEL_LOG(Gamep g, Levelsp v, Levelp l, const char *fmt, ...)
   va_end(args);
 }
 
-void LEVEL_DBG(Gamep g, Levelsp v, Levelp l, const char *fmt, ...)
+void level_dbg(Gamep g, Levelsp v, Levelp l, const char *fmt, ...)
 {
   TRACE();
 
@@ -71,7 +71,7 @@ static void level_warn_(Gamep g, Levelsp v, Levelp l, const char *fmt, va_list a
   wid_console_log(buf);
 }
 
-void LEVEL_WARN(Gamep g, Levelsp v, Levelp l, const char *fmt, ...)
+void level_warn(Gamep g, Levelsp v, Levelp l, const char *fmt, ...)
 {
   TRACE();
 
@@ -105,7 +105,7 @@ static void level_con_(Gamep g, Levelsp v, Levelp l, const char *fmt, va_list ar
   wid_console_log(buf);
 }
 
-void LEVEL_CON(Gamep g, Levelsp v, Levelp l, const char *fmt, ...)
+void level_con(Gamep g, Levelsp v, Levelp l, const char *fmt, ...)
 {
   TRACE();
 
@@ -128,7 +128,7 @@ static void level_err_(Gamep g, Levelsp v, Levelp l, const char *fmt, va_list ar
   ERR("%s", buf);
 }
 
-void LEVEL_ERR(Gamep g, Levelsp v, Levelp l, const char *fmt, ...)
+void level_err(Gamep g, Levelsp v, Levelp l, const char *fmt, ...)
 {
   TRACE();
 
@@ -163,7 +163,7 @@ static void level_topcon_(Gamep g, Levelsp v, Levelp l, const char *fmt, va_list
   wid_console_log(buf);
 }
 
-void LEVEL_TOPCON(Gamep g, Levelsp v, Levelp l, const char *fmt, ...)
+void level_topcon(Gamep g, Levelsp v, Levelp l, const char *fmt, ...)
 {
   TRACE();
 
@@ -191,7 +191,7 @@ static void level_botcon_(Gamep g, Levelsp v, Levelp l, const char *fmt, va_list
   wid_botcon_log(buf);
 }
 
-void LEVEL_BOTCON(Gamep g, Levelsp v, Levelp l, const char *fmt, ...)
+void level_botcon(Gamep g, Levelsp v, Levelp l, const char *fmt, ...)
 {
   TRACE();
 

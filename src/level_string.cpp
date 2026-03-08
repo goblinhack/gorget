@@ -33,7 +33,7 @@ auto level_string(Gamep g, Levelsp v, Levelp l, int w, int h) -> std::string
 {
   std::string out;
 
-  LEVEL_LOG(g, v, l, "string");
+  level_log(g, v, l, "string");
   TRACE_INDENT();
 
   for (int y = 0; y < h; y++) {

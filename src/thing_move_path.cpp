@@ -71,7 +71,7 @@ auto thing_move_path_apply(Gamep g, Levelsp v, Levelp l, Thingp t, std::vector< 
 {
   auto *ext_struct = thing_ext_struct(g, t);
   if (ext_struct == nullptr) {
-    THING_ERR(t, "no ext struct");
+    thing_err(t, "no ext struct");
     return false;
   }
 

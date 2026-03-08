@@ -45,7 +45,7 @@ static auto thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thing
   auto dist     = distance(monst_at, target);
   auto v_dist   = thing_distance_vision(me);
   if (v_dist == 0) {
-    THING_ERR(me, "choose target: monst has no vision distance");
+    thing_err(me, "choose target: monst has no vision distance");
     return false;
   }
 
@@ -81,7 +81,7 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
 
   auto *ext = thing_ext_struct(g, me);
   if (ext == nullptr) {
-    THING_ERR(me, "no ext pointer");
+    thing_err(me, "no ext pointer");
     return false;
   }
 
@@ -99,7 +99,7 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
   }
 
   if (radius == 0) {
-    THING_ERR(me, "unexpected value for radius");
+    thing_err(me, "unexpected value for radius");
     return false;
   }
 
@@ -168,7 +168,7 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
     }
 
     if (compiler_unused) {
-      THING_LOG(me, "best %d,%d score %d", x, y, score);
+      THING_DBG(me, "best %d,%d score %d", x, y, score);
     }
 
     thing_target_set(g, v, l, me, target);
@@ -489,7 +489,7 @@ void thing_monst_tick(Gamep g, Levelsp v, Levelp l, Thingp me)
   const int player_speed = thing_speed(player);
 
   if (compiler_unused) {
-    THING_LOG(me, "move_rem %d dt %f", thing_move_remaining(me), me->thing_dt);
+    THING_DBG(me, "move_rem %d dt %f", thing_move_remaining(me), me->thing_dt);
   }
 
   //

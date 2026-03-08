@@ -47,7 +47,7 @@ auto thing_projectile_get_direction(Gamep g, Levelsp v, Levelp l, Thingp t) -> f
 
 auto thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const fpoint target) -> bool
 {
-  THING_LOG(me, "fire projectile");
+  THING_DBG(me, "fire projectile");
   TRACE_INDENT();
 
   auto delta = target - make_fpoint(thing_at(me));
@@ -90,7 +90,7 @@ auto thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what,
   auto real_at = thing_real_at(projectile);
 
   if (compiler_unused) {
-    THING_LOG(projectile, "%f,%f", real_at.x, real_at.y);
+    THING_DBG(projectile, "%f,%f", real_at.x, real_at.y);
   }
 
   return true;
@@ -146,5 +146,5 @@ void thing_projectile_move(Gamep g, Levelsp v, Levelp l, Thingp t, float dt)
   thing_on_moved(g, v, l, t);
 
   thing_collision_handle_interpolated(g, v, l, t, old_at);
-  THING_LOG(t, "post move of delta %f,%f dt %f", delta.x, delta.y, t->thing_dt);
+  THING_DBG(t, "post move of delta %f,%f dt %f", delta.x, delta.y, t->thing_dt);
 }

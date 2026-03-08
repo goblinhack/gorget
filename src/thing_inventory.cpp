@@ -15,7 +15,7 @@ auto thing_inventory_is_empty(Gamep g, Levelsp v, Levelp l, Thingp player_or_mon
   TRACE();
 
   if (! thing_is_player(player_or_monst) && ! thing_is_monst(player_or_monst)) {
-    THING_ERR(player_or_monst, "unexpected thing for %s", __FUNCTION__);
+    thing_err(player_or_monst, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
 
@@ -52,7 +52,7 @@ auto thing_inventory_add(Gamep g, Levelsp v, Levelp l, Thingp new_item, Thingp p
   TRACE();
 
   if (! thing_is_player(player_or_monst) && ! thing_is_monst(player_or_monst)) {
-    THING_ERR(player_or_monst, "unexpected thing for %s", __FUNCTION__);
+    thing_err(player_or_monst, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
 
@@ -120,7 +120,7 @@ auto thing_inventory_remove(Gamep g, Levelsp v, Levelp l, Thingp drop_item, Thin
   TRACE();
 
   if (! thing_is_player(player_or_monst) && ! thing_is_monst(player_or_monst)) {
-    THING_ERR(player_or_monst, "unexpected thing for %s", __FUNCTION__);
+    thing_err(player_or_monst, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
 
@@ -163,7 +163,7 @@ void thing_inventory_dump(Gamep g, Levelsp v, Levelp l, Thingp player_or_monst)
   TRACE();
 
   if (! thing_is_player(player_or_monst) && ! thing_is_monst(player_or_monst)) {
-    THING_ERR(player_or_monst, "unexpected thing for %s", __FUNCTION__);
+    thing_err(player_or_monst, "unexpected thing for %s", __FUNCTION__);
     return;
   }
 
@@ -175,15 +175,15 @@ void thing_inventory_dump(Gamep g, Levelsp v, Levelp l, Thingp player_or_monst)
   FOR_ALL_INVENTORY_SLOTS(g, v, l, player_or_monst, slot, item)
   { //
     if (item == nullptr) {
-      THING_LOG(player_or_monst, "slot %d: -", _n_);
+      THING_DBG(player_or_monst, "slot %d: -", _n_);
       continue;
     }
 
     auto s = to_string(g, v, l, item);
     if (slot->count != 0) {
-      THING_LOG(player_or_monst, "slot %d: %s, count %d", _n_, s.c_str(), slot->count);
+      THING_DBG(player_or_monst, "slot %d: %s, count %d", _n_, s.c_str(), slot->count);
     } else {
-      THING_LOG(player_or_monst, "slot %d: %s", _n_, s.c_str());
+      THING_DBG(player_or_monst, "slot %d: %s", _n_, s.c_str());
     }
   }
 }

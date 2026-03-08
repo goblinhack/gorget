@@ -32,7 +32,7 @@ void thing_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, const spoint &val)
   if (thing_is_player(t)) {
     if (t->_at != valf) {
       l->request_to_update_per_tile_visibility = true;
-      // THING_TOPCON(t, "spoint");
+      // thing_topcon(t, "spoint");
     }
   }
 
@@ -61,7 +61,7 @@ void thing_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, const fpoint &val)
   if (thing_is_player(t)) {
     if (t->_at != val) {
       l->request_to_update_per_tile_visibility = true;
-      // THING_TOPCON(t, "fpoint");
+      // thing_topcon(t, "fpoint");
     }
   }
 
@@ -1087,7 +1087,7 @@ auto thing_is_carried_try_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp 
   TRACE_DEBUG();
 
   if (! thing_is_player(player_or_monst) && ! thing_is_monst(player_or_monst)) {
-    THING_ERR(player_or_monst, "unexpected thing for %s", __FUNCTION__);
+    thing_err(player_or_monst, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
 
@@ -1098,7 +1098,7 @@ auto thing_is_carried_try_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp 
 
   if (item->_is_carried == static_cast< int >(val)) {
     auto s = to_string(g, v, l, item);
-    THING_LOG(player_or_monst, "carry-try: %s (failed, already carried)", s.c_str());
+    THING_DBG(player_or_monst, "carry-try: %s (failed, already carried)", s.c_str());
     return true;
   }
   auto old_value    = item->_is_carried;
@@ -1118,7 +1118,7 @@ auto thing_is_carried_try_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp 
       item->_is_carried = old_value;
 
       auto s = to_string(g, v, l, item);
-      THING_LOG(player_or_monst, "carry-try: %s (failed, carry request)", s.c_str());
+      THING_DBG(player_or_monst, "carry-try: %s (failed, carry request)", s.c_str());
       return false;
     }
 
@@ -1132,7 +1132,7 @@ auto thing_is_carried_try_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp 
       item->_is_carried = old_value;
 
       auto s = to_string(g, v, l, item);
-      THING_LOG(player_or_monst, "carry-try: %s (failed, inventory add)", s.c_str());
+      THING_DBG(player_or_monst, "carry-try: %s (failed, inventory add)", s.c_str());
       return false;
     }
 
@@ -1147,7 +1147,7 @@ auto thing_is_carried_try_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp 
       item->_is_carried = old_value;
 
       auto s = to_string(g, v, l, item);
-      THING_LOG(player_or_monst, "drop-try: %s (failed, drop request)", s.c_str());
+      THING_DBG(player_or_monst, "drop-try: %s (failed, drop request)", s.c_str());
       return false;
     }
 
@@ -1158,7 +1158,7 @@ auto thing_is_carried_try_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp 
       item->_is_carried = old_value;
 
       auto s = to_string(g, v, l, item);
-      THING_LOG(player_or_monst, "drop-try: %s (failed, inventory remove)", s.c_str());
+      THING_DBG(player_or_monst, "drop-try: %s (failed, inventory remove)", s.c_str());
       return false;
     }
   }

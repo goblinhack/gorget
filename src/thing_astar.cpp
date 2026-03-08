@@ -137,14 +137,14 @@ void Astar::add_to_open(Node *n)
   auto  p = n->at;
   auto *o = &open[ p.x ][ p.y ];
   if (*o != nullptr) {
-    THING_ERR(me, "already in open");
+    thing_err(me, "already in open");
     return;
   }
   *o = n;
 
   auto result = open_nodes.insert(std::make_pair(n->cost, n));
   if (! result.second) {
-    THING_ERR(me, "open insert fail");
+    thing_err(me, "open insert fail");
     return;
   }
 }
@@ -154,14 +154,14 @@ void Astar::add_to_closed(Node *n)
   auto  p = n->at;
   auto *o = &closed[ p.x ][ p.y ];
   if (*o != nullptr) {
-    THING_ERR(me, "already in closed");
+    thing_err(me, "already in closed");
     return;
   }
   *o = n;
 
   auto result = closed_nodes.insert(std::make_pair(n->cost, n));
   if (! result.second) {
-    THING_ERR(me, "closed insert fail");
+    thing_err(me, "closed insert fail");
     return;
   }
 }
@@ -171,7 +171,7 @@ void Astar::remove_from_open(Node *n)
   auto  p = n->at;
   auto *o = &open[ p.x ][ p.y ];
   if (*o == nullptr) {
-    THING_ERR(me, "not in open");
+    thing_err(me, "not in open");
     return;
   }
   *o = nullptr;
@@ -474,7 +474,7 @@ auto Astar::solve(bool allow_diagonal) -> std::vector< spoint >
 
 void Astar::dump()
 {
-  THING_LOG(me, "ASTAR:");
+  THING_DBG(me, "ASTAR:");
   TRACE_INDENT();
 
   for (auto y = 0; y < MAP_HEIGHT; y++) {
@@ -503,7 +503,7 @@ void Astar::dump()
 
       s += buf;
     }
-    THING_LOG(me, "ASTAR:%s", s.c_str());
+    THING_DBG(me, "ASTAR:%s", s.c_str());
   }
 }
 

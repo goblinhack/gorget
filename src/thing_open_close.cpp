@@ -14,7 +14,7 @@ auto thing_open(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp player_or_monst)
   TRACE();
 
   if (! thing_is_player(player_or_monst) && ! thing_is_monst(player_or_monst)) {
-    THING_ERR(player_or_monst, "unexpected thing for %s", __FUNCTION__);
+    thing_err(player_or_monst, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
 
@@ -26,7 +26,7 @@ auto thing_open(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp player_or_monst)
   if (success) {
     if (thing_is_player(player_or_monst)) {
       level_tick_begin_requested(g, v, l, "player opened something");
-      THING_LOG(player_or_monst, "opened %s", to_string(g, v, l, me).c_str());
+      THING_DBG(player_or_monst, "opened %s", to_string(g, v, l, me).c_str());
     }
   }
 
@@ -41,7 +41,7 @@ auto thing_close(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp player_or_monst
   TRACE();
 
   if (! thing_is_player(player_or_monst) && ! thing_is_monst(player_or_monst)) {
-    THING_ERR(player_or_monst, "unexpected thing for %s", __FUNCTION__);
+    thing_err(player_or_monst, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
 
@@ -53,7 +53,7 @@ auto thing_close(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp player_or_monst
   if (success) {
     if (thing_is_player(player_or_monst)) {
       level_tick_begin_requested(g, v, l, "player closed something");
-      THING_LOG(player_or_monst, "closed %s", to_string(g, v, l, me).c_str());
+      THING_DBG(player_or_monst, "closed %s", to_string(g, v, l, me).c_str());
     }
   }
 

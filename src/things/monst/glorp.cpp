@@ -14,7 +14,7 @@
 
 static auto tp_glorp_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE();
+  TRACE_INDENT();
 
   if (thing_is_dead(t)) {
     return "dead glorp";
@@ -24,7 +24,7 @@ static auto tp_glorp_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> 
 
 static auto tp_glorp_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE();
+  TRACE_INDENT();
 
   return                                                                                                 //
       UI_INFO1_FMT_STR "Glorps are voracious masses of sentient slime.\n"                                //
@@ -34,7 +34,7 @@ static auto tp_glorp_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::
 
 static auto tp_glorp_assess_tile(Gamep g, Levelsp v, Levelp l, const spoint &at, Thingp t) -> ThingEnviron
 {
-  TRACE();
+  TRACE_INDENT();
 
   if (level_is_lava(g, v, l, at) != nullptr) {
     return THING_ENVIRON_HATES;

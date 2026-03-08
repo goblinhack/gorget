@@ -12,14 +12,14 @@
 
 static auto tp_water_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE();
+  TRACE_INDENT();
 
   return "shallow water";
 }
 
 auto tp_load_water() -> bool
 {
-  TRACE();
+  TRACE_INDENT();
 
   auto *tp   = tp_load("water"); // keep as string for scripts
   auto  name = tp_name(tp);

@@ -58,7 +58,7 @@ void thing_can_see_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
     return;
   }
 
-  THING_LOG(t, "can see:");
+  THING_DBG(t, "can see:");
   TRACE_INDENT();
 
   for (auto y = 0; y < MAP_HEIGHT; y++) {
@@ -89,7 +89,7 @@ void thing_can_see_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
       debug += ".";
     }
 
-    THING_LOG(t, "can see: %s", debug.c_str());
+    THING_DBG(t, "can see: %s", debug.c_str());
   }
 }
 
@@ -100,7 +100,7 @@ void thing_has_seen_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
     return;
   }
 
-  THING_LOG(t, "has seen:");
+  THING_DBG(t, "has seen:");
   TRACE_INDENT();
 
   for (auto y = 0; y < MAP_HEIGHT; y++) {
@@ -126,6 +126,6 @@ void thing_has_seen_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
       debug += ".";
     }
 
-    THING_LOG(t, "has seen: %s", debug.c_str());
+    THING_DBG(t, "has seen: %s", debug.c_str());
   }
 }

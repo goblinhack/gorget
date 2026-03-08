@@ -15,28 +15,28 @@
 
 static auto tp_kobalos_mob_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE();
+  TRACE_INDENT();
 
   return "kobalos spawning grounds";
 }
 
 static auto tp_kobalos_mob_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE();
+  TRACE_INDENT();
 
   return UI_INFO1_FMT_STR "This hideous, puslating creation is a kobalos spawning device.";
 }
 
 static void tp_kobalos_mob_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 {
-  TRACE();
+  TRACE_INDENT();
 
   thing_sound_play(g, v, l, t, "explosion");
 }
 
 static void tp_kobalos_mob_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE();
+  TRACE_INDENT();
 
   if (d100() < 90) {
     return;

@@ -265,7 +265,7 @@ auto thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p) -> Thingp
   auto needs_ext_memory = tp_is_mob(tp) || tp_is_monst(tp) || tp_is_player(tp) || (tp_distance_vision_get(tp) != 0);
   if (needs_ext_memory) {
     if (v->thing_ext_count >= THING_EXT_MAX - 1) {
-      TP_LOG(tp, "out of ext thing memory");
+      tp_log(tp, "out of ext thing memory");
       return nullptr;
     }
   }
@@ -273,7 +273,7 @@ auto thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p) -> Thingp
   auto needs_light_memory = tp_is_light_source(tp) || tp_is_player(tp);
   if (needs_light_memory) {
     if (v->thing_light_count >= THING_LIGHT_MAX - 1) {
-      TP_LOG(tp, "out of light thing memory");
+      tp_log(tp, "out of light thing memory");
       return nullptr;
     }
   }
@@ -370,7 +370,7 @@ void thing_free(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 
   if (compiler_unused) {
-    THING_LOG(t, "free");
+    THING_DBG(t, "free");
   }
 
   if (v->is_generating_levels) {

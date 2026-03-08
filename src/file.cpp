@@ -40,7 +40,7 @@ auto file_load(const char *filename, int *outlen) -> uint8_t *
       if (static_cast< bool >(file_exists_and_is_newer_than(filename, g_exec_full_path_and_name))) {
         out = file_io_read_if_exists(filename, outlen);
         if (out != nullptr) {
-          FILE_LOG("Read file %s (newer than exec)", filename);
+          file_log("Read file %s (newer than exec)", filename);
           return out;
         }
       }
@@ -48,7 +48,7 @@ auto file_load(const char *filename, int *outlen) -> uint8_t *
       if (static_cast< bool >(file_exists_and_is_newer_than(filename, ".o/file.o"))) {
         out = file_io_read_if_exists(filename, outlen);
         if (out != nullptr) {
-          FILE_LOG("Read file %s (newer than build)", filename);
+          file_log("Read file %s (newer than build)", filename);
           return out;
         }
       }
@@ -56,14 +56,14 @@ auto file_load(const char *filename, int *outlen) -> uint8_t *
       if (static_cast< bool >(file_exists_and_is_newer_than(filename, "src/.o/file.o"))) {
         out = file_io_read_if_exists(filename, outlen);
         if (out != nullptr) {
-          FILE_LOG("Read file %s (newer than src build)", filename);
+          file_log("Read file %s (newer than src build)", filename);
           return out;
         }
       }
     } else {
       out = file_io_read_if_exists(filename, outlen);
       if (out != nullptr) {
-        FILE_LOG("Read file %s (exists locally)", filename);
+        file_log("Read file %s (exists locally)", filename);
         return out;
       }
     }
@@ -107,7 +107,7 @@ auto file_load(const char *filename, int *outlen) -> uint8_t *
 
   auto *r = ramdisk_load(filename, outlen);
   if (r != nullptr) {
-    FILE_LOG("Read (ramdisk) %s, %d Mb, %d bytes", filename, *outlen / (1024 * 1024), *outlen);
+    file_log("Read (ramdisk) %s, %d Mb, %d bytes", filename, *outlen / (1024 * 1024), *outlen);
 
     if (alt_filename != nullptr) {
       MYFREE(alt_filename);
@@ -219,7 +219,7 @@ auto file_io_read(const char *filename, int *out_len) -> uint8_t *
     *out_len = len;
   }
 
-  FILE_LOG("Read %s, %d Mb, %d bytes", filename, len / (1024 * 1024), len);
+  file_log("Read %s, %d Mb, %d bytes", filename, len / (1024 * 1024), len);
 
   fclose(file);
 
@@ -241,7 +241,7 @@ auto file_write(const char *filename, uint8_t *buffer, int len) -> int
 
   rc = fwrite(buffer, len, 1, file);
 
-  FILE_LOG("Saved %s, %d bytes", filename, len);
+  file_log("Saved %s, %d bytes", filename, len);
 
   /*
    * Check written one object.
@@ -425,7 +425,7 @@ auto file_exists_and_is_newer_than(const char *filename1, const char *filename2)
   return static_cast< uint8_t >(delta > 0);
 }
 
-void FILE_LOG(const char *fmt, ...)
+void file_log(const char *fmt, ...)
 {
   va_list args = {};
 
@@ -434,7 +434,7 @@ void FILE_LOG(const char *fmt, ...)
   va_end(args);
 }
 
-void FILE_DBG(const char *fmt, ...)
+void file_dbg(const char *fmt, ...)
 {
   va_list args = {};
 

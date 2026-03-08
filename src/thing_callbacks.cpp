@@ -297,14 +297,14 @@ auto thing_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp playe
     return true;
   }
   if (! thing_is_player(player_or_monst) && ! thing_is_monst(player_or_monst)) {
-    THING_ERR(player_or_monst, "unexpected thing for %s", __FUNCTION__);
+    thing_err(player_or_monst, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
   auto ret = tp->on_open_request(g, v, l, me, player_or_monst);
   if (ret) {
-    THING_LOG(me, "opens");
+    THING_DBG(me, "opens");
   } else {
-    THING_LOG(me, "fails to open");
+    THING_DBG(me, "fails to open");
   }
   return ret;
 }
@@ -334,14 +334,14 @@ auto thing_on_close_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp play
     return true;
   }
   if (! thing_is_player(player_or_monst) && ! thing_is_monst(player_or_monst)) {
-    THING_ERR(player_or_monst, "unexpected thing for %s", __FUNCTION__);
+    thing_err(player_or_monst, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
   auto ret = tp->on_close_request(g, v, l, me, player_or_monst);
   if (ret) {
-    THING_LOG(me, "closes");
+    THING_DBG(me, "closes");
   } else {
-    THING_LOG(me, "fails to close");
+    THING_DBG(me, "fails to close");
   }
   return ret;
 }
@@ -371,7 +371,7 @@ auto thing_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp play
     return true;
   }
   if (! thing_is_player(player_or_monst) && ! thing_is_monst(player_or_monst)) {
-    THING_ERR(player_or_monst, "unexpected thing for %s", __FUNCTION__);
+    thing_err(player_or_monst, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
   return tp->on_carry_request(g, v, l, me, player_or_monst);
@@ -402,7 +402,7 @@ auto thing_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp playe
     return true;
   }
   if (! thing_is_player(player_or_monst) && ! thing_is_monst(player_or_monst)) {
-    THING_ERR(player_or_monst, "unexpected thing for %s", __FUNCTION__);
+    thing_err(player_or_monst, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
   return tp->on_drop_request(g, v, l, me, player_or_monst);
@@ -550,7 +550,7 @@ void thing_on_shoved(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp player_or_m
     return;
   }
   if (! thing_is_player(player_or_monst) && ! thing_is_monst(player_or_monst)) {
-    THING_ERR(player_or_monst, "unexpected thing for %s", __FUNCTION__);
+    thing_err(player_or_monst, "unexpected thing for %s", __FUNCTION__);
     return;
   }
   tp->on_shoved(g, v, l, me, player_or_monst);

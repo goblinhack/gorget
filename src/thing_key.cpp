@@ -21,7 +21,7 @@ auto thing_collect_key(Gamep g, Levelsp v, Levelp l, Thingp it, Thingp player_or
   }
 
   if (! thing_is_player(player_or_monst) && ! thing_is_monst(player_or_monst)) {
-    THING_ERR(player_or_monst, "unexpected thing for %s", __FUNCTION__);
+    thing_err(player_or_monst, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
 

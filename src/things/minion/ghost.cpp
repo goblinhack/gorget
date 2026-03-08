@@ -13,14 +13,14 @@
 
 static auto tp_ghost_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE();
+  TRACE_INDENT();
 
   return "vengeful spirit";
 }
 
 static auto tp_ghost_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE();
+  TRACE_INDENT();
 
   return                                                              //
       UI_INFO1_FMT_STR "The spirit of one less fortunate than you.\n" //
@@ -29,7 +29,7 @@ static auto tp_ghost_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::
 
 static auto tp_ghost_assess_tile(Gamep g, Levelsp v, Levelp l, const spoint &at, Thingp t) -> ThingEnviron
 {
-  TRACE();
+  TRACE_INDENT();
 
   if (level_is_water(g, v, l, at) != nullptr) {
     return THING_ENVIRON_HATES;

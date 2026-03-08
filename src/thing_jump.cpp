@@ -88,7 +88,7 @@ auto thing_jump_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to, bool warn)
   //
   thing_jump_truncate(g, v, l, t, to);
 
-  THING_LOG(t, "jump to %d,%d", to.x, to.y);
+  THING_DBG(t, "jump to %d,%d", to.x, to.y);
   TRACE_INDENT();
 
   //

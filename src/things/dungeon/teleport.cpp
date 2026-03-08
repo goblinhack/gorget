@@ -12,21 +12,21 @@
 
 static auto tp_teleport_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE();
+  TRACE_INDENT();
 
   return "teleport";
 }
 
 static auto tp_teleport_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE();
+  TRACE_INDENT();
 
   return UI_INFO1_FMT_STR "Run of the mill teleport.";
 }
 
 auto tp_load_teleport() -> bool
 {
-  TRACE();
+  TRACE_INDENT();
 
   auto *tp   = tp_load("teleport"); // keep as string for scripts
   auto  name = tp_name(tp);

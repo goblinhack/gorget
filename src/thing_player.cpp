@@ -308,7 +308,7 @@ void player_state_change(Gamep g, Levelsp v, Levelp l, PlayerState new_state)
   //
   // Why oh why change state
   //
-  THING_LOG(me, "state change: %s -> %s", player_state_to_string(old_state).c_str(), player_state_to_string(new_state).c_str());
+  THING_DBG(me, "state change: %s -> %s", player_state_to_string(old_state).c_str(), player_state_to_string(new_state).c_str());
   TRACE_INDENT();
 
   switch (new_state) {
@@ -415,11 +415,11 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
       // Wait for confirmation.
       //
       if (val) {
-        THING_LOG(me, "confirmed move");
+        THING_DBG(me, "confirmed move");
         TRACE_INDENT();
         player_state_change(g, v, l, PLAYER_STATE_FOLLOWING_PATH);
       } else {
-        THING_LOG(me, "declined move");
+        THING_DBG(me, "declined move");
         TRACE_INDENT();
         player_state_change(g, v, l, PLAYER_STATE_NORMAL);
       }
@@ -443,7 +443,7 @@ auto player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, con
     return false;
   }
 
-  THING_LOG(me, "player move");
+  THING_DBG(me, "player move");
   TRACE_INDENT();
 
   //
@@ -829,7 +829,7 @@ void player_warp_to_specific_level(Gamep g, Levelsp v, LevelNum level_num)
 
   auto *new_level = level_change(g, v, level_num);
   if (new_level == nullptr) {
-    THING_ERR(me, "failed to move me to level %u", level_num);
+    thing_err(me, "failed to move me to level %u", level_num);
     return;
   }
 

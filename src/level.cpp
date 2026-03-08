@@ -92,7 +92,7 @@ auto level_match_contents(Gamep g, Levelsp v, Levelp l, Testp t, int w, int h, c
 {
   TRACE();
 
-  LEVEL_LOG(g, v, l, "match");
+  level_log(g, v, l, "match");
   TRACE_INDENT();
 
   std::string found = level_string(g, v, l, w, h);
@@ -239,7 +239,7 @@ void levels_finalize(Gamep g, Levelsp v)
 
 void level_enter(Gamep g, Levelsp v, Levelp l)
 {
-  LEVEL_LOG(g, v, l, "Level entered");
+  level_log(g, v, l, "Level entered");
   TRACE_INDENT();
 
   l->player_has_entered_level = true;
@@ -257,7 +257,7 @@ void level_is_completed_by_player_exiting(Gamep g, Levelsp v, Levelp l)
   }
   l->player_completed_level_via_exit = true;
 
-  LEVEL_LOG(g, v, l, "Level completed");
+  level_log(g, v, l, "Level completed");
   TRACE_INDENT();
 
   auto *player_struct = thing_player_struct(g);
@@ -380,7 +380,7 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
   FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
   {
     //
-    THING_ERR(t, "thing still on level after destroying it");
+    thing_err(t, "thing still on level after destroying it");
   }
 
   //

@@ -24,17 +24,15 @@ static void thing_log_(Thingp t, const char *fmt, va_list args)
   buf[ 0 ] = '\0';
   get_timestamp(buf, MAXLONGSTR);
   len = static_cast< int >(strlen(buf));
-  IF_DEBUG
-  {
-    snprintf(buf + len, MAXLONGSTR - len, "[%-50s]: %*s", to_string(nullptr, nullptr, nullptr, t).c_str(), g_callframes_indent, "");
-    len = static_cast< int >(strlen(buf));
-  }
+  snprintf(buf + len, MAXLONGSTR - len, "[%-50s]: %*s", to_string(nullptr, nullptr, nullptr, t).c_str(), g_callframes_indent, "");
+  len = static_cast< int >(strlen(buf));
+
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
   putf(MY_STDOUT, buf);
 }
 
-void THING_LOG(Thingp t, const char *fmt, ...)
+void thing_log(Thingp t, const char *fmt, ...)
 {
   TRACE();
 
@@ -51,7 +49,7 @@ void THING_LOG(Thingp t, const char *fmt, ...)
   va_end(args);
 }
 
-void THING_DBG(Thingp t, const char *fmt, ...)
+void thing_dbg(Thingp t, const char *fmt, ...)
 {
   TRACE();
 
@@ -88,7 +86,7 @@ static void thing_warn_(Thingp t, const char *fmt, va_list args)
   wid_console_log(buf);
 }
 
-void THING_WARN(Thingp t, const char *fmt, ...)
+void thing_warn(Thingp t, const char *fmt, ...)
 {
   TRACE();
 
@@ -122,7 +120,7 @@ static void thing_con_(Thingp t, const char *fmt, va_list args)
   wid_console_log(buf);
 }
 
-void THING_CON(Thingp t, const char *fmt, ...)
+void thing_con(Thingp t, const char *fmt, ...)
 {
   TRACE();
 
@@ -145,7 +143,7 @@ static void thing_err_(Thingp t, const char *fmt, va_list args)
   ERR("%s", buf);
 }
 
-void THING_ERR(Thingp t, const char *fmt, ...)
+void thing_err(Thingp t, const char *fmt, ...)
 {
   TRACE();
 
@@ -180,7 +178,7 @@ static void thing_topcon_(Thingp t, const char *fmt, va_list args)
   wid_console_log(buf);
 }
 
-void THING_TOPCON(Thingp t, const char *fmt, ...)
+void thing_topcon(Thingp t, const char *fmt, ...)
 {
   TRACE();
 
@@ -208,7 +206,7 @@ static void thing_botcon_(Thingp t, const char *fmt, va_list args)
   wid_botcon_log(buf);
 }
 
-void THING_BOTCON(Thingp t, const char *fmt, ...)
+void thing_botcon(Thingp t, const char *fmt, ...)
 {
   TRACE();
 

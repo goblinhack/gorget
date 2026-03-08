@@ -8,6 +8,7 @@
 #include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_thing_callbacks.hpp"
+#include "my_thing_inlines.hpp"
 #include "my_tile.hpp"
 #include "my_tp.hpp"
 #include "my_tps.hpp"
@@ -15,14 +16,14 @@
 
 static auto tp_bridge_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE();
+  TRACE_INDENT();
 
   return "rickety bridge";
 }
 
 static void tp_bridge_destroy_adj(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE();
+  TRACE_INDENT();
 
   //
   // Replace the bridge with the most populous surrounding hazard
@@ -88,19 +89,27 @@ static void tp_bridge_destroy_adj(Gamep g, Levelsp v, Levelp l, Thingp t)
 
 static void tp_bridge_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 {
-  TRACE();
+  TRACE_INDENT();
 
   tp_bridge_destroy_adj(g, v, l, t);
 
   auto *player = thing_player(g);
   if (player != nullptr) {
-    auto at = thing_at(player);
+    auto player_at = thing_at(player);
     if (thing_on_same_level_as_player(g, v, t)) {
-      if (thing_vision_can_see_tile(g, v, l, player, at)) {
+      if (thing_at(t) == player_at) {
+        TOPCON("The bridge collapses under you!");
+      } else if (thing_vision_can_see_tile(g, v, l, player, player_at)) {
         TOPCON("The bridge collapses!");
       } else {
         TOPCON("You hear a bridge collapse!");
       }
+    } else if (thing_is_falling(player)) {
+      //
+      // This happens for adjacent bridge tiles being destroyed when the
+      // player is falling. I think we can avoid a message here elese we
+      // see multiple of the same message.
+      //
     } else {
       TOPCON("You hear a very distant bridge collapse!");
     }
@@ -109,14 +118,14 @@ static void tp_bridge_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEven
 
 static void tp_bridge_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE();
+  TRACE_INDENT();
 
   tp_bridge_destroy_adj(g, v, l, t);
 }
 
 static void tp_bridge_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE();
+  TRACE_INDENT();
 
   //
   // If we fell into another chasm, don't kill the thing yet
@@ -134,7 +143,7 @@ static void tp_bridge_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
 
 auto tp_load_bridge() -> bool
 {
-  TRACE();
+  TRACE_INDENT();
 
   auto *tp   = tp_load("bridge"); // keep as string for scripts
   auto  name = tp_name(tp);

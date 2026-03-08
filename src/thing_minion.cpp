@@ -50,7 +50,7 @@ auto thing_minion_get_mob_dmap(Gamep g, Levelsp v, Levelp l, Thingp me) -> Dmap 
 
   auto *mob_ext = thing_ext_struct(g, mob);
   if (mob_ext == nullptr) {
-    THING_ERR(me, "mob has no ext memory");
+    thing_err(me, "mob has no ext memory");
     return nullptr;
   }
 
@@ -69,7 +69,7 @@ auto thing_minion_detach_me_from_mob(Gamep g, Levelsp v, Levelp l, Thingp me) ->
   }
 
   if (! thing_is_minion(me)) {
-    THING_ERR(me, "non minion trying to detach itself");
+    thing_err(me, "non minion trying to detach itself");
     return false;
   }
 
@@ -78,7 +78,7 @@ auto thing_minion_detach_me_from_mob(Gamep g, Levelsp v, Levelp l, Thingp me) ->
     return false; // can be normal if detached
   }
 
-  THING_LOG(me, "detach me from mob");
+  THING_DBG(me, "detach me from mob");
   TRACE_INDENT();
 
   return thing_mob_detach_minion(g, v, l, mob, me);
@@ -150,7 +150,7 @@ auto thing_minion_choose_target_near_mob(Gamep g, Levelsp v, Levelp l, Thingp me
   //
   auto radius = thing_distance_minion_from_mob_max(me);
   if (radius == 0) {
-    THING_ERR(me, "unexpected value for radius");
+    thing_err(me, "unexpected value for radius");
     return false;
   }
 

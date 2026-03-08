@@ -23,7 +23,7 @@ auto file_load(const char *filename, int *outlen) -> uint8_t *;
 #define SET_BINARY_MODE(file)
 #endif
 
-void FILE_LOG(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
-void FILE_DBG(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
+void file_log(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
+void file_dbg(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 
 #endif

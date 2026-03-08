@@ -39,7 +39,7 @@ auto level_light_blocker_at(Gamep g, Levelsp v, Levelp l, const spoint &pov) -> 
 
     if (thing_is_obs_to_vision(it)) {
       if (compiler_unused) {
-        THING_LOG(it, "block");
+        THING_DBG(it, "block");
       }
       return it;
     }

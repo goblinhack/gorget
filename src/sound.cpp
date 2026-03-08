@@ -35,10 +35,10 @@ public:
   //
   int concurrent_max = {1};
 
-  Mix_Chunk     *chunk = {};
-  uint8_t *data  = {};
-  int            len   = {};
-  float          volume {};
+  Mix_Chunk *chunk = {};
+  uint8_t   *data  = {};
+  int        len   = {};
+  float      volume {};
 };
 
 static std::unordered_map< std::string, class Sound * > all_sound;
@@ -56,6 +56,7 @@ static std::unordered_map< int, Playing > already_playing;
 
 static void sound_finished(int channel)
 {
+  DBG2("Sound channel %d finished", channel);
   if (channel != -1) {
     already_playing[ channel ].alias = "";
   }
@@ -64,7 +65,7 @@ static void sound_finished(int channel)
 auto sound_init() -> bool
 {
   TRACE();
-  Mix_AllocateChannels(8);
+  Mix_AllocateChannels(16);
   Mix_ChannelFinished(sound_finished);
 
   sound_init_done = true;
@@ -203,6 +204,7 @@ auto sound_find(const std::string &alias) -> bool
 
   auto chan = Mix_PlayChannel(-1, s->chunk, 0 /* loops */);
   if (chan == -1) {
+    DBG("Failed to play sound %s volume %d channel %d: %s", alias.c_str(), static_cast< int >(volume), chan, Mix_GetError());
     return false;
   }
 

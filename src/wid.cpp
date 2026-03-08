@@ -106,7 +106,7 @@ static void wid_tree_detach(Widp w);
 static void wid_tree_insert(Widp w);
 static void wid_tree_attach(Widp w);
 
-static void WID_DBG(Widp w, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+static void wid_dbg(Widp w, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 
 //
 // Child sort priority
@@ -1655,7 +1655,7 @@ void wid_focus_lock(Gamep g, Widp w)
   }
 
   if (w != nullptr) {
-    WID_DBG(w, "focus locked");
+    wid_dbg(w, "focus locked");
   }
 
   wid_focus_locked = w;
@@ -2003,7 +2003,7 @@ static auto wid_new(Widp parent) -> Widp
 
   w->visible = 1U;
   wid_set_style(w, UI_WID_STYLE_NORMAL);
-  WID_DBG(w, "new");
+  wid_dbg(w, "new");
 
   return w;
 }
@@ -2022,7 +2022,7 @@ static auto wid_new() -> Widp
 
   w->visible = 1U;
   wid_set_style(w, UI_WID_STYLE_NORMAL);
-  WID_DBG(w, "new");
+  wid_dbg(w, "new");
 
   return w;
 }
@@ -2096,7 +2096,7 @@ static void wid_destroy_immediate(Gamep g_maybe_null, Widp w)
 {
   TRACE();
 
-  WID_DBG(w, "destroy immediate");
+  wid_dbg(w, "destroy immediate");
 
   //
   // If removing a top level widget, choose a new focus.
@@ -2158,7 +2158,7 @@ static void wid_destroy_delay(Gamep g, Widp *wp, int delay)
     return;
   }
 
-  WID_DBG(w, "destroy delay");
+  wid_dbg(w, "destroy delay");
 
   (*wp) = nullptr;
 
@@ -2243,7 +2243,7 @@ auto wid_new_container(Gamep g, Widp parent, const std::string &name) -> Widp
 #endif
 #endif
 
-  WID_DBG(w, "%s", __FUNCTION__);
+  wid_dbg(w, "%s", __FUNCTION__);
 
   wid_set_name(w, name);
   wid_set_mode(w, WID_MODE_NORMAL);
@@ -2256,7 +2256,7 @@ auto wid_new_container(Gamep g, Widp parent, const std::string &name) -> Widp
   // then this will be in front
   //
   wid_raise(g, w);
-  WID_DBG(w, "new");
+  wid_dbg(w, "new");
 
   return w;
 }
@@ -2276,7 +2276,7 @@ auto wid_new_window(Gamep g, const std::string &name) -> Widp
 
   w->to_string = string_sprintf("%s[%p]", name.c_str(), (void *) w);
 
-  WID_DBG(w, "%s", __FUNCTION__);
+  wid_dbg(w, "%s", __FUNCTION__);
 
   wid_set_mode(w, WID_MODE_NORMAL);
   wid_set_name(w, name);
@@ -2289,7 +2289,7 @@ auto wid_new_window(Gamep g, const std::string &name) -> Widp
   // then this will be in front
   //
   wid_raise(g, w);
-  WID_DBG(w, "new");
+  wid_dbg(w, "new");
 
   return w;
 }
@@ -2316,7 +2316,7 @@ auto wid_new_square_button(Gamep g, Widp parent, const std::string &name) -> Wid
 #endif
 #endif
 
-  WID_DBG(w, "%s", __FUNCTION__);
+  wid_dbg(w, "%s", __FUNCTION__);
 
   wid_set_name(w, name);
   wid_set_shape_square(w);
@@ -2334,7 +2334,7 @@ auto wid_new_square_button(Gamep g, Widp parent, const std::string &name) -> Wid
   // then this will be in front
   //
   wid_raise(g, w);
-  WID_DBG(w, "new");
+  wid_dbg(w, "new");
 
   return w;
 }
@@ -2361,7 +2361,7 @@ auto wid_new_plain(Gamep g, Widp parent, const std::string &name) -> Widp
 #endif
 #endif
 
-  WID_DBG(w, "%s", __FUNCTION__);
+  wid_dbg(w, "%s", __FUNCTION__);
 
   wid_set_name(w, name);
   wid_set_shape_square(w);
@@ -2377,7 +2377,7 @@ auto wid_new_plain(Gamep g, Widp parent, const std::string &name) -> Widp
   // then this will be in front
   //
   wid_raise(g, w);
-  WID_DBG(w, "new");
+  wid_dbg(w, "new");
 
   return w;
 }
@@ -2401,7 +2401,7 @@ static auto wid_new_scroll_trough(Gamep g, Widp parent) -> Widp
 
   w->to_string = string_sprintf("[%p] scroll trough (parent %s[%p])", (void *) w, parent->to_string.c_str(), (void *) parent);
 
-  WID_DBG(w, "%s", __FUNCTION__);
+  wid_dbg(w, "%s", __FUNCTION__);
 
   wid_set_mode(w, WID_MODE_NORMAL);
   {
@@ -2422,7 +2422,7 @@ static auto wid_new_scroll_trough(Gamep g, Widp parent) -> Widp
   wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
 
   wid_set_style(w, UI_WID_STYLE_NORMAL);
-  WID_DBG(w, "new");
+  wid_dbg(w, "new");
 
   return w;
 }
@@ -2450,7 +2450,7 @@ static auto wid_new_scroll_bar(Gamep g, Widp parent, const std::string &name, Wi
     w->to_string = string_sprintf("%s, %s[%p]", name.c_str(), "horiz scroll bar", (void *) w);
   }
 
-  WID_DBG(w, "%s", __FUNCTION__);
+  wid_dbg(w, "%s", __FUNCTION__);
 
   wid_set_name(w, name);
 
@@ -2492,7 +2492,7 @@ static auto wid_new_scroll_bar(Gamep g, Widp parent, const std::string &name, Wi
   wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
 
   wid_set_style(w, UI_WID_STYLE_NORMAL);
-  WID_DBG(w, "new");
+  wid_dbg(w, "new");
 
   return w;
 }
@@ -5265,7 +5265,7 @@ static void wid_gc(Gamep g, Widp w)
 {
   TRACE();
 
-  WID_DBG(w, "gc");
+  wid_dbg(w, "gc");
 
   if (static_cast< bool >(w->being_destroyed)) {
     wid_destroy_immediate(g, w);
@@ -5580,7 +5580,7 @@ static void wid_log_(Widp w, const char *fmt, va_list args)
   putf(MY_STDOUT, buf);
 }
 
-void WID_DBG(Widp w, const char *fmt, ...)
+void wid_dbg(Widp w, const char *fmt, ...)
 {
   va_list args = {};
 

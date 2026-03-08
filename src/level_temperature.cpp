@@ -200,8 +200,8 @@ void level_thing_pair_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp a,
   int const Tb = thing_temperature(b);
 
   if (compiler_unused) {
-    THING_LOG(a, "a Ta %d", Ta);
-    THING_LOG(b, "b Tb %d", Tb);
+    THING_DBG(a, "a Ta %d", Ta);
+    THING_DBG(b, "b Tb %d", Tb);
   }
 
   //
@@ -309,8 +309,8 @@ void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
         auto *a = a_pair.first;
         auto *b = a_pair.second;
 
-        THING_LOG(a, "A before prio %d", a->_priority + b->_priority);
-        THING_LOG(b, "B before");
+        THING_DBG(a, "A before prio %d", a->_priority + b->_priority);
+        THING_DBG(b, "B before");
       }
     }
 
@@ -330,8 +330,8 @@ void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
         auto *a = a_pair.first;
         auto *b = a_pair.second;
 
-        THING_LOG(a, "A after prio %d", a->_priority + b->_priority);
-        THING_LOG(b, "B after");
+        THING_DBG(a, "A after prio %d", a->_priority + b->_priority);
+        THING_DBG(b, "B after");
       }
     }
 
