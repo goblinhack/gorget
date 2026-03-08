@@ -95,6 +95,15 @@ static void tp_bridge_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEven
 
   auto *player = thing_player(g);
   if (player != nullptr) {
+    if (thing_is_falling(player)) {
+      //
+      // This happens for adjacent bridge tiles being destroyed when the
+      // player is falling. I think we can avoid a message here elese we
+      // see multiple of the same message.
+      //
+      return;
+    }
+
     auto player_at = thing_at(player);
     if (thing_on_same_level_as_player(g, v, t)) {
       if (thing_at(t) == player_at) {
@@ -104,12 +113,6 @@ static void tp_bridge_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEven
       } else {
         TOPCON("You hear a bridge collapse!");
       }
-    } else if (thing_is_falling(player)) {
-      //
-      // This happens for adjacent bridge tiles being destroyed when the
-      // player is falling. I think we can avoid a message here elese we
-      // see multiple of the same message.
-      //
     } else {
       TOPCON("You hear a very distant bridge collapse!");
     }
