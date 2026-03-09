@@ -28,8 +28,8 @@
 #endif
 
 struct Callframe {
-  const char    *func;
-  uint16_t line;
+  const char *func;
+  uint16_t    line;
 };
 
 //
@@ -45,8 +45,8 @@ enum { MAXCALLFRAME = 256 };
 #define USE_THREADS
 
 extern thread_local struct Callframe callframes[ MAXCALLFRAME ];
-extern thread_local uint8_t    g_callframes_depth;
-extern thread_local uint8_t    g_callframes_indent;
+extern thread_local uint8_t          g_callframes_depth;
+extern thread_local uint8_t          g_callframes_indent;
 
 class TracerT
 {

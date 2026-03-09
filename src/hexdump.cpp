@@ -23,12 +23,12 @@ enum { HEX_DUMP_WIDTH = (16) };
 //
 void hexdump(const uint8_t *addr, size_t len)
 {
-  int           skipping_blanks         = 0;
-  uint8_t empty[ HEX_DUMP_WIDTH ] = {0};
-  uint8_t buf[ HEX_DUMP_WIDTH + 1 ];
-  auto         *pc = const_cast< uint8_t * >(addr);
-  size_t        i  = 0;
-  unsigned int  x  = 0;
+  int          skipping_blanks         = 0;
+  uint8_t      empty[ HEX_DUMP_WIDTH ] = {0};
+  uint8_t      buf[ HEX_DUMP_WIDTH + 1 ];
+  auto        *pc = const_cast< uint8_t * >(addr);
+  size_t       i  = 0;
+  unsigned int x  = 0;
 
   std::cout << std::dec << len << " bytes:" << '\n';
 

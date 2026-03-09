@@ -1,28 +1,33 @@
 bugs
 ----
 dead kobalos are piling up
+
+essential features
+------------------
 stamina needed to avoid fast jump loops
 limit firing to 1
-
-basic features
---------------
+score? score is hard coded to 666
+remove minimap from main screen
 hard coded to fire fireball
-stealth
-squeal noises for monsters
-score is hard coded to 666
 chests need to contain something and those items destroyed when the chest is
+spell points to collect
+emergency teleport
+minimap has to show wizards
+wizards have to move levels
+monsters cause damage
+traps must do something
+spells need to have a cost that can be influenced by specializing
 
 later features
 --------------
+take on limitations at start e.g one leg, limited jump, reduced spell cost
 projectile collision with projectile
 bogs / traps / gas effects
 ghosts can only be hit when solid
 bushes quiver when monster is behind? / items hiding in bushes 
 boulders that can crush
 magic
-do not allow the player to land in an enclosed area; climb? digging / blind jump/ emergency teleport
 shrines that reduce spell points
-spell points to collect
 anti magic areas
 anti anti magic areas
 sacrifice a leg / soul to progress

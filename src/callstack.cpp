@@ -12,8 +12,8 @@
 #include "my_wids.hpp"
 
 thread_local struct Callframe callframes[ MAXCALLFRAME ];
-thread_local uint8_t    g_callframes_depth;
-thread_local uint8_t    g_callframes_indent;
+thread_local uint8_t          g_callframes_depth;
+thread_local uint8_t          g_callframes_indent;
 
 auto callstack_string() -> std::string
 {

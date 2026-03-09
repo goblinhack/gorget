@@ -24,7 +24,7 @@ static auto level_populated(Gamep g, Levelsp v, Levelp l)
     thing_on_level_populated(g, v, l, t);
 
     if (thing_is_grouped_thing(t)) {
-      if (t->group_id == 0u) {
+      if (t->group_id == 0U) {
         level_group_things(g, v, l, t);
       }
     }

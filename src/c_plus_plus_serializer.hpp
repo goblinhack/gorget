@@ -130,7 +130,7 @@ static inline auto operator<<(std::ostream &out, Bits< const char & > const v) -
     uint8_t _b = 0;
     uint8_t _c = 0;
     uint8_t _d = 0;
-    _a               = (v.t & (0xff000000)) >> 24;
+    _a         = (v.t & (0xff000000)) >> 24;
     out << bits(_a);
     _b = (v.t & (0x00ff0000)) >> 16;
     out << bits(_b);
@@ -147,7 +147,7 @@ static inline auto operator<<(std::ostream &out, Bits< const char & > const v) -
   } else if (sizeof(char) == 2) {
     uint8_t _a = 0;
     uint8_t _b = 0;
-    _a               = (v.t & (0xff00)) >> 8;
+    _a         = (v.t & (0xff00)) >> 8;
     out << bits(_a);
     _b = (v.t & (0x00ff)) >> 0;
     out << bits(_b);
@@ -171,7 +171,7 @@ static inline auto operator<<(std::ostream &out, Bits< char & > const v) -> std:
     uint8_t _b = 0;
     uint8_t _c = 0;
     uint8_t _d = 0;
-    _a               = (v.t & (0xff000000)) >> 24;
+    _a         = (v.t & (0xff000000)) >> 24;
     out << bits(_a);
     _b = (v.t & (0x00ff0000)) >> 16;
     out << bits(_b);
@@ -188,7 +188,7 @@ static inline auto operator<<(std::ostream &out, Bits< char & > const v) -> std:
   } else if (sizeof(char) == 2) {
     uint8_t _a = 0;
     uint8_t _b = 0;
-    _a               = (v.t & (0xff00)) >> 8;
+    _a         = (v.t & (0xff00)) >> 8;
     out << bits(_a);
     _b = (v.t & (0x00ff)) >> 0;
     out << bits(_b);

@@ -17,7 +17,7 @@ void thing_group_join(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp group)
 {
   TRACE();
 
-  if (t->group_id != 0u) {
+  if (t->group_id != 0U) {
     return;
   }
 
@@ -26,7 +26,7 @@ void thing_group_join(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp group)
   }
 
   if (t != group) {
-    if (group->group_id == 0u) {
+    if (group->group_id == 0U) {
       thing_err(t, "asked to join an empty group");
     }
   }
@@ -47,7 +47,7 @@ void thing_group_leave(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE();
 
-  if (t->group_id == 0u) {
+  if (t->group_id == 0U) {
     return;
   }
 

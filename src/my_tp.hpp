@@ -195,7 +195,7 @@
       list_macro(is_unused61, "is_unused61"),                                       /* newline */                                          \
       list_macro(is_unused62, "is_unused62"),                                       /* newline */                                          \
       list_macro(is_unused63, "is_unused63"),                                       /* newline */                                          \
-      list_macro(is_grouped_thing, "is_grouped_thing"),                                       /* newline */                                          \
+      list_macro(is_grouped_thing, "is_grouped_thing"),                             /* newline */                                          \
       list_macro(is_able_to_see_360_degrees, "is_able_to_see_360_degrees"),         /* newline */                                          \
       list_macro(is_able_to_see_180_degrees, "is_able_to_see_180_degrees"),         /* newline */                                          \
       list_macro(is_able_to_lunge, "is_able_to_lunge"),                             /* newline */                                          \
@@ -761,6 +761,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup val);
 [[nodiscard]] auto tp_is_glass(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_gold(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_grass(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_grouped_thing(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_health_bar_shown(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_indestructible(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_insectoid(Tpp tp) -> bool;
@@ -893,7 +894,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup val);
 [[nodiscard]] auto tp_is_unused61(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused62(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused63(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_grouped_thing(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused7(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused8(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused9(Tpp tp) -> bool;
