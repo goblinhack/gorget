@@ -1247,10 +1247,10 @@ auto level_is_unused63(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp
   return level_flag(g, v, l, is_unused63, p);
 }
 
-auto level_is_unused64(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp
+auto level_is_grouped_thing(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused64, p);
+  return level_flag(g, v, l, is_grouped_thing, p);
 }
 
 auto level_is_able_to_see_360_degrees(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp

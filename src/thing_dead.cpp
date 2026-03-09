@@ -163,6 +163,8 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 {
   TRACE();
 
+  thing_log(t, "thing_dead");
+
   if (thing_is_dead(t)) {
     return;
   }
@@ -193,62 +195,6 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 
   thing_is_dead_set(g, v, l, t);
 
-  if (thing_is_corpse_on_death(t)) {
-    //
-    // Keep the thing on the map, but in dead state.
-    //
-    thing_is_corpse_set(g, v, l, t);
-  } else {
-    //
-    // Schedule for removal from the map and freeing
-    //
-    thing_is_scheduled_for_cleanup_set(g, v, l, t);
-  }
-
-  if (thing_is_player(t)) {
-    auto death_reason = to_death_reason_string(g, v, l, t, e);
-
-    auto score = 666;
-    if (game_is_new_hiscore(g, score)) {
-      TOPCON(UI_GOOD_FMT_STR "New high score, %s place!" UI_RESET_FMT, game_place_str(g, score));
-      game_add_new_hiscore(g, score, l->level_num, game_player_name_get(g), death_reason.c_str());
-    }
-
-    //
-    // Request the dead menu at end of tick
-    //
-    game_request_to_end_game_set(g);
-    game_request_to_end_game_reason_set(g, death_reason);
-  }
-
-  //
-  // Per thing callback
-  //
-  thing_on_death(g, v, l, t, e);
-
-  //
-  // If the mob dies, so do the minions
-  //
-  if (thing_is_mob(t)) {
-    if (thing_is_mob_kill_minions_on_death(t)) {
-      (void) thing_mob_kill_all_minions(g, v, l, t, e);
-    } else {
-      (void) thing_mob_detach_all_minions(g, v, l, t);
-    }
-  }
-
-  if (thing_is_minion(t)) {
-    (void) thing_minion_detach_me_from_mob(g, v, l, t);
-  }
-}
-
-//
-// Complete the death process
-//
-void thing_is_dead_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
-{
-  TRACE();
-
   //
   // Update the animation, for example, flattened grass
   //
@@ -269,13 +215,6 @@ void thing_is_dead_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 
   //
-  // No more following the cursor if dead...
-  //
-  if (thing_is_player(t)) {
-    player_state_change(g, v, l, PLAYER_STATE_DEAD);
-  }
-
-  //
   // Stop it moving
   //
   thing_move_or_jump_finish(g, v, l, t);
@@ -288,4 +227,79 @@ void thing_is_dead_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 
   t->tick_dead = v->tick;
+
+  //
+  // Leaves a corpse?
+  //
+  if (thing_is_corpse_on_death(t)) {
+    //
+    // Keep the thing on the map, but in dead state.
+    //
+    thing_is_corpse_set(g, v, l, t);
+  } else {
+    //
+    // Schedule for removal from the map and freeing
+    //
+    thing_is_scheduled_for_cleanup_set(g, v, l, t);
+  }
+
+  //
+  // Request end of game if this is the player
+  //
+  if (thing_is_player(t)) {
+    //
+    // No more following the cursor if dead...
+    //
+    if (thing_is_player(t)) {
+      player_state_change(g, v, l, PLAYER_STATE_DEAD);
+    }
+
+    auto death_reason = to_death_reason_string(g, v, l, t, e);
+
+    //
+    // Hiscore?
+    //
+    auto score = 666;
+    if (game_is_new_hiscore(g, score)) {
+      TOPCON(UI_GOOD_FMT_STR "New high score, %s place!" UI_RESET_FMT, game_place_str(g, score));
+      game_add_new_hiscore(g, score, l->level_num, game_player_name_get(g), death_reason.c_str());
+    }
+
+    //
+    // Request the dead menu at end of tick
+    //
+    game_request_to_end_game_set(g);
+    game_request_to_end_game_reason_set(g, death_reason);
+  }
+
+  //
+  // Per thing callback
+  //
+  thing_on_death(g, v, l, t, e);
+
+  //
+  // If the mob dies, unleash or kill minions
+  //
+  if (thing_is_mob(t)) {
+    if (thing_is_mob_kill_minions_on_death(t)) {
+      (void) thing_mob_kill_all_minions(g, v, l, t, e);
+    } else {
+      (void) thing_mob_detach_all_minions(g, v, l, t);
+    }
+  }
+
+  //
+  // Unleash minions from mobs
+  //
+  if (thing_is_minion(t)) {
+    (void) thing_minion_detach_me_from_mob(g, v, l, t);
+  }
+
+  //
+  // Bridges need to leave their group now
+  //
+  // There is a problem here potentially if the group leader dies, leaving the members
+  // detached.
+  //
+  thing_group_leave(g, v, l, t);
 }

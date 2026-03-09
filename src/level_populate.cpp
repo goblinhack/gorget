@@ -15,6 +15,26 @@
 #include <cstring>
 #include <utility>
 
+static auto level_populated(Gamep g, Levelsp v, Levelp l)
+{
+  TRACE();
+
+  FOR_ALL_THINGS_ON_LEVEL_UNSAFE(g, v, l, t)
+  {
+    thing_on_level_populated(g, v, l, t);
+
+    if (thing_is_grouped_thing(t)) {
+      if (! t->group_id) {
+        level_group_things(g, v, l, t);
+      }
+    }
+  }
+
+  level_count_items(g, v, l);
+
+  return true;
+}
+
 auto level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int w, int h, const char *in, const Overrides &overrides)
     -> bool
 {
@@ -317,7 +337,7 @@ auto level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int
     }
   }
 
-  return true;
+  return level_populated(g, v, l);
 }
 
 auto level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, const char *in, const Overrides &overrides) -> bool
@@ -328,14 +348,6 @@ auto level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, con
     ERR("level populate failed");
     return false;
   }
-
-  FOR_ALL_THINGS_ON_LEVEL_UNSAFE(g, v, l, t)
-  {
-    //
-    thing_on_level_populated(g, v, l, t);
-  }
-
-  level_count_items(g, v, l);
 
   return true;
 }

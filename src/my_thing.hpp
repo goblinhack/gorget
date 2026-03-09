@@ -441,6 +441,11 @@ using Thing = struct Thing {
   //
   ThingId mob_id;
   //
+  // If this is a thing that is tied to other things, e.g. a bridge tile then
+  // they all share this id; which is the id of the first thing in the group
+  //
+  ThingId group_id;
+  //
   // For player and monsters
   //
   ThingExtId ext_id;
@@ -783,7 +788,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused61(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused62(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused63(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused64(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_grouped_thing(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused7(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused8(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused9(Thingp t) -> bool;
@@ -963,6 +968,10 @@ using Thing = struct Thing {
 auto astar_solve(Gamep g, Levelsp v, Levelp l, Thingp me, spoint src, spoint dst) -> std::vector< spoint >;
 void level_botcon(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
 void level_con(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
+void thing_degroup(Gamep g, Levelsp v, Levelp l, Thingp t);
+void thing_group_join(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp group);
+void thing_group_leave(Gamep g, Levelsp v, Levelp l, Thingp t);
+void thing_group_member_leave(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_vision_calculate(Gamep g, Levelsp v, Levelp l, Thingp me);
 void level_dbg(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
 void level_err(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
@@ -1021,7 +1030,6 @@ void thing_is_burning_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val = tru
 void thing_is_burning_unset(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_is_corpse_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val = true);
 void thing_is_corpse_unset(Gamep g, Levelsp v, Levelp l, Thingp t);
-void thing_is_dead_handle(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_is_dead_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val = true);
 void thing_is_dead_unset(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_is_falling_continues_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val = true);

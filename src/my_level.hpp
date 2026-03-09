@@ -576,6 +576,18 @@ struct MyIter {
                       if ((_t_)->iter[ _iter_index_ ] != (_v_)->iter[ _iter_index_ ])                                                      \
                         if ((((_t_)->iter[ _iter_index_ ] = (_v_)->iter[ _iter_index_ ])) || 1)
 
+#define FOR_ALL_GROUP_THINGS_ON_LEVEL_UNSAFE(_g_, _v_, _l_, _t_, _group_id_)                                                               \
+  FOR_ALL_THINGS_ON_LEVEL_UNSAFE(_g_, _v_, _l_, _t_)                                                                                       \
+  if ((_t_)->group_id == (_group_id_))
+
+#define FOR_ALL_GROUP_THINGS_ON_LEVEL(_g_, _v_, _l_, _t_, _group_id_)                                                                      \
+  FOR_ALL_THINGS_ON_LEVEL(_g_, _v_, _l_, _t_)                                                                                              \
+  if ((_t_)->group_id == (_group_id_))
+
+#define FOR_ALL_GROUP_THINGS_ON_LEVEL_DEBUG(_g_, _v_, _l_, _t_, _group_id_)                                                                \
+  FOR_ALL_THINGS_ON_LEVEL_DEBUG(_g_, _v_, _l_, _t_)                                                                                        \
+  if ((_t_)->group_id == (_group_id_))
+
 #define FOR_ALL_THINGS_AT_UNSAFE(_g_, _v_, _l_, _t_, _p_)                                                                                  \
   if ((_g_) && (_v_) && (_l_))                                                                                                             \
     if (spoint _at_ = make_spoint(_p_); true)                                                                                              \
@@ -678,6 +690,7 @@ enum {
 
 // begin sort marker2 {
 void fragment_alts_fini(Gamep g);
+void level_group_things(Gamep g, Levelsp v, Levelp l, Thingp t);
 void fragments_fini(Gamep g);
 void fragments_init(Gamep g);
 void game_debug_info(Gamep g);
@@ -1023,7 +1036,7 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_is_unused61(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_unused62(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_unused63(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
-[[nodiscard]] auto level_is_unused64(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
+[[nodiscard]] auto level_is_grouped_thing(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_unused7(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_unused8(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_unused9(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
@@ -1244,7 +1257,7 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_alive_is_unused61(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_unused62(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_unused63(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
-[[nodiscard]] auto level_alive_is_unused64(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
+[[nodiscard]] auto level_alive_is_grouped_thing(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_unused7(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_unused8(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_unused9(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
@@ -1465,7 +1478,7 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_count_is_unused61(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_unused62(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_unused63(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
-[[nodiscard]] auto level_count_is_unused64(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
+[[nodiscard]] auto level_count_is_grouped_thing(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_unused7(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_unused8(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_unused9(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
@@ -1687,7 +1700,7 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_open_is_unused61(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused62(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused63(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
-[[nodiscard]] auto level_open_is_unused64(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
+[[nodiscard]] auto level_open_is_grouped_thing(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused7(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused8(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused9(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;

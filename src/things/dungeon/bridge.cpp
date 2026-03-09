@@ -21,7 +21,7 @@ static auto tp_bridge_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) ->
   return "rickety bridge";
 }
 
-static void tp_bridge_destroy_adj(Gamep g, Levelsp v, Levelp l, Thingp t)
+static void thing_bridge_replace(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_INDENT();
 
@@ -62,28 +62,28 @@ static void tp_bridge_destroy_adj(Gamep g, Levelsp v, Levelp l, Thingp t)
       }
     }
   }
+}
 
-  //
-  // Destroy adjacent bridge tiles
-  //
+static void tp_bridge_group_destroy(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_INDENT();
+
+  if (! t->group_id) {
+    return;
+  }
+
+  std::vector< Thingp > group;
+  auto                  group_id = t->group_id;
+
+  FOR_ALL_GROUP_THINGS_ON_LEVEL(g, v, l, o, group_id)
   {
-    const std::initializer_list< spoint > points = {
-        spoint(0, -1),
-        spoint(-1, 0),
-        spoint(1, 0),
-        spoint(0, 1),
-    };
+    group.push_back(o);
+    thing_group_member_leave(g, v, l, o);
+  }
 
-    for (auto delta : points) {
-      auto  at = thing_at(t);
-      auto  p  = at + delta;
-      auto *b  = level_alive_is_bridge(g, v, l, p);
-      if (b != nullptr) {
-        if (level_is_chasm(g, v, l, thing_at(t)) != nullptr) {
-          thing_fall(g, v, l, b);
-        }
-      }
-    }
+  for (auto o : group) {
+    thing_bridge_replace(g, v, l, o);
+    thing_fall(g, v, l, o);
   }
 }
 
@@ -91,39 +91,32 @@ static void tp_bridge_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEven
 {
   TRACE_INDENT();
 
-  tp_bridge_destroy_adj(g, v, l, t);
-
-  auto *player = thing_player(g);
-  if (player != nullptr) {
-    if (thing_is_falling(player)) {
-      //
-      // This happens for adjacent bridge tiles being destroyed when the
-      // player is falling. I think we can avoid a message here elese we
-      // see multiple of the same message.
-      //
-      return;
-    }
-
-    auto player_at = thing_at(player);
-    if (thing_on_same_level_as_player(g, v, t)) {
-      if (thing_at(t) == player_at) {
-        TOPCON("The bridge collapses under you!");
-      } else if (thing_vision_can_see_tile(g, v, l, player, player_at)) {
-        TOPCON("The bridge collapses!");
+  if (t->group_id) {
+    auto *player = thing_player(g);
+    if (player != nullptr) {
+      auto player_at = thing_at(player);
+      if (thing_on_same_level_as_player(g, v, t)) {
+        if (thing_at(t) == player_at) {
+          TOPCON("The bridge collapses under you!");
+        } else if (thing_vision_can_see_tile(g, v, l, player, player_at)) {
+          TOPCON("The bridge collapses!");
+        } else {
+          TOPCON("You hear a bridge collapse!");
+        }
       } else {
-        TOPCON("You hear a bridge collapse!");
+        TOPCON("You hear a very distant bridge collapse!");
       }
-    } else {
-      TOPCON("You hear a very distant bridge collapse!");
     }
   }
+
+  tp_bridge_group_destroy(g, v, l, t);
 }
 
 static void tp_bridge_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_INDENT();
 
-  tp_bridge_destroy_adj(g, v, l, t);
+  tp_bridge_group_destroy(g, v, l, t);
 }
 
 static void tp_bridge_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
@@ -161,6 +154,7 @@ auto tp_load_bridge() -> bool
   tp_flag_set(tp, is_blit_if_has_seen);
   tp_flag_set(tp, is_blit_per_pixel_lighting);
   tp_flag_set(tp, is_blit_shown_in_chasms);
+  tp_flag_set(tp, is_grouped_thing);
   tp_flag_set(tp, is_bridge);
   tp_flag_set(tp, is_burnable);    // is capable of being burned by fire
   tp_flag_set(tp, is_combustible); // will continue to burn once on fire

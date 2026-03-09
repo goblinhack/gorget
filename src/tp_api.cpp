@@ -1247,10 +1247,10 @@ auto tp_is_unused63(Tpp tp) -> bool
   return tp_flag(tp, is_unused63) != 0;
 }
 
-auto tp_is_unused64(Tpp tp) -> bool
+auto tp_is_grouped_thing(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused64) != 0;
+  return tp_flag(tp, is_grouped_thing) != 0;
 }
 
 auto tp_is_able_to_see_360_degrees(Tpp tp) -> bool

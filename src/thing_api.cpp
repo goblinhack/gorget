@@ -657,8 +657,6 @@ void thing_is_dead_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
   if (val) {
     THING_DBG(t, "is dead");
   }
-
-  thing_is_dead_handle(g, v, l, t);
 }
 
 void thing_is_dead_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
@@ -2507,7 +2505,7 @@ auto thing_is_unused63(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused63) != 0;
 }
 
-auto thing_is_unused64(Thingp t) -> bool
+auto thing_is_grouped_thing(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2515,7 +2513,7 @@ auto thing_is_unused64(Thingp t) -> bool
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused64) != 0;
+  return tp_flag(thing_tp(t), is_grouped_thing) != 0;
 }
 
 auto thing_is_able_to_see_360_degrees(Thingp t) -> bool
