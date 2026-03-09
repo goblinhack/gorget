@@ -19,7 +19,7 @@ static auto tp_mantisman_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
   if (thing_is_dead(t)) {
     return "dead mantisman";
   }
-  return "living mantisman";
+  return "mantisman";
 }
 
 static auto tp_mantisman_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string

@@ -25,7 +25,7 @@ static void level_group_things_do(Gamep g, Levelsp v, Levelp l, Thingp group, Tp
   FOR_ALL_THINGS_AT_UNSAFE(g, v, l, t, p)
   {
     if (thing_tp(t) == tp) {
-      if (t->group_id) {
+      if (t->group_id != 0u) {
         return;
       }
 
@@ -47,7 +47,7 @@ void level_group_things(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE();
 
-  if (t->group_id) {
+  if (t->group_id != 0u) {
     return;
   }
 

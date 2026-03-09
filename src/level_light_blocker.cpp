@@ -40,7 +40,7 @@ auto level_light_blocker_at(Gamep g, Levelsp v, Levelp l, const spoint &pov) -> 
     //
     // Submerged foliage does not block light
     //
-    if (thing_submerged_pct(it)) {
+    if (thing_submerged_pct(it) != 0) {
       continue;
     }
 
