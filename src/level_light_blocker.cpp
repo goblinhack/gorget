@@ -37,6 +37,13 @@ auto level_light_blocker_at(Gamep g, Levelsp v, Levelp l, const spoint &pov) -> 
       continue;
     }
 
+    //
+    // Submerged foliage does not block light
+    //
+    if (thing_submerged_pct(it)) {
+      continue;
+    }
+
     if (thing_is_obs_to_vision(it)) {
       if (compiler_unused) {
         THING_DBG(it, "block");

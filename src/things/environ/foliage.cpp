@@ -42,6 +42,7 @@ auto tp_load_foliage() -> bool
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_blit_if_has_seen);
   tp_flag_set(tp, is_blit_obscures);
+  tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_burnable); // is capable of being burned by fire
   tp_flag_set(tp, is_collision_circle_large);
@@ -72,19 +73,19 @@ auto tp_load_foliage() -> bool
 
   for (auto frame = 0; frame < 14; frame++) {
     auto *tile = tile_find_mand(name + std::string(".idle.") + std::to_string(frame));
-    tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
+    tile_size_set(tile, OUTLINE_TILE_WIDTH, OUTLINE_TILE_HEIGHT);
     tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
   }
 
   for (auto frame = 0; frame < 1; frame++) {
     auto *tile = tile_find_mand(name + std::string(".dead.") + std::to_string(frame));
-    tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
+    tile_size_set(tile, OUTLINE_TILE_WIDTH, OUTLINE_TILE_HEIGHT);
     tp_tiles_push_back(tp, THING_ANIM_DEAD, tile);
   }
 
   for (auto frame = 0; frame < 1; frame++) {
     auto *tile = tile_find_mand(name + std::string(".burnt.") + std::to_string(frame));
-    tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
+    tile_size_set(tile, OUTLINE_TILE_WIDTH, OUTLINE_TILE_HEIGHT);
     tp_tiles_push_back(tp, THING_ANIM_BURNT, tile);
   }
 
