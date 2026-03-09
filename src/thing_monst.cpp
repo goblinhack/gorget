@@ -28,6 +28,7 @@ static auto thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thing
     return false;
   }
 
+  thing_can_see_dump(g, v, l, me);
   auto *player_level = game_level_get(g, v, player->level_num);
   auto *monst_level  = game_level_get(g, v, me->level_num);
   if (player_level != monst_level) {
@@ -40,6 +41,7 @@ static auto thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thing
     THING_DBG(me, "choose target: cannot see player");
     return false;
   }
+  THING_DBG(me, "choose target: can see player");
 
   auto monst_at = thing_at(me);
   auto dist     = distance(monst_at, target);
@@ -285,10 +287,6 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
 {
   TRACE();
 
-  if (compiler_unused) {
-    thing_can_see_dump(g, v, l, me);
-  }
-
   if (thing_monst_choose_target_player(g, v, l, me)) {
     monst_state_change(g, v, l, me, MONST_STATE_CHASING);
     return true;
@@ -317,6 +315,10 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
 void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
+
+  if (compiler_unused) {
+    thing_can_see_dump(g, v, l, me);
+  }
 
   //
   // Early state check

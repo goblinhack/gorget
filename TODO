@@ -1,8 +1,6 @@
 bugs
 ----
-player visibility
-foliage and monster visibility
-projectile collision with projectile
+dead kobalos are piling up
 stamina needed to avoid fast jump loops
 limit firing to 1
 
@@ -16,7 +14,9 @@ chests need to contain something and those items destroyed when the chest is
 
 later features
 --------------
-traps / gas effects
+projectile collision with projectile
+bogs / traps / gas effects
+ghosts can only be hit when solid
 bushes quiver when monster is behind? / items hiding in bushes 
 boulders that can crush
 magic

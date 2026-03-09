@@ -53,22 +53,6 @@ auto level_light_blocker_at(Gamep g, Levelsp v, Levelp l, const spoint &pov) -> 
   }
 
   return nullptr;
-
-#if 0
-    if (me->is_monst()) {
-      if (! light_blocker) {
-        light_blocker = is_obs_to_vision_for_monst(p);
-      }
-
-      if (! light_blocker) {
-        if (! me->is_player()) {
-          if (! me->is_able_to_see_in_magical_darkness()) {
-            light_blocker = is_darkness(p);
-          }
-        }
-      }
-    }
-#endif
 }
 
 //

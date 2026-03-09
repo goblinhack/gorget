@@ -66,8 +66,18 @@ void thing_can_see_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
     for (auto x = 0; x < MAP_WIDTH; x++) {
       spoint const p(x, y);
 
-      if (p == thing_at(t)) {
+      if (p == thing_target(t)) {
+        debug += "G";
+        continue;
+      }
+
+      if (thing_is_player(t)) {
         debug += "@";
+        continue;
+      }
+
+      if (p == thing_at(t)) {
+        debug += "m";
         continue;
       }
 
@@ -81,10 +91,11 @@ void thing_can_see_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
         continue;
       }
 
-      if (static_cast< unsigned int >(age_map_get(&ext->has_seen, p.x, p.y)) != 0U) {
-        debug += "o";
-        continue;
-      }
+      if (0)
+        if (static_cast< unsigned int >(age_map_get(&ext->has_seen, p.x, p.y)) != 0U) {
+          debug += "o";
+          continue;
+        }
 
       debug += ".";
     }
@@ -127,5 +138,44 @@ void thing_has_seen_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
     }
 
     THING_DBG(t, "has seen: %s", debug.c_str());
+  }
+}
+
+void thing_vision_calculate(Gamep g, Levelsp v, Levelp l, Thingp me)
+{
+  TRACE();
+
+  auto max_radius = thing_distance_vision(me);
+  if (max_radius == 0) {
+    return;
+  }
+
+  auto *ext = thing_ext_struct(g, me);
+  if (ext == nullptr) [[unlikely]] {
+    return;
+  }
+
+  FovContext ctx;
+
+  ctx.g                  = g;
+  ctx.v                  = v;
+  ctx.l                  = l;
+  ctx.me                 = me;
+  ctx.pov                = thing_at(me);
+  ctx.thing_at_in_pixels = thing_pix_at(me);
+  ctx.max_radius         = max_radius;
+  ctx.can_see_tile       = &ext->can_see;
+  ctx.has_seen_tile      = &ext->has_seen;
+
+  //
+  // If this is set, we will be able to see through foliage at the edge of vision
+  //
+  ctx.light_walls = false;
+
+  level_fov(ctx);
+
+  if (compiler_unused) {
+    THING_DBG(me, "dir %s", ThingDir_to_string(me->dir).c_str());
+    thing_can_see_dump(g, v, l, me);
   }
 }

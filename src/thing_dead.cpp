@@ -163,7 +163,7 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 {
   TRACE();
 
-  thing_log(t, "thing_dead");
+  THING_DBG(t, "thing_dead");
 
   if (thing_is_dead(t)) {
     return;
