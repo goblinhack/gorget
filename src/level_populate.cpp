@@ -167,8 +167,8 @@ auto level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int
             tp         = tp_random(is_trap);
             break;
           case CHARMAP_LAVA :
-            need_floor = true;
-            tp         = tp_lava;
+            need_dirt = true;
+            tp        = tp_lava;
             break;
           case CHARMAP_BRAZIER :
             need_floor = true;

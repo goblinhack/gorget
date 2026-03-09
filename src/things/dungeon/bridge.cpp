@@ -52,12 +52,21 @@ static void thing_bridge_replace(Gamep g, Levelsp v, Levelp l, Thingp t)
           (void) thing_spawn(g, v, l, tp_first(is_chasm), t);
         }
       } else if (max_count == water_count) {
+        //
+        // Water needs dirt under it so we can see the transparency
+        //
         if (level_is_water(g, v, l, thing_at(t)) == nullptr) {
           (void) thing_spawn(g, v, l, tp_first(is_water), t);
+        }
+        if (level_is_dirt(g, v, l, thing_at(t)) == nullptr) {
+          (void) thing_spawn(g, v, l, tp_first(is_dirt), t);
         }
       } else if (max_count == lava_count) {
         if (level_is_lava(g, v, l, thing_at(t)) == nullptr) {
           (void) thing_spawn(g, v, l, tp_first(is_lava), t);
+        }
+        if (level_is_dirt(g, v, l, thing_at(t)) == nullptr) {
+          (void) thing_spawn(g, v, l, tp_first(is_dirt), t);
         }
       }
     }
