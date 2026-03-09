@@ -66,5 +66,7 @@ void thing_sound_play(Gamep g, Levelsp v, Levelp l, Thingp t, const std::string 
     return;
   }
 
+  thing_dbg(t, "play %s", alias.c_str());
+
   (void) sound_play(g, alias, scale);
 }

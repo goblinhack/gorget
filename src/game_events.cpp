@@ -18,21 +18,21 @@
 //
 auto game_mouse_down(Gamep g, int x, int y, uint32_t button) -> bool
 {
-  DBG("Game mouse down");
+  DBG("game mouse down");
   TRACE_INDENT();
 
   if (wid_some_recent_event_occurred()) {
-    DBG("Game mouse down, ignore, some event occurred");
+    DBG("game mouse down, ignore, some event occurred");
     return false;
   }
 
   if (g == nullptr) {
-    DBG("Game mouse down, ignore, no game");
+    DBG("game mouse down, ignore, no game");
     return false;
   }
 
   if (game_state(g) != STATE_PLAYING) {
-    DBG("Game mouse down, ignore, not playing");
+    DBG("game mouse down, ignore, not playing");
     return false;
   }
 
@@ -41,7 +41,7 @@ auto game_mouse_down(Gamep g, int x, int y, uint32_t button) -> bool
   //
   auto *v = game_levels_get(g);
   if (v == nullptr) {
-    DBG("Game mouse down, ignore, no levels");
+    DBG("game mouse down, ignore, no levels");
     return true;
   }
 
@@ -50,7 +50,7 @@ auto game_mouse_down(Gamep g, int x, int y, uint32_t button) -> bool
   //
   auto *l = game_level_get(g, v);
   if (l == nullptr) {
-    DBG("Game mouse down, ignore, no level");
+    DBG("game mouse down, ignore, no level");
     return false;
   }
 
@@ -58,7 +58,7 @@ auto game_mouse_down(Gamep g, int x, int y, uint32_t button) -> bool
   // Over the map?
   //
   if (! level_cursor_is_valid(g, v)) {
-    DBG("Game mouse down, ignore, no cursor valid");
+    DBG("game mouse down, ignore, no cursor valid");
     return false;
   }
 
@@ -80,7 +80,7 @@ auto game_mouse_up(Gamep g, int x, int y, uint32_t button) -> bool { return fals
 
 auto game_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx, int wheely) -> bool
 {
-  DBG2("Game mouse motion");
+  DBG2("game mouse motion");
   TRACE_INDENT();
 
   if (wid_some_recent_event_occurred()) {
@@ -88,12 +88,12 @@ auto game_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx, in
   }
 
   if (g == nullptr) {
-    DBG("Game motion, ignore, no game");
+    DBG("game motion, ignore, no game");
     return false;
   }
 
   if (game_state(g) != STATE_PLAYING) {
-    DBG("Game motion, ignore, not playing");
+    DBG("game motion, ignore, not playing");
     return false;
   }
 
@@ -342,7 +342,9 @@ static auto game_event_jump(Gamep g) -> bool
     player_state_change(g, v, l, PLAYER_STATE_PATH_REQUESTED);
     level_cursor_copy_mouse_path_to_player(g, v, l);
     return player_check_if_target_needs_move_confirm(g, v, l, v->cursor_at);
-  } //
+  }
+
+  //
   // Else, just jump, which cannot be done by mouse means unless it is
   // obvious and the target is a chasm.
   //

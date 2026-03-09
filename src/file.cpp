@@ -27,7 +27,7 @@ auto file_load(const char *filename, int *outlen) -> uint8_t *
   TRACE();
 
   uint8_t *out          = nullptr; // NOLINT
-  char          *alt_filename = nullptr;
+  char    *alt_filename = nullptr;
 
   alt_filename = nullptr;
 
@@ -161,7 +161,7 @@ auto file_load(const char *filename, int *outlen) -> uint8_t *
 
   MYFREE(popup_str);
    */
-  LOG("File not found \"%s\"", filename);
+  LOG("file not found \"%s\"", filename);
 
   return nullptr;
 }
@@ -171,8 +171,8 @@ auto file_io_read(const char *filename, int *out_len) -> uint8_t *
   TRACE();
 
   uint8_t *buffer = nullptr;
-  FILE          *file   = nullptr;
-  int            len    = 0;
+  FILE    *file   = nullptr;
+  int      len    = 0;
 
   file = fopen(filename, "rb");
   if (file == nullptr) {

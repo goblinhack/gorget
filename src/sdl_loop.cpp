@@ -18,8 +18,8 @@
 //
 void sdl_loop(Gamep g)
 {
-  TRACE();
-  DBG("SDL: main loop");
+  LOG("SDL: main loop");
+  TRACE_INDENT();
 
   //
   // Keep this lowish to avoid too much lag when processing mouse motion events, that redraw the cursor path.
@@ -217,7 +217,7 @@ void sdl_loop(Gamep g)
     // Config change?
     //
     if ((! g_need_restart_with_given_arguments.empty())) [[unlikely]] {
-      LOG("Restart needed");
+      LOG("restart needed");
       break;
     }
 
@@ -251,7 +251,7 @@ void sdl_loop(Gamep g)
     game_pcg_unlock();
   }
 
-  DBG("Exited main loop");
+  LOG("SDL: exited main loop");
 
   gl_leave_2d_mode(g);
 

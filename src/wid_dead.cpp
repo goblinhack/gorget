@@ -84,7 +84,7 @@ void wid_dead_select(Gamep g, const std::string &reason)
 {
   TRACE();
 
-  LOG("Open dead select: %s", reason.c_str());
+  LOG("open dead select: %s", reason.c_str());
 
   game_state_change(g, STATE_DEAD_MENU, "player is dead");
 
@@ -93,7 +93,7 @@ void wid_dead_select(Gamep g, const std::string &reason)
   spoint const br(UI_LEFTBAR_WIDTH - 1, TERM_HEIGHT - 1);
   auto         width = br.x - tl.x - 1;
 
-  wid_dead_window = new WidPopup(g, "Game dead", tl, br, nullptr, "", false, false);
+  wid_dead_window = new WidPopup(g, "game dead", tl, br, nullptr, "", false, false);
 
   wid_set_on_key_down(wid_dead_window->wid_popup_container, wid_dead_key_down);
   wid_raise(g, wid_dead_window->wid_popup_container);

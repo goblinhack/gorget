@@ -21,7 +21,7 @@ void level_dmap(Gamep g, Levelsp v, Levelp l)
 
 void levels_dmap(Gamep g, Levelsp v)
 {
-  LOG("Levels dmap");
+  LOG("levels dmap");
   TRACE_INDENT();
 
   if (g == nullptr) {

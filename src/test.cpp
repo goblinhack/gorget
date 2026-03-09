@@ -177,7 +177,7 @@ auto test_load(const char *name_in) -> Testp
 
   std::string const name(name_in);
 
-  LOG("Load test '%s'", name_in);
+  LOG("load test '%s'", name_in);
 
   if (test_find(name_in) != nullptr) {
     CROAK("test_load: test name [%s] already loaded", name_in);
@@ -248,7 +248,7 @@ void tests_run(Gamep g)
     // Preamble
     //
     if (! skipped) {
-      LOG("Running test: %s", name.c_str());
+      LOG("running test: %s", name.c_str());
       LOG("-------------------------------------------");
     }
 
@@ -284,7 +284,7 @@ void tests_run(Gamep g)
       out += "OK ";
       out += how_long;
 
-      LOG("Passed %s", how_long.c_str());
+      LOG("passed %s", how_long.c_str());
     } else {
       failed++;
       out += "FAILED";
@@ -305,7 +305,7 @@ void tests_run(Gamep g)
       term_log("%%fg=green$OK%%fg=reset$ ");
       term_log(how_long.c_str());
       term_log("\n");
-      LOG("Passed %s", how_long.c_str());
+      LOG("passed %s", how_long.c_str());
     } else {
       failed++;
       term_log("%%fg=red$FAILED%%fg=reset$\n");

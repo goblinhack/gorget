@@ -159,7 +159,7 @@ void level_init(Gamep g, Levelsp v, Levelp l, LevelNum n)
 
 auto levels_memory_alloc(Gamep g) -> Levelsp
 {
-  LOG("Levels alloc memory");
+  LOG("levels alloc memory");
   TRACE_INDENT();
 
   auto *v = game_levels_get(g);
@@ -184,7 +184,7 @@ auto levels_memory_alloc(Gamep g) -> Levelsp
 
 static void levels_memory_free(Gamep g, Levelsp v)
 {
-  LOG("Levels free memory");
+  LOG("levels free memory");
   TRACE_INDENT();
 
   VERIFY(MTYPE_LEVELS, v);
@@ -196,7 +196,7 @@ static void levels_memory_free(Gamep g, Levelsp v)
 
 void levels_destroy(Gamep g, Levelsp v)
 {
-  LOG("Levels destroy");
+  LOG("levels destroy");
   TRACE_INDENT();
 
   FOR_ALL_LEVELS(g, v, iter)
@@ -218,7 +218,7 @@ void level_finalize(Gamep g, Levelsp v, Levelp l)
 
 void levels_finalize(Gamep g, Levelsp v)
 {
-  LOG("Levels finalize");
+  LOG("levels finalize");
   TRACE_INDENT();
 
   if (g == nullptr) {
@@ -278,7 +278,7 @@ void level_is_completed_by_player_falling(Gamep g, Levelsp v, Levelp l)
 //
 auto level_change(Gamep g, Levelsp v, LevelNum level_num) -> Levelp
 {
-  LOG("Level change to %u", level_num);
+  LOG("level change to %u", level_num);
   TRACE_INDENT();
 
   VERIFY(MTYPE_LEVELS, v);
@@ -301,7 +301,7 @@ auto level_change(Gamep g, Levelsp v, LevelNum level_num) -> Levelp
     // Jump tot the last real level
     //
     level_num = s->level_count - 1;
-    LOG("Level change to %u (max level)", level_num);
+    LOG("level change to %u (max level)", level_num);
   }
 
   Level *old_level = game_level_get(g, v); // NOLINT

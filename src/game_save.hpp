@@ -456,7 +456,7 @@ auto operator<<(std::ostream &out, Bits< const class Game & > const my) -> std::
 
 auto Game::save(const std::string &file_to_save) -> bool
 {
-  LOG("Save: %s", file_to_save.c_str());
+  LOG("save: %s", file_to_save.c_str());
   TRACE_INDENT();
 
   //
@@ -599,13 +599,13 @@ auto Game::save(const std::string &file_to_save) -> bool
     return false;
   }
 
-  LOG("Opened: %s for writing", file_to_save.c_str());
+  LOG("opened: %s for writing", file_to_save.c_str());
 
   fwrite(reinterpret_cast< char * >(&src_size), sizeof(src_size), 1, ofile);
   fwrite(dst, dst_size, 1, ofile);
   fclose(ofile);
 
-  LOG("Wrote: %s", file_to_save.c_str());
+  LOG("wrote: %s", file_to_save.c_str());
 
   if (need_larger_src_buffer) {
     free(src);
@@ -627,14 +627,14 @@ auto Game::save(const std::string &file_to_save) -> bool
 
 auto game_save(Gamep g, const std::string &file_to_save) -> bool
 {
-  LOG("Save: %s", file_to_save.c_str());
+  LOG("save: %s", file_to_save.c_str());
 
   return g->save(file_to_save);
 }
 
 auto Game::save(int slot) -> bool
 {
-  LOG("Save slot: %d", slot);
+  LOG("save slot: %d", slot);
   TRACE_INDENT();
 
   if (slot < 0) {
@@ -647,14 +647,14 @@ auto Game::save(int slot) -> bool
 
   auto this_save_file = saved_dir + "saved-slot-info-" + std::to_string(slot);
 
-  LOG("Saving: %s", this_save_file.c_str());
+  LOG("saving: %s", this_save_file.c_str());
   game_headers_only = true;
   save(this_save_file);
   game_headers_only = false;
 
   this_save_file = saved_dir + "saved-slot-" + std::to_string(slot);
 
-  LOG("Saving: %s", this_save_file.c_str());
+  LOG("saving: %s", this_save_file.c_str());
   auto ret = save(this_save_file);
 
   CON("Saved the game to %s.", this_save_file.c_str());
@@ -664,19 +664,19 @@ auto Game::save(int slot) -> bool
 
 auto Game::save_snapshot() -> bool
 {
-  LOG("Save snapshot");
+  LOG("save snapshot");
   TRACE_INDENT();
 
   auto this_save_file = saved_dir + "saved-snapshot-info";
 
-  LOG("Saving: %s", this_save_file.c_str());
+  LOG("saving: %s", this_save_file.c_str());
   game_headers_only = true;
   save(this_save_file);
   game_headers_only = true;
 
   this_save_file = saved_dir + "saved-snapshot";
 
-  LOG("Saving: %s", this_save_file.c_str());
+  LOG("saving: %s", this_save_file.c_str());
   auto ret = save(this_save_file);
 
   CON("%%fg=green$Autosaved.%%fg=reset$");
@@ -698,7 +698,7 @@ auto Game::save_config() -> bool
     ERR("failed to open %s for writing: %s", filename.c_str(), strerror(errno));
     return false;
   }
-  LOG("Opened [%s] for writing", filename.c_str());
+  LOG("opened [%s] for writing", filename.c_str());
   const Config &c = game->config;
   out << bits(c);
   return true;
@@ -755,7 +755,7 @@ static auto wid_save_key_up(Gamep g, Widp w, const struct SDL_Keysym *key) -> bo
               case 'B' :
               case SDLK_ESCAPE :
                 {
-                  LOG("Save game cancelled");
+                  LOG("save game cancelled");
                   TRACE_INDENT();
                   wid_save_destroy(game);
                   return true;
@@ -801,7 +801,7 @@ static auto wid_save_cancel(Gamep g, Widp w, int x, int y, uint32_t button) -> b
 
 auto Game::save_select() -> bool
 {
-  LOG("Save menu");
+  LOG("save menu");
   TRACE_INDENT();
 
   if (wid_save != nullptr) {
@@ -812,7 +812,7 @@ auto Game::save_select() -> bool
   int const    menu_width  = UI_WID_POPUP_WIDTH_WIDE;
   spoint const outer_tl((TERM_WIDTH / 2) - (menu_width / 2), (TERM_HEIGHT / 2) - (menu_height / 2));
   spoint const outer_br((TERM_WIDTH / 2) + (menu_width / 2), (TERM_HEIGHT / 2) + (menu_height / 2));
-  wid_save = new WidPopup(game, "Game save", outer_tl, outer_br, nullptr, "", false, false);
+  wid_save = new WidPopup(game, "game save", outer_tl, outer_br, nullptr, "", false, false);
 
   wid_set_on_key_up(wid_save->wid_popup_container, wid_save_key_up);
   wid_set_on_key_down(wid_save->wid_popup_container, wid_save_key_down);

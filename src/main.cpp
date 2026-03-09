@@ -83,7 +83,7 @@ static void parse_args(int argc, char *argv[])
   if (g_opt_debug1) {
     CON("Parse command line arguments for '%s'", argv[ 0 ]);
   } else {
-    LOG("Parse command line arguments for '%s'", argv[ 0 ]);
+    LOG("parse command line arguments for '%s'", argv[ 0 ]);
   }
 
   for (i = 1; i < argc; i++) {
@@ -246,7 +246,7 @@ auto main(int argc, char *argv[]) -> int
 
   g_thread_id = MAIN_THREAD;
 
-  LOG("Start");
+  LOG("start");
   TRACE();
 
   //////////////////////////////////////////////////////////////////////////////
@@ -267,8 +267,8 @@ auto main(int argc, char *argv[]) -> int
   redirect_stderr();
 
   TRACE_DEBUG();
-  LOG("Will use STDOUT as '%s'", g_log_stdout_filename.c_str());
-  LOG("Will use STDERR as '%s'", g_log_stderr_filename.c_str());
+  LOG("will use STDOUT as '%s'", g_log_stdout_filename.c_str());
+  LOG("will use STDERR as '%s'", g_log_stderr_filename.c_str());
 
   //////////////////////////////////////////////////////////////////////////////
   // Use LOG instead of CON until we set stdout or you see two logs
@@ -276,19 +276,19 @@ auto main(int argc, char *argv[]) -> int
   //////////////////////////////////////////////////////////////////////////////
   TRACE_DEBUG();
 #ifdef _WIN32
-  LOG("Platform is _WIN32");
+  LOG("platform is _WIN32");
 #endif
 #ifdef __MINGW32__
-  LOG("Platform is __MINGW32__");
+  LOG("platform is __MINGW32__");
 #endif
 #ifdef __MINGW64__
-  LOG("Platform is __MINGW64__");
+  LOG("platform is __MINGW64__");
 #endif
 #ifdef __APPLE__
-  LOG("Platform is __APPLE__");
+  LOG("platform is __APPLE__");
 #endif
 #ifdef __linux__
-  LOG("Platform is __linux__");
+  LOG("platform is __linux__");
 #endif
 
   //////////////////////////////////////////////////////////////////////////////
@@ -302,13 +302,13 @@ auto main(int argc, char *argv[]) -> int
   }
 
   {
-    LOG("Ramdisk init");
+    LOG("ramdisk init");
     TRACE_DEBUG();
     ramdisk_init();
   }
 
   {
-    LOG("Create console");
+    LOG("create console");
     TRACE_DEBUG();
     ascii_init();
   }
@@ -317,7 +317,7 @@ auto main(int argc, char *argv[]) -> int
   // Need this to get the UTF on the console
   //
 #ifndef _WIN32
-  LOG("Set locale for console");
+  LOG("set locale for console");
   std::locale const loc("");
   std::ios_base::sync_with_stdio(false);
   std::wcout.imbue(loc);
@@ -327,7 +327,7 @@ auto main(int argc, char *argv[]) -> int
   //
   // Crash handlers
   //
-  LOG("Install crash handlers");
+  LOG("install crash handlers");
 #ifdef SIGSEGV
   signal(SIGSEGV, crash_handler);
 #endif
@@ -403,7 +403,7 @@ auto main(int argc, char *argv[]) -> int
     if (g_opt_debug1) {
       CON("Load early gfx tiles, text, UI etc...");
     } else {
-      LOG("Load early gfx tiles, text, UI etc...");
+      LOG("load early gfx tiles, text, UI etc...");
     }
     gfx_init();
   }
@@ -430,7 +430,7 @@ auto main(int argc, char *argv[]) -> int
     if (g_opt_debug1) {
       CON("Load fonts");
     } else {
-      LOG("Load fonts");
+      LOG("load fonts");
     }
     if (! font_init()) {
       ERR("font init");
@@ -442,7 +442,7 @@ auto main(int argc, char *argv[]) -> int
     if (g_opt_debug1) {
       CON("Load console");
     } else {
-      LOG("Load console");
+      LOG("load console");
     }
     if (! wid_console_init(g)) {
       ERR("wid_console init");
@@ -481,7 +481,7 @@ auto main(int argc, char *argv[]) -> int
     if (g_opt_debug1) {
       CON("Original program name: %s", g_program_name.c_str());
     } else {
-      LOG("Original program name: %s", g_program_name.c_str());
+      LOG("original program name: %s", g_program_name.c_str());
     }
     wid_console_flush(g);
   }
@@ -491,7 +491,7 @@ auto main(int argc, char *argv[]) -> int
     if (g_opt_debug1) {
       CON("Load tiles");
     } else {
-      LOG("Load tiles");
+      LOG("load tiles");
     }
     if (! wid_tiles_init()) {
       ERR("widget tiles init");
@@ -511,7 +511,7 @@ auto main(int argc, char *argv[]) -> int
     if (g_opt_debug1) {
       CON("Load textures");
     } else {
-      LOG("Load textures");
+      LOG("load textures");
     }
     if (! tex_init()) {
       ERR("tex init");
@@ -524,7 +524,7 @@ auto main(int argc, char *argv[]) -> int
     if (g_opt_debug1) {
       CON("Init audio");
     } else {
-      LOG("Init audio");
+      LOG("init audio");
     }
     if (! audio_init()) {
       ERR("audio init");
@@ -537,7 +537,7 @@ auto main(int argc, char *argv[]) -> int
     if (g_opt_debug1) {
       CON("Init music");
     } else {
-      LOG("Init music");
+      LOG("init music");
     }
     if (! music_init()) {
       ERR("music init");
@@ -550,7 +550,7 @@ auto main(int argc, char *argv[]) -> int
     if (g_opt_debug1) {
       CON("Load sounds");
     } else {
-      LOG("Load sounds");
+      LOG("load sounds");
     }
     if (! sound_init()) {
       ERR("sound init");
@@ -563,20 +563,20 @@ auto main(int argc, char *argv[]) -> int
   {
     TRACE_DEBUG();
 
-    LOG("Load templates");
+    LOG("load templates");
     if (! tp_init()) {
       ERR("templates init");
     }
-    LOG("Loaded templates");
+    LOG("loaded templates");
   }
 
   {
     TRACE_DEBUG();
-    LOG("Load commands");
+    LOG("load commands");
     if (! command_init()) {
       ERR("command init");
     }
-    LOG("Loaded commands");
+    LOG("loaded commands");
     wid_console_flush(g);
   }
 
@@ -662,10 +662,7 @@ auto main(int argc, char *argv[]) -> int
 
   g_opt_no_slow_log_flush = false;
 
-  TRACE_DEBUG();
-  LOG("SDL loop begin");
   sdl_loop(g);
-  LOG("SDL loop end");
   wid_console_flush(g);
 
   if (! g_need_restart_with_given_arguments.empty()) {
@@ -673,7 +670,7 @@ auto main(int argc, char *argv[]) -> int
     restart(g, g_need_restart_with_given_arguments);
   }
 
-  LOG("Quit");
+  LOG("quit");
   cleanup();
 
   CON("Goodbye my friend and take care until next time!");

@@ -52,7 +52,7 @@ void wid_notice(const std::string &s)
 
   auto width = br.x - tl.x;
 
-  wid_notice_window = new WidPopup(g, "Game notice", tl, br, nullptr, "", false, false);
+  wid_notice_window = new WidPopup(g, "game notice", tl, br, nullptr, "", false, false);
   {
     TRACE();
     Widp w = wid_notice_window->wid_popup_container;

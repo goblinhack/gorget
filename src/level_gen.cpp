@@ -870,7 +870,7 @@ static void room_dump(class Room *r)
   TRACE();
 
   level_gen_mutex.lock();
-  LOG("Room %d @ %s:%d", r->id, r->file, r->line);
+  LOG("room %d @ %s:%d", r->id, r->file, r->line);
   TRACE_INDENT();
 
   for (int y = 0; y < r->height; y++) {
@@ -1658,7 +1658,7 @@ static void fragment_dump(class Fragment *f)
   TRACE();
 
   level_gen_mutex.lock();
-  LOG("Fragment %d @ %s:%d", f->id, f->file, f->line);
+  LOG("fragment %d @ %s:%d", f->id, f->file, f->line);
   TRACE_INDENT();
 
   for (int y = 0; y < f->height; y++) {
@@ -2123,21 +2123,21 @@ static void level_gen_dump(class LevelGen *l, const char *msg)
 
   level_gen_mutex.lock();
   if (msg != nullptr) {
-    LOG("Level: %u (%s)", l->level_num + 1, msg);
+    LOG("level: %u (%s)", l->level_num + 1, msg);
   } else {
-    LOG("Level: %u", l->level_num + 1);
+    LOG("level: %u", l->level_num + 1);
   }
   TRACE_INDENT();
 
-  LOG("Seed              : %u", l->info.seed_num);
-  LOG("Room count        : %d", l->info.room_count);
-  LOG("Fragment count    : %d", l->info.fragment_count);
-  LOG("Treasure count    : %d", l->info.treasure_count);
-  LOG("Monst count       : %d (normal:%d enhanced:%d)", l->info.monst_count, l->info.monst_group_easy_count,
+  LOG("seed              : %u", l->info.seed_num);
+  LOG("room count        : %d", l->info.room_count);
+  LOG("fragment count    : %d", l->info.fragment_count);
+  LOG("treasure count    : %d", l->info.treasure_count);
+  LOG("monst count       : %d (normal:%d enhanced:%d)", l->info.monst_count, l->info.monst_group_easy_count,
       l->info.monst_group_hard_count);
-  LOG("Teleport count    : %d", l->info.teleport_count);
-  LOG("Locked door count : %d", l->info.door_locked_count);
-  LOG("Key count         : %d", l->info.key_count);
+  LOG("teleport count    : %d", l->info.teleport_count);
+  LOG("locked door count : %d", l->info.door_locked_count);
+  LOG("key count         : %d", l->info.key_count);
 
   for (int y = 0; y < MAP_HEIGHT; y++) {
     std::string tmp;
@@ -2228,7 +2228,7 @@ void level_gen_stats_dump(Gamep g)
 {
   TRACE();
 
-  LOG("Level generation errors:");
+  LOG("level generation errors:");
   LOG("- create level fail:               %d", level_create_fail);
   LOG("- place first room fail:           %d", level_place_first_room_fail);
   LOG("- place subsequent room fail:      %d", level_place_subsequent_room_fail);
@@ -5134,7 +5134,7 @@ void level_gen_create_levels(Gamep g, Levelsp v)
   // We keep one level free for the grid level
   //
   auto start = time_ms();
-  LOG("Level generation (max %u)", s->level_count);
+  LOG("level generation (max %u)", s->level_count);
   TRACE_INDENT();
 
   std::vector< std::thread > threads;
@@ -5160,7 +5160,7 @@ void level_gen_create_levels(Gamep g, Levelsp v)
   }
 
   s->create_time = time_ms() - start;
-  LOG("Level generation completed, took %u ms", s->create_time);
+  LOG("level generation completed, took %u ms", s->create_time);
   TRACE_INDENT();
 
   level_gen_stats_dump(g);

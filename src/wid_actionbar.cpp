@@ -36,7 +36,7 @@ static std::string last_menu_string;
 {
   TRACE();
 
-  LOG("Actionbar save");
+  LOG("actionbar save");
 
   return game_event_save(g);
 }
@@ -83,7 +83,7 @@ static void wid_actionbar_save_over_end(Gamep g, Widp w)
 
 [[nodiscard]] static auto wid_actionbar_load(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  LOG("Actionbar load");
+  LOG("actionbar load");
   TRACE();
   return game_event_load(g);
 }
@@ -130,7 +130,7 @@ static void wid_actionbar_load_over_end(Gamep g, Widp w)
 
 [[nodiscard]] static auto wid_actionbar_wait(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  LOG("Actionbar wait");
+  LOG("actionbar wait");
   TRACE();
 
   wid_last_key_press = time_ms_cached();
@@ -140,7 +140,7 @@ static void wid_actionbar_load_over_end(Gamep g, Widp w)
 
 [[nodiscard]] static auto wid_actionbar_repeat_wait(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  LOG("Actionbar wait");
+  LOG("actionbar wait");
   TRACE();
 
   if (! time_have_x_tenths_passed_since(1, wid_last_key_press)) {
@@ -199,7 +199,7 @@ static void wid_actionbar_wait_over_end(Gamep g, Widp w)
 
 [[nodiscard]] static auto wid_actionbar_inventory(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  LOG("Actionbar inventory");
+  LOG("actionbar inventory");
   TRACE();
 
   return game_event_inventory(g);
@@ -247,7 +247,7 @@ static void wid_actionbar_inventory_over_end(Gamep g, Widp w)
 
 [[nodiscard]] static auto wid_actionbar_fire(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  LOG("Actionbar fire");
+  LOG("actionbar fire");
   TRACE();
 
   wid_last_key_repeat = time_ms_cached();
@@ -269,7 +269,7 @@ static void wid_actionbar_inventory_over_end(Gamep g, Widp w)
 
 [[nodiscard]] static auto wid_actionbar_repeat_fire(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  LOG("Actionbar fire");
+  LOG("actionbar fire");
   TRACE();
 
   if (! time_have_x_tenths_passed_since(1, wid_last_key_repeat)) {
@@ -339,7 +339,7 @@ static void wid_actionbar_fire_over_end(Gamep g, Widp w)
 
 [[nodiscard]] static auto wid_actionbar_ascend(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  LOG("Actionbar ascend");
+  LOG("actionbar ascend");
   TRACE();
 
   return game_event_ascend(g);
@@ -387,7 +387,7 @@ static void wid_actionbar_ascend_over_end(Gamep g, Widp w)
 
 [[nodiscard]] static auto wid_actionbar_descend(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  LOG("Actionbar descend");
+  LOG("actionbar descend");
   TRACE();
 
   return game_event_descend(g);
@@ -435,7 +435,7 @@ static void wid_actionbar_descend_over_end(Gamep g, Widp w)
 
 [[nodiscard]] static auto wid_actionbar_quit(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  LOG("Actionbar quit");
+  LOG("actionbar quit");
   TRACE();
 
   return game_event_quit(g);
@@ -482,7 +482,7 @@ static void wid_actionbar_quit_over_end(Gamep g, Widp w)
 
 [[nodiscard]] static auto wid_actionbar_help(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  LOG("Actionbar help");
+  LOG("actionbar help");
   TRACE();
 
   return game_event_help(g);

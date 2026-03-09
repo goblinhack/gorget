@@ -29,7 +29,7 @@ static void find_executable()
   char       *tmp                = nullptr;
 
   exec_name = mybasename(g_argv[ 0 ], __FUNCTION__);
-  LOG("Will use EXEC_NAME as '%s'", exec_name.c_str());
+  LOG("will use EXEC_NAME as '%s'", exec_name.c_str());
 
   //
   // Get the current directory, ending in a single /
@@ -177,7 +177,7 @@ static void find_exec_dir()
   }
   g_exec_dir = tmp5;
 
-  LOG("Will use g_exec_dir as '%s'", g_exec_dir);
+  LOG("will use g_exec_dir as '%s'", g_exec_dir);
 }
 
 //
@@ -258,6 +258,6 @@ void find_file_locations()
   find_ttf_dir();
   find_gfx_dir();
 
-  LOG("Gfx path    : \"%s\"", g_gfx_path);
-  LOG("Font path   : \"%s\"", g_ttf_path);
+  LOG("gfx path    : \"%s\"", g_gfx_path);
+  LOG("font path   : \"%s\"", g_ttf_path);
 }

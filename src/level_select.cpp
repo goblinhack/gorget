@@ -322,7 +322,7 @@ static void level_select_dump(LevelSelect *s)
 
   IF_NODEBUG { return; }
 
-  LOG("LevelSelect, level count %d", s->level_count);
+  LOG("levelSelect, level count %d", s->level_count);
   TRACE_INDENT();
 
   for (int y = 0; y < LEVEL_DOWN; y++) {
@@ -472,7 +472,7 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
 //
 [[nodiscard]] static auto level_select_map_set(Gamep g, Levelsp v) -> bool
 {
-  LOG("Level select map");
+  LOG("level select map");
   TRACE_INDENT();
 
   LevelSelect const *s            = &v->level_select;
@@ -803,7 +803,7 @@ void level_select_update_grid_tiles(Gamep g, Levelsp v)
 //
 void level_select_grid_of_empty_levels(Gamep g)
 {
-  LOG("Level select generate");
+  LOG("level select generate");
   TRACE_INDENT();
 
   auto *v = levels_memory_alloc(g);
@@ -820,7 +820,7 @@ void level_select_grid_of_empty_levels(Gamep g)
 //
 void level_select_destroy(Gamep g, Levelsp v, Levelp l)
 {
-  LOG("Level select destroy");
+  LOG("level select destroy");
   TRACE_INDENT();
 
   if ((l == nullptr) || ! l->is_initialized) {

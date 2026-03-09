@@ -25,11 +25,11 @@ public:
     MYFREE(data);
   }
 
-  std::string    name_alias;
-  Mix_Music     *m    = {};
-  uint8_t *data = {};
-  int            len  = {};
-  uint32_t       rate = 44100;
+  std::string name_alias;
+  Mix_Music  *m    = {};
+  uint8_t    *data = {};
+  int         len  = {};
+  uint32_t    rate = 44100;
 };
 
 static std::unordered_map< std::string, class Music * > all_music;
@@ -59,7 +59,7 @@ auto music_init() -> bool
 
 void music_fini()
 {
-  LOG("Music fini");
+  LOG("music fini");
   TRACE();
 
   if (music_init_done) {

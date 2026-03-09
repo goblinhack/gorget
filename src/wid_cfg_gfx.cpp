@@ -189,7 +189,7 @@ static auto wid_cfg_gfx_find_closest_resolution(Gamep g) -> std::string
   auto w           = game_window_pix_width_get(g);
   auto h           = game_window_pix_height_get(g);
   auto current_res = std::to_string(w) + "x" + std::to_string(h);
-  LOG("Find closest resolution to %s:", current_res.c_str());
+  LOG("find closest resolution to %s:", current_res.c_str());
 
   //
   // Find the closest mode
@@ -230,7 +230,7 @@ static auto wid_cfg_gfx_find_closest_resolution(Gamep g) -> std::string
     }
   }
 
-  LOG("Chose fallback resolution of: %s", best_cand.c_str());
+  LOG("chose fallback resolution of: %s", best_cand.c_str());
 
   return best_cand;
 }

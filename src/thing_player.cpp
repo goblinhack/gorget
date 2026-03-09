@@ -14,6 +14,28 @@
 
 #include <ranges>
 
+void thing_player_init(Gamep g)
+{
+  TRACE();
+
+  auto *v = game_levels_get(g);
+  if (v == nullptr) {
+    ERR("no levels");
+    return;
+  }
+
+  if (v->player_id == 0U) {
+    ERR("no player");
+    return;
+  }
+  auto *l = game_level_get(g, v);
+  if (l == nullptr) {
+    return;
+  }
+
+  player_state_change(g, v, l, PLAYER_STATE_NORMAL);
+}
+
 auto thing_player(Gamep g) -> Thingp
 {
   TRACE();
@@ -262,11 +284,16 @@ void player_state_change(Gamep g, Levelsp v, Levelp l, PlayerState new_state)
 
   auto old_state = v->_player_state;
 
+  if (v->_player_state == new_state) {
+    return;
+  }
+
   switch (old_state) {
     case PLAYER_STATE_INIT :
       //
       // Player not initialized yet
       //
+      player_move_requests_reset(g, v);
       break;
     case PLAYER_STATE_DEAD :
       //
@@ -296,10 +323,6 @@ void player_state_change(Gamep g, Levelsp v, Levelp l, PlayerState new_state)
     case PLAYER_STATE_ENUM_MAX : break;
   }
 
-  if (v->_player_state == new_state) {
-    return;
-  }
-
   //
   // Set here to stop recursion.
   //
@@ -308,7 +331,7 @@ void player_state_change(Gamep g, Levelsp v, Levelp l, PlayerState new_state)
   //
   // Why oh why change state
   //
-  THING_DBG(me, "state change: %s -> %s", player_state_to_string(old_state).c_str(), player_state_to_string(new_state).c_str());
+  THING_DBG(me, "player state change: %s -> %s", player_state_to_string(old_state).c_str(), player_state_to_string(new_state).c_str());
   TRACE_INDENT();
 
   switch (new_state) {
@@ -581,7 +604,7 @@ static void player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy)
   TRACE();
 
   if (game_state(g) != STATE_PLAYING) {
-    player_move_reset(g, v, l);
+    player_move_requests_reset(g, v);
     return;
   }
 
@@ -607,7 +630,7 @@ static void player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy)
 
   (void) player_move_try(g, v, l, me, to, true);
 
-  player_move_reset(g, v, l);
+  player_move_requests_reset(g, v);
 }
 
 void player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what)
@@ -644,7 +667,7 @@ void player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what)
   }
 
   if (game_state(g) != STATE_PLAYING) {
-    player_move_reset(g, v, l);
+    player_move_requests_reset(g, v);
     return;
   }
 
@@ -666,7 +689,7 @@ void player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what)
     target             = make_spoint(thing_real_at(me) + delta);
   }
 
-  player_move_reset(g, v, l);
+  player_move_requests_reset(g, v);
 
   if (! thing_projectile_fire_at(g, v, l, me, fire_what, target)) {
     return;
@@ -678,7 +701,7 @@ void player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what)
 //
 // All keys have been released, forget any accumulation of events
 //
-void player_move_reset(Gamep g, Levelsp v, Levelp l)
+void player_move_requests_reset(Gamep g, Levelsp v)
 {
   TRACE();
 
@@ -735,7 +758,7 @@ auto player_move_request(Gamep g, bool up, bool down, bool left, bool right, boo
   }
 
   if (game_state(g) != STATE_PLAYING) {
-    player_move_reset(g, v, l);
+    player_move_requests_reset(g, v);
     return false;
   }
 

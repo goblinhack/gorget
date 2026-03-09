@@ -968,6 +968,7 @@ using Thing = struct Thing {
 auto astar_solve(Gamep g, Levelsp v, Levelp l, Thingp me, spoint src, spoint dst) -> std::vector< spoint >;
 void level_botcon(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
 void level_con(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
+void thing_player_init(Gamep g);
 void thing_degroup(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_group_join(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp group);
 void thing_group_leave(Gamep g, Levelsp v, Levelp l, Thingp t);
@@ -985,7 +986,7 @@ void player_fell(Gamep g, Levelsp v, Levelp l, Levelp next_level, Thingp me);
 void player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp what = nullptr);
 void player_map_center(Gamep, Levelsp, Levelp);
 void player_move_accum(Gamep g, Levelsp v, Levelp l, bool up, bool down, bool left, bool right, bool fire);
-void player_move_reset(Gamep g, Levelsp v, Levelp l);
+void player_move_requests_reset(Gamep g, Levelsp v);
 void player_reached_entrance(Gamep g, Levelsp v, Levelp l);
 void player_reached_exit(Gamep g, Levelsp v, Levelp l);
 void player_warp_to_specific_level(Gamep g, Levelsp v, LevelNum level_num);

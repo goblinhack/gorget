@@ -13,7 +13,7 @@ static bool audio_init_done;
 
 void audio_fini()
 {
-  LOG("Audio fini");
+  LOG("audio fini");
   TRACE_INDENT();
 
   Mix_CloseAudio();

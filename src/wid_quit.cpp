@@ -26,16 +26,16 @@ void wid_quit_destroy(Gamep g)
 [[nodiscard]] static auto wid_quit_yes(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
-  LOG("Quit, yes");
+  LOG("quit, yes");
 
   if (game_levels_get(g) != nullptr) {
-    LOG("Continue game");
+    LOG("continue game");
 
     game_destroy_levels(g);
     wid_quit_destroy(g);
     wid_main_menu_select(g);
   } else {
-    LOG("Exit game");
+    LOG("exit game");
 
     wid_quit_destroy(g);
     DIE_CLEAN("Quit");
@@ -46,7 +46,7 @@ void wid_quit_destroy(Gamep g)
 [[nodiscard]] static auto wid_quit_no(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
-  LOG("Quit, no");
+  LOG("quit, no");
 
   wid_quit_destroy(g);
 
@@ -102,7 +102,7 @@ void wid_quit_destroy(Gamep g)
 void wid_quit_select(Gamep g)
 {
   TRACE();
-  LOG("Quit select");
+  LOG("quit select");
 
   if (wid_quit_window != nullptr) {
     wid_quit_destroy(g);
@@ -119,7 +119,7 @@ void wid_quit_select(Gamep g)
   spoint const outer_br(m + (UI_WID_POPUP_WIDTH_NORMAL / 2), n + 3);
   auto         width = outer_br.x - outer_tl.x;
 
-  wid_quit_window = new WidPopup(g, "Game quit", outer_tl, outer_br, nullptr, "", false, false);
+  wid_quit_window = new WidPopup(g, "game quit", outer_tl, outer_br, nullptr, "", false, false);
   {
     TRACE();
     Widp w = wid_quit_window->wid_popup_container;

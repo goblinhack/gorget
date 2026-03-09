@@ -315,7 +315,7 @@ static void wid_main_menu_tick(Gamep g, Widp w)
 
 void wid_main_menu_select(Gamep g)
 {
-  LOG("Main menu");
+  LOG("main menu");
   TRACE();
 
   if (wid_main_menu_window != nullptr) {
@@ -408,7 +408,7 @@ void wid_main_menu_select(Gamep g)
 
 void wid_new_game(Gamep g)
 {
-  LOG("New game");
+  LOG("new game");
   TRACE();
 
   game_state_reset(g, "new game");

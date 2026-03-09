@@ -250,9 +250,7 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
     //
     // No more following the cursor if dead...
     //
-    if (thing_is_player(t)) {
-      player_state_change(g, v, l, PLAYER_STATE_DEAD);
-    }
+    player_state_change(g, v, l, PLAYER_STATE_DEAD);
 
     auto death_reason = to_death_reason_string(g, v, l, t, e);
 

@@ -54,7 +54,7 @@ void restart(Gamep g, const std::string &restart_arg)
   // Build the full command line
   //
   std::string argument_line;
-  LOG("Command line arguments for restarting '%s'", executable);
+  LOG("command line arguments for restarting '%s'", executable);
   for (i = 1; i < argc; i++) {
     LOG("+ argument: \"%s\"", argv[ i ]);
     argument_line += ' ';

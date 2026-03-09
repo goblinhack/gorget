@@ -152,7 +152,7 @@ static Thingp g_item;
 void wid_item_menu_select(Gamep g, Levelsp v, Thingp item)
 {
   TRACE();
-  LOG("Item menu");
+  LOG("item menu");
 
   auto *l = game_level_get(g, v);
   if (l == nullptr) {

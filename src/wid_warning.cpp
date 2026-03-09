@@ -121,7 +121,7 @@ void wid_warning(Gamep g, const std::string &warning, wid_warning_callback_t cal
   spoint const br(m + (UI_WID_POPUP_WIDTH_WIDE / 2), n + 5);
   auto         width = br.x - tl.x;
 
-  wid_warning_window = new WidPopup(g, "Game warning", tl, br, nullptr, "", false, false);
+  wid_warning_window = new WidPopup(g, "game warning", tl, br, nullptr, "", false, false);
   wid_set_on_key_down(wid_warning_window->wid_popup_container, wid_warning_key_down);
   wid_set_do_not_lower(wid_warning_window->wid_popup_container);
   wid_set_void_context(wid_warning_window->wid_popup_container, reinterpret_cast< void * >(callback));

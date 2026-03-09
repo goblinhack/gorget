@@ -308,13 +308,13 @@ class Game *game;
 
 void Config::fini()
 {
-  LOG("Game fini");
+  LOG("game fini");
   TRACE_INDENT();
 }
 
 void Config::reset()
 {
-  LOG("Game reset");
+  LOG("game reset");
   TRACE_INDENT();
 
   config_pix_height      = {};
@@ -366,7 +366,7 @@ void game_config_reset(Gamep g) { g->config.reset(); }
 
 Game::Game(const std::string &vappdata) : save_slot(1)
 {
-  LOG("Game load %s", vappdata.c_str());
+  LOG("game load %s", vappdata.c_str());
   TRACE_INDENT();
 
   auto *g = this;
@@ -387,7 +387,7 @@ Game::Game(const std::string &vappdata) : save_slot(1)
 
 void Game::init()
 {
-  CON("Game init");
+  CON("game init");
   TRACE_INDENT();
 
   //
@@ -499,7 +499,7 @@ void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num,
 
 void Game::fini()
 {
-  LOG("Game fini");
+  LOG("game fini");
   TRACE_INDENT();
 
   cleanup();
@@ -522,7 +522,7 @@ void game_fini(Gamep g)
 
 void Game::cleanup()
 {
-  LOG("Game cleanup");
+  LOG("game cleanup");
   TRACE_INDENT();
 
   state_change(STATE_QUITTING, "quitting");
@@ -639,7 +639,7 @@ void Game::seed_set(const char *maybe_seed)
     config.seed_num = string_to_hash(config.seed_name);
   }
 
-  LOG("Set seed, name '%s', seed %u", config.seed_name.c_str(), config.seed_num);
+  LOG("set seed, name '%s', seed %u", config.seed_name.c_str(), config.seed_num);
 
   //
   // Limit to tested levels
@@ -763,7 +763,7 @@ auto game_player_name_get(Gamep g) -> const char *
 
 void Game::create_levels()
 {
-  LOG("Create levels");
+  LOG("create levels");
   TRACE_INDENT();
 
   auto *g = this;
@@ -849,7 +849,7 @@ void game_create_levels(Gamep g) { g->create_levels(); }
 
 void Game::start_playing()
 {
-  LOG("Game started playing");
+  LOG("game started playing");
   TRACE();
 
   auto *g = this;
@@ -883,7 +883,7 @@ void Game::destroy_levels()
     return;
   }
 
-  LOG("Levels destroy all");
+  LOG("levels destroy all");
   TRACE_INDENT();
 
   levels_destroy(g, v);
@@ -911,7 +911,7 @@ static auto game_state_to_string(GameState state) -> std::string
 //
 void Game::state_reset(const std::string &why)
 {
-  LOG("State reset: %s", why.c_str());
+  LOG("state reset: %s", why.c_str());
   TRACE_INDENT();
 
   auto *g = this;
@@ -948,7 +948,7 @@ void Game::state_change(GameState new_state, const std::string &why)
   //
   // Why oh why change state
   //
-  LOG("Game state change: %s -> %s, reason: %s", game_state_to_string(old_state).c_str(), game_state_to_string(new_state).c_str(),
+  LOG("game state change: %s -> %s, reason: %s", game_state_to_string(old_state).c_str(), game_state_to_string(new_state).c_str(),
       why.c_str());
   TRACE_INDENT();
 
@@ -1017,14 +1017,14 @@ void Game::state_change(GameState new_state, const std::string &why)
         //
         // Do nothing
         //
-        LOG("Do nothing, quick start chosen");
+        LOG("do nothing, quick start chosen");
       } else if (g_opt_level_select_menu) {
         //
         // Do nothing
         //
-        LOG("Do nothing, level select menu chosen");
+        LOG("do nothing, level select menu chosen");
       } else {
-        LOG("Select the main menu");
+        LOG("select the main menu");
         wid_main_menu_select(g);
       }
       break;
@@ -1040,6 +1040,7 @@ void Game::state_change(GameState new_state, const std::string &why)
           wid_botcon_init(g);
           game_map_zoom_update(g);
           wid_actionbar_init(g);
+          thing_player_init(g);
           break;
         case STATE_QUIT_MENU :
         case STATE_MOVE_WARNING_MENU :

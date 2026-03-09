@@ -18,7 +18,7 @@ void game_debug_info(Gamep g)
     return;
   }
 
-  LOG("Level info:");
+  LOG("level info:");
   LOG("- Levels memory:                   %" PRI_SIZE_T " Mb", sizeof(Levels) / (1024 * 1024));
   LOG("- Thing ext memory:                %" PRI_SIZE_T " Mb", sizeof(v->thing_ext) / (1024 * 1024));
   LOG("- Thing fov memory:                %" PRI_SIZE_T " Mb", sizeof(v->thing_light) / (1024 * 1024));
@@ -91,20 +91,20 @@ void level_debug(Gamep g, Levelsp v, Levelp l)
 {
   TRACE();
 
-  LOG("Level         : %d", l->level_num);
-  LOG("Seed          : %u", l->info.seed_num);
+  LOG("level         : %d", l->level_num);
+  LOG("seed          : %u", l->info.seed_num);
 
   if (l->info.room_count != 0) {
-    LOG("Room count        : %d", l->info.room_count);
-    LOG("Entrance at       : %d,%d", l->info.entrance_at.x, l->info.entrance_at.y);
-    LOG("Exit at           : %d,%d", l->info.exit_at.x, l->info.exit_at.y);
-    LOG("Fragment count    : %d", l->info.fragment_count);
-    LOG("Treasure count    : %d", l->info.treasure_count);
-    LOG("Monst count       : %d (mob:%d easy:%d hard:%d)", l->info.monst_count, l->info.monst_group_mob_count,
+    LOG("room count        : %d", l->info.room_count);
+    LOG("entrance at       : %d,%d", l->info.entrance_at.x, l->info.entrance_at.y);
+    LOG("exit at           : %d,%d", l->info.exit_at.x, l->info.exit_at.y);
+    LOG("fragment count    : %d", l->info.fragment_count);
+    LOG("treasure count    : %d", l->info.treasure_count);
+    LOG("monst count       : %d (mob:%d easy:%d hard:%d)", l->info.monst_count, l->info.monst_group_mob_count,
         l->info.monst_group_easy_count, l->info.monst_group_hard_count);
-    LOG("Teleport count    : %d", l->info.teleport_count);
-    LOG("Locked door count : %d", l->info.door_locked_count);
-    LOG("Key count         : %d", l->info.key_count);
+    LOG("teleport count    : %d", l->info.teleport_count);
+    LOG("locked door count : %d", l->info.door_locked_count);
+    LOG("key count         : %d", l->info.key_count);
     if (l->player_has_entered_level) {
       LOG("- player has entered level");
     }

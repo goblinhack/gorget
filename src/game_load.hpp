@@ -66,9 +66,9 @@ auto operator>>(std::istream &in, Bits< Config & > my) -> std::istream &
   TRACE();
 
   in >> bits(my.t.version);
-  LOG("Read config: version                = [%s]", my.t.version.c_str());
+  LOG("read config: version                = [%s]", my.t.version.c_str());
   in >> bits(my.t.serialized_size);
-  LOG("Read config: serialized_size        = %d", my.t.serialized_size);
+  LOG("read config: serialized_size        = %d", my.t.serialized_size);
 
   if (my.t.serialized_size != sizeof(Config)) {
     game_load_error = "bad save file header version";
@@ -450,19 +450,19 @@ auto operator>>(std::istream &in, Bits< Config & > my) -> std::istream &
   in >> bits(my.t.sdl_delay);
   in >> bits(my.t.sound_volume);
 
-  LOG("Read config: config_pix_height      = %d", my.t.config_pix_height);
-  LOG("Read config: config_pix_width       = %d", my.t.config_pix_width);
-  LOG("Read config: debug_mode             = %d", static_cast< int >(my.t.debug_mode));
-  LOG("Read config: fps_counter            = %d", static_cast< int >(my.t.fps_counter));
-  LOG("Read config: gfx_borderless         = %d", static_cast< int >(my.t.gfx_borderless));
-  LOG("Read config: gfx_fullscreen         = %d", static_cast< int >(my.t.gfx_fullscreen));
-  LOG("Read config: gfx_fullscreen_desktop = %d", static_cast< int >(my.t.gfx_fullscreen_desktop));
-  LOG("Read config: gfx_vsync_enable       = %d", static_cast< int >(my.t.gfx_vsync_enable));
-  LOG("Read config: mouse_wheel_lr_negated = %d", static_cast< int >(my.t.mouse_wheel_lr_negated));
-  LOG("Read config: mouse_wheel_ud_negated = %d", static_cast< int >(my.t.mouse_wheel_ud_negated));
-  LOG("Read config: music_volume           = %d", my.t.music_volume);
-  LOG("Read config: sdl_delay              = %d", my.t.sdl_delay);
-  LOG("Read config: sound_volume           = %d", my.t.sound_volume);
+  LOG("read config: config_pix_height      = %d", my.t.config_pix_height);
+  LOG("read config: config_pix_width       = %d", my.t.config_pix_width);
+  LOG("read config: debug_mode             = %d", static_cast< int >(my.t.debug_mode));
+  LOG("read config: fps_counter            = %d", static_cast< int >(my.t.fps_counter));
+  LOG("read config: gfx_borderless         = %d", static_cast< int >(my.t.gfx_borderless));
+  LOG("read config: gfx_fullscreen         = %d", static_cast< int >(my.t.gfx_fullscreen));
+  LOG("read config: gfx_fullscreen_desktop = %d", static_cast< int >(my.t.gfx_fullscreen_desktop));
+  LOG("read config: gfx_vsync_enable       = %d", static_cast< int >(my.t.gfx_vsync_enable));
+  LOG("read config: mouse_wheel_lr_negated = %d", static_cast< int >(my.t.mouse_wheel_lr_negated));
+  LOG("read config: mouse_wheel_ud_negated = %d", static_cast< int >(my.t.mouse_wheel_ud_negated));
+  LOG("read config: music_volume           = %d", my.t.music_volume);
+  LOG("read config: sdl_delay              = %d", my.t.sdl_delay);
+  LOG("read config: sound_volume           = %d", my.t.sound_volume);
 
   if (! g_opt_override_debug_level) {
     if (my.t.debug_mode) {
@@ -542,19 +542,19 @@ auto operator>>(std::istream &in, Bits< class Game & > my) -> std::istream &
     uint32_t tmp = 0;
 
     in >> bits(tmp);
-    LOG("Read config: sizeof(Thing)          = %u", tmp);
+    LOG("read config: sizeof(Thing)          = %u", tmp);
     if (tmp != sizeof(Thing)) {
       game_load_error = "Incompatible Thing structure size";
       return in;
     }
     in >> bits(tmp);
-    LOG("Read config: sizeof(Level)          = %u", tmp);
+    LOG("read config: sizeof(Level)          = %u", tmp);
     if (tmp != sizeof(Level)) {
       game_load_error = "Incompatible Level structure size";
       return in;
     }
     in >> bits(tmp);
-    LOG("Read config: sizeof(Levels)         = %u", tmp);
+    LOG("read config: sizeof(Levels)         = %u", tmp);
     if (tmp != sizeof(Levels)) {
       game_load_error = "Incompatible Levels structure size";
       return in;
@@ -1014,7 +1014,7 @@ static auto read_lzo_file(const std::string &filename, long *uncompressed_sz) ->
 
 auto Game::load(const std::string &file_to_load, class Game &target) -> bool
 {
-  LOG("Load: %s", file_to_load.c_str());
+  LOG("load: %s", file_to_load.c_str());
   TRACE_INDENT();
 
   VERIFY(MTYPE_GAME, this);
@@ -1061,7 +1061,7 @@ auto Game::load(const std::string &file_to_load, class Game &target) -> bool
 
   auto start = time_ms();
 
-  LOG("Expect: %s, decompress %ld (%ld bytes) -> %ld Mb (%ld bytes)", file_to_load.c_str(),
+  LOG("expect: %s, decompress %ld (%ld bytes) -> %ld Mb (%ld bytes)", file_to_load.c_str(),
       src_size / (1024 * 1024), //
       src_size,                 //
       dst_size / (1024 * 1024), //
@@ -1163,7 +1163,7 @@ auto Game::load_config() const -> std::string
 
 auto Game::load(int slot) -> bool
 {
-  LOG("Load slot: %d", slot);
+  LOG("load slot: %d", slot);
   TRACE_INDENT();
 
   if (slot < 0) {
@@ -1184,7 +1184,7 @@ auto Game::load(int slot) -> bool
     return false;
   }
 
-  LOG("Clean up current game");
+  LOG("clean up current game");
   game->fini();
 
   auto this_save_file = saved_dir + "saved-slot-" + std::to_string(slot);
@@ -1193,7 +1193,7 @@ auto Game::load(int slot) -> bool
     this_save_file = saved_dir + "saved-snapshot";
   }
 
-  LOG("Loading: %s", this_save_file.c_str());
+  LOG("loading: %s", this_save_file.c_str());
   g_loading = true;
   load(this_save_file, *this);
   g_loading = false;
@@ -1213,14 +1213,14 @@ auto Game::load(int slot) -> bool
 
 auto Game::load_snapshot() -> bool
 {
-  LOG("Load snapshot");
+  LOG("load snapshot");
   TRACE_INDENT();
 
   game->fini();
 
   auto this_save_file = saved_dir + "saved-snapshot";
 
-  LOG("Loading: %s", this_save_file.c_str());
+  LOG("loading: %s", this_save_file.c_str());
   g_loading = true;
   load(this_save_file, *this);
   g_loading = false;
@@ -1288,7 +1288,7 @@ static auto wid_load_key_up(Gamep g, Widp w, const struct SDL_Keysym *key) -> bo
               case 'B' :
               case SDLK_ESCAPE :
                 {
-                  LOG("Load game cancelled");
+                  LOG("load game cancelled");
                   TRACE_INDENT();
 
                   wid_load_destroy(game);
@@ -1318,7 +1318,7 @@ static auto wid_load_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> 
 
 static auto wid_load_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  LOG("Load selected slot");
+  LOG("load selected slot");
   TRACE_INDENT();
 
   auto slot = wid_get_int_context(w);
@@ -1329,7 +1329,7 @@ static auto wid_load_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button) ->
 
 static auto wid_load_saved_snapshot(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  LOG("Load snapshot");
+  LOG("load snapshot");
   TRACE_INDENT();
 
   game->load_snapshot();
@@ -1339,7 +1339,7 @@ static auto wid_load_saved_snapshot(Gamep g, Widp w, int x, int y, uint32_t butt
 
 static auto wid_load_cancel(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  LOG("Load cancel");
+  LOG("load cancel");
   TRACE_INDENT();
 
   wid_load_destroy(game);
@@ -1349,7 +1349,7 @@ static auto wid_load_cancel(Gamep g, Widp w, int x, int y, uint32_t button) -> b
 
 void Game::load_select()
 {
-  LOG("Load menu");
+  LOG("load menu");
   TRACE_INDENT();
 
   if (wid_load != nullptr) {
@@ -1362,7 +1362,7 @@ void Game::load_select()
   int const    menu_width  = UI_WID_POPUP_WIDTH_WIDE;
   spoint const outer_tl((TERM_WIDTH / 2) - (menu_width / 2), (TERM_HEIGHT / 2) - (menu_height / 2));
   spoint const outer_br((TERM_WIDTH / 2) + (menu_width / 2), (TERM_HEIGHT / 2) + (menu_height / 2));
-  wid_load = new WidPopup(game, "Game load", outer_tl, outer_br, nullptr, "", false, false);
+  wid_load = new WidPopup(game, "game load", outer_tl, outer_br, nullptr, "", false, false);
 
   wid_set_on_key_up(wid_load->wid_popup_container, wid_load_key_up);
   wid_set_on_key_down(wid_load->wid_popup_container, wid_load_key_down);
@@ -1440,7 +1440,7 @@ void wid_load_select(Gamep g) { g->load_select(); }
 
 auto game_load_last_config(const char *appdata) -> bool
 {
-  LOG("Load config");
+  LOG("load config");
   TRACE_INDENT();
 
   game = new Game(std::string(appdata));

@@ -3776,7 +3776,7 @@ auto wid_receive_input(Gamep g, Widp w, const SDL_Keysym *key) -> bool
   w = wid_get_top_parent(wid_console_input_line);
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
-    LOG("Open console");
+    LOG("open console");
 
     if (AN_ERROR_OCCURRED()) {
       //
