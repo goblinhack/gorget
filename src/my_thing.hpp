@@ -953,6 +953,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_value9(Thingp t) -> int;
 [[nodiscard]] auto thing_variant_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_variant(Thingp t) -> int;
+[[nodiscard]] auto thing_vision_blocker(Gamep g, Levelsp v, Levelp l, Thingp it) -> bool;
 [[nodiscard]] auto thing_vision_can_see_tile(Gamep g, Levelsp v, Levelp l, Thingp t, spoint p) -> bool;
 [[nodiscard]] auto thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp me, spoint to) -> bool;
 [[nodiscard]] auto thing_weight_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
@@ -962,7 +963,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto to_string(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string;
 [[nodiscard]] auto top_owner(Gamep g, Levelsp v, Levelp l, Thingp t) -> Thingp;
 [[nodiscard]] auto wid_get_thing_context(Gamep g, Levelsp v, Widp w, int which) -> Thingp;
-[[nodiscard]] auto thing_vision_blocker(Gamep g, Levelsp v, Levelp l, Thingp it) -> bool;
 // end sort marker1 }
 
 // begin sort marker2 {

@@ -118,15 +118,15 @@ static const int MAX_LEVEL_GEN_ADD_ADDITIONAL_ROOM_WITH_DOOR_TRIES = 10;
 //
 // Chance of obscuring things
 //
-static const int LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_TELEPORTS    = 50;
-static const int LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_ITEMS        = 20;
-static const int LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_TRAPS        = 75;
-static const int LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_KEYS         = 100;
-static const int LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_CHASMS       = 30;
+static const int LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_TELEPORTS   = 50;
+static const int LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_ITEMS       = 20;
+static const int LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_TRAPS       = 75;
+static const int LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_KEYS        = 100;
+static const int LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_CHASMS      = 30;
 static const int LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_DOOR_LOCKED = 50;
 static const int LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_DOOR_SECRET = 80;
-static const int LEVEL_GEN_CHANCE_OF_DOOR_LOCKED                 = 30;
-static const int LEVEL_GEN_CHANCE_OF_CENTRAL_BRIDGE              = 50;
+static const int LEVEL_GEN_CHANCE_OF_DOOR_LOCKED                = 30;
+static const int LEVEL_GEN_CHANCE_OF_CENTRAL_BRIDGE             = 50;
 
 //
 // Chances of creating, tested in the following order, with the default being water
