@@ -123,8 +123,8 @@ static const int LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_ITEMS        = 20;
 static const int LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_TRAPS        = 75;
 static const int LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_KEYS         = 100;
 static const int LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_CHASMS       = 30;
-static const int LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_LOCKED_DOORS = 50;
-static const int LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_SECRET_DOORS = 80;
+static const int LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_DOOR_LOCKED = 50;
+static const int LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_DOOR_SECRET = 80;
 static const int LEVEL_GEN_CHANCE_OF_DOOR_LOCKED                 = 30;
 static const int LEVEL_GEN_CHANCE_OF_CENTRAL_BRIDGE              = 50;
 
@@ -3660,7 +3660,7 @@ static void level_gen_add_foliage_around_secret_doors(Gamep g, class LevelGen *l
             for (int dx = -2; dx <= 2; dx++) {
               auto d = l->data[ x - dx ][ y - dy ].c;
               if ((d == CHARMAP_EMPTY) || (d == CHARMAP_FLOOR)) {
-                if (d100() < LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_SECRET_DOORS) {
+                if (d100() < LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_DOOR_SECRET) {
                   l->data[ x - dx ][ y - dy ].c = CHARMAP_FOLIAGE;
                 }
               }
@@ -3712,7 +3712,7 @@ static void level_gen_add_foliage_around_secret_doors(Gamep g, class LevelGen *l
             for (int dx = -2; dx <= 2; dx++) {
               auto d = l->data[ x - dx ][ y - dy ].c;
               if ((d == CHARMAP_EMPTY) || (d == CHARMAP_FLOOR)) {
-                if (d100() < LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_LOCKED_DOORS) {
+                if (d100() < LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_DOOR_LOCKED) {
                   l->data[ x - dx ][ y - dy ].c = CHARMAP_FOLIAGE;
                 }
               }

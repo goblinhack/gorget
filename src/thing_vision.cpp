@@ -11,6 +11,42 @@
 #include "my_level_inlines.hpp"
 #include "my_thing_inlines.hpp"
 
+//
+// Something blocking the fov?
+//
+bool thing_vision_blocker(Gamep g, Levelsp v, Levelp l, Thingp it)
+{
+  //
+  // Dead foliage should not block
+  //
+  if (thing_is_dead(it)) {
+    return false;
+  }
+
+  //
+  // Open doors should not block
+  //
+  if (thing_is_open(it)) {
+    return false;
+  }
+
+  //
+  // Submerged foliage does not block light
+  //
+  if (thing_submerged_pct(it) != 0) {
+    return false;
+  }
+
+  if (thing_is_obs_to_vision(it)) {
+    if (compiler_unused) {
+      THING_DBG(it, "block");
+    }
+    return true;
+  }
+
+  return false;
+}
+
 void thing_vision_reset(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE();

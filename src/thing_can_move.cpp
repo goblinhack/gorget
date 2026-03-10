@@ -60,7 +60,22 @@ auto thing_can_move_to_ai(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) ->
     }
 
     //
-    // Walls are not always obstacles
+    // Allow AI to make a path through unlocked doors
+    //
+    if (thing_is_door_unlocked(it)) {
+      if (! thing_is_able_to_open(me)) {
+        return false;
+      }
+    }
+
+    //
+    // We allow paths to be made through chasms, lava, monsters. This allows
+    // the monster to try and reach the player over these. If it cannot, it
+    // will just lunge at the player
+    //
+
+    //
+    // Allow AI to make a path through walls
     //
     if (thing_is_wall(it)) {
       if (thing_is_able_to_move_through_walls(me)) {
@@ -112,7 +127,16 @@ auto thing_can_move_to_possible(Gamep g, Levelsp v, Levelp l, Thingp me, spoint 
     }
 
     //
-    // Walls are not always obstacles
+    // Allow walking through unlocked doors
+    //
+    if (thing_is_door_unlocked(it)) {
+      if (! thing_is_able_to_open(me)) {
+        return false;
+      }
+    }
+
+    //
+    // Allow walking through walls
     //
     if (thing_is_wall(it)) {
       if (thing_is_able_to_move_through_walls(me)) {
@@ -121,7 +145,9 @@ auto thing_can_move_to_possible(Gamep g, Levelsp v, Levelp l, Thingp me, spoint 
     }
 
     //
-    // Chasms are obstacles only if you can fall into them
+    // AI will create paths over chasms. This allows monsters to try to cross
+    // them. Howver if they cannot jump over, then they will just lunge at the
+    // player.
     //
     if (thing_is_chasm(it)) {
       if (thing_is_monst(me)) {
@@ -135,7 +161,9 @@ auto thing_can_move_to_possible(Gamep g, Levelsp v, Levelp l, Thingp me, spoint 
     }
 
     //
-    // Lava is only an obstacle if you can burn
+    // AI will create paths over lava. This allows monsters to try to cross
+    // them. Howver if they cannot jump over, then they will just lunge at the
+    // player.
     //
     if (thing_is_lava(it)) {
       if (thing_is_monst(me)) {

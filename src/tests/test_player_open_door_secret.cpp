@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static auto test_player_open_locked_door_success(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_player_open_door_secret(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -23,7 +23,7 @@
       = "xxxxxxx"
         "x...x.x"
         "x...x.x"
-        "x.@k+.x"
+        "x.@.s.x"
         "x...x.x"
         "x...x.x"
         "xxxxxxx";
@@ -31,7 +31,7 @@
       = "xxxxxxx"
         "x...x.x"
         "x...x.x"
-        "x..@+.x"
+        "x..@s.x"
         "x...x.x"
         "x...x.x"
         "xxxxxxx";
@@ -155,14 +155,14 @@ exit:
   return result;
 }
 
-auto test_load_open_locked_door_success() -> bool // NOLINT
+auto test_player_open_door_door_secret() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("open_locked_door_success");
+  Testp test = test_load("player_open_door_secret");
 
   // begin sort marker1 {
-  test_callback_set(test, test_player_open_locked_door_success);
+  test_callback_set(test, test_player_open_door_secret);
   // end sort marker1 }
 
   return true;

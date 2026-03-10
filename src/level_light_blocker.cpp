@@ -23,31 +23,7 @@ auto level_light_blocker_at(Gamep g, Levelsp v, Levelp l, const spoint &pov) -> 
 {
   FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, pov)
   {
-    //
-    // Dead foliage should not block
-    //
-    if (thing_is_dead(it)) {
-      continue;
-    }
-
-    //
-    // Open doors should not block
-    //
-    if (thing_is_open(it)) {
-      continue;
-    }
-
-    //
-    // Submerged foliage does not block light
-    //
-    if (thing_submerged_pct(it) != 0) {
-      continue;
-    }
-
-    if (thing_is_obs_to_vision(it)) {
-      if (compiler_unused) {
-        THING_DBG(it, "block");
-      }
+    if (thing_vision_blocker(g, v, l, it)) {
       return it;
     }
   }

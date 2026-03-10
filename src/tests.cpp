@@ -26,7 +26,6 @@ auto tests_init() -> bool
   if (!test_load_brazier_shove_ok()) { return false; }
   if (!test_load_bridge_on_fire_over_lava()) { return false; }
   if (!test_load_bridge_on_fire()) { return false; }
-  if (!test_load_door_secret()) { return false; }
   if (!test_load_fire_on_water()) { return false; }
   if (!test_load_fire_over_chasm()) { return false; }
   if (!test_load_foliage_on_fire()) { return false; }
@@ -46,14 +45,14 @@ auto tests_init() -> bool
   if (!test_load_monst_crosses_water()) { return false; }
   if (!test_load_monst_mobbing()) { return false; }
   if (!test_load_monst_pass_through_walls()) { return false; }
+  if (!test_load_monster_door_locked()) { return false; }
+  if (!test_load_monster_door_unlocked()) { return false; }
   if (!test_load_monster_maze()) { return false; }
   if (!test_load_monster_mob_leash()) { return false; }
+  if (!test_load_monster_secret_door()) { return false; }
   if (!test_load_monster_slow()) { return false; }
   if (!test_load_move_ok()) { return false; }
   if (!test_load_no_change()) { return false; }
-  if (!test_load_open_locked_door_fail()) { return false; }
-  if (!test_load_open_locked_door_success()) { return false; }
-  if (!test_load_open_unlocked_door()) { return false; }
   if (!test_load_path_astar()) { return false; }
   if (!test_load_path_dmap_reverse()) { return false; }
   if (!test_load_path_dmap()) { return false; }
@@ -67,12 +66,12 @@ auto tests_init() -> bool
   if (!test_load_player_on_fire()) { return false; }
   if (!test_load_projectile_barrel_explosion()) { return false; }
   if (!test_load_projectile_border_turns_to_lava()) { return false; }
-  if (!test_load_projectile_locked_door()) { return false; }
+  if (!test_load_projectile_door_locked()) { return false; }
+  if (!test_load_projectile_door_secret()) { return false; }
+  if (!test_load_projectile_door_unlocked()) { return false; }
   if (!test_load_projectile_mob()) { return false; }
   if (!test_load_projectile_over_water()) { return false; }
   if (!test_load_projectile_rock_turns_to_lava()) { return false; }
-  if (!test_load_projectile_secret_door()) { return false; }
-  if (!test_load_projectile_unlocked_door()) { return false; }
   if (!test_load_projectile_wall_turns_to_lava()) { return false; }
   if (!test_load_projectile()) { return false; }
   if (!test_load_save_load()) { return false; }

@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static auto test_player_open_locked_door_fail(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_player_open_door_unlocked(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -23,7 +23,7 @@
       = "xxxxxxx"
         "x...x.x"
         "x...x.x"
-        "x.@.+.x"
+        "x.@.D.x"
         "x...x.x"
         "x...x.x"
         "xxxxxxx";
@@ -31,7 +31,7 @@
       = "xxxxxxx"
         "x...x.x"
         "x...x.x"
-        "x..@+.x"
+        "x..@D.x"
         "x...x.x"
         "x...x.x"
         "xxxxxxx";
@@ -39,7 +39,7 @@
       = "xxxxxxx"
         "x...x.x"
         "x...x.x"
-        "x..@+.x"
+        "x...@.x"
         "x...x.x"
         "x...x.x"
         "xxxxxxx";
@@ -47,7 +47,7 @@
       = "xxxxxxx"
         "x...x.x"
         "x...x.x"
-        "x..@+.x"
+        "x....@x"
         "x...x.x"
         "x...x.x"
         "xxxxxxx";
@@ -144,7 +144,7 @@
     }
   }
 
-  TEST_ASSERT(t, game_tick_get(g, v) == 3, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 4, "final tick counter value");
 
   level_dump(g, v, l, w, h);
   TEST_PASSED(t);
@@ -155,14 +155,14 @@ exit:
   return result;
 }
 
-auto test_load_open_locked_door_fail() -> bool // NOLINT
+auto test_player_open_door_unlocked() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("open_locked_door_fail");
+  Testp test = test_load("player_open_door_unlocked");
 
   // begin sort marker1 {
-  test_callback_set(test, test_player_open_locked_door_fail);
+  test_callback_set(test, test_player_open_door_unlocked);
   // end sort marker1 }
 
   return true;
