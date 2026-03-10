@@ -143,10 +143,13 @@ static void wid_rightbar_create_minimap_world(Gamep g)
   }
 
   //
-  // Always show minimaps
+  // Minimaps
   //
-  wid_rightbar_create_minimap_level(g);
-  wid_rightbar_create_minimap_world(g);
+  IF_DEBUG
+  {
+    wid_rightbar_create_minimap_level(g);
+    wid_rightbar_create_minimap_world(g);
+  }
 
   wid_update(g, wid_rightbar->wid_popup_container);
 
