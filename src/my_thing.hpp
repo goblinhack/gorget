@@ -962,7 +962,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto to_string(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string;
 [[nodiscard]] auto top_owner(Gamep g, Levelsp v, Levelp l, Thingp t) -> Thingp;
 [[nodiscard]] auto wid_get_thing_context(Gamep g, Levelsp v, Widp w, int which) -> Thingp;
-[[nodiscard]] bool thing_vision_blocker(Gamep g, Levelsp v, Levelp l, Thingp it);
+[[nodiscard]] auto thing_vision_blocker(Gamep g, Levelsp v, Levelp l, Thingp it) -> bool;
 // end sort marker1 }
 
 // begin sort marker2 {

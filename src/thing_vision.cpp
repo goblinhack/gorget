@@ -14,7 +14,7 @@
 //
 // Something blocking the fov?
 //
-bool thing_vision_blocker(Gamep g, Levelsp v, Levelp l, Thingp it)
+auto thing_vision_blocker(Gamep g, Levelsp v, Levelp l, Thingp it) -> bool
 {
   //
   // Dead foliage should not block
