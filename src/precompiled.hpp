@@ -17,6 +17,7 @@
 #include <ctime>
 #include <cxxabi.h>
 #include <format>
+#include <fstream>
 #include <functional>
 #include <inttypes.h>
 #include <iomanip>
@@ -25,15 +26,19 @@
 #include <limits>
 #include <list>
 #include <map>
+#include <math.h>
 #include <memory>
 #include <mutex>
 #include <numbers>
 #include <print>
 #include <ranges>
 #include <set>
+#include <source_location>
 #include <sstream>
 #include <stdarg.h>
+#include <stdint.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <string>
 #include <strings.h>
@@ -43,6 +48,8 @@
 #include <utility>
 #include <vector>
 
+#include "my_age_map.hpp"
+#include "my_age_map_inlines.hpp"
 #include "my_ascii.hpp"
 #include "my_audio.hpp"
 #include "my_backtrace.hpp"
@@ -57,12 +64,15 @@
 #include "my_command_history.hpp"
 #include "my_console.hpp"
 #include "my_cpp_template.hpp"
+#include "my_dice_class.hpp"
 #include "my_dice_rolls.hpp"
 #include "my_dir.hpp"
 #include "my_dmap.hpp"
 #include "my_enum.hpp"
 #include "my_file.hpp"
 #include "my_font.hpp"
+#include "my_fov_map.hpp"
+#include "my_fov_map_inlines.hpp"
 #include "my_fpoint.hpp"
 #include "my_game.hpp"
 #include "my_game_defs.hpp"
@@ -73,6 +83,8 @@
 #include "my_hiscore.hpp"
 #include "my_level.hpp"
 #include "my_level_ext.hpp"
+#include "my_level_inlines.hpp"
+#include "my_level_light_inlines.hpp"
 #include "my_line.hpp"
 #include "my_log.hpp"
 #include "my_main.hpp"
