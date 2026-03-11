@@ -85,7 +85,7 @@
 //
 // The thing name
 //
-[[nodiscard]] static auto wid_thing_info_name(Gamep g, Thingp t, Tpp tp, WidPopup *parent) -> bool
+[[nodiscard]] static auto wid_thing_info_name(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, WidPopup *parent) -> bool
 {
   TRACE();
 
@@ -93,7 +93,7 @@
   if (thing_is_player(t)) {
     name_str = game_player_name_get(g);
   } else {
-    name_str = tp_long_name(tp);
+    name_str = thing_name_long(g, v, l, t);
   }
   name_str = capitalize(name_str);
 
@@ -109,6 +109,10 @@
 {
   TRACE();
 
+  if (thing_is_dead(t)) {
+    return false;
+  }
+
   parent->log(g, thing_detail_get(g, v, l, t), TEXT_FORMAT_LHS);
 
   return true;
@@ -120,6 +124,10 @@
 [[nodiscard]] static auto wid_thing_info_health_bar(Gamep g, Thingp t, Tpp tp, WidPopup *parent, int width) -> bool
 {
   TRACE();
+
+  if (thing_is_dead(t)) {
+    return false;
+  }
 
   if (! tp_is_health_bar_shown(tp)) {
     return false;
@@ -273,7 +281,7 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp t, WidPopup *parent, in
 
   (void) wid_thing_info_keys(g, t, parent);
 
-  if (wid_thing_info_name(g, t, tp, parent)) {
+  if (wid_thing_info_name(g, v, l, t, tp, parent)) {
     parent->log_empty_line(g);
   }
 
@@ -306,7 +314,7 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp t, WidPopup *parent, in
     auto at = thing_at(t);
     FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, at)
     {
-      auto s = std::format("- {}", thing_short_name(g, v, l, it));
+      auto s = std::format("- {}", thing_name_short(g, v, l, it));
       parent->log(g, s, TEXT_FORMAT_LHS);
     }
   }

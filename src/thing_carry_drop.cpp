@@ -35,7 +35,7 @@ auto thing_carry_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp player_o
     TRACE_INDENT();
 
     if (thing_is_player(player_or_monst)) {
-      auto the_thing = thing_the_long_name(g, v, l, item);
+      auto the_thing = thing_name_long_the(g, v, l, item);
       TOPCON("You fail to carry %s.", the_thing.c_str());
     }
     return false;
@@ -46,7 +46,7 @@ auto thing_carry_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp player_o
   thing_inventory_dump(g, v, l, player_or_monst);
 
   if (thing_is_player(player_or_monst)) {
-    auto the_thing = thing_the_long_name(g, v, l, item);
+    auto the_thing = thing_name_long_the(g, v, l, item);
     TOPCON("You carry %s.", the_thing.c_str());
   }
 
@@ -82,7 +82,7 @@ auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp player_or
     TRACE_INDENT();
 
     if (thing_is_player(player_or_monst)) {
-      auto the_thing = thing_the_long_name(g, v, l, item);
+      auto the_thing = thing_name_long_the(g, v, l, item);
       TOPCON("You fail to drop %s.", the_thing.c_str());
     }
     return false;
@@ -92,13 +92,13 @@ auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp player_or
   // Drop the thing where the player is
   //
   if (! thing_warp_to(g, v, l, item, thing_at(player_or_monst))) {
-    auto the_thing = thing_the_long_name(g, v, l, item);
+    auto the_thing = thing_name_long_the(g, v, l, item);
     TOPCON("You fail to place %s.", the_thing.c_str());
     return false;
   }
 
   if (thing_is_player(player_or_monst)) {
-    auto the_thing = thing_the_long_name(g, v, l, item);
+    auto the_thing = thing_name_long_the(g, v, l, item);
     TOPCON("You drop %s.", the_thing.c_str());
   }
 

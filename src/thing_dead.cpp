@@ -20,7 +20,7 @@ static void thing_killed_player(Gamep g, Levelsp v, Levelp l, ThingEvent &e)
   auto *it = e.source;
 
   if (it != nullptr) {
-    auto by_the_thing = thing_the_long_name(g, v, l, it);
+    auto by_the_thing = thing_name_long_the(g, v, l, it);
 
     switch (e.event_type) {
       case THING_EVENT_SHOVED : //
@@ -115,8 +115,8 @@ static void thing_killed_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
   auto *it = e.source;
 
   if ((it != nullptr) && thing_is_loggable(t)) {
-    auto the_thing = capitalize_first(thing_the_long_name(g, v, l, t));
-    auto by_player = thing_long_name(g, v, l, it);
+    auto the_thing = capitalize_first(thing_name_long_the(g, v, l, t));
+    auto by_player = thing_name_long(g, v, l, it);
 
     switch (e.event_type) {
       case THING_EVENT_SHOVED : //
@@ -169,6 +169,8 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
     return;
   }
 
+  auto tp = thing_tp(t);
+
   //
   // Where did the thing die? Might not be on the current level.
   //
@@ -198,7 +200,7 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
   //
   // Update the animation, for example, flattened grass
   //
-  if (thing_is_burning(t) && (tp_tiles_size(thing_tp(t), THING_ANIM_BURNT) != 0)) {
+  if (thing_is_burning(t) && (tp_tiles_size(tp, THING_ANIM_BURNT) != 0)) {
     //
     // If it has burnt anim frames
     //
@@ -207,7 +209,7 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
     // Restart the animation if we have burnt frames
     //
     thing_anim_init(g, v, l, t, THING_ANIM_BURNT);
-  } else if (tp_tiles_size(thing_tp(t), THING_ANIM_DEAD) != 0) {
+  } else if (tp_tiles_size(tp, THING_ANIM_DEAD) != 0) {
     //
     // Restart the animation if we have dead frames
     //
@@ -231,7 +233,7 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
   //
   // Leaves a corpse?
   //
-  if (thing_is_corpse_on_death(t)) {
+  if (thing_corpse_allowed(g, v, l, t)) {
     //
     // Keep the thing on the map, but in dead state.
     //
@@ -300,4 +302,9 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
   // detached.
   //
   thing_group_leave(g, v, l, t);
+
+  //
+  // Unset various flags so the dead thing is not still described as "sleeping" when dead
+  //
+  thing_is_sleeping_unset(g, v, l, t);
 }

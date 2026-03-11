@@ -98,7 +98,7 @@ auto thing_jump_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to, bool warn)
   if (obs != nullptr) {
     if (thing_is_player(t)) {
       if (warn) {
-        auto the_thing = thing_the_long_name(g, v, l, obs);
+        auto the_thing = thing_name_long_the(g, v, l, obs);
         TOPCON("You cannot jump over %s.", the_thing.c_str());
       }
     }

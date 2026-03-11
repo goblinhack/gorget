@@ -6,7 +6,7 @@
 #include "my_game.hpp"
 #include "my_thing_inlines.hpp"
 
-static auto thing_pluralize_name(Thingp t) -> std::string
+static auto thing_name_pluralize(Thingp t) -> std::string
 {
   TRACE();
 
@@ -20,7 +20,7 @@ static auto thing_pluralize_name(Thingp t) -> std::string
   return out;
 }
 
-static auto thing_apostrophize_name(Thingp t) -> std::string
+static auto thing_name_apostrophize(Thingp t) -> std::string
 {
   TRACE();
 
@@ -34,7 +34,7 @@ static auto thing_apostrophize_name(Thingp t) -> std::string
   return out;
 }
 
-auto thing_long_name(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) -> std::string
+auto thing_name_long(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) -> std::string
 {
   TRACE();
 
@@ -46,16 +46,6 @@ auto thing_long_name(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) -
 
   std::string out;
 
-#if 0
-  //
-  // Tamed?
-  //
-  auto l = leader();
-  if (l && (l == level->player)) {
-    out = "your ";
-  }
-
-#endif
   //
   // "the kobalos's short sword" for example
   //
@@ -70,7 +60,11 @@ auto thing_long_name(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) -
 
   if ((f & TEXT_EXCLUDE_DEATH) == 0) {
     if (thing_is_burning(t)) {
-      out += "burning ";
+      if (thing_is_dead(t)) {
+        out += "burnt ";
+      } else {
+        out += "burning ";
+      }
     }
 
     if (thing_is_dead(t)) {
@@ -88,37 +82,12 @@ auto thing_long_name(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) -
         out += "extinguished ";
       }
     }
-
-#if 0
-  if (is_frozen) {
-    out += "frozen ";
-  } else if (is_gaseous) {
-    out += "burnt ";
-  } else if (tp->charge_count() && ! charge_count()) {
-    out += "spent ";
   }
-#endif
-  }
-
-#if 0
-  //
-  // Tamed?
-  //
-  if (l && (l == level->player)) {
-    if (is_not_shown_as_a_pet()) {
-      //
-      // Not really a pet
-      //
-    } else {
-      out += "pet ";
-    }
-  }
-#endif
 
   if ((f & TEXT_APOSTROPHIZE) != 0) {
-    out += thing_apostrophize_name(t);
+    out += thing_name_apostrophize(t);
   } else if ((f & TEXT_APOSTROPHIZE) != 0) {
-    out += thing_pluralize_name(t);
+    out += thing_name_pluralize(t);
   } else {
     auto name = tp_long_name(tp);
     if ((g != nullptr) && thing_is_player(t)) {
@@ -128,27 +97,17 @@ auto thing_long_name(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) -
     out += name;
   }
 
-#if 0
-  if (tp->is_spell()) {
-    out += " spell";
-  }
-
-  if (tp->is_skill()) {
-    out += " skill";
-  }
-#endif
-
   return out;
 }
 
-auto thing_the_long_name(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) -> std::string
+auto thing_name_long_the(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) -> std::string
 {
   TRACE();
 
-  return "the " + thing_long_name(g, v, l, t, f);
+  return "the " + thing_name_long(g, v, l, t, f);
 }
 
-auto thing_short_name(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) -> std::string
+auto thing_name_short(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) -> std::string
 {
   TRACE();
 
@@ -195,9 +154,9 @@ auto thing_short_name(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) 
   }
 
   if ((f & TEXT_APOSTROPHIZE) != 0) {
-    out += thing_apostrophize_name(t);
+    out += thing_name_apostrophize(t);
   } else if ((f & TEXT_APOSTROPHIZE) != 0) {
-    out += thing_pluralize_name(t);
+    out += thing_name_pluralize(t);
   } else {
     auto name = tp_short_name(tp);
     if ((g != nullptr) && thing_is_player(t)) {
@@ -210,9 +169,9 @@ auto thing_short_name(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) 
   return out;
 }
 
-auto thing_the_short_name(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) -> std::string
+auto thing_name_short_the(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) -> std::string
 {
   TRACE();
 
-  return "the " + thing_short_name(g, v, l, t, f);
+  return "the " + thing_name_short(g, v, l, t, f);
 }

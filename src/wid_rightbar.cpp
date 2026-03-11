@@ -138,7 +138,26 @@ static void wid_rightbar_create_minimap_world(Gamep g)
         continue;
       }
 
+      if (thing_is_dead(t)) {
+        continue;
+      }
+
       wid_thing_info(g, v, l, t, wid_rightbar, UI_RIGHTBAR_WIDTH);
+    }
+
+    for (auto n = 0; std::cmp_less(n, v->describe_count); n++) {
+      auto *t = thing_find_optional(g, v, v->describe[ n ]);
+      if (t == nullptr) {
+        continue;
+      }
+
+      if (thing_is_player(t)) {
+        continue;
+      }
+
+      if (thing_is_dead(t)) {
+        wid_thing_info(g, v, l, t, wid_rightbar, UI_RIGHTBAR_WIDTH);
+      }
     }
   }
 
