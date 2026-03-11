@@ -7,40 +7,54 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static auto test_monster_mobbing(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_monst_mob_leash(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
 
   LevelNum const level_num = 0;
-  auto           w         = 7;
-  auto           h         = 7;
+  auto           w         = 14;
+  auto           h         = 14;
 
   //
   // How the dungeon starts out, and how we expect it to change
   //
   std::string const start
-      = "XXXXXXX"
-        "XmmmmmX"
-        "Xm...mX"
-        "X.....X"
-        "X..@..X"
-        "X.....X"
-        "XXXXXXX";
-  std::string const expect1
-      = "XXXXXXX"
-        "X.....X"
-        "X.....X"
-        "X.mmm.X"
-        "X.m@m.X"
-        "X.m.m.X"
-        "XXXXXXX";
+      = "XXXXXXXXXXXXXX"
+        "X............X"
+        "X............X"
+        "X............X"
+        "X............X"
+        "X............X"
+        "X.@........g.X"
+        "X............X"
+        "X............X"
+        "X............X"
+        "X............X"
+        "X............X"
+        "X............X"
+        "XXXXXXXXXXXXXX";
+  std::string const expect
+      = "XXXXXXXXXXXXXX"
+        "X............X"
+        "X............X"
+        "X.....m......X"
+        "X.....m......X"
+        "X.....mm.....X"
+        "X.@..mmm...g.X"
+        "X.....m......X"
+        "X.....m......X"
+        "X.....m......X"
+        "X............X"
+        "X............X"
+        "X............X"
+        "XXXXXXXXXXXXXX";
 
   //
   // Create the level and start playing
   //
   Overrides overrides;
-  overrides[ 'm' ] = [](char c, spoint p) -> Tpp { return tp_find_mand("ghost"); };
+  overrides[ 'g' ] = [](char c, spoint p) -> Tpp { return tp_find_mand("ghost_mob"); };
   Levelp  l        = nullptr;
   Levelsp v        = game_test_init(g, &l, level_num, w, h, start.c_str(), overrides);
 
@@ -51,7 +65,7 @@
 
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 4; tries++) {
+  for (auto tries = 0; tries < 30; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE();
     level_dump(g, v, l, w, h);
@@ -69,7 +83,7 @@
   TEST_PROGRESS(t);
   {
     TRACE();
-    if (! (result = level_match_contents(g, v, l, t, w, h, expect1.c_str()))) {
+    if (! (result = level_match_contents(g, v, l, t, w, h, expect.c_str()))) {
       TEST_FAILED(t, "unexpected contents");
       goto exit;
     }
@@ -80,9 +94,7 @@
   //
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  {
-    TEST_ASSERT(t, game_tick_get(g, v) == 4, "final tick counter value");
-  }
+  TEST_ASSERT(t, game_tick_get(g, v) == 30, "final tick counter value");
 
   level_dump(g, v, l, w, h);
   TEST_PASSED(t);
@@ -93,14 +105,14 @@ exit:
   return result;
 }
 
-auto test_load_monst_mobbing() -> bool // NOLINT
+auto test_load_monst_mob_leash() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("monst_mobbing");
+  Testp test = test_load("monst_mob_leash");
 
   // begin sort marker1 {
-  test_callback_set(test, test_monster_mobbing);
+  test_callback_set(test, test_monst_mob_leash);
   // end sort marker1 }
 
   return true;

@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static auto test_monster_avoids_lava(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_monst_avoids_water(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -21,42 +21,42 @@
   //
   std::string const start
       = "XXXXXXXXXXXXXXX"
-        "X.LLL.LLL.LLL.X"
-        "X.===.LLL.===.X"
-        "X.LLL.LLL.LLL.X"
-        "X.LLL.===.LLL.X"
-        "X@LLL.LLL.LLLmX"
+        "X.~~~.~~~.~~~.X"
+        "X.===.~~~.===.X"
+        "X.~~~.~~~.~~~.X"
+        "X.~~~.===.~~~.X"
+        "X@~~~.~~~.~~~mX"
         "XXXXXXXXXXXXXXX";
   std::string const expect1
       = "XXXXXXXXXXXXXXX"
-        "X.LLL.LLL.LLL.X"
-        "X.===.LLLm===.X"
-        "X.LLL.LLL.LLL.X"
-        "X.LLL.===.LLL.X"
-        "X@LLL.LLL.LLL.X"
+        "X.~~~.~~~.~~~.X"
+        "X.===.~~~.=m=.X"
+        "X.~~~.~~~.~~~.X"
+        "X.~~~.===.~~~.X"
+        "X@~~~.~~~.~~~.X"
         "XXXXXXXXXXXXXXX";
   std::string const expect2
       = "XXXXXXXXXXXXXXX"
-        "X.LLL.LLL.LLL.X"
-        "X.===.LLL.===.X"
-        "X.LLLmLLL.LLL.X"
-        "X.LLL.===.LLL.X"
-        "X@LLL.LLL.LLL.X"
+        "X.~~~.~~~.~~~.X"
+        "X.===.~~~.===.X"
+        "X.~~~.~~~.~~~.X"
+        "X.~~~.=m=.~~~.X"
+        "X@~~~.~~~.~~~.X"
         "XXXXXXXXXXXXXXX";
   std::string const expect3
       = "XXXXXXXXXXXXXXX"
-        "X.LLL.LLL.LLL.X"
-        "X.===.LLL.===.X"
-        "X.LLL.LLL.LLL.X"
-        "XmLLL.===.LLL.X"
-        "X@LLL.LLL.LLL.X"
+        "X.~~~.~~~.~~~.X"
+        "X.=m=.~~~.===.X"
+        "X.~~~.~~~.~~~.X"
+        "X.~~~.===.~~~.X"
+        "X@~~~.~~~.~~~.X"
         "XXXXXXXXXXXXXXX";
 
   //
   // Create the level and start playing
   //
   Overrides overrides;
-  overrides[ 'm' ] = [](char c, spoint p) -> Tpp { return tp_find_mand("mantisman"); };
+  overrides[ 'm' ] = [](char c, spoint p) -> Tpp { return tp_find_mand("ghost"); };
   Levelp  l        = nullptr;
   Levelsp v        = game_test_init(g, &l, level_num, w, h, start.c_str(), overrides);
 
@@ -67,7 +67,7 @@
 
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 7; tries++) {
+  for (auto tries = 0; tries < 4; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE();
     level_dump(g, v, l, w, h);
@@ -93,7 +93,7 @@
 
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 7; tries++) {
+  for (auto tries = 0; tries < 4; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE();
     level_dump(g, v, l, w, h);
@@ -119,7 +119,7 @@
 
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 7; tries++) {
+  for (auto tries = 0; tries < 4; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE();
     level_dump(g, v, l, w, h);
@@ -148,9 +148,7 @@
   //
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  {
-    TEST_ASSERT(t, game_tick_get(g, v) == 21, "final tick counter value");
-  }
+  TEST_ASSERT(t, game_tick_get(g, v) == 12, "final tick counter value");
 
   level_dump(g, v, l, w, h);
   TEST_PASSED(t);
@@ -161,14 +159,14 @@ exit:
   return result;
 }
 
-auto test_load_monst_avoids_lava() -> bool // NOLINT
+auto test_load_monst_avoids_water() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("monst_avoids_lava");
+  Testp test = test_load("monst_avoids_water");
 
   // begin sort marker1 {
-  test_callback_set(test, test_monster_avoids_lava);
+  test_callback_set(test, test_monst_avoids_water);
   // end sort marker1 }
 
   return true;

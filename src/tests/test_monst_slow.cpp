@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static auto test_monster_maze(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_monst_slow(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -21,42 +21,42 @@
   //
   std::string const start
       = "XXXXXXX"
-        "X...xmX"
-        "X.x.x.X"
-        "X.x.x.X"
-        "X.x.x.X"
-        "X@x...X"
+        "X.....X"
+        "X.....X"
+        "X@...mX"
+        "X.....X"
+        "X.....X"
         "XXXXXXX";
   std::string const expect1
       = "XXXXXXX"
-        "X...x.X"
-        "X.x.x.X"
-        "X.x.x.X"
-        "X.x.x.X"
-        "X@x.m.X"
+        "X.....X"
+        "X.....X"
+        "X@..M.X"
+        "X.....X"
+        "X.....X"
         "XXXXXXX";
   std::string const expect2
       = "XXXXXXX"
-        "X..mx.X"
-        "X.x.x.X"
-        "X.x.x.X"
-        "X.x.x.X"
-        "X@x...X"
+        "X.....X"
+        "X.....X"
+        "X@.M..X"
+        "X.....X"
+        "X.....X"
         "XXXXXXX";
   std::string const expect3
       = "XXXXXXX"
-        "X...x.X"
-        "X.x.x.X"
-        "X.x.x.X"
-        "Xmx.x.X"
-        "X@x...X"
+        "X.....X"
+        "X.....X"
+        "X@M...X"
+        "X.....X"
+        "X.....X"
         "XXXXXXX";
 
   //
   // Create the level and start playing
   //
   Overrides overrides;
-  overrides[ 'm' ] = [](char c, spoint p) -> Tpp { return tp_find_mand("kobalos"); };
+  overrides[ 'm' ] = [](char c, spoint p) -> Tpp { return tp_find_mand("glorp"); };
   Levelp  l        = nullptr;
   Levelsp v        = game_test_init(g, &l, level_num, w, h, start.c_str(), overrides);
 
@@ -67,7 +67,7 @@
 
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 5; tries++) {
+  for (auto tries = 0; tries < 2; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE();
     level_dump(g, v, l, w, h);
@@ -93,7 +93,7 @@
 
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 5; tries++) {
+  for (auto tries = 0; tries < 2; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE();
     level_dump(g, v, l, w, h);
@@ -119,7 +119,7 @@
 
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 5; tries++) {
+  for (auto tries = 0; tries < 2; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE();
     level_dump(g, v, l, w, h);
@@ -148,9 +148,7 @@
   //
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  {
-    TEST_ASSERT(t, game_tick_get(g, v) == 15, "final tick counter value");
-  }
+  TEST_ASSERT(t, game_tick_get(g, v) == 6, "final tick counter value");
 
   level_dump(g, v, l, w, h);
   TEST_PASSED(t);
@@ -161,14 +159,14 @@ exit:
   return result;
 }
 
-auto test_load_monster_maze() -> bool // NOLINT
+auto test_load_monst_slow() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("monster_maze");
+  Testp test = test_load("monst_slow");
 
   // begin sort marker1 {
-  test_callback_set(test, test_monster_maze);
+  test_callback_set(test, test_monst_slow);
   // end sort marker1 }
 
   return true;

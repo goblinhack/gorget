@@ -7,48 +7,76 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static auto test_monster_no_water(Gamep g, Testp t) -> bool
+//
+// If there is too much water, the monster will take the shortcut even
+// if it doesn't "like" water
+//
+[[nodiscard]] static auto test_monst_avoids_water_usually(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
 
   LevelNum const level_num = 0;
   auto           w         = 7;
-  auto           h         = 7;
+  auto           h         = 23;
 
   //
   // How the dungeon starts out, and how we expect it to change
   //
   std::string const start
       = "XXXXXXX"
-        "X.....X"
+        "X.===.X"
         "X.~~~.X"
-        "X@...mX"
         "X.~~~.X"
-        "X.....X"
+        "X.~~~.X"
+        "X.~~~.X"
+        "X.~~~.X"
+        "X.~~~.X"
+        "X.~~~.X"
+        "X.~~~.X"
+        "X.~~~.X"
+        "X.~~~.X"
+        "X.~~~.X"
+        "X.~~~.X"
+        "X.~~~.X"
+        "X.~~~.X"
+        "X.~~~.X"
+        "X.~~~.X"
+        "X.~~~.X"
+        "X.~~~.X"
+        "X.~~~.X"
+        "X@~~~mX"
         "XXXXXXX";
   std::string const expect1
       = "XXXXXXX"
-        "X.....X"
+        "X.===.X"
         "X.~~~.X"
-        "X@.m..X"
         "X.~~~.X"
-        "X.....X"
-        "XXXXXXX";
-  std::string const expect2
-      = "XXXXXXX"
-        "X.....X"
         "X.~~~.X"
-        "X@m...X"
         "X.~~~.X"
-        "X.....X"
+        "X.~~~.X"
+        "X.~~~.X"
+        "X.~~~.X"
+        "X.~~~.X"
+        "X.~~~.X"
+        "X.~~~.X"
+        "X.~~~.X"
+        "X.~~~.X"
+        "X.~~~.X"
+        "X.~~~.X"
+        "X.~~~.X"
+        "X.~~~.X"
+        "X.~~~.X"
+        "X.~~~.X"
+        "X.~~~.X"
+        "X@m~~.X"
         "XXXXXXX";
 
   //
   // Create the level and start playing
   //
   Overrides overrides;
-  overrides[ 'm' ] = [](char c, spoint p) -> Tpp { return tp_find_mand("ghost"); };
+  overrides[ 'm' ] = [](char c, spoint p) -> Tpp { return tp_find_mand("mantisman"); };
   Levelp  l        = nullptr;
   Levelsp v        = game_test_init(g, &l, level_num, w, h, start.c_str(), overrides);
 
@@ -59,7 +87,7 @@
 
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 1; tries++) {
+  for (auto tries = 0; tries < 5; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE();
     level_dump(g, v, l, w, h);
@@ -83,40 +111,12 @@
     }
   }
 
-  level_dump(g, v, l, w, h);
-  TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 1; tries++) {
-    TEST_LOG(t, "try: %d", tries);
-    TRACE();
-    level_dump(g, v, l, w, h);
-    TEST_ASSERT(t, game_event_wait(g), "failed to wait");
-    if (! game_wait_for_tick_to_finish(g, v, l)) {
-      TEST_FAILED(t, "wait loop failed");
-      goto exit;
-    }
-  }
-
-  //
-  // Check the level contents
-  //
-  level_dump(g, v, l, w, h);
-  TEST_PROGRESS(t);
-  {
-    TRACE();
-    if (! (result = level_match_contents(g, v, l, t, w, h, expect2.c_str()))) {
-      TEST_FAILED(t, "unexpected contents");
-      goto exit;
-    }
-  }
-
   //
   // Check the tick is as expected
   //
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  {
-    TEST_ASSERT(t, game_tick_get(g, v) == 2, "final tick counter value");
-  }
+  TEST_ASSERT(t, game_tick_get(g, v) == 5, "final tick counter value");
 
   level_dump(g, v, l, w, h);
   TEST_PASSED(t);
@@ -127,14 +127,14 @@ exit:
   return result;
 }
 
-auto test_load_ghost_no_water() -> bool // NOLINT
+auto test_load_monst_avoids_water_usually() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("ghost_no_water");
+  Testp test = test_load("monst_avoids_water_usually");
 
   // begin sort marker1 {
-  test_callback_set(test, test_monster_no_water);
+  test_callback_set(test, test_monst_avoids_water_usually);
   // end sort marker1 }
 
   return true;

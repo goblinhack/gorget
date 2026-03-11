@@ -14,6 +14,7 @@ auto templates_init() -> bool;
 /* shell echo "auto $i() -> bool;" */
 /* shell done */
 auto tp_load_barrel() -> bool;
+auto tp_load_blitzhound() -> bool;
 auto tp_load_border() -> bool;
 auto tp_load_brazier() -> bool;
 auto tp_load_bridge() -> bool;

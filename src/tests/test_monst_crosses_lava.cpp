@@ -7,40 +7,42 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static auto test_monster_door_unlocked(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_monst_crosses_lava(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
 
   LevelNum const level_num = 0;
-  auto           w         = 7;
+  auto           w         = 15;
   auto           h         = 7;
 
   //
   // How the dungeon starts out, and how we expect it to change
   //
   std::string const start
-      = "xxxxxxx"
-        "x..x..x"
-        "x..x..x"
-        "x@.D.mx"
-        "x..x..x"
-        "x..x..x"
-        "xxxxxxx";
+      = "XXXXXXXXXXXXXXX"
+        "X.LLL.LLL.LLL.X"
+        "X.===.LLL.===.X"
+        "X.LLL.LLL.LLL.X"
+        "X.LLL.===.LLL.X"
+        "X@LLL.LLL.LLLmX"
+        "XXXXXXXXXXXXXXX";
   std::string const expect1
-      = "xxxxxxx"
-        "x..x..x"
-        "x..x..x"
-        "x@.D..x"
-        "x..x..x"
-        "x..x.mx"
-        "xxxxxxx";
+      = "XXXXXXXXXXXXXXX"
+        "X.LLL.LLL.LLL.X"
+        "X.===.LLL.===.X"
+        "X.LLL.LLL.LLL.X"
+        "X.LLL.===.LLL.X"
+        "X@mLL.LLL.LLL.X"
+        "XXXXXXXXXXXXXXX";
 
   //
   // Create the level and start playing
   //
-  Levelp  l = nullptr;
-  Levelsp v = game_test_init(g, &l, level_num, w, h, start.c_str());
+  Overrides overrides;
+  overrides[ 'm' ] = [](char c, spoint p) -> Tpp { return tp_find_mand("ghost"); };
+  Levelp  l        = nullptr;
+  Levelsp v        = game_test_init(g, &l, level_num, w, h, start.c_str(), overrides);
 
   //
   // The guts of the test
@@ -49,7 +51,7 @@
 
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 10; tries++) {
+  for (auto tries = 0; tries < 14; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE();
     level_dump(g, v, l, w, h);
@@ -73,7 +75,12 @@
     }
   }
 
-  TEST_ASSERT(t, game_tick_get(g, v) == 10, "final tick counter value");
+  //
+  // Check the tick is as expected
+  //
+  level_dump(g, v, l, w, h);
+  TEST_PROGRESS(t);
+  TEST_ASSERT(t, game_tick_get(g, v) == 14, "final tick counter value");
 
   level_dump(g, v, l, w, h);
   TEST_PASSED(t);
@@ -84,14 +91,14 @@ exit:
   return result;
 }
 
-auto test_load_monster_door_unlocked() -> bool // NOLINT
+auto test_load_monst_crosses_lava() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("monster_door_unlocked");
+  Testp test = test_load("monst_crosses_lava");
 
   // begin sort marker1 {
-  test_callback_set(test, test_monster_door_unlocked);
+  test_callback_set(test, test_monst_crosses_lava);
   // end sort marker1 }
 
   return true;

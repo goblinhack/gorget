@@ -193,7 +193,7 @@
       list_macro(is_unused59, "is_unused59"),                                       /* newline */                                          \
       list_macro(is_unused60, "is_unused60"),                                       /* newline */                                          \
       list_macro(is_unused61, "is_unused61"),                                       /* newline */                                          \
-      list_macro(is_unused62, "is_unused62"),                                       /* newline */                                          \
+      list_macro(is_blitzhound, "is_blitzhound"),                                   /* newline */                                          \
       list_macro(is_unused63, "is_unused63"),                                       /* newline */                                          \
       list_macro(is_grouped_thing, "is_grouped_thing"),                             /* newline */                                          \
       list_macro(is_able_to_see_360_degrees, "is_able_to_see_360_degrees"),         /* newline */                                          \
@@ -713,6 +713,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup val);
 [[nodiscard]] auto tp_is_blit_shown_in_overlay(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_blit_square_outlined(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_blit_when_obscured(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_blitzhound(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_border(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_brazier(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_bridge(Tpp tp) -> bool;
@@ -892,7 +893,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup val);
 [[nodiscard]] auto tp_is_unused6(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused60(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused61(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused62(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused63(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused7(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused8(Tpp tp) -> bool;

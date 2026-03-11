@@ -1235,10 +1235,10 @@ auto level_count_is_unused61(Gamep g, Levelsp v, Levelp l, const spoint &p) -> u
   return level_count(g, v, l, is_unused61, p);
 }
 
-auto level_count_is_unused62(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t
+auto level_count_is_blitzhound(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused62, p);
+  return level_count(g, v, l, is_blitzhound, p);
 }
 
 auto level_count_is_unused63(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t

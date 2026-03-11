@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static auto test_monster_door_locked(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_monst_door_unlocked(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -23,7 +23,7 @@
       = "xxxxxxx"
         "x..x..x"
         "x..x..x"
-        "x@.+.mx"
+        "x@.D.mx"
         "x..x..x"
         "x..x..x"
         "xxxxxxx";
@@ -31,7 +31,7 @@
       = "xxxxxxx"
         "x..x..x"
         "x..x..x"
-        "x@.+..x"
+        "x@.D..x"
         "x..x..x"
         "x..x.mx"
         "xxxxxxx";
@@ -84,14 +84,14 @@ exit:
   return result;
 }
 
-auto test_load_monster_door_locked() -> bool // NOLINT
+auto test_load_monst_door_unlocked() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("monster_door_locked");
+  Testp test = test_load("monst_door_unlocked");
 
   // begin sort marker1 {
-  test_callback_set(test, test_monster_door_locked);
+  test_callback_set(test, test_monst_door_unlocked);
   // end sort marker1 }
 
   return true;

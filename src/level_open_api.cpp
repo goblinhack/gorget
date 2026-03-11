@@ -1235,10 +1235,10 @@ auto level_open_is_unused61(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Th
   return level_open(g, v, l, is_unused61, p);
 }
 
-auto level_open_is_unused62(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp
+auto level_open_is_blitzhound(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_open(g, v, l, is_unused62, p);
+  return level_open(g, v, l, is_blitzhound, p);
 }
 
 auto level_open_is_unused63(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp

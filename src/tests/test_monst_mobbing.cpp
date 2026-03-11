@@ -7,76 +7,40 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-//
-// If there is too much water, the monster will take the shortcut even
-// if it doesn't "like" water
-//
-[[nodiscard]] static auto test_monster_avoids_water_usually(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_monst_mobbing(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
 
   LevelNum const level_num = 0;
   auto           w         = 7;
-  auto           h         = 23;
+  auto           h         = 7;
 
   //
   // How the dungeon starts out, and how we expect it to change
   //
   std::string const start
       = "XXXXXXX"
-        "X.===.X"
-        "X.~~~.X"
-        "X.~~~.X"
-        "X.~~~.X"
-        "X.~~~.X"
-        "X.~~~.X"
-        "X.~~~.X"
-        "X.~~~.X"
-        "X.~~~.X"
-        "X.~~~.X"
-        "X.~~~.X"
-        "X.~~~.X"
-        "X.~~~.X"
-        "X.~~~.X"
-        "X.~~~.X"
-        "X.~~~.X"
-        "X.~~~.X"
-        "X.~~~.X"
-        "X.~~~.X"
-        "X.~~~.X"
-        "X@~~~mX"
+        "XmmmmmX"
+        "Xm...mX"
+        "X.....X"
+        "X..@..X"
+        "X.....X"
         "XXXXXXX";
   std::string const expect1
       = "XXXXXXX"
-        "X.===.X"
-        "X.~~~.X"
-        "X.~~~.X"
-        "X.~~~.X"
-        "X.~~~.X"
-        "X.~~~.X"
-        "X.~~~.X"
-        "X.~~~.X"
-        "X.~~~.X"
-        "X.~~~.X"
-        "X.~~~.X"
-        "X.~~~.X"
-        "X.~~~.X"
-        "X.~~~.X"
-        "X.~~~.X"
-        "X.~~~.X"
-        "X.~~~.X"
-        "X.~~~.X"
-        "X.~~~.X"
-        "X.~~~.X"
-        "X@m~~.X"
+        "X.....X"
+        "X.....X"
+        "X.mmm.X"
+        "X.m@m.X"
+        "X.m.m.X"
         "XXXXXXX";
 
   //
   // Create the level and start playing
   //
   Overrides overrides;
-  overrides[ 'm' ] = [](char c, spoint p) -> Tpp { return tp_find_mand("mantisman"); };
+  overrides[ 'm' ] = [](char c, spoint p) -> Tpp { return tp_find_mand("ghost"); };
   Levelp  l        = nullptr;
   Levelsp v        = game_test_init(g, &l, level_num, w, h, start.c_str(), overrides);
 
@@ -87,7 +51,7 @@
 
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 5; tries++) {
+  for (auto tries = 0; tries < 8; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE();
     level_dump(g, v, l, w, h);
@@ -116,9 +80,7 @@
   //
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  {
-    TEST_ASSERT(t, game_tick_get(g, v) == 5, "final tick counter value");
-  }
+  TEST_ASSERT(t, game_tick_get(g, v) == 8, "final tick counter value");
 
   level_dump(g, v, l, w, h);
   TEST_PASSED(t);
@@ -129,14 +91,14 @@ exit:
   return result;
 }
 
-auto test_load_monst_avoids_water_usually() -> bool // NOLINT
+auto test_load_monst_mobbing() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("monst_avoids_water_usually");
+  Testp test = test_load("monst_mobbing");
 
   // begin sort marker1 {
-  test_callback_set(test, test_monster_avoids_water_usually);
+  test_callback_set(test, test_monst_mobbing);
   // end sort marker1 }
 
   return true;

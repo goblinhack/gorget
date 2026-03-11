@@ -1235,10 +1235,10 @@ auto tp_is_unused61(Tpp tp) -> bool
   return tp_flag(tp, is_unused61) != 0;
 }
 
-auto tp_is_unused62(Tpp tp) -> bool
+auto tp_is_blitzhound(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused62) != 0;
+  return tp_flag(tp, is_blitzhound) != 0;
 }
 
 auto tp_is_unused63(Tpp tp) -> bool

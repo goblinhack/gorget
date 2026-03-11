@@ -29,7 +29,6 @@ auto tests_init() -> bool
   if (!test_load_fire_on_water()) { return false; }
   if (!test_load_fire_over_chasm()) { return false; }
   if (!test_load_foliage_on_fire()) { return false; }
-  if (!test_load_ghost_no_water()) { return false; }
   if (!test_load_jump_ok()) { return false; }
   if (!test_load_jump_truncated()) { return false; }
   if (!test_load_large_fire_water()) { return false; }
@@ -43,14 +42,15 @@ auto tests_init() -> bool
   if (!test_load_monst_crosses_chasm()) { return false; }
   if (!test_load_monst_crosses_lava()) { return false; }
   if (!test_load_monst_crosses_water()) { return false; }
+  if (!test_load_monst_door_locked()) { return false; }
+  if (!test_load_monst_door_unlocked()) { return false; }
+  if (!test_load_monst_fast()) { return false; }
+  if (!test_load_monst_maze()) { return false; }
+  if (!test_load_monst_mob_leash()) { return false; }
   if (!test_load_monst_mobbing()) { return false; }
   if (!test_load_monst_pass_through_walls()) { return false; }
-  if (!test_load_monster_door_locked()) { return false; }
-  if (!test_load_monster_door_unlocked()) { return false; }
-  if (!test_load_monster_maze()) { return false; }
-  if (!test_load_monster_mob_leash()) { return false; }
-  if (!test_load_monster_secret_door()) { return false; }
-  if (!test_load_monster_slow()) { return false; }
+  if (!test_load_monst_secret_door()) { return false; }
+  if (!test_load_monst_slow()) { return false; }
   if (!test_load_move_ok()) { return false; }
   if (!test_load_no_change()) { return false; }
   if (!test_load_path_astar()) { return false; }

@@ -2483,7 +2483,7 @@ auto thing_is_unused61(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused61) != 0;
 }
 
-auto thing_is_unused62(Thingp t) -> bool
+auto thing_is_blitzhound(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2491,7 +2491,7 @@ auto thing_is_unused62(Thingp t) -> bool
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused62) != 0;
+  return tp_flag(thing_tp(t), is_blitzhound) != 0;
 }
 
 auto thing_is_unused63(Thingp t) -> bool

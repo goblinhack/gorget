@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static auto test_large_fire_water(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_monst_fast(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -20,73 +20,54 @@
   // How the dungeon starts out, and how we expect it to change
   //
   std::string const start
-      = "......."
-        "......."
-        "...~~~."
-        "..@~~~."
-        "...~~~."
-        "......."
-        ".......";
+      = "XXXXXXX"
+        "X.....X"
+        "X.....X"
+        "X@...mX"
+        "X.....X"
+        "X.....X"
+        "XXXXXXX";
   std::string const expect1
-      = "......."
-        "......."
-        "...~~~."
-        "..@~:~."
-        "...~~~."
-        "......."
-        ".......";
+      = "XXXXXXX"
+        "X.....X"
+        "X.....X"
+        "X@M...X"
+        "X.....X"
+        "X.....X"
+        "XXXXXXX";
   std::string const expect2
-      = "......."
-        "......."
-        "...~~~."
-        "..@~~~."
-        "...~~~."
-        "......."
-        ".......";
+      = "XXXXXXX"
+        "X.....X"
+        "X.....X"
+        "X@M...X"
+        "X.....X"
+        "X.....X"
+        "XXXXXXX";
+  std::string const expect3
+      = "XXXXXXX"
+        "X.....X"
+        "X.....X"
+        "X@M...X"
+        "X.....X"
+        "X.....X"
+        "XXXXXXX";
 
   //
   // Create the level and start playing
   //
-  Levelp  l = nullptr;
-  Levelsp v = game_test_init(g, &l, level_num, w, h, start.c_str());
+  Overrides overrides;
+  overrides[ 'm' ] = [](char c, spoint p) -> Tpp { return tp_find_mand("blitzhound"); };
+  Levelp  l        = nullptr;
+  Levelsp v        = game_test_init(g, &l, level_num, w, h, start.c_str(), overrides);
 
   //
   // The guts of the test
   //
-  bool   result = false;
-  Thingp player = nullptr;
-
-  //
-  // Push the mob into lava
-  //
-  TEST_LOG(t, "spawn fire over water");
-  TRACE();
-
-  //
-  // Find the player
-  //
-  level_dump(g, v, l, w, h);
-  TEST_PROGRESS(t);
-  {
-    TRACE();
-    player = thing_player(g);
-    if (player == nullptr) [[unlikely]] {
-      TEST_FAILED(t, "no player");
-      goto exit;
-    }
-  }
-
-  //
-  // Spawn fire twice. This should be enough to evaporate the water.
-  //
-  if (thing_spawn(g, v, l, tp_first(is_fire), thing_at(player) + spoint(2, 0)) == nullptr) {
-    TEST_FAILED(t, "spawn failed");
-    goto exit;
-  }
+  bool result = false;
 
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 3; tries++) {
+  for (auto tries = 0; tries < 2; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE();
     level_dump(g, v, l, w, h);
@@ -112,7 +93,7 @@
 
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 10; tries++) {
+  for (auto tries = 0; tries < 2; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE();
     level_dump(g, v, l, w, h);
@@ -136,12 +117,38 @@
     }
   }
 
+  level_dump(g, v, l, w, h);
+  TEST_PROGRESS(t);
+  for (auto tries = 0; tries < 2; tries++) {
+    TEST_LOG(t, "try: %d", tries);
+    TRACE();
+    level_dump(g, v, l, w, h);
+    TEST_ASSERT(t, game_event_wait(g), "failed to wait");
+    if (! game_wait_for_tick_to_finish(g, v, l)) {
+      TEST_FAILED(t, "wait loop failed");
+      goto exit;
+    }
+  }
+
+  //
+  // Check the level contents
+  //
+  level_dump(g, v, l, w, h);
+  TEST_PROGRESS(t);
+  {
+    TRACE();
+    if (! (result = level_match_contents(g, v, l, t, w, h, expect3.c_str()))) {
+      TEST_FAILED(t, "unexpected contents");
+      goto exit;
+    }
+  }
+
   //
   // Check the tick is as expected
   //
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  TEST_ASSERT(t, game_tick_get(g, v) == 13, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 6, "final tick counter value");
 
   level_dump(g, v, l, w, h);
   TEST_PASSED(t);
@@ -152,14 +159,14 @@ exit:
   return result;
 }
 
-auto test_load_large_fire_water() -> bool // NOLINT
+auto test_load_monst_fast() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("large_fire_water");
+  Testp test = test_load("monst_fast");
 
   // begin sort marker1 {
-  test_callback_set(test, test_large_fire_water);
+  test_callback_set(test, test_monst_fast);
   // end sort marker1 }
 
   return true;

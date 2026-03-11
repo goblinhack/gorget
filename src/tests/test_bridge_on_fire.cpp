@@ -130,9 +130,7 @@
   // Check the tick is as expected
   //
   TEST_PROGRESS(t);
-  {
-    TEST_ASSERT(t, game_tick_get(g, v) == 3, "final tick counter value");
-  }
+  TEST_ASSERT(t, game_tick_get(g, v) == 3, "final tick counter value");
 
   TEST_PASSED(t);
 exit:
