@@ -14,11 +14,11 @@
 //
 // Allowed to place a corpse here?
 //
-bool thing_corpse_allowed(Gamep g, Levelsp v, Levelp l, Thingp t)
+auto thing_corpse_allowed(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool
 {
   TRACE();
 
-  auto tp = thing_tp(t);
+  auto *tp = thing_tp(t);
 
   //
   // Leaves a corpse?

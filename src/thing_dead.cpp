@@ -169,7 +169,7 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
     return;
   }
 
-  auto tp = thing_tp(t);
+  auto *tp = thing_tp(t);
 
   //
   // Where did the thing die? Might not be on the current level.
