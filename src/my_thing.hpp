@@ -1025,6 +1025,7 @@ void player_reached_entrance(Gamep g, Levelsp v, Levelp l);
 void player_reached_exit(Gamep g, Levelsp v, Levelp l);
 void player_warp_to_specific_level(Gamep g, Levelsp v, LevelNum level_num);
 void thing_anim_init(Gamep g, Levelsp v, Levelp l, Thingp t, ThingAnim anim_type);
+void thing_dump_projectiles(Gamep g, Levelsp v, Levelp l, Thingp me);
 void thing_anim_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, int time_step);
 void thing_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, const fpoint &val);
 void thing_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, const spoint &val);

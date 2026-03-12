@@ -53,7 +53,7 @@ auto thing_projectile_count_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> int
 //
 // Add a projectile if possible
 //
-auto thing_spawn_a_projectile(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const fpoint target) -> Thingp
+static auto thing_spawn_a_projectile(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const fpoint target) -> Thingp
 {
   TRACE();
 
