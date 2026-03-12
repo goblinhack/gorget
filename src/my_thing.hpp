@@ -44,9 +44,10 @@ using ThingIdPacked = union {
 enum {
   THING_DESCRIBE_MAX = 10 // The number of things we can show in the rightbar
 };
-#define THING_MOVE_PATH_MAX (MAP_WIDTH + MAP_HEIGHT) // Player/monster move paths (max size uint8_t)
-#define THING_INVENTORY_MAX 26
-#define THING_MINION_MAX    10
+#define THING_MOVE_PATH_MAX  (MAP_WIDTH + MAP_HEIGHT) // Player/monster move paths (max size uint8_t)
+#define THING_INVENTORY_MAX  26
+#define THING_MINION_MAX     10
+#define THING_PROJECTILE_MAX 10
 
 enum {
   TEXT_INCLUDE_OWNER = 1,
@@ -122,6 +123,21 @@ using ThingMinions = struct ThingMinions {
 };
 
 //
+// Projectiles
+//
+using ThingProjectile = struct ThingProjectile {
+  ThingId projectile_id;
+};
+
+//
+// Per monster/player projectiles fired
+//
+using ThingProjectiles = struct ThingProjectiles {
+  ThingProjectile projectile[ THING_PROJECTILE_MAX ];
+  int8_t          count;
+};
+
+//
 // Per thing extended memory
 //
 using ThingExt = struct ThingExt {
@@ -130,6 +146,10 @@ using ThingExt = struct ThingExt {
   // All minions for this mob
   //
   ThingMinions minions;
+  //
+  // All projectiles currently en-route
+  //
+  ThingProjectiles projectiles;
   //
   // Can be per monster or shared per mob memory of the preferred target,
   // usually the player.
@@ -376,6 +396,10 @@ using Thing = struct Thing {
   //
   uint8_t _minion_max;
   //
+  // How many projectiles this thing can spawn
+  //
+  uint8_t _projectile_max;
+  //
   // The type of wall
   //
   uint8_t _variant;
@@ -441,6 +465,10 @@ using Thing = struct Thing {
   //
   ThingId mob_id;
   //
+  // If fired, by whom
+  //
+  ThingId fired_by_id;
+  //
   // If this is a thing that is tied to other things, e.g. a bridge tile then
   // they all share this id; which is the id of the first thing in the group
   //
@@ -498,6 +526,7 @@ using Thing = struct Thing {
 // begin sort marker1 {
 [[nodiscard]] auto immediate_owner(Gamep g, Levelsp v, Levelp l, Thingp t) -> Thingp;
 [[nodiscard]] auto monst_state_to_string(MonstState state) -> std::string;
+[[nodiscard]] auto thing_projectile_fired_by_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> Thingp;
 [[nodiscard]] auto monst_state(Gamep g, Levelsp v, Levelp l, Thingp me) -> MonstState;
 [[nodiscard]] auto player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, const spoint &to) -> bool;
 [[nodiscard]] auto player_jump(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool;
@@ -787,7 +816,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused59(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused6(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused60(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused61(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_able_to_fire_projectiles(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused63(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused7(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused8(Thingp t) -> bool;
@@ -811,17 +840,26 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_minion_can_move_to_possible(Gamep g, Levelsp v, Levelp l, Thingp me, const spoint &to) -> bool;
 [[nodiscard]] auto thing_minion_choose_target_near_mob(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
 [[nodiscard]] auto thing_minion_detach_me_from_mob(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
+[[nodiscard]] auto thing_projectile_detach_me_from_firer(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
 [[nodiscard]] auto thing_minion_get_mob_dmap(Gamep g, Levelsp v, Levelp l, Thingp me) -> Dmap *;
 [[nodiscard]] auto thing_minion_max_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_minion_max_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_minion_max_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_minion_max(Thingp t) -> int;
+[[nodiscard]] auto thing_projectile_max_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
+[[nodiscard]] auto thing_projectile_max_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
+[[nodiscard]] auto thing_projectile_max_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
+[[nodiscard]] auto thing_projectile_max(Thingp t) -> int;
 [[nodiscard]] auto thing_minion_mob_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> Thingp;
 [[nodiscard]] auto thing_mob_detach_all_minions(Gamep g, Levelsp v, Levelp l, Thingp mob) -> bool;
 [[nodiscard]] auto thing_mob_detach_minion(Gamep g, Levelsp v, Levelp l, Thingp mob, Thingp minion) -> bool;
 [[nodiscard]] auto thing_mob_kill_all_minions(Gamep g, Levelsp v, Levelp l, Thingp mob, ThingEvent &e) -> bool;
 [[nodiscard]] auto thing_mob_minion_count_get(Gamep g, Levelsp v, Levelp l, Thingp mob) -> int;
 [[nodiscard]] auto thing_mob_spawn_a_minion(Gamep g, Levelsp v, Levelp l, Thingp mob, Tpp tp_minion) -> Thingp;
+[[nodiscard]] auto thing_projectile_detach_all_fired(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
+[[nodiscard]] auto thing_projectile_kill_all_fired(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e) -> bool;
+[[nodiscard]] auto thing_projectile_count_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> int;
+[[nodiscard]] auto thing_spawn_a_projectile(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp tp_projectile) -> Thingp;
 [[nodiscard]] auto thing_move_path_apply(Gamep g, Levelsp v, Levelp l, Thingp t, std::vector< spoint > &move_path) -> bool;
 [[nodiscard]] auto thing_move_path_pop(Gamep g, Levelsp v, Levelp l, Thingp t, spoint &out) -> bool;
 [[nodiscard]] auto thing_move_path_size(Gamep g, Levelsp v, Levelp l, Thingp t) -> int;
@@ -1012,6 +1050,7 @@ void thing_dir_tr_set(Thingp, uint8_t);
 void thing_dir_up_set(Thingp, uint8_t);
 void thing_dmap(Gamep g, Levelsp v, Levelp l, Thingp me, bool reverse = false);
 void thing_err(Thingp t, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void thing_croak(Thingp t, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void thing_explosion_handle(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_fall_end_check(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_fall_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step);
@@ -1115,6 +1154,21 @@ void thing_display(Gamep g, Levelsp v, Levelp l, const spoint &p, Tpp tp, Thingp
       for (auto _n_ = 0; _n_ < THING_MINION_MAX; _n_++)                                                                                    \
         for (auto _slot_ = &_ext_->minions.minion[ _n_ ]; _slot_; _slot_ = nullptr)                                                        \
           for (Thingp _minion_ = thing_find_optional(g, v, _slot_->minion_id); _minion_; (_minion_) = nullptr)
+
+#define FOR_ALL_PROJECTILE_SLOTS(_g_, _v_, _l_, _mob_, _slot_, _projectile_)                                                               \
+  if ((_g_) && (_v_) && (_l_))                                                                                                             \
+    for (auto _ext_ = thing_ext_struct(_g_, _mob_); _ext_; _ext_ = nullptr)                                                                \
+      for (auto _n_ = 0; _n_ < THING_PROJECTILE_MAX; _n_++)                                                                                \
+        for (AUTO(_slot_) = &_ext_->projectiles.projectile[ _n_ ]; _slot_; (_slot_) = nullptr)                                             \
+          for (AUTO(_projectile_) = thing_find_optional(g, v, (_slot_)->projectile_id), loop2 = (Thingp) 1; loop2 == (Thingp) 1;           \
+               loop2 = (Thingp) 0)
+
+#define FOR_ALL_PROJECTILES(_g_, _v_, _l_, _mob_, _projectile_)                                                                            \
+  if ((_g_) && (_v_) && (_l_))                                                                                                             \
+    for (auto _ext_ = thing_ext_struct(_g_, _mob_); _ext_; _ext_ = nullptr)                                                                \
+      for (auto _n_ = 0; _n_ < THING_PROJECTILE_MAX; _n_++)                                                                                \
+        for (auto _slot_ = &_ext_->projectiles.projectile[ _n_ ]; _slot_; _slot_ = nullptr)                                                \
+          for (Thingp _projectile_ = thing_find_optional(g, v, _slot_->projectile_id); _projectile_; (_projectile_) = nullptr)
 
 #define FOR_ALL_INVENTORY_SLOTS(_g_, _v_, _l_, _owner_, _slot_, _item_)                                                                    \
   if ((_g_) && (_v_) && (_l_))                                                                                                             \

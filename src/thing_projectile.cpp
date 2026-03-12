@@ -9,8 +9,268 @@
 #include "my_main.hpp"
 #include "my_math.hpp"
 #include "my_thing_callbacks.hpp"
+#include "my_thing_inlines.hpp"
 
 #include <cmath>
+
+//
+// Is this projectile attached to a thing?
+//
+auto thing_projectile_fired_by_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> Thingp
+{
+  if (me == nullptr) {
+    return nullptr;
+  }
+
+  if (me->fired_by_id == 0U) {
+    return nullptr;
+  }
+
+  return thing_find(g, v, me->fired_by_id);
+}
+
+//
+// How many projectils?
+//
+auto thing_projectile_count_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> int
+{
+  if (me == nullptr) {
+    return 0;
+  }
+
+  if (! thing_is_able_to_fire_projectiles(me)) {
+    return 0;
+  }
+
+  auto *ext_struct = thing_ext_struct(g, me);
+  if (ext_struct == nullptr) {
+    return 0;
+  }
+
+  return ext_struct->projectiles.count;
+}
+
+//
+// Add a projectile if possible
+//
+auto thing_spawn_a_projectile(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const fpoint target) -> Thingp
+{
+  TRACE();
+
+  if (me == nullptr) {
+    return nullptr;
+  }
+
+  if (! thing_is_able_to_fire_projectiles(me)) {
+    thing_err(me, "thing trying to spawn projectiles when it cannot");
+    return nullptr;
+  }
+
+  if (what == nullptr) {
+    thing_err(me, "no projectile to spawn");
+    return nullptr;
+  }
+
+  auto *ext_struct = thing_ext_struct(g, me);
+  if (ext_struct == nullptr) {
+    thing_err(me, "missing ext struct");
+    return nullptr;
+  }
+
+  //
+  // Too many projectiles
+  //
+  if (thing_projectile_count_get(g, v, l, me) >= thing_projectile_max(me)) {
+    THING_DBG(me, "trying to fire too many projectiles");
+    return nullptr;
+  }
+
+  //
+  // Look for a free slot
+  //
+  FOR_ALL_PROJECTILE_SLOTS(g, v, l, me, slot, existing_projectile)
+  {
+    if (existing_projectile != nullptr) {
+      continue;
+    }
+
+    //
+    // Create the projectile. Should be no chance to fail now.
+    //
+    auto *new_projectile = thing_spawn(g, v, l, what, target);
+    if (new_projectile == nullptr) {
+      return nullptr;
+    }
+
+    memset(slot, 0, sizeof(*slot));
+    slot->projectile_id         = new_projectile->id;
+    new_projectile->fired_by_id = me->id;
+    ext_struct->projectiles.count++;
+
+    THING_DBG(me, "spawned projectile %s", to_string(g, v, l, new_projectile).c_str());
+    THING_DBG(new_projectile, "new born projectile");
+
+    return new_projectile;
+  }
+
+  //
+  // Out of slots; but we checked above
+  //
+  thing_err(me, "unexpectedly out of projectile slots");
+
+  return nullptr;
+}
+
+//
+// Detach or kill all projectiles (or a specific one)
+//
+[[nodiscard]] static auto thing_projectiles_process_all(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp specific_projectile, ThingEvent &e)
+    -> bool
+{
+  TRACE();
+
+  if (me == nullptr) {
+    return false;
+  }
+
+  if (! thing_is_able_to_fire_projectiles(me)) {
+    thing_err(me, "non owner trying to detach projectiles");
+    return false;
+  }
+
+  auto *ext_struct = thing_ext_struct(g, me);
+  if (ext_struct == nullptr) {
+    return false;
+  }
+
+  FOR_ALL_PROJECTILE_SLOTS(g, v, l, me, slot, projectile)
+  {
+    if (projectile == nullptr) {
+      continue;
+    }
+
+    if (specific_projectile != nullptr) {
+      if (projectile != specific_projectile) {
+        continue;
+      }
+    }
+
+    if (! static_cast< bool >(projectile->fired_by_id)) {
+      thing_err(me, "found detached projectile: %s", to_string(g, v, l, projectile).c_str());
+      return false;
+    }
+
+    if (ext_struct->projectiles.count <= 0) {
+      thing_err(me, "has unexpected projectile count when detaching: %s", to_string(g, v, l, projectile).c_str());
+      return false;
+    }
+
+    ext_struct->projectiles.count--;
+    memset(slot, 0, sizeof(*slot));
+    projectile->fired_by_id = 0;
+
+    if (e.event_type != THING_EVENT_NONE) {
+      THING_DBG(me, "kill projectile %s", to_string(g, v, l, projectile).c_str());
+      thing_dead(g, v, l, projectile, e);
+    } else {
+      THING_DBG(me, "detach projectile %s", to_string(g, v, l, projectile).c_str());
+    }
+  }
+
+  return true;
+}
+
+//
+// Detach all projectiles from their owner
+//
+auto thing_projectile_detach_all_fired(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
+{
+  TRACE();
+
+  ThingEvent e = {};
+  return thing_projectiles_process_all(g, v, l, me, nullptr, e);
+}
+
+//
+// Kill all projectiles
+//
+auto thing_projectile_kill_all_fired(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e) -> bool
+{
+  TRACE();
+
+  return thing_projectiles_process_all(g, v, l, me, nullptr, e);
+}
+
+//
+// Detach a projectile from its owner
+//
+static auto thing_projectile_detach_from_firer(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp projectile) -> bool
+{
+  TRACE();
+
+  ThingEvent e = {};
+  return thing_projectiles_process_all(g, v, l, me, projectile, e);
+}
+
+//
+// Detach a projectile from its firer
+//
+auto thing_projectile_detach_me_from_firer(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
+{
+  TRACE();
+
+  if (me == nullptr) {
+    return false;
+  }
+
+  if (! thing_is_projectile(me)) {
+    thing_err(me, "non projectile trying to detach itself");
+    return false;
+  }
+
+  auto *fired_by = thing_projectile_fired_by_get(g, v, l, me);
+  if (fired_by == nullptr) {
+    return false; // can be normal if detached
+  }
+
+  THING_DBG(me, "detach me from firer");
+  TRACE_INDENT();
+
+  return thing_projectile_detach_from_firer(g, v, l, fired_by, me);
+}
+
+//
+// Dump all projectiles
+//
+void thing_dump_projectiles(Gamep g, Levelsp v, Levelp l, Thingp me)
+{
+  TRACE();
+
+  if (me == nullptr) {
+    return;
+  }
+
+  if (! thing_is_able_to_fire_projectiles(me)) {
+    thing_err(me, "non owner trying to detach projectile");
+    return;
+  }
+
+  auto *ext_struct = thing_ext_struct(g, me);
+  if (ext_struct == nullptr) {
+    return;
+  }
+
+  FOR_ALL_PROJECTILE_SLOTS(g, v, l, me, slot, existing_projectile)
+  {
+    if (existing_projectile == nullptr) {
+      THING_DBG(me, "slot %d: -", _n_);
+      continue;
+    }
+
+    auto s = to_string(g, v, l, existing_projectile);
+    THING_DBG(me, "slot %d: %s", _n_, s.c_str());
+  }
+}
 
 static auto thing_projectile_get_delta_from_dt(Gamep g, Thingp t, float dt) -> fpoint
 {
@@ -71,7 +331,7 @@ auto thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what,
   proj_at.x += c * offset;
   proj_at.y += s * offset;
 
-  auto *projectile = thing_spawn(g, v, l, what, proj_at);
+  auto *projectile = thing_spawn_a_projectile(g, v, l, me, what, proj_at);
   if (projectile == nullptr) {
     return false;
   }

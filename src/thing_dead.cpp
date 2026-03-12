@@ -296,6 +296,17 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
   }
 
   //
+  // Not sure if we kill or just detach projectiles
+  //
+  if (thing_is_able_to_fire_projectiles(t)) {
+    (void) thing_projectile_detach_all_fired(g, v, l, t);
+  }
+
+  if (thing_is_projectile(t)) {
+    (void) thing_projectile_detach_me_from_firer(g, v, l, t);
+  }
+
+  //
   // Bridges need to leave their group now
   //
   // There is a problem here potentially if the group leader dies, leaving the members

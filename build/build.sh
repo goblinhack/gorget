@@ -525,7 +525,7 @@ fi
 #
 LLVM_PATH=$(clang++ -v 2>&1 | grep InstalledDir | sed 's/^.* //g' | sed 's/\(^.*\)\/.*/\1/g')
 
-if [[ $(which mold) ]]; then
+if [[ $(which xxxx_mold) ]]; then # binary seems to hang when using mold
   LDFLAGS+=" -fuse-ld=mold"
   log_info "Have mold                  : Yes"
 elif [ -x $LLVM_PATH/bin/lld ]; then

@@ -650,8 +650,14 @@ auto main(int argc, char *argv[]) -> int
     GL_ERROR_CHECK();
 
     if (game_gfx_vsync_enable_get(g)) {
+      //
+      // Force display VSYNC
+      //
       SDL_GL_SetSwapInterval(1);
     } else {
+      //
+      // No VSYNC
+      //
       SDL_GL_SetSwapInterval(0);
     }
     GL_ERROR_CHECK();

@@ -192,7 +192,7 @@
       list_macro(is_unused58, "is_unused58"),                                       /* newline */                                          \
       list_macro(is_unused59, "is_unused59"),                                       /* newline */                                          \
       list_macro(is_unused60, "is_unused60"),                                       /* newline */                                          \
-      list_macro(is_unused61, "is_unused61"),                                       /* newline */                                          \
+      list_macro(is_able_to_fire_projectiles, "is_able_to_fire_projectiles"),       /* newline */                                          \
       list_macro(is_blitzhound, "is_blitzhound"),                                   /* newline */                                          \
       list_macro(is_unused63, "is_unused63"),                                       /* newline */                                          \
       list_macro(is_grouped_thing, "is_grouped_thing"),                             /* newline */                                          \
@@ -656,6 +656,9 @@ void               tp_value20_set(Tpp tp, int val);
 void               tp_minion_max_set(Tpp tp, int val);
 [[nodiscard]] auto tp_minion_max_get(Tpp tp) -> int;
 
+void               tp_projectile_max_set(Tpp tp, int val);
+[[nodiscard]] auto tp_projectile_max_get(Tpp tp) -> int;
+
 void               tp_distance_minion_from_mob_max_set(Tpp tp, int val);
 [[nodiscard]] auto tp_distance_minion_from_mob_max_get(Tpp tp) -> int;
 
@@ -892,7 +895,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup val);
 [[nodiscard]] auto tp_is_unused59(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused6(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused60(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused61(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_able_to_fire_projectiles(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused63(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused7(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused8(Tpp tp) -> bool;

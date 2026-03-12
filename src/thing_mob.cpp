@@ -8,7 +8,7 @@
 #include <cstring>
 
 //
-// Add a minion to the mob if possible
+// Howm many minions?
 //
 auto thing_mob_minion_count_get(Gamep g, Levelsp v, Levelp l, Thingp mob) -> int
 {
@@ -75,20 +75,20 @@ auto thing_mob_spawn_a_minion(Gamep g, Levelsp v, Levelp l, Thingp mob, Tpp tp_m
   }
 
   //
-  // Create the minion. Should be no chance to fail now.
-  //
-  auto *new_minion = thing_spawn(g, v, l, tp_minion, thing_at(mob));
-  if (new_minion == nullptr) {
-    return nullptr;
-  }
-
-  //
   // Look for a free slot
   //
   FOR_ALL_MINION_SLOTS(g, v, l, mob, slot, existing_minion)
   {
     if (existing_minion != nullptr) {
       continue;
+    }
+
+    //
+    // Create the minion. Should be no chance to fail now.
+    //
+    auto *new_minion = thing_spawn(g, v, l, tp_minion, thing_at(mob));
+    if (new_minion == nullptr) {
+      return nullptr;
     }
 
     memset(slot, 0, sizeof(*slot));

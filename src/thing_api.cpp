@@ -2472,7 +2472,7 @@ auto thing_is_unused60(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused60) != 0;
 }
 
-auto thing_is_unused61(Thingp t) -> bool
+auto thing_is_able_to_fire_projectiles(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2480,7 +2480,7 @@ auto thing_is_unused61(Thingp t) -> bool
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused61) != 0;
+  return tp_flag(thing_tp(t), is_able_to_fire_projectiles) != 0;
 }
 
 auto thing_is_blitzhound(Thingp t) -> bool
@@ -4546,6 +4546,7 @@ auto thing_value20_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
   }
   return t->_value20 -= val;
 }
+
 auto thing_minion_max(Thingp t) -> int
 {
   TRACE_DEBUG();
@@ -4565,6 +4566,12 @@ auto thing_minion_max_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> in
     ERR("no thing pointer");
     return 0;
   }
+
+  if (val > THING_MINION_MAX) {
+    thing_croak(t, "trying to set minion max too high");
+    val = THING_MINION_MAX;
+  }
+
   return t->_minion_max = val;
 }
 
@@ -4576,6 +4583,11 @@ auto thing_minion_max_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> i
     ERR("no thing pointer");
     return 0;
   }
+
+  if (t->_minion_max + val >= THING_MINION_MAX) {
+    return t->_minion_max = THING_MINION_MAX;
+  }
+
   return t->_minion_max += val;
 }
 
@@ -4592,6 +4604,65 @@ auto thing_minion_max_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> i
   }
   return t->_minion_max -= val;
 }
+
+auto thing_projectile_max(Thingp t) -> int
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return 0;
+  }
+  return t->_projectile_max;
+}
+
+auto thing_projectile_max_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return 0;
+  }
+
+  if (val > THING_PROJECTILE_MAX) {
+    thing_err(t, "trying to set projectile max too high");
+    val = THING_PROJECTILE_MAX;
+  }
+
+  return t->_projectile_max = val;
+}
+
+auto thing_projectile_max_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return 0;
+  }
+
+  if (t->_projectile_max + val >= THING_PROJECTILE_MAX) {
+    return t->_projectile_max = THING_PROJECTILE_MAX;
+  }
+
+  return t->_projectile_max += val;
+}
+
+auto thing_projectile_max_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return 0;
+  }
+  if (static_cast< int >(t->_projectile_max) - val <= 0) {
+    return t->_projectile_max = 0;
+  }
+  return t->_projectile_max -= val;
+}
+
 auto thing_distance_minion_from_mob_max(Thingp t) -> int
 {
   TRACE_DEBUG();

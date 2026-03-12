@@ -129,7 +129,16 @@ public:
   int value18 {0};
   int value19 {0};
   int value20 {0};
+
+  //
+  // Max number of minions the thing can spawn
+  //
   int minion_max {0};
+
+  //
+  // Max number of projectiles the thing can fire
+  //
+  int projectile_max {0};
 
   //
   // Heat capacity indicates the amount of heat energy required to

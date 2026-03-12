@@ -153,6 +153,29 @@ void thing_err(Thingp t, const char *fmt, ...)
   va_end(args);
 }
 
+static void thing_croak_(Thingp t, const char *fmt, va_list args)
+{
+  char buf[ MAXLONGSTR ];
+  int  len = 0;
+
+  buf[ 0 ] = '\0';
+  snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_string(nullptr, nullptr, nullptr, t).c_str());
+  len = static_cast< int >(strlen(buf));
+  vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
+
+  CROAK("%s", buf);
+}
+
+void thing_croak(Thingp t, const char *fmt, ...)
+{
+  TRACE();
+
+  va_list args = {};
+  va_start(args, fmt);
+  thing_croak_(t, fmt, args);
+  va_end(args);
+}
+
 static void thing_topcon_(Thingp t, const char *fmt, va_list args)
 {
   TRACE();

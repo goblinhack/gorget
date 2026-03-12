@@ -182,6 +182,7 @@ auto tp_load_player() -> bool
   tp_distance_jump_set(tp, 3);
   tp_distance_vision_set(tp, MAP_WIDTH / 2); // tiles
   tp_flag_set(tp, is_able_to_collect_items);
+  tp_flag_set(tp, is_able_to_fire_projectiles);
   tp_flag_set(tp, is_able_to_collect_keys);
   tp_flag_set(tp, is_able_to_crush_grass);
   tp_flag_set(tp, is_able_to_fall_repeatedly);
@@ -215,6 +216,7 @@ auto tp_load_player() -> bool
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_tickable);
   tp_health_set(tp, "100");
+  tp_projectile_max_set(tp, THING_PROJECTILE_MAX);
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_light_color_set(tp, "white");
   tp_priority_set(tp, THING_PRIORITY_PLAYER);

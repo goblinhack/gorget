@@ -1229,10 +1229,10 @@ auto tp_is_unused60(Tpp tp) -> bool
   return tp_flag(tp, is_unused60) != 0;
 }
 
-auto tp_is_unused61(Tpp tp) -> bool
+auto tp_is_able_to_fire_projectiles(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused61) != 0;
+  return tp_flag(tp, is_able_to_fire_projectiles) != 0;
 }
 
 auto tp_is_blitzhound(Tpp tp) -> bool

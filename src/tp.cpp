@@ -1427,6 +1427,31 @@ auto tp_minion_max_get(Tpp tp) -> int
   return tp->minion_max;
 }
 
+void tp_projectile_max_set(Tpp tp, int val)
+{
+  TRACE();
+  if (tp == nullptr) [[unlikely]] {
+    tp_err(tp, "no thing template pointer");
+    return;
+  }
+  if (val > THING_PROJECTILE_MAX) {
+    tp_err(tp, "projectile max too high: %d", val);
+    return;
+  }
+
+  tp->projectile_max = val;
+}
+
+auto tp_projectile_max_get(Tpp tp) -> int
+{
+  TRACE();
+  if (tp == nullptr) [[unlikely]] {
+    tp_err(tp, "no thing template pointer");
+    return 0;
+  }
+  return tp->projectile_max;
+}
+
 void tp_distance_minion_from_mob_max_set(Tpp tp, int val)
 {
   TRACE();

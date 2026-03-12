@@ -1229,10 +1229,10 @@ auto level_is_unused60(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp
   return level_flag(g, v, l, is_unused60, p);
 }
 
-auto level_is_unused61(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp
+auto level_is_able_to_fire_projectiles(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused61, p);
+  return level_flag(g, v, l, is_able_to_fire_projectiles, p);
 }
 
 auto level_is_blitzhound(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp
