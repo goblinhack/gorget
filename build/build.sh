@@ -373,7 +373,7 @@ case "$MY_OS_NAME" in
         #
         # Clang supports PDB debug file creation, but you need to do the following to enable it.
         #
-        # -fno-emulated-tls -fno-lto is needed to work around a thread_local issue with lld
+        # -fno-emulated-tls is needed to work around a thread_local issue with lld
         #
         C_FLAGS+=" -g"
         if [[ $OPT_GCC = "" ]]; then
@@ -550,10 +550,14 @@ fi
 #
 LLVM_PATH=$(clang++ -v 2>&1 | grep InstalledDir | sed 's/^.* //g' | sed 's/\(^.*\)\/.*/\1/g')
 
-if [ -x $LLVM_PATH/bin/lld ]; then
+if [[ $(which mold) ]]; then
+  LDFLAGS+=" -fuse-ld=mold"
+  log_info "Have mold                  : Yes"
+elif [ -x $LLVM_PATH/bin/lld ]; then
   LDFLAGS+=" -fuse-ld=lld"
   log_info "Have lld                   : Yes"
 else
+  log_info "Have mold                  : No"
   log_info "Have lld                   : No"
 fi
 
