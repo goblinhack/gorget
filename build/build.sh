@@ -295,7 +295,7 @@ log_info "SDL2 config                : $SDL2_CONFIG"
 log_info "SDL2 version               : "$($SDL2_CONFIG --version 2>/dev/null)
 log_info "SDL2 libs                  : "$($SDL2_CONFIG --libs 2>/dev/null)
 log_info "SDL2 static libs           : "$($SDL2_CONFIG --static-libs 2>/dev/null)
-log_info "SDL2 cflags                : "$($SDL2_CONFIG --cflags 2>/dev/null)
+log_info "SDL2 CFLAGS                : "$($SDL2_CONFIG --cflags 2>/dev/null)
 log_info "SDL2 prefix                : "$($SDL2_CONFIG --prefix 2>/dev/null)
 log_info "SDL2 exec-prefix           : "$($SDL2_CONFIG --exec-prefix 2>/dev/null)
 log_info "SDL2 include path          : $SDL2_INC_PATH"
@@ -317,7 +317,7 @@ then
     exit 1
 fi
 
-C_FLAGS=$($SDL2_CONFIG --cflags | sed 's/ \-D_REENTRANT//g')
+CFLAGS+=$($SDL2_CONFIG --cflags | sed 's/ \-D_REENTRANT//g')
 if [ $? -ne 0 ]
 then
     sdl_help
@@ -336,7 +336,7 @@ LDLIBS+=" -lSDL2_mixer"
 #
 CONFIG_H=src/cfg.hpp
 echo "#include \"my_cfg.hpp\"" > $CONFIG_H
-C_FLAGS+=" -include cfg.hpp"
+CFLAGS+=" -include cfg.hpp"
 rm -f src/precompiled.hpp.gch
 
 EXTRA_CHECKS=" -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer -fno-common"
@@ -351,7 +351,7 @@ case "$MY_OS_NAME" in
     *MING*|*MSYS*)
         PATH=/${MSYS_PATH}/bin:$PATH
         EXE=".exe"
-        C_FLAGS+=" -I/${MSYS_PATH}/ginclude "
+        CFLAGS+=" -I/${MSYS_PATH}/ginclude "
         LDLIBS+=" -L/${MSYS_PATH}/glib/"
         LDLIBS=$(echo $LDLIBS | sed -e 's/-lmingw32 //g')
         LDLIBS+=" -funwind-tables"
@@ -375,16 +375,16 @@ case "$MY_OS_NAME" in
         #
         # -fno-emulated-tls is needed to work around a thread_local issue with lld
         #
-        C_FLAGS+=" -g"
+        CFLAGS+=" -g"
         if [[ $OPT_GCC = "" ]]; then
           #
           # GCC says cannot be used with precompiled headers
           #
-          C_FLAGS+=" -gcodeview"
+          CFLAGS+=" -gcodeview"
           #
           # GCC does not like
           #
-          C_FLAGS+=" -fno-emulated-tls"
+          CFLAGS+=" -fno-emulated-tls"
         fi
 
         #
@@ -413,7 +413,7 @@ case "$MY_OS_NAME" in
         DSYM="dsymutil \${TARGET_GAME} &"
 
         if [[ $OPT_SANITY_BUILD != "" ]]; then
-            C_FLAGS+="$EXTRA_CHECKS"
+            CFLAGS+="$EXTRA_CHECKS"
             LDFLAGS+="$EXTRA_CHECKS"
         fi
         LDFLAGS+=" -rdynamic"
@@ -434,7 +434,7 @@ case "$MY_OS_NAME" in
         LDLIBS+=" -lGL"
 
         if [[ $OPT_SANITY_BUILD != "" ]]; then
-            C_FLAGS+="$EXTRA_CHECKS"
+            CFLAGS+="$EXTRA_CHECKS"
             LDFLAGS+="$EXTRA_CHECKS"
         fi
         LDFLAGS+=" -rdynamic"
@@ -466,38 +466,38 @@ fi
 cd src || exit
 
 if [[ $OPT_PROFILE_BUILD != "" ]]; then
-    C_FLAGS+=" -pg"
+    CFLAGS+=" -pg"
     LDFLAGS+=" -pg"
 fi
 
 if [[ $OPT_SANITY_BUILD != "" ]]; then
-    C_FLAGS+=" -DSANITY_BUILD"
+    CFLAGS+=" -DSANITY_BUILD"
 fi
 
 if [[ $OPT_DEBUG_BUILD != "" || $OPT_SANITY_BUILD != "" ]]; then
-    C_FLAGS+=" -DDEBUG_BUILD"
+    CFLAGS+=" -DDEBUG_BUILD"
 else
-    C_FLAGS+=" -DRELEASE_BUILD"
+    CFLAGS+=" -DRELEASE_BUILD"
 fi
 
 if [[ $OPT_GITHUB_BUILD != "" ]]; then
-    C_FLAGS+=" -DGITHUB_BUILD"
+    CFLAGS+=" -DGITHUB_BUILD"
 fi
 
 OPT_LZ4=
 if [[ -f /usr/include/lz4.h ]]; then
     OPT_LZ4=1
 elif [[ -f /opt/local/include/lz4.h ]]; then
-    C_FLAGS+=" -I/opt/local/include"
+    CFLAGS+=" -I/opt/local/include"
     OPT_LZ4=1
 elif [[ -f /${MSYS_PATH}/include/lz4.h ]]; then
-    C_FLAGS+=" -I/${MSYS_PATH}/include"
+    CFLAGS+=" -I/${MSYS_PATH}/include"
     OPT_LZ4=1
 elif [[ -f $SDL2_INC_PATH/../lz4.h ]]; then
     #
     # last resort
     #
-    C_FLAGS+=" -I$SDL2_INC_PATH/.."
+    CFLAGS+=" -I$SDL2_INC_PATH/.."
     OPT_LZ4=1
 fi
 
@@ -511,7 +511,7 @@ if [[ $OPT_LZ4 != "" ]]; then
     # LZ4 compressed 1239Mb (1299692095 bytes) -> 15Mb (15982242 bytes) took 121 ms
     # LZ4 decompress 15Mb (15982242 bytes) -> 1239Mb (1299692095 bytes) took 63 ms (appdata/gorget/saved-slot-0)
     #
-    C_FLAGS+=" -DUSE_LZ4"
+    CFLAGS+=" -DUSE_LZ4"
     LDLIBS+=" -llz4"
     log_info "Have LZ4                   : Yes"
 else
@@ -519,34 +519,9 @@ else
 fi
 
 #
-# Hard code on for me
-#
-$(grep -q goblinhack ~/.gitconfig 2>/dev/null)
-GOBLINHACK=$?
-if [[ $GOBLINHACK ]]; then
-  WERROR="-Werror"
-fi
-
-MAKEFILE=../build/Makefile.template
-
-if [[ $OPT_RELEASE_BUILD != "" ]]; then
-    echo "COMPILER_FLAGS=$WERROR $C_FLAGS -O3 -ffast-math -g" > $MAKEFILE
-else
-    echo "COMPILER_FLAGS=$WERROR $C_FLAGS -Og -g" > $MAKEFILE
-fi
-
-if [[ $OPT_SANITY_BUILD != "" ]]; then
-    GCC_STACK_CHECK="-fstack-protector-all -D_FORTIFY_SOURCE=2"
-    GCC_STACK_CHECK="-fstack-protector-all"
-else
-    GCC_STACK_CHECK=
-fi
-
-#
 # LLD is faster
 #
 # Needed to create PDB files
-#
 #
 LLVM_PATH=$(clang++ -v 2>&1 | grep InstalledDir | sed 's/^.* //g' | sed 's/\(^.*\)\/.*/\1/g')
 
@@ -561,7 +536,37 @@ else
   log_info "Have lld                   : No"
 fi
 
-log_info "LLVM path                  : $LLVM_PATH/bin"
+log_info "Have llvm                  : $LLVM_PATH/bin"
+
+#
+# Doesn't seem to work yet - at least on macos
+#
+#LDFLAGS+=" -flto"
+#CFLAGS+=" -flto"
+
+#
+# Hard code on for me
+#
+$(grep -q goblinhack ~/.gitconfig 2>/dev/null)
+GOBLINHACK=$?
+if [[ $GOBLINHACK ]]; then
+  WERROR="-Werror"
+fi
+
+MAKEFILE=../build/Makefile.template
+
+if [[ $OPT_RELEASE_BUILD != "" ]]; then
+    echo "COMPILER_FLAGS=$WERROR $CFLAGS -O3 -ffast-math -g" > $MAKEFILE
+else
+    echo "COMPILER_FLAGS=$WERROR $CFLAGS -Og -g" > $MAKEFILE
+fi
+
+if [[ $OPT_SANITY_BUILD != "" ]]; then
+    GCC_STACK_CHECK="-fstack-protector-all -D_FORTIFY_SOURCE=2"
+    GCC_STACK_CHECK="-fstack-protector-all"
+else
+    GCC_STACK_CHECK=
+fi
 
 CHOSEN_COMPILER=
 
@@ -649,7 +654,7 @@ CORES=""
 
 case "$MY_OS_NAME" in
     *Darwin*)
-      CORES=$(/usr/sbin/system_profiler -detailLevel full SPHardwareDataType  | grep Cores | sed 's/.*: //g' | awk '{print $1}')
+      CORES=$(/usr/sbin/system_profiler -detailLevel full SPHardwareDataType 2>/dev/null | grep Cores | sed 's/.*: //g' | awk '{print $1}')
     ;;
     *inux*)
       CORES=$(grep -E -c "cpu cores|processor" /proc/cpuinfo)
@@ -760,6 +765,7 @@ else
     echo "COMPILER_WARNINGS=\$(CLANG_COMPILER_WARNINGS)" >> $MAKEFILE
 fi
 
+log_info "CFLAGS                     : $CFLAGS"
 log_info "LDFLAGS                    :$LDFLAGS"
 log_info "LDLIBS                     : $LDLIBS"
 
