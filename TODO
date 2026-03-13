@@ -1,11 +1,10 @@
 bugs
 ----
-limit firing to 1
+score? score is hard coded to 666
 
 essential features
 ------------------
 stamina needed to avoid fast jump loops
-score? score is hard coded to 666
 remove minimap from main screen
 hard coded to fire fireball
 chests need to contain something and those items destroyed when the chest is

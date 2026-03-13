@@ -80,6 +80,7 @@ auto tp_load_glorp() -> bool
   tp_flag_set(tp, is_health_bar_shown);
   tp_flag_set(tp, is_light_source, 2);
   tp_flag_set(tp, is_loggable);
+  tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_monst);
   tp_flag_set(tp, is_obs_to_jumping_onto);
   tp_flag_set(tp, is_obs_to_movement);
@@ -111,6 +112,13 @@ auto tp_load_glorp() -> bool
     tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
     tile_delay_ms_set(tile, delay);
     tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
+  }
+
+  for (auto frame = 0; frame < 4; frame++) {
+    auto *tile = tile_find_mand(name + std::string(".dead.") + std::to_string(frame));
+    tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
+    tile_delay_ms_set(tile, delay);
+    tp_tiles_push_back(tp, THING_ANIM_DEAD, tile);
   }
 
   return true;

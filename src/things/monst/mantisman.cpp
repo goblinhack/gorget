@@ -87,6 +87,7 @@ auto tp_load_mantisman() -> bool
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_removable_when_dead_on_err);
+  tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_tickable);
   tp_health_set(tp, "1d6");
@@ -112,8 +113,16 @@ auto tp_load_mantisman() -> bool
       tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
     }
   }
+
   for (auto frame = 0; frame < 6; frame++) {
     auto *tile = tile_find_mand(name + std::string(".idle.") + std::to_string(frame));
+    tile_size_set(tile, OUTLINE_TILE_WIDTH, OUTLINE_TILE_HEIGHT);
+    tile_delay_ms_set(tile, delay);
+    tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
+  }
+
+  for (auto frame = 0; frame < 1; frame++) {
+    auto *tile = tile_find_mand(name + std::string(".dead.") + std::to_string(frame));
     tile_size_set(tile, OUTLINE_TILE_WIDTH, OUTLINE_TILE_HEIGHT);
     tile_delay_ms_set(tile, delay);
     tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
