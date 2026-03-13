@@ -1223,10 +1223,10 @@ auto level_count_is_unused6(Gamep g, Levelsp v, Levelp l, const spoint &p) -> ui
   return level_count(g, v, l, is_unused6, p);
 }
 
-auto level_count_is_unused60(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t
+auto level_count_is_hit_when_dead(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused60, p);
+  return level_count(g, v, l, is_hit_when_dead, p);
 }
 
 auto level_count_is_able_to_fire_projectiles(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t

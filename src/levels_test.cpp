@@ -100,24 +100,24 @@ void levels_test(Gamep g)
   {
     Overrides overrides;
 
-    overrides[ 'm' ] = [](char c, spoint p) -> Tpp { return tp_find_mand("kobalos"); };
+    overrides[ 'm' ] = [](char c, spoint p) -> Tpp { return tp_find_mand("mantisman"); };
     overrides[ 'n' ] = [](char c, spoint p) -> Tpp { return tp_find_mand("ghost"); };
 
     level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "monst.1", __FUNCTION__, __LINE__, overrides, 0,
                     /* line */ (const char *) "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
                     /* line */ (const char *) "x..............x.......x.............x...x...x.x",
                     /* line */ (const char *) "x...xxxxxxxxxx.x.......x.........x...x.x.x.x.x.x",
-                    /* line */ (const char *) "x.mmmmmmmmm..x.x.......x.........x...x.x.x.x.x.x",
-                    /* line */ (const char *) "x.mmmmmmmm...x.x.................x...x.x.x.x.x.x",
-                    /* line */ (const char *) "x.mmmmmmmm...x.xxxxxxxxxxxxxxxxxxx...x.x.x.xxx.x",
-                    /* line */ (const char *) "xmmmmmmmm....x.........x.........x.....x.......x",
-                    /* line */ (const char *) "xmmmmmmmm....x...~~~~~~x.........x..x..xxxxxxxxx",
-                    /* line */ (const char *) "x.mmmmmmmm...x.~~~~~~~~x..~~~....x..xxxx.......x",
-                    /* line */ (const char *) "x.mmmmmmmm...x..~~~~~~~x.~~~~....x.............x",
+                    /* line */ (const char *) "x............x.x.......x.........x...x.x.x.x.x.x",
+                    /* line */ (const char *) "x............x.x.................x...x.x.x.x.x.x",
+                    /* line */ (const char *) "x...@mm......x.xxxxxxxxxxxxxxxxxxx...x.x.x.xxx.x",
+                    /* line */ (const char *) "x............x.........x.........x.....x.......x",
+                    /* line */ (const char *) "x............x...~~~~~~x.........x..x..xxxxxxxxx",
+                    /* line */ (const char *) "x............x.~~~~~~~~x..~~~....x..xxxx.......x",
+                    /* line */ (const char *) "x............x..~~~~~~~x.~~~~....x.............x",
                     /* line */ (const char *) "x............x..~~~~~.~x.~~~~~...xxxxxxxxxxxxx.x",
                     /* line */ (const char *) "x............x~~~~~~~.~x.~~~.....x.........x...x",
                     /* line */ (const char *) "x................~~~~.~x.~~~~~~..x..x.x....x...x",
-                    /* line */ (const char *) "x.@...xxxxxx.x~~~~~~~..x.~~......x..x.x.xxxx...x",
+                    /* line */ (const char *) "x.....xxxxxx.x~~~~~~~..x.~~......x..x.x.xxxx...x",
                     /* line */ (const char *) "x............x.....~~....~.......x....x.x..x...x",
                     /* line */ (const char *) "x...``..xxxxxx....~~~.~~~~~~~~...xxxx.x.x..x.xxx",
                     /* line */ (const char *) "x...x.................................x........x",

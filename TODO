@@ -1,18 +1,20 @@
 bugs
 ----
+collect sound for potions
+monsters cause damage
+monster slash anim
+monster and player damage
 score? score is hard coded to 666
 
 essential features
 ------------------
 stamina needed to avoid fast jump loops
-remove minimap from main screen
 hard coded to fire fireball
 chests need to contain something and those items destroyed when the chest is
 spell points to collect
 emergency teleport
-minimap has to show wizards
+level map has to show wizards
 wizards have to move levels
-monsters cause damage
 traps must do something
 spells need to have a cost that can be influenced by specializing
 

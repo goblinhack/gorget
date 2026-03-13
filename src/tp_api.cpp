@@ -1223,10 +1223,10 @@ auto tp_is_unused6(Tpp tp) -> bool
   return tp_flag(tp, is_unused6) != 0;
 }
 
-auto tp_is_unused60(Tpp tp) -> bool
+auto tp_is_hit_when_dead(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused60) != 0;
+  return tp_flag(tp, is_hit_when_dead) != 0;
 }
 
 auto tp_is_able_to_fire_projectiles(Tpp tp) -> bool

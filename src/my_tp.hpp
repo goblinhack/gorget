@@ -191,7 +191,7 @@
       list_macro(is_unused57, "is_unused57"),                                       /* newline */                                          \
       list_macro(is_unused58, "is_unused58"),                                       /* newline */                                          \
       list_macro(is_unused59, "is_unused59"),                                       /* newline */                                          \
-      list_macro(is_unused60, "is_unused60"),                                       /* newline */                                          \
+      list_macro(is_hit_when_dead, "is_hit_when_dead"),                             /* newline */                                          \
       list_macro(is_able_to_fire_projectiles, "is_able_to_fire_projectiles"),       /* newline */                                          \
       list_macro(is_blitzhound, "is_blitzhound"),                                   /* newline */                                          \
       list_macro(is_unused63, "is_unused63"),                                       /* newline */                                          \
@@ -403,7 +403,8 @@ ENUM_DEF_H(THING_ENVIRON_ENUM, ThingEnviron)
       list_macro(THING_PRIORITY_WATER, "water"),           /* newline */                                                                   \
       list_macro(THING_PRIORITY_SMOKE, "smoke"),           /* newline */                                                                   \
       list_macro(THING_PRIORITY_OBJECT, "object"),         /* newline */                                                                   \
-      list_macro(THING_PRIORITY_LOW, "low"),               /* newline */
+      list_macro(THING_PRIORITY_LOW, "low"),               /* newline */                                                                   \
+      list_macro(THING_PRIORITY_DEAD, "dead"),             /* newline */
 
 ENUM_DEF_H(THING_PRIORITY_ENUM, ThingPriorityType)
 
@@ -895,7 +896,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup val);
 [[nodiscard]] auto tp_is_unused58(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused59(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused6(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused60(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_hit_when_dead(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused63(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused7(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused8(Tpp tp) -> bool;

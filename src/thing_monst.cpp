@@ -28,7 +28,10 @@ static auto thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thing
     return false;
   }
 
-  thing_can_see_dump(g, v, l, me);
+  if (compiler_unused) {
+    thing_can_see_dump(g, v, l, me);
+  }
+
   auto *player_level = game_level_get(g, v, player->level_num);
   auto *monst_level  = game_level_get(g, v, me->level_num);
   if (player_level != monst_level) {

@@ -85,6 +85,7 @@ auto tp_load_mantisman() -> bool
   tp_flag_set(tp, is_obs_to_movement);
   tp_flag_set(tp, is_obs_to_teleporting_onto);
   tp_flag_set(tp, is_physics_explosion);
+  tp_flag_set(tp, is_hit_when_dead);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_removable_when_dead_on_err);
   tp_flag_set(tp, is_corpse_on_death);
@@ -125,7 +126,7 @@ auto tp_load_mantisman() -> bool
     auto *tile = tile_find_mand(name + std::string(".dead.") + std::to_string(frame));
     tile_size_set(tile, OUTLINE_TILE_WIDTH, OUTLINE_TILE_HEIGHT);
     tile_delay_ms_set(tile, delay);
-    tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
+    tp_tiles_push_back(tp, THING_ANIM_DEAD, tile);
   }
 
   return true;

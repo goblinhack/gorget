@@ -815,7 +815,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused58(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused59(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused6(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused60(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_hit_when_dead(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused63(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused7(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused8(Thingp t) -> bool;

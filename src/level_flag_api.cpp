@@ -1223,10 +1223,10 @@ auto level_is_unused6(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp
   return level_flag(g, v, l, is_unused6, p);
 }
 
-auto level_is_unused60(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp
+auto level_is_hit_when_dead(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused60, p);
+  return level_flag(g, v, l, is_hit_when_dead, p);
 }
 
 auto level_is_able_to_fire_projectiles(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp

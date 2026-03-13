@@ -2461,7 +2461,7 @@ auto thing_is_unused59(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused59) != 0;
 }
 
-auto thing_is_unused60(Thingp t) -> bool
+auto thing_is_hit_when_dead(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2469,7 +2469,7 @@ auto thing_is_unused60(Thingp t) -> bool
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused60) != 0;
+  return tp_flag(thing_tp(t), is_hit_when_dead) != 0;
 }
 
 auto thing_is_able_to_fire_projectiles(Thingp t) -> bool
@@ -4761,6 +4761,9 @@ auto thing_priority(Thingp t) -> ThingPriorityType
   if (t == nullptr) {
     ERR("no thing pointer");
     return THING_PRIORITY_LOW;
+  }
+  if (thing_is_dead(t)) {
+    return THING_PRIORITY_DEAD;
   }
   return t->_priority;
 }
