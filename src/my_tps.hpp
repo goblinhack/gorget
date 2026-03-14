@@ -19,6 +19,7 @@ auto tp_load_border() -> bool;
 auto tp_load_brazier() -> bool;
 auto tp_load_bridge() -> bool;
 auto tp_load_chasm() -> bool;
+auto tp_load_chest() -> bool;
 auto tp_load_corridor() -> bool;
 auto tp_load_cursor_at() -> bool;
 auto tp_load_cursor_path() -> bool;
@@ -58,7 +59,6 @@ auto tp_load_smoke() -> bool;
 auto tp_load_steam() -> bool;
 auto tp_load_teleport() -> bool;
 auto tp_load_trap() -> bool;
-auto tp_load_treasure() -> bool;
 auto tp_load_wall() -> bool;
 auto tp_load_water() -> bool;
   /* end shell marker1 */

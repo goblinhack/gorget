@@ -21,6 +21,7 @@ auto templates_init() -> bool
   if (!tp_load_brazier()) { return false; }
   if (!tp_load_bridge()) { return false; }
   if (!tp_load_chasm()) { return false; }
+  if (!tp_load_chest()) { return false; }
   if (!tp_load_corridor()) { return false; }
   if (!tp_load_cursor_at()) { return false; }
   if (!tp_load_cursor_path()) { return false; }
@@ -60,7 +61,6 @@ auto templates_init() -> bool
   if (!tp_load_steam()) { return false; }
   if (!tp_load_teleport()) { return false; }
   if (!tp_load_trap()) { return false; }
-  if (!tp_load_treasure()) { return false; }
   if (!tp_load_wall()) { return false; }
   if (!tp_load_water()) { return false; }
   /* end shell marker1 */

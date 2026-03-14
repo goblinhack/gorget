@@ -61,7 +61,7 @@ static auto tp_door_locked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l
 }
 
 //
-// Return trun on processing the mouse event
+// Return true on processing the mouse event
 //
 [[nodiscard]] static auto tp_door_locked_mouse_down(Gamep g, Levelsp v, Levelp l, Thingp t, int x, int y, int button) -> bool
 {
@@ -157,7 +157,7 @@ static auto tp_door_locked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l
     thing_is_unlocked_set(g, v, l, t);
   }
 
-  thing_sound_play(g, v, l, t, "door");
+  thing_sound_play(g, v, l, t, "door_open");
 
   return true;
 }
@@ -170,7 +170,7 @@ static auto tp_door_locked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l
     TOPCON("The locked door closes.");
   }
 
-  thing_sound_play(g, v, l, t, "door");
+  thing_sound_play(g, v, l, t, "door_open");
 
   return true;
 }

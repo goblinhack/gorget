@@ -33,7 +33,7 @@ void levels_test(Gamep g)
                   /* line */ (const char *) "xxxxxxxxxxx",
                   /* line */ (const char *) "xxxxxxxxxxx",
                   /* line */ (const char *) "xx.......xx",
-                  /* line */ (const char *) "xx.......xx",
+                  /* line */ (const char *) "xx...k...xx",
                   /* line */ (const char *) "xx...$$$.xx",
                   /* line */ (const char *) "xx.@.$$$.xx",
                   /* line */ (const char *) "xx...$$$.xx",

@@ -112,7 +112,7 @@ static auto tp_door_unlocked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp
     thing_is_unlocked_set(g, v, l, t);
   }
 
-  thing_sound_play(g, v, l, t, "door");
+  thing_sound_play(g, v, l, t, "door_open");
 
   return true;
 }
@@ -125,7 +125,7 @@ static auto tp_door_unlocked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp
     TOPCON("The door closes.");
   }
 
-  thing_sound_play(g, v, l, t, "door");
+  thing_sound_play(g, v, l, t, "door_open");
 
   return true;
 }

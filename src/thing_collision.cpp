@@ -534,7 +534,7 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
       auto *t2 = b.second;
       if (d1 < d2) {
         return true;
-}
+      }
 
       if (thing_priority(t1) < thing_priority(t2)) {
         return true;

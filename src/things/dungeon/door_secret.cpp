@@ -37,7 +37,7 @@ static auto tp_door_secret_description_get(Gamep g, Levelsp v, Levelp l, Thingp 
     TOPCON("A secret door creaks open!");
   }
 
-  thing_sound_play(g, v, l, t, "door_secret");
+  thing_sound_play(g, v, l, t, "door_open_secret");
 
   thing_dead(g, v, l, t, e);
 

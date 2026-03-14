@@ -5,6 +5,7 @@
 #include "my_callstack.hpp"
 #include "my_main.hpp"
 #include "my_thing_callbacks.hpp"
+#include "my_thing_inlines.hpp"
 #include "my_tile.hpp"
 #include "my_tp.hpp"
 #include "my_tps.hpp"
@@ -29,12 +30,20 @@ static auto tp_potion_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std:
 {
   TRACE_INDENT();
 
+  if (thing_is_player(collector)) {
+    thing_sound_play(g, v, l, collector, "item_collect");
+  }
+
   return true;
 }
 
 [[nodiscard]] static auto tp_potion_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp dropper) -> bool
 {
   TRACE_INDENT();
+
+  if (thing_is_player(dropper)) {
+    thing_sound_play(g, v, l, dropper, "item_drop");
+  }
 
   return true;
 }

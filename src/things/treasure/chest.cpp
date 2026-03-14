@@ -38,7 +38,16 @@ static auto tp_chest_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::
   return UI_INFO1_FMT_STR "A closed chest. What wonders might it contain? Probably none.";
 }
 
-auto tp_load_treasure() -> bool
+[[nodiscard]] static auto tp_chest_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener) -> bool
+{
+  TRACE_INDENT();
+
+  thing_sound_play(g, v, l, t, "chest_open");
+
+  return true;
+}
+
+auto tp_load_chest() -> bool
 {
   TRACE_INDENT();
 
@@ -48,6 +57,7 @@ auto tp_load_treasure() -> bool
   // begin sort marker1 {
   thing_description_set(tp, tp_chest_description_get);
   thing_detail_set(tp, tp_chest_detail_get);
+  thing_on_open_request_set(tp, tp_chest_on_open_request);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // roll max to continue burning
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated);
