@@ -682,6 +682,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_health_bar_shown(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_hit_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_is_hit_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
+[[nodiscard]] auto thing_is_hit_when_dead(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_hot_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_is_hot_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_is_immune_to(Thingp t, ThingEventType val) -> bool;
@@ -815,7 +816,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused58(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused59(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused6(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_hit_when_dead(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused63(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused7(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused8(Thingp t) -> bool;

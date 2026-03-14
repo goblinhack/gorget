@@ -75,8 +75,10 @@ auto tp_load_mantisman() -> bool
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_burnable); // is capable of being burned by fire
   tp_flag_set(tp, is_collision_circle_large);
+  tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_health_bar_shown);
+  tp_flag_set(tp, is_hit_when_dead);
   tp_flag_set(tp, is_insectoid);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_mantisman);
@@ -85,10 +87,8 @@ auto tp_load_mantisman() -> bool
   tp_flag_set(tp, is_obs_to_movement);
   tp_flag_set(tp, is_obs_to_teleporting_onto);
   tp_flag_set(tp, is_physics_explosion);
-  tp_flag_set(tp, is_hit_when_dead);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_removable_when_dead_on_err);
-  tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_tickable);
   tp_health_set(tp, "1d6");

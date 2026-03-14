@@ -908,6 +908,7 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_is_grass(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_grouped_thing(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_health_bar_shown(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
+[[nodiscard]] auto level_is_hit_when_dead(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_indestructible(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_insectoid(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_inventory_item(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
@@ -1035,7 +1036,6 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_is_unused58(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_unused59(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_unused6(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
-[[nodiscard]] auto level_is_hit_when_dead(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_unused63(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_unused7(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_unused8(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
@@ -1129,6 +1129,7 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_alive_is_grass(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_grouped_thing(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_health_bar_shown(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
+[[nodiscard]] auto level_alive_is_hit_when_dead(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_indestructible(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_insectoid(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_inventory_item(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
@@ -1256,7 +1257,6 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_alive_is_unused58(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_unused59(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_unused6(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
-[[nodiscard]] auto level_alive_is_hit_when_dead(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_unused63(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_unused7(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_unused8(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
@@ -1350,6 +1350,7 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_count_is_grass(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_grouped_thing(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_health_bar_shown(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
+[[nodiscard]] auto level_count_is_hit_when_dead(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_indestructible(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_insectoid(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_inventory_item(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
@@ -1477,7 +1478,6 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_count_is_unused58(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_unused59(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_unused6(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
-[[nodiscard]] auto level_count_is_hit_when_dead(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_unused63(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_unused7(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_unused8(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
@@ -1572,6 +1572,7 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_open_is_grass(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_grouped_thing(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_health_bar_shown(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
+[[nodiscard]] auto level_open_is_hit_when_dead(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_indestructible(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_insectoid(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_inventory_item(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
@@ -1699,7 +1700,6 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_open_is_unused58(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused59(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused6(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
-[[nodiscard]] auto level_open_is_hit_when_dead(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused63(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused7(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused8(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
