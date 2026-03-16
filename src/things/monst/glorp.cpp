@@ -120,11 +120,16 @@ auto tp_load_glorp() -> bool
     tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
   }
 
+  delay = 100;
   for (auto frame = 0; frame < 4; frame++) {
     auto *tile = tile_find_mand(name + std::string(".dead.") + std::to_string(frame));
     tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
     tile_delay_ms_set(tile, delay);
     tp_tiles_push_back(tp, THING_ANIM_DEAD, tile);
+
+    if (frame == 3) {
+      tile_is_cleanup_on_end_of_anim_set(tile);
+    }
   }
 
   return true;
