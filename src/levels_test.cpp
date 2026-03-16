@@ -109,7 +109,7 @@ void levels_test(Gamep g)
                     /* line */ (const char *) "x...xxxxxxxxxx.x.......x.........x...x.x.x.x.x.x",
                     /* line */ (const char *) "x............x.x.......x.........x...x.x.x.x.x.x",
                     /* line */ (const char *) "x............x.x.................x...x.x.x.x.x.x",
-                    /* line */ (const char *) "x...@mm......x.xxxxxxxxxxxxxxxxxxx...x.x.x.xxx.x",
+                    /* line */ (const char *) "x...@m.......x.xxxxxxxxxxxxxxxxxxx...x.x.x.xxx.x",
                     /* line */ (const char *) "x............x.........x.........x.....x.......x",
                     /* line */ (const char *) "x............x...~~~~~~x.........x..x..xxxxxxxxx",
                     /* line */ (const char *) "x............x.~~~~~~~~x..~~~....x..xxxx.......x",

@@ -362,6 +362,8 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me)
   //
   // Post thinking state check
   //
+  auto old_target = thing_target(me);
+  thing_log(me, "target %d,%d", old_target.x, old_target.y);
   switch (monst_state(g, v, l, me)) {
     case MONST_STATE_INIT : //
       break;
@@ -384,8 +386,17 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me)
         // To avoid one move of sitting idle, can we choose a new target and
         // keep on moving?
         //
+        // However, if it is the same target tile, do not try to fail to move
+        // to the same tile again.
+        //
         if (thing_monst_choose_target(g, v, l, me)) {
-          (void) thing_monst_move_to_next(g, v, l, me);
+          auto new_target = thing_target(me);
+          if (old_target == new_target) {
+            THING_DBG(me, "end of move: same target as before, do not continue");
+          } else {
+            THING_DBG(me, "end of move: have a new target");
+            (void) thing_monst_move_to_next(g, v, l, me);
+          }
         }
       }
       break;
