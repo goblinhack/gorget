@@ -51,14 +51,6 @@ static inline auto is_oob_or_border(int x, int y) -> bool
 }
 
 //
-// Something blocking the fov?
-//
-static inline auto level_light_blocker_at_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool
-{
-  return l->is_light_blocker_cache[ p.x ][ p.y ] != 0;
-}
-
-//
 // Has the player seen this tile?
 //
 static inline auto level_has_seen_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool

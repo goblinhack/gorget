@@ -124,12 +124,6 @@ void level_update_visibility(Gamep g, Levelsp v, Levelp l)
   }
 
   if (update_per_tile_visibility) {
-    // TOPCON("T");
-    //
-    // Per tick check what blocks light.
-    //
-    level_light_blocker_update(g, v, l);
-
     //
     // Per tick check what the player can see.
     //

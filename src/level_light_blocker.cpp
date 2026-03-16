@@ -30,22 +30,3 @@ auto level_light_blocker_at(Gamep g, Levelsp v, Levelp l, const spoint &pov) -> 
 
   return nullptr;
 }
-
-//
-// Update all light blockers. This is done per tick to avoid having to redo this
-// check for every monster during vision checks.
-//
-void level_light_blocker_update(Gamep g, Levelsp v, Levelp l)
-{
-  TRACE();
-
-  for (auto x = 0; x < MAP_WIDTH; x++) {
-    for (auto y = 0; y < MAP_HEIGHT; y++) {
-      if (level_light_blocker_at(g, v, l, spoint(x, y)) != nullptr) {
-        l->is_light_blocker_cache[ x ][ y ] = 1U;
-      } else {
-        l->is_light_blocker_cache[ x ][ y ] = 0U;
-      }
-    }
-  }
-}

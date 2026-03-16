@@ -267,10 +267,6 @@ using Level = struct Level {
   //
   uint8_t player_has_walked_tile[ MAP_WIDTH ][ MAP_HEIGHT ];
   //
-  // Updated per tick for things that block light
-  //
-  uint8_t is_light_blocker_cache[ MAP_WIDTH ][ MAP_HEIGHT ];
-  //
   // Updated per tick what the player has seen
   //
   uint8_t player_has_seen_tile_cache[ MAP_WIDTH ][ MAP_HEIGHT ];
@@ -726,7 +722,6 @@ void level_is_completed_by_player_exiting(Gamep g, Levelsp v, Levelp l);
 void level_is_completed_by_player_falling(Gamep g, Levelsp v, Levelp l);
 void level_is_player_level_set(Gamep g, Levelsp v, Levelp l);
 void level_is_player_level_unset(Gamep g, Levelsp v, Levelp l);
-void level_light_blocker_update(Gamep g, Levelsp v, Levelp l);
 void level_light_calculate_all(Gamep g, Levelsp v, Levelp l);
 void level_light_per_pixel_lighting(Gamep g, Levelsp v, Levelp l, Thingp t, spoint pov, spoint p);
 void level_light_precalculate(Gamep g);
