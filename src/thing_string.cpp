@@ -165,7 +165,7 @@ auto to_death_reason_string(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &
     if (thing_is_lava(source) || thing_is_water(source)) {
       s += " in " + tp_name_long(thing_tp(source));
     } else if ((g != nullptr) && thing_is_player(source)) {
-      std::string name = game_player_name_get(g);
+      std::string const name = game_player_name_get(g);
       s += " by " + name;
     } else {
       s += " by " + tp_name_a_or_an(thing_tp(source));

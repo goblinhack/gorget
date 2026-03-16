@@ -118,7 +118,7 @@ static void level_fov_do(const short       distance_from_origin, // Polar distan
     //
     // Treat player and monster blocking differently so the player can use cover
     //
-    auto vision_blocked = thing_vision_blocker_for_me_at(ctx.g, ctx.v, ctx.l, ctx.me, p);
+    auto vision_blocked = level_vision_blocker_at(ctx.g, ctx.v, ctx.l, ctx.me, p);
 
     if ((angle * angle) + (distance_from_origin * distance_from_origin) <= radius_squared && (ctx.light_walls || ! vision_blocked)) {
 

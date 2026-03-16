@@ -398,7 +398,7 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me)
             //
             // Can we attack here?
             //
-            if (level_is_attackable_by_monst(g, v, l, new_target)) {
+            if (level_is_attackable_by_monst(g, v, l, new_target) != nullptr) {
               if (thing_attack_at(g, v, l, me, new_target)) {
                 THING_DBG(me, "end of move: same target as before, attacked");
                 break;

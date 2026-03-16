@@ -92,20 +92,6 @@ auto thing_vision_blocker(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it) ->
   return false;
 }
 
-//
-// Something blocking the fov?
-//
-auto thing_vision_blocker_for_me_at(Gamep g, Levelsp v, Levelp l, Thingp me, const spoint &at) -> bool
-{
-  FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, at)
-  {
-    if (thing_vision_blocker(g, v, l, me, it)) {
-      return true;
-    }
-  }
-  return false;
-}
-
 void thing_vision_reset(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE();

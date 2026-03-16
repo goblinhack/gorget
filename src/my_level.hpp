@@ -821,8 +821,6 @@ using LevelType = enum LevelType_ {
 
 // begin sort marker3 {
 [[nodiscard]] auto level_is_able_to_collect_items(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
-[[nodiscard]] bool level_tick_begin_requested(Gamep g, Levelsp v, Levelp l, const char *why);
-[[nodiscard]] bool level_tick_begin_is_requested(Gamep g, Levelsp v, Levelp l);
 [[nodiscard]] auto level_is_able_to_collect_keys(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_able_to_crush_grass(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_able_to_fall_repeatedly(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
@@ -1040,6 +1038,8 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_is_wall(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_water(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_wood(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
+[[nodiscard]] auto level_tick_begin_is_requested(Gamep g, Levelsp v, Levelp l) -> bool;
+[[nodiscard]] auto level_tick_begin_requested(Gamep g, Levelsp v, Levelp l, const char *why) -> bool;
 // end sort marker3 }
 
 // begin sort marker4 {

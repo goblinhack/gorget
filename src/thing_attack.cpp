@@ -14,7 +14,7 @@
 //
 // We're trying to attack at this tile. What do we hit first?
 //
-bool thing_attack(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it)
+static auto thing_attack(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it) -> bool
 {
   TRACE();
 
@@ -39,7 +39,7 @@ bool thing_attack(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it)
 //
 // We're trying to attack at this tile. What do we hit first?
 //
-bool thing_attack_at(Gamep g, Levelsp v, Levelp l, Thingp me, const spoint &attack_at)
+auto thing_attack_at(Gamep g, Levelsp v, Levelp l, Thingp me, const spoint &attack_at) -> bool
 {
   TRACE();
 
@@ -75,27 +75,22 @@ bool thing_attack_at(Gamep g, Levelsp v, Levelp l, Thingp me, const spoint &atta
     }
   }
 
-  if (! cands.size()) {
+  if (cands.empty()) {
     return false;
   }
 
   //
   // Sort by priority
   //
-  std::ranges::sort(cands, [](Thingp a, Thingp b) -> bool {
-    if (thing_priority(a) < thing_priority(b)) {
-      return true;
-    }
-    return false;
-  });
+  std::ranges::sort(cands, [](Thingp a, Thingp b) -> bool { return thing_priority(a) < thing_priority(b); });
 
   if (compiler_unused) {
-    for (auto cand : cands) {
+    for (auto *cand : cands) {
       THING_DBG(cand, "prio %u", thing_priority(cand));
     }
   }
 
-  for (auto cand : cands) {
+  for (auto *cand : cands) {
 
     if (thing_is_dead(cand)) {
       if (! thing_is_hit_when_dead(cand)) {

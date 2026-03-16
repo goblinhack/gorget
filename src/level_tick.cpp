@@ -436,7 +436,7 @@ static void level_tick_idle(Gamep g, Levelsp v, Levelp l)
   }
 }
 
-bool level_tick_begin_requested(Gamep g, Levelsp v, Levelp l, const char *why)
+auto level_tick_begin_requested(Gamep g, Levelsp v, Levelp l, const char *why) -> bool
 {
   TRACE();
 
@@ -481,7 +481,7 @@ bool level_tick_begin_requested(Gamep g, Levelsp v, Levelp l, const char *why)
   return ret;
 }
 
-bool level_tick_begin_is_requested(Gamep g, Levelsp v, Levelp l)
+auto level_tick_begin_is_requested(Gamep g, Levelsp v, Levelp l) -> bool
 {
   TRACE();
 

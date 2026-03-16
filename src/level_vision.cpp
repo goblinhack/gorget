@@ -5,6 +5,7 @@
 #include "my_callstack.hpp"
 #include "my_game.hpp"
 #include "my_level.hpp"
+#include "my_level_inlines.hpp"
 #include "my_thing_inlines.hpp"
 #include "my_tp.hpp"
 
@@ -55,4 +56,18 @@ void level_vision_calculate_all(Gamep g, Levelsp v, Levelp l)
   for (auto &i : threads) {
     i.join();
   }
+}
+
+//
+// Something blocking the fov?
+//
+auto level_vision_blocker_at(Gamep g, Levelsp v, Levelp l, Thingp me, const spoint &at) -> bool
+{
+  FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, at)
+  {
+    if (thing_vision_blocker(g, v, l, me, it)) {
+      return true;
+    }
+  }
+  return false;
 }
