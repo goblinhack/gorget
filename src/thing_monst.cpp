@@ -386,15 +386,25 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me)
         // To avoid one move of sitting idle, can we choose a new target and
         // keep on moving?
         //
-        // However, if it is the same target tile, do not try to fail to move
-        // to the same tile again.
-        //
         if (thing_monst_choose_target(g, v, l, me)) {
           auto new_target = thing_target(me);
-          if (level_is_attackable_by_monst(g, v, l, new_target)) {
-            thing_topcon(me, "attack");
-          }
           if (old_target == new_target) {
+            //
+            // However, if it is the same target tile, do not try to fail to move
+            // to the same tile again.
+            //
+            monst_state_change(g, v, l, me, MONST_STATE_NORMAL);
+
+            //
+            // Can we attack here?
+            //
+            if (level_is_attackable_by_monst(g, v, l, new_target)) {
+              if (thing_attack_at(g, v, l, me, new_target)) {
+                THING_DBG(me, "end of move: same target as before, attacked");
+                break;
+              }
+            }
+
             THING_DBG(me, "end of move: same target as before, do not continue");
           } else {
             THING_DBG(me, "end of move: have a new target");
