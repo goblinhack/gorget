@@ -6,32 +6,40 @@
 #include "my_game.hpp"
 #include "my_thing_inlines.hpp"
 
-static auto thing_name_pluralize(Thingp t) -> std::string
+auto thing_name_pluralize(Thingp t) -> std::string
 {
   TRACE();
 
   auto *tp  = thing_tp(t);
-  auto  out = tp_pluralize_name(tp);
+  auto  out = tp_name_pluralize(tp);
 
   if (out.empty()) {
-    return tp_long_name(tp) + "s";
+    return tp_name_long(tp) + "s";
   }
 
   return out;
 }
 
-static auto thing_name_apostrophize(Thingp t) -> std::string
+auto thing_name_apostrophize(Thingp t) -> std::string
 {
   TRACE();
 
   auto *tp  = thing_tp(t);
-  auto  out = tp_apostrophize_name(tp);
+  auto  out = tp_name_apostrophize(tp);
 
   if (out.empty()) {
-    return tp_long_name(tp) + "'s";
+    return tp_name_long(tp) + "'s";
   }
 
   return out;
+}
+
+auto thing_name_a_or_an(Thingp t) -> std::string
+{
+  TRACE();
+
+  auto *tp = thing_tp(t);
+  return tp_name_a_or_an(tp);
 }
 
 auto thing_name_long(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) -> std::string
@@ -53,7 +61,7 @@ auto thing_name_long(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) -
   if ((f & TEXT_INCLUDE_OWNER) != 0) {
     if ((t_o != nullptr) && ! thing_is_player(t_o)) {
 
-      out += tp_long_name(thing_tp(t_o));
+      out += tp_name_long(thing_tp(t_o));
       out += "'s ";
     }
   }
@@ -84,12 +92,14 @@ auto thing_name_long(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) -
     }
   }
 
-  if ((f & TEXT_APOSTROPHIZE) != 0) {
-    out += thing_name_apostrophize(t);
+  if ((f & TEXT_A_OR_AN) != 0) {
+    out += thing_name_a_or_an(t);
   } else if ((f & TEXT_APOSTROPHIZE) != 0) {
+    out += thing_name_apostrophize(t);
+  } else if ((f & TEXT_PLURALIZE) != 0) {
     out += thing_name_pluralize(t);
   } else {
-    auto name = tp_long_name(tp);
+    auto name = tp_name_long(tp);
     if ((g != nullptr) && thing_is_player(t)) {
       name = game_player_name_get(g);
     }
@@ -136,7 +146,7 @@ auto thing_name_short(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) 
   if ((f & TEXT_INCLUDE_OWNER) != 0) {
     if ((t_o != nullptr) && ! thing_is_player(t_o)) {
 
-      out += tp_short_name(thing_tp(t_o));
+      out += tp_name_short(thing_tp(t_o));
       out += "'s ";
     }
   }
@@ -153,12 +163,14 @@ auto thing_name_short(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) 
     }
   }
 
-  if ((f & TEXT_APOSTROPHIZE) != 0) {
-    out += thing_name_apostrophize(t);
+  if ((f & TEXT_A_OR_AN) != 0) {
+    out += thing_name_a_or_an(t);
   } else if ((f & TEXT_APOSTROPHIZE) != 0) {
+    out += thing_name_apostrophize(t);
+  } else if ((f & TEXT_PLURALIZE) != 0) {
     out += thing_name_pluralize(t);
   } else {
-    auto name = tp_short_name(tp);
+    auto name = tp_name_short(tp);
     if ((g != nullptr) && thing_is_player(t)) {
       name = game_player_name_get(g);
     }

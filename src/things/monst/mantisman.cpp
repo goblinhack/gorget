@@ -63,6 +63,7 @@ auto tp_load_mantisman() -> bool
   thing_detail_set(tp, tp_mantisman_detail_get);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6"); // roll max to continue burning
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // roll max to continue burning
+  tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d3");
   tp_distance_vision_set(tp, 10);
   tp_flag_set(tp, is_able_to_crush_grass);
   tp_flag_set(tp, is_able_to_fall);
@@ -94,8 +95,12 @@ auto tp_load_mantisman() -> bool
   tp_flag_set(tp, is_tickable);
   tp_health_set(tp, "1d6");
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
-  tp_long_name_set(tp, "mantisman");
   tp_monst_group_add(tp, MONST_GROUP_EASY);
+  tp_name_a_or_an_set(tp, "a mantisman");
+  tp_name_apostrophize_set(tp, "mantismans'");
+  tp_name_long_set(tp, "mantisman");
+  tp_name_pluralize_set(tp, "mantismen");
+  tp_name_short_set(tp, "mantisman");
   tp_priority_set(tp, THING_PRIORITY_MONST);
   tp_speed_set(tp, 100);
   tp_temperature_burns_at_set(tp, 50);  // celsius

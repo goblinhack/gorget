@@ -57,7 +57,11 @@ auto tp_load_rock() -> bool
     tp_health_set(tp, "1d200+200");
     tp_is_immunity_add(tp, THING_EVENT_MELEE_DAMAGE);
     tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
-    tp_long_name_set(tp, "rock");
+    tp_name_a_or_an_set(tp, "a rock");
+    tp_name_apostrophize_set(tp, "rocks'");
+    tp_name_long_set(tp, "rock");
+    tp_name_pluralize_set(tp, "rocks");
+    tp_name_short_set(tp, "rock");
     tp_temperature_damage_at_set(tp, 50); // celsius
     tp_temperature_initial_set(tp, 20);   // celsius
     tp_temperature_melts_at_set(tp, 300); // celsius

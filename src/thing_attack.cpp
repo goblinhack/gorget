@@ -5,10 +5,36 @@
 #include "my_callstack.hpp"
 #include "my_level_inlines.hpp"
 #include "my_main.hpp"
+#include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
 
 #include <algorithm>
 #include <cmath>
+
+//
+// We're trying to attack at this tile. What do we hit first?
+//
+bool thing_attack(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it)
+{
+  TRACE();
+
+  auto *source     = me;
+  auto  event_type = THING_EVENT_MELEE_DAMAGE;
+  auto  damage     = tp_damage(thing_tp(source), event_type);
+
+  ThingEvent e {
+      .reason     = "melee",    //
+      .event_type = event_type, //
+      .damage     = damage,     //
+      .source     = source,     //
+  };
+
+  thing_damage(g, v, l, it, e);
+
+  thing_is_hit_set(g, v, l, it, MAX_HIT_TIME_MS);
+
+  return true;
+}
 
 //
 // We're trying to attack at this tile. What do we hit first?
@@ -19,6 +45,13 @@ bool thing_attack_at(Gamep g, Levelsp v, Levelp l, Thingp me, const spoint &atta
 
   if (compiler_unused) {
     THING_DBG(me, "thing_attack_at");
+  }
+
+  //
+  // Only allow attacks on immediately adjacent tiles
+  //
+  if (! adjacent(thing_at(me), attack_at)) {
+    return false;
   }
 
   std::vector< Thingp > cands;
@@ -70,9 +103,9 @@ bool thing_attack_at(Gamep g, Levelsp v, Levelp l, Thingp me, const spoint &atta
       }
     }
 
-    thing_is_hit_set(g, v, l, cand, MAX_HIT_TIME_MS);
-
-    return true;
+    if (thing_attack(g, v, l, me, cand)) {
+      return true;
+    }
   }
   return false;
 }

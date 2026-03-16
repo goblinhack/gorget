@@ -50,7 +50,11 @@ auto tp_load_key() -> bool
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_light_color_set(tp, "yellow");
-  tp_long_name_set(tp, name);
+  tp_name_a_or_an_set(tp, "a key");
+  tp_name_apostrophize_set(tp, "keys'");
+  tp_name_long_set(tp, "key");
+  tp_name_pluralize_set(tp, "keys");
+  tp_name_short_set(tp, "key");
   tp_weight_set(tp, WEIGHT_FEATHER); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   // end sort marker1 }

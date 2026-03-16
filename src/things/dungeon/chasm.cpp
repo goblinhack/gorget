@@ -39,7 +39,11 @@ auto tp_load_chasm() -> bool
   tp_flag_set(tp, is_tick_end_delay);
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_tiled);
-  tp_long_name_set(tp, name);
+  tp_name_a_or_an_set(tp, "a chasm");
+  tp_name_apostrophize_set(tp, "chasms'");
+  tp_name_long_set(tp, "chasm");
+  tp_name_pluralize_set(tp, "chasms");
+  tp_name_short_set(tp, "chasm");
   tp_weight_set(tp, WEIGHT_NONE); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_FLOOR);
   // end sort marker1 }

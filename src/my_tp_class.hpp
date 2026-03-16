@@ -177,27 +177,32 @@ public:
   //
   // For mimics
   //
-  std::string real_name;
+  std::string name_real;
 
   //
   // Short name for lists
   //
-  std::string short_name;
+  std::string name_short;
 
   //
   // Longer name for attacks text
   //
-  std::string long_name;
+  std::string name_long;
 
   //
   // monster's
   //
-  std::string apostrophize_name;
+  std::string name_apostrophize;
+
+  //
+  // a monster
+  //
+  std::string name_a_or_an;
 
   //
   // monsters
   //
-  std::string pluralize_name;
+  std::string name_pluralize;
 
   //
   // Damage types, in dice

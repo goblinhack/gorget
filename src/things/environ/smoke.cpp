@@ -39,7 +39,11 @@ auto tp_load_smoke() -> bool
   tp_flag_set(tp, is_submergible);
   tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_tickable);
-  tp_long_name_set(tp, name);
+  tp_name_a_or_an_set(tp, "smoke");
+  tp_name_apostrophize_set(tp, "smokes'");
+  tp_name_long_set(tp, "smoke");
+  tp_name_pluralize_set(tp, "smokes");
+  tp_name_short_set(tp, "smoke");
   tp_priority_set(tp, THING_PRIORITY_SMOKE);
   tp_weight_set(tp, WEIGHT_NONE); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_GAS);

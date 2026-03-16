@@ -34,6 +34,7 @@ static inline auto make_spoint(const spoint &f) -> spoint { return spoint(f.x, f
 static inline auto make_spoint(spoint &f) -> spoint { return spoint(f.x, f.y); }
 static inline auto make_spoint(short x, short y) -> spoint { return spoint(x, y); }
 
-auto distance(spoint a, spoint b) -> float;
+auto distance(const spoint &a, const spoint &b) -> float;
+auto adjacent(const spoint &a, const spoint &b) -> bool;
 
 #endif // MY_SPOINT_HPP

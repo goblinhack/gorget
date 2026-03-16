@@ -41,7 +41,11 @@ auto tp_load_steam() -> bool
   tp_flag_set(tp, is_tick_end_delay);
   tp_flag_set(tp, is_tickable);
   tp_lifespan_set(tp, "1d6+3");
-  tp_long_name_set(tp, name);
+  tp_name_a_or_an_set(tp, "steam");
+  tp_name_apostrophize_set(tp, "steams'");
+  tp_name_long_set(tp, "steam");
+  tp_name_pluralize_set(tp, "steams");
+  tp_name_short_set(tp, "steam");
   tp_priority_set(tp, THING_PRIORITY_STEAM);
   tp_temperature_initial_set(tp, 100); // celsius
   tp_weight_set(tp, WEIGHT_NONE);      // grams

@@ -59,7 +59,6 @@ auto tp_load_ghost_mob() -> bool
   thing_detail_set(tp, tp_ghost_mob_detail_get);
   thing_on_death_set(tp, tp_ghost_mob_on_death);
   thing_on_tick_begin_set(tp, tp_ghost_mob_tick_begin);
-  tp_apostrophize_name_set(tp, "ghosts mob's");
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
@@ -91,11 +90,13 @@ auto tp_load_ghost_mob() -> bool
   tp_flag_set(tp, is_wait_on_dead_anim);
   tp_health_set(tp, "1d3+2");
   tp_light_color_set(tp, "cyan");
-  tp_long_name_set(tp, "ghost mob");
   tp_minion_max_set(tp, 10);
-  tp_pluralize_name_set(tp, "ghostly mobs");
+  tp_name_a_or_an_set(tp, "a pile of bones");
+  tp_name_apostrophize_set(tp, "pile of bones'");
+  tp_name_long_set(tp, "pile of bones");
+  tp_name_pluralize_set(tp, "piles of bones");
+  tp_name_short_set(tp, "bone mob");
   tp_priority_set(tp, THING_PRIORITY_MOB);
-  tp_short_name_set(tp, "pile of bones");
   tp_speed_set(tp, 100);
   tp_temperature_burns_at_set(tp, 100);  // celsius
   tp_temperature_damage_at_set(tp, 100); // celsius

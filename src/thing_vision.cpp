@@ -47,6 +47,65 @@ auto thing_vision_blocker(Gamep g, Levelsp v, Levelp l, Thingp it) -> bool
   return false;
 }
 
+//
+// Something blocking the fov?
+//
+auto thing_vision_blocker(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it) -> bool
+{
+  //
+  // Dead foliage should not block
+  //
+  if (thing_is_dead(it)) {
+    return false;
+  }
+
+  //
+  // Open doors should not block
+  //
+  if (thing_is_open(it)) {
+    return false;
+  }
+
+  //
+  // Submerged foliage does not block light
+  //
+  if (thing_submerged_pct(it) != 0) {
+    return false;
+  }
+
+  //
+  // Some monsters can see through walls
+  //
+  if (thing_is_able_to_walk_through_walls(me)) {
+    if (thing_is_wall(it)) {
+      return false;
+    }
+  }
+
+  if (thing_is_obs_to_vision(it)) {
+    if (compiler_unused) {
+      THING_DBG(it, "block");
+    }
+    return true;
+  }
+
+  return false;
+}
+
+//
+// Something blocking the fov?
+//
+auto thing_vision_blocker_for_me_at(Gamep g, Levelsp v, Levelp l, Thingp me, const spoint &at) -> bool
+{
+  FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, at)
+  {
+    if (thing_vision_blocker(g, v, l, me, it)) {
+      return true;
+    }
+  }
+  return false;
+}
+
 void thing_vision_reset(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE();

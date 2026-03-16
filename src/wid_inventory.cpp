@@ -315,7 +315,7 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
       std::string s;
 
       if (item != nullptr) {
-        s = tp_long_name(tp);
+        s = tp_name_long(tp);
       } else {
         s = "-";
       }

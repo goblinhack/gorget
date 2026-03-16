@@ -76,7 +76,11 @@ auto tp_load_chest() -> bool
   tp_flag_set(tp, is_wood);
   tp_health_set(tp, "1d20");
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
-  tp_long_name_set(tp, name);
+  tp_name_a_or_an_set(tp, "a treasure chest");
+  tp_name_apostrophize_set(tp, "treasure chests'");
+  tp_name_long_set(tp, "treasure chest");
+  tp_name_pluralize_set(tp, "treasure chests");
+  tp_name_short_set(tp, "chest");
   tp_temperature_burns_at_set(tp, 100);  // celsius
   tp_temperature_damage_at_set(tp, 100); // celsius
   tp_temperature_initial_set(tp, 20);    // celsius

@@ -40,9 +40,12 @@ auto tp_load_deep_water() -> bool
   tp_flag_set(tp, is_tick_end_delay);
   tp_flag_set(tp, is_tiled);
   tp_health_set(tp, "40"); // to allow it to be damaged by fire
-  tp_long_name_set(tp, "deep water");
+  tp_name_a_or_an_set(tp, "deep water");
+  tp_name_apostrophize_set(tp, "deep waters'");
+  tp_name_long_set(tp, "deep water");
+  tp_name_pluralize_set(tp, "deep waters");
+  tp_name_short_set(tp, "deep water");
   tp_priority_set(tp, THING_PRIORITY_WATER);
-  tp_short_name_set(tp, "deep water");
   tp_temperature_burns_at_set(tp, 100);  // celsius
   tp_temperature_damage_at_set(tp, 100); // celsius
   tp_temperature_initial_set(tp, 5);     // celsius

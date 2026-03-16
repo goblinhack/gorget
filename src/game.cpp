@@ -435,6 +435,11 @@ auto game_test_init(Gamep g, Levelp *l_out, LevelNum level_num, int w, int h, co
 
   game_state_change(g, STATE_PLAYING, "new game");
 
+  //
+  // Need this to update visibility.
+  //
+  game_tick(g);
+
   return v;
 }
 
@@ -484,11 +489,6 @@ void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num,
   // Final level connectivity.
   //
   levels_finalize(g, v);
-
-  //
-  // Need this to update visibility.
-  //
-  game_tick(g);
 }
 
 void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num, int w, int h, const char *contents,

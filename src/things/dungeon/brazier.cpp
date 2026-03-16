@@ -149,7 +149,11 @@ auto tp_load_brazier() -> bool
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_tickable);
   tp_light_color_set(tp, "orange");
-  tp_long_name_set(tp, name);
+  tp_name_a_or_an_set(tp, "a brazier");
+  tp_name_apostrophize_set(tp, "braziers'");
+  tp_name_long_set(tp, "brazier");
+  tp_name_pluralize_set(tp, "braziers");
+  tp_name_short_set(tp, "brazier");
   tp_weight_set(tp, WEIGHT_MEDIUM); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   // end sort marker1 }

@@ -588,119 +588,142 @@ auto tp_name(Tpp tp) -> std::string
   return tp->name;
 }
 
-void tp_short_name_set(Tpp tp, const std::string &val)
+void tp_name_short_set(Tpp tp, const std::string &val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
     tp_err(tp, "no thing template pointer");
     return;
   }
-  tp->short_name = std::string(val);
+  tp->name_short = std::string(val);
 }
 
-auto tp_short_name(Tpp tp) -> std::string
+auto tp_name_short(Tpp tp) -> std::string
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
     tp_err(tp, "no thing template pointer");
     return "<noshortname>";
   }
-  if (tp->short_name.empty()) {
+  if (tp->name_short.empty()) {
     return tp_name(tp);
   }
-  return tp->short_name;
+  return tp->name_short;
 }
 
-void tp_long_name_set(Tpp tp, const std::string &val)
+void tp_name_long_set(Tpp tp, const std::string &val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
     tp_err(tp, "no thing template pointer");
     return;
   }
-  tp->long_name = std::string(val);
+  tp->name_long = std::string(val);
 }
 
-auto tp_long_name(Tpp tp) -> std::string
+auto tp_name_long(Tpp tp) -> std::string
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
     tp_err(tp, "no thing template pointer");
     return "<nolongname>";
   }
-  if (tp->long_name.empty()) {
-    return tp_short_name(tp);
+  if (tp->name_long.empty()) {
+    return tp_name_short(tp);
   }
-  return tp->long_name;
+  return tp->name_long;
 }
 
-void tp_apostrophize_name_set(Tpp tp, const std::string &val)
+void tp_name_apostrophize_set(Tpp tp, const std::string &val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
     tp_err(tp, "no thing template pointer");
     return;
   }
-  tp->apostrophize_name = std::string(val);
+  tp->name_apostrophize = std::string(val);
 }
 
-auto tp_apostrophize_name(Tpp tp) -> std::string
+auto tp_name_apostrophize(Tpp tp) -> std::string
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
     tp_err(tp, "no thing template pointer");
     return "<noapostrophizename>";
   }
-  if (tp->apostrophize_name.empty()) {
-    return tp_long_name(tp);
+  if (tp->name_apostrophize.empty()) {
+    return tp_name_long(tp);
   }
-  return tp->apostrophize_name;
+  return tp->name_apostrophize;
 }
 
-void tp_pluralize_name_set(Tpp tp, const std::string &val)
+void tp_name_a_or_an_set(Tpp tp, const std::string &val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
     tp_err(tp, "no thing template pointer");
     return;
   }
-  tp->pluralize_name = std::string(val);
+  tp->name_a_or_an = std::string(val);
 }
 
-auto tp_pluralize_name(Tpp tp) -> std::string
+auto tp_name_a_or_an(Tpp tp) -> std::string
+{
+  TRACE();
+  if (tp == nullptr) [[unlikely]] {
+    tp_err(tp, "no thing template pointer");
+    return "<noa_or_anname>";
+  }
+  if (tp->name_a_or_an.empty()) {
+    return tp_name_long(tp);
+  }
+  return tp->name_a_or_an;
+}
+
+void tp_name_pluralize_set(Tpp tp, const std::string &val)
+{
+  TRACE();
+  if (tp == nullptr) [[unlikely]] {
+    tp_err(tp, "no thing template pointer");
+    return;
+  }
+  tp->name_pluralize = std::string(val);
+}
+
+auto tp_name_pluralize(Tpp tp) -> std::string
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
     tp_err(tp, "no thing template pointer");
     return "<nopluralizename>";
   }
-  if (tp->pluralize_name.empty()) {
-    return tp_long_name(tp);
+  if (tp->name_pluralize.empty()) {
+    return tp_name_long(tp);
   }
-  return tp->pluralize_name;
+  return tp->name_pluralize;
 }
 
-void tp_real_name_set(Tpp tp, const std::string &val)
+void tp_name_real_set(Tpp tp, const std::string &val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
     tp_err(tp, "no thing template pointer");
     return;
   }
-  tp->real_name = std::string(val);
+  tp->name_real = std::string(val);
 }
 
-auto tp_real_name(Tpp tp) -> std::string
+auto tp_name_real(Tpp tp) -> std::string
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
     tp_err(tp, "no thing template pointer");
     return "<norealname>";
   }
-  if (tp->real_name.empty()) {
-    return tp_long_name(tp);
+  if (tp->name_real.empty()) {
+    return tp_name_long(tp);
   }
-  return tp->real_name;
+  return tp->name_real;
 }
 
 void tp_light_color_set(Tpp tp, const std::string &val)

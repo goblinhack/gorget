@@ -452,7 +452,6 @@ ENUM_DEF_H(THING_DIR_ENUM, ThingDir)
 class Tp;
 
 [[nodiscard]] auto string2tp(const char **s, int *len = nullptr) -> Tpp;
-[[nodiscard]] auto tp_apostrophize_name(Tpp tp) -> std::string;
 [[nodiscard]] auto tp_chance_fail(Tpp tp, ThingChanceType val) -> bool;
 [[nodiscard]] auto tp_chance_success(Tpp tp, ThingChanceType val) -> bool;
 [[nodiscard]] auto tp_chance(Tpp tp, ThingChanceType val) -> int;
@@ -462,13 +461,20 @@ class Tp;
 [[nodiscard]] auto tp_find(TpId id) -> Tpp;
 [[nodiscard]] auto tp_first_tile(class Tp *tp, ThingAnim val) -> Tilep;
 [[nodiscard]] auto tp_first(ThingFlag f) -> Tpp;
+[[nodiscard]] auto tp_flag(Tpp tp, ThingFlag f) -> int;
+[[nodiscard]] auto tp_health_get(Tpp tp) -> int;
+[[nodiscard]] auto tp_health_max_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_id_get(Tpp tp) -> TpId;
 [[nodiscard]] auto tp_init() -> bool;
 [[nodiscard]] auto tp_light_color(Tpp tp) -> color;
 [[nodiscard]] auto tp_load(const std::string &val) -> Tpp;
-[[nodiscard]] auto tp_long_name(Tpp tp) -> std::string;
+[[nodiscard]] auto tp_name_apostrophize(Tpp tp) -> std::string;
+[[nodiscard]] auto tp_name_a_or_an(Tpp tp) -> std::string;
+[[nodiscard]] auto tp_name_long(Tpp tp) -> std::string;
+[[nodiscard]] auto tp_name_pluralize(Tpp tp) -> std::string;
+[[nodiscard]] auto tp_name_real(Tpp tp) -> std::string;
+[[nodiscard]] auto tp_name_short(Tpp tp) -> std::string;
 [[nodiscard]] auto tp_name(Tpp tp) -> std::string;
-[[nodiscard]] auto tp_pluralize_name(Tpp tp) -> std::string;
 [[nodiscard]] auto tp_random_dungeon_entrance() -> Tpp;
 [[nodiscard]] auto tp_random_exit() -> Tpp;
 [[nodiscard]] auto tp_random_key() -> Tpp;
@@ -476,60 +482,46 @@ class Tp;
 [[nodiscard]] auto tp_random_player() -> Tpp;
 [[nodiscard]] auto tp_random_wall() -> Tpp;
 [[nodiscard]] auto tp_random(ThingFlag f) -> Tpp;
-[[nodiscard]] auto tp_real_name(Tpp tp) -> std::string;
-[[nodiscard]] auto tp_short_name(Tpp tp) -> std::string;
+[[nodiscard]] auto tp_speed_get(Tpp tp) -> int;
+[[nodiscard]] auto tp_temperature_burns_at_get(Tpp tp) -> int;
+[[nodiscard]] auto tp_temperature_damage_at_get(Tpp tp) -> int;
+[[nodiscard]] auto tp_temperature_initial_get(Tpp tp) -> int;
+[[nodiscard]] auto tp_temperature_melts_at_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_tiles_get(Tpp tp, ThingAnim val, int index) -> Tilep;
 [[nodiscard]] auto tp_tiles_size(Tpp tp, ThingAnim val) -> int;
 [[nodiscard]] auto tp_variant(ThingFlag f, int /*variant*/) -> Tpp;
-
-void tp_apostrophize_name_set(Tpp tp, const std::string &val);
-void tp_chance_set(Tpp tp, ThingChanceType e, const std::string &val);
-void tp_damage_set(Tpp tp, ThingEventType e, const std::string &val);
-void tp_light_color_apply(Tpp tp);
-void tp_light_color_set(Tpp tp, const std::string &val);
-void tp_long_name_set(Tpp tp, const std::string &val);
-void tp_pluralize_name_set(Tpp tp, const std::string &val);
-void tp_real_name_set(Tpp tp, const std::string &val);
-void tp_short_name_set(Tpp tp, const std::string &val);
-void tp_tiles_push_back(Tpp tp, ThingAnim val, Tilep tile_p);
-
-void tp_con(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
-void tp_con_(Tpp tp, const char *fmt, va_list args); // compile error without
-void tp_dbg_(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
-void tp_die(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
-void tp_die_(Tpp tp, const char *fmt, va_list args); // compile error without
-void tp_err(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
-void tp_err_(Tpp tp, const char *fmt, va_list args); // compile error without
-void tp_log(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
-void tp_log_(Tpp tp, const char *fmt, va_list args); // compile error without
-                                                     //
-void tp_fini();
-void tp_get_id(const char *, int *id);
-
-[[nodiscard]] auto tp_flag(Tpp tp, ThingFlag f) -> int;
-void               tp_flag_set(Tpp tp, ThingFlag f, int val = 1);
-
-void               tp_z_depth_set(Tpp tp, MapZDepth val);
 [[nodiscard]] auto tp_z_depth_get(Tpp tp) -> MapZDepth;
 
-void               tp_speed_set(Tpp tp, int val);
-[[nodiscard]] auto tp_speed_get(Tpp tp) -> int;
-
-void               tp_health_set(Tpp tp, const std::string &val);
-[[nodiscard]] auto tp_health_get(Tpp tp) -> int;
-[[nodiscard]] auto tp_health_max_get(Tpp tp) -> int;
-
-void               tp_temperature_initial_set(Tpp tp, int val);
-[[nodiscard]] auto tp_temperature_initial_get(Tpp tp) -> int;
-
-void               tp_temperature_burns_at_set(Tpp tp, int val);
-[[nodiscard]] auto tp_temperature_burns_at_get(Tpp tp) -> int;
-
-void               tp_temperature_melts_at_set(Tpp tp, int val);
-[[nodiscard]] auto tp_temperature_melts_at_get(Tpp tp) -> int;
-
-void               tp_temperature_damage_at_set(Tpp tp, int val);
-[[nodiscard]] auto tp_temperature_damage_at_get(Tpp tp) -> int;
+void tp_flag_set(Tpp tp, ThingFlag f, int val = 1);
+void tp_health_set(Tpp tp, const std::string &val);
+void tp_speed_set(Tpp tp, int val);
+void tp_temperature_burns_at_set(Tpp tp, int val);
+void tp_temperature_damage_at_set(Tpp tp, int val);
+void tp_temperature_initial_set(Tpp tp, int val);
+void tp_temperature_melts_at_set(Tpp tp, int val);
+void tp_z_depth_set(Tpp tp, MapZDepth val);
+void tp_chance_set(Tpp tp, ThingChanceType e, const std::string &val);
+void tp_con_(Tpp tp, const char *fmt, va_list args); // compile error without
+void tp_con(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void tp_damage_set(Tpp tp, ThingEventType e, const std::string &val);
+void tp_dbg_(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void tp_die_(Tpp tp, const char *fmt, va_list args); // compile error without
+void tp_die(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void tp_err_(Tpp tp, const char *fmt, va_list args); // compile error without
+void tp_err(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void tp_fini();
+void tp_get_id(const char *, int *id);
+void tp_light_color_apply(Tpp tp);
+void tp_light_color_set(Tpp tp, const std::string &val);
+void tp_log_(Tpp tp, const char *fmt, va_list args); // compile error without
+void tp_log(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void tp_name_apostrophize_set(Tpp tp, const std::string &val);
+void tp_name_a_or_an_set(Tpp tp, const std::string &val);
+void tp_name_long_set(Tpp tp, const std::string &val);
+void tp_name_pluralize_set(Tpp tp, const std::string &val);
+void tp_name_real_set(Tpp tp, const std::string &val);
+void tp_name_short_set(Tpp tp, const std::string &val);
+void tp_tiles_push_back(Tpp tp, ThingAnim val, Tilep tile_p);
 
 //
 // Heat capacity indicates the amount of heat energy required to

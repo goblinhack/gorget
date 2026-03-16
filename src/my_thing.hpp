@@ -52,8 +52,9 @@ enum {
 enum {
   TEXT_INCLUDE_OWNER = 1,
   TEXT_EXCLUDE_DEATH = 2,
-  TEXT_APOSTROPHIZE  = 4,
-  TEXT_PLURALIZE     = 8,
+  TEXT_A_OR_AN       = 4,
+  TEXT_APOSTROPHIZE  = 8,
+  TEXT_PLURALIZE     = 16,
 };
 
 using ThingTextFlags = uint8_t;
@@ -525,7 +526,6 @@ using Thing = struct Thing {
 
 // begin sort marker1 {
 [[nodiscard]] auto immediate_owner(Gamep g, Levelsp v, Levelp l, Thingp t) -> Thingp;
-[[nodiscard]] bool thing_attack_at(Gamep g, Levelsp v, Levelp l, Thingp me, const spoint &attack_at);
 [[nodiscard]] auto monst_state_to_string(MonstState state) -> std::string;
 [[nodiscard]] auto monst_state(Gamep g, Levelsp v, Levelp l, Thingp me) -> MonstState;
 [[nodiscard]] auto player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, const spoint &to) -> bool;
@@ -862,9 +862,13 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_move_to_next(Gamep, Levelsp, Levelp, Thingp) -> bool;
 [[nodiscard]] auto thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool;
 [[nodiscard]] auto thing_moving_from(Thingp t) -> spoint;
+[[nodiscard]] auto thing_name_a_or_an(Thingp t) -> std::string;
+[[nodiscard]] auto thing_name_a_or_an(Thingp, ThingTextFlags) -> std::string;
+[[nodiscard]] auto thing_name_apostrophize(Thingp t) -> std::string;
 [[nodiscard]] auto thing_name_apostrophize(Thingp, ThingTextFlags) -> std::string;
 [[nodiscard]] auto thing_name_long_the(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags flags = 0) -> std::string;
 [[nodiscard]] auto thing_name_long(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags flags = 0) -> std::string;
+[[nodiscard]] auto thing_name_pluralize(Thingp t) -> std::string;
 [[nodiscard]] auto thing_name_pluralize(Thingp, ThingTextFlags) -> std::string;
 [[nodiscard]] auto thing_name_short_the(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags flags = 0) -> std::string;
 [[nodiscard]] auto thing_name_short(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags flags = 0) -> std::string;
@@ -994,6 +998,8 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_variant_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_variant(Thingp t) -> int;
 [[nodiscard]] auto thing_vision_blocker(Gamep g, Levelsp v, Levelp l, Thingp it) -> bool;
+[[nodiscard]] auto thing_vision_blocker(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it) -> bool;
+[[nodiscard]] auto thing_vision_blocker_for_me_at(Gamep g, Levelsp v, Levelp l, Thingp me, const spoint &at) -> bool;
 [[nodiscard]] auto thing_vision_can_see_tile(Gamep g, Levelsp v, Levelp l, Thingp t, spoint p) -> bool;
 [[nodiscard]] auto thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp me, spoint to) -> bool;
 [[nodiscard]] auto thing_weight_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
@@ -1003,6 +1009,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto to_string(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string;
 [[nodiscard]] auto top_owner(Gamep g, Levelsp v, Levelp l, Thingp t) -> Thingp;
 [[nodiscard]] auto wid_get_thing_context(Gamep g, Levelsp v, Widp w, int which) -> Thingp;
+[[nodiscard]] bool thing_attack_at(Gamep g, Levelsp v, Levelp l, Thingp me, const spoint &attack_at);
 // end sort marker1 }
 
 // begin sort marker2 {

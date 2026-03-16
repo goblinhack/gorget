@@ -40,7 +40,11 @@ auto tp_load_trap() -> bool
   tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_trap);
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
-  tp_long_name_set(tp, name);
+  tp_name_a_or_an_set(tp, "a trap");
+  tp_name_apostrophize_set(tp, "traps'");
+  tp_name_long_set(tp, "trap");
+  tp_name_pluralize_set(tp, "traps");
+  tp_name_short_set(tp, "trap");
   tp_weight_set(tp, WEIGHT_FEATHER); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   // end sort marker1 }

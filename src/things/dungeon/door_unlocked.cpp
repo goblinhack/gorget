@@ -190,7 +190,11 @@ auto tp_load_door_unlocked() -> bool
   tp_flag_set(tp, is_wood);
   tp_health_set(tp, "200");
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
-  tp_long_name_set(tp, name);
+  tp_name_a_or_an_set(tp, "an unlocked door");
+  tp_name_apostrophize_set(tp, "unlocked doors'");
+  tp_name_long_set(tp, "unlocked door");
+  tp_name_pluralize_set(tp, "unlocked doors");
+  tp_name_short_set(tp, "unlocked door");
   tp_priority_set(tp, THING_PRIORITY_OBJECT);
   tp_temperature_burns_at_set(tp, 100);  // celsius
   tp_temperature_damage_at_set(tp, 100); // celsius

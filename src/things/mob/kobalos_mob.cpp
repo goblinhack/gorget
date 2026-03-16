@@ -57,7 +57,6 @@ auto tp_load_kobalos_mob() -> bool
   thing_detail_set(tp, tp_kobalos_mob_detail_get);
   thing_on_death_set(tp, tp_kobalos_mob_on_death);
   thing_on_tick_begin_set(tp, tp_kobalos_mob_tick_begin);
-  tp_apostrophize_name_set(tp, "kobalos' mobs");
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
@@ -88,11 +87,13 @@ auto tp_load_kobalos_mob() -> bool
   tp_flag_set(tp, is_wait_on_dead_anim);
   tp_health_set(tp, "1d3+3");
   tp_light_color_set(tp, "green");
-  tp_long_name_set(tp, "kobalos mob");
   tp_minion_max_set(tp, 5);
-  tp_pluralize_name_set(tp, "kobalosy mobs");
+  tp_name_a_or_an_set(tp, "a kobalos mob");
+  tp_name_apostrophize_set(tp, "kobalos mob'");
+  tp_name_long_set(tp, "kobalos mob");
+  tp_name_pluralize_set(tp, "kobalos mobs");
+  tp_name_short_set(tp, "kobalos mob");
   tp_priority_set(tp, THING_PRIORITY_MOB);
-  tp_short_name_set(tp, "kobalos den");
   tp_speed_set(tp, 100);
   tp_temperature_burns_at_set(tp, 100);  // celsius
   tp_temperature_damage_at_set(tp, 100); // celsius

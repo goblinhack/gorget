@@ -48,7 +48,11 @@ auto tp_load_exit() -> bool
   tp_flag_set(tp, is_stone);
   tp_flag_set(tp, is_submergible);
   tp_flag_set(tp, is_teleport_blocked);
-  tp_long_name_set(tp, name);
+  tp_name_a_or_an_set(tp, "an exit");
+  tp_name_apostrophize_set(tp, "exits'");
+  tp_name_long_set(tp, "exit");
+  tp_name_pluralize_set(tp, "exits");
+  tp_name_short_set(tp, "exit");
   tp_weight_set(tp, WEIGHT_VHEAVY); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   // end sort marker1 }

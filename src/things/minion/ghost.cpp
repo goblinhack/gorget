@@ -47,6 +47,7 @@ auto tp_load_ghost() -> bool
   thing_assess_tile_set(tp, tp_ghost_assess_tile);
   thing_description_set(tp, tp_ghost_description_get);
   thing_detail_set(tp, tp_ghost_detail_get);
+  tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d1");
   tp_distance_minion_from_mob_max_set(tp, 6);
   tp_distance_vision_set(tp, 12);
   tp_flag_set(tp, is_able_to_lunge);
@@ -77,7 +78,11 @@ auto tp_load_ghost() -> bool
   tp_health_set(tp, "1");
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_light_color_set(tp, "cyan");
-  tp_long_name_set(tp, name);
+  tp_name_a_or_an_set(tp, "a ghost");
+  tp_name_apostrophize_set(tp, "ghosts'");
+  tp_name_long_set(tp, "ghost");
+  tp_name_pluralize_set(tp, "ghosts");
+  tp_name_short_set(tp, "ghost");
   tp_priority_set(tp, THING_PRIORITY_MONST);
   tp_speed_set(tp, 100);
   tp_temperature_initial_set(tp, -10); // celsius

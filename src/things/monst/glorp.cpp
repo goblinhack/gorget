@@ -62,6 +62,7 @@ auto tp_load_glorp() -> bool
   thing_detail_set(tp, tp_glorp_detail_get);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // roll max to continue burning
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // roll max to continue burning
+  tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d6");
   tp_distance_jump_set(tp, 3);
   tp_distance_vision_set(tp, 10);
   tp_flag_set(tp, is_able_to_crush_grass);
@@ -95,8 +96,12 @@ auto tp_load_glorp() -> bool
   tp_health_set(tp, "1d10+4");
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_light_color_set(tp, "green");
-  tp_long_name_set(tp, "glorp");
   tp_monst_group_add(tp, MONST_GROUP_HARD);
+  tp_name_a_or_an_set(tp, "a glorp");
+  tp_name_apostrophize_set(tp, "glorps'");
+  tp_name_long_set(tp, "glorp");
+  tp_name_pluralize_set(tp, "glorps");
+  tp_name_short_set(tp, "glorp");
   tp_priority_set(tp, THING_PRIORITY_MONST);
   tp_speed_set(tp, 50);
   tp_temperature_burns_at_set(tp, 30);  // celsius

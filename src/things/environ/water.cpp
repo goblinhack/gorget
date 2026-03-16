@@ -40,9 +40,12 @@ auto tp_load_water() -> bool
   tp_flag_set(tp, is_tiled);
   tp_flag_set(tp, is_water);
   tp_health_set(tp, "1d10"); // to allow it to be damaged by fire
-  tp_long_name_set(tp, name);
+  tp_name_a_or_an_set(tp, "shallow water");
+  tp_name_apostrophize_set(tp, "shallow waters'");
+  tp_name_long_set(tp, "shallow water");
+  tp_name_pluralize_set(tp, "shallow waters");
+  tp_name_short_set(tp, "shallow water");
   tp_priority_set(tp, THING_PRIORITY_WATER);
-  tp_short_name_set(tp, "shallow water");
   tp_temperature_burns_at_set(tp, 100);  // celsius
   tp_temperature_damage_at_set(tp, 100); // celsius
   tp_temperature_initial_set(tp, 10);    // celsius

@@ -51,7 +51,11 @@ auto tp_load_pillar() -> bool
   tp_is_immunity_add(tp, THING_EVENT_HEAT_DAMAGE);
   tp_is_immunity_add(tp, THING_EVENT_MELEE_DAMAGE);
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
-  tp_long_name_set(tp, name);
+  tp_name_a_or_an_set(tp, "a pillar");
+  tp_name_apostrophize_set(tp, "pillars'");
+  tp_name_long_set(tp, "stone pillar");
+  tp_name_pluralize_set(tp, "pillars");
+  tp_name_short_set(tp, "pillar");
   tp_weight_set(tp, WEIGHT_VVVHEAVY); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   // end sort marker1 }

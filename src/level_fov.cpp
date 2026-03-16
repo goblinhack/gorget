@@ -118,9 +118,9 @@ static void level_fov_do(const short       distance_from_origin, // Polar distan
     //
     // Treat player and monster blocking differently so the player can use cover
     //
-    auto light_blocker = level_light_blocker_at_cached(ctx.g, ctx.v, ctx.l, p);
+    auto vision_blocked = thing_vision_blocker_for_me_at(ctx.g, ctx.v, ctx.l, ctx.me, p);
 
-    if ((angle * angle) + (distance_from_origin * distance_from_origin) <= radius_squared && (ctx.light_walls || ! light_blocker)) {
+    if ((angle * angle) + (distance_from_origin * distance_from_origin) <= radius_squared && (ctx.light_walls || ! vision_blocked)) {
 
       if (ctx.can_see_tile != nullptr) {
         //
@@ -153,11 +153,11 @@ static void level_fov_do(const short       distance_from_origin, // Polar distan
       }
     }
 
-    if (prev_tile_blocked && ! light_blocker) { // Wall -> floor.
-      view_slope_high = prev_tile_slope_low;    // Reduce the view size.
+    if (prev_tile_blocked && ! vision_blocked) { // Wall -> floor.
+      view_slope_high = prev_tile_slope_low;     // Reduce the view size.
     }
 
-    if (! prev_tile_blocked && light_blocker) { // Floor -> wall.
+    if (! prev_tile_blocked && vision_blocked) { // Floor -> wall.
       //
       // Get the last sequence of floors as a view and recurse into them.
       //
@@ -168,7 +168,7 @@ static void level_fov_do(const short       distance_from_origin, // Polar distan
                    ctx);
     }
 
-    prev_tile_blocked = light_blocker;
+    prev_tile_blocked = vision_blocked;
   }
 
   if (! prev_tile_blocked) {

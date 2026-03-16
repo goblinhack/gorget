@@ -51,7 +51,11 @@ auto tp_load_teleport() -> bool
   tp_flag_set(tp, is_teleport);
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_light_color_set(tp, "red");
-  tp_long_name_set(tp, name);
+  tp_name_a_or_an_set(tp, "a teleport");
+  tp_name_apostrophize_set(tp, "teleports'");
+  tp_name_long_set(tp, "teleport");
+  tp_name_pluralize_set(tp, "teleports");
+  tp_name_short_set(tp, "teleport");
   tp_weight_set(tp, WEIGHT_VVHEAVY); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   // end sort marker1 }

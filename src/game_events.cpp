@@ -208,8 +208,9 @@ auto game_event_wait(Gamep g) -> bool
     return false;
   }
 
-  TOPCON("You wait...");
-  level_tick_begin_requested(g, v, l, "player waiting");
+  if (level_tick_begin_requested(g, v, l, "player waiting")) {
+    TOPCON("You wait...");
+  }
 
   return true;
 }
@@ -342,6 +343,10 @@ static auto game_event_jump(Gamep g) -> bool
     player_state_change(g, v, l, PLAYER_STATE_PATH_REQUESTED);
     level_cursor_copy_mouse_path_to_player(g, v, l);
     return player_check_if_target_needs_move_confirm(g, v, l, v->cursor_at);
+  }
+
+  if (level_tick_is_in_progress(g, v, l) || level_tick_begin_is_requested(g, v, l)) {
+    return false;
   }
 
   //

@@ -750,7 +750,6 @@ void level_select_rightbar_show_contents(Gamep g, Levelsp v, Levelp l, WidPopup 
 void level_select_test(Gamep g);
 void level_select_update_grid_tiles(Gamep g, Levelsp v);
 void level_thing_pair_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp a, Thingp b);
-void level_tick_begin_requested(Gamep g, Levelsp v, Levelp l, const char *why);
 void level_tick_begin_temperature(Gamep g, Levelsp v, Levelp l);
 void level_tick_chasm(Gamep g, Levelsp v, Levelp l);
 void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l);
@@ -827,6 +826,8 @@ using LevelType = enum LevelType_ {
 
 // begin sort marker3 {
 [[nodiscard]] auto level_is_able_to_collect_items(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
+[[nodiscard]] bool level_tick_begin_requested(Gamep g, Levelsp v, Levelp l, const char *why);
+[[nodiscard]] bool level_tick_begin_is_requested(Gamep g, Levelsp v, Levelp l);
 [[nodiscard]] auto level_is_able_to_collect_keys(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_able_to_crush_grass(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_able_to_fall_repeatedly(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;

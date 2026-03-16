@@ -436,17 +436,40 @@ static void level_tick_idle(Gamep g, Levelsp v, Levelp l)
   }
 }
 
-void level_tick_begin_requested(Gamep g, Levelsp v, Levelp l, const char *why)
+bool level_tick_begin_requested(Gamep g, Levelsp v, Levelp l, const char *why)
 {
   TRACE();
 
-  level_log(g, v, l, "Tick %u: requested new tick: %s", v->tick, why);
-  TRACE_INDENT();
+  //
+  // If we've already requested a tick, then indicate to the caller.
+  //
+  bool ret = true;
 
   FOR_ALL_LEVELS(g, v, iter)
   {
-    TRACE();
-    iter->tick_begin_requested = true;
+    level_log(g, v, iter, "tick_begin_requested %d is_tick_required %d", iter->tick_begin_requested, iter->is_tick_required);
+  }
+
+  FOR_ALL_TICKING_LEVELS(g, v, iter)
+  {
+    if (iter->tick_begin_requested) {
+      level_log(g, v, iter, "Tick already requested for this level");
+      ret = false;
+    }
+  }
+
+  if (ret) {
+    level_log(g, v, l, "Tick %u: requested new tick: %s", v->tick, why);
+  } else {
+    level_log(g, v, l, "Tick %u: already requested, ignore: %s", v->tick, why);
+  }
+
+  FOR_ALL_TICKING_LEVELS(g, v, iter)
+  {
+    if (! iter->tick_begin_requested) {
+      iter->tick_begin_requested = true;
+      level_log(g, v, iter, "Tick requested for this level");
+    }
   }
 
   v->requested_fire       = false;
@@ -454,6 +477,22 @@ void level_tick_begin_requested(Gamep g, Levelsp v, Levelp l, const char *why)
   v->requested_move_down  = false;
   v->requested_move_left  = false;
   v->requested_move_right = false;
+
+  return ret;
+}
+
+bool level_tick_begin_is_requested(Gamep g, Levelsp v, Levelp l)
+{
+  TRACE();
+
+  FOR_ALL_TICKING_LEVELS(g, v, iter)
+  {
+    if (iter->tick_begin_requested) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 static void level_tick_end(Gamep g, Levelsp v, Levelp l)
@@ -600,7 +639,7 @@ static auto level_tick_process_pending_request(Gamep g, Levelsp v, Levelp curren
     //
     iter->tick_begin_requested = false;
 
-    level_dbg(g, v, current_level, "Tick %u: requested by level %u", v->tick, iter->level_num);
+    level_dbg(g, v, iter, "Tick %u: requested by level %u", v->tick, iter->level_num);
 
     //
     // If this is the first level requesting a tick, reset the fram counters and move the

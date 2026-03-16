@@ -59,6 +59,7 @@ auto tp_load_kobalos() -> bool
   thing_detail_set(tp, tp_kobalos_detail_get);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6"); // roll max to continue burning
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // roll max to continue burning
+  tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d2");
   tp_distance_minion_from_mob_max_set(tp, 20);
   tp_distance_vision_set(tp, 10);
   tp_flag_set(tp, is_able_to_crush_grass);
@@ -91,7 +92,11 @@ auto tp_load_kobalos() -> bool
   tp_flag_set(tp, is_tickable);
   tp_health_set(tp, "1d4");
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
-  tp_long_name_set(tp, name);
+  tp_name_a_or_an_set(tp, "a kobalos");
+  tp_name_apostrophize_set(tp, "kobalos'");
+  tp_name_long_set(tp, "kobalos");
+  tp_name_pluralize_set(tp, "kobalo");
+  tp_name_short_set(tp, "kobalos");
   tp_priority_set(tp, THING_PRIORITY_MONST);
   tp_speed_set(tp, 100);
   tp_temperature_burns_at_set(tp, 50);  // celsius

@@ -267,7 +267,7 @@ void thing_fall_end_check(Gamep g, Levelsp v, Levelp l, Thingp t)
       if (level_is_chasm(g, v, t_level, thing_at(t)) != nullptr) {
         THING_DBG(t, "fell again");
         TRACE_INDENT();
-        level_tick_begin_requested(g, v, t_level, "player fell again");
+        (void) level_tick_begin_requested(g, v, t_level, "player fell again");
       }
 
       //
@@ -276,7 +276,7 @@ void thing_fall_end_check(Gamep g, Levelsp v, Levelp l, Thingp t)
       if (level_is_lava(g, v, t_level, thing_at(t)) != nullptr) {
         THING_DBG(t, "fell into lava");
         TRACE_INDENT();
-        level_tick_begin_requested(g, v, t_level, "player fell into lava");
+        (void) level_tick_begin_requested(g, v, t_level, "player fell into lava");
       }
     }
   }

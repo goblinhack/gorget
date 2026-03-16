@@ -126,7 +126,11 @@ auto tp_load_barrel() -> bool
   tp_flag_set(tp, is_wood);
   tp_health_set(tp, "1");
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
-  tp_long_name_set(tp, name);
+  tp_name_a_or_an_set(tp, "a barrel");
+  tp_name_apostrophize_set(tp, "barrels'");
+  tp_name_long_set(tp, "barrel");
+  tp_name_pluralize_set(tp, "barrels");
+  tp_name_short_set(tp, "barrel");
   tp_priority_set(tp, THING_PRIORITY_OBJECT);
   tp_temperature_burns_at_set(tp, 50);  // celsius
   tp_temperature_damage_at_set(tp, 50); // celsius
