@@ -30,6 +30,8 @@ auto templates_init() -> bool
   if (!tp_load_door_locked()) { return false; }
   if (!tp_load_door_secret()) { return false; }
   if (!tp_load_door_unlocked()) { return false; }
+  if (!tp_load_effect_attack()) { return false; }
+  if (!tp_load_effect_blood()) { return false; }
   if (!tp_load_entrance()) { return false; }
   if (!tp_load_exit()) { return false; }
   if (!tp_load_explosion()) { return false; }

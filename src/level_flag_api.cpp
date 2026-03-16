@@ -1199,22 +1199,22 @@ auto level_is_unused56(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp
   return level_flag(g, v, l, is_unused56, p);
 }
 
-auto level_is_unused57(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp
+auto level_is_effect(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused57, p);
+  return level_flag(g, v, l, is_effect, p);
 }
 
-auto level_is_unused58(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp
+auto level_is_effect_attack(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused58, p);
+  return level_flag(g, v, l, is_effect_attack, p);
 }
 
-auto level_is_unused59(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp
+auto level_is_effect_blood(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused59, p);
+  return level_flag(g, v, l, is_effect_blood, p);
 }
 
 auto level_is_unused6(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp

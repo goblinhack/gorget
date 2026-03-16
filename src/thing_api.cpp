@@ -2428,7 +2428,7 @@ auto thing_is_unused56(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused56) != 0;
 }
 
-auto thing_is_unused57(Thingp t) -> bool
+auto thing_is_effect(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2436,10 +2436,10 @@ auto thing_is_unused57(Thingp t) -> bool
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused57) != 0;
+  return tp_flag(thing_tp(t), is_effect) != 0;
 }
 
-auto thing_is_unused58(Thingp t) -> bool
+auto thing_is_effect_attack(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2447,10 +2447,10 @@ auto thing_is_unused58(Thingp t) -> bool
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused58) != 0;
+  return tp_flag(thing_tp(t), is_effect_attack) != 0;
 }
 
-auto thing_is_unused59(Thingp t) -> bool
+auto thing_is_effect_blood(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2458,7 +2458,7 @@ auto thing_is_unused59(Thingp t) -> bool
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused59) != 0;
+  return tp_flag(thing_tp(t), is_effect_blood) != 0;
 }
 
 auto thing_is_hit_when_dead(Thingp t) -> bool

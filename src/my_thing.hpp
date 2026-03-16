@@ -659,6 +659,9 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_door_secret(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_door_unlocked(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_dungeon_entrance(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_effect_attack(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_effect_blood(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_effect(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_entrance(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_ethereal(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_exit(Thingp t) -> bool;
@@ -812,9 +815,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused54(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused55(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused56(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused57(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused58(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused59(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused6(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused63(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused7(Thingp t) -> bool;

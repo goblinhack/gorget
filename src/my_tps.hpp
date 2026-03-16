@@ -28,6 +28,8 @@ auto tp_load_dirt() -> bool;
 auto tp_load_door_locked() -> bool;
 auto tp_load_door_secret() -> bool;
 auto tp_load_door_unlocked() -> bool;
+auto tp_load_effect_attack() -> bool;
+auto tp_load_effect_blood() -> bool;
 auto tp_load_entrance() -> bool;
 auto tp_load_exit() -> bool;
 auto tp_load_explosion() -> bool;

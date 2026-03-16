@@ -1199,22 +1199,22 @@ auto tp_is_unused56(Tpp tp) -> bool
   return tp_flag(tp, is_unused56) != 0;
 }
 
-auto tp_is_unused57(Tpp tp) -> bool
+auto tp_is_effect(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused57) != 0;
+  return tp_flag(tp, is_effect) != 0;
 }
 
-auto tp_is_unused58(Tpp tp) -> bool
+auto tp_is_effect_attack(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused58) != 0;
+  return tp_flag(tp, is_effect_attack) != 0;
 }
 
-auto tp_is_unused59(Tpp tp) -> bool
+auto tp_is_effect_blood(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused59) != 0;
+  return tp_flag(tp, is_effect_blood) != 0;
 }
 
 auto tp_is_unused6(Tpp tp) -> bool

@@ -188,9 +188,9 @@
       list_macro(is_unused54, "is_unused54"),                                       /* newline */                                          \
       list_macro(is_unused55, "is_unused55"),                                       /* newline */                                          \
       list_macro(is_unused56, "is_unused56"),                                       /* newline */                                          \
-      list_macro(is_unused57, "is_unused57"),                                       /* newline */                                          \
-      list_macro(is_unused58, "is_unused58"),                                       /* newline */                                          \
-      list_macro(is_unused59, "is_unused59"),                                       /* newline */                                          \
+      list_macro(is_effect, "is_effect"),                                           /* newline */                                          \
+      list_macro(is_effect_attack, "is_effect_attack"),                             /* newline */                                          \
+      list_macro(is_effect_blood, "is_effect_blood"),                               /* newline */                                          \
       list_macro(is_hit_when_dead, "is_hit_when_dead"),                             /* newline */                                          \
       list_macro(is_able_to_fire_projectiles, "is_able_to_fire_projectiles"),       /* newline */                                          \
       list_macro(is_blitzhound, "is_blitzhound"),                                   /* newline */                                          \
@@ -251,6 +251,7 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
       list_macro(MAP_Z_DEPTH_WALL, "wall"),                /* newline */                                                                   \
       list_macro(MAP_Z_DEPTH_PLAYER, "monsts"),            /* newline */                                                                   \
       list_macro(MAP_Z_DEPTH_FOLIAGE, "obscuring plants"), /* newline */                                                                   \
+      list_macro(MAP_Z_DEPTH_EFFECT, "effect"),            /* newline */                                                                   \
       list_macro(MAP_Z_DEPTH_PROJECTILE, "projectile"),    /* newline */                                                                   \
       list_macro(MAP_Z_DEPTH_GAS, "fire, smoke"),          /* newline */
 
@@ -750,6 +751,9 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup val);
 [[nodiscard]] auto tp_is_door_secret(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_door_unlocked(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_dungeon_entrance(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_effect_attack(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_effect_blood(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_effect(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_entrance(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_ethereal(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_exit(Tpp tp) -> bool;
@@ -893,9 +897,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup val);
 [[nodiscard]] auto tp_is_unused54(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused55(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused56(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused57(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused58(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused59(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused6(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused63(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused7(Tpp tp) -> bool;
