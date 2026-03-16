@@ -1187,16 +1187,16 @@ auto tp_is_unused54(Tpp tp) -> bool
   return tp_flag(tp, is_unused54) != 0;
 }
 
-auto tp_is_unused55(Tpp tp) -> bool
+auto tp_is_attackable_by_player(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused55) != 0;
+  return tp_flag(tp, is_attackable_by_player) != 0;
 }
 
-auto tp_is_unused56(Tpp tp) -> bool
+auto tp_is_attackable_by_monst(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused56) != 0;
+  return tp_flag(tp, is_attackable_by_monst) != 0;
 }
 
 auto tp_is_effect(Tpp tp) -> bool

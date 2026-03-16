@@ -186,8 +186,8 @@
       list_macro(is_unused52, "is_unused52"),                                       /* newline */                                          \
       list_macro(is_unused53, "is_unused53"),                                       /* newline */                                          \
       list_macro(is_unused54, "is_unused54"),                                       /* newline */                                          \
-      list_macro(is_unused55, "is_unused55"),                                       /* newline */                                          \
-      list_macro(is_unused56, "is_unused56"),                                       /* newline */                                          \
+      list_macro(is_attackable_by_player, "is_attackable_by_player"),               /* newline */                                          \
+      list_macro(is_attackable_by_monst, "is_attackable_by_monst"),                 /* newline */                                          \
       list_macro(is_effect, "is_effect"),                                           /* newline */                                          \
       list_macro(is_effect_attack, "is_effect_attack"),                             /* newline */                                          \
       list_macro(is_effect_blood, "is_effect_blood"),                               /* newline */                                          \
@@ -707,6 +707,8 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup val);
 [[nodiscard]] auto tp_is_animated_no_dir(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_animated_sync_first(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_animated(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_attackable_by_monst(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_attackable_by_player(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_barrel(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_blit_centered(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_blit_flush_per_line(Tpp tp) -> bool;
@@ -895,8 +897,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup val);
 [[nodiscard]] auto tp_is_unused52(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused53(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused54(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused55(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused56(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused6(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused63(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused7(Tpp tp) -> bool;

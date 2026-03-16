@@ -71,6 +71,7 @@ auto tp_load_mantisman() -> bool
   tp_flag_set(tp, is_able_to_see_180_degrees);
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
+  tp_flag_set(tp, is_attackable_by_player);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_burnable); // is capable of being burned by fire

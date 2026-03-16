@@ -1187,16 +1187,16 @@ auto level_is_unused54(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp
   return level_flag(g, v, l, is_unused54, p);
 }
 
-auto level_is_unused55(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp
+auto level_is_attackable_by_player(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused55, p);
+  return level_flag(g, v, l, is_attackable_by_player, p);
 }
 
-auto level_is_unused56(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp
+auto level_is_attackable_by_monst(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused56, p);
+  return level_flag(g, v, l, is_attackable_by_monst, p);
 }
 
 auto level_is_effect(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp

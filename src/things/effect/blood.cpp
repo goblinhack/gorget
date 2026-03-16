@@ -21,8 +21,8 @@ auto tp_load_effect_blood() -> bool
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_shown_in_chasms);
-  tp_flag_set(tp, is_effect);
   tp_flag_set(tp, is_effect_blood);
+  tp_flag_set(tp, is_effect);
   tp_flag_set(tp, is_removable_on_err);
   tp_flag_set(tp, is_submergible);
   tp_flag_set(tp, is_teleport_blocked);

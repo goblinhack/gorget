@@ -2406,7 +2406,7 @@ auto thing_is_unused54(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused54) != 0;
 }
 
-auto thing_is_unused55(Thingp t) -> bool
+auto thing_is_attackable_by_player(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2414,10 +2414,10 @@ auto thing_is_unused55(Thingp t) -> bool
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused55) != 0;
+  return tp_flag(thing_tp(t), is_attackable_by_player) != 0;
 }
 
-auto thing_is_unused56(Thingp t) -> bool
+auto thing_is_attackable_by_monst(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2425,7 +2425,7 @@ auto thing_is_unused56(Thingp t) -> bool
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused56) != 0;
+  return tp_flag(thing_tp(t), is_attackable_by_monst) != 0;
 }
 
 auto thing_is_effect(Thingp t) -> bool

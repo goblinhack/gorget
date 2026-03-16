@@ -845,6 +845,8 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_is_animated_no_dir(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_animated_sync_first(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_animated(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
+[[nodiscard]] auto level_is_attackable_by_monst(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
+[[nodiscard]] auto level_is_attackable_by_player(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_barrel(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_blit_centered(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_blit_flush_per_line(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
@@ -1033,8 +1035,6 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_is_unused52(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_unused53(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_unused54(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
-[[nodiscard]] auto level_is_unused55(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
-[[nodiscard]] auto level_is_unused56(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_unused6(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_unused63(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_is_unused7(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
@@ -1066,6 +1066,8 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_alive_is_animated_no_dir(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_animated_sync_first(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_animated(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
+[[nodiscard]] auto level_alive_is_attackable_by_monst(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
+[[nodiscard]] auto level_alive_is_attackable_by_player(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_barrel(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_blit_centered(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_blit_flush_per_line(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
@@ -1254,8 +1256,6 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_alive_is_unused52(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_unused53(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_unused54(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
-[[nodiscard]] auto level_alive_is_unused55(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
-[[nodiscard]] auto level_alive_is_unused56(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_unused6(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_unused63(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_unused7(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
@@ -1287,6 +1287,8 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_count_is_animated_no_dir(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_animated_sync_first(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_animated(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
+[[nodiscard]] auto level_count_is_attackable_by_monst(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
+[[nodiscard]] auto level_count_is_attackable_by_player(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_barrel(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_blit_centered(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_blit_flush_per_line(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
@@ -1475,8 +1477,6 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_count_is_unused52(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_unused53(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_unused54(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
-[[nodiscard]] auto level_count_is_unused55(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
-[[nodiscard]] auto level_count_is_unused56(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_unused6(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_unused63(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_unused7(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
@@ -1509,6 +1509,8 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_open_is_animated_no_dir(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_animated_sync_first(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_animated(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
+[[nodiscard]] auto level_open_is_attackable_by_monst(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
+[[nodiscard]] auto level_open_is_attackable_by_player(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_barrel(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_blit_centered(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_blit_flush_per_line(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
@@ -1697,8 +1699,6 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_open_is_unused52(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused53(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused54(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
-[[nodiscard]] auto level_open_is_unused55(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
-[[nodiscard]] auto level_open_is_unused56(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused6(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused63(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused7(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;

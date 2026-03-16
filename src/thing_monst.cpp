@@ -391,6 +391,9 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me)
         //
         if (thing_monst_choose_target(g, v, l, me)) {
           auto new_target = thing_target(me);
+          if (level_is_attackable_by_monst(g, v, l, new_target)) {
+            thing_topcon(me, "attack");
+          }
           if (old_target == new_target) {
             THING_DBG(me, "end of move: same target as before, do not continue");
           } else {
