@@ -45,7 +45,7 @@ auto thing_can_move_to_attempt(Gamep g, Levelsp v, Levelp l, Thingp me, spoint t
 //
 auto thing_can_move_to_ai(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool
 {
-  TRACE();
+  TRACE_DEBUG();
 
   FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, to)
   {
@@ -103,7 +103,7 @@ auto thing_can_move_to_ai(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) ->
 //
 auto thing_can_move_to_possible(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool
 {
-  TRACE();
+  TRACE_DEBUG();
 
   //
   // If a minion, check we're not moving too far from the mob

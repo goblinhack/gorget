@@ -416,6 +416,11 @@ static void level_tick_begin(Gamep g, Levelsp v, Levelp l)
   l->tick_in_progress     = true;
   l->tick_ended           = false;
 
+  //
+  // Update cached flags
+  //
+  level_update_flags(g, v, l);
+
   FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
   {
     if (thing_is_tickable(t)) {

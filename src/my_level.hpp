@@ -271,6 +271,10 @@ using Level = struct Level {
   //
   uint8_t player_has_seen_tile_cache[ MAP_WIDTH ][ MAP_HEIGHT ];
   //
+  // Level flag cache
+  //
+  uint8_t flag[ MAP_WIDTH ][ MAP_HEIGHT ][ THING_FLAG_ENUM_MAX ];
+  //
   // Original character map when the level was generated
   //
   char debug[ MAP_WIDTH ][ MAP_HEIGHT ];
@@ -653,6 +657,7 @@ enum {
 [[nodiscard]] auto level_find_all(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> std::vector< Thingp >;
 [[nodiscard]] auto level_find_all(Gamep g, Levelsp v, Levelp l, ThingFlag f) -> std::vector< Thingp >;
 [[nodiscard]] auto level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> Thingp;
+[[nodiscard]] auto level_flag_cached(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> bool;
 [[nodiscard]] auto level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp at) -> Thingp;
 [[nodiscard]] auto level_gen_is_room_entrance(Gamep g, class LevelGen *l, int x, int y) -> bool;
 [[nodiscard]] auto level_gen_is_room_entrance(Gamep g, class LevelGen *l, spoint at) -> bool;
@@ -717,6 +722,7 @@ void level_gen_stats_dump(Gamep g);
 void level_gen_test(Gamep g);
 void level_group_things(Gamep g, Levelsp v, Levelp l, Thingp t);
 void level_has_seen_update(Gamep g, Levelsp v, Levelp l);
+void level_update_flags(Gamep g, Levelsp v, Levelp l);
 void level_init(Gamep g, Levelsp v, Levelp l, LevelNum n);
 void level_is_completed_by_player_exiting(Gamep g, Levelsp v, Levelp l);
 void level_is_completed_by_player_falling(Gamep g, Levelsp v, Levelp l);
@@ -1043,6 +1049,229 @@ using LevelType = enum LevelType_ {
 // end sort marker3 }
 
 // begin sort marker4 {
+[[nodiscard]] auto level_is_able_to_collect_items_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_able_to_collect_keys_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_able_to_crush_grass_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_able_to_fall_repeatedly_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_able_to_fall_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_able_to_fire_projectiles_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_able_to_jump_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_able_to_lunge_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_able_to_move_diagonally_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_able_to_move_through_walls_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_able_to_open_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_able_to_see_180_degrees_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_able_to_see_360_degrees_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_able_to_shove_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_able_to_walk_through_walls_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_animated_can_hflip_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_animated_no_dir_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_animated_sync_first_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_animated_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_attackable_by_monst_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_attackable_by_player_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_barrel_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_blit_centered_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_blit_flush_per_line_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_blit_if_has_seen_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_blit_obscures_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_blit_on_ground_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_blit_outlined_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_blit_per_pixel_lighting_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_blit_shown_in_chasms_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_blit_shown_in_overlay_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_blit_square_outlined_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_blit_when_obscured_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_blitzhound_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_border_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_brazier_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_bridge_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_broken_on_death_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_burnable_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_chasm_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_collectable_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_collision_circle_large_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_collision_circle_small_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_collision_detection_enabled_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_collision_square_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_combustible_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_corpse_on_death_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_corridor_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_crushable_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_cursor_path_hazard_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_cursor_path_none_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_cursor_path_warning_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_cursor_path_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_cursor_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_damage_capped_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_dead_on_collision_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_dead_on_shoving_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_deep_water_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_described_cursor_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_dirt_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_dmap_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_door_locked_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_door_secret_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_door_unlocked_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_dungeon_entrance_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_effect_attack_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_effect_blood_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_effect_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_entrance_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_ethereal_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_exit_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_explosion_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_extinguished_on_death_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_fire_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_fireball_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_flesh_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_floating_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_floor_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_flying_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_foliage_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_gaseous_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_ghost_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_glass_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_gold_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_grass_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_grouped_thing_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_health_bar_shown_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_hit_when_dead_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_indestructible_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_insectoid_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_inventory_item_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_item_droppable_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_item_equipable_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_item_mergeable_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_item_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_key_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_kobalos_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_lava_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_level_across_icon_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_level_curr_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_level_down_icon_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_level_final_icon_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_level_next_icon_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_level_not_visited_icon_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_level_visited_icon_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_levitating_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_light_source_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_loggable_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_mantisman_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_meltable_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_metal_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_minion_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_mob_kill_minions_on_death_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_mob_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_mob1_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_mob2_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_monst_group_easy_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_monst_group_hard_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_monst_group_mob_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_monst_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_needs_move_confirm_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_obs_to_cursor_path_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_obs_to_explosion_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_obs_to_falling_onto_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_obs_to_fire_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_obs_to_jump_over_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_obs_to_jumping_onto_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_obs_to_jumping_out_of_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_obs_to_movement_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_obs_to_paths_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_obs_to_spawning_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_obs_to_teleporting_onto_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_obs_to_vision_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_obs_when_dead_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_openable_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_physics_explosion_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_physics_temperature_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_physics_water_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_pillar_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_plant_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_player_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_projectile_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_removable_on_err_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_removable_when_dead_on_err_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_rock_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_shovable_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_slime_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_smoke_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_steam_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_stone_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_submergible_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_teleport_blocked_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_teleport_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_tick_end_delay_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_tickable_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_tiled_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_trap_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_treasure_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_undead_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused1_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused10_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused11_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused12_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused13_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused14_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused15_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused16_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused17_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused18_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused19_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused2_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused20_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused21_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused22_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused23_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused24_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused25_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused26_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused27_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused28_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused29_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused3_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused30_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused31_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused32_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused33_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused34_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused35_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused36_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused37_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused38_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused39_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused4_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused40_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused41_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused42_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused43_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused44_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused45_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused46_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused47_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused48_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused49_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused5_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused50_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused51_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused52_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused53_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused54_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused6_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused63_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused7_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused8_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_unused9_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_wait_on_dead_anim_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_wall_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_water_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_is_wood_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
+[[nodiscard]] auto level_tick_begin_is_requested_cached(Gamep g, Levelsp v, Levelp l) -> bool;
+[[nodiscard]] auto level_tick_begin_requested_cached(Gamep g, Levelsp v, Levelp l, const char *why) -> bool;
+// end sort marker4 }
+
+// begin sort marker5 {
 [[nodiscard]] auto level_alive_is_able_to_collect_items(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_able_to_collect_keys(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_able_to_crush_grass(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
@@ -1261,9 +1490,9 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_alive_is_wall(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_water(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_wood(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
-// end sort marker4
+// end sort marker5 }
 
-// begin sort marker5
+// begin sort marker6 {
 [[nodiscard]] auto level_count_is_able_to_collect_items(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_able_to_collect_keys(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_able_to_crush_grass(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
@@ -1482,9 +1711,9 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_count_is_wall(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_water(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_wood(Gamep g, Levelsp v, Levelp l, const spoint &p) -> uint32_t;
-// end sort marker5
+// end sort marker6 }
 
-// begin sort marker6
+// begin sort marker7 {
 [[nodiscard]] auto level_has_seen(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool;
 [[nodiscard]] auto level_open_is_able_to_collect_items(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_able_to_collect_keys(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
@@ -1704,6 +1933,6 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_open_is_wall(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_water(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_wood(Gamep g, Levelsp v, Levelp l, const spoint &p) -> Thingp;
-// end sort marker6
+// end sort marker7 }
 
 #endif // MY_LEVEL_HPP

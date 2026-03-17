@@ -29,9 +29,9 @@ static auto tp_ghost_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::
 
 static auto tp_ghost_assess_tile(Gamep g, Levelsp v, Levelp l, const spoint &at, Thingp t) -> ThingEnviron
 {
-  TRACE_INDENT();
+  TRACE_DEBUG();
 
-  if (level_is_water(g, v, l, at) != nullptr) {
+  if (level_is_water_cached(g, v, l, at)) {
     return THING_ENVIRON_HATES;
   }
 

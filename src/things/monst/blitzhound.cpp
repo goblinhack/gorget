@@ -41,13 +41,13 @@ static auto tp_blitzhound_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> 
 
 static auto tp_blitzhound_assess_tile(Gamep g, Levelsp v, Levelp l, const spoint &at, Thingp t) -> ThingEnviron
 {
-  TRACE_INDENT();
+  TRACE_DEBUG();
 
-  if (level_is_lava(g, v, l, at) != nullptr) {
+  if (level_is_lava_cached(g, v, l, at)) {
     return THING_ENVIRON_HATES;
   }
 
-  if (level_is_chasm(g, v, l, at) != nullptr) {
+  if (level_is_chasm_cached(g, v, l, at)) {
     return THING_ENVIRON_HATES;
   }
 

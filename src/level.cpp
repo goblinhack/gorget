@@ -9,6 +9,7 @@
 #include "my_main.hpp"
 #include "my_test.hpp"
 #include "my_thing_inlines.hpp"
+#include "my_tp_class.hpp"
 #include "my_ui.hpp"
 #include "my_wids.hpp"
 
@@ -525,6 +526,30 @@ auto level_find_all(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> std:
   }
 
   return out;
+}
+
+void level_update_flags(Gamep g, Levelsp v, Levelp l)
+{
+  TRACE();
+
+  memset(l->flag, 0, sizeof(l->flag));
+
+  FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
+  {
+    auto tp = thing_tp(t);
+    auto at = thing_at(t);
+
+    for (auto f = 0; f < THING_FLAG_ENUM_MAX; f++) {
+      l->flag[ at.x ][ at.y ][ f ] |= tp->flag[ f ];
+    }
+  }
+}
+
+auto level_flag_cached(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> bool
+{
+  TRACE_DEBUG();
+
+  return l->flag[ p.x ][ p.y ][ f ] ? true : false;
 }
 
 auto level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> Thingp
