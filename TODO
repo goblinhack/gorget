@@ -4,6 +4,8 @@ need player attacked noise
 if cannot move should fire at?
 monster slash anim
 score? score is hard coded to 666
+prefer larger rooms
+level 105 has a monster in start room
 
 essential features
 ------------------

@@ -363,7 +363,6 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me)
   // Post thinking state check
   //
   auto old_target = thing_target(me);
-  thing_log(me, "target %d,%d", old_target.x, old_target.y);
   switch (monst_state(g, v, l, me)) {
     case MONST_STATE_INIT : //
       break;

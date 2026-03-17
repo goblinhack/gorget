@@ -445,11 +445,6 @@ auto level_tick_begin_requested(Gamep g, Levelsp v, Levelp l, const char *why) -
   //
   bool ret = true;
 
-  FOR_ALL_LEVELS(g, v, iter)
-  {
-    level_log(g, v, iter, "tick_begin_requested %d is_tick_required %d", iter->tick_begin_requested, iter->is_tick_required);
-  }
-
   FOR_ALL_TICKING_LEVELS(g, v, iter)
   {
     if (iter->tick_begin_requested) {

@@ -348,7 +348,7 @@ void player_state_change(Gamep g, Levelsp v, Levelp l, PlayerState new_state)
       break;
     case PLAYER_STATE_NORMAL :
       //
-      // Replace the mouse path
+      // If we're hit while moving, we return to this state and so need to clear the mouse path
       //
       level_cursor_path_reset(g, v, l);
 
