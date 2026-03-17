@@ -26,13 +26,6 @@ static void tp_fireball_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEv
   thing_sound_play(g, v, l, t, "explosion");
 }
 
-static auto tp_fireball_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
-{
-  TRACE_INDENT();
-
-  return "burning fireball";
-}
-
 static void tp_fireball_on_moved(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_INDENT();
@@ -55,7 +48,6 @@ auto tp_load_fireball() -> bool
   auto  name = tp_name(tp);
 
   // begin sort marker1 {
-  thing_description_set(tp, tp_fireball_description_get);
   thing_on_death_set(tp, tp_fireball_on_death);
   thing_on_moved_set(tp, tp_fireball_on_moved);
   thing_on_spawned_set(tp, tp_fireball_on_spawned);
@@ -67,7 +59,6 @@ auto tp_load_fireball() -> bool
   tp_flag_set(tp, is_blit_shown_in_overlay);
   tp_flag_set(tp, is_collision_circle_small);
   tp_flag_set(tp, is_dead_on_collision);
-  tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_fireball);
   tp_flag_set(tp, is_gaseous);
   tp_flag_set(tp, is_light_source, 2);

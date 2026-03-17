@@ -30,7 +30,6 @@ auto tp_load_explosion() -> bool
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_shown_in_chasms);
-  tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_explosion);
   tp_flag_set(tp, is_gaseous);
   tp_flag_set(tp, is_light_source, 5);
