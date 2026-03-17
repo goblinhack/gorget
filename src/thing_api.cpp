@@ -376,9 +376,9 @@ void thing_is_hit_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   t->_is_hit = val;
 
   if (val != 0) {
-    thing_on_hit_begin(g, v, l, t);
+    thing_on_hit_anim_begin(g, v, l, t);
   } else {
-    thing_on_hit_end(g, v, l, t);
+    thing_on_hit_anim_end(g, v, l, t);
   }
 }
 
@@ -392,7 +392,7 @@ auto thing_is_hit_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
   }
 
   if ((! static_cast< bool >(t->_is_hit)) && (val != 0)) {
-    thing_on_hit_begin(g, v, l, t);
+    thing_on_hit_anim_begin(g, v, l, t);
   }
 
   if (t->_is_hit + val > 255) {
@@ -413,7 +413,7 @@ auto thing_is_hit_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 
   if (static_cast< int >(t->_is_hit) - val <= 0) {
     if (static_cast< bool >(t->_is_hit)) {
-      thing_on_hit_end(g, v, l, t);
+      thing_on_hit_anim_end(g, v, l, t);
     }
     return t->_is_hit = 0;
   }

@@ -350,6 +350,8 @@ void player_state_change(Gamep g, Levelsp v, Levelp l, PlayerState new_state)
       //
       // Replace the mouse path
       //
+      level_cursor_path_reset(g, v, l);
+
       if (old_state == PLAYER_STATE_FOLLOWING_PATH) {
         //
         // Only auto scroll at the start and end of moving

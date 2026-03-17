@@ -82,6 +82,10 @@ using thing_on_death_t = void (*)(Gamep, Levelsp, Levelp, Thingp me, ThingEvent 
 void thing_on_death_set(Tpp tp, thing_on_death_t callback);
 void thing_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e);
 
+using thing_on_damage_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, ThingEvent &);
+void thing_on_damage_set(Tpp tp, thing_on_damage_t callback);
+bool thing_on_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e);
+
 using thing_on_moved_t = void (*)(Gamep, Levelsp, Levelp, Thingp me);
 void thing_on_moved_set(Tpp tp, thing_on_moved_t callback);
 void thing_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me);
@@ -114,12 +118,12 @@ using thing_on_fall_end_t = void (*)(Gamep, Levelsp, Levelp, Thingp me);
 void thing_on_fall_end_set(Tpp tp, thing_on_fall_end_t callback);
 void thing_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp me);
 
-using thing_on_hit_begin_t = void (*)(Gamep, Levelsp, Levelp, Thingp me);
-void thing_on_hit_begin_set(Tpp tp, thing_on_hit_begin_t callback);
-void thing_on_hit_begin(Gamep g, Levelsp v, Levelp l, Thingp me);
+using thing_on_hit_anim_begin_t = void (*)(Gamep, Levelsp, Levelp, Thingp me);
+void thing_on_hit_anim_begin_set(Tpp tp, thing_on_hit_anim_begin_t callback);
+void thing_on_hit_anim_begin(Gamep g, Levelsp v, Levelp l, Thingp me);
 
-using thing_on_hit_end_t = void (*)(Gamep, Levelsp, Levelp, Thingp me);
-void thing_on_hit_end_set(Tpp tp, thing_on_hit_end_t callback);
-void thing_on_hit_end(Gamep g, Levelsp v, Levelp l, Thingp me);
+using thing_on_hit_anim_end_t = void (*)(Gamep, Levelsp, Levelp, Thingp me);
+void thing_on_hit_anim_end_set(Tpp tp, thing_on_hit_anim_end_t callback);
+void thing_on_hit_anim_end(Gamep g, Levelsp v, Levelp l, Thingp me);
 
 #endif

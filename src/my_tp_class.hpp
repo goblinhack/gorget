@@ -238,6 +238,7 @@ public:
   thing_on_tick_begin_t         tick_begin            = {};
   thing_on_tick_end_t           tick_end              = {};
   thing_on_death_t              on_death              = {};
+  thing_on_damage_t             on_damage             = {};
   thing_on_moved_t              on_moved              = {};
   thing_on_teleported_t         on_teleported         = {};
   thing_on_shoved_t             on_shoved             = {};
@@ -246,8 +247,8 @@ public:
   thing_on_fall_begin_t         on_fall_begin         = {};
   thing_on_melt_t               on_melt               = {};
   thing_on_fall_end_t           on_fall_end           = {};
-  thing_on_hit_begin_t          on_hit_begin          = {};
-  thing_on_hit_end_t            on_hit_end            = {};
+  thing_on_hit_anim_begin_t     on_hit_anim_begin     = {};
+  thing_on_hit_anim_end_t       on_hit_anim_end       = {};
   thing_display_get_tile_info_t display_get_tile_info = {};
   thing_assess_tile_t           assess_tile           = {};
 

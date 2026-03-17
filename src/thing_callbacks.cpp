@@ -5,6 +5,7 @@
 #include "my_callstack.hpp"
 #include "my_globals.hpp"
 #include "my_main.hpp"
+#include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp"
 #include "my_tp_class.hpp"
 
@@ -432,6 +433,30 @@ void thing_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
   tp->on_death(g, v, l, me, e);
 }
 
+void thing_on_damage_set(Tpp tp, thing_on_damage_t callback)
+{
+  TRACE();
+  if (tp == nullptr) [[unlikely]] {
+    ERR("no thing template pointer");
+    return;
+  }
+  tp->on_damage = callback;
+}
+
+bool thing_on_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
+{
+  TRACE();
+  auto *tp = thing_tp(me);
+  if (tp == nullptr) [[unlikely]] {
+    ERR("no thing template pointer");
+    return false;
+  }
+  if (tp->on_damage == nullptr) {
+    return true;
+  }
+  return tp->on_damage(g, v, l, me, e);
+}
+
 void thing_on_moved_set(Tpp tp, thing_on_moved_t callback)
 {
   TRACE();
@@ -630,17 +655,17 @@ void thing_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp->on_fall_end(g, v, l, me);
 }
 
-void thing_on_hit_begin_set(Tpp tp, thing_on_hit_begin_t callback)
+void thing_on_hit_anim_begin_set(Tpp tp, thing_on_hit_anim_begin_t callback)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
     ERR("no thing template pointer");
     return;
   }
-  tp->on_hit_begin = callback;
+  tp->on_hit_anim_begin = callback;
 }
 
-void thing_on_hit_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
+void thing_on_hit_anim_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
   auto *tp = thing_tp(me);
@@ -648,23 +673,23 @@ void thing_on_hit_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
     ERR("no thing template pointer");
     return;
   }
-  if (tp->on_hit_begin == nullptr) {
+  if (tp->on_hit_anim_begin == nullptr) {
     return;
   }
-  tp->on_hit_begin(g, v, l, me);
+  tp->on_hit_anim_begin(g, v, l, me);
 }
 
-void thing_on_hit_end_set(Tpp tp, thing_on_hit_end_t callback)
+void thing_on_hit_anim_end_set(Tpp tp, thing_on_hit_anim_end_t callback)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
     ERR("no thing template pointer");
     return;
   }
-  tp->on_hit_end = callback;
+  tp->on_hit_anim_end = callback;
 }
 
-void thing_on_hit_end(Gamep g, Levelsp v, Levelp l, Thingp me)
+void thing_on_hit_anim_end(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
   auto *tp = thing_tp(me);
@@ -673,11 +698,11 @@ void thing_on_hit_end(Gamep g, Levelsp v, Levelp l, Thingp me)
     return;
   }
 
-  if (tp->on_hit_end == nullptr) {
+  if (tp->on_hit_anim_end == nullptr) {
     return;
   }
 
-  tp->on_hit_end(g, v, l, me);
+  tp->on_hit_anim_end(g, v, l, me);
 }
 
 void thing_display_get_tile_info_set(Tpp tp, thing_display_get_tile_info_t callback)

@@ -54,6 +54,19 @@ static void tp_player_on_moved(Gamep g, Levelsp v, Levelp l, Thingp t)
   v->cursor[ at.x ][ at.y ] = CURSOR_NONE;
 }
 
+static bool tp_player_on_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
+{
+  TRACE_INDENT();
+
+  //
+  // If hit, clear the cursor path and stop moving.
+  //
+
+  player_state_change(g, v, l, PLAYER_STATE_NORMAL);
+
+  return true; // allow the damage to be applied
+}
+
 static void tp_player_on_jump_end(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_INDENT();
@@ -173,6 +186,7 @@ auto tp_load_player() -> bool
   thing_on_level_leave_set(tp, tp_player_level_leave);
   thing_on_level_populated_set(tp, tp_player_level_populated);
   thing_on_moved_set(tp, tp_player_on_moved);
+  thing_on_damage_set(tp, tp_player_on_damage);
   thing_on_teleported_set(tp, tp_player_on_teleported);
   thing_on_tick_begin_set(tp, tp_player_tick_begin);
   thing_on_tick_end_set(tp, tp_player_tick_end);

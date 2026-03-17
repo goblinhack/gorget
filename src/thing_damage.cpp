@@ -2,14 +2,15 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include <algorithm>
-
 #include "my_callstack.hpp"
 #include "my_game_popups.hpp"
 #include "my_globals.hpp"
 #include "my_main.hpp"
+#include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp"
 #include "my_ui.hpp"
+
+#include <algorithm>
 
 //
 // The player has been attacked
@@ -278,6 +279,14 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
   // Limit damage?
   //
   thing_damage_cap(g, v, l, t, e);
+
+  //
+  // Per thing callback
+  //
+  if (! thing_on_damage(g, v, l, t, e)) {
+    THING_DBG(t, "%s: no damage due to callback", to_string(g, v, l, e).c_str());
+    return;
+  }
 
   //
   // No damage?
