@@ -59,6 +59,7 @@ static auto thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thing
     return false;
   }
 
+  thing_topcon(me, "astar");
   auto p = astar_solve(g, v, l, me, monst_at, target);
   if (p.empty()) {
     THING_DBG(me, "choose target: no path to player at %d,%d", target.x, target.y);
@@ -163,6 +164,7 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
       continue;
     }
 
+    thing_topcon(me, "astar");
     auto p = astar_solve(g, v, l, me, at, target);
     if (p.empty()) {
       continue;
