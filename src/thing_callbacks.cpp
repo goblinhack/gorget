@@ -443,7 +443,7 @@ void thing_on_damage_set(Tpp tp, thing_on_damage_t callback)
   tp->on_damage = callback;
 }
 
-bool thing_on_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
+auto thing_on_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e) -> bool
 {
   TRACE();
   auto *tp = thing_tp(me);

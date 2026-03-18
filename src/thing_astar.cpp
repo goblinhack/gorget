@@ -216,7 +216,7 @@ void Astar::eval_neighbor(Node *current, const spoint &delta)
     return;
   }
 
-  Cost cost = current->cost.cost + heuristic(next_hop) / 10;
+  Cost cost = current->cost.cost + (heuristic(next_hop) / 10);
 
   //
   // These are hard obstacles that the AI cannot see past

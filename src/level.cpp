@@ -537,7 +537,7 @@ void level_update_flags(Gamep g, Levelsp v, Levelp l)
   FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
   {
     auto *tp = thing_tp(t);
-    auto at = thing_at(t);
+    auto  at = thing_at(t);
 
     for (auto f = 0; f < THING_FLAG_ENUM_MAX; f++) {
       l->flag[ at.x ][ at.y ][ f ] |= tp->flag[ f ];

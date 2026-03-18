@@ -63,7 +63,7 @@ static void level_tick_ok_to_end_check(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
-  if (!worklist.empty() != 0u) {
+  if (static_cast< unsigned int >(! worklist.empty()) != 0U) {
     l->tick_wait_on_things = true;
   }
 
@@ -451,7 +451,7 @@ static void level_tick_worklist(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
-  auto sz = static_cast<int>(worklist.size());
+  auto sz = static_cast< int >(worklist.size());
   if (worklist.empty()) {
     return;
   }
