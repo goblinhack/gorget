@@ -186,7 +186,7 @@ auto Astar::heuristic(const spoint at) const -> Cost
   // to the end point, and sometimes a diagonal move is closer.
   //
   // Euclidian
-  return distance(dst, at);
+  return sort_distance(dst, at);
   //
   // Chebyshev for octagonal movement
   // return std::max(abs(dst.x - at.x), abs(dst.y - at.y));
@@ -216,7 +216,7 @@ void Astar::eval_neighbor(Node *current, const spoint &delta)
     return;
   }
 
-  Cost cost = current->cost.cost + heuristic(next_hop);
+  Cost cost = current->cost.cost + heuristic(next_hop) / 10;
 
   //
   // These are hard obstacles that the AI cannot see past

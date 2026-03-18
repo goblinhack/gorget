@@ -13,6 +13,11 @@ score? score is hard coded to 666
 prefer larger rooms
 level 105 has a monster in start room
 
+using RayPixel = struct RayPixel {
+  spoint p;
+  float  distance; - use sort distance?
+};
+
 essential features
 ------------------
 stamina needed to avoid fast jump loops

@@ -22,6 +22,12 @@
 
 #define ROUNDUP(x, r) ((r) * floor(((x) + (r)) / (r)))
 
+//
+// If distance is only needed for sorting
+//
+#define SORT_DISTANCEf(xa, ya, xb, yb) (SQUARED((xb) - (xa)) + SQUARED((yb) - (ya)))
+#define SORT_DISTANCEd(xa, ya, xb, yb) (SQUARED((xb) - (xa)) + SQUARED((yb) - (ya)))
+
 #define DISTANCEf(xa, ya, xb, yb) sqrtf((float) (SQUARED((xb) - (xa)) + SQUARED((yb) - (ya))))
 #define DISTANCEd(xa, ya, xb, yb) sqrt((double) (SQUARED((xb) - (xa)) + SQUARED((yb) - (ya))))
 

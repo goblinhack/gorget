@@ -516,7 +516,7 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
           }
 
           if (collision) {
-            float const                      o_dist = distance(at, o_at);
+            float const                      o_dist = sort_distance(at, o_at);
             std::pair< float, Thingp > const p      = std::make_pair(o_dist, o);
             pairs.push_back(p);
           }
@@ -532,6 +532,7 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
       auto  d2 = b.first;
       auto *t1 = a.second;
       auto *t2 = b.second;
+
       if (d1 < d2) {
         return true;
       }
@@ -547,7 +548,7 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
         auto  o_dist = a_pair.first;
         auto *o      = a_pair.second;
 
-        THING_DBG(o, "distance %f prio %u", o_dist, thing_priority(o));
+        THING_DBG(o, "sort_distance %f prio %u", o_dist, thing_priority(o));
       }
     }
 
