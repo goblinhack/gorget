@@ -56,7 +56,7 @@ auto thing_attack_at(Gamep g, Levelsp v, Levelp l, Thingp me, const spoint &atta
 
   std::vector< Thingp > cands;
 
-  FOR_ALL_THINGS_AT(g, v, l, o, attack_at)
+  FOR_ALL_THINGS_AT_UNSAFE(g, v, l, o, attack_at)
   {
     if (o == me) {
       continue;

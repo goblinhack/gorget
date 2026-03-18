@@ -87,7 +87,7 @@ void level_light_precalculate(Gamep g)
 //
 // All light from all light sources, combined.
 //
-void level_light_calculate_all_things(Gamep g, Levelsp v, Levelp l)
+static void level_light_calculate_all_things(Gamep g, Levelsp v, Levelp l)
 {
   TRACE();
 

@@ -536,7 +536,7 @@ void level_update_flags(Gamep g, Levelsp v, Levelp l)
 
   FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
   {
-    auto tp = thing_tp(t);
+    auto *tp = thing_tp(t);
     auto at = thing_at(t);
 
     for (auto f = 0; f < THING_FLAG_ENUM_MAX; f++) {
@@ -549,7 +549,7 @@ auto level_flag_cached(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> b
 {
   TRACE_DEBUG();
 
-  return l->flag[ p.x ][ p.y ][ f ] ? true : false;
+  return l->flag[ p.x ][ p.y ][ f ] != 0;
 }
 
 auto level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> Thingp

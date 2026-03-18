@@ -84,7 +84,7 @@ void thing_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e);
 
 using thing_on_damage_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, ThingEvent &);
 void thing_on_damage_set(Tpp tp, thing_on_damage_t callback);
-bool thing_on_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e);
+auto thing_on_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e) -> bool;
 
 using thing_on_moved_t = void (*)(Gamep, Levelsp, Levelp, Thingp me);
 void thing_on_moved_set(Tpp tp, thing_on_moved_t callback);

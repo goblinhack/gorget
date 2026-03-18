@@ -63,7 +63,7 @@ static void level_tick_ok_to_end_check(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
-  if (worklist.size()) {
+  if (!worklist.empty() != 0u) {
     l->tick_wait_on_things = true;
   }
 
@@ -446,13 +446,13 @@ static void level_tick_worklist(Gamep g, Levelsp v, Levelp l)
   TRACE();
 
   auto *player_level = thing_player_level(g);
-  if (! player_level) {
+  if (player_level == nullptr) {
     worklist.clear();
     return;
   }
 
-  auto sz = (int) worklist.size();
-  if (! worklist.size()) {
+  auto sz = static_cast<int>(worklist.size());
+  if (worklist.empty()) {
     return;
   }
 
@@ -465,17 +465,17 @@ static void level_tick_worklist(Gamep g, Levelsp v, Levelp l)
     auto id = worklist.back();
     worklist.pop_back();
 
-    auto t = thing_find_optional(g, v, id);
-    if (t) {
+    auto *t = thing_find_optional(g, v, id);
+    if (t != nullptr) {
       if (! thing_is_dead(t)) {
-        auto monst_level = thing_level(g, v, t);
-        if (monst_level && (monst_level == player_level)) {
+        auto *monst_level = thing_level(g, v, t);
+        if ((monst_level != nullptr) && (monst_level == player_level)) {
           thing_monst_tick(g, v, monst_level, t);
         }
       }
     }
 
-    if (! worklist.size()) {
+    if (worklist.empty()) {
       return;
     }
   }
