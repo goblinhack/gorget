@@ -158,13 +158,14 @@ auto thing_minion_choose_target_near_mob(Gamep g, Levelsp v, Levelp l, Thingp me
   // Keep trying to find a target
   //
   spoint target;
-  int    tries = (radius * radius) / 2;
+  int    tries = 1;
+
   while (tries-- > 0) {
     if (! thing_minion_get_mob_dmap_target_cand(g, v, l, me, mob_at, dmap, radius, target)) {
       continue;
     }
 
-    THING_DBG(me, "astar thing_minion_choose_target_near_mob");
+    thing_log(me, "astar thing_minion_choose_target_near_mob");
     auto p = astar_solve(g, v, l, me, minion_at, target);
     if (p.empty()) {
       continue;

@@ -316,11 +316,13 @@ static void level_minimap_levels_update(Gamep g, Levelsp v, Levelp l, const bool
 
 void level_minimaps_update(Gamep g, Levelsp v, Levelp l)
 {
-  TRACE();
-
   if (g_opt_tests) {
     return;
   }
+
+  IF_NODEBUG { return; }
+
+  TRACE();
 
   //
   // If in level select mode, avoid certain things, like vision effects

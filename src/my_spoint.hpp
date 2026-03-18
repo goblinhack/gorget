@@ -5,6 +5,10 @@
 #ifndef MY_SPOINT_HPP
 #define MY_SPOINT_HPP
 
+#include <my_math.hpp>
+
+#include <math.h>
+
 using spoint = struct MySpoint {
 public:
   short x;
@@ -30,7 +34,11 @@ static inline auto make_spoint(const spoint &f) -> spoint { return spoint(f.x, f
 static inline auto make_spoint(spoint &f) -> spoint { return spoint(f.x, f.y); }
 static inline auto make_spoint(short x, short y) -> spoint { return spoint(x, y); }
 
-auto distance(const spoint &a, const spoint &b) -> float;
+static inline auto distance(const spoint &a, const spoint &b) -> float
+{
+  return DISTANCEf((float) a.x, (float) a.y, (float) b.x, (float) b.y);
+}
+
 auto adjacent(const spoint &a, const spoint &b) -> bool;
 
 #endif // MY_SPOINT_HPP

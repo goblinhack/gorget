@@ -5,6 +5,7 @@
 #ifndef MY_FPOINT_HPP
 #define MY_FPOINT_HPP
 
+#include "my_math.hpp"
 #include "my_spoint.hpp"
 
 #include <math.h>
@@ -33,11 +34,12 @@ auto rotate_radians(const fpoint &p, float angle) -> fpoint;
 auto normal(const fpoint &p) -> fpoint;
 auto unit(const fpoint &p) -> fpoint;
 
-auto distance(const fpoint &a, const fpoint &b) -> float;
 auto angle_radians(const fpoint &p) -> float;
 auto distance_to_line(fpoint P0, fpoint L0, fpoint L1, float *dist, fpoint *intersect_out) -> int;
 
 static inline auto make_fpoint(const spoint f) -> fpoint { return fpoint(f.x, f.y); }
+
+static inline auto distance(const fpoint &a, const fpoint &b) -> float { return ((DISTANCEf(a.x, a.y, b.x, b.y))); }
 
 //
 // round() is better than floor() as if we do a jump on a diagonal, that is 0.707

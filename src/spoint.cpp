@@ -47,8 +47,6 @@ void spoint::unit()
   y /= len;
 }
 
-auto distance(const spoint &a, const spoint &b) -> float { return DISTANCEf((float) a.x, (float) a.y, (float) b.x, (float) b.y); }
-
 //
 // Are points adjacent to each other?
 //

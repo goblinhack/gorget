@@ -49,8 +49,6 @@ void fpoint::unit()
   y /= len;
 }
 
-auto distance(const fpoint &a, const fpoint &b) -> float { return ((DISTANCEf(a.x, a.y, b.x, b.y))); }
-
 //
 // Yields an angle between 0 and 360 deg radians - essentially, how much
 // this point has been rotated about the origin.

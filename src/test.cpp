@@ -333,9 +333,11 @@ void tests_run(Gamep g)
 
   if (failed != 0) {
     CON("Results: %d passed, %d failed", passed, failed);
+    term_log("%%fg=red$Some tests failed%%fg=reset$\n");
     exit(1);
   } else {
-    CON("All %d tests passed", passed);
+    CON("Results: %d tests passed", passed);
+    term_log("%%fg=green$All tests passed%%fg=reset$\n");
     DIE_CLEAN("done");
   }
 }

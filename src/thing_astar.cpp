@@ -332,6 +332,8 @@ auto Astar::can_move_to_cost(const spoint &to) -> uint8_t
 
 auto Astar::solve(bool allow_diagonal) -> std::vector< spoint >
 {
+  static const std::vector< spoint > empty;
+
   auto  ncost    = Nodecost(heuristic(src));
   auto *neighbor = node_init(src, ncost);
 
@@ -468,7 +470,6 @@ auto Astar::solve(bool allow_diagonal) -> std::vector< spoint >
     }
   }
 
-  static const std::vector< spoint > empty;
   return empty;
 }
 
