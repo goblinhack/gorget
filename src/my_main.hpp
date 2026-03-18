@@ -113,6 +113,10 @@ void close_stdout();
 //
 // Used to stop the compiler removing unused code I want to keep
 //
+#ifdef DEBUG_BUILD
 extern bool compiler_unused;
+#else
+#define compiler_unused false
+#endif
 
 #endif

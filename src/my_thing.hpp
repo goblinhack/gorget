@@ -1193,5 +1193,6 @@ void thing_display(Gamep g, Levelsp v, Levelp l, const spoint &p, Tpp tp, Thingp
           for (AUTO(_item_) = thing_find_optional(g, v, _slot_->item_id); _item_; (_item_) = nullptr)
 
 #define THING_DBG IF_DEBUG thing_dbg
+#define LEVEL_DBG IF_DEBUG level_dbg
 
 #endif

@@ -29,7 +29,9 @@
 //
 // Used to stop the compiler removing unused code I want to keep
 //
+#ifdef DEBUG_BUILD
 bool compiler_unused;
+#endif
 
 static void usage()
 {

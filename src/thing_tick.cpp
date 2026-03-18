@@ -47,10 +47,6 @@ void thing_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
   if (thing_is_dead(t)) {
     return;
   }
-
-  if (thing_is_monst(t)) {
-    thing_monst_tick(g, v, l, t);
-  }
 }
 
 //
