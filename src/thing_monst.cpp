@@ -109,7 +109,7 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
     return false;
   }
 
-  auto radius_sq = radius * radius;
+  auto diameter  = radius * 2;
   auto tries     = 0;
   auto max_tries = 100;
 
@@ -117,21 +117,33 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
   bool found_path        = false;
 
   //
+  // Avoid memsetting this by using uninitialized memory
+  //
+  uint8_t        tried[ MAP_WIDTH ][ MAP_HEIGHT ];
+  static uint8_t try_magic;
+  try_magic++;
+
+  //
   // Keep trying to find a target
   //
   while (tries++ < max_tries) {
-    uint8_t x = 0;
-    uint8_t y = 0;
+    spoint target;
 
     //
     // Get a valid tile.
     //
-    do {
-      x = at.x - radius + PCG_RANDOM_RANGE(0, radius_sq);
-      y = at.y - radius + PCG_RANDOM_RANGE(0, radius_sq);
-    } while (is_oob_or_border(x, y));
-
-    spoint const target(x, y);
+    for (;;) {
+      target.x = (int) at.x - radius + PCG_RANDOM_RANGE(0, diameter);
+      target.y = (int) at.y - radius + PCG_RANDOM_RANGE(0, diameter);
+      if (is_oob_or_border(target)) {
+        continue;
+      }
+      if (tried[ target.x ][ target.y ] == try_magic) {
+        continue;
+      }
+      break;
+    }
+    tried[ target.x ][ target.y ] = try_magic;
 
     //
     // Check this is a tile we want to potentially walk to.
@@ -153,7 +165,7 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
     //
     // Prefer older tiles, so the monster explores more
     //
-    int score = age_map_get(&ext->has_seen, x, y) * 100;
+    int score = age_map_get(&ext->has_seen, target.x, target.y) * 100;
 
     //
     // Prefer further away tiles for exploration
@@ -164,7 +176,6 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
       continue;
     }
 
-    thing_topcon(me, "astar");
     auto p = astar_solve(g, v, l, me, at, target);
     if (p.empty()) {
       continue;
@@ -175,7 +186,7 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
     }
 
     if (compiler_unused) {
-      THING_DBG(me, "best %d,%d score %d", x, y, score);
+      THING_DBG(me, "best %d,%d score %d", target.x, target.y, score);
     }
 
     thing_target_set(g, v, l, me, target);
