@@ -758,17 +758,6 @@ auto tp_light_color(Tpp tp) -> color
   return tp->light_color;
 }
 
-auto tp_flag(Tpp tp, ThingFlag f) -> int
-{
-  TRACE_DEBUG(); // expensive
-
-  if (tp == nullptr) [[unlikely]] {
-    tp_err(tp, "no thing template pointer");
-    return 0;
-  }
-  return tp->flag[ f ];
-}
-
 void tp_flag_set(Tpp tp, ThingFlag f, int val)
 {
   TRACE();

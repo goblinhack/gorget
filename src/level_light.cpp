@@ -12,10 +12,10 @@
 #include "my_tile.hpp"
 #include "my_ui.hpp"
 
-#include <cmath>
-
 #include <array>
+#include <cmath>
 #include <cstring>
+#include <thread>
 
 static float light_fade[ MAP_WIDTH ];
 
@@ -87,33 +87,9 @@ void level_light_precalculate(Gamep g)
 //
 // All light from all light sources, combined.
 //
-void level_light_calculate_all(Gamep g, Levelsp v, Levelp l)
+void level_light_calculate_all_things(Gamep g, Levelsp v, Levelp l)
 {
   TRACE();
-
-  auto *player = thing_player(g);
-
-  if (player == nullptr) [[unlikely]] {
-    return;
-  }
-
-  if ((g == nullptr) || (v == nullptr) || (l == nullptr)) [[unlikely]] {
-    return;
-  }
-
-  //
-  // If the player is not on the level being lit, then nothing to do
-  //
-  if (l->level_num != player->level_num) {
-    return;
-  }
-
-  v->light_map = {};
-
-  //
-  // Now do the same for the player
-  //
-  level_raycast(g, v, l, FBO_MAP_LIGHT);
 
   //
   // Calculate all lit tiles for non player things
@@ -156,5 +132,45 @@ void level_light_calculate_all(Gamep g, Levelsp v, Levelp l)
     ctx.has_seen_tile            = nullptr;
 
     level_fov(ctx);
+  }
+}
+
+//
+// All light from all light sources, combined.
+//
+void level_light_calculate_all(Gamep g, Levelsp v, Levelp l)
+{
+  TRACE();
+
+  auto *player = thing_player(g);
+
+  if (player == nullptr) [[unlikely]] {
+    return;
+  }
+
+  if ((g == nullptr) || (v == nullptr) || (l == nullptr)) [[unlikely]] {
+    return;
+  }
+
+  //
+  // If the player is not on the level being lit, then nothing to do
+  //
+  if (l->level_num != player->level_num) {
+    return;
+  }
+
+  v->light_map = {};
+
+  std::vector< std::thread > threads;
+
+  threads.emplace_back(level_light_calculate_all_things, g, v, l);
+
+  //
+  // Calculate player lighting while we wait
+  //
+  level_raycast(g, v, l, FBO_MAP_LIGHT);
+
+  for (auto &t : threads) {
+    t.join();
   }
 }

@@ -50,6 +50,10 @@ void level_vision_calculate_all(Gamep g, Levelsp v, Levelp l)
       continue;
     }
 
+    if (! thing_distance_vision(t)) {
+      continue;
+    }
+
     threads.emplace_back(thing_vision_calculate, g, v, l, t);
   }
 

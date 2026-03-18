@@ -13,6 +13,20 @@
 
 #include "my_level.hpp"
 #include "my_thing.hpp"
+#include "my_tp_class.hpp"
+
+static inline auto tp_flag(Tpp tp, ThingFlag f) -> int
+{
+#ifdef DEBUG_BUILD
+  TRACE_DEBUG(); // expensive
+  if (tp == nullptr) [[unlikely]] {
+    tp_err(tp, "no thing template pointer");
+    return 0;
+  }
+#endif
+
+  return tp->flag[ f ];
+}
 
 //
 // this belongs in my_thing.hpp but as it is inlined, it needs to access
@@ -21,8 +35,7 @@
 static inline auto thing_find(Gamep g, Levelsp v, ThingId id) -> Thingp
 {
 #ifdef DEBUG_BUILD
-  TRACE(); // expensive
-           //
+  TRACE_DEBUG(); // expensive
   if (g == nullptr) {
     ERR("no game pointer");
     return nullptr;
@@ -56,8 +69,7 @@ static inline auto thing_find(Gamep g, Levelsp v, ThingId id) -> Thingp
 static inline auto thing_tp(Thingp t) -> Tpp
 {
 #ifdef DEBUG_BUILD
-  TRACE(); // expensive
-           //
+  TRACE_DEBUG(); // expensive
   if (t == nullptr) {
     ERR("no thing pointer");
     return nullptr;
@@ -70,7 +82,7 @@ static inline auto thing_tp(Thingp t) -> Tpp
 static inline auto thing_is_falling(Thingp t) -> int
 {
 #ifdef DEBUG_BUILD
-  TRACE();
+  TRACE_DEBUG();
   if (t == nullptr) {
     ERR("no thing pointer");
     return 0;
@@ -83,7 +95,7 @@ static inline auto thing_is_falling(Thingp t) -> int
 static inline auto thing_is_lunging(Thingp t) -> int
 {
 #ifdef DEBUG_BUILD
-  TRACE();
+  TRACE_DEBUG();
   if (t == nullptr) {
     ERR("no thing pointer");
     return 0;
@@ -96,7 +108,7 @@ static inline auto thing_is_lunging(Thingp t) -> int
 static inline auto thing_is_hit(Thingp t) -> int
 {
 #ifdef DEBUG_BUILD
-  TRACE();
+  TRACE_DEBUG();
   if (t == nullptr) {
     ERR("no thing pointer");
     return 0;
@@ -109,7 +121,7 @@ static inline auto thing_is_hit(Thingp t) -> int
 static inline auto thing_is_hot(Thingp t) -> int
 {
 #ifdef DEBUG_BUILD
-  TRACE();
+  TRACE_DEBUG();
   if (t == nullptr) {
     ERR("no thing pointer");
     return 0;
@@ -122,7 +134,7 @@ static inline auto thing_is_hot(Thingp t) -> int
 static inline auto thing_is_jumping(Thingp t) -> bool
 {
 #ifdef DEBUG_BUILD
-  TRACE();
+  TRACE_DEBUG();
   if (t == nullptr) {
     ERR("no thing pointer");
     return false;
@@ -135,7 +147,7 @@ static inline auto thing_is_jumping(Thingp t) -> bool
 static inline auto thing_is_moving(Thingp t) -> bool
 {
 #ifdef DEBUG_BUILD
-  TRACE();
+  TRACE_DEBUG();
   if (t == nullptr) {
     ERR("no thing pointer");
     return false;
@@ -148,7 +160,7 @@ static inline auto thing_is_moving(Thingp t) -> bool
 static inline auto thing_is_spawned(Thingp t) -> bool
 {
 #ifdef DEBUG_BUILD
-  TRACE();
+  TRACE_DEBUG();
   if (t == nullptr) {
     ERR("no thing pointer");
     return false;
@@ -161,7 +173,7 @@ static inline auto thing_is_spawned(Thingp t) -> bool
 static inline auto thing_is_dead(Thingp t) -> bool
 {
 #ifdef DEBUG_BUILD
-  TRACE();
+  TRACE_DEBUG();
   if (t == nullptr) {
     ERR("no thing pointer");
     return false;
@@ -174,7 +186,7 @@ static inline auto thing_is_dead(Thingp t) -> bool
 static inline auto thing_is_physics_temperature(Thingp t) -> bool
 {
 #ifdef DEBUG_BUILD
-  TRACE();
+  TRACE_DEBUG();
   if (t == nullptr) {
     ERR("no thing pointer");
     return false;
@@ -187,7 +199,7 @@ static inline auto thing_is_physics_temperature(Thingp t) -> bool
 static inline auto thing_is_player(const Thingp t) -> bool
 {
 #ifdef DEBUG_BUILD
-  TRACE();
+  TRACE_DEBUG();
   if (t == nullptr) {
     ERR("no thing pointer");
     return false;
@@ -200,7 +212,7 @@ static inline auto thing_is_player(const Thingp t) -> bool
 static inline auto thing_is_obs_to_vision(Thingp t) -> bool
 {
 #ifdef DEBUG_BUILD
-  TRACE();
+  TRACE_DEBUG();
   if (t == nullptr) {
     ERR("no thing pointer");
     return false;
@@ -213,7 +225,7 @@ static inline auto thing_is_obs_to_vision(Thingp t) -> bool
 static inline auto thing_pix_at(Thingp t) -> spoint
 {
 #ifdef DEBUG_BUILD
-  TRACE();
+  TRACE_DEBUG();
   if (t == nullptr) {
     CROAK("no thing pointer");
   }
@@ -225,7 +237,7 @@ static inline auto thing_pix_at(Thingp t) -> spoint
 static inline auto thing_is_open(Thingp t) -> bool
 {
 #ifdef DEBUG_BUILD
-  TRACE();
+  TRACE_DEBUG();
   if (t == nullptr) {
     ERR("no thing pointer");
     return false;
@@ -238,7 +250,7 @@ static inline auto thing_is_open(Thingp t) -> bool
 static inline auto thing_find_optional(Gamep g, Levelsp v, ThingId id) -> Thingp
 {
 #ifdef DEBUG_BUILD
-  TRACE(); // expensive
+  TRACE_DEBUG(); // expensive
 #endif
 
   if (! static_cast< bool >(id)) {
@@ -270,7 +282,7 @@ static inline auto thing_find_optional(Gamep g, Levelsp v, ThingId id) -> Thingp
 static inline auto thing_is_light_source(Thingp t) -> int
 {
 #ifdef DEBUG_BUILD
-  TRACE();
+  TRACE_DEBUG();
   if (t == nullptr) {
     ERR("no thing pointer");
     return 0;
@@ -278,6 +290,26 @@ static inline auto thing_is_light_source(Thingp t) -> int
 #endif
 
   return tp_flag(thing_tp(t), is_light_source);
+}
+
+static inline auto thing_submerged_pct(Thingp t) -> int
+{
+#ifdef DEBUG_BUILD
+  TRACE_DEBUG();
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return 0;
+  }
+#endif
+
+  //
+  // Floating when dead?
+  //
+  if (thing_is_dead(t)) {
+    return t->_submerged_pct / 2;
+  }
+
+  return t->_submerged_pct;
 }
 
 #endif // MY_THING_INLINES_HPP

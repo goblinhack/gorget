@@ -59,7 +59,7 @@ static auto thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thing
     return false;
   }
 
-  thing_topcon(me, "astar");
+  THING_DBG(me, "astar thing_monst_choose_target_player");
   auto p = astar_solve(g, v, l, me, monst_at, target);
   if (p.empty()) {
     THING_DBG(me, "choose target: no path to player at %d,%d", target.x, target.y);
@@ -181,6 +181,7 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
     thing_target_set(g, v, l, me, target);
     best_lowest_score = score;
     found_path        = true;
+    break;
   }
 
   return found_path;
@@ -376,42 +377,64 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me)
     case MONST_STATE_CHASING : [[fallthrough]];
     case MONST_STATE_WANDER :
       //
-      // If we are unable to move, or we reach the target, move back
-      // to normal state so we can decide what to do.
+      // If we are unable to move, or we reach the target, move back to normal state so we can decide what to do.
       //
       if (! thing_monst_move_to_next(g, v, l, me)) {
-        THING_DBG(me, "end of move");
+        THING_DBG(me, "end of move, old target %d,%d", old_target.x, old_target.y);
+
         monst_state_change(g, v, l, me, MONST_STATE_NORMAL);
 
         //
-        // To avoid one move of sitting idle, can we choose a new target and
-        // keep on moving?
+        // To avoid one move of sitting idle, can we choose a new target and keep on moving?
         //
-        if (thing_monst_choose_target(g, v, l, me)) {
-          auto new_target = thing_target(me);
-          if (old_target == new_target) {
-            //
-            // However, if it is the same target tile, do not try to fail to move
-            // to the same tile again.
-            //
-            monst_state_change(g, v, l, me, MONST_STATE_NORMAL);
+        if (adjacent(thing_at(me), old_target)) {
+          //
+          // We're probably lunging at the player right now. No need to try to move again.
+          //
+          THING_DBG(me, "end of move: adjacent to target");
 
-            //
-            // Can we attack here?
-            //
-            if (level_is_attackable_by_monst(g, v, l, new_target) != nullptr) {
-              if (thing_attack_at(g, v, l, me, new_target)) {
-                THING_DBG(me, "end of move: same target as before, attacked");
-                break;
-              }
+          //
+          // Can we attack here?
+          //
+          if (level_is_attackable_by_monst(g, v, l, old_target) != nullptr) {
+            if (thing_attack_at(g, v, l, me, old_target)) {
+              THING_DBG(me, "end of move: attack");
+              break;
             }
-
-            THING_DBG(me, "end of move: same target as before, do not continue");
-          } else {
-            THING_DBG(me, "end of move: have a new target");
-            (void) thing_monst_move_to_next(g, v, l, me);
           }
+          break;
         }
+
+        //
+        // Did we get a new target?
+        //
+        if (! thing_monst_choose_target(g, v, l, me)) {
+          break;
+        }
+
+        auto new_target = thing_target(me);
+        if (old_target == new_target) {
+          //
+          // If it is the same target, do not try to fail to move to the same tile again.
+          //
+          monst_state_change(g, v, l, me, MONST_STATE_NORMAL);
+
+          //
+          // Can we attack here?
+          //
+          if (level_is_attackable_by_monst(g, v, l, new_target) != nullptr) {
+            if (thing_attack_at(g, v, l, me, new_target)) {
+              THING_DBG(me, "end of move: same target as before, attacked");
+              break;
+            }
+          }
+
+          THING_DBG(me, "end of move: same target as before, do not continue");
+          break;
+        }
+
+        THING_DBG(me, "end of move: have a new target %d,%d", new_target.x, new_target.y);
+        (void) thing_monst_move_to_next(g, v, l, me);
       }
       break;
     case MONST_STATE_ENUM_MAX : break;

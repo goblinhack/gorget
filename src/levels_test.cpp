@@ -101,6 +101,54 @@ void levels_test(Gamep g)
     Overrides overrides;
 
     overrides[ 'm' ] = [](char c, spoint p) -> Tpp { return tp_find_mand("mantisman"); };
+
+    level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "test3", __FUNCTION__, __LINE__, overrides, 0,
+                    /* line */ (const char *) "XXXXXXXXXXXXXXX",
+                    /* line */ (const char *) "X.CCC.CCC.CCC.X",
+                    /* line */ (const char *) "X.===.CCC.===.X",
+                    /* line */ (const char *) "X.CCC.CCC.CCC.X",
+                    /* line */ (const char *) "X.CCC.===.CCC.X",
+                    /* line */ (const char *) "X@CCC.CCC.CCCmX",
+                    /* line */ (const char *) "XXXXXXXXXXXXXXX",
+                    /* end */ nullptr);
+  }
+
+  {
+    Overrides overrides;
+
+    overrides[ 'm' ] = [](char c, spoint p) -> Tpp { return tp_find_mand("mantisman"); };
+
+    level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "test4", __FUNCTION__, __LINE__, overrides, 0,
+                    /* line */ (const char *) "XXXXXXX",
+                    /* line */ (const char *) "X...x.X",
+                    /* line */ (const char *) "X.x.x.X",
+                    /* line */ (const char *) "X.x.xmX",
+                    /* line */ (const char *) "X.x.x.X",
+                    /* line */ (const char *) "X@x...X",
+                    /* line */ (const char *) "XXXXXXX",
+                    /* end */ nullptr);
+  }
+
+  {
+    Overrides overrides;
+
+    overrides[ 'm' ] = [](char c, spoint p) -> Tpp { return tp_find_mand("mantisman"); };
+
+    level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "test5", __FUNCTION__, __LINE__, overrides, 0,
+                    /* line */ (const char *) "XXXXXXX",
+                    /* line */ (const char *) "X..C..X",
+                    /* line */ (const char *) "X..C..X",
+                    /* line */ (const char *) "X..C.mX",
+                    /* line */ (const char *) "X..C..X",
+                    /* line */ (const char *) "X@.C..X",
+                    /* line */ (const char *) "XXXXXXX",
+                    /* end */ nullptr);
+  }
+
+  {
+    Overrides overrides;
+
+    overrides[ 'm' ] = [](char c, spoint p) -> Tpp { return tp_find_mand("mantisman"); };
     overrides[ 'n' ] = [](char c, spoint p) -> Tpp { return tp_find_mand("ghost"); };
 
     level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "monst.1", __FUNCTION__, __LINE__, overrides, 0,

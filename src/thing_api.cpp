@@ -32,7 +32,6 @@ void thing_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, const spoint &val)
   if (thing_is_player(t)) {
     if (t->_at != valf) {
       l->request_to_update_per_tile_visibility = true;
-      // thing_topcon(t, "spoint");
     }
   }
 
@@ -61,7 +60,6 @@ void thing_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, const fpoint &val)
   if (thing_is_player(t)) {
     if (t->_at != val) {
       l->request_to_update_per_tile_visibility = true;
-      // thing_topcon(t, "fpoint");
     }
   }
 
@@ -4871,25 +4869,6 @@ auto thing_lifespan_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
     return t->_lifespan = 0;
   }
   return t->_lifespan -= val;
-}
-
-auto thing_submerged_pct(Thingp t) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-
-  //
-  // Floating when dead?
-  //
-  if (thing_is_dead(t)) {
-    return t->_submerged_pct / 2;
-  }
-
-  return t->_submerged_pct;
 }
 
 auto thing_submerged_pct_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int

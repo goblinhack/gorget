@@ -59,7 +59,7 @@ void thing_dbg(Thingp t, const char *fmt, ...)
   // Filter to interesting things
   //
   if (! thing_is_loggable(t)) {
-    //    return;
+    return;
   }
 
   va_list args = {};

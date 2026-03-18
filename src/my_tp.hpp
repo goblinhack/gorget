@@ -461,7 +461,6 @@ class Tp;
 [[nodiscard]] auto tp_find(TpId id) -> Tpp;
 [[nodiscard]] auto tp_first_tile(class Tp *tp, ThingAnim val) -> Tilep;
 [[nodiscard]] auto tp_first(ThingFlag f) -> Tpp;
-[[nodiscard]] auto tp_flag(Tpp tp, ThingFlag f) -> int;
 [[nodiscard]] auto tp_health_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_health_max_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_id_get(Tpp tp) -> TpId;

@@ -38,9 +38,6 @@ auto thing_vision_blocker(Gamep g, Levelsp v, Levelp l, Thingp it) -> bool
   }
 
   if (thing_is_obs_to_vision(it)) {
-    if (compiler_unused) {
-      THING_DBG(it, "block");
-    }
     return true;
   }
 
