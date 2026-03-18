@@ -179,6 +179,7 @@ auto tp_load_player() -> bool
   // begin sort marker1 {
   thing_description_set(tp, tp_player_description_get);
   thing_detail_set(tp, tp_player_detail_get);
+  thing_on_damage_set(tp, tp_player_on_damage);
   thing_on_fall_begin_set(tp, tp_player_on_fall_begin);
   thing_on_fall_end_set(tp, tp_player_on_fall_end);
   thing_on_jump_end_set(tp, tp_player_on_jump_end);
@@ -186,7 +187,6 @@ auto tp_load_player() -> bool
   thing_on_level_leave_set(tp, tp_player_level_leave);
   thing_on_level_populated_set(tp, tp_player_level_populated);
   thing_on_moved_set(tp, tp_player_on_moved);
-  thing_on_damage_set(tp, tp_player_on_damage);
   thing_on_teleported_set(tp, tp_player_on_teleported);
   thing_on_tick_begin_set(tp, tp_player_tick_begin);
   thing_on_tick_end_set(tp, tp_player_tick_end);
