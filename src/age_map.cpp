@@ -9,7 +9,7 @@
 #include "my_level_inlines.hpp"
 #include "my_main.hpp"
 
-void age_map_incr(AgeMap *m, const spoint &pov, const uint8_t val)
+void age_map_incr(AgeMap *m, const bpoint &pov, const uint8_t val)
 {
 #ifdef DEBUG_BUILD
   if (is_oob(pov)) [[unlikely]] {
@@ -23,7 +23,7 @@ void age_map_incr(AgeMap *m, const spoint &pov, const uint8_t val)
   }
 }
 
-[[nodiscard]] auto age_map_get(const AgeMap *m, const spoint &pov) -> uint8_t
+[[nodiscard]] auto age_map_get(const AgeMap *m, const bpoint &pov) -> uint8_t
 {
 #ifdef DEBUG_BUILD
   if (is_oob(pov)) [[unlikely]] {

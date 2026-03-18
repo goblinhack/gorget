@@ -235,7 +235,7 @@ auto thing_get_direction(Gamep g, Levelsp v, Levelp l, Thingp me) -> fpoint
 //
 // Handles manual and mouse follow moves
 //
-auto thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool
+auto thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool
 {
   TRACE();
 
@@ -268,7 +268,7 @@ auto thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool
 //
 // Handles shoving to a location. We can'me move there yet.
 //
-auto thing_shove_to(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool
+auto thing_shove_to(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool
 {
   TRACE();
 
@@ -296,7 +296,7 @@ auto thing_shove_to(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool
 //
 // This is used for teleporting, falling etc...
 //
-auto thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp me, spoint to) -> bool
+auto thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp me, bpoint to) -> bool
 {
   TRACE();
 

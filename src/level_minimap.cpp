@@ -53,7 +53,7 @@ static void level_minimap_world_update(Gamep g, Levelsp v, const bool level_sele
         color  c              = BLACK;
         Levelp level_at_coord = nullptr;
 
-        spoint const p(x, y);
+        bpoint const p(x, y);
         auto        *s = level_select_get(g, v, p);
         if (s->is_set == 0U) {
           //
@@ -207,7 +207,7 @@ static void level_minimap_levels_update(Gamep g, Levelsp v, Levelp l, const bool
     for (auto y = 0; y < MAP_HEIGHT; y++) {
       for (auto x = 0; x < MAP_WIDTH; x++) {
         color        c = BLACK;
-        spoint const p(x, y);
+        bpoint const p(x, y);
 
         if (! g_opt_debug1) {
           if (! level_has_seen_cached(g, v, l, p)) {

@@ -53,7 +53,7 @@
   bool left   = false;
   bool right  = false;
 
-  spoint p;
+  bpoint p;
   bool   found_corpse = false;
   Thingp player       = nullptr;
 

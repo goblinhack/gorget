@@ -14,7 +14,7 @@
 #include <cstring>
 #include <map>
 
-void level_update_paths_set(Gamep g, Levelsp v, Levelp l, const spoint &p)
+void level_update_paths_set(Gamep g, Levelsp v, Levelp l, const bpoint &p)
 {
   TRACE();
 

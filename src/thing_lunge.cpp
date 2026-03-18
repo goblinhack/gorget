@@ -133,7 +133,7 @@ void thing_lunge_time_step(Gamep g, Levelsp v, Levelp l, Thingp me, int time_ste
   thing_lunge_end_check(g, v, l, me);
 }
 
-auto thing_lunge(Gamep g, Levelsp v, Levelp l, Thingp me, const spoint &to) -> bool
+auto thing_lunge(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &to) -> bool
 {
   TRACE();
 

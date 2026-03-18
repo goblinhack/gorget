@@ -39,7 +39,7 @@ static auto tp_blitzhound_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> 
       "Also make good pets.";
 }
 
-static auto tp_blitzhound_assess_tile(Gamep g, Levelsp v, Levelp l, const spoint &at, Thingp t) -> ThingEnviron
+static auto tp_blitzhound_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at, Thingp t) -> ThingEnviron
 {
   TRACE_DEBUG();
 

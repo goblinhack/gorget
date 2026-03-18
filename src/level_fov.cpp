@@ -109,7 +109,7 @@ static void level_fov_do(const short       distance_from_origin, // Polar distan
     }
 
     // Current tile is in view.
-    const spoint p(ctx.pov.x + (angle * xx) + (distance_from_origin * xy), ctx.pov.y + (angle * yx) + (distance_from_origin * yy));
+    const bpoint p(ctx.pov.x + (angle * xx) + (distance_from_origin * xy), ctx.pov.y + (angle * yx) + (distance_from_origin * yy));
 
     if (is_oob(p)) [[unlikely]] {
       continue; // Angle is out-of-bounds.

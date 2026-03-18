@@ -11,7 +11,7 @@
 #include "my_level_inlines.hpp"
 #include "my_thing_inlines.hpp"
 
-auto level_has_seen(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool
+auto level_has_seen(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE();
 

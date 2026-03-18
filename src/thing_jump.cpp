@@ -13,7 +13,7 @@
 //
 // If jumping too far, truncate the jump
 //
-static void thing_jump_truncate(Gamep g, Levelsp v, Levelp l, Thingp t, spoint &to)
+static void thing_jump_truncate(Gamep g, Levelsp v, Levelp l, Thingp t, bpoint &to)
 {
   //
   // Add some random delta for fun and some for diagonals
@@ -42,14 +42,14 @@ static void thing_jump_truncate(Gamep g, Levelsp v, Levelp l, Thingp t, spoint &
 
     fpoint const fto = make_fpoint(curr_at) + u;
 
-    to = make_spoint(fto);
+    to = make_bpoint(fto);
   }
 }
 
 //
 // Check if jumping over something we cannot
 //
-static auto thing_jump_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to) -> Thingp
+static auto thing_jump_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thingp t, bpoint to) -> Thingp
 {
   auto at        = thing_at(t);
   auto jump_path = draw_line(at, to);
@@ -66,7 +66,7 @@ static auto thing_jump_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thingp
 //
 // Handles player and monster jumps
 //
-auto thing_jump_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to, bool warn) -> bool
+auto thing_jump_to(Gamep g, Levelsp v, Levelp l, Thingp t, bpoint to, bool warn) -> bool
 {
   TRACE();
 

@@ -6,6 +6,7 @@
 #define MY_THING_HPP
 
 #include "my_age_map.hpp"
+#include "my_bpoint.hpp"
 #include "my_color.hpp"
 #include "my_dmap.hpp"
 #include "my_fov_map.hpp"
@@ -168,7 +169,7 @@ using ThingExt = struct ThingExt {
   // Holds the path as we or the monster walk it
   //
   struct {
-    spoint points[ THING_MOVE_PATH_MAX ];
+    bpoint points[ THING_MOVE_PATH_MAX ];
     int8_t size;
   } move_path;
 };
@@ -491,15 +492,15 @@ using Thing = struct Thing {
   // Previous map co-ords used for interpolation when moving. Changes when
   // the move finishes.
   //
-  spoint _moving_from;
+  bpoint _moving_from;
   //
   // Last location we were pushed onto the map.
   //
-  spoint last_pushed_at;
+  bpoint last_pushed_at;
   //
   // Where we're lunging
   //
-  spoint lunging_to;
+  bpoint lunging_to;
   //
   // Increases per tick and when it reaches 1, allows the thing to move
   //
@@ -521,16 +522,16 @@ using Thing = struct Thing {
   //
   // What we're chasing currently. Might be the player or some random tile.
   //
-  spoint _target;
+  bpoint _target;
 };
 
 // begin sort marker1 {
 [[nodiscard]] auto immediate_owner(Gamep g, Levelsp v, Levelp l, Thingp t) -> Thingp;
-[[nodiscard]] auto level_vision_blocker_at(Gamep g, Levelsp v, Levelp l, Thingp me, const spoint &at) -> bool;
+[[nodiscard]] auto level_vision_blocker_at(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &at) -> bool;
 [[nodiscard]] auto monst_state_to_string(MonstState state) -> std::string;
 [[nodiscard]] auto monst_state(Gamep g, Levelsp v, Levelp l, Thingp me) -> MonstState;
-[[nodiscard]] auto player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, const spoint &to) -> bool;
-[[nodiscard]] auto player_jump(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool;
+[[nodiscard]] auto player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, const bpoint &to) -> bool;
+[[nodiscard]] auto player_jump(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool;
 [[nodiscard]] auto player_mouse_down(Gamep, Levelsp, Levelp, int x, int y, uint32_t button) -> bool;
 [[nodiscard]] auto player_move_request(Gamep g, bool up, bool down, bool left, bool right, bool fire) -> bool;
 [[nodiscard]] auto player_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
@@ -538,16 +539,16 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_age_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_age_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_age(Thingp t) -> int;
-[[nodiscard]] auto thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p) -> Thingp;
-[[nodiscard]] auto thing_and_tp_get_at_safe(Gamep g, Levelsp v, Levelp l, const spoint &p, int slot, Tpp *out) -> Thingp;
-[[nodiscard]] auto thing_and_tp_get_at(Gamep g, Levelsp v, Levelp l, const spoint &p, int slot, Tpp *out) -> Thingp;
-[[nodiscard]] auto thing_at(Thingp t) -> spoint;
-[[nodiscard]] auto thing_attack_at(Gamep g, Levelsp v, Levelp l, Thingp me, const spoint &attack_at) -> bool;
-[[nodiscard]] auto thing_can_move_to_ai(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool;
-[[nodiscard]] auto thing_can_move_to_attempt_by_opening(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool;
-[[nodiscard]] auto thing_can_move_to_attempt_by_shoving(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool;
-[[nodiscard]] auto thing_can_move_to_attempt(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool;
-[[nodiscard]] auto thing_can_move_to_possible(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool;
+[[nodiscard]] auto thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, bpoint p) -> Thingp;
+[[nodiscard]] auto thing_and_tp_get_at_safe(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot, Tpp *out) -> Thingp;
+[[nodiscard]] auto thing_and_tp_get_at(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot, Tpp *out) -> Thingp;
+[[nodiscard]] auto thing_at(Thingp t) -> bpoint;
+[[nodiscard]] auto thing_attack_at(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &attack_at) -> bool;
+[[nodiscard]] auto thing_can_move_to_ai(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool;
+[[nodiscard]] auto thing_can_move_to_attempt_by_opening(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool;
+[[nodiscard]] auto thing_can_move_to_attempt_by_shoving(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool;
+[[nodiscard]] auto thing_can_move_to_attempt(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool;
+[[nodiscard]] auto thing_can_move_to_possible(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool;
 [[nodiscard]] auto thing_carry_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp player_or_monst) -> bool;
 [[nodiscard]] auto thing_close(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp player_or_monst) -> bool;
 [[nodiscard]] auto thing_collect_key(Gamep g, Levelsp v, Levelp l, Thingp it, Thingp player_or_monst) -> bool;
@@ -572,16 +573,16 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp player_or_monst) -> bool;
 [[nodiscard]] auto thing_ext_struct(Gamep g, Thingp t) -> ThingExtp;
 [[nodiscard]] auto thing_find_non_inline(Gamep g, Levelsp v, ThingId id) -> Thingp;
-[[nodiscard]] auto thing_get_at_safe(Gamep g, Levelsp v, Levelp l, const spoint &p, int slot) -> Thingp;
+[[nodiscard]] auto thing_get_at_safe(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot) -> Thingp;
 [[nodiscard]] auto thing_get_direction(Gamep g, Levelsp v, Levelp l, Thingp me) -> fpoint;
 [[nodiscard]] auto thing_get_dmap(Gamep g, Levelsp v, Levelp l, Thingp me) -> Dmap *;
-[[nodiscard]] auto thing_get(Gamep g, Levelsp v, Levelp l, const spoint &p, int slot) -> Thingp;
+[[nodiscard]] auto thing_get(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot) -> Thingp;
 [[nodiscard]] auto thing_health_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_health_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_health_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_health(Thingp t) -> int;
 [[nodiscard]] auto thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &real_at) -> Thingp;
-[[nodiscard]] auto thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const spoint &at) -> Thingp;
+[[nodiscard]] auto thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const bpoint &at) -> Thingp;
 [[nodiscard]] auto thing_inventory_add(Gamep g, Levelsp v, Levelp l, Thingp new_item, Thingp player_or_monst) -> bool;
 [[nodiscard]] auto thing_inventory_is_empty(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
 [[nodiscard]] auto thing_inventory_item_mergeable(Gamep g, Levelsp v, Levelp l, Thingp a, Thingp b) -> bool;
@@ -827,7 +828,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_wall(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_water(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_wood(Thingp t) -> bool;
-[[nodiscard]] auto thing_jump_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to, bool warn = true) -> bool;
+[[nodiscard]] auto thing_jump_to(Gamep g, Levelsp v, Levelp l, Thingp t, bpoint to, bool warn = true) -> bool;
 [[nodiscard]] auto thing_keys_carried_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_keys_carried_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_keys_carried_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
@@ -838,8 +839,8 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_lifespan_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_lifespan(Thingp t) -> int;
 [[nodiscard]] auto thing_light_struct(Gamep g, Thingp t) -> ThingLightp;
-[[nodiscard]] auto thing_lunge(Gamep g, Levelsp v, Levelp l, Thingp me, const spoint &to) -> bool;
-[[nodiscard]] auto thing_minion_can_move_to_possible(Gamep g, Levelsp v, Levelp l, Thingp me, const spoint &to) -> bool;
+[[nodiscard]] auto thing_lunge(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &to) -> bool;
+[[nodiscard]] auto thing_minion_can_move_to_possible(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &to) -> bool;
 [[nodiscard]] auto thing_minion_choose_target_near_mob(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
 [[nodiscard]] auto thing_minion_detach_me_from_mob(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
 [[nodiscard]] auto thing_minion_get_mob_dmap(Gamep g, Levelsp v, Levelp l, Thingp me) -> Dmap *;
@@ -853,17 +854,17 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_mob_kill_all_minions(Gamep g, Levelsp v, Levelp l, Thingp mob, ThingEvent &e) -> bool;
 [[nodiscard]] auto thing_mob_minion_count_get(Gamep g, Levelsp v, Levelp l, Thingp mob) -> int;
 [[nodiscard]] auto thing_mob_spawn_a_minion(Gamep g, Levelsp v, Levelp l, Thingp mob, Tpp tp_minion) -> Thingp;
-[[nodiscard]] auto thing_move_path_apply(Gamep g, Levelsp v, Levelp l, Thingp t, std::vector< spoint > &move_path) -> bool;
-[[nodiscard]] auto thing_move_path_pop(Gamep g, Levelsp v, Levelp l, Thingp t, spoint &out) -> bool;
+[[nodiscard]] auto thing_move_path_apply(Gamep g, Levelsp v, Levelp l, Thingp t, std::vector< bpoint > &move_path) -> bool;
+[[nodiscard]] auto thing_move_path_pop(Gamep g, Levelsp v, Levelp l, Thingp t, bpoint &out) -> bool;
 [[nodiscard]] auto thing_move_path_size(Gamep g, Levelsp v, Levelp l, Thingp t) -> int;
-[[nodiscard]] auto thing_move_path_target(Gamep g, Levelsp v, Levelp l, Thingp t, spoint &out) -> bool;
+[[nodiscard]] auto thing_move_path_target(Gamep g, Levelsp v, Levelp l, Thingp t, bpoint &out) -> bool;
 [[nodiscard]] auto thing_move_remaining_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_move_remaining_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_move_remaining_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_move_remaining(Thingp t) -> int;
 [[nodiscard]] auto thing_move_to_next(Gamep, Levelsp, Levelp, Thingp) -> bool;
-[[nodiscard]] auto thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool;
-[[nodiscard]] auto thing_moving_from(Thingp t) -> spoint;
+[[nodiscard]] auto thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool;
+[[nodiscard]] auto thing_moving_from(Thingp t) -> bpoint;
 [[nodiscard]] auto thing_name_a_or_an(Thingp t) -> std::string;
 [[nodiscard]] auto thing_name_a_or_an(Thingp, ThingTextFlags) -> std::string;
 [[nodiscard]] auto thing_name_apostrophize(Thingp t) -> std::string;
@@ -874,7 +875,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_name_pluralize(Thingp, ThingTextFlags) -> std::string;
 [[nodiscard]] auto thing_name_short_the(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags flags = 0) -> std::string;
 [[nodiscard]] auto thing_name_short(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags flags = 0) -> std::string;
-[[nodiscard]] auto thing_old_at(Thingp t) -> spoint;
+[[nodiscard]] auto thing_old_at(Thingp t) -> bpoint;
 [[nodiscard]] auto thing_on_same_level_as_player(Gamep g, Levelsp v, Thingp t) -> bool;
 [[nodiscard]] auto thing_open(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp player_or_monst) -> bool;
 [[nodiscard]] auto thing_player_level(Gamep g) -> Levelp;
@@ -889,7 +890,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_projectile_detach_all_fired(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
 [[nodiscard]] auto thing_projectile_detach_me_from_firer(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
 [[nodiscard]] auto thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, fpoint target) -> bool;
-[[nodiscard]] auto thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, spoint target) -> bool;
+[[nodiscard]] auto thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, bpoint target) -> bool;
 [[nodiscard]] auto thing_projectile_fired_by_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> Thingp;
 [[nodiscard]] auto thing_projectile_get_direction(Gamep g, Levelsp v, Levelp l, Thingp t) -> fpoint;
 [[nodiscard]] auto thing_projectile_kill_all_fired(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e) -> bool;
@@ -899,18 +900,18 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_projectile_max(Thingp t) -> int;
 [[nodiscard]] auto thing_push(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
 [[nodiscard]] auto thing_real_at(Thingp t) -> fpoint;
-[[nodiscard]] auto thing_shove_handle(Gamep g, Levelsp v, Levelp l, Thingp shover, spoint at) -> bool;
-[[nodiscard]] auto thing_shove_to(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool;
+[[nodiscard]] auto thing_shove_handle(Gamep g, Levelsp v, Levelp l, Thingp shover, bpoint at) -> bool;
+[[nodiscard]] auto thing_shove_to(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool;
 [[nodiscard]] auto thing_spawn_a_projectile(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp tp_projectile) -> Thingp;
 [[nodiscard]] auto thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &at) -> Thingp;
-[[nodiscard]] auto thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, const spoint &at) -> Thingp;
+[[nodiscard]] auto thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, const bpoint &at) -> Thingp;
 [[nodiscard]] auto thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp thing_at) -> Thingp;
 [[nodiscard]] auto thing_speed_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_speed(Thingp t) -> int;
 [[nodiscard]] auto thing_submerged_pct_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_submerged_pct_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_submerged_pct_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
-[[nodiscard]] auto thing_target(Thingp t) -> spoint;
+[[nodiscard]] auto thing_target(Thingp t) -> bpoint;
 [[nodiscard]] auto thing_teleport_handle(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
 [[nodiscard]] auto thing_temperature_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_temperature_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
@@ -1000,8 +1001,8 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_variant(Thingp t) -> int;
 [[nodiscard]] auto thing_vision_blocker(Gamep g, Levelsp v, Levelp l, Thingp it) -> bool;
 [[nodiscard]] auto thing_vision_blocker(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it) -> bool;
-[[nodiscard]] auto thing_vision_can_see_tile(Gamep g, Levelsp v, Levelp l, Thingp t, spoint p) -> bool;
-[[nodiscard]] auto thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp me, spoint to) -> bool;
+[[nodiscard]] auto thing_vision_can_see_tile(Gamep g, Levelsp v, Levelp l, Thingp t, bpoint p) -> bool;
+[[nodiscard]] auto thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp me, bpoint to) -> bool;
 [[nodiscard]] auto thing_weight_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_weight(Thingp t) -> int;
 [[nodiscard]] auto to_death_reason_string(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e) -> std::string;
@@ -1012,7 +1013,7 @@ using Thing = struct Thing {
 // end sort marker1 }
 
 // begin sort marker2 {
-auto astar_solve(Gamep g, Levelsp v, Levelp l, Thingp me, spoint src, spoint dst) -> std::vector< spoint >;
+auto astar_solve(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint src, bpoint dst) -> std::vector< bpoint >;
 void level_botcon(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
 void level_con(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
 void level_dbg(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
@@ -1034,7 +1035,7 @@ void player_warp_to_specific_level(Gamep g, Levelsp v, LevelNum level_num);
 void thing_anim_init(Gamep g, Levelsp v, Levelp l, Thingp t, ThingAnim anim_type);
 void thing_anim_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, int time_step);
 void thing_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, const fpoint &val);
-void thing_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, const spoint &val);
+void thing_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, const bpoint &val);
 void thing_blit_text(Gamep g, Levelsp v, Levelp l, spoint tl, spoint br, std::string const &text, color fg, bool outline);
 void thing_botcon(Thingp t, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void thing_can_see_dump(Gamep g, Levelsp v, Levelp l, Thingp t);
@@ -1113,8 +1114,8 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me);
 void thing_monst_tick(Gamep g, Levelsp v, Levelp l, Thingp me);
 void thing_move_or_jump_finish(Gamep g, Levelsp v, Levelp l, Thingp me);
 void thing_move_path_reset(Gamep g, Levelsp v, Levelp l, Thingp t);
-void thing_moving_from_set(Thingp t, const spoint &val);
-void thing_path_shorten(Gamep g, Levelsp v, Levelp l, Thingp t, std::vector< spoint > &path);
+void thing_moving_from_set(Thingp t, const bpoint &val);
+void thing_path_shorten(Gamep g, Levelsp v, Levelp l, Thingp t, std::vector< bpoint > &path);
 void thing_pix_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, const spoint &val);
 void thing_pix_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, short x, short y);
 void thing_player_event_loop(Gamep g, Levelsp v, Levelp l);
@@ -1124,7 +1125,7 @@ void thing_projectile_move(Gamep g, Levelsp v, Levelp l, Thingp t, float dt);
 void thing_set_dir_from_delta(Thingp me, int dx, int dy);
 void thing_sound_play(Gamep g, Levelsp v, Levelp l, Thingp t, const std::string &alias);
 void thing_stats_dump(Gamep g, Levelsp v);
-void thing_target_set(Gamep g, Levelsp v, Levelp l, Thingp t, const spoint &val);
+void thing_target_set(Gamep g, Levelsp v, Levelp l, Thingp t, const bpoint &val);
 void thing_temperature_damage_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thingp t, int n);
 void thing_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thingp t, int n);
 void thing_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t);
@@ -1143,10 +1144,10 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp t, WidPopup *parent, in
 void wid_unset_thing_context(Gamep g, Levelsp v, Widp w, Thingp t);
 // end sort marker2 }
 
-void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, const spoint &p, Tpp tp_maybe_null, Thingp t_maybe_null, spoint &tl,
+void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp_maybe_null, Thingp t_maybe_null, spoint &tl,
                                  spoint &br, uint16_t *tile_index);
 
-void thing_display(Gamep g, Levelsp v, Levelp l, const spoint &p, Tpp tp, Thingp t_maybe_null, spoint tl, spoint br, uint16_t tile_index,
+void thing_display(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp t_maybe_null, spoint tl, spoint br, uint16_t tile_index,
                    FboEnum fbo);
 
 #define FOR_ALL_MINION_SLOTS(_g_, _v_, _l_, _mob_, _slot_, _minion_)                                                                       \

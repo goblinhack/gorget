@@ -89,8 +89,8 @@ auto thing_minion_detach_me_from_mob(Gamep g, Levelsp v, Levelp l, Thingp me) ->
 // The points are arranged in a radius around the dmap goal, which was
 // what was presumably used to create the dmap.
 //
-[[nodiscard]] static auto thing_minion_get_mob_dmap_target_cand(Gamep g, Levelsp v, Levelp l, Thingp me, spoint dmap_goal, Dmap *dmap,
-                                                                int radius, spoint &target) -> bool
+[[nodiscard]] static auto thing_minion_get_mob_dmap_target_cand(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint dmap_goal, Dmap *dmap,
+                                                                int radius, bpoint &target) -> bool
 {
   TRACE();
 
@@ -157,7 +157,7 @@ auto thing_minion_choose_target_near_mob(Gamep g, Levelsp v, Levelp l, Thingp me
   //
   // Keep trying to find a target
   //
-  spoint target;
+  bpoint target;
   int    tries = 1;
 
   while (tries-- > 0) {
@@ -188,7 +188,7 @@ auto thing_minion_choose_target_near_mob(Gamep g, Levelsp v, Levelp l, Thingp me
 //
 // We do not change direction upon this attempt; purely a check only
 //
-auto thing_minion_can_move_to_possible(Gamep g, Levelsp v, Levelp l, Thingp me, const spoint &to) -> bool
+auto thing_minion_can_move_to_possible(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &to) -> bool
 {
   TRACE();
 

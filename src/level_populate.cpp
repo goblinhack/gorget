@@ -80,7 +80,7 @@ auto level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int
       auto         offset = (w * y) + x;
       auto         c      = in[ offset ];
       Tpp          tp     = nullptr;
-      spoint const at(x, y);
+      bpoint const at(x, y);
 
       l->debug[ x ][ y ] = c;
 
@@ -322,12 +322,12 @@ auto level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int
         if (compiler_unused) {
           if (tp == tp_player) {
             {
-              if (thing_spawn(g, v, l, tp_random(is_trap), at + spoint(1, 0)) == nullptr) {
+              if (thing_spawn(g, v, l, tp_random(is_trap), at + bpoint(1, 0)) == nullptr) {
                 return false;
               }
             }
             {
-              if (thing_spawn(g, v, l, tp_random(is_treasure), at + spoint(2, 0)) == nullptr) {
+              if (thing_spawn(g, v, l, tp_random(is_treasure), at + bpoint(2, 0)) == nullptr) {
                 return false;
               }
             }

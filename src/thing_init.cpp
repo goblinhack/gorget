@@ -11,7 +11,7 @@ auto thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &real_at) -> 
 {
   TRACE();
 
-  auto at = make_spoint(real_at);
+  auto at = make_bpoint(real_at);
 
   auto *t = thing_alloc(g, v, l, tp, at);
   if (t == nullptr) {
@@ -125,4 +125,4 @@ auto thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &real_at) -> 
   return t;
 }
 
-auto thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const spoint &at) -> Thingp { return thing_init(g, v, l, tp, make_fpoint(at)); }
+auto thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const bpoint &at) -> Thingp { return thing_init(g, v, l, tp, make_fpoint(at)); }

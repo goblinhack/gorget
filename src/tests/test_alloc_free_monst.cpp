@@ -36,11 +36,11 @@
       }
 
       level_num++;
-      game_test_init_level(g, v, &l, level_num, spoint(X, Y), w, h, start.c_str());
+      game_test_init_level(g, v, &l, level_num, bpoint(X, Y), w, h, start.c_str());
 
       for (auto x = 0; x < MAP_WIDTH; x++) {
         for (auto y = 0; y < MAP_HEIGHT; y++) {
-          if (thing_spawn(g, v, l, tp_random(is_monst_group_easy), spoint(x, y)) == nullptr) {
+          if (thing_spawn(g, v, l, tp_random(is_monst_group_easy), bpoint(x, y)) == nullptr) {
             break;
           }
 

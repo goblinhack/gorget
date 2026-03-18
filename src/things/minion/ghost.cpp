@@ -27,7 +27,7 @@ static auto tp_ghost_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::
       UI_INFO2_FMT_STR "Beware, such spirits can traverse chasms and float through solid rock.";
 }
 
-static auto tp_ghost_assess_tile(Gamep g, Levelsp v, Levelp l, const spoint &at, Thingp t) -> ThingEnviron
+static auto tp_ghost_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at, Thingp t) -> ThingEnviron
 {
   TRACE_DEBUG();
 

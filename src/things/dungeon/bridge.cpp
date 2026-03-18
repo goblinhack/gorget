@@ -29,8 +29,8 @@ static void thing_bridge_replace(Gamep g, Levelsp v, Levelp l, Thingp t)
   // Replace the bridge with the most populous surrounding hazard
   //
   {
-    const std::initializer_list< spoint > points = {
-        spoint(-1, -1), spoint(1, -1), spoint(0, -1), spoint(-1, 0), spoint(1, 0), spoint(0, 0), spoint(-1, 1), spoint(1, 1), spoint(0, 1),
+    const std::initializer_list< bpoint > points = {
+        bpoint(-1, -1), bpoint(1, -1), bpoint(0, -1), bpoint(-1, 0), bpoint(1, 0), bpoint(0, 0), bpoint(-1, 1), bpoint(1, 1), bpoint(0, 1),
     };
 
     auto lava_count  = 0;

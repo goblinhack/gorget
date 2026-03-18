@@ -461,7 +461,7 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
 //
 // Return true on the event being consumed
 //
-auto player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, const spoint &to) -> bool
+auto player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, const bpoint &to) -> bool
 {
   auto *me = thing_player(g);
   if (me == nullptr) {
@@ -527,7 +527,7 @@ auto player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, con
 //
 // Return true on a successful move (or a popup asking more info)
 //
-[[nodiscard]] static auto player_move_try(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to, bool need_path) -> bool
+[[nodiscard]] static auto player_move_try(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to, bool need_path) -> bool
 {
   THING_DBG(me, "move try");
 
@@ -538,7 +538,7 @@ auto player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, con
     THING_DBG(me, "move try: can move to");
 
     if (need_path) {
-      std::vector< spoint > move_path;
+      std::vector< bpoint > move_path;
       move_path.push_back(to);
       player_state_change(g, v, l, PLAYER_STATE_PATH_REQUESTED);
       level_cursor_copy_path_to_player(g, v, l, move_path);
@@ -557,7 +557,7 @@ auto player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, con
     THING_DBG(me, "move try: can move to by shoving");
 
     if (need_path) {
-      std::vector< spoint > move_path;
+      std::vector< bpoint > move_path;
       move_path.push_back(to);
       player_state_change(g, v, l, PLAYER_STATE_PATH_REQUESTED);
       level_cursor_copy_path_to_player(g, v, l, move_path);
@@ -628,7 +628,7 @@ static void player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy)
   }
 
   auto         at = thing_at(me);
-  spoint const to(at.x + dx, at.y + dy);
+  bpoint const to(at.x + dx, at.y + dy);
 
   (void) player_move_try(g, v, l, me, to, true);
 
@@ -682,13 +682,13 @@ void player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what)
 
   thing_set_dir_from_delta(me, dx, dy);
 
-  spoint target;
+  bpoint target;
 
   if (v->cursor_visible) {
     target = v->cursor_at;
   } else {
     fpoint const delta = thing_get_direction(g, v, l, me);
-    target             = make_spoint(thing_real_at(me) + delta);
+    target             = make_bpoint(thing_real_at(me) + delta);
   }
 
   player_move_requests_reset(g, v);
@@ -973,7 +973,7 @@ void player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
 //
 // Handle me jumping
 //
-auto player_jump(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool
+auto player_jump(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool
 {
   TRACE();
 
@@ -1053,7 +1053,7 @@ auto player_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
   //
   // Get the next tile to move to
   //
-  spoint move_next = {};
+  bpoint move_next = {};
   if (! thing_move_path_pop(g, v, l, me, move_next)) {
     //
     // If could not pop, then no path is left
@@ -1062,7 +1062,7 @@ auto player_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
     return false;
   }
 
-  spoint move_destination = {};
+  bpoint move_destination = {};
   if (thing_move_path_target(g, v, l, me, move_destination)) {
     if (level_is_cursor_path_hazard(g, v, l, move_next) != nullptr) {
       if (thing_jump_to(g, v, l, me, move_destination)) {

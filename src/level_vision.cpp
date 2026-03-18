@@ -65,7 +65,7 @@ void level_vision_calculate_all(Gamep g, Levelsp v, Levelp l)
 //
 // Something blocking the fov?
 //
-auto level_vision_blocker_at(Gamep g, Levelsp v, Levelp l, Thingp me, const spoint &at) -> bool
+auto level_vision_blocker_at(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &at) -> bool
 {
   FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, at)
   {

@@ -23,7 +23,7 @@ void level_tick_chasm(Gamep g, Levelsp v, Levelp l)
 
   FOR_ALL_MAP_POINTS(g, v, l, x, y)
   {
-    spoint p(x, y);
+    bpoint p(x, y);
 
     if (level_is_chasm(g, v, l, p) == nullptr) {
       continue;

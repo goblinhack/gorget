@@ -91,7 +91,7 @@
 
   bool   found_corpse = false;
   Thingp player       = nullptr;
-  spoint p;
+  bpoint p;
 
   //
   // Find the player

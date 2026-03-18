@@ -341,8 +341,8 @@ auto thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what,
   //
   // Set my direction based on where I fire
   //
-  spoint const dir    = make_spoint(proj_at);
-  spoint const source = thing_at(me);
+  bpoint const dir    = make_bpoint(proj_at);
+  bpoint const source = thing_at(me);
   thing_set_dir_from_delta(me, dir.x - source.x, dir.y - source.y);
 
   thing_is_moving_set(g, v, l, projectile);
@@ -356,7 +356,7 @@ auto thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what,
   return true;
 }
 
-auto thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const spoint target) -> bool
+auto thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const bpoint target) -> bool
 {
   return thing_projectile_fire_at(g, v, l, me, what, make_fpoint(target));
 }

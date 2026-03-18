@@ -89,7 +89,7 @@
     // Check the mob is alive
     //
     TEST_LOG(t, "check mob is alive");
-    auto p        = thing_at(player) + spoint(1, 0);
+    auto p        = thing_at(player) + bpoint(1, 0);
     bool found_it = false;
 
     FOR_ALL_THINGS_AT(g, v, l, it, p)

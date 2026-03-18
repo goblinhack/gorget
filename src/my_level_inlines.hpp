@@ -5,6 +5,8 @@
 #ifndef MY_LEVEL_INLINES_HPP
 #define MY_LEVEL_INLINES_HPP
 
+#include "my_bpoint.hpp"
+#include "my_fpoint.hpp"
 #include "my_level.hpp"
 
 static inline auto is_oob(fpoint p) -> bool
@@ -14,7 +16,7 @@ static inline auto is_oob(fpoint p) -> bool
          (p.y >= static_cast< float >(MAP_HEIGHT));
 }
 
-static inline auto is_oob(spoint p) -> bool
+static inline auto is_oob(bpoint p) -> bool
 { //
   return (p.x < 0) || (p.y < 0) || (p.x >= MAP_WIDTH) || (p.y >= MAP_HEIGHT);
 }
@@ -34,7 +36,7 @@ static inline auto is_oob_or_border(fpoint p) -> bool
          (p.y >= static_cast< float >(MAP_HEIGHT - BORDER_CHARS));
 }
 
-static inline auto is_oob_or_border(spoint p) -> bool
+static inline auto is_oob_or_border(bpoint p) -> bool
 {                                             //
   return (p.x < BORDER_CHARS) ||              //
          (p.y < BORDER_CHARS) ||              //
@@ -53,7 +55,7 @@ static inline auto is_oob_or_border(int x, int y) -> bool
 //
 // Has the player seen this tile?
 //
-static inline auto level_has_seen_cached(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool
+static inline auto level_has_seen_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   return l->player_has_seen_tile_cache[ p.x ][ p.y ] != 0;
 }

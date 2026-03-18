@@ -50,7 +50,7 @@ void thing_dmap(Gamep g, Levelsp v, Levelp l, Thingp me, bool reverse)
 
   for (auto y = miny; y < maxy; y++) {
     for (auto x = minx; x < maxx; x++) {
-      spoint const p(x, y);
+      bpoint const p(x, y);
 
       if (! thing_can_move_to_ai(g, v, l, me, p)) {
         ext->dmap.val[ x ][ y ] = DMAP_IS_WALL;
@@ -65,8 +65,8 @@ void thing_dmap(Gamep g, Levelsp v, Levelp l, Thingp me, bool reverse)
     ext->dmap.val[ target.x ][ target.y ] = DMAP_IS_GOAL;
   }
 
-  auto dmap_start = spoint(minx, miny);
-  auto dmap_end   = spoint(maxx, maxy);
+  auto dmap_start = bpoint(minx, miny);
+  auto dmap_end   = bpoint(maxx, maxy);
 
   if (compiler_unused) {
     dmap_print(&ext->dmap, target, dmap_start, dmap_end);

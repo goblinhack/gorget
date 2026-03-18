@@ -716,7 +716,7 @@ void thing_display_get_tile_info_set(Tpp tp, thing_display_get_tile_info_t callb
   tp->display_get_tile_info = callback;
 }
 
-auto thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, const spoint &p, Tpp tp, Thingp t_maybe_null) -> Tilep
+auto thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp t_maybe_null) -> Tilep
 {
   TRACE_DEBUG();
 
@@ -740,7 +740,7 @@ void thing_assess_tile_set(Tpp tp, thing_assess_tile_t callback)
   tp->assess_tile = callback;
 }
 
-auto thing_assess_tile(Gamep g, Levelsp v, Levelp l, const spoint &p, Thingp me) -> ThingEnviron
+auto thing_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> ThingEnviron
 {
   TRACE_DEBUG();
 

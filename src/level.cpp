@@ -133,7 +133,7 @@ auto level_match_contents(Gamep g, Levelsp v, Levelp l, Testp t, int w, int h, c
       if (x < w) {
         continue;
       }
-      spoint p(x, y);
+      bpoint p(x, y);
 
       FOR_ALL_THINGS_AT(g, v, l, unused, p)
       {
@@ -394,7 +394,7 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
   memset(l, 0, SIZEOF(*l));
 }
 
-auto level_populate_thing_id_at(Gamep g, Levelsp v, Levelp l, const spoint &p, int slot, ThingId id) -> bool
+auto level_populate_thing_id_at(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot, ThingId id) -> bool
 {
   TRACE();
 
@@ -406,7 +406,7 @@ auto level_populate_thing_id_at(Gamep g, Levelsp v, Levelp l, const spoint &p, i
   return true;
 }
 
-auto level_get_thing_id_at(Gamep g, Levelsp v, Levelp l, const spoint &p, int slot) -> ThingId
+auto level_get_thing_id_at(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot) -> ThingId
 {
   TRACE();
 
@@ -498,7 +498,7 @@ auto level_find_all(Gamep g, Levelsp v, Levelp l, ThingFlag f) -> std::vector< T
   return out;
 }
 
-auto level_find_all(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> std::vector< Thingp >
+auto level_find_all(Gamep g, Levelsp v, Levelp l, ThingFlag f, bpoint p) -> std::vector< Thingp >
 {
   TRACE();
 
@@ -545,14 +545,14 @@ void level_update_flags(Gamep g, Levelsp v, Levelp l)
   }
 }
 
-auto level_flag_cached(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> bool
+auto level_flag_cached(Gamep g, Levelsp v, Levelp l, ThingFlag f, bpoint p) -> bool
 {
   TRACE_DEBUG();
 
   return l->flag[ p.x ][ p.y ][ f ] != 0;
 }
 
-auto level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> Thingp
+auto level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, bpoint p) -> Thingp
 {
   TRACE_DEBUG();
 
@@ -595,7 +595,7 @@ auto level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp at) -> Thingp
 //
 // Filter to only alive things
 //
-auto level_alive(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> Thingp
+auto level_alive(Gamep g, Levelsp v, Levelp l, ThingFlag f, bpoint p) -> Thingp
 {
   TRACE();
 
@@ -646,7 +646,7 @@ auto level_alive(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp at) -> Thingp
 //
 // Flag + is open
 //
-auto level_open(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> Thingp
+auto level_open(Gamep g, Levelsp v, Levelp l, ThingFlag f, bpoint p) -> Thingp
 {
   TRACE();
 
@@ -697,7 +697,7 @@ auto level_open(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp at) -> Thingp
 //
 // Count things
 //
-auto level_count(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p) -> int
+auto level_count(Gamep g, Levelsp v, Levelp l, ThingFlag f, bpoint p) -> int
 {
   TRACE();
 
@@ -742,7 +742,7 @@ auto level_count(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp t) -> int
   return level_count(g, v, l, f, thing_at(t));
 }
 
-auto level_is_same_obj_type_at(Gamep g, Levelsp v, Levelp l, const spoint &p, Tpp tp) -> bool
+auto level_is_same_obj_type_at(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp) -> bool
 {
   TRACE();
 

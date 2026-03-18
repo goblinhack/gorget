@@ -6,7 +6,7 @@
 #define MY_AGE_MAP_HPP
 
 #include "my_game_defs.hpp"
-#include "my_spoint.hpp"
+#include "my_bpoint.hpp"
 #include "my_types.hpp"
 
 //
@@ -19,7 +19,7 @@ using AgeMap = struct AgeMap {
   uint8_t val[ MAP_WIDTH ][ MAP_HEIGHT ];
 };
 
-void               age_map_incr(AgeMap *m, const spoint &pov, uint8_t val);
-[[nodiscard]] auto age_map_get(const AgeMap *m, const spoint &pov) -> uint8_t;
+void               age_map_incr(AgeMap *m, const bpoint &pov, uint8_t val);
+[[nodiscard]] auto age_map_get(const AgeMap *m, const bpoint &pov) -> uint8_t;
 
 #endif // MY_AGE_MAP_HPP

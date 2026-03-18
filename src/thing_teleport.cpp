@@ -7,7 +7,7 @@
 #include "my_level_inlines.hpp"
 #include "my_thing_inlines.hpp"
 
-[[nodiscard]] static auto teleport_find_other(Gamep g, Levelsp v, Levelp l, const spoint &in, spoint &out) -> bool
+[[nodiscard]] static auto teleport_find_other(Gamep g, Levelsp v, Levelp l, const bpoint &in, bpoint &out) -> bool
 {
   TRACE();
 
@@ -44,14 +44,14 @@
 //
 // Find a spot next to the teleport where we can land.
 //
-[[nodiscard]] static auto teleport_find_landing_spot(Gamep g, Levelsp v, Levelp l, Thingp t, spoint &out) -> bool
+[[nodiscard]] static auto teleport_find_landing_spot(Gamep g, Levelsp v, Levelp l, Thingp t, bpoint &out) -> bool
 {
   TRACE();
 
   auto   outf  = make_fpoint(out);
   fpoint delta = thing_real_at(t) - make_fpoint(thing_old_at(t));
   fpoint tof   = outf + delta;
-  spoint to    = make_spoint(tof);
+  bpoint to    = make_bpoint(tof);
 
   //
   // No need to check for collisions for things like fireballs otherwise we will
@@ -60,22 +60,22 @@
   if (thing_is_projectile(t)) {
     delta = thing_get_direction(g, v, l, t);
     tof   = outf + delta;
-    to    = make_spoint(tof);
+    to    = make_bpoint(tof);
     out   = to;
-    THING_DBG(t, "teleport projectile, delta %f,%f spoint %d,%d", delta.x, delta.y, to.x, to.y);
+    THING_DBG(t, "teleport projectile, delta %f,%f bpoint %d,%d", delta.x, delta.y, to.x, to.y);
     return true;
   }
 
   if ((delta == fpoint(0, 0)) || (level_is_obs_to_teleporting_onto(g, v, l, to) != nullptr)) {
     delta = thing_get_direction(g, v, l, t);
     tof   = outf + delta;
-    to    = make_spoint(tof);
+    to    = make_bpoint(tof);
   }
 
   if ((delta == fpoint(0, 0)) || (level_is_obs_to_teleporting_onto(g, v, l, to) != nullptr)) {
     delta = thing_get_direction(g, v, l, t);
     tof   = outf + delta;
-    to    = make_spoint(tof);
+    to    = make_bpoint(tof);
   }
 
   if ((delta == fpoint(0, 0)) || (level_is_obs_to_teleporting_onto(g, v, l, to) != nullptr)) {
@@ -89,7 +89,7 @@
     for (auto d : deltas) {
       delta = d;
       tof   = outf + delta;
-      to    = make_spoint(tof);
+      to    = make_bpoint(tof);
       if (level_is_obs_to_teleporting_onto(g, v, l, to) == nullptr) {
         break;
       }
@@ -97,10 +97,10 @@
   }
 
   tof = outf + delta;
-  to  = make_spoint(tof);
+  to  = make_bpoint(tof);
 
   if (compiler_unused) {
-    THING_DBG(t, "delta %f,%f spoint %d,%d out %d,%d", delta.x, delta.y, to.x, to.y, out.x, out.y);
+    THING_DBG(t, "delta %f,%f bpoint %d,%d out %d,%d", delta.x, delta.y, to.x, to.y, out.x, out.y);
   }
 
   if (level_is_obs_to_teleporting_onto(g, v, l, to) != nullptr) {
@@ -144,7 +144,7 @@ auto thing_teleport_handle(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool
     return false;
   }
 
-  spoint to;
+  bpoint to;
   if (! teleport_find_other(g, v, l, thing_at(t), to)) {
     THING_DBG(t, "teleport, no; none found");
     return false;

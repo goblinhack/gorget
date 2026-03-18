@@ -13,7 +13,7 @@
 //
 // Ok to land on this spot?
 //
-[[nodiscard]] static auto thing_ok_landing_spot(Gamep g, Levelsp v, Levelp l, const spoint &p) -> bool
+[[nodiscard]] static auto thing_ok_landing_spot(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE();
 
@@ -32,7 +32,7 @@
 // Try to find a spot close to where we landed that is ok to exist in.
 // i.e. no landing inside walls.
 //
-static auto thing_choose_landing_spot(Gamep g, Levelsp v, Levelp l, Thingp t) -> spoint
+static auto thing_choose_landing_spot(Gamep g, Levelsp v, Levelp l, Thingp t) -> bpoint
 {
   TRACE();
 
@@ -46,7 +46,7 @@ static auto thing_choose_landing_spot(Gamep g, Levelsp v, Levelp l, Thingp t) ->
 
     for (auto dx = -dist; dx <= dist; dx++) {
       for (auto dy = -dist; dy <= dist; dy++) {
-        spoint q;
+        bpoint q;
         q.x = at.x + dx;
         q.y = at.y + dy;
 

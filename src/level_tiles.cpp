@@ -70,7 +70,7 @@
 ENUM_DEF_H(IS_JOIN_ENUM, is_join_enum)
 ENUM_DEF_C(IS_JOIN_ENUM, is_join_enum)
 
-static void level_assign_tiles_at(Gamep g, Levelsp v, Levelp l, const spoint &p)
+static void level_assign_tiles_at(Gamep g, Levelsp v, Levelp l, const bpoint &p)
 {
   TRACE();
 
@@ -88,15 +88,15 @@ static void level_assign_tiles_at(Gamep g, Levelsp v, Levelp l, const spoint &p)
     if (tp_is_tiled(tp)) {
       auto tile_name = tp_name(tp);
 
-      uint16_t const A = level_is_same_obj_type_at(g, v, l, spoint(x - 1, y - 1), tp) ? 1 : 0;
-      uint16_t const B = level_is_same_obj_type_at(g, v, l, spoint(x, y - 1), tp) ? 1 : 0;
-      uint16_t const C = level_is_same_obj_type_at(g, v, l, spoint(x + 1, y - 1), tp) ? 1 : 0;
-      uint16_t const D = level_is_same_obj_type_at(g, v, l, spoint(x - 1, y), tp) ? 1 : 0;
-      uint16_t const E = level_is_same_obj_type_at(g, v, l, spoint(x, y), tp) ? 1 : 0;
-      uint16_t const F = level_is_same_obj_type_at(g, v, l, spoint(x + 1, y), tp) ? 1 : 0;
-      uint16_t const G = level_is_same_obj_type_at(g, v, l, spoint(x - 1, y + 1), tp) ? 1 : 0;
-      uint16_t const H = level_is_same_obj_type_at(g, v, l, spoint(x, y + 1), tp) ? 1 : 0;
-      uint16_t const I = level_is_same_obj_type_at(g, v, l, spoint(x + 1, y + 1), tp) ? 1 : 0;
+      uint16_t const A = level_is_same_obj_type_at(g, v, l, bpoint(x - 1, y - 1), tp) ? 1 : 0;
+      uint16_t const B = level_is_same_obj_type_at(g, v, l, bpoint(x, y - 1), tp) ? 1 : 0;
+      uint16_t const C = level_is_same_obj_type_at(g, v, l, bpoint(x + 1, y - 1), tp) ? 1 : 0;
+      uint16_t const D = level_is_same_obj_type_at(g, v, l, bpoint(x - 1, y), tp) ? 1 : 0;
+      uint16_t const E = level_is_same_obj_type_at(g, v, l, bpoint(x, y), tp) ? 1 : 0;
+      uint16_t const F = level_is_same_obj_type_at(g, v, l, bpoint(x + 1, y), tp) ? 1 : 0;
+      uint16_t const G = level_is_same_obj_type_at(g, v, l, bpoint(x - 1, y + 1), tp) ? 1 : 0;
+      uint16_t const H = level_is_same_obj_type_at(g, v, l, bpoint(x, y + 1), tp) ? 1 : 0;
+      uint16_t const I = level_is_same_obj_type_at(g, v, l, bpoint(x + 1, y + 1), tp) ? 1 : 0;
 
       const uint16_t omask = (I << 8) | (H << 7) | (G << 6) | (F << 5) | (E << 4) | (D << 3) | (C << 2) | (B << 1) | (A << 0);
 
@@ -194,7 +194,7 @@ void level_assign_tiles(Gamep g, Levelsp v, Levelp l)
 
   for (auto y = 0; y < MAP_HEIGHT; y++) {
     for (auto x = 0; x < MAP_WIDTH; x++) {
-      spoint const p(x, y);
+      bpoint const p(x, y);
       level_assign_tiles_at(g, v, l, p);
     }
   }
@@ -207,7 +207,7 @@ void level_update_tiles(Gamep g, Levelsp v, Levelp l)
   for (auto y = 0; y < MAP_HEIGHT; y++) {
     for (auto x = 0; x < MAP_WIDTH; x++) {
       if (static_cast< bool >(l->is_modified_tile[ x ][ y ])) {
-        level_assign_tiles_at(g, v, l, spoint(x, y));
+        level_assign_tiles_at(g, v, l, bpoint(x, y));
       }
     }
   }

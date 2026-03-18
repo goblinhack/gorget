@@ -11,7 +11,7 @@
 
 #include <iostream>
 
-auto thing_get(Gamep g, Levelsp v, Levelp l, const spoint &p, int slot) -> Thingp
+auto thing_get(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot) -> Thingp
 {
   TRACE_DEBUG();
 
@@ -43,7 +43,7 @@ auto thing_get(Gamep g, Levelsp v, Levelp l, const spoint &p, int slot) -> Thing
   return t;
 }
 
-auto thing_get_at_safe(Gamep g, Levelsp v, Levelp l, const spoint &p, int slot) -> Thingp
+auto thing_get_at_safe(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot) -> Thingp
 {
   TRACE_DEBUG();
 
@@ -61,7 +61,7 @@ auto thing_get_at_safe(Gamep g, Levelsp v, Levelp l, const spoint &p, int slot) 
   return t;
 }
 
-auto thing_and_tp_get_at_safe(Gamep g, Levelsp v, Levelp l, const spoint &p, int slot, Tpp *out) -> Thingp
+auto thing_and_tp_get_at_safe(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot, Tpp *out) -> Thingp
 {
   TRACE_DEBUG();
 
@@ -83,7 +83,7 @@ auto thing_and_tp_get_at_safe(Gamep g, Levelsp v, Levelp l, const spoint &p, int
   return t;
 }
 
-auto thing_and_tp_get_at(Gamep g, Levelsp v, Levelp l, const spoint &p, int slot, Tpp *out) -> Thingp
+auto thing_and_tp_get_at(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot, Tpp *out) -> Thingp
 {
   TRACE_DEBUG();
 

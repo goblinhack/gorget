@@ -446,7 +446,7 @@ auto game_test_init(Gamep g, Levelp *l_out, LevelNum level_num, int w, int h, co
 //
 // Create an additional level with the given contents and start the game into playing state
 //
-void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num, spoint level_at, int w, int h, const char *contents,
+void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num, bpoint level_at, int w, int h, const char *contents,
                           const Overrides &overrides)
 {
   LOG("test init level");
@@ -494,7 +494,7 @@ void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num,
 void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num, int w, int h, const char *contents,
                           const Overrides &overrides)
 {
-  game_test_init_level(g, v, l_out, level_num, spoint(0, level_num), w, h, contents, overrides);
+  game_test_init_level(g, v, l_out, level_num, bpoint(0, level_num), w, h, contents, overrides);
 }
 
 void Game::fini()

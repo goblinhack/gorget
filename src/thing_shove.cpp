@@ -44,7 +44,7 @@ static void thing_shoved_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
 //
 // Handle interactions for a thing at its location with a dead thing
 //
-[[nodiscard]] static auto thing_shove_handle_dead_thing(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp shover, spoint to) -> bool
+[[nodiscard]] static auto thing_shove_handle_dead_thing(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp shover, bpoint to) -> bool
 {
   TRACE();
 
@@ -85,7 +85,7 @@ static void thing_shoved_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
 //
 // Handle interactions for a thing at its location with an alive thing
 //
-[[nodiscard]] static auto thing_shove_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp shover, spoint to, spoint direction)
+[[nodiscard]] static auto thing_shove_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp shover, bpoint to, bpoint direction)
     -> bool
 {
   TRACE();
@@ -141,13 +141,13 @@ static void thing_shoved_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
 //
 // Returns true on success at shoving something
 //
-auto thing_shove_handle(Gamep g, Levelsp v, Levelp l, Thingp shover, spoint at) -> bool
+auto thing_shove_handle(Gamep g, Levelsp v, Levelp l, Thingp shover, bpoint at) -> bool
 {
   TRACE();
 
   bool         ret       = false;
   auto         direction = at - thing_at(shover);
-  spoint const to        = at + direction;
+  bpoint const to        = at + direction;
 
   if (thing_is_ethereal(shover)) {
     return false;

@@ -54,7 +54,7 @@ public:
 
   class Node *came_from {};
   Nodecost    cost;
-  spoint      at {};
+  bpoint      at {};
 };
 
 //
@@ -85,8 +85,8 @@ public:
   //
   // Start and desired end of the search
   //
-  spoint src {};
-  spoint dst {};
+  bpoint src {};
+  bpoint dst {};
 
   //
   // Indicates which nodes in the grid we've searched and added to the open list
@@ -115,18 +115,18 @@ public:
   std::array< std::array< uint8_t, MAP_HEIGHT >, MAP_WIDTH > can_move_to_cost_cached     = {};
   std::array< std::array< uint8_t, MAP_HEIGHT >, MAP_WIDTH > can_move_to_cost_cached_set = {};
 
-  [[nodiscard]] auto        can_move_to_ai(const spoint &to) -> bool;
-  [[nodiscard]] auto        can_move_to_possible(const spoint &to) -> bool;
-  [[nodiscard]] auto        can_move_to_cost(const spoint &to) -> uint8_t;
-  [[nodiscard]] auto        heuristic(spoint at) const -> Cost;
-  [[nodiscard]] auto        node_init(spoint next_hop, Nodecost cost) -> Node *;
-  [[nodiscard]] auto        solve(bool allow_diagonal) -> std::vector< spoint >;
-  [[nodiscard]] static auto create_path(const Node *came_from) -> std::vector< spoint >;
+  [[nodiscard]] auto        can_move_to_ai(const bpoint &to) -> bool;
+  [[nodiscard]] auto        can_move_to_possible(const bpoint &to) -> bool;
+  [[nodiscard]] auto        can_move_to_cost(const bpoint &to) -> uint8_t;
+  [[nodiscard]] auto        heuristic(bpoint at) const -> Cost;
+  [[nodiscard]] auto        node_init(bpoint next_hop, Nodecost cost) -> Node *;
+  [[nodiscard]] auto        solve(bool allow_diagonal) -> std::vector< bpoint >;
+  [[nodiscard]] static auto create_path(const Node *came_from) -> std::vector< bpoint >;
 
   void add_to_closed(Node *n);
   void add_to_open(Node *n);
   void dump();
-  void eval_neighbor(Node *current, const spoint &delta);
+  void eval_neighbor(Node *current, const bpoint &delta);
   void remove_from_open(Node *n);
 
   static void init();
@@ -179,7 +179,7 @@ void Astar::remove_from_open(Node *n)
   open_nodes.erase(n->cost);
 }
 
-auto Astar::heuristic(const spoint at) const -> Cost
+auto Astar::heuristic(const bpoint at) const -> Cost
 {
   //
   // This can create wiggles in the path as we're always looking at the distance
@@ -192,7 +192,7 @@ auto Astar::heuristic(const spoint at) const -> Cost
   // return std::max(abs(dst.x - at.x), abs(dst.y - at.y));
 }
 
-auto Astar::node_init(const spoint next_hop, Nodecost cost) -> Node *
+auto Astar::node_init(const bpoint next_hop, Nodecost cost) -> Node *
 {
   auto *n = &nodes[ next_hop.x ][ next_hop.y ];
 
@@ -205,7 +205,7 @@ auto Astar::node_init(const spoint next_hop, Nodecost cost) -> Node *
 //
 // Evaluate a neighbor for adding to the open set
 //
-void Astar::eval_neighbor(Node *current, const spoint &delta)
+void Astar::eval_neighbor(Node *current, const bpoint &delta)
 {
   const auto next_hop = current->at + delta;
 
@@ -253,11 +253,11 @@ void Astar::eval_neighbor(Node *current, const spoint &delta)
   }
 }
 
-auto Astar::create_path(const Node *came_from) -> std::vector< spoint >
+auto Astar::create_path(const Node *came_from) -> std::vector< bpoint >
 {
-  static const std::vector< spoint > empty;
+  static const std::vector< bpoint > empty;
 
-  std::vector< spoint > out;
+  std::vector< bpoint > out;
 
   while (came_from != nullptr) {
     if (came_from->came_from != nullptr) {
@@ -279,7 +279,7 @@ void Astar::init()
 #endif
 }
 
-auto Astar::can_move_to_ai(const spoint &to) -> bool
+auto Astar::can_move_to_ai(const bpoint &to) -> bool
 {
   if (to == dst) {
     return true;
@@ -293,7 +293,7 @@ auto Astar::can_move_to_ai(const spoint &to) -> bool
   return can_move_to_ai_cached[ to.x ][ to.y ];
 }
 
-auto Astar::can_move_to_possible(const spoint &to) -> bool
+auto Astar::can_move_to_possible(const bpoint &to) -> bool
 {
   if (to == dst) {
     return true;
@@ -307,7 +307,7 @@ auto Astar::can_move_to_possible(const spoint &to) -> bool
   return can_move_to_possible_cached[ to.x ][ to.y ];
 }
 
-auto Astar::can_move_to_cost(const spoint &to) -> uint8_t
+auto Astar::can_move_to_cost(const bpoint &to) -> uint8_t
 {
   if (to == dst) {
     return 0;
@@ -330,9 +330,9 @@ auto Astar::can_move_to_cost(const spoint &to) -> uint8_t
   return can_move_to_cost_cached[ to.x ][ to.y ];
 }
 
-auto Astar::solve(bool allow_diagonal) -> std::vector< spoint >
+auto Astar::solve(bool allow_diagonal) -> std::vector< bpoint >
 {
-  static const std::vector< spoint > empty;
+  static const std::vector< bpoint > empty;
 
   auto  ncost    = Nodecost(heuristic(src));
   auto *neighbor = node_init(src, ncost);
@@ -367,27 +367,27 @@ auto Astar::solve(bool allow_diagonal) -> std::vector< spoint >
       continue;
     }
 
-    eval_neighbor(current, spoint(-1, 0));
-    eval_neighbor(current, spoint(1, 0));
-    eval_neighbor(current, spoint(0, -1));
-    eval_neighbor(current, spoint(0, 1));
+    eval_neighbor(current, bpoint(-1, 0));
+    eval_neighbor(current, bpoint(1, 0));
+    eval_neighbor(current, bpoint(0, -1));
+    eval_neighbor(current, bpoint(0, 1));
 
     if (allow_diagonal) {
       if (thing_is_able_to_move_through_walls(me)) {
         //
         // Can move through walls in any direction
         //
-        eval_neighbor(current, spoint(-1, -1));
-        eval_neighbor(current, spoint(-1, 1));
-        eval_neighbor(current, spoint(1, -1));
-        eval_neighbor(current, spoint(1, 1));
+        eval_neighbor(current, bpoint(-1, -1));
+        eval_neighbor(current, bpoint(-1, 1));
+        eval_neighbor(current, bpoint(1, -1));
+        eval_neighbor(current, bpoint(1, 1));
       } else {
         //
         // Don't allow shortcuts through diagonal walls
         //
         // Don't allow shortcuts across chasms, hence _possible instead of _ai
         //
-        if (! can_move_to_possible(spoint(at.x - 1, at.y)) || ! can_move_to_possible(spoint(at.x, at.y - 1))) {
+        if (! can_move_to_possible(bpoint(at.x - 1, at.y)) || ! can_move_to_possible(bpoint(at.x, at.y - 1))) {
           //
           // Block these paths
           //
@@ -404,10 +404,10 @@ auto Astar::solve(bool allow_diagonal) -> std::vector< spoint >
           // .a.
           // ...
         } else {
-          eval_neighbor(current, spoint(-1, -1));
+          eval_neighbor(current, bpoint(-1, -1));
         }
 
-        if (! can_move_to_possible(spoint(at.x - 1, at.y)) || ! can_move_to_possible(spoint(at.x, at.y + 1))) {
+        if (! can_move_to_possible(bpoint(at.x - 1, at.y)) || ! can_move_to_possible(bpoint(at.x, at.y + 1))) {
           //
           // Block these paths
           //
@@ -424,10 +424,10 @@ auto Astar::solve(bool allow_diagonal) -> std::vector< spoint >
           // .a.
           // .#.
         } else {
-          eval_neighbor(current, spoint(-1, 1));
+          eval_neighbor(current, bpoint(-1, 1));
         }
 
-        if (! can_move_to_possible(spoint(at.x + 1, at.y)) || ! can_move_to_possible(spoint(at.x, at.y - 1))) {
+        if (! can_move_to_possible(bpoint(at.x + 1, at.y)) || ! can_move_to_possible(bpoint(at.x, at.y - 1))) {
           //
           // Block these paths
           //
@@ -444,10 +444,10 @@ auto Astar::solve(bool allow_diagonal) -> std::vector< spoint >
           // .a.
           // ...
         } else {
-          eval_neighbor(current, spoint(1, -1));
+          eval_neighbor(current, bpoint(1, -1));
         }
 
-        if (! can_move_to_possible(spoint(at.x + 1, at.y)) || ! can_move_to_possible(spoint(at.x, at.y + 1))) {
+        if (! can_move_to_possible(bpoint(at.x + 1, at.y)) || ! can_move_to_possible(bpoint(at.x, at.y + 1))) {
           //
           // Block these paths
           //
@@ -464,7 +464,7 @@ auto Astar::solve(bool allow_diagonal) -> std::vector< spoint >
           // .a.
           // .#.
         } else {
-          eval_neighbor(current, spoint(1, 1));
+          eval_neighbor(current, bpoint(1, 1));
         }
       }
     }
@@ -483,7 +483,7 @@ void Astar::dump()
     for (auto x = 0; x < MAP_WIDTH; x++) {
       std::string buf;
 
-      if (can_move_to_ai(spoint(x, y))) {
+      if (can_move_to_ai(bpoint(x, y))) {
         buf = ".";
       } else {
         buf = "#";
@@ -495,10 +495,10 @@ void Astar::dump()
       }
 #endif
 
-      if (spoint(x, y) == src) {
+      if (bpoint(x, y) == src) {
         buf = "@";
       }
-      if (spoint(x, y) == dst) {
+      if (bpoint(x, y) == dst) {
         buf = "*";
       }
 
@@ -508,7 +508,7 @@ void Astar::dump()
   }
 }
 
-auto astar_solve(Gamep g, Levelsp v, Levelp l, Thingp me, spoint src, spoint dst) -> std::vector< spoint >
+auto astar_solve(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint src, bpoint dst) -> std::vector< bpoint >
 {
   TRACE();
 

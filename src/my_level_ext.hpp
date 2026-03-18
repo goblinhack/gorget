@@ -6,7 +6,7 @@
 #define MY_LEVEL_EXT_HPP
 
 #include "my_level.hpp"
-#include "my_spoint.hpp"
+#include "my_bpoint.hpp"
 #include "my_tp.hpp"
 
 #include <functional>
@@ -15,7 +15,7 @@
 //
 // Overriding specific characters
 //
-using Override  = std::function< Tpp(char, spoint) >;
+using Override  = std::function< Tpp(char, bpoint) >;
 using Overrides = std::map< char, Override >;
 
 extern Overrides no_overrides;

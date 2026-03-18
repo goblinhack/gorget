@@ -13,7 +13,7 @@
 #include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp"
 
-static void level_group_things_do(Gamep g, Levelsp v, Levelp l, Thingp group, Tpp tp, const spoint &p)
+static void level_group_things_do(Gamep g, Levelsp v, Levelp l, Thingp group, Tpp tp, const bpoint &p)
 
 {
   if (is_oob(p)) {
@@ -36,10 +36,10 @@ static void level_group_things_do(Gamep g, Levelsp v, Levelp l, Thingp group, Tp
   }
 
   if (got_one) {
-    level_group_things_do(g, v, l, group, tp, spoint(p.x - 1, p.y));
-    level_group_things_do(g, v, l, group, tp, spoint(p.x + 1, p.y));
-    level_group_things_do(g, v, l, group, tp, spoint(p.x, p.y - 1));
-    level_group_things_do(g, v, l, group, tp, spoint(p.x, p.y + 1));
+    level_group_things_do(g, v, l, group, tp, bpoint(p.x - 1, p.y));
+    level_group_things_do(g, v, l, group, tp, bpoint(p.x + 1, p.y));
+    level_group_things_do(g, v, l, group, tp, bpoint(p.x, p.y - 1));
+    level_group_things_do(g, v, l, group, tp, bpoint(p.x, p.y + 1));
   }
 }
 

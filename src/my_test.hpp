@@ -81,7 +81,7 @@ void test_fini();
 void game_test_init_level(Gamep g, Levelsp v, Levelp *out, LevelNum level_num, int w, int h, const char *contents,
                           const Overrides &overrides = no_overrides);
 
-void game_test_init_level(Gamep g, Levelsp v, Levelp *out, LevelNum level_num, spoint level_at, int w, int h, const char *contents,
+void game_test_init_level(Gamep g, Levelsp v, Levelp *out, LevelNum level_num, bpoint level_at, int w, int h, const char *contents,
                           const Overrides &overrides = no_overrides);
 
 #endif // MY_TEST_HPP

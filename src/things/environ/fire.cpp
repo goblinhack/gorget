@@ -33,8 +33,8 @@ static void tp_fire_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
     return;
   }
 
-  const std::initializer_list< spoint > points = {
-      spoint(-1, -1), spoint(0, -1), spoint(1, -1), spoint(-1, 0), spoint(1, 0), spoint(-1, 1), spoint(0, 1), spoint(1, 1),
+  const std::initializer_list< bpoint > points = {
+      bpoint(-1, -1), bpoint(0, -1), bpoint(1, -1), bpoint(-1, 0), bpoint(1, 0), bpoint(-1, 1), bpoint(0, 1), bpoint(1, 1),
   };
 
   //

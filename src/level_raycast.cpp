@@ -234,7 +234,7 @@ void Raycast::ray_lengths_precalculate(Gamep g, Levelsp v, Levelp l)
   }
 }
 
-static void level_raycast_light_tile(const FovContext &ctx, const spoint &tile, ThingLightp light, ThingExtp ext)
+static void level_raycast_light_tile(const FovContext &ctx, const bpoint &tile, ThingLightp light, ThingExtp ext)
 {
   TRACE_DEBUG();
 
@@ -294,7 +294,7 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
 
   for (auto x = 0; x < MAP_WIDTH; x++) {
     for (auto y = 0; y < MAP_HEIGHT; y++) {
-      light_blocker_cache[ x ][ y ] = level_light_blocker_at(g, v, l, spoint(x, y));
+      light_blocker_cache[ x ][ y ] = level_light_blocker_at(g, v, l, bpoint(x, y));
     }
   }
 
@@ -361,7 +361,7 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
       //
       // Oob can happen in custom levels with no edges
       //
-      spoint tile(tile_x, tile_y);
+      bpoint tile(tile_x, tile_y);
       if (is_oob(tile)) [[unlikely]] {
         break;
       }

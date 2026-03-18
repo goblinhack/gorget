@@ -78,7 +78,7 @@
   bool   down   = false;
   bool   left   = false;
   bool   right  = false;
-  spoint p;
+  bpoint p;
   bool   found_it = false;
   Thingp player   = nullptr;
   int    tries    = 0;
@@ -155,7 +155,7 @@
   // Check the brazier is dead
   //
   TEST_LOG(t, "check brazier is dead");
-  p        = thing_at(player) + spoint(0, -1);
+  p        = thing_at(player) + bpoint(0, -1);
   found_it = false;
 
   TEST_PROGRESS(t);

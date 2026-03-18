@@ -105,7 +105,7 @@ void thing_vision_reset(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 }
 
-auto thing_vision_can_see_tile(Gamep g, Levelsp v, Levelp l, Thingp t, spoint p) -> bool
+auto thing_vision_can_see_tile(Gamep g, Levelsp v, Levelp l, Thingp t, bpoint p) -> bool
 {
   TRACE();
 
@@ -142,7 +142,7 @@ void thing_can_see_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
   for (auto y = 0; y < MAP_HEIGHT; y++) {
     std::string debug;
     for (auto x = 0; x < MAP_WIDTH; x++) {
-      spoint const p(x, y);
+      bpoint const p(x, y);
 
       if (p == thing_target(t)) {
         debug += "G";
@@ -196,7 +196,7 @@ void thing_has_seen_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
   for (auto y = 0; y < MAP_HEIGHT; y++) {
     std::string debug;
     for (auto x = 0; x < MAP_WIDTH; x++) {
-      spoint const p(x, y);
+      bpoint const p(x, y);
 
       if (p == thing_at(t)) {
         debug += "@";

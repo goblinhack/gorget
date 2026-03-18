@@ -41,7 +41,7 @@ auto thing_move_path_size(Gamep g, Levelsp v, Levelp l, Thingp t) -> int
 //
 // Return true if there is a move to pop (and pop it)
 //
-auto thing_move_path_pop(Gamep g, Levelsp v, Levelp l, Thingp t, spoint &out) -> bool
+auto thing_move_path_pop(Gamep g, Levelsp v, Levelp l, Thingp t, bpoint &out) -> bool
 {
   TRACE();
 
@@ -67,7 +67,7 @@ auto thing_move_path_pop(Gamep g, Levelsp v, Levelp l, Thingp t, spoint &out) ->
 //
 // Copy the given path to the thing
 //
-auto thing_move_path_apply(Gamep g, Levelsp v, Levelp l, Thingp t, std::vector< spoint > &move_path) -> bool
+auto thing_move_path_apply(Gamep g, Levelsp v, Levelp l, Thingp t, std::vector< bpoint > &move_path) -> bool
 {
   auto *ext_struct = thing_ext_struct(g, t);
   if (ext_struct == nullptr) {
@@ -101,7 +101,7 @@ auto thing_move_path_apply(Gamep g, Levelsp v, Levelp l, Thingp t, std::vector< 
 //
 // Return true if there is a move to pop.
 //
-auto thing_move_path_target(Gamep g, Levelsp v, Levelp l, Thingp t, spoint &out) -> bool
+auto thing_move_path_target(Gamep g, Levelsp v, Levelp l, Thingp t, bpoint &out) -> bool
 {
   TRACE();
 

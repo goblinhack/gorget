@@ -54,6 +54,7 @@
 #include "my_audio.hpp"
 #include "my_backtrace.hpp"
 #include "my_bits.hpp"
+#include "my_bpoint.hpp"
 #include "my_callstack.hpp"
 #include "my_cave.hpp"
 #include "my_cfg.hpp"

@@ -52,8 +52,8 @@ public:
   //
   // Top left and bottom right bounds
   //
-  spoint tl = {};
-  spoint br = {};
+  bpoint tl = {};
+  bpoint br = {};
 
   int room_width {};
   int room_height {};
@@ -159,8 +159,8 @@ static void room_gen_keep_largest_chunk(Gamep g, class RoomGen *grid)
   int x = 0;
   int y = 0;
 
-  spoint tl(999, 999);
-  spoint br(-1, -1);
+  bpoint tl(99, 99);
+  bpoint br(-1, -1);
 
   //
   // Get the top left and bottom right bounds
@@ -176,10 +176,10 @@ static void room_gen_keep_largest_chunk(Gamep g, class RoomGen *grid)
     }
   }
 
-  if (tl.x == 999) {
+  if (tl.x == 99) {
     return false;
   }
-  if (tl.y == 999) {
+  if (tl.y == 99) {
     return false;
   }
   if (br.x == -1) {
@@ -227,7 +227,7 @@ static void room_gen_draw_rectangle(RoomGen *grid, int x, int y, int width, int 
 
   for (auto i = x; i < x + width; i++) {
     for (auto j = y; j < y + height; j++) {
-      spoint const p(i, j);
+      bpoint const p(i, j);
       if (is_oob(p)) [[unlikely]] {
         continue;
       }
@@ -246,7 +246,7 @@ static void room_gen_draw_circle(RoomGen *grid, int x, int y, int radius, char v
   for (i = std::max(0, x - radius - 1); i < std::max(static_cast< int >(MAP_WIDTH), x + radius); i++) {
     for (j = std::max(0, y - radius - 1); j < std::max(static_cast< int >(MAP_HEIGHT), y + radius); j++) {
       if (((i - x) * (i - x)) + ((j - y) * (j - y)) < (radius * radius) + radius) {
-        spoint const p(i, j);
+        bpoint const p(i, j);
         if (is_oob(p)) [[unlikely]] {
           continue;
         }

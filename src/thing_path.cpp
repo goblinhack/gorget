@@ -14,7 +14,7 @@
 // .xx## -> ..x##
 // ..xxx    ..xxx
 //
-void thing_path_shorten(Gamep g, Levelsp v, Levelp l, Thingp t, std::vector< spoint > &path)
+void thing_path_shorten(Gamep g, Levelsp v, Levelp l, Thingp t, std::vector< bpoint > &path)
 {
   bool const debug = false;
 
@@ -57,7 +57,7 @@ void thing_path_shorten(Gamep g, Levelsp v, Levelp l, Thingp t, std::vector< spo
     // .....     .....
     //
     if (px - 1 == mx && py + 1 == my && px == nx && py + 1 == ny
-        && (level_alive_is_obs_to_cursor_path(g, v, l, spoint(px - 1, py)) == nullptr)) {
+        && (level_alive_is_obs_to_cursor_path(g, v, l, bpoint(px - 1, py)) == nullptr)) {
       path.erase(path.begin());
       return;
     }
@@ -76,43 +76,43 @@ void thing_path_shorten(Gamep g, Levelsp v, Levelp l, Thingp t, std::vector< spo
     // .....     .....
     //
     if (px - 1 == mx && py + 1 == my && px - 1 == nx && py == ny
-        && (level_alive_is_obs_to_cursor_path(g, v, l, spoint(px, py + 1)) == nullptr)) {
+        && (level_alive_is_obs_to_cursor_path(g, v, l, bpoint(px, py + 1)) == nullptr)) {
       path.erase(path.begin());
       return;
     }
 
     if (px + 1 == mx && py + 1 == my && px == nx && py + 1 == ny
-        && (level_alive_is_obs_to_cursor_path(g, v, l, spoint(px + 1, py)) == nullptr)) {
+        && (level_alive_is_obs_to_cursor_path(g, v, l, bpoint(px + 1, py)) == nullptr)) {
       path.erase(path.begin());
       return;
     }
 
     if (px + 1 == mx && py + 1 == my && px + 1 == nx && py == ny
-        && (level_alive_is_obs_to_cursor_path(g, v, l, spoint(px, py + 1)) == nullptr)) {
+        && (level_alive_is_obs_to_cursor_path(g, v, l, bpoint(px, py + 1)) == nullptr)) {
       path.erase(path.begin());
       return;
     }
 
     if (px - 1 == mx && py - 1 == my && px == nx && py - 1 == ny
-        && (level_alive_is_obs_to_cursor_path(g, v, l, spoint(px - 1, py)) == nullptr)) {
+        && (level_alive_is_obs_to_cursor_path(g, v, l, bpoint(px - 1, py)) == nullptr)) {
       path.erase(path.begin());
       return;
     }
 
     if (px - 1 == mx && py - 1 == my && px - 1 == nx && py == ny
-        && (level_alive_is_obs_to_cursor_path(g, v, l, spoint(px, py - 1)) == nullptr)) {
+        && (level_alive_is_obs_to_cursor_path(g, v, l, bpoint(px, py - 1)) == nullptr)) {
       path.erase(path.begin());
       return;
     }
 
     if (px + 1 == mx && py - 1 == my && px == nx && py - 1 == ny
-        && (level_alive_is_obs_to_cursor_path(g, v, l, spoint(px + 1, py)) == nullptr)) {
+        && (level_alive_is_obs_to_cursor_path(g, v, l, bpoint(px + 1, py)) == nullptr)) {
       path.erase(path.begin());
       return;
     }
 
     if (px + 1 == mx && py - 1 == my && px + 1 == nx && py == ny
-        && (level_alive_is_obs_to_cursor_path(g, v, l, spoint(px, py - 1)) == nullptr)) {
+        && (level_alive_is_obs_to_cursor_path(g, v, l, bpoint(px, py - 1)) == nullptr)) {
       path.erase(path.begin());
       return;
     }
@@ -147,56 +147,56 @@ void thing_path_shorten(Gamep g, Levelsp v, Levelp l, Thingp t, std::vector< spo
       auto my = m.y;
 
       if (px - 1 == mx && py + 1 == my && px == nx && py + 1 == ny
-          && (level_alive_is_obs_to_cursor_path(g, v, l, spoint(px - 1, py)) == nullptr)) {
+          && (level_alive_is_obs_to_cursor_path(g, v, l, bpoint(px - 1, py)) == nullptr)) {
         path.erase(path.begin() + i + 1);
         modified = true;
         break;
       }
 
       if (px - 1 == mx && py + 1 == my && px - 1 == nx && py == ny
-          && (level_alive_is_obs_to_cursor_path(g, v, l, spoint(px, py + 1)) == nullptr)) {
+          && (level_alive_is_obs_to_cursor_path(g, v, l, bpoint(px, py + 1)) == nullptr)) {
         path.erase(path.begin() + i + 1);
         modified = true;
         break;
       }
 
       if (px + 1 == mx && py + 1 == my && px == nx && py + 1 == ny
-          && (level_alive_is_obs_to_cursor_path(g, v, l, spoint(px + 1, py)) == nullptr)) {
+          && (level_alive_is_obs_to_cursor_path(g, v, l, bpoint(px + 1, py)) == nullptr)) {
         path.erase(path.begin() + i + 1);
         modified = true;
         break;
       }
 
       if (px + 1 == mx && py + 1 == my && px + 1 == nx && py == ny
-          && (level_alive_is_obs_to_cursor_path(g, v, l, spoint(px, py + 1)) == nullptr)) {
+          && (level_alive_is_obs_to_cursor_path(g, v, l, bpoint(px, py + 1)) == nullptr)) {
         path.erase(path.begin() + i + 1);
         modified = true;
         break;
       }
 
       if (px - 1 == mx && py - 1 == my && px == nx && py - 1 == ny
-          && (level_alive_is_obs_to_cursor_path(g, v, l, spoint(px - 1, py)) == nullptr)) {
+          && (level_alive_is_obs_to_cursor_path(g, v, l, bpoint(px - 1, py)) == nullptr)) {
         path.erase(path.begin() + i + 1);
         modified = true;
         break;
       }
 
       if (px - 1 == mx && py - 1 == my && px - 1 == nx && py == ny
-          && (level_alive_is_obs_to_cursor_path(g, v, l, spoint(px, py - 1)) == nullptr)) {
+          && (level_alive_is_obs_to_cursor_path(g, v, l, bpoint(px, py - 1)) == nullptr)) {
         path.erase(path.begin() + i + 1);
         modified = true;
         break;
       }
 
       if (px + 1 == mx && py - 1 == my && px == nx && py - 1 == ny
-          && (level_alive_is_obs_to_cursor_path(g, v, l, spoint(px + 1, py)) == nullptr)) {
+          && (level_alive_is_obs_to_cursor_path(g, v, l, bpoint(px + 1, py)) == nullptr)) {
         path.erase(path.begin() + i + 1);
         modified = true;
         break;
       }
 
       if (px + 1 == mx && py - 1 == my && px + 1 == nx && py == ny
-          && (level_alive_is_obs_to_cursor_path(g, v, l, spoint(px, py - 1)) == nullptr)) {
+          && (level_alive_is_obs_to_cursor_path(g, v, l, bpoint(px, py - 1)) == nullptr)) {
         path.erase(path.begin() + i + 1);
         modified = true;
         break;

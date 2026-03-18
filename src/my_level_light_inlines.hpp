@@ -14,7 +14,7 @@
 //
 // A player specific version of this function that has less overhead
 //
-static inline void level_light_per_pixel(const FovContext &ctx, const spoint &p)
+static inline void level_light_per_pixel(const FovContext &ctx, const bpoint &p)
 {
   TRACE_DEBUG();
 

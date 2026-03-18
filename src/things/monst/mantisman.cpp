@@ -33,7 +33,7 @@ static auto tp_mantisman_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> s
       UI_INFO4_FMT_STR "The one thing they do not do... is pray.";
 }
 
-static auto tp_mantisman_assess_tile(Gamep g, Levelsp v, Levelp l, const spoint &at, Thingp t) -> ThingEnviron
+static auto tp_mantisman_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at, Thingp t) -> ThingEnviron
 {
   TRACE_DEBUG();
 

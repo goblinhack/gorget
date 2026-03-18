@@ -16,7 +16,7 @@
 
 #include <utility>
 
-static void level_display_cursor(Gamep g, Levelsp v, Levelp l, const spoint &p, FboEnum fbo)
+static void level_display_cursor(Gamep g, Levelsp v, Levelp l, const bpoint &p, FboEnum fbo)
 {
   TRACE_DEBUG();
 
@@ -93,13 +93,13 @@ static void level_display_cursor(Gamep g, Levelsp v, Levelp l, FboEnum fbo)
 
   for (auto y = v->miny; y < v->maxy; y++) {
     for (auto x = v->minx; x < v->maxx; x++) {
-      spoint const p(x, y);
+      bpoint const p(x, y);
       level_display_cursor(g, v, l, p, fbo);
     }
   }
 }
 
-static void level_display_slot(Gamep g, Levelsp v, Levelp l, const spoint &p, int slot, MapZDepth depth, FboEnum fbo)
+static void level_display_slot(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot, MapZDepth depth, FboEnum fbo)
 {
   TRACE_DEBUG();
 
@@ -147,7 +147,7 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp l, Levelp level_abov
     for (auto y = v->miny; y < v->maxy; y++) {
       for (auto x = v->minx; x < v->maxx; x++) {
 
-        spoint const p(x, y);
+        bpoint const p(x, y);
         auto         display_tile = false;
 
         switch (fbo) {
@@ -341,8 +341,8 @@ static void level_blit_light(Gamep g, Levelsp v, Levelp l, color c)
     // Get the on screen pixel co-oords of the top left and bottom right tiles
     //
     //    auto single_pix_size = game_map_single_pix_size_get(g);
-    thing_display_get_tile_info(g, v, l, spoint(0, 0), NULL_TP, NULL_THING, tl1, br1, nullptr);
-    thing_display_get_tile_info(g, v, l, spoint(MAP_WIDTH - 1, MAP_HEIGHT - 1), NULL_TP, NULL_THING, tl2, br2, nullptr);
+    thing_display_get_tile_info(g, v, l, bpoint(0, 0), NULL_TP, NULL_THING, tl1, br1, nullptr);
+    thing_display_get_tile_info(g, v, l, bpoint(MAP_WIDTH - 1, MAP_HEIGHT - 1), NULL_TP, NULL_THING, tl2, br2, nullptr);
 
     tl1.x += visible_map_tl_x;
     tl1.y += visible_map_tl_y;

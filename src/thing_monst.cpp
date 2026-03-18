@@ -127,7 +127,7 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
   // Keep trying to find a target
   //
   while (tries++ < max_tries) {
-    spoint target;
+    bpoint target;
 
     //
     // Get a valid tile.
@@ -201,7 +201,7 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
 //
 // Return true on a successful move (or a popup asking more info)
 //
-[[nodiscard]] static auto thing_monst_move_try(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool
+[[nodiscard]] static auto thing_monst_move_try(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool
 {
   THING_DBG(me, "move try");
 
@@ -259,7 +259,7 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
   //
   // Get the next tile to move to
   //
-  spoint move_next = {};
+  bpoint move_next = {};
   if (! thing_move_path_pop(g, v, l, me, move_next)) {
     //
     // If could not pop, then no path is left
@@ -268,7 +268,7 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
     return false;
   }
 
-  spoint move_destination = {};
+  bpoint move_destination = {};
   if (thing_move_path_target(g, v, l, me, move_destination)) {
     if (! thing_can_move_to_possible(g, v, l, me, move_next)) {
       if (thing_jump_to(g, v, l, me, move_destination)) {

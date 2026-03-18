@@ -76,7 +76,7 @@
   // Create the level and start playing
   //
   Overrides overrides;
-  overrides[ 'm' ] = [](char c, spoint p) -> Tpp { return tp_find_mand("mantisman"); };
+  overrides[ 'm' ] = [](char c, bpoint p) -> Tpp { return tp_find_mand("mantisman"); };
   Levelp  l        = nullptr;
   Levelsp v        = game_test_init(g, &l, level_num, w, h, start.c_str(), overrides);
 

@@ -11,9 +11,9 @@
 
 #include <algorithm>
 
-static std::vector< spoint > cursor_path;
+static std::vector< bpoint > cursor_path;
 
-void level_cursor_set(Gamep g, Levelsp v, spoint p)
+void level_cursor_set(Gamep g, Levelsp v, bpoint p)
 {
   TRACE();
 
@@ -50,17 +50,17 @@ auto level_cursor_is_valid(Gamep g, Levelsp v) -> bool
 // For the 3rd pass, any tiles will do as long as not consecutive hazard tiles.
 // For the 4th pass, any tiles will do as long as not walls
 //
-static auto level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Thingp player, spoint start, spoint end, int attempt)
-    -> std::vector< spoint >
+static auto level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Thingp player, bpoint start, bpoint end, int attempt)
+    -> std::vector< bpoint >
 {
   TRACE();
 
-  static std::vector< spoint > const empty;
+  static std::vector< bpoint > const empty;
 
   bool   prev_tile_was_hazard = {};
   Dmap   dmap {};
-  spoint dmap_start = start;
-  spoint dmap_end   = end;
+  bpoint dmap_start = start;
+  bpoint dmap_end   = end;
 
   int minx = 0;
   int miny = 0;
@@ -113,7 +113,7 @@ static auto level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Th
       if (level_has_seen(g, v, l, end)) {
         for (auto y = miny; y < maxy; y++) {
           for (auto x = minx; x < maxx; x++) {
-            spoint const p(x, y);
+            bpoint const p(x, y);
 
             if (level_alive_is_obs_to_cursor_path(g, v, l, p) != nullptr) {
               dmap.val[ x ][ y ] = DMAP_IS_WALL;
@@ -129,7 +129,7 @@ static auto level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Th
         //
         for (auto y = miny; y < maxy; y++) {
           for (auto x = minx; x < maxx; x++) {
-            spoint const p(x, y);
+            bpoint const p(x, y);
 
             if ((level_alive_is_obs_to_cursor_path(g, v, l, p) != nullptr) || (level_alive_is_cursor_path_hazard(g, v, l, p) != nullptr)) {
               dmap.val[ x ][ y ] = DMAP_IS_WALL;
@@ -146,7 +146,7 @@ static auto level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Th
       //
       for (auto y = miny; y < maxy; y++) {
         for (auto x = minx; x < maxx; x++) {
-          spoint const p(x, y);
+          bpoint const p(x, y);
 
           //
           // Any tile will do as long as not consecutive hazard tiles.
@@ -184,7 +184,7 @@ static auto level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Th
         //
         for (auto y = miny; y < maxy; y++) {
           for (auto x = minx; x < maxx; x++) {
-            spoint const p(x, y);
+            bpoint const p(x, y);
 
             if (level_alive_is_obs_to_cursor_path(g, v, l, p) != nullptr) {
               dmap.val[ x ][ y ] = DMAP_IS_WALL;
@@ -201,7 +201,7 @@ static auto level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Th
         std::initializer_list< ThingFlag > const init    = {is_lava, is_chasm, is_water};
 
         for (auto i : init) {
-          if (level_flag(g, v, l, i, spoint(v->cursor_at.x, v->cursor_at.y)) != nullptr) {
+          if (level_flag(g, v, l, i, bpoint(v->cursor_at.x, v->cursor_at.y)) != nullptr) {
             got_one = true;
 
             //
@@ -213,7 +213,7 @@ static auto level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Th
             //
             for (auto y = miny; y < maxy; y++) {
               for (auto x = minx; x < maxx; x++) {
-                spoint const p(x, y);
+                bpoint const p(x, y);
 
                 //
                 // But we still can't walk through walls to get to the hazard
@@ -245,7 +245,7 @@ static auto level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Th
         if (! got_one) {
           for (auto y = miny; y < maxy; y++) {
             for (auto x = minx; x < maxx; x++) {
-              spoint const p(x, y);
+              bpoint const p(x, y);
 
               if ((level_alive_is_obs_to_cursor_path(g, v, l, p) != nullptr) || (level_is_cursor_path_hazard(g, v, l, p) != nullptr)) {
                 dmap.val[ x ][ y ] = DMAP_IS_WALL;
@@ -261,7 +261,7 @@ static auto level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Th
         //
         for (auto y = miny; y < maxy; y++) {
           for (auto x = minx; x < maxx; x++) {
-            spoint const p(x, y);
+            bpoint const p(x, y);
 
             //
             // Avoid hazards
@@ -282,7 +282,7 @@ static auto level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Th
   //
   for (auto y = miny; y < maxy; y++) {
     for (auto x = minx; x < maxx; x++) {
-      spoint const p(x, y);
+      bpoint const p(x, y);
 
       if (DEBUG) {
         //
@@ -310,8 +310,8 @@ static auto level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Th
     }
   }
 
-  dmap_start = spoint(minx, miny);
-  dmap_end   = spoint(maxx, maxy);
+  dmap_start = bpoint(minx, miny);
+  dmap_end   = bpoint(maxx, maxy);
 
   dmap.val[ end.x ][ end.y ]     = DMAP_IS_GOAL;
   dmap.val[ start.x ][ start.y ] = DMAP_IS_PASSABLE;
@@ -353,9 +353,9 @@ static auto level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Th
 //
 // Returns true on success
 //
-static auto level_cursor_path_draw_line(Gamep g, Levelsp v, Levelp l, const spoint &start, spoint end) -> std::vector< spoint >
+static auto level_cursor_path_draw_line(Gamep g, Levelsp v, Levelp l, const bpoint &start, bpoint end) -> std::vector< bpoint >
 {
-  static std::vector< spoint > const empty;
+  static std::vector< bpoint > const empty;
 
   auto *player = thing_player(g);
   if (player == nullptr) [[unlikely]] {
@@ -370,7 +370,7 @@ static auto level_cursor_path_draw_line(Gamep g, Levelsp v, Levelp l, const spoi
   auto attempt1 = level_cursor_path_draw_line_attempt(g, v, l, player, start, end, 1);
   auto attempt2 = level_cursor_path_draw_line_attempt(g, v, l, player, start, end, 2);
 
-  std::vector< spoint > best;
+  std::vector< bpoint > best;
 
   best = attempt1;
 
@@ -439,7 +439,7 @@ void level_cursor_path_reset(Gamep g)
 //
 // Copy the given path to the thing
 //
-void level_cursor_copy_path_to_player(Gamep g, Levelsp v, Levelp l, std::vector< spoint > &move_path)
+void level_cursor_copy_path_to_player(Gamep g, Levelsp v, Levelp l, std::vector< bpoint > &move_path)
 {
   auto *player = thing_player(g);
   if (player == nullptr) [[unlikely]] {

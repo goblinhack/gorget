@@ -19,16 +19,16 @@
 #include <algorithm>
 #include <print>
 
-static auto car_to_iso(spoint car) -> spoint
+static auto car_to_iso(bpoint car) -> bpoint
 {
-  spoint iso;
+  bpoint iso;
   iso.y = car.x + car.y;
   iso.x = car.y - car.x;
 
   return iso;
 }
 
-auto level_select_is_oob(spoint p) -> bool
+auto level_select_is_oob(bpoint p) -> bool
 {
   TRACE();
 
@@ -69,7 +69,7 @@ auto level_select_is_oob(int x, int y) -> bool
 //
 // If in level select mode, enter the chosen level
 //
-auto level_select_get_level_at_tile_coords(Gamep g, Levelsp v, spoint p) -> Levelp
+auto level_select_get_level_at_tile_coords(Gamep g, Levelsp v, bpoint p) -> Levelp
 {
   TRACE();
 
@@ -102,7 +102,7 @@ auto level_select_get_level_at_tile_coords(Gamep g, Levelsp v, spoint p) -> Leve
 // Given a point in the level select grid, return the corresponding level,
 // if one exists there.
 //
-static auto level_select_get_level_from_grid_coords(Levelsp v, spoint p) -> Levelp
+static auto level_select_get_level_from_grid_coords(Levelsp v, bpoint p) -> Levelp
 {
   TRACE();
 
@@ -266,7 +266,7 @@ auto level_select_calculate_next_level_down(Gamep g, Levelsp v, Levelp l, bool r
     if (compiler_unused) {
       CON("level %d -> next (random)", l->level_num);
     }
-    spoint const random_p(PCG_RANDOM_RANGE(0, LEVEL_ACROSS), PCG_RANDOM_RANGE(0, LEVEL_DOWN));
+    bpoint const random_p(PCG_RANDOM_RANGE(0, LEVEL_ACROSS), PCG_RANDOM_RANGE(0, LEVEL_DOWN));
 
     auto *cand = level_select_get_level_from_grid_coords(v, random_p);
     if ((cand != nullptr) && (cand != l)) {
@@ -365,7 +365,7 @@ void level_select_assign_levels_to_grid(Gamep g, Levelsp v)
         }
 
         auto *c            = &s->data[ x ][ y ];
-        l->level_select_at = spoint(x, y);
+        l->level_select_at = bpoint(x, y);
 
         c->level_num = l->level_num;
         if ((x == LEVEL_ACROSS - 1) && (y == LEVEL_DOWN - 1)) {
@@ -381,7 +381,7 @@ void level_select_assign_levels_to_grid(Gamep g, Levelsp v)
 //
 // Return the level
 //
-auto level_select_get(Gamep g, Levelsp v, spoint p) -> LevelSelectCell *
+auto level_select_get(Gamep g, Levelsp v, bpoint p) -> LevelSelectCell *
 {
   TRACE();
 
@@ -418,11 +418,11 @@ static auto level_select_count_levels(LevelSelect *s) -> int
   return s->level_count;
 }
 
-static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, spoint at, int dive_chance)
+static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, bpoint at, int dive_chance)
 {
   TRACE();
 
-  spoint const end(LEVEL_ACROSS - 1, LEVEL_DOWN - 1);
+  bpoint const end(LEVEL_ACROSS - 1, LEVEL_DOWN - 1);
 
   while (at != end) {
     //
@@ -460,7 +460,7 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
     auto y = PCG_RANDOM_RANGE(0, LEVEL_DOWN);
 
     if (s->data[ x ][ y ].is_set != 0U) {
-      snake_dive(g, v, s, spoint(x, y), dive_chance);
+      snake_dive(g, v, s, bpoint(x, y), dive_chance);
 
       return;
     }
@@ -501,7 +501,7 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
   auto *tp_is_level_visited_icon     = tp_first(is_level_visited_icon);
   auto *tp_is_level_next_icon        = tp_first(is_level_next_icon);
 
-  spoint const map_offset(MAP_WIDTH / 2, 1);
+  bpoint const map_offset(MAP_WIDTH / 2, 1);
 
   for (auto y = 0; y < LEVEL_DOWN; y++) {
     for (auto x = 0; x < LEVEL_ACROSS; x++) {
@@ -629,7 +629,7 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
       }
 
       if (tp != nullptr) {
-        spoint at(x * 2, y * 2);
+        bpoint at(x * 2, y * 2);
         at = car_to_iso(at);
         at += map_offset;
         if (is_oob(at)) [[unlikely]] {
@@ -683,7 +683,7 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
         continue;
       }
 
-      spoint at((x * 2) + 1, y * 2);
+      bpoint at((x * 2) + 1, y * 2);
       at = car_to_iso(at);
       at += map_offset;
       if (is_oob(at)) [[unlikely]] {
@@ -712,7 +712,7 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
         continue;
       }
 
-      spoint at(x * 2, (y * 2) + 1);
+      bpoint at(x * 2, (y * 2) + 1);
       at = car_to_iso(at);
       at += map_offset;
       if (is_oob(at)) [[unlikely]] {
@@ -733,7 +733,7 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
   for (auto y = 0; y < MAP_HEIGHT; y++) {
     for (auto x = 0; x < MAP_WIDTH; x++) {
       auto   count = 0;
-      spoint at(x, y);
+      bpoint at(x, y);
       FOR_ALL_THINGS_AT(g, v, level_select, it, at) { count++; }
       if (count == 0) {
         auto *tp_rock = tp_first(is_dirt);
@@ -769,12 +769,12 @@ static void level_select_create(Gamep g, Levelsp v, LevelSelect *s)
   uint32_t const seed_num = game_seed_num_get(g);
   PCG_SRAND(seed_num);
 
-  snake_dive(g, v, s, spoint(0, 0), 90);
+  snake_dive(g, v, s, bpoint(0, 0), 90);
   snake_dive(g, v, s, 90);
-  snake_dive(g, v, s, spoint(0, 0), 50);
-  snake_dive(g, v, s, spoint(0, 0), 30);
-  snake_dive(g, v, s, spoint(0, 0), 30);
-  snake_dive(g, v, s, spoint(0, 0), 30);
+  snake_dive(g, v, s, bpoint(0, 0), 50);
+  snake_dive(g, v, s, bpoint(0, 0), 30);
+  snake_dive(g, v, s, bpoint(0, 0), 30);
+  snake_dive(g, v, s, bpoint(0, 0), 30);
   snake_dive(g, v, s, 30);
   snake_dive(g, v, s, 30);
   snake_dive(g, v, s, 30);

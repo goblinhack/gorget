@@ -63,7 +63,7 @@ auto thing_close(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp player_or_monst
 //
 // Returns true if we can move to this location by opening a door
 //
-auto thing_can_move_to_attempt_by_opening(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to) -> bool
+auto thing_can_move_to_attempt_by_opening(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool
 {
   TRACE();
 

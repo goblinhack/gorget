@@ -39,7 +39,7 @@
         // Already inited
         //
       } else {
-        game_test_init_level(g, v, &l, level_num, spoint(X, Y), w, h, start.c_str());
+        game_test_init_level(g, v, &l, level_num, bpoint(X, Y), w, h, start.c_str());
       }
 
       //
@@ -65,7 +65,7 @@
       for (auto x = 0; x < MAP_WIDTH; x++) {
         for (auto y = 0; y < MAP_HEIGHT; y++) {
           for (auto slot = 0; slot < slot_depth_to_test; slot++) {
-            if (thing_spawn(g, v, l, tp_random(is_wall), spoint(x, y)) == nullptr) {
+            if (thing_spawn(g, v, l, tp_random(is_wall), bpoint(x, y)) == nullptr) {
               break;
             }
 

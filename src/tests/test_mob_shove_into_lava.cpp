@@ -53,7 +53,7 @@
   bool left   = false;
   bool right  = false;
 
-  spoint  p;
+  bpoint  p;
   bool    found_it = false;
   ThingId mob_id   = 0;
   Thingp  player   = nullptr;
@@ -87,7 +87,7 @@
   TEST_PROGRESS(t);
   {
     TRACE();
-    p        = thing_at(player) + spoint(1, 0);
+    p        = thing_at(player) + bpoint(1, 0);
     found_it = false;
     FOR_ALL_THINGS_AT(g, v, l, it, p)
     {
@@ -146,7 +146,7 @@
   {
     TRACE();
     TEST_LOG(t, "check mob is dead when shoved into lava");
-    p        = thing_at(player) + spoint(1, 0);
+    p        = thing_at(player) + bpoint(1, 0);
     found_it = false;
 
     FOR_ALL_THINGS_AT(g, v, l, it, p)

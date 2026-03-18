@@ -39,7 +39,7 @@ static auto thing_attack(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it) -> 
 //
 // We're trying to attack at this tile. What do we hit first?
 //
-auto thing_attack_at(Gamep g, Levelsp v, Levelp l, Thingp me, const spoint &attack_at) -> bool
+auto thing_attack_at(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &attack_at) -> bool
 {
   TRACE();
 

@@ -416,14 +416,14 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
     std::vector< std::pair< float, Thingp > > pairs;
 
     fpoint const interp_at_f(old_at.x + (stepx * step), old_at.y + (stepy * step));
-    spoint const interp_at = make_spoint(interp_at_f);
+    bpoint const interp_at = make_bpoint((int) interp_at_f.x, (int) interp_at_f.y);
 
     if (compiler_unused) {
       THING_DBG(me, "interp collision at %f,%f step %d", interp_at_f.x, interp_at_f.y, step);
       for (auto dx = -1; dx <= 1; dx++) {
         for (auto dy = -1; dy <= 1; dy++) {
 
-          spoint collision_at(interp_at.x + dx, interp_at.y + dy);
+          bpoint collision_at(interp_at.x + dx, interp_at.y + dy);
 
           THING_DBG(me, "interp collision for things at %d,%d", collision_at.x, collision_at.y);
 
@@ -442,7 +442,7 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
     for (auto dx = -1; dx <= 1; dx++) {
       for (auto dy = -1; dy <= 1; dy++) {
 
-        spoint collision_at(interp_at.x + dx, interp_at.y + dy);
+        bpoint collision_at(interp_at.x + dx, interp_at.y + dy);
 
         FOR_ALL_THINGS_AT(g, v, l, o, collision_at)
         {

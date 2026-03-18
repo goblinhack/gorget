@@ -39,7 +39,7 @@ auto level_string(Gamep g, Levelsp v, Levelp l, int w, int h) -> std::string
   for (int y = 0; y < h; y++) {
     for (int x = 0; x < w; x++) {
       char         c = CHARMAP_EMPTY;
-      spoint const p(x, y);
+      bpoint const p(x, y);
 
       if (level_is_dirt(g, v, l, p) != nullptr) {
         c = CHARMAP_DIRT;

@@ -71,7 +71,7 @@
   //
   // Spawn fire.
   //
-  if (thing_spawn(g, v, l, tp_first(is_fire), thing_at(player) + spoint(2, 0)) == nullptr) {
+  if (thing_spawn(g, v, l, tp_first(is_fire), thing_at(player) + bpoint(2, 0)) == nullptr) {
     TEST_FAILED(t, "spawn failed");
     goto exit;
   }

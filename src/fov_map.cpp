@@ -9,7 +9,7 @@
 #include "my_level_inlines.hpp"
 #include "my_main.hpp"
 
-void fov_map_set(FovMap *m, const spoint &pov, const bool val)
+void fov_map_set(FovMap *m, const bpoint &pov, const bool val)
 {
 #ifdef DEBUG_BUILD
   if (is_oob(pov)) [[unlikely]] {
@@ -23,7 +23,7 @@ void fov_map_set(FovMap *m, const spoint &pov, const bool val)
   }
 }
 
-[[nodiscard]] auto fov_map_get(const FovMap *m, const spoint &pov) -> bool
+[[nodiscard]] auto fov_map_get(const FovMap *m, const bpoint &pov) -> bool
 {
 #ifdef DEBUG_BUILD
   if (is_oob(pov)) [[unlikely]] {

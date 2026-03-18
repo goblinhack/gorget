@@ -5,6 +5,7 @@
 #ifndef MY_FPOINT_HPP
 #define MY_FPOINT_HPP
 
+#include "my_bpoint.hpp"
 #include "my_math.hpp"
 #include "my_spoint.hpp"
 
@@ -39,6 +40,8 @@ auto distance_to_line(fpoint P0, fpoint L0, fpoint L1, float *dist, fpoint *inte
 
 static inline auto make_fpoint(const spoint f) -> fpoint { return fpoint(f.x, f.y); }
 
+static inline auto make_fpoint(const bpoint f) -> fpoint { return fpoint(f.x, f.y); }
+
 static inline auto sort_distance(const fpoint &a, const fpoint &b) -> float { return SORT_DISTANCEf(a.x, a.y, b.x, b.y); }
 
 static inline auto distance(const fpoint &a, const fpoint &b) -> float { return DISTANCEf(a.x, a.y, b.x, b.y); }
@@ -49,7 +52,12 @@ static inline auto distance(const fpoint &a, const fpoint &b) -> float { return 
 //
 static inline auto make_spoint(const fpoint &f) -> spoint
 {
-  return spoint(static_cast< int >(roundf(f.x)), static_cast< int >(roundf(f.y)));
+  return spoint(static_cast< short >(roundf(f.x)), static_cast< short >(roundf(f.y)));
+}
+
+static inline auto make_bpoint(const fpoint &f) -> bpoint
+{
+  return bpoint(static_cast< int8_t >(roundf(f.x)), static_cast< int8_t >(roundf(f.y)));
 }
 
 #endif // MY_FPOINT_HPP

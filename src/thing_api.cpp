@@ -9,17 +9,17 @@
 #include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp"
 
-auto thing_at(Thingp t) -> spoint
+auto thing_at(Thingp t) -> bpoint
 {
   TRACE_DEBUG();
 
   if (t == nullptr) {
     CROAK("no thing pointer");
   }
-  return make_spoint(t->_at);
+  return make_bpoint(t->_at);
 }
 
-void thing_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, const spoint &val)
+void thing_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, const bpoint &val)
 {
   TRACE_DEBUG();
 
@@ -67,14 +67,14 @@ void thing_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, const fpoint &val)
   t->_at     = val;
 }
 
-auto thing_old_at(Thingp t) -> spoint
+auto thing_old_at(Thingp t) -> bpoint
 {
   TRACE_DEBUG();
 
   if (t == nullptr) {
     CROAK("no thing pointer");
   }
-  return make_spoint(t->_old_at);
+  return make_bpoint(t->_old_at);
 }
 
 auto thing_prev_pix_at(Thingp t) -> spoint
@@ -135,7 +135,7 @@ void thing_pix_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, short x, short y)
   t->_curr_pix_at = val;
 }
 
-auto thing_moving_from(Thingp t) -> spoint
+auto thing_moving_from(Thingp t) -> bpoint
 {
   TRACE_DEBUG();
 
@@ -145,7 +145,7 @@ auto thing_moving_from(Thingp t) -> spoint
   return t->_moving_from;
 }
 
-void thing_moving_from_set(Thingp t, const spoint &val)
+void thing_moving_from_set(Thingp t, const bpoint &val)
 {
   TRACE_DEBUG();
 
@@ -5008,7 +5008,7 @@ auto thing_collision_radius(Thingp t) -> float
   return thing_is_collision_circle_small(t) ? THING_COLLISION_CIRCLE_SMALL_RADIUS : THING_COLLISION_CIRCLE_LARGE_RADIUS;
 }
 
-auto thing_target(Thingp t) -> spoint
+auto thing_target(Thingp t) -> bpoint
 {
   TRACE_DEBUG();
 
@@ -5016,10 +5016,10 @@ auto thing_target(Thingp t) -> spoint
     CROAK("no thing pointer");
   }
 
-  return make_spoint(t->_target);
+  return t->_target;
 }
 
-void thing_target_set(Gamep g, Levelsp v, Levelp l, Thingp t, const spoint &val)
+void thing_target_set(Gamep g, Levelsp v, Levelp l, Thingp t, const bpoint &val)
 {
   TRACE_DEBUG();
 
