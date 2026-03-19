@@ -416,7 +416,7 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
     std::vector< std::pair< float, Thingp > > pairs;
 
     fpoint const interp_at_f(old_at.x + (stepx * step), old_at.y + (stepy * step));
-    bpoint const interp_at = make_bpoint((int) interp_at_f.x, (int) interp_at_f.y);
+    bpoint const interp_at = make_bpoint(static_cast< int >(interp_at_f.x), static_cast< int >(interp_at_f.y));
 
     if (compiler_unused) {
       THING_DBG(me, "interp collision at %f,%f step %d", interp_at_f.x, interp_at_f.y, step);
