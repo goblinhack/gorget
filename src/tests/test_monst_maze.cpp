@@ -32,18 +32,26 @@
         "X...x.X"
         "X.x.x.X"
         "X.x.x.X"
-        "X.x.x.X"
-        "X@x.m.X"
+        "X.x.xmX"
+        "X@x...X"
         "XXXXXXX";
   std::string const expect2
       = "XXXXXXX"
-        "X..mx.X"
+        "X...x.X"
         "X.x.x.X"
-        "X.x.x.X"
+        "X.xmx.X"
         "X.x.x.X"
         "X@x...X"
         "XXXXXXX";
   std::string const expect3
+      = "XXXXXXX"
+        "X...x.X"
+        "Xmx.x.X"
+        "X.x.x.X"
+        "X.x.x.X"
+        "X@x...X"
+        "XXXXXXX";
+  std::string const expect4
       = "XXXXXXX"
         "X...x.X"
         "X.x.x.X"
@@ -143,12 +151,38 @@
     }
   }
 
+  level_dump(g, v, l, w, h);
+  TEST_PROGRESS(t);
+  for (auto tries = 0; tries < 5; tries++) {
+    TEST_LOG(t, "try: %d", tries);
+    TRACE();
+    level_dump(g, v, l, w, h);
+    TEST_ASSERT(t, game_event_wait(g), "failed to wait");
+    if (! game_wait_for_tick_to_finish(g, v, l)) {
+      TEST_FAILED(t, "wait loop failed");
+      goto exit;
+    }
+  }
+
+  //
+  // Check the level contents
+  //
+  level_dump(g, v, l, w, h);
+  TEST_PROGRESS(t);
+  {
+    TRACE();
+    if (! (result = level_match_contents(g, v, l, t, w, h, expect4.c_str()))) {
+      TEST_FAILED(t, "unexpected contents");
+      goto exit;
+    }
+  }
+
   //
   // Check the tick is as expected
   //
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  TEST_ASSERT(t, game_tick_get(g, v) == 15, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 20, "final tick counter value");
 
   level_dump(g, v, l, w, h);
   TEST_PASSED(t);

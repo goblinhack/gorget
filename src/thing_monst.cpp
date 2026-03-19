@@ -132,16 +132,15 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
     //
     // Get a valid tile.
     //
-    for (;;) {
-      target.x = static_cast< int >(at.x) - radius + PCG_RANDOM_RANGE(0, diameter);
-      target.y = static_cast< int >(at.y) - radius + PCG_RANDOM_RANGE(0, diameter);
-      if (is_oob_or_border(target)) {
-        continue;
-      }
-      if (tried[ target.x ][ target.y ] == try_magic) {
-        continue;
-      }
-      break;
+    target.x = static_cast< int >(at.x) - radius + PCG_RANDOM_RANGE(0, diameter);
+    target.y = static_cast< int >(at.y) - radius + PCG_RANDOM_RANGE(0, diameter);
+
+    if (is_oob_or_border(target)) {
+      continue;
+    }
+
+    if (tried[ target.x ][ target.y ] == try_magic) {
+      continue;
     }
     tried[ target.x ][ target.y ] = try_magic;
 

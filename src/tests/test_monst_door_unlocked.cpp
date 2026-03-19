@@ -30,8 +30,8 @@
   std::string const expect1
       = "xxxxxxx"
         "x..x..x"
-        "x..xm.x"
-        "x@.D..x"
+        "x..x..x"
+        "x@.Dm.x"
         "x..x..x"
         "x..x..x"
         "xxxxxxx";

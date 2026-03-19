@@ -483,9 +483,11 @@ static void level_tick_worklist(Gamep g, Levelsp v, Levelp l)
 
 static void level_tick_in_progress(Gamep g, Levelsp v, Levelp l)
 {
-  TRACE_DEBUG();
+  TRACE();
 
-  LEVEL_DBG(g, v, l, "Tick %u: progress", v->tick);
+  if (compiler_unused) {
+    LEVEL_DBG(g, v, l, "Tick %u: progress", v->tick);
+  }
 
   //
   // Process monsters per tick. We do this staggered to avoid the framerate being
