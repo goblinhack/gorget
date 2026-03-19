@@ -48,6 +48,7 @@ auto tests_init() -> bool
   if (!test_load_monst_maze()) { return false; }
   if (!test_load_monst_mob_leash()) { return false; }
   if (!test_load_monst_mobbing()) { return false; }
+  if (!test_load_monst_pass_through_open_door()) { return false; }
   if (!test_load_monst_pass_through_walls()) { return false; }
   if (!test_load_monst_secret_door()) { return false; }
   if (!test_load_monst_slow()) { return false; }

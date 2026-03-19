@@ -660,8 +660,8 @@ enum {
 [[nodiscard]] auto level_flag_cached(Gamep g, Levelsp v, Levelp l, ThingFlag f, bpoint p) -> bool;
 [[nodiscard]] auto level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, bpoint p) -> Thingp;
 [[nodiscard]] auto level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp at) -> Thingp;
-[[nodiscard]] auto level_gen_is_room_entrance(Gamep g, class LevelGen *l, int x, int y) -> bool;
 [[nodiscard]] auto level_gen_is_room_entrance(Gamep g, class LevelGen *l, bpoint at) -> bool;
+[[nodiscard]] auto level_gen_is_room_entrance(Gamep g, class LevelGen *l, int x, int y) -> bool;
 [[nodiscard]] auto level_get_thing_id_at(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot) -> ThingId;
 [[nodiscard]] auto level_is_level_select(Gamep g, Levelsp v, Levelp l) -> bool;
 [[nodiscard]] auto level_is_player_level(Gamep g, Levelsp v, Levelp l) -> bool;
@@ -677,8 +677,8 @@ enum {
 [[nodiscard]] auto level_select_get_level(Gamep, Levelsp, Levelp l, const bpoint &) -> Levelp;
 [[nodiscard]] auto level_select_get_next_level_down(Gamep g, Levelsp v, Levelp l) -> Levelp;
 [[nodiscard]] auto level_select_get(Gamep g, Levelsp v, bpoint p) -> LevelSelectCell *;
-[[nodiscard]] auto level_select_is_oob(int x, int y) -> bool;
 [[nodiscard]] auto level_select_is_oob(bpoint p) -> bool;
+[[nodiscard]] auto level_select_is_oob(int x, int y) -> bool;
 [[nodiscard]] auto level_string(Gamep g, Levelsp v, Levelp l, int w, int h) -> std::string;
 [[nodiscard]] auto level_tick_is_in_progress(Gamep g, Levelsp v, Levelp l) -> bool;
 [[nodiscard]] auto levels_memory_alloc(Gamep g) -> Levelsp;

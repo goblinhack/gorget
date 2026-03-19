@@ -46,6 +46,7 @@ auto test_load_monst_fast() -> bool;
 auto test_load_monst_maze() -> bool;
 auto test_load_monst_mob_leash() -> bool;
 auto test_load_monst_mobbing() -> bool;
+auto test_load_monst_pass_through_open_door() -> bool;
 auto test_load_monst_pass_through_walls() -> bool;
 auto test_load_monst_secret_door() -> bool;
 auto test_load_monst_slow() -> bool;

@@ -5,8 +5,8 @@
 #ifndef MY_FOV_MAP_HPP
 #define MY_FOV_MAP_HPP
 
-#include "my_game_defs.hpp"
 #include "my_bpoint.hpp"
+#include "my_game_defs.hpp"
 #include "my_types.hpp"
 
 //
