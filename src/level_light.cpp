@@ -15,7 +15,6 @@
 #include <array>
 #include <cmath>
 #include <cstring>
-#include <thread>
 
 static float light_fade[ MAP_WIDTH ];
 
@@ -159,18 +158,15 @@ void level_light_calculate_all(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
+  //
+  // NOTE: light_map is shared with ray casting, so we cannot use threads here
+  //
   v->light_map = {};
 
-  std::vector< std::thread > threads;
-
-  threads.emplace_back(level_light_calculate_all_things, g, v, l);
+  level_light_calculate_all_things(g, v, l);
 
   //
   // Calculate player lighting while we wait
   //
   level_raycast(g, v, l, FBO_MAP_LIGHT);
-
-  for (auto &t : threads) {
-    t.join();
-  }
 }

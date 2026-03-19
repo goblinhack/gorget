@@ -469,4 +469,8 @@ void level_blit(Gamep g)
     blit_fbo(g, FBO_MAP_FG_MERGED);
   }
   blit_fbo_unbind();
+
+  if (compiler_unused) {
+    sdl_fbo_dump(g, FBO_FINAL, "FBO_FINAL");
+  }
 }

@@ -153,11 +153,11 @@ void sdl_fbo_dump(Gamep g, FboEnum fbo, const std::string &name)
   blit_fbo_pop();
   GL_ERROR_CHECK();
 
-  static int const count      = 0;
-  int const        components = 4;
-  char            *png        = dynprintf("screenshot.%s.%03d.png", name.c_str(), count);
+  static int count      = 0;
+  int const  components = 4;
+  char      *png        = dynprintf("screenshot.%s.%03d.png", name.c_str(), count);
   stbi_write_png(png, w, h, components, pixels.data(), 4 * w);
   CON("Screenshot: %s", png);
   MYFREE(png);
-  //  count++;
+  count++;
 }
