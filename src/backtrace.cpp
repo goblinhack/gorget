@@ -20,6 +20,12 @@
 #include <execinfo.h>
 #endif
 
+#ifdef __has_include
+#if __has_include(<libunwind.h>)
+#include <libunwind.h>
+#endif
+#endif
+
 #ifdef HAVE_LIBUNWIND
 #include <libunwind.h>
 #endif
