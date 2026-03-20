@@ -43,6 +43,25 @@
 /*code specific to mingw compilers*/
 #endif
 
+//
+// Check if std::float16_t is defined
+//
+#ifdef __is_identifier
+#if ! __is_identifier(_Float16)
+#include <float.h>
+#define f16 _Float16;
+#endif
+#endif
+
+#if __has_include(<stdfloat>)
+#include <stdfloat>
+#define f16 std::float16_t;
+#endif
+
+#ifndef f16
+#define f16 float
+#endif
+
 // %d--> for int
 //
 // %u--> for unsigned int
@@ -164,6 +183,7 @@ typedef unsigned long int uint64_t;
 #define CHECK_FORMAT_STR(a, b, c)
 #endif
 
+class Charmap;
 class Font;
 class Game;
 class HiScore;
