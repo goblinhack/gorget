@@ -406,5 +406,5 @@ void thing_projectile_move(Gamep g, Levelsp v, Levelp l, Thingp t, float dt)
   thing_on_moved(g, v, l, t);
 
   thing_collision_handle_interpolated(g, v, l, t, old_at);
-  THING_DBG(t, "post move of delta %f,%f dt %f", delta.x, delta.y, t->thing_dt);
+  THING_DBG(t, "post move of delta %f,%f dt %f", delta.x, delta.y, (float) t->thing_dt);
 }

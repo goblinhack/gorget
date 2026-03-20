@@ -363,7 +363,6 @@ case "$MY_OS_NAME" in
         LDLIBS+=" -L/${MSYS_PATH}/lib/binutils -lbfd -lintl -ldbghelp -liberty"
 
         if [ -f /${MSYS_PATH}/lib/libunwind.a ]; then
-          echo "#define HAVE_LIBUNWIND" >> $CONFIG_H
           LDLIBS+=" -lunwind"
           log_info "Have libunwind             : Yes"
         else
@@ -419,7 +418,6 @@ case "$MY_OS_NAME" in
         LDFLAGS+=" -rdynamic"
 
         if [[ -f /opt/local/libexec/llvm-devel/lib/libunwind/libunwind.a ]]; then
-          echo "#define HAVE_LIBUNWIND" >> $CONFIG_H
           #
           # Can't seem to link it and get it to work!
           #
@@ -441,7 +439,6 @@ case "$MY_OS_NAME" in
 
         pkg-config --print-provides libunwind >/dev/null 2>/dev/null
         if [[ $? -eq 0 ]]; then
-          echo "#define HAVE_LIBUNWIND" >> $CONFIG_H
           LDLIBS+=" -lunwind"
           log_info "Have libunwind             : Yes"
         else

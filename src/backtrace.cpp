@@ -16,18 +16,19 @@
 #include <winbase.h> 
 #include <dbghelp.h>
 // clang-format on
-#else
+#endif
+
+#ifdef __has_include
+#if __has_include(<execinfo.h>)
 #include <execinfo.h>
+#endif
 #endif
 
 #ifdef __has_include
 #if __has_include(<libunwind.h>)
 #include <libunwind.h>
+#define HAVE_LIBUNWIND
 #endif
-#endif
-
-#ifdef HAVE_LIBUNWIND
-#include <libunwind.h>
 #endif
 
 #include <cerrno>

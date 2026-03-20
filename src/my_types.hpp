@@ -57,8 +57,10 @@
 #ifdef __has_include
 #if __has_include(<stdfloat>)
 #include <stdfloat>
+#if __cplusplus > 202002L && defined(__STDCPP_FLOAT16_T__)
 #undef f16
 #define f16 std::float16_t
+#endif
 #endif
 #endif
 

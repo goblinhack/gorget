@@ -552,7 +552,7 @@ void thing_monst_tick(Gamep g, Levelsp v, Levelp l, Thingp me)
   const int player_speed = thing_speed(player);
 
   if (compiler_unused) {
-    THING_DBG(me, "move_rem %d dt %f", thing_move_remaining(me), me->thing_dt);
+    THING_DBG(me, "move_rem %d dt %f", thing_move_remaining(me), (float) me->thing_dt);
   }
 
   //
