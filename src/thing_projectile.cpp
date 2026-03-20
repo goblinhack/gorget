@@ -336,7 +336,7 @@ auto thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what,
     return false;
   }
 
-  projectile->angle = angle;
+  projectile->angle = (f16) angle;
 
   //
   // Set my direction based on where I fire
