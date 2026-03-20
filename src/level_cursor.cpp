@@ -367,27 +367,40 @@ static auto level_cursor_path_draw_line(Gamep g, Levelsp v, Levelp l, const bpoi
   //
   // The first path prefers visited tiles.
   //
-  auto attempt1 = level_cursor_path_draw_line_attempt(g, v, l, player, start, end, 1);
-  auto attempt2 = level_cursor_path_draw_line_attempt(g, v, l, player, start, end, 2);
+  const int max_attempts = 5;
 
-  std::vector< bpoint > best;
+  typedef struct PathCost_ {
+    std::vector< bpoint > path;
+    int                   cost = {};
+  } PathCost;
 
-  best = attempt1;
+  std::vector< PathCost > paths;
 
-  if (best.empty()) {
-    best = attempt2;
-  } else if ((static_cast< unsigned int >(! attempt2.empty()) != 0U) && (attempt2.size() < best.size())) {
-    best = attempt2;
+  for (auto attempt = 1; attempt < max_attempts; attempt++) {
+    PathCost pc;
+    pc.path = level_cursor_path_draw_line_attempt(g, v, l, player, start, end, attempt);
+    if (pc.path.empty()) {
+      continue;
+    }
+    pc.cost = thing_path_cost(g, v, l, player, pc.path);
+    paths.push_back(pc);
   }
 
-  if (best.empty()) {
-    best = level_cursor_path_draw_line_attempt(g, v, l, player, start, end, 3);
-    if (best.empty()) {
-      best = level_cursor_path_draw_line_attempt(g, v, l, player, start, end, 4);
+  if (paths.empty()) {
+    return empty;
+  }
+
+  std::ranges::sort(paths, [](const PathCost &a, const PathCost &b) -> bool { return (a.cost < b.cost); });
+
+  IF_DEBUG
+  {
+    auto idx = 0;
+    for (auto pc : paths) {
+      thing_log(player, "path[%d]: cost:%d len:%d", idx++, pc.cost, (int) pc.path.size());
     }
   }
 
-  return best;
+  return paths[ 0 ].path;
 }
 
 //

@@ -41,6 +41,4 @@ static inline auto distance(const spoint &a, const spoint &b) -> float
   return DISTANCEf((float) a.x, (float) a.y, (float) b.x, (float) b.y);
 }
 
-auto adjacent(const spoint &a, const spoint &b) -> bool;
-
 #endif // MY_SPOINT_HPP

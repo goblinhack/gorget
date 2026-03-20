@@ -2,9 +2,14 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include <print>
-
+#include "my_callstack.hpp"
 #include "my_level.hpp"
+#include "my_main.hpp"
+#include "my_thing.hpp"
+#include "my_thing_callbacks.hpp"
+#include "my_thing_inlines.hpp"
+
+#include <print>
 
 //
 // Shorten paths, but don't cut corners
@@ -224,4 +229,67 @@ void thing_path_shorten(Gamep g, Levelsp v, Levelp l, Thingp t, std::vector< bpo
     std::println("");
     std::println("");
   }
+}
+
+//
+// Compute the path cost. Diagonals are longer than grid moves.
+//
+// Also factors in preferred tiles.
+//
+int thing_path_cost(Gamep g, Levelsp v, Levelp l, Thingp me, std::vector< bpoint > &path)
+{
+  TRACE();
+
+  int cost = 0;
+
+  if (path.empty()) {
+    return cost;
+  }
+
+  auto prev = thing_at(me);
+
+  for (auto p : path) {
+    //
+    // Prefer has seen tiles
+    //
+    if (thing_is_player(me)) {
+      if (level_has_seen(g, v, l, p)) {
+        cost += 1;
+      } else {
+        cost += 2;
+      }
+    }
+
+    //
+    // Diagonal moves are more expensive
+    //
+    if (adjacent_vert_or_horiz(p, prev)) {
+      cost += 3;
+    } else {
+      cost += 4; // Diagonal
+    }
+
+    if (level_alive_is_cursor_path_hazard(g, v, l, p) != nullptr) {
+      cost += 10;
+    }
+
+    if (level_alive_is_obs_to_cursor_path(g, v, l, p) != nullptr) {
+      cost += 10;
+    }
+
+    //
+    // Factor in preferences
+    //
+    switch (thing_assess_tile(g, v, l, p, me)) {
+      case THING_ENVIRON_HATES :    cost += 100; break;
+      case THING_ENVIRON_DISLIKES : cost += 50; break;
+      case THING_ENVIRON_NEUTRAL :  cost += 0; break;
+      case THING_ENVIRON_LIKES :    cost += -1; break;
+      case THING_ENVIRON_ENUM_MAX : break;
+    }
+
+    prev = p;
+  }
+
+  return cost;
 }

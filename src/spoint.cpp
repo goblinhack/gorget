@@ -46,17 +46,3 @@ void spoint::unit()
   x /= len;
   y /= len;
 }
-
-//
-// Are points adjacent to each other?
-//
-auto adjacent(const spoint &a, const spoint &b) -> bool
-{
-  if (abs(a.x - b.x) > 1) {
-    return false;
-  }
-  if (abs(a.y - b.y) > 1) {
-    return false;
-  }
-  return true;
-}

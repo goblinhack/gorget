@@ -528,6 +528,7 @@ using Thing = struct Thing {
 // begin sort marker1 {
 [[nodiscard]] auto immediate_owner(Gamep g, Levelsp v, Levelp l, Thingp t) -> Thingp;
 [[nodiscard]] auto level_vision_blocker_at(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &at) -> bool;
+[[nodiscard]] int  thing_path_cost(Gamep g, Levelsp v, Levelp l, Thingp me, std::vector< bpoint > &path);
 [[nodiscard]] auto monst_state_to_string(MonstState state) -> std::string;
 [[nodiscard]] auto monst_state(Gamep g, Levelsp v, Levelp l, Thingp me) -> MonstState;
 [[nodiscard]] auto player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, const bpoint &to) -> bool;
