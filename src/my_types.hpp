@@ -46,16 +46,20 @@
 //
 // Check if std::float16_t is defined
 //
+#undef f16
+
 #ifdef __is_identifier
 #if ! __is_identifier(_Float16)
 #include <float.h>
-#define f16 _Float16;
+#define f16 _Float16
 #endif
 #endif
 
+#ifdef __has_include
 #if __has_include(<stdfloat>)
 #include <stdfloat>
-#define f16 std::float16_t;
+#define f16 std::float16_t
+#endif
 #endif
 
 #ifndef f16

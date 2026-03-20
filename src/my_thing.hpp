@@ -504,11 +504,11 @@ using Thing = struct Thing {
   //
   // Increases per tick and when it reaches 1, allows the thing to move
   //
-  float16_t thing_dt;
+  f16 thing_dt;
   //
   // Angle of movement.
   //
-  float16_t angle;
+  f16 angle;
   //
   // Previous map co-ords. Does not change when the move finishes.
   //
