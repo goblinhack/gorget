@@ -623,7 +623,7 @@ using RoomFlags = enum RoomFlags_ {
   //
   // Dungeon entrance room
   //
-  ROOM_FLAG_START = 1 << 0,
+  ROOM_FLAG_ENTRANCE = 1 << 0,
   //
   // Normal room
   //
@@ -651,13 +651,13 @@ using RoomFlags = enum RoomFlags_ {
 };
 
 static auto const ROOM_FLAG_ALL = // newline
-    ROOM_FLAG_START |             // newline
+    ROOM_FLAG_ENTRANCE |          // newline
     ROOM_FLAG_NORMAL |            // newline
     ROOM_FLAG_EXIT |              // newline
     ROOM_FLAG_LOCKED |            // newline
     ROOM_FLAG_HAS_KEY;            // newline
 
-#define ROOM_TYPE_FIRST ROOM_TYPE_START
+#define ROOM_TYPE_FIRST ROOM_TYPE_ENTRANCE
 
 enum {
   //

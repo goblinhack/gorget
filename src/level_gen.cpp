@@ -263,8 +263,8 @@ public:
 };
 
 using RoomType = enum RoomType_ {
-  ROOM_TYPE_START,
-#define ROOM_TYPE_FIRST ROOM_TYPE_START
+  ROOM_TYPE_ENTRANCE,
+#define ROOM_TYPE_FIRST ROOM_TYPE_ENTRANCE
   ROOM_TYPE_NORMAL,
   ROOM_TYPE_EXIT,
   ROOM_TYPE_LOCKED,
@@ -692,7 +692,7 @@ void room_add(Gamep g, int chance, int room_flags, const char *file, int line, .
             CROAK("room has too many entrances in room @ %s:%d", file, line);
             return;
           }
-          room_type = ROOM_TYPE_START;
+          room_type = ROOM_TYPE_ENTRANCE;
           break;
         default : CROAK("room has unknown char [%c] in room @ %s:%d", room_line[ i ], file, line); return;
       }
@@ -1346,7 +1346,7 @@ static auto fragment_alt_random_get(Gamep g, class LevelGen *l, Fragment *f, bpo
 {
   TRACE();
 
-  auto r = l->data[ at.x ][ at.y ].room;
+  auto *r = l->data[ at.x ][ at.y ].room;
   if (f->fragment_alts.empty()) {
     return nullptr;
   }
@@ -1357,30 +1357,30 @@ static auto fragment_alt_random_get(Gamep g, class LevelGen *l, Fragment *f, bpo
 
     bool skip = false;
 
-    if (r) {
+    if (r != nullptr) {
       switch (r->room_type) {
-        case ROOM_TYPE_START :
-          if (! (a->room_flags & ROOM_FLAG_START)) {
+        case ROOM_TYPE_ENTRANCE :
+          if ((a->room_flags & ROOM_FLAG_ENTRANCE) == 0u) {
             skip = true;
           }
           break;
         case ROOM_TYPE_NORMAL :
-          if (! (a->room_flags & ROOM_FLAG_NORMAL)) {
+          if ((a->room_flags & ROOM_FLAG_NORMAL) == 0u) {
             skip = true;
           }
           break;
         case ROOM_TYPE_EXIT :
-          if (! (a->room_flags & ROOM_FLAG_EXIT)) {
+          if ((a->room_flags & ROOM_FLAG_EXIT) == 0u) {
             skip = true;
           }
           break;
         case ROOM_TYPE_LOCKED :
-          if (! (a->room_flags & ROOM_FLAG_LOCKED)) {
+          if ((a->room_flags & ROOM_FLAG_LOCKED) == 0u) {
             skip = true;
           }
           break;
         case ROOM_TYPE_HAS_KEY :
-          if (! (a->room_flags & ROOM_FLAG_HAS_KEY)) {
+          if ((a->room_flags & ROOM_FLAG_HAS_KEY) == 0u) {
             skip = true;
           }
           break;
@@ -2619,7 +2619,7 @@ static void level_gen_create_remaining_rooms(Gamep g, LevelGen *l)
   //
   // Choose a random first room and place it
   //
-  auto *r = l->room_entrance = room_random_get(ROOM_TYPE_START);
+  auto *r = l->room_entrance = room_random_get(ROOM_TYPE_ENTRANCE);
   if (! room_can_place_at(g, l, r, at)) {
     return false;
   }
@@ -3257,10 +3257,10 @@ static void level_gen_connect_adjacent_rooms_with_distance_and_chance(class Leve
               //
               // Keep connections to the start room minimal
               //
-              if (room_a->room_type == ROOM_TYPE_START) {
+              if (room_a->room_type == ROOM_TYPE_ENTRANCE) {
                 continue;
               }
-              if (room_b->room_type == ROOM_TYPE_START) {
+              if (room_b->room_type == ROOM_TYPE_ENTRANCE) {
                 continue;
               }
 
