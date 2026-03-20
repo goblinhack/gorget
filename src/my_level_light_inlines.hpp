@@ -56,9 +56,9 @@ static inline void level_light_per_pixel(const FovContext &ctx, const bpoint &p)
       auto       *light_pixel = &light_tile->pixels.pixel[ pixx ][ pixy ];
       float const fade        = ctx.light_fade_map[ light_fade_index ];
 
-      light_pixel->r = std::min(255, static_cast<int>(light_pixel->r + (fade * col_r)));
-      light_pixel->g = std::min(255, static_cast<int>(light_pixel->g + (fade * col_g)));
-      light_pixel->b = std::min(255, static_cast<int>(light_pixel->b + (fade * col_b)));
+      light_pixel->r = std::min(255, static_cast< int >(light_pixel->r + (fade * col_r)));
+      light_pixel->g = std::min(255, static_cast< int >(light_pixel->g + (fade * col_g)));
+      light_pixel->b = std::min(255, static_cast< int >(light_pixel->b + (fade * col_b)));
     }
   }
 }

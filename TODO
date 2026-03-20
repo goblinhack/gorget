@@ -1,6 +1,6 @@
 bugs
 ----
-can hear teleport noise on level 106
+level 105 has a monster in start room
 preferred path is chosen like this
   .mxxx.
   @....x
@@ -8,7 +8,6 @@ need player attacked noise
 if cannot move should fire at?
 monster slash anim
 prefer larger rooms
-level 105 has a monster in start room
 score? score is hard coded to 666
 
 essential features
