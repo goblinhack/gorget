@@ -403,6 +403,11 @@ public:
   int chance = {CHANCE_NORMAL};
 
   //
+  // Used to filter the room types this fragment can be appled to
+  //
+  uint32_t room_flags = {NO_FLAGS};
+
+  //
   // FragmentAlt size
   //
   int width  = {};
@@ -1128,13 +1133,14 @@ static auto fragment_alt_rotate(class FragmentAlt *r) -> class FragmentAlt *
   fragment_alts_all.push_back(n);
   fragment_alts_curr.push_back(n);
 
-  n->id     = fragment_no++;
-  n->chance = r->chance;
-  n->file   = r->file;
-  n->line   = r->line;
-  n->width  = r->height;
-  n->height = r->width;
-  n->data   = static_cast< char * >(MYZALLOC(r->width * r->height, "fragment_alt data"));
+  n->id         = fragment_no++;
+  n->chance     = r->chance;
+  n->room_flags = r->room_flags;
+  n->file       = r->file;
+  n->line       = r->line;
+  n->width      = r->height;
+  n->height     = r->width;
+  n->data       = static_cast< char * >(MYZALLOC(r->width * r->height, "fragment_alt data"));
 
   for (int y = 0; y < r->height; y++) {
     for (int x = 0; x < r->width; x++) {
@@ -1158,13 +1164,14 @@ static auto fragment_alt_flip_horiz(class FragmentAlt *r) -> class FragmentAlt *
   fragment_alts_all.push_back(n);
   fragment_alts_curr.push_back(n);
 
-  n->id     = fragment_alt_no++;
-  n->chance = r->chance;
-  n->file   = r->file;
-  n->line   = r->line;
-  n->width  = r->width;
-  n->height = r->height;
-  n->data   = static_cast< char * >(MYZALLOC(r->width * r->height, "fragment_alt data"));
+  n->id         = fragment_alt_no++;
+  n->chance     = r->chance;
+  n->room_flags = r->room_flags;
+  n->file       = r->file;
+  n->line       = r->line;
+  n->width      = r->width;
+  n->height     = r->height;
+  n->data       = static_cast< char * >(MYZALLOC(r->width * r->height, "fragment_alt data"));
 
   for (int y = 0; y < r->height; y++) {
     for (int x = 0; x < r->width; x++) {
@@ -1180,7 +1187,7 @@ static auto fragment_alt_flip_horiz(class FragmentAlt *r) -> class FragmentAlt *
 //
 // Add a fragment_alt and copies with all possible rotations
 //
-auto fragment_alt_add(Gamep g, int chance, const char *file, int line, ...) -> bool
+auto fragment_alt_add(Gamep g, int chance, uint32_t room_flags, const char *file, int line, ...) -> bool
 {
   TRACE();
 
@@ -1290,13 +1297,14 @@ auto fragment_alt_add(Gamep g, int chance, const char *file, int line, ...) -> b
   fragment_alts_curr.clear();
   fragment_alts_curr.push_back(f);
 
-  f->id     = fragment_alt_no++;
-  f->chance = chance;
-  f->file   = file;
-  f->line   = line;
-  f->width  = fragment_alt_width;
-  f->height = fragment_alt_height;
-  f->data   = static_cast< char * >(MYZALLOC(fragment_alt_width * fragment_alt_height, "fragment_alt data"));
+  f->id         = fragment_alt_no++;
+  f->chance     = chance;
+  f->room_flags = room_flags;
+  f->file       = file;
+  f->line       = line;
+  f->width      = fragment_alt_width;
+  f->height     = fragment_alt_height;
+  f->data       = static_cast< char * >(MYZALLOC(fragment_alt_width * fragment_alt_height, "fragment_alt data"));
 
   //
   // Now read the fragment_alt again
@@ -1334,10 +1342,11 @@ auto fragment_alt_add(Gamep g, int chance, const char *file, int line, ...) -> b
 //
 // Get a random alt fragment.
 //
-static auto fragment_alt_random_get(Fragment *f) -> class FragmentAlt *
+static auto fragment_alt_random_get(Gamep g, class LevelGen *l, Fragment *f, bpoint at) -> class FragmentAlt *
 {
   TRACE();
 
+  auto r = l->data[ at.x ][ at.y ].room;
   if (f->fragment_alts.empty()) {
     return nullptr;
   }
@@ -1345,6 +1354,44 @@ static auto fragment_alt_random_get(Fragment *f) -> class FragmentAlt *
   int tries = 0;
   while (tries++ < MAX_LEVEL_GEN_FRAGMENT_TRIES) {
     auto *a = f->fragment_alts[ PCG_RANDOM_RANGE(0, f->fragment_alts.size()) ];
+
+    bool skip = false;
+
+    if (r) {
+      switch (r->room_type) {
+        case ROOM_TYPE_START :
+          if (! (a->room_flags & ROOM_FLAG_START)) {
+            skip = true;
+          }
+          break;
+        case ROOM_TYPE_NORMAL :
+          if (! (a->room_flags & ROOM_FLAG_NORMAL)) {
+            skip = true;
+          }
+          break;
+        case ROOM_TYPE_EXIT :
+          if (! (a->room_flags & ROOM_FLAG_EXIT)) {
+            skip = true;
+          }
+          break;
+        case ROOM_TYPE_LOCKED :
+          if (! (a->room_flags & ROOM_FLAG_LOCKED)) {
+            skip = true;
+          }
+          break;
+        case ROOM_TYPE_HAS_KEY :
+          if (! (a->room_flags & ROOM_FLAG_HAS_KEY)) {
+            skip = true;
+          }
+          break;
+        case ROOM_TYPE_MAX : break;
+      }
+    }
+
+    if (skip) {
+      continue;
+    }
+
     if (d10000() < a->chance) {
       return a;
     }
@@ -1739,7 +1786,7 @@ static auto fragment_put(Gamep g, class LevelGen *l, class Fragment *f, bpoint a
     return nullptr;
   }
 
-  auto *a = fragment_alt_random_get(f);
+  auto *a = fragment_alt_random_get(g, l, f, at);
   if (a == nullptr) {
     return nullptr;
   }

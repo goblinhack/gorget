@@ -62,7 +62,7 @@ void thing_sound_play(Gamep g, Levelsp v, Levelp l, Thingp t, const std::string 
     return;
   }
 
-  thing_dbg(t, "play %s scale %f", alias.c_str(), scale);
+  THING_DBG(t, "play %s scale %f", alias.c_str(), scale);
 
   (void) sound_play(g, alias, scale);
 }

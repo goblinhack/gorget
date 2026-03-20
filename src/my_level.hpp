@@ -618,23 +618,46 @@ enum {
   CHANCE_NORMAL       = 10000,
 };
 
-enum {
-  NO_FLAGS = 0x0,
+using RoomFlags = enum RoomFlags_ {
+  NO_FLAGS = 0,
+  //
+  // Dungeon entrance room
+  //
+  ROOM_FLAG_START = 1 << 0,
+  //
+  // Normal room
+  //
+  ROOM_FLAG_NORMAL = 1 << 1,
+  //
+  // Dungeon exit room
+  //
+  ROOM_FLAG_EXIT = 1 << 2,
+  //
+  // Secret rooms which need a key to enter
+  //
+  ROOM_FLAG_LOCKED = 1 << 3,
+  //
+  // Key room
+  //
+  ROOM_FLAG_HAS_KEY = 1 << 4,
   //
   // Sanity check on exits that we have no tiles in the same column or row
   // as an exit; it makes it harder to join rooms together
   //
-  ROOM_FLAG_CHECK_EXITS = 0x1,
+  ROOM_FLAG_CHECK_EXITS = 1 << 5,
   //
-  // Secret rooms which need a key to enter
+  // Room types
   //
-  ROOM_FLAG_LOCKED = 0x2,
-  //
-  // Key room
-  //
-  ROOM_FLAG_HAS_KEY = 0x4,
-  ROOM_FLAG_NEXT    = 0x8,
 };
+
+static auto const ROOM_FLAG_ALL = // newline
+    ROOM_FLAG_START |             // newline
+    ROOM_FLAG_NORMAL |            // newline
+    ROOM_FLAG_EXIT |              // newline
+    ROOM_FLAG_LOCKED |            // newline
+    ROOM_FLAG_HAS_KEY;            // newline
+
+#define ROOM_TYPE_FIRST ROOM_TYPE_START
 
 enum {
   //
@@ -645,7 +668,7 @@ enum {
 
 // begin sort marker1 {
 [[nodiscard]] auto fragment_add(Gamep g, int chance, const char *file, int line, ...) -> bool;
-[[nodiscard]] auto fragment_alt_add(Gamep g, int chance, const char *file, int line, ...) -> bool;
+[[nodiscard]] auto fragment_alt_add(Gamep g, int chance, uint32_t flags, const char *file, int line, ...) -> bool;
 [[nodiscard]] auto level_alive(Gamep g, Levelsp v, Levelp l, ThingFlag f, bpoint p) -> Thingp;
 [[nodiscard]] auto level_alive(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp at) -> Thingp;
 [[nodiscard]] auto level_change(Gamep g, Levelsp v, LevelNum level_num) -> Levelp;
