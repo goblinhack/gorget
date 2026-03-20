@@ -112,9 +112,9 @@ using LightPixel = struct LightPixel {
   //
   // The total of all lights intersecting here, which is then scaled into the final light
   //
-  float r;
-  float g;
-  float b;
+  uint8_t r;
+  uint8_t g;
+  uint8_t b;
 };
 
 using LightPixels = struct LightPixels {
