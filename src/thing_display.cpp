@@ -375,9 +375,9 @@ void thing_display(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp
     //
     if (fbo == FBO_MAP_FG) {
       auto *pixel = &v->light_map.tile[ p.x ][ p.y ].pixels.pixel[ 0 ][ 0 ];
-      fg.r        = pixel->r > 255 ? 255 : static_cast< uint8_t >(static_cast< int >(pixel->r));
-      fg.g        = pixel->g > 255 ? 255 : static_cast< uint8_t >(static_cast< int >(pixel->g));
-      fg.b        = pixel->b > 255 ? 255 : static_cast< uint8_t >(static_cast< int >(pixel->b));
+      fg.r        = pixel->r;
+      fg.g        = pixel->g;
+      fg.b        = pixel->b;
 
       //
       // Too many tiny tiles
