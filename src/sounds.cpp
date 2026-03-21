@@ -15,6 +15,7 @@ void sounds_init()
   (void) sound_load(1.0F, "data/sounds/impacts/player_oof.ogg", "player_oof");
   (void) sound_load(1.0F, "data/sounds/impacts/player_hit.ogg", "player_hit");
   (void) sound_load(1.0F, "data/sounds/impacts/player_ouch.ogg", "player_ouch");
+  (void) sound_load(1.0F, "data/sounds/impacts/monst_death.ogg", "monst_death");
   (void) sound_load(1.0F, "data/sounds/misc/fall.ogg", "fall");
   (void) sound_load(1.0F, "data/sounds/misc/teleport.ogg", "teleport");
   (void) sound_load(1.0F, "data/sounds/impacts/explosion.ogg", "explosion", 10 /* concurrent_max */);

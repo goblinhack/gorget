@@ -60,6 +60,15 @@ static bool tp_glorp_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thing
   return true;
 }
 
+static void tp_glorp_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
+{
+  TRACE();
+
+  (void) thing_spawn(g, v, l, tp_first(is_effect_blood), t);
+
+  thing_sound_play(g, v, l, t, "monst_death");
+}
+
 auto tp_load_glorp() -> bool
 {
   auto *tp   = tp_load("glorp"); // keep as string for scripts
@@ -68,6 +77,7 @@ auto tp_load_glorp() -> bool
   // begin sort marker1 {
   thing_assess_tile_set(tp, tp_glorp_assess_tile);
   thing_description_set(tp, tp_glorp_description_get);
+  thing_on_death_set(tp, tp_glorp_on_death);
   thing_detail_set(tp, tp_glorp_detail_get);
   thing_on_attacking_set(tp, tp_glorp_on_attacking);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // roll max to continue burning

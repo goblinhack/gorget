@@ -47,6 +47,13 @@ static bool tp_ghost_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thing
   return true;
 }
 
+static void tp_ghost_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
+{
+  TRACE();
+
+  thing_sound_play(g, v, l, t, "monst_death");
+}
+
 auto tp_load_ghost() -> bool
 {
   auto *tp   = tp_load("ghost"); // keep as string for scripts
@@ -55,6 +62,7 @@ auto tp_load_ghost() -> bool
   // begin sort marker1 {
   thing_assess_tile_set(tp, tp_ghost_assess_tile);
   thing_description_set(tp, tp_ghost_description_get);
+  thing_on_death_set(tp, tp_ghost_on_death);
   thing_detail_set(tp, tp_ghost_detail_get);
   thing_on_attacking_set(tp, tp_ghost_on_attacking);
   tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d1");

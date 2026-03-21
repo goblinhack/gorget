@@ -57,6 +57,8 @@ static void tp_mantisman_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingE
   TRACE();
 
   (void) thing_spawn(g, v, l, tp_first(is_effect_blood), t);
+
+  thing_sound_play(g, v, l, t, "monst_death");
 }
 
 static bool tp_mantisman_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, ThingEvent &e)

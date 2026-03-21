@@ -59,6 +59,8 @@ static void tp_blitzhound_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
   TRACE();
 
   (void) thing_spawn(g, v, l, tp_first(is_effect_blood), t);
+
+  thing_sound_play(g, v, l, t, "monst_death");
 }
 
 static bool tp_blitzhound_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, ThingEvent &e)

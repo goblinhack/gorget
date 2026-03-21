@@ -53,6 +53,8 @@ static void tp_kobalos_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEve
   TRACE();
 
   (void) thing_spawn(g, v, l, tp_first(is_effect_blood), t);
+
+  thing_sound_play(g, v, l, t, "monst_death");
 }
 
 static bool tp_kobalos_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, ThingEvent &e)
