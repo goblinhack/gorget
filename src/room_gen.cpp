@@ -22,12 +22,16 @@ static const int ROOM_BORDER       = 2;
 //
 // How many times to try to replace part of the dungeon
 //
-static const int MAX_LEVEL_GEN_FRAGMENT_TRIES = 1000;
+static const int MAX_FRAGMENT_FIND_ATTEMPTS = 2000;
 
 //
 // The max amount of fragments to create
 //
-static const int MAX_LEVEL_GEN_FRAGMENTS = 4;
+static const int MAX_FRAGMENTS_TO_PLACE_PER_ROOM = 10;
+
+static const int MAX_PLACE_DOOR_ATTEMPTS = 20;
+
+static const int ROOM_CHANCE_FRAGMENTS = 80;
 
 enum {
   ROOM_TYPE_CROSS,
@@ -292,17 +296,22 @@ static void room_gen_draw_circle(RoomGen *grid, int x, int y, int radius, char v
 //
 // Add random exits to the room
 //
-static void room_gen_add_exits(RoomGen *grid)
+static bool room_gen_add_exits(RoomGen *grid)
 {
   TRACE();
 
   int x = 0;
   int y = 0;
+  int tries;
 
+  tries = 0;
   for (;;) {
     //
     // Top door
     //
+    if (tries++ > MAX_PLACE_DOOR_ATTEMPTS) {
+      return false;
+    }
     x = grid->tl.x + PCG_RANDOM_RANGE(0, grid->room_width);
     y = grid->tl.y - 1;
 
@@ -313,10 +322,14 @@ static void room_gen_add_exits(RoomGen *grid)
     }
   }
 
+  tries = 0;
   for (;;) {
     //
     // Bottom door
     //
+    if (tries++ > MAX_PLACE_DOOR_ATTEMPTS) {
+      return false;
+    }
     x = grid->tl.x + PCG_RANDOM_RANGE(0, grid->room_width);
     y = grid->br.y + 1;
 
@@ -327,10 +340,14 @@ static void room_gen_add_exits(RoomGen *grid)
     }
   }
 
+  tries = 0;
   for (;;) {
     //
     // Left door
     //
+    if (tries++ > MAX_PLACE_DOOR_ATTEMPTS) {
+      return false;
+    }
     x = grid->tl.x - 1;
     y = grid->tl.y + PCG_RANDOM_RANGE(0, grid->room_height);
 
@@ -341,10 +358,14 @@ static void room_gen_add_exits(RoomGen *grid)
     }
   }
 
+  tries = 0;
   for (;;) {
     //
     // Right door
     //
+    if (tries++ > MAX_PLACE_DOOR_ATTEMPTS) {
+      return false;
+    }
     x = grid->br.x + 1;
     y = grid->tl.y + PCG_RANDOM_RANGE(0, grid->room_height);
 
@@ -354,6 +375,8 @@ static void room_gen_add_exits(RoomGen *grid)
       break;
     }
   }
+
+  return true;
 }
 
 //
@@ -684,7 +707,7 @@ static void room_gen_add_fragments(Gamep g, class RoomGen *r)
   int fragment_count = 0;
   int tries          = 0;
 
-  while (tries++ < MAX_LEVEL_GEN_FRAGMENT_TRIES) {
+  while (tries++ < MAX_FRAGMENT_FIND_ATTEMPTS) {
     auto *f = fragment_random_get(g);
     if (f == nullptr) {
       return;
@@ -692,9 +715,9 @@ static void room_gen_add_fragments(Gamep g, class RoomGen *r)
 
     std::vector< bpoint > cands;
 
-    for (int y = 0; y < r->room_height; y++) {
-      for (int x = 0; x < r->room_width; x++) {
-        bpoint const at(r->tl.x + x, r->tl.y + y);
+    for (int y = 0; y < r->room_height + 1; y++) {
+      for (int x = 0; x < r->room_width + 1; x++) {
+        bpoint const at(r->tl.x + x - 1, r->tl.y + y - 1);
         if (fragment_match(g, r, f, at)) {
           cands.push_back(at);
         }
@@ -710,7 +733,7 @@ static void room_gen_add_fragments(Gamep g, class RoomGen *r)
       continue;
     }
 
-    if (fragment_count++ >= MAX_LEVEL_GEN_FRAGMENTS) {
+    if (fragment_count++ >= MAX_FRAGMENTS_TO_PLACE_PER_ROOM) {
       return;
     }
   }
@@ -763,7 +786,7 @@ static void room_gen_add_fragments(Gamep g, class RoomGen *r)
     room_gen_dump(&r);
   }
 
-  if (d100() < 50) {
+  if (d100() < ROOM_CHANCE_FRAGMENTS) {
     switch (which) {
       case ROOM_TYPE_CROSS :
       case ROOM_TYPE_CROSS_SYM :
@@ -782,7 +805,10 @@ static void room_gen_add_fragments(Gamep g, class RoomGen *r)
   //
   // Add room exits
   //
-  room_gen_add_exits(&r);
+  if (! room_gen_add_exits(&r)) {
+    return false;
+  }
+
   if (! room_gen_get_bounds(&r)) {
     return false;
   }
