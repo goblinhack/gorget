@@ -65,6 +65,8 @@ static bool tp_player_on_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEve
 
   (void) thing_spawn(g, v, l, tp_first(is_effect_blood), t);
 
+  thing_sound_play(g, v, l, t, "player_hit");
+
   return true; // allow the damage to be applied
 }
 
@@ -85,7 +87,7 @@ static void tp_player_on_jump_end(Gamep g, Levelsp v, Levelp l, Thingp t)
     // We already have a splash noise
     //
   } else {
-    thing_sound_play(g, v, l, t, "oof");
+    thing_sound_play(g, v, l, t, "player_oof");
 
     auto at = thing_at(t);
     game_popup_text_add(g, at.x, at.y, std::string("Oof!"));
@@ -116,7 +118,7 @@ static void tp_player_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
   if (level_is_water(g, v, l, thing_at(t)) != nullptr) {
     thing_sound_play(g, v, l, t, "splash");
   } else {
-    thing_sound_play(g, v, l, t, "oof");
+    thing_sound_play(g, v, l, t, "player_oof");
   }
 }
 
@@ -168,7 +170,7 @@ static void tp_player_tick_end(Gamep g, Levelsp v, Levelp l, Thingp t)
   (void) player_move_to_next(g, v, l, t);
 
   if (thing_is_burning(t)) {
-    thing_sound_play(g, v, l, t, "ouch");
+    thing_sound_play(g, v, l, t, "player_ouch");
   }
 }
 

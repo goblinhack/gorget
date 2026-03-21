@@ -12,8 +12,9 @@ void sounds_init()
   (void) sound_load(0.1F, "data/sounds/interface/keypress.ogg", "keypress");
   (void) sound_load(0.2F, "data/sounds/interface/mouse_click.ogg", "click");
   (void) sound_load(0.5F, "data/sounds/interface/error.ogg", "error");
-  (void) sound_load(1.0F, "data/sounds/impacts/player_oof.ogg", "oof");
-  (void) sound_load(1.0F, "data/sounds/impacts/player_ouch.ogg", "ouch");
+  (void) sound_load(1.0F, "data/sounds/impacts/player_oof.ogg", "player_oof");
+  (void) sound_load(1.0F, "data/sounds/impacts/player_hit.ogg", "player_hit");
+  (void) sound_load(1.0F, "data/sounds/impacts/player_ouch.ogg", "player_ouch");
   (void) sound_load(1.0F, "data/sounds/misc/fall.ogg", "fall");
   (void) sound_load(1.0F, "data/sounds/misc/teleport.ogg", "teleport");
   (void) sound_load(1.0F, "data/sounds/impacts/explosion.ogg", "explosion", 10 /* concurrent_max */);
