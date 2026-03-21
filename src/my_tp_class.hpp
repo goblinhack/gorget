@@ -239,6 +239,7 @@ public:
   thing_on_tick_end_t           tick_end              = {};
   thing_on_death_t              on_death              = {};
   thing_on_damage_t             on_damage             = {};
+  thing_on_attacking_t          on_attacking          = {};
   thing_on_moved_t              on_moved              = {};
   thing_on_teleported_t         on_teleported         = {};
   thing_on_shoved_t             on_shoved             = {};

@@ -14,21 +14,21 @@
 
 static void tp_fireball_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE_INDENT();
+  TRACE();
 
   thing_sound_play(g, v, l, t, "fireball");
 }
 
 static void tp_fireball_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 {
-  TRACE_INDENT();
+  TRACE();
 
   thing_sound_play(g, v, l, t, "explosion");
 }
 
 static void tp_fireball_on_moved(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE_INDENT();
+  TRACE();
 
   //
   // The fireball doesn't heat water up quick enough, so add this cheap effect

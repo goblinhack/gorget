@@ -457,6 +457,30 @@ auto thing_on_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e) -> 
   return tp->on_damage(g, v, l, me, e);
 }
 
+void thing_on_attacking_set(Tpp tp, thing_on_attacking_t callback)
+{
+  TRACE();
+  if (tp == nullptr) [[unlikely]] {
+    ERR("no thing template pointer");
+    return;
+  }
+  tp->on_attacking = callback;
+}
+
+auto thing_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, ThingEvent &e) -> bool
+{
+  TRACE();
+  auto *tp = thing_tp(me);
+  if (tp == nullptr) [[unlikely]] {
+    ERR("no thing template pointer");
+    return false;
+  }
+  if (tp->on_attacking == nullptr) {
+    return true;
+  }
+  return tp->on_attacking(g, v, l, me, it, e);
+}
+
 void thing_on_moved_set(Tpp tp, thing_on_moved_t callback)
 {
   TRACE();

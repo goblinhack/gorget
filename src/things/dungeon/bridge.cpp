@@ -16,14 +16,14 @@
 
 static auto tp_bridge_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE_INDENT();
+  TRACE();
 
   return "rickety bridge";
 }
 
 static void thing_bridge_replace(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE_INDENT();
+  TRACE();
 
   //
   // Replace the bridge with the most populous surrounding hazard
@@ -75,7 +75,7 @@ static void thing_bridge_replace(Gamep g, Levelsp v, Levelp l, Thingp t)
 
 static void tp_bridge_group_destroy(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE_INDENT();
+  TRACE();
 
   if (! t->group_id) {
     return;
@@ -98,7 +98,7 @@ static void tp_bridge_group_destroy(Gamep g, Levelsp v, Levelp l, Thingp t)
 
 static void tp_bridge_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 {
-  TRACE_INDENT();
+  TRACE();
 
   if (t->group_id) {
     auto *player = thing_player(g);
@@ -123,14 +123,14 @@ static void tp_bridge_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEven
 
 static void tp_bridge_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE_INDENT();
+  TRACE();
 
   tp_bridge_group_destroy(g, v, l, t);
 }
 
 static void tp_bridge_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  TRACE_INDENT();
+  TRACE();
 
   //
   // If we fell into another chasm, don't kill the thing yet
@@ -148,7 +148,7 @@ static void tp_bridge_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
 
 auto tp_load_bridge() -> bool
 {
-  TRACE_INDENT();
+  TRACE();
 
   auto *tp   = tp_load("bridge"); // keep as string for scripts
   auto  name = tp_name(tp);

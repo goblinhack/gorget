@@ -16,7 +16,7 @@
 
 static auto tp_kobalos_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE_INDENT();
+  TRACE();
 
   if (thing_is_dead(t)) {
     return "dead kobalos";
@@ -26,7 +26,7 @@ static auto tp_kobalos_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -
 
 static auto tp_kobalos_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE_INDENT();
+  TRACE();
 
   return                                                                                                                   //
       UI_INFO1_FMT_STR "Kobalos are small green-skinned creatures that are identical in every possible way to a goblin.\n" //
@@ -50,9 +50,18 @@ static auto tp_kobalos_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &a
 
 static void tp_kobalos_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 {
-  TRACE_INDENT();
+  TRACE();
 
   (void) thing_spawn(g, v, l, tp_first(is_effect_blood), t);
+}
+
+static bool tp_kobalos_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, ThingEvent &e)
+{
+  TRACE();
+
+  (void) thing_spawn(g, v, l, tp_first(is_effect_attack), it);
+
+  return true;
 }
 
 auto tp_load_kobalos() -> bool
@@ -64,6 +73,7 @@ auto tp_load_kobalos() -> bool
   thing_assess_tile_set(tp, tp_kobalos_assess_tile);
   thing_description_set(tp, tp_kobalos_description_get);
   thing_detail_set(tp, tp_kobalos_detail_get);
+  thing_on_attacking_set(tp, tp_kobalos_on_attacking);
   thing_on_death_set(tp, tp_kobalos_on_death);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6"); // roll max to continue burning
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // roll max to continue burning

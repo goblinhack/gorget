@@ -12,13 +12,14 @@
 
 auto tp_load_effect_blood() -> bool
 {
-  TRACE_INDENT();
+  TRACE();
 
   auto *tp   = tp_load("effect_blood"); // keep as string for scripts
   auto  name = tp_name(tp);
 
   // begin sort marker1 {
   tp_flag_set(tp, is_animated);
+  tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_effect_blood);

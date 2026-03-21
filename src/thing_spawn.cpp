@@ -45,11 +45,21 @@ auto thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &at) -> Thin
 
 auto thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, const bpoint &at) -> Thingp { return thing_spawn(g, v, l, tp, make_fpoint(at)); }
 
-auto thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp at) -> Thingp
+auto thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp spawner) -> Thingp
 {
-  if (at == nullptr) {
+  if (spawner == nullptr) {
     ERR("no thing pointer");
     return nullptr;
   }
-  return thing_spawn(g, v, l, tp, thing_at(at));
+
+  auto dir = thing_get_direction_grid(g, v, l, spawner);
+
+  auto spawned = thing_spawn(g, v, l, tp, thing_at(spawner));
+  if (! spawned) {
+    return nullptr;
+  }
+
+  thing_set_dir_from_delta(spawned, dir.x, dir.y);
+
+  return spawned;
 }

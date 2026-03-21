@@ -14,21 +14,21 @@
 
 static auto tp_potion_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE_INDENT();
+  TRACE();
 
   return "potion";
 }
 
 static auto tp_potion_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE_INDENT();
+  TRACE();
 
   return UI_INFO1_FMT_STR "A mysterious purple potion.";
 }
 
 [[nodiscard]] static auto tp_potion_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp collector) -> bool
 {
-  TRACE_INDENT();
+  TRACE();
 
   if (thing_is_player(collector)) {
     thing_sound_play(g, v, l, collector, "item_collect");
@@ -39,7 +39,7 @@ static auto tp_potion_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std:
 
 [[nodiscard]] static auto tp_potion_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp dropper) -> bool
 {
-  TRACE_INDENT();
+  TRACE();
 
   if (thing_is_player(dropper)) {
     thing_sound_play(g, v, l, dropper, "item_drop");
@@ -50,7 +50,7 @@ static auto tp_potion_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std:
 
 auto tp_load_potion() -> bool
 {
-  TRACE_INDENT();
+  TRACE();
 
   auto *tp   = tp_load("potion"); // keep as string for scripts
   auto  name = tp_name(tp);

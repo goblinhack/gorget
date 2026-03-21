@@ -12,7 +12,7 @@
 
 auto tp_load_effect_attack() -> bool
 {
-  TRACE_INDENT();
+  TRACE();
 
   auto *tp   = tp_load("effect_attack"); // keep as string for scripts
   auto  name = tp_name(tp);
@@ -20,6 +20,8 @@ auto tp_load_effect_attack() -> bool
   // begin sort marker1 {
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
+  tp_flag_set(tp, is_blit_shown_in_overlay);
+  tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_effect_attack);
   tp_flag_set(tp, is_effect);

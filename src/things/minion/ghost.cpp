@@ -13,14 +13,14 @@
 
 static auto tp_ghost_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE_INDENT();
+  TRACE();
 
   return "vengeful spirit";
 }
 
 static auto tp_ghost_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE_INDENT();
+  TRACE();
 
   return                                                              //
       UI_INFO1_FMT_STR "The spirit of one less fortunate than you.\n" //
@@ -38,6 +38,15 @@ static auto tp_ghost_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at,
   return THING_ENVIRON_NEUTRAL;
 }
 
+static bool tp_ghost_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, ThingEvent &e)
+{
+  TRACE();
+
+  (void) thing_spawn(g, v, l, tp_first(is_effect_attack), it);
+
+  return true;
+}
+
 auto tp_load_ghost() -> bool
 {
   auto *tp   = tp_load("ghost"); // keep as string for scripts
@@ -47,6 +56,7 @@ auto tp_load_ghost() -> bool
   thing_assess_tile_set(tp, tp_ghost_assess_tile);
   thing_description_set(tp, tp_ghost_description_get);
   thing_detail_set(tp, tp_ghost_detail_get);
+  thing_on_attacking_set(tp, tp_ghost_on_attacking);
   tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d1");
   tp_distance_minion_from_mob_max_set(tp, 6);
   tp_distance_vision_set(tp, 12);

@@ -88,6 +88,10 @@ using thing_on_damage_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, ThingEvent
 void thing_on_damage_set(Tpp tp, thing_on_damage_t callback);
 auto thing_on_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e) -> bool;
 
+using thing_on_attacking_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp it, ThingEvent &);
+void thing_on_attacking_set(Tpp tp, thing_on_attacking_t callback);
+auto thing_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, ThingEvent &e) -> bool;
+
 using thing_on_moved_t = void (*)(Gamep, Levelsp, Levelp, Thingp me);
 void thing_on_moved_set(Tpp tp, thing_on_moved_t callback);
 void thing_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me);

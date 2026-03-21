@@ -14,7 +14,7 @@
 
 static auto tp_chest_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE_INDENT();
+  TRACE();
 
   if (thing_is_open(t)) {
     return "open chest";
@@ -27,7 +27,7 @@ static auto tp_chest_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> 
 
 static auto tp_chest_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE_INDENT();
+  TRACE();
 
   if (thing_is_open(t)) {
     return UI_INFO1_FMT_STR "An open chest.";
@@ -40,7 +40,7 @@ static auto tp_chest_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::
 
 [[nodiscard]] static auto tp_chest_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener) -> bool
 {
-  TRACE_INDENT();
+  TRACE();
 
   thing_sound_play(g, v, l, t, "chest_open");
 
@@ -49,7 +49,7 @@ static auto tp_chest_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::
 
 auto tp_load_chest() -> bool
 {
-  TRACE_INDENT();
+  TRACE();
 
   auto *tp   = tp_load("chest"); // keep as string for scripts
   auto  name = tp_name(tp);

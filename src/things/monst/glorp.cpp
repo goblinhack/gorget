@@ -14,7 +14,7 @@
 
 static auto tp_glorp_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE_INDENT();
+  TRACE();
 
   if (thing_is_dead(t)) {
     return "dead glorp";
@@ -24,7 +24,7 @@ static auto tp_glorp_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> 
 
 static auto tp_glorp_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
-  TRACE_INDENT();
+  TRACE();
 
   return                                                                                                 //
       UI_INFO1_FMT_STR "Glorps are voracious masses of sentient slime.\n"                                //
@@ -51,6 +51,15 @@ static auto tp_glorp_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at,
   return THING_ENVIRON_NEUTRAL;
 }
 
+static bool tp_glorp_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, ThingEvent &e)
+{
+  TRACE();
+
+  (void) thing_spawn(g, v, l, tp_first(is_effect_attack), it);
+
+  return true;
+}
+
 auto tp_load_glorp() -> bool
 {
   auto *tp   = tp_load("glorp"); // keep as string for scripts
@@ -60,6 +69,7 @@ auto tp_load_glorp() -> bool
   thing_assess_tile_set(tp, tp_glorp_assess_tile);
   thing_description_set(tp, tp_glorp_description_get);
   thing_detail_set(tp, tp_glorp_detail_get);
+  thing_on_attacking_set(tp, tp_glorp_on_attacking);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // roll max to continue burning
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // roll max to continue burning
   tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d6");

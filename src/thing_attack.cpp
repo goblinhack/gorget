@@ -29,6 +29,13 @@ static auto thing_attack(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it) -> 
       .source     = source,     //
   };
 
+  //
+  // Thing callback
+  //
+  if (! thing_on_attacking(g, v, l, me, it, e)) {
+    return false;
+  }
+
   thing_damage(g, v, l, it, e);
 
   thing_is_hit_set(g, v, l, it, MAX_HIT_TIME_MS);

@@ -233,6 +233,32 @@ auto thing_get_direction(Gamep g, Levelsp v, Levelp l, Thingp me) -> fpoint
 }
 
 //
+// Get direction; need to also account for projectiles that move at an angle.
+//
+auto thing_get_direction_grid(Gamep g, Levelsp v, Levelp l, Thingp me) -> bpoint
+{
+  TRACE();
+
+  if (thing_is_projectile(me)) {
+    thing_err(me, "cannot return grid direction");
+    return bpoint(0, 0);
+  }
+
+  switch (me->dir) {
+    case THING_DIR_BR :    return bpoint(1, 1);
+    case THING_DIR_TR :    return bpoint(1, -1);
+    case THING_DIR_BL :    return bpoint(-1, 1);
+    case THING_DIR_TL :    return bpoint(-1, -1);
+    case THING_DIR_RIGHT : return bpoint(1, 0);
+    case THING_DIR_NONE :  return bpoint(0, 0);
+    case THING_DIR_DOWN :  return bpoint(0, 1);
+    case THING_DIR_UP :    return bpoint(0, -1);
+    case THING_DIR_LEFT :  return bpoint(-1, 0);
+    default :              return bpoint(0, 0);
+  }
+}
+
+//
 // Handles manual and mouse follow moves
 //
 auto thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool

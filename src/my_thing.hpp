@@ -575,6 +575,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_find_non_inline(Gamep g, Levelsp v, ThingId id) -> Thingp;
 [[nodiscard]] auto thing_get_at_safe(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot) -> Thingp;
 [[nodiscard]] auto thing_get_direction(Gamep g, Levelsp v, Levelp l, Thingp me) -> fpoint;
+[[nodiscard]] auto thing_get_direction_grid(Gamep g, Levelsp v, Levelp l, Thingp me) -> bpoint;
 [[nodiscard]] auto thing_get_dmap(Gamep g, Levelsp v, Levelp l, Thingp me) -> Dmap *;
 [[nodiscard]] auto thing_get(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot) -> Thingp;
 [[nodiscard]] auto thing_health_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
