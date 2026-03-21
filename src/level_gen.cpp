@@ -1360,27 +1360,27 @@ static auto fragment_alt_random_get(Gamep g, class LevelGen *l, Fragment *f, bpo
     if (r != nullptr) {
       switch (r->room_type) {
         case ROOM_TYPE_ENTRANCE :
-          if ((a->room_flags & ROOM_FLAG_ENTRANCE) == 0u) {
+          if ((a->room_flags & ROOM_FLAG_ENTRANCE) == 0U) {
             skip = true;
           }
           break;
         case ROOM_TYPE_NORMAL :
-          if ((a->room_flags & ROOM_FLAG_NORMAL) == 0u) {
+          if ((a->room_flags & ROOM_FLAG_NORMAL) == 0U) {
             skip = true;
           }
           break;
         case ROOM_TYPE_EXIT :
-          if ((a->room_flags & ROOM_FLAG_EXIT) == 0u) {
+          if ((a->room_flags & ROOM_FLAG_EXIT) == 0U) {
             skip = true;
           }
           break;
         case ROOM_TYPE_LOCKED :
-          if ((a->room_flags & ROOM_FLAG_LOCKED) == 0u) {
+          if ((a->room_flags & ROOM_FLAG_LOCKED) == 0U) {
             skip = true;
           }
           break;
         case ROOM_TYPE_HAS_KEY :
-          if ((a->room_flags & ROOM_FLAG_HAS_KEY) == 0u) {
+          if ((a->room_flags & ROOM_FLAG_HAS_KEY) == 0U) {
             skip = true;
           }
           break;

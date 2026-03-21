@@ -77,9 +77,9 @@ auto tp_load_glorp() -> bool
   // begin sort marker1 {
   thing_assess_tile_set(tp, tp_glorp_assess_tile);
   thing_description_set(tp, tp_glorp_description_get);
-  thing_on_death_set(tp, tp_glorp_on_death);
   thing_detail_set(tp, tp_glorp_detail_get);
   thing_on_attacking_set(tp, tp_glorp_on_attacking);
+  thing_on_death_set(tp, tp_glorp_on_death);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // roll max to continue burning
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // roll max to continue burning
   tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d6");

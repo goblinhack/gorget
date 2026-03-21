@@ -17,3 +17,4 @@ Sound effects
 - Falling sound [found here](https://freesound.org/people/nomiqbomi/sounds/578808/)
 - 8 bit sounds [found here](https://soundsbydane.itch.io/8-bit-sound-pack)
 - item collect [found here](https://freesound.org/people/mrickey13/sounds/518850/)
+- Monster death by Michel88 [found here](https://freesound.org/people/Michel88/)

@@ -369,10 +369,10 @@ static auto level_cursor_path_draw_line(Gamep g, Levelsp v, Levelp l, const bpoi
   //
   const int max_attempts = 5;
 
-  typedef struct PathCost_ {
+  using PathCost = struct PathCost_ {
     std::vector< bpoint > path;
     int                   cost = {};
-  } PathCost;
+  };
 
   std::vector< PathCost > paths;
 
@@ -395,8 +395,8 @@ static auto level_cursor_path_draw_line(Gamep g, Levelsp v, Levelp l, const bpoi
   IF_DEBUG
   {
     auto idx = 0;
-    for (auto pc : paths) {
-      thing_log(player, "path[%d]: cost:%d len:%d", idx++, pc.cost, (int) pc.path.size());
+    for (const auto &pc : paths) {
+      thing_log(player, "path[%d]: cost:%d len:%d", idx++, pc.cost, static_cast< int >(pc.path.size()));
     }
   }
 

@@ -62,9 +62,9 @@ auto tp_load_ghost() -> bool
   // begin sort marker1 {
   thing_assess_tile_set(tp, tp_ghost_assess_tile);
   thing_description_set(tp, tp_ghost_description_get);
-  thing_on_death_set(tp, tp_ghost_on_death);
   thing_detail_set(tp, tp_ghost_detail_get);
   thing_on_attacking_set(tp, tp_ghost_on_attacking);
+  thing_on_death_set(tp, tp_ghost_on_death);
   tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d1");
   tp_distance_minion_from_mob_max_set(tp, 6);
   tp_distance_vision_set(tp, 12);

@@ -54,8 +54,8 @@ auto thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp spawner) -> Thingp
 
   auto dir = thing_get_direction_grid(g, v, l, spawner);
 
-  auto spawned = thing_spawn(g, v, l, tp, thing_at(spawner));
-  if (! spawned) {
+  auto *spawned = thing_spawn(g, v, l, tp, thing_at(spawner));
+  if (spawned == nullptr) {
     return nullptr;
   }
 

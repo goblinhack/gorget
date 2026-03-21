@@ -18,8 +18,8 @@ auto tp_load_effect_blood() -> bool
   auto  name = tp_name(tp);
 
   // begin sort marker1 {
-  tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_animated_can_hflip);
+  tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_effect_blood);

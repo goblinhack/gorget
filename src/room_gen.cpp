@@ -24,6 +24,7 @@ enum {
   ROOM_TYPE_CROSS_SYM,
   ROOM_TYPE_SMALL,
   ROOM_TYPE_MEDIUM,
+  ROOM_TYPE_LARGE,
   ROOM_TYPE_CIRCULAR,
   ROOM_TYPE_CHUNKY,
   ROOM_TYPE_BLEND1,
@@ -468,6 +469,19 @@ static void room_gen_design_medium_room(Gamep g, RoomGen *grid)
   room_gen_draw_rectangle(grid, (MAP_WIDTH - width) / 2, (MAP_HEIGHT - height) / 2, width, height, CHARMAP_FLOOR);
 }
 
+static void room_gen_design_large_room(Gamep g, RoomGen *grid)
+{
+  TRACE();
+
+  int width  = 0;
+  int height = 0;
+
+  width  = PCG_RANDOM_RANGE(10, 20);
+  height = PCG_RANDOM_RANGE(10, 20);
+
+  room_gen_draw_rectangle(grid, (MAP_WIDTH - width) / 2, (MAP_HEIGHT - height) / 2, width, height, CHARMAP_FLOOR);
+}
+
 static void room_gen_design_circular_room(Gamep g, RoomGen *grid)
 {
   int radius = 0;
@@ -539,6 +553,7 @@ static void room_gen_design_chunky_room(Gamep g, RoomGen *grid)
     case ROOM_TYPE_CROSS_SYM : room_gen_design_cross_room_symmetrical(g, &grid); break;
     case ROOM_TYPE_SMALL :     room_gen_design_small_room(g, &grid); break;
     case ROOM_TYPE_MEDIUM :    room_gen_design_medium_room(g, &grid); break;
+    case ROOM_TYPE_LARGE :     room_gen_design_large_room(g, &grid); break;
     case ROOM_TYPE_CIRCULAR :  room_gen_design_circular_room(g, &grid); break;
     case ROOM_TYPE_CHUNKY :    room_gen_design_chunky_room(g, &grid); break;
     case ROOM_TYPE_BLEND1 :
@@ -643,6 +658,7 @@ void rooms_test(Gamep g)
   rooms_write_source_file_for_n_rooms(g, 500, ROOM_TYPE_CROSS_SYM, "cross_sym");
   rooms_write_source_file_for_n_rooms(g, 500, ROOM_TYPE_SMALL, "small");
   rooms_write_source_file_for_n_rooms(g, 1000, ROOM_TYPE_MEDIUM, "medium");
+  rooms_write_source_file_for_n_rooms(g, 2000, ROOM_TYPE_LARGE, "large");
   rooms_write_source_file_for_n_rooms(g, 200, ROOM_TYPE_CIRCULAR, "circular");
   rooms_write_source_file_for_n_rooms(g, 500, ROOM_TYPE_CHUNKY, "chunky");
   rooms_write_source_file_for_n_rooms(g, 500, ROOM_TYPE_BLEND2, "blend2");
