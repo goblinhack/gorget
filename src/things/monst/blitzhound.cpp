@@ -54,6 +54,13 @@ static auto tp_blitzhound_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint
   return THING_ENVIRON_NEUTRAL;
 }
 
+static void tp_blitzhound_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
+{
+  TRACE_INDENT();
+
+  (void) thing_spawn(g, v, l, tp_first(is_effect_blood), t);
+}
+
 auto tp_load_blitzhound() -> bool
 {
   auto *tp   = tp_load("blitzhound"); // keep as string for scripts
@@ -63,6 +70,7 @@ auto tp_load_blitzhound() -> bool
   thing_assess_tile_set(tp, tp_blitzhound_assess_tile);
   thing_description_set(tp, tp_blitzhound_description_get);
   thing_detail_set(tp, tp_blitzhound_detail_get);
+  thing_on_death_set(tp, tp_blitzhound_on_death);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6"); // roll max to continue burning
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // roll max to continue burning
   tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d4");
