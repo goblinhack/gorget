@@ -199,6 +199,8 @@ class Tile;
 class Tp;
 class Test;
 class Wid;
+class Fragment;
+class FragmentAlt;
 class WidPopup;
 
 struct Level;
@@ -231,6 +233,8 @@ using TpId         = unsigned int;
 using Tpp          = class Tp *;
 using Testp        = class Test *;
 using Widp         = class Wid *;
+using Fragmentp    = class Fragment *;
+using FragmentAltp = class FragmentAlt *;
 using LevelNum     = unsigned char;
 
 #define NULL_THING ((Thingp) nullptr)

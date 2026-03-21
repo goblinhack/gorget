@@ -1945,6 +1945,12 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_open_is_unused49(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused5(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused50(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
+[[nodiscard]] auto fragment_random_get(Gamep g) -> Fragmentp;
+[[nodiscard]] auto fragment_char(Fragmentp f, int x, int y) -> char;
+[[nodiscard]] auto fragment_height(Fragmentp f) -> int;
+[[nodiscard]] auto fragment_width(Fragmentp f) -> int;
+[[nodiscard]] auto fragment_alt_random_get(Gamep g, Fragmentp f, bpoint at) -> FragmentAltp;
+[[nodiscard]] auto fragment_alt_char(FragmentAltp, int x, int y) -> char;
 [[nodiscard]] auto level_open_is_unused51(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused52(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused53(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;

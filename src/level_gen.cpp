@@ -1104,7 +1104,7 @@ void rooms_fini(Gamep g)
 //
 // Read a fragment_alt char
 //
-static auto fragment_alt_char(class FragmentAlt *r, int x, int y) -> char
+auto fragment_alt_char(class FragmentAlt *r, int x, int y) -> char
 {
   if (x < 0) {
     return CHARMAP_EMPTY;
@@ -1342,6 +1342,24 @@ auto fragment_alt_add(Gamep g, int chance, uint32_t room_flags, const char *file
 //
 // Get a random alt fragment.
 //
+auto fragment_alt_random_get(Gamep g, Fragment *f, bpoint at) -> class FragmentAlt *
+{
+  TRACE();
+
+  int tries = 0;
+  while (tries++ < MAX_LEVEL_GEN_FRAGMENT_TRIES) {
+    auto *a = f->fragment_alts[ PCG_RANDOM_RANGE(0, f->fragment_alts.size()) ];
+
+    if (d10000() < a->chance) {
+      return a;
+    }
+  }
+  return nullptr;
+}
+
+//
+// Get a random alt fragment.
+//
 static auto fragment_alt_random_get(Gamep g, class LevelGen *l, Fragment *f, bpoint at) -> class FragmentAlt *
 {
   TRACE();
@@ -1448,10 +1466,14 @@ void fragment_alts_fini(Gamep g)
   }
 }
 
+auto fragment_width(class Fragment *f) -> int { return f->width; }
+
+auto fragment_height(class Fragment *f) -> int { return f->height; }
+
 //
 // Read a fragment char
 //
-static auto fragment_char(class Fragment *f, int x, int y) -> char
+auto fragment_char(class Fragment *f, int x, int y) -> char
 {
   if (x < 0) {
     return CHARMAP_EMPTY;
@@ -1679,7 +1701,7 @@ auto fragment_add(Gamep g, int chance, const char *file, int line, ...) -> bool
 //
 // Get a random fragment.
 //
-static auto fragment_random_get(Gamep g, class LevelGen *l) -> class Fragment *
+auto fragment_random_get(Gamep g) -> class Fragment *
 {
   TRACE();
 
@@ -1830,7 +1852,7 @@ static void level_gen_add_fragments(Gamep g, class LevelGen *l)
 
   int tries = 0;
   while (tries++ < MAX_LEVEL_GEN_FRAGMENT_TRIES) {
-    auto *f = fragment_random_get(g, l);
+    auto *f = fragment_random_get(g);
     if (f == nullptr) {
       return;
     }
