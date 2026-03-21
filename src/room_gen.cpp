@@ -22,12 +22,12 @@ static const int ROOM_BORDER       = 2;
 //
 // How many times to try to replace part of the dungeon
 //
-static const int MAX_LEVEL_GEN_FRAGMENT_TRIES = 100;
+static const int MAX_LEVEL_GEN_FRAGMENT_TRIES = 1000;
 
 //
 // The max amount of fragments to create
 //
-static const int MAX_LEVEL_GEN_FRAGMENTS = 20;
+static const int MAX_LEVEL_GEN_FRAGMENTS = 4;
 
 enum {
   ROOM_TYPE_CROSS,
@@ -35,6 +35,8 @@ enum {
   ROOM_TYPE_SMALL,
   ROOM_TYPE_MEDIUM,
   ROOM_TYPE_LARGE,
+  ROOM_TYPE_TALL,
+  ROOM_TYPE_LONG,
   ROOM_TYPE_CIRCULAR,
   ROOM_TYPE_CHUNKY,
   ROOM_TYPE_BLEND1,
@@ -512,6 +514,32 @@ static void room_gen_design_large_room(Gamep g, RoomGen *grid)
   room_gen_draw_rectangle(grid, (MAP_WIDTH - width) / 2, (MAP_HEIGHT - height) / 2, width, height, CHARMAP_FLOOR);
 }
 
+static void room_gen_design_tall_room(Gamep g, RoomGen *grid)
+{
+  TRACE();
+
+  int width  = 0;
+  int height = 0;
+
+  width  = PCG_RANDOM_RANGE(3, 8);
+  height = PCG_RANDOM_RANGE(10, 20);
+
+  room_gen_draw_rectangle(grid, (MAP_WIDTH - width) / 2, (MAP_HEIGHT - height) / 2, width, height, CHARMAP_FLOOR);
+}
+
+static void room_gen_design_long_room(Gamep g, RoomGen *grid)
+{
+  TRACE();
+
+  int width  = 0;
+  int height = 0;
+
+  width  = PCG_RANDOM_RANGE(10, 20);
+  height = PCG_RANDOM_RANGE(3, 8);
+
+  room_gen_draw_rectangle(grid, (MAP_WIDTH - width) / 2, (MAP_HEIGHT - height) / 2, width, height, CHARMAP_FLOOR);
+}
+
 static void room_gen_design_circular_room(Gamep g, RoomGen *grid)
 {
   int radius = 0;
@@ -664,8 +692,8 @@ static void room_gen_add_fragments(Gamep g, class RoomGen *r)
 
     std::vector< bpoint > cands;
 
-    for (int y = 0; y < r->room_height - fragment_height(f); y++) {
-      for (int x = 0; x < r->room_width - fragment_width(f); x++) {
+    for (int y = 0; y < r->room_height; y++) {
+      for (int x = 0; x < r->room_width; x++) {
         bpoint const at(r->tl.x + x, r->tl.y + y);
         if (fragment_match(g, r, f, at)) {
           cands.push_back(at);
@@ -707,6 +735,8 @@ static void room_gen_add_fragments(Gamep g, class RoomGen *r)
     case ROOM_TYPE_SMALL :     room_gen_design_small_room(g, &r); break;
     case ROOM_TYPE_MEDIUM :    room_gen_design_medium_room(g, &r); break;
     case ROOM_TYPE_LARGE :     room_gen_design_large_room(g, &r); break;
+    case ROOM_TYPE_TALL :      room_gen_design_tall_room(g, &r); break;
+    case ROOM_TYPE_LONG :      room_gen_design_long_room(g, &r); break;
     case ROOM_TYPE_CIRCULAR :  room_gen_design_circular_room(g, &r); break;
     case ROOM_TYPE_CHUNKY :    room_gen_design_chunky_room(g, &r); break;
     case ROOM_TYPE_BLEND1 :
@@ -733,6 +763,22 @@ static void room_gen_add_fragments(Gamep g, class RoomGen *r)
     room_gen_dump(&r);
   }
 
+  if (d100() < 50) {
+    switch (which) {
+      case ROOM_TYPE_CROSS :
+      case ROOM_TYPE_CROSS_SYM :
+      case ROOM_TYPE_SMALL :
+      case ROOM_TYPE_MEDIUM :
+      case ROOM_TYPE_LARGE :
+      case ROOM_TYPE_TALL :
+      case ROOM_TYPE_LONG :
+      case ROOM_TYPE_CIRCULAR :
+      case ROOM_TYPE_CHUNKY :
+      case ROOM_TYPE_BLEND1 :
+      case ROOM_TYPE_BLEND2 :    room_gen_add_fragments(g, &r); break;
+    }
+  }
+
   //
   // Add room exits
   //
@@ -755,20 +801,6 @@ static void room_gen_add_fragments(Gamep g, class RoomGen *r)
       if (! room_gen_get_bounds(&r)) {
         return false;
       }
-    }
-  }
-
-  if (d100() < 50) {
-    switch (which) {
-      case ROOM_TYPE_CROSS :
-      case ROOM_TYPE_CROSS_SYM :
-      case ROOM_TYPE_SMALL :
-      case ROOM_TYPE_MEDIUM :
-      case ROOM_TYPE_LARGE :
-      case ROOM_TYPE_CIRCULAR :
-      case ROOM_TYPE_CHUNKY :
-      case ROOM_TYPE_BLEND1 :
-      case ROOM_TYPE_BLEND2 :    room_gen_add_fragments(g, &r); break;
     }
   }
 
@@ -825,13 +857,15 @@ void rooms_test(Gamep g)
 {
   TRACE();
 
-  rooms_write_source_file_for_n_rooms(g, 5000, ROOM_TYPE_LARGE, "large");
-  rooms_write_source_file_for_n_rooms(g, 5000, ROOM_TYPE_CROSS, "cross");
-  rooms_write_source_file_for_n_rooms(g, 5000, ROOM_TYPE_CROSS_SYM, "cross_sym");
-  rooms_write_source_file_for_n_rooms(g, 5000, ROOM_TYPE_SMALL, "small");
-  rooms_write_source_file_for_n_rooms(g, 5000, ROOM_TYPE_MEDIUM, "medium");
-  rooms_write_source_file_for_n_rooms(g, 5000, ROOM_TYPE_CIRCULAR, "circular");
-  rooms_write_source_file_for_n_rooms(g, 5000, ROOM_TYPE_CHUNKY, "chunky");
-  rooms_write_source_file_for_n_rooms(g, 5000, ROOM_TYPE_BLEND2, "blend2");
-  rooms_write_source_file_for_n_rooms(g, 5000, ROOM_TYPE_BLEND1, "blend1");
+  rooms_write_source_file_for_n_rooms(g, 1000, ROOM_TYPE_LARGE, "large");
+  rooms_write_source_file_for_n_rooms(g, 1000, ROOM_TYPE_TALL, "tall");
+  rooms_write_source_file_for_n_rooms(g, 1000, ROOM_TYPE_LONG, "long");
+  rooms_write_source_file_for_n_rooms(g, 1000, ROOM_TYPE_CROSS, "cross");
+  rooms_write_source_file_for_n_rooms(g, 1000, ROOM_TYPE_CROSS_SYM, "cross_sym");
+  rooms_write_source_file_for_n_rooms(g, 1000, ROOM_TYPE_SMALL, "small");
+  rooms_write_source_file_for_n_rooms(g, 1000, ROOM_TYPE_MEDIUM, "medium");
+  rooms_write_source_file_for_n_rooms(g, 1000, ROOM_TYPE_CIRCULAR, "circular");
+  rooms_write_source_file_for_n_rooms(g, 1000, ROOM_TYPE_CHUNKY, "chunky");
+  rooms_write_source_file_for_n_rooms(g, 1000, ROOM_TYPE_BLEND2, "blend2");
+  rooms_write_source_file_for_n_rooms(g, 1000, ROOM_TYPE_BLEND1, "blend1");
 }

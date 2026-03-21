@@ -811,6 +811,8 @@ void rooms_init(Gamep g);
 void rooms_key(Gamep g);
 void rooms_medium(Gamep g);
 void rooms_large(Gamep g);
+void rooms_tall(Gamep g);
+void rooms_long(Gamep g);
 void rooms_prefab_secret(Gamep g);
 void rooms_prefab(Gamep g);
 void rooms_small(Gamep g);

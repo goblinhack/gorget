@@ -633,6 +633,91 @@ void fragments_init(Gamep g)
   }
 
   if (fragment_add(g, CHANCE_NORMAL, __FUNCTION__, __LINE__,
+                   /* frag   */ (const char *) "     ",
+                   /* frag   */ (const char *) ".... ",
+                   /* frag   */ (const char *) ".... ",
+                   /* frag   */ (const char *) ".... ",
+                   /* frag   */ (const char *) ".... ", nullptr)) {
+    if (! fragment_alt_add(g, CHANCE_NORMAL, ROOM_FLAG_ALL, __FUNCTION__, __LINE__,
+                           /* alt  */ (const char *) "     ",
+                           /* alt  */ (const char *) "..   ",
+                           /* alt  */ (const char *) "...  ",
+                           /* alt  */ (const char *) ".x.. ",
+                           /* alt  */ (const char *) ".... ", nullptr)) {
+      CROAK("failed to add fragment alt");
+    }
+    if (! fragment_alt_add(g, CHANCE_NORMAL, ROOM_FLAG_ALL, __FUNCTION__, __LINE__,
+                           /* alt  */ (const char *) "     ",
+                           /* alt  */ (const char *) "..   ",
+                           /* alt  */ (const char *) "...  ",
+                           /* alt  */ (const char *) ".x.. ",
+                           /* alt  */ (const char *) ".... ", nullptr)) {
+      CROAK("failed to add fragment alt");
+    }
+    if (! fragment_alt_add(g, CHANCE_NORMAL, ROOM_FLAG_ALL, __FUNCTION__, __LINE__,
+                           /* alt  */ (const char *) "     ",
+                           /* alt  */ (const char *) "..   ",
+                           /* alt  */ (const char *) "...  ",
+                           /* alt  */ (const char *) ".... ",
+                           /* alt  */ (const char *) ".... ", nullptr)) {
+      CROAK("failed to add fragment alt");
+    }
+    if (! fragment_alt_add(g, CHANCE_NORMAL, ROOM_FLAG_ALL, __FUNCTION__, __LINE__,
+                           /* alt  */ (const char *) "     ",
+                           /* alt  */ (const char *) ".    ",
+                           /* alt  */ (const char *) ".    ",
+                           /* alt  */ (const char *) "..   ",
+                           /* alt  */ (const char *) ".... ", nullptr)) {
+      CROAK("failed to add fragment alt");
+    }
+  }
+
+  if (fragment_add(g, CHANCE_NORMAL, __FUNCTION__, __LINE__,
+                   /* frag   */ (const char *) "      ",
+                   /* frag   */ (const char *) "..... ",
+                   /* frag   */ (const char *) "..... ",
+                   /* frag   */ (const char *) "..... ",
+                   /* frag   */ (const char *) "..... ",
+                   /* frag   */ (const char *) "..... ", nullptr)) {
+    if (! fragment_alt_add(g, CHANCE_NORMAL, ROOM_FLAG_ALL, __FUNCTION__, __LINE__,
+                           /* alt  */ (const char *) "      ",
+                           /* alt  */ (const char *) "...   ",
+                           /* alt  */ (const char *) ".x..  ",
+                           /* alt  */ (const char *) "..x.. ",
+                           /* alt  */ (const char *) "...x. ",
+                           /* alt  */ (const char *) "..... ", nullptr)) {
+      CROAK("failed to add fragment alt");
+    }
+    if (! fragment_alt_add(g, CHANCE_NORMAL, ROOM_FLAG_ALL, __FUNCTION__, __LINE__,
+                           /* alt  */ (const char *) "      ",
+                           /* alt  */ (const char *) "...   ",
+                           /* alt  */ (const char *) ".x..  ",
+                           /* alt  */ (const char *) ".x... ",
+                           /* alt  */ (const char *) ".xxx. ",
+                           /* alt  */ (const char *) "..... ", nullptr)) {
+      CROAK("failed to add fragment alt");
+    }
+    if (! fragment_alt_add(g, CHANCE_NORMAL, ROOM_FLAG_ALL, __FUNCTION__, __LINE__,
+                           /* alt  */ (const char *) "      ",
+                           /* alt  */ (const char *) "...   ",
+                           /* alt  */ (const char *) "....  ",
+                           /* alt  */ (const char *) "..... ",
+                           /* alt  */ (const char *) "..... ",
+                           /* alt  */ (const char *) "..... ", nullptr)) {
+      CROAK("failed to add fragment alt");
+    }
+    if (! fragment_alt_add(g, CHANCE_NORMAL, ROOM_FLAG_ALL, __FUNCTION__, __LINE__,
+                           /* alt  */ (const char *) "      ",
+                           /* alt  */ (const char *) "..    ",
+                           /* alt  */ (const char *) "....  ",
+                           /* alt  */ (const char *) ".. .  ",
+                           /* alt  */ (const char *) "..... ",
+                           /* alt  */ (const char *) "..... ", nullptr)) {
+      CROAK("failed to add fragment alt");
+    }
+  }
+
+  if (fragment_add(g, CHANCE_NORMAL, __FUNCTION__, __LINE__,
                    /* frag   */ (const char *) ".....",
                    /* frag   */ (const char *) ".....",
                    /* frag   */ (const char *) ".....",
