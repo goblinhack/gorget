@@ -654,13 +654,13 @@ void rooms_test(Gamep g)
 {
   TRACE();
 
-  rooms_write_source_file_for_n_rooms(g, 500, ROOM_TYPE_CROSS, "cross");
-  rooms_write_source_file_for_n_rooms(g, 500, ROOM_TYPE_CROSS_SYM, "cross_sym");
-  rooms_write_source_file_for_n_rooms(g, 500, ROOM_TYPE_SMALL, "small");
-  rooms_write_source_file_for_n_rooms(g, 1000, ROOM_TYPE_MEDIUM, "medium");
-  rooms_write_source_file_for_n_rooms(g, 2000, ROOM_TYPE_LARGE, "large");
-  rooms_write_source_file_for_n_rooms(g, 200, ROOM_TYPE_CIRCULAR, "circular");
-  rooms_write_source_file_for_n_rooms(g, 500, ROOM_TYPE_CHUNKY, "chunky");
-  rooms_write_source_file_for_n_rooms(g, 500, ROOM_TYPE_BLEND2, "blend2");
-  rooms_write_source_file_for_n_rooms(g, 500, ROOM_TYPE_BLEND1, "blend1");
+  rooms_write_source_file_for_n_rooms(g, 5000, ROOM_TYPE_CROSS, "cross");
+  rooms_write_source_file_for_n_rooms(g, 5000, ROOM_TYPE_CROSS_SYM, "cross_sym");
+  rooms_write_source_file_for_n_rooms(g, 5000, ROOM_TYPE_SMALL, "small");
+  rooms_write_source_file_for_n_rooms(g, 5000, ROOM_TYPE_MEDIUM, "medium");
+  rooms_write_source_file_for_n_rooms(g, 5000, ROOM_TYPE_LARGE, "large");
+  rooms_write_source_file_for_n_rooms(g, 5000, ROOM_TYPE_CIRCULAR, "circular");
+  rooms_write_source_file_for_n_rooms(g, 5000, ROOM_TYPE_CHUNKY, "chunky");
+  rooms_write_source_file_for_n_rooms(g, 5000, ROOM_TYPE_BLEND2, "blend2");
+  rooms_write_source_file_for_n_rooms(g, 5000, ROOM_TYPE_BLEND1, "blend1");
 }
