@@ -779,7 +779,7 @@ static void level_tick_time_step(Gamep g, Levelsp v, Levelp current_level)
   // jumping so quickly
   //
   auto *player = thing_player(g);
-  if (! player || ! thing_is_moving(player)) {
+  if ((player == nullptr) || ! thing_is_moving(player)) {
     //    duration_ms = TICK_DURATION_WHEN_IDLE_MS;
   }
 

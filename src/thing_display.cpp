@@ -183,7 +183,7 @@ static void thing_display_outlined_blit(Gamep g, Tpp tp, spoint tl, spoint br, T
   //
   // Flash if hidden
   //
-  if (! t_maybe_null) {
+  if (t_maybe_null == nullptr) {
     return false;
   }
   auto h = thing_is_hidden(t_maybe_null);
@@ -223,7 +223,7 @@ static void thing_display_blit(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tp
       //
       // Jumping things need to be seen over other things
       //
-      if (t_maybe_null && thing_is_jumping(t_maybe_null)) {
+      if ((t_maybe_null != nullptr) && thing_is_jumping(t_maybe_null)) {
         break;
       }
 

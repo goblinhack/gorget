@@ -55,8 +55,8 @@ void thing_hot_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step)
     n = mid - n;
   }
 
-  auto i     = (int) ((float) (255 / (float) mid) * (float) n);
-  t->_is_hot = ((uint8_t) i) / 2 + 100;
+  auto i     = static_cast< int >((255 / static_cast< float >(mid)) * static_cast< float >(n));
+  t->_is_hot = ((static_cast< uint8_t >(i)) / 2) + 100;
 }
 
 //
@@ -106,7 +106,7 @@ void thing_is_hot_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
   }
 
   if (val) {
-    if (t->_is_hot) {
+    if (t->_is_hot != 0u) {
       return;
     }
 

@@ -21,10 +21,10 @@ void thing_hidden_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_ste
     n = mid - n;
   }
 
-  auto i        = (int) ((float) (255 / (float) mid) * (float) n);
-  t->_is_hidden = ((uint8_t) i) / 2 + 100;
+  auto i        = static_cast< int >((255 / static_cast< float >(mid)) * static_cast< float >(n));
+  t->_is_hidden = ((static_cast< uint8_t >(i)) / 2) + 100;
 
-  if (! t->_is_hidden) {
+  if (t->_is_hidden == 0u) {
     t->_is_hidden = 1;
   }
 }
@@ -39,7 +39,7 @@ void thing_is_hidden_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
   }
 
   if (val) {
-    if (t->_is_hidden) {
+    if (t->_is_hidden != 0u) {
       return;
     }
 

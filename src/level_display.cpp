@@ -206,7 +206,7 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp l, Levelp level_abov
             if (! display_tile) {
               FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, p)
               {
-                if (thing_is_hidden(it)) {
+                if (thing_is_hidden(it) != 0) {
                   display_tile = true;
                   break;
                 }

@@ -296,13 +296,13 @@ static void room_gen_draw_circle(RoomGen *grid, int x, int y, int radius, char v
 //
 // Add random exits to the room
 //
-static bool room_gen_add_exits(RoomGen *grid)
+static auto room_gen_add_exits(RoomGen *grid) -> bool
 {
   TRACE();
 
-  int x = 0;
-  int y = 0;
-  int tries;
+  int x     = 0;
+  int y     = 0;
+  int tries = 0;
 
   tries = 0;
   for (;;) {
@@ -619,7 +619,7 @@ static void room_gen_design_chunky_room(Gamep g, RoomGen *grid)
 //
 // Place the fragment
 //
-static bool fragment_put(Gamep g, class RoomGen *r, class Fragment *f, bpoint at)
+static auto fragment_put(Gamep g, class RoomGen *r, class Fragment *f, bpoint at) -> bool
 {
   TRACE();
 

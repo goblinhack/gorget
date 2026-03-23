@@ -1741,7 +1741,7 @@ using LevelType = enum LevelType_ {
 // end sort marker6 }
 
 // begin sort marker7 {
-[[nodiscard]] auto fragment_alt_char(FragmentAltp, int x, int y) -> char;
+[[nodiscard]] auto fragment_alt_char(FragmentAltp /*r*/, int x, int y) -> char;
 [[nodiscard]] auto fragment_alt_random_get(Gamep g, Fragmentp f, bpoint at) -> FragmentAltp;
 [[nodiscard]] auto fragment_char(Fragmentp f, int x, int y) -> char;
 [[nodiscard]] auto fragment_height(Fragmentp f) -> int;
