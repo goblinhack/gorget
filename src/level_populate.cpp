@@ -82,6 +82,8 @@ auto level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int
       Tpp          tp     = nullptr;
       bpoint const at(x, y);
 
+      const auto is_entrance = level_gen_is_room_entrance(g, level_gen, at);
+
       l->debug[ x ][ y ] = c;
 
       bool       need_floor    = false;
@@ -136,10 +138,7 @@ auto level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int
             need_floor = true;
             tp         = tp_teleport;
             break;
-          case CHARMAP_FOLIAGE :
-            need_floor   = true;
-            need_foliage = true;
-            break;
+          case CHARMAP_FOLIAGE : need_foliage = true; break;
           case CHARMAP_DEEP_WATER :
             need_dirt  = true;
             tp         = tp_deep_water;
@@ -198,19 +197,27 @@ auto level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int
             break;
           case CHARMAP_MONST1 :
             need_floor = true;
-            tp         = tp_random_monst(1);
+            if (! is_entrance) {
+              tp = tp_random_monst(1);
+            }
             break;
           case CHARMAP_MONST2 :
             need_floor = true;
-            tp         = tp_random_monst(2);
+            if (! is_entrance) {
+              tp = tp_random_monst(2);
+            }
             break;
           case CHARMAP_MOB1 :
             need_floor = true;
-            tp         = tp_random(is_mob1);
+            if (! is_entrance) {
+              tp = tp_random(is_mob1);
+            }
             break;
           case CHARMAP_MOB2 :
             need_floor = true;
-            tp         = tp_random(is_mob2);
+            if (! is_entrance) {
+              tp = tp_random(is_mob2);
+            }
             break;
           case CHARMAP_FIRE :
             need_floor = true;
@@ -268,6 +275,14 @@ auto level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int
         }
       }
 
+      //
+      // Makes more sense plants grow from dirt
+      //
+      if (need_foliage) {
+        need_floor = false;
+        need_dirt  = true;
+      }
+
       if (need_floor) {
         auto *tp_add = tp_floor;
         if (thing_spawn(g, v, l, tp_add, at) == nullptr) {
@@ -296,11 +311,9 @@ auto level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int
       }
 
       if (need_foliage) {
-        if (! level_gen_is_room_entrance(g, level_gen, at)) {
-          auto *tp_add = tp_foliage;
-          if (thing_spawn(g, v, l, tp_add, at) == nullptr) {
-            return false;
-          }
+        auto *tp_add = tp_foliage;
+        if (thing_spawn(g, v, l, tp_add, at) == nullptr) {
+          return false;
         }
       }
 
