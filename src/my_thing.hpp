@@ -626,7 +626,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_blit_shown_in_chasms(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_blit_shown_in_overlay(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_blit_square_outlined(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_blit_when_obscured(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_blit_when_obscured_as_faded(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_blitzhound(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_border(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_brazier(Thingp t) -> bool;
@@ -823,7 +823,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused51(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused52(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused53(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused54(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_blit_when_obscured_as_outline(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused6(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused63(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused7(Thingp t) -> bool;

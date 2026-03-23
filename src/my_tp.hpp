@@ -37,7 +37,7 @@
       list_macro(is_blit_shown_in_chasms, "is_blit_shown_in_chasms"),               /* newline */                                          \
       list_macro(is_blit_shown_in_overlay, "is_blit_shown_in_overlay"),             /* newline */                                          \
       list_macro(is_blit_square_outlined, "is_blit_square_outlined"),               /* newline */                                          \
-      list_macro(is_blit_when_obscured, "is_blit_when_obscured"),                   /* newline */                                          \
+      list_macro(is_blit_when_obscured_as_faded, "is_blit_when_obscured_as_faded"),                   /* newline */                                          \
       list_macro(is_brazier, "is_brazier"),                                         /* newline */                                          \
       list_macro(is_bridge, "is_bridge"),                                           /* newline */                                          \
       list_macro(is_broken_on_death, "is_broken_on_death"),                         /* newline */                                          \
@@ -185,7 +185,7 @@
       list_macro(is_unused51, "is_unused51"),                                       /* newline */                                          \
       list_macro(is_unused52, "is_unused52"),                                       /* newline */                                          \
       list_macro(is_unused53, "is_unused53"),                                       /* newline */                                          \
-      list_macro(is_unused54, "is_unused54"),                                       /* newline */                                          \
+      list_macro(is_blit_when_obscured_as_outline, "is_blit_when_obscured_as_outline"),                                       /* newline */                                          \
       list_macro(is_attackable_by_player, "is_attackable_by_player"),               /* newline */                                          \
       list_macro(is_attackable_by_monst, "is_attackable_by_monst"),                 /* newline */                                          \
       list_macro(is_effect, "is_effect"),                                           /* newline */                                          \
@@ -711,7 +711,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup val);
 [[nodiscard]] auto tp_is_blit_shown_in_chasms(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_blit_shown_in_overlay(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_blit_square_outlined(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_blit_when_obscured(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_blit_when_obscured_as_faded(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_blitzhound(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_border(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_brazier(Tpp tp) -> bool;
@@ -887,7 +887,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup val);
 [[nodiscard]] auto tp_is_unused51(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused52(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused53(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused54(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_blit_when_obscured_as_outline(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused6(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused63(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused7(Tpp tp) -> bool;

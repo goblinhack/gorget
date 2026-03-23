@@ -182,22 +182,26 @@ static void thing_display_outlined_blit(Gamep g, Tpp tp, spoint tl, spoint br, T
   //
   // Flash if hidden
   //
-  if (t_maybe_null) {
-    auto h = thing_is_hidden(t_maybe_null);
-    if (h != 0) {
-      if (thing_is_ghost(t_maybe_null)) {
-        fg.a = h;
-        tile_blit(tile, x1, x2, y1, y2, tl, br, fg);
-      } else {
-        color c = WHITE;
-        c.a     = h;
-        tile_blit_outline(tile, x1, x2, y1, y2, tl, br, c);
-        return true;
-      }
-    }
+  if (! t_maybe_null) {
+    return false;
+  }
+  auto h = thing_is_hidden(t_maybe_null);
+  if (h == 0) {
+    return false;
   }
 
-  return false;
+  if (thing_is_blit_when_obscured_as_faded(t_maybe_null)) {
+    fg.a = h;
+    tile_blit(tile, x1, x2, y1, y2, tl, br, fg);
+  } else if (thing_is_blit_when_obscured_as_outline(t_maybe_null)) {
+    color c = WHITE;
+    c.a     = h;
+    tile_blit_outline(tile, x1, x2, y1, y2, tl, br, c);
+  } else {
+    thing_err(t_maybe_null, "need to set obscured type");
+  }
+
+  return true;
 }
 
 static void thing_display_blit(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp t_maybe_null, spoint tl, spoint br, Tilep tile,

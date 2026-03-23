@@ -2254,7 +2254,7 @@ auto thing_is_unused53(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused53) != 0;
 }
 
-auto thing_is_unused54(Thingp t) -> bool
+auto thing_is_blit_when_obscured_as_outline(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2262,7 +2262,7 @@ auto thing_is_unused54(Thingp t) -> bool
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused54) != 0;
+  return tp_flag(thing_tp(t), is_blit_when_obscured_as_outline) != 0;
 }
 
 auto thing_is_attackable_by_player(Thingp t) -> bool
@@ -2859,7 +2859,7 @@ auto thing_is_collectable(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_collectable) != 0;
 }
 
-auto thing_is_blit_when_obscured(Thingp t) -> bool
+auto thing_is_blit_when_obscured_as_faded(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2867,7 +2867,7 @@ auto thing_is_blit_when_obscured(Thingp t) -> bool
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_blit_when_obscured) != 0;
+  return tp_flag(thing_tp(t), is_blit_when_obscured_as_faded) != 0;
 }
 
 auto thing_is_openable(Thingp t) -> bool
