@@ -52,7 +52,7 @@ auto thing_corpse_allowed(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool
     //
     // Again, but across species
     //
-    if (corpse_count > MAX_CORPSES_PER_TILE) {
+    if (corpse_count > THING_CORPSES_PER_TILE) {
       return false;
     }
   }

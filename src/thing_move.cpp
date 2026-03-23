@@ -456,6 +456,7 @@ void thing_move_or_jump_finish(Gamep g, Levelsp v, Levelp l, Thingp me)
   thing_is_moving_unset(g, v, l, me);
   thing_is_jumping_unset(g, v, l, me);
   thing_dmap(g, v, l, me);
+  thing_update_pos(g, v, l, me);
 }
 
 //
@@ -470,4 +471,10 @@ void thing_update_pos(Gamep g, Levelsp v, Levelp l, Thingp me)
   pix_at.x = static_cast< int >(real_at.x * static_cast< float >(TILE_WIDTH));
   pix_at.y = static_cast< int >(real_at.y * static_cast< float >(TILE_HEIGHT));
   thing_pix_at_set(g, v, l, me, pix_at);
+
+  if (tp_is_blit_when_obscured(thing_tp(me)) && level_alive_is_blit_obscures(g, v, l, thing_at(me)) != nullptr) {
+    thing_is_hidden_set(g, v, l, me, true);
+  } else {
+    thing_is_hidden_set(g, v, l, me, false);
+  }
 }

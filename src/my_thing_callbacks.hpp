@@ -124,12 +124,4 @@ using thing_on_fall_end_t = void (*)(Gamep, Levelsp, Levelp, Thingp me);
 void thing_on_fall_end_set(Tpp tp, thing_on_fall_end_t callback);
 void thing_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp me);
 
-using thing_on_hit_anim_begin_t = void (*)(Gamep, Levelsp, Levelp, Thingp me);
-void thing_on_hit_anim_begin_set(Tpp tp, thing_on_hit_anim_begin_t callback);
-void thing_on_hit_anim_begin(Gamep g, Levelsp v, Levelp l, Thingp me);
-
-using thing_on_hit_anim_end_t = void (*)(Gamep, Levelsp, Levelp, Thingp me);
-void thing_on_hit_anim_end_set(Tpp tp, thing_on_hit_anim_end_t callback);
-void thing_on_hit_anim_end(Gamep g, Levelsp v, Levelp l, Thingp me);
-
 #endif

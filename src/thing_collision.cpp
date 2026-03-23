@@ -561,7 +561,7 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
         }
       }
 
-      thing_is_hit_set(g, v, l, o, MAX_HIT_TIME_MS);
+      thing_is_hit_set(g, v, l, o, THING_HIT_FLASH_TIME_MS);
 
       bool stop = {};
       thing_collision_handle(g, v, l, o, me, stop);

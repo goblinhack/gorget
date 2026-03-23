@@ -5239,7 +5239,7 @@ void level_gen_test(Gamep g)
 {
   TRACE();
 
-  for (auto seed = 0U; seed < MAX_TESTED_LEVELS; seed++) {
+  for (auto seed = 0U; seed < LEVEL_TEST_MAX; seed++) {
     game_seed_set(g, seed);
 
     //

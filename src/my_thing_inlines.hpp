@@ -118,6 +118,19 @@ static inline auto thing_is_hit(Thingp t) -> int
   return t->_is_hit;
 }
 
+static inline auto thing_is_hidden(Thingp t) -> int
+{
+#ifdef DEBUG_BUILD
+  TRACE_DEBUG();
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return 0;
+  }
+#endif
+
+  return t->_is_hidden;
+}
+
 static inline auto thing_is_hot(Thingp t) -> int
 {
 #ifdef DEBUG_BUILD

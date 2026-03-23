@@ -348,6 +348,7 @@ static auto tex_create_masks_from_surface(SDL_Surface *src, const std::string &f
   NEWPTR(MTYPE_SDL, dst_outline, "SDL_CreateRGBSurface19");
 
   color const col_white(255, 255, 255, 255);
+  color const col_black(0, 0, 0, 255);
 
   for (src_y = 0; src_y < src_height; src_y++) {
     for (src_x = 0; src_x < src_width; src_x++) {
@@ -359,6 +360,8 @@ static auto tex_create_masks_from_surface(SDL_Surface *src, const std::string &f
       //
       if ((col_orig.a == 255) && (col_orig.r == 0) && (col_orig.g == 0) && (col_orig.b == 0)) {
         PUT_PIXEL(dst_outline, src_x, src_y, col_white);
+      } else {
+        PUT_PIXEL(dst_outline, src_x, src_y, col_black);
       }
 
       //

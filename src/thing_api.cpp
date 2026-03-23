@@ -296,8 +296,8 @@ auto thing_is_falling_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> i
     return 0;
   }
 
-  if (t->_fall_ms + val > MAX_FALL_TIME_MS) {
-    return t->_fall_ms = MAX_FALL_TIME_MS;
+  if (t->_fall_ms + val > THING_FALL_TIME_MS) {
+    return t->_fall_ms = THING_FALL_TIME_MS;
   }
 
   return t->_fall_ms += val;
@@ -341,145 +341,6 @@ void thing_is_falling_continues_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   TRACE_DEBUG();
 
   thing_is_falling_continues_set(g, v, l, t, false);
-}
-
-void thing_is_hit_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return;
-  }
-
-  //
-  // Once hit, it is treated as a counter
-  //
-  if (val != 0) {
-    //
-    // Start the hit counter if not doing do
-    //
-    if (static_cast< bool >(t->_is_hit)) {
-      return;
-    }
-  } else {
-    //
-    // Stop hit
-    //
-    if (! static_cast< bool >(t->_is_hit)) {
-      return;
-    }
-  }
-
-  t->_is_hit = val;
-
-  if (val != 0) {
-    thing_on_hit_anim_begin(g, v, l, t);
-  } else {
-    thing_on_hit_anim_end(g, v, l, t);
-  }
-}
-
-auto thing_is_hit_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-
-  if ((! static_cast< bool >(t->_is_hit)) && (val != 0)) {
-    thing_on_hit_anim_begin(g, v, l, t);
-  }
-
-  if (t->_is_hit + val > 255) {
-    return t->_is_hit = 255;
-  }
-
-  return t->_is_hit += val;
-}
-
-auto thing_is_hit_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-
-  if (static_cast< int >(t->_is_hit) - val <= 0) {
-    if (static_cast< bool >(t->_is_hit)) {
-      thing_on_hit_anim_end(g, v, l, t);
-    }
-    return t->_is_hit = 0;
-  }
-
-  return t->_is_hit -= val;
-}
-
-void thing_is_hot_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return;
-  }
-
-  //
-  // Once hot, it is treated as a counter
-  //
-  if (val != 0) {
-    //
-    // Start the hot counter if not doing do
-    //
-    if (static_cast< bool >(t->_is_hot)) {
-      return;
-    }
-  } else {
-    //
-    // Stop hot
-    //
-    if (! static_cast< bool >(t->_is_hot)) {
-      return;
-    }
-  }
-
-  t->_is_hot = val;
-}
-
-auto thing_is_hot_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-
-  if (t->_is_hot + val > 255) {
-    return t->_is_hot = 255;
-  }
-
-  return t->_is_hot += val;
-}
-
-auto thing_is_hot_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-
-  if (static_cast< int >(t->_is_hot) - val <= 0) {
-    return t->_is_hot = 0;
-  }
-
-  return t->_is_hot -= val;
 }
 
 auto thing_temperature(Thingp t) -> int

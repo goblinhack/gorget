@@ -175,7 +175,7 @@ void thing_lunge_end_check(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
-  if (thing_is_lunging(me) >= MAX_LUNGE_TIME_MS) {
+  if (thing_is_lunging(me) >= THING_LUNGE_TIME_MS) {
     if (compiler_unused) {
       THING_DBG(me, "lunge to @%d,%d done", me->lunging_to.x, me->lunging_to.y);
     }
@@ -194,7 +194,7 @@ void thing_lunge_modify_position(Gamep g, Levelsp v, Levelp l, Thingp me, spoint
 
   auto dir = me->lunging_to - thing_at(me);
 
-  auto pct  = static_cast< float >(me->_lunge_ms) / static_cast< float >(MAX_LUNGE_TIME_MS);
+  auto pct  = static_cast< float >(me->_lunge_ms) / static_cast< float >(THING_LUNGE_TIME_MS);
   auto idxs = ARRAY_SIZE(lunge_amount);
   auto idx  = static_cast< int >(idxs * pct);
 

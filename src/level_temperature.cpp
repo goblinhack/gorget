@@ -273,6 +273,11 @@ void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
 
       if (thing_is_physics_temperature(t)) {
         things.push_back(t);
+
+        //
+        // Check if the thing needs to pulse
+        //
+        (void) thing_is_hot_check(g, v, l, t);
       }
     }
 

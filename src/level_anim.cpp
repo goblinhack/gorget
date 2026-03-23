@@ -41,6 +41,10 @@ void level_anim(Gamep g, Levelsp v, Levelp l)
       thing_hit_time_step(g, v, l, t, time_step);
     }
 
+    if (thing_is_hidden(t) != 0) {
+      thing_hidden_time_step(g, v, l, t, time_step);
+    }
+
     if (thing_is_falling(t) != 0) {
       thing_fall_time_step(g, v, l, t, time_step);
     }

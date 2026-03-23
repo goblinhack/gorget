@@ -199,6 +199,19 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp l, Levelp level_abov
                 display_tile = true;
               }
             }
+
+            //
+            // Need to show hidden things in the overlay. e.g. a ghost inside a wall
+            //
+            if (! display_tile) {
+              FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, p)
+              {
+                if (thing_is_hidden(it)) {
+                  display_tile = true;
+                  break;
+                }
+              }
+            }
             break;
           default : break;
         }

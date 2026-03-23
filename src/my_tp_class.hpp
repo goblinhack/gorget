@@ -248,8 +248,6 @@ public:
   thing_on_fall_begin_t         on_fall_begin         = {};
   thing_on_melt_t               on_melt               = {};
   thing_on_fall_end_t           on_fall_end           = {};
-  thing_on_hit_anim_begin_t     on_hit_anim_begin     = {};
-  thing_on_hit_anim_end_t       on_hit_anim_end       = {};
   thing_display_get_tile_info_t display_get_tile_info = {};
   thing_assess_tile_t           assess_tile           = {};
 

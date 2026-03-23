@@ -252,7 +252,7 @@ void thing_fall_end_check(Gamep g, Levelsp v, Levelp l, Thingp t)
     TRACE_INDENT();
   }
 
-  if (thing_is_falling(t) >= MAX_FALL_TIME_MS) {
+  if (thing_is_falling(t) >= THING_FALL_TIME_MS) {
 
     thing_fall_end(g, v, l, t);
 

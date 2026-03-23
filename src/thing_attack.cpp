@@ -38,7 +38,7 @@ static auto thing_attack(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it) -> 
 
   thing_damage(g, v, l, it, e);
 
-  thing_is_hit_set(g, v, l, it, MAX_HIT_TIME_MS);
+  thing_is_hit_set(g, v, l, it, THING_HIT_FLASH_TIME_MS);
 
   return true;
 }

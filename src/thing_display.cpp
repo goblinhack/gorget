@@ -174,20 +174,26 @@ static void thing_display_outlined_blit(Gamep g, Tpp tp, spoint tl, spoint br, T
 //
 // Show an outline if obscured? e.g. foliage and the player hiding in it
 //
-[[nodiscard]] static auto thing_display_outline_blit(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, spoint tl, spoint br,
-                                                     Tilep tile, float x1, float x2, float y1, float y2, FboEnum fbo, color fg) -> bool
+[[nodiscard]] static auto thing_display_hidden(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp t_maybe_null, spoint tl,
+                                               spoint br, Tilep tile, float x1, float x2, float y1, float y2, FboEnum fbo, color fg) -> bool
 {
   TRACE_DEBUG();
 
   //
-  // Ensure dead foliage does not block
+  // Flash if hidden
   //
-  if (level_alive_is_blit_obscures(g, v, l, p) != nullptr) {
-    if (tp_is_blit_when_obscured(tp)) {
-      color c = CYAN;
-      c.a     = 230;
-      tile_blit_outline(tile, x1, x2, y1, y2, tl, br, c);
-      return true;
+  if (t_maybe_null) {
+    auto h = thing_is_hidden(t_maybe_null);
+    if (h != 0) {
+      if (thing_is_ghost(t_maybe_null)) {
+        fg.a = h;
+        tile_blit(tile, x1, x2, y1, y2, tl, br, fg);
+      } else {
+        color c = WHITE;
+        c.a     = h;
+        tile_blit_outline(tile, x1, x2, y1, y2, tl, br, c);
+        return true;
+      }
     }
   }
 
@@ -203,14 +209,14 @@ static void thing_display_blit(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tp
   switch (fbo) {
     case FBO_MAP_FG_OVERLAY :
 
+      if (thing_display_hidden(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg)) {
+        return;
+      }
+
       //
       // Things like exits and entrances are shown in color once seen
       //
       if (! tp_is_blit_shown_in_overlay(tp)) {
-        return;
-      }
-
-      if (thing_display_outline_blit(g, v, l, p, tp, tl, br, tile, x1, x2, y1, y2, fbo, fg)) {
         return;
       }
 
@@ -240,7 +246,8 @@ static void thing_display_falling(Gamep g, Levelsp v, Levelp l, const bpoint &p,
   TRACE_DEBUG();
 
   int const fall_height = thing_is_falling(t);
-  int const dh = static_cast< int >(((0.5F * (static_cast< float >(br.y - tl.y))) / static_cast< float >(MAX_FALL_TIME_MS)) * fall_height);
+  int const dh
+      = static_cast< int >(((0.5F * (static_cast< float >(br.y - tl.y))) / static_cast< float >(THING_FALL_TIME_MS)) * fall_height);
 
   tl.x += dh;
   tl.y += dh;
@@ -472,16 +479,11 @@ void thing_display(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp
       //
       // Preserve original alpha
       //
-      auto        pulse = thing_is_hot(t_maybe_null);
-      color const flash = RED;
-      fg.r              = flash.r;
-      if (pulse < 128) {
-        pulse = 255 - pulse;
-      }
-      fg.g = pulse;
-      fg.b = pulse;
-
-      light_pixels = nullptr;
+      color const hot = ORANGE;
+      fg.r            = thing_is_hot(t_maybe_null);
+      fg.g            = hot.g;
+      fg.b            = hot.b;
+      light_pixels    = nullptr;
     }
 
     //
@@ -504,7 +506,8 @@ void thing_display(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp
     //
     if (thing_is_hit(t_maybe_null) != 0) {
       color outline = RED;
-      int   a   = static_cast< int >((static_cast< float >(thing_is_hit(t_maybe_null)) / static_cast< float >(MAX_HIT_TIME_MS)) * 255.0);
+      int   a
+          = static_cast< int >((static_cast< float >(thing_is_hit(t_maybe_null)) / static_cast< float >(THING_HIT_FLASH_TIME_MS)) * 255.0);
       a         = std::min(a, 255);
       outline.a = static_cast< uint8_t >(a);
       tile_blit_outline(tile, x1, x2, y1, y2, tl, br, outline);

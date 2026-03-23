@@ -644,7 +644,7 @@ void Game::seed_set(const char *maybe_seed)
   //
   // Limit to tested levels
   //
-  PCG_SRAND(config.seed_num % MAX_TESTED_LEVELS);
+  PCG_SRAND(config.seed_num % LEVEL_TEST_MAX);
 }
 
 void game_seed_set(Gamep g, const char *maybe_seed)
