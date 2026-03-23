@@ -809,14 +809,14 @@ void rooms_exit(Gamep g);
 void rooms_fini(Gamep g);
 void rooms_init(Gamep g);
 void rooms_key(Gamep g);
-void rooms_medium(Gamep g);
 void rooms_large(Gamep g);
-void rooms_tall(Gamep g);
 void rooms_long(Gamep g);
+void rooms_medium(Gamep g);
 void rooms_prefab_secret(Gamep g);
 void rooms_prefab(Gamep g);
 void rooms_small(Gamep g);
 void rooms_start(Gamep g);
+void rooms_tall(Gamep g);
 void rooms_test(Gamep g);
 void thing_lunge_modify_position(Gamep g, Levelsp v, Levelp l, Thingp me, spoint &tl, spoint &br);
 // end sort marker2 }
@@ -886,6 +886,7 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_is_blit_shown_in_overlay(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_is_blit_square_outlined(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_is_blit_when_obscured_as_faded(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
+[[nodiscard]] auto level_is_blit_when_obscured_as_outline(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_is_blitzhound(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_is_border(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_is_brazier(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
@@ -1061,7 +1062,6 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_is_unused51(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_is_unused52(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_is_unused53(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
-[[nodiscard]] auto level_is_blit_when_obscured_as_outline(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_is_unused6(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_is_unused63(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_is_unused7(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
@@ -1109,6 +1109,7 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_is_blit_shown_in_overlay_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
 [[nodiscard]] auto level_is_blit_square_outlined_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
 [[nodiscard]] auto level_is_blit_when_obscured_as_faded_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
+[[nodiscard]] auto level_is_blit_when_obscured_as_outline_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
 [[nodiscard]] auto level_is_blitzhound_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
 [[nodiscard]] auto level_is_border_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
 [[nodiscard]] auto level_is_brazier_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
@@ -1284,7 +1285,6 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_is_unused51_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
 [[nodiscard]] auto level_is_unused52_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
 [[nodiscard]] auto level_is_unused53_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
-[[nodiscard]] auto level_is_blit_when_obscured_as_outline_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
 [[nodiscard]] auto level_is_unused6_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
 [[nodiscard]] auto level_is_unused63_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
 [[nodiscard]] auto level_is_unused7_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
@@ -1332,6 +1332,7 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_alive_is_blit_shown_in_overlay(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_blit_square_outlined(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_blit_when_obscured_as_faded(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
+[[nodiscard]] auto level_alive_is_blit_when_obscured_as_outline(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_blitzhound(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_border(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_brazier(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
@@ -1507,7 +1508,6 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_alive_is_unused51(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_unused52(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_unused53(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
-[[nodiscard]] auto level_alive_is_blit_when_obscured_as_outline(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_unused6(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_unused63(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_unused7(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
@@ -1553,6 +1553,7 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_count_is_blit_shown_in_overlay(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_blit_square_outlined(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_blit_when_obscured_as_faded(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
+[[nodiscard]] auto level_count_is_blit_when_obscured_as_outline(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_blitzhound(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_border(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_brazier(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
@@ -1728,7 +1729,6 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_count_is_unused51(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_unused52(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_unused53(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
-[[nodiscard]] auto level_count_is_blit_when_obscured_as_outline(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_unused6(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_unused63(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_unused7(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
@@ -1741,6 +1741,12 @@ using LevelType = enum LevelType_ {
 // end sort marker6 }
 
 // begin sort marker7 {
+[[nodiscard]] auto fragment_alt_char(FragmentAltp, int x, int y) -> char;
+[[nodiscard]] auto fragment_alt_random_get(Gamep g, Fragmentp f, bpoint at) -> FragmentAltp;
+[[nodiscard]] auto fragment_char(Fragmentp f, int x, int y) -> char;
+[[nodiscard]] auto fragment_height(Fragmentp f) -> int;
+[[nodiscard]] auto fragment_random_get(Gamep g) -> Fragmentp;
+[[nodiscard]] auto fragment_width(Fragmentp f) -> int;
 [[nodiscard]] auto level_has_seen(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
 [[nodiscard]] auto level_open_is_able_to_collect_items(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_able_to_collect_keys(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
@@ -1775,6 +1781,7 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_open_is_blit_shown_in_overlay(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_blit_square_outlined(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_blit_when_obscured_as_faded(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
+[[nodiscard]] auto level_open_is_blit_when_obscured_as_outline(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_blitzhound(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_border(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_brazier(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
@@ -1947,16 +1954,9 @@ using LevelType = enum LevelType_ {
 [[nodiscard]] auto level_open_is_unused49(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused5(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused50(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
-[[nodiscard]] auto fragment_random_get(Gamep g) -> Fragmentp;
-[[nodiscard]] auto fragment_char(Fragmentp f, int x, int y) -> char;
-[[nodiscard]] auto fragment_height(Fragmentp f) -> int;
-[[nodiscard]] auto fragment_width(Fragmentp f) -> int;
-[[nodiscard]] auto fragment_alt_random_get(Gamep g, Fragmentp f, bpoint at) -> FragmentAltp;
-[[nodiscard]] auto fragment_alt_char(FragmentAltp, int x, int y) -> char;
 [[nodiscard]] auto level_open_is_unused51(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused52(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused53(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
-[[nodiscard]] auto level_open_is_blit_when_obscured_as_outline(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused6(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused63(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused7(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
