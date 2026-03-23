@@ -67,6 +67,7 @@ enum {
   THING_LUNGE_TIME_MS        = 150,
   THING_HIT_FLASH_TIME_MS    = 250,
   THING_CORPSES_PER_TILE     = 3,
+  THING_JUMP_HEIGHT_TILES    = 2,
 
   POPUP_DURATION_MS          = 2000,
   POPUP_DURATION_TILE_HEIGHT = 6,
@@ -91,7 +92,12 @@ enum {
 #define POPUP_TEXT_SCALE_DOWN 1.5
 #define TEST_SEED             "test-seed"
 
-enum { TEST_ITERATIONS = 100, TICK_DURATION_MS = 100 };
+enum {
+  TEST_ITERATIONS            = 100, // newline
+  TICK_DURATION_MS           = 100, // newline
+  TICK_DURATION_WHEN_IDLE_MS = 200, // newline
+};
+
 enum { WALL_VARIANTS = 12, FLOOR_VARIANTS = 10 };
 
 //

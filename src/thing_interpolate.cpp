@@ -39,4 +39,8 @@ void thing_interpolate(Gamep g, Levelsp v, Levelp l, Thingp t, float dt)
   pix_at.x = static_cast< int >(pix_x * static_cast< float >(TILE_WIDTH));
   pix_at.y = static_cast< int >(pix_y * static_cast< float >(TILE_HEIGHT));
   thing_pix_at_set(g, v, l, t, pix_at);
+
+  if (compiler_unused) {
+    THING_DBG(t, "from %d,%d to %d,%d dt %f pix_at %d,%d", moving_from.x, moving_from.y, at.x, at.y, dt, pix_at.x, pix_at.y);
+  }
 }

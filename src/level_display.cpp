@@ -210,6 +210,11 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp l, Levelp level_abov
                   display_tile = true;
                   break;
                 }
+
+                if (thing_is_jumping(it)) {
+                  display_tile = true;
+                  break;
+                }
               }
             }
             break;

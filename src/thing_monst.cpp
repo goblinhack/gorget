@@ -204,6 +204,8 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
 {
   THING_DBG(me, "move try");
 
+  auto at = thing_at(me);
+
   if (thing_can_move_to_attempt(g, v, l, me, to)) {
     return true;
   }
@@ -234,6 +236,15 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
   }
 
   //
+  // Can it jump there?
+  //
+  if (! adjacent(at, to)) {
+    if (thing_jump_to(g, v, l, me, to, false)) {
+      return true;
+    }
+  }
+
+  //
   // Bumped into obstacle
   //
   return false;
@@ -245,6 +256,7 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
 [[nodiscard]] static auto thing_monst_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
 {
   TRACE();
+
   THING_DBG(me, "move to next");
 
   //
@@ -445,6 +457,7 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me)
 
         THING_DBG(me, "end of move: have a new target %d,%d", new_target.x, new_target.y);
         (void) thing_monst_move_to_next(g, v, l, me);
+        THING_DBG(me, "end of move: done");
       }
       break;
     case MONST_STATE_ENUM_MAX : break;

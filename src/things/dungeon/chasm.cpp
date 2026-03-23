@@ -34,6 +34,7 @@ auto tp_load_chasm() -> bool
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_needs_move_confirm);
   tp_flag_set(tp, is_obs_to_explosion);
+  tp_flag_set(tp, is_obs_to_jumping_onto);
   tp_flag_set(tp, is_obs_to_teleporting_onto);
   tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_tick_end_delay);

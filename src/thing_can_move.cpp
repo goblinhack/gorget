@@ -24,6 +24,10 @@ auto thing_can_move_to_attempt(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint t
     return true;
   }
 
+  if (! adjacent(at, to)) {
+    return false;
+  }
+
   auto dx = to.x - at.x;
   auto dy = to.y - at.y;
   thing_set_dir_from_delta(me, dx, dy);

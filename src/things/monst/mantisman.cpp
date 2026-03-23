@@ -26,11 +26,12 @@ static auto tp_mantisman_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> s
 {
   TRACE();
 
-  return                                                                                                //
-      UI_INFO1_FMT_STR "MantisMan: half-mantis, half-man but which half?\n"                             //
-      UI_INFO2_FMT_STR "These tall bipedal insectoids linger in the spaces that nature forgets.\n"      //
-      UI_INFO3_FMT_STR "They hunger for human flesh especially and hang around in chittering groups.\n" //
-      UI_INFO4_FMT_STR "The one thing they do not do... is pray.";
+  return                                                                                               //
+      UI_INFO1_FMT_STR "MantisMan: half-mantis, half-man but which half?\n"                            //
+      UI_INFO2_FMT_STR "These tall bipedal insectoids linger in the spaces that nature forgets.\n"     //
+      UI_INFO3_FMT_STR "They hunger for human flesh especially and hang around in chittering groups. " //
+      UI_INFO3_FMT_STR "The one thing these mantises do not do... is pray.\n"                          //
+      UI_INFO4_FMT_STR "Watch out for their jump attack!\n";
 }
 
 static auto tp_mantisman_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at, Thingp t) -> ThingEnviron
@@ -84,9 +85,11 @@ auto tp_load_mantisman() -> bool
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6"); // roll max to continue burning
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // roll max to continue burning
   tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d3");
+  tp_distance_jump_set(tp, 2);
   tp_distance_vision_set(tp, 10);
   tp_flag_set(tp, is_able_to_crush_grass);
   tp_flag_set(tp, is_able_to_fall);
+  tp_flag_set(tp, is_able_to_jump);
   tp_flag_set(tp, is_able_to_lunge);
   tp_flag_set(tp, is_able_to_move_diagonally);
   tp_flag_set(tp, is_able_to_see_180_degrees);

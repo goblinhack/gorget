@@ -915,7 +915,7 @@ void fragments_init(Gamep g)
                            /* alt  */ (const char *) ".....", nullptr)) {
       CROAK("failed to add fragment alt");
     }
-    if (! fragment_alt_add(g, CHANCE_NORMAL, ROOM_FLAG_ALL, __FUNCTION__, __LINE__,
+    if (! fragment_alt_add(g, CHANCE_NORMAL, ~ROOM_FLAG_ENTRANCE, __FUNCTION__, __LINE__,
                            /* alt  */ (const char *) ".....",
                            /* alt  */ (const char *) "...x.",
                            /* alt  */ (const char *) "..gx.",
@@ -963,7 +963,7 @@ void fragments_init(Gamep g)
                            /* alt  */ (const char *) ".....", nullptr)) {
       CROAK("failed to add fragment alt");
     }
-    if (! fragment_alt_add(g, CHANCE_NORMAL, ROOM_FLAG_ALL, __FUNCTION__, __LINE__,
+    if (! fragment_alt_add(g, CHANCE_NORMAL, ~ROOM_FLAG_ENTRANCE, __FUNCTION__, __LINE__,
                            /* alt  */ (const char *) ".....",
                            /* alt  */ (const char *) ".....",
                            /* alt  */ (const char *) "..M..",
@@ -971,7 +971,7 @@ void fragments_init(Gamep g)
                            /* alt  */ (const char *) ".....", nullptr)) {
       CROAK("failed to add fragment alt");
     }
-    if (! fragment_alt_add(g, CHANCE_UNLIKELY, ROOM_FLAG_ALL, __FUNCTION__, __LINE__,
+    if (! fragment_alt_add(g, CHANCE_UNLIKELY, ~ROOM_FLAG_ENTRANCE, __FUNCTION__, __LINE__,
                            /* alt  */ (const char *) ".....",
                            /* alt  */ (const char *) ".x.x.",
                            /* alt  */ (const char *) "..g..",
@@ -979,7 +979,7 @@ void fragments_init(Gamep g)
                            /* alt  */ (const char *) ".....", nullptr)) {
       CROAK("failed to add fragment alt");
     }
-    if (! fragment_alt_add(g, CHANCE_V_UNLIKELY, ROOM_FLAG_ALL, __FUNCTION__, __LINE__,
+    if (! fragment_alt_add(g, CHANCE_V_UNLIKELY, ~ROOM_FLAG_ENTRANCE, __FUNCTION__, __LINE__,
                            /* alt  */ (const char *) ".....",
                            /* alt  */ (const char *) ".xxx.",
                            /* alt  */ (const char *) ".gxg.",
@@ -987,7 +987,7 @@ void fragments_init(Gamep g)
                            /* alt  */ (const char *) ".....", nullptr)) {
       CROAK("failed to add fragment alt");
     }
-    if (! fragment_alt_add(g, CHANCE_VV_UNLIKELY, ROOM_FLAG_ALL, __FUNCTION__, __LINE__,
+    if (! fragment_alt_add(g, CHANCE_VV_UNLIKELY, ~ROOM_FLAG_ENTRANCE, __FUNCTION__, __LINE__,
                            /* alt  */ (const char *) ".....",
                            /* alt  */ (const char *) ".xxx.",
                            /* alt  */ (const char *) ".gxg.",
@@ -995,7 +995,7 @@ void fragments_init(Gamep g)
                            /* alt  */ (const char *) ".....", nullptr)) {
       CROAK("failed to add fragment alt");
     }
-    if (! fragment_alt_add(g, CHANCE_VVV_UNLIKELY, ROOM_FLAG_ALL, __FUNCTION__, __LINE__,
+    if (! fragment_alt_add(g, CHANCE_VVV_UNLIKELY, ~ROOM_FLAG_ENTRANCE, __FUNCTION__, __LINE__,
                            /* alt  */ (const char *) ".....",
                            /* alt  */ (const char *) ".xgx.",
                            /* alt  */ (const char *) ".gxg.",
@@ -1221,19 +1221,19 @@ void fragments_init(Gamep g)
                            /* alt  */ (const char *) "...", nullptr)) {
       CROAK("failed to add fragment alt");
     }
-    if (! fragment_alt_add(g, CHANCE_NORMAL, ROOM_FLAG_ALL, __FUNCTION__, __LINE__,
+    if (! fragment_alt_add(g, CHANCE_NORMAL, ~ROOM_FLAG_ENTRANCE, __FUNCTION__, __LINE__,
                            /* alt  */ (const char *) "...",
                            /* alt  */ (const char *) ".g.",
                            /* alt  */ (const char *) "...", nullptr)) {
       CROAK("failed to add fragment alt");
     }
-    if (! fragment_alt_add(g, CHANCE_UNLIKELY, ROOM_FLAG_ALL, __FUNCTION__, __LINE__,
+    if (! fragment_alt_add(g, CHANCE_UNLIKELY, ~ROOM_FLAG_ENTRANCE, __FUNCTION__, __LINE__,
                            /* alt  */ (const char *) "...",
                            /* alt  */ (const char *) ".M.",
                            /* alt  */ (const char *) "...", nullptr)) {
       CROAK("failed to add fragment alt");
     }
-    if (! fragment_alt_add(g, CHANCE_UNLIKELY, ROOM_FLAG_ALL, __FUNCTION__, __LINE__,
+    if (! fragment_alt_add(g, CHANCE_UNLIKELY, ~ROOM_FLAG_ENTRANCE, __FUNCTION__, __LINE__,
                            /* alt  */ (const char *) "...",
                            /* alt  */ (const char *) ".G.",
                            /* alt  */ (const char *) "...", nullptr)) {
@@ -1408,7 +1408,7 @@ void fragments_init(Gamep g)
                    /* frag   */ (const char *) "x.....x",
                    /* frag   */ (const char *) "x.....x",
                    /* frag   */ (const char *) "x.....x", nullptr)) {
-    if (! fragment_alt_add(g, CHANCE_NORMAL, ROOM_FLAG_ALL, __FUNCTION__, __LINE__,
+    if (! fragment_alt_add(g, CHANCE_NORMAL, ~ROOM_FLAG_ENTRANCE, __FUNCTION__, __LINE__,
                            /* alt  */ (const char *) "B..g..B",
                            /* alt  */ (const char *) ".......",
                            /* alt  */ (const char *) ".B...B$",
@@ -1417,7 +1417,7 @@ void fragments_init(Gamep g)
                            /* alt  */ (const char *) "x.....x", nullptr)) {
       CROAK("failed to add fragment alt");
     }
-    if (! fragment_alt_add(g, CHANCE_NORMAL, ROOM_FLAG_ALL, __FUNCTION__, __LINE__,
+    if (! fragment_alt_add(g, CHANCE_NORMAL, ~ROOM_FLAG_ENTRANCE, __FUNCTION__, __LINE__,
                            /* alt  */ (const char *) "B..g..B",
                            /* alt  */ (const char *) ".......",
                            /* alt  */ (const char *) ".BC=CB$",
@@ -1426,7 +1426,7 @@ void fragments_init(Gamep g)
                            /* alt  */ (const char *) "x.....x", nullptr)) {
       CROAK("failed to add fragment alt");
     }
-    if (! fragment_alt_add(g, CHANCE_NORMAL, ROOM_FLAG_ALL, __FUNCTION__, __LINE__,
+    if (! fragment_alt_add(g, CHANCE_NORMAL, ~ROOM_FLAG_ENTRANCE, __FUNCTION__, __LINE__,
                            /* alt  */ (const char *) "B..G..B",
                            /* alt  */ (const char *) ".......",
                            /* alt  */ (const char *) ".B...B$",
@@ -1435,7 +1435,7 @@ void fragments_init(Gamep g)
                            /* alt  */ (const char *) "x.....x", nullptr)) {
       CROAK("failed to add fragment alt");
     }
-    if (! fragment_alt_add(g, CHANCE_NORMAL, ROOM_FLAG_ALL, __FUNCTION__, __LINE__,
+    if (! fragment_alt_add(g, CHANCE_NORMAL, ~ROOM_FLAG_ENTRANCE, __FUNCTION__, __LINE__,
                            /* alt  */ (const char *) "B..gxx.",
                            /* alt  */ (const char *) "....s..",
                            /* alt  */ (const char *) "B...x.$",

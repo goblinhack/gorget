@@ -105,6 +105,7 @@ void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, const bpoint &p, 
 
   if ((t_maybe_null != nullptr) && thing_is_jumping(t_maybe_null)) {
     auto jump_height = static_cast< int >((sin(std::numbers::pi_v< float > * t_maybe_null->thing_dt)) * static_cast< float >(dh));
+    jump_height *= THING_JUMP_HEIGHT_TILES;
     tl.y -= jump_height;
     br.y -= jump_height;
   }
@@ -212,9 +213,18 @@ static void thing_display_blit(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tp
 
   switch (fbo) {
     case FBO_MAP_FG_OVERLAY :
-
+      //
+      // Hidden things need to be shown on top of walls or foliage
+      //
       if (thing_display_hidden(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg)) {
         return;
+      }
+
+      //
+      // Jumping things need to be seen over other things
+      //
+      if (t_maybe_null && thing_is_jumping(t_maybe_null)) {
+        break;
       }
 
       //
@@ -233,7 +243,6 @@ static void thing_display_blit(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tp
   // light_pixels is set for things like floors and walls, and blits the tile as lots of individual
   // pixels with their own lighting
   //
-
   if (tp_is_blit_outlined(tp) || tp_is_blit_square_outlined(tp)) {
     thing_display_outlined_blit(g, tp, tl, br, tile, x1, x2, y1, y2, fg);
   } else {

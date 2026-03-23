@@ -13,13 +13,12 @@
 //
 // If jumping too far, truncate the jump
 //
-static void thing_jump_truncate(Gamep g, Levelsp v, Levelp l, Thingp t, bpoint &to)
+static void thing_jump_truncate(Gamep g, Levelsp v, Levelp l, Thingp t, bpoint &to, int how_far_i_can_jump)
 {
   //
   // Add some random delta for fun and some for diagonals
   //
   auto        curr_at                = thing_at(t);
-  float       how_far_i_can_jump     = thing_distance_jump(t);
   float const how_far_i_want_to_jump = distance(curr_at, to);
 
   //
@@ -86,9 +85,14 @@ auto thing_jump_to(Gamep g, Levelsp v, Levelp l, Thingp t, bpoint to, bool warn)
   //
   // If jumping too far, truncate the jump
   //
-  thing_jump_truncate(g, v, l, t, to);
+  auto how_far_i_can_jump = thing_distance_jump(t);
+  thing_con(t, "jump to %d,%d (original)", to.x, to.y);
 
-  THING_DBG(t, "jump to %d,%d", to.x, to.y);
+  thing_jump_truncate(g, v, l, t, to, how_far_i_can_jump);
+
+  auto how_far_i_want_to_jump = (int) floor(distance(at, to));
+
+  thing_con(t, "jump to %d,%d (latest)", to.x, to.y);
   TRACE_INDENT();
 
   //
@@ -114,6 +118,16 @@ auto thing_jump_to(Gamep g, Levelsp v, Levelp l, Thingp t, bpoint to, bool warn)
         TOPCON("There is something in the way of jumping there.");
       }
     }
+
+    //
+    // We could be trying to land on the player. Try again, but with a shorter distance.
+    //
+    if (how_far_i_want_to_jump > 1) {
+      thing_jump_truncate(g, v, l, t, to, how_far_i_want_to_jump - 1);
+      thing_con(t, "something in the way, truncate jump to %d,%d", to.x, to.y);
+      return thing_jump_to(g, v, l, t, to, warn);
+    }
+
     return false;
   }
 

@@ -82,7 +82,7 @@ auto level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int
       Tpp          tp     = nullptr;
       bpoint const at(x, y);
 
-      const auto is_entrance = level_gen_is_room_entrance(g, level_gen, at);
+      auto is_entrance = level_gen_is_room_entrance(g, level_gen, at);
 
       l->debug[ x ][ y ] = c;
 

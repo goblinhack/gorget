@@ -772,8 +772,19 @@ static void level_tick_time_step(Gamep g, Levelsp v, Levelp current_level)
   //
   // Calculate the time step, for animation
   //
+  auto duration_ms = TICK_DURATION_MS;
+
+  //
+  // If the player is not moving, this makes monster jumps look smoother as we're not
+  // jumping so quickly
+  //
+  auto *player = thing_player(g);
+  if (! player || ! thing_is_moving(player)) {
+    //    duration_ms = TICK_DURATION_WHEN_IDLE_MS;
+  }
+
   v->last_time_step = v->time_step;
-  v->time_step      = (static_cast< float >(v->frame - v->frame_begin)) / static_cast< float >(TICK_DURATION_MS);
+  v->time_step      = (static_cast< float >(v->frame - v->frame_begin)) / static_cast< float >(duration_ms);
 
   IF_DEBUG2
   { //
