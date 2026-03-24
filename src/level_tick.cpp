@@ -3,6 +3,7 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_dice_rolls.hpp"
 #include "my_game.hpp"
 #include "my_game_popups.hpp"
 #include "my_globals.hpp"
@@ -107,7 +108,6 @@ static void level_tick_ok_to_end_check(Gamep g, Levelsp v, Levelp l)
     if (thing_is_lunging(t) != 0) {
       thing_lunge_end_check(g, v, l, t);
       if (thing_is_lunging(t) != 0) {
-        //        l->tick_wait_on_things = true;
         if (compiler_unused) { //
           LEVEL_DBG(g, v, l, "waiting on lunge %s", to_string(g, v, l, t).c_str());
         }
@@ -423,6 +423,15 @@ static void level_tick_begin(Gamep g, Levelsp v, Levelp l)
   //
   level_update_flags(g, v, l);
 
+  //
+  // For things that are too far away, move them less often
+  //
+  bpoint player_at;
+  auto  *player = thing_player(g);
+  if (player != nullptr) {
+    player_at = thing_at(player);
+  }
+
   FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
   {
     if (thing_is_tickable(t)) {
@@ -430,6 +439,12 @@ static void level_tick_begin(Gamep g, Levelsp v, Levelp l)
 
       if (! thing_is_dead(t)) {
         if (thing_is_monst(t)) {
+          if (player && (distance(player_at, thing_at(t)) > MAP_WIDTH / 2)) {
+            if (d100() > TICK_FAR_OFF_MONST_CHANCE) {
+              continue;
+            }
+          }
+
           worklist.push_back(t->id);
         }
       }

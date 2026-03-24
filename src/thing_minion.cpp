@@ -165,7 +165,7 @@ auto thing_minion_choose_target_near_mob(Gamep g, Levelsp v, Levelp l, Thingp me
       continue;
     }
 
-    thing_log(me, "astar thing_minion_choose_target_near_mob");
+    THING_DBG(me, "astar thing_minion_choose_target_near_mob");
     auto p = astar_solve(g, v, l, me, minion_at, target);
     if (p.empty()) {
       continue;

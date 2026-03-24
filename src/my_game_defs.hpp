@@ -93,8 +93,9 @@ enum {
 #define TEST_SEED             "test-seed"
 
 enum {
-  TEST_ITERATIONS  = 100, // newline
-  TICK_DURATION_MS = 125, // newline
+  TEST_ITERATIONS           = 100, // newline
+  TICK_DURATION_MS          = 125, // newline
+  TICK_FAR_OFF_MONST_CHANCE = 10,  // newline
 };
 
 enum {
