@@ -127,8 +127,11 @@ enum {
 // x..........................x
 // xxxxxxxxxxxxxxxxxxxxxxxxxxxx
 //
-#define MAP_SCROLL_EDGE       0.45
-#define MAP_SCROLL_OUTER_EDGE 0.1
+#define MAP_SCROLL_EDGE_INNER       0.45 // slower scroll when far from edge
+#define MAP_SCROLL_EDGE_INNER_PIXEL 1    // max pixels to scroll jump
+
+#define MAP_SCROLL_EDGE_OUTER       0.15 // faster scroll as closer to edge
+#define MAP_SCROLL_EDGE_OUTER_PIXEL 5    // max pixels to scroll jump
 
 //
 // Collision detection radii

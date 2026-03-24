@@ -13,6 +13,11 @@
 
 static std::vector< bpoint > cursor_path;
 
+using PathCost = struct PathCost {
+  std::vector< bpoint > path;
+  int                   cost = {};
+};
+
 void level_cursor_set(Gamep g, Levelsp v, bpoint p)
 {
   TRACE();
@@ -368,11 +373,6 @@ static auto level_cursor_path_draw_line(Gamep g, Levelsp v, Levelp l, const bpoi
   // The first path prefers visited tiles.
   //
   const int max_attempts = 5;
-
-  using PathCost = struct PathCost {
-    std::vector< bpoint > path;
-    int                   cost = {};
-  };
 
   std::vector< PathCost > paths;
 

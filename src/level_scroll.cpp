@@ -64,8 +64,6 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
   float const  x = ((pix_at.x * zoom) - v->pixel_map_at.x) / static_cast< float >(w);
   float const  y = ((pix_at.y * zoom) - v->pixel_map_at.y) / static_cast< float >(h);
 
-  const auto scroll_border = MAP_SCROLL_EDGE;
-
   if (v->scroll_speed == 0U) {
     v->scroll_speed = MAP_SCROLL_SPEED;
   }
@@ -85,7 +83,7 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
       //
       return;
     }
-    if ((x < MAP_SCROLL_OUTER_EDGE) || (y < MAP_SCROLL_OUTER_EDGE) || (x > 1 - MAP_SCROLL_OUTER_EDGE) || (y > 1 - MAP_SCROLL_OUTER_EDGE)) {
+    if ((x < MAP_SCROLL_EDGE_OUTER) || (y < MAP_SCROLL_EDGE_OUTER) || (x > 1 - MAP_SCROLL_EDGE_OUTER) || (y > 1 - MAP_SCROLL_EDGE_OUTER)) {
       //
       // Unless the player has wandered off screen
       //
@@ -147,21 +145,48 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
   //
   // If too close to the edges, scroll.
   //
-  if (x > 1.0 - scroll_border) {
-    dx = static_cast< int >((x - scroll_border) * v->scroll_speed);
+  // Scroll faster if really close to the edge.
+  //
+  auto scroll_inner = MAP_SCROLL_EDGE_INNER;
+  auto scroll_outer = MAP_SCROLL_EDGE_OUTER;
+
+  auto max_pixel_scroll_inner = MAP_SCROLL_EDGE_INNER_PIXEL;
+  auto max_pixel_scroll_outer = MAP_SCROLL_EDGE_OUTER_PIXEL;
+
+  if (x > 1.0 - scroll_outer) {
+    dx = static_cast< int >((x - scroll_outer) * v->scroll_speed);
+    dx = std::min(dx, max_pixel_scroll_outer);
     v->pixel_map_at.x += dx;
-  }
-  if (x < scroll_border) {
-    dy = static_cast< int >((scroll_border - x) * v->scroll_speed);
-    v->pixel_map_at.x -= dy;
-  }
-  if (y > 1.0 - scroll_border) {
-    dy = static_cast< int >((y - scroll_border) * v->scroll_speed);
-    v->pixel_map_at.y += dy;
-  }
-  if (y < scroll_border) {
-    dx = static_cast< int >((scroll_border - y) * v->scroll_speed);
+  } else if (x > 1.0 - scroll_inner) {
+    dx = static_cast< int >((x - scroll_inner) * v->scroll_speed);
+    dx = std::min(dx, max_pixel_scroll_inner);
+    v->pixel_map_at.x += dx;
+  } else if (y < scroll_outer) {
+    dx = static_cast< int >((scroll_outer - y) * v->scroll_speed);
+    dx = std::min(dx, max_pixel_scroll_outer);
     v->pixel_map_at.y -= dx;
+  } else if (y < scroll_inner) {
+    dx = static_cast< int >((scroll_inner - y) * v->scroll_speed);
+    dx = std::min(dx, max_pixel_scroll_inner);
+    v->pixel_map_at.y -= dx;
+  }
+
+  if (x < scroll_outer) {
+    dy = static_cast< int >((scroll_outer - x) * v->scroll_speed);
+    dy = std::min(dy, max_pixel_scroll_outer);
+    v->pixel_map_at.x -= dy;
+  } else if (x < scroll_inner) {
+    dy = static_cast< int >((scroll_inner - x) * v->scroll_speed);
+    dy = std::min(dy, max_pixel_scroll_inner);
+    v->pixel_map_at.x -= dy;
+  } else if (y > 1.0 - scroll_outer) {
+    dy = static_cast< int >((y - scroll_outer) * v->scroll_speed);
+    dy = std::min(dy, max_pixel_scroll_outer);
+    v->pixel_map_at.y += dy;
+  } else if (y > 1.0 - scroll_inner) {
+    dy = static_cast< int >((y - scroll_inner) * v->scroll_speed);
+    dy = std::min(dy, max_pixel_scroll_inner);
+    v->pixel_map_at.y += dy;
   }
 
   //
@@ -170,25 +195,21 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
   if (v->pixel_map_at.x > v->pixel_max.x) {
     dx                = 0;
     v->pixel_map_at.x = v->pixel_max.x;
+  } else if (v->pixel_map_at.x < 0) {
+    dx                = 0;
+    v->pixel_map_at.x = 0;
   }
 
   if (v->pixel_map_at.y > v->pixel_max.y) {
     dy                = 0;
     v->pixel_map_at.y = v->pixel_max.y;
-  }
-
-  if (v->pixel_map_at.x < 0) {
-    dx                = 0;
-    v->pixel_map_at.x = 0;
-  }
-
-  if (v->pixel_map_at.y < 0) {
+  } else if (v->pixel_map_at.y < 0) {
     dy                = 0;
     v->pixel_map_at.y = 0;
   }
 
   if (compiler_unused) {
-    TOPCON("%u [%d,%d] elapsed %u", v->requested_forced_auto_scroll, dx, dy, time_ms() - v->requested_forced_auto_scroll);
+    CON("%u [%d,%d] elapsed %u", v->requested_forced_auto_scroll, dx, dy, time_ms() - v->requested_forced_auto_scroll);
   }
 
   //
