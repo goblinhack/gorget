@@ -106,7 +106,7 @@ void thing_is_hot_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
   }
 
   if (val) {
-    if (t->_is_hot != 0u) {
+    if (t->_is_hot != 0U) {
       return;
     }
 

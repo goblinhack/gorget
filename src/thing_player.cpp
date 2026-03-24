@@ -687,7 +687,7 @@ auto player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what) ->
   //
   // No firing in deep water
   //
-  if (level_is_deep_water(g, v, l, thing_at(me))) {
+  if (level_is_deep_water(g, v, l, thing_at(me)) != nullptr) {
     if (thing_is_player(me)) {
       TOPCON("The deep water is preventing you from firing a volley!");
       return false;

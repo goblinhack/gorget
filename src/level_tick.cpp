@@ -439,7 +439,7 @@ static void level_tick_begin(Gamep g, Levelsp v, Levelp l)
 
       if (! thing_is_dead(t)) {
         if (thing_is_monst(t)) {
-          if (player && (distance(player_at, thing_at(t)) > MAP_WIDTH / 2)) {
+          if ((player != nullptr) && (distance(player_at, thing_at(t)) > MAP_WIDTH / 2)) {
             if (d100() > TICK_FAR_OFF_MONST_CHANCE) {
               continue;
             }
