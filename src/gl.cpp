@@ -1536,9 +1536,9 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
     for (auto x = 0; x < LIGHT_PIXEL; x++) {
 
       auto *const   pixel = &light_pixels->pixel[ x ][ y ];
-      uint8_t const r     = pixel->r;
-      uint8_t const g     = pixel->g;
-      uint8_t const b     = pixel->b;
+      uint8_t const r     = std::max(pixel->r, pixel->player_r);
+      uint8_t const g     = std::max(pixel->g, pixel->player_g);
+      uint8_t const b     = std::max(pixel->b, pixel->player_b);
 
       float const texMinX2 = texMinX + (x * texDiffX);
       float const texMaxX2 = texMinX + ((x + 1) * texDiffX);

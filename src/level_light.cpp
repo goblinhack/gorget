@@ -15,6 +15,7 @@
 #include <array>
 #include <cmath>
 #include <cstring>
+#include <thread>
 
 static float light_fade[ MAP_WIDTH ];
 
@@ -84,6 +85,57 @@ void level_light_precalculate(Gamep g)
 }
 
 //
+// Light the pixels of a tile
+//
+static inline void level_light_per_pixel(const FovContext &ctx, const bpoint &p)
+{
+  TRACE_DEBUG();
+
+  auto *const light_tile = &ctx.v->light_map.tile[ p.x ][ p.y ];
+  float const col_r      = ctx.light_color.r;
+  float const col_g      = ctx.light_color.g;
+  float const col_b      = ctx.light_color.b;
+
+  uint16_t light_pixel_at_y = (p.y * TILE_WIDTH) - (TILE_WIDTH / 2);
+  for (uint8_t pixy = 0; pixy < LIGHT_PIXEL; pixy++, light_pixel_at_y++) {
+
+    uint16_t light_pixel_at_x = (p.x * TILE_WIDTH) - (TILE_WIDTH / 2);
+    for (uint8_t pixx = 0; pixx < LIGHT_PIXEL; pixx++, light_pixel_at_x++) {
+
+      float const dist_in_pixels = DISTANCEf(light_pixel_at_x, light_pixel_at_y, // newline
+                                             (float) ctx.thing_at_in_pixels.x, (float) ctx.thing_at_in_pixels.y);
+
+      //
+      // No point in calculating beyond the maximum light distance.
+      //
+      if (dist_in_pixels >= ctx.light_strength_in_pixels) [[unlikely]] {
+        continue;
+      }
+
+      auto light_fade_index
+          = static_cast< uint8_t >(static_cast< int >((dist_in_pixels / ctx.light_strength_in_pixels) * static_cast< float >(MAP_WIDTH)));
+
+#ifdef DEBUG_BUILD
+      //
+      // Should not happen
+      //
+      if ((light_fade_index >= MAP_WIDTH)) [[unlikely]] {
+        light_fade_index = MAP_WIDTH - 1;
+        CROAK("unexpected overflow");
+      }
+#endif
+
+      auto       *light_pixel = &light_tile->pixels.pixel[ pixx ][ pixy ];
+      float const fade        = light_fade[ light_fade_index ];
+
+      light_pixel->r = std::min(255, static_cast< int >(light_pixel->r + (fade * col_r)));
+      light_pixel->g = std::min(255, static_cast< int >(light_pixel->g + (fade * col_g)));
+      light_pixel->b = std::min(255, static_cast< int >(light_pixel->b + (fade * col_b)));
+    }
+  }
+}
+
+//
 // All light from all light sources, combined.
 //
 static void level_light_calculate_all_things(Gamep g, Levelsp v, Levelp l)
@@ -124,7 +176,6 @@ static void level_light_calculate_all_things(Gamep g, Levelsp v, Levelp l)
     ctx.light_walls              = true;
     ctx.light_strength_in_pixels = thing_is_light_source(t) * TILE_WIDTH;
     ctx.thing_at_in_pixels       = thing_pix_at(t);
-    ctx.light_fade_map           = light_fade;
     ctx.can_see_callback         = level_light_per_pixel;
     ctx.max_radius               = max_radius;
     ctx.can_see_tile             = &light->is_lit;
@@ -163,10 +214,16 @@ void level_light_calculate_all(Gamep g, Levelsp v, Levelp l)
   //
   v->light_map = {};
 
-  level_light_calculate_all_things(g, v, l);
+  std::vector< std::thread > threads;
+
+  threads.emplace_back(level_light_calculate_all_things, g, v, l);
 
   //
   // Calculate player lighting while we wait
   //
   level_raycast(g, v, l, FBO_MAP_LIGHT);
+
+  for (auto &t : threads) {
+    t.join();
+  }
 }

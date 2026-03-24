@@ -115,6 +115,9 @@ using LightPixel = struct LightPixel {
   uint8_t r;
   uint8_t g;
   uint8_t b;
+  uint8_t player_r;
+  uint8_t player_g;
+  uint8_t player_b;
 };
 
 using LightPixels = struct LightPixels {
@@ -834,7 +837,6 @@ using FovContext = struct FovContext {
   bool                         light_walls              = false;
   color                        light_color              = {};
   float                        light_strength_in_pixels = {};
-  float                       *light_fade_map           = {};
   spoint                       thing_at_in_pixels       = {};
   int                          max_radius               = {};
   FovMap                      *can_see_tile             = {};

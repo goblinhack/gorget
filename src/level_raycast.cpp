@@ -234,6 +234,57 @@ void Raycast::ray_lengths_precalculate(Gamep g, Levelsp v, Levelp l)
   }
 }
 
+//
+// A player specific version of this function.
+//
+static inline void level_light_per_pixel_player(const FovContext &ctx, const bpoint &p)
+{
+  TRACE_DEBUG();
+
+  auto *const light_tile = &ctx.v->light_map.tile[ p.x ][ p.y ];
+  float const col_r      = ctx.light_color.r;
+  float const col_g      = ctx.light_color.g;
+  float const col_b      = ctx.light_color.b;
+
+  uint16_t light_pixel_at_y = (p.y * TILE_WIDTH) - (TILE_WIDTH / 2);
+  for (uint8_t pixy = 0; pixy < LIGHT_PIXEL; pixy++, light_pixel_at_y++) {
+
+    uint16_t light_pixel_at_x = (p.x * TILE_WIDTH) - (TILE_WIDTH / 2);
+    for (uint8_t pixx = 0; pixx < LIGHT_PIXEL; pixx++, light_pixel_at_x++) {
+
+      float const dist_in_pixels = DISTANCEf(light_pixel_at_x, light_pixel_at_y, // newline
+                                             (float) ctx.thing_at_in_pixels.x, (float) ctx.thing_at_in_pixels.y);
+
+      //
+      // No point in calculating beyond the maximum light distance.
+      //
+      if (dist_in_pixels >= ctx.light_strength_in_pixels) [[unlikely]] {
+        continue;
+      }
+
+      auto light_fade_index
+          = static_cast< uint8_t >(static_cast< int >((dist_in_pixels / ctx.light_strength_in_pixels) * static_cast< float >(MAP_WIDTH)));
+
+#ifdef DEBUG_BUILD
+      //
+      // Should not happen
+      //
+      if ((light_fade_index >= MAP_WIDTH)) [[unlikely]] {
+        light_fade_index = MAP_WIDTH - 1;
+        CROAK("unexpected overflow");
+      }
+#endif
+
+      auto       *light_pixel = &light_tile->pixels.pixel[ pixx ][ pixy ];
+      float const fade        = player_light_fade[ light_fade_index ];
+
+      light_pixel->player_r = std::min(255, static_cast< int >(light_pixel->player_r + (fade * col_r)));
+      light_pixel->player_g = std::min(255, static_cast< int >(light_pixel->player_g + (fade * col_g)));
+      light_pixel->player_b = std::min(255, static_cast< int >(light_pixel->player_b + (fade * col_b)));
+    }
+  }
+}
+
 static void level_raycast_light_tile(const FovContext &ctx, const bpoint &tile, ThingLightp light, ThingExtp ext)
 {
   TRACE_DEBUG();
@@ -245,7 +296,7 @@ static void level_raycast_light_tile(const FovContext &ctx, const bpoint &tile, 
     fov_map_set(&light->is_lit, tile.x, tile.y, 1U);
     age_map_set(&ext->has_seen, tile.x, tile.y, 1U);
     fov_map_set(&ext->can_see, tile.x, tile.y, 1U);
-    level_light_per_pixel(ctx, tile);
+    level_light_per_pixel_player(ctx, tile);
   }
 }
 
@@ -308,7 +359,6 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
   ctx.light_color              = tp_light_color(tp);
   ctx.light_strength_in_pixels = thing_is_light_source(player) * TILE_WIDTH;
   ctx.thing_at_in_pixels       = thing_pix_at(player);
-  ctx.light_fade_map           = player_light_fade;
 
   //
   // Center the light on the player
