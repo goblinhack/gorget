@@ -48,7 +48,7 @@ public:
   //
   // Index within the overall texture, left to right, top to bottom.
   //
-  int index {};
+  uint16_t index {};
 
   int pix_width {};
   int pix_height {};
@@ -603,7 +603,7 @@ auto tile_tex(Tilep tile) -> Texp
   return tile->tex;
 }
 
-auto tile_index(Tilep tile) -> uint32_t
+auto tile_index(Tilep tile) -> uint16_t
 {
   TRACE_DEBUG();
   return tile->index;

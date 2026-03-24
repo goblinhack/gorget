@@ -289,5 +289,28 @@ void level_scroll_warp_to_focus(Gamep g, Levelsp v, Levelp l)
   v->pixel_map_at.x -= game_map_fbo_width_get(g) / 2;
   v->pixel_map_at.y -= game_map_fbo_height_get(g) / 2;
 
+  //
+  // Accomodate half the player tile size
+  //
+  auto player = thing_player(g);
+  if (player) {
+    spoint   tl;
+    spoint   br;
+    uint16_t tile_index = 0;
+    thing_display_get_tile_info(g, v, l, thing_at(player), thing_tp(player), player, tl, br, &tile_index);
+    if (tile_index) {
+      if (br.x < tl.x) {
+        std::swap(br.x, tl.x);
+      }
+
+      if (br.y < tl.y) {
+        std::swap(br.y, tl.y);
+      }
+
+      v->pixel_map_at.x += (br.x - tl.x) / 2;
+      v->pixel_map_at.y += (br.y - tl.y) / 2;
+    }
+  }
+
   level_bounds_set(g, v, l);
 }

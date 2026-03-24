@@ -16,7 +16,7 @@ enum {
   //
   // The world map is smaller than the level map by a factor.
   //
-  LEVEL_SCALE = 6,
+  LEVEL_SCALE = 9,
 
   //
   // Entropy is always > 0 for Thing IDs to distinguish them

@@ -66,7 +66,7 @@ auto tile_find(const std::string &name) -> Tilep;
 auto tile_index_to_tile(int i) -> Tilep;
 auto tile_delay_ms(Tilep t) -> uint32_t;
 auto tile_global_index(Tilep t) -> uint32_t;
-auto tile_index(Tilep tile) -> uint32_t;
+auto tile_index(Tilep tile) -> uint16_t;
 auto tile_move(Tilep) -> uint32_t;
 void tile_coords(Tilep tile, float *x1, float *y1, float *x2, float *y2);
 void tile_size_set(Tilep t, uint32_t w, uint32_t h);
