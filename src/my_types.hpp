@@ -221,21 +221,21 @@ using LevelSelectp = struct LevelSelect *;
 using Levelsp      = struct Levels *;
 using Texp         = class Tex *;
 using ThingId      = unsigned int;
-using ThingExtId   = unsigned short;
-using ThingLightId = unsigned short;
+using ThingExtId   = uint16_t;
+using ThingLightId = uint16_t;
 using Thingp       = struct Thing *;
 using ThingSlotp   = struct ThingSlot *;
 using ThingExtp    = struct ThingExt *;
 using ThingLightp  = struct ThingLight *;
 using ThingPlayerp = struct ThingPlayer *;
 using Tilep        = class Tile *;
-using TpId         = unsigned int;
+using TpId         = uint32_t;
 using Tpp          = class Tp *;
 using Testp        = class Test *;
 using Widp         = class Wid *;
 using Fragmentp    = class Fragment *;
 using FragmentAltp = class FragmentAlt *;
-using LevelNum     = unsigned char;
+using LevelNum     = uint8_t;
 
 #define NULL_THING ((Thingp) nullptr)
 #define NULL_TP    ((Tpp) nullptr)

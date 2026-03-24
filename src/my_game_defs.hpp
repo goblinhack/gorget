@@ -39,11 +39,6 @@ enum {
   //
   MAP_WORLD_MAP_PIXEL_SIZE_PER_LEVEL = 4,
 
-  //
-  // Number of light rays the player casts
-  //
-  LIGHT_MAX_RAYS_MAX = (360 * 4),
-
   MAP_SCROLL_SPEED          = 50,
   MAP_SCROLL_TELEPORT_SPEED = 200,
 
@@ -73,6 +68,11 @@ enum {
   POPUP_DURATION_TILE_HEIGHT = 6,
   POPUP_TEXT_SCALE_ACROSS    = 3,
 
+  //
+  // Number of light rays the player casts
+  //
+  LIGHT_MAX_RAYS_MAX = (360 * 4),
+
   LEVEL_TEST_MAX  = 1000,
   LEVEL_ACROSS    = (MAP_WIDTH / LEVEL_SCALE),
   LEVEL_DOWN      = (MAP_HEIGHT / LEVEL_SCALE),
@@ -93,12 +93,14 @@ enum {
 #define TEST_SEED             "test-seed"
 
 enum {
-  TEST_ITERATIONS            = 100, // newline
-  TICK_DURATION_MS           = 100, // newline
-  TICK_DURATION_WHEN_IDLE_MS = 200, // newline
+  TEST_ITERATIONS  = 100, // newline
+  TICK_DURATION_MS = 125, // newline
 };
 
-enum { WALL_VARIANTS = 12, FLOOR_VARIANTS = 10 };
+enum {
+  WALL_VARIANTS  = 12, // newline
+  FLOOR_VARIANTS = 10  // newline
+};
 
 //
 // 'x' is the edge of the visible map
