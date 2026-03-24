@@ -161,7 +161,9 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
     dx = static_cast< int >((x - scroll_inner) * v->scroll_speed);
     dx = std::min(dx, max_pixel_scroll_inner);
     v->pixel_map_at.x += dx;
-  } else if (x < scroll_outer) {
+  }
+
+  if (x < scroll_outer) {
     dy = static_cast< int >((scroll_outer - x) * v->scroll_speed);
     dy = std::min(dy, max_pixel_scroll_outer);
     v->pixel_map_at.x -= dy;
@@ -179,7 +181,9 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
     dy = static_cast< int >((y - scroll_inner) * v->scroll_speed);
     dy = std::min(dy, max_pixel_scroll_inner);
     v->pixel_map_at.y += dy;
-  } else if (y < scroll_outer) {
+  }
+
+  if (y < scroll_outer) {
     dx = static_cast< int >((scroll_outer - y) * v->scroll_speed);
     dx = std::min(dx, max_pixel_scroll_outer);
     v->pixel_map_at.y -= dx;
