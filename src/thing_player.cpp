@@ -635,14 +635,14 @@ static void player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy)
   player_move_requests_reset(g, v);
 }
 
-void player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what)
+auto player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what) -> bool
 {
   TRACE();
 
   auto *me = thing_player(g);
   if (me == nullptr) {
     ERR("no thing pointer");
-    return;
+    return false;
   }
 
   //
@@ -660,27 +660,39 @@ void player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what)
   auto *ext_struct = thing_ext_struct(g, me);
   if (ext_struct == nullptr) {
     ERR("no ext struct found");
-    return;
+    return false;
   }
 
   if (fire_what == nullptr) {
     ERR("nothing to fire");
-    return;
+    return false;
   }
 
   if (game_state(g) != STATE_PLAYING) {
     player_move_requests_reset(g, v);
-    return;
+    return false;
   }
 
   //
   // Wait until the end of the tick
   //
   if (level_tick_is_in_progress(g, v, l)) {
-    return;
+    return false;
   }
 
   thing_set_dir_from_delta(me, dx, dy);
+
+  player_move_requests_reset(g, v);
+
+  //
+  // No firing in deep water
+  //
+  if (level_is_deep_water(g, v, l, thing_at(me))) {
+    if (thing_is_player(me)) {
+      TOPCON("The deep water is preventing you from firing a volley!");
+      return false;
+    }
+  }
 
   bpoint target;
 
@@ -691,13 +703,11 @@ void player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what)
     target             = make_bpoint(thing_real_at(me) + delta);
   }
 
-  player_move_requests_reset(g, v);
-
   if (! thing_projectile_fire_at(g, v, l, me, fire_what, target)) {
-    return;
+    return false;
   }
 
-  (void) level_tick_begin_requested(g, v, l, "player fired");
+  return level_tick_begin_requested(g, v, l, "player fired");
 }
 
 //
@@ -776,26 +786,26 @@ auto player_move_request(Gamep g, bool up, bool down, bool left, bool right, boo
   if (v->requested_fire) {
     if (v->requested_move_up) {
       if (v->requested_move_left) {
-        player_fire(g, v, l, -1, -1);
+        (void) player_fire(g, v, l, -1, -1);
       } else if (v->requested_move_right) {
-        player_fire(g, v, l, 1, -1);
+        (void) player_fire(g, v, l, 1, -1);
       } else {
-        player_fire(g, v, l, 0, -1);
+        (void) player_fire(g, v, l, 0, -1);
       }
     } else if (v->requested_move_down) {
       if (v->requested_move_left) {
-        player_fire(g, v, l, -1, 1);
+        (void) player_fire(g, v, l, -1, 1);
       } else if (v->requested_move_right) {
-        player_fire(g, v, l, 1, 1);
+        (void) player_fire(g, v, l, 1, 1);
       } else {
-        player_fire(g, v, l, 0, 1);
+        (void) player_fire(g, v, l, 0, 1);
       }
     } else if (v->requested_move_left) {
-      player_fire(g, v, l, -1, 0);
+      (void) player_fire(g, v, l, -1, 0);
     } else if (v->requested_move_right) {
-      player_fire(g, v, l, 1, 0);
+      (void) player_fire(g, v, l, 1, 0);
     } else {
-      player_fire(g, v, l, 0, 0);
+      (void) player_fire(g, v, l, 0, 0);
     }
   }
 

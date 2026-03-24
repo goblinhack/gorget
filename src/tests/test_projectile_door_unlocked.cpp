@@ -49,7 +49,7 @@
   }
 
   for (auto tries = 0; tries < 5; tries++) {
-    player_fire(g, v, l, 1, 0, tp_fireball);
+    (void) player_fire(g, v, l, 1, 0, tp_fireball);
     TEST_ASSERT(t, game_event_wait(g), "failed to wait");
     if (! game_wait_for_tick_to_finish(g, v, l)) {
       TEST_FAILED(t, "wait loop failed");

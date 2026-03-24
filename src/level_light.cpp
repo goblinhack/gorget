@@ -210,10 +210,13 @@ void level_light_calculate_all(Gamep g, Levelsp v, Levelp l)
   }
 
   //
-  // NOTE: light_map is shared with ray casting, so we cannot use threads here
+  // Clear the pixel lighting buffer
   //
   v->light_map = {};
 
+  //
+  // Calculate thing lighting
+  //
   std::vector< std::thread > threads;
 
   threads.emplace_back(level_light_calculate_all_things, g, v, l);

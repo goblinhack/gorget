@@ -53,7 +53,7 @@
   //
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  player_fire(g, v, l, 1, 0, tp_fireball);
+  (void) player_fire(g, v, l, 1, 0, tp_fireball);
 
   //
   // Wait for the projectile to ignite a barrel

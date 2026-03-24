@@ -263,7 +263,7 @@ static void wid_actionbar_inventory_over_end(Gamep g, Widp w)
     return false;
   }
 
-  player_fire(g, v, l, 0, 0, nullptr);
+  (void) player_fire(g, v, l, 0, 0, nullptr);
 
   return true;
 }
@@ -293,7 +293,7 @@ static void wid_actionbar_inventory_over_end(Gamep g, Widp w)
     return false;
   }
 
-  player_fire(g, v, l, 0, 0, nullptr);
+  (void) player_fire(g, v, l, 0, 0, nullptr);
 
   return true;
 }

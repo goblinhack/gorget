@@ -1,14 +1,17 @@
 bugs
 ----
+mantisman flashes oddly when hit in water
 mantisman not jumping over chasm onto secret door
 mantisman jump over short chasm path
-score? score is hard coded to 666
-cobwebs burns and get you burn
-intro level
 
 essential features
 ------------------
+score? score is hard coded to 666
+cobwebs burns and get you burn
+intro level
+play weekly/daily seed - generated from date
 stamina needed to avoid fast jump loops
+items can be lost in deep water
 hard coded to fire fireball
 chests need to contain something and those items destroyed when the chest is
 spell points to collect
