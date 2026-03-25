@@ -963,21 +963,21 @@ void tile_blit_outlined(const Tilep &tile, float x1, float x2, float y1, float y
 // Shift the coordinates of a tile by a given percentage, so the bottom is
 // trimmed and looks submerged.
 //
-void tile_blit_apply_submerge_pct(Gamep g, spoint &tl, spoint &br, float & /*x1*/, float & /*x2*/, float &y1, float &y2, float percent)
+void tile_blit_apply_submerge_pct(Gamep g, spoint &tl, spoint &br, Tilep tile, float &x1, float &x2, float &y1, float &y2, float percent)
 {
   TRACE_DEBUG();
 
-  float const h1 = br.y - tl.y;
-  float const h2 = y2 - y1;
+  float const pix_height = br.y - tl.y;
+  float const tex_height = y2 - y1;
 
-  float const off1 = ((h1 / 100) * percent);
-  float const off2 = ((h2 / 100) * percent);
+  float const pix_submerged_amount = ((pix_height / 100) * percent);
+  float const tex_submerged_amount = ((tex_height / 100) * percent);
 
-  tl.y += static_cast< int >(off1);
-  y2 -= off2;
+  tl.y += static_cast< int >(pix_submerged_amount);
+  tl.y -= (static_cast< int >(pix_submerged_amount)) / 2;
+  br.y -= (static_cast< int >(pix_submerged_amount)) / 2;
 
-  tl.y -= (static_cast< int >(off1)) / 2;
-  br.y -= (static_cast< int >(off1)) / 2;
+  y2 -= tex_submerged_amount;
 
   //
   // Round back to the nearest pixel size

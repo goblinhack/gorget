@@ -51,8 +51,8 @@ void levels_test(Gamep g)
     level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "test1", __FUNCTION__, __LINE__, overrides, 0,
                     /* line */ (const char *) "XXXXXXXXXX",
                     /* line */ (const char *) "X~~~~~~~~X",
-                    /* line */ (const char *) "X@~WWWW~mX",
-                    /* line */ (const char *) "X~~WWWW~~X",
+                    /* line */ (const char *) "X@~~~WW~.X",
+                    /* line */ (const char *) "X~~~~WW~~X",
                     /* line */ (const char *) "X~~~~~~~~X",
                     /* line */ (const char *) "XXXXXXXXXX",
                     /* end */ nullptr);
