@@ -300,6 +300,86 @@ static void thing_display_rotated(Gamep g, Levelsp v, Levelp l, const bpoint &p,
 }
 
 //
+// Handle all the various lighting modes to display a thing
+//
+static void thing_display_it(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp t_maybe_null, spoint tl, spoint br, Tilep tile,
+                             float x1, float x2, float y1, float y2, FboEnum fbo, color fg, LightPixels *light_pixels = nullptr)
+{
+  TRACE_DEBUG();
+
+  IF_DEBUG
+  {
+    light_pixels = nullptr;
+    fg.r         = 255;
+    fg.g         = 255;
+    fg.b         = 255;
+  }
+
+  if (t_maybe_null != nullptr) {
+    //
+    // Flash if hit
+    //
+    if (thing_is_hit(t_maybe_null) != 0) {
+      //
+      // Preserve original alpha
+      //
+      color const flash = ORANGE;
+      fg.r              = flash.r;
+      fg.g              = flash.g;
+      fg.b              = flash.b;
+      light_pixels      = nullptr;
+    }
+
+    //
+    // Pulse when hot. But not when dead. Else a monster killed by a fireball will
+    // pulse!
+    //
+    if ((thing_is_hot(t_maybe_null) != 0) && ! thing_is_dead(t_maybe_null)) {
+      //
+      // Preserve original alpha
+      //
+      color const hot = ORANGE;
+      fg.r            = thing_is_hot(t_maybe_null);
+      fg.g            = hot.g;
+      fg.b            = hot.b;
+      light_pixels    = nullptr;
+    }
+
+    //
+    // Rotate when falling
+    //
+    if (t_maybe_null->angle != 0.0) {
+      thing_display_rotated(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg);
+      return;
+    }
+
+    //
+    // If we have alpha values in the texture, the end of one triangle line and the start of another creates
+    // a visible strip
+    //
+    bool const is_blit_flush_per_line = thing_is_blit_flush_per_line(t_maybe_null);
+    thing_display_blit(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg, light_pixels, is_blit_flush_per_line);
+
+    //
+    // Flash red outline if hit
+    //
+    if (thing_is_hit(t_maybe_null) != 0) {
+      color outline = RED;
+      float a       = (static_cast< float >(thing_is_hit(t_maybe_null)) / static_cast< float >(THING_HIT_FLASH_TIME_MS));
+      a *= 255.0f;
+      a         = std::min(static_cast< int >(a), 255);
+      outline.a = static_cast< uint8_t >(a);
+      tile_blit_outline(tile, x1, x2, y1, y2, tl, br, outline);
+    }
+  } else {
+    //
+    // Probably the cursor
+    //
+    thing_display_blit(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg, nullptr, false);
+  }
+}
+
+//
 // Display a single thing to an FBO
 //
 void thing_display(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp t_maybe_null, spoint tl, spoint br, uint16_t tile_index,
@@ -441,7 +521,7 @@ void thing_display(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp
       //
       if (submerged_pct != 0) {
         tile_blit_apply_submerge_pct(g, tl, br, x1, x2, y1, y2, thing_submerged_pct(t_maybe_null));
-        thing_display_blit(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg);
+        thing_display_it(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg, light_pixels);
 
         //
         // Add a reflection
@@ -461,74 +541,5 @@ void thing_display(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp
     }
   }
 
-  IF_DEBUG
-  {
-    light_pixels = nullptr;
-    fg.r         = 255;
-    fg.g         = 255;
-    fg.b         = 255;
-  }
-
-  if (t_maybe_null != nullptr) {
-    //
-    // Flash if hit
-    //
-    if (thing_is_hit(t_maybe_null) != 0) {
-      //
-      // Preserve original alpha
-      //
-      color const flash = ORANGE;
-      fg.r              = flash.r;
-      fg.g              = flash.g;
-      fg.b              = flash.b;
-      light_pixels      = nullptr;
-    }
-
-    //
-    // Pulse when hot. But not when dead. Else a monster killed by a fireball will
-    // pulse!
-    //
-    if ((thing_is_hot(t_maybe_null) != 0) && ! thing_is_dead(t_maybe_null)) {
-      //
-      // Preserve original alpha
-      //
-      color const hot = ORANGE;
-      fg.r            = thing_is_hot(t_maybe_null);
-      fg.g            = hot.g;
-      fg.b            = hot.b;
-      light_pixels    = nullptr;
-    }
-
-    //
-    // Rotate when falling
-    //
-    if (t_maybe_null->angle != 0.0) {
-      thing_display_rotated(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg);
-      return;
-    }
-
-    //
-    // If we have alpha values in the texture, the end of one triangle line and the start of another creates
-    // a visible strip
-    //
-    bool const is_blit_flush_per_line = thing_is_blit_flush_per_line(t_maybe_null);
-    thing_display_blit(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg, light_pixels, is_blit_flush_per_line);
-
-    //
-    // Flash red outline if hit
-    //
-    if (thing_is_hit(t_maybe_null) != 0) {
-      color outline = RED;
-      float a       = (static_cast< float >(thing_is_hit(t_maybe_null)) / static_cast< float >(THING_HIT_FLASH_TIME_MS));
-      a *= 255.0f;
-      a         = std::min(static_cast< int >(a), 255);
-      outline.a = static_cast< uint8_t >(a);
-      tile_blit_outline(tile, x1, x2, y1, y2, tl, br, outline);
-    }
-  } else {
-    //
-    // Probably the cursor
-    //
-    thing_display_blit(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg, nullptr, false);
-  }
+  thing_display_it(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg, light_pixels);
 }

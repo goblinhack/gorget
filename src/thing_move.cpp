@@ -474,7 +474,13 @@ void thing_update_pos(Gamep g, Levelsp v, Levelp l, Thingp me)
 
   if (tp_is_blit_when_obscured_as_faded(thing_tp(me)) && level_alive_is_blit_obscures(g, v, l, thing_at(me)) != nullptr) {
     thing_is_hidden_set(g, v, l, me, true);
+    if (thing_is_player(me)) {
+      thing_topcon(me, "hidden");
+    }
   } else {
     thing_is_hidden_set(g, v, l, me, false);
+    if (thing_is_player(me)) {
+      thing_topcon(me, "visible");
+    }
   }
 }

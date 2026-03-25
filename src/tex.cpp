@@ -356,11 +356,11 @@ static auto tex_create_masks_from_surface(SDL_Surface *src, const std::string &f
       GET_PIXEL(src, src_x, src_y, col_orig);
 
       //
-      // Only copy solid black pixels for the outline.
+      // Solid black for the monster body and white pixels to replace any black outline
       //
       if ((col_orig.a == 255) && (col_orig.r == 0) && (col_orig.g == 0) && (col_orig.b == 0)) {
         PUT_PIXEL(dst_outline, src_x, src_y, col_white);
-      } else {
+      } else if (col_orig.a) {
         PUT_PIXEL(dst_outline, src_x, src_y, col_black);
       }
 
