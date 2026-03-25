@@ -125,20 +125,6 @@ void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, const bpoint &p, 
     }
   }
 
-  //
-  // Update submerged status
-  //
-  if ((t_maybe_null != nullptr) && tp_is_submergible(tp_maybe_null)) {
-    (void) thing_submerged_pct_set(g, v, l, t_maybe_null, 0);
-    if (level_is_deep_water(g, v, l, p) != nullptr) {
-      (void) thing_submerged_pct_set(g, v, l, t_maybe_null, 80);
-    } else if (level_is_water(g, v, l, p) != nullptr) {
-      (void) thing_submerged_pct_set(g, v, l, t_maybe_null, 50);
-    } else if (level_is_lava(g, v, l, p) != nullptr) {
-      (void) thing_submerged_pct_set(g, v, l, t_maybe_null, 40);
-    }
-  }
-
   if (t_maybe_null != nullptr) {
     thing_lunge_modify_position(g, v, l, t_maybe_null, tl, br);
   }

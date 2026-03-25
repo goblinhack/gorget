@@ -472,15 +472,18 @@ void thing_update_pos(Gamep g, Levelsp v, Levelp l, Thingp me)
   pix_at.y = static_cast< int >(real_at.y * static_cast< float >(TILE_HEIGHT));
   thing_pix_at_set(g, v, l, me, pix_at);
 
-  if (tp_is_blit_when_obscured_as_faded(thing_tp(me)) && level_alive_is_blit_obscures(g, v, l, thing_at(me)) != nullptr) {
+  //
+  // Update submerged status
+  //
+  thing_submerged_update(g, v, l, me);
+
+  //
+  // Update hidden status
+  //
+  if ((thing_is_blit_when_obscured_as_faded(me) || thing_is_blit_when_obscured_as_outline(me))
+      && level_alive_is_blit_obscures(g, v, l, thing_at(me)) != nullptr) {
     thing_is_hidden_set(g, v, l, me, true);
-    if (thing_is_player(me)) {
-      thing_topcon(me, "hidden");
-    }
   } else {
     thing_is_hidden_set(g, v, l, me, false);
-    if (thing_is_player(me)) {
-      thing_topcon(me, "visible");
-    }
   }
 }

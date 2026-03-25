@@ -33,7 +33,7 @@ auto thing_vision_blocker(Gamep g, Levelsp v, Levelp l, Thingp it) -> bool
   //
   // Submerged foliage does not block light
   //
-  if (thing_submerged_pct(it) != 0) {
+  if (thing_submerged_pct(it) > 50) {
     return false;
   }
 
@@ -50,27 +50,6 @@ auto thing_vision_blocker(Gamep g, Levelsp v, Levelp l, Thingp it) -> bool
 auto thing_vision_blocker(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it) -> bool
 {
   //
-  // Dead foliage should not block
-  //
-  if (thing_is_dead(it)) {
-    return false;
-  }
-
-  //
-  // Open doors should not block
-  //
-  if (thing_is_open(it)) {
-    return false;
-  }
-
-  //
-  // Submerged foliage does not block light
-  //
-  if (thing_submerged_pct(it) != 0) {
-    return false;
-  }
-
-  //
   // Some monsters can see through walls
   //
   if (thing_is_able_to_walk_through_walls(me)) {
@@ -79,14 +58,7 @@ auto thing_vision_blocker(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it) ->
     }
   }
 
-  if (thing_is_obs_to_vision(it)) {
-    if (compiler_unused) {
-      THING_DBG(it, "block");
-    }
-    return true;
-  }
-
-  return false;
+  return thing_vision_blocker(g, v, l, it);
 }
 
 void thing_vision_reset(Gamep g, Levelsp v, Levelp l, Thingp t)

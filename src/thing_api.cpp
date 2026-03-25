@@ -3096,17 +3096,6 @@ auto thing_is_obs_to_teleporting_onto(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_obs_to_teleporting_onto) != 0;
 }
 
-auto thing_is_submergible(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_submergible) != 0;
-}
-
 auto thing_is_able_to_fall(Thingp t) -> bool
 {
   TRACE_DEBUG();
@@ -4730,42 +4719,6 @@ auto thing_lifespan_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
     return t->_lifespan = 0;
   }
   return t->_lifespan -= val;
-}
-
-auto thing_submerged_pct_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  return t->_submerged_pct = val;
-}
-
-auto thing_submerged_pct_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  return t->_submerged_pct += val;
-}
-
-auto thing_submerged_pct_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  if (t->_submerged_pct - val <= 0) {
-    return t->_submerged_pct = 0;
-  }
-  return t->_submerged_pct -= val;
 }
 
 auto thing_age(Thingp t) -> int

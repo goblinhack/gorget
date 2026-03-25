@@ -1071,6 +1071,7 @@ void thing_fall_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step)
 void thing_fall(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_fini(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_free(Gamep g, Levelsp v, Levelp l, Thingp t);
+void thing_submerged_update(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_group_join(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp group);
 void thing_group_leave(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_group_member_leave(Gamep g, Levelsp v, Levelp l, Thingp t);
