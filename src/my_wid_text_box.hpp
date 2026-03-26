@@ -21,9 +21,9 @@ class WidTextBox
 {
 private:
   std::map< uint32_t, std::string > wid_text_box_lines;
-  int                                   width {};
-  int                                   height {};
-  int                                   scroll_height {};
+  int                               width {};
+  int                               height {};
+  int                               scroll_height {};
 
   std::vector< Widp > children;
 

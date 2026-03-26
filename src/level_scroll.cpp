@@ -298,7 +298,7 @@ void level_scroll_warp_to_focus(Gamep g, Levelsp v, Levelp l)
     spoint   br;
     uint16_t tile_index = 0;
     thing_display_get_tile_info(g, v, l, thing_at(player), thing_tp(player), player, tl, br, &tile_index);
-    if (tile_index != 0u) {
+    if (tile_index != 0U) {
       if (br.x < tl.x) {
         std::swap(br.x, tl.x);
       }

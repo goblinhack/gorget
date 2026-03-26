@@ -15,7 +15,7 @@ class WidPopup
 {
 private:
   std::map< uint32_t, std::string > wid_popup_lines;
-  std::vector< Widp >                   children;
+  std::vector< Widp >               children;
 
 public:
   Widp        wid_popup_container {};
