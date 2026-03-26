@@ -311,6 +311,16 @@ static void tp_fixup()
 
       tp_temperature_init(tp);
       tp_collision_init(tp);
+
+      if (tp_is_blit_centered(tp)) {
+        if (tp_is_blit_on_ground(tp)) {
+          tp_err(tp, "both blit on_ground and centered are set");
+        }
+      } else if (tp_is_blit_on_ground(tp)) {
+        // ok
+      } else {
+        tp_err(tp, "neither blit on_ground or centered are set");
+      }
     }
   }
 }

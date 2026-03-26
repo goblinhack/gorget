@@ -967,23 +967,71 @@ void tile_blit_apply_submerge_pct(Gamep g, spoint &tl, spoint &br, Tilep tile, f
 {
   TRACE_DEBUG();
 
-  float const pix_height = br.y - tl.y;
-  float const tex_height = y2 - y1;
-
-  float const pix_submerged_amount = ((pix_height / 100) * percent);
-  float const tex_submerged_amount = ((tex_height / 100) * percent);
-
-  tl.y += static_cast< int >(pix_submerged_amount);
-  tl.y -= (static_cast< int >(pix_submerged_amount)) / 2;
-  br.y -= (static_cast< int >(pix_submerged_amount)) / 2;
-
-  y2 -= tex_submerged_amount;
+  //
+  //    centered       centered      on_ground     on_ground
+  // ..............     (same)        (same)     ..............
+  // ..............  ............  ............  ..............
+  // ..............  ............  ............  ..............
+  // ..............  ............  ............  ..............
+  // ..............  ............  ............  ..............
+  // ..............  ............  ............  ..............
+  // ....14x14.....  ...12x12....  ...12x12....  ....14x14.....
+  // ..............  ............  ............  ..............
+  // ..............  ............  ............  ..............
+  // ..............  ............  ............  ..............
+  // ..............  ............  ............  ..............
+  // ..............  ............  ............  ..............
+  // ..............  ............  ............  ..............
+  // ..............  ............  ............  .............. <---- ground level
+  // ..............
+  //
+  // changes to
+  //
+  //    centered       centered      on_ground     on_ground
+  // ..............     (same)        (same)     ..............
+  // ..............  ............  ............  ..............
+  // ..............  ............  ............  ..............
+  // ..............  ............  ............  ..............
+  // ..............  ............  ............  ..............
+  // ..............  ............  ............  ..............
+  // ....14x14.....  ...12x12....  ...12x12....  ....14x14.....
+  // ..............  ............  ............  ..............
+  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //
+  float pix_height     = br.y - tl.y;
+  auto  pc             = percent / 100.0f;
+  auto  pix_removed    = (int) (pc * pix_height);
+  auto  one_pix_height = (int) (pix_height / tile_height(tile));
 
   //
-  // Round back to the nearest pixel size
+  // Round the pixel removed amount to the nearest whole pixel
   //
-  float const pix = game_map_single_pix_size_get(g);
-  auto        h   = br.y - tl.y;
-  tl.y            = static_cast< int >(floor(static_cast< float >(tl.y) / pix) * pix);
-  br.y            = tl.y + h;
+  pix_removed -= pix_removed % one_pix_height;
+
+  //
+  // The actual removed percentage based on the number of pixels
+  // removed and not the original percentage which might have
+  // been on an uneven pixel boundary
+  //
+  pc = pix_removed / pix_height;
+
+  //
+  // Now we know how many pixels are being removed, we can apply
+  // the percentage to the texture
+  //
+  auto tex_height  = y2 - y1;
+  auto tex_removed = pc * tex_height;
+
+  //
+  // Remove the submerged part of the tile
+  //
+  br.y -= pix_removed;
+  y2 -= tex_removed;
+
+  //
+  // Now shift the tile down so it looks as if it is on the waterline
+  // Move if down by the amount removed
+  //
+  tl.y += pix_removed;
+  br.y += pix_removed;
 }

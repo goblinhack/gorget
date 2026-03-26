@@ -47,7 +47,7 @@ static void error_message_do(Gamep g, std::string &tech_support)
   tech_support += "\n";
   tech_support += callstack_string();
   tech_support += "\n";
-  tech_support += "The goblin responsible for this shall be punished!!!\n";
+  tech_support += "The goblin responsible for this shall be punished!\n";
 
   CON("%s", tech_support.c_str());
 

@@ -91,23 +91,40 @@ void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, const bpoint &p, 
   auto pix_width  = tile_width(tile) * zoom;
 
   //
-  // Centered
+  //    centered       centered      on_ground     on_ground
+  // ..............     (same)        (same)     ..............
+  // ..............  ............  ............  ..............
+  // ..............  ............  ............  ..............
+  // ..............  ............  ............  ..............
+  // ..............  ............  ............  ..............
+  // ..............  ............  ............  ..............
+  // ....14x14.....  ...12x12....  ...12x12....  ....14x14.....
+  // ..............  ............  ............  ..............
+  // ..............  ............  ............  ..............
+  // ..............  ............  ............  ..............
+  // ..............  ............  ............  ..............
+  // ..............  ............  ............  ..............
+  // ..............  ............  ............  ..............
+  // ..............  ............  ............  .............. <---- ground level
+  // ..............
   //
-  if ((tp_maybe_null != nullptr) && tp_is_blit_centered(tp_maybe_null)) {
-    tl.x -= (pix_width - dw) / 2;
-    tl.y -= (pix_height - dh) / 2;
+  if (tp_maybe_null != nullptr) {
+    if (tp_is_blit_centered(tp_maybe_null)) {
+      tl.x -= (pix_width - dw) / 2;
+      tl.y -= (pix_height - dh) / 2;
+    } else if (tp_is_blit_on_ground(tp_maybe_null)) {
+      tl.x -= (pix_width - dw) / 2;
+      tl.y -= (pix_height - dh);
+    }
   }
 
-  if ((tp_maybe_null != nullptr) && tp_is_blit_on_ground(tp_maybe_null)) {
-    tl.x -= (pix_width - dw) / 2;
-    tl.y -= (pix_height - dh);
-  }
-
-  if ((t_maybe_null != nullptr) && thing_is_jumping(t_maybe_null)) {
-    auto jump_height = static_cast< int >((sin(std::numbers::pi_v< float > * t_maybe_null->thing_dt)) * static_cast< float >(dh));
-    jump_height *= THING_JUMP_HEIGHT_TILES;
-    tl.y -= jump_height;
-    br.y -= jump_height;
+  if (t_maybe_null != nullptr) {
+    if (thing_is_jumping(t_maybe_null)) {
+      auto jump_height = static_cast< int >((sin(std::numbers::pi_v< float > * t_maybe_null->thing_dt)) * static_cast< float >(dh));
+      jump_height *= THING_JUMP_HEIGHT_TILES;
+      tl.y -= jump_height;
+      br.y -= jump_height;
+    }
   }
 
   //

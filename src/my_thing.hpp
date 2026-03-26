@@ -1071,7 +1071,6 @@ void thing_fall_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step)
 void thing_fall(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_fini(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_free(Gamep g, Levelsp v, Levelp l, Thingp t);
-void thing_submerged_update(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_group_join(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp group);
 void thing_group_leave(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_group_member_leave(Gamep g, Levelsp v, Levelp l, Thingp t);
@@ -1133,6 +1132,7 @@ void thing_projectile_move(Gamep g, Levelsp v, Levelp l, Thingp t, float dt);
 void thing_set_dir_from_delta(Thingp me, int dx, int dy);
 void thing_sound_play(Gamep g, Levelsp v, Levelp l, Thingp t, const std::string &alias);
 void thing_stats_dump(Gamep g, Levelsp v);
+void thing_submerged_update(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_target_set(Gamep g, Levelsp v, Levelp l, Thingp t, const bpoint &val);
 void thing_temperature_damage_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thingp t, int n);
 void thing_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thingp t, int n);

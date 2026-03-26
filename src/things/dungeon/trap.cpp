@@ -32,6 +32,7 @@ auto tp_load_trap() -> bool
   // begin sort marker1 {
   thing_description_set(tp, tp_trap_description_get);
   tp_flag_set(tp, is_able_to_fall);
+  tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_per_pixel_lighting);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_described_cursor);
