@@ -23,6 +23,14 @@ auto level_light_blocker_at(Gamep g, Levelsp v, Levelp l, const bpoint &pov) -> 
 {
   FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, pov)
   {
+    //
+    // Light blocking and vision are mostly the same. However, the lighting algorithm
+    // only really works with whole tiles. If things are submerged, it looks odd.
+    //
+    if (thing_submerged_pct(it)) {
+      continue;
+    }
+
     if (thing_vision_blocker(g, v, l, it)) {
       return it;
     }
