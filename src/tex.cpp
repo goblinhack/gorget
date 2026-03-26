@@ -360,7 +360,7 @@ static auto tex_create_masks_from_surface(SDL_Surface *src, const std::string &f
       //
       if ((col_orig.a == 255) && (col_orig.r == 0) && (col_orig.g == 0) && (col_orig.b == 0)) {
         PUT_PIXEL(dst_outline, src_x, src_y, col_white);
-      } else if (col_orig.a) {
+      } else if (col_orig.a != 0u) {
         PUT_PIXEL(dst_outline, src_x, src_y, col_black);
       }
 

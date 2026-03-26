@@ -2,6 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include <utility>
+
 #include "my_callstack.hpp"
 #include "my_game.hpp"
 #include "my_globals.hpp"
@@ -175,7 +177,7 @@ auto thing_speed_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
     return 0;
   }
 
-  if (val > std::numeric_limits< decltype(t->_speed) >::max()) {
+  if (std::cmp_greater(val, std::numeric_limits< decltype(t->_speed) >::max())) {
     thing_err(t, "value overflow");
     return 0;
   }

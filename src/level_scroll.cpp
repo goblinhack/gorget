@@ -150,8 +150,8 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
   auto scroll_inner = MAP_SCROLL_EDGE_INNER;
   auto scroll_outer = MAP_SCROLL_EDGE_OUTER;
 
-  int max_pixel_scroll_inner = MAP_SCROLL_EDGE_INNER_PIXEL;
-  int max_pixel_scroll_outer = MAP_SCROLL_EDGE_OUTER_PIXEL;
+  int const max_pixel_scroll_inner = MAP_SCROLL_EDGE_INNER_PIXEL;
+  int const max_pixel_scroll_outer = MAP_SCROLL_EDGE_OUTER_PIXEL;
 
   if (x > 1.0 - scroll_outer) {
     dx = static_cast< int >((x - scroll_outer) * v->scroll_speed);
@@ -292,13 +292,13 @@ void level_scroll_warp_to_focus(Gamep g, Levelsp v, Levelp l)
   //
   // Accomodate half the player tile size
   //
-  auto player = thing_player(g);
-  if (player) {
+  auto *player = thing_player(g);
+  if (player != nullptr) {
     spoint   tl;
     spoint   br;
     uint16_t tile_index = 0;
     thing_display_get_tile_info(g, v, l, thing_at(player), thing_tp(player), player, tl, br, &tile_index);
-    if (tile_index) {
+    if (tile_index != 0u) {
       if (br.x < tl.x) {
         std::swap(br.x, tl.x);
       }

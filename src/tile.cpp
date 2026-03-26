@@ -998,10 +998,10 @@ void tile_blit_apply_submerge_pct(Gamep g, spoint &tl, spoint &br, Tilep tile, f
   // ..............  ............  ............  ..............
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //
-  float pix_height     = br.y - tl.y;
-  auto  pc             = percent / 100.0f;
-  auto  pix_removed    = (int) (pc * pix_height);
-  auto  one_pix_height = (int) (pix_height / tile_height(tile));
+  float const pix_height     = br.y - tl.y;
+  auto        pc             = percent / 100.0F;
+  auto        pix_removed    = static_cast< int >(pc * pix_height);
+  auto        one_pix_height = static_cast< int >(pix_height / tile_height(tile));
 
   //
   // Round the pixel removed amount to the nearest whole pixel

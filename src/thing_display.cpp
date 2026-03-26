@@ -369,7 +369,7 @@ static void thing_display_it(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp 
     if (thing_is_hit(t_maybe_null) != 0) {
       color outline = RED;
       float a       = (static_cast< float >(thing_is_hit(t_maybe_null)) / static_cast< float >(THING_HIT_FLASH_TIME_MS));
-      a *= 255.0f;
+      a *= 255.0F;
       a         = std::min(static_cast< int >(a), 255);
       outline.a = static_cast< uint8_t >(a);
       tile_blit_outline(tile, x1, x2, y1, y2, tl, br, outline);
