@@ -29,7 +29,7 @@ auto level_has_seen(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
     return false;
   }
 
-  return static_cast< unsigned int >(age_map_get(&ext->has_seen, p.x, p.y)) != 0U;
+  return static_cast< uint32_t >(age_map_get(&ext->has_seen, p.x, p.y)) != 0U;
 }
 
 //
@@ -51,7 +51,7 @@ void level_has_seen_update(Gamep g, Levelsp v, Levelp l)
 
   for (auto x = 0; x < MAP_WIDTH; x++) {
     for (auto y = 0; y < MAP_HEIGHT; y++) {
-      if (static_cast< unsigned int >(age_map_get(&ext->has_seen, x, y)) != 0U) {
+      if (static_cast< uint32_t >(age_map_get(&ext->has_seen, x, y)) != 0U) {
         l->player_has_seen_tile_cache[ x ][ y ] = 1U;
       } else {
         l->player_has_seen_tile_cache[ x ][ y ] = 0U;

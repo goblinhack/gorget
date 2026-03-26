@@ -393,7 +393,7 @@ void Game::init()
   //
   // If no seed is specified, we do want to start from a different seed each time
   //
-  OS_SRAND((unsigned int) std::time(nullptr));
+  OS_SRAND((uint32_t) std::time(nullptr));
 
   seed_set();
 

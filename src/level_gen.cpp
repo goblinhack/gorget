@@ -303,7 +303,7 @@ public:
   //
   // e.g. ROOM_FLAG_CHECK_EXITS
   //
-  unsigned int flags = {};
+  uint32_t flags = {};
 
   //
   // Room data

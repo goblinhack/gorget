@@ -62,7 +62,7 @@ public:
   //
   // Weight in grams
   //
-  int weight {0};
+  uint32_t weight {0};
 
   //
   // Starting health.

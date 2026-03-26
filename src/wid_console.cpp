@@ -26,7 +26,7 @@ static Widp wid_console_horiz_scroll {};
 Widp        wid_console_input_line {};
 Widp        wid_console_window {};
 
-static std::map< unsigned int, std::string > wid_console_lines;
+static std::map< uint32_t, std::string > wid_console_lines;
 
 void wid_console_fini(Gamep g)
 {

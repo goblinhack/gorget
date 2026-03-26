@@ -196,7 +196,7 @@ auto thing_weight(Thingp t) -> int
   return t->_weight;
 }
 
-auto thing_weight_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+auto thing_weight_set(Gamep g, Levelsp v, Levelp l, Thingp t, uint32_t val) -> int
 {
   TRACE_DEBUG();
 

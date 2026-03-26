@@ -820,7 +820,7 @@ auto tp_speed_get(Tpp tp) -> int
   return tp->speed;
 }
 
-void tp_weight_set(Tpp tp, int val)
+void tp_weight_set(Tpp tp, uint32_t val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -830,7 +830,7 @@ void tp_weight_set(Tpp tp, int val)
   tp->weight = val;
 }
 
-auto tp_weight_get(Tpp tp) -> int
+auto tp_weight_get(Tpp tp) -> uint32_t
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {

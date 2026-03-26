@@ -32,7 +32,7 @@ void level_cursor_describe_update(Gamep g, Levelsp v)
 
   v->describe_count = 0;
 
-  for (unsigned int const i : v->describe) {
+  for (uint32_t const i : v->describe) {
     if (i != 0U) {
       v->describe_count++;
     }
@@ -61,14 +61,14 @@ auto level_cursor_describe_add(Gamep g, Levelsp v, Thingp t) -> bool
     return false;
   }
 
-  for (unsigned int const i : v->describe) {
+  for (uint32_t const i : v->describe) {
     auto *cand = thing_find_optional(g, v, i);
     if (cand == t) {
       return true;
     }
   }
 
-  for (unsigned int &i : v->describe) {
+  for (uint32_t &i : v->describe) {
     auto *cand = thing_find_optional(g, v, i);
     if (cand == nullptr) {
       i = t->id;
@@ -103,7 +103,7 @@ auto level_cursor_describe_remove(Gamep g, Levelsp v, Thingp t) -> bool
     return false;
   }
 
-  for (unsigned int &i : v->describe) {
+  for (uint32_t &i : v->describe) {
     auto *cand = thing_find_optional(g, v, t->id);
     if (cand == t) {
       i = 0;

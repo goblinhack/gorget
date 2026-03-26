@@ -20,7 +20,7 @@ using wid_text_format = enum wid_text_format_ {
 class WidTextBox
 {
 private:
-  std::map< unsigned int, std::string > wid_text_box_lines;
+  std::map< uint32_t, std::string > wid_text_box_lines;
   int                                   width {};
   int                                   height {};
   int                                   scroll_height {};

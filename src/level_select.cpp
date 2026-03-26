@@ -847,7 +847,7 @@ static void level_select_show_sorted_values(Gamep g, WidPopup *parent, std::map<
     parent->log(g, UI_INFO_FMT_STR + std::string(s1) + UI_RESET_FMT, TEXT_FORMAT_LHS);
   }
 
-  while (static_cast< unsigned int >(! map_in.empty()) != 0U) {
+  while (static_cast< uint32_t >(! map_in.empty()) != 0U) {
     std::string highest;
     for (const auto &m : map_in) {
       auto name = m.first;

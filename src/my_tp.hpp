@@ -577,8 +577,8 @@ void tp_tiles_push_back(Tpp tp, ThingAnim val, Tilep tile_p);
 #define WEIGHT_FEATHER  (1)
 #define WEIGHT_NONE     (0)
 
-void               tp_weight_set(Tpp tp, int val);
-[[nodiscard]] auto tp_weight_get(Tpp tp) -> int;
+void               tp_weight_set(Tpp tp, uint32_t val);
+[[nodiscard]] auto tp_weight_get(Tpp tp) -> uint32_t;
 
 void               tp_temperature_thermal_conductivity_set(Tpp tp, float val);
 [[nodiscard]] auto tp_temperature_thermal_conductivity_get(Tpp tp) -> float;

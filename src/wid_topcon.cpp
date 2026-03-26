@@ -22,7 +22,7 @@ Widp        wid_topcon_window {};
 static std::string last_msg;
 static int         last_msg_count;
 
-static std::map< unsigned int, std::string > wid_topcon_lines;
+static std::map< uint32_t, std::string > wid_topcon_lines;
 
 void wid_topcon_fini(Gamep g)
 {

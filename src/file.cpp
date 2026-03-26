@@ -189,7 +189,7 @@ auto file_io_read(const char *filename, int *out_len) -> uint8_t *
     return nullptr;
   }
 
-  len = static_cast< unsigned int >(ftell(file));
+  len = static_cast< uint32_t >(ftell(file));
   if (len == -1) {
     std::println(MY_STDERR, "failed to get size of file \"{}\": {}", filename, strerror(errno));
     fclose(file);

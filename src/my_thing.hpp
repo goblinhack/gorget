@@ -24,16 +24,16 @@ enum { MY_ITERS_MAX = 4 };
 
 using ThingIdPacked = union {
   struct {
-    unsigned int val : 32;
+    uint32_t val : 32;
   } __attribute__((__packed__)) a;
   struct {
-    unsigned int entropy      : THING_ENTROPY_BITS;
-    unsigned int per_level_id : THING_PER_LEVEL_THING_ID_BITS;
-    unsigned int level_num    : THING_LEVEL_ID_BITS;
+    uint32_t entropy      : THING_ENTROPY_BITS;
+    uint32_t per_level_id : THING_PER_LEVEL_THING_ID_BITS;
+    uint32_t level_num    : THING_LEVEL_ID_BITS;
   } __attribute__((__packed__)) b;
   struct {
-    unsigned int entropy   : THING_ENTROPY_BITS;
-    unsigned int arr_index : THING_ARR_INDEX_BITS;
+    uint32_t entropy   : THING_ENTROPY_BITS;
+    uint32_t arr_index : THING_ARR_INDEX_BITS;
   } __attribute__((__packed__)) c;
 };
 
@@ -1009,7 +1009,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_vision_blocker(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it) -> bool;
 [[nodiscard]] auto thing_vision_can_see_tile(Gamep g, Levelsp v, Levelp l, Thingp t, bpoint p) -> bool;
 [[nodiscard]] auto thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp me, bpoint to) -> bool;
-[[nodiscard]] auto thing_weight_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
+[[nodiscard]] auto thing_weight_set(Gamep g, Levelsp v, Levelp l, Thingp t, uint32_t val) -> int;
 [[nodiscard]] auto thing_weight(Thingp t) -> int;
 [[nodiscard]] auto to_death_reason_string(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e) -> std::string;
 [[nodiscard]] auto to_string(Gamep g, Levelsp v, Levelp l, ThingEvent &e) -> std::string;

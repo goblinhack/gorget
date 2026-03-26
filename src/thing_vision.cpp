@@ -98,7 +98,7 @@ auto thing_vision_can_see_tile(Gamep g, Levelsp v, Levelp l, Thingp t, bpoint p)
     return false;
   }
 
-  return static_cast< unsigned int >(fov_map_get(&ext->can_see, p.x, p.y)) != 0U;
+  return static_cast< uint32_t >(fov_map_get(&ext->can_see, p.x, p.y)) != 0U;
 }
 
 void thing_can_see_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
@@ -136,13 +136,13 @@ void thing_can_see_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
         continue;
       }
 
-      if (static_cast< unsigned int >(fov_map_get(&ext->can_see, p.x, p.y)) != 0U) {
+      if (static_cast< uint32_t >(fov_map_get(&ext->can_see, p.x, p.y)) != 0U) {
         debug += "*";
         continue;
       }
 
       if (0) {
-        if (static_cast< unsigned int >(age_map_get(&ext->has_seen, p.x, p.y)) != 0U) {
+        if (static_cast< uint32_t >(age_map_get(&ext->has_seen, p.x, p.y)) != 0U) {
           debug += "o";
           continue;
         }
@@ -180,7 +180,7 @@ void thing_has_seen_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
         continue;
       }
 
-      if (static_cast< unsigned int >(age_map_get(&ext->has_seen, p.x, p.y)) != 0U) {
+      if (static_cast< uint32_t >(age_map_get(&ext->has_seen, p.x, p.y)) != 0U) {
         debug += "*";
         continue;
       }

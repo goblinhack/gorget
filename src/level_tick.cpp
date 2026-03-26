@@ -64,7 +64,7 @@ static void level_tick_ok_to_end_check(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
-  if (static_cast< unsigned int >(! worklist.empty()) != 0U) {
+  if (static_cast< uint32_t >(! worklist.empty()) != 0U) {
     l->tick_wait_on_things = true;
   }
 

@@ -22,7 +22,7 @@ Widp        wid_botcon_window {};
 static std::string last_msg;
 static int         last_msg_count;
 
-static std::map< unsigned int, std::string > wid_botcon_lines;
+static std::map< uint32_t, std::string > wid_botcon_lines;
 
 void wid_botcon_fini(Gamep g)
 {

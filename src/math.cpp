@@ -4,7 +4,7 @@
 
 #include "my_math.hpp"
 
-auto nextpoweroftwo(unsigned int val) -> unsigned int
+auto nextpoweroftwo(uint32_t val) -> uint32_t
 {
   val--;
   val = (val >> 1) | val;
