@@ -19,6 +19,37 @@ auto thing_is_dir_down(Thingp me) -> bool { return (me->dir == THING_DIR_DOWN); 
 auto thing_is_dir_up(Thingp me) -> bool { return (me->dir == THING_DIR_UP); }
 auto thing_is_dir_left(Thingp me) -> bool { return (me->dir == THING_DIR_LEFT); }
 
+void thing_is_moving_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return;
+  }
+
+  if (t->_is_moving == static_cast< int >(val)) {
+    return;
+  }
+  t->_is_moving = val;
+
+  //
+  // Just in case we are still mid lunge, stop it.
+  //
+  thing_is_lunging_set(g, v, l, t, false);
+
+  if (val) {
+    thing_on_moved(g, v, l, t);
+  }
+}
+
+void thing_is_moving_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_DEBUG();
+
+  thing_is_moving_set(g, v, l, t, false);
+}
+
 //
 // Set thing direction
 //

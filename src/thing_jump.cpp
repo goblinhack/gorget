@@ -10,6 +10,34 @@
 
 #include <ranges>
 
+void thing_is_jumping_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return;
+  }
+
+  if (t->_is_jumping == static_cast< int >(val)) {
+    return;
+  }
+  t->_is_jumping = val;
+
+  if (val) {
+    thing_on_jump_begin(g, v, l, t);
+  } else {
+    thing_on_jump_end(g, v, l, t);
+  }
+}
+
+void thing_is_jumping_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_DEBUG();
+
+  thing_is_jumping_set(g, v, l, t, false);
+}
+
 //
 // If jumping too far, truncate the jump
 //

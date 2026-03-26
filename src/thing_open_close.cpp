@@ -7,6 +7,99 @@
 #include "my_thing_inlines.hpp"
 
 //
+// Returns true/false on success/fail
+//
+auto thing_is_open_try_set(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener, bool val) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+
+  if (t->_is_open == static_cast< int >(val)) {
+    return true;
+  }
+  t->_is_open = val;
+
+  //
+  // Attempt the open/close. It can fail.
+  //
+  if (val) {
+    //
+    // Try to open
+    //
+    if (! thing_on_open_request(g, v, l, t, opener)) {
+      //
+      // Open failed
+      //
+      t->_is_open = false;
+      return false;
+    }
+
+    //
+    // Reset animation
+    //
+    thing_anim_init(g, v, l, t, THING_ANIM_OPEN);
+  } else {
+    //
+    // Try to close
+    //
+    if (! thing_on_close_request(g, v, l, t, opener)) {
+      //
+      // Close failed
+      //
+      t->_is_open = true;
+      return false;
+    }
+
+    //
+    // Reset animation
+    //
+    thing_anim_init(g, v, l, t, THING_ANIM_IDLE);
+  }
+
+  return true;
+}
+
+auto thing_is_open_try_unset(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp closer) -> bool
+{
+  TRACE_DEBUG();
+
+  return thing_is_open_try_set(g, v, l, t, closer, false);
+}
+
+auto thing_is_unlocked(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return t->_is_unlocked;
+}
+
+void thing_is_unlocked_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return;
+  }
+  t->_is_unlocked = val;
+}
+
+void thing_is_unlocked_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_DEBUG();
+
+  thing_is_unlocked_set(g, v, l, t, false);
+}
+
+//
 // Open doors
 //
 auto thing_open(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp player_or_monst) -> bool

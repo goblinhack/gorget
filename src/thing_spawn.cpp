@@ -8,6 +8,35 @@
 #include "my_main.hpp"
 #include "my_thing_callbacks.hpp"
 
+void thing_is_spawned_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return;
+  }
+
+  if (t->_is_spawned == static_cast< int >(val)) {
+    return;
+  }
+  t->_is_spawned = val;
+
+  if (val) {
+    //
+    // Callback upon spawning
+    //
+    thing_on_spawned(g, v, l, t);
+  }
+}
+
+void thing_is_spawned_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_DEBUG();
+
+  thing_is_spawned_set(g, v, l, t, false);
+}
+
 auto thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &at) -> Thingp
 {
   TRACE();

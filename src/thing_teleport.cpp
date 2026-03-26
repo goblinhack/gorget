@@ -7,6 +7,43 @@
 #include "my_level_inlines.hpp"
 #include "my_thing_inlines.hpp"
 
+auto thing_is_teleporting(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return t->_is_teleporting;
+}
+
+void thing_is_teleporting_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return;
+  }
+
+  if (t->_is_teleporting == static_cast< int >(val)) {
+    return;
+  }
+  t->_is_teleporting = val;
+
+  if (val) {
+    thing_on_teleported(g, v, l, t);
+  }
+}
+
+void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_DEBUG();
+
+  thing_is_teleporting_set(g, v, l, t, false);
+}
+
 [[nodiscard]] static auto teleport_find_other(Gamep g, Levelsp v, Levelp l, const bpoint &in, bpoint &out) -> bool
 {
   TRACE();
