@@ -347,13 +347,9 @@ using Thing = struct Thing {
   //
   uint16_t tile_index;
   //
-  // Count down until the next animation frame should start
-  //
-  int16_t anim_ms_remaining;
-  //
   // Move speed, with 100 being player.
   //
-  int16_t _speed;
+  uint16_t _speed;
   //
   // This is the amount move moving (the speed above) we can do per tick.
   //
@@ -364,11 +360,15 @@ using Thing = struct Thing {
   // Each tick, this amount is incremented by the speed value until it
   // is >= the player's speed. At which point the monst can move.
   //
-  int16_t _move_remaining;
+  int16_t _move_remaining; // can be decremented, so signed is safer
+  //
+  // Count down until the next animation frame should start
+  //
+  int16_t anim_ms_remaining; // can be decremented, so signed is safer
   //
   // Temperature in celsius.
   //
-  int16_t _temperature;
+  int16_t _temperature; // can be decremented, so signed is safer
   //
   // Damage can be capped per tick to a limit so we don't kill a player in one go
   //
@@ -410,17 +410,17 @@ using Thing = struct Thing {
   //
   uint8_t _variant;
   //
+  // Used in lava, water etc...
+  //
+  uint8_t _submerged_pct;
+  //
   // Lifespan remaining in ticks
   //
-  int16_t _lifespan;
+  int16_t _lifespan; // can be decremented, so signed is safer
   //
   // How long this thing has lived
   //
-  int16_t _age;
-  //
-  // Used in lava, water etc...
-  //
-  int16_t _submerged_pct;
+  int16_t _age; // can be decremented, so signed is safer
   //
   // Health of the item.
   //
@@ -436,7 +436,7 @@ using Thing = struct Thing {
   //
   // Weight in grams. Impacts things like grass being crushed.
   //
-  int32_t _weight;
+  uint32_t _weight;
   //
   // Current game tick this thing has completed
   //

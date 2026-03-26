@@ -174,6 +174,12 @@ auto thing_speed_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
     ERR("no thing pointer");
     return 0;
   }
+
+  if (val > std::numeric_limits< decltype(t->_speed) >::max()) {
+    thing_err(t, "value overflow");
+    return 0;
+  }
+
   return t->_speed = val;
 }
 
@@ -196,6 +202,12 @@ auto thing_weight_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
     ERR("no thing pointer");
     return 0;
   }
+
+  if (val > std::numeric_limits< decltype(t->_weight) >::max()) {
+    thing_err(t, "value overflow");
+    return 0;
+  }
+
   return t->_weight = val;
 }
 
@@ -218,6 +230,12 @@ auto thing_health_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
     ERR("no thing pointer");
     return 0;
   }
+
+  if (val > std::numeric_limits< decltype(t->_health) >::max()) {
+    thing_err(t, "value overflow");
+    return 0;
+  }
+
   game_request_to_remake_ui_set(g);
   return t->_health = val;
 }
@@ -363,6 +381,11 @@ auto thing_temperature_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> i
     return 0;
   }
 
+  if (val > std::numeric_limits< decltype(t->_temperature) >::max()) {
+    thing_err(t, "value overflow");
+    return 0;
+  }
+
   if (! thing_is_physics_temperature(t)) {
     return 0;
   }
@@ -425,6 +448,12 @@ auto thing_damage_this_tick_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
     ERR("no thing pointer");
     return 0;
   }
+
+  if (val > std::numeric_limits< decltype(t->_damage_this_tick) >::max()) {
+    thing_err(t, "value overflow");
+    return 0;
+  }
+
   return t->_damage_this_tick = val;
 }
 
@@ -469,6 +498,12 @@ auto thing_keys_carried_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> 
     ERR("no thing pointer");
     return 0;
   }
+
+  if (val > std::numeric_limits< decltype(t->_keys_carried) >::max()) {
+    thing_err(t, "value overflow");
+    return 0;
+  }
+
   return t->_keys_carried = val;
 }
 
