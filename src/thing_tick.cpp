@@ -17,7 +17,13 @@ void thing_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // Update hidden and submerged status
   //
-  thing_update_pos(g, v, l, t);
+  if (! thing_is_moving(t)) {
+    //
+    // Only if not moving, else the player appears to jump briefly forward
+    // before being interpolated
+    //
+    thing_update_pos(g, v, l, t);
+  }
 
   //
   // Reset damage counts.
