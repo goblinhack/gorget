@@ -42,8 +42,8 @@ auto tp_load_foliage() -> bool
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_blit_if_has_seen);
   tp_flag_set(tp, is_blit_obscures);
-  tp_flag_set(tp, is_blit_outlined_when_hit);
   tp_flag_set(tp, is_blit_on_ground);
+  tp_flag_set(tp, is_blit_outlined_when_hit);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_burnable); // is capable of being burned by fire
   tp_flag_set(tp, is_collision_circle_large);

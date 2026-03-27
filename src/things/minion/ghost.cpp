@@ -77,6 +77,7 @@ auto tp_load_ghost() -> bool
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_attackable_by_player);
   tp_flag_set(tp, is_blit_centered);
+  tp_flag_set(tp, is_blit_outlined_when_hit);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_blit_when_obscured_as_faded);
   tp_flag_set(tp, is_collision_circle_large);
@@ -104,7 +105,6 @@ auto tp_load_ghost() -> bool
   tp_name_short_set(tp, "ghost");
   tp_priority_set(tp, THING_PRIORITY_MONST);
   tp_speed_set(tp, 100);
-  tp_flag_set(tp, is_blit_outlined_when_hit);
   tp_temperature_initial_set(tp, -10); // celsius
   tp_weight_set(tp, WEIGHT_FEATHER);   // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);

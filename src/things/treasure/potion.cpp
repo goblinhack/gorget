@@ -64,6 +64,7 @@ auto tp_load_potion() -> bool
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
+  tp_flag_set(tp, is_blit_outlined_when_hit);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_burnable); // is capable of being burned by fire
   tp_flag_set(tp, is_collectable);
@@ -79,7 +80,6 @@ auto tp_load_potion() -> bool
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
-  tp_flag_set(tp, is_blit_outlined_when_hit);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_treasure);

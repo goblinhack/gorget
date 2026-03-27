@@ -63,6 +63,7 @@ auto tp_load_ghost_mob() -> bool
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
+  tp_flag_set(tp, is_blit_outlined_when_hit);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_burnable); // is capable of being burned by fire
   tp_flag_set(tp, is_collision_square);
@@ -100,9 +101,8 @@ auto tp_load_ghost_mob() -> bool
   tp_speed_set(tp, 100);
   tp_temperature_burns_at_set(tp, 100);  // celsius
   tp_temperature_damage_at_set(tp, 100); // celsius
-  tp_flag_set(tp, is_blit_outlined_when_hit);
-  tp_temperature_initial_set(tp, 0); // celsius
-  tp_weight_set(tp, WEIGHT_HEAVY);   // grams
+  tp_temperature_initial_set(tp, 0);     // celsius
+  tp_weight_set(tp, WEIGHT_HEAVY);       // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   // end sort marker1 }
 

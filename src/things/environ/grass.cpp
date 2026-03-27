@@ -35,13 +35,13 @@ auto tp_load_grass() -> bool
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_if_has_seen);
+  tp_flag_set(tp, is_blit_outlined_when_hit);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_burnable);    // is capable of being burned by fire
   tp_flag_set(tp, is_combustible); // will continue to burn once on fire
   tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_crushable);
   tp_flag_set(tp, is_described_cursor);
-  tp_flag_set(tp, is_blit_outlined_when_hit);
   tp_flag_set(tp, is_grass);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);

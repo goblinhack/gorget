@@ -184,7 +184,7 @@
       list_macro(is_unused50, "is_unused50"),                                           /* newline */                                      \
       list_macro(is_unused51, "is_unused51"),                                           /* newline */                                      \
       list_macro(is_unused52, "is_unused52"),                                           /* newline */                                      \
-      list_macro(is_blit_outlined_when_hit, "is_blit_outlined_when_hit"),                                           /* newline */                                      \
+      list_macro(is_blit_outlined_when_hit, "is_blit_outlined_when_hit"),               /* newline */                                      \
       list_macro(is_blit_when_obscured_as_outline, "is_blit_when_obscured_as_outline"), /* newline */                                      \
       list_macro(is_attackable_by_player, "is_attackable_by_player"),                   /* newline */                                      \
       list_macro(is_attackable_by_monst, "is_attackable_by_monst"),                     /* newline */                                      \
@@ -706,6 +706,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup val);
 [[nodiscard]] auto tp_is_blit_if_has_seen(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_blit_obscures(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_blit_on_ground(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_blit_outlined_when_hit(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_blit_outlined(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_blit_per_pixel_lighting(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_blit_shown_in_chasms(Tpp tp) -> bool;
@@ -887,7 +888,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup val);
 [[nodiscard]] auto tp_is_unused50(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused51(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused52(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_blit_outlined_when_hit(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused6(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused63(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused7(Tpp tp) -> bool;

@@ -531,7 +531,6 @@ using Thing = struct Thing {
 
 // begin sort marker1 {
 [[nodiscard]] auto immediate_owner(Gamep g, Levelsp v, Levelp l, Thingp t) -> Thingp;
-[[nodiscard]] bool thing_is_always_hot(Thingp me);
 [[nodiscard]] auto level_vision_blocker_at(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &at) -> bool;
 [[nodiscard]] auto monst_state_to_string(MonstState state) -> std::string;
 [[nodiscard]] auto monst_state(Gamep g, Levelsp v, Levelp l, Thingp me) -> MonstState;
@@ -621,6 +620,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_blit_if_has_seen(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_blit_obscures(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_blit_on_ground(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_blit_outlined_when_hit(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_blit_outlined(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_blit_per_pixel_lighting(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_blit_shown_in_chasms(Thingp t) -> bool;
@@ -824,7 +824,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused50(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused51(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused52(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_blit_outlined_when_hit(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused6(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused63(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused7(Thingp t) -> bool;
@@ -1017,6 +1016,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto to_string(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string;
 [[nodiscard]] auto top_owner(Gamep g, Levelsp v, Levelp l, Thingp t) -> Thingp;
 [[nodiscard]] auto wid_get_thing_context(Gamep g, Levelsp v, Widp w, int which) -> Thingp;
+[[nodiscard]] bool thing_is_always_hot(Thingp me);
 // end sort marker1 }
 
 // begin sort marker2 {
