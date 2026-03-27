@@ -206,7 +206,6 @@ static void croak_handle(bool clean, const char *fmt, va_list args)
 
 void CROAK_HANDLE(bool clean, const char *fmt, ...)
 {
-  LOG("CROAK_HANDLE");
   TRACE();
 
   va_list args = {};
@@ -222,7 +221,6 @@ void CROAK_HANDLE(bool clean, const char *fmt, ...)
 
 static void err_handle(Gamep g, const char *fmt, va_list args)
 {
-  LOG("err_handle");
   TRACE();
 
   char buf[ MAXLONGSTR * 10 ];
@@ -246,7 +244,6 @@ static void err_handle(Gamep g, const char *fmt, va_list args)
 
 void ERR_HANDLE(const char *fmt, ...)
 {
-  LOG("ERR_HANDLE");
   TRACE();
 
   if (g_err_count++ > ENABLE_MAX_ERR_COUNT) {

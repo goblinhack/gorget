@@ -31,7 +31,7 @@
       = "xxxxxxx"
         "xxx.!!x"
         "xxx!x!x"
-        "x@!!x!x"
+        "x@!;x!x"
         "xxxxx!x"
         "x....!x"
         "xxxxxxx";

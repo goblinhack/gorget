@@ -83,6 +83,9 @@ auto tp_load_door_secret() -> bool
     tp_name_long_set(tp, "secret door");
     tp_name_pluralize_set(tp, "secret door");
     tp_name_short_set(tp, "secret door");
+    tp_temperature_damage_at_set(tp, 50); // celsius
+    tp_temperature_initial_set(tp, 20);   // celsius
+    tp_temperature_melts_at_set(tp, 300); // celsius
     tp_priority_set(tp, THING_PRIORITY_OBJECT);
     tp_variant_set(tp, variant);
     tp_weight_set(tp, WEIGHT_VHEAVY); // grams

@@ -178,7 +178,7 @@ auto thing_speed_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
   }
 
   if (std::cmp_greater(val, std::numeric_limits< decltype(t->_speed) >::max())) {
-    thing_err(t, "value overflow");
+    thing_err(t, "value overflow: %d", val);
     return 0;
   }
 
@@ -206,7 +206,7 @@ auto thing_weight_set(Gamep g, Levelsp v, Levelp l, Thingp t, uint32_t val) -> i
   }
 
   if (val > std::numeric_limits< decltype(t->_weight) >::max()) {
-    thing_err(t, "value overflow");
+    thing_err(t, "value overflow: %d", val);
     return 0;
   }
 
@@ -234,7 +234,7 @@ auto thing_health_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
   }
 
   if (val > std::numeric_limits< decltype(t->_health) >::max()) {
-    thing_err(t, "value overflow");
+    thing_err(t, "value overflow: %d", val);
     return 0;
   }
 
@@ -384,7 +384,7 @@ auto thing_temperature_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> i
   }
 
   if (val > std::numeric_limits< decltype(t->_temperature) >::max()) {
-    thing_err(t, "value overflow");
+    thing_err(t, "value overflow: %d", val);
     return 0;
   }
 
@@ -452,7 +452,7 @@ auto thing_damage_this_tick_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   }
 
   if (val > std::numeric_limits< decltype(t->_damage_this_tick) >::max()) {
-    thing_err(t, "value overflow");
+    thing_err(t, "value overflow: %d", val);
     return 0;
   }
 
@@ -502,7 +502,7 @@ auto thing_keys_carried_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> 
   }
 
   if (val > std::numeric_limits< decltype(t->_keys_carried) >::max()) {
-    thing_err(t, "value overflow");
+    thing_err(t, "value overflow: %d", val);
     return 0;
   }
 

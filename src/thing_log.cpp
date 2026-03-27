@@ -55,13 +55,6 @@ void thing_dbg(Thingp t, const char *fmt, ...)
 
   IF_NODEBUG return;
 
-  //
-  // Filter to interesting things
-  //
-  if (! thing_is_loggable(t)) {
-    return;
-  }
-
   va_list args = {};
   va_start(args, fmt);
   thing_log_(t, fmt, args);

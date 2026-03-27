@@ -13,13 +13,22 @@ void thing_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thing
 {
   TRACE();
 
-  auto *tp = thing_tp(t);
+  THING_DBG(t, "temperature handle: %d", n);
 
   //
   // If not burnt already, burn it if over the threshold temperature.
   //
-  auto Tb = tp_temperature_burns_at_get(tp);
-  if ((Tb != 0) && (n > Tb)) {
+  auto *tp   = thing_tp(t);
+  auto  Tb   = tp_temperature_burns_at_get(tp);
+  auto  Tm   = tp_temperature_melts_at_get(tp);
+  auto  Tmax = std::max(Tb, Tm);
+
+  //
+  // Don't allow things to become superheated
+  //
+  n = std::min(Tmax * 2, n);
+
+  if ((Tb != 0) && (n >= Tb)) {
     if (thing_is_steam(source) || thing_is_water(source)) {
       //
       // You don't continue to burn with steam
@@ -47,8 +56,7 @@ void thing_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thing
   //
   // If not meltt already, melt it if over the threshold temperature.
   //
-  auto Tm = tp_temperature_melts_at_get(tp);
-  if ((Tm != 0) && (n > Tm)) {
+  if ((Tm != 0) && (n >= Tm)) {
     THING_DBG(t, "melt");
     thing_melt(g, v, l, t);
   }

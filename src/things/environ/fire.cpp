@@ -204,8 +204,9 @@ auto tp_load_fire() -> bool
   tp_name_pluralize_set(tp, "fires");
   tp_name_short_set(tp, "fire");
   tp_priority_set(tp, THING_PRIORITY_FIRE);
-  tp_temperature_initial_set(tp, 500); // celsius
-  tp_weight_set(tp, WEIGHT_NONE);      // grams
+  tp_temperature_burns_at_set(tp, 500); // celsius
+  tp_temperature_initial_set(tp, 500);  // celsius
+  tp_weight_set(tp, WEIGHT_NONE);       // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_GAS);
   // end sort marker1 }
 
