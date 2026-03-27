@@ -30,13 +30,6 @@ auto thing_vision_blocker(Gamep g, Levelsp v, Levelp l, Thingp it) -> bool
     return false;
   }
 
-  //
-  // Submerged foliage does not block light
-  //
-  if (thing_submerged_pct(it) > 50) {
-    return false;
-  }
-
   if (thing_is_obs_to_vision(it)) {
     return true;
   }
