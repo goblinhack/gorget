@@ -1,37 +1,37 @@
 bugs
 ----
-submerged vision blocking foliage looks bad
 need test for player hiding in bushes
 need test for player hiding in deep water in bushes
 mantisman not jumping over chasm onto secret door
 mantisman jump over short chasm path
+too many monsters
 
 essential features
 ------------------
-score? score is hard coded to 666
-cobwebs burns and get you burn
-intro level
-play weekly/daily seed - generated from date
 stamina needed to avoid fast jump loops
+score? score is hard coded to 666
+intro level
+traps must do something / gas effects
 items can be lost in deep water
-hard coded to fire fireball
 chests need to contain something and those items destroyed when the chest is
 spell points to collect
 emergency teleport
+hard coded to fire fireball
+spells need to have a cost that can be influenced by specializing
 level map has to show wizards
 wizards have to move levels
-traps must do something
-spells need to have a cost that can be influenced by specializing
 
 later features
 --------------
-take on limitations at start e.g one leg, limited jump, reduced spell cost
+explosive bog
 projectile collision with projectile
-bogs / traps / gas effects
+play weekly/daily seed - generated from date
+cobwebs burns and get you stuck
+ice weapon and shattering
+take on limitations at start e.g one leg, limited jump, reduced spell cost
 ghosts can only be hit when solid
 bushes quiver when monster is behind? / items hiding in bushes 
 boulders that can crush
-magic
 shrines that reduce spell points
 anti magic areas
 anti anti magic areas
@@ -45,12 +45,12 @@ eyes of ice, heart of fire
 monsters
 --------
 ogri - like in Doctor Who, monoliths that move slowly and block the way
-unihound
+unihulk
 ravenbeast
 bearowl
 ogyr (celtic)
 door mimic
-kobalos need to steal items
+thief that can steal items
 
 story
 -----
