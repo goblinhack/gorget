@@ -297,7 +297,7 @@ void tests_run(Gamep g)
       out += "FAILED";
       LOG("failed");
     }
-    printf("%s\n", out.c_str());
+    std::println("{}", out);
 #else
     term_log(buf);
     //
