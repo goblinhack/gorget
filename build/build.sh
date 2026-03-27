@@ -874,6 +874,8 @@ if [[ $OPT_GITHUB_BUILD != "" ]]; then
 
     LSAN_OPTIONS=max_leaks=10 ./${TARGET} --tests --debug
     if [[ $? -ne 0 ]]; then
+        cat ${TARGET}.stdout.txt
+        find appdata
         cat appdata/${TARGET}/stdout.txt
         ls -la
         find . -name stdout.txt
