@@ -81,7 +81,8 @@ static auto thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thing
 //
 static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
 {
-  TRACE();
+  THING_DBG(me, "choose target: can see");
+  TRACE_INDENT();
 
   auto at = thing_at(me);
 
@@ -104,6 +105,9 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
     radius = thing_distance_minion_from_mob_max(me);
   }
 
+  THING_DBG(me, "choose target: radius: %d", radius);
+  TRACE_INDENT();
+
   if (radius == 0) {
     thing_err(me, "unexpected value for radius");
     return false;
@@ -117,11 +121,10 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
   bool found_path        = false;
 
   //
-  // Avoid memsetting this by using uninitialized memory
+  // Could avoid memsetting this by using uninitialized memory but
+  // it means the tests are not deterministic
   //
-  uint8_t        tried[ MAP_WIDTH ][ MAP_HEIGHT ];
-  static uint8_t try_magic;
-  try_magic++;
+  bool tried[ MAP_WIDTH ][ MAP_HEIGHT ] = {{0}};
 
   //
   // Keep trying to find a target
@@ -135,14 +138,17 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
     target.x = static_cast< int >(at.x) - radius + PCG_RANDOM_RANGE(0, diameter);
     target.y = static_cast< int >(at.y) - radius + PCG_RANDOM_RANGE(0, diameter);
 
+    THING_DBG(me, "choose target: try: %d,%d", target.x, target.y);
+    TRACE_INDENT();
+
     if (is_oob_or_border(target)) {
       continue;
     }
 
-    if (tried[ target.x ][ target.y ] == try_magic) {
+    if (tried[ target.x ][ target.y ]) {
       continue;
     }
-    tried[ target.x ][ target.y ] = try_magic;
+    tried[ target.x ][ target.y ] = true;
 
     //
     // Check this is a tile we want to potentially walk to.
@@ -313,21 +319,25 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
 
 [[nodiscard]] static auto thing_monst_choose_target(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
 {
-  TRACE();
+  THING_DBG(me, "choose target");
+  TRACE_INDENT();
 
   if (thing_monst_choose_target_player(g, v, l, me)) {
+    THING_DBG(me, "choose target: found player");
     monst_state_change(g, v, l, me, MONST_STATE_CHASING);
     return true;
   }
 
   if (thing_is_minion(me)) {
     if (thing_minion_choose_target_near_mob(g, v, l, me)) {
+      THING_DBG(me, "choose target: found target near mob");
       monst_state_change(g, v, l, me, MONST_STATE_WANDER);
       return true;
     }
   }
 
   if (thing_minion_choose_target_can_see(g, v, l, me)) {
+    THING_DBG(me, "choose target: found target can see");
     monst_state_change(g, v, l, me, MONST_STATE_WANDER);
     return true;
   }
@@ -502,6 +512,7 @@ void monst_state_change(Gamep g, Levelsp v, Levelp l, Thingp me, MonstState new_
   }
 
   if (me->_monst_state == new_state) {
+    IF_DEBUG { THING_DBG(me, "same state: %s", monst_state_to_string(new_state).c_str()); }
     return;
   }
 

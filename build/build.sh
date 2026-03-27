@@ -881,6 +881,11 @@ if [[ $OPT_GITHUB_BUILD != "" ]]; then
         find . -name stdout.txt
         exit 1
     fi
+        cat ${TARGET}.stdout.txt
+        find appdata
+        cat appdata/${TARGET}/stdout.txt
+        ls -la
+        find .
 fi
 
 exit 0

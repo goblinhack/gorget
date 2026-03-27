@@ -128,7 +128,8 @@ auto thing_minion_detach_me_from_mob(Gamep g, Levelsp v, Levelp l, Thingp me) ->
 //
 auto thing_minion_choose_target_near_mob(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
 {
-  TRACE();
+  THING_DBG(me, "choose target: near mob");
+  TRACE_INDENT();
 
   auto *mob = thing_minion_mob_get(g, v, l, me);
   if (mob == nullptr) {

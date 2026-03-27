@@ -12,6 +12,8 @@
 //
 auto thing_mob_minion_count_get(Gamep g, Levelsp v, Levelp l, Thingp mob) -> int
 {
+  TRACE();
+
   if (mob == nullptr) {
     return 0;
   }

@@ -248,29 +248,25 @@ auto main(int argc, char *argv[]) -> int
 
   g_thread_id = MAIN_THREAD;
 
-  LOG("start");
   TRACE();
-
-  //////////////////////////////////////////////////////////////////////////////
-  // Call parse_args before any memory allocations, in case debug2 is enabled
-  //////////////////////////////////////////////////////////////////////////////
-  {
-    TRACE_DEBUG();
-    parse_args(argc, argv);
-  }
-
-  TRACE_DEBUG();
   auto appdata = log_dir_create(); // Want this first so we get all logs
 
   TRACE_DEBUG();
   redirect_stdout();
+  LOG("will use STDOUT as '%s'", g_log_stdout_filename.c_str());
 
   TRACE_DEBUG();
   redirect_stderr();
+  LOG("will use STDERR as '%s'", g_log_stderr_filename.c_str());
 
   TRACE_DEBUG();
-  LOG("will use STDOUT as '%s'", g_log_stdout_filename.c_str());
-  LOG("will use STDERR as '%s'", g_log_stderr_filename.c_str());
+  LOG("start");
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Call parse_args before any memory allocations, in case debug2 is enabled
+  //////////////////////////////////////////////////////////////////////////////
+  TRACE_DEBUG();
+  parse_args(argc, argv);
 
   //////////////////////////////////////////////////////////////////////////////
   // Use LOG instead of CON until we set stdout or you see two logs
