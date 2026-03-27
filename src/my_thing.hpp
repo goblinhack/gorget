@@ -608,6 +608,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_able_to_see_360_degrees(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_shove(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_walk_through_walls(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_always_hot(Thingp me) -> bool;
 [[nodiscard]] auto thing_is_animated_can_hflip(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_animated_no_dir(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_animated_sync_first(Thingp t) -> bool;
@@ -700,7 +701,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_hit_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_is_hit_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_is_hit_when_dead(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_hot_check(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
+[[nodiscard]] auto thing_is_hot_check(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
 [[nodiscard]] auto thing_is_immune_to(Thingp t, ThingEventType val) -> bool;
 [[nodiscard]] auto thing_is_indestructible(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_insectoid(Thingp t) -> bool;
@@ -760,7 +761,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_rock(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_scheduled_for_cleanup(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_shovable(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_sleeping(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_sleeping(Thingp me) -> bool;
 [[nodiscard]] auto thing_is_slime(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_smoke(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_steam(Thingp t) -> bool;
@@ -768,7 +769,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_submergible(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_teleport_blocked(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_teleport(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_teleporting(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_teleporting(Thingp me) -> bool;
 [[nodiscard]] auto thing_is_tick_end_delay(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_tickable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_tiled(Thingp t) -> bool;
@@ -918,7 +919,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_submerged_pct_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_submerged_pct_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_target(Thingp t) -> bpoint;
-[[nodiscard]] auto thing_teleport_handle(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
+[[nodiscard]] auto thing_teleport_handle(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
 [[nodiscard]] auto thing_temperature_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_temperature_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_temperature_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
@@ -1016,7 +1017,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto to_string(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string;
 [[nodiscard]] auto top_owner(Gamep g, Levelsp v, Levelp l, Thingp t) -> Thingp;
 [[nodiscard]] auto wid_get_thing_context(Gamep g, Levelsp v, Widp w, int which) -> Thingp;
-[[nodiscard]] bool thing_is_always_hot(Thingp me);
 // end sort marker1 }
 
 // begin sort marker2 {
@@ -1076,9 +1076,9 @@ void thing_group_join(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp group);
 void thing_group_leave(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_group_member_leave(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_has_seen_dump(Gamep g, Levelsp v, Levelp l, Thingp t);
-void thing_hidden_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step);
+void thing_hidden_time_step(Gamep g, Levelsp v, Levelp l, Thingp me, int time_step);
 void thing_hit_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step);
-void thing_hot_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step);
+void thing_hot_time_step(Gamep g, Levelsp v, Levelp l, Thingp me, int time_step);
 void thing_interpolate(Gamep g, Levelsp v, Levelp l, Thingp t, float dt);
 void thing_inventory_dump(Gamep g, Levelsp v, Levelp l, Thingp player_or_monst);
 void thing_is_burning_handle(Gamep g, Levelsp v, Levelp l, Thingp t);
@@ -1091,9 +1091,9 @@ void thing_is_dead_unset(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_is_falling_continues_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val = true);
 void thing_is_falling_continues_unset(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_is_falling_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val);
-void thing_is_hidden_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val);
+void thing_is_hidden_set(Gamep g, Levelsp v, Levelp l, Thingp me, bool val);
 void thing_is_hit_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val);
-void thing_is_hot_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val);
+void thing_is_hot_set(Gamep g, Levelsp v, Levelp l, Thingp me, bool val);
 void thing_is_jumping_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val = true);
 void thing_is_jumping_unset(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_is_lunging_set(Gamep g, Levelsp v, Levelp l, Thingp me, bool val);
@@ -1103,12 +1103,12 @@ void thing_is_on_map_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val = true
 void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_is_scheduled_for_cleanup_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val = true);
 void thing_is_scheduled_for_cleanup_unset(Gamep g, Levelsp v, Levelp l, Thingp t);
-void thing_is_sleeping_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val = true);
-void thing_is_sleeping_unset(Gamep g, Levelsp v, Levelp l, Thingp t);
+void thing_is_sleeping_set(Gamep g, Levelsp v, Levelp l, Thingp me, bool val = true);
+void thing_is_sleeping_unset(Gamep g, Levelsp v, Levelp l, Thingp me);
 void thing_is_spawned_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val = true);
 void thing_is_spawned_unset(Gamep g, Levelsp v, Levelp l, Thingp t);
-void thing_is_teleporting_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val = true);
-void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp t);
+void thing_is_teleporting_set(Gamep g, Levelsp v, Levelp l, Thingp me, bool val = true);
+void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me);
 void thing_is_unlocked_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val = true);
 void thing_is_unlocked_unset(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_level_warp_to_entrance(Gamep g, Levelsp v, Levelp new_level, Thingp t);

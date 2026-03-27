@@ -10,7 +10,7 @@
 #include "my_time.hpp"
 #include "my_tp.hpp"
 
-bool thing_is_always_hot(Thingp me)
+auto thing_is_always_hot(Thingp me) -> bool
 {
   TRACE();
   if (thing_is_fire(me)) {

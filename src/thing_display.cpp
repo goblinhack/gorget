@@ -381,11 +381,11 @@ static void thing_display_it(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp 
         //
         // Flash orange
         //
-        color is_hot = ORANGE;
-        fg.r         = is_hot.r;
-        fg.g         = is_hot.g;
-        fg.b         = is_hot.b;
-        fg.a         = (uint8_t) a;
+        color const is_hot = ORANGE;
+        fg.r               = is_hot.r;
+        fg.g               = is_hot.g;
+        fg.b               = is_hot.b;
+        fg.a               = static_cast< uint8_t >(a);
         thing_display_blit(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg, nullptr, false);
       }
     }
