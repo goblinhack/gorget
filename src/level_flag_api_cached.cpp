@@ -1175,10 +1175,10 @@ auto level_is_unused52_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> 
   return level_flag_cached(g, v, l, is_unused52, p);
 }
 
-auto level_is_unused53_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+auto level_is_blit_outlined_when_hit_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused53, p);
+  return level_flag_cached(g, v, l, is_blit_outlined_when_hit, p);
 }
 
 auto level_is_blit_when_obscured_as_outline_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

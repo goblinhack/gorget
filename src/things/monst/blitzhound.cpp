@@ -124,7 +124,8 @@ auto tp_load_blitzhound() -> bool
   tp_name_short_set(tp, "blitzhound");
   tp_priority_set(tp, THING_PRIORITY_MONST);
   tp_speed_set(tp, 200);
-  tp_temperature_burns_at_set(tp, 50);  // celsius
+  tp_temperature_burns_at_set(tp, 50); // celsius
+  tp_flag_set(tp, is_blit_outlined_when_hit);
   tp_temperature_damage_at_set(tp, 35); // celsius
   tp_temperature_initial_set(tp, 20);   // celsius
   tp_weight_set(tp, WEIGHT_HUMAN);      // grams

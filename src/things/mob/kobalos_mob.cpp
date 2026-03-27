@@ -83,6 +83,7 @@ auto tp_load_kobalos_mob() -> bool
   tp_flag_set(tp, is_shovable);
   tp_flag_set(tp, is_stone);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
+  tp_flag_set(tp, is_blit_outlined_when_hit);
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_wait_on_dead_anim);
   tp_health_set(tp, "1d3+3");

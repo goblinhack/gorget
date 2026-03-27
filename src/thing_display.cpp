@@ -341,11 +341,13 @@ static void thing_display_it(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp 
       //
       // Preserve original alpha
       //
-      color const hot = ORANGE;
-      fg.r            = thing_is_hot(t_maybe_null);
-      fg.g            = hot.g;
-      fg.b            = hot.b;
-      light_pixels    = nullptr;
+      if (! thing_is_always_hot(t_maybe_null)) {
+        color const hot = RED;
+        fg.r            = thing_is_hot(t_maybe_null);
+        fg.g            = hot.g;
+        fg.b            = hot.b;
+        light_pixels    = nullptr;
+      }
     }
 
     //
@@ -367,12 +369,25 @@ static void thing_display_it(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp 
     // Flash red outline if hit
     //
     if (thing_is_hit(t_maybe_null) != 0) {
-      color outline = RED;
-      float a       = (static_cast< float >(thing_is_hit(t_maybe_null)) / static_cast< float >(THING_HIT_FLASH_TIME_MS));
+      float a = (static_cast< float >(thing_is_hit(t_maybe_null)) / static_cast< float >(THING_HIT_FLASH_TIME_MS));
       a *= 255.0F;
-      a         = std::min(static_cast< int >(a), 255);
-      outline.a = static_cast< uint8_t >(a);
-      tile_blit_outline(tile, x1, x2, y1, y2, tl, br, outline);
+      a = std::min(static_cast< int >(a), 255);
+
+      if (thing_is_blit_outlined_when_hit(t_maybe_null)) {
+        color outline = RED;
+        outline.a     = static_cast< uint8_t >(a);
+        tile_blit_outline(tile, x1, x2, y1, y2, tl, br, outline);
+      } else {
+        //
+        // Flash orange
+        //
+        color is_hot = ORANGE;
+        fg.r         = is_hot.r;
+        fg.g         = is_hot.g;
+        fg.b         = is_hot.b;
+        fg.a         = (uint8_t) a;
+        thing_display_blit(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg, nullptr, false);
+      }
     }
   } else {
     //

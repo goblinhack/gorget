@@ -9,7 +9,7 @@
 //
 // Hidden anim time step
 //
-void thing_hidden_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step)
+void thing_hidden_time_step(Gamep g, Levelsp v, Levelp l, Thingp me, int time_step)
 {
   TRACE();
 
@@ -21,30 +21,30 @@ void thing_hidden_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_ste
     n = mid - n;
   }
 
-  auto i        = static_cast< int >((255 / static_cast< float >(mid)) * static_cast< float >(n));
-  t->_is_hidden = ((static_cast< uint8_t >(i)) / 2) + 100;
+  auto i         = static_cast< int >((255 / static_cast< float >(mid)) * static_cast< float >(n));
+  me->_is_hidden = ((static_cast< uint8_t >(i)) / 2) + 100;
 
-  if (t->_is_hidden == 0U) {
-    t->_is_hidden = 1;
+  if (me->_is_hidden == 0U) {
+    me->_is_hidden = 1;
   }
 }
 
-void thing_is_hidden_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
+void thing_is_hidden_set(Gamep g, Levelsp v, Levelp l, Thingp me, bool val)
 {
   TRACE_DEBUG();
 
-  if (t == nullptr) {
+  if (me == nullptr) {
     ERR("no thing pointer");
     return;
   }
 
   if (val) {
-    if (t->_is_hidden != 0U) {
+    if (me->_is_hidden != 0U) {
       return;
     }
 
-    t->_is_hidden = 100;
+    me->_is_hidden = 100;
   } else {
-    t->_is_hidden = 0;
+    me->_is_hidden = 0;
   }
 }

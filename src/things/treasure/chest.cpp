@@ -75,6 +75,7 @@ auto tp_load_chest() -> bool
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_treasure);
   tp_flag_set(tp, is_wood);
+  tp_flag_set(tp, is_blit_outlined_when_hit);
   tp_health_set(tp, "1d20");
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_name_a_or_an_set(tp, "a treasure chest");

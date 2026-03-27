@@ -531,6 +531,7 @@ using Thing = struct Thing {
 
 // begin sort marker1 {
 [[nodiscard]] auto immediate_owner(Gamep g, Levelsp v, Levelp l, Thingp t) -> Thingp;
+[[nodiscard]] bool thing_is_always_hot(Thingp me);
 [[nodiscard]] auto level_vision_blocker_at(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &at) -> bool;
 [[nodiscard]] auto monst_state_to_string(MonstState state) -> std::string;
 [[nodiscard]] auto monst_state(Gamep g, Levelsp v, Levelp l, Thingp me) -> MonstState;
@@ -823,7 +824,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused50(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused51(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused52(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused53(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_blit_outlined_when_hit(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused6(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused63(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused7(Thingp t) -> bool;

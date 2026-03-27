@@ -104,6 +104,7 @@ auto tp_load_ghost() -> bool
   tp_name_short_set(tp, "ghost");
   tp_priority_set(tp, THING_PRIORITY_MONST);
   tp_speed_set(tp, 100);
+  tp_flag_set(tp, is_blit_outlined_when_hit);
   tp_temperature_initial_set(tp, -10); // celsius
   tp_weight_set(tp, WEIGHT_FEATHER);   // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);

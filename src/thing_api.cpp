@@ -2033,7 +2033,7 @@ auto thing_is_unused52(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused52) != 0;
 }
 
-auto thing_is_unused53(Thingp t) -> bool
+auto thing_is_blit_outlined_when_hit(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2041,7 +2041,7 @@ auto thing_is_unused53(Thingp t) -> bool
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused53) != 0;
+  return tp_flag(thing_tp(t), is_blit_outlined_when_hit) != 0;
 }
 
 auto thing_is_blit_when_obscured_as_outline(Thingp t) -> bool

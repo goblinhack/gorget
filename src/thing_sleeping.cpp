@@ -9,31 +9,31 @@
 #include "my_time.hpp"
 #include "my_tp.hpp"
 
-auto thing_is_sleeping(Thingp t) -> bool
+auto thing_is_sleeping(Thingp me) -> bool
 {
   TRACE_DEBUG();
 
-  if (t == nullptr) {
+  if (me == nullptr) {
     ERR("no thing pointer");
     return false;
   }
-  return t->_is_sleeping;
+  return me->_is_sleeping;
 }
 
-void thing_is_sleeping_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
+void thing_is_sleeping_set(Gamep g, Levelsp v, Levelp l, Thingp me, bool val)
 {
   TRACE_DEBUG();
 
-  if (t == nullptr) {
+  if (me == nullptr) {
     ERR("no thing pointer");
     return;
   }
-  t->_is_sleeping = val;
+  me->_is_sleeping = val;
 }
 
-void thing_is_sleeping_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
+void thing_is_sleeping_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_DEBUG();
 
-  thing_is_sleeping_set(g, v, l, t, false);
+  thing_is_sleeping_set(g, v, l, me, false);
 }

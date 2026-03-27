@@ -1175,10 +1175,10 @@ auto level_open_is_unused52(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Th
   return level_open(g, v, l, is_unused52, p);
 }
 
-auto level_open_is_unused53(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+auto level_open_is_blit_outlined_when_hit(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_open(g, v, l, is_unused53, p);
+  return level_open(g, v, l, is_blit_outlined_when_hit, p);
 }
 
 auto level_open_is_blit_when_obscured_as_outline(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp

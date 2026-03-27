@@ -1175,10 +1175,10 @@ auto tp_is_unused52(Tpp tp) -> bool
   return tp_flag(tp, is_unused52) != 0;
 }
 
-auto tp_is_unused53(Tpp tp) -> bool
+auto tp_is_blit_outlined_when_hit(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused53) != 0;
+  return tp_flag(tp, is_blit_outlined_when_hit) != 0;
 }
 
 auto tp_is_blit_when_obscured_as_outline(Tpp tp) -> bool
