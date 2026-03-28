@@ -63,6 +63,7 @@ auto tp_load_wall() -> bool
     tp_name_long_set(tp, "wall");
     tp_name_pluralize_set(tp, "walls");
     tp_name_short_set(tp, "wall");
+    tp_priority_set(tp, THING_PRIORITY_WALL);
     tp_temperature_damage_at_set(tp, 50); // celsius
     tp_temperature_initial_set(tp, 20);   // celsius
     tp_temperature_melts_at_set(tp, 300); // celsius

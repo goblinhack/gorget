@@ -56,6 +56,7 @@ auto tp_load_pillar() -> bool
   tp_name_long_set(tp, "stone pillar");
   tp_name_pluralize_set(tp, "pillars");
   tp_name_short_set(tp, "pillar");
+  tp_priority_set(tp, THING_PRIORITY_WALL);
   tp_weight_set(tp, WEIGHT_VVVHEAVY); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   // end sort marker1 }

@@ -69,6 +69,7 @@ auto tp_load_foliage() -> bool
   tp_name_long_set(tp, "foliage");
   tp_name_pluralize_set(tp, "foliage");
   tp_name_short_set(tp, "foliage");
+  tp_priority_set(tp, THING_PRIORITY_FOLIAGE);
   tp_temperature_burns_at_set(tp, 100); // celsius
   tp_temperature_damage_at_set(tp, 50); // celsius
   tp_temperature_initial_set(tp, 20);   // celsius

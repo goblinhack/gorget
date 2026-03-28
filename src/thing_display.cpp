@@ -16,6 +16,21 @@
 #include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp"
 
+void tp_display_init(Tpp tp)
+{
+  TRACE();
+
+  if (tp_is_blit_centered(tp)) {
+    if (tp_is_blit_on_ground(tp)) {
+      tp_err(tp, "both blit on_ground and centered are set");
+    }
+  } else if (tp_is_blit_on_ground(tp)) {
+    // ok
+  } else {
+    tp_err(tp, "neither blit on_ground or centered are set");
+  }
+}
+
 void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp_maybe_null, Thingp t_maybe_null, spoint &tl,
                                  spoint &br, uint16_t *tile_index)
 {

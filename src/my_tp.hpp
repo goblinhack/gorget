@@ -393,7 +393,8 @@ ENUM_DEF_H(THING_ENVIRON_ENUM, ThingEnviron)
 //
 #define THING_PRIORITY_ENUM(list_macro)                                                                                                    \
   CLANG_FORMAT_INDENT()                                    /* dummy line for clang indentation fixup */                                    \
-  list_macro(THING_PRIORITY_EXPLOSION, "explosion"),       /* newline */                                                                   \
+  list_macro(THING_PRIORITY_NONE, "none"),                 /* newline */                                                                   \
+      list_macro(THING_PRIORITY_EXPLOSION, "explosion"),   /* newline */                                                                   \
       list_macro(THING_PRIORITY_PROJECTILE, "projectile"), /* newline */                                                                   \
       list_macro(THING_PRIORITY_LAVA, "lava"),             /* newline */                                                                   \
       list_macro(THING_PRIORITY_FIRE, "fire"),             /* newline */                                                                   \
@@ -404,8 +405,12 @@ ENUM_DEF_H(THING_ENVIRON_ENUM, ThingEnviron)
       list_macro(THING_PRIORITY_WATER, "water"),           /* newline */                                                                   \
       list_macro(THING_PRIORITY_SMOKE, "smoke"),           /* newline */                                                                   \
       list_macro(THING_PRIORITY_OBJECT, "object"),         /* newline */                                                                   \
-      list_macro(THING_PRIORITY_LOW, "low"),               /* newline */                                                                   \
-      list_macro(THING_PRIORITY_DEAD, "dead"),             /* newline */
+      list_macro(THING_PRIORITY_FOLIAGE, "low"),           /* newline */                                                                   \
+      list_macro(THING_PRIORITY_DEAD, "dead"),             /* newline */                                                                   \
+      list_macro(THING_PRIORITY_BRAZIER, "low"),           /* newline */                                                                   \
+      list_macro(THING_PRIORITY_TELEPORT, "teleport"),     /* newline */                                                                   \
+      list_macro(THING_PRIORITY_WALL, "wall"),             /* newline */                                                                   \
+      list_macro(THING_PRIORITY_LOWEST, "lowest"),         /* newline */
 
 ENUM_DEF_H(THING_PRIORITY_ENUM, ThingPriorityType)
 

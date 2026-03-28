@@ -586,5 +586,9 @@ void tp_collision_init(Tpp tp)
       tp_is_collision_circle_large(tp) || //
       tp_is_collision_square(tp)) {
     tp_flag_set(tp, is_collision_detection_enabled);
+
+    if (tp_priority_get(tp) == THING_PRIORITY_NONE) {
+      tp_err(tp, "need to set priority");
+    }
   }
 }

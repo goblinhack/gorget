@@ -34,6 +34,7 @@ auto tp_load_border() -> bool
   tp_flag_set(tp, is_obs_to_vision);
   tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_tiled);
+  tp_priority_set(tp, THING_PRIORITY_LOWEST);
   tp_weight_set(tp, WEIGHT_VVHEAVY); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_WALL);
   // end sort marker1 }

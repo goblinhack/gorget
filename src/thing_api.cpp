@@ -4398,7 +4398,7 @@ auto thing_priority(Thingp t) -> ThingPriorityType
 
   if (t == nullptr) {
     ERR("no thing pointer");
-    return THING_PRIORITY_LOW;
+    return THING_PRIORITY_LOWEST;
   }
   if (thing_is_dead(t)) {
     return THING_PRIORITY_DEAD;
@@ -4412,7 +4412,7 @@ auto thing_priority_set(Gamep g, Levelsp v, Levelp l, Thingp t, ThingPriorityTyp
 
   if (t == nullptr) {
     ERR("no thing pointer");
-    return THING_PRIORITY_LOW;
+    return THING_PRIORITY_LOWEST;
   }
   return t->_priority = val;
 }

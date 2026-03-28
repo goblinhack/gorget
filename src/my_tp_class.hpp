@@ -92,7 +92,7 @@ public:
   //
   // For event processing. Lower is higher priority.
   //
-  ThingPriorityType priority {THING_PRIORITY_LOW};
+  ThingPriorityType priority {THING_PRIORITY_NONE};
 
   //
   // In tiles

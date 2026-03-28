@@ -91,6 +91,7 @@ auto tp_load_potion() -> bool
   tp_name_long_set(tp, "potion");
   tp_name_pluralize_set(tp, "potions");
   tp_name_short_set(tp, "potion");
+  tp_priority_set(tp, THING_PRIORITY_OBJECT);
   tp_temperature_burns_at_set(tp, 30);  // celsius
   tp_temperature_damage_at_set(tp, 30); // celsius
   tp_temperature_initial_set(tp, 20);   // celsius

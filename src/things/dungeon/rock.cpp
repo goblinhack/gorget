@@ -63,6 +63,7 @@ auto tp_load_rock() -> bool
     tp_name_long_set(tp, "rock");
     tp_name_pluralize_set(tp, "rocks");
     tp_name_short_set(tp, "rock");
+    tp_priority_set(tp, THING_PRIORITY_WALL);
     tp_temperature_damage_at_set(tp, 50); // celsius
     tp_temperature_initial_set(tp, 20);   // celsius
     tp_temperature_melts_at_set(tp, 300); // celsius

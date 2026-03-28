@@ -56,6 +56,7 @@ auto tp_load_teleport() -> bool
   tp_name_long_set(tp, "teleport");
   tp_name_pluralize_set(tp, "teleports");
   tp_name_short_set(tp, "teleport");
+  tp_priority_set(tp, THING_PRIORITY_TELEPORT);
   tp_weight_set(tp, WEIGHT_VVHEAVY); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   // end sort marker1 }

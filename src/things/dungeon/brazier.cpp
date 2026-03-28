@@ -155,6 +155,7 @@ auto tp_load_brazier() -> bool
   tp_name_long_set(tp, "brazier");
   tp_name_pluralize_set(tp, "braziers");
   tp_name_short_set(tp, "brazier");
+  tp_priority_set(tp, THING_PRIORITY_BRAZIER);
   tp_weight_set(tp, WEIGHT_MEDIUM); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   // end sort marker1 }

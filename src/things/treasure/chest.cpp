@@ -83,6 +83,7 @@ auto tp_load_chest() -> bool
   tp_name_long_set(tp, "treasure chest");
   tp_name_pluralize_set(tp, "treasure chests");
   tp_name_short_set(tp, "chest");
+  tp_priority_set(tp, THING_PRIORITY_OBJECT);
   tp_temperature_burns_at_set(tp, 100);  // celsius
   tp_temperature_damage_at_set(tp, 100); // celsius
   tp_temperature_initial_set(tp, 20);    // celsius
