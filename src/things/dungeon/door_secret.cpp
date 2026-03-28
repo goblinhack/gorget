@@ -64,11 +64,8 @@ auto tp_load_door_secret() -> bool
     tp_flag_set(tp, is_loggable);
     tp_flag_set(tp, is_obs_to_cursor_path);
     tp_flag_set(tp, is_obs_to_explosion);
-    tp_flag_set(tp, is_obs_to_falling_onto);
     tp_flag_set(tp, is_obs_to_fire);
-    tp_flag_set(tp, is_obs_to_jumping_onto);
     tp_flag_set(tp, is_obs_to_spawning);
-    tp_flag_set(tp, is_obs_to_teleporting_onto);
     tp_flag_set(tp, is_obs_to_vision);
     tp_flag_set(tp, is_openable);
     tp_flag_set(tp, is_physics_explosion);

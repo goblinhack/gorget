@@ -337,7 +337,7 @@ auto level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int
       }
 
       if (! g_opt_tests) {
-        if (1) {
+        if (0) {
           if (tp == tp_player) {
             {
               if (thing_spawn(g, v, l, tp_random(is_foliage), at + bpoint(2, 0)) == nullptr) {

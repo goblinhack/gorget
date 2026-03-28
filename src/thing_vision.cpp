@@ -51,6 +51,15 @@ auto thing_vision_blocker(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it) ->
     }
   }
 
+  //
+  // Monsters can see through secret doors
+  //
+  if (thing_is_monst(me)) {
+    if (thing_is_door_secret(it)) {
+      return false;
+    }
+  }
+
   return thing_vision_blocker(g, v, l, it);
 }
 

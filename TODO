@@ -1,6 +1,5 @@
 bugs
 ----
-hitting a wall should hit ghost first
 mantisman not jumping over chasm onto secret door
 mantisman jump over short chasm path
 too many monsters
@@ -19,6 +18,7 @@ hard coded to fire fireball
 spells need to have a cost that can be influenced by specializing
 level map has to show wizards
 wizards have to move levels
+ethereal wepon to hit ghosts in walls
 
 later features
 --------------
