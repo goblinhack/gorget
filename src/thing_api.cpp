@@ -2000,7 +2000,7 @@ auto thing_is_unused49(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused49) != 0;
 }
 
-auto thing_is_unused50(Thingp t) -> bool
+auto thing_is_able_to_fall_sound(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2008,7 +2008,7 @@ auto thing_is_unused50(Thingp t) -> bool
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused50) != 0;
+  return tp_flag(thing_tp(t), is_able_to_fall_sound) != 0;
 }
 
 auto thing_is_collision_hit_first_on_tile(Thingp t) -> bool

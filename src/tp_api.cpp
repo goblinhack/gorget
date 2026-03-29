@@ -1157,10 +1157,10 @@ auto tp_is_unused5(Tpp tp) -> bool
   return tp_flag(tp, is_unused5) != 0;
 }
 
-auto tp_is_unused50(Tpp tp) -> bool
+auto tp_is_able_to_fall_sound(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused50) != 0;
+  return tp_flag(tp, is_able_to_fall_sound) != 0;
 }
 
 auto tp_is_collision_hit_first_on_tile(Tpp tp) -> bool

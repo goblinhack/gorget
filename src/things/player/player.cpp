@@ -98,8 +98,6 @@ static void tp_player_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE();
 
-  thing_sound_play(g, v, l, t, "fall");
-
   auto at = thing_at(t);
   game_popup_text_add(g, at.x, at.y, std::string("Aargh!"));
 }
@@ -202,6 +200,7 @@ auto tp_load_player() -> bool
   tp_flag_set(tp, is_able_to_collect_keys);
   tp_flag_set(tp, is_able_to_crush_grass);
   tp_flag_set(tp, is_able_to_fall_repeatedly);
+  tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_able_to_fire_projectiles);
   tp_flag_set(tp, is_able_to_jump);

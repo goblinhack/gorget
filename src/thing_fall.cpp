@@ -301,5 +301,9 @@ void thing_fall(Gamep g, Levelsp v, Levelp l, Thingp t)
     return;
   }
 
+  if (thing_is_able_to_fall_sound(t)) {
+    thing_sound_play(g, v, l, t, "fall");
+  }
+
   thing_is_falling_set(g, v, l, t, true);
 }

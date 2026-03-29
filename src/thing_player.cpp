@@ -410,10 +410,7 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
     return;
   }
 
-  if (! val) {
-    level_cursor_path_reset(g, v, l);
-  }
-
+  LOG("player_check_if_target_needs_move_confirm_callback : path %d", (int) thing_move_path_size(g, v, l, me));
   switch (player_state(g, v)) {
     case PLAYER_STATE_INIT :
       //
@@ -456,6 +453,11 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
       break;
     case PLAYER_STATE_ENUM_MAX : break;
   }
+
+  if (! val) {
+    level_cursor_path_reset(g, v, l);
+    thing_move_path_reset(g, v, l, me);
+  }
 }
 
 //
@@ -470,6 +472,10 @@ auto player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, con
 
   THING_DBG(me, "player move");
   TRACE_INDENT();
+
+  if (! adjacent(thing_at(me), to)) {
+    return false;
+  }
 
   //
   // Double check before jumping in chasms or lava
@@ -527,9 +533,24 @@ auto player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, con
 //
 // Return true on a successful move (or a popup asking more info)
 //
-[[nodiscard]] static auto player_move_try(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to, bool need_path) -> bool
+[[nodiscard]] static auto player_move_try(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to, bool move_confirmed, bool need_path) -> bool
 {
   THING_DBG(me, "move try");
+
+  if (! move_confirmed) {
+    if (! player_check_if_target_needs_move_confirm(g, v, l, to)) {
+      //
+      // A popup is present
+      //
+      if (! thing_move_path_size(g, v, l, me)) {
+        std::vector< bpoint > pending_path;
+        pending_path.push_back(to);
+        (void) thing_move_path_apply_confirmed(g, v, l, me, pending_path, true);
+      }
+
+      return false;
+    }
+  }
 
   if (thing_can_move_to_attempt(g, v, l, me, to)) {
     //
@@ -550,6 +571,7 @@ auto player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, con
     }
     return true;
   }
+
   if (thing_can_move_to_attempt_by_shoving(g, v, l, me, to)) {
     //
     // Can we shove it out of the way to move?
@@ -598,6 +620,12 @@ auto player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, con
   } else {
     (void) level_tick_begin_requested(g, v, l, "player bumped into obstacle");
   }
+
+  //
+  // If could not move, then abort the path walk
+  //
+  player_state_change(g, v, l, PLAYER_STATE_NORMAL);
+
   return false;
 }
 
@@ -630,7 +658,10 @@ static void player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy)
   auto         at = thing_at(me);
   bpoint const to(at.x + dx, at.y + dy);
 
-  (void) player_move_try(g, v, l, me, to, true);
+  const bool need_path      = true;
+  const bool move_confirmed = false;
+
+  (void) player_move_try(g, v, l, me, to, move_confirmed, need_path);
 
   player_move_requests_reset(g, v);
 }
@@ -1063,8 +1094,10 @@ auto player_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
   //
   // Get the next tile to move to
   //
-  bpoint move_next = {};
-  if (! thing_move_path_pop(g, v, l, me, move_next)) {
+  bpoint move_next      = {};
+  bool   move_confirmed = {};
+
+  if (! thing_move_path_pop(g, v, l, me, move_confirmed, move_next)) {
     //
     // If could not pop, then no path is left
     //
@@ -1094,11 +1127,9 @@ auto player_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
     }
   }
 
-  if (! player_move_try(g, v, l, me, move_next, false)) {
-    //
-    // If could not move, then abort the path walk
-    //
-    player_state_change(g, v, l, PLAYER_STATE_NORMAL);
+  bool need_path = false;
+
+  if (! player_move_try(g, v, l, me, move_next, move_confirmed, need_path)) {
     return false;
   }
 

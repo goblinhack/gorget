@@ -1157,10 +1157,10 @@ auto level_open_is_unused5(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thi
   return level_open(g, v, l, is_unused5, p);
 }
 
-auto level_open_is_unused50(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+auto level_open_is_able_to_fall_sound(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_open(g, v, l, is_unused50, p);
+  return level_open(g, v, l, is_able_to_fall_sound, p);
 }
 
 auto level_open_is_collision_hit_first_on_tile(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp

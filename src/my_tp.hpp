@@ -181,7 +181,7 @@
       list_macro(is_unused47, "is_unused47"),                                           /* newline */                                      \
       list_macro(is_unused48, "is_unused48"),                                           /* newline */                                      \
       list_macro(is_unused49, "is_unused49"),                                           /* newline */                                      \
-      list_macro(is_unused50, "is_unused50"),                                           /* newline */                                      \
+      list_macro(is_able_to_fall_sound, "is_able_to_fall_sound"),                                           /* newline */                                      \
       list_macro(is_collision_hit_first_on_tile, "is_collision_hit_first_on_tile"),     /* newline */                                      \
       list_macro(is_collision_hit_all_on_tile, "is_collision_hit_all_on_tile"),         /* newline */                                      \
       list_macro(is_blit_outlined_when_hit, "is_blit_outlined_when_hit"),               /* newline */                                      \
@@ -892,7 +892,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup val);
 [[nodiscard]] auto tp_is_unused48(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused49(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused5(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused50(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_able_to_fall_sound(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused6(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused63(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused7(Tpp tp) -> bool;

@@ -277,6 +277,7 @@ static auto thing_minion_choose_target_can_see(Gamep g, Levelsp v, Levelp l, Thi
   // Get the next tile to move to
   //
   bpoint move_next = {};
+
   if (! thing_move_path_pop(g, v, l, me, move_next)) {
     //
     // If could not pop, then no path is left

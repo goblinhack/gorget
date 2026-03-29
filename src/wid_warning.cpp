@@ -116,7 +116,7 @@ void wid_warning(Gamep g, const std::string &warning, wid_warning_callback_t cal
   }
 
   auto         m = TERM_WIDTH / 2;
-  auto         n = TERM_HEIGHT / 2;
+  auto         n = TERM_HEIGHT / 4;
   spoint const tl(m - (UI_WID_POPUP_WIDTH_WIDE / 2), n - 5);
   spoint const br(m + (UI_WID_POPUP_WIDTH_WIDE / 2), n + 5);
   auto         width = br.x - tl.x;

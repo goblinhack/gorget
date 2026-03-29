@@ -99,6 +99,7 @@ auto tp_load_barrel() -> bool
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // roll max to stop burning
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // roll max to continue burning
   tp_flag_set(tp, is_able_to_fall);
+  tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_barrel);
   tp_flag_set(tp, is_blit_centered);
