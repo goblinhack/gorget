@@ -161,6 +161,12 @@ auto thing_lunge(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &to) -> b
     THING_DBG(me, "lunge to @%d,%d", to.x, to.y);
   }
 
+  //
+  // Set the direction from lunge
+  //
+  auto at = thing_at(me);
+  thing_set_dir_from_delta(me, to.x - at.x, to.x - at.x);
+
   thing_is_lunging_set(g, v, l, me, true);
 
   me->lunging_to = to;

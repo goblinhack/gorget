@@ -129,11 +129,11 @@ void levels_test(Gamep g)
 
     level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "test5", __FUNCTION__, __LINE__, overrides, 0,
                     /* line */ (const char *) "XXXXXXX",
-                    /* line */ (const char *) "X.xC..X",
-                    /* line */ (const char *) "X.xC..X",
-                    /* line */ (const char *) "X@sC.mX",
-                    /* line */ (const char *) "X.xC..X",
-                    /* line */ (const char *) "X.xC..X",
+                    /* line */ (const char *) "X.CCC.X",
+                    /* line */ (const char *) "X.CCC.X",
+                    /* line */ (const char *) "X@CCCmX",
+                    /* line */ (const char *) "X.CCC.X",
+                    /* line */ (const char *) "X.CCC.X",
                     /* line */ (const char *) "XXXXXXX",
                     /* end */ nullptr);
   }
@@ -292,15 +292,12 @@ void levels_test(Gamep g)
   level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "chasm.1", __FUNCTION__, __LINE__, no_overrides, 0,
                   /* line */ (const char *) "xxxxxxxxxxx",
                   /* line */ (const char *) "xxxxxxxxxxx",
-                  /* line */ (const char *) "xx.......xx",
-                  /* line */ (const char *) "xx.......xx",
                   /* line */ (const char *) "xx...CCC.xx",
                   /* line */ (const char *) "xx...CCC.xx",
-                  /* line */ (const char *) "xx@..CCC.xx",
+                  /* line */ (const char *) "xx@..CCCMxx",
                   /* line */ (const char *) "xx...CCC.xx",
                   /* line */ (const char *) "xx...CCC.xx",
                   /* line */ (const char *) "xx...CCC.xx",
-                  /* line */ (const char *) "xx.......xx",
                   /* line */ (const char *) "xxxxxxxxxxx",
                   /* line */ (const char *) "xxxxxxxxxxx",
                   /* end */ nullptr);
