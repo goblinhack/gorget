@@ -1163,16 +1163,16 @@ auto level_alive_is_unused50(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> T
   return level_alive(g, v, l, is_unused50, p);
 }
 
-auto level_alive_is_unused51(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+auto level_alive_is_collision_hit_first_on_tile(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_alive(g, v, l, is_unused51, p);
+  return level_alive(g, v, l, is_collision_hit_first_on_tile, p);
 }
 
-auto level_alive_is_unused52(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+auto level_alive_is_collision_hit_all_on_tile(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_alive(g, v, l, is_unused52, p);
+  return level_alive(g, v, l, is_collision_hit_all_on_tile, p);
 }
 
 auto level_alive_is_blit_outlined_when_hit(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp

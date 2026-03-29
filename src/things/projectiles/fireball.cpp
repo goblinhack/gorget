@@ -58,6 +58,7 @@ auto tp_load_fireball() -> bool
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_blit_shown_in_overlay);
   tp_flag_set(tp, is_collision_circle_small);
+  tp_flag_set(tp, is_collision_hit_first_on_tile);
   tp_flag_set(tp, is_dead_on_collision);
   tp_flag_set(tp, is_fireball);
   tp_flag_set(tp, is_gaseous);

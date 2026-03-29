@@ -644,6 +644,8 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_collision_circle_large(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_collision_circle_small(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_collision_detection_enabled(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_collision_hit_all_on_tile(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_collision_hit_first_on_tile(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_collision_square(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_combustible(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_corpse_on_death(Thingp t) -> bool;
@@ -823,8 +825,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused49(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused5(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused50(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused51(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused52(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused6(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused63(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused7(Thingp t) -> bool;

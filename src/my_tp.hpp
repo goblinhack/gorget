@@ -182,8 +182,8 @@
       list_macro(is_unused48, "is_unused48"),                                           /* newline */                                      \
       list_macro(is_unused49, "is_unused49"),                                           /* newline */                                      \
       list_macro(is_unused50, "is_unused50"),                                           /* newline */                                      \
-      list_macro(is_unused51, "is_unused51"),                                           /* newline */                                      \
-      list_macro(is_unused52, "is_unused52"),                                           /* newline */                                      \
+      list_macro(is_collision_hit_first_on_tile, "is_collision_hit_first_on_tile"),     /* newline */                                      \
+      list_macro(is_collision_hit_all_on_tile, "is_collision_hit_all_on_tile"),         /* newline */                                      \
       list_macro(is_blit_outlined_when_hit, "is_blit_outlined_when_hit"),               /* newline */                                      \
       list_macro(is_blit_when_obscured_as_outline, "is_blit_when_obscured_as_outline"), /* newline */                                      \
       list_macro(is_attackable_by_player, "is_attackable_by_player"),                   /* newline */                                      \
@@ -730,6 +730,8 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup val);
 [[nodiscard]] auto tp_is_collision_circle_large(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_collision_circle_small(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_collision_detection_enabled(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_collision_hit_all_on_tile(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_collision_hit_first_on_tile(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_collision_square(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_combustible(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_corpse_on_death(Tpp tp) -> bool;
@@ -891,8 +893,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup val);
 [[nodiscard]] auto tp_is_unused49(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused5(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused50(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused51(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused52(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused6(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused63(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused7(Tpp tp) -> bool;

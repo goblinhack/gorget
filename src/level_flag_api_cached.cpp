@@ -1163,16 +1163,16 @@ auto level_is_unused50_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> 
   return level_flag_cached(g, v, l, is_unused50, p);
 }
 
-auto level_is_unused51_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+auto level_is_collision_hit_first_on_tile_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused51, p);
+  return level_flag_cached(g, v, l, is_collision_hit_first_on_tile, p);
 }
 
-auto level_is_unused52_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+auto level_is_collision_hit_all_on_tile_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused52, p);
+  return level_flag_cached(g, v, l, is_collision_hit_all_on_tile, p);
 }
 
 auto level_is_blit_outlined_when_hit_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

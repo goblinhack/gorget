@@ -10,6 +10,9 @@
 #include <algorithm>
 #include <cmath>
 
+using ThingCand  = std::pair< float, Thingp >;
+using ThingCands = std::vector< ThingCand >;
+
 //
 // Handle common interactions for a thing at its location with a thing
 //
@@ -393,6 +396,232 @@ static auto thing_collision_check_circle_circle(Gamep g, Levelsp v, Levelp l, Th
 }
 
 //
+// Sort the candidates by distance / potentially add more cands if we can hit all
+// things on the same tile
+//
+static void thing_collision_interpolated_expand_candidates(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &collision_at,
+                                                           ThingCands &cands)
+{
+  TRACE();
+
+  //
+  // If this is a fireball hitting a wall, then we want to hit the ghost that is
+  // also hiding inside the wall
+  //
+  if (! cands.size()) {
+    return;
+  }
+
+  if (! thing_is_collision_hit_all_on_tile(me) && ! thing_is_collision_hit_first_on_tile(me)) {
+    return;
+  }
+
+  //
+  // For all other things on the same tile as the collision
+  //
+  FOR_ALL_THINGS_AT(g, v, l, o, collision_at)
+  {
+    //
+    // Filter to only things that can be hit
+    //
+    if (thing_is_collision_detection_enabled(o)) {
+      //
+      // Check this thing is not on the cand list already
+      //
+      bool already_cand = false;
+      for (auto a_cand : cands) {
+        if (a_cand.second == o) {
+          already_cand = true;
+        }
+        break;
+      }
+
+      if (! already_cand) {
+        auto            at     = thing_real_at(me);
+        auto            o_at   = thing_real_at(o);
+        float const     o_dist = distance(at, o_at);
+        ThingCand const p      = std::make_pair(o_dist, o);
+        cands.push_back(p);
+      }
+    }
+  }
+}
+
+//
+// Sort the candidates by distance / potentially add more cands if we can hit all
+// things on the same tile
+//
+static void thing_collision_interpolated_sort_candidates(Gamep g, Levelsp v, Levelp l, Thingp me, ThingCands &cands)
+{
+  TRACE();
+
+  //
+  // Sort by distance and priority
+  //
+  std::ranges::sort(cands, [](const ThingCand &a, const ThingCand &b) -> bool {
+    auto  d1 = a.first;
+    auto  d2 = b.first;
+    auto *t1 = a.second;
+    auto *t2 = b.second;
+
+    if (d1 < d2) {
+      return true;
+    }
+
+    return thing_priority(t1) < thing_priority(t2);
+  });
+
+  //
+  // Dump the final cands
+  //
+  if (compiler_unused) {
+    for (auto a_cand : cands) {
+      auto  o_dist = a_cand.first;
+      auto *o      = a_cand.second;
+
+      THING_DBG(o, "sort_distance %f prio %u", o_dist, thing_priority(o));
+    }
+  }
+}
+
+//
+// Process the collision candidate list
+//
+static bool thing_collision_interplolated_process_candidates(Gamep g, Levelsp v, Levelp l, Thingp me, const ThingCands &cands)
+{
+  TRACE();
+
+  bool hit_something = {};
+
+  for (auto cand : cands) {
+    auto *o = cand.second;
+
+    //
+    // Skip things that are dead; unless we can hit their corpse
+    //
+    if (thing_is_dead(o)) {
+      if (! thing_is_hit_when_dead(o)) {
+        continue;
+      }
+    }
+
+    //
+    // Flash the thing red
+    //
+    thing_is_hit_set(g, v, l, o, THING_HIT_FLASH_TIME_MS);
+
+    //
+    // Handle the actual collision
+    //
+    bool stop = {};
+    thing_collision_handle(g, v, l, o, me, stop);
+    if (stop) {
+      if (compiler_unused) {
+        THING_DBG(me, "stop");
+      }
+
+      return true;
+    }
+
+    if (thing_is_collision_hit_first_on_tile(me)) {
+      return true;
+    }
+
+    hit_something = true;
+  }
+
+  return hit_something;
+}
+
+//
+// Do accurate hit box collision detection for this interpolated postion
+//
+static void thing_collision_handle_interpolated_delta(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &collision_at,
+                                                      const fpoint &interp_at_f, ThingCands &cands)
+{
+  TRACE();
+
+  FOR_ALL_THINGS_AT(g, v, l, o, collision_at)
+  {
+    if (o == me) {
+      continue;
+    }
+
+    auto o_at      = thing_real_at(o);
+    auto collision = false;
+
+    if (thing_is_collision_circle_small(me)) {
+      if (thing_is_collision_circle_small(o)) {
+        collision = thing_collision_check_circle_small_circle_small(g, v, l, me, interp_at_f, o, o_at);
+        if (compiler_unused) {
+          THING_DBG(o, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
+        }
+      } else if (thing_is_collision_circle_large(o)) {
+        collision = thing_collision_check_circle_small_circle_large(g, v, l, me, interp_at_f, o, o_at);
+        if (compiler_unused) {
+          THING_DBG(o, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
+        }
+      } else if (thing_is_collision_square(o)) {
+        collision = thing_collision_check_circle_small_square(g, v, l, me, interp_at_f, o, o_at);
+        if (compiler_unused) {
+          THING_DBG(o, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
+        }
+      } else {
+        continue;
+      }
+    } else if (thing_is_collision_circle_large(me)) {
+      if (thing_is_collision_circle_small(o)) {
+        collision = thing_collision_check_circle_small_circle_large(g, v, l, me, interp_at_f, o, o_at);
+        if (compiler_unused) {
+          THING_DBG(o, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
+        }
+      } else if (thing_is_collision_circle_large(o)) {
+        collision = thing_collision_check_circle_large_circle_large(g, v, l, me, interp_at_f, o, o_at);
+        if (compiler_unused) {
+          THING_DBG(o, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
+        }
+      } else if (thing_is_collision_square(o)) {
+        collision = thing_collision_check_circle_large_square(g, v, l, me, interp_at_f, o, o_at);
+        if (compiler_unused) {
+          THING_DBG(o, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
+        }
+      } else {
+        continue;
+      }
+    } else if (thing_is_collision_square(me)) {
+      if (thing_is_collision_circle_small(o)) {
+        collision = thing_collision_check_circle_small_square(g, v, l, o, o_at, me, interp_at_f);
+        if (compiler_unused) {
+          THING_DBG(o, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
+        }
+      } else if (thing_is_collision_circle_large(o)) {
+        collision = thing_collision_check_circle_large_square(g, v, l, o, o_at, me, interp_at_f);
+        if (compiler_unused) {
+          THING_DBG(o, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
+        }
+      } else if (thing_is_collision_square(o)) {
+        collision = thing_collision_check_square_square(g, v, l, o, o_at, me, interp_at_f);
+        if (compiler_unused) {
+          THING_DBG(o, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
+        }
+      } else {
+        continue;
+      }
+    } else {
+      thing_err(me, "no collision type set");
+      continue;
+    }
+
+    if (collision) {
+      auto            at     = thing_real_at(me);
+      float const     o_dist = distance(at, o_at);
+      ThingCand const p      = std::make_pair(o_dist, o);
+      cands.push_back(p);
+    }
+  }
+}
+
+//
 // For fast moving objects, they might jump 1 or 2 tiles, so we need to collision detect
 // for enough points in between to make sense.
 //
@@ -404,8 +633,7 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
     THING_DBG(me, "thing_collision_handle_interpolated");
   }
 
-  auto at = thing_real_at(me);
-  //  auto        src   = thing_at(me);
+  auto        at    = thing_real_at(me);
   float const dist  = distance(at, old_at);
   float const steps = ceil(dist) * 10;
   auto        diff  = at - old_at;
@@ -413,8 +641,6 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
   float const stepy = diff.y / steps;
 
   for (auto step = 0; step < steps; step++) {
-    std::vector< std::pair< float, Thingp > > pairs;
-
     fpoint const interp_at_f(old_at.x + (stepx * step), old_at.y + (stepy * step));
     bpoint const interp_at = make_bpoint(static_cast< int >(interp_at_f.x), static_cast< int >(interp_at_f.y));
 
@@ -422,157 +648,52 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
       THING_DBG(me, "interp collision at %f,%f step %d", interp_at_f.x, interp_at_f.y, step);
       for (auto dx = -1; dx <= 1; dx++) {
         for (auto dy = -1; dy <= 1; dy++) {
-
           bpoint collision_at(interp_at.x + dx, interp_at.y + dy);
-
-          THING_DBG(me, "interp collision for things at %d,%d", collision_at.x, collision_at.y);
-
+          THING_DBG(me, "- at %d,%d", collision_at.x, collision_at.y);
           FOR_ALL_THINGS_AT(g, v, l, o, collision_at)
           {
-            if (o == me) {
-              continue;
+            if (o != me) {
+              THING_DBG(o, "   - check for collision");
             }
-
-            THING_DBG(o, " - check for collision");
           }
         }
       }
     }
+
+    ThingCands cands;
 
     for (auto dx = -1; dx <= 1; dx++) {
       for (auto dy = -1; dy <= 1; dy++) {
-
         bpoint collision_at(interp_at.x + dx, interp_at.y + dy);
 
-        FOR_ALL_THINGS_AT(g, v, l, o, collision_at)
-        {
-          if (o == me) {
-            continue;
-          }
+        //
+        // Do accurate hit box collision detection for this interpolated postion
+        //
+        thing_collision_handle_interpolated_delta(g, v, l, me, collision_at, interp_at_f, cands);
 
-          auto o_at      = thing_real_at(o);
-          auto collision = false;
-
-          if (thing_is_collision_circle_small(me)) {
-            if (thing_is_collision_circle_small(o)) {
-              collision = thing_collision_check_circle_small_circle_small(g, v, l, me, interp_at_f, o, o_at);
-              if (compiler_unused) {
-                THING_DBG(o, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
-              }
-            } else if (thing_is_collision_circle_large(o)) {
-              collision = thing_collision_check_circle_small_circle_large(g, v, l, me, interp_at_f, o, o_at);
-              if (compiler_unused) {
-                THING_DBG(o, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
-              }
-            } else if (thing_is_collision_square(o)) {
-              collision = thing_collision_check_circle_small_square(g, v, l, me, interp_at_f, o, o_at);
-              if (compiler_unused) {
-                THING_DBG(o, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
-              }
-            } else {
-              continue;
-            }
-          } else if (thing_is_collision_circle_large(me)) {
-            if (thing_is_collision_circle_small(o)) {
-              collision = thing_collision_check_circle_small_circle_large(g, v, l, me, interp_at_f, o, o_at);
-              if (compiler_unused) {
-                THING_DBG(o, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
-              }
-            } else if (thing_is_collision_circle_large(o)) {
-              collision = thing_collision_check_circle_large_circle_large(g, v, l, me, interp_at_f, o, o_at);
-              if (compiler_unused) {
-                THING_DBG(o, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
-              }
-            } else if (thing_is_collision_square(o)) {
-              collision = thing_collision_check_circle_large_square(g, v, l, me, interp_at_f, o, o_at);
-              if (compiler_unused) {
-                THING_DBG(o, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
-              }
-            } else {
-              continue;
-            }
-          } else if (thing_is_collision_square(me)) {
-            if (thing_is_collision_circle_small(o)) {
-              collision = thing_collision_check_circle_small_square(g, v, l, o, o_at, me, interp_at_f);
-              if (compiler_unused) {
-                THING_DBG(o, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
-              }
-            } else if (thing_is_collision_circle_large(o)) {
-              collision = thing_collision_check_circle_large_square(g, v, l, o, o_at, me, interp_at_f);
-              if (compiler_unused) {
-                THING_DBG(o, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
-              }
-            } else if (thing_is_collision_square(o)) {
-              collision = thing_collision_check_square_square(g, v, l, o, o_at, me, interp_at_f);
-              if (compiler_unused) {
-                THING_DBG(o, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
-              }
-            } else {
-              continue;
-            }
-          } else {
-            thing_err(me, "no collision type set");
-            continue;
-          }
-
-          if (collision) {
-            float const                      o_dist = sort_distance(at, o_at);
-            std::pair< float, Thingp > const p      = std::make_pair(o_dist, o);
-            pairs.push_back(p);
-          }
-        }
+        //
+        // Sort the candidates by distance / potentially add more cands if we can hit all
+        // things on the same tile
+        //
+        if (0)
+          thing_collision_interpolated_expand_candidates(g, v, l, me, collision_at, cands);
       }
     }
 
     //
-    // Sort by distance
+    // Sort the candidates by distance / potentially add more cands if we can hit all
+    // things on the same tile
     //
-    std::ranges::sort(pairs, [](const std::pair< float, Thingp > &a, const std::pair< float, Thingp > &b) -> bool {
-      auto  d1 = a.first;
-      auto  d2 = b.first;
-      auto *t1 = a.second;
-      auto *t2 = b.second;
+    thing_collision_interpolated_sort_candidates(g, v, l, me, cands);
 
-      if (d1 < d2) {
-        return true;
-      }
-
-      if (thing_priority(t1) < thing_priority(t2)) {
-        return true;
-      }
-      return false;
-    });
-
-    if (compiler_unused) {
-      for (auto a_pair : pairs) {
-        auto  o_dist = a_pair.first;
-        auto *o      = a_pair.second;
-
-        THING_DBG(o, "sort_distance %f prio %u", o_dist, thing_priority(o));
-      }
-    }
-
-    for (auto a_pair : pairs) {
-      auto *o = a_pair.second;
-
-      if (thing_is_dead(o)) {
-        if (! thing_is_hit_when_dead(o)) {
-          continue;
-        }
-      }
-
-      thing_is_hit_set(g, v, l, o, THING_HIT_FLASH_TIME_MS);
-
-      bool stop = {};
-      thing_collision_handle(g, v, l, o, me, stop);
-      if (stop) {
-        if (compiler_unused) {
-          THING_DBG(me, "stop");
-        }
-        return;
-      }
+    //
+    // Process the collision candidate list
+    //
+    if (thing_collision_interplolated_process_candidates(g, v, l, me, cands)) {
+      return;
     }
   }
+
   if (compiler_unused) {
     THING_DBG(me, "-");
   }

@@ -2011,7 +2011,7 @@ auto thing_is_unused50(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused50) != 0;
 }
 
-auto thing_is_unused51(Thingp t) -> bool
+auto thing_is_collision_hit_first_on_tile(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2019,10 +2019,10 @@ auto thing_is_unused51(Thingp t) -> bool
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused51) != 0;
+  return tp_flag(thing_tp(t), is_collision_hit_first_on_tile) != 0;
 }
 
-auto thing_is_unused52(Thingp t) -> bool
+auto thing_is_collision_hit_all_on_tile(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2030,7 +2030,7 @@ auto thing_is_unused52(Thingp t) -> bool
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused52) != 0;
+  return tp_flag(thing_tp(t), is_collision_hit_all_on_tile) != 0;
 }
 
 auto thing_is_blit_outlined_when_hit(Thingp t) -> bool

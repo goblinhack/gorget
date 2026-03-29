@@ -2,6 +2,7 @@ bugs
 ----
 hit all on tile
 mantisman jump over short chasm path
+mantisman passing by player test
 too many monsters
 
 essential features
@@ -22,6 +23,7 @@ ethereal wepon to hit ghosts in walls
 
 later features
 --------------
+wraithwalk - walk into walls
 explosive bog
 projectile collision with projectile
 play weekly/daily seed - generated from date

@@ -1163,16 +1163,16 @@ auto tp_is_unused50(Tpp tp) -> bool
   return tp_flag(tp, is_unused50) != 0;
 }
 
-auto tp_is_unused51(Tpp tp) -> bool
+auto tp_is_collision_hit_first_on_tile(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused51) != 0;
+  return tp_flag(tp, is_collision_hit_first_on_tile) != 0;
 }
 
-auto tp_is_unused52(Tpp tp) -> bool
+auto tp_is_collision_hit_all_on_tile(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused52) != 0;
+  return tp_flag(tp, is_collision_hit_all_on_tile) != 0;
 }
 
 auto tp_is_blit_outlined_when_hit(Tpp tp) -> bool
