@@ -416,6 +416,10 @@ static void thing_collision_interpolated_expand_candidates(Gamep g, Levelsp v, L
     return;
   }
 
+  auto at = thing_real_at(me);
+
+  auto owner = top_owner(g, v, l, me);
+
   //
   // For all other things on the same tile as the collision
   //
@@ -424,25 +428,38 @@ static void thing_collision_interpolated_expand_candidates(Gamep g, Levelsp v, L
     //
     // Filter to only things that can be hit
     //
-    if (thing_is_collision_detection_enabled(o)) {
-      //
-      // Check this thing is not on the cand list already
-      //
-      bool already_cand = false;
-      for (auto a_cand : cands) {
-        if (a_cand.second == o) {
-          already_cand = true;
-        }
-        break;
-      }
+    if (! thing_is_collision_detection_enabled(o)) {
+      continue;
+    }
 
-      if (! already_cand) {
-        auto            at     = thing_real_at(me);
-        auto            o_at   = thing_real_at(o);
-        float const     o_dist = distance(at, o_at);
-        ThingCand const p      = std::make_pair(o_dist, o);
-        cands.push_back(p);
+    if (o == me) {
+      continue;
+    }
+
+    if (o == owner) {
+      continue;
+    }
+
+    //
+    // Check this thing is not on the cand list already
+    //
+    bool already_cand = false;
+    for (auto a_cand : cands) {
+      if (a_cand.second == o) {
+        already_cand = true;
       }
+      break;
+    }
+
+    if (! already_cand) {
+      //
+      // Sort by center of the tile distance. This allows walls and ghost in walls to have
+      // the same distance
+      //
+      auto            o_tiled_at = make_fpoint(thing_at(o)) + fpoint(0.5, 0.5);
+      float const     o_dist     = distance(at, o_tiled_at);
+      ThingCand const p          = std::make_pair(o_dist, o);
+      cands.push_back(p);
     }
   }
 }
@@ -455,6 +472,15 @@ static void thing_collision_interpolated_sort_candidates(Gamep g, Levelsp v, Lev
 {
   TRACE();
 
+  if (compiler_unused) {
+    THING_DBG(me, "final cands: (pre sort)");
+    for (auto a_cand : cands) {
+      auto  o_dist = a_cand.first;
+      auto *o      = a_cand.second;
+
+      THING_DBG(o, "- sort_distance %f prio %u", o_dist, thing_priority(o));
+    }
+  }
   //
   // Sort by distance and priority
   //
@@ -464,22 +490,25 @@ static void thing_collision_interpolated_sort_candidates(Gamep g, Levelsp v, Lev
     auto *t1 = a.second;
     auto *t2 = b.second;
 
-    if (d1 < d2) {
+    if (d1 == d2) {
+      return thing_priority(t1) < thing_priority(t2);
+    } else if (d1 < d2) {
       return true;
+    } else {
+      return false;
     }
-
-    return thing_priority(t1) < thing_priority(t2);
   });
 
   //
   // Dump the final cands
   //
   if (compiler_unused) {
+    THING_DBG(me, "final cands:");
     for (auto a_cand : cands) {
       auto  o_dist = a_cand.first;
       auto *o      = a_cand.second;
 
-      THING_DBG(o, "sort_distance %f prio %u", o_dist, thing_priority(o));
+      THING_DBG(o, "- sort_distance %f prio %u", o_dist, thing_priority(o));
     }
   }
 }
@@ -613,9 +642,14 @@ static void thing_collision_handle_interpolated_delta(Gamep g, Levelsp v, Levelp
     }
 
     if (collision) {
-      auto            at     = thing_real_at(me);
-      float const     o_dist = distance(at, o_at);
-      ThingCand const p      = std::make_pair(o_dist, o);
+      auto at = thing_real_at(me);
+      //
+      // Sort by center of the tile distance. This allows walls and ghost in walls to have
+      // the same distance
+      //
+      auto            o_tiled_at = make_fpoint(thing_at(o)) + fpoint(0.5, 0.5);
+      float const     o_dist     = distance(at, o_tiled_at);
+      ThingCand const p          = std::make_pair(o_dist, o);
       cands.push_back(p);
     }
   }
@@ -675,8 +709,7 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
         // Sort the candidates by distance / potentially add more cands if we can hit all
         // things on the same tile
         //
-        if (0)
-          thing_collision_interpolated_expand_candidates(g, v, l, me, collision_at, cands);
+        thing_collision_interpolated_expand_candidates(g, v, l, me, collision_at, cands);
       }
     }
 
