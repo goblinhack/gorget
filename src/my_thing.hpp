@@ -1039,14 +1039,14 @@ using Thing = struct Thing {
 [[nodiscard]] auto top_owner(Gamep g, Levelsp v, Levelp l, Thingp t) -> Thingp;
 [[nodiscard]] auto wid_get_thing_context(Gamep g, Levelsp v, Widp w, int which) -> Thingp;
 [[nodiscard]] auto wid_thing_info_detail(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent) -> bool;
-[[nodiscard]] auto wid_thing_info_health_bar(Gamep g, Thingp me, Tpp tp, WidPopup *parent, int width) -> bool;
+[[nodiscard]] auto wid_thing_info_health_bar(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp tp, WidPopup *parent, int width) -> bool;
 [[nodiscard]] auto wid_thing_info_icon(Gamep g, Tpp tp, WidPopup *parent) -> bool;
-[[nodiscard]] auto wid_thing_info_immunities(Gamep g, Thingp me, WidPopup *parent, int width) -> bool;
-[[nodiscard]] auto wid_thing_info_keys(Gamep g, Thingp me, WidPopup *parent) -> bool;
+[[nodiscard]] auto wid_thing_info_immunities(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, int width) -> bool;
+[[nodiscard]] auto wid_thing_info_keys(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent) -> bool;
 [[nodiscard]] auto wid_thing_info_name(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp tp, WidPopup *parent) -> bool;
-[[nodiscard]] auto wid_thing_info_score(Gamep g, Thingp me, Tpp tp, WidPopup *parent) -> bool;
-[[nodiscard]] auto wid_thing_info_special_damage(Gamep g, Thingp me, WidPopup *parent) -> bool;
-[[nodiscard]] auto wid_thing_info_stamina_bar(Gamep g, Thingp me, Tpp tp, WidPopup *parent, int width) -> bool;
+[[nodiscard]] auto wid_thing_info_score(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp tp, WidPopup *parent) -> bool;
+[[nodiscard]] auto wid_thing_info_special_damage(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent) -> bool;
+[[nodiscard]] auto wid_thing_info_stamina_bar(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp tp, WidPopup *parent, int width) -> bool;
 // end sort marker1 }
 
 // begin sort marker2 {

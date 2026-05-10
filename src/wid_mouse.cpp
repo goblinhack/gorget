@@ -92,9 +92,7 @@ void wid_mouse_over_end(Gamep g)
 
   w = wid_over;
   if (wid_over != nullptr) {
-    if (! wid_ignore_events(wid_over)) {
-      wid_last_over_event = time_ms_cached();
-    }
+    wid_last_over_event = time_ms_cached();
   }
   wid_over = nullptr;
 

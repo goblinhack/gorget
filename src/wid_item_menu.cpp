@@ -25,6 +25,13 @@ static Thingp g_item;
   delete wid_item_menu_window;
   wid_item_menu_window = nullptr;
 
+  return true;
+}
+
+[[nodiscard]] static auto wid_item_menu_go_back(Gamep g) -> bool
+{
+  TRACE();
+
   auto *v = game_levels_get(g);
   if (v == nullptr) {
     return false;
@@ -51,6 +58,33 @@ static Thingp g_item;
     //
     wid_inventory_show(g, v, l, player);
   }
+
+  return true;
+}
+
+[[nodiscard]] static auto wid_item_menu_close(Gamep g) -> bool
+{
+  TRACE();
+
+  auto *v = game_levels_get(g);
+  if (v == nullptr) {
+    return false;
+  }
+
+  auto *l = game_level_get(g, v);
+  if (l == nullptr) {
+    return false;
+  }
+
+  auto *player = thing_player(g);
+  if (player == nullptr) [[unlikely]] {
+    return false;
+  }
+
+  //
+  // If empty, just go back to playing
+  //
+  game_state_change(g, STATE_PLAYING, "close inventory");
 
   return true;
 }
@@ -90,20 +124,34 @@ static Thingp g_item;
     return false;
   }
 
-  return wid_item_menu_destroy(g);
+  (void) wid_item_menu_destroy(g);
+  (void) wid_item_menu_go_back(g);
+  return true;
 }
 
 [[nodiscard]] static auto wid_item_menu_equip(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
   topcon("TODO equip");
-  return wid_item_menu_destroy(g);
+  (void) wid_item_menu_destroy(g);
+  (void) wid_item_menu_go_back(g);
+  return true;
 }
 
 [[nodiscard]] static auto wid_item_menu_back(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
-  return wid_item_menu_destroy(g);
+  (void) wid_item_menu_destroy(g);
+  (void) wid_item_menu_go_back(g);
+  return true;
+}
+
+[[nodiscard]] static auto wid_item_menu_close(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+{
+  TRACE();
+  (void) wid_item_menu_destroy(g);
+  (void) wid_item_menu_close(g);
+  return true;
 }
 
 [[nodiscard]] static auto wid_item_menu_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
@@ -146,10 +194,10 @@ static Thingp g_item;
       }
   }
 
-  return false;
+  return true;
 }
 
-void wid_item_menu_select(Gamep g, Levelsp v, Thingp item)
+void wid_item_menu_select(Gamep g, Levelsp v, Thingp item, bool from_inventory)
 {
   TRACE();
   log("item menu");
@@ -233,7 +281,7 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item)
     y_at += box_step;
   }
 
-  {
+  if (from_inventory) {
     TRACE();
     auto *p = wid_item_menu_window->wid_text_area->wid_text_area;
     auto *w = wid_new_back_button(g, p, "BACK");
@@ -241,6 +289,15 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item)
     spoint const tl(0, y_at);
     spoint const br(button_width, y_at + box_height);
     wid_set_on_mouse_up(w, wid_item_menu_back);
+    wid_set_pos(w, tl, br);
+  } else {
+    TRACE();
+    auto *p = wid_item_menu_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_close_button(g, p, "CLOSE");
+
+    spoint const tl(0, y_at);
+    spoint const br(button_width, y_at + box_height);
+    wid_set_on_mouse_up(w, wid_item_menu_close);
     wid_set_pos(w, tl, br);
   }
 

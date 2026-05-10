@@ -233,7 +233,7 @@ void wid_statistics_show(Gamep g, Levelsp v, Levelp l, Thingp player)
     wid_statistics_window = wid_statistics_popup->wid_popup_container;
 
     wid_set_on_key_down(wid_statistics_window, wid_statistics_key_down);
-    wid_set_text(wid_statistics_window, "Statistics");
+    wid_set_text(wid_statistics_window, "Ye status of final demise");
     wid_set_text_top(wid_statistics_window, 1u);
   }
 
@@ -247,11 +247,11 @@ void wid_statistics_show(Gamep g, Levelsp v, Levelp l, Thingp player)
     wid_statistics_popup->log_empty_line(g);
   }
 
-  if (wid_thing_info_score(g, player, tp, wid_statistics_popup)) {
+  if (wid_thing_info_score(g, v, l, player, tp, wid_statistics_popup)) {
     wid_statistics_popup->log_empty_line(g);
   }
 
-  if (wid_thing_info_immunities(g, player, wid_statistics_popup, UI_INVENTORY_WIDTH)) {
+  if (wid_thing_info_immunities(g, v, l, player, wid_statistics_popup, UI_INVENTORY_WIDTH)) {
     wid_statistics_popup->log_empty_line(g);
   }
 

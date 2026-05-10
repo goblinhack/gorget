@@ -3906,7 +3906,7 @@ auto wid_receive_input(Gamep g, Widp w, const SDL_Keysym *key) -> bool
 
     default :
       if ((wid_console_window != nullptr) && (static_cast< bool >(wid_console_window->visible))) {
-        wid_console_receive_input(g, wid_console_input_line, key);
+        return wid_console_receive_input(g, wid_console_input_line, key);
       }
       break;
   }

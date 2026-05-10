@@ -83,10 +83,6 @@ auto game_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx, in
   DBG("game mouse motion");
   TRACE();
 
-  if (wid_some_recent_event_occurred()) {
-    return false;
-  }
-
   if (g == nullptr) {
     DBG("game motion, ignore, no game");
     return false;
@@ -111,17 +107,15 @@ auto game_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx, in
   }
 
   //
+  // Update the cursor path
+  //
+  game_request_to_update_cursor_set(g);
+
+  //
   // Over the map?
   //
   if (! level_cursor_is_valid(g, v)) {
     return false;
-  }
-
-  //
-  // Update the cursor path
-  //
-  if ((wheelx == 0) && (wheely == 0)) {
-    game_request_to_update_cursor_set(g);
   }
 
   level_scroll_delta(g, v, l, spoint(wheelx, -wheely));

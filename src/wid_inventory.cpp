@@ -21,6 +21,10 @@ static void wid_inventory_destroy(Gamep g)
 {
   TRACE();
 
+  memset(wid_shortcut, 0, sizeof(wid_shortcut));
+  memset(wid_icon, 0, sizeof(wid_icon));
+  memset(wid_item, 0, sizeof(wid_item));
+
   if (wid_inventory_window != nullptr) {
     wid_destroy(g, &wid_inventory_window);
 
@@ -28,15 +32,16 @@ static void wid_inventory_destroy(Gamep g)
   }
 }
 
-static void wid_inventory_mouse_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
+void wid_inventory_mouse_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
 {
   TRACE();
 
   for (auto &n : wid_item) {
-    w = n;
-    if (w != wid_over) {
-      wid_set_style(w, UI_WID_STYLE_SOLID_WHITE);
-      wid_set_color(w, WID_COLOR_BG, GRAY20);
+    if (n) {
+      if (n != wid_over) {
+        wid_set_style(n, UI_WID_STYLE_SOLID_WHITE);
+        wid_set_color(n, WID_COLOR_BG, GRAY20);
+      }
     }
   }
 
@@ -50,10 +55,12 @@ static void wid_inventory_mouse_over_begin(Gamep g, Widp w, int relx, int rely, 
     return;
   }
 
-  (void) level_cursor_describe_add(g, v, t);
+  if (level_cursor_describe_add(g, v, t)) {
+    game_request_to_remake_ui_set(g);
+  }
 }
 
-static void wid_inventory_mouse_over_end(Gamep g, Widp w)
+void wid_inventory_mouse_over_end(Gamep g, Widp w)
 {
   TRACE();
 
@@ -67,10 +74,12 @@ static void wid_inventory_mouse_over_end(Gamep g, Widp w)
     return;
   }
 
-  (void) level_cursor_describe_remove(g, v, t);
+  if (level_cursor_describe_remove(g, v, t)) {
+    game_request_to_remake_ui_set(g);
+  }
 }
 
-[[nodiscard]] static auto wid_inventory_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] auto wid_inventory_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
 
@@ -85,7 +94,7 @@ static void wid_inventory_mouse_over_end(Gamep g, Widp w)
   }
 
   wid_inventory_destroy(g);
-  wid_item_menu_select(g, v, t);
+  wid_item_menu_select(g, v, t, true /* from inventory */);
 
   return true;
 }
@@ -259,7 +268,7 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
         TRACE();
         auto        *w = wid_new_square_button(g, wid_inventory_window, "Icon");
         spoint const tl(1, y_at);
-        spoint const br(2, y_at + button_height);
+        spoint const br(1, y_at);
         wid_set_tile(TILE_LAYER_BG_0, w, tile);
         wid_set_style(w, button_style);
         wid_set_pos(w, tl, br);
@@ -320,7 +329,7 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
         s = "-";
       }
 
-      if (slot->count != 0) {
+      if (slot->count > 0) {
         s += " x";
         s += std::to_string(slot->count);
       }

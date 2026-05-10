@@ -42,7 +42,7 @@
   return true;
 }
 
-[[nodiscard]] auto wid_thing_info_keys(Gamep g, Thingp me, WidPopup *parent) -> bool
+[[nodiscard]] auto wid_thing_info_keys(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent) -> bool
 {
   TRACE();
 
@@ -121,7 +121,7 @@
 //
 // Score
 //
-[[nodiscard]] auto wid_thing_info_score(Gamep g, Thingp me, Tpp tp, WidPopup *parent) -> bool
+[[nodiscard]] auto wid_thing_info_score(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp tp, WidPopup *parent) -> bool
 {
   TRACE();
 
@@ -160,7 +160,7 @@
 //
 // Health bar
 //
-[[nodiscard]] auto wid_thing_info_health_bar(Gamep g, Thingp me, Tpp tp, WidPopup *parent, int width) -> bool
+[[nodiscard]] auto wid_thing_info_health_bar(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp tp, WidPopup *parent, int width) -> bool
 {
   TRACE();
 
@@ -218,7 +218,7 @@
 //
 // Stamina bar
 //
-[[nodiscard]] auto wid_thing_info_stamina_bar(Gamep g, Thingp me, Tpp tp, WidPopup *parent, int width) -> bool
+[[nodiscard]] auto wid_thing_info_stamina_bar(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp tp, WidPopup *parent, int width) -> bool
 {
   TRACE();
 
@@ -280,7 +280,7 @@
 //
 // Add immunities
 //
-[[nodiscard]] auto wid_thing_info_immunities(Gamep g, Thingp me, WidPopup *parent, int width) -> bool
+[[nodiscard]] auto wid_thing_info_immunities(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, int width) -> bool
 {
   TRACE();
 
@@ -338,7 +338,7 @@
 //
 // Add special damage
 //
-[[nodiscard]] auto wid_thing_info_special_damage(Gamep g, Thingp me, WidPopup *parent) -> bool
+[[nodiscard]] auto wid_thing_info_special_damage(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent) -> bool
 {
   TRACE();
 
@@ -347,6 +347,105 @@
   if (! thing_is_immune_to(me, THING_EVENT_WATER_DAMAGE)) {
     parent->log(g, "Takes damage from water.", TEXT_FORMAT_LHS);
     printed_something = true;
+  }
+
+  return printed_something;
+}
+
+void wid_thing_info_item_mouse_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
+{
+  TRACE();
+
+  auto *v = game_levels_get(g);
+  if (v == nullptr) {
+    return;
+  }
+
+  auto *t = wid_get_thing_context(g, v, w, 0);
+  if (t == nullptr) {
+    return;
+  }
+
+  (void) level_cursor_describe_add(g, v, t);
+  (void) wid_rightbar_init(g);
+}
+
+void wid_thing_info_item_mouse_over_end(Gamep g, Widp w)
+{
+  TRACE();
+
+  auto *v = game_levels_get(g);
+  if (v == nullptr) {
+    return;
+  }
+
+  auto *t = wid_get_thing_context(g, v, w, 0);
+  if (t == nullptr) {
+    return;
+  }
+
+  (void) level_cursor_describe_remove(g, v, t);
+  (void) wid_rightbar_init(g);
+}
+
+[[nodiscard]] auto wid_thing_info_item_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+{
+  TRACE();
+
+  auto *v = game_levels_get(g);
+  if (v == nullptr) {
+    return false;
+  }
+
+  auto *t = wid_get_thing_context(g, v, w, 0);
+  if (t == nullptr) {
+    return false;
+  }
+
+  wid_item_menu_select(g, v, t, false /* not from inventory */);
+
+  return true;
+}
+
+//
+// Items
+//
+[[nodiscard]] auto wid_thing_info_items(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent) -> bool
+{
+  TRACE();
+
+  bool printed_something = false;
+
+  if (! thing_is_player(me)) {
+    return printed_something;
+  }
+
+  FOR_ALL_INVENTORY_SLOTS(g, v, l, me, slot, item)
+  {
+    auto *item_tp = (item != nullptr) ? thing_tp(item) : nullptr;
+    if (! item_tp) {
+      continue;
+    }
+
+    std::string line = "- ";
+
+    line += "%%tp=";
+    line += tp_name(item_tp);
+    line += "$";
+    line += " ";
+    line += std::format("{:<20}", tp_name(item_tp));
+
+    if (slot->count > 1) {
+      line += " x";
+      line += std::to_string(slot->count);
+    }
+
+    Widp w = parent->log(g, line, TEXT_FORMAT_LHS);
+
+    wid_set_thing_context(g, v, w, item);
+    wid_set_on_mouse_up(w, wid_thing_info_item_mouse_up);
+    wid_set_on_mouse_over_begin(w, wid_thing_info_item_mouse_over_begin);
+    wid_set_on_mouse_over_end(w, wid_thing_info_item_mouse_over_end);
   }
 
   return printed_something;
@@ -377,7 +476,7 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, i
     parent->log_empty_line(g);
   }
 
-  (void) wid_thing_info_keys(g, me, parent);
+  (void) wid_thing_info_keys(g, v, l, me, parent);
 
   if (wid_thing_info_name(g, v, l, me, tp, parent)) {
     parent->log_empty_line(g);
@@ -387,23 +486,27 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, i
     parent->log_empty_line(g);
   }
 
-  if (wid_thing_info_score(g, me, tp, parent)) {
+  if (wid_thing_info_score(g, v, l, me, tp, parent)) {
     parent->log_empty_line(g);
   }
 
-  if (wid_thing_info_health_bar(g, me, tp, parent, width)) {
+  if (wid_thing_info_health_bar(g, v, l, me, tp, parent, width)) {
     parent->log_empty_line(g);
   }
 
-  if (wid_thing_info_stamina_bar(g, me, tp, parent, width)) {
+  if (wid_thing_info_stamina_bar(g, v, l, me, tp, parent, width)) {
     parent->log_empty_line(g);
   }
 
-  if (wid_thing_info_immunities(g, me, parent, width)) {
+  if (wid_thing_info_immunities(g, v, l, me, parent, width)) {
     parent->log_empty_line(g);
   }
 
-  if (wid_thing_info_special_damage(g, me, parent)) {
+  if (wid_thing_info_special_damage(g, v, l, me, parent)) {
+    parent->log_empty_line(g);
+  }
+
+  if (wid_thing_info_items(g, v, l, me, parent)) {
     parent->log_empty_line(g);
   }
 

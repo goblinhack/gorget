@@ -13,6 +13,7 @@
 #include "my_sdl_proto.hpp"
 #include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp"
+#include "my_wid.hpp"
 
 #include <utility>
 
@@ -288,7 +289,11 @@ static void level_display_fbo(Gamep g, Levelsp v, Levelp l, Levelp level_below, 
     blit_flush();
 
     if (fbo == FBO_MAP_FG_OVERLAY) {
-      level_display_cursor(g, v, l, fbo);
+      if (! wid_over) {
+        if (game_state(g) == STATE_PLAYING) {
+          level_display_cursor(g, v, l, fbo);
+        }
+      }
       blit_flush();
       game_popups_display(g, v, l);
     }

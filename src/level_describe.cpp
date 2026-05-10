@@ -72,7 +72,6 @@ auto level_cursor_describe_add(Gamep g, Levelsp v, Thingp t) -> bool
     auto *cand = thing_find_optional(g, v, i);
     if (cand == nullptr) {
       i = t->id;
-      game_request_to_remake_ui_set(g);
       level_cursor_describe_update(g, v);
       return true;
     }
@@ -107,7 +106,6 @@ auto level_cursor_describe_remove(Gamep g, Levelsp v, Thingp t) -> bool
     auto *cand = thing_find_optional(g, v, t->id);
     if (cand == t) {
       i = 0;
-      game_request_to_remake_ui_set(g);
       level_cursor_describe_update(g, v);
       return true;
     }
@@ -204,7 +202,9 @@ void level_cursor_describe(Gamep g, Levelsp v, Levelp l)
 
     auto one_detail = thing_detail_get(g, v, l, it);
     if (! one_detail.empty()) {
-      (void) level_cursor_describe_add(g, v, it);
+      if (level_cursor_describe_add(g, v, it)) {
+        game_request_to_remake_ui_set(g);
+      }
     }
 
     //

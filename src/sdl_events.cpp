@@ -487,6 +487,14 @@ void sdl_key_repeat_events(Gamep g)
 {
   TRACE_DEBUG();
 
+  //
+  // For example. You close the item menu with 'd'. This should not translate into a movement
+  // also.
+  //
+  if (wid_some_recent_event_occurred()) {
+    return;
+  }
+
   if (game_state(g) != STATE_PLAYING) {
     return;
   }
@@ -512,6 +520,10 @@ void sdl_key_repeat_events(Gamep g)
   bool down_held  = static_cast< bool >(state[ sdlk_to_scancode(game_key_move_down_get(g)) ]);
   bool left_held  = static_cast< bool >(state[ sdlk_to_scancode(game_key_move_left_get(g)) ]);
   bool right_held = static_cast< bool >(state[ sdlk_to_scancode(game_key_move_right_get(g)) ]);
+
+  if (compiler_unused) {
+    con("movement %d/%d/%d/%d", up_held, down_held, left_held, right_held);
+  }
 
   //
   // Keypad stuff is hardcoded.

@@ -48,6 +48,7 @@ auto thing_carry_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp carrier)
   if (thing_is_player(carrier)) {
     auto the_thing = thing_name_long_the(g, v, l, item);
     topcon("You carry %s.", the_thing.c_str());
+    game_request_to_remake_ui_set(g);
   }
 
   return true;
@@ -100,6 +101,7 @@ auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp dropper) 
   if (thing_is_player(dropper)) {
     auto the_thing = thing_name_long_the(g, v, l, item);
     topcon("You drop %s.", the_thing.c_str());
+    game_request_to_remake_ui_set(g);
   }
 
   return true;

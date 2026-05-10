@@ -96,7 +96,7 @@ void sdl_display_reset(Gamep g)
   wid_console_fini(g);
   config_game_gfx_update(g);
 
-  wid_console_init(g);
+  (void) wid_console_init(g);
   wid_hide(g, wid_console_window);
   sdl_flush_display(g);
 
