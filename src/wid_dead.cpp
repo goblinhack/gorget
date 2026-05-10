@@ -42,20 +42,11 @@ static void wid_dead_close(Gamep g)
 
   wid_statistics_show(g, v, l, player);
 
-  if (0) {
-    TRACE();
-    wid_dead_fini(g);
-
-    TRACE();
-    game_cleanup(g);
-
-    TRACE();
-    game_state_reset(g, "finished game");
-
-    if (g_opt_quick_start) {
-      DIE_CLEAN("Quick quit");
-    }
+  if (g_opt_quick_start) {
+    DIE_CLEAN("Quick quit");
   }
+
+  wid_dead_fini(g);
 }
 
 [[nodiscard]] static auto wid_dead_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool

@@ -70,11 +70,137 @@ static void wid_statistics_destroy(Gamep g)
   return false;
 }
 
-[[nodiscard]] static auto wid_statistics_back(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_statistics_close(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
   wid_statistics_destroy(g);
+
+  TRACE();
+  game_cleanup(g);
+
+  TRACE();
+  game_state_reset(g, "finished game");
+
+  if (g_opt_quick_start) {
+    DIE_CLEAN("Quick quit");
+  }
+
   return true;
+}
+
+static void wid_statistics_show_defeated(Gamep g, Levelsp v, Levelp l, Thingp player)
+{
+  TRACE();
+
+  auto *player_struct = thing_player_struct(g);
+  if (player_struct == nullptr) {
+    return;
+  }
+
+  std::string line;
+  bool        defeated_something = {};
+
+  wid_statistics_popup->log(g, "Defeated:", TEXT_FORMAT_LHS);
+
+  //
+  // Monster defeated
+  //
+  for (auto i = 1; i < TP_ID_MAX; i++) {
+
+    auto *monst_tp = tp_find(i);
+    if (monst_tp == nullptr) {
+      continue;
+    }
+
+    if (! tp_is_monst(monst_tp)) {
+      continue;
+    }
+
+    if (! player_struct->defeated[ i ]) {
+      continue;
+    }
+
+    defeated_something = true;
+
+    auto s = std::format("{:<3}", player_struct->defeated[ i ]);
+
+    s += " %%tp=";
+    s += tp_name(monst_tp);
+    s += "$";
+    s += " ";
+    s += std::format("{:<20}", tp_name(monst_tp));
+
+    if (line.empty()) {
+      line = s;
+    } else {
+      line = " - " + line + "  " + s;
+      wid_statistics_popup->log(g, line, TEXT_FORMAT_LHS);
+      line = "";
+    }
+  }
+
+  if (! line.empty()) {
+    line = " - " + line;
+    wid_statistics_popup->log(g, line, TEXT_FORMAT_LHS);
+    line = "";
+  }
+
+  if (! defeated_something) {
+    wid_statistics_popup->log(g, "You did not defeat anything!");
+  }
+  wid_statistics_popup->log_empty_line(g);
+}
+
+static void wid_statistics_show_items(Gamep g, Levelsp v, Levelp l, Thingp player)
+{
+  TRACE();
+
+  auto *player_struct = thing_player_struct(g);
+  if (player_struct == nullptr) {
+    return;
+  }
+
+  std::string line;
+  bool        carried_something = {};
+
+  wid_statistics_popup->log(g, "Carrying:", TEXT_FORMAT_LHS);
+
+  FOR_ALL_INVENTORY_SLOTS(g, v, l, player, slot, item)
+  {
+    auto *item_tp = (item != nullptr) ? thing_tp(item) : nullptr;
+    if (! item_tp) {
+      continue;
+    }
+
+    carried_something = true;
+
+    auto s = std::format("{:<3}", slot->count);
+
+    s += " %%tp=";
+    s += tp_name(item_tp);
+    s += "$";
+    s += " ";
+    s += std::format("{:<20}", tp_name(item_tp));
+
+    if (line.empty()) {
+      line = s;
+    } else {
+      line = " - " + line + "  " + s;
+      wid_statistics_popup->log(g, line, TEXT_FORMAT_LHS);
+      line = "";
+    }
+  }
+
+  if (! line.empty()) {
+    line = " - " + line;
+    wid_statistics_popup->log(g, line, TEXT_FORMAT_LHS);
+    line = "";
+  }
+
+  if (! carried_something) {
+    wid_statistics_popup->log(g, "You were not carrying anything");
+  }
+  wid_statistics_popup->log_empty_line(g);
 }
 
 void wid_statistics_show(Gamep g, Levelsp v, Levelp l, Thingp player)
@@ -121,12 +247,6 @@ void wid_statistics_show(Gamep g, Levelsp v, Levelp l, Thingp player)
     wid_statistics_popup->log_empty_line(g);
   }
 
-  if (0) {
-    if (wid_thing_info_detail(g, v, l, player, wid_statistics_popup)) {
-      wid_statistics_popup->log_empty_line(g);
-    }
-  }
-
   if (wid_thing_info_score(g, player, tp, wid_statistics_popup)) {
     wid_statistics_popup->log_empty_line(g);
   }
@@ -135,60 +255,16 @@ void wid_statistics_show(Gamep g, Levelsp v, Levelp l, Thingp player)
     wid_statistics_popup->log_empty_line(g);
   }
 
-  if (wid_thing_info_special_damage(g, player, wid_statistics_popup)) {
-    wid_statistics_popup->log_empty_line(g);
-  }
-
-  wid_statistics_popup->log(g, "Defeateds:", TEXT_FORMAT_LHS);
-
-  std::string line;
-
-  //
-  // Monster defeateds
-  //
-  for (auto x = 0; x < 5; x++) {
-    for (auto i = 1; i < TP_ID_MAX; i++) {
-
-      auto *monst_tp = tp_find(i);
-      if (monst_tp == nullptr) {
-        continue;
-      }
-
-      if (! tp_is_monst(monst_tp)) {
-        continue;
-      }
-
-      auto s = std::format("{:<3}", player_struct->defeated[ i ]);
-
-      s += " %%tp=";
-      s += tp_name(monst_tp);
-      s += "$";
-      s += " ";
-      s += std::format("{:<20}", tp_name(monst_tp));
-
-      if (line.empty()) {
-        line = s;
-      } else {
-        line = " - " + line + "  " + s;
-        wid_statistics_popup->log(g, line, TEXT_FORMAT_LHS);
-        line = "";
-      }
-    }
-  }
-
-  if (! line.empty()) {
-    line = " - " + line;
-    wid_statistics_popup->log(g, line, TEXT_FORMAT_LHS);
-    line = "";
-  }
+  wid_statistics_show_defeated(g, v, l, player);
+  wid_statistics_show_items(g, v, l, player);
 
   {
     TRACE();
-    auto *w = wid_new_back_button(g, wid_statistics_window, "BACK");
+    auto *w = wid_new_close_button(g, wid_statistics_window, "CLOSE");
 
-    spoint const tl((defeated_width / 2) - 4, defeated_height - 4);
+    spoint const tl((defeated_width / 2) - 3, defeated_height - 4);
     spoint const br((defeated_width / 2) + 3, defeated_height - 2);
-    wid_set_on_mouse_up(w, wid_statistics_back);
+    wid_set_on_mouse_up(w, wid_statistics_close);
     wid_set_pos(w, tl, br);
   }
 

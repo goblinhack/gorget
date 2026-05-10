@@ -47,6 +47,7 @@ void wid_save_select(Gamep g);
 void wid_seed_select(Gamep g);
 void wid_gray_out_button(Gamep g, Widp w);
 auto wid_new_back_button(Gamep g, Widp parent, const std::string &name) -> Widp;
+auto wid_new_close_button(Gamep g, Widp parent, const std::string &name) -> Widp;
 auto wid_new_continue_button(Gamep g, Widp parent, const std::string &name) -> Widp;
 auto wid_new_menu_button(Gamep g, Widp parent, const std::string &name) -> Widp;
 auto wid_new_save_button(Gamep g, Widp parent, const std::string &name) -> Widp;

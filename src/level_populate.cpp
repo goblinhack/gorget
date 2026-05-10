@@ -856,7 +856,7 @@ auto level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *lg, int w, int
         if (0) {
           if (tp == lp.tp_player) {
             {
-              if (thing_spawn(g, v, l, tp_random(g, v, l, is_exit), lp.at + bpoint(2, 0)) == nullptr) {
+              if (thing_spawn(g, v, l, tp_random(g, v, l, is_item), lp.at + bpoint(1, 0)) == nullptr) {
                 return false;
               }
             }
