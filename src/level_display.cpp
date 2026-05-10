@@ -204,16 +204,22 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp l, Levelp level_abov
             // Need to show hidden things in the overlay. e.g. a ghost inside a wall
             //
             if (! display_tile) {
-              FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, p)
-              {
-                if (thing_is_hidden(it) != 0) {
-                  display_tile = true;
-                  break;
-                }
+              //
+              // But only for base tiles that we have seen already. Else a hidden ghost
+              // might briefly appear off screen
+              //
+              if (thing_vision_can_see_tile(g, v, player_level, player, p)) {
+                FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, p)
+                {
+                  if (thing_is_hidden(it) != 0) {
+                    display_tile = true;
+                    break;
+                  }
 
-                if (thing_is_jumping(it)) {
-                  display_tile = true;
-                  break;
+                  if (thing_is_jumping(it)) {
+                    display_tile = true;
+                    break;
+                  }
                 }
               }
             }
