@@ -108,6 +108,7 @@ static std::initializer_list< std::string > tps = {
     "key",
     "kobalos_mob",
     "kobalos",
+    "laser_1",
     "lava",
     "level_closed",
     "level_curr",

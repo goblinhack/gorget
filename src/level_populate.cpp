@@ -853,7 +853,7 @@ auto level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *lg, int w, int
       }
 
       if (! g_opt_tests) {
-        if (1) {
+        if (0) {
           if (tp == lp.tp_player) {
             {
               if (thing_spawn(g, v, l, tp_random(g, v, l, is_item), lp.at + bpoint(2, 0)) == nullptr) {

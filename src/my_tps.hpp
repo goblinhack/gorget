@@ -44,6 +44,7 @@ auto tp_load_grass() -> bool;
 auto tp_load_key() -> bool;
 auto tp_load_kobalos_mob() -> bool;
 auto tp_load_kobalos() -> bool;
+auto tp_load_laser_1() -> bool;
 auto tp_load_lava() -> bool;
 auto tp_load_level_closed() -> bool;
 auto tp_load_level_curr() -> bool;

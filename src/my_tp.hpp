@@ -168,7 +168,7 @@
       list_macro(is_unused34, "is_unused34"),                                               /* newline */                                  \
       list_macro(is_unused35, "is_unused35"),                                               /* newline */                                  \
       list_macro(is_unused36, "is_unused36"),                                               /* newline */                                  \
-      list_macro(is_unused37, "is_unused37"),                                               /* newline */                                  \
+      list_macro(is_laser, "is_laser"),                                                     /* newline */                                  \
       list_macro(is_stamina_visible, "is_stamina_visible"),                                 /* newline */                                  \
       list_macro(is_reeds, "is_reeds"),                                                     /* newline */                                  \
       list_macro(is_vault, "is_vault"),                                                     /* newline */                                  \
@@ -616,6 +616,7 @@ class Tp;
 [[nodiscard]] auto tp_is_item(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_key(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_kobalos(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_laser(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_lava(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_level_closed_icon(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_level_curr(Tpp tp) -> bool;
@@ -710,7 +711,6 @@ class Tp;
 [[nodiscard]] auto tp_is_unused34(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused35(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused36(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused37(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused4(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused46(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused47(Tpp tp) -> bool;

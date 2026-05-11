@@ -1067,10 +1067,10 @@ auto tp_is_unused36(Tpp tp) -> bool
   return tp_flag(tp, is_unused36) != 0;
 }
 
-auto tp_is_unused37(Tpp tp) -> bool
+auto tp_is_laser(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused37) != 0;
+  return tp_flag(tp, is_laser) != 0;
 }
 
 auto tp_is_stamina_visible(Tpp tp) -> bool

@@ -1667,7 +1667,7 @@ auto thing_is_unused36(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused36) != 0;
 }
 
-auto thing_is_unused37(Thingp t) -> bool
+auto thing_is_laser(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -1675,7 +1675,7 @@ auto thing_is_unused37(Thingp t) -> bool
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused37) != 0;
+  return tp_flag(thing_tp(t), is_laser) != 0;
 }
 
 auto thing_is_vault(Thingp t) -> bool

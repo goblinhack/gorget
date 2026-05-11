@@ -735,6 +735,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_item(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_key(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_kobalos(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_laser(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_lava(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_level_closed_icon(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_level_curr(Thingp t) -> bool;
@@ -831,7 +832,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused34(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused35(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused36(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused37(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused4(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused46(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused47(Thingp t) -> bool;

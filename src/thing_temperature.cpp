@@ -163,7 +163,7 @@ void tp_temperature_init(Tpp tp)
     tp_temperature_heat_capacity_set(tp, HEAT_CAPACITY_WATER);
     heat_exchange_set = true;
   }
-  if (tp_is_gaseous(tp)) {
+  if (tp_is_gaseous(tp) || tp_is_laser(tp)) {
     tp_temperature_thermal_conductivity_set(tp, THERMAL_CONDUCTIVITY_GAS);
     tp_temperature_heat_capacity_set(tp, HEAT_CAPACITY_GAS);
     heat_exchange_set = true;

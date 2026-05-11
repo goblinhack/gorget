@@ -3800,11 +3800,63 @@ static void gfx_init_tiles()
   tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
 }
 
+static void gfx_init_tiles_laser_1()
+{
+  const char *tiles[] = {
+      "laser_1.1.start",   "laser_1.1.mid.1",   "laser_1.1.mid.2",   "laser_1.1.mid.3",   "laser_1.1.mid.4",   "laser_1.1.mid.5",
+      "laser_1.1.mid.6",   "laser_1.1.mid.7",   "laser_1.1.mid.8",   "laser_1.1.mid.9",   "laser_1.1.mid.10",  "laser_1.1.mid.11",
+      "laser_1.1.mid.12",  "laser_1.1.mid.13",  "laser_1.1.mid.14",  "laser_1.1.end",     "laser_1.2.start",   "laser_1.2.mid.1",
+      "laser_1.2.mid.2",   "laser_1.2.mid.3",   "laser_1.2.mid.4",   "laser_1.2.mid.5",   "laser_1.2.mid.6",   "laser_1.2.mid.7",
+      "laser_1.2.mid.8",   "laser_1.2.mid.9",   "laser_1.2.mid.10",  "laser_1.2.mid.11",  "laser_1.2.mid.12",  "laser_1.2.mid.13",
+      "laser_1.2.mid.14",  "laser_1.2.end",     "laser_1.3.start",   "laser_1.3.mid.1",   "laser_1.3.mid.2",   "laser_1.3.mid.3",
+      "laser_1.3.mid.4",   "laser_1.3.mid.5",   "laser_1.3.mid.6",   "laser_1.3.mid.7",   "laser_1.3.mid.8",   "laser_1.3.mid.9",
+      "laser_1.3.mid.10",  "laser_1.3.mid.11",  "laser_1.3.mid.12",  "laser_1.3.mid.13",  "laser_1.3.mid.14",  "laser_1.3.end",
+      "laser_1.4.start",   "laser_1.4.mid.1",   "laser_1.4.mid.2",   "laser_1.4.mid.3",   "laser_1.4.mid.4",   "laser_1.4.mid.5",
+      "laser_1.4.mid.6",   "laser_1.4.mid.7",   "laser_1.4.mid.8",   "laser_1.4.mid.9",   "laser_1.4.mid.10",  "laser_1.4.mid.11",
+      "laser_1.4.mid.12",  "laser_1.4.mid.13",  "laser_1.4.mid.14",  "laser_1.4.end",     "laser_1.5.start",   "laser_1.5.mid.1",
+      "laser_1.5.mid.2",   "laser_1.5.mid.3",   "laser_1.5.mid.4",   "laser_1.5.mid.5",   "laser_1.5.mid.6",   "laser_1.5.mid.7",
+      "laser_1.5.mid.8",   "laser_1.5.mid.9",   "laser_1.5.mid.10",  "laser_1.5.mid.11",  "laser_1.5.mid.12",  "laser_1.5.mid.13",
+      "laser_1.5.mid.14",  "laser_1.5.end",     "laser_1.6.start",   "laser_1.6.mid.1",   "laser_1.6.mid.2",   "laser_1.6.mid.3",
+      "laser_1.6.mid.4",   "laser_1.6.mid.5",   "laser_1.6.mid.6",   "laser_1.6.mid.7",   "laser_1.6.mid.8",   "laser_1.6.mid.9",
+      "laser_1.6.mid.10",  "laser_1.6.mid.11",  "laser_1.6.mid.12",  "laser_1.6.mid.13",  "laser_1.6.mid.14",  "laser_1.6.end",
+      "laser_1.7.start",   "laser_1.7.mid.1",   "laser_1.7.mid.2",   "laser_1.7.mid.3",   "laser_1.7.mid.4",   "laser_1.7.mid.5",
+      "laser_1.7.mid.6",   "laser_1.7.mid.7",   "laser_1.7.mid.8",   "laser_1.7.mid.9",   "laser_1.7.mid.10",  "laser_1.7.mid.11",
+      "laser_1.7.mid.12",  "laser_1.7.mid.13",  "laser_1.7.mid.14",  "laser_1.7.end",     "laser_1.8.start",   "laser_1.8.mid.1",
+      "laser_1.8.mid.2",   "laser_1.8.mid.3",   "laser_1.8.mid.4",   "laser_1.8.mid.5",   "laser_1.8.mid.6",   "laser_1.8.mid.7",
+      "laser_1.8.mid.8",   "laser_1.8.mid.9",   "laser_1.8.mid.10",  "laser_1.8.mid.11",  "laser_1.8.mid.12",  "laser_1.8.mid.13",
+      "laser_1.8.mid.14",  "laser_1.8.end",     "laser_1.9.start",   "laser_1.9.mid.1",   "laser_1.9.mid.2",   "laser_1.9.mid.3",
+      "laser_1.9.mid.4",   "laser_1.9.mid.5",   "laser_1.9.mid.6",   "laser_1.9.mid.7",   "laser_1.9.mid.8",   "laser_1.9.mid.9",
+      "laser_1.9.mid.10",  "laser_1.9.mid.11",  "laser_1.9.mid.12",  "laser_1.9.mid.13",  "laser_1.9.mid.14",  "laser_1.9.end",
+      "laser_1.10.start",  "laser_1.10.mid.1",  "laser_1.10.mid.2",  "laser_1.10.mid.3",  "laser_1.10.mid.4",  "laser_1.10.mid.5",
+      "laser_1.10.mid.6",  "laser_1.10.mid.7",  "laser_1.10.mid.8",  "laser_1.10.mid.9",  "laser_1.10.mid.10", "laser_1.10.mid.11",
+      "laser_1.10.mid.12", "laser_1.10.mid.13", "laser_1.10.mid.14", "laser_1.10.end",    "laser_1.11.start",  "laser_1.11.mid.1",
+      "laser_1.11.mid.2",  "laser_1.11.mid.3",  "laser_1.11.mid.4",  "laser_1.11.mid.5",  "laser_1.11.mid.6",  "laser_1.11.mid.7",
+      "laser_1.11.mid.8",  "laser_1.11.mid.9",  "laser_1.11.mid.10", "laser_1.11.mid.11", "laser_1.11.mid.12", "laser_1.11.mid.13",
+      "laser_1.11.mid.14", "laser_1.11.end",    "laser_1.12.start",  "laser_1.12.mid.1",  "laser_1.12.mid.2",  "laser_1.12.mid.3",
+      "laser_1.12.mid.4",  "laser_1.12.mid.5",  "laser_1.12.mid.6",  "laser_1.12.mid.7",  "laser_1.12.mid.8",  "laser_1.12.mid.9",
+      "laser_1.12.mid.10", "laser_1.12.mid.11", "laser_1.12.mid.12", "laser_1.12.mid.13", "laser_1.12.mid.14", "laser_1.12.end",
+      "laser_1.13.start",  "laser_1.13.mid.1",  "laser_1.13.mid.2",  "laser_1.13.mid.3",  "laser_1.13.mid.4",  "laser_1.13.mid.5",
+      "laser_1.13.mid.6",  "laser_1.13.mid.7",  "laser_1.13.mid.8",  "laser_1.13.mid.9",  "laser_1.13.mid.10", "laser_1.13.mid.11",
+      "laser_1.13.mid.12", "laser_1.13.mid.13", "laser_1.13.mid.14", "laser_1.13.end",    "laser_1.14.start",  "laser_1.14.mid.1",
+      "laser_1.14.mid.2",  "laser_1.14.mid.3",  "laser_1.14.mid.4",  "laser_1.14.mid.5",  "laser_1.14.mid.6",  "laser_1.14.mid.7",
+      "laser_1.14.mid.8",  "laser_1.14.mid.9",  "laser_1.14.mid.10", "laser_1.14.mid.11", "laser_1.14.mid.12", "laser_1.14.mid.13",
+      "laser_1.14.mid.14", "laser_1.14.end",    "laser_1.15.start",  "laser_1.15.mid.1",  "laser_1.15.mid.2",  "laser_1.15.mid.3",
+      "laser_1.15.mid.4",  "laser_1.15.mid.5",  "laser_1.15.mid.6",  "laser_1.15.mid.7",  "laser_1.15.mid.8",  "laser_1.15.mid.9",
+      "laser_1.15.mid.10", "laser_1.15.mid.11", "laser_1.15.mid.12", "laser_1.15.mid.13", "laser_1.15.mid.14", "laser_1.15.end",
+      "laser_1.16.start",  "laser_1.16.mid.1",  "laser_1.16.mid.2",  "laser_1.16.mid.3",  "laser_1.16.mid.4",  "laser_1.16.mid.5",
+      "laser_1.16.mid.6",  "laser_1.16.mid.7",  "laser_1.16.mid.8",  "laser_1.16.mid.9",  "laser_1.16.mid.10", "laser_1.16.mid.11",
+      "laser_1.16.mid.12", "laser_1.16.mid.13", "laser_1.16.mid.14", "laser_1.16.end",
+  };
+
+  tile_load_arr("data/gfx/tiles_laser_1.tga", "laser_1", TILE_WIDTH, TILE_HEIGHT, ARRAY_SIZE(tiles), tiles);
+}
+
 void gfx_init()
 {
   gfx_init_font_ui();
 
   // begin sort marker1 {
+  gfx_init_tiles_laser_1();
   gfx_init_tiles();
   gfx_ui_init_0();
   gfx_ui_init_1();
