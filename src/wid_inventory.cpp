@@ -269,7 +269,7 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
         auto        *w = wid_new_square_button(g, wid_inventory_window, "Icon");
         spoint const tl(1, y_at);
         spoint const br(1, y_at);
-        wid_set_tile(TILE_LAYER_BG_0, w, tile);
+        wid_set_tile(TILE_LAYER_TEXT_FG, w, tile);
         wid_set_style(w, button_style);
         wid_set_pos(w, tl, br);
 

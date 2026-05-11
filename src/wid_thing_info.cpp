@@ -35,7 +35,7 @@
   auto        *w = wid_new_square_button(g, b, "Icon");
   spoint const tl(0, text->line_count);
   spoint const br(3, text->line_count + 2);
-  wid_set_tile(TILE_LAYER_BG_0, w, tile);
+  wid_set_tile(TILE_LAYER_BOX_BG, w, tile);
   wid_set_style(w, UI_WID_STYLE_SPARSE_NONE);
   wid_set_pos(w, tl, br);
 
@@ -59,7 +59,7 @@
     auto        *w    = wid_new_square_button(g, b, "Keys");
     spoint const tl(UI_LEFTBAR_WIDTH - 8, text->line_count);
     spoint const br(UI_LEFTBAR_WIDTH - 5, text->line_count + 2);
-    wid_set_tile(TILE_LAYER_BG_0, w, tile);
+    wid_set_tile(TILE_LAYER_BOX_BG, w, tile);
     wid_set_style(w, UI_WID_STYLE_SPARSE_NONE);
     wid_set_pos(w, tl, br);
   }
@@ -208,7 +208,7 @@
     wid_set_shape_square(w);
     wid_set_style(w, UI_WID_STYLE_SPARSE_NONE);
     wid_set_color(w, WID_COLOR_TEXT_FG, UI_HIGHLIGHT_COLOR);
-    wid_set_tilename(TILE_LAYER_BG_0, w, icon);
+    wid_set_tilename(TILE_LAYER_BOX_BG, w, icon);
     wid_set_text_lhs(w, 1u);
   }
 
@@ -270,7 +270,7 @@
     wid_set_shape_square(w);
     wid_set_style(w, UI_WID_STYLE_SPARSE_NONE);
     wid_set_color(w, WID_COLOR_TEXT_FG, UI_HIGHLIGHT_COLOR);
-    wid_set_tilename(TILE_LAYER_BG_0, w, icon);
+    wid_set_tilename(TILE_LAYER_BOX_BG, w, icon);
     wid_set_text_lhs(w, 1u);
   }
 

@@ -52,7 +52,7 @@ WidPopup::WidPopup(Gamep g, std::string vname, spoint vtl, spoint vbr, Tilep vti
     wid_set_pos(wid_popup_container, tl, br);
     wid_set_style(wid_popup_container, UI_WID_STYLE_SPARSE_NONE);
     if (! background.empty()) {
-      wid_set_tile(TILE_LAYER_BG_0, wid_popup_container, tile_find_mand(background));
+      wid_set_tile(TILE_LAYER_BOX_BG, wid_popup_container, tile_find_mand(background));
     } else {
       wid_set_style(wid_popup_container, UI_WID_STYLE_NORMAL);
     }
@@ -65,7 +65,7 @@ WidPopup::WidPopup(Gamep g, std::string vname, spoint vtl, spoint vbr, Tilep vti
     wid_set_pos(w, spoint(title_x + 0, 1), spoint(title_x + tile_size - 1, tile_size));
     wid_set_style(w, UI_WID_STYLE_NORMAL);
     wid_set_style(w, UI_WID_STYLE_SPARSE_NONE);
-    wid_set_tile(TILE_LAYER_FG_0, w, title_tile);
+    wid_set_tile(TILE_LAYER_BOX_FG, w, title_tile);
   }
 
   {

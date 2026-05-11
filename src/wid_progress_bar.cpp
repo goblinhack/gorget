@@ -74,7 +74,7 @@ void wid_progress_bar(Gamep g, const std::string &title, float pct)
     wid_set_pos(w, tl2, br2);
     wid_set_style(w, UI_WID_STYLE_SPARSE_NONE);
     wid_set_color(w, WID_COLOR_TEXT_FG, UI_HIGHLIGHT_COLOR);
-    wid_set_tilename(TILE_LAYER_BG_0, w, tilename);
+    wid_set_tilename(TILE_LAYER_BOX_BG, w, tilename);
   }
 
   wid_update(g, wid_progress_bar_window->wid_text_area->wid_text_area);

@@ -42,7 +42,7 @@ static void wid_rightbar_create_minimap_level(Gamep g)
     auto        *w = wid_new_square_button(g, wid_rightbar->wid_popup_container, "level map");
     spoint const minimap_tl(1, TERM_HEIGHT - minimap_size + 1);
     spoint const minimap_br(minimap_size + 2, TERM_HEIGHT - 2);
-    wid_set_tilename(TILE_LAYER_FG_0, w, "FBO_MINIMAP_LEVEL");
+    wid_set_tilename(TILE_LAYER_BOX_FG, w, "FBO_MINIMAP_LEVEL");
     wid_set_text_lhs(w);
     wid_set_text_top(w);
     wid_set_style(w, UI_WID_STYLE_SPARSE_NONE);
