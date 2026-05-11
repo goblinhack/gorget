@@ -16,14 +16,8 @@ static void tp_laser_1_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE();
 
-  thing_sound_play(g, v, l, t, "laser_1");
-}
-
-static void tp_laser_1_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
-{
-  TRACE();
-
-  thing_sound_play(g, v, l, t, "explosion");
+  // TODO
+  // thing_sound_play(g, v, l, t, "laser_1");
 }
 
 auto tp_load_laser_1() -> bool
@@ -32,7 +26,6 @@ auto tp_load_laser_1() -> bool
   auto  name = tp_name(tp);
 
   // begin sort marker1 {
-  thing_on_death_set(tp, tp_laser_1_on_death);
   thing_on_spawned_set(tp, tp_laser_1_on_spawned);
   tp_damage_set(tp, THING_EVENT_FIRE_DAMAGE, "1d4");
   tp_flag_set(tp, is_animated);
@@ -59,12 +52,23 @@ auto tp_load_laser_1() -> bool
   tp_name_long_set(tp, "beam of light");
   tp_name_pluralize_set(tp, "beams of light");
   tp_name_short_set(tp, "light beam");
-  tp_priority_set(tp, THING_PRIORITY_PROJECTILE);
+  tp_priority_set(tp, THING_PRIORITY_WEAPON);
   tp_speed_set(tp, 800);
   tp_temperature_initial_set(tp, 500); // celsius
   tp_weight_set(tp, WEIGHT_NONE);      // grams
-  tp_z_depth_set(tp, MAP_Z_DEPTH_PROJECTILE);
+  tp_z_depth_set(tp, MAP_Z_DEPTH_WEAPON);
   // end sort marker1 }
+
+  auto delay = 200;
+
+  for (auto frame = 0; frame < 16; frame++) {
+    for (auto step = 0; step < 16; step++) {
+      auto *tile = tile_find_mand(name + "." + std::to_string(frame) + "." + std::to_string(step));
+      tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
+      tile_delay_ms_set(tile, delay);
+      tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
+    }
+  }
 
   return true;
 }

@@ -176,7 +176,7 @@ static auto thing_get_killer(Gamep g, Levelsp v, Levelp l, ThingEvent &e) -> Thi
     return killer;
   }
 
-  auto *fired_by = thing_projectile_fired_by_get(g, v, l, killer);
+  auto *fired_by = thing_fired_by_get(g, v, l, killer);
   if (fired_by != nullptr) {
     return fired_by;
   }
@@ -326,12 +326,12 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
   //
   // Not sure if we kill or just detach projectiles
   //
-  if (thing_is_able_to_fire_projectiles(me)) {
-    (void) thing_projectile_detach_all_fired(g, v, l, me);
+  if (thing_is_able_to_fire_weapons(me)) {
+    (void) thing_weapon_detach_all_fired(g, v, l, me);
   }
 
-  if (thing_is_projectile(me)) {
-    (void) thing_projectile_detach_me_from_firer(g, v, l, me);
+  if (thing_is_projectile(me) || thing_is_laser(me)) {
+    (void) thing_weapon_detach_me_from_firer(g, v, l, me);
   }
 
   //

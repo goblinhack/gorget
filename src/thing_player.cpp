@@ -779,8 +779,16 @@ auto player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what) ->
     target             = make_bpoint(thing_real_at(me) + delta);
   }
 
-  if (! thing_projectile_fire_at(g, v, l, me, fire_what, target)) {
-    return false;
+  if (tp_is_laser(fire_what)) {
+#if 0
+    if (! thing_laser_fire_at(g, v, l, me, fire_what, target)) {
+      return false;
+    }
+#endif
+  } else {
+    if (! thing_projectile_fire_at(g, v, l, me, fire_what, target)) {
+      return false;
+    }
   }
 
   return level_tick_begin_requested(g, v, l, "player fired");

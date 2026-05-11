@@ -155,7 +155,7 @@ auto level_string(Gamep g, Levelsp v, Levelp l, int w, int h) -> std::string
         c = CHARMAP_SMOKE;
       }
       if (level_is_projectile(g, v, l, p) != nullptr) {
-        c = CHARMAP_PROJECTILE;
+        c = CHARMAP_WEAPON;
       }
       if (level_is_border(g, v, l, p) != nullptr) {
         c = CHARMAP_BORDER;

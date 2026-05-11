@@ -1229,10 +1229,10 @@ auto level_is_hit_when_dead_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p
   return level_flag_cached(g, v, l, is_hit_when_dead, p);
 }
 
-auto level_is_able_to_fire_projectiles_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+auto level_is_able_to_fire_weapons_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_able_to_fire_projectiles, p);
+  return level_flag_cached(g, v, l, is_able_to_fire_weapons, p);
 }
 
 auto level_is_blitzhound_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

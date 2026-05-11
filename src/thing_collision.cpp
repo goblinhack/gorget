@@ -204,7 +204,7 @@ void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 
   //
-  // Projectiles handled seperately.
+  // Weapons handled seperately.
   //
   if (thing_is_projectile(me)) {
     return;

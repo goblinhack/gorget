@@ -309,13 +309,14 @@ auto tp_load_player() -> bool
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d100");  // roll max to continue burning
   tp_distance_jump_set(tp, 3);
   tp_distance_vision_set(tp, MAP_WIDTH / 2); // tiles
+  tp_fired_weapon_count_max_set(tp, THING_WEAPON_MAX);
   tp_flag_set(tp, is_able_to_collect_items);
   tp_flag_set(tp, is_able_to_collect_keys);
   tp_flag_set(tp, is_able_to_crush_grass);
   tp_flag_set(tp, is_able_to_fall_repeatedly);
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
-  tp_flag_set(tp, is_able_to_fire_projectiles);
+  tp_flag_set(tp, is_able_to_fire_weapons);
   tp_flag_set(tp, is_able_to_jump);
   tp_flag_set(tp, is_able_to_lunge);
   tp_flag_set(tp, is_able_to_move_diagonally);
@@ -352,7 +353,6 @@ auto tp_load_player() -> bool
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_light_color_set(tp, "white");
   tp_priority_set(tp, THING_PRIORITY_PLAYER);
-  tp_projectile_max_set(tp, THING_PROJECTILE_MAX);
   tp_speed_set(tp, 100);
   tp_stamina_set(tp, "100");
   tp_temperature_burns_at_set(tp, 50);  // celsius

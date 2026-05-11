@@ -1229,10 +1229,10 @@ auto level_is_hit_when_dead(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thing
   return level_flag(g, v, l, is_hit_when_dead, p, me);
 }
 
-auto level_is_able_to_fire_projectiles(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+auto level_is_able_to_fire_weapons(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_able_to_fire_projectiles, p, me);
+  return level_flag(g, v, l, is_able_to_fire_weapons, p, me);
 }
 
 auto level_is_blitzhound(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp

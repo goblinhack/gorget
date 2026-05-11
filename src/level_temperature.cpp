@@ -126,7 +126,7 @@ static void thing_heat_exchange(Levelsp v, Thingp a, Thingp b, int &finalT)
   finalT = static_cast< int >(Ta);
 
   //
-  // Projectiles only heat up things they hit.
+  // Weapons only heat up things they hit.
   //
   // Steam over water is handles as a special case.
   //

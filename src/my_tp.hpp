@@ -192,7 +192,7 @@
       list_macro(is_effect_attack, "is_effect_attack"),                                     /* newline */                                  \
       list_macro(is_effect_blood, "is_effect_blood"),                                       /* newline */                                  \
       list_macro(is_hit_when_dead, "is_hit_when_dead"),                                     /* newline */                                  \
-      list_macro(is_able_to_fire_projectiles, "is_able_to_fire_projectiles"),               /* newline */                                  \
+      list_macro(is_able_to_fire_weapons, "is_able_to_fire_weapons"),                       /* newline */                                  \
       list_macro(is_blitzhound, "is_blitzhound"),                                           /* newline */                                  \
       list_macro(is_unused63, "is_unused63"),                                               /* newline */                                  \
       list_macro(is_grouped_thing, "is_grouped_thing"),                                     /* newline */                                  \
@@ -252,7 +252,7 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
       list_macro(MAP_Z_DEPTH_PLAYER, "monsts"),            /* newline */                                                                   \
       list_macro(MAP_Z_DEPTH_FOLIAGE, "obscuring plants"), /* newline */                                                                   \
       list_macro(MAP_Z_DEPTH_EFFECT, "effect"),            /* newline */                                                                   \
-      list_macro(MAP_Z_DEPTH_PROJECTILE, "projectile"),    /* newline */                                                                   \
+      list_macro(MAP_Z_DEPTH_WEAPON, "projectile"),        /* newline */                                                                   \
       list_macro(MAP_Z_DEPTH_GAS, "fire, smoke"),          /* newline */
 
 ENUM_DEF_H(MAP_Z_DEPTH_ENUM, MapZDepth)
@@ -425,25 +425,25 @@ ENUM_DEF_H(THING_ENVIRON_ENUM, ThingEnviron)
 // Thing priority enum
 //
 #define THING_PRIORITY_ENUM(list_macro)                                                                                                    \
-  CLANG_FORMAT_INDENT()                                    /* dummy line for clang indentation fixup */                                    \
-  list_macro(THING_PRIORITY_NONE, "none"),                 /* newline */                                                                   \
-      list_macro(THING_PRIORITY_EXPLOSION, "explosion"),   /* newline */                                                                   \
-      list_macro(THING_PRIORITY_PROJECTILE, "projectile"), /* newline */                                                                   \
-      list_macro(THING_PRIORITY_LAVA, "lava"),             /* newline */                                                                   \
-      list_macro(THING_PRIORITY_FIRE, "fire"),             /* newline */                                                                   \
-      list_macro(THING_PRIORITY_STEAM, "steam"),           /* newline */                                                                   \
-      list_macro(THING_PRIORITY_PLAYER, "player"),         /* newline */                                                                   \
-      list_macro(THING_PRIORITY_MONST, "monst"),           /* newline */                                                                   \
-      list_macro(THING_PRIORITY_MOB, "mob"),               /* newline */                                                                   \
-      list_macro(THING_PRIORITY_WATER, "water"),           /* newline */                                                                   \
-      list_macro(THING_PRIORITY_SMOKE, "smoke"),           /* newline */                                                                   \
-      list_macro(THING_PRIORITY_OBJECT, "object"),         /* newline */                                                                   \
-      list_macro(THING_PRIORITY_FOLIAGE, "low"),           /* newline */                                                                   \
-      list_macro(THING_PRIORITY_DEAD, "dead"),             /* newline */                                                                   \
-      list_macro(THING_PRIORITY_BRAZIER, "low"),           /* newline */                                                                   \
-      list_macro(THING_PRIORITY_TELEPORT, "teleport"),     /* newline */                                                                   \
-      list_macro(THING_PRIORITY_WALL, "wall"),             /* newline */                                                                   \
-      list_macro(THING_PRIORITY_LOWEST, "lowest"),         /* newline */
+  CLANG_FORMAT_INDENT()                                  /* dummy line for clang indentation fixup */                                      \
+  list_macro(THING_PRIORITY_NONE, "none"),               /* newline */                                                                     \
+      list_macro(THING_PRIORITY_EXPLOSION, "explosion"), /* newline */                                                                     \
+      list_macro(THING_PRIORITY_WEAPON, "projectile"),   /* newline */                                                                     \
+      list_macro(THING_PRIORITY_LAVA, "lava"),           /* newline */                                                                     \
+      list_macro(THING_PRIORITY_FIRE, "fire"),           /* newline */                                                                     \
+      list_macro(THING_PRIORITY_STEAM, "steam"),         /* newline */                                                                     \
+      list_macro(THING_PRIORITY_PLAYER, "player"),       /* newline */                                                                     \
+      list_macro(THING_PRIORITY_MONST, "monst"),         /* newline */                                                                     \
+      list_macro(THING_PRIORITY_MOB, "mob"),             /* newline */                                                                     \
+      list_macro(THING_PRIORITY_WATER, "water"),         /* newline */                                                                     \
+      list_macro(THING_PRIORITY_SMOKE, "smoke"),         /* newline */                                                                     \
+      list_macro(THING_PRIORITY_OBJECT, "object"),       /* newline */                                                                     \
+      list_macro(THING_PRIORITY_FOLIAGE, "low"),         /* newline */                                                                     \
+      list_macro(THING_PRIORITY_DEAD, "dead"),           /* newline */                                                                     \
+      list_macro(THING_PRIORITY_BRAZIER, "low"),         /* newline */                                                                     \
+      list_macro(THING_PRIORITY_TELEPORT, "teleport"),   /* newline */                                                                     \
+      list_macro(THING_PRIORITY_WALL, "wall"),           /* newline */                                                                     \
+      list_macro(THING_PRIORITY_LOWEST, "lowest"),       /* newline */
 
 ENUM_DEF_H(THING_PRIORITY_ENUM, ThingPriorityType)
 
@@ -502,6 +502,7 @@ class Tp;
 [[nodiscard]] auto tp_find_mand(const std::string &val) -> Tpp;
 [[nodiscard]] auto tp_find_opt(const std::string &val) -> Tpp;
 [[nodiscard]] auto tp_find(TpId id) -> Tpp;
+[[nodiscard]] auto tp_fired_weapon_count_max_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_first_tile(class Tp *tp, ThingAnim val) -> Tilep;
 [[nodiscard]] auto tp_first(ThingFlag f) -> Tpp;
 [[nodiscard]] auto tp_health_get(Tpp tp) -> int;
@@ -514,7 +515,7 @@ class Tp;
 [[nodiscard]] auto tp_is_able_to_fall_repeatedly(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_fall_sound(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_fall(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_able_to_fire_projectiles(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_able_to_fire_weapons(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_jump(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_lunge(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_move_diagonally(Tpp tp) -> bool;
@@ -739,7 +740,6 @@ class Tp;
 [[nodiscard]] auto tp_name_real(Tpp tp) -> std::string;
 [[nodiscard]] auto tp_name_short(Tpp tp) -> std::string;
 [[nodiscard]] auto tp_name(Tpp tp) -> std::string;
-[[nodiscard]] auto tp_projectile_max_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_random_dungeon_entrance() -> Tpp;
 [[nodiscard]] auto tp_random_exit() -> Tpp;
 [[nodiscard]] auto tp_random_key() -> Tpp;
@@ -799,6 +799,7 @@ void tp_distance_vision_set(Tpp tp, int val);
 void tp_err_(Tpp tp, const char *fmt, va_list args); // compile error without
 void tp_err(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void tp_fini();
+void tp_fired_weapon_count_max_set(Tpp tp, int val);
 void tp_flag_set(Tpp tp, ThingFlag f, int val = 1);
 void tp_get_id(const char *, int *id);
 void tp_health_set(Tpp tp, const std::string &val);
@@ -817,7 +818,6 @@ void tp_name_pluralize_set(Tpp tp, const std::string &val);
 void tp_name_real_set(Tpp tp, const std::string &val);
 void tp_name_short_set(Tpp tp, const std::string &val);
 void tp_priority_set(Tpp tp, ThingPriorityType val);
-void tp_projectile_max_set(Tpp tp, int val);
 void tp_score_value_set(Tpp tp, int val);
 void tp_speed_set(Tpp tp, int val);
 void tp_stamina_set(Tpp tp, const std::string &val);

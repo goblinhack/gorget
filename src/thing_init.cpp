@@ -66,7 +66,7 @@ auto thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &real_at) -> 
   (void) thing_distance_vision_set(g, v, l, t, tp_distance_vision_get(tp));
   (void) thing_minion_max_set(g, v, l, t, tp_minion_max_get(tp));
   (void) thing_priority_set(g, v, l, t, tp_priority_get(tp));
-  (void) thing_projectile_max_set(g, v, l, t, tp_projectile_max_get(tp));
+  (void) thing_fired_weapon_count_max_set(g, v, l, t, tp_fired_weapon_count_max_get(tp));
   (void) thing_score_value_set(g, v, l, t, tp_score_value_get(tp));
   (void) thing_speed_set(g, v, l, t, tp_speed_get(tp));
   (void) thing_temperature_set(g, v, l, t, tp_temperature_initial_get(tp));

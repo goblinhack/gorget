@@ -36,7 +36,6 @@ enum : char {
   CHARMAP_MONST_HARD    = 'M',
   CHARMAP_PILLAR        = '|',
   CHARMAP_PLAYER        = '@',
-  CHARMAP_PROJECTILE    = '-',
   CHARMAP_REEDS         = '"',
   CHARMAP_ROCK          = 'R',
   CHARMAP_SMOKE         = ';',
@@ -47,6 +46,7 @@ enum : char {
   CHARMAP_VAULT         = 'v',
   CHARMAP_WALL          = 'x',
   CHARMAP_WATER         = '~',
+  CHARMAP_WEAPON        = '-',
   CHARMAP_WILDCARD      = '*',
   // end sort marker1 }
 };

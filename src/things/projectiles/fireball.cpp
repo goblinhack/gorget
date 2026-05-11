@@ -77,11 +77,11 @@ auto tp_load_fireball() -> bool
   tp_name_long_set(tp, "fireball");
   tp_name_pluralize_set(tp, "fireballs");
   tp_name_short_set(tp, "fireball");
-  tp_priority_set(tp, THING_PRIORITY_PROJECTILE);
+  tp_priority_set(tp, THING_PRIORITY_WEAPON);
   tp_speed_set(tp, 800);
   tp_temperature_initial_set(tp, 500); // celsius
   tp_weight_set(tp, WEIGHT_NONE);      // grams
-  tp_z_depth_set(tp, MAP_Z_DEPTH_PROJECTILE);
+  tp_z_depth_set(tp, MAP_Z_DEPTH_WEAPON);
   // end sort marker1 }
 
   auto delay = 200;
