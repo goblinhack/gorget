@@ -81,6 +81,7 @@ auto thing_laser_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, cons
     auto *laser = thing_spawn_weapon(g, v, l, me, what, laser_at);
 
     if (laser == nullptr) {
+      topcon("failed");
       return false;
     }
 

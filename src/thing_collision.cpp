@@ -178,6 +178,18 @@ static void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp obstacle
     return;
   }
 
+  if (! thing_is_collision_detection_enabled(obstacle)) {
+    return;
+  }
+
+  //
+  // No overlapping lasers
+  //
+  auto owner = thing_fired_by_get(g, v, l, me);
+  if (owner && (thing_fired_by_get(g, v, l, obstacle) == owner)) {
+    return;
+  }
+
   if (thing_is_dead(obstacle)) {
     //
     // Dead things
@@ -223,10 +235,6 @@ void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
   auto at = thing_at(me);
   FOR_ALL_THINGS_AT(g, v, l, obstacle, at)
   {
-    if (! thing_is_collision_detection_enabled(obstacle)) {
-      continue;
-    }
-
     bool stop = {};
     thing_collision_handle(g, v, l, obstacle, me, stop);
     if (stop) {
@@ -540,11 +548,6 @@ static auto thing_collision_interplolated_process_candidates(Gamep g, Levelsp v,
         continue;
       }
     }
-
-    //
-    // Flash the thing red
-    //
-    thing_is_hit_set(g, v, l, o, THING_HIT_FLASH_TIME_MS);
 
     //
     // Handle the actual collision
