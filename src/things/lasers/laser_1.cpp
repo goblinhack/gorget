@@ -26,7 +26,7 @@ auto tp_load_laser_1() -> bool
 
   // begin sort marker1 {
   thing_on_spawned_set(tp, tp_laser_1_on_spawned);
-  tp_damage_set(tp, THING_EVENT_FIRE_DAMAGE, "1d4");
+  tp_damage_set(tp, THING_EVENT_FIRE_DAMAGE, "1d3");
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_corpse_on_death);
@@ -53,7 +53,6 @@ auto tp_load_laser_1() -> bool
   tp_name_pluralize_set(tp, "beams of light");
   tp_name_short_set(tp, "light beam");
   tp_priority_set(tp, THING_PRIORITY_WEAPON);
-  tp_speed_set(tp, 800);
   tp_temperature_initial_set(tp, 500); // celsius
   tp_weight_set(tp, WEIGHT_NONE);      // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_WEAPON);

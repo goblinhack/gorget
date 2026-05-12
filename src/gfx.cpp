@@ -153,7 +153,7 @@ static void gfx_init_font_ui()
       "nothing",
   };
 
-  tile_load_arr_sprites("data/fonts/6x8.tga", "font_ui", UI_FONT_WIDTH, UI_FONT_HEIGHT, ARRAY_SIZE(tiles), tiles);
+  tile_load_arr("data/fonts/6x8.tga", "font_ui", UI_FONT_WIDTH, UI_FONT_HEIGHT, ARRAY_SIZE(tiles), tiles);
 }
 
 static void gfx_ui_init_0()
@@ -3853,16 +3853,23 @@ static void gfx_init_tiles_laser_1()
       "laser_1.15.15", // newline
   };
 
-  tile_load_arr("data/gfx/tiles_laser_1.tga", "laser_1", TILE_WIDTH, TILE_HEIGHT, ARRAY_SIZE(tiles), tiles);
+  tile_load_arr_sprites("data/gfx/tiles_laser_1.tga", "laser_1", TILE_WIDTH, TILE_HEIGHT, ARRAY_SIZE(tiles), tiles);
 }
 
 void gfx_init()
 {
   gfx_init_font_ui();
 
-  // begin sort marker1 {
+  // ##############################################################################
+  // NOTE: use tile_load_arr_sprites for sprites
+  // ##############################################################################
   gfx_init_tiles_laser_1();
   gfx_init_tiles();
+  // ##############################################################################
+  // NOTE: use tile_load_arr_sprites for sprites
+  // ##############################################################################
+
+  // begin sort marker1 {
   gfx_ui_init_0();
   gfx_ui_init_1();
   gfx_ui_init_10();
