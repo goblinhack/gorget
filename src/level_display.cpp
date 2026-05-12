@@ -289,7 +289,7 @@ static void level_display_fbo(Gamep g, Levelsp v, Levelp l, Levelp level_below, 
     blit_flush();
 
     if (fbo == FBO_MAP_FG_OVERLAY) {
-      if (! wid_over) {
+      if (wid_over == nullptr) {
         if (game_state(g) == STATE_PLAYING) {
           level_display_cursor(g, v, l, fbo);
         }

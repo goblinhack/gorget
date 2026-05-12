@@ -33,13 +33,12 @@ auto tp_load_grass() -> bool
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // roll max to continue burning
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // roll max to continue burning
   tp_flag_set(tp, is_able_to_fall);
-  tp_priority_set(tp, THING_PRIORITY_FOLIAGE);
   tp_flag_set(tp, is_blit_centered);
-  tp_flag_set(tp, is_collision_circle_large);
   tp_flag_set(tp, is_blit_hit_outline_w_black_inside);
   tp_flag_set(tp, is_blit_if_has_seen);
   tp_flag_set(tp, is_blit_shown_in_chasms);
-  tp_flag_set(tp, is_burnable);    // is capable of being burned by fire
+  tp_flag_set(tp, is_burnable); // is capable of being burned by fire
+  tp_flag_set(tp, is_collision_circle_large);
   tp_flag_set(tp, is_combustible); // will continue to burn once on fire
   tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_crushable);
@@ -59,6 +58,7 @@ auto tp_load_grass() -> bool
   tp_name_long_set(tp, "grass");
   tp_name_pluralize_set(tp, "grasses");
   tp_name_short_set(tp, "grass");
+  tp_priority_set(tp, THING_PRIORITY_FOLIAGE);
   tp_temperature_burns_at_set(tp, 100); // celsius
   tp_temperature_damage_at_set(tp, 50); // celsius
   tp_temperature_initial_set(tp, 20);   // celsius

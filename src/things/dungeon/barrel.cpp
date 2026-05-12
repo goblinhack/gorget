@@ -117,9 +117,9 @@ auto tp_load_barrel() -> bool
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_obs_to_cursor_path);
-  tp_flag_set(tp, is_obs_to_laser);
   tp_flag_set(tp, is_obs_to_falling_onto);
   tp_flag_set(tp, is_obs_to_jumping_onto);
+  tp_flag_set(tp, is_obs_to_laser);
   tp_flag_set(tp, is_obs_to_movement);
   tp_flag_set(tp, is_obs_to_paths);
   tp_flag_set(tp, is_obs_to_spawning);

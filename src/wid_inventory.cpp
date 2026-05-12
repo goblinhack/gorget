@@ -37,7 +37,7 @@ void wid_inventory_mouse_over_begin(Gamep g, Widp w, int relx, int rely, int whe
   TRACE();
 
   for (auto &n : wid_item) {
-    if (n) {
+    if (n != nullptr) {
       if (n != wid_over) {
         wid_set_style(n, UI_WID_STYLE_SOLID_WHITE);
         wid_set_color(n, WID_COLOR_BG, GRAY20);

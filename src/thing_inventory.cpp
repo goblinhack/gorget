@@ -141,7 +141,7 @@ auto thing_inventory_remove(Gamep g, Levelsp v, Levelp l, Thingp drop_item, Thin
   //
   FOR_ALL_INVENTORY_SLOTS(g, v, l, carrier, slot, item)
   {
-    if (! item) {
+    if (item == nullptr) {
       continue;
     }
 

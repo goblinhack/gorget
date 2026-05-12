@@ -185,8 +185,8 @@ static void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp obstacle
   //
   // No overlapping lasers
   //
-  auto owner = thing_fired_by_get(g, v, l, me);
-  if (owner && (thing_fired_by_get(g, v, l, obstacle) == owner)) {
+  auto *owner = thing_fired_by_get(g, v, l, me);
+  if ((owner != nullptr) && (thing_fired_by_get(g, v, l, obstacle) == owner)) {
     return;
   }
 

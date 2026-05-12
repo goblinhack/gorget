@@ -72,7 +72,7 @@ auto thing_laser_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, cons
   // Create all the fragments of the laser
   //
   auto        laser_target_distance = ceil(distance);
-  const float avoid_gaps_in_tiles   = 0.94f;
+  const float avoid_gaps_in_tiles   = 0.94F;
   for (auto step = 0; step < laser_target_distance; step++) {
     if (0) {
       thing_topcon(me, "%f,%f step %d", laser_at.x, laser_at.y, step);
@@ -87,16 +87,15 @@ auto thing_laser_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, cons
     laser->angle = static_cast< f16 >(angle);
 
     bool last = (step == laser_target_distance - 1);
-    if (level_is_obs_to_laser(g, v, l, thing_at(laser))) {
+    if (level_is_obs_to_laser(g, v, l, thing_at(laser)) != nullptr) {
       last = true;
     }
 
     if (last) {
       laser->anim_index = THING_LASER_DISTANCE_MAX - 1;
       break;
-    } else {
-      laser->anim_index = step;
     }
+    laser->anim_index = step;
 
     //
     // Set up the next fragment

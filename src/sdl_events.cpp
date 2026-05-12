@@ -522,7 +522,8 @@ void sdl_key_repeat_events(Gamep g)
   bool right_held = static_cast< bool >(state[ sdlk_to_scancode(game_key_move_right_get(g)) ]);
 
   if (compiler_unused) {
-    con("movement %d/%d/%d/%d", up_held, down_held, left_held, right_held);
+    con("movement %d/%d/%d/%d", static_cast< int >(up_held), static_cast< int >(down_held), static_cast< int >(left_held),
+        static_cast< int >(right_held));
   }
 
   //

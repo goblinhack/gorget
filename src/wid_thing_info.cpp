@@ -352,7 +352,7 @@
   return printed_something;
 }
 
-void wid_thing_info_item_mouse_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
+static void wid_thing_info_item_mouse_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
 {
   TRACE();
 
@@ -370,7 +370,7 @@ void wid_thing_info_item_mouse_over_begin(Gamep g, Widp w, int relx, int rely, i
   (void) wid_rightbar_init(g);
 }
 
-void wid_thing_info_item_mouse_over_end(Gamep g, Widp w)
+static void wid_thing_info_item_mouse_over_end(Gamep g, Widp w)
 {
   TRACE();
 
@@ -388,7 +388,7 @@ void wid_thing_info_item_mouse_over_end(Gamep g, Widp w)
   (void) wid_rightbar_init(g);
 }
 
-[[nodiscard]] auto wid_thing_info_item_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_thing_info_item_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
 
@@ -410,11 +410,11 @@ void wid_thing_info_item_mouse_over_end(Gamep g, Widp w)
 //
 // Items
 //
-[[nodiscard]] auto wid_thing_info_items(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent) -> bool
+[[nodiscard]] static auto wid_thing_info_items(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent) -> bool
 {
   TRACE();
 
-  bool printed_something = false;
+  bool const printed_something = false;
 
   if (! thing_is_player(me)) {
     return printed_something;
@@ -423,7 +423,7 @@ void wid_thing_info_item_mouse_over_end(Gamep g, Widp w)
   FOR_ALL_INVENTORY_SLOTS(g, v, l, me, slot, item)
   {
     auto *item_tp = (item != nullptr) ? thing_tp(item) : nullptr;
-    if (! item_tp) {
+    if (item_tp == nullptr) {
       continue;
     }
 

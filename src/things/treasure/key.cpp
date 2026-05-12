@@ -40,12 +40,12 @@ auto tp_load_key() -> bool
   thing_on_death_set(tp, tp_key_on_death);
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
-  tp_flag_set(tp, is_collision_circle_large);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_hit_outline_w_black_inside);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_collectable);
+  tp_flag_set(tp, is_collision_circle_large);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_key);
   tp_flag_set(tp, is_light_source, 2);
@@ -53,13 +53,13 @@ auto tp_load_key() -> bool
   tp_flag_set(tp, is_metal);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
-  tp_priority_set(tp, THING_PRIORITY_OBJECT);
   tp_light_color_set(tp, "yellow");
   tp_name_a_or_an_set(tp, "a key");
   tp_name_apostrophize_set(tp, "keys'");
   tp_name_long_set(tp, "key");
   tp_name_pluralize_set(tp, "keys");
   tp_name_short_set(tp, "key");
+  tp_priority_set(tp, THING_PRIORITY_OBJECT);
   tp_weight_set(tp, WEIGHT_FEATHER); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   // end sort marker1 }

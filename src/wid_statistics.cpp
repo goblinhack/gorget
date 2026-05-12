@@ -116,7 +116,7 @@ static void wid_statistics_show_defeated(Gamep g, Levelsp v, Levelp l, Thingp pl
       continue;
     }
 
-    if (! player_struct->defeated[ i ]) {
+    if (player_struct->defeated[ i ] == 0u) {
       continue;
     }
 
@@ -168,7 +168,7 @@ static void wid_statistics_show_items(Gamep g, Levelsp v, Levelp l, Thingp playe
   FOR_ALL_INVENTORY_SLOTS(g, v, l, player, slot, item)
   {
     auto *item_tp = (item != nullptr) ? thing_tp(item) : nullptr;
-    if (! item_tp) {
+    if (item_tp == nullptr) {
       continue;
     }
 
