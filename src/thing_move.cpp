@@ -251,8 +251,8 @@ auto thing_get_direction(Gamep g, Levelsp v, Levelp l, Thingp me) -> fpoint
 {
   TRACE();
 
-  if (thing_is_projectile(me)) {
-    return thing_projectile_get_direction(g, v, l, me);
+  if (thing_is_projectile(me) || thing_is_laser(me)) {
+    return thing_weapon_get_direction(g, v, l, me);
   }
 
   switch (me->dir) {
@@ -276,7 +276,7 @@ auto thing_get_direction_grid(Gamep g, Levelsp v, Levelp l, Thingp me) -> bpoint
 {
   TRACE();
 
-  if (thing_is_projectile(me)) {
+  if (thing_is_projectile(me) || thing_is_laser(me)) {
     thing_err(me, "cannot return grid direction");
     return bpoint(0, 0);
   }

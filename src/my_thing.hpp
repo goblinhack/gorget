@@ -45,10 +45,11 @@ using ThingIdPacked = union {
 enum {
   THING_DESCRIBE_MAX = 10 // The number of things we can show in the rightbar
 };
-#define THING_MOVE_PATH_MAX (MAP_WIDTH + MAP_HEIGHT) // Player/monster move paths (max size uint8_t)
-#define THING_INVENTORY_MAX 26
-#define THING_MINION_MAX    10
-#define THING_WEAPON_MAX    16
+#define THING_MOVE_PATH_MAX      (MAP_WIDTH + MAP_HEIGHT) // Player/monster move paths (max size uint8_t)
+#define THING_INVENTORY_MAX      26
+#define THING_MINION_MAX         10
+#define THING_WEAPON_MAX         32
+#define THING_LASER_DISTANCE_MAX 16
 
 enum {
   TEXT_INCLUDE_OWNER = 1,
@@ -917,7 +918,10 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_weapon_detach_me_from_firer(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
 [[nodiscard]] auto thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, bpoint target) -> bool;
 [[nodiscard]] auto thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, fpoint target) -> bool;
-[[nodiscard]] auto thing_projectile_get_direction(Gamep g, Levelsp v, Levelp l, Thingp t) -> fpoint;
+[[nodiscard]] auto thing_laser_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, bpoint target) -> bool;
+[[nodiscard]] auto thing_laser_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, fpoint target) -> bool;
+[[nodiscard]] auto thing_weapon_get_direction(Gamep g, Levelsp v, Levelp l, Thingp t) -> fpoint;
+[[nodiscard]] auto thing_weapon_get_delta_from_dt(Gamep g, Thingp t, float dt) -> fpoint;
 [[nodiscard]] auto thing_weapon_kill_all_fired(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e) -> bool;
 [[nodiscard]] auto thing_push(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
 [[nodiscard]] auto thing_real_at(Thingp t) -> fpoint;
@@ -931,7 +935,8 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_score(Gamep g, Thingp t) -> int;
 [[nodiscard]] auto thing_shove_handle(Gamep g, Levelsp v, Levelp l, Thingp shover, bpoint at) -> bool;
 [[nodiscard]] auto thing_shove_to(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool;
-[[nodiscard]] auto thing_spawn_a_projectile(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp tp_projectile) -> Thingp;
+[[nodiscard]] auto thing_spawn_weapon(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp tp_projectile) -> Thingp;
+[[nodiscard]] auto thing_spawn_weapon(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const fpoint target) -> Thingp;
 [[nodiscard]] auto thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, const bpoint &at) -> Thingp;
 [[nodiscard]] auto thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &at) -> Thingp;
 [[nodiscard]] auto thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp spawner) -> Thingp;

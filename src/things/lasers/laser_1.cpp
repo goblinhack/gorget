@@ -39,8 +39,8 @@ auto tp_load_laser_1() -> bool
   tp_flag_set(tp, is_laser);
   tp_flag_set(tp, is_light_source, 2);
   tp_flag_set(tp, is_loggable);
+  tp_flag_set(tp, is_animated_sync_first);
   tp_flag_set(tp, is_physics_temperature);
-  tp_flag_set(tp, is_projectile);
   tp_flag_set(tp, is_removable_on_err);
   tp_flag_set(tp, is_tickable);
   tp_health_set(tp, "1");
@@ -59,14 +59,17 @@ auto tp_load_laser_1() -> bool
   tp_z_depth_set(tp, MAP_Z_DEPTH_WEAPON);
   // end sort marker1 }
 
-  auto delay = 200;
+  auto delay = 10;
 
-  for (auto frame = 0; frame < 16; frame++) {
-    for (auto step = 0; step < 16; step++) {
-      auto *tile = tile_find_mand(name + "." + std::to_string(frame) + "." + std::to_string(step));
+  for (auto frame = 0; frame < THING_LASER_DISTANCE_MAX; frame++) {
+    for (auto step = 0; step < THING_LASER_DISTANCE_MAX; step++) {
+      auto tile = tile_find_mand(name + "." + std::to_string(frame) + "." + std::to_string(step));
       tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
       tile_delay_ms_set(tile, delay);
       tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
+      if (frame == THING_LASER_DISTANCE_MAX - 1) {
+        tile_is_cleanup_on_end_of_anim_set(tile);
+      }
     }
   }
 

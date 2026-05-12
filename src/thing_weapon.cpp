@@ -13,8 +13,116 @@
 
 #include <cmath>
 
+auto thing_weapon_get_delta_from_dt(Gamep g, Thingp t, float dt) -> fpoint
+{
+  TRACE();
+
+  float s = 0;
+  float c = 0;
+  SINCOSF(t->angle, &s, &c);
+
+  auto *player = thing_player(g);
+  if (player == nullptr) [[unlikely]] {
+    CROAK("no player struct found");
+    return fpoint(0, 0);
+  }
+
+  const int   player_speed = thing_speed(player);
+  const float t_speed      = thing_speed(t);
+  const auto  tile_speed   = (t_speed / static_cast< float >(player_speed));
+
+  auto delta = fpoint(c * dt * tile_speed, s * dt * tile_speed);
+  if ((delta.x == 0) && (delta.y == 0)) {
+    CROAK("no delta for weapon sin %f cos %f dt %f tile_speed %f", s, c, dt, tile_speed);
+  }
+
+  return delta;
+}
+
+auto thing_weapon_get_direction(Gamep g, Levelsp v, Levelp l, Thingp t) -> fpoint
+{
+  TRACE();
+
+  return unit(thing_weapon_get_delta_from_dt(g, t, 1.0));
+}
+
 //
-// Is this projectile attached to a thing?
+// Add a weapon if possible
+//
+auto thing_spawn_weapon(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const fpoint target) -> Thingp
+{
+  TRACE();
+
+  if (me == nullptr) {
+    return nullptr;
+  }
+
+  if (! thing_is_able_to_fire_weapons(me)) {
+    thing_err(me, "thing trying to spawn projectiles when it cannot");
+    return nullptr;
+  }
+
+  if (what == nullptr) {
+    thing_err(me, "no weapon to spawn");
+    return nullptr;
+  }
+
+  auto *ext_struct = thing_ext_struct(g, me);
+  if (ext_struct == nullptr) {
+    thing_err(me, "missing ext struct");
+    return nullptr;
+  }
+
+  //
+  // Too many projectiles
+  //
+  if (thing_fired_by_count_get(g, v, l, me) >= thing_fired_weapon_count_max(me)) {
+    if (thing_is_player(me)) {
+      topcon("Trying to fire too many projectiles!");
+      return nullptr;
+    }
+    THING_DBG(me, "trying to fire too many projectiles");
+    return nullptr;
+  }
+
+  //
+  // Look for a free slot
+  //
+  FOR_ALL_WEAPON_SLOTS(g, v, l, me, slot, existing_projectile)
+  {
+    if (existing_projectile != nullptr) {
+      continue;
+    }
+
+    //
+    // Create the weapon. Should be no chance to fail now.
+    //
+    auto *new_projectile = thing_spawn(g, v, l, what, target);
+    if (new_projectile == nullptr) {
+      return nullptr;
+    }
+
+    memset(slot, 0, sizeof(*slot));
+    slot->weapon_id             = new_projectile->id;
+    new_projectile->fired_by_id = me->id;
+    ext_struct->weapons.count++;
+
+    THING_DBG(me, "spawned weapon %s", to_string(g, v, l, new_projectile).c_str());
+    THING_DBG(new_projectile, "new born weapon");
+
+    return new_projectile;
+  }
+
+  //
+  // Out of slots; but we checked above
+  //
+  thing_err(me, "unexpectedly out of weapon slots");
+
+  return nullptr;
+}
+
+//
+// Is this weapon attached to a thing?
 //
 auto thing_fired_by_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> Thingp
 {
@@ -74,39 +182,39 @@ auto thing_fired_by_count_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> int
 
   bool got_one = false;
 
-  FOR_ALL_WEAPON_SLOTS(g, v, l, me, slot, projectile)
+  FOR_ALL_WEAPON_SLOTS(g, v, l, me, slot, weapon)
   {
-    if (projectile == nullptr) {
+    if (weapon == nullptr) {
       continue;
     }
 
     if (specific_projectile != nullptr) {
-      if (projectile != specific_projectile) {
+      if (weapon != specific_projectile) {
         continue;
       }
     }
 
-    if (! static_cast< bool >(projectile->fired_by_id)) {
-      thing_err(me, "found detached projectile: %s", to_string(g, v, l, projectile).c_str());
+    if (! static_cast< bool >(weapon->fired_by_id)) {
+      thing_err(me, "found detached weapon: %s", to_string(g, v, l, weapon).c_str());
       return false;
     }
 
     if (ext_struct->weapons.count <= 0) {
-      thing_err(me, "has unexpected projectile count when detaching: %s", to_string(g, v, l, projectile).c_str());
+      thing_err(me, "has unexpected weapon count when detaching: %s", to_string(g, v, l, weapon).c_str());
       return false;
     }
 
     ext_struct->weapons.count--;
     memset(slot, 0, sizeof(*slot));
-    projectile->fired_by_id = 0;
+    weapon->fired_by_id = 0;
 
     if (e.event_type != THING_EVENT_NONE) {
-      THING_DBG(me, "kill projectile %s", to_string(g, v, l, projectile).c_str());
+      THING_DBG(me, "kill weapon %s", to_string(g, v, l, weapon).c_str());
       TRACE_INDENT();
-      thing_dead(g, v, l, projectile, e);
+      thing_dead(g, v, l, weapon, e);
       got_one = true;
     } else {
-      THING_DBG(me, "detach projectile %s", to_string(g, v, l, projectile).c_str());
+      THING_DBG(me, "detach weapon %s", to_string(g, v, l, weapon).c_str());
       got_one = true;
     }
   }
@@ -140,18 +248,18 @@ auto thing_weapon_kill_all_fired(Gamep g, Levelsp v, Levelp l, Thingp me, ThingE
 }
 
 //
-// Detach a projectile from its owner
+// Detach a weapon from its owner
 //
-static auto thing_weapon_detach_from_firer(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp projectile) -> bool
+static auto thing_weapon_detach_from_firer(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp weapon) -> bool
 {
   TRACE();
 
   ThingEvent e = {};
-  return thing_weapon_process_all(g, v, l, me, projectile, e);
+  return thing_weapon_process_all(g, v, l, me, weapon, e);
 }
 
 //
-// Detach a projectile from its firer
+// Detach a weapon from its firer
 //
 auto thing_weapon_detach_me_from_firer(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
 {
@@ -161,8 +269,8 @@ auto thing_weapon_detach_me_from_firer(Gamep g, Levelsp v, Levelp l, Thingp me) 
     return false;
   }
 
-  if (! thing_is_projectile(me)) {
-    thing_err(me, "non projectile trying to detach itself");
+  if (! thing_is_projectile(me) && ! thing_is_laser(me)) {
+    thing_err(me, "non weapon trying to detach itself");
     return false;
   }
 
@@ -189,7 +297,7 @@ void thing_dump_weapons(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 
   if (! thing_is_able_to_fire_weapons(me)) {
-    thing_err(me, "non owner trying to detach projectile");
+    thing_err(me, "non owner trying to detach weapon");
     return;
   }
 

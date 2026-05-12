@@ -780,11 +780,9 @@ auto player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what) ->
   }
 
   if (tp_is_laser(fire_what)) {
-#if 0
     if (! thing_laser_fire_at(g, v, l, me, fire_what, target)) {
       return false;
     }
-#endif
   } else {
     if (! thing_projectile_fire_at(g, v, l, me, fire_what, target)) {
       return false;

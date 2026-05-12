@@ -13,114 +13,6 @@
 
 #include <cmath>
 
-//
-// Add a projectile if possible
-//
-static auto thing_spawn_a_projectile(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const fpoint target) -> Thingp
-{
-  TRACE();
-
-  if (me == nullptr) {
-    return nullptr;
-  }
-
-  if (! thing_is_able_to_fire_weapons(me)) {
-    thing_err(me, "thing trying to spawn projectiles when it cannot");
-    return nullptr;
-  }
-
-  if (what == nullptr) {
-    thing_err(me, "no projectile to spawn");
-    return nullptr;
-  }
-
-  auto *ext_struct = thing_ext_struct(g, me);
-  if (ext_struct == nullptr) {
-    thing_err(me, "missing ext struct");
-    return nullptr;
-  }
-
-  //
-  // Too many projectiles
-  //
-  if (thing_fired_by_count_get(g, v, l, me) >= thing_fired_weapon_count_max(me)) {
-    if (thing_is_player(me)) {
-      topcon("Trying to fire too many projectiles!");
-      return nullptr;
-    }
-    THING_DBG(me, "trying to fire too many projectiles");
-    return nullptr;
-  }
-
-  //
-  // Look for a free slot
-  //
-  FOR_ALL_WEAPON_SLOTS(g, v, l, me, slot, existing_projectile)
-  {
-    if (existing_projectile != nullptr) {
-      continue;
-    }
-
-    //
-    // Create the projectile. Should be no chance to fail now.
-    //
-    auto *new_projectile = thing_spawn(g, v, l, what, target);
-    if (new_projectile == nullptr) {
-      return nullptr;
-    }
-
-    memset(slot, 0, sizeof(*slot));
-    slot->weapon_id             = new_projectile->id;
-    new_projectile->fired_by_id = me->id;
-    ext_struct->weapons.count++;
-
-    THING_DBG(me, "spawned projectile %s", to_string(g, v, l, new_projectile).c_str());
-    THING_DBG(new_projectile, "new born projectile");
-
-    return new_projectile;
-  }
-
-  //
-  // Out of slots; but we checked above
-  //
-  thing_err(me, "unexpectedly out of projectile slots");
-
-  return nullptr;
-}
-
-static auto thing_projectile_get_delta_from_dt(Gamep g, Thingp t, float dt) -> fpoint
-{
-  TRACE();
-
-  float s = 0;
-  float c = 0;
-  SINCOSF(t->angle, &s, &c);
-
-  auto *player = thing_player(g);
-  if (player == nullptr) [[unlikely]] {
-    CROAK("no player struct found");
-    return fpoint(0, 0);
-  }
-
-  const int   player_speed = thing_speed(player);
-  const float t_speed      = thing_speed(t);
-  const auto  tile_speed   = (t_speed / static_cast< float >(player_speed));
-
-  auto delta = fpoint(c * dt * tile_speed, s * dt * tile_speed);
-  if ((delta.x == 0) && (delta.y == 0)) {
-    CROAK("no delta for projectile sin %f cos %f dt %f tile_speed %f", s, c, dt, tile_speed);
-  }
-
-  return delta;
-}
-
-auto thing_projectile_get_direction(Gamep g, Levelsp v, Levelp l, Thingp t) -> fpoint
-{
-  TRACE();
-
-  return unit(thing_projectile_get_delta_from_dt(g, t, 1.0));
-}
-
 auto thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const fpoint target) -> bool
 {
   THING_DBG(me, "fire projectile");
@@ -137,17 +29,17 @@ auto thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what,
   float c     = 0;
   SINCOSF(angle, &s, &c);
 
-  fpoint proj_at = thing_real_at(me);
+  fpoint projectile_at = thing_real_at(me);
 
   //
   // Need a small fraction to account for comparisons of very similar floats where
   // we end up shooting the player upon firing
   //
   float const offset = thing_collision_radius(me) + tp_collision_radius(what) + THING_COLLISION_FIRING_OFFSET;
-  proj_at.x += c * offset;
-  proj_at.y += s * offset;
+  projectile_at.x += c * offset;
+  projectile_at.y += s * offset;
 
-  auto *projectile = thing_spawn_a_projectile(g, v, l, me, what, proj_at);
+  auto *projectile = thing_spawn_weapon(g, v, l, me, what, projectile_at);
   if (projectile == nullptr) {
     return false;
   }
@@ -157,7 +49,7 @@ auto thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what,
   //
   // Set my direction based on where I fire
   //
-  bpoint const dir    = make_bpoint(proj_at);
+  bpoint const dir    = make_bpoint(projectile_at);
   bpoint const source = thing_at(me);
   thing_set_dir_from_delta(me, dir.x - source.x, dir.y - source.y);
 
@@ -192,7 +84,7 @@ void thing_projectile_move(Gamep g, Levelsp v, Levelp l, Thingp me, float dt)
     return;
   }
 
-  auto delta = thing_projectile_get_delta_from_dt(g, me, dt);
+  auto delta = thing_weapon_get_delta_from_dt(g, me, dt);
   at.x += delta.x;
   at.y += delta.y;
 

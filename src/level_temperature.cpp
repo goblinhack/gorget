@@ -133,7 +133,7 @@ static void thing_heat_exchange(Levelsp v, Thingp a, Thingp b, int &finalT)
   // If we do turn on collision detection, for say water, then the water ends up boiling
   // off too soon. So the hack is just to ignore this case.
   //
-  if (thing_is_projectile(b)) {
+  if (thing_is_projectile(b) || thing_is_laser(b)) {
     if (! thing_is_collision_detection_enabled(a)) {
       return;
     }
@@ -169,7 +169,7 @@ static void thing_heat_exchange(Levelsp v, Thingp a, Thingp b, int &finalT)
   // tile of water, which seems wrong.
   //
   if ((static_cast< int >(m)) == 0) {
-    if (thing_is_gaseous(a) || thing_is_projectile(a)) {
+    if (thing_is_gaseous(a) || thing_is_projectile(a) || thing_is_laser(a)) {
       m = 1;
     }
     if ((static_cast< int >(m)) == 0) {

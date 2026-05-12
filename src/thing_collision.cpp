@@ -62,7 +62,7 @@ static void thing_collision_handle_dead_thing(Gamep g, Levelsp v, Levelp l, Thin
     return;
   }
 
-  if (thing_is_projectile(me)) {
+  if (thing_is_projectile(me) || thing_is_laser(me)) {
     auto *source     = me;
     auto  event_type = THING_EVENT_FIRE_DAMAGE;
     auto  damage     = tp_damage(thing_tp(source), event_type);
@@ -128,7 +128,7 @@ static void thing_collision_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thi
     return;
   }
 
-  if (thing_is_projectile(me)) {
+  if (thing_is_projectile(me) || thing_is_laser(me)) {
     auto *source     = me;
     auto  event_type = THING_EVENT_FIRE_DAMAGE;
     auto  damage     = tp_damage(thing_tp(source), event_type);
