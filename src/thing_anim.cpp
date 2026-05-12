@@ -162,7 +162,19 @@ void thing_anim_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, int ti
     //
     // Schedule for removal from the map and freeing
     //
+    // Could be dead already. Brazier.
+    //
     thing_is_scheduled_for_cleanup_set(g, v, l, t);
+
+    //
+    // If not dead (laser), make sure it is.
+    //
+    ThingEvent e {
+        .reason     = "by cleanup on end of anim",  //
+        .event_type = THING_EVENT_LIFESPAN_EXPIRED, //
+    };
+
+    thing_dead(g, v, l, t, e);
     return;
   }
 

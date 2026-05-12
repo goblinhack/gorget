@@ -345,7 +345,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool tick_is
     // speed 100  tick                tick
     // speed 50   tick
     //
-    if (! thing_is_moving(t) && ! thing_is_jumping(t) && ! thing_is_projectile(t)) {
+    if (! thing_is_moving(t) && ! thing_is_jumping(t) && ! thing_is_projectile(t) && ! thing_is_laser(t)) {
       continue;
     }
 
@@ -400,7 +400,6 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool tick_is
       // See if this monster can move again this tick
       //
       if (! tick_is_about_to_end && (v->time_step < 1.0)) {
-        THING_DBG(t, "additional move possible");
         thing_monst_tick(g, v, l, t);
       }
     }

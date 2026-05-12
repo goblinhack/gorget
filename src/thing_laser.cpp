@@ -71,8 +71,8 @@ auto thing_laser_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, cons
   //
   // Create all the fragments of the laser
   //
-  auto       laser_target_distance = floor(distance);
-  const auto avoid_gaps_in_tiles   = 0.94;
+  auto        laser_target_distance = floor(distance);
+  const float avoid_gaps_in_tiles   = 0.94f;
   for (auto step = 0; step < laser_target_distance; step++) {
     if (0) {
       thing_topcon(me, "%f,%f step %d", laser_at.x, laser_at.y, step);

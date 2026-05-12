@@ -74,7 +74,7 @@ static void thing_collision_handle_dead_thing(Gamep g, Levelsp v, Levelp l, Thin
         .source     = source,                      //
     };
 
-    THING_DBG(me, "collision with");
+    THING_DBG(me, "collision with dead thing");
     THING_DBG(obstacle, "me");
 
     thing_damage(g, v, l, obstacle, e);
@@ -206,7 +206,7 @@ void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
   //
   // Weapons handled seperately.
   //
-  if (thing_is_projectile(me)) {
+  if (thing_is_projectile(me) || thing_is_laser(me)) {
     return;
   }
 

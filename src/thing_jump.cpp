@@ -35,6 +35,10 @@ void thing_is_jumping_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_DEBUG();
 
+  if (! me->_is_jumping) {
+    return;
+  }
+
   THING_DBG(me, "jump end");
 
   thing_is_jumping_set(g, v, l, me, false);

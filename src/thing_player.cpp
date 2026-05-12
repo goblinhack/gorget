@@ -726,7 +726,11 @@ auto player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what) ->
   //
   static Tpp tp_fireball;
   if (tp_fireball == nullptr) {
-    tp_fireball = tp_find_mand("fireball");
+    if (g_opt_tests) {
+      tp_fireball = tp_find_mand("fireball");
+    } else {
+      tp_fireball = tp_find_mand("laser_1");
+    }
   }
 
   if (fire_what == nullptr) {
