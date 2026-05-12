@@ -838,7 +838,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused33(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused34(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused35(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused36(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_obs_to_laser(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused4(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused46(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused47(Thingp t) -> bool;

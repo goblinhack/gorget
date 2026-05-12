@@ -1061,10 +1061,10 @@ auto level_is_unused35_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> 
   return level_flag_cached(g, v, l, is_unused35, p);
 }
 
-auto level_is_unused36_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+auto level_is_obs_to_laser_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused36, p);
+  return level_flag_cached(g, v, l, is_obs_to_laser, p);
 }
 
 auto level_is_laser_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

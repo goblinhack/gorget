@@ -34,6 +34,7 @@ auto tp_load_pillar() -> bool
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_obs_to_cursor_path);
   tp_flag_set(tp, is_obs_to_falling_onto);
+  tp_flag_set(tp, is_obs_to_laser);
   tp_flag_set(tp, is_obs_to_fire);
   tp_flag_set(tp, is_obs_to_jump_over);
   tp_flag_set(tp, is_obs_to_jumping_onto);

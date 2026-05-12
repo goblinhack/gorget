@@ -87,6 +87,7 @@ auto tp_load_ghost_mob() -> bool
   tp_flag_set(tp, is_mob);
   tp_flag_set(tp, is_mob1);
   tp_flag_set(tp, is_obs_to_jumping_onto);
+  tp_flag_set(tp, is_obs_to_laser);
   tp_flag_set(tp, is_obs_to_movement);
   tp_flag_set(tp, is_obs_to_teleporting_onto);
   tp_flag_set(tp, is_physics_explosion);

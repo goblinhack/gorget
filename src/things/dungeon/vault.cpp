@@ -44,6 +44,7 @@ auto tp_load_vault() -> bool
     tp_flag_set(tp, is_collision_square);
     tp_flag_set(tp, is_meltable);
     tp_flag_set(tp, is_obs_to_cursor_path);
+    tp_flag_set(tp, is_obs_to_laser);
     tp_flag_set(tp, is_obs_to_explosion);
     tp_flag_set(tp, is_obs_to_falling_onto);
     tp_flag_set(tp, is_obs_to_fire);

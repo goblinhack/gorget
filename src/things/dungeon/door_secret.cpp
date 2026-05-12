@@ -66,6 +66,7 @@ auto tp_load_door_secret() -> bool
     tp_flag_set(tp, is_door_secret);
     tp_flag_set(tp, is_loggable);
     tp_flag_set(tp, is_obs_to_cursor_path);
+    tp_flag_set(tp, is_obs_to_laser);
     tp_flag_set(tp, is_obs_to_explosion);
     tp_flag_set(tp, is_obs_to_fire);
     tp_flag_set(tp, is_obs_to_spawning);
