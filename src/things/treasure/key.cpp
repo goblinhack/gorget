@@ -40,6 +40,7 @@ auto tp_load_key() -> bool
   thing_on_death_set(tp, tp_key_on_death);
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
+  tp_flag_set(tp, is_collision_circle_large);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_hit_outline_w_black_inside);
@@ -52,6 +53,7 @@ auto tp_load_key() -> bool
   tp_flag_set(tp, is_metal);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
+  tp_priority_set(tp, THING_PRIORITY_OBJECT);
   tp_light_color_set(tp, "yellow");
   tp_name_a_or_an_set(tp, "a key");
   tp_name_apostrophize_set(tp, "keys'");

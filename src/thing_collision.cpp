@@ -206,7 +206,7 @@ void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
   //
   // Weapons handled seperately.
   //
-  if (thing_is_projectile(me) || thing_is_laser(me)) {
+  if (thing_is_projectile(me)) {
     return;
   }
 
@@ -223,6 +223,10 @@ void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
   auto at = thing_at(me);
   FOR_ALL_THINGS_AT(g, v, l, obstacle, at)
   {
+    if (! thing_is_collision_detection_enabled(obstacle)) {
+      continue;
+    }
+
     bool stop = {};
     thing_collision_handle(g, v, l, obstacle, me, stop);
     if (stop) {

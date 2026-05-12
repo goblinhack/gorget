@@ -33,7 +33,9 @@ auto tp_load_grass() -> bool
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // roll max to continue burning
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // roll max to continue burning
   tp_flag_set(tp, is_able_to_fall);
+  tp_priority_set(tp, THING_PRIORITY_FOLIAGE);
   tp_flag_set(tp, is_blit_centered);
+  tp_flag_set(tp, is_collision_circle_large);
   tp_flag_set(tp, is_blit_hit_outline_w_black_inside);
   tp_flag_set(tp, is_blit_if_has_seen);
   tp_flag_set(tp, is_blit_shown_in_chasms);

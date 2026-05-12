@@ -16,8 +16,7 @@ static void tp_laser_1_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE();
 
-  // TODO
-  // thing_sound_play(g, v, l, t, "laser_1");
+  thing_sound_play(g, v, l, t, "laser");
 }
 
 auto tp_load_laser_1() -> bool
@@ -30,6 +29,7 @@ auto tp_load_laser_1() -> bool
   tp_damage_set(tp, THING_EVENT_FIRE_DAMAGE, "1d4");
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
+  tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_blit_if_has_seen);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_blit_shown_in_overlay);
@@ -59,7 +59,7 @@ auto tp_load_laser_1() -> bool
   tp_z_depth_set(tp, MAP_Z_DEPTH_WEAPON);
   // end sort marker1 }
 
-  auto delay = 10;
+  auto delay = 5;
 
   for (auto frame = 0; frame < THING_LASER_DISTANCE_MAX; frame++) {
     for (auto step = 0; step < THING_LASER_DISTANCE_MAX; step++) {
