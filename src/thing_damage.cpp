@@ -435,7 +435,7 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
   //
   // Flash the thing red
   //
-  thing_is_hit_set(g, v, l, me, THING_HIT_FLASH_TIME_MS);
+  thing_is_hit_set(g, v, l, me, THING_HIT_FLASH_ANIM_MS);
 
   THING_DBG(me, "post damage");
 }

@@ -55,14 +55,50 @@ enum {
   MAP_ZOOM_DEF      = 2,
   MAP_ZOOM_MAX      = 16,
 
-  THING_FALL_TILE_HEIGHT_MAX = 4,
-  THING_FALL_TIME_MS         = 250,
-  THING_IS_HOT_PULSE_MS      = 1500,
-  THING_IS_HIDDEN_PULSE_MS   = 1500,
-  THING_LUNGE_TIME_MS        = 150,
-  THING_HIT_FLASH_TIME_MS    = 250,
-  THING_CORPSES_PER_TILE     = 3,
-  THING_JUMP_HEIGHT_TILES    = 1,
+  //
+  // How long we allow the fall animation
+  //
+  THING_FALL_ANIM_MS = 250,
+
+  //
+  // If things are too hot, this is the animation pulse time
+  //
+  THING_IS_HOT_PULSE_ANIM_MS = 1500,
+
+  //
+  // If things are hidden, this is the animation pulse time
+  //
+  THING_IS_HIDDEN_PULSE_ANIM_MS = 1500,
+
+  //
+  // If things are hit, this is the animation pulse time
+  //
+  THING_HIT_FLASH_ANIM_MS = 250,
+
+  //
+  // Lunge duration
+  //
+  THING_LUNGE_ANIM_MS = 150,
+
+  //
+  // Don't let corpses pile up as each corpse take up a lot
+  //
+  THING_CORPSES_PER_TILE = 3,
+
+  //
+  // Jump animation height in tiles
+  //
+  THING_JUMP_HEIGHT_ANIM_TILES = 1,
+
+  //
+  // The number of things we can show in the rightbar
+  //
+  THING_DESCRIBE_MAX = 10,
+
+  //
+  // The laser is fixed length due to the animation.
+  //
+  THING_LASER_TILES_MAX = 16,
 
   POPUP_DURATION_MS          = 1000,
   POPUP_DURATION_TILE_HEIGHT = 3,

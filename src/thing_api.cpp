@@ -258,8 +258,8 @@ auto thing_is_falling_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> i
     return 0;
   }
 
-  if (t->_fall_ms + val > THING_FALL_TIME_MS) {
-    return t->_fall_ms = THING_FALL_TIME_MS;
+  if (t->_fall_ms + val > THING_FALL_ANIM_MS) {
+    return t->_fall_ms = THING_FALL_ANIM_MS;
   }
 
   return t->_fall_ms += val;

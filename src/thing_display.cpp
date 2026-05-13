@@ -138,7 +138,7 @@ void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, const bpoint &p, 
   if (t_maybe_null != nullptr) {
     if (thing_is_jumping(t_maybe_null)) {
       auto jump_height = static_cast< int >((sin(std::numbers::pi_v< float > * t_maybe_null->thing_dt)) * static_cast< float >(dh));
-      jump_height *= THING_JUMP_HEIGHT_TILES;
+      jump_height *= THING_JUMP_HEIGHT_ANIM_TILES;
       tl.y -= jump_height;
       br.y -= jump_height;
     }
@@ -311,7 +311,7 @@ static void thing_display_falling(Gamep g, Levelsp v, Levelp l, const bpoint &p,
 
   int const fall_height = thing_is_falling(t);
   int const dh
-      = static_cast< int >(((0.5F * (static_cast< float >(br.y - tl.y))) / static_cast< float >(THING_FALL_TIME_MS)) * fall_height);
+      = static_cast< int >(((0.5F * (static_cast< float >(br.y - tl.y))) / static_cast< float >(THING_FALL_ANIM_MS)) * fall_height);
 
   tl.x += dh;
   tl.y += dh;
@@ -393,7 +393,7 @@ static void thing_display_it(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp 
   // Flash red outline if hit
   //
   if (thing_is_hit(t_maybe_null) != 0) {
-    float a = (static_cast< float >(thing_is_hit(t_maybe_null)) / static_cast< float >(THING_HIT_FLASH_TIME_MS));
+    float a = (static_cast< float >(thing_is_hit(t_maybe_null)) / static_cast< float >(THING_HIT_FLASH_ANIM_MS));
     a *= 255.0F;
     a = std::min(static_cast< int >(a), 255);
 

@@ -286,7 +286,7 @@ void thing_fall_end_check(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // Fallen for long enough?
   //
-  bool fall_finished = thing_is_falling(t) >= THING_FALL_TIME_MS;
+  bool fall_finished = thing_is_falling(t) >= THING_FALL_ANIM_MS;
 
   //
   // If the player cannot see the thing fall, then complete the fall to avoid

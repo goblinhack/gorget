@@ -53,7 +53,7 @@ static void wid_button_pulse(Gamep g, Widp w)
 {
   TRACE();
 
-  auto pulse = THING_IS_HOT_PULSE_MS; // ms
+  auto pulse = THING_IS_HOT_PULSE_ANIM_MS; // ms
   auto mid   = pulse / 2;
   auto n     = time_ms_cached() % pulse;
 

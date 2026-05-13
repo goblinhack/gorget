@@ -116,7 +116,7 @@ static void wid_statistics_show_defeated(Gamep g, Levelsp v, Levelp l, Thingp pl
       continue;
     }
 
-    if (player_struct->defeated[ i ] == 0u) {
+    if (player_struct->defeated[ i ] == 0U) {
       continue;
     }
 

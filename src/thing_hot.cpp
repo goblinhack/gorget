@@ -66,7 +66,7 @@ void thing_hot_time_step(Gamep g, Levelsp v, Levelp l, Thingp me, int time_step)
     return;
   }
 
-  auto pulse = THING_IS_HOT_PULSE_MS; // ms
+  auto pulse = THING_IS_HOT_PULSE_ANIM_MS; // ms
   auto mid   = pulse / 2;
   auto n     = time_ms_cached() % pulse;
 

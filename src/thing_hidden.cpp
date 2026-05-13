@@ -13,7 +13,7 @@ void thing_hidden_time_step(Gamep g, Levelsp v, Levelp l, Thingp me, int time_st
 {
   TRACE();
 
-  auto pulse = THING_IS_HIDDEN_PULSE_MS; // ms
+  auto pulse = THING_IS_HIDDEN_PULSE_ANIM_MS; // ms
   auto mid   = pulse / 2;
   auto n     = time_ms_cached() % pulse;
 
