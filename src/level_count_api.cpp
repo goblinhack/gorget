@@ -1055,10 +1055,10 @@ auto level_count_is_unused34(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> u
   return level_count(g, v, l, is_unused34, p);
 }
 
-auto level_count_is_unused35(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+auto level_count_is_flat(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused35, p);
+  return level_count(g, v, l, is_flat, p);
 }
 
 auto level_count_is_obs_to_laser(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t

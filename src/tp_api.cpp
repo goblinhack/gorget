@@ -1055,10 +1055,10 @@ auto tp_is_unused34(Tpp tp) -> bool
   return tp_flag(tp, is_unused34) != 0;
 }
 
-auto tp_is_unused35(Tpp tp) -> bool
+auto tp_is_flat(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused35) != 0;
+  return tp_flag(tp, is_flat) != 0;
 }
 
 auto tp_is_obs_to_laser(Tpp tp) -> bool

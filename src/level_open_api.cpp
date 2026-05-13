@@ -1055,10 +1055,10 @@ auto level_open_is_unused34(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Th
   return level_open(g, v, l, is_unused34, p);
 }
 
-auto level_open_is_unused35(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+auto level_open_is_flat(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_open(g, v, l, is_unused35, p);
+  return level_open(g, v, l, is_flat, p);
 }
 
 auto level_open_is_obs_to_laser(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp

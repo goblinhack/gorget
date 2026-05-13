@@ -87,6 +87,7 @@ static std::initializer_list< std::string > tests = {
     "projectile_door_secret",
     "projectile_door_unlocked",
     "projectile_mob",
+    "projectile_over_grass",
     "projectile_over_water",
     "projectile_rock_turns_to_lava",
     "projectile_wall_turns_to_lava",

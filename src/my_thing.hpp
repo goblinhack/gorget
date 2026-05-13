@@ -718,6 +718,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_falling_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_is_fire(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_fireball(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_flat(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_flesh(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_floating(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_flying(Thingp t) -> bool;
@@ -838,7 +839,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused32(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused33(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused34(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused35(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused4(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused46(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused47(Thingp t) -> bool;

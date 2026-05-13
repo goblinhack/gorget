@@ -166,7 +166,7 @@
       list_macro(is_unused32, "is_unused32"),                                               /* newline */                                  \
       list_macro(is_unused33, "is_unused33"),                                               /* newline */                                  \
       list_macro(is_unused34, "is_unused34"),                                               /* newline */                                  \
-      list_macro(is_unused35, "is_unused35"),                                               /* newline */                                  \
+      list_macro(is_flat, "is_flat"),                                                       /* newline */                                  \
       list_macro(is_obs_to_laser, "is_obs_to_laser"),                                       /* newline */                                  \
       list_macro(is_laser, "is_laser"),                                                     /* newline */                                  \
       list_macro(is_stamina_visible, "is_stamina_visible"),                                 /* newline */                                  \
@@ -594,6 +594,7 @@ class Tp;
 [[nodiscard]] auto tp_is_extinguished_on_death(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_fire(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_fireball(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_flat(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_flesh(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_floating(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_floor(Tpp tp) -> bool;
@@ -711,7 +712,6 @@ class Tp;
 [[nodiscard]] auto tp_is_unused32(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused33(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused34(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused35(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused4(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused46(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused47(Tpp tp) -> bool;

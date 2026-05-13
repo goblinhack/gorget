@@ -174,12 +174,21 @@ static void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp obstacle
     return;
   }
 
+  if (! thing_is_collision_detection_enabled(obstacle)) {
+    return;
+  }
+
   if (thing_is_ethereal(me)) {
     return;
   }
 
-  if (! thing_is_collision_detection_enabled(obstacle)) {
-    return;
+  //
+  // Projectiles do not hit grass
+  //
+  if (thing_is_flat(obstacle)) {
+    if (thing_is_projectile(me) || thing_is_laser(me)) {
+      return;
+    }
   }
 
   //

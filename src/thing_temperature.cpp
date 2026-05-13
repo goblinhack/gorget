@@ -13,8 +13,6 @@ void thing_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thing
 {
   TRACE();
 
-  THING_DBG(t, "temperature handle: %d", n);
-
   //
   // If not burnt already, burn it if over the threshold temperature.
   //
@@ -27,6 +25,8 @@ void thing_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thing
   // Don't allow things to become superheated
   //
   n = std::min(Tmax * 2, n);
+
+  THING_DBG(t, "temperature handle: %d degrees (Tmax %d)", n, Tmax * 2);
 
   if ((Tb != 0) && (n >= Tb)) {
     if (thing_is_steam(source) || thing_is_water(source)) {

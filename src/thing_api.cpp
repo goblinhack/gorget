@@ -1645,7 +1645,7 @@ auto thing_is_unused34(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused34) != 0;
 }
 
-auto thing_is_unused35(Thingp t) -> bool
+auto thing_is_flat(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -1653,7 +1653,7 @@ auto thing_is_unused35(Thingp t) -> bool
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused35) != 0;
+  return tp_flag(thing_tp(t), is_flat) != 0;
 }
 
 auto thing_is_obs_to_laser(Thingp t) -> bool

@@ -76,6 +76,7 @@ auto tests_init() -> bool
   if (!test_load_projectile_door_secret()) { return false; }
   if (!test_load_projectile_door_unlocked()) { return false; }
   if (!test_load_projectile_mob()) { return false; }
+  if (!test_load_projectile_over_grass()) { return false; }
   if (!test_load_projectile_over_water()) { return false; }
   if (!test_load_projectile_rock_turns_to_lava()) { return false; }
   if (!test_load_projectile_wall_turns_to_lava()) { return false; }

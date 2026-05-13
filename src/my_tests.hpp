@@ -74,6 +74,7 @@ auto test_load_projectile_door_locked() -> bool;
 auto test_load_projectile_door_secret() -> bool;
 auto test_load_projectile_door_unlocked() -> bool;
 auto test_load_projectile_mob() -> bool;
+auto test_load_projectile_over_grass() -> bool;
 auto test_load_projectile_over_water() -> bool;
 auto test_load_projectile_rock_turns_to_lava() -> bool;
 auto test_load_projectile_wall_turns_to_lava() -> bool;

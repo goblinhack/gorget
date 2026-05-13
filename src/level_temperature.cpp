@@ -134,6 +134,13 @@ static void thing_heat_exchange(Levelsp v, Thingp a, Thingp b, int &finalT)
   // off too soon. So the hack is just to ignore this case.
   //
   if (thing_is_projectile(b) || thing_is_laser(b)) {
+    //
+    // Avoid grass catching fire due to lasers
+    //
+    if (thing_is_flat(a)) {
+      return;
+    }
+
     if (! thing_is_collision_detection_enabled(a)) {
       return;
     }

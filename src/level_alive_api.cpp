@@ -1055,10 +1055,10 @@ auto level_alive_is_unused34(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> T
   return level_alive(g, v, l, is_unused34, p);
 }
 
-auto level_alive_is_unused35(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+auto level_alive_is_flat(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_alive(g, v, l, is_unused35, p);
+  return level_alive(g, v, l, is_flat, p);
 }
 
 auto level_alive_is_obs_to_laser(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
