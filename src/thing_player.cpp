@@ -711,7 +711,7 @@ static void player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy)
   player_move_requests_reset(g, v);
 }
 
-auto player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what) -> bool
+auto player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what, bpoint target) -> bool
 {
   TRACE();
 
@@ -775,9 +775,11 @@ auto player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what) ->
     }
   }
 
-  bpoint target;
-
-  if (v->cursor_visible) {
+  if (target != bpoint(0, 0)) {
+    //
+    // Use the given target
+    //
+  } else if (v->cursor_visible) {
     target = v->cursor_at;
   } else {
     fpoint const delta = thing_get_direction(g, v, l, me);

@@ -126,6 +126,13 @@ static void level_tick_ok_to_end_check(Gamep g, Levelsp v, Levelp l)
           }
         }
       }
+
+      //
+      // Lasers only die when the anim ends
+      //
+      if (thing_is_wait_on_anim(t)) {
+        l->tick_wait_on_anim = true;
+      }
     }
   }
 }

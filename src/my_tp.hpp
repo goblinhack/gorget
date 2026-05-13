@@ -165,7 +165,7 @@
       list_macro(is_unused31, "is_unused31"),                                               /* newline */                                  \
       list_macro(is_unused32, "is_unused32"),                                               /* newline */                                  \
       list_macro(is_unused33, "is_unused33"),                                               /* newline */                                  \
-      list_macro(is_unused34, "is_unused34"),                                               /* newline */                                  \
+      list_macro(is_wait_on_anim, "is_wait_on_anim"),                                       /* newline */                                  \
       list_macro(is_flat, "is_flat"),                                                       /* newline */                                  \
       list_macro(is_obs_to_laser, "is_obs_to_laser"),                                       /* newline */                                  \
       list_macro(is_laser, "is_laser"),                                                     /* newline */                                  \
@@ -711,7 +711,6 @@ class Tp;
 [[nodiscard]] auto tp_is_unused31(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused32(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused33(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused34(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused4(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused46(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused47(Tpp tp) -> bool;
@@ -724,6 +723,7 @@ class Tp;
 [[nodiscard]] auto tp_is_vault(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_vision_180_degrees(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_vision_360_degrees(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_wait_on_anim(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_wait_on_dead_anim(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_wall(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_water(Tpp tp) -> bool;

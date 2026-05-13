@@ -1049,10 +1049,10 @@ auto level_is_unused33_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> 
   return level_flag_cached(g, v, l, is_unused33, p);
 }
 
-auto level_is_unused34_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+auto level_is_wait_on_anim_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused34, p);
+  return level_flag_cached(g, v, l, is_wait_on_anim, p);
 }
 
 auto level_is_flat_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

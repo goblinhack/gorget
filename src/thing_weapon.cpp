@@ -77,11 +77,13 @@ auto thing_spawn_weapon(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const
   // Too many projectiles
   //
   if (thing_fired_by_count_get(g, v, l, me) >= thing_fired_weapon_count_max(me)) {
+    THING_DBG(me, "trying to fire too many weapons");
+    thing_dump_weapons(g, v, l, me);
+
     if (thing_is_player(me)) {
-      topcon("Trying to fire too many projectiles!");
-      return nullptr;
+      topcon("Trying to fire too many weapons!");
     }
-    THING_DBG(me, "trying to fire too many projectiles");
+
     return nullptr;
   }
 

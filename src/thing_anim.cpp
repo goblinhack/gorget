@@ -179,7 +179,7 @@ void thing_anim_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, int ti
   }
 
   if (thing_is_laser(t)) {
-    t->anim_index += THING_LASER_DISTANCE_MAX;
+    t->anim_index += THING_LASER_TILES_MAX;
   } else {
     t->anim_index++;
   }

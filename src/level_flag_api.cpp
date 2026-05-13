@@ -1049,10 +1049,10 @@ auto level_is_unused33(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me)
   return level_flag(g, v, l, is_unused33, p, me);
 }
 
-auto level_is_unused34(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+auto level_is_wait_on_anim(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused34, p, me);
+  return level_flag(g, v, l, is_wait_on_anim, p, me);
 }
 
 auto level_is_flat(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp

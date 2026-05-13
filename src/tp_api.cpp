@@ -1049,10 +1049,10 @@ auto tp_is_unused33(Tpp tp) -> bool
   return tp_flag(tp, is_unused33) != 0;
 }
 
-auto tp_is_unused34(Tpp tp) -> bool
+auto tp_is_wait_on_anim(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused34) != 0;
+  return tp_flag(tp, is_wait_on_anim) != 0;
 }
 
 auto tp_is_flat(Tpp tp) -> bool

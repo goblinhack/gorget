@@ -20,7 +20,7 @@ static auto thing_laser_truncate(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint
 {
   auto        curr_at                 = thing_real_at(me);
   float const how_far_i_want_to_shoot = distance(curr_at, to);
-  float const how_far_i_can_shoot     = THING_LASER_DISTANCE_MAX;
+  float const how_far_i_can_shoot     = THING_LASER_TILES_MAX;
 
   if (how_far_i_want_to_shoot > how_far_i_can_shoot) {
     //
@@ -101,7 +101,7 @@ auto thing_laser_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, cons
     }
 
     if (last) {
-      laser->anim_index = THING_LASER_DISTANCE_MAX - 1;
+      laser->anim_index = THING_LASER_TILES_MAX - 1;
       break;
     }
     laser->anim_index = step;

@@ -45,11 +45,19 @@ using ThingIdPacked = union {
 enum {
   THING_DESCRIBE_MAX = 10 // The number of things we can show in the rightbar
 };
-#define THING_MOVE_PATH_MAX      (MAP_WIDTH + MAP_HEIGHT) // Player/monster move paths (max size uint8_t)
-#define THING_INVENTORY_MAX      26
-#define THING_MINION_MAX         10
-#define THING_WEAPON_MAX         32
-#define THING_LASER_DISTANCE_MAX 16
+#define THING_MOVE_PATH_MAX (MAP_WIDTH + MAP_HEIGHT) // Player/monster move paths (max size uint8_t)
+#define THING_INVENTORY_MAX 26
+#define THING_MINION_MAX    10
+
+//
+// The laser is fixed length due to the animation.
+//
+#define THING_LASER_TILES_MAX 16
+
+//
+// Enough for one laser or many projectiles.
+//
+#define THING_WEAPON_MAX THING_LASER_TILES_MAX
 
 enum {
   TEXT_INCLUDE_OWNER = 1,
@@ -547,7 +555,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto monst_state_to_string(MonstState state) -> std::string;
 [[nodiscard]] auto monst_state(Gamep g, Levelsp v, Levelp l, Thingp me) -> MonstState;
 [[nodiscard]] auto player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, const bpoint &to) -> bool;
-[[nodiscard]] auto player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp what = nullptr) -> bool;
+[[nodiscard]] auto player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp what = nullptr, bpoint target = bpoint(0, 0)) -> bool;
 [[nodiscard]] auto player_jump(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool;
 [[nodiscard]] auto player_mouse_down(Gamep, Levelsp, Levelp, int x, int y, uint32_t button) -> bool;
 [[nodiscard]] auto player_move_request(Gamep g, bool up, bool down, bool left, bool right, bool fire) -> bool;
@@ -838,7 +846,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused31(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused32(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused33(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused34(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused4(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused46(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused47(Thingp t) -> bool;
@@ -851,6 +858,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_vault(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_vision_180_degrees(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_vision_360_degrees(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_wait_on_anim(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_wait_on_dead_anim(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_wood(Thingp t) -> bool;
 [[nodiscard]] auto thing_jump_to(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to, bool warn = true) -> bool;
