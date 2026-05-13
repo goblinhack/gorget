@@ -14,6 +14,53 @@ using ThingCand  = std::pair< float, Thingp >;
 using ThingCands = std::vector< ThingCand >;
 
 //
+// Sort the candidates by distance / potentially add more cands if we can hit all
+// things on the same tile
+//
+static void thing_collision_sort_cands(Gamep g, Levelsp v, Levelp l, Thingp me, ThingCands &cands)
+{
+  TRACE();
+
+  if (compiler_unused) {
+    THING_DBG(me, "final cands: (pre sort)");
+    for (auto a_cand : cands) {
+      auto  o_dist = a_cand.first;
+      auto *o      = a_cand.second;
+
+      THING_DBG(o, "- sort_distance %f prio %u", o_dist, thing_priority(o));
+    }
+  }
+
+  //
+  // Sort by distance and priority
+  //
+  std::ranges::sort(cands, [](const ThingCand &a, const ThingCand &b) -> bool {
+    auto  d1 = a.first;
+    auto  d2 = b.first;
+    auto *t1 = a.second;
+    auto *t2 = b.second;
+
+    if (d1 == d2) {
+      return thing_priority(t1) < thing_priority(t2);
+    }
+    return d1 < d2;
+  });
+
+  //
+  // Dump the final cands
+  //
+  if (compiler_unused) {
+    THING_DBG(me, "final cands:");
+    for (auto a_cand : cands) {
+      auto  o_dist = a_cand.first;
+      auto *o      = a_cand.second;
+
+      THING_DBG(o, "- sort_distance %f prio %u", o_dist, thing_priority(o));
+    }
+  }
+}
+
+//
 // Handle common interactions for a thing at its location with a thing
 //
 static void thing_collision_handle_common(Gamep g, Levelsp v, Levelp l, Thingp obstacle, Thingp me, bool &stop)
@@ -242,9 +289,19 @@ void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
   // Common collision handling for player and anything else
   //
   auto at = thing_at(me);
+
+  ThingCands cands;
   FOR_ALL_THINGS_AT(g, v, l, obstacle, at)
   {
-    bool stop = {};
+    ThingCand const p = std::make_pair(0 /* dist */, obstacle);
+    cands.push_back(p);
+  }
+
+  thing_collision_sort_cands(g, v, l, me, cands);
+
+  for (auto cand : cands) {
+    auto obstacle = cand.second;
+    bool stop     = {};
     thing_collision_handle(g, v, l, obstacle, me, stop);
     if (stop) {
       return;
@@ -492,52 +549,6 @@ static void thing_collision_interpolated_expand_candidates(Gamep g, Levelsp v, L
 }
 
 //
-// Sort the candidates by distance / potentially add more cands if we can hit all
-// things on the same tile
-//
-static void thing_collision_interpolated_sort_candidates(Gamep g, Levelsp v, Levelp l, Thingp me, ThingCands &cands)
-{
-  TRACE();
-
-  if (compiler_unused) {
-    THING_DBG(me, "final cands: (pre sort)");
-    for (auto a_cand : cands) {
-      auto  o_dist = a_cand.first;
-      auto *o      = a_cand.second;
-
-      THING_DBG(o, "- sort_distance %f prio %u", o_dist, thing_priority(o));
-    }
-  }
-  //
-  // Sort by distance and priority
-  //
-  std::ranges::sort(cands, [](const ThingCand &a, const ThingCand &b) -> bool {
-    auto  d1 = a.first;
-    auto  d2 = b.first;
-    auto *t1 = a.second;
-    auto *t2 = b.second;
-
-    if (d1 == d2) {
-      return thing_priority(t1) < thing_priority(t2);
-    }
-    return d1 < d2;
-  });
-
-  //
-  // Dump the final cands
-  //
-  if (compiler_unused) {
-    THING_DBG(me, "final cands:");
-    for (auto a_cand : cands) {
-      auto  o_dist = a_cand.first;
-      auto *o      = a_cand.second;
-
-      THING_DBG(o, "- sort_distance %f prio %u", o_dist, thing_priority(o));
-    }
-  }
-}
-
-//
 // Process the collision candidate list
 //
 static auto thing_collision_interplolated_process_candidates(Gamep g, Levelsp v, Levelp l, Thingp me, const ThingCands &cands) -> bool
@@ -736,7 +747,7 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
     // Sort the candidates by distance / potentially add more cands if we can hit all
     // things on the same tile
     //
-    thing_collision_interpolated_sort_candidates(g, v, l, me, cands);
+    thing_collision_sort_cands(g, v, l, me, cands);
 
     //
     // Process the collision candidate list
