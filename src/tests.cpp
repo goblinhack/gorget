@@ -79,6 +79,7 @@ auto tests_init() -> bool
   if (!test_load_projectile_over_grass()) { return false; }
   if (!test_load_projectile_over_water()) { return false; }
   if (!test_load_projectile_rock_turns_to_lava()) { return false; }
+  if (!test_load_projectile_teleport()) { return false; }
   if (!test_load_projectile_wall_turns_to_lava()) { return false; }
   if (!test_load_projectile()) { return false; }
   if (!test_load_save_load()) { return false; }

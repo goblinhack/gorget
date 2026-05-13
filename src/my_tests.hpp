@@ -77,6 +77,7 @@ auto test_load_projectile_mob() -> bool;
 auto test_load_projectile_over_grass() -> bool;
 auto test_load_projectile_over_water() -> bool;
 auto test_load_projectile_rock_turns_to_lava() -> bool;
+auto test_load_projectile_teleport() -> bool;
 auto test_load_projectile_wall_turns_to_lava() -> bool;
 auto test_load_projectile() -> bool;
 auto test_load_save_load() -> bool;

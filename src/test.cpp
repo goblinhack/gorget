@@ -90,6 +90,7 @@ static std::initializer_list< std::string > tests = {
     "projectile_over_grass",
     "projectile_over_water",
     "projectile_rock_turns_to_lava",
+    "projectile_teleport",
     "projectile_wall_turns_to_lava",
     "projectile",
     "save_load",
