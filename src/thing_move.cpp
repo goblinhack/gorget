@@ -418,6 +418,12 @@ auto thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp me, bpoint to) -
   thing_at_set(g, v, new_level, me, to);
 
   //
+  // For newly spawned things, like a laser, we do not want to see interpolation else
+  // the thing will glide over the level to the new location
+  //
+  thing_moving_from_set(me, to);
+
+  //
   // Join the level.
   //
   (void) thing_push(g, v, new_level, me);

@@ -86,6 +86,15 @@ auto thing_laser_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, cons
 
     laser->angle = static_cast< f16 >(angle);
 
+    //
+    // Special handling for teleporting of a laser
+    //
+    if (level_is_teleport(g, v, l, thing_at(laser)) != nullptr) {
+      if (thing_teleport_handle(g, v, l, laser)) {
+        laser_at = thing_real_at(laser);
+      }
+    }
+
     bool last = (step == laser_target_distance - 1);
     if (level_is_obs_to_laser(g, v, l, thing_at(laser)) != nullptr) {
       last = true;
