@@ -32,9 +32,19 @@ auto tests_init() -> bool
   if (!test_load_jump_ok()) { return false; }
   if (!test_load_jump_truncated()) { return false; }
   if (!test_load_large_fire_water()) { return false; }
+  if (!test_load_laser_barrel_explosion()) { return false; }
+  if (!test_load_laser_border_turns_to_lava()) { return false; }
+  if (!test_load_laser_door_locked()) { return false; }
+  if (!test_load_laser_door_secret()) { return false; }
+  if (!test_load_laser_door_unlocked()) { return false; }
   if (!test_load_laser_mob()) { return false; }
   if (!test_load_laser_monst_chain()) { return false; }
+  if (!test_load_laser_over_grass()) { return false; }
+  if (!test_load_laser_over_water()) { return false; }
+  if (!test_load_laser_rock_turns_to_lava()) { return false; }
   if (!test_load_laser_teleport()) { return false; }
+  if (!test_load_laser_wall_turns_to_lava()) { return false; }
+  if (!test_load_laser()) { return false; }
   if (!test_load_mob_shove_into_lava()) { return false; }
   if (!test_load_mob_water()) { return false; }
   if (!test_load_mob()) { return false; }

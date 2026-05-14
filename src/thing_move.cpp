@@ -478,10 +478,6 @@ void thing_move_or_jump_finish(Gamep g, Levelsp v, Levelp l, Thingp me)
     return;
   }
 
-  if (thing_is_dead(me)) {
-    THING_DBG(me, "finish moving when dead");
-  }
-
   //
   // Need to complete the interpolation or the thing will appear to be on
   // the previous tile

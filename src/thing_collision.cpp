@@ -9,6 +9,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <set>
 
 using ThingCand  = std::pair< float, Thingp >;
 using ThingCands = std::vector< ThingCand >;
@@ -208,6 +209,29 @@ static void thing_collision_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thi
 }
 
 //
+// Check we only collide once between objects per tick
+//
+static bool thing_collision_handle_done_already(Gamep g, Levelsp v, Levelp l, Thingp obstacle, Thingp me)
+{
+  static std::set< std::pair< Thingp, Thingp > > collided;
+
+  static uint32_t collided_tick;
+
+  if (v->tick != collided_tick) {
+    collided.clear();
+    collided_tick = v->tick;
+  }
+
+  auto p = std::pair(obstacle, me);
+  if (collided.find(p) != collided.end()) {
+    return true;
+  }
+
+  collided.insert(p);
+  return false;
+}
+
+//
 // Handle interactions for a thing at its location
 //
 // Return true to continue with more collisions, or false to stop.
@@ -218,6 +242,10 @@ static void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp obstacle
   TRACE();
 
   if (obstacle == me) {
+    return;
+  }
+
+  if (thing_collision_handle_done_already(g, v, l, obstacle, me)) {
     return;
   }
 
@@ -265,11 +293,8 @@ static void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp obstacle
 //
 void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
-  TRACE();
-
-  if (compiler_unused) {
-    THING_DBG(me, "thing_collision_handle");
-  }
+  THING_DBG(me, "thing_collision_handle");
+  TRACE_INDENT();
 
   //
   // Weapons handled seperately.
@@ -691,11 +716,8 @@ static void thing_collision_handle_interpolated_delta(Gamep g, Levelsp v, Levelp
 //
 void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint old_at)
 {
-  TRACE();
-
-  if (compiler_unused) {
-    THING_DBG(me, "thing_collision_handle_interpolated");
-  }
+  THING_DBG(me, "thing_collision_handle_interpolated");
+  TRACE_INDENT();
 
   auto        at    = thing_real_at(me);
   float const dist  = distance(at, old_at);

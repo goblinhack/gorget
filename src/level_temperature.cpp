@@ -128,7 +128,7 @@ static void thing_heat_exchange(Levelsp v, Thingp a, Thingp b, int &finalT)
   //
   // Weapons only heat up things they hit.
   //
-  // Steam over water is handles as a special case.
+  // Steam over water is handled as a special case.
   //
   // If we do turn on collision detection, for say water, then the water ends up boiling
   // off too soon. So the hack is just to ignore this case.

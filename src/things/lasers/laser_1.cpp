@@ -17,6 +17,14 @@ static void tp_laser_1_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp t)
   TRACE();
 
   thing_sound_play(g, v, l, t, "laser");
+
+  if (level_is_water(g, v, l, thing_at(t)) != nullptr) {
+    if (level_is_steam(g, v, l, thing_at(t)) == nullptr) {
+      if (d100() < 50) {
+        (void) thing_spawn(g, v, l, tp_first(is_steam), thing_at(t));
+      }
+    }
+  }
 }
 
 auto tp_load_laser_1() -> bool

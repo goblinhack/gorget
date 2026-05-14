@@ -39,6 +39,7 @@ auto tp_load_rock() -> bool
     tp_flag_set(tp, is_blit_if_has_seen);
     tp_flag_set(tp, is_blit_obscures);
     tp_flag_set(tp, is_blit_per_pixel_lighting);
+    tp_flag_set(tp, is_loggable);
     tp_flag_set(tp, is_blit_shown_in_chasms);
     tp_flag_set(tp, is_collision_square);
     tp_flag_set(tp, is_meltable);
