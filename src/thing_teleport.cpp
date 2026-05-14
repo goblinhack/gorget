@@ -166,7 +166,7 @@ auto thing_teleport_handle(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
   THING_DBG(me, "teleport, try");
   TRACE_INDENT();
 
-  if (me->tick_teleport != 0u) {
+  if (me->tick_teleport != 0U) {
     if (me->tick_teleport == v->tick) {
       THING_DBG(me, "teleport, no; too frequent");
       return false;
