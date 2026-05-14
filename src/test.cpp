@@ -39,6 +39,8 @@ static std::initializer_list< std::string > tests = {
     "jump_ok",
     "jump_truncated",
     "large_fire_water",
+    "laser_mob",
+    "laser_monst_chain",
     "laser_teleport",
     "mob_shove_into_lava",
     "mob_shove_ok",

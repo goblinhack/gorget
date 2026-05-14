@@ -30,6 +30,8 @@ auto test_load_foliage_on_fire() -> bool;
 auto test_load_jump_ok() -> bool;
 auto test_load_jump_truncated() -> bool;
 auto test_load_large_fire_water() -> bool;
+auto test_load_laser_mob() -> bool;
+auto test_load_laser_monst_chain() -> bool;
 auto test_load_laser_teleport() -> bool;
 auto test_load_mob_shove_into_lava() -> bool;
 auto test_load_mob_water() -> bool;
