@@ -625,8 +625,8 @@ static auto room_flip_horiz(Gamep g, class Room *r) -> class Room *
     case CHARMAP_KEY :           return true;
     case CHARMAP_MOB1 :          return true;
     case CHARMAP_MOB2 :          return true;
-    case CHARMAP_MONST_EASY :    return true;
-    case CHARMAP_MONST_HARD :    return true;
+    case CHARMAP_MONST1 :        return true;
+    case CHARMAP_MONST2 :        return true;
     case CHARMAP_TRAP :          return true;
     case CHARMAP_TREASURE :      return true;
     case CHARMAP_WATER :         return true;
@@ -711,8 +711,8 @@ void room_add(Gamep g, int chance, int room_flags, const char *file, int line, .
         case CHARMAP_LAVA :          break;
         case CHARMAP_MOB1 :          break;
         case CHARMAP_MOB2 :          break;
-        case CHARMAP_MONST_EASY :    break;
-        case CHARMAP_MONST_HARD :    break;
+        case CHARMAP_MONST1 :        break;
+        case CHARMAP_MONST2 :        break;
         case CHARMAP_PILLAR :        break;
         case CHARMAP_TELEPORT :      break;
         case CHARMAP_TRAP :          break;
@@ -1334,8 +1334,8 @@ auto fragment_alt_add(Gamep g, int chance, uint32_t room_flags, const char *file
         case CHARMAP_LAVA :          break;
         case CHARMAP_MOB1 :          break;
         case CHARMAP_MOB2 :          break;
-        case CHARMAP_MONST_EASY :    break;
-        case CHARMAP_MONST_HARD :    break;
+        case CHARMAP_MONST1 :        break;
+        case CHARMAP_MONST2 :        break;
         case CHARMAP_PILLAR :        break;
         case CHARMAP_TELEPORT :      break;
         case CHARMAP_TRAP :          break;
@@ -1708,8 +1708,8 @@ auto fragment_add(Gamep g, int chance, const char *file, int line, ...) -> bool
         case CHARMAP_LAVA :          break;
         case CHARMAP_MOB1 :          break;
         case CHARMAP_MOB2 :          break;
-        case CHARMAP_MONST_EASY :    break;
-        case CHARMAP_MONST_HARD :    break;
+        case CHARMAP_MONST1 :        break;
+        case CHARMAP_MONST2 :        break;
         case CHARMAP_PILLAR :        break;
         case CHARMAP_TELEPORT :      break;
         case CHARMAP_TRAP :          break;
@@ -2067,8 +2067,8 @@ void level_fixed_add(Gamep g, int chance, LevelType level_type, const std::strin
         case CHARMAP_LAVA :          break;
         case CHARMAP_MOB1 :          break;
         case CHARMAP_MOB2 :          break;
-        case CHARMAP_MONST_EASY :    break;
-        case CHARMAP_MONST_HARD :    break;
+        case CHARMAP_MONST1 :        break;
+        case CHARMAP_MONST2 :        break;
         case CHARMAP_PILLAR :        break;
         case CHARMAP_TELEPORT :      break;
         case CHARMAP_TRAP :          break;
@@ -2296,8 +2296,8 @@ static void level_gen_dump(class LevelGen *lg, const char *msg)
   log("room count        : %d", lg->info.room_count);
   log("fragment count    : %d", lg->info.fragment_count);
   log("treasure count    : %d", lg->info.treasure_count);
-  log("monst count       : %d (normal:%d enhanced:%d)", lg->info.monst_count, lg->info.monst_group_easy_count,
-      lg->info.monst_group_hard_count);
+  log("monst count       : %d (group1:%d group2:%d)", lg->info.monst_count, lg->info.monst1_count, lg->info.monst2_count);
+  log("mob count         : %d (group1:%d group2:%d)", lg->info.mob_count, lg->info.mob1_count, lg->info.mob2_count);
   log("teleport count    : %d", lg->info.teleport_count);
   log("locked door count : %d", lg->info.door_locked_count);
   log("key count         : %d", lg->info.key_count);
@@ -2336,21 +2336,21 @@ static void level_gen_dump(class LevelGen *lg, const char *msg)
           case CHARMAP_WALL :
           case CHARMAP_VAULT :
           case CHARMAP_EMPTY :         break;
-          case CHARMAP_MOB1 :
           case CHARMAP_BARREL :
           case CHARMAP_BRAZIER :
           case CHARMAP_CORRIDOR :
+          case CHARMAP_FLOOR :
+          case CHARMAP_FOLIAGE :
+          case CHARMAP_GRASS :
+          case CHARMAP_MOB1 :
           case CHARMAP_MOB2 :
+          case CHARMAP_MONST1 :
+          case CHARMAP_MONST2 :
           case CHARMAP_PILLAR :
+          case CHARMAP_REEDS :
           case CHARMAP_TELEPORT :
           case CHARMAP_TRAP :
-          case CHARMAP_MONST_EASY :
-          case CHARMAP_MONST_HARD :
-          case CHARMAP_FLOOR :
           case CHARMAP_TREASURE :
-          case CHARMAP_FOLIAGE :
-          case CHARMAP_REEDS :
-          case CHARMAP_GRASS :
             if (lg->info.on_path_entrance_to_exit[ x ][ y ] != 0U) {
               c = '_';
             }
@@ -2865,8 +2865,8 @@ static void level_gen_single_large_blob_in_center(Gamep g, class LevelGen *lg, c
           case CHARMAP_LAVA :
           case CHARMAP_MOB1 :
           case CHARMAP_MOB2 :
-          case CHARMAP_MONST_EASY :
-          case CHARMAP_MONST_HARD :
+          case CHARMAP_MONST1 :
+          case CHARMAP_MONST2 :
           case CHARMAP_PILLAR :
           case CHARMAP_TELEPORT :
           case CHARMAP_TRAP :
@@ -2943,8 +2943,8 @@ static void level_gen_blob(Gamep g, class LevelGen *lg, char c)
           case CHARMAP_LAVA :
           case CHARMAP_MOB1 :
           case CHARMAP_MOB2 :
-          case CHARMAP_MONST_EASY :
-          case CHARMAP_MONST_HARD :
+          case CHARMAP_MONST1 :
+          case CHARMAP_MONST2 :
           case CHARMAP_PILLAR :
           case CHARMAP_TELEPORT :
           case CHARMAP_TRAP :
@@ -3173,8 +3173,8 @@ static auto level_proc_gen_create_rooms(Gamep g, LevelNum level_num) -> class Le
     case CHARMAP_KEY :           return true;
     case CHARMAP_MOB1 :          return true;
     case CHARMAP_MOB2 :          return true;
-    case CHARMAP_MONST_EASY :    return true;
-    case CHARMAP_MONST_HARD :    return true;
+    case CHARMAP_MONST1 :        return true;
+    case CHARMAP_MONST2 :        return true;
     case CHARMAP_TRAP :          return true;
     case CHARMAP_TREASURE :      return true;
     case CHARMAP_WATER :         return true;
@@ -3738,8 +3738,8 @@ static void level_gen_add_walls_around_rooms(class LevelGen *lg)
         case CHARMAP_KEY :
         case CHARMAP_MOB1 :
         case CHARMAP_MOB2 :
-        case CHARMAP_MONST_EASY :
-        case CHARMAP_MONST_HARD :
+        case CHARMAP_MONST1 :
+        case CHARMAP_MONST2 :
         case CHARMAP_PILLAR :
         case CHARMAP_TELEPORT :
         case CHARMAP_TRAP :
@@ -3929,8 +3929,8 @@ static void level_gen_add_foliage_around_secret_doors(Gamep g, class LevelGen *l
         case CHARMAP_MOB1 :
         case CHARMAP_MOB2 :
         case CHARMAP_DOOR_UNLOCKED :
-        case CHARMAP_MONST_EASY :
-        case CHARMAP_MONST_HARD :    break;
+        case CHARMAP_MONST1 :
+        case CHARMAP_MONST2 :        break;
         case CHARMAP_VAULT :
         case CHARMAP_DOOR_SECRET :
           for (int dy = -2; dy <= 2; dy++) {
@@ -4266,26 +4266,37 @@ static void level_gen_count_items(class LevelGen *lg)
 {
   TRACE();
 
-  lg->info.monst_count            = 0;
-  lg->info.monst_group_easy_count = 0;
-  lg->info.monst_group_hard_count = 0;
-  lg->info.treasure_count         = 0;
-  lg->info.teleport_count         = 0;
-  lg->info.door_locked_count      = 0;
-  lg->info.key_count              = 0;
+  lg->info.monst_count       = 0;
+  lg->info.monst1_count      = 0;
+  lg->info.monst2_count      = 0;
+  lg->info.mob_count         = 0;
+  lg->info.mob1_count        = 0;
+  lg->info.mob2_count        = 0;
+  lg->info.treasure_count    = 0;
+  lg->info.teleport_count    = 0;
+  lg->info.door_locked_count = 0;
+  lg->info.key_count         = 0;
 
   for (int y = 1; y < MAP_HEIGHT - 1; y++) {
     for (int x = 1; x < MAP_WIDTH - 1; x++) {
       auto c = lg->data[ x ][ y ].c;
 
       switch (c) {
-        case CHARMAP_MONST_EASY :
+        case CHARMAP_MONST1 :
           lg->info.monst_count++;
-          lg->info.monst_group_easy_count++;
+          lg->info.monst1_count++;
           break;
-        case CHARMAP_MONST_HARD :
+        case CHARMAP_MONST2 :
           lg->info.monst_count++;
-          lg->info.monst_group_hard_count++;
+          lg->info.monst2_count++;
+          break;
+        case CHARMAP_MOB1 :
+          lg->info.mob_count++;
+          lg->info.mob1_count++;
+          break;
+        case CHARMAP_MOB2 :
+          lg->info.mob_count++;
+          lg->info.mob2_count++;
           break;
         case CHARMAP_TREASURE : //
           lg->info.treasure_count++;
@@ -4338,9 +4349,9 @@ static void level_gen_add_missing_monsts_and_treasure(class LevelGen *lg, int nm
         }
 
         if (d100() < 90) {
-          lg->data[ x ][ y ].c = CHARMAP_MONST_EASY;
+          lg->data[ x ][ y ].c = CHARMAP_MONST1;
         } else {
-          lg->data[ x ][ y ].c = CHARMAP_MONST_HARD;
+          lg->data[ x ][ y ].c = CHARMAP_MONST2;
         }
         lg->info.monst_count++;
     }
@@ -4894,8 +4905,8 @@ static void level_gen_extend_bridges_do(Gamep g, class LevelGen *lg, int x, int 
     case CHARMAP_KEY :        break;
     case CHARMAP_MOB1 :       break;
     case CHARMAP_MOB2 :       break;
-    case CHARMAP_MONST_EASY : break;
-    case CHARMAP_MONST_HARD : break;
+    case CHARMAP_MONST1 :     break;
+    case CHARMAP_MONST2 :     break;
     case CHARMAP_PILLAR :     break;
     case CHARMAP_TELEPORT :   break;
     case CHARMAP_TRAP :       break;

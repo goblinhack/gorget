@@ -77,7 +77,6 @@ auto tp_load_kobalos_mob() -> bool
   tp_flag_set(tp, is_light_source, 3);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_mob);
-  tp_flag_set(tp, is_mob2);
   tp_flag_set(tp, is_obs_to_jumping_onto);
   tp_flag_set(tp, is_obs_to_laser);
   tp_flag_set(tp, is_obs_to_movement);
@@ -93,6 +92,7 @@ auto tp_load_kobalos_mob() -> bool
   tp_health_set(tp, "1d3+3");
   tp_light_color_set(tp, "green");
   tp_minion_max_set(tp, 5);
+  tp_monst_group_add(tp, MOB_GROUP2);
   tp_name_a_or_an_set(tp, "a kobalos mob");
   tp_name_apostrophize_set(tp, "kobalos mob'");
   tp_name_long_set(tp, "kobalos mob");

@@ -762,10 +762,9 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_mob(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_mob1(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_mob2(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_monst_group_easy(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_monst_group_hard(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_monst_group_mob(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_monst(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_monst1(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_monst2(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_needs_move_confirm(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_cursor_path(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_explosion(Thingp t) -> bool;

@@ -1129,7 +1129,7 @@ auto thing_is_monst(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_monst) != 0;
 }
 
-auto thing_is_monst_group_easy(Thingp t) -> bool
+auto thing_is_monst1(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -1137,10 +1137,10 @@ auto thing_is_monst_group_easy(Thingp t) -> bool
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_monst_group_easy) != 0;
+  return tp_flag(thing_tp(t), is_monst1) != 0;
 }
 
-auto thing_is_monst_group_hard(Thingp t) -> bool
+auto thing_is_monst2(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -1148,7 +1148,7 @@ auto thing_is_monst_group_hard(Thingp t) -> bool
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_monst_group_hard) != 0;
+  return tp_flag(thing_tp(t), is_monst2) != 0;
 }
 
 auto thing_is_obs_to_movement(Thingp t) -> bool
@@ -2792,17 +2792,6 @@ auto thing_is_corpse_on_death(Thingp t) -> bool
     return false;
   }
   return tp_flag(thing_tp(t), is_corpse_on_death) != 0;
-}
-
-auto thing_is_monst_group_mob(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_monst_group_mob) != 0;
 }
 
 auto thing_is_blit_if_has_seen(Thingp t) -> bool

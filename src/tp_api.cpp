@@ -635,22 +635,16 @@ auto tp_is_mob2(Tpp tp) -> bool
   return tp_flag(tp, is_mob2) != 0;
 }
 
-auto tp_is_monst_group_easy(Tpp tp) -> bool
+auto tp_is_monst1(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_monst_group_easy) != 0;
+  return tp_flag(tp, is_monst1) != 0;
 }
 
-auto tp_is_monst_group_hard(Tpp tp) -> bool
+auto tp_is_monst2(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_monst_group_hard) != 0;
-}
-
-auto tp_is_monst_group_mob(Tpp tp) -> bool
-{
-  TRACE_DEBUG();
-  return tp_flag(tp, is_monst_group_mob) != 0;
+  return tp_flag(tp, is_monst2) != 0;
 }
 
 auto tp_is_monst(Tpp tp) -> bool

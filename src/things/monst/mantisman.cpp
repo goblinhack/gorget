@@ -126,7 +126,7 @@ auto tp_load_mantisman() -> bool
   tp_flag_set(tp, is_vision_180_degrees);
   tp_health_set(tp, "2d6");
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
-  tp_monst_group_add(tp, MONST_GROUP_EASY);
+  tp_monst_group_add(tp, MONST_GROUP1);
   tp_name_a_or_an_set(tp, "a mantisman");
   tp_name_apostrophize_set(tp, "mantismans'");
   tp_name_long_set(tp, "mantisman");

@@ -123,7 +123,7 @@ auto tp_load_blitzhound() -> bool
   tp_flag_set(tp, is_vision_180_degrees);
   tp_health_set(tp, "2d4");
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
-  tp_monst_group_add(tp, MONST_GROUP_HARD);
+  tp_monst_group_add(tp, MONST_GROUP2);
   tp_name_a_or_an_set(tp, "a blitzhound");
   tp_name_apostrophize_set(tp, "blitzhounds'");
   tp_name_long_set(tp, "blitzhound");

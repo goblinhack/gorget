@@ -635,22 +635,16 @@ auto level_is_mob2(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> 
   return level_flag(g, v, l, is_mob2, p, me);
 }
 
-auto level_is_monst_group_easy(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+auto level_is_monst1(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_monst_group_easy, p, me);
+  return level_flag(g, v, l, is_monst1, p, me);
 }
 
-auto level_is_monst_group_hard(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+auto level_is_monst2(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_monst_group_hard, p, me);
-}
-
-auto level_is_monst_group_mob(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
-{
-  TRACE_DEBUG();
-  return level_flag(g, v, l, is_monst_group_mob, p, me);
+  return level_flag(g, v, l, is_monst2, p, me);
 }
 
 auto level_is_monst(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp

@@ -13,28 +13,36 @@ void level_count_items(Gamep g, Levelsp v, Levelp l)
 {
   TRACE();
 
-  l->info.monst_count            = 0;
-  l->info.monst_group_mob_count  = 0;
-  l->info.monst_group_easy_count = 0;
-  l->info.monst_group_hard_count = 0;
-  l->info.treasure_count         = 0;
-  l->info.teleport_count         = 0;
-  l->info.door_locked_count      = 0;
-  l->info.key_count              = 0;
+  l->info.monst_count       = 0;
+  l->info.monst1_count      = 0;
+  l->info.monst2_count      = 0;
+  l->info.mob_count         = 0;
+  l->info.mob1_count        = 0;
+  l->info.mob2_count        = 0;
+  l->info.treasure_count    = 0;
+  l->info.teleport_count    = 0;
+  l->info.door_locked_count = 0;
+  l->info.key_count         = 0;
 
   FOR_ALL_THINGS_ON_LEVEL_UNSAFE(g, v, l, t)
   {
     if (thing_is_monst(t)) {
       l->info.monst_count++;
     }
-    if (thing_is_monst_group_mob(t)) {
-      l->info.monst_group_mob_count++;
+    if (thing_is_monst1(t)) {
+      l->info.monst1_count++;
     }
-    if (thing_is_monst_group_easy(t)) {
-      l->info.monst_group_easy_count++;
+    if (thing_is_monst2(t)) {
+      l->info.monst2_count++;
     }
-    if (thing_is_monst_group_hard(t)) {
-      l->info.monst_group_hard_count++;
+    if (thing_is_mob(t)) {
+      l->info.mob_count++;
+    }
+    if (thing_is_mob1(t)) {
+      l->info.mob1_count++;
+    }
+    if (thing_is_mob2(t)) {
+      l->info.mob2_count++;
     }
     if (thing_is_treasure(t)) {
       l->info.treasure_count++;

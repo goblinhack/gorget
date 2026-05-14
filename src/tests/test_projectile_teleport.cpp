@@ -35,9 +35,12 @@
         "x........T..-.......-....!x"
         "x.........................x"
         "xxxxxxxxxxxxxxxxxxxxxxxxxxx";
-  Levelp  l      = nullptr;
-  Levelsp v      = game_test_init(g, &l, level_num, w, h, start.c_str());
-  bool    result = true;
+
+  Overrides overrides;
+  overrides[ 'G' ] = [](char c, bpoint p) -> Tpp { return tp_find_mand("kobalos_mob"); };
+  Levelp  l        = nullptr;
+  Levelsp v        = game_test_init(g, &l, level_num, w, h, start.c_str(), overrides);
+  bool    result   = true;
 
   auto *tp_fireball = tp_find_mand("fireball");
   tp_damage_set(tp_fireball, THING_EVENT_FIRE_DAMAGE, "100");

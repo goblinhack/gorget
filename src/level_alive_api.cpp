@@ -635,22 +635,16 @@ auto level_alive_is_mob2(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thing
   return level_alive(g, v, l, is_mob2, p);
 }
 
-auto level_alive_is_monst_group_easy(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+auto level_alive_is_monst1(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_alive(g, v, l, is_monst_group_easy, p);
+  return level_alive(g, v, l, is_monst1, p);
 }
 
-auto level_alive_is_monst_group_hard(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+auto level_alive_is_monst2(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_alive(g, v, l, is_monst_group_hard, p);
-}
-
-auto level_alive_is_monst_group_mob(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
-{
-  TRACE_DEBUG();
-  return level_alive(g, v, l, is_monst_group_mob, p);
+  return level_alive(g, v, l, is_monst2, p);
 }
 
 auto level_alive_is_monst(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp

@@ -100,8 +100,8 @@ void level_debug(Gamep g, Levelsp v, Levelp l)
     level_log(g, v, l, "exit at           : %d,%d", l->info.exit_at.x, l->info.exit_at.y);
     level_log(g, v, l, "fragment count    : %d", l->info.fragment_count);
     level_log(g, v, l, "treasure count    : %d", l->info.treasure_count);
-    level_log(g, v, l, "monst count       : %d (mob:%d easy:%d hard:%d)", l->info.monst_count, l->info.monst_group_mob_count,
-              l->info.monst_group_easy_count, l->info.monst_group_hard_count);
+    level_log(g, v, l, "monst count       : %d (group1:%d group2:%d)", l->info.monst_count, l->info.monst1_count, l->info.monst2_count);
+    level_log(g, v, l, "mob count         : %d (group1:%d group2:%d)", l->info.mob_count, l->info.mob1_count, l->info.mob2_count);
     level_log(g, v, l, "teleport count    : %d", l->info.teleport_count);
     level_log(g, v, l, "locked door count : %d", l->info.door_locked_count);
     level_log(g, v, l, "key count         : %d", l->info.key_count);

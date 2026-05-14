@@ -124,7 +124,7 @@ auto tp_load_glorp() -> bool
   tp_health_set(tp, "1d10+4");
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_light_color_set(tp, "green");
-  tp_monst_group_add(tp, MONST_GROUP_HARD);
+  tp_monst_group_add(tp, MONST_GROUP2);
   tp_name_a_or_an_set(tp, "a glorp");
   tp_name_apostrophize_set(tp, "glorps'");
   tp_name_long_set(tp, "glorp");

@@ -85,7 +85,6 @@ auto tp_load_ghost_mob() -> bool
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_mob_kill_minions_on_death);
   tp_flag_set(tp, is_mob);
-  tp_flag_set(tp, is_mob1);
   tp_flag_set(tp, is_obs_to_jumping_onto);
   tp_flag_set(tp, is_obs_to_laser);
   tp_flag_set(tp, is_obs_to_movement);
@@ -101,6 +100,7 @@ auto tp_load_ghost_mob() -> bool
   tp_health_set(tp, "1d3+2");
   tp_light_color_set(tp, "cyan");
   tp_minion_max_set(tp, 5);
+  tp_monst_group_add(tp, MOB_GROUP1);
   tp_name_a_or_an_set(tp, "a pile of bones");
   tp_name_apostrophize_set(tp, "pile of bones'");
   tp_name_long_set(tp, "pile of bones");

@@ -196,28 +196,28 @@ static auto level_populate_biome_dungeon(Gamep g, Levelsp v, Levelp l, class Lev
       lp.need_floor = true;
       tp            = lp.tp_grass;
       break;
-    case CHARMAP_MONST_EASY :
+    case CHARMAP_MONST1 :
       lp.need_floor = true;
       if (! lp.is_room_entrance) {
-        tp = tp_random_monst(g, v, l, MONST_GROUP_EASY);
+        tp = tp_random_monst(g, v, l, MONST_GROUP1);
       }
       break;
-    case CHARMAP_MONST_HARD :
+    case CHARMAP_MONST2 :
       lp.need_floor = true;
       if (! lp.is_room_entrance) {
-        tp = tp_random_monst(g, v, l, MONST_GROUP_HARD);
+        tp = tp_random_monst(g, v, l, MONST_GROUP2);
       }
       break;
     case CHARMAP_MOB1 :
       lp.need_floor = true;
       if (! lp.is_room_entrance) {
-        tp = tp_random(g, v, l, is_mob1);
+        tp = tp_random_monst(g, v, l, MOB_GROUP1);
       }
       break;
     case CHARMAP_MOB2 :
       lp.need_floor = true;
       if (! lp.is_room_entrance) {
-        tp = tp_random(g, v, l, is_mob2);
+        tp = tp_random_monst(g, v, l, MOB_GROUP2);
       }
       break;
     case CHARMAP_FIRE :
@@ -371,8 +371,8 @@ static auto level_populate_biome_bogland(Gamep g, Levelsp v, Levelp l, class Lev
     case CHARMAP_DOOR_LOCKED : [[fallthrough]];
     case CHARMAP_DOOR_SECRET : [[fallthrough]];
     case CHARMAP_GRASS :       [[fallthrough]];
-    case CHARMAP_MONST_EASY :  [[fallthrough]];
-    case CHARMAP_MONST_HARD :  [[fallthrough]];
+    case CHARMAP_MONST1 :      [[fallthrough]];
+    case CHARMAP_MONST2 :      [[fallthrough]];
     case CHARMAP_MOB1 :        [[fallthrough]];
     case CHARMAP_MOB2 :        [[fallthrough]];
     case CHARMAP_FIRE :        [[fallthrough]];
@@ -425,8 +425,8 @@ static auto level_populate_biome_nethervoid(Gamep g, Levelsp v, Levelp l, class 
     case CHARMAP_TRAP :          [[fallthrough]];
     case CHARMAP_DOOR_LOCKED :   [[fallthrough]];
     case CHARMAP_DOOR_SECRET :   [[fallthrough]];
-    case CHARMAP_MONST_EASY :    [[fallthrough]];
-    case CHARMAP_MONST_HARD :    [[fallthrough]];
+    case CHARMAP_MONST1 :        [[fallthrough]];
+    case CHARMAP_MONST2 :        [[fallthrough]];
     case CHARMAP_MOB1 :          [[fallthrough]];
     case CHARMAP_MOB2 :          [[fallthrough]];
     case CHARMAP_FIRE :          [[fallthrough]];
@@ -521,8 +521,8 @@ static auto level_populate_biome_graveyard(Gamep g, Levelsp v, Levelp l, class L
     case CHARMAP_TRAP :          [[fallthrough]];
     case CHARMAP_DOOR_LOCKED :   [[fallthrough]];
     case CHARMAP_DOOR_SECRET :   [[fallthrough]];
-    case CHARMAP_MONST_EASY :    [[fallthrough]];
-    case CHARMAP_MONST_HARD :    [[fallthrough]];
+    case CHARMAP_MONST1 :        [[fallthrough]];
+    case CHARMAP_MONST2 :        [[fallthrough]];
     case CHARMAP_MOB1 :          [[fallthrough]];
     case CHARMAP_MOB2 :          [[fallthrough]];
     case CHARMAP_FIRE :          [[fallthrough]];
@@ -610,8 +610,8 @@ static auto level_populate_biome_underhell(Gamep g, Levelsp v, Levelp l, class L
     case CHARMAP_TRAP :          [[fallthrough]];
     case CHARMAP_DOOR_LOCKED :   [[fallthrough]];
     case CHARMAP_DOOR_SECRET :   [[fallthrough]];
-    case CHARMAP_MONST_EASY :    [[fallthrough]];
-    case CHARMAP_MONST_HARD :    [[fallthrough]];
+    case CHARMAP_MONST1 :        [[fallthrough]];
+    case CHARMAP_MONST2 :        [[fallthrough]];
     case CHARMAP_MOB1 :          [[fallthrough]];
     case CHARMAP_MOB2 :          [[fallthrough]];
     case CHARMAP_FIRE :          [[fallthrough]];
