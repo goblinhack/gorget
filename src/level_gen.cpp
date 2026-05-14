@@ -60,8 +60,18 @@ static const int MAX_LEVEL_GEN_MIN_BRIDGE_LEN_CHANCE = 30;
 // Per level minimums
 //
 static const int MAX_LEVEL_GEN_MIN_TREASURE_PER_LEVEL = 6;
-static const int MAX_LEVEL_GEN_MIN_MONST_PER_LEVEL    = 10;
-static const int MAX_LEVEL_GEN_MIN_MONST_PLACE_TRY    = 100;
+
+//
+// Monster limits
+//
+static const int MAX_LEVEL_GEN_MIN_MONST_PER_LEVEL = 10;
+static const int MAX_LEVEL_GEN_MAX_MONST_PER_LEVEL = 12;
+static const int MAX_LEVEL_GEN_MIN_MONST_PLACE_TRY = 100;
+
+//
+// Mob limits
+//
+static const int MAX_LEVEL_GEN_MAX_MOB_PER_LEVEL = 4;
 
 //
 // How many times to try to replace part of the dungeon
@@ -4476,6 +4486,100 @@ static void level_gen_remove_additional_keys(Gamep g, class LevelGen *lg)
 }
 
 //
+// If too many monsts, remove one
+//
+static void level_gen_remove_additional_monsts_do(class LevelGen *lg)
+{
+  TRACE();
+
+  std::vector< bpoint > cands;
+
+  //
+  // Find floor tiles with floor space around them, candidates for placing items
+  //
+  for (int y = 1; y < MAP_HEIGHT - 1; y++) {
+    for (int x = 1; x < MAP_WIDTH - 1; x++) {
+      auto c = lg->data[ x ][ y ].c;
+
+      switch (c) {
+        case CHARMAP_MONST1 : cands.push_back(bpoint(x, y)); break;
+        case CHARMAP_MONST2 : cands.push_back(bpoint(x, y)); break;
+      }
+    }
+  }
+
+  if (cands.empty()) {
+    return;
+  }
+
+  auto cand                      = cands[ PCG_RAND() % cands.size() ];
+  lg->data[ cand.x ][ cand.y ].c = CHARMAP_FLOOR;
+}
+
+//
+// For secret doors, need to add a corresponding monst
+//
+static void level_gen_remove_additional_monsts(Gamep g, class LevelGen *lg)
+{
+  TRACE();
+
+  int tries = lg->info.monst_count;
+
+  tries -= MAX_LEVEL_GEN_MAX_MONST_PER_LEVEL;
+
+  while (tries-- > 0) {
+    level_gen_remove_additional_monsts_do(lg);
+  }
+}
+
+//
+// If too many mobs, remove one
+//
+static void level_gen_remove_additional_mobs_do(class LevelGen *lg)
+{
+  TRACE();
+
+  std::vector< bpoint > cands;
+
+  //
+  // Find floor tiles with floor space around them, candidates for placing items
+  //
+  for (int y = 1; y < MAP_HEIGHT - 1; y++) {
+    for (int x = 1; x < MAP_WIDTH - 1; x++) {
+      auto c = lg->data[ x ][ y ].c;
+
+      switch (c) {
+        case CHARMAP_MOB1 : cands.push_back(bpoint(x, y)); break;
+        case CHARMAP_MOB2 : cands.push_back(bpoint(x, y)); break;
+      }
+    }
+  }
+
+  if (cands.empty()) {
+    return;
+  }
+
+  auto cand                      = cands[ PCG_RAND() % cands.size() ];
+  lg->data[ cand.x ][ cand.y ].c = CHARMAP_FLOOR;
+}
+
+//
+// For secret doors, need to add a corresponding mob
+//
+static void level_gen_remove_additional_mobs(Gamep g, class LevelGen *lg)
+{
+  TRACE();
+
+  int tries = lg->info.mob_count;
+
+  tries -= MAX_LEVEL_GEN_MAX_MOB_PER_LEVEL;
+
+  while (tries-- > 0) {
+    level_gen_remove_additional_mobs_do(lg);
+  }
+}
+
+//
 // Try to add some more content
 //
 static void level_gen_add_missing_monsts_and_treasure(Gamep g, class LevelGen *lg)
@@ -5307,6 +5411,12 @@ static auto level_gen_create_proc_gen_level(Gamep g, Levelsp v, LevelNum level_n
   // If too many keys, remove some
   //
   level_gen_remove_additional_keys(g, lg);
+
+  //
+  // If too many monsters, remove some
+  //
+  level_gen_remove_additional_monsts(g, lg);
+  level_gen_remove_additional_mobs(g, lg);
 
   //
   // Hide doors
