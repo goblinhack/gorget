@@ -163,7 +163,7 @@
       list_macro(is_unused30, "is_unused30"),                                               /* newline */                                  \
       list_macro(is_unused31, "is_unused31"),                                               /* newline */                                  \
       list_macro(is_unused32, "is_unused32"),                                               /* newline */                                  \
-      list_macro(is_unused33, "is_unused33"),                                               /* newline */                                  \
+      list_macro(is_argusul, "is_argusul"),                                                 /* newline */                                  \
       list_macro(is_wait_on_anim, "is_wait_on_anim"),                                       /* newline */                                  \
       list_macro(is_flat, "is_flat"),                                                       /* newline */                                  \
       list_macro(is_obs_to_laser, "is_obs_to_laser"),                                       /* newline */                                  \
@@ -527,6 +527,7 @@ class Tp;
 [[nodiscard]] auto tp_is_animated_no_dir(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_animated_sync_first(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_animated(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_argusul(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_attackable_by_monst(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_attackable_by_player(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_barrel(Tpp tp) -> bool;
@@ -709,7 +710,6 @@ class Tp;
 [[nodiscard]] auto tp_is_unused30(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused31(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused32(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused33(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused4(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused46(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused47(Tpp tp) -> bool;

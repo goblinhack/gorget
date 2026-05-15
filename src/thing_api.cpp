@@ -1623,7 +1623,7 @@ auto thing_is_unused32(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused32) != 0;
 }
 
-auto thing_is_unused33(Thingp t) -> bool
+auto thing_is_argusul(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -1631,7 +1631,7 @@ auto thing_is_unused33(Thingp t) -> bool
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused33) != 0;
+  return tp_flag(thing_tp(t), is_argusul) != 0;
 }
 
 auto thing_is_wait_on_anim(Thingp t) -> bool

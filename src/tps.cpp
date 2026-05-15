@@ -15,6 +15,7 @@ auto templates_init() -> bool
   /* shell do */
   /* shell echo "  if (!$i()) { return false; }" */
   /* shell done */
+  if (!tp_load_argusul()) { return false; }
   if (!tp_load_barrel()) { return false; }
   if (!tp_load_blitzhound()) { return false; }
   if (!tp_load_border()) { return false; }

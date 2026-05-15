@@ -640,6 +640,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_animated_no_dir(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_animated_sync_first(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_animated(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_argusul(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_attackable_by_monst(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_attackable_by_player(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_barrel(Thingp t) -> bool;
@@ -840,7 +841,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused30(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused31(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused32(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused33(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused4(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused46(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused47(Thingp t) -> bool;

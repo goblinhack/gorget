@@ -1037,10 +1037,10 @@ auto level_alive_is_unused32(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> T
   return level_alive(g, v, l, is_unused32, p);
 }
 
-auto level_alive_is_unused33(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+auto level_alive_is_argusul(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_alive(g, v, l, is_unused33, p);
+  return level_alive(g, v, l, is_argusul, p);
 }
 
 auto level_alive_is_wait_on_anim(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp

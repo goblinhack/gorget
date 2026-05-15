@@ -13,6 +13,7 @@ auto templates_init() -> bool;
 /* shell do */
 /* shell echo "auto $i() -> bool;" */
 /* shell done */
+auto tp_load_argusul() -> bool;
 auto tp_load_barrel() -> bool;
 auto tp_load_blitzhound() -> bool;
 auto tp_load_border() -> bool;

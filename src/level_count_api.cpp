@@ -1037,10 +1037,10 @@ auto level_count_is_unused32(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> u
   return level_count(g, v, l, is_unused32, p);
 }
 
-auto level_count_is_unused33(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+auto level_count_is_argusul(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused33, p);
+  return level_count(g, v, l, is_argusul, p);
 }
 
 auto level_count_is_wait_on_anim(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
