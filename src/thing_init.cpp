@@ -82,7 +82,7 @@ auto thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &real_at) -> 
   (void) thing_value15_set(g, v, l, t, tp_value15_get(tp));
   (void) thing_value16_set(g, v, l, t, tp_value16_get(tp));
   (void) thing_value17_set(g, v, l, t, tp_value17_get(tp));
-  (void) thing_value18_set(g, v, l, t, tp_value18_get(tp));
+  (void) thing_distance_avoid_target_set(g, v, l, t, tp_distance_avoid_target_get(tp));
   (void) thing_value2_set(g, v, l, t, tp_value2_get(tp));
   (void) thing_value3_set(g, v, l, t, tp_value3_get(tp));
   (void) thing_value4_set(g, v, l, t, tp_value4_get(tp));

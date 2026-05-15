@@ -3768,7 +3768,7 @@ auto thing_value17_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
   }
   return t->_value17 -= val;
 }
-auto thing_value18(Thingp t) -> int
+auto thing_distance_avoid_target(Thingp t) -> int
 {
   TRACE_DEBUG();
 
@@ -3776,10 +3776,10 @@ auto thing_value18(Thingp t) -> int
     ERR("no thing pointer");
     return 0;
   }
-  return t->_value18;
+  return t->_distance_avoid_target;
 }
 
-auto thing_value18_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+auto thing_distance_avoid_target_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3787,10 +3787,10 @@ auto thing_value18_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
     ERR("no thing pointer");
     return 0;
   }
-  return t->_value18 = val;
+  return t->_distance_avoid_target = val;
 }
 
-auto thing_value18_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+auto thing_distance_avoid_target_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3798,10 +3798,10 @@ auto thing_value18_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
     ERR("no thing pointer");
     return 0;
   }
-  return t->_value18 += val;
+  return t->_distance_avoid_target += val;
 }
 
-auto thing_value18_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+auto thing_distance_avoid_target_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3809,10 +3809,10 @@ auto thing_value18_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
     ERR("no thing pointer");
     return 0;
   }
-  if (static_cast< int >(t->_value18) - val <= 0) {
-    return t->_value18 = 0;
+  if (static_cast< int >(t->_distance_avoid_target) - val <= 0) {
+    return t->_distance_avoid_target = 0;
   }
-  return t->_value18 -= val;
+  return t->_distance_avoid_target -= val;
 }
 
 auto thing_minion_max(Thingp t) -> int

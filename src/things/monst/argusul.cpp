@@ -28,15 +28,16 @@ static auto tp_argusul_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std
 {
   TRACE();
 
-  return                                                                                                         //
-      UI_INFO1_FMT_STR                                                                                           //
-      "Argusuls are floating many-eyed monsters that are impossible to sneak up on. \n"                          //
-      UI_INFO2_FMT_STR                                                                                           //
-      "Intelligent and fearful to behold, many opt wisely to travel in the opposite direction of an Argusul. \n" //
-      UI_INFO3_FMT_STR                                                                                           //
-      "Beware their central eye that is capable of firing a beam weapon. At you. \n"                             //
-      UI_INFO4_FMT_STR                                                                                           //
-      "It is rumoured that a greater Argusul lurks in the dungeon somewhere... \n";                              //
+  return                                                                                 //
+      UI_INFO1_FMT_STR                                                                   //
+      "Argusuls are floating many-eyed monsters that are impossible to sneak up on. \n"  //
+      UI_INFO2_FMT_STR                                                                   //
+      "Intelligent, fearful to behold, and immune to many forms of attack, it would be " //
+      "wise to travel in the opposite direction of an Argusul. \n"                       //
+      UI_INFO3_FMT_STR                                                                   //
+      "Beware their central eye that is capable of firing a beam weapon. At you. \n"     //
+      UI_INFO4_FMT_STR                                                                   //
+      "It is rumoured that a greater Argusul lurks in the dungeon somewhere... \n";      //
 }
 
 static auto tp_argusul_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at, Thingp t) -> ThingEnviron
@@ -80,27 +81,27 @@ auto tp_load_argusul() -> bool
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6"); // roll max to continue burning
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // roll max to continue burning
   tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d4");
+  tp_distance_avoid_target_set(tp, 3);
   tp_distance_vision_set(tp, 12);
   tp_flag_set(tp, is_able_to_lunge);
   tp_flag_set(tp, is_able_to_move_diagonally);
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
+  tp_flag_set(tp, is_argusul);
   tp_flag_set(tp, is_attackable_by_player);
   tp_flag_set(tp, is_biome_dungeon);
   tp_flag_set(tp, is_biome_graveyard);
   tp_flag_set(tp, is_biome_nethervoid);
-  tp_flag_set(tp, is_hit_when_dead);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_hit_outline_w_invis_inside);
   tp_flag_set(tp, is_blit_shown_in_chasms);
-  tp_flag_set(tp, is_argusul);
-  tp_flag_set(tp, is_floating);
-  tp_flag_set(tp, is_burnable); // is capable of being burned by fire
   tp_flag_set(tp, is_collision_circle_large);
   tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_flesh);
+  tp_flag_set(tp, is_floating);
   tp_flag_set(tp, is_health_visible);
+  tp_flag_set(tp, is_hit_when_dead);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_monst);
   tp_flag_set(tp, is_obs_to_jumping_onto);
@@ -112,6 +113,7 @@ auto tp_load_argusul() -> bool
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_vision_360_degrees);
   tp_health_set(tp, "3d4");
+  tp_is_immunity_add(tp, THING_EVENT_FIRE_DAMAGE);
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_monst_group_add(tp, MONST_GROUP2);
   tp_name_a_or_an_set(tp, "an argusul");
@@ -122,10 +124,9 @@ auto tp_load_argusul() -> bool
   tp_priority_set(tp, THING_PRIORITY_MONST);
   tp_score_value_set(tp, 5);
   tp_speed_set(tp, 25);
-  tp_temperature_burns_at_set(tp, 50);  // celsius
-  tp_temperature_damage_at_set(tp, 35); // celsius
-  tp_temperature_initial_set(tp, 20);   // celsius
-  tp_weight_set(tp, WEIGHT_HUMAN);      // grams
+  tp_temperature_damage_at_set(tp, 200); // celsius
+  tp_temperature_initial_set(tp, 20);    // celsius
+  tp_weight_set(tp, WEIGHT_HUMAN);       // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   // end sort marker1 }
 
@@ -133,14 +134,14 @@ auto tp_load_argusul() -> bool
 
   for (auto frame = 0; frame < 2; frame++) {
     auto *tile = tile_find_mand(name + std::string(".idle.") + std::to_string(frame));
-    tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
+    tile_size_set(tile, OUTLINE_TILE_WIDTH, OUTLINE_TILE_HEIGHT);
     tile_delay_ms_set(tile, delay);
     tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
   }
 
   for (auto frame = 0; frame < 1; frame++) {
     auto *tile = tile_find_mand(name + std::string(".dead.") + std::to_string(frame));
-    tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
+    tile_size_set(tile, OUTLINE_TILE_WIDTH, OUTLINE_TILE_HEIGHT);
     tile_delay_ms_set(tile, delay);
     tp_tiles_push_back(tp, THING_ANIM_DEAD, tile);
   }

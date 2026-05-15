@@ -1502,24 +1502,24 @@ auto tp_value17_get(Tpp tp) -> int
   return tp->value17;
 }
 
-void tp_value18_set(Tpp tp, int val)
+void tp_distance_avoid_target_set(Tpp tp, int val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
     tp_err(tp, "no thing template pointer");
     return;
   }
-  tp->value18 = val;
+  tp->distance_avoid_target = val;
 }
 
-auto tp_value18_get(Tpp tp) -> int
+auto tp_distance_avoid_target_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
     tp_err(tp, "no thing template pointer");
     return 0;
   }
-  return tp->value18;
+  return tp->distance_avoid_target;
 }
 
 void tp_score_value_set(Tpp tp, int val)
