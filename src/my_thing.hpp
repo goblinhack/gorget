@@ -22,6 +22,10 @@
 
 enum { MY_ITERS_MAX = 4 };
 
+//
+// NOTE: some places assume 32 bit pairs of things for creating 64 bit hashes
+// e.g. thing_collision_handle_done_already
+//
 using ThingIdPacked = union {
   struct {
     uint32_t val : 32;

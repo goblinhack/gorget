@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <cmath>
 #include <set>
+#include <unordered_set>
 
 using ThingCand  = std::pair< float, Thingp >;
 using ThingCands = std::vector< ThingCand >;
@@ -211,19 +212,21 @@ static void thing_collision_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thi
 //
 // Check we only collide once between objects per tick
 //
-static bool thing_collision_handle_done_already(Gamep g, Levelsp v, Levelp l, Thingp obstacle, Thingp me)
+static auto thing_collision_handle_done_already(Gamep g, Levelsp v, Levelp l, Thingp obstacle, Thingp me) -> bool
 {
-  static std::set< std::pair< Thingp, Thingp > > collided;
+  static std::unordered_set< uint64_t > collided;
 
+  //
+  // Reset each new tick
+  //
   static uint32_t collided_tick;
-
   if (v->tick != collided_tick) {
     collided.clear();
     collided_tick = v->tick;
   }
 
-  auto p = std::pair(obstacle, me);
-  if (collided.find(p) != collided.end()) {
+  uint64_t p = ((uint64_t) obstacle->id << 32) | me->id;
+  if (collided.contains(p)) {
     return true;
   }
 
