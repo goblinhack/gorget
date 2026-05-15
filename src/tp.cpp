@@ -576,7 +576,7 @@ auto tp_damage_random_type_get(Tpp tp) -> ThingEventType
 
   for (auto v = 0; v < THING_EVENT_ENUM_MAX; v++) {
     if (tp->damage[ v ].initialized) {
-      cands.push_back((ThingEventType) v);
+      cands.push_back(static_cast< ThingEventType >(v));
     }
   }
 

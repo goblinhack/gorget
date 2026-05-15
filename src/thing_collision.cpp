@@ -113,7 +113,7 @@ static void thing_collision_handle_dead_thing(Gamep g, Levelsp v, Levelp l, Thin
 
   if (thing_is_projectile(me) || thing_is_laser(me)) {
     auto *source     = me;
-    auto  source_tp  = thing_tp(source);
+    auto *source_tp  = thing_tp(source);
     auto  event_type = tp_damage_random_type_get(source_tp);
     auto  damage     = tp_damage(source_tp, event_type);
 
@@ -180,7 +180,7 @@ static void thing_collision_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thi
 
   if (thing_is_projectile(me) || thing_is_laser(me)) {
     auto *source     = me;
-    auto  source_tp  = thing_tp(source);
+    auto *source_tp  = thing_tp(source);
     auto  event_type = tp_damage_random_type_get(source_tp);
     auto  damage     = tp_damage(source_tp, event_type);
 
@@ -227,7 +227,7 @@ static auto thing_collision_handle_done_already(Gamep g, Levelsp v, Levelp l, Th
     collided_tick = v->tick;
   }
 
-  uint64_t p = ((uint64_t) obstacle->id << 32) | me->id;
+  uint64_t const p = (static_cast< uint64_t >(obstacle->id) << 32) | me->id;
   if (collided.contains(p)) {
     return true;
   }

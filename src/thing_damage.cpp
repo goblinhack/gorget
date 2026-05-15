@@ -28,8 +28,8 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
   if (it != nullptr) {
     auto by_the_thing = thing_name_long(g, v, l, it);
 
-    auto fired_by = thing_fired_by_get(g, v, l, it);
-    if (fired_by) {
+    auto *fired_by = thing_fired_by_get(g, v, l, it);
+    if (fired_by != nullptr) {
       by_the_thing = thing_name_apostrophize_the(g, v, l, fired_by) + " " + by_the_thing;
     }
 
