@@ -39,7 +39,10 @@ static void thing_killed_player(Gamep g, Levelsp v, Levelp l, ThingEvent &e)
         topcon(UI_IMPORTANT_FMT_STR "You die in the undrinkable depths from %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
       case THING_EVENT_EXPLOSION_DAMAGE : //
-        topcon(UI_IMPORTANT_FMT_STR "You die in blast from %s." UI_RESET_FMT, by_the_thing.c_str());
+        topcon(UI_IMPORTANT_FMT_STR "You die in the blast from %s." UI_RESET_FMT, by_the_thing.c_str());
+        break;
+      case THING_EVENT_LIGHT_DAMAGE : //
+        topcon(UI_IMPORTANT_FMT_STR "You die in the blinding light from %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
       case THING_EVENT_FIRE_DAMAGE : //
         if (thing_is_lava(it)) {
@@ -54,15 +57,15 @@ static void thing_killed_player(Gamep g, Levelsp v, Levelp l, ThingEvent &e)
           topcon(UI_IMPORTANT_FMT_STR "You are burnt by %s." UI_RESET_FMT, by_the_thing.c_str());
         }
         break;
-      case THING_EVENT_OPEN :             //
-      case THING_EVENT_NONE :             //
-      case THING_EVENT_FALL :             //
-      case THING_EVENT_THE_END :          //
-      case THING_EVENT_LIFESPAN_EXPIRED : //
-      case THING_EVENT_CARRIED :          //
-      case THING_EVENT_CARRIED_MERGED :   //
-      case THING_EVENT_MELT :             //
-      case THING_EVENT_ENUM_MAX :         //
+      case THING_EVENT_OPEN :             [[fallthrough]];
+      case THING_EVENT_NONE :             [[fallthrough]];
+      case THING_EVENT_FALL :             [[fallthrough]];
+      case THING_EVENT_THE_END :          [[fallthrough]];
+      case THING_EVENT_LIFESPAN_EXPIRED : [[fallthrough]];
+      case THING_EVENT_CARRIED :          [[fallthrough]];
+      case THING_EVENT_CARRIED_MERGED :   [[fallthrough]];
+      case THING_EVENT_MELT :             [[fallthrough]];
+      case THING_EVENT_ENUM_MAX : //
         ERR("unexpected event: %s", ThingEventType_to_string(e.event_type).c_str());
         break;
     }
@@ -96,13 +99,16 @@ static void thing_killed_player(Gamep g, Levelsp v, Levelp l, ThingEvent &e)
       case THING_EVENT_FIRE_DAMAGE : //
         topcon(UI_IMPORTANT_FMT_STR "You are burnt to death." UI_RESET_FMT);
         break;
+      case THING_EVENT_LIGHT_DAMAGE : //
+        topcon(UI_IMPORTANT_FMT_STR "You are blasted to death." UI_RESET_FMT);
+        break;
       case THING_EVENT_THE_END : //
         break;
-      case THING_EVENT_OPEN :           //
-      case THING_EVENT_CARRIED :        //
-      case THING_EVENT_CARRIED_MERGED : //
-      case THING_EVENT_MELT :           //
-      case THING_EVENT_ENUM_MAX :       //
+      case THING_EVENT_OPEN :           [[fallthrough]];
+      case THING_EVENT_CARRIED :        [[fallthrough]];
+      case THING_EVENT_CARRIED_MERGED : [[fallthrough]];
+      case THING_EVENT_MELT :           [[fallthrough]];
+      case THING_EVENT_ENUM_MAX : //
         ERR("unexpected event: %s", ThingEventType_to_string(e.event_type).c_str());
         break;
     }
@@ -148,17 +154,20 @@ static void thing_killed_by_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
       case THING_EVENT_FIRE_DAMAGE : //
         topcon("%s is burnt to death by %s.", the_thing.c_str(), by_player.c_str());
         break;
-      case THING_EVENT_CARRIED :        //
+      case THING_EVENT_LIGHT_DAMAGE : //
+        topcon("%s is blasted to death by %s.", the_thing.c_str(), by_player.c_str());
+        break;
+      case THING_EVENT_CARRIED : [[fallthrough]];
       case THING_EVENT_CARRIED_MERGED : //
         topcon("%s is carried by %s.", the_thing.c_str(), by_player.c_str());
         break;
-      case THING_EVENT_OPEN :             //
-      case THING_EVENT_NONE :             //
-      case THING_EVENT_THE_END :          //
-      case THING_EVENT_FALL :             //
-      case THING_EVENT_LIFESPAN_EXPIRED : //
-      case THING_EVENT_MELT :             //
-      case THING_EVENT_ENUM_MAX :         //
+      case THING_EVENT_OPEN :             [[fallthrough]];
+      case THING_EVENT_NONE :             [[fallthrough]];
+      case THING_EVENT_THE_END :          [[fallthrough]];
+      case THING_EVENT_FALL :             [[fallthrough]];
+      case THING_EVENT_LIFESPAN_EXPIRED : [[fallthrough]];
+      case THING_EVENT_MELT :             [[fallthrough]];
+      case THING_EVENT_ENUM_MAX : //
         ERR("unexpected event: %s", ThingEventType_to_string(e.event_type).c_str());
         break;
     }

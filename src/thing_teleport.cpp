@@ -65,7 +65,7 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
     return false;
   }
 
-  auto *other = PCG_RAND_one_of(teleports);
+  auto *other = pcg_rand_one_of(teleports);
 
   if (other != nullptr) {
     //

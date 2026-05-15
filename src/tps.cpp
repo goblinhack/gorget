@@ -47,7 +47,8 @@ auto templates_init() -> bool
   if (!tp_load_key()) { return false; }
   if (!tp_load_kobalos_mob()) { return false; }
   if (!tp_load_kobalos()) { return false; }
-  if (!tp_load_laser_1()) { return false; }
+  if (!tp_load_laser_fire()) { return false; }
+  if (!tp_load_laser_light()) { return false; }
   if (!tp_load_lava()) { return false; }
   if (!tp_load_level_closed()) { return false; }
   if (!tp_load_level_curr()) { return false; }

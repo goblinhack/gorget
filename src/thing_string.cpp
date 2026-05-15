@@ -129,6 +129,9 @@ auto to_death_reason_string(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &
     case THING_EVENT_FIRE_DAMAGE : //
       s += "burned";
       break;
+    case THING_EVENT_LIGHT_DAMAGE : //
+      s += "blasted";
+      break;
     case THING_EVENT_OPEN : //
       s += "opened";
       break;

@@ -108,9 +108,9 @@ auto tp_load_kobalos() -> bool
   tp_flag_set(tp, is_minion);
   tp_flag_set(tp, is_monst);
   tp_flag_set(tp, is_obs_to_jumping_onto);
+  tp_flag_set(tp, is_obs_to_laser);
   tp_flag_set(tp, is_obs_to_movement);
   tp_flag_set(tp, is_obs_to_teleporting_onto);
-  tp_flag_set(tp, is_obs_to_laser);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_removable_when_dead_on_err);

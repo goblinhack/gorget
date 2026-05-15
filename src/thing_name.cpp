@@ -6,7 +6,7 @@
 #include "my_game.hpp"
 #include "my_thing_inlines.hpp"
 
-auto thing_name_pluralize(Thingp t) -> std::string
+auto thing_name_pluralize(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
   TRACE();
 
@@ -20,7 +20,13 @@ auto thing_name_pluralize(Thingp t) -> std::string
   return out;
 }
 
-auto thing_name_apostrophize(Thingp t) -> std::string
+auto thing_name_pluralize_the(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
+{
+  TRACE();
+  return "the " + thing_name_pluralize(g, v, l, t);
+}
+
+auto thing_name_apostrophize(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
   TRACE();
 
@@ -32,6 +38,12 @@ auto thing_name_apostrophize(Thingp t) -> std::string
   }
 
   return out;
+}
+
+auto thing_name_apostrophize_the(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
+{
+  TRACE();
+  return "the " + thing_name_apostrophize(g, v, l, t);
 }
 
 auto thing_name_a_or_an(Thingp t) -> std::string
@@ -95,9 +107,9 @@ auto thing_name_long(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) -
   if ((f & TEXT_A_OR_AN) != 0) {
     out += thing_name_a_or_an(t);
   } else if ((f & TEXT_APOSTROPHIZE) != 0) {
-    out += thing_name_apostrophize(t);
+    out += thing_name_apostrophize(g, v, l, t);
   } else if ((f & TEXT_PLURALIZE) != 0) {
-    out += thing_name_pluralize(t);
+    out += thing_name_pluralize(g, v, l, t);
   } else {
     auto name = tp_name_long(tp);
     if ((g != nullptr) && thing_is_player(t)) {
@@ -166,9 +178,9 @@ auto thing_name_short(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) 
   if ((f & TEXT_A_OR_AN) != 0) {
     out += thing_name_a_or_an(t);
   } else if ((f & TEXT_APOSTROPHIZE) != 0) {
-    out += thing_name_apostrophize(t);
+    out += thing_name_apostrophize(g, v, l, t);
   } else if ((f & TEXT_PLURALIZE) != 0) {
-    out += thing_name_pluralize(t);
+    out += thing_name_pluralize(g, v, l, t);
   } else {
     auto name = tp_name_short(tp);
     if ((g != nullptr) && thing_is_player(t)) {

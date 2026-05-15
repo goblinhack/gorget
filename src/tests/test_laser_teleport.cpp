@@ -47,8 +47,8 @@
   Levelsp v      = game_test_init(g, &l, level_num, w, h, start.c_str());
   bool    result = true;
 
-  auto *tp_laser_1 = tp_find_mand("laser_1");
-  tp_damage_set(tp_laser_1, THING_EVENT_FIRE_DAMAGE, "100");
+  auto *tp_laser_fire = tp_find_mand("laser_fire");
+  tp_damage_set(tp_laser_fire, THING_EVENT_FIRE_DAMAGE, "100");
 
   auto *player = thing_player(g);
   if (player == nullptr) [[unlikely]] {
@@ -71,7 +71,7 @@
     TEST_LOG(t, "try: %d", tries);
     level_dump(g, v, l, w, h);
 
-    (void) player_fire(g, v, l, 1, 0, tp_laser_1, bpoint(13, 3));
+    (void) player_fire(g, v, l, 1, 0, tp_laser_fire, bpoint(13, 3));
     TRACE();
 
     if (tries == 0) {

@@ -15,9 +15,10 @@ private:
   int modifier {0}; // 1d6+2 (2)
 
   std::string hitdice;
-  bool        initialized {};
 
 public:
+  bool initialized {};
+
   [[nodiscard]] auto to_string() const -> std::string;
 
   Dice();

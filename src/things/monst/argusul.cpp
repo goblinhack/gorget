@@ -63,8 +63,8 @@ static bool tp_argusul_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thi
 
   auto target = thing_at(it);
   if (! adjacent(thing_at(me), target)) {
-    auto fire_what = tp_find_mand("laser_1");
-    if (d100() < 20) {
+    auto fire_what = tp_find_mand("laser_light");
+    if (d100() < 50) {
       (void) thing_laser_fire_at(g, v, l, me, fire_what, target);
     }
     return false; // prevent melee attack
@@ -97,7 +97,6 @@ auto tp_load_argusul() -> bool
   thing_description_set(tp, tp_argusul_description_get);
   thing_detail_set(tp, tp_argusul_detail_get);
   thing_on_attacking_set(tp, tp_argusul_on_attacking);
-  tp_flag_set(tp, is_able_to_fire_weapons);
   thing_on_death_set(tp, tp_argusul_on_death);
   thing_on_tick_begin_set(tp, tp_argusul_tick_begin);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6"); // roll max to continue burning
@@ -105,6 +104,8 @@ auto tp_load_argusul() -> bool
   tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d4");
   tp_distance_avoid_target_set(tp, 3);
   tp_distance_vision_set(tp, 12);
+  tp_fired_weapon_count_max_set(tp, THING_WEAPON_MAX);
+  tp_flag_set(tp, is_able_to_fire_weapons);
   tp_flag_set(tp, is_able_to_lunge);
   tp_flag_set(tp, is_able_to_move_diagonally);
   tp_flag_set(tp, is_animated_can_hflip);
@@ -127,11 +128,11 @@ auto tp_load_argusul() -> bool
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_monst);
   tp_flag_set(tp, is_obs_to_jumping_onto);
+  tp_flag_set(tp, is_obs_to_laser);
   tp_flag_set(tp, is_obs_to_movement);
   tp_flag_set(tp, is_obs_to_teleporting_onto);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
-  tp_flag_set(tp, is_obs_to_laser);
   tp_flag_set(tp, is_removable_when_dead_on_err);
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_vision_360_degrees);
@@ -140,14 +141,13 @@ auto tp_load_argusul() -> bool
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_monst_group_add(tp, MONST_GROUP2);
   tp_name_a_or_an_set(tp, "an argusul");
-  tp_name_apostrophize_set(tp, "argusuls'");
+  tp_name_apostrophize_set(tp, "argusul's");
   tp_name_long_set(tp, "argusul");
   tp_name_pluralize_set(tp, "argusuls");
   tp_name_short_set(tp, "argusul");
   tp_priority_set(tp, THING_PRIORITY_MONST);
   tp_score_value_set(tp, 5);
-  tp_speed_set(tp, 25);
-  tp_fired_weapon_count_max_set(tp, THING_WEAPON_MAX);
+  tp_speed_set(tp, 50);
   tp_temperature_damage_at_set(tp, 200); // celsius
   tp_temperature_initial_set(tp, 20);    // celsius
   tp_weight_set(tp, WEIGHT_HUMAN);       // grams

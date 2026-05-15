@@ -366,6 +366,7 @@ ENUM_DEF_H(THING_ANIM_ENUM, ThingAnim)
 #define THING_EVENT_ENUM(list_macro)                                                                                                       \
   CLANG_FORMAT_INDENT()                                             /* dummy line for clang indentation fixup */                           \
   list_macro(THING_EVENT_FIRE_DAMAGE, "fire damage"),               /* newline */                                                          \
+      list_macro(THING_EVENT_LIGHT_DAMAGE, "light damage"),         /* newline */                                                          \
       list_macro(THING_EVENT_HEAT_DAMAGE, "heat damage"),           /* newline */                                                          \
       list_macro(THING_EVENT_MELEE_DAMAGE, "melee damage"),         /* newline */                                                          \
       list_macro(THING_EVENT_WATER_DAMAGE, "water damage"),         /* newline */                                                          \
@@ -772,6 +773,7 @@ class Tp;
 [[nodiscard]] auto tp_value2_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_value3_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_value4_get(Tpp tp) -> int;
+[[nodiscard]] auto tp_damage_random_type_get(Tpp tp) -> ThingEventType;
 [[nodiscard]] auto tp_value5_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_value6_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_value7_get(Tpp tp) -> int;

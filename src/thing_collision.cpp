@@ -113,17 +113,18 @@ static void thing_collision_handle_dead_thing(Gamep g, Levelsp v, Levelp l, Thin
 
   if (thing_is_projectile(me) || thing_is_laser(me)) {
     auto *source     = me;
-    auto  event_type = THING_EVENT_FIRE_DAMAGE;
-    auto  damage     = tp_damage(thing_tp(source), event_type);
+    auto  source_tp  = thing_tp(source);
+    auto  event_type = tp_damage_random_type_get(source_tp);
+    auto  damage     = tp_damage(source_tp, event_type);
 
     ThingEvent e {
-        .reason     = "by projectile fire damage", //
-        .event_type = event_type,                  //
-        .damage     = damage,                      //
-        .source     = source,                      //
+        .reason     = "by weapon damage", //
+        .event_type = event_type,         //
+        .damage     = damage,             //
+        .source     = source,             //
     };
 
-    THING_DBG(me, "collision with dead thing");
+    THING_DBG(me, "weapon collision with dead thing");
     THING_DBG(obstacle, "me");
 
     thing_damage(g, v, l, obstacle, e);
@@ -179,17 +180,18 @@ static void thing_collision_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thi
 
   if (thing_is_projectile(me) || thing_is_laser(me)) {
     auto *source     = me;
-    auto  event_type = THING_EVENT_FIRE_DAMAGE;
-    auto  damage     = tp_damage(thing_tp(source), event_type);
+    auto  source_tp  = thing_tp(source);
+    auto  event_type = tp_damage_random_type_get(source_tp);
+    auto  damage     = tp_damage(source_tp, event_type);
 
     ThingEvent e {
-        .reason     = "by projectile fire damage", //
-        .event_type = event_type,                  //
-        .damage     = damage,                      //
-        .source     = source,                      //
+        .reason     = "by weapon damage", //
+        .event_type = event_type,         //
+        .damage     = damage,             //
+        .source     = source,             //
     };
 
-    THING_DBG(me, "collision with");
+    THING_DBG(me, "weapon collision with");
     THING_DBG(obstacle, "me");
 
     thing_damage(g, v, l, obstacle, e);

@@ -292,39 +292,47 @@
       continue;
     }
 
-    bool skip_showing_immunity_string = false;
+    bool show_string = false;
 
     switch (e) {
       case THING_EVENT_SHOVED : //
-        skip_showing_immunity_string = true;
+        show_string = false;
         break;
       case THING_EVENT_CRUSH : //
-        skip_showing_immunity_string = true;
+        show_string = false;
+        break;
+      case THING_EVENT_LIGHT_DAMAGE : //
+        show_string = true;
         break;
       case THING_EVENT_MELEE_DAMAGE : //
+        show_string = true;
         break;
       case THING_EVENT_HEAT_DAMAGE : //
+        show_string = true;
         break;
       case THING_EVENT_EXPLOSION_DAMAGE : //
+        show_string = true;
         break;
       case THING_EVENT_FIRE_DAMAGE : //
+        show_string = true;
         break;
       case THING_EVENT_WATER_DAMAGE : //
+        show_string = true;
         break;
-      case THING_EVENT_NONE :             //
-      case THING_EVENT_THE_END :          //
-      case THING_EVENT_MELT :             //
-      case THING_EVENT_OPEN :             //
-      case THING_EVENT_LIFESPAN_EXPIRED : //
-      case THING_EVENT_FALL :             //
-      case THING_EVENT_CARRIED :          //
-      case THING_EVENT_CARRIED_MERGED :   //
-      case THING_EVENT_ENUM_MAX :         //
-        skip_showing_immunity_string = true;
+      case THING_EVENT_NONE :             [[fallthrough]];
+      case THING_EVENT_THE_END :          [[fallthrough]];
+      case THING_EVENT_MELT :             [[fallthrough]];
+      case THING_EVENT_OPEN :             [[fallthrough]];
+      case THING_EVENT_LIFESPAN_EXPIRED : [[fallthrough]];
+      case THING_EVENT_FALL :             [[fallthrough]];
+      case THING_EVENT_CARRIED :          [[fallthrough]];
+      case THING_EVENT_CARRIED_MERGED :   [[fallthrough]];
+      case THING_EVENT_ENUM_MAX : //
+        show_string = false;
         break;
     }
 
-    if (skip_showing_immunity_string) {
+    if (! show_string) {
       continue;
     }
 

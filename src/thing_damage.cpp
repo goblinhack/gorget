@@ -26,7 +26,12 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
   game_popup_text_add(g, at.x, at.y, msg, RED);
 
   if (it != nullptr) {
-    auto by_the_thing = thing_name_long_the(g, v, l, it);
+    auto by_the_thing = thing_name_long(g, v, l, it);
+
+    auto fired_by = thing_fired_by_get(g, v, l, it);
+    if (fired_by) {
+      by_the_thing = thing_name_apostrophize_the(g, v, l, fired_by) + " " + by_the_thing;
+    }
 
     switch (e.event_type) {
       case THING_EVENT_SHOVED : //
@@ -45,7 +50,10 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
         topcon(UI_WARNING_FMT_STR "You suffer water damage from %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
       case THING_EVENT_EXPLOSION_DAMAGE : //
-        topcon(UI_WARNING_FMT_STR "You suffer blast damage from %s." UI_RESET_FMT, by_the_thing.c_str());
+        topcon(UI_WARNING_FMT_STR "You suffer concussive damage from %s." UI_RESET_FMT, by_the_thing.c_str());
+        break;
+      case THING_EVENT_LIGHT_DAMAGE : //
+        topcon(UI_WARNING_FMT_STR "You suffer dazzling damage from %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
       case THING_EVENT_FIRE_DAMAGE :
         if (thing_is_lava(it)) {
@@ -60,15 +68,15 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
           topcon(UI_WARNING_FMT_STR "You are burnt by %s." UI_RESET_FMT, by_the_thing.c_str());
         }
         break;
-      case THING_EVENT_NONE :             //
-      case THING_EVENT_OPEN :             //
-      case THING_EVENT_THE_END :          //
-      case THING_EVENT_LIFESPAN_EXPIRED : //
-      case THING_EVENT_FALL :             //
-      case THING_EVENT_CARRIED :          //
-      case THING_EVENT_CARRIED_MERGED :   //
-      case THING_EVENT_MELT :             //
-      case THING_EVENT_ENUM_MAX :         //
+      case THING_EVENT_NONE :             [[fallthrough]];
+      case THING_EVENT_OPEN :             [[fallthrough]];
+      case THING_EVENT_THE_END :          [[fallthrough]];
+      case THING_EVENT_LIFESPAN_EXPIRED : [[fallthrough]];
+      case THING_EVENT_FALL :             [[fallthrough]];
+      case THING_EVENT_CARRIED :          [[fallthrough]];
+      case THING_EVENT_CARRIED_MERGED :   [[fallthrough]];
+      case THING_EVENT_MELT :             [[fallthrough]];
+      case THING_EVENT_ENUM_MAX : //
         ERR("unexpected event: %s", ThingEventType_to_string(e.event_type).c_str());
         break;
     }
@@ -93,7 +101,10 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
         topcon(UI_WARNING_FMT_STR "You suffer water damage." UI_RESET_FMT);
         break;
       case THING_EVENT_EXPLOSION_DAMAGE : //
-        topcon(UI_WARNING_FMT_STR "You suffer blast damage." UI_RESET_FMT);
+        topcon(UI_WARNING_FMT_STR "You suffer explosion damage." UI_RESET_FMT);
+        break;
+      case THING_EVENT_LIGHT_DAMAGE : //
+        topcon(UI_WARNING_FMT_STR "You suffer dazzling damage." UI_RESET_FMT);
         break;
       case THING_EVENT_FIRE_DAMAGE : //
         topcon(UI_WARNING_FMT_STR "You are burnt." UI_RESET_FMT);
@@ -146,6 +157,9 @@ static void thing_damage_by_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
         break;
       case THING_EVENT_EXPLOSION_DAMAGE : //
         topcon("%s suffers blast damage from %s.", the_thing_name_long.c_str(), by_player.c_str());
+        break;
+      case THING_EVENT_LIGHT_DAMAGE : //
+        topcon("%s suffers dazzling damage from %s.", the_thing_name_long.c_str(), by_player.c_str());
         break;
       case THING_EVENT_FIRE_DAMAGE : //
         if (thing_is_burning(the_player)) {
@@ -248,7 +262,8 @@ static void thing_damage_cap(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent
 //
 void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
 {
-  TRACE();
+  THING_DBG(me, "%s: thing_damage", to_string(g, v, l, e).c_str());
+  TRACE_INDENT();
 
   auto *tp = thing_tp(me);
 
@@ -372,14 +387,16 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
           (void) thing_spawn(g, v, l, tp_first(is_steam), me);
         }
         break;
+      case THING_EVENT_LIGHT_DAMAGE : //
+        break;
       case THING_EVENT_EXPLOSION_DAMAGE : //
         break;
-      case THING_EVENT_OPEN :           //
-      case THING_EVENT_CARRIED :        //
-      case THING_EVENT_THE_END :        //
-      case THING_EVENT_CARRIED_MERGED : //
-      case THING_EVENT_MELT :           //
-      case THING_EVENT_ENUM_MAX :       //
+      case THING_EVENT_OPEN :           [[fallthrough]];
+      case THING_EVENT_CARRIED :        [[fallthrough]];
+      case THING_EVENT_THE_END :        [[fallthrough]];
+      case THING_EVENT_CARRIED_MERGED : [[fallthrough]];
+      case THING_EVENT_MELT :           [[fallthrough]];
+      case THING_EVENT_ENUM_MAX : //
         ERR("unexpected event: %s", ThingEventType_to_string(e.event_type).c_str());
         break;
     }
@@ -405,7 +422,7 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
         break;
       case THING_EVENT_MELEE_DAMAGE : //
         break;
-      case THING_EVENT_HEAT_DAMAGE : //
+      case THING_EVENT_HEAT_DAMAGE : [[fallthrough]];
       case THING_EVENT_FIRE_DAMAGE :
         //
         // Needed to allow things like projectiles to heat targets
@@ -418,13 +435,21 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
           }
         }
         break;
-      case THING_EVENT_WATER_DAMAGE :     //
+      case THING_EVENT_LIGHT_DAMAGE : //
+        break;
+      case THING_EVENT_WATER_DAMAGE : //
+        break;
       case THING_EVENT_EXPLOSION_DAMAGE : //
-      case THING_EVENT_OPEN :             //
-      case THING_EVENT_CARRIED :          //
-      case THING_EVENT_THE_END :          //
-      case THING_EVENT_CARRIED_MERGED :   //
-      case THING_EVENT_MELT :             //
+        break;
+      case THING_EVENT_OPEN : //
+        break;
+      case THING_EVENT_CARRIED : //
+        break;
+      case THING_EVENT_THE_END : //
+        break;
+      case THING_EVENT_CARRIED_MERGED : //
+        break;
+      case THING_EVENT_MELT : //
         break;
       case THING_EVENT_ENUM_MAX : //
         ERR("unexpected event: %s", ThingEventType_to_string(e.event_type).c_str());

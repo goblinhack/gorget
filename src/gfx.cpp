@@ -3800,60 +3800,148 @@ static void gfx_init_tiles()
   tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
 }
 
-static void gfx_init_tiles_laser_1()
+static void gfx_init_tiles_laser_fire()
 {
   const char *tiles[] = {
-      "laser_1.0.0",   "laser_1.0.1",  "laser_1.0.2",   "laser_1.0.3",   "laser_1.0.4",   "laser_1.0.5",   "laser_1.0.6",   "laser_1.0.7",
-      "laser_1.0.8",   "laser_1.0.9",  "laser_1.0.10",  "laser_1.0.11",  "laser_1.0.12",  "laser_1.0.13",  "laser_1.0.14",
-      "laser_1.0.15", // newline
-      "laser_1.1.0",   "laser_1.1.1",  "laser_1.1.2",   "laser_1.1.3",   "laser_1.1.4",   "laser_1.1.5",   "laser_1.1.6",   "laser_1.1.7",
-      "laser_1.1.8",   "laser_1.1.9",  "laser_1.1.10",  "laser_1.1.11",  "laser_1.1.12",  "laser_1.1.13",  "laser_1.1.14",
-      "laser_1.1.15", // newline
-      "laser_1.2.0",   "laser_1.2.1",  "laser_1.2.2",   "laser_1.2.3",   "laser_1.2.4",   "laser_1.2.5",   "laser_1.2.6",   "laser_1.2.7",
-      "laser_1.2.8",   "laser_1.2.9",  "laser_1.2.10",  "laser_1.2.11",  "laser_1.2.12",  "laser_1.2.13",  "laser_1.2.14",
-      "laser_1.2.15", // newline
-      "laser_1.3.0",   "laser_1.3.1",  "laser_1.3.2",   "laser_1.3.3",   "laser_1.3.4",   "laser_1.3.5",   "laser_1.3.6",   "laser_1.3.7",
-      "laser_1.3.8",   "laser_1.3.9",  "laser_1.3.10",  "laser_1.3.11",  "laser_1.3.12",  "laser_1.3.13",  "laser_1.3.14",
-      "laser_1.3.15", // newline
-      "laser_1.4.0",   "laser_1.4.1",  "laser_1.4.2",   "laser_1.4.3",   "laser_1.4.4",   "laser_1.4.5",   "laser_1.4.6",   "laser_1.4.7",
-      "laser_1.4.8",   "laser_1.4.9",  "laser_1.4.10",  "laser_1.4.11",  "laser_1.4.12",  "laser_1.4.13",  "laser_1.4.14",
-      "laser_1.4.15", // newline
-      "laser_1.5.0",   "laser_1.5.1",  "laser_1.5.2",   "laser_1.5.3",   "laser_1.5.4",   "laser_1.5.5",   "laser_1.5.6",   "laser_1.5.7",
-      "laser_1.5.8",   "laser_1.5.9",  "laser_1.5.10",  "laser_1.5.11",  "laser_1.5.12",  "laser_1.5.13",  "laser_1.5.14",
-      "laser_1.5.15", // newline
-      "laser_1.6.0",   "laser_1.6.1",  "laser_1.6.2",   "laser_1.6.3",   "laser_1.6.4",   "laser_1.6.5",   "laser_1.6.6",   "laser_1.6.7",
-      "laser_1.6.8",   "laser_1.6.9",  "laser_1.6.10",  "laser_1.6.11",  "laser_1.6.12",  "laser_1.6.13",  "laser_1.6.14",
-      "laser_1.6.15", // newline
-      "laser_1.7.0",   "laser_1.7.1",  "laser_1.7.2",   "laser_1.7.3",   "laser_1.7.4",   "laser_1.7.5",   "laser_1.7.6",   "laser_1.7.7",
-      "laser_1.7.8",   "laser_1.7.9",  "laser_1.7.10",  "laser_1.7.11",  "laser_1.7.12",  "laser_1.7.13",  "laser_1.7.14",
-      "laser_1.7.15", // newline
-      "laser_1.8.0",   "laser_1.8.1",  "laser_1.8.2",   "laser_1.8.3",   "laser_1.8.4",   "laser_1.8.5",   "laser_1.8.6",   "laser_1.8.7",
-      "laser_1.8.8",   "laser_1.8.9",  "laser_1.8.10",  "laser_1.8.11",  "laser_1.8.12",  "laser_1.8.13",  "laser_1.8.14",
-      "laser_1.8.15", // newline
-      "laser_1.9.0",   "laser_1.9.1",  "laser_1.9.2",   "laser_1.9.3",   "laser_1.9.4",   "laser_1.9.5",   "laser_1.9.6",   "laser_1.9.7",
-      "laser_1.9.8",   "laser_1.9.9",  "laser_1.9.10",  "laser_1.9.11",  "laser_1.9.12",  "laser_1.9.13",  "laser_1.9.14",
-      "laser_1.9.15", // newline
-      "laser_1.10.0",  "laser_1.10.1", "laser_1.10.2",  "laser_1.10.3",  "laser_1.10.4",  "laser_1.10.5",  "laser_1.10.6",  "laser_1.10.7",
-      "laser_1.10.8",  "laser_1.10.9", "laser_1.10.10", "laser_1.10.11", "laser_1.10.12", "laser_1.10.13", "laser_1.10.14",
-      "laser_1.10.15", // newline
-      "laser_1.11.0",  "laser_1.11.1", "laser_1.11.2",  "laser_1.11.3",  "laser_1.11.4",  "laser_1.11.5",  "laser_1.11.6",  "laser_1.11.7",
-      "laser_1.11.8",  "laser_1.11.9", "laser_1.11.10", "laser_1.11.11", "laser_1.11.12", "laser_1.11.13", "laser_1.11.14",
-      "laser_1.11.15", // newline
-      "laser_1.12.0",  "laser_1.12.1", "laser_1.12.2",  "laser_1.12.3",  "laser_1.12.4",  "laser_1.12.5",  "laser_1.12.6",  "laser_1.12.7",
-      "laser_1.12.8",  "laser_1.12.9", "laser_1.12.10", "laser_1.12.11", "laser_1.12.12", "laser_1.12.13", "laser_1.12.14",
-      "laser_1.12.15", // newline
-      "laser_1.13.0",  "laser_1.13.1", "laser_1.13.2",  "laser_1.13.3",  "laser_1.13.4",  "laser_1.13.5",  "laser_1.13.6",  "laser_1.13.7",
-      "laser_1.13.8",  "laser_1.13.9", "laser_1.13.10", "laser_1.13.11", "laser_1.13.12", "laser_1.13.13", "laser_1.13.14",
-      "laser_1.13.15", // newline
-      "laser_1.14.0",  "laser_1.14.1", "laser_1.14.2",  "laser_1.14.3",  "laser_1.14.4",  "laser_1.14.5",  "laser_1.14.6",  "laser_1.14.7",
-      "laser_1.14.8",  "laser_1.14.9", "laser_1.14.10", "laser_1.14.11", "laser_1.14.12", "laser_1.14.13", "laser_1.14.14",
-      "laser_1.14.15", // newline
-      "laser_1.15.0",  "laser_1.15.1", "laser_1.15.2",  "laser_1.15.3",  "laser_1.15.4",  "laser_1.15.5",  "laser_1.15.6",  "laser_1.15.7",
-      "laser_1.15.8",  "laser_1.15.9", "laser_1.15.10", "laser_1.15.11", "laser_1.15.12", "laser_1.15.13", "laser_1.15.14",
-      "laser_1.15.15", // newline
+      "laser_fire.0.0",   "laser_fire.0.1",   "laser_fire.0.2",   "laser_fire.0.3",   "laser_fire.0.4",
+      "laser_fire.0.5",   "laser_fire.0.6",   "laser_fire.0.7",   "laser_fire.0.8",   "laser_fire.0.9",
+      "laser_fire.0.10",  "laser_fire.0.11",  "laser_fire.0.12",  "laser_fire.0.13",  "laser_fire.0.14",
+      "laser_fire.0.15", // newline
+      "laser_fire.1.0",   "laser_fire.1.1",   "laser_fire.1.2",   "laser_fire.1.3",   "laser_fire.1.4",
+      "laser_fire.1.5",   "laser_fire.1.6",   "laser_fire.1.7",   "laser_fire.1.8",   "laser_fire.1.9",
+      "laser_fire.1.10",  "laser_fire.1.11",  "laser_fire.1.12",  "laser_fire.1.13",  "laser_fire.1.14",
+      "laser_fire.1.15", // newline
+      "laser_fire.2.0",   "laser_fire.2.1",   "laser_fire.2.2",   "laser_fire.2.3",   "laser_fire.2.4",
+      "laser_fire.2.5",   "laser_fire.2.6",   "laser_fire.2.7",   "laser_fire.2.8",   "laser_fire.2.9",
+      "laser_fire.2.10",  "laser_fire.2.11",  "laser_fire.2.12",  "laser_fire.2.13",  "laser_fire.2.14",
+      "laser_fire.2.15", // newline
+      "laser_fire.3.0",   "laser_fire.3.1",   "laser_fire.3.2",   "laser_fire.3.3",   "laser_fire.3.4",
+      "laser_fire.3.5",   "laser_fire.3.6",   "laser_fire.3.7",   "laser_fire.3.8",   "laser_fire.3.9",
+      "laser_fire.3.10",  "laser_fire.3.11",  "laser_fire.3.12",  "laser_fire.3.13",  "laser_fire.3.14",
+      "laser_fire.3.15", // newline
+      "laser_fire.4.0",   "laser_fire.4.1",   "laser_fire.4.2",   "laser_fire.4.3",   "laser_fire.4.4",
+      "laser_fire.4.5",   "laser_fire.4.6",   "laser_fire.4.7",   "laser_fire.4.8",   "laser_fire.4.9",
+      "laser_fire.4.10",  "laser_fire.4.11",  "laser_fire.4.12",  "laser_fire.4.13",  "laser_fire.4.14",
+      "laser_fire.4.15", // newline
+      "laser_fire.5.0",   "laser_fire.5.1",   "laser_fire.5.2",   "laser_fire.5.3",   "laser_fire.5.4",
+      "laser_fire.5.5",   "laser_fire.5.6",   "laser_fire.5.7",   "laser_fire.5.8",   "laser_fire.5.9",
+      "laser_fire.5.10",  "laser_fire.5.11",  "laser_fire.5.12",  "laser_fire.5.13",  "laser_fire.5.14",
+      "laser_fire.5.15", // newline
+      "laser_fire.6.0",   "laser_fire.6.1",   "laser_fire.6.2",   "laser_fire.6.3",   "laser_fire.6.4",
+      "laser_fire.6.5",   "laser_fire.6.6",   "laser_fire.6.7",   "laser_fire.6.8",   "laser_fire.6.9",
+      "laser_fire.6.10",  "laser_fire.6.11",  "laser_fire.6.12",  "laser_fire.6.13",  "laser_fire.6.14",
+      "laser_fire.6.15", // newline
+      "laser_fire.7.0",   "laser_fire.7.1",   "laser_fire.7.2",   "laser_fire.7.3",   "laser_fire.7.4",
+      "laser_fire.7.5",   "laser_fire.7.6",   "laser_fire.7.7",   "laser_fire.7.8",   "laser_fire.7.9",
+      "laser_fire.7.10",  "laser_fire.7.11",  "laser_fire.7.12",  "laser_fire.7.13",  "laser_fire.7.14",
+      "laser_fire.7.15", // newline
+      "laser_fire.8.0",   "laser_fire.8.1",   "laser_fire.8.2",   "laser_fire.8.3",   "laser_fire.8.4",
+      "laser_fire.8.5",   "laser_fire.8.6",   "laser_fire.8.7",   "laser_fire.8.8",   "laser_fire.8.9",
+      "laser_fire.8.10",  "laser_fire.8.11",  "laser_fire.8.12",  "laser_fire.8.13",  "laser_fire.8.14",
+      "laser_fire.8.15", // newline
+      "laser_fire.9.0",   "laser_fire.9.1",   "laser_fire.9.2",   "laser_fire.9.3",   "laser_fire.9.4",
+      "laser_fire.9.5",   "laser_fire.9.6",   "laser_fire.9.7",   "laser_fire.9.8",   "laser_fire.9.9",
+      "laser_fire.9.10",  "laser_fire.9.11",  "laser_fire.9.12",  "laser_fire.9.13",  "laser_fire.9.14",
+      "laser_fire.9.15", // newline
+      "laser_fire.10.0",  "laser_fire.10.1",  "laser_fire.10.2",  "laser_fire.10.3",  "laser_fire.10.4",
+      "laser_fire.10.5",  "laser_fire.10.6",  "laser_fire.10.7",  "laser_fire.10.8",  "laser_fire.10.9",
+      "laser_fire.10.10", "laser_fire.10.11", "laser_fire.10.12", "laser_fire.10.13", "laser_fire.10.14",
+      "laser_fire.10.15", // newline
+      "laser_fire.11.0",  "laser_fire.11.1",  "laser_fire.11.2",  "laser_fire.11.3",  "laser_fire.11.4",
+      "laser_fire.11.5",  "laser_fire.11.6",  "laser_fire.11.7",  "laser_fire.11.8",  "laser_fire.11.9",
+      "laser_fire.11.10", "laser_fire.11.11", "laser_fire.11.12", "laser_fire.11.13", "laser_fire.11.14",
+      "laser_fire.11.15", // newline
+      "laser_fire.12.0",  "laser_fire.12.1",  "laser_fire.12.2",  "laser_fire.12.3",  "laser_fire.12.4",
+      "laser_fire.12.5",  "laser_fire.12.6",  "laser_fire.12.7",  "laser_fire.12.8",  "laser_fire.12.9",
+      "laser_fire.12.10", "laser_fire.12.11", "laser_fire.12.12", "laser_fire.12.13", "laser_fire.12.14",
+      "laser_fire.12.15", // newline
+      "laser_fire.13.0",  "laser_fire.13.1",  "laser_fire.13.2",  "laser_fire.13.3",  "laser_fire.13.4",
+      "laser_fire.13.5",  "laser_fire.13.6",  "laser_fire.13.7",  "laser_fire.13.8",  "laser_fire.13.9",
+      "laser_fire.13.10", "laser_fire.13.11", "laser_fire.13.12", "laser_fire.13.13", "laser_fire.13.14",
+      "laser_fire.13.15", // newline
+      "laser_fire.14.0",  "laser_fire.14.1",  "laser_fire.14.2",  "laser_fire.14.3",  "laser_fire.14.4",
+      "laser_fire.14.5",  "laser_fire.14.6",  "laser_fire.14.7",  "laser_fire.14.8",  "laser_fire.14.9",
+      "laser_fire.14.10", "laser_fire.14.11", "laser_fire.14.12", "laser_fire.14.13", "laser_fire.14.14",
+      "laser_fire.14.15", // newline
+      "laser_fire.15.0",  "laser_fire.15.1",  "laser_fire.15.2",  "laser_fire.15.3",  "laser_fire.15.4",
+      "laser_fire.15.5",  "laser_fire.15.6",  "laser_fire.15.7",  "laser_fire.15.8",  "laser_fire.15.9",
+      "laser_fire.15.10", "laser_fire.15.11", "laser_fire.15.12", "laser_fire.15.13", "laser_fire.15.14",
+      "laser_fire.15.15", // newline
   };
 
-  tile_load_arr_sprites("data/gfx/tiles_laser_1.tga", "laser_1", TILE_WIDTH, TILE_HEIGHT, ARRAY_SIZE(tiles), tiles);
+  tile_load_arr_sprites("data/gfx/tiles_laser_fire.tga", "laser_fire", TILE_WIDTH, TILE_HEIGHT, ARRAY_SIZE(tiles), tiles);
+}
+
+static void gfx_init_tiles_laser_light()
+{
+  const char *tiles[] = {
+      "laser_light.0.0",   "laser_light.0.1",   "laser_light.0.2",   "laser_light.0.3",   "laser_light.0.4",
+      "laser_light.0.5",   "laser_light.0.6",   "laser_light.0.7",   "laser_light.0.8",   "laser_light.0.9",
+      "laser_light.0.10",  "laser_light.0.11",  "laser_light.0.12",  "laser_light.0.13",  "laser_light.0.14",
+      "laser_light.0.15", // newline
+      "laser_light.1.0",   "laser_light.1.1",   "laser_light.1.2",   "laser_light.1.3",   "laser_light.1.4",
+      "laser_light.1.5",   "laser_light.1.6",   "laser_light.1.7",   "laser_light.1.8",   "laser_light.1.9",
+      "laser_light.1.10",  "laser_light.1.11",  "laser_light.1.12",  "laser_light.1.13",  "laser_light.1.14",
+      "laser_light.1.15", // newline
+      "laser_light.2.0",   "laser_light.2.1",   "laser_light.2.2",   "laser_light.2.3",   "laser_light.2.4",
+      "laser_light.2.5",   "laser_light.2.6",   "laser_light.2.7",   "laser_light.2.8",   "laser_light.2.9",
+      "laser_light.2.10",  "laser_light.2.11",  "laser_light.2.12",  "laser_light.2.13",  "laser_light.2.14",
+      "laser_light.2.15", // newline
+      "laser_light.3.0",   "laser_light.3.1",   "laser_light.3.2",   "laser_light.3.3",   "laser_light.3.4",
+      "laser_light.3.5",   "laser_light.3.6",   "laser_light.3.7",   "laser_light.3.8",   "laser_light.3.9",
+      "laser_light.3.10",  "laser_light.3.11",  "laser_light.3.12",  "laser_light.3.13",  "laser_light.3.14",
+      "laser_light.3.15", // newline
+      "laser_light.4.0",   "laser_light.4.1",   "laser_light.4.2",   "laser_light.4.3",   "laser_light.4.4",
+      "laser_light.4.5",   "laser_light.4.6",   "laser_light.4.7",   "laser_light.4.8",   "laser_light.4.9",
+      "laser_light.4.10",  "laser_light.4.11",  "laser_light.4.12",  "laser_light.4.13",  "laser_light.4.14",
+      "laser_light.4.15", // newline
+      "laser_light.5.0",   "laser_light.5.1",   "laser_light.5.2",   "laser_light.5.3",   "laser_light.5.4",
+      "laser_light.5.5",   "laser_light.5.6",   "laser_light.5.7",   "laser_light.5.8",   "laser_light.5.9",
+      "laser_light.5.10",  "laser_light.5.11",  "laser_light.5.12",  "laser_light.5.13",  "laser_light.5.14",
+      "laser_light.5.15", // newline
+      "laser_light.6.0",   "laser_light.6.1",   "laser_light.6.2",   "laser_light.6.3",   "laser_light.6.4",
+      "laser_light.6.5",   "laser_light.6.6",   "laser_light.6.7",   "laser_light.6.8",   "laser_light.6.9",
+      "laser_light.6.10",  "laser_light.6.11",  "laser_light.6.12",  "laser_light.6.13",  "laser_light.6.14",
+      "laser_light.6.15", // newline
+      "laser_light.7.0",   "laser_light.7.1",   "laser_light.7.2",   "laser_light.7.3",   "laser_light.7.4",
+      "laser_light.7.5",   "laser_light.7.6",   "laser_light.7.7",   "laser_light.7.8",   "laser_light.7.9",
+      "laser_light.7.10",  "laser_light.7.11",  "laser_light.7.12",  "laser_light.7.13",  "laser_light.7.14",
+      "laser_light.7.15", // newline
+      "laser_light.8.0",   "laser_light.8.1",   "laser_light.8.2",   "laser_light.8.3",   "laser_light.8.4",
+      "laser_light.8.5",   "laser_light.8.6",   "laser_light.8.7",   "laser_light.8.8",   "laser_light.8.9",
+      "laser_light.8.10",  "laser_light.8.11",  "laser_light.8.12",  "laser_light.8.13",  "laser_light.8.14",
+      "laser_light.8.15", // newline
+      "laser_light.9.0",   "laser_light.9.1",   "laser_light.9.2",   "laser_light.9.3",   "laser_light.9.4",
+      "laser_light.9.5",   "laser_light.9.6",   "laser_light.9.7",   "laser_light.9.8",   "laser_light.9.9",
+      "laser_light.9.10",  "laser_light.9.11",  "laser_light.9.12",  "laser_light.9.13",  "laser_light.9.14",
+      "laser_light.9.15", // newline
+      "laser_light.10.0",  "laser_light.10.1",  "laser_light.10.2",  "laser_light.10.3",  "laser_light.10.4",
+      "laser_light.10.5",  "laser_light.10.6",  "laser_light.10.7",  "laser_light.10.8",  "laser_light.10.9",
+      "laser_light.10.10", "laser_light.10.11", "laser_light.10.12", "laser_light.10.13", "laser_light.10.14",
+      "laser_light.10.15", // newline
+      "laser_light.11.0",  "laser_light.11.1",  "laser_light.11.2",  "laser_light.11.3",  "laser_light.11.4",
+      "laser_light.11.5",  "laser_light.11.6",  "laser_light.11.7",  "laser_light.11.8",  "laser_light.11.9",
+      "laser_light.11.10", "laser_light.11.11", "laser_light.11.12", "laser_light.11.13", "laser_light.11.14",
+      "laser_light.11.15", // newline
+      "laser_light.12.0",  "laser_light.12.1",  "laser_light.12.2",  "laser_light.12.3",  "laser_light.12.4",
+      "laser_light.12.5",  "laser_light.12.6",  "laser_light.12.7",  "laser_light.12.8",  "laser_light.12.9",
+      "laser_light.12.10", "laser_light.12.11", "laser_light.12.12", "laser_light.12.13", "laser_light.12.14",
+      "laser_light.12.15", // newline
+      "laser_light.13.0",  "laser_light.13.1",  "laser_light.13.2",  "laser_light.13.3",  "laser_light.13.4",
+      "laser_light.13.5",  "laser_light.13.6",  "laser_light.13.7",  "laser_light.13.8",  "laser_light.13.9",
+      "laser_light.13.10", "laser_light.13.11", "laser_light.13.12", "laser_light.13.13", "laser_light.13.14",
+      "laser_light.13.15", // newline
+      "laser_light.14.0",  "laser_light.14.1",  "laser_light.14.2",  "laser_light.14.3",  "laser_light.14.4",
+      "laser_light.14.5",  "laser_light.14.6",  "laser_light.14.7",  "laser_light.14.8",  "laser_light.14.9",
+      "laser_light.14.10", "laser_light.14.11", "laser_light.14.12", "laser_light.14.13", "laser_light.14.14",
+      "laser_light.14.15", // newline
+      "laser_light.15.0",  "laser_light.15.1",  "laser_light.15.2",  "laser_light.15.3",  "laser_light.15.4",
+      "laser_light.15.5",  "laser_light.15.6",  "laser_light.15.7",  "laser_light.15.8",  "laser_light.15.9",
+      "laser_light.15.10", "laser_light.15.11", "laser_light.15.12", "laser_light.15.13", "laser_light.15.14",
+      "laser_light.15.15", // newline
+  };
+
+  tile_load_arr_sprites("data/gfx/tiles_laser_light.tga", "laser_light", TILE_WIDTH, TILE_HEIGHT, ARRAY_SIZE(tiles), tiles);
 }
 
 void gfx_init()
@@ -3863,7 +3951,8 @@ void gfx_init()
   // ##############################################################################
   // NOTE: use tile_load_arr_sprites for sprites
   // ##############################################################################
-  gfx_init_tiles_laser_1();
+  gfx_init_tiles_laser_fire();
+  gfx_init_tiles_laser_light();
   gfx_init_tiles();
   // ##############################################################################
   // NOTE: use tile_load_arr_sprites for sprites

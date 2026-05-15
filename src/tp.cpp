@@ -3,6 +3,7 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_cpp_template.hpp"
 #include "my_dice_rolls.hpp"
 #include "my_gl.hpp"
 #include "my_globals.hpp"
@@ -109,7 +110,8 @@ static std::initializer_list< std::string > tps = {
     "key",
     "kobalos_mob",
     "kobalos",
-    "laser_1",
+    "laser_fire",
+    "laser_light",
     "lava",
     "level_closed",
     "level_curr",
@@ -559,6 +561,31 @@ auto tp_damage(Tpp tp, ThingEventType val) -> int
   }
 
   return tp->damage[ val ].roll();
+}
+
+auto tp_damage_random_type_get(Tpp tp) -> ThingEventType
+{
+  TRACE();
+
+  if (tp == nullptr) [[unlikely]] {
+    tp_err(tp, "no thing template pointer");
+    return THING_EVENT_NONE;
+  }
+
+  std::vector< ThingEventType > cands;
+
+  for (auto v = 0; v < THING_EVENT_ENUM_MAX; v++) {
+    if (tp->damage[ v ].initialized) {
+      cands.push_back((ThingEventType) v);
+    }
+  }
+
+  if (cands.empty()) {
+    tp_err(tp, "no damage types set");
+    return THING_EVENT_NONE;
+  }
+
+  return pcg_rand_one_of(cands);
 }
 
 void tp_chance_set(Tpp tp, ThingChanceType ev, const std::string &val)

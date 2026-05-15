@@ -903,12 +903,12 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_moving_from(Thingp t) -> bpoint;
 [[nodiscard]] auto thing_name_a_or_an(Thingp t) -> std::string;
 [[nodiscard]] auto thing_name_a_or_an(Thingp, ThingTextFlags) -> std::string;
-[[nodiscard]] auto thing_name_apostrophize(Thingp t) -> std::string;
-[[nodiscard]] auto thing_name_apostrophize(Thingp, ThingTextFlags) -> std::string;
+[[nodiscard]] auto thing_name_apostrophize(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string;
+[[nodiscard]] auto thing_name_apostrophize_the(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string;
 [[nodiscard]] auto thing_name_long_the(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags flags = 0) -> std::string;
 [[nodiscard]] auto thing_name_long(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags flags = 0) -> std::string;
-[[nodiscard]] auto thing_name_pluralize(Thingp t) -> std::string;
-[[nodiscard]] auto thing_name_pluralize(Thingp, ThingTextFlags) -> std::string;
+[[nodiscard]] auto thing_name_pluralize(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string;
+[[nodiscard]] auto thing_name_pluralize_the(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string;
 [[nodiscard]] auto thing_name_short_the(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags flags = 0) -> std::string;
 [[nodiscard]] auto thing_name_short(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags flags = 0) -> std::string;
 [[nodiscard]] auto thing_old_at(Thingp t) -> bpoint;
