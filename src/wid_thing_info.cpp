@@ -292,7 +292,7 @@
       continue;
     }
 
-    bool skip_showing_immunity_string = true;
+    bool skip_showing_immunity_string = false;
 
     switch (e) {
       case THING_EVENT_SHOVED : //
@@ -309,7 +309,8 @@
         break;
       case THING_EVENT_FIRE_DAMAGE : //
         break;
-      case THING_EVENT_WATER_DAMAGE :     //
+      case THING_EVENT_WATER_DAMAGE : //
+        break;
       case THING_EVENT_NONE :             //
       case THING_EVENT_THE_END :          //
       case THING_EVENT_MELT :             //

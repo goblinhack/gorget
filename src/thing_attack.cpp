@@ -55,10 +55,12 @@ auto thing_attack_at(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &atta
   }
 
   //
-  // Only allow attacks on immediately adjacent tiles
+  // Only allow attacks on immediately adjacent tiles. Unless you can fire weapons.
   //
-  if (! adjacent(thing_at(me), attack_at)) {
-    return false;
+  if (! thing_is_able_to_fire_weapons(me)) {
+    if (! adjacent(thing_at(me), attack_at)) {
+      return false;
+    }
   }
 
   std::vector< Thingp > cands;

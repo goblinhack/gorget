@@ -66,6 +66,14 @@ static auto thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thing
     return false;
   }
 
+  //
+  // Some monsters don't like to get too close
+  //
+  auto d = thing_distance_avoid_target(me);
+  while (d-- > 0) {
+    p.pop_back();
+  }
+
   if (thing_move_path_apply(g, v, l, me, p)) {
     thing_target_set(g, v, l, me, target);
     THING_DBG(me, "choose target: found path to player");

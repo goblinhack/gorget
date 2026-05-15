@@ -3,6 +3,7 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_dice_rolls.hpp"
 #include "my_globals.hpp"
 #include "my_main.hpp"
 #include "my_thing.hpp"
@@ -60,11 +61,30 @@ static bool tp_argusul_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thi
 {
   TRACE();
 
+  auto target = thing_at(it);
+  if (! adjacent(thing_at(me), target)) {
+    auto fire_what = tp_find_mand("laser_1");
+    if (d100() < 20) {
+      (void) thing_laser_fire_at(g, v, l, me, fire_what, target);
+    }
+    return false; // prevent melee attack
+  }
+
   (void) thing_spawn(g, v, l, tp_first(is_effect_attack), it);
 
   thing_sound_play(g, v, l, me, "hiss");
 
   return true;
+}
+
+static void tp_argusul_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
+{
+  TRACE();
+
+  auto target = thing_target(me);
+  if (level_is_player(g, v, l, target)) {
+    (void) thing_attack_at(g, v, l, me, target);
+  }
 }
 
 auto tp_load_argusul() -> bool
@@ -77,7 +97,9 @@ auto tp_load_argusul() -> bool
   thing_description_set(tp, tp_argusul_description_get);
   thing_detail_set(tp, tp_argusul_detail_get);
   thing_on_attacking_set(tp, tp_argusul_on_attacking);
+  tp_flag_set(tp, is_able_to_fire_weapons);
   thing_on_death_set(tp, tp_argusul_on_death);
+  thing_on_tick_begin_set(tp, tp_argusul_tick_begin);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6"); // roll max to continue burning
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // roll max to continue burning
   tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d4");
@@ -109,6 +131,7 @@ auto tp_load_argusul() -> bool
   tp_flag_set(tp, is_obs_to_teleporting_onto);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
+  tp_flag_set(tp, is_obs_to_laser);
   tp_flag_set(tp, is_removable_when_dead_on_err);
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_vision_360_degrees);
@@ -124,6 +147,7 @@ auto tp_load_argusul() -> bool
   tp_priority_set(tp, THING_PRIORITY_MONST);
   tp_score_value_set(tp, 5);
   tp_speed_set(tp, 25);
+  tp_fired_weapon_count_max_set(tp, THING_WEAPON_MAX);
   tp_temperature_damage_at_set(tp, 200); // celsius
   tp_temperature_initial_set(tp, 20);    // celsius
   tp_weight_set(tp, WEIGHT_HUMAN);       // grams
