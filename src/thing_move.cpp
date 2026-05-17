@@ -7,6 +7,8 @@
 #include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp"
 
+#include <cmath>
+
 //
 // Get thing direction
 //
@@ -276,9 +278,28 @@ auto thing_get_direction_grid(Gamep g, Levelsp v, Levelp l, Thingp me) -> bpoint
 {
   TRACE();
 
-  if (thing_is_projectile(me)) {
-    thing_err(me, "cannot return grid direction");
-    return bpoint(0, 0);
+  if (thing_is_projectile(me) || thing_is_laser(me)) {
+    //
+    // Convert to a grid direction. This is very rough.
+    //
+    fpoint dir = thing_weapon_get_direction(g, v, l, me);
+    bpoint dir_out;
+
+    dir.x = (int) std::round(dir.x);
+    dir.y = (int) std::round(dir.y);
+
+    if (dir.x > 0) {
+      dir_out.x = 1;
+    } else if (dir.x < 0) {
+      dir_out.x = -1;
+    }
+    if (dir.y > 0) {
+      dir_out.y = 1;
+    } else if (dir.y < 0) {
+      dir_out.y = -1;
+    }
+
+    return dir_out;
   }
 
   switch (me->dir) {
