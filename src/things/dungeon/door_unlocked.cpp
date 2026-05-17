@@ -69,6 +69,26 @@ static auto tp_door_unlocked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp
   }
 
   if (distance(thing_at(me), thing_at(player)) <= 1) {
+    //
+    // Door slam attack
+    //
+    auto door_at = thing_at(me);
+    if (level_is_attackable_by_player(g, v, l, door_at)) {
+      auto event_type = THING_EVENT_MELEE_DAMAGE;
+      auto damage     = tp_damage(thing_tp(me), event_type);
+
+      ThingEvent e {
+          .reason     = "door slam", //
+          .event_type = event_type,  //
+          .damage     = damage,      //
+          .source     = player,      //
+      };
+
+      if (thing_attack_at(g, v, l, me, door_at, &e)) {
+        topcon("You slam the door!");
+      }
+    }
+
     if (thing_is_open(me)) {
       (void) thing_close(g, v, l, me, player /* opener */);
     } else {
@@ -183,6 +203,7 @@ auto tp_load_door_unlocked() -> bool
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_submergible);
+  tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d4");
   tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_wood);

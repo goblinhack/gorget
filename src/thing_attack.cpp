@@ -14,7 +14,7 @@
 //
 // We're trying to attack at this tile. What do we hit first?
 //
-static auto thing_attack(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it) -> bool
+static auto thing_attack(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, ThingEvent *e_in = nullptr) -> bool
 {
   TRACE();
 
@@ -28,6 +28,10 @@ static auto thing_attack(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it) -> 
       .damage     = damage,     //
       .source     = source,     //
   };
+
+  if (e_in) {
+    e = *e_in;
+  }
 
   //
   // Thing callback
@@ -46,19 +50,27 @@ static auto thing_attack(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it) -> 
 //
 // We're trying to attack at this tile. What do we hit first?
 //
-auto thing_attack_at(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &attack_at) -> bool
+auto thing_attack_at(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &attack_at, ThingEvent *e) -> bool
 {
-  TRACE();
-
-  if (compiler_unused) {
-    THING_DBG(me, "thing_attack_at");
-  }
+  THING_DBG(me, "%s", __FUNCTION__);
+  TRACE_INDENT();
 
   //
   // Only allow attacks on immediately adjacent tiles. Unless you can fire weapons.
   //
-  if (! thing_is_able_to_fire_weapons(me)) {
-    if (! adjacent(thing_at(me), attack_at)) {
+  if (thing_is_able_to_fire_weapons(me)) {
+    //
+    // Firing tiles do not need to be adjacent
+    //
+  } else {
+    if (thing_at(me) == attack_at) {
+      //
+      // Allow door slam attack on same tile
+      //
+    } else if (! adjacent(thing_at(me), attack_at)) {
+      //
+      // Adjacent tile attack
+      //
       return false;
     }
   }
@@ -71,11 +83,11 @@ auto thing_attack_at(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &atta
       continue;
     }
 
-    if (thing_is_monst(me)) {
+    if (thing_is_monst(me) || (e && e->source && thing_is_monst(e->source))) {
       if (thing_is_attackable_by_monst(o)) {
         cands.push_back(o);
       }
-    } else if (thing_is_player(me)) {
+    } else if (thing_is_player(me) || (e && e->source && thing_is_player(e->source))) {
       if (thing_is_attackable_by_player(o)) {
         cands.push_back(o);
       }
@@ -107,7 +119,7 @@ auto thing_attack_at(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &atta
       }
     }
 
-    if (thing_attack(g, v, l, me, cand)) {
+    if (thing_attack(g, v, l, me, cand, e)) {
       return true;
     }
   }

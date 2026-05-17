@@ -291,6 +291,7 @@ auto tp_load_player() -> bool
   auto  name = tp_name(tp);
 
   // begin sort marker1 {
+  tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d4");
   thing_description_set(tp, tp_player_description_get);
   thing_detail_set(tp, tp_player_detail_get);
   thing_on_damage_set(tp, tp_player_on_damage);
