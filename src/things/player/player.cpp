@@ -320,7 +320,7 @@ auto tp_load_player() -> bool
   tp_flag_set(tp, is_able_to_jump);
   tp_flag_set(tp, is_able_to_lunge);
   tp_flag_set(tp, is_able_to_move_diagonally);
-  tp_flag_set(tp, is_able_to_open);
+  tp_flag_set(tp, is_able_to_open_things);
   tp_flag_set(tp, is_able_to_shove);
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);

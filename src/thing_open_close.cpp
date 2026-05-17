@@ -11,7 +11,8 @@
 //
 auto thing_is_open_try_set(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener, bool val) -> bool
 {
-  TRACE_DEBUG();
+  THING_DBG(t, "%s", __FUNCTION__);
+  TRACE_INDENT();
 
   if (t == nullptr) {
     ERR("no thing pointer");
@@ -34,6 +35,7 @@ auto thing_is_open_try_set(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener
       //
       // Open failed
       //
+      THING_DBG(t, "open failed");
       t->_is_open = false;
       return false;
     }
@@ -41,6 +43,7 @@ auto thing_is_open_try_set(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener
     //
     // Reset animation
     //
+    THING_DBG(t, "open success");
     thing_anim_init(g, v, l, t, THING_ANIM_OPEN);
   } else {
     //
@@ -50,6 +53,7 @@ auto thing_is_open_try_set(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener
       //
       // Close failed
       //
+      THING_DBG(t, "close failed");
       t->_is_open = true;
       return false;
     }
@@ -57,6 +61,7 @@ auto thing_is_open_try_set(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener
     //
     // Reset animation
     //
+    THING_DBG(t, "close success");
     thing_anim_init(g, v, l, t, THING_ANIM_IDLE);
   }
 
@@ -104,7 +109,8 @@ void thing_is_unlocked_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
 //
 auto thing_open(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp opener) -> bool
 {
-  TRACE();
+  THING_DBG(me, "%s", __FUNCTION__);
+  TRACE_INDENT();
 
   if (! thing_is_player(opener) && ! thing_is_monst(opener)) {
     thing_err(opener, "unexpected thing for %s", __FUNCTION__);
@@ -131,7 +137,8 @@ auto thing_open(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp opener) -> bool
 //
 auto thing_close(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp closer) -> bool
 {
-  TRACE();
+  THING_DBG(me, "%s", __FUNCTION__);
+  TRACE_INDENT();
 
   if (! thing_is_player(closer) && ! thing_is_monst(closer)) {
     thing_err(closer, "unexpected thing for %s", __FUNCTION__);
@@ -158,7 +165,8 @@ auto thing_close(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp closer) -> bool
 //
 auto thing_can_move_to_attempt_by_opening(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool
 {
-  TRACE();
+  THING_DBG(me, "%s", __FUNCTION__);
+  TRACE_INDENT();
 
   if (is_oob_or_border(to)) [[unlikely]] {
     return false;
@@ -173,7 +181,7 @@ auto thing_can_move_to_attempt_by_opening(Gamep g, Levelsp v, Levelp l, Thingp m
   auto dy = to.y - at.y;
   thing_set_dir_from_delta(me, dx, dy);
 
-  if (! thing_is_able_to_open(me)) {
+  if (! thing_is_able_to_open_things(me)) {
     (void) thing_lunge(g, v, l, me, to);
     return false;
   }

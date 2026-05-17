@@ -285,7 +285,9 @@ void thing_on_open_request_set(Tpp tp, thing_on_open_request_t callback)
 
 auto thing_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp opener) -> bool
 {
-  TRACE();
+  THING_DBG(me, "%s", __FUNCTION__);
+  TRACE_INDENT();
+
   auto *tp = thing_tp(me);
   if (tp == nullptr) [[unlikely]] {
     ERR("no thing template pointer");
@@ -322,7 +324,9 @@ void thing_on_close_request_set(Tpp tp, thing_on_close_request_t callback)
 
 auto thing_on_close_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp closer) -> bool
 {
-  TRACE();
+  THING_DBG(me, "%s", __FUNCTION__);
+  TRACE_INDENT();
+
   auto *tp = thing_tp(me);
   if (tp == nullptr) [[unlikely]] {
     ERR("no thing template pointer");

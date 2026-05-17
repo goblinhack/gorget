@@ -370,6 +370,8 @@ auto level_get_thing_id_at(Gamep g, Levelsp v, Levelp l, const bpoint &p, int sl
     case is_obs_to_jump_over :
     case is_obs_to_teleporting_onto :
     case is_obs_to_movement :
+    case is_obs_to_paths :
+    case is_obs_to_laser :
       //
       // Should be able to move onto dead things
       //

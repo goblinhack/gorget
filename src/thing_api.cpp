@@ -2338,7 +2338,7 @@ auto thing_is_inventory_item(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_inventory_item) != 0;
 }
 
-auto thing_is_able_to_open(Thingp t) -> bool
+auto thing_is_able_to_open_things(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2346,7 +2346,7 @@ auto thing_is_able_to_open(Thingp t) -> bool
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_able_to_open) != 0;
+  return tp_flag(thing_tp(t), is_able_to_open_things) != 0;
 }
 
 auto thing_is_item(Thingp t) -> bool

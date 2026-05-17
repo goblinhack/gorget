@@ -636,7 +636,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_able_to_lunge(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_move_diagonally(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_move_through_walls(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_able_to_open(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_able_to_open_things(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_shove(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_walk_through_walls(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_always_hot(Thingp me) -> bool;

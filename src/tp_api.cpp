@@ -59,10 +59,10 @@ auto tp_is_able_to_move_through_walls(Tpp tp) -> bool
   return tp_flag(tp, is_able_to_move_through_walls) != 0;
 }
 
-auto tp_is_able_to_open(Tpp tp) -> bool
+auto tp_is_able_to_open_things(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_able_to_open) != 0;
+  return tp_flag(tp, is_able_to_open_things) != 0;
 }
 
 auto tp_is_able_to_shove(Tpp tp) -> bool

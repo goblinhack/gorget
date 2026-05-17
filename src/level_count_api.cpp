@@ -59,10 +59,10 @@ auto level_count_is_able_to_move_through_walls(Gamep g, Levelsp v, Levelp l, con
   return level_count(g, v, l, is_able_to_move_through_walls, p);
 }
 
-auto level_count_is_able_to_open(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+auto level_count_is_able_to_open_things(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_able_to_open, p);
+  return level_count(g, v, l, is_able_to_open_things, p);
 }
 
 auto level_count_is_able_to_shove(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t

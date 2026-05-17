@@ -174,8 +174,10 @@ auto thing_can_move_to_ai(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) ->
     // Allow AI to make a path through unlocked doors
     //
     if (thing_is_door_unlocked(it)) {
-      if (! thing_is_able_to_open(me)) {
-        return false;
+      if (! thing_is_open(it)) {
+        if (! thing_is_able_to_open_things(me)) {
+          return false;
+        }
       }
     }
 
@@ -241,8 +243,10 @@ auto thing_can_move_to_possible(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint 
     // Allow walking through unlocked doors
     //
     if (thing_is_door_unlocked(it)) {
-      if (! thing_is_able_to_open(me)) {
-        return false;
+      if (! thing_is_open(it)) {
+        if (! thing_is_able_to_open_things(me)) {
+          return false;
+        }
       }
     }
 

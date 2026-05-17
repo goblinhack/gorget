@@ -59,10 +59,10 @@ auto level_is_able_to_move_through_walls(Gamep g, Levelsp v, Levelp l, const bpo
   return level_flag(g, v, l, is_able_to_move_through_walls, p, me);
 }
 
-auto level_is_able_to_open(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+auto level_is_able_to_open_things(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_able_to_open, p, me);
+  return level_flag(g, v, l, is_able_to_open_things, p, me);
 }
 
 auto level_is_able_to_shove(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp

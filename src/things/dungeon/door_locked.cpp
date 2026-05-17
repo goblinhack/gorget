@@ -25,7 +25,7 @@ static auto tp_door_locked_description_get(Gamep g, Levelsp v, Levelp l, Thingp 
     return "open door";
   }
   if (thing_is_dead(me)) {
-    return "broken door";
+    return "broken locked door";
   }
   if (thing_health(me) < thing_health_max(me)) {
     return "damaged locked door";
@@ -64,7 +64,8 @@ static auto tp_door_locked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l
 //
 [[nodiscard]] static auto tp_door_locked_mouse_down(Gamep g, Levelsp v, Levelp l, Thingp me, int x, int y, int button) -> bool
 {
-  TRACE();
+  THING_DBG(me, "%s", __FUNCTION__);
+  TRACE_INDENT();
 
   auto *player = thing_player(g);
   if (player == nullptr) [[unlikely]] {
@@ -77,17 +78,9 @@ static auto tp_door_locked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l
 
   if (distance(thing_at(me), thing_at(player)) <= 1) {
     if (thing_is_open(me)) {
-      if (thing_close(g, v, l, me, player /* opener */)) {
-        topcon("The door closes.");
-      } else {
-        topcon("The door wont close!");
-      }
+      (void) thing_close(g, v, l, me, player /* opener */);
     } else {
-      if (thing_open(g, v, l, me, player /* opener */)) {
-        topcon("The door opens.");
-      } else {
-        topcon("The door wont open!");
-      }
+      (void) thing_open(g, v, l, me, player /* opener */);
     }
 
     return true;
@@ -98,18 +91,19 @@ static auto tp_door_locked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l
 
 [[nodiscard]] static auto tp_door_locked_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp opener) -> bool
 {
-  TRACE();
+  THING_DBG(me, "%s", __FUNCTION__);
+  TRACE_INDENT();
 
   if (thing_health(me) < thing_health_max(me)) {
     if (thing_is_player(opener)) {
-      topcon("The door is damaged and won't open!");
+      topcon("The locked door is damaged and won't open!");
     }
     return false;
   }
 
   if (thing_is_hot(me) != 0) {
     if (thing_is_player(opener)) {
-      topcon("The door is too hot to touch!");
+      topcon("The locked door is too hot to touch!");
     }
     return false;
   }
@@ -161,7 +155,8 @@ static auto tp_door_locked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l
 
 [[nodiscard]] static auto tp_door_locked_on_close_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp opener) -> bool
 {
-  TRACE();
+  THING_DBG(me, "%s", __FUNCTION__);
+  TRACE_INDENT();
 
   if (thing_is_player(opener)) {
     topcon("The locked door closes.");
@@ -223,7 +218,6 @@ auto tp_load_door_locked() -> bool
   tp_flag_set(tp, is_obs_to_jumping_onto);
   tp_flag_set(tp, is_obs_to_laser);
   tp_flag_set(tp, is_obs_to_movement);
-  tp_flag_set(tp, is_obs_to_paths);
   tp_flag_set(tp, is_obs_to_spawning);
   tp_flag_set(tp, is_obs_to_teleporting_onto);
   tp_flag_set(tp, is_obs_to_vision);

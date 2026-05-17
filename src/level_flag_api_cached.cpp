@@ -59,10 +59,10 @@ auto level_is_able_to_move_through_walls_cached(Gamep g, Levelsp v, Levelp l, co
   return level_flag_cached(g, v, l, is_able_to_move_through_walls, p);
 }
 
-auto level_is_able_to_open_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+auto level_is_able_to_open_things_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_able_to_open, p);
+  return level_flag_cached(g, v, l, is_able_to_open_things, p);
 }
 
 auto level_is_able_to_shove_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

@@ -103,7 +103,8 @@ static void thing_collision_handle_common(Gamep g, Levelsp v, Levelp l, Thingp o
 //
 static void thing_collision_handle_dead_thing(Gamep g, Levelsp v, Levelp l, Thingp obstacle, Thingp me, bool &stop)
 {
-  TRACE();
+  THING_DBG(obstacle, "%s", __FUNCTION__);
+  TRACE_INDENT();
 
   thing_collision_handle_common(g, v, l, obstacle, me, stop);
 
@@ -149,7 +150,8 @@ static void thing_collision_handle_dead_thing(Gamep g, Levelsp v, Levelp l, Thin
 //
 static void thing_collision_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thingp obstacle, Thingp me, bool &stop)
 {
-  TRACE();
+  THING_DBG(obstacle, "%s", __FUNCTION__);
+  TRACE_INDENT();
 
   thing_collision_handle_common(g, v, l, obstacle, me, stop);
   if (stop) {
@@ -244,7 +246,8 @@ static auto thing_collision_handle_done_already(Gamep g, Levelsp v, Levelp l, Th
 //
 static void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp obstacle, Thingp me, bool &stop)
 {
-  TRACE();
+  THING_DBG(obstacle, "%s", __FUNCTION__);
+  TRACE_INDENT();
 
   if (obstacle == me) {
     return;
@@ -298,7 +301,7 @@ static void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp obstacle
 //
 void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
-  THING_DBG(me, "thing_collision_handle");
+  THING_DBG(me, "%s", __FUNCTION__);
   TRACE_INDENT();
 
   //

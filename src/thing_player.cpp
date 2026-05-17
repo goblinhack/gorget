@@ -1064,7 +1064,8 @@ void player_fell(Gamep g, Levelsp v, Levelp l, Levelp next_level, Thingp me)
 //
 void player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
-  TRACE();
+  THING_DBG(me, "%s", __FUNCTION__);
+  TRACE_INDENT();
 
   auto *ext_struct = thing_ext_struct(g, me);
   if (ext_struct == nullptr) {
@@ -1083,6 +1084,11 @@ void player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
         if (thing_is_dead(it)) {
           continue;
         }
+      } else {
+        //
+        // Failed to open
+        //
+        continue;
       }
     }
 
