@@ -276,7 +276,7 @@ auto thing_get_direction_grid(Gamep g, Levelsp v, Levelp l, Thingp me) -> bpoint
 {
   TRACE();
 
-  if (thing_is_projectile(me) || thing_is_laser(me)) {
+  if (thing_is_projectile(me)) {
     thing_err(me, "cannot return grid direction");
     return bpoint(0, 0);
   }

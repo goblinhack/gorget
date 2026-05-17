@@ -352,6 +352,7 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
             if (level_is_water(g, v, l, thing_at(me)) != nullptr) {
               if (level_is_steam(g, v, l, thing_at(me)) == nullptr) {
                 THING_DBG(me, "spawn steam over water due to fire damage");
+                TRACE_INDENT();
                 (void) thing_spawn(g, v, l, tp_first(is_steam), me);
               }
             }
@@ -369,6 +370,7 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
         if (level_is_fire(g, v, l, thing_at(me)) == nullptr) {
           if (level_is_combustible(g, v, l, thing_at(me)) != nullptr) {
             THING_DBG(me, "spawn flames due to fire damage");
+            TRACE_INDENT();
             (void) thing_spawn(g, v, l, tp_first(is_fire), me);
           }
         }
@@ -376,6 +378,7 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
         if (level_is_water(g, v, l, thing_at(me)) != nullptr) {
           if (level_is_steam(g, v, l, thing_at(me)) == nullptr) {
             THING_DBG(me, "spawn steam over water due to fire damage");
+            TRACE_INDENT();
             (void) thing_spawn(g, v, l, tp_first(is_steam), me);
           }
         }
@@ -385,6 +388,7 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
       case THING_EVENT_WATER_DAMAGE : //
         if (level_is_steam(g, v, l, thing_at(me)) == nullptr) {
           THING_DBG(me, "spawn steam due to water damage");
+          TRACE_INDENT();
           (void) thing_spawn(g, v, l, tp_first(is_steam), me);
         }
         break;

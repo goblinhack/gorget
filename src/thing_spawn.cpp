@@ -76,6 +76,8 @@ auto thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, const bpoint &at) -> Thin
 
 auto thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp spawner) -> Thingp
 {
+  TRACE();
+
   if (spawner == nullptr) {
     ERR("no thing pointer");
     return nullptr;
