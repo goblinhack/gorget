@@ -4444,7 +4444,7 @@ static void level_gen_add_missing_keys(Gamep g, class LevelGen *lg)
 // Find the quadrant with the most of this thing and remove one from that quadrant.
 // This helps to keep the level balanced.
 //
-[[nodiscard]] static bool level_gen_remove_thing_balanced_by_grid(class LevelGen *lg, char what)
+[[nodiscard]] static auto level_gen_remove_thing_balanced_by_grid(class LevelGen *lg, char what) -> bool
 {
   TRACE();
 
@@ -4458,9 +4458,9 @@ static void level_gen_add_missing_keys(Gamep g, class LevelGen *lg)
       if (c != what) {
         continue;
       }
-      int qx = x / (MAP_WIDTH / 2);
-      int qy = y / (MAP_HEIGHT / 2);
-      int q  = qx + qy;
+      int const qx = x / (MAP_WIDTH / 2);
+      int const qy = y / (MAP_HEIGHT / 2);
+      int const q  = qx + qy;
 
       cands[ q ].push_back(bpoint(x, y));
       if (cands[ q ].size() > max_quadrant) {

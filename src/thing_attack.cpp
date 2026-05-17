@@ -29,7 +29,7 @@ static auto thing_attack(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, Thi
       .source     = source,     //
   };
 
-  if (e_in) {
+  if (e_in != nullptr) {
     e = *e_in;
   }
 
@@ -83,11 +83,11 @@ auto thing_attack_at(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &atta
       continue;
     }
 
-    if (thing_is_monst(me) || (e && e->source && thing_is_monst(e->source))) {
+    if (thing_is_monst(me) || ((e != nullptr) && (e->source != nullptr) && thing_is_monst(e->source))) {
       if (thing_is_attackable_by_monst(o)) {
         cands.push_back(o);
       }
-    } else if (thing_is_player(me) || (e && e->source && thing_is_player(e->source))) {
+    } else if (thing_is_player(me) || ((e != nullptr) && (e->source != nullptr) && thing_is_player(e->source))) {
       if (thing_is_attackable_by_player(o)) {
         cands.push_back(o);
       }
