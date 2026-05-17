@@ -69,6 +69,13 @@ static void thing_bridge_replace(Gamep g, Levelsp v, Levelp l, Thingp t)
           (void) thing_spawn(g, v, l, tp_first(is_dirt), t);
         }
       }
+    } else {
+      //
+      // If nothing we can gather from the surronds, default to chasm
+      //
+      if (level_is_chasm(g, v, l, thing_at(t)) == nullptr) {
+        (void) thing_spawn(g, v, l, tp_first(is_chasm), t);
+      }
     }
   }
 }
