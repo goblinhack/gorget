@@ -43,9 +43,9 @@ static auto tp_door_locked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l
 
   if (thing_health(t_maybe_null) < thing_health_max(t_maybe_null)) {
     if (thing_is_open(t_maybe_null)) {
-      return door_locked_idle_damaged;
+      return door_locked_open_damaged;
     }
-    return door_locked_open_damaged;
+    return door_locked_idle_damaged;
   }
 
   if (thing_is_open(t_maybe_null)) {

@@ -42,9 +42,9 @@ static auto tp_door_unlocked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp
 
   Tilep alt_tile = nullptr;
   if (thing_is_open(t_maybe_null)) {
-    alt_tile = door_unlocked_idle_damaged;
-  } else {
     alt_tile = door_unlocked_open_damaged;
+  } else {
+    alt_tile = door_unlocked_idle_damaged;
   }
 
   if (thing_health(t_maybe_null) < thing_health_max(t_maybe_null)) {

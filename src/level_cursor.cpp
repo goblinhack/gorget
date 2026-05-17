@@ -388,7 +388,16 @@ static auto level_cursor_path_draw_line(Gamep g, Levelsp v, Levelp l, const bpoi
   }
 
   if (paths.empty()) {
-    return draw_line(start, end);
+    std::vector< bpoint > path;
+    for (auto p : draw_line(start, end)) {
+      if ((level_alive_is_obs_to_cursor_path(g, v, l, p) != nullptr) || (level_alive_is_cursor_path_hazard(g, v, l, p) != nullptr)) {
+        break;
+      }
+      path.push_back(p);
+    }
+    PathCost pc;
+    pc.path = path;
+    paths.push_back(pc);
   }
 
   std::ranges::sort(paths, [](const PathCost &a, const PathCost &b) -> bool { return (a.cost < b.cost); });
