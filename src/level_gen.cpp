@@ -4441,33 +4441,42 @@ static void level_gen_add_missing_keys(Gamep g, class LevelGen *lg)
 }
 
 //
-// If too many keys, remove one
+// Find the quadrant with the most of this thing and remove one from that quadrant.
+// This helps to keep the level balanced.
 //
-static void level_gen_remove_additional_keys_do(class LevelGen *lg)
+[[nodiscard]] static bool level_gen_remove_thing_balanced_by_grid(class LevelGen *lg, char what)
 {
   TRACE();
 
-  std::vector< bpoint > cands;
+  std::vector< bpoint > cands[ 4 ];
+  size_t                max_quadrant = 0;
 
-  //
-  // Find floor tiles with floor space around them, candidates for placing items
-  //
   for (int y = 1; y < MAP_HEIGHT - 1; y++) {
     for (int x = 1; x < MAP_WIDTH - 1; x++) {
       auto c = lg->data[ x ][ y ].c;
 
-      switch (c) {
-        case CHARMAP_KEY : cands.push_back(bpoint(x, y)); break;
+      if (c != what) {
+        continue;
+      }
+      int qx = x / (MAP_WIDTH / 2);
+      int qy = y / (MAP_HEIGHT / 2);
+      int q  = qx + qy;
+
+      cands[ q ].push_back(bpoint(x, y));
+      if (cands[ q ].size() > max_quadrant) {
+        max_quadrant = q;
       }
     }
   }
 
-  if (cands.empty()) {
-    return;
+  const auto most_cands = cands[ max_quadrant ];
+  if (most_cands.empty()) {
+    return false;
   }
 
-  auto cand                      = cands[ PCG_RAND() % cands.size() ];
+  auto cand                      = most_cands[ PCG_RAND() % most_cands.size() ];
   lg->data[ cand.x ][ cand.y ].c = CHARMAP_FLOOR;
+  return true;
 }
 
 //
@@ -4481,112 +4490,55 @@ static void level_gen_remove_additional_keys(Gamep g, class LevelGen *lg)
   tries -= lg->info.door_locked_count;
 
   while (tries-- > 0) {
-    level_gen_remove_additional_keys_do(lg);
+    (void) level_gen_remove_thing_balanced_by_grid(lg, CHARMAP_KEY);
   }
 }
 
 //
-// If too many monsts, remove one
-//
-static void level_gen_remove_additional_monsts_do(class LevelGen *lg)
-{
-  TRACE();
-
-  std::vector< bpoint > cands[ 4 ];
-  size_t                max_quadrant = 0;
-
-  //
-  // Find floor tiles with floor space around them, candidates for placing items
-  //
-  for (int y = 1; y < MAP_HEIGHT - 1; y++) {
-    for (int x = 1; x < MAP_WIDTH - 1; x++) {
-      auto c = lg->data[ x ][ y ].c;
-
-      int qx = x / (MAP_WIDTH / 2);
-      int qy = y / (MAP_HEIGHT / 2);
-      int q  = qx + qy;
-
-      switch (c) {
-        case CHARMAP_MONST1 : [[fallthrough]];
-        case CHARMAP_MONST2 :
-          cands[ q ].push_back(bpoint(x, y));
-          if (cands[ q ].size() > max_quadrant) {
-            max_quadrant = q;
-          }
-          break;
-      }
-    }
-  }
-
-  const auto most_cands = cands[ max_quadrant ];
-  if (most_cands.empty()) {
-    return;
-  }
-
-  auto cand                      = most_cands[ PCG_RAND() % most_cands.size() ];
-  lg->data[ cand.x ][ cand.y ].c = CHARMAP_FLOOR;
-}
-
-//
-// For secret doors, need to add a corresponding monst
+// Too many monsters?
 //
 static void level_gen_remove_additional_monsts(Gamep g, class LevelGen *lg)
 {
   TRACE();
 
-  int tries = lg->info.monst_count;
-
-  tries -= MAX_LEVEL_GEN_MAX_MONST_PER_LEVEL;
-
-  while (tries-- > 0) {
-    level_gen_remove_additional_monsts_do(lg);
-  }
-}
-
-//
-// If too many mobs, remove one
-//
-static void level_gen_remove_additional_mobs_do(class LevelGen *lg)
-{
-  TRACE();
-
-  std::vector< bpoint > cands;
-
-  //
-  // Find floor tiles with floor space around them, candidates for placing items
-  //
-  for (int y = 1; y < MAP_HEIGHT - 1; y++) {
-    for (int x = 1; x < MAP_WIDTH - 1; x++) {
-      auto c = lg->data[ x ][ y ].c;
-
-      switch (c) {
-        case CHARMAP_MOB1 : cands.push_back(bpoint(x, y)); break;
-        case CHARMAP_MOB2 : cands.push_back(bpoint(x, y)); break;
+  {
+    int tries = lg->info.monst_count - MAX_LEVEL_GEN_MAX_MONST_PER_LEVEL;
+    while (tries-- > 0) {
+      if (level_gen_remove_thing_balanced_by_grid(lg, CHARMAP_MONST1)) {
+        lg->info.monst_count--;
       }
     }
   }
 
-  if (cands.empty()) {
-    return;
+  {
+    int tries = lg->info.monst_count - MAX_LEVEL_GEN_MAX_MONST_PER_LEVEL;
+    while (tries-- > 0) {
+      (void) level_gen_remove_thing_balanced_by_grid(lg, CHARMAP_MONST2);
+    }
   }
-
-  auto cand                      = cands[ PCG_RAND() % cands.size() ];
-  lg->data[ cand.x ][ cand.y ].c = CHARMAP_FLOOR;
 }
 
 //
-// For secret doors, need to add a corresponding mob
+// Too many mobs?
 //
 static void level_gen_remove_additional_mobs(Gamep g, class LevelGen *lg)
 {
   TRACE();
 
-  int tries = lg->info.mob_count;
+  {
+    int tries = lg->info.mob_count - MAX_LEVEL_GEN_MAX_MOB_PER_LEVEL;
+    while (tries-- > 0) {
+      if (level_gen_remove_thing_balanced_by_grid(lg, CHARMAP_MOB1)) {
+        lg->info.mob_count--;
+      }
+    }
+  }
 
-  tries -= MAX_LEVEL_GEN_MAX_MOB_PER_LEVEL;
-
-  while (tries-- > 0) {
-    level_gen_remove_additional_mobs_do(lg);
+  {
+    int tries = lg->info.mob_count - MAX_LEVEL_GEN_MAX_MOB_PER_LEVEL;
+    while (tries-- > 0) {
+      (void) level_gen_remove_thing_balanced_by_grid(lg, CHARMAP_MOB2);
+    }
   }
 }
 
