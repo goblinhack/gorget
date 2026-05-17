@@ -69,26 +69,6 @@ static auto tp_door_unlocked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp
   }
 
   if (distance(thing_at(me), thing_at(player)) <= 1) {
-    //
-    // Door slam attack
-    //
-    auto door_at = thing_at(me);
-    if (level_is_attackable_by_player(g, v, l, door_at)) {
-      auto event_type = THING_EVENT_MELEE_DAMAGE;
-      auto damage     = tp_damage(thing_tp(me), event_type);
-
-      ThingEvent e {
-          .reason     = "door slam", //
-          .event_type = event_type,  //
-          .damage     = damage,      //
-          .source     = player,      //
-      };
-
-      if (thing_attack_at(g, v, l, me, door_at, &e)) {
-        topcon("You slam the door!");
-      }
-    }
-
     if (thing_is_open(me)) {
       (void) thing_close(g, v, l, me, player /* opener */);
     } else {
@@ -136,11 +116,34 @@ static auto tp_door_unlocked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp
   THING_DBG(me, "%s", __FUNCTION__);
   TRACE_INDENT();
 
+  thing_sound_play(g, v, l, me, "door_open");
+
+  //
+  // Door slam attack
+  //
   if (thing_is_player(opener)) {
-    topcon("The door closes.");
+    auto door_at = thing_at(me);
+    if (level_is_attackable_by_player(g, v, l, door_at)) {
+      auto event_type = THING_EVENT_MELEE_DAMAGE;
+      auto damage     = tp_damage(thing_tp(me), event_type);
+
+      ThingEvent e {
+          .reason     = "door slam", //
+          .event_type = event_type,  //
+          .damage     = damage,      //
+          .source     = opener,      //
+      };
+
+      if (thing_attack_at(g, v, l, me, door_at, &e)) {
+        topcon("You slam the door!");
+        return true;
+      }
+    }
   }
 
-  thing_sound_play(g, v, l, me, "door_open");
+  if (thing_is_player(opener)) {
+    topcon("The locked door closes.");
+  }
 
   return true;
 }
@@ -179,6 +182,7 @@ auto tp_load_door_unlocked() -> bool
   thing_on_open_request_set(tp, tp_door_unlocked_on_open_request);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // roll max to continue burning
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // roll max to continue burning
+  tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d4");
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_if_has_seen);
@@ -203,7 +207,6 @@ auto tp_load_door_unlocked() -> bool
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_submergible);
-  tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d4");
   tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_wood);

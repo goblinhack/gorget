@@ -63,6 +63,7 @@ static std::initializer_list< std::string > tests = {
     "monst_crosses_lava",
     "monst_crosses_water",
     "monst_door_locked",
+    "monst_door_slam_attack",
     "monst_door_unlocked",
     "monst_fast",
     "monst_jump_over_chasm",

@@ -291,7 +291,6 @@ auto tp_load_player() -> bool
   auto  name = tp_name(tp);
 
   // begin sort marker1 {
-  tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d4");
   thing_description_set(tp, tp_player_description_get);
   thing_detail_set(tp, tp_player_detail_get);
   thing_on_damage_set(tp, tp_player_on_damage);
@@ -308,6 +307,7 @@ auto tp_load_player() -> bool
   thing_on_tick_idle_set(tp, tp_player_tick_idle);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6"); // roll max to stop burning
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d100");  // roll max to continue burning
+  tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d4");
   tp_distance_jump_set(tp, 3);
   tp_distance_vision_set(tp, MAP_WIDTH / 2); // tiles
   tp_fired_weapon_count_max_set(tp, THING_WEAPON_MAX);

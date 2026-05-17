@@ -54,6 +54,7 @@ auto test_load_monst_crosses_chasm() -> bool;
 auto test_load_monst_crosses_lava() -> bool;
 auto test_load_monst_crosses_water() -> bool;
 auto test_load_monst_door_locked() -> bool;
+auto test_load_monst_door_slam_attack() -> bool;
 auto test_load_monst_door_unlocked() -> bool;
 auto test_load_monst_fast() -> bool;
 auto test_load_monst_jump_over_chasm() -> bool;

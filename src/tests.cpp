@@ -56,6 +56,7 @@ auto tests_init() -> bool
   if (!test_load_monst_crosses_lava()) { return false; }
   if (!test_load_monst_crosses_water()) { return false; }
   if (!test_load_monst_door_locked()) { return false; }
+  if (!test_load_monst_door_slam_attack()) { return false; }
   if (!test_load_monst_door_unlocked()) { return false; }
   if (!test_load_monst_fast()) { return false; }
   if (!test_load_monst_jump_over_chasm()) { return false; }

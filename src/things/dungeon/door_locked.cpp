@@ -178,11 +178,34 @@ static auto tp_door_locked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l
   THING_DBG(me, "%s", __FUNCTION__);
   TRACE_INDENT();
 
+  thing_sound_play(g, v, l, me, "door_open");
+
+  //
+  // Door slam attack
+  //
+  if (thing_is_player(opener)) {
+    auto door_at = thing_at(me);
+    if (level_is_attackable_by_player(g, v, l, door_at)) {
+      auto event_type = THING_EVENT_MELEE_DAMAGE;
+      auto damage     = tp_damage(thing_tp(me), event_type);
+
+      ThingEvent e {
+          .reason     = "door slam", //
+          .event_type = event_type,  //
+          .damage     = damage,      //
+          .source     = opener,      //
+      };
+
+      if (thing_attack_at(g, v, l, me, door_at, &e)) {
+        topcon("You slam the door!");
+        return true;
+      }
+    }
+  }
+
   if (thing_is_player(opener)) {
     topcon("The locked door closes.");
   }
-
-  thing_sound_play(g, v, l, me, "door_open");
 
   return true;
 }
@@ -214,7 +237,6 @@ auto tp_load_door_locked() -> bool
   auto  name = tp_name(tp);
   // begin sort marker1 {
   thing_description_set(tp, tp_door_locked_description_get);
-  tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d4");
   thing_display_get_tile_info_set(tp, tp_door_locked_at_display_get_tile_info);
   thing_mouse_down_set(tp, tp_door_locked_mouse_down);
   thing_on_close_request_set(tp, tp_door_locked_on_close_request);
@@ -222,6 +244,7 @@ auto tp_load_door_locked() -> bool
   thing_on_open_request_set(tp, tp_door_locked_on_open_request);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // roll max to continue burning
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // roll max to continue burning
+  tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d4");
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_if_has_seen);
