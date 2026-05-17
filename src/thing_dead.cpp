@@ -20,7 +20,13 @@ static void thing_killed_player(Gamep g, Levelsp v, Levelp l, ThingEvent &e)
   auto *it = e.source;
 
   if (it != nullptr) {
-    auto by_the_thing = thing_name_long_the(g, v, l, it);
+    std::string by_the_thing;
+    auto       *fired_by = thing_fired_by_get(g, v, l, it);
+    if (fired_by != nullptr) {
+      by_the_thing = thing_name_apostrophize_the(g, v, l, fired_by) + " " + thing_name_long(g, v, l, it);
+    } else {
+      by_the_thing = thing_name_long_the(g, v, l, it);
+    }
 
     switch (e.event_type) {
       case THING_EVENT_SHOVED : //

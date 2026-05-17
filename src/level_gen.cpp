@@ -4492,7 +4492,8 @@ static void level_gen_remove_additional_monsts_do(class LevelGen *lg)
 {
   TRACE();
 
-  std::vector< bpoint > cands;
+  std::vector< bpoint > cands[ 4 ];
+  size_t                max_quadrant = 0;
 
   //
   // Find floor tiles with floor space around them, candidates for placing items
@@ -4501,18 +4502,28 @@ static void level_gen_remove_additional_monsts_do(class LevelGen *lg)
     for (int x = 1; x < MAP_WIDTH - 1; x++) {
       auto c = lg->data[ x ][ y ].c;
 
+      int qx = x / (MAP_WIDTH / 2);
+      int qy = y / (MAP_HEIGHT / 2);
+      int q  = qx + qy;
+
       switch (c) {
-        case CHARMAP_MONST1 : cands.push_back(bpoint(x, y)); break;
-        case CHARMAP_MONST2 : cands.push_back(bpoint(x, y)); break;
+        case CHARMAP_MONST1 : [[fallthrough]];
+        case CHARMAP_MONST2 :
+          cands[ q ].push_back(bpoint(x, y));
+          if (cands[ q ].size() > max_quadrant) {
+            max_quadrant = q;
+          }
+          break;
       }
     }
   }
 
-  if (cands.empty()) {
+  const auto most_cands = cands[ max_quadrant ];
+  if (most_cands.empty()) {
     return;
   }
 
-  auto cand                      = cands[ PCG_RAND() % cands.size() ];
+  auto cand                      = most_cands[ PCG_RAND() % most_cands.size() ];
   lg->data[ cand.x ][ cand.y ].c = CHARMAP_FLOOR;
 }
 
