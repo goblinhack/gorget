@@ -376,7 +376,7 @@ void ascii_putf_internal2(int x, int y, color fg, color bg, const std::string &t
             auto tmp  = std::string(text_iter, text.end());
             int  slen = 0;
             tile      = string2tile(tmp, &slen);
-            text_iter += slen - 1;
+            text_iter += slen;
             got_pct = false;
             continue;
           }
@@ -550,7 +550,7 @@ auto ascii_strlen(std::string const &text) -> int
               auto tmp  = std::string(text_iter, text.end());
               int  slen = 0;
               (void) string2tile(tmp, &slen);
-              text_iter += slen - 1;
+              text_iter += slen;
               got_pct = false;
               continue;
             }
@@ -621,7 +621,7 @@ auto ascii_strip(std::string const &text) -> std::string
         auto tmp  = std::string(text_iter, text.end());
         int  slen = 0;
         (void) string2tile(tmp, &slen);
-        text_iter += slen - 1;
+        text_iter += slen;
         continue;
       }
     }

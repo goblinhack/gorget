@@ -321,17 +321,26 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
     // Item name
     //
     {
-      std::string s;
+      std::string line;
 
       if (item != nullptr) {
-        s = tp_name_long(tp);
+        line = tp_name_long(tp);
       } else {
-        s = "-";
+        line = "-";
       }
 
-      if (slot->count > 0) {
-        s += " x";
-        s += std::to_string(slot->count);
+      if (slot->count > 1) {
+        line += " x";
+        line += std::to_string(slot->count);
+      }
+
+      if (item) {
+        auto charge_count = thing_charge_count(item);
+        if (charge_count > 0) {
+          line += " ";
+          line += std::to_string(charge_count);
+          line += ", charges %%tile=lightning$";
+        }
       }
 
       {
@@ -342,7 +351,7 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
         spoint const br(button_width, y_at + button_height);
         wid_set_text_lhs(w, 1u);
         wid_set_pos(w, tl, br);
-        wid_set_text(w, s);
+        wid_set_text(w, line);
 
         if (item != nullptr) {
           wid_set_thing_context(g, v, w, item);

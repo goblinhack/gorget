@@ -411,6 +411,10 @@ static void wid_thing_info_item_mouse_over_end(Gamep g, Widp w)
     return false;
   }
 
+  if (game_state(g) != STATE_PLAYING) {
+    return true;
+  }
+
   wid_item_menu_select(g, v, t, false /* not from inventory */);
 
   return true;
@@ -442,11 +446,18 @@ static void wid_thing_info_item_mouse_over_end(Gamep g, Widp w)
     line += tp_name(item_tp);
     line += "$";
     line += " ";
-    line += std::format("{:<20}", tp_name(item_tp));
+    line += thing_name_short(g, v, l, item);
 
     if (slot->count > 1) {
       line += " x";
       line += std::to_string(slot->count);
+    }
+
+    auto charge_count = thing_charge_count(item);
+    if (charge_count > 0) {
+      line += " ";
+      line += std::to_string(charge_count);
+      line += " %%tile=lightning$";
     }
 
     Widp w = parent->log(g, line, TEXT_FORMAT_LHS);
