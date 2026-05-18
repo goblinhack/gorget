@@ -347,8 +347,8 @@ void wid_main_menu_select(Gamep g)
 
   auto str1       = "Weekly: seed " + g_opt_seed_name_weekly;
   auto str2       = "Previous: seed " + g_opt_seed_name_previous;
-  auto menu_width = std::max((int) str1.size() + 6, (int) UI_WID_POPUP_WIDTH_NORMAL);
-  menu_width      = std::max((int) str2.size() + 6, menu_width);
+  auto menu_width = std::max(static_cast<int>(str1.size()) + 6, static_cast<int>(UI_WID_POPUP_WIDTH_NORMAL));
+  menu_width      = std::max(static_cast<int>(str2.size()) + 6, menu_width);
 
   auto y_at = 0;
 
@@ -379,11 +379,11 @@ void wid_main_menu_select(Gamep g)
     wid_set_on_mouse_up(w, game_menu_new_game);
     wid_set_pos(w, tl, br);
     if (game_seed_source_get(g) == SEED_SOURCE_RANDOM) {
-      std::string s = std::string(UI_HIGHLIGHT_FMT_STR) + std::string("N") + std::string(UI_RESET_FMT) + std::string("ew game")
+      std::string const s = std::string(UI_HIGHLIGHT_FMT_STR) + std::string("N") + std::string(UI_RESET_FMT) + std::string("ew game")
                     + std::string(UI_RESET_FMT);
       wid_set_text(w, s);
     } else {
-      std::string s = std::string(UI_HIGHLIGHT_FMT_STR) + std::string("N") + std::string(UI_RESET_FMT) + std::string("ew game:")
+      std::string const s = std::string(UI_HIGHLIGHT_FMT_STR) + std::string("N") + std::string(UI_RESET_FMT) + std::string("ew game:")
                     + std::string(UI_RESET_FMT) + std::string(" ") + game_seed_name_get(g);
       wid_set_text(w, s);
     }
@@ -398,7 +398,7 @@ void wid_main_menu_select(Gamep g)
     spoint const br(button_width, y_at + button_height);
     wid_set_on_mouse_up(w, game_menu_weekly_seed);
     wid_set_pos(w, tl, br);
-    std::string s = std::string(UI_HIGHLIGHT_FMT_STR) + std::string("W") + std::string(UI_RESET_FMT) + std::string("eekly seed:")
+    std::string const s = std::string(UI_HIGHLIGHT_FMT_STR) + std::string("W") + std::string(UI_RESET_FMT) + std::string("eekly seed:")
                   + std::string(UI_RESET_FMT) + std::string(" ") + g_opt_seed_name_weekly;
     wid_set_text(w, s);
     y_at += button_step;
@@ -413,7 +413,7 @@ void wid_main_menu_select(Gamep g)
       spoint const br(button_width, y_at + button_height);
       wid_set_on_mouse_up(w, game_menu_previous_seed);
       wid_set_pos(w, tl, br);
-      std::string s = std::string(UI_HIGHLIGHT_FMT_STR) + std::string("P") + std::string(UI_RESET_FMT) + std::string("revious seed:")
+      std::string const s = std::string(UI_HIGHLIGHT_FMT_STR) + std::string("P") + std::string(UI_RESET_FMT) + std::string("revious seed:")
                     + std::string(UI_RESET_FMT) + std::string(" ") + g_opt_seed_name_previous;
       wid_set_text(w, s);
       y_at += button_step;

@@ -299,7 +299,7 @@ public:
   void popup_text_add(spoint p, const std::string &);
   void seed_clear();
   void seed_set(const char *seed = nullptr);
-  void seed_previous_set(void);
+  void seed_previous_set() const;
   void start_playing();
   void state_change(GameState state, const std::string &why);
   void state_reset(const std::string &why);
@@ -603,7 +603,7 @@ void Game::seed_clear()
 
 void Game::seed_set(const char *maybe_seed)
 {
-  if (maybe_seed) {
+  if (maybe_seed != nullptr) {
     DBG("set seed: %s", maybe_seed);
   } else {
     DBG("set seed: (none)");
@@ -667,7 +667,7 @@ void Game::seed_set(const char *maybe_seed)
   PCG_SRAND(config.seed_num % LEVEL_TEST_MAX);
 }
 
-void Game::seed_previous_set(void)
+void Game::seed_previous_set() const
 {
   TRACE();
   log("set previous seed?");

@@ -334,7 +334,7 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
         line += std::to_string(slot->count);
       }
 
-      if (item) {
+      if (item != nullptr) {
         auto charge_count = thing_charge_count(item);
         if (charge_count > 0) {
           line += " ";
