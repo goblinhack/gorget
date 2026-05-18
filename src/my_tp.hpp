@@ -161,8 +161,8 @@
       list_macro(is_unused28, "is_unused28"),                                               /* newline */                                  \
       list_macro(is_unused29, "is_unused29"),                                               /* newline */                                  \
       list_macro(is_unused30, "is_unused30"),                                               /* newline */                                  \
-      list_macro(is_unused31, "is_unused31"),                                               /* newline */                                  \
-      list_macro(is_unused32, "is_unused32"),                                               /* newline */                                  \
+      list_macro(is_wand, "is_wand"),                                                       /* newline */                                  \
+      list_macro(is_staff, "is_staff"),                                                     /* newline */                                  \
       list_macro(is_argusul, "is_argusul"),                                                 /* newline */                                  \
       list_macro(is_wait_on_anim, "is_wait_on_anim"),                                       /* newline */                                  \
       list_macro(is_flat, "is_flat"),                                                       /* newline */                                  \
@@ -495,6 +495,7 @@ class Tp;
 [[nodiscard]] auto tp_chance_fail(Tpp tp, ThingChanceType val) -> bool;
 [[nodiscard]] auto tp_chance_success(Tpp tp, ThingChanceType val) -> bool;
 [[nodiscard]] auto tp_chance(Tpp tp, ThingChanceType val) -> int;
+[[nodiscard]] auto tp_charge_count_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_collision_radius(Tpp t) -> float;
 [[nodiscard]] auto tp_damage_random_type_get(Tpp tp) -> ThingEventType;
 [[nodiscard]] auto tp_damage(Tpp tp, ThingEventType val) -> int;
@@ -675,6 +676,7 @@ class Tp;
 [[nodiscard]] auto tp_is_shovable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_slime(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_smoke(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_staff(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_stamina_visible(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_steam(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_stone(Tpp tp) -> bool;
@@ -711,8 +713,6 @@ class Tp;
 [[nodiscard]] auto tp_is_unused29(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused3(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused30(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused31(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused32(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused4(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused46(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused47(Tpp tp) -> bool;
@@ -728,6 +728,7 @@ class Tp;
 [[nodiscard]] auto tp_is_wait_on_anim(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_wait_on_dead_anim(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_wall(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_wand(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_water(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_wood(Tpp tp) -> bool;
 [[nodiscard]] auto tp_lifespan_get(Tpp tp) -> int;
@@ -770,7 +771,6 @@ class Tp;
 [[nodiscard]] auto tp_value14_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_value15_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_value16_get(Tpp tp) -> int;
-[[nodiscard]] auto tp_value17_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_value2_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_value3_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_value4_get(Tpp tp) -> int;
@@ -788,6 +788,7 @@ class Tp;
 // begin sort marker2 {
 auto tp_priority_get(Tpp tp) -> ThingPriorityType;
 void tp_chance_set(Tpp tp, ThingChanceType e, const std::string &val);
+void tp_charge_count_set(Tpp tp, int val);
 void tp_con_(Tpp tp, const char *fmt, va_list args); // compile error without
 void tp_con(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void tp_damage_set(Tpp tp, ThingEventType e, const std::string &val);
@@ -839,7 +840,6 @@ void tp_value13_set(Tpp tp, int val);
 void tp_value14_set(Tpp tp, int val);
 void tp_value15_set(Tpp tp, int val);
 void tp_value16_set(Tpp tp, int val);
-void tp_value17_set(Tpp tp, int val);
 void tp_value2_set(Tpp tp, int val);
 void tp_value3_set(Tpp tp, int val);
 void tp_value4_set(Tpp tp, int val);

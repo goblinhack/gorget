@@ -1025,16 +1025,16 @@ auto tp_is_unused30(Tpp tp) -> bool
   return tp_flag(tp, is_unused30) != 0;
 }
 
-auto tp_is_unused31(Tpp tp) -> bool
+auto tp_is_wand(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused31) != 0;
+  return tp_flag(tp, is_wand) != 0;
 }
 
-auto tp_is_unused32(Tpp tp) -> bool
+auto tp_is_staff(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused32) != 0;
+  return tp_flag(tp, is_staff) != 0;
 }
 
 auto tp_is_argusul(Tpp tp) -> bool

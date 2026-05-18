@@ -1025,16 +1025,16 @@ auto level_count_is_unused30(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> u
   return level_count(g, v, l, is_unused30, p);
 }
 
-auto level_count_is_unused31(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+auto level_count_is_wand(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused31, p);
+  return level_count(g, v, l, is_wand, p);
 }
 
-auto level_count_is_unused32(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+auto level_count_is_staff(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused32, p);
+  return level_count(g, v, l, is_staff, p);
 }
 
 auto level_count_is_argusul(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t

@@ -72,6 +72,8 @@ auto thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &real_at) -> 
   (void) thing_temperature_set(g, v, l, t, tp_temperature_initial_get(tp));
   (void) thing_variant_set(g, v, l, t, tp_variant_get(tp));
   (void) thing_weight_set(g, v, l, t, tp_weight_get(tp));
+  (void) thing_charge_count_set(g, v, l, t, tp_charge_count_get(tp));
+  (void) thing_distance_avoid_target_set(g, v, l, t, tp_distance_avoid_target_get(tp));
 
   (void) thing_value1_set(g, v, l, t, tp_value1_get(tp));
   (void) thing_value10_set(g, v, l, t, tp_value10_get(tp));
@@ -81,8 +83,6 @@ auto thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &real_at) -> 
   (void) thing_value14_set(g, v, l, t, tp_value14_get(tp));
   (void) thing_value15_set(g, v, l, t, tp_value15_get(tp));
   (void) thing_value16_set(g, v, l, t, tp_value16_get(tp));
-  (void) thing_value17_set(g, v, l, t, tp_value17_get(tp));
-  (void) thing_distance_avoid_target_set(g, v, l, t, tp_distance_avoid_target_get(tp));
   (void) thing_value2_set(g, v, l, t, tp_value2_get(tp));
   (void) thing_value3_set(g, v, l, t, tp_value3_get(tp));
   (void) thing_value4_set(g, v, l, t, tp_value4_get(tp));

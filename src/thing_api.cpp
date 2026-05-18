@@ -1601,7 +1601,7 @@ auto thing_is_unused30(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused30) != 0;
 }
 
-auto thing_is_unused31(Thingp t) -> bool
+auto thing_is_wand(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -1609,10 +1609,10 @@ auto thing_is_unused31(Thingp t) -> bool
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused31) != 0;
+  return tp_flag(thing_tp(t), is_wand) != 0;
 }
 
-auto thing_is_unused32(Thingp t) -> bool
+auto thing_is_staff(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -1620,7 +1620,7 @@ auto thing_is_unused32(Thingp t) -> bool
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused32) != 0;
+  return tp_flag(thing_tp(t), is_staff) != 0;
 }
 
 auto thing_is_argusul(Thingp t) -> bool
@@ -3722,7 +3722,7 @@ auto thing_value16_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
   }
   return t->_value16 -= val;
 }
-auto thing_value17(Thingp t) -> int
+auto thing_charge_count(Thingp t) -> int
 {
   TRACE_DEBUG();
 
@@ -3730,10 +3730,10 @@ auto thing_value17(Thingp t) -> int
     ERR("no thing pointer");
     return 0;
   }
-  return t->_value17;
+  return t->_charge_count;
 }
 
-auto thing_value17_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+auto thing_charge_count_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3741,10 +3741,10 @@ auto thing_value17_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
     ERR("no thing pointer");
     return 0;
   }
-  return t->_value17 = val;
+  return t->_charge_count = val;
 }
 
-auto thing_value17_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+auto thing_charge_count_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3752,10 +3752,10 @@ auto thing_value17_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
     ERR("no thing pointer");
     return 0;
   }
-  return t->_value17 += val;
+  return t->_charge_count += val;
 }
 
-auto thing_value17_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+auto thing_charge_count_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3763,10 +3763,10 @@ auto thing_value17_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
     ERR("no thing pointer");
     return 0;
   }
-  if (static_cast< int >(t->_value17) - val <= 0) {
-    return t->_value17 = 0;
+  if (static_cast< int >(t->_charge_count) - val <= 0) {
+    return t->_charge_count = 0;
   }
-  return t->_value17 -= val;
+  return t->_charge_count -= val;
 }
 auto thing_distance_avoid_target(Thingp t) -> int
 {

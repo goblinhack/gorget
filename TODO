@@ -3,6 +3,9 @@ bugs
 
 todo
 ----
+wands
+staffs
+charges
 
 essential features
 ------------------
@@ -83,6 +86,7 @@ monsters
   - ogyr (celtic)
   - door mimic
   - thief that can steal items
+  - dropbear
 allies
   - Allies vanish each level and the life force is returned to you
   - Life force can be applied to the summoning of allies each level.

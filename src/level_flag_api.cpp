@@ -1025,16 +1025,16 @@ auto level_is_unused30(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me)
   return level_flag(g, v, l, is_unused30, p, me);
 }
 
-auto level_is_unused31(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+auto level_is_wand(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused31, p, me);
+  return level_flag(g, v, l, is_wand, p, me);
 }
 
-auto level_is_unused32(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+auto level_is_staff(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused32, p, me);
+  return level_flag(g, v, l, is_staff, p, me);
 }
 
 auto level_is_argusul(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp

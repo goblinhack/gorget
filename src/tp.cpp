@@ -126,6 +126,7 @@ static std::initializer_list< std::string > tps = {
     "potion",
     "reeds",
     "smoke",
+    "staff_fire",
     "steam",
     "teleport",
     "trap",
@@ -1509,24 +1510,24 @@ auto tp_value16_get(Tpp tp) -> int
   return tp->value16;
 }
 
-void tp_value17_set(Tpp tp, int val)
+void tp_charge_count_set(Tpp tp, int val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
     tp_err(tp, "no thing template pointer");
     return;
   }
-  tp->value17 = val;
+  tp->charge_count = val;
 }
 
-auto tp_value17_get(Tpp tp) -> int
+auto tp_charge_count_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
     tp_err(tp, "no thing template pointer");
     return 0;
   }
-  return tp->value17;
+  return tp->charge_count;
 }
 
 void tp_distance_avoid_target_set(Tpp tp, int val)

@@ -64,6 +64,7 @@ auto templates_init() -> bool
   if (!tp_load_reeds()) { return false; }
   if (!tp_load_rock()) { return false; }
   if (!tp_load_smoke()) { return false; }
+  if (!tp_load_staff_fire()) { return false; }
   if (!tp_load_steam()) { return false; }
   if (!tp_load_teleport()) { return false; }
   if (!tp_load_trap()) { return false; }

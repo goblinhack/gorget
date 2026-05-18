@@ -130,7 +130,7 @@ public:
   int value14 {0};
   int value15 {0};
   int value16 {0};
-  int value17 {0};
+  int charge_count {0};
   int distance_avoid_target {0};
   int stamina {0};
   int score_value {0};

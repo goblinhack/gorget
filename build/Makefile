@@ -14,6 +14,8 @@ FORMAT_DIRS=$(DIRS) \
 	    src/things/effect \
 	    src/things/projectiles \
 	    src/things/monst \
+	    src/things/wand \
+	    src/things/staff \
 	    src/things/minion \
 	    src/things/mob \
 	    src/things/treasure \

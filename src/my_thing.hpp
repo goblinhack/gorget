@@ -404,7 +404,7 @@ using Thing = struct Thing {
   int16_t _value14;
   int16_t _value15;
   int16_t _value16;
-  int16_t _value17;
+  int16_t _charge_count;
   int16_t _distance_avoid_target;
   int16_t _score_value;
   //
@@ -572,6 +572,10 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_can_move_to_diagonal_is_blocked(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool;
 [[nodiscard]] auto thing_can_move_to_possible(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool;
 [[nodiscard]] auto thing_carry_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp carrier) -> bool;
+[[nodiscard]] auto thing_charge_count_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
+[[nodiscard]] auto thing_charge_count_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
+[[nodiscard]] auto thing_charge_count_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
+[[nodiscard]] auto thing_charge_count(Thingp t) -> int;
 [[nodiscard]] auto thing_close(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp closer) -> bool;
 [[nodiscard]] auto thing_collect_key(Gamep g, Levelsp v, Levelp l, Thingp it, Thingp carrier) -> bool;
 [[nodiscard]] auto thing_collision_radius(Thingp t) -> float;
@@ -805,6 +809,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_sleeping(Thingp me) -> bool;
 [[nodiscard]] auto thing_is_slime(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_smoke(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_staff(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_stamina_visible(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_steam(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_stone(Thingp t) -> bool;
@@ -843,8 +848,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused29(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused3(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused30(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused31(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused32(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused4(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused46(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused47(Thingp t) -> bool;
@@ -859,6 +862,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_vision_360_degrees(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_wait_on_anim(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_wait_on_dead_anim(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_wand(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_wood(Thingp t) -> bool;
 [[nodiscard]] auto thing_jump_to(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to, bool warn = true) -> bool;
 [[nodiscard]] auto thing_keys_carried_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
@@ -993,10 +997,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_value16_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_value16_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_value16(Thingp t) -> int;
-[[nodiscard]] auto thing_value17_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
-[[nodiscard]] auto thing_value17_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
-[[nodiscard]] auto thing_value17_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
-[[nodiscard]] auto thing_value17(Thingp t) -> int;
 [[nodiscard]] auto thing_value2_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_value2_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_value2_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;

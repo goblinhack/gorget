@@ -1025,16 +1025,16 @@ auto level_is_unused30_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> 
   return level_flag_cached(g, v, l, is_unused30, p);
 }
 
-auto level_is_unused31_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+auto level_is_wand_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused31, p);
+  return level_flag_cached(g, v, l, is_wand, p);
 }
 
-auto level_is_unused32_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+auto level_is_staff_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused32, p);
+  return level_flag_cached(g, v, l, is_staff, p);
 }
 
 auto level_is_argusul_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
