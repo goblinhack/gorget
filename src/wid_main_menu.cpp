@@ -379,7 +379,7 @@ void wid_main_menu_select(Gamep g)
     wid_set_on_mouse_up(w, game_menu_new_game);
     wid_set_pos(w, tl, br);
     if (game_seed_source_get(g) == SEED_SOURCE_RANDOM) {
-      std::string s = std::string(UI_HIGHLIGHT_FMT_STR) + std::string("N") + std::string(UI_RESET_FMT) + std::string("ew game: random seed")
+      std::string s = std::string(UI_HIGHLIGHT_FMT_STR) + std::string("N") + std::string(UI_RESET_FMT) + std::string("ew game")
                     + std::string(UI_RESET_FMT);
       wid_set_text(w, s);
     } else {

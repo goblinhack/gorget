@@ -642,7 +642,7 @@ auto main(int argc, char *argv[]) -> int
     // Need this to get the background working
     //
     wid_main_menu_select(g);
-    wid_cfg_gfx_select(g);
+    wid_cfg_gfx_select(g, true /* menu_was_created_due_to_game_restarting */);
   } else if (g_opt_quick_start) {
     wid_hide(g, wid_console_window);
     wid_new_game(g);

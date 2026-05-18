@@ -12,7 +12,7 @@
 
 static WidPopup *wid_options_menu_window;
 
-static void wid_options_menu_destroy()
+void wid_options_menu_destroy(Gamep g)
 {
   TRACE();
   delete wid_options_menu_window;
@@ -22,7 +22,7 @@ static void wid_options_menu_destroy()
 [[nodiscard]] static auto wid_options_menu_gfx(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
-  wid_options_menu_destroy();
+  wid_options_menu_destroy(g);
   wid_cfg_gfx_select(g);
   return true;
 }
@@ -30,7 +30,7 @@ static void wid_options_menu_destroy()
 [[nodiscard]] static auto wid_options_menu_seed(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
-  wid_options_menu_destroy();
+  wid_options_menu_destroy(g);
   wid_seed_select(g);
   return true;
 }
@@ -38,7 +38,7 @@ static void wid_options_menu_destroy()
 [[nodiscard]] static auto wid_options_menu_player_name(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
-  wid_options_menu_destroy();
+  wid_options_menu_destroy(g);
   wid_player_name_select(g);
   return true;
 }
@@ -46,7 +46,7 @@ static void wid_options_menu_destroy()
 [[nodiscard]] static auto wid_options_menu_mouse(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
-  wid_options_menu_destroy();
+  wid_options_menu_destroy(g);
   wid_cfg_mouse_select(g);
   return true;
 }
@@ -54,7 +54,7 @@ static void wid_options_menu_destroy()
 [[nodiscard]] static auto wid_options_menu_keyboard(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
-  wid_options_menu_destroy();
+  wid_options_menu_destroy(g);
   wid_cfg_help_select(g);
   return true;
 }
@@ -62,7 +62,7 @@ static void wid_options_menu_destroy()
 [[nodiscard]] static auto wid_options_menu_sound(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
-  wid_options_menu_destroy();
+  wid_options_menu_destroy(g);
   wid_cfg_sound_select(g);
   return true;
 }
@@ -70,7 +70,7 @@ static void wid_options_menu_destroy()
 [[nodiscard]] static auto wid_options_menu_back(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
-  wid_options_menu_destroy();
+  wid_options_menu_destroy(g);
   wid_main_menu_select(g);
   return true;
 }
@@ -144,7 +144,7 @@ void wid_options_menu_select(Gamep g)
   log("options menu");
 
   if (wid_options_menu_window != nullptr) {
-    wid_options_menu_destroy();
+    wid_options_menu_destroy(g);
   }
 
   auto box_height = 2;

@@ -20,6 +20,7 @@ static WidPopup *wid_cfg_gfx_window;
 
 static SDL_DisplayMode pending_mode;
 static bool            pending_mode_set;
+static bool            menu_was_created_due_to_game_restarting;
 
 static void wid_cfg_gfx_destroy()
 {
@@ -48,7 +49,12 @@ static void wid_cfg_gfx_destroy()
   TRACE();
   con("Reload config");
   wid_cfg_gfx_destroy();
-  wid_options_menu_select(g);
+  if (menu_was_created_due_to_game_restarting) {
+    wid_options_menu_destroy(g);
+    wid_main_menu_select(g);
+  } else {
+    wid_options_menu_select(g);
+  }
   return true;
 }
 
@@ -56,7 +62,12 @@ static void wid_cfg_gfx_destroy()
 {
   TRACE();
   wid_cfg_gfx_destroy();
-  wid_options_menu_select(g);
+  if (menu_was_created_due_to_game_restarting) {
+    wid_options_menu_destroy(g);
+    wid_main_menu_select(g);
+  } else {
+    wid_options_menu_select(g);
+  }
   return true;
 }
 
@@ -390,12 +401,14 @@ static auto wid_cfg_gfx_find_closest_resolution(Gamep g) -> std::string
   return false;
 }
 
-void wid_cfg_gfx_select(Gamep g)
+void wid_cfg_gfx_select(Gamep g, bool menu_was_created_due_to_game_restarting_in)
 {
   TRACE();
   if (wid_cfg_gfx_window != nullptr) {
     wid_cfg_gfx_destroy();
   }
+
+  menu_was_created_due_to_game_restarting = menu_was_created_due_to_game_restarting_in;
 
   auto m = TERM_WIDTH / 2;
 
