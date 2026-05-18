@@ -72,7 +72,7 @@ enum { UI_FONT_HEIGHT = 8, UI_FONT_WIDTH = 6 };
 //
 enum {
   UI_MAX_PLAYER_NAME_LEN = 12,
-  UI_MAX_SEED_NAME_LEN   = 10,
+  UI_MAX_SEED_NAME_LEN   = 17,
   UI_MAX_WID_CONTEXT     = 2,
   UI_MAX_SAVE_SLOTS      = 10 // How many save game slots
 };

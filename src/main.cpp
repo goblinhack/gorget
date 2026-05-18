@@ -12,6 +12,7 @@
 #include "my_main.hpp"
 #include "my_music.hpp"
 #include "my_ramdisk.hpp"
+#include "my_random_name.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
 #include "my_test.hpp"
@@ -19,8 +20,10 @@
 #include "my_wid_tiles.hpp"
 #include "my_wids.hpp"
 
+#include <chrono>
 #include <csignal>
 #include <cstring>
+#include <format>
 #include <iostream>
 #include <print>
 #include <strings.h>
@@ -108,6 +111,11 @@ static void parse_args(int argc, char *argv[])
         CROAK("missing parameter for argument, %s", argv[ i ]);
       }
       g_opt_seed_name = argv[ i + 1 ];
+
+      if (g_opt_seed_name == "weekly") {
+        g_opt_seed_name = g_opt_seed_name_weekly;
+      }
+
       i++;
       continue;
     }
@@ -259,6 +267,16 @@ auto main(int argc, char *argv[]) -> int
   TRACE_DEBUG();
   redirect_stderr();
   log("will use STDERR as '%s'", g_log_stderr_filename.c_str());
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Set the weekly seed
+  //////////////////////////////////////////////////////////////////////////////
+  {
+    const auto now         = std::chrono::system_clock::now();
+    auto       seed_str    = std::format("weekly:{:%Y:%U}", now);
+    auto       h           = string_to_hash(seed_str);
+    g_opt_seed_name_weekly = os_random_name_from_hash(h, UI_MAX_SEED_NAME_LEN);
+  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Call parse_args before any memory allocations, in case debug2 is enabled

@@ -3,9 +3,6 @@ bugs
 
 todo
 ----
-brazier kick over sound
-rustle noise in bushes
-shoot from behind double damage
 
 essential features
 ------------------
@@ -34,7 +31,6 @@ gods
     - darknes
   - horned god                    (green)
   sacrificing an acolyte of the same god - bad
-
 abilities
   - Hollow Bones: Fall damage is halved and you move silently, but strong winds can knock you off balance.
   - Glass Bones: Take double damage from falls and blunt impacts, but your strikes are unnaturally precise.
@@ -51,22 +47,34 @@ weapon slots
   - etherblast to hit ghosts in walls
   - emergency teleport
 gameplay
+  - brazier kick over sound
+  - rustle noise in bushes / bushes quiver when monster is behind?
+  - items hiding in bushes 
+  - shoot from behind double damage
   - hard coded to fire fireball
   - traps must do something / gas effects
   - items can be lost in deep water
   - chests need to contain something and those items destroyed when the chest is
   - spell points to collect
   - spells need to have a cost that can be influenced by specializing
-  - boss that can move levels
   - projectile collision with projectile
   - boulders that can crush
   - cobwebs burns and get you stuck
   - ice weapon and shattering
   - intelligent monsters when hurt should escape
   - shrines that reduce spell points
-  - bushes quiver when monster is behind? / items hiding in bushes 
   - anti magic areas
   - anti anti magic areas
+  - debug shell "add monst"
+  - "You have used up your 5 free stabs included with the basic plan. If you wish to stab more..."
+  - Allies will follow you around and defend you; also thinking you
+    can set an ally with a basic programmed task - explore/defend/attack
+  - Enemy souls can be harvested to add to your life force. Thinking
+    of a pacman like blue ghost you need to hunt down. Only applies to
+    living beings that are toasted.
+  - Alternative turn based idea is that the dungeon will force a move
+    after say 10 seconds. Gradually this will increase in speed until
+    the monsters are moving almost real time.
 monsters
   - ogri - like in Doctor Who, monoliths that move slowly and block the way
   - unihulk
@@ -82,26 +90,10 @@ allies
     Hence you need to balance how many allies to summon with the chance
     of permanent loss.
 ui
-  - replay seed
-  - play weekly/daily seed - generated from date
   - random player name e.g. galatrex the dark
-
-future
-------
-debug shell "add monst"
 sacrifices
-sacrifice a leg / soul to progress
-sacrifices are to Gods
-sacrificed an arm to a god of fire, would you get a spectral arm of fire with fire damage bonus as replacement
-most players would need to sacrifice something in order to get past the first half of the game
-eyes of ice, heart of fire
-7 chakras
-"You have used up your 5 free stabs included with the basic plan. If you wish to stab more..."
-- Allies will follow you around and defend you; also thinking you
-  can set an ally with a basic programmed task - explore/defend/attack
-- Enemy souls can be harvested to add to your life force. Thinking
-  of a pacman like blue ghost you need to hunt down. Only applies to
-  living beings that are toasted.
-- Alternative turn based idea is that the dungeon will force a move
-  after say 10 seconds. Gradually this will increase in speed until
-  the monsters are moving almost real time.
+  - sacrifice a leg / soul to progress
+  - sacrifices are to Gods
+  - sacrificed an arm to a god of fire, would you get a spectral arm of fire with fire damage bonus as replacement
+    most players would need to sacrifice something in order to get past the first half of the game
+    eyes of ice, heart of fire

@@ -401,3 +401,10 @@ auto os_rand_dict2_name() -> const char *
 
   return dict2_names[ OS_RANDOM_RANGE(0, ARRAY_SIZE(dict2_names)) ];
 }
+
+auto os_rand_dict2_name(uint32_t h) -> const char *
+{
+  TRACE();
+
+  return dict2_names[ h % ARRAY_SIZE(dict2_names) ];
+}

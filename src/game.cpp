@@ -299,6 +299,7 @@ public:
   void popup_text_add(spoint p, const std::string &);
   void seed_clear();
   void seed_set(const char *seed = nullptr);
+  void seed_previous_set(void);
   void start_playing();
   void state_change(GameState state, const std::string &why);
   void state_reset(const std::string &why);
@@ -593,13 +594,22 @@ auto game_popups_present(Gamep g, int x, int y) -> bool
 
 void Game::seed_clear()
 {
+  DBG("seed clear");
+  TRACE_INDENT();
+
   config.seed_name   = "";
   config.seed_source = SEED_SOURCE_RANDOM;
 }
 
 void Game::seed_set(const char *maybe_seed)
 {
-  TRACE();
+  if (maybe_seed) {
+    DBG("set seed: %s", maybe_seed);
+  } else {
+    DBG("set seed: (none)");
+  }
+
+  TRACE_INDENT();
 
   if (! g_level_opt.level_name.empty()) {
     config.seed_name   = TEST_SEED;
@@ -657,6 +667,28 @@ void Game::seed_set(const char *maybe_seed)
   PCG_SRAND(config.seed_num % LEVEL_TEST_MAX);
 }
 
+void Game::seed_previous_set(void)
+{
+  TRACE();
+  log("set previous seed?");
+
+  switch (config.seed_source) {
+    case SEED_SOURCE_TEST : //
+      log("set previous seed?: no, test");
+      break;
+    case SEED_SOURCE_COMMAND_LINE : //
+      log("set previous seed?: no, command line");
+      break;
+    case SEED_SOURCE_USER : //
+      log("set previous seed?: no, user");
+      break;
+    case SEED_SOURCE_RANDOM :
+      log("set previous seed, name '%s', seed %u", config.seed_name.c_str(), config.seed_num);
+      g_opt_seed_name_previous = config.seed_name;
+      break;
+  }
+}
+
 void game_seed_set(Gamep g, const char *maybe_seed)
 {
   TRACE();
@@ -683,7 +715,8 @@ void game_seed_clear(Gamep g)
 
 void game_seed_set(Gamep g, uint32_t seed)
 {
-  TRACE();
+  DBG("set seed: %u", seed);
+  TRACE_INDENT();
 
   if (g == nullptr) {
     ERR("no game pointer");
@@ -703,6 +736,7 @@ auto game_seed_name_get(Gamep g) -> const char *
     return "";
   }
 
+  DBG("get seed: %s", g->config.seed_name.c_str());
   return g->config.seed_name.c_str();
 }
 
@@ -897,6 +931,11 @@ void Game::destroy_levels()
   TRACE_INDENT();
 
   levels_destroy(g, v);
+
+  //
+  // Save previous seed
+  //
+  seed_previous_set();
 
   //
   // Create a new seed for the next run
@@ -2838,7 +2877,7 @@ auto game_map_zoom_def_get(Gamep g) -> int
 //
 static void game_map_zoom_update(Gamep g)
 {
-  DBG("Zoom update");
+  DBG("zoom update");
   TRACE_INDENT();
 
   auto *v = game_levels_get(g);
@@ -2872,7 +2911,7 @@ static void game_map_zoom_update(Gamep g)
 //
 void game_map_zoom_toggle(Gamep g)
 {
-  DBG("Zoom alt");
+  DBG("zoom alt");
   TRACE_INDENT();
 
   if (game_map_zoom_is_full_map_visible(g)) {
@@ -2903,7 +2942,7 @@ void game_map_zoom_toggle(Gamep g)
 //
 void game_map_zoom_in(Gamep g)
 {
-  DBG("Zoom in");
+  DBG("zoom in");
   TRACE_INDENT();
 
   game_map_zoom_set(g, game_map_zoom_def_get(g));
@@ -2915,7 +2954,7 @@ void game_map_zoom_in(Gamep g)
 //
 void game_map_zoom_out(Gamep g)
 {
-  DBG("Zoom out");
+  DBG("zoom out");
   TRACE_INDENT();
 
   game_map_zoom_set(g, MAP_ZOOM_FULL_MAP);

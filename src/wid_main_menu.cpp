@@ -75,6 +75,24 @@ static void wid_main_menu_hide(Gamep g)
   return false; // suppress mouse click
 }
 
+[[nodiscard]] static auto game_menu_weekly_seed(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+{
+  TRACE();
+
+  game_seed_set(g, g_opt_seed_name_weekly.c_str());
+
+  return game_menu_new_game(g, w, x, y, button);
+}
+
+[[nodiscard]] static auto game_menu_previous_seed(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+{
+  TRACE();
+
+  game_seed_set(g, g_opt_seed_name_previous.c_str());
+
+  return game_menu_new_game(g, w, x, y, button);
+}
+
 [[nodiscard]] static auto wid_main_menu_quit(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
@@ -122,6 +140,18 @@ static void wid_main_menu_hide(Gamep g)
   if (s == "q" || s == "Q") {
     sound_play(g, "keypress");
     (void) wid_main_menu_quit(g, nullptr, 0, 0, 0);
+    return true;
+  }
+
+  if (s == "p" || s == "P") {
+    sound_play(g, "keypress");
+    (void) game_menu_previous_seed(g, nullptr, 0, 0, 0);
+    return true;
+  }
+
+  if (s == "w" || s == "W") {
+    sound_play(g, "keypress");
+    (void) game_menu_weekly_seed(g, nullptr, 0, 0, 0);
     return true;
   }
 
@@ -290,13 +320,43 @@ void wid_main_menu_select(Gamep g)
 
   const auto button_height = 2;
   const auto button_step   = 3;
-  const auto menu_height   = 16;
-  const auto menu_width    = UI_WID_POPUP_WIDTH_NORMAL;
+
+  auto menu_height = 17;
+
+  if (! g_opt_seed_name_weekly.empty()) {
+    menu_height += 3;
+
+    if (game_seed_name_get(g) == g_opt_seed_name_weekly) {
+      DBG("clear old seed as using 'weekly seed'");
+      game_seed_clear(g);
+      game_seed_set(g, nullptr);
+    }
+  }
+
+  if (! g_opt_seed_name_previous.empty()) {
+    if (g_opt_seed_name_previous != g_opt_seed_name_weekly) {
+      menu_height += 3;
+
+      if (game_seed_name_get(g) == g_opt_seed_name_previous) {
+        DBG("clear old seed as using 'previous seed'");
+        game_seed_clear(g);
+        game_seed_set(g, nullptr);
+      }
+    }
+  }
+
+  auto str1       = "Weekly: seed " + g_opt_seed_name_weekly;
+  auto str2       = "Previous: seed " + g_opt_seed_name_previous;
+  auto menu_width = std::max((int) str1.size() + 6, (int) UI_WID_POPUP_WIDTH_NORMAL);
+  menu_width      = std::max((int) str2.size() + 6, menu_width);
 
   auto y_at = 0;
 
-  const spoint outer_tl((TERM_WIDTH / 2) - (menu_width / 2), (TERM_HEIGHT / 2) - (menu_height / 2));
-  const spoint outer_br((TERM_WIDTH / 2) + (menu_width / 2), (TERM_HEIGHT / 2) + (menu_height / 2));
+  spoint outer_tl((TERM_WIDTH / 2) - (menu_width / 2), (TERM_HEIGHT / 2) - (menu_height / 2));
+  spoint outer_br((TERM_WIDTH / 2) + (menu_width / 2), (TERM_HEIGHT / 2) + (menu_height / 2));
+
+  outer_tl.y += 2;
+  outer_br.y += 2;
 
   wid_main_menu_window = new WidPopup(g, "Main menu", outer_tl, outer_br, nullptr, "nothing", false, false);
 
@@ -318,9 +378,47 @@ void wid_main_menu_select(Gamep g)
     spoint const br(button_width, y_at + button_height);
     wid_set_on_mouse_up(w, game_menu_new_game);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, UI_HIGHLIGHT_FMT_STR "N" UI_RESET_FMT "ew game" UI_RESET_FMT);
+    if (game_seed_source_get(g) == SEED_SOURCE_RANDOM) {
+      std::string s = std::string(UI_HIGHLIGHT_FMT_STR) + std::string("N") + std::string(UI_RESET_FMT) + std::string("ew game: random seed")
+                    + std::string(UI_RESET_FMT);
+      wid_set_text(w, s);
+    } else {
+      std::string s = std::string(UI_HIGHLIGHT_FMT_STR) + std::string("N") + std::string(UI_RESET_FMT) + std::string("ew game:")
+                    + std::string(UI_RESET_FMT) + std::string(" ") + game_seed_name_get(g);
+      wid_set_text(w, s);
+    }
   }
   y_at += button_step;
+  if (! g_opt_seed_name_weekly.empty()) {
+    TRACE();
+    auto *p = wid_main_menu_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_menu_button(g, p, "Weekly Seed");
+
+    spoint const tl(0, y_at);
+    spoint const br(button_width, y_at + button_height);
+    wid_set_on_mouse_up(w, game_menu_weekly_seed);
+    wid_set_pos(w, tl, br);
+    std::string s = std::string(UI_HIGHLIGHT_FMT_STR) + std::string("W") + std::string(UI_RESET_FMT) + std::string("eekly seed:")
+                  + std::string(UI_RESET_FMT) + std::string(" ") + g_opt_seed_name_weekly;
+    wid_set_text(w, s);
+    y_at += button_step;
+  }
+  if (! g_opt_seed_name_previous.empty()) {
+    if (g_opt_seed_name_previous != g_opt_seed_name_weekly) {
+      TRACE();
+      auto *p = wid_main_menu_window->wid_text_area->wid_text_area;
+      auto *w = wid_new_menu_button(g, p, "Previous Seed");
+
+      spoint const tl(0, y_at);
+      spoint const br(button_width, y_at + button_height);
+      wid_set_on_mouse_up(w, game_menu_previous_seed);
+      wid_set_pos(w, tl, br);
+      std::string s = std::string(UI_HIGHLIGHT_FMT_STR) + std::string("P") + std::string(UI_RESET_FMT) + std::string("revious seed:")
+                    + std::string(UI_RESET_FMT) + std::string(" ") + g_opt_seed_name_previous;
+      wid_set_text(w, s);
+      y_at += button_step;
+    }
+  }
   {
     TRACE();
     auto *p = wid_main_menu_window->wid_text_area->wid_text_area;

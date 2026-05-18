@@ -43,6 +43,8 @@ char      **g_argv;
 int         g_argc;
 std::string g_need_restart_with_given_arguments; // Need to restart game
 std::string g_opt_seed_name;
+std::string g_opt_seed_name_weekly;
+std::string g_opt_seed_name_previous;
 std::string g_opt_test_name_filter;
 std::string g_opt_test_current;
 std::string g_program_name;
