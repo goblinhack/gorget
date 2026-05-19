@@ -2281,10 +2281,10 @@ static void gfx_init_tiles()
       "",
       "",
       // ##############################################################################
-      "lightning",
+      "icon_lightning",
+      "icon_hand",
       "staff_fire.0",
       "staff_fire.1",
-      "",
       "",
       "",
       "",

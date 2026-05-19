@@ -119,7 +119,7 @@ static Thingp g_item;
     return false;
   }
 
-  if (! thing_drop_item(g, v, l, item, player)) {
+  if (! thing_drop(g, v, l, player, item)) {
     sound_play(g, "error");
     return false;
   }

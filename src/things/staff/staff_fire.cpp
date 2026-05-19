@@ -62,6 +62,7 @@ auto tp_load_staff_fire() -> bool
   thing_on_drop_request_set(tp, tp_staff_fire_on_drop_request);
   tp_charge_count_set(tp, 1000);
   tp_flag_set(tp, is_able_to_fall_sound);
+  tp_flag_set(tp, is_able_to_be_wielded);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);

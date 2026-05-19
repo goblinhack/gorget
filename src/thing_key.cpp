@@ -8,7 +8,7 @@
 //
 // Add a key to the things inventory
 //
-auto thing_collect_key(Gamep g, Levelsp v, Levelp l, Thingp it, Thingp carrier) -> bool
+auto thing_collect_key(Gamep g, Levelsp v, Levelp l, Thingp carrier, Thingp it) -> bool
 {
   TRACE();
 

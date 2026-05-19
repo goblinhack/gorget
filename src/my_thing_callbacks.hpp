@@ -60,6 +60,14 @@ using thing_on_drop_request_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thin
 void thing_on_drop_request_set(Tpp tp, thing_on_drop_request_t callback);
 auto thing_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp dropper) -> bool;
 
+using thing_on_wield_request_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp carrier);
+void thing_on_wield_request_set(Tpp tp, thing_on_wield_request_t callback);
+auto thing_on_wield_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp carrier) -> bool;
+
+using thing_on_unwield_request_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp unwieldper);
+void thing_on_unwield_request_set(Tpp tp, thing_on_unwield_request_t callback);
+auto thing_on_unwield_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp unwieldper) -> bool;
+
 using thing_on_open_request_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp opener);
 void thing_on_open_request_set(Tpp tp, thing_on_open_request_t callback);
 auto thing_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp opener) -> bool;

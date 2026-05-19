@@ -169,14 +169,14 @@ static void thing_collision_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thi
   //
   // Collect keys?
   //
-  if (thing_collect_key(g, v, l, obstacle, me)) {
+  if (thing_collect_key(g, v, l, me, obstacle)) {
     return;
   }
 
   //
   // Collect items?
   //
-  if (thing_carry_item(g, v, l, obstacle, me)) {
+  if (thing_carry(g, v, l, me, obstacle)) {
     return;
   }
 

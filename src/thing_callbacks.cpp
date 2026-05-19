@@ -351,68 +351,6 @@ auto thing_on_close_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp clos
   return ret;
 }
 
-void thing_on_carry_request_set(Tpp tp, thing_on_carry_request_t callback)
-{
-  TRACE();
-  if (tp == nullptr) [[unlikely]] {
-    ERR("no thing template pointer");
-    return;
-  }
-  tp->on_carry_request = callback;
-}
-
-auto thing_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp carrier) -> bool
-{
-  TRACE();
-  auto *tp = thing_tp(me);
-  if (tp == nullptr) [[unlikely]] {
-    ERR("no thing template pointer");
-    return false;
-  }
-  if (tp->on_carry_request == nullptr) {
-    //
-    // Assume success
-    //
-    return true;
-  }
-  if (! thing_is_player(carrier) && ! thing_is_monst(carrier)) {
-    thing_err(carrier, "unexpected thing for %s", __FUNCTION__);
-    return false;
-  }
-  return tp->on_carry_request(g, v, l, me, carrier);
-}
-
-void thing_on_drop_request_set(Tpp tp, thing_on_drop_request_t callback)
-{
-  TRACE();
-  if (tp == nullptr) [[unlikely]] {
-    ERR("no thing template pointer");
-    return;
-  }
-  tp->on_drop_request = callback;
-}
-
-auto thing_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp dropper) -> bool
-{
-  TRACE();
-  auto *tp = thing_tp(me);
-  if (tp == nullptr) [[unlikely]] {
-    ERR("no thing template pointer");
-    return false;
-  }
-  if (tp->on_drop_request == nullptr) {
-    //
-    // Assume success
-    //
-    return true;
-  }
-  if (! thing_is_player(dropper) && ! thing_is_monst(dropper)) {
-    thing_err(dropper, "unexpected thing for %s", __FUNCTION__);
-    return false;
-  }
-  return tp->on_drop_request(g, v, l, me, dropper);
-}
-
 void thing_on_death_set(Tpp tp, thing_on_death_t callback)
 {
   TRACE();

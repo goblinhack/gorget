@@ -1007,10 +1007,10 @@ auto level_count_is_unused28(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> u
   return level_count(g, v, l, is_unused28, p);
 }
 
-auto level_count_is_unused29(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+auto level_count_is_able_to_be_wielded(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused29, p);
+  return level_count(g, v, l, is_able_to_be_wielded, p);
 }
 
 auto level_count_is_unused3(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
@@ -1019,10 +1019,10 @@ auto level_count_is_unused3(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> ui
   return level_count(g, v, l, is_unused3, p);
 }
 
-auto level_count_is_unused30(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+auto level_count_is_able_to_wield_items(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused30, p);
+  return level_count(g, v, l, is_able_to_wield_items, p);
 }
 
 auto level_count_is_wand(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t

@@ -1579,7 +1579,7 @@ auto thing_is_unused28(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused28) != 0;
 }
 
-auto thing_is_unused29(Thingp t) -> bool
+auto thing_is_able_to_be_wielded(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -1587,10 +1587,10 @@ auto thing_is_unused29(Thingp t) -> bool
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused29) != 0;
+  return tp_flag(thing_tp(t), is_able_to_be_wielded) != 0;
 }
 
-auto thing_is_unused30(Thingp t) -> bool
+auto thing_is_able_to_wield_items(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -1598,7 +1598,7 @@ auto thing_is_unused30(Thingp t) -> bool
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused30) != 0;
+  return tp_flag(thing_tp(t), is_able_to_wield_items) != 0;
 }
 
 auto thing_is_wand(Thingp t) -> bool

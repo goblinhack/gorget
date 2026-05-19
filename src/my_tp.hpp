@@ -159,8 +159,8 @@
       list_macro(is_unused26, "is_unused26"),                                               /* newline */                                  \
       list_macro(is_unused27, "is_unused27"),                                               /* newline */                                  \
       list_macro(is_unused28, "is_unused28"),                                               /* newline */                                  \
-      list_macro(is_unused29, "is_unused29"),                                               /* newline */                                  \
-      list_macro(is_unused30, "is_unused30"),                                               /* newline */                                  \
+      list_macro(is_able_to_be_wielded, "is_able_to_be_wielded"),                                               /* newline */                                  \
+      list_macro(is_able_to_wield_items, "is_able_to_wield_items"),                                               /* newline */                                  \
       list_macro(is_wand, "is_wand"),                                                       /* newline */                                  \
       list_macro(is_staff, "is_staff"),                                                     /* newline */                                  \
       list_macro(is_argusul, "is_argusul"),                                                 /* newline */                                  \
@@ -710,9 +710,9 @@ class Tp;
 [[nodiscard]] auto tp_is_unused26(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused27(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused28(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused29(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_able_to_be_wielded(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused3(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused30(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_able_to_wield_items(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused4(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused46(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused47(Tpp tp) -> bool;

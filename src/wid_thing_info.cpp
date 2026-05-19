@@ -453,11 +453,16 @@ static void wid_thing_info_item_mouse_over_end(Gamep g, Widp w)
       line += std::to_string(slot->count);
     }
 
+    line += " ";
+
     auto charge_count = thing_charge_count(item);
     if (charge_count > 0) {
-      line += " ";
       line += std::to_string(charge_count);
-      line += " %%tile=lightning$";
+      line += "%%tile=icon_lightning$";
+    }
+
+    if (thing_is_wielded(item)) {
+      line += "%%tile=icon_hand$";
     }
 
     Widp w = parent->log(g, line, TEXT_FORMAT_LHS);

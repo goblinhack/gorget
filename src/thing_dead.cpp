@@ -345,14 +345,20 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
     (void) thing_weapon_detach_all_fired(g, v, l, me);
   }
 
+  //
+  // Detach weapons from owners
+  //
   if (thing_is_projectile(me) || thing_is_laser(me)) {
     (void) thing_weapon_detach_me_from_firer(g, v, l, me);
   }
 
+  //
+  // Detach items from owners
+  //
   if (thing_is_carried(me)) {
     auto owner = thing_owner(g, v, l, me);
     if (owner) {
-      if (! thing_drop_item(g, v, l, me, owner)) {
+      if (! thing_drop(g, v, l, owner, me)) {
         thing_err(me, "item is carried but could not drop");
       }
     }

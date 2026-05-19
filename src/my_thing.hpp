@@ -326,6 +326,10 @@ using Thing = struct Thing {
   //
   uint8_t _is_carried : 1;
   //
+  // Is being wielded
+  //
+  uint8_t _is_wielded : 1;
+  //
   // Pushed onto the map?
   //
   uint8_t _is_on_map : 1;
@@ -479,6 +483,10 @@ using Thing = struct Thing {
   //
   ThingId id;
   //
+  // What weapon we're wielding
+  //
+  ThingId wielding_id;
+  //
   // If owned, by whom
   //
   ThingId owner_id;
@@ -570,7 +578,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_can_move_to_attempt(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool;
 [[nodiscard]] auto thing_can_move_to_diagonal_is_blocked(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool;
 [[nodiscard]] auto thing_can_move_to_possible(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool;
-[[nodiscard]] auto thing_carry_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp carrier) -> bool;
+[[nodiscard]] auto thing_carry(Gamep g, Levelsp v, Levelp l, Thingp carrier, Thingp item) -> bool;
 [[nodiscard]] auto thing_charge_count_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_charge_count_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_charge_count_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
@@ -600,7 +608,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_distance_vision_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_distance_vision_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_distance_vision(Gamep g, Levelsp v, Levelp l, Thingp t) -> int;
-[[nodiscard]] auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp dropper) -> bool;
+[[nodiscard]] auto thing_drop(Gamep g, Levelsp v, Levelp l, Thingp dropper, Thingp item) -> bool;
 [[nodiscard]] auto thing_ext_struct(Gamep g, Thingp t) -> ThingExtp;
 [[nodiscard]] auto thing_find_non_inline(Gamep g, Levelsp v, ThingId id) -> Thingp;
 [[nodiscard]] auto thing_fired_by_count_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> int;
@@ -681,6 +689,9 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_carried_try_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp carrier, bool val = true) -> bool;
 [[nodiscard]] auto thing_is_carried_try_unset(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp carrier) -> bool;
 [[nodiscard]] auto thing_is_carried(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_wielded_try_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp carrier, bool val = true) -> bool;
+[[nodiscard]] auto thing_is_wielded_try_unset(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp carrier) -> bool;
+[[nodiscard]] auto thing_is_wielded(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_chasm(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_collectable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_collision_circle_large(Thingp t) -> bool;
@@ -844,9 +855,9 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused26(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused27(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused28(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused29(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_able_to_be_wielded(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused3(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused30(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_able_to_wield_items(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused4(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused46(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused47(Thingp t) -> bool;
@@ -1044,6 +1055,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto to_string(Gamep g, Levelsp v, Levelp l, ThingEvent &e) -> std::string;
 [[nodiscard]] auto to_string(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string;
 [[nodiscard]] auto thing_owner(Gamep g, Levelsp v, Levelp l, Thingp t) -> Thingp;
+[[nodiscard]] auto thing_wielder(Gamep g, Levelsp v, Levelp l, Thingp t) -> Thingp;
 [[nodiscard]] auto wid_get_thing_context(Gamep g, Levelsp v, Widp w, int which) -> Thingp;
 [[nodiscard]] auto wid_thing_info_detail(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent) -> bool;
 [[nodiscard]] auto wid_thing_info_health_bar(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp tp, WidPopup *parent, int width) -> bool;
@@ -1061,6 +1073,8 @@ auto astar_solve(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint src, bpoint dst
 void level_botcon(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
 void thing_owner_unset(Gamep g, Levelsp v, Levelp l, Thingp me);
 void thing_owner_set(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner);
+void thing_unwield(Gamep g, Levelsp v, Levelp l, Thingp me);
+void thing_wield(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item);
 void level_con(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
 void level_dbg(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
 void level_err(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);

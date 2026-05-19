@@ -1007,10 +1007,10 @@ auto level_is_unused28(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me)
   return level_flag(g, v, l, is_unused28, p, me);
 }
 
-auto level_is_unused29(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+auto level_is_able_to_be_wielded(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused29, p, me);
+  return level_flag(g, v, l, is_able_to_be_wielded, p, me);
 }
 
 auto level_is_unused3(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
@@ -1019,10 +1019,10 @@ auto level_is_unused3(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) 
   return level_flag(g, v, l, is_unused3, p, me);
 }
 
-auto level_is_unused30(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+auto level_is_able_to_wield_items(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused30, p, me);
+  return level_flag(g, v, l, is_able_to_wield_items, p, me);
 }
 
 auto level_is_wand(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp

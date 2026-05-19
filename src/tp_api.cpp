@@ -1007,10 +1007,10 @@ auto tp_is_unused28(Tpp tp) -> bool
   return tp_flag(tp, is_unused28) != 0;
 }
 
-auto tp_is_unused29(Tpp tp) -> bool
+auto tp_is_able_to_be_wielded(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused29) != 0;
+  return tp_flag(tp, is_able_to_be_wielded) != 0;
 }
 
 auto tp_is_unused3(Tpp tp) -> bool
@@ -1019,10 +1019,10 @@ auto tp_is_unused3(Tpp tp) -> bool
   return tp_flag(tp, is_unused3) != 0;
 }
 
-auto tp_is_unused30(Tpp tp) -> bool
+auto tp_is_able_to_wield_items(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused30) != 0;
+  return tp_flag(tp, is_able_to_wield_items) != 0;
 }
 
 auto tp_is_wand(Tpp tp) -> bool

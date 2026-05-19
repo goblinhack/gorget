@@ -1007,10 +1007,10 @@ auto level_is_unused28_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> 
   return level_flag_cached(g, v, l, is_unused28, p);
 }
 
-auto level_is_unused29_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+auto level_is_able_to_be_wielded_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused29, p);
+  return level_flag_cached(g, v, l, is_able_to_be_wielded, p);
 }
 
 auto level_is_unused3_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
@@ -1019,10 +1019,10 @@ auto level_is_unused3_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> b
   return level_flag_cached(g, v, l, is_unused3, p);
 }
 
-auto level_is_unused30_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+auto level_is_able_to_wield_items_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused30, p);
+  return level_flag_cached(g, v, l, is_able_to_wield_items, p);
 }
 
 auto level_is_wand_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
