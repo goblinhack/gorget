@@ -535,7 +535,7 @@ static void thing_collision_interpolated_expand_candidates(Gamep g, Levelsp v, L
 
   auto at = thing_real_at(me);
 
-  auto *owner = top_owner(g, v, l, me);
+  auto *owner = thing_owner(g, v, l, me);
 
   //
   // For all other things on the same tile as the collision

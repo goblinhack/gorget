@@ -69,7 +69,7 @@ auto thing_name_long(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) -
   //
   // "the kobalos's short sword" for example
   //
-  auto *t_o = top_owner(g, v, l, t);
+  auto *t_o = thing_owner(g, v, l, t);
   if ((f & TEXT_INCLUDE_OWNER) != 0) {
     if ((t_o != nullptr) && ! thing_is_player(t_o)) {
 
@@ -154,7 +154,7 @@ auto thing_name_short(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) 
   //
   // "the kobalos's short sword" for example
   //
-  auto *t_o = top_owner(g, v, l, t);
+  auto *t_o = thing_owner(g, v, l, t);
   if ((f & TEXT_INCLUDE_OWNER) != 0) {
     if ((t_o != nullptr) && ! thing_is_player(t_o)) {
 

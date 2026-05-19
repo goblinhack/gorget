@@ -196,7 +196,7 @@ static auto thing_get_killer(Gamep g, Levelsp v, Levelp l, ThingEvent &e) -> Thi
     return fired_by;
   }
 
-  return top_owner(g, v, l, killer);
+  return thing_owner(g, v, l, killer);
 }
 
 //
@@ -347,6 +347,15 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
 
   if (thing_is_projectile(me) || thing_is_laser(me)) {
     (void) thing_weapon_detach_me_from_firer(g, v, l, me);
+  }
+
+  if (thing_is_carried(me)) {
+    auto owner = thing_owner(g, v, l, me);
+    if (owner) {
+      if (! thing_drop_item(g, v, l, me, owner)) {
+        thing_err(me, "item is carried but could not drop");
+      }
+    }
   }
 
   //

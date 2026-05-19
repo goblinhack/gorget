@@ -51,6 +51,8 @@ auto thing_carry_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp carrier)
     game_request_to_remake_ui_set(g);
   }
 
+  thing_owner_set(g, v, l, item, carrier);
+
   return true;
 }
 
@@ -103,6 +105,8 @@ auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp dropper) 
     topcon("You drop %s.", the_thing.c_str());
     game_request_to_remake_ui_set(g);
   }
+
+  thing_owner_unset(g, v, l, item);
 
   return true;
 }

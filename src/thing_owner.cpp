@@ -5,28 +5,52 @@
 #include "my_callstack.hpp"
 #include "my_thing_inlines.hpp"
 
-auto top_owner(Gamep g, Levelsp v, Levelp l, Thingp t) -> Thingp
+auto thing_owner(Gamep g, Levelsp v, Levelp l, Thingp me) -> Thingp
 {
   TRACE();
 
-  if (! static_cast< bool >(t->owner_id)) {
+  if (me == nullptr) {
+    ERR("no thing pointer");
     return nullptr;
   }
 
-  auto *o = thing_find(g, v, t->owner_id);
-  if (o == nullptr) {
+  if (! static_cast< bool >(me->owner_id)) {
     return nullptr;
   }
-  return top_owner(g, v, l, o);
+
+  return thing_find_optional(g, v, me->owner_id);
 }
 
-auto immediate_owner(Gamep g, Levelsp v, Levelp l, Thingp t) -> Thingp
+void thing_owner_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
-  if (! static_cast< bool >(t->owner_id)) {
-    return nullptr;
+  if (me == nullptr) {
+    ERR("no thing pointer");
+    return;
   }
 
-  return thing_find(g, v, t->owner_id);
+  auto owner = thing_owner(g, v, l, me);
+  if (owner) {
+    me->owner_id = 0;
+  }
+}
+
+void thing_owner_set(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner)
+{
+  TRACE();
+
+  if (me == nullptr) {
+    ERR("no thing pointer");
+    return;
+  }
+
+  if (! owner) {
+    thing_err(me, "no owner");
+    return;
+  }
+
+  thing_owner_unset(g, v, l, me);
+
+  me->owner_id = owner->id;
 }
