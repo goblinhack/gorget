@@ -1001,10 +1001,10 @@ auto level_is_unused27(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me)
   return level_flag(g, v, l, is_unused27, p, me);
 }
 
-auto level_is_unused28(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+auto level_is_able_to_fire_weapons(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused28, p, me);
+  return level_flag(g, v, l, is_able_to_fire_weapons, p, me);
 }
 
 auto level_is_able_to_be_wielded(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
@@ -1221,12 +1221,6 @@ auto level_is_hit_when_dead(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thing
 {
   TRACE_DEBUG();
   return level_flag(g, v, l, is_hit_when_dead, p, me);
-}
-
-auto level_is_able_to_fire_weapons(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
-{
-  TRACE_DEBUG();
-  return level_flag(g, v, l, is_able_to_fire_weapons, p, me);
 }
 
 auto level_is_blitzhound(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp

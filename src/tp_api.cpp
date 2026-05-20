@@ -1001,10 +1001,10 @@ auto tp_is_unused27(Tpp tp) -> bool
   return tp_flag(tp, is_unused27) != 0;
 }
 
-auto tp_is_unused28(Tpp tp) -> bool
+auto tp_is_able_to_fire_weapons(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused28) != 0;
+  return tp_flag(tp, is_able_to_fire_weapons) != 0;
 }
 
 auto tp_is_able_to_be_wielded(Tpp tp) -> bool
@@ -1221,12 +1221,6 @@ auto tp_is_hit_when_dead(Tpp tp) -> bool
 {
   TRACE_DEBUG();
   return tp_flag(tp, is_hit_when_dead) != 0;
-}
-
-auto tp_is_able_to_fire_weapons(Tpp tp) -> bool
-{
-  TRACE_DEBUG();
-  return tp_flag(tp, is_able_to_fire_weapons) != 0;
 }
 
 auto tp_is_blitzhound(Tpp tp) -> bool

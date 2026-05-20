@@ -1568,7 +1568,7 @@ auto thing_is_unused27(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused27) != 0;
 }
 
-auto thing_is_unused28(Thingp t) -> bool
+auto thing_is_able_to_fire_weapons(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -1576,7 +1576,7 @@ auto thing_is_unused28(Thingp t) -> bool
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused28) != 0;
+  return tp_flag(thing_tp(t), is_able_to_fire_weapons) != 0;
 }
 
 auto thing_is_able_to_be_wielded(Thingp t) -> bool
@@ -1907,17 +1907,6 @@ auto thing_is_hit_when_dead(Thingp t) -> bool
     return false;
   }
   return tp_flag(thing_tp(t), is_hit_when_dead) != 0;
-}
-
-auto thing_is_able_to_fire_weapons(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_able_to_fire_weapons) != 0;
 }
 
 auto thing_is_blitzhound(Thingp t) -> bool

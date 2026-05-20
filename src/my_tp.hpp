@@ -158,9 +158,8 @@
       list_macro(is_unused25, "is_unused25"),                                               /* newline */                                  \
       list_macro(is_unused26, "is_unused26"),                                               /* newline */                                  \
       list_macro(is_unused27, "is_unused27"),                                               /* newline */                                  \
-      list_macro(is_unused28, "is_unused28"),                                               /* newline */                                  \
-      list_macro(is_able_to_be_wielded, "is_able_to_be_wielded"),                                               /* newline */                                  \
-      list_macro(is_able_to_wield_items, "is_able_to_wield_items"),                                               /* newline */                                  \
+      list_macro(is_able_to_be_wielded, "is_able_to_be_wielded"),                           /* newline */                                  \
+      list_macro(is_able_to_wield_items, "is_able_to_wield_items"),                         /* newline */                                  \
       list_macro(is_wand, "is_wand"),                                                       /* newline */                                  \
       list_macro(is_staff, "is_staff"),                                                     /* newline */                                  \
       list_macro(is_argusul, "is_argusul"),                                                 /* newline */                                  \
@@ -513,6 +512,7 @@ class Tp;
 [[nodiscard]] auto tp_health_max_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_id_get(Tpp tp) -> TpId;
 [[nodiscard]] auto tp_init() -> bool;
+[[nodiscard]] auto tp_is_able_to_be_wielded(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_collect_items(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_collect_keys(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_crush_grass(Tpp tp) -> bool;
@@ -527,6 +527,7 @@ class Tp;
 [[nodiscard]] auto tp_is_able_to_open_things(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_shove(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_walk_through_walls(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_able_to_wield_items(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_animated_can_hflip(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_animated_no_dir(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_animated_sync_first(Tpp tp) -> bool;
@@ -709,10 +710,7 @@ class Tp;
 [[nodiscard]] auto tp_is_unused25(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused26(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused27(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused28(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_able_to_be_wielded(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused3(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_able_to_wield_items(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused4(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused46(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused47(Tpp tp) -> bool;

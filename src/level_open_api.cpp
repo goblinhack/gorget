@@ -1001,10 +1001,10 @@ auto level_open_is_unused27(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Th
   return level_open(g, v, l, is_unused27, p);
 }
 
-auto level_open_is_unused28(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+auto level_open_is_able_to_fire_weapons(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_open(g, v, l, is_unused28, p);
+  return level_open(g, v, l, is_able_to_fire_weapons, p);
 }
 
 auto level_open_is_able_to_be_wielded(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
@@ -1221,12 +1221,6 @@ auto level_open_is_hit_when_dead(Gamep g, Levelsp v, Levelp l, const bpoint &p) 
 {
   TRACE_DEBUG();
   return level_open(g, v, l, is_hit_when_dead, p);
-}
-
-auto level_open_is_able_to_fire_weapons(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
-{
-  TRACE_DEBUG();
-  return level_open(g, v, l, is_able_to_fire_weapons, p);
 }
 
 auto level_open_is_blitzhound(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp

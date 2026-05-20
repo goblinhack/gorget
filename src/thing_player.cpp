@@ -721,21 +721,23 @@ auto player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what, bp
     return false;
   }
 
-  //
-  // TODO(nmcgill):
-  //
-  static Tpp tp_fireball;
-  if (tp_fireball == nullptr) {
-    if (g_opt_tests) {
-      tp_fireball = tp_find_mand("fireball");
-    } else {
-      tp_fireball = tp_find_mand("laser_fire");
+  if (g_opt_tests) {
+    if (fire_what == nullptr) {
+      fire_what = tp_find_mand("fireball");
     }
-    tp_fireball = tp_find_mand("laser_fire");
-  }
+  } else {
+    auto wielding_what = thing_wielding(g, v, l, me);
+    if (! wielding_what) {
+      topcon("You have nothing to wield.");
+      return false;
+    }
 
-  if (fire_what == nullptr) {
-    fire_what = tp_fireball;
+    fire_what = thing_on_fire_weapon_request(g, v, l, wielding_what, me);
+    if (! wielding_what) {
+      auto the_thing = thing_name_long_the(g, v, l, wielding_what);
+      topcon("You fail to fire %s.", the_thing.c_str());
+      return false;
+    }
   }
 
   auto *ext_struct = thing_ext_struct(g, me);

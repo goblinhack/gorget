@@ -313,7 +313,6 @@ auto tp_load_player() -> bool
   thing_description_set(tp, tp_player_description_get);
   thing_detail_set(tp, tp_player_detail_get);
   thing_on_damage_set(tp, tp_player_on_damage);
-  thing_on_spawned_set(tp, tp_player_on_spawned);
   thing_on_fall_begin_set(tp, tp_player_on_fall_begin);
   thing_on_fall_end_set(tp, tp_player_on_fall_end);
   thing_on_jump_end_set(tp, tp_player_on_jump_end);
@@ -321,6 +320,7 @@ auto tp_load_player() -> bool
   thing_on_level_leave_set(tp, tp_player_level_leave);
   thing_on_level_populated_set(tp, tp_player_level_populated);
   thing_on_moved_set(tp, tp_player_on_moved);
+  thing_on_spawned_set(tp, tp_player_on_spawned);
   thing_on_teleported_set(tp, tp_player_on_teleported);
   thing_on_tick_begin_set(tp, tp_player_tick_begin);
   thing_on_tick_end_set(tp, tp_player_tick_end);
@@ -331,7 +331,6 @@ auto tp_load_player() -> bool
   tp_distance_jump_set(tp, 3);
   tp_distance_vision_set(tp, MAP_WIDTH / 2); // tiles
   tp_fired_weapon_count_max_set(tp, THING_WEAPON_MAX);
-  tp_flag_set(tp, is_able_to_wield_items);
   tp_flag_set(tp, is_able_to_collect_items);
   tp_flag_set(tp, is_able_to_collect_keys);
   tp_flag_set(tp, is_able_to_crush_grass);
@@ -344,6 +343,7 @@ auto tp_load_player() -> bool
   tp_flag_set(tp, is_able_to_move_diagonally);
   tp_flag_set(tp, is_able_to_open_things);
   tp_flag_set(tp, is_able_to_shove);
+  tp_flag_set(tp, is_able_to_wield_items);
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_attackable_by_monst);

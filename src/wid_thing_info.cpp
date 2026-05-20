@@ -344,23 +344,6 @@
   return printed_something;
 }
 
-//
-// Add special damage
-//
-[[nodiscard]] auto wid_thing_info_special_damage(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent) -> bool
-{
-  TRACE();
-
-  bool printed_something = false;
-
-  if (! thing_is_immune_to(me, THING_EVENT_WATER_DAMAGE)) {
-    parent->log(g, "Takes damage from water.", TEXT_FORMAT_LHS);
-    printed_something = true;
-  }
-
-  return printed_something;
-}
-
 static void wid_thing_info_item_mouse_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
 {
   TRACE();
@@ -524,10 +507,6 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, i
   }
 
   if (wid_thing_info_immunities(g, v, l, me, parent, width)) {
-    parent->log_empty_line(g);
-  }
-
-  if (wid_thing_info_special_damage(g, v, l, me, parent)) {
     parent->log_empty_line(g);
   }
 

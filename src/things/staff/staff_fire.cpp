@@ -48,6 +48,25 @@ static auto tp_staff_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> 
   return true;
 }
 
+[[nodiscard]] static auto tp_staff_fire_on_wield_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp user) -> bool
+{
+  TRACE();
+
+  return true;
+}
+
+[[nodiscard]] static auto tp_staff_fire_on_fire_weapon_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp user) -> Tpp
+{
+  TRACE();
+
+  static Tpp what;
+  if (! what) {
+    what = tp_find_mand("fireball");
+  }
+
+  return what;
+}
+
 auto tp_load_staff_fire() -> bool
 {
   TRACE();
@@ -60,9 +79,11 @@ auto tp_load_staff_fire() -> bool
   thing_detail_set(tp, tp_staff_fire_detail_get);
   thing_on_carry_request_set(tp, tp_staff_fire_on_carry_request);
   thing_on_drop_request_set(tp, tp_staff_fire_on_drop_request);
+  thing_on_wield_request_set(tp, tp_staff_fire_on_wield_request);
+  thing_on_fire_weapon_request_set(tp, tp_staff_fire_on_fire_weapon_request);
   tp_charge_count_set(tp, 1000);
-  tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_be_wielded);
+  tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
