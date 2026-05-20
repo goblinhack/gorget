@@ -21,7 +21,6 @@
 #include "my_wids.hpp"
 #include <SDL_keyboard.h>
 #include <cstdint>
-#include <OpenGL/gl.h>
 
 static WidPopup *wid_intro_window;
 

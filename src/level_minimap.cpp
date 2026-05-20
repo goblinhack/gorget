@@ -16,7 +16,6 @@
 #include "my_tex.hpp"
 #include "my_types.hpp"
 #include "my_thing.hpp"
-#include <OpenGL/gl.h>
 
 static Texp solid_tex;
 static int  solid_tex_id;

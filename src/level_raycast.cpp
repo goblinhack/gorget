@@ -22,7 +22,6 @@
 #include "my_tp.hpp"
 
 #include <algorithm>
-#include <OpenGL/gl.h>
 #include <array>
 #include <cmath>
 #include <cstdint>

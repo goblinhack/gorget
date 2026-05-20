@@ -32,7 +32,6 @@
 #include <_strings.h>
 #include <SDL_events.h>
 #include <SDL_video.h>
-#include <OpenGL/gl.h>
 #include <chrono>
 #include <cmath>
 #include <csignal>

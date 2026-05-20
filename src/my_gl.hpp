@@ -14,20 +14,11 @@
 /* Defined before OpenGL and GLUT includes to avoid deprecation messages */
 #define GL_SILENCE_DEPRECATION
 
-#ifdef __IPHONE_OS_VERSION_MIN_REQUIRED
-#define __IPHONEOS__
-#include "SDL_opengles.h"
-
-#define CreateVertexBuffers(nobuf, bufptr) glGenBuffers(nobuf, bufptr)
-#define DeleteVertexBuffers(nobuf, bufptr) glDeleteBuffers(nobuf, bufptr)
-#else
-
 #ifdef _WIN32
 #include "SDL_opengl.h"
 #endif
 
 #define glOrthof glOrtho
-#endif
 
 #ifdef _WIN32
 //    #include "GL/glew.h"
@@ -35,16 +26,6 @@
 #include "OpenGL/gl.h"
 #include "OpenGL/glext.h"
 #include "TargetConditionals.h"
-
-#if TARGET_IPHONE_SIMULATOR
-// iOS Simulator
-#elif TARGET_OS_IPHONE
-// iOS device
-#elif TARGET_OS_MAC
-// Other kinds of Mac OS
-#else
-// Unsupported platform
-#endif
 #else
 // linux
 #include "GL/gl.h"

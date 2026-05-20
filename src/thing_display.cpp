@@ -18,7 +18,6 @@
 #include "my_tp.hpp"
 #include "my_types.hpp"
 
-#include <OpenGL/gl.h>
 #include <algorithm>
 #include <cmath>
 #include <cstdint>

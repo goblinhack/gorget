@@ -18,7 +18,6 @@
 #include "my_tile.hpp"
 #include "my_types.hpp"
 
-#include <OpenGL/gl.h>
 #include <cmath>
 
 #include <unordered_map>

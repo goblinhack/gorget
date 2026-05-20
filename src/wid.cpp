@@ -39,7 +39,6 @@
 #include <vector>
 #include <_strings.h>
 #include <SDL_mouse.h>
-#include <OpenGL/gl.h>
 #include <cstdarg>
 #include <cstring>
 #include <cstdio>

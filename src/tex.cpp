@@ -19,8 +19,6 @@
 #include <cstdint>
 #include <string>
 #include <SDL_surface.h>
-#include <OpenGL/gltypes.h>
-#include <OpenGL/gl.h>
 #include <SDL_endian.h>
 #include <cstring>
 #include <SDL_pixels.h>

@@ -13,7 +13,6 @@
 #include "my_types.hpp"
 #include "my_wid.hpp"
 #include "my_wids.hpp"
-#include <OpenGL/gl.h>
 #include <SDL_timer.h>
 #include <SDL_video.h>
 #include <cmath>

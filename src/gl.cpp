@@ -15,11 +15,8 @@
 #include "my_size.hpp"
 #include "my_spoint.hpp"
 #include "my_tile.hpp"
-#include <OpenGL/gltypes.h>
 #include "my_types.hpp"
-#include <OpenGL/gl.h>
 #include <cmath>
-#include <OpenGL/glext.h>
 #include <cstring>
 #include <cstdint>
 #include <cstddef>
