@@ -312,8 +312,8 @@ static void thing_display_blit(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t_ma
 //
 // Display a spinning falling thing
 //
-static void thing_display_falling(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp t, spoint tl, spoint br, Tilep tile,
-                                  float x1, float x2, float y1, float y2, FboEnum fbo, color fg)
+static void thing_display_falling(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t, spoint tl, spoint br, Tilep tile, float x1, float x2,
+                                  float y1, float y2, FboEnum fbo, color fg)
 {
   TRACE_DEBUG();
 
@@ -341,8 +341,8 @@ static void thing_display_falling(Gamep g, Levelsp v, Levelp l, const bpoint &p,
 //
 // Display a spinning thing
 //
-static void thing_display_rotated(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp t, spoint tl, spoint br, Tilep tile,
-                                  float x1, float x2, float y1, float y2, FboEnum fbo, color fg)
+static void thing_display_rotated(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t, spoint tl, spoint br, Tilep tile, float x1, float x2,
+                                  float y1, float y2, FboEnum fbo, color fg)
 {
   TRACE_DEBUG();
 
@@ -386,7 +386,7 @@ static void thing_display_it(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp 
   // Rotate when falling
   //
   if (t_maybe_null->angle != 0.0) {
-    thing_display_rotated(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg);
+    thing_display_rotated(g, v, l, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg);
     return;
   }
 
@@ -593,7 +593,7 @@ void thing_display(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp
     // Handle various effects
     //
     if (is_falling) {
-      thing_display_falling(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg);
+      thing_display_falling(g, v, l, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg);
       return;
     }
 

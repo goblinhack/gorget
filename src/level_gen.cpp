@@ -658,7 +658,7 @@ static auto room_flip_horiz(class Room *r) -> class Room *
 //
 // Add a room and copies with all possible rotations
 //
-void room_add(Gamep g, int chance, int room_flags, const char *file, int line, ...)
+void room_add(Gamep /*g*/, int chance, int room_flags, const char *file, int line, ...)
 {
   TRACE();
 
@@ -2590,7 +2590,7 @@ void level_gen_stats_dump(Gamep /*g*/)
 //
 // Place a room of the given type at a random door
 //
-[[nodiscard]] static auto level_gen_create_another_room(Gamep g, LevelGen *lg, RoomType room_type) -> bool
+[[nodiscard]] static auto level_gen_create_another_room(LevelGen *lg, RoomType room_type) -> bool
 {
   TRACE();
 
@@ -2723,7 +2723,7 @@ static void level_gen_create_remaining_rooms(Gamep g, LevelGen *lg)
     //
     // Create another room if possible
     //
-    if (! level_gen_create_another_room(g, lg, room_type)) {
+    if (! level_gen_create_another_room(lg, room_type)) {
       continue;
     }
 

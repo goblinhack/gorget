@@ -722,7 +722,7 @@ static void player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy)
   player_move_requests_reset(g, v);
 }
 
-auto player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what_tp, bpoint target) -> bool
+auto player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what, bpoint target) -> bool
 {
   TRACE();
 
@@ -735,8 +735,8 @@ auto player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what_tp,
   }
 
   if (g_opt_tests) {
-    if (fire_what_tp == nullptr) {
-      fire_what_tp = tp_find_mand("fireball");
+    if (fire_what == nullptr) {
+      fire_what = tp_find_mand("fireball");
     }
   } else {
     item = thing_wielding(g, v, l, me);
@@ -745,7 +745,7 @@ auto player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what_tp,
       return false;
     }
 
-    fire_what_tp = thing_on_fire_weapon_request(g, v, l, item, me);
+    fire_what = thing_on_fire_weapon_request(g, v, l, item, me);
     if (item == nullptr) {
       auto the_thing = thing_name_long_the(g, v, l, item);
       topcon("You fail to fire %s.", the_thing.c_str());
@@ -759,7 +759,7 @@ auto player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what_tp,
     return false;
   }
 
-  if (fire_what_tp == nullptr) {
+  if (fire_what == nullptr) {
     ERR("nothing to fire");
     return false;
   }
@@ -799,7 +799,7 @@ auto player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what_tp,
     target             = make_bpoint(thing_real_at(me) + delta);
   }
 
-  if (! thing_fire_at(g, v, l, me, item, fire_what_tp, target)) {
+  if (! thing_fire_at(g, v, l, me, item, fire_what, target)) {
     auto the_thing = thing_name_long_the(g, v, l, item);
     topcon("You are unable to fire %s.", the_thing.c_str());
   }
