@@ -16,6 +16,7 @@
 #include <cassert>
 #include <print>
 #ifndef _WIN32
+#include <sys/wait.h> // NOLINT
 #endif
 
 #ifdef __linux__
