@@ -33,7 +33,7 @@
  */
 #define ENUM_DEF_C(ENUM_NAME, enum_name)                                                                                                   \
                                                                                                                                            \
-  std::string enum_name##_to_string(enum_name val)                                                                                         \
+  auto enum_name##_to_string(enum_name val) -> std::string                                                                                 \
   {                                                                                                                                        \
     static const char *arr[] = {ENUM_NAME(ENUM_LIST_MACRO_STRING)};                                                                        \
                                                                                                                                            \
@@ -48,7 +48,7 @@
     return (std::string(arr[ val ]));                                                                                                      \
   }                                                                                                                                        \
                                                                                                                                            \
-  const char *enum_name##_to_c_str(enum_name val)                                                                                          \
+  auto enum_name##_to_c_str(enum_name val) -> const char *                                                                                 \
   {                                                                                                                                        \
     static const char *arr[] = {ENUM_NAME(ENUM_LIST_MACRO_STRING)};                                                                        \
                                                                                                                                            \
@@ -68,7 +68,7 @@
   /*                                                                                                                                       \
    * String to enum.                                                                                                                       \
    */                                                                                                                                      \
-  enum_name enum_name##_str2val(const char *val)                                                                                           \
+  auto enum_name##_str2val(const char *val) -> enum_name                                                                                   \
   {                                                                                                                                        \
     static const char *arr[] = {ENUM_NAME(ENUM_LIST_MACRO_STRING)};                                                                        \
                                                                                                                                            \

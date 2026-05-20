@@ -132,6 +132,7 @@ tidy:
 			modernize-*,\
 			performance-*,\
 			readability-*" \
+			no-readability-identifier-length,\
 			-header-filter=".*" \
 			$x -- $(CFLAGS); \
 	)
