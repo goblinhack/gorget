@@ -2,15 +2,21 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_bpoint.hpp"
 #include "my_dmap.hpp"
-#include "my_main.hpp"
-#include "my_sprintf.hpp"
+#include "my_game_defs.hpp"
+#include "my_main.hpp" // NOLINT
 #include "my_thing.hpp"
+#include "my_types.hpp"
 
 #include <algorithm>
 #include <array>
-#include <print>
+#include <cmath>
+#include <cstdint>
+#include <format>
+#include <string>
 #include <utility>
+#include <vector>
 
 void dmap_print(const Dmap *D, bpoint at, bpoint tl, bpoint br)
 {

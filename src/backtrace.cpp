@@ -4,9 +4,12 @@
 //
 #include "my_backtrace.hpp"
 #include "my_main.hpp"
-#include "my_sprintf.hpp"
 #include "my_string.hpp"
 #include "my_wids.hpp"
+#include <cstdio>
+#include <cstdlib>
+#include <format>
+#include <string>
 
 #ifdef _WIN32
 // clang-format off
@@ -20,13 +23,13 @@
 
 #ifdef __has_include
 #if __has_include(<execinfo.h>)
-#include <execinfo.h>
+#include <execinfo.h> // NOLINT
 #endif
 #endif
 
 #ifdef __has_include
 #if __has_include(<libunwind.h>)
-#include <libunwind.h>
+#include <libunwind.h> // NOLINT
 #define HAVE_LIBUNWIND
 #endif
 #endif
@@ -36,8 +39,6 @@
 #include <cxxabi.h>
 
 #include <array>
-#include <iostream>
-#include <memory>
 #include <mutex>
 #include <print>
 

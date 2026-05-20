@@ -10,12 +10,17 @@
 #include "my_ptrcheck.hpp"
 #include "my_ramdisk.hpp"
 #include "my_string.hpp"
+#include "my_types.hpp"
 
+#include <cerrno>
 #include <cmath>
 #include <cstdarg>
+#include <cstdint>
+#include <cstdio>
 #include <cstring>
 #include <ctime>
 #include <print>
+#include <string>
 #include <sys/stat.h>
 #include <unistd.h>
 

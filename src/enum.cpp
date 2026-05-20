@@ -2,11 +2,11 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include "my_callstack.hpp" // do not remove
-#include "my_game.hpp"
-#include "my_globals.hpp"
-#include "my_level.hpp"
-#include "my_main.hpp"
+#include "my_callstack.hpp" // NOLINT
+#include "my_game.hpp"      // NOLINT
+#include "my_globals.hpp"   // NOLINT
+#include "my_level.hpp"     // NOLINT
+#include "my_main.hpp"      // NOLINT
 
 ENUM_DEF_C(THING_FLAG_ENUM, ThingFlag)
 ENUM_DEF_C(THING_ANIM_ENUM, ThingAnim)

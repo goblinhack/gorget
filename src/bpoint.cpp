@@ -3,10 +3,10 @@
 //
 
 #include "my_bpoint.hpp"
-#include "my_math.hpp"
 
 #include <algorithm>
 #include <cmath>
+#include <cstdint>
 
 auto operator<(bpoint const &a, bpoint const &b) -> bool { return (a.x < b.x) || (a.x == b.x && a.y < b.y); }
 auto operator+(bpoint const &a, bpoint const &b) -> bpoint { return bpoint(a.x + b.x, a.y + b.y); }

@@ -2,17 +2,25 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_bpoint.hpp"
 #include "my_callstack.hpp"
+#include "my_color.hpp"
+#include "my_color_defs.hpp"
 #include "my_game.hpp"
+#include "my_game_defs.hpp"
 #include "my_game_popups.hpp"
 #include "my_gl.hpp"
-#include "my_globals.hpp"
-#include "my_level.hpp"
 #include "my_level_inlines.hpp"
 #include "my_main.hpp"
+#include "my_spoint.hpp"
+#include "my_thing.hpp"
 #include "my_time.hpp"
+#include "my_types.hpp"
+#include "my_tp.hpp"
 
-#include <algorithm>
+#include <string>
+#include <list>
+#include <cstdint>
 
 void game_popup_text_add(Gamep g, int x, int y, const std::string &text, color c)
 {

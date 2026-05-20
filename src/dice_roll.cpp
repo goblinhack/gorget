@@ -3,10 +3,10 @@
 //
 
 #include "my_dice_class.hpp"
-#include "my_globals.hpp"
 #include "my_main.hpp"
 #include "my_random.hpp"
 #include "my_string.hpp"
+#include <string>
 
 // Roll -30 -> bonus -20
 // Roll -29 -> bonus -19

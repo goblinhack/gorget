@@ -116,23 +116,10 @@ tidy:
 			conc*,\
 			cert*,\
 			hicpp-*,\
-			misc-confusable-identifiers,\
-			misc-const-correctness,\
-			misc-definitions-in-headers,\
-			misc-misleading-bidirectional,\
-			misc-misleading-identifier,\
-			misc-misplaced-const,\
-			misc-new-delete-overloads,\
-			misc-non-copyable-objectsl,\
-			misc-redundant-expression,\
-			misc-static-assert,\
-			misc-unconventional-assign-operator,\
-			misc-unused-alias-decls,\
-			misc-use-internal-linkage,\
+			misc-*,\
 			modernize-*,\
 			performance-*,\
-			readability-*" \
-			no-readability-identifier-length,\
+			readability-*,\
 			-header-filter=".*" \
 			$x -- $(CFLAGS); \
 	)

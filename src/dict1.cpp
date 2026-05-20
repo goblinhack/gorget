@@ -5,7 +5,9 @@
 #include "my_callstack.hpp"
 #include "my_random.hpp"
 #include "my_random_name.hpp"
+#include "my_types.hpp"
 
+#include <cstdint>
 #include <cstdlib>
 
 //

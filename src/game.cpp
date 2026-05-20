@@ -2,24 +2,44 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include <SDL_keyboard.h>
+#include <SDL_keycode.h>
 #include <algorithm>
+#include <cstdint>
+#include <cmath>
+#include <cstdlib>
 #include <ctime>
 
+#include "cfg.hpp"
 #include "my_ascii.hpp"
+#include "my_callstack.hpp"
+#include "my_bpoint.hpp"
 #include "my_game.hpp"
+#include "my_game_defs.hpp"
 #include "my_game_popups.hpp"
+#include "my_globals.hpp"
+#include "my_gl.hpp"
 #include "my_hiscore.hpp"
 #include "my_level.hpp"
 #include "my_level_ext.hpp"
+#include "my_ptrcheck.hpp"
+#include "my_main.hpp"
 #include "my_random.hpp"
 #include "my_random_name.hpp"
+#include "my_spoint.hpp"
+#include "my_sdl_proto.hpp"
 #include "my_test.hpp"
+#include "my_types.hpp"
+#include "my_time.hpp"
+#include "my_thing.hpp"
+#include "my_tile.hpp"
 #include "my_wid.hpp"
 #include "my_wids.hpp"
 
 #include <SDL_mixer.h>
 #include <array>
-#include <utility>
+#include <string>
+#include <list>
 
 static SDL_Keysym no_key;
 

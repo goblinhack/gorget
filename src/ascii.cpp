@@ -2,18 +2,31 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include <algorithm>
-
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
+#include "my_color.hpp"
 #include "my_color_defs.hpp"
 #include "my_font.hpp"
+#include "my_fpoint.hpp"
 #include "my_game.hpp"
-#include "my_globals.hpp"
+#include "my_gl.hpp"
 #include "my_main.hpp"
+#include "my_spoint.hpp"
 #include "my_string.hpp"
+#include "my_tex.hpp"
+#include "my_tile.hpp"
 #include "my_time.hpp"
 #include "my_tp.hpp"
+#include "my_types.hpp"
+#include "my_ui.hpp"
+
+#include <algorithm>
+#include <array>
+#include <cstdarg>
+#include <cstdint>
+#include <cstdio>
+#include <cstdlib>
+#include <string>
 
 struct Ascii {
   //

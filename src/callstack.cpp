@@ -2,13 +2,15 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include <cstdint>
+#include <format>
+#include <cstdio>
 #include <print>
+#include <string>
 #include <utility>
 
 #include "my_callstack.hpp"
 #include "my_main.hpp"
-#include "my_sprintf.hpp"
-#include "my_string.hpp"
 #include "my_wids.hpp"
 
 thread_local struct Callframe callframes[ MAXCALLFRAME ];

@@ -4,10 +4,11 @@
 
 #include "my_audio.hpp"
 #include "my_callstack.hpp"
-#include "my_globals.hpp"
 #include "my_main.hpp"
 
+#include <SDL_error.h>
 #include <SDL_mixer.h>
+#include <cmath>
 
 static bool audio_init_done;
 

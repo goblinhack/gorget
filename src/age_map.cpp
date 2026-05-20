@@ -2,12 +2,10 @@
 // Changed by goblinhack@gmail.com
 //
 
+#include "my_age_map.hpp"
 #include "my_age_map_inlines.hpp"
-#include "my_callstack.hpp"
-#include "my_globals.hpp"
-#include "my_level.hpp"
-#include "my_level_inlines.hpp"
-#include "my_main.hpp"
+#include "my_bpoint.hpp"
+#include <cstdint>
 
 void age_map_incr(AgeMap *m, const bpoint &pov, const uint8_t val)
 {

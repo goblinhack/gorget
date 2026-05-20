@@ -3,18 +3,20 @@
 //
 
 #include "my_cave.hpp"
+#include "my_game_defs.hpp"
 #include "my_random.hpp"
 #include "my_spoint.hpp"
+#include "my_types.hpp"
 
+#include <cstdint>
 #include <cstring>
 
 #include <algorithm>
 #include <print>
-#include <utility>
 
 static const int MAP_LEVEL_BLOB_CENTERING = MAP_WIDTH / 4;
 
-void cave_dump(Gamep g, Cave *c)
+void cave_dump(Gamep  /*g*/, Cave *c)
 {
   uint8_t x = 0;
   uint8_t y = 0;
@@ -127,7 +129,7 @@ static void cave_generation(Cave *c, uint32_t fill_prob, uint8_t r1, uint8_t r2,
 //
 // Iterate the generations for cellular automata
 //
-void cave_create(Gamep g, Cave *c, uint32_t fill_prob, uint8_t r1, uint8_t r2, int map_generations)
+void cave_create(Gamep  /*g*/, Cave *c, uint32_t fill_prob, uint8_t r1, uint8_t r2, int map_generations)
 {
   for (auto gen = 0; gen < map_generations; gen++) {
     cave_generation(c, fill_prob, r1, r2, gen);
@@ -242,7 +244,7 @@ void cave_generation_keep_largest_blob(Gamep g, Cave *c)
 //
 // Post generation of the cave, keep all but the largest blob
 //
-void cave_generation_center_blob(Gamep g, Cave *c)
+void cave_generation_center_blob(Gamep  /*g*/, Cave *c)
 {
   int x = 0;
   int y = 0;

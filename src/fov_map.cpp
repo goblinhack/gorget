@@ -2,12 +2,10 @@
 // Changed by goblinhack@gmail.com
 //
 
-#include "my_callstack.hpp"
+#include "my_bpoint.hpp"
+#include "my_fov_map.hpp"
 #include "my_fov_map_inlines.hpp"
-#include "my_globals.hpp"
-#include "my_level.hpp"
-#include "my_level_inlines.hpp"
-#include "my_main.hpp"
+#include <cstdint>
 
 void fov_map_set(FovMap *m, const bpoint &pov, const bool val)
 {

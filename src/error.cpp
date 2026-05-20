@@ -9,7 +9,8 @@
 #include "my_main.hpp"
 #include "my_sdl_event.hpp"
 #include "my_sdl_proto.hpp"
-#include "my_string.hpp"
+#include "my_types.hpp"
+#include "my_wid.hpp"
 #include "my_wids.hpp"
 
 #include <cerrno>
@@ -20,8 +21,7 @@
 #include <ctime>
 #include <mutex>
 #include <print>
-#include <strings.h>
-#include <unistd.h>
+#include <string>
 
 static void error_message_do(Gamep g, std::string &tech_support)
 {
@@ -116,7 +116,7 @@ void error_message(Gamep g, const std::string &error_msg)
   error_message_do(g, tech_support);
 }
 
-void error_clear(Gamep g)
+void error_clear(Gamep  /*g*/)
 {
   TRACE();
 

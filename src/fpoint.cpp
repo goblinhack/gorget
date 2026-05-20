@@ -3,7 +3,6 @@
 //
 
 #include "my_fpoint.hpp"
-#include "my_main.hpp"
 #include "my_math.hpp"
 
 #include <cmath>

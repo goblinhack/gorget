@@ -3,13 +3,19 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_color.hpp"
 #include "my_color_defs.hpp"
-#include "my_globals.hpp"
 #include "my_main.hpp"
 #include "my_string.hpp"
+#include "my_types.hpp"
 #include "my_ui.hpp"
 
+#include <string>
+#include <cstdint>
+#include <_strings.h>
+#include <cstring>
 #include <unordered_map>
+#include <utility>
 
 using colors = std::unordered_map< std::string, color >;
 

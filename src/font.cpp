@@ -4,11 +4,16 @@
 
 #include "my_callstack.hpp"
 #include "my_font.hpp"
-#include "my_globals.hpp"
 #include "my_main.hpp"
+#include "my_types.hpp"
+#include "my_tile.hpp"
 
+#include <cstdint>
+#include <cstdio>
 #include <cstdlib>
+#include <string>
 #include <unordered_map>
+#include <utility>
 
 Fontp font_ui;
 

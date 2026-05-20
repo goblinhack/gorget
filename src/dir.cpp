@@ -2,6 +2,7 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include <cstdint>
 #include <cstring>
 #include <sys/param.h>
 #include <sys/stat.h>
@@ -11,6 +12,7 @@
 #include "my_dir.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_string.hpp"
+#include "my_types.hpp"
 
 /*
  * Does the requested dir exist?

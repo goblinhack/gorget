@@ -2,6 +2,7 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_bpoint.hpp"
 #include "my_callstack.hpp"
 #include "my_game.hpp"
 #include "my_globals.hpp"
@@ -9,9 +10,17 @@
 #include "my_main.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
+#include "my_thing.hpp"
+#include "my_spoint.hpp"
 #include "my_thing_inlines.hpp"
+#include "my_types.hpp"
 #include "my_ui.hpp"
+#include "my_wid.hpp"
 #include "my_wids.hpp"
+#include <cstdint>
+#include <vector>
+#include <SDL_keyboard.h>
+#include <SDL_keycode.h>
 
 //
 // Return true on the event being consumed
@@ -76,9 +85,9 @@ auto game_mouse_down(Gamep g, int x, int y, uint32_t button) -> bool
   return thing_player_mouse_down(g, v, l, x, y, button);
 }
 
-auto game_mouse_up(Gamep g, int x, int y, uint32_t button) -> bool { return false; }
+auto game_mouse_up(Gamep  /*g*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool { return false; }
 
-auto game_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx, int wheely) -> bool
+auto game_mouse_motion(Gamep g, int  /*x*/, int  /*y*/, int  /*relx*/, int  /*rely*/, int wheelx, int wheely) -> bool
 {
   DBG("game mouse motion");
   TRACE();

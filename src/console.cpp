@@ -3,11 +3,14 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_color.hpp"
 #include "my_color_defs.hpp"
 #include "my_console.hpp"
-#include "my_globals.hpp"
 #include "my_main.hpp"
+#include "my_types.hpp"
 
+#include <cstdint>
+#include <cstdio>
 #include <cstdlib>
 #include <cstring>
 

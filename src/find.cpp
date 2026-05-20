@@ -9,10 +9,13 @@
 #include "my_main.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_string.hpp"
+#include "my_types.hpp"
 
+#include <cmath>
+#include <cstdlib>
 #include <cstring>
 #include <libgen.h>
-#include <unistd.h>
+#include <string>
 
 //
 // Find the binary we are running.
