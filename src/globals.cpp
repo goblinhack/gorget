@@ -49,8 +49,8 @@ std::string g_opt_test_name_filter;
 std::string g_opt_test_current;
 std::string g_program_name;
 
-const char **g_argv;
-int          g_argc;
+char **g_argv;
+int    g_argc;
 
 int                      g_errored_thread_id = -1; // An error has occurred on this thread
 std::string              g_error_last;             // An error has occurred
