@@ -82,16 +82,4 @@ void wid_topcon_log(const std::string &s);
 [[nodiscard]] auto wid_rightbar_init(Gamep g) -> bool;
 [[nodiscard]] auto wid_topcon_init(Gamep g) -> bool;
 
-extern Widp wid_topcon_input_line;
-extern Widp wid_topcon_window;
-extern Widp wid_topcon_container;
-
-extern Widp wid_botcon_input_line;
-extern Widp wid_botcon_window;
-extern Widp wid_botcon_container;
-
-extern Widp wid_console_input_line;
-extern Widp wid_console_window;
-extern Widp wid_console_container;
-
 #endif

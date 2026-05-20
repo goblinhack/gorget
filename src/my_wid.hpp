@@ -255,5 +255,8 @@ extern ts_t wid_last_over_event;
 extern Widp wid_focus;
 extern Widp wid_over;
 extern Widp wid_focus_locked;
+extern Widp wid_console_window;
+extern Widp wid_console_input_line;
+extern Widp wid_console_container;
 
 #endif
