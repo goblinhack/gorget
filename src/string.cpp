@@ -12,22 +12,22 @@
 #include "my_tp.hpp"
 #include "my_types.hpp"
 
-#include <_strings.h>
-#include <_string.h>
 #include <algorithm>
-#include <cstring>
-#include <cstdint>
-#include <cstddef>
 #include <cctype>
-#include <cstdlib>
-#include <cstdarg>
-#include <cstdio>
 #include <cerrno>
+#include <cstdarg>
+#include <cstddef>
+#include <cstdint>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 #include <libgen.h>
 #include <locale>
 #include <ranges>
 #include <sstream>
+#include <string.h>
 #include <string>
+#include <strings.h>
 #include <utility>
 #include <vector>
 

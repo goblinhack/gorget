@@ -10,10 +10,10 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
-#include <string>
 #include <cstdint>
-#include <_strings.h>
 #include <cstring>
+#include <string>
+#include <strings.h>
 #include <unordered_map>
 #include <utility>
 

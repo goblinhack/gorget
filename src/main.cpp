@@ -20,16 +20,15 @@
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
 #include "my_test.hpp"
+#include "my_tex.hpp"
+#include "my_tile.hpp"
+#include "my_tp.hpp"
 #include "my_types.hpp"
 #include "my_ui.hpp"
 #include "my_wid.hpp"
-#include "my_tile.hpp"
-#include "my_tex.hpp"
-#include "my_tp.hpp"
 #include "my_wid_tiles.hpp"
 #include "my_wids.hpp"
 
-#include <_strings.h>
 #include <SDL_events.h>
 #include <SDL_video.h>
 #include <chrono>
@@ -41,6 +40,7 @@
 #include <iostream>
 #include <locale>
 #include <print>
+#include <strings.h>
 
 //
 // Used to stop the compiler removing unused code I want to keep

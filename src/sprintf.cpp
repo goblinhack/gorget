@@ -4,9 +4,9 @@
 
 #include "my_sprintf.hpp"
 
-#include <_stdio.h>
 #include <cstdarg>
 #include <cstdlib>
+#include <stdio.h>
 #include <string>
 
 // https://stackoverflow.com/questions/40159892/using-asprintf-on-windows
