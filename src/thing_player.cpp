@@ -711,9 +711,11 @@ static void player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy)
   player_move_requests_reset(g, v);
 }
 
-auto player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what, bpoint target) -> bool
+auto player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what_tp, bpoint target) -> bool
 {
   TRACE();
+
+  Thingp item = nullptr;
 
   auto *me = thing_player(g);
   if (me == nullptr) {
@@ -722,19 +724,19 @@ auto player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what, bp
   }
 
   if (g_opt_tests) {
-    if (fire_what == nullptr) {
-      fire_what = tp_find_mand("fireball");
+    if (fire_what_tp == nullptr) {
+      fire_what_tp = tp_find_mand("fireball");
     }
   } else {
-    auto wielding_what = thing_wielding(g, v, l, me);
-    if (! wielding_what) {
+    item = thing_wielding(g, v, l, me);
+    if (! item) {
       topcon("You have nothing to wield.");
       return false;
     }
 
-    fire_what = thing_on_fire_weapon_request(g, v, l, wielding_what, me);
-    if (! wielding_what) {
-      auto the_thing = thing_name_long_the(g, v, l, wielding_what);
+    fire_what_tp = thing_on_fire_weapon_request(g, v, l, item, me);
+    if (! item) {
+      auto the_thing = thing_name_long_the(g, v, l, item);
       topcon("You fail to fire %s.", the_thing.c_str());
       return false;
     }
@@ -746,7 +748,7 @@ auto player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what, bp
     return false;
   }
 
-  if (fire_what == nullptr) {
+  if (fire_what_tp == nullptr) {
     ERR("nothing to fire");
     return false;
   }
@@ -771,10 +773,8 @@ auto player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what, bp
   // No firing in deep water
   //
   if (level_is_deep_water(g, v, l, thing_at(me)) != nullptr) {
-    if (thing_is_player(me)) {
-      topcon("The deep water is preventing you from firing a volley!");
-      return false;
-    }
+    topcon("The deep water is preventing you from firing a volley!");
+    return false;
   }
 
   if (target != bpoint(0, 0)) {
@@ -788,14 +788,9 @@ auto player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what, bp
     target             = make_bpoint(thing_real_at(me) + delta);
   }
 
-  if (tp_is_laser(fire_what)) {
-    if (! thing_laser_fire_at(g, v, l, me, fire_what, target)) {
-      return false;
-    }
-  } else {
-    if (! thing_projectile_fire_at(g, v, l, me, fire_what, target)) {
-      return false;
-    }
+  if (! thing_fire_at(g, v, l, me, item, fire_what_tp, target)) {
+    auto the_thing = thing_name_long_the(g, v, l, item);
+    topcon("You are unable to fire %s.", the_thing.c_str());
   }
 
   return level_tick_begin_requested(g, v, l, "player fired");

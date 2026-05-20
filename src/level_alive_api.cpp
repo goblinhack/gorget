@@ -995,10 +995,10 @@ auto level_alive_is_unused26(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> T
   return level_alive(g, v, l, is_unused26, p);
 }
 
-auto level_alive_is_unused27(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+auto level_alive_is_dead_when_discharged(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_alive(g, v, l, is_unused27, p);
+  return level_alive(g, v, l, is_dead_when_discharged, p);
 }
 
 auto level_alive_is_able_to_fire_weapons(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp

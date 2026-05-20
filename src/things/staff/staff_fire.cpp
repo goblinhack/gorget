@@ -79,9 +79,9 @@ auto tp_load_staff_fire() -> bool
   thing_detail_set(tp, tp_staff_fire_detail_get);
   thing_on_carry_request_set(tp, tp_staff_fire_on_carry_request);
   thing_on_drop_request_set(tp, tp_staff_fire_on_drop_request);
-  thing_on_wield_request_set(tp, tp_staff_fire_on_wield_request);
   thing_on_fire_weapon_request_set(tp, tp_staff_fire_on_fire_weapon_request);
-  tp_charge_count_set(tp, 1000);
+  thing_on_wield_request_set(tp, tp_staff_fire_on_wield_request);
+  tp_charge_count_set(tp, 10);
   tp_flag_set(tp, is_able_to_be_wielded);
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
@@ -95,6 +95,7 @@ auto tp_load_staff_fire() -> bool
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_inventory_item);
   tp_flag_set(tp, is_item_droppable);
+  tp_flag_set(tp, is_dead_when_discharged);
   tp_flag_set(tp, is_item);
   tp_flag_set(tp, is_light_source, 2);
   tp_flag_set(tp, is_loggable);

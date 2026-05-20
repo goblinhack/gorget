@@ -995,10 +995,10 @@ auto tp_is_unused26(Tpp tp) -> bool
   return tp_flag(tp, is_unused26) != 0;
 }
 
-auto tp_is_unused27(Tpp tp) -> bool
+auto tp_is_dead_when_discharged(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused27) != 0;
+  return tp_flag(tp, is_dead_when_discharged) != 0;
 }
 
 auto tp_is_able_to_fire_weapons(Tpp tp) -> bool

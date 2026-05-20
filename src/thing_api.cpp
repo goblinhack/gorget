@@ -1557,7 +1557,7 @@ auto thing_is_unused26(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused26) != 0;
 }
 
-auto thing_is_unused27(Thingp t) -> bool
+auto thing_is_dead_when_discharged(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -1565,7 +1565,7 @@ auto thing_is_unused27(Thingp t) -> bool
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused27) != 0;
+  return tp_flag(thing_tp(t), is_dead_when_discharged) != 0;
 }
 
 auto thing_is_able_to_fire_weapons(Thingp t) -> bool
@@ -3710,52 +3710,6 @@ auto thing_value16_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
     return t->_value16 = 0;
   }
   return t->_value16 -= val;
-}
-auto thing_charge_count(Thingp t) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  return t->_charge_count;
-}
-
-auto thing_charge_count_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  return t->_charge_count = val;
-}
-
-auto thing_charge_count_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  return t->_charge_count += val;
-}
-
-auto thing_charge_count_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  if (static_cast< int >(t->_charge_count) - val <= 0) {
-    return t->_charge_count = 0;
-  }
-  return t->_charge_count -= val;
 }
 auto thing_distance_avoid_target(Thingp t) -> int
 {

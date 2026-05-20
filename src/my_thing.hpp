@@ -611,6 +611,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_drop(Gamep g, Levelsp v, Levelp l, Thingp dropper, Thingp item) -> bool;
 [[nodiscard]] auto thing_ext_struct(Gamep g, Thingp t) -> ThingExtp;
 [[nodiscard]] auto thing_find_non_inline(Gamep g, Levelsp v, ThingId id) -> Thingp;
+[[nodiscard]] auto thing_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, Tpp fire_what, const bpoint &target) -> bool;
 [[nodiscard]] auto thing_fired_by_count_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> int;
 [[nodiscard]] auto thing_fired_by_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> Thingp;
 [[nodiscard]] auto thing_fired_weapon_count_max_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
@@ -712,6 +713,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_damage_capped(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_dead_on_collision(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_dead_on_shoving(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_dead_when_discharged(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_deep_water(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_described_cursor(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_dir_bl(Thingp me) -> bool;
@@ -852,7 +854,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused24(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused25(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused26(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused27(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused3(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused4(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused46(Thingp t) -> bool;

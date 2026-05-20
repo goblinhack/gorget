@@ -1,0 +1,53 @@
+//
+// Copyright goblinhack@gmail.com
+//
+
+#include "my_callstack.hpp"
+#include "my_thing_inlines.hpp"
+
+auto thing_charge_count(Thingp t) -> int
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return 0;
+  }
+  return t->_charge_count;
+}
+
+auto thing_charge_count_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return 0;
+  }
+  return t->_charge_count = val;
+}
+
+auto thing_charge_count_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return 0;
+  }
+  return t->_charge_count += val;
+}
+
+auto thing_charge_count_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return 0;
+  }
+  if (static_cast< int >(t->_charge_count) - val <= 0) {
+    return t->_charge_count = 0;
+  }
+  return t->_charge_count -= val;
+}

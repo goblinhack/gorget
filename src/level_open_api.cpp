@@ -995,10 +995,10 @@ auto level_open_is_unused26(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Th
   return level_open(g, v, l, is_unused26, p);
 }
 
-auto level_open_is_unused27(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+auto level_open_is_dead_when_discharged(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_open(g, v, l, is_unused27, p);
+  return level_open(g, v, l, is_dead_when_discharged, p);
 }
 
 auto level_open_is_able_to_fire_weapons(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp

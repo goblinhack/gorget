@@ -157,7 +157,7 @@
       list_macro(is_unused24, "is_unused24"),                                               /* newline */                                  \
       list_macro(is_unused25, "is_unused25"),                                               /* newline */                                  \
       list_macro(is_unused26, "is_unused26"),                                               /* newline */                                  \
-      list_macro(is_unused27, "is_unused27"),                                               /* newline */                                  \
+      list_macro(is_dead_when_discharged, "is_dead_when_discharged"),                       /* newline */                                  \
       list_macro(is_able_to_be_wielded, "is_able_to_be_wielded"),                           /* newline */                                  \
       list_macro(is_able_to_wield_items, "is_able_to_wield_items"),                         /* newline */                                  \
       list_macro(is_wand, "is_wand"),                                                       /* newline */                                  \
@@ -582,6 +582,7 @@ class Tp;
 [[nodiscard]] auto tp_is_damage_capped(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_dead_on_collision(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_dead_on_shoving(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_dead_when_discharged(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_deep_water(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_described_cursor(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_dirt(Tpp tp) -> bool;
@@ -709,7 +710,6 @@ class Tp;
 [[nodiscard]] auto tp_is_unused24(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused25(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused26(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused27(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused3(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused4(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused46(Tpp tp) -> bool;
