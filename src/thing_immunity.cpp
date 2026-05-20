@@ -4,6 +4,8 @@
 
 #include "my_callstack.hpp"
 #include "my_thing_inlines.hpp"
+#include "my_types.hpp"
+#include "my_tp.hpp"
 
 auto thing_is_immune_to(Thingp t, ThingEventType val) -> bool
 {

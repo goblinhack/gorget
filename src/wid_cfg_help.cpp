@@ -10,7 +10,16 @@
 #include "my_sdl_event.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
+#include "my_wid_popup.hpp"
+#include "my_types.hpp"
+#include "my_wid.hpp"
+#include "my_spoint.hpp"
+#include "my_ui.hpp"
 #include "my_wids.hpp"
+#include <SDL_keyboard.h>
+#include <cstdint>
+#include <string>
+#include <SDL_keycode.h>
 
 static int       last_vert_scroll_offset = -1;
 static WidPopup *wid_cfg_help_window;
@@ -160,7 +169,7 @@ static void wid_cfg_help_destroy(Gamep g)
   game_state_reset(g, "widget keyboard destroy");
 }
 
-[[nodiscard]] static auto wid_cfg_help_cancel(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_cfg_help_cancel(Gamep g, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
   con("Reload config");
@@ -182,7 +191,7 @@ static void wid_cfg_help_destroy(Gamep g)
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_help_save(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_cfg_help_save(Gamep g, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
 
@@ -203,7 +212,7 @@ static void wid_cfg_help_destroy(Gamep g)
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_help_back(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_cfg_help_back(Gamep g, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
   wid_cfg_help_destroy(g);
@@ -540,7 +549,7 @@ static void grab_key(const std::string &which)
   local_g_config_changed = true;
 }
 
-[[nodiscard]] static auto wid_cfg_help_profile_arrow_keys(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_cfg_help_profile_arrow_keys(Gamep g, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
   SDL_Keysym k {};
@@ -571,7 +580,7 @@ static void grab_key(const std::string &which)
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_help_profile_wasd(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_cfg_help_profile_wasd(Gamep g, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
   SDL_Keysym k = {};
@@ -602,7 +611,7 @@ static void grab_key(const std::string &which)
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_key_move_left(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_cfg_key_move_left(Gamep  /*g*/, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
   grab_key("move left");
@@ -611,7 +620,7 @@ static void grab_key(const std::string &which)
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_key_move_right(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_cfg_key_move_right(Gamep  /*g*/, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
   grab_key("move right");
@@ -620,7 +629,7 @@ static void grab_key(const std::string &which)
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_key_move_up(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_cfg_key_move_up(Gamep  /*g*/, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
   grab_key("move up");
@@ -629,7 +638,7 @@ static void grab_key(const std::string &which)
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_key_move_down(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_cfg_key_move_down(Gamep  /*g*/, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
   grab_key("move down");
@@ -638,7 +647,7 @@ static void grab_key(const std::string &which)
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_key_wait(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_cfg_key_wait(Gamep  /*g*/, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
   grab_key("attack");
@@ -647,7 +656,7 @@ static void grab_key(const std::string &which)
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_key_unused1(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_cfg_key_unused1(Gamep  /*g*/, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
   grab_key("key_unused1");
@@ -656,7 +665,7 @@ static void grab_key(const std::string &which)
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_key_unused2(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_cfg_key_unused2(Gamep  /*g*/, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
   grab_key("key_unused2");
@@ -665,7 +674,7 @@ static void grab_key(const std::string &which)
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_key_unused3(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_cfg_key_unused3(Gamep  /*g*/, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
   grab_key("key_unused3");
@@ -674,7 +683,7 @@ static void grab_key(const std::string &which)
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_key_unused4(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_cfg_key_unused4(Gamep  /*g*/, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
   grab_key("key_unused4");
@@ -683,7 +692,7 @@ static void grab_key(const std::string &which)
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_key_unused5(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_cfg_key_unused5(Gamep  /*g*/, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
   grab_key("key_unused5");
@@ -692,7 +701,7 @@ static void grab_key(const std::string &which)
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_key_unused6(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_cfg_key_unused6(Gamep  /*g*/, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
   grab_key("key_unused6");
@@ -701,7 +710,7 @@ static void grab_key(const std::string &which)
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_key_unused7(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_cfg_key_unused7(Gamep  /*g*/, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
   grab_key("key_unused7");
@@ -710,7 +719,7 @@ static void grab_key(const std::string &which)
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_key_unused8(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_cfg_key_unused8(Gamep  /*g*/, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
   grab_key("key_unused8");
@@ -719,7 +728,7 @@ static void grab_key(const std::string &which)
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_key_unused9(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_cfg_key_unused9(Gamep  /*g*/, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
   grab_key("key_unused9");
@@ -728,7 +737,7 @@ static void grab_key(const std::string &which)
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_key_unused10(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_cfg_key_unused10(Gamep  /*g*/, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
   grab_key("key_unused10");
@@ -737,7 +746,7 @@ static void grab_key(const std::string &which)
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_key_unused11(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_cfg_key_unused11(Gamep  /*g*/, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
   grab_key("key_unused11");
@@ -746,7 +755,7 @@ static void grab_key(const std::string &which)
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_key_unused12(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_cfg_key_unused12(Gamep  /*g*/, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
   grab_key("key_unused12");
@@ -755,7 +764,7 @@ static void grab_key(const std::string &which)
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_key_unused13(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_cfg_key_unused13(Gamep  /*g*/, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
   grab_key("key_unused13");
@@ -764,7 +773,7 @@ static void grab_key(const std::string &which)
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_key_unused14(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_cfg_key_unused14(Gamep  /*g*/, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
   grab_key("key_unused14");
@@ -773,7 +782,7 @@ static void grab_key(const std::string &which)
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_key_fire(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_cfg_key_fire(Gamep  /*g*/, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
   grab_key("key_fire");
@@ -782,7 +791,7 @@ static void grab_key(const std::string &which)
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_key_inventory(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_cfg_key_inventory(Gamep  /*g*/, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
   grab_key("key_inventory");
@@ -791,7 +800,7 @@ static void grab_key(const std::string &which)
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_key_jump(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_cfg_key_jump(Gamep  /*g*/, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
   grab_key("jump");
@@ -800,7 +809,7 @@ static void grab_key(const std::string &which)
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_key_ascend(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_cfg_key_ascend(Gamep  /*g*/, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
   grab_key("ascend");
@@ -809,7 +818,7 @@ static void grab_key(const std::string &which)
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_key_descend(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_cfg_key_descend(Gamep  /*g*/, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
   grab_key("descend");
@@ -818,7 +827,7 @@ static void grab_key(const std::string &which)
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_key_zoom(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_cfg_key_zoom(Gamep  /*g*/, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
   grab_key("zoom toggle");
@@ -827,7 +836,7 @@ static void grab_key(const std::string &which)
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_key_save(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_cfg_key_save(Gamep  /*g*/, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
   grab_key("save game");
@@ -836,7 +845,7 @@ static void grab_key(const std::string &which)
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_key_load(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_cfg_key_load(Gamep  /*g*/, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
   grab_key("load game");
@@ -845,7 +854,7 @@ static void grab_key(const std::string &which)
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_key_help(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_cfg_key_help(Gamep  /*g*/, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
   grab_key("help");
@@ -854,7 +863,7 @@ static void grab_key(const std::string &which)
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_key_console(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_cfg_key_console(Gamep  /*g*/, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
   grab_key("toggle console");
@@ -863,7 +872,7 @@ static void grab_key(const std::string &which)
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_key_quit(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_cfg_key_quit(Gamep  /*g*/, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
   grab_key("quit");
@@ -872,7 +881,7 @@ static void grab_key(const std::string &which)
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_key_screenshot(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_cfg_key_screenshot(Gamep  /*g*/, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
   grab_key("screenshot grab");
@@ -881,7 +890,7 @@ static void grab_key(const std::string &which)
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_help_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
+[[nodiscard]] static auto wid_cfg_help_key_down(Gamep g, Widp  /*w*/, const struct SDL_Keysym *key) -> bool
 {
   TRACE();
 

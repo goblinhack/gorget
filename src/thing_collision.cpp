@@ -2,15 +2,23 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_bpoint.hpp"
 #include "my_callstack.hpp"
+#include "my_fpoint.hpp"
+#include "my_level.hpp"
 #include "my_level_inlines.hpp"
-#include "my_main.hpp"
+#include "my_main.hpp" // NOLINT
+#include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
+#include "my_tp.hpp"
+#include "my_types.hpp"
 
 #include <algorithm>
 #include <cmath>
-#include <set>
+#include <cstdint>
 #include <unordered_set>
+#include <utility>
+#include <vector>
 
 using ThingCand  = std::pair< float, Thingp >;
 using ThingCands = std::vector< ThingCand >;
@@ -19,7 +27,7 @@ using ThingCands = std::vector< ThingCand >;
 // Sort the candidates by distance / potentially add more cands if we can hit all
 // things on the same tile
 //
-static void thing_collision_sort_cands(Gamep g, Levelsp v, Levelp l, Thingp me, ThingCands &cands)
+static void thing_collision_sort_cands(Thingp me, ThingCands &cands)
 {
   TRACE();
 
@@ -216,7 +224,7 @@ static void thing_collision_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thi
 //
 // Check we only collide once between objects per tick
 //
-static auto thing_collision_handle_done_already(Gamep g, Levelsp v, Levelp l, Thingp obstacle, Thingp me) -> bool
+static auto thing_collision_handle_done_already(Levelsp v, Thingp obstacle, Thingp me) -> bool
 {
   static std::unordered_set< uint64_t > collided;
 
@@ -253,7 +261,7 @@ static void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp obstacle
     return;
   }
 
-  if (thing_collision_handle_done_already(g, v, l, obstacle, me)) {
+  if (thing_collision_handle_done_already(v, obstacle, me)) {
     return;
   }
 
@@ -330,7 +338,7 @@ void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
     cands.push_back(p);
   }
 
-  thing_collision_sort_cands(g, v, l, me, cands);
+  thing_collision_sort_cands(me, cands);
 
   for (auto cand : cands) {
     auto *obstacle = cand.second;
@@ -342,7 +350,7 @@ void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 }
 
-static auto thing_collision_check_circle_circle(Gamep g, Levelsp v, Levelp l, Thingp A, fpoint A_at, Thingp B, fpoint B_at) -> bool
+static auto thing_collision_check_circle_circle(Thingp A, fpoint A_at, Thingp B, fpoint B_at) -> bool
 {
   float const A_radius = thing_collision_radius(A);
   float const B_radius = thing_collision_radius(B);
@@ -474,18 +482,17 @@ static auto thing_collision_check_circle_circle(Gamep g, Levelsp v, Levelp l, Th
                                                                           fpoint o_at) -> bool
 {
   TRACE();
-  return thing_collision_check_circle_circle(g, v, l, me, me_at, o, o_at);
+  return thing_collision_check_circle_circle(me, me_at, o, o_at);
 }
 
 [[nodiscard]] static auto thing_collision_check_circle_small_circle_large(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint me_at, Thingp o,
                                                                           fpoint o_at) -> bool
 {
   TRACE();
-  return thing_collision_check_circle_circle(g, v, l, me, me_at, o, o_at);
+  return thing_collision_check_circle_circle(me, me_at, o, o_at);
 }
 
-[[nodiscard]] static auto thing_collision_check_circle_small_square(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint me_at, Thingp o,
-                                                                    fpoint o_at) -> bool
+[[nodiscard]] static auto thing_collision_check_circle_small_square(Thingp me, fpoint me_at, Thingp o, fpoint o_at) -> bool
 {
   TRACE();
   return thing_collision_check_circle_square(me, me_at, o, o_at);
@@ -495,18 +502,16 @@ static auto thing_collision_check_circle_circle(Gamep g, Levelsp v, Levelp l, Th
                                                                           fpoint o_at) -> bool
 {
   TRACE();
-  return thing_collision_check_circle_circle(g, v, l, me, me_at, o, o_at);
+  return thing_collision_check_circle_circle(me, me_at, o, o_at);
 }
 
-[[nodiscard]] static auto thing_collision_check_circle_large_square(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint me_at, Thingp o,
-                                                                    fpoint o_at) -> bool
+[[nodiscard]] static auto thing_collision_check_circle_large_square(Thingp me, fpoint me_at, Thingp o, fpoint o_at) -> bool
 {
   TRACE();
   return thing_collision_check_circle_square(me, me_at, o, o_at);
 }
 
-[[nodiscard]] static auto thing_collision_check_square_square(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint me_at, Thingp o, fpoint o_at)
-    -> bool
+[[nodiscard]] static auto thing_collision_check_square_square(fpoint me_at, fpoint o_at) -> bool
 {
   TRACE();
   return thing_collision_check_squares(me_at, o_at);
@@ -654,7 +659,7 @@ static void thing_collision_handle_interpolated_delta(Gamep g, Levelsp v, Levelp
           THING_DBG(o, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
         }
       } else if (thing_is_collision_square(o)) {
-        collision = thing_collision_check_circle_small_square(g, v, l, me, interp_at_f, o, o_at);
+        collision = thing_collision_check_circle_small_square(me, interp_at_f, o, o_at);
         if (compiler_unused) {
           THING_DBG(o, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
         }
@@ -673,7 +678,7 @@ static void thing_collision_handle_interpolated_delta(Gamep g, Levelsp v, Levelp
           THING_DBG(o, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
         }
       } else if (thing_is_collision_square(o)) {
-        collision = thing_collision_check_circle_large_square(g, v, l, me, interp_at_f, o, o_at);
+        collision = thing_collision_check_circle_large_square(me, interp_at_f, o, o_at);
         if (compiler_unused) {
           THING_DBG(o, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
         }
@@ -682,17 +687,17 @@ static void thing_collision_handle_interpolated_delta(Gamep g, Levelsp v, Levelp
       }
     } else if (thing_is_collision_square(me)) {
       if (thing_is_collision_circle_small(o)) {
-        collision = thing_collision_check_circle_small_square(g, v, l, o, o_at, me, interp_at_f);
+        collision = thing_collision_check_circle_small_square(o, o_at, me, interp_at_f);
         if (compiler_unused) {
           THING_DBG(o, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
         }
       } else if (thing_is_collision_circle_large(o)) {
-        collision = thing_collision_check_circle_large_square(g, v, l, o, o_at, me, interp_at_f);
+        collision = thing_collision_check_circle_large_square(o, o_at, me, interp_at_f);
         if (compiler_unused) {
           THING_DBG(o, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
         }
       } else if (thing_is_collision_square(o)) {
-        collision = thing_collision_check_square_square(g, v, l, o, o_at, me, interp_at_f);
+        collision = thing_collision_check_square_square(o_at, interp_at_f);
         if (compiler_unused) {
           THING_DBG(o, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
         }
@@ -777,7 +782,7 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
     // Sort the candidates by distance / potentially add more cands if we can hit all
     // things on the same tile
     //
-    thing_collision_sort_cands(g, v, l, me, cands);
+    thing_collision_sort_cands(me, cands);
 
     //
     // Process the collision candidate list

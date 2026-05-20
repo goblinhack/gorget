@@ -2,16 +2,18 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include "my_charmap.hpp"
-#include "my_globals.hpp"
+#include "my_bpoint.hpp"
+#include "my_callstack.hpp"
+#include "my_game_defs.hpp"
 #include "my_level.hpp"
-#include "my_level_inlines.hpp"
+#include "my_level_inlines.hpp" // NOLINT
 #include "my_main.hpp"
 #include "my_test.hpp"
-#include "my_thing_inlines.hpp"
-#include "my_tp_class.hpp"
-#include "my_ui.hpp"
-#include "my_wids.hpp"
+#include "my_thing.hpp"
+#include "my_thing_inlines.hpp" // NOLINT
+#include "my_types.hpp"
+
+#include <string>
 
 //
 // Compare level contents

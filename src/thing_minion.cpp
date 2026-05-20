@@ -2,16 +2,14 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_bpoint.hpp"
 #include "my_callstack.hpp"
-#include "my_cpp_template.hpp"
-#include "my_game.hpp"
-#include "my_globals.hpp"
+#include "my_dmap.hpp"
 #include "my_level_inlines.hpp"
-#include "my_line.hpp"
-#include "my_main.hpp"
-#include "my_thing_callbacks.hpp"
+#include "my_thing.hpp"
+#include "my_random.hpp"
 #include "my_thing_inlines.hpp"
-#include "my_wid_warning.hpp"
+#include "my_types.hpp"
 
 #include <cstring>
 #include <utility>
@@ -19,7 +17,7 @@
 //
 // Is this minion attached to a mob?
 //
-auto thing_minion_mob_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> Thingp
+auto thing_minion_mob_get(Gamep g, Levelsp v, Levelp  /*l*/, Thingp me) -> Thingp
 {
   if (me == nullptr) {
     return nullptr;

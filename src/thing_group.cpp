@@ -3,17 +3,12 @@
 //
 
 #include "my_callstack.hpp"
-#include "my_charmap.hpp"
-#include "my_dice_rolls.hpp"
-#include "my_globals.hpp"
 #include "my_level.hpp"
-#include "my_level_ext.hpp"
-#include "my_level_inlines.hpp"
-#include "my_main.hpp"
-#include "my_thing_callbacks.hpp"
+#include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
+#include "my_types.hpp"
 
-void thing_group_join(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp group)
+void thing_group_join(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, Thingp group)
 {
   TRACE();
 
@@ -35,7 +30,7 @@ void thing_group_join(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp group)
   THING_DBG(t, "join group %d", group->id);
 }
 
-void thing_group_member_leave(Gamep g, Levelsp v, Levelp l, Thingp t)
+void thing_group_member_leave(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t)
 {
   TRACE();
 

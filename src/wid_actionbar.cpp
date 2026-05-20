@@ -7,10 +7,19 @@
 #include "my_game.hpp"
 #include "my_globals.hpp"
 #include "my_level.hpp"
-#include "my_main.hpp"
 #include "my_sdl_proto.hpp"
+#include "my_spoint.hpp"
+#include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
+#include "my_types.hpp"
+#include "my_wid_popup.hpp"
+#include "my_time.hpp"
+#include "my_wid.hpp"
+#include "my_ui.hpp"
 #include "my_wids.hpp"
+#include <string>
+#include <cstdint>
+#include <cmath>
 
 static Widp      wid_actionbar {};
 static Widp      wid_actionbar_container {};
@@ -33,7 +42,7 @@ static ts_t wid_last_key_repeat;
 //
 static std::string last_menu_string;
 
-[[nodiscard]] static auto wid_actionbar_save(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_actionbar_save(Gamep g, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
 
@@ -42,7 +51,7 @@ static std::string last_menu_string;
   return game_event_save(g);
 }
 
-static void wid_actionbar_save_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
+static void wid_actionbar_save_over_begin(Gamep g, Widp w, int  /*relx*/, int  /*rely*/, int  /*wheelx*/, int  /*wheely*/)
 {
   TRACE();
 
@@ -74,7 +83,7 @@ static void wid_actionbar_save_over_begin(Gamep g, Widp w, int relx, int rely, i
   level_cursor_path_reset(g);
 }
 
-static void wid_actionbar_save_over_end(Gamep g, Widp w)
+static void wid_actionbar_save_over_end(Gamep  /*g*/, Widp  /*w*/)
 {
   TRACE();
 
@@ -82,14 +91,14 @@ static void wid_actionbar_save_over_end(Gamep g, Widp w)
   wid_over_save = nullptr;
 }
 
-[[nodiscard]] static auto wid_actionbar_load(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_actionbar_load(Gamep g, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   log("actionbar load");
   TRACE();
   return game_event_load(g);
 }
 
-static void wid_actionbar_load_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
+static void wid_actionbar_load_over_begin(Gamep g, Widp w, int  /*relx*/, int  /*rely*/, int  /*wheelx*/, int  /*wheely*/)
 {
   TRACE();
 
@@ -121,7 +130,7 @@ static void wid_actionbar_load_over_begin(Gamep g, Widp w, int relx, int rely, i
   level_cursor_path_reset(g);
 }
 
-static void wid_actionbar_load_over_end(Gamep g, Widp w)
+static void wid_actionbar_load_over_end(Gamep  /*g*/, Widp  /*w*/)
 {
   TRACE();
 
@@ -129,7 +138,7 @@ static void wid_actionbar_load_over_end(Gamep g, Widp w)
   wid_over_load = nullptr;
 }
 
-[[nodiscard]] static auto wid_actionbar_wait(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_actionbar_wait(Gamep g, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   log("actionbar wait");
   TRACE();
@@ -139,7 +148,7 @@ static void wid_actionbar_load_over_end(Gamep g, Widp w)
   return game_event_wait(g);
 }
 
-[[nodiscard]] static auto wid_actionbar_repeat_wait(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_actionbar_repeat_wait(Gamep g, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   log("actionbar wait");
   TRACE();
@@ -156,7 +165,7 @@ static void wid_actionbar_load_over_end(Gamep g, Widp w)
   return game_event_wait(g);
 }
 
-static void wid_actionbar_wait_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
+static void wid_actionbar_wait_over_begin(Gamep g, Widp w, int  /*relx*/, int  /*rely*/, int  /*wheelx*/, int  /*wheely*/)
 {
   TRACE();
 
@@ -190,7 +199,7 @@ static void wid_actionbar_wait_over_begin(Gamep g, Widp w, int relx, int rely, i
   level_cursor_path_reset(g);
 }
 
-static void wid_actionbar_wait_over_end(Gamep g, Widp w)
+static void wid_actionbar_wait_over_end(Gamep  /*g*/, Widp  /*w*/)
 {
   TRACE();
 
@@ -198,7 +207,7 @@ static void wid_actionbar_wait_over_end(Gamep g, Widp w)
   wid_over_wait = nullptr;
 }
 
-[[nodiscard]] static auto wid_actionbar_inventory(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_actionbar_inventory(Gamep g, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   log("actionbar inventory");
   TRACE();
@@ -206,7 +215,7 @@ static void wid_actionbar_wait_over_end(Gamep g, Widp w)
   return game_event_inventory(g);
 }
 
-static void wid_actionbar_inventory_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
+static void wid_actionbar_inventory_over_begin(Gamep g, Widp w, int  /*relx*/, int  /*rely*/, int  /*wheelx*/, int  /*wheely*/)
 {
   TRACE();
 
@@ -238,7 +247,7 @@ static void wid_actionbar_inventory_over_begin(Gamep g, Widp w, int relx, int re
   level_cursor_path_reset(g);
 }
 
-static void wid_actionbar_inventory_over_end(Gamep g, Widp w)
+static void wid_actionbar_inventory_over_end(Gamep  /*g*/, Widp  /*w*/)
 {
   TRACE();
 
@@ -246,7 +255,7 @@ static void wid_actionbar_inventory_over_end(Gamep g, Widp w)
   wid_over_inventory = nullptr;
 }
 
-[[nodiscard]] static auto wid_actionbar_fire(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_actionbar_fire(Gamep g, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   log("actionbar fire");
   TRACE();
@@ -268,7 +277,7 @@ static void wid_actionbar_inventory_over_end(Gamep g, Widp w)
   return true;
 }
 
-[[nodiscard]] static auto wid_actionbar_repeat_fire(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_actionbar_repeat_fire(Gamep g, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   log("actionbar fire");
   TRACE();
@@ -298,7 +307,7 @@ static void wid_actionbar_inventory_over_end(Gamep g, Widp w)
   return true;
 }
 
-static void wid_actionbar_fire_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
+static void wid_actionbar_fire_over_begin(Gamep g, Widp w, int  /*relx*/, int  /*rely*/, int  /*wheelx*/, int  /*wheely*/)
 {
   TRACE();
 
@@ -330,7 +339,7 @@ static void wid_actionbar_fire_over_begin(Gamep g, Widp w, int relx, int rely, i
   level_cursor_path_reset(g);
 }
 
-static void wid_actionbar_fire_over_end(Gamep g, Widp w)
+static void wid_actionbar_fire_over_end(Gamep  /*g*/, Widp  /*w*/)
 {
   TRACE();
 
@@ -338,7 +347,7 @@ static void wid_actionbar_fire_over_end(Gamep g, Widp w)
   wid_over_fire = nullptr;
 }
 
-[[nodiscard]] static auto wid_actionbar_ascend(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_actionbar_ascend(Gamep g, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   log("actionbar ascend");
   TRACE();
@@ -346,7 +355,7 @@ static void wid_actionbar_fire_over_end(Gamep g, Widp w)
   return game_event_ascend(g);
 }
 
-static void wid_actionbar_ascend_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
+static void wid_actionbar_ascend_over_begin(Gamep g, Widp w, int  /*relx*/, int  /*rely*/, int  /*wheelx*/, int  /*wheely*/)
 {
   TRACE();
 
@@ -378,7 +387,7 @@ static void wid_actionbar_ascend_over_begin(Gamep g, Widp w, int relx, int rely,
   level_cursor_path_reset(g);
 }
 
-static void wid_actionbar_ascend_over_end(Gamep g, Widp w)
+static void wid_actionbar_ascend_over_end(Gamep  /*g*/, Widp  /*w*/)
 {
   TRACE();
 
@@ -386,7 +395,7 @@ static void wid_actionbar_ascend_over_end(Gamep g, Widp w)
   wid_over_ascend = nullptr;
 }
 
-[[nodiscard]] static auto wid_actionbar_descend(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_actionbar_descend(Gamep g, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   log("actionbar descend");
   TRACE();
@@ -394,7 +403,7 @@ static void wid_actionbar_ascend_over_end(Gamep g, Widp w)
   return game_event_descend(g);
 }
 
-static void wid_actionbar_descend_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
+static void wid_actionbar_descend_over_begin(Gamep g, Widp w, int  /*relx*/, int  /*rely*/, int  /*wheelx*/, int  /*wheely*/)
 {
   TRACE();
 
@@ -426,7 +435,7 @@ static void wid_actionbar_descend_over_begin(Gamep g, Widp w, int relx, int rely
   level_cursor_path_reset(g);
 }
 
-static void wid_actionbar_descend_over_end(Gamep g, Widp w)
+static void wid_actionbar_descend_over_end(Gamep  /*g*/, Widp  /*w*/)
 {
   TRACE();
 
@@ -434,7 +443,7 @@ static void wid_actionbar_descend_over_end(Gamep g, Widp w)
   wid_over_descend = nullptr;
 }
 
-[[nodiscard]] static auto wid_actionbar_quit(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_actionbar_quit(Gamep g, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   log("actionbar quit");
   TRACE();
@@ -442,7 +451,7 @@ static void wid_actionbar_descend_over_end(Gamep g, Widp w)
   return game_event_quit(g);
 }
 
-static void wid_actionbar_quit_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
+static void wid_actionbar_quit_over_begin(Gamep g, Widp w, int  /*relx*/, int  /*rely*/, int  /*wheelx*/, int  /*wheely*/)
 {
   TRACE();
 
@@ -473,7 +482,7 @@ static void wid_actionbar_quit_over_begin(Gamep g, Widp w, int relx, int rely, i
   level_cursor_path_reset(g);
 }
 
-static void wid_actionbar_quit_over_end(Gamep g, Widp w)
+static void wid_actionbar_quit_over_end(Gamep  /*g*/, Widp  /*w*/)
 {
   TRACE();
 
@@ -481,7 +490,7 @@ static void wid_actionbar_quit_over_end(Gamep g, Widp w)
   wid_over_quit = nullptr;
 }
 
-[[nodiscard]] static auto wid_actionbar_zoom(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_actionbar_zoom(Gamep g, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   log("actionbar zoom");
   TRACE();
@@ -491,7 +500,7 @@ static void wid_actionbar_quit_over_end(Gamep g, Widp w)
   return true;
 }
 
-static void wid_actionbar_zoom_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
+static void wid_actionbar_zoom_over_begin(Gamep g, Widp w, int  /*relx*/, int  /*rely*/, int  /*wheelx*/, int  /*wheely*/)
 {
   TRACE();
 
@@ -522,7 +531,7 @@ static void wid_actionbar_zoom_over_begin(Gamep g, Widp w, int relx, int rely, i
   level_cursor_path_reset(g);
 }
 
-static void wid_actionbar_zoom_over_end(Gamep g, Widp w)
+static void wid_actionbar_zoom_over_end(Gamep  /*g*/, Widp  /*w*/)
 {
   TRACE();
 
@@ -530,7 +539,7 @@ static void wid_actionbar_zoom_over_end(Gamep g, Widp w)
   wid_over_zoom = nullptr;
 }
 
-[[nodiscard]] static auto wid_actionbar_help(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_actionbar_help(Gamep g, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   log("actionbar help");
   TRACE();
@@ -538,7 +547,7 @@ static void wid_actionbar_zoom_over_end(Gamep g, Widp w)
   return game_event_help(g);
 }
 
-static void wid_actionbar_help_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
+static void wid_actionbar_help_over_begin(Gamep g, Widp w, int  /*relx*/, int  /*rely*/, int  /*wheelx*/, int  /*wheely*/)
 {
   TRACE();
 
@@ -569,7 +578,7 @@ static void wid_actionbar_help_over_begin(Gamep g, Widp w, int relx, int rely, i
   level_cursor_path_reset(g);
 }
 
-static void wid_actionbar_help_over_end(Gamep g, Widp w)
+static void wid_actionbar_help_over_end(Gamep  /*g*/, Widp  /*w*/)
 {
   TRACE();
 

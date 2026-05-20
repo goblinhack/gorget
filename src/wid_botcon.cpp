@@ -7,10 +7,17 @@
 #include "my_color_defs.hpp"
 #include "my_globals.hpp"
 #include "my_main.hpp"
+#include "my_spoint.hpp"
 #include "my_string.hpp"
+#include "my_types.hpp"
+#include "my_wid.hpp"
+#include "my_ui.hpp"
 #include "my_wids.hpp"
 
+#include <cstdint>
 #include <map>
+#include <string>
+#include <utility>
 
 static void wid_botcon_wid_create(Gamep g);
 

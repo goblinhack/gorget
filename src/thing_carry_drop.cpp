@@ -3,13 +3,18 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_game.hpp"
 #include "my_main.hpp"
+#include "my_thing.hpp"
+#include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp"
+#include "my_types.hpp"
+#include "my_tp.hpp"
 
 //
 // Add an item to the things inventory
 //
-auto thing_carry_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp carrier) -> bool
+static auto thing_carry_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp carrier) -> bool
 {
   TRACE();
 
@@ -59,7 +64,7 @@ auto thing_carry_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp carrier)
 //
 // Drop an item from the things inventory
 //
-auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp dropper) -> bool
+static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp dropper) -> bool
 {
   TRACE();
 
@@ -283,7 +288,7 @@ auto thing_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp dropp
   return tp->on_drop_request(g, v, l, me, dropper);
 }
 
-bool thing_carry(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item)
+auto thing_carry(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item) -> bool
 {
   TRACE();
 
@@ -292,7 +297,7 @@ bool thing_carry(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item)
     return false;
   }
 
-  if (! item) {
+  if (item == nullptr) {
     thing_err(me, "no item to carry");
     return false;
   }
@@ -300,7 +305,7 @@ bool thing_carry(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item)
   return thing_carry_item(g, v, l, item, me);
 }
 
-bool thing_drop(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item)
+auto thing_drop(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item) -> bool
 {
   TRACE();
 
@@ -309,13 +314,13 @@ bool thing_drop(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item)
     return false;
   }
 
-  if (! item) {
+  if (item == nullptr) {
     thing_err(me, "no item to carry");
     return false;
   }
 
   if (thing_is_wielded(item)) {
-    (void) thing_unwield(g, v, l, me);
+    thing_unwield(g, v, l, me);
   }
 
   return thing_drop_item(g, v, l, item, me);

@@ -2,19 +2,22 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include "my_backtrace.hpp"
 #include "my_callstack.hpp"
 #include "my_globals.hpp"
 #include "my_main.hpp"
 #include "my_ptrcheck.hpp"
-#include "my_sprintf.hpp"
 #include "my_time.hpp"
+#include "my_types.hpp"
 
 #include <algorithm>
+#include <array>
+#include <cstdlib>
+#include <cstdint>
+#include <cstdio>
 #include <cstring>
-#include <iostream>
 #include <mutex>
 #include <print>
+#include <string>
 #include <vector>
 
 static std::mutex ptrcheck_mutex;

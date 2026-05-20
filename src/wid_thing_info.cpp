@@ -2,20 +2,31 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include "my_ascii.hpp"
 #include "my_callstack.hpp"
 #include "my_game.hpp"
-#include "my_globals.hpp"
-#include "my_level_inlines.hpp"
+#include "my_level.hpp"
+#include "my_level_inlines.hpp" // NOLINT
 #include "my_main.hpp"
+#include "my_spoint.hpp"
 #include "my_sprintf.hpp"
 #include "my_string.hpp"
+#include "my_thing.hpp"
 #include "my_thing_callbacks.hpp"
-#include "my_thing_inlines.hpp"
+#include "my_thing_inlines.hpp" // NOLINT
+#include "my_tile.hpp"
+#include "my_tp.hpp"
+#include "my_types.hpp"
+#include "my_ui.hpp"
+#include "my_wid.hpp"
+#include "my_wid_popup.hpp"
+#include "my_wid_text_box.hpp"
 #include "my_wids.hpp"
 
 #include <algorithm>
-#include <print>
+#include <cstdint>
+#include <cstring>
+#include <format>
+#include <string>
 
 //
 // The thing icon
@@ -42,7 +53,7 @@
   return true;
 }
 
-[[nodiscard]] auto wid_thing_info_keys(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent) -> bool
+[[nodiscard]] auto wid_thing_info_keys(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp me, WidPopup *parent) -> bool
 {
   TRACE();
 
@@ -85,7 +96,7 @@
 //
 // The thing name
 //
-[[nodiscard]] auto wid_thing_info_name(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp tp, WidPopup *parent) -> bool
+[[nodiscard]] auto wid_thing_info_name(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp /*tp*/, WidPopup *parent) -> bool
 {
   TRACE();
 
@@ -121,7 +132,7 @@
 //
 // Score
 //
-[[nodiscard]] auto wid_thing_info_score(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp tp, WidPopup *parent) -> bool
+[[nodiscard]] auto wid_thing_info_score(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp me, Tpp /*tp*/, WidPopup *parent) -> bool
 {
   TRACE();
 
@@ -160,7 +171,7 @@
 //
 // Health bar
 //
-[[nodiscard]] auto wid_thing_info_health_bar(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp tp, WidPopup *parent, int width) -> bool
+[[nodiscard]] auto wid_thing_info_health_bar(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp me, Tpp tp, WidPopup *parent, int width) -> bool
 {
   TRACE();
 
@@ -218,7 +229,7 @@
 //
 // Stamina bar
 //
-[[nodiscard]] auto wid_thing_info_stamina_bar(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp tp, WidPopup *parent, int width) -> bool
+[[nodiscard]] auto wid_thing_info_stamina_bar(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp me, Tpp tp, WidPopup *parent, int width) -> bool
 {
   TRACE();
 
@@ -280,7 +291,7 @@
 //
 // Add immunities
 //
-[[nodiscard]] auto wid_thing_info_immunities(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, int width) -> bool
+[[nodiscard]] auto wid_thing_info_immunities(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp me, WidPopup *parent, int width) -> bool
 {
   TRACE();
 
@@ -344,7 +355,7 @@
   return printed_something;
 }
 
-static void wid_thing_info_item_mouse_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
+static void wid_thing_info_item_mouse_over_begin(Gamep g, Widp w, int /*relx*/, int /*rely*/, int /*wheelx*/, int /*wheely*/)
 {
   TRACE();
 
@@ -380,7 +391,7 @@ static void wid_thing_info_item_mouse_over_end(Gamep g, Widp w)
   (void) wid_rightbar_init(g);
 }
 
-[[nodiscard]] static auto wid_thing_info_item_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_thing_info_item_mouse_up(Gamep g, Widp w, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
   TRACE();
 

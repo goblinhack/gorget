@@ -3,7 +3,8 @@
 //
 
 #include "my_callstack.hpp"
-#include "my_level.hpp"
+#include "my_types.hpp"
+#include "my_thing.hpp"
 
 void thing_chasm_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
 {

@@ -4,23 +4,45 @@
 
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
+#include "my_color.hpp"
+#include "my_color_defs.hpp"
 #include "my_command.hpp"
 #include "my_command_history.hpp"
 #include "my_font.hpp"
+#include "my_fpoint.hpp"
 #include "my_game.hpp"
+#include "my_gl.hpp"
 #include "my_globals.hpp"
 #include "my_log.hpp"
 #include "my_main.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_sdl_event.hpp"
 #include "my_sdl_proto.hpp"
-#include "my_size.hpp"
 #include "my_sound.hpp"
 #include "my_sprintf.hpp"
+#include "my_string.hpp"
 #include "my_thing_inlines.hpp"
+#include "my_time.hpp"
+#include "my_types.hpp"
+#include "my_ui.hpp"
+#include "my_wid.hpp"
+#include "my_tile.hpp"
 #include "my_wid_class.hpp"
-#include "my_wid_tiles.hpp"
 #include "my_wids.hpp"
+#include <cstdint>
+#include <array>
+#include <string>
+#include <SDL_keyboard.h>
+#include <SDL_keycode.h>
+#include <SDL_version.h>
+#include <cstddef>
+#include <vector>
+#include <_strings.h>
+#include <SDL_mouse.h>
+#include <OpenGL/gl.h>
+#include <cstdarg>
+#include <cstring>
+#include <cstdio>
 
 #ifdef ENABLE_DEBUG_GFX_GL_BLEND
 #include <unistd.h>
@@ -29,7 +51,6 @@
 #include <cmath>
 
 #include <algorithm>
-#include <print>
 #include <ranges>
 #include <utility>
 
@@ -1423,7 +1444,7 @@ auto wid_get_text_rhs(Widp w) -> bool
   return static_cast< bool >(w->text_rhs);
 }
 
-void wid_set_text_rhs(Widp w, bool val)
+void wid_set_text_rhs(Widp w, bool  /*val*/)
 {
   TRACE();
   w->text_rhs = 1U;
@@ -2268,7 +2289,7 @@ void wid_destroy_nodelay(Gamep g, Widp *wp)
   wid_destroy_delay(g, wp, 0);
 }
 
-void wid_destroy_in(Gamep g, Widp w, uint32_t ms)
+void wid_destroy_in(Gamep  /*g*/, Widp w, uint32_t ms)
 {
   TRACE();
 
@@ -2440,7 +2461,7 @@ auto wid_new_plain(Gamep g, Widp parent, const std::string &name) -> Widp
 //
 // Initialize a wid with basic settings
 //
-static auto wid_new_scroll_trough(Gamep g, Widp parent) -> Widp
+static auto wid_new_scroll_trough(Widp parent) -> Widp
 {
   TRACE();
 
@@ -2588,7 +2609,7 @@ auto wid_new_vert_scroll_bar(Gamep g, Widp parent, const std::string &name, Widp
   vert_tl.y = tly - ptly;
   vert_br.y = tly - ptly + wid_get_height(scrollbar_owner) - 1;
 
-  Widp trough = wid_new_scroll_trough(g, parent);
+  Widp trough = wid_new_scroll_trough(parent);
   wid_set_pos(trough, vert_tl, vert_br);
   wid_set_shape_square(trough);
   wid_set_style(trough, UI_WID_STYLE_VERT_SCROLL_DARK);
@@ -2650,7 +2671,7 @@ auto wid_new_horiz_scroll_bar(Gamep g, Widp parent, const std::string &name, Wid
   horiz_tl.y = tly - ptly + wid_get_height(scrollbar_owner);
   horiz_br.y = horiz_tl.y;
 
-  Widp trough = wid_new_scroll_trough(g, parent);
+  Widp trough = wid_new_scroll_trough(parent);
   wid_set_pos(trough, horiz_tl, horiz_br);
   wid_set_shape_square(trough);
   wid_set_style(trough, UI_WID_STYLE_HORIZ_SCROLL_DARK);
@@ -3554,7 +3575,7 @@ void wid_scroll_text(Widp w)
 // Replace the 2nd last line of text and scroll. The assumption is the last
 // line is the input line.
 //
-void wid_scroll_with_input(Gamep g, Widp w, const std::string &str)
+void wid_scroll_with_input(Gamep  /*g*/, Widp w, const std::string &str)
 {
   TRACE();
 
@@ -4208,7 +4229,7 @@ void wid_move_delta(Gamep g, Widp w, int dx, int dy)
   wid_update_internal(g, w);
 }
 
-void wid_resize(Gamep g, Widp w, int width, int height)
+void wid_resize(Gamep  /*g*/, Widp w, int width, int height)
 {
   TRACE();
 
@@ -5335,7 +5356,7 @@ static void wid_gc(Gamep g, Widp w)
 //
 // Check widgets are not getting out of hand
 //
-void wid_sanity_check(Gamep g)
+void wid_sanity_check(Gamep  /*g*/)
 {
   TRACE();
 

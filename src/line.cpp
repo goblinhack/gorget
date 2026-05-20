@@ -2,9 +2,13 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_bpoint.hpp"
 #include "my_line.hpp"
+#include "my_spoint.hpp"
 
 #include <cmath>
+#include <cstddef>
+#include <cstdint>
 #include <vector>
 
 auto draw_line(const spoint s, const spoint e, size_t max_elems) -> std::vector< spoint >

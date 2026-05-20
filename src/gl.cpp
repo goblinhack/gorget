@@ -3,15 +3,27 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_color.hpp"
 #include "my_color_defs.hpp"
+#include "my_enum.hpp"
 #include "my_game.hpp"
+#include "my_game_defs.hpp"
 #include "my_gl.hpp"
-#include "my_globals.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_size.hpp"
+#include "my_spoint.hpp"
 #include "my_tile.hpp"
+#include <OpenGL/gltypes.h>
+#include "my_types.hpp"
+#include <OpenGL/gl.h>
+#include <cmath>
+#include <OpenGL/glext.h>
+#include <cstring>
+#include <cstdint>
+#include <cstddef>
+#include <algorithm>
 
 ENUM_DEF_C(FBO_ENUM, FboEnum)
 
@@ -208,7 +220,7 @@ void gl_enter_2d_mode(Gamep g, int w, int h)
   in_2d_mode = true;
 }
 
-void gl_leave_2d_mode(Gamep g)
+void gl_leave_2d_mode(Gamep  /*g*/)
 {
   if (! in_2d_mode) {
     return;
@@ -592,7 +604,7 @@ void blit_fbo(Gamep g, FboEnum fbo)
   blit_flush();
 }
 
-void blit_fbo(Gamep g, FboEnum fbo, int tl_x, int tl_y, int br_x, int br_y)
+void blit_fbo(Gamep  /*g*/, FboEnum fbo, int tl_x, int tl_y, int br_x, int br_y)
 {
   TRACE_DEBUG();
 

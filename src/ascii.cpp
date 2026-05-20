@@ -3,7 +3,7 @@
 //
 
 #include "my_ascii.hpp"
-#include "my_callstack.hpp"
+#include "my_callstack.hpp" // NOLINT
 #include "my_color.hpp"
 #include "my_color_defs.hpp"
 #include "my_font.hpp"
@@ -20,6 +20,7 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
+#include <OpenGL/gl.h>
 #include <algorithm>
 #include <array>
 #include <cstdarg>

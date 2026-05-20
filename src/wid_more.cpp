@@ -5,10 +5,20 @@
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
 #include "my_game.hpp"
-#include "my_main.hpp"
+#include "my_main.hpp" // NOLINT
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
+#include "my_spoint.hpp"
+#include "my_types.hpp"
+#include "my_ui.hpp"
+#include "my_wid.hpp"
+#include "my_wid_popup.hpp"
 #include "my_wids.hpp"
+
+#include <SDL_keyboard.h>
+#include <SDL_keycode.h>
+#include <cmath>
+#include <cstdint>
 
 static WidPopup *wid_more_window;
 
@@ -19,7 +29,7 @@ static void wid_more_destroy()
   wid_more_window = nullptr;
 }
 
-[[nodiscard]] static auto wid_more_credits(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_more_credits(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
   TRACE();
   wid_more_destroy();
@@ -27,7 +37,7 @@ static void wid_more_destroy()
   return true;
 }
 
-[[nodiscard]] static auto wid_more_hiscores(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_more_hiscores(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
   TRACE();
   wid_more_destroy();
@@ -35,7 +45,7 @@ static void wid_more_destroy()
   return true;
 }
 
-[[nodiscard]] static auto wid_more_back(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_more_back(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
   TRACE();
   wid_more_destroy();
@@ -43,7 +53,7 @@ static void wid_more_destroy()
   return true;
 }
 
-[[nodiscard]] static auto wid_more_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
+[[nodiscard]] static auto wid_more_key_down(Gamep g, Widp /*w*/, const struct SDL_Keysym *key) -> bool
 {
   TRACE();
 

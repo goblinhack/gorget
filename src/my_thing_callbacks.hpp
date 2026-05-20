@@ -66,7 +66,7 @@ auto thing_on_fire_weapon_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thing
 
 using thing_on_wield_request_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp carrier);
 void thing_on_wield_request_set(Tpp tp, thing_on_wield_request_t callback);
-auto thing_on_wield_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp carrier) -> bool;
+auto thing_on_wield_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp wielder) -> bool;
 
 using thing_on_unwield_request_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp unwieldper);
 void thing_on_unwield_request_set(Tpp tp, thing_on_unwield_request_t callback);

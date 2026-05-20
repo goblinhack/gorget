@@ -2,17 +2,28 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_bpoint.hpp"
 #include "my_callstack.hpp"
+#include "my_fpoint.hpp"
 #include "my_game.hpp"
+#include "my_game_defs.hpp"
 #include "my_globals.hpp"
-#include "my_level_inlines.hpp"
+#include "my_level.hpp"
+#include "my_level_inlines.hpp" // NOLINT
 #include "my_line.hpp"
 #include "my_main.hpp"
+#include "my_thing.hpp"
 #include "my_thing_callbacks.hpp"
-#include "my_thing_inlines.hpp"
+#include "my_thing_inlines.hpp" // NOLINT
+#include "my_tp.hpp"
+#include "my_types.hpp"
 #include "my_wid_warning.hpp"
 
+#include <cmath>
+#include <cstdint>
 #include <ranges>
+#include <string>
+#include <vector>
 
 void thing_player_init(Gamep g)
 {
@@ -269,7 +280,7 @@ auto player_state_to_string(PlayerState state) -> std::string
   return PlayerState_to_string(state);
 }
 
-auto player_state(Gamep g, Levelsp v) -> PlayerState
+auto player_state(Gamep /*g*/, Levelsp v) -> PlayerState
 {
   TRACE();
   return v->_player_state;
@@ -729,13 +740,13 @@ auto player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what_tp,
     }
   } else {
     item = thing_wielding(g, v, l, me);
-    if (! item) {
+    if (item == nullptr) {
       topcon("You have nothing to wield.");
       return false;
     }
 
     fire_what_tp = thing_on_fire_weapon_request(g, v, l, item, me);
-    if (! item) {
+    if (item == nullptr) {
       auto the_thing = thing_name_long_the(g, v, l, item);
       topcon("You fail to fire %s.", the_thing.c_str());
       return false;
@@ -799,7 +810,7 @@ auto player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what_tp,
 //
 // All keys have been released, forget any accumulation of events
 //
-void player_move_requests_reset(Gamep g, Levelsp v)
+void player_move_requests_reset(Gamep /*g*/, Levelsp v)
 {
   TRACE();
 
@@ -813,7 +824,7 @@ void player_move_requests_reset(Gamep g, Levelsp v)
 //
 // Allow moves to accumulate so we can do diagonal moves.
 //
-void player_move_accum(Gamep g, Levelsp v, Levelp l, bool up, bool down, bool left, bool right, bool fire)
+void player_move_accum(Gamep /*g*/, Levelsp v, Levelp /*l*/, bool up, bool down, bool left, bool right, bool fire)
 {
   TRACE();
 
@@ -1043,7 +1054,7 @@ void player_reached_entrance(Gamep g, Levelsp v, Levelp l)
 //
 // Handle the me falling out of the level
 //
-void player_fell(Gamep g, Levelsp v, Levelp l, Levelp next_level, Thingp me)
+void player_fell(Gamep g, Levelsp v, Levelp l, Levelp next_level, Thingp /*me*/)
 {
   TRACE();
 

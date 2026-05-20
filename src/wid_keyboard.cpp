@@ -4,13 +4,26 @@
 
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
-#include "my_globals.hpp"
-#include "my_main.hpp"
+#include "my_color.hpp"
+#include "my_color_defs.hpp"
+#include "my_main.hpp" // NOLINT
 #include "my_ptrcheck.hpp"
 #include "my_sdl_event.hpp"
 #include "my_sound.hpp"
+#include "my_spoint.hpp"
+#include "my_time.hpp"
+#include "my_types.hpp"
+#include "my_ui.hpp"
+#include "my_wid.hpp"
 #include "my_wid_keyboard.hpp"
 #include "my_wids.hpp"
+
+#include <SDL_keyboard.h>
+#include <SDL_keycode.h>
+#include <cstddef>
+#include <cstdint>
+#include <string>
+#include <strings.h>
 
 /*
  * How keys appear on screen
@@ -271,7 +284,7 @@ static void wid_keyboard_event(Gamep g, Widp w, int focusx, int focusy, const SD
   return true;
 }
 
-[[nodiscard]] static auto wid_keyboard_button_mouse_event(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_keyboard_button_mouse_event(Gamep g, Widp w, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
   TRACE();
   int const focus  = wid_get_int_context(w);
@@ -397,7 +410,7 @@ static void wid_keyboard_set_focus(Gamep g, wid_keyboard_ctx *ctx, int focusx, i
   return true;
 }
 
-[[nodiscard]] static auto wid_keyboard_parent_joy_button(Gamep g, Widp w, int x, int y) -> bool
+[[nodiscard]] static auto wid_keyboard_parent_joy_button(Gamep g, Widp w, int /*x*/, int /*y*/) -> bool
 {
   TRACE();
   auto *ctx = static_cast< wid_keyboard_ctx * >(wid_get_void_context(w));
@@ -512,7 +525,7 @@ static void wid_keyboard_set_focus(Gamep g, wid_keyboard_ctx *ctx, int focusx, i
   return false;
 }
 
-[[nodiscard]] static auto wid_keyboard_button_joy_button_event(Gamep g, Widp w, int x, int y) -> bool
+[[nodiscard]] static auto wid_keyboard_button_joy_button_event(Gamep g, Widp w, int /*x*/, int /*y*/) -> bool
 {
   TRACE();
   auto *ctx = static_cast< wid_keyboard_ctx * >(wid_get_void_context(w));
@@ -626,7 +639,7 @@ static void wid_keyboard_set_focus(Gamep g, wid_keyboard_ctx *ctx, int focusx, i
   return false;
 }
 
-static void wid_keyboard_destroy(Gamep g, Widp w)
+static void wid_keyboard_destroy(Gamep /*g*/, Widp w)
 {
   TRACE();
   auto *ctx = static_cast< wid_keyboard_ctx * >(wid_get_void_context(w));
@@ -638,7 +651,7 @@ static void wid_keyboard_destroy(Gamep g, Widp w)
   wid_keyboard_visible = 0;
 }
 
-static void wid_keyboard_tick(Gamep g, Widp w)
+static void wid_keyboard_tick(Gamep /*g*/, Widp w)
 {
   TRACE();
   auto *ctx = static_cast< wid_keyboard_ctx * >(wid_get_void_context(w));

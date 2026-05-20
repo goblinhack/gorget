@@ -2,12 +2,21 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_bpoint.hpp"
 #include "my_callstack.hpp"
+#include "my_level.hpp"
+#include "my_fpoint.hpp"
 #include "my_level_inlines.hpp"
 #include "my_line.hpp"
 #include "my_main.hpp"
+#include "my_thing_callbacks.hpp"
+#include "my_thing.hpp"
+#include "my_spoint.hpp"
 #include "my_thing_inlines.hpp"
+#include "my_types.hpp"
+#include "my_tile.hpp"
 
+#include <cmath>
 #include <ranges>
 
 void thing_is_jumping_set(Gamep g, Levelsp v, Levelp l, Thingp me, bool val)
@@ -241,7 +250,7 @@ auto thing_distance_jump(Thingp me) -> int
   return d;
 }
 
-auto thing_distance_jump_set(Gamep g, Levelsp v, Levelp l, Thingp me, int val) -> int
+auto thing_distance_jump_set(Gamep  /*g*/, Levelsp  /*v*/, Levelp  /*l*/, Thingp me, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -252,7 +261,7 @@ auto thing_distance_jump_set(Gamep g, Levelsp v, Levelp l, Thingp me, int val) -
   return me->_distance_jump = val;
 }
 
-auto thing_distance_jump_incr(Gamep g, Levelsp v, Levelp l, Thingp me, int val) -> int
+auto thing_distance_jump_incr(Gamep  /*g*/, Levelsp  /*v*/, Levelp  /*l*/, Thingp me, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -263,7 +272,7 @@ auto thing_distance_jump_incr(Gamep g, Levelsp v, Levelp l, Thingp me, int val) 
   return me->_distance_jump += val;
 }
 
-auto thing_distance_jump_decr(Gamep g, Levelsp v, Levelp l, Thingp me, int val) -> int
+auto thing_distance_jump_decr(Gamep  /*g*/, Levelsp  /*v*/, Levelp  /*l*/, Thingp me, int val) -> int
 {
   TRACE_DEBUG();
 

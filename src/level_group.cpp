@@ -2,16 +2,13 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_bpoint.hpp"
 #include "my_callstack.hpp"
-#include "my_charmap.hpp"
-#include "my_dice_rolls.hpp"
-#include "my_globals.hpp"
 #include "my_level.hpp"
-#include "my_level_ext.hpp"
 #include "my_level_inlines.hpp"
-#include "my_main.hpp"
-#include "my_thing_callbacks.hpp"
+#include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
+#include "my_types.hpp"
 
 static void level_group_things_do(Gamep g, Levelsp v, Levelp l, Thingp group, Tpp tp, const bpoint &p)
 

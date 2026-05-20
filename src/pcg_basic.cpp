@@ -28,11 +28,11 @@
  * your project.
  */
 
-#include "my_globals.hpp"
 #include "my_main.hpp"
 #include "my_pcg_basic.hpp"
-#include "my_source_loc.hpp"
 
+#include <cstdint>
+#include <cmath>
 #include <cstdlib>
 
 static int pcg_lock_count; // No pcg random numbers allowed here

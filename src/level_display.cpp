@@ -2,8 +2,12 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_bpoint.hpp"
 #include "my_callstack.hpp"
+#include "my_color.hpp"
+#include "my_color_defs.hpp"
 #include "my_game.hpp"
+#include "my_game_defs.hpp"
 #include "my_game_popups.hpp"
 #include "my_gl.hpp"
 #include "my_globals.hpp"
@@ -11,10 +15,16 @@
 #include "my_level_inlines.hpp"
 #include "my_main.hpp"
 #include "my_sdl_proto.hpp"
+#include "my_thing.hpp"
+#include "my_spoint.hpp"
 #include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp"
+#include "my_types.hpp"
+#include "my_tp.hpp"
 #include "my_wid.hpp"
 
+#include <cstdint>
+#include <OpenGL/gl.h>
 #include <utility>
 
 static void level_display_cursor(Gamep g, Levelsp v, Levelp l, const bpoint &p, FboEnum fbo)

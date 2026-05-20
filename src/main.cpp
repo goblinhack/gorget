@@ -4,9 +4,13 @@
 
 #include "my_ascii.hpp"
 #include "my_audio.hpp"
+#include "my_callstack.hpp"
+#include "my_color.hpp"
 #include "my_command.hpp"
 #include "my_font.hpp"
+#include "my_game.hpp"
 #include "my_gfx.hpp"
+#include "my_gl.hpp"
 #include "my_globals.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
@@ -16,19 +20,28 @@
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
 #include "my_test.hpp"
-#include "my_tests.hpp"
+#include "my_types.hpp"
+#include "my_ui.hpp"
+#include "my_wid.hpp"
+#include "my_tile.hpp"
+#include "my_tex.hpp"
+#include "my_tp.hpp"
 #include "my_wid_tiles.hpp"
 #include "my_wids.hpp"
 
+#include <_strings.h>
+#include <SDL_events.h>
+#include <SDL_video.h>
+#include <OpenGL/gl.h>
 #include <chrono>
+#include <cmath>
 #include <csignal>
+#include <cstdlib>
 #include <cstring>
 #include <format>
 #include <iostream>
+#include <locale>
 #include <print>
-#include <strings.h>
-#include <sys/stat.h>
-#include <unistd.h>
 
 //
 // Used to stop the compiler removing unused code I want to keep

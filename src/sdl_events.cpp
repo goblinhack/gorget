@@ -2,20 +2,32 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include <SDL_keyboard.h>
+#include <SDL_events.h>
+#include <SDL_keycode.h>
+#include <SDL_mouse.h>
+#include <SDL_joystick.h>
+#include <SDL_scancode.h>
 #include <algorithm>
+#include <cinttypes>
+#include <cstring>
+#include <cstdint>
 
 #include "my_callstack.hpp"
 #include "my_game.hpp"
 #include "my_globals.hpp"
-#include "my_level.hpp"
 #include "my_main.hpp"
+#include "my_ptrcheck.hpp"
 #include "my_sdl_event.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
+#include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
+#include "my_time.hpp"
+#include "my_types.hpp"
 #include "my_ui.hpp"
+#include "my_wid.hpp"
 #include "my_wid_class.hpp"
-#include "my_wids.hpp"
 
 static struct SDL_Keysym last_key_pressed;
 

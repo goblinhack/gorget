@@ -2,17 +2,35 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include <algorithm>
-
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
-#include "my_command.hpp"
+#include "my_command.hpp" // NOLINT
 #include "my_game.hpp"
+#include "my_game_defs.hpp"
+#include "my_gl.hpp"
 #include "my_globals.hpp"
 #include "my_main.hpp"
 #include "my_sdl_event.hpp"
 #include "my_sdl_proto.hpp"
+#include "my_tile.hpp"
+#include "my_time.hpp"
+#include "my_types.hpp"
+#include "my_ui.hpp"
+#include "my_wid.hpp"
 #include "my_wids.hpp"
+
+#include <SDL.h>
+#include <SDL_error.h>
+#include <SDL_gamecontroller.h>
+#include <SDL_haptic.h>
+#include <SDL_joystick.h>
+#include <SDL_mouse.h>
+#include <SDL_version.h>
+#include <SDL_video.h>
+#include <algorithm>
+#include <cmath>
+#include <cstdint>
+#include <cstdlib>
 
 SDL sdl;
 
@@ -327,7 +345,7 @@ void sdl_tick(Gamep g)
   }
 }
 
-void sdl_prepare_to_exit(Gamep g)
+void sdl_prepare_to_exit(Gamep /*g*/)
 {
   if (! g_main_loop_running) {
     return;
@@ -346,7 +364,7 @@ void sdl_prepare_to_exit(Gamep g)
 //
 // User has entered a command, run it
 //
-auto config_fps_counter_set(Gamep g, class Tokens *tokens, void *context) -> uint8_t
+auto config_fps_counter_set(Gamep g, class Tokens *tokens, void * /*context*/) -> uint8_t
 {
   TRACE();
 
@@ -374,7 +392,7 @@ auto config_fps_counter_set(Gamep g, class Tokens *tokens, void *context) -> uin
 //
 // User wants to change the debug level
 //
-auto config_debug_set(Gamep g, class Tokens *tokens, void *context) -> uint8_t
+auto config_debug_set(Gamep /*g*/, class Tokens *tokens, void * /*context*/) -> uint8_t
 {
   TRACE();
 
@@ -404,7 +422,7 @@ auto config_debug_set(Gamep g, class Tokens *tokens, void *context) -> uint8_t
 //
 // User has entered a command, run it
 //
-auto config_gfx_vsync_enable(Gamep g, class Tokens *tokens, void *context) -> uint8_t
+auto config_gfx_vsync_enable(Gamep g, class Tokens *tokens, void * /*context*/) -> uint8_t
 {
   TRACE();
 
@@ -447,7 +465,7 @@ void config_gfx_vsync_update(Gamep g)
 //
 // User has entered a command, run it
 //
-auto config_errored_clear(Gamep g, class Tokens *tokens, void *context) -> uint8_t
+auto config_errored_clear(Gamep g, class Tokens * /*tokens*/, void * /*context*/) -> uint8_t
 {
   TRACE();
 
@@ -467,7 +485,7 @@ auto config_errored_clear(Gamep g, class Tokens *tokens, void *context) -> uint8
   return 1U;
 }
 
-auto show_error(Gamep g, class Tokens *tokens, void *context) -> uint8_t
+auto show_error(Gamep g, class Tokens * /*tokens*/, void * /*context*/) -> uint8_t
 {
   TRACE();
 
@@ -498,7 +516,7 @@ void sdl_config_update_all(Gamep g)
 //
 // User has entered a command, run it
 //
-auto sdl_user_exit(Gamep g, class Tokens *tokens, void *context) -> uint8_t
+auto sdl_user_exit(Gamep g, class Tokens * /*tokens*/, void * /*context*/) -> uint8_t
 {
   TRACE();
   sdl_prepare_to_exit(g);

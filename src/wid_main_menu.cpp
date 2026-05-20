@@ -2,23 +2,35 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include <algorithm>
-#include <numbers>
-
 #include "config.hpp"
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
+#include "my_color.hpp"
+#include "my_color_defs.hpp"
 #include "my_game.hpp"
+#include "my_gl.hpp" // NOLINT
+#include "my_globals.hpp"
 #include "my_main.hpp"
 #include "my_music.hpp"
-#include "my_random.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
+#include "my_spoint.hpp"
+#include "my_tile.hpp"
+#include "my_types.hpp"
+#include "my_ui.hpp"
+#include "my_wid.hpp"
+#include "my_wid_popup.hpp"
 #include "my_wids.hpp"
+
+#include <SDL_keyboard.h>
+#include <algorithm>
+#include <cmath>
+#include <cstdint>
+#include <numbers>
 
 static WidPopup *wid_main_menu_window;
 
-void wid_main_menu_destroy(Gamep g)
+void wid_main_menu_destroy(Gamep /*g*/)
 {
   TRACE();
 
@@ -37,14 +49,14 @@ static void wid_main_menu_hide(Gamep g)
   wid_hide(g, wid_main_menu_window->wid_popup_container);
 }
 
-[[nodiscard]] static auto wid_main_menu_load(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_main_menu_load(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
   TRACE();
   wid_load_select(g);
   return true;
 }
 
-[[nodiscard]] static auto wid_main_menu_cfg(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_main_menu_cfg(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
   TRACE();
   wid_options_menu_select(g);
@@ -52,7 +64,7 @@ static void wid_main_menu_hide(Gamep g)
   return true;
 }
 
-[[nodiscard]] static auto wid_main_menu_more(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_main_menu_more(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
   TRACE();
   wid_more_select(g);
@@ -60,7 +72,7 @@ static void wid_main_menu_hide(Gamep g)
   return true;
 }
 
-[[nodiscard]] static auto game_menu_new_game(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto game_menu_new_game(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
   TRACE();
   wid_main_menu_hide(g);
@@ -93,7 +105,7 @@ static void wid_main_menu_hide(Gamep g)
   return game_menu_new_game(g, w, x, y, button);
 }
 
-[[nodiscard]] static auto wid_main_menu_quit(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_main_menu_quit(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
   TRACE();
   wid_quit_select(g);
@@ -101,7 +113,7 @@ static void wid_main_menu_hide(Gamep g)
   return true;
 }
 
-[[nodiscard]] static auto wid_main_menu_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
+[[nodiscard]] static auto wid_main_menu_key_down(Gamep g, Widp /*w*/, const struct SDL_Keysym *key) -> bool
 {
   TRACE();
 
@@ -279,7 +291,7 @@ auto color_change_hue(const color &in, const float fHue) -> color
   return out;
 }
 
-static void wid_main_menu_tick(Gamep g, Widp w)
+static void wid_main_menu_tick(Gamep g, Widp /*w*/)
 {
   TRACE();
 

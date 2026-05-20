@@ -3,12 +3,10 @@
 //
 
 #include "my_callstack.hpp"
-#include "my_level.hpp"
+#include "my_game.hpp"
 #include "my_main.hpp"
 #include "my_thing.hpp"
-#include "my_thing_inlines.hpp"
-#include "my_time.hpp"
-#include "my_tp.hpp"
+#include "my_types.hpp"
 
 auto thing_score(Gamep g, Thingp t) -> int
 {
@@ -27,7 +25,7 @@ auto thing_score(Gamep g, Thingp t) -> int
   return ext->score;
 }
 
-auto thing_score_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+auto thing_score_set(Gamep g, Levelsp  /*v*/, Levelp  /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -45,7 +43,7 @@ auto thing_score_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
   return ext->score = val;
 }
 
-auto thing_score_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+auto thing_score_incr(Gamep g, Levelsp  /*v*/, Levelp  /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -63,7 +61,7 @@ auto thing_score_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
   return ext->score += val;
 }
 
-auto thing_score_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+auto thing_score_decr(Gamep g, Levelsp  /*v*/, Levelp  /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -96,7 +94,7 @@ auto thing_score_value(Thingp t) -> int
   return t->_score_value;
 }
 
-auto thing_score_value_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+auto thing_score_value_set(Gamep  /*g*/, Levelsp  /*v*/, Levelp  /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -107,7 +105,7 @@ auto thing_score_value_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> i
   return t->_score_value = val;
 }
 
-auto thing_score_value_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+auto thing_score_value_incr(Gamep  /*g*/, Levelsp  /*v*/, Levelp  /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -118,7 +116,7 @@ auto thing_score_value_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> 
   return t->_score_value += val;
 }
 
-auto thing_score_value_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+auto thing_score_value_decr(Gamep  /*g*/, Levelsp  /*v*/, Levelp  /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 

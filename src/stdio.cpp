@@ -5,12 +5,15 @@
 #include "my_callstack.hpp"
 #include "my_globals.hpp"
 #include "my_main.hpp"
-#include "my_sprintf.hpp"
+#include "my_types.hpp"
 
 #include <cerrno>
+#include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <format>
 #include <print>
+#include <string>
 
 //
 // Remap stdout to a file of our choosing.

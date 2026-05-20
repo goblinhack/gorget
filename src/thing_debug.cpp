@@ -3,13 +3,12 @@
 //
 
 #include "my_callstack.hpp"
-#include "my_game.hpp"
-#include "my_globals.hpp"
 #include "my_level.hpp"
-#include "my_main.hpp"
 #include "my_thing.hpp"
+#include "my_types.hpp"
+#include <cstdint>
 
-auto thing_debug(Gamep g, Levelsp v, Levelp l, Thingp t, uint32_t iter_index) -> bool
+auto thing_debug(Gamep  /*g*/, Levelsp v, Levelp  /*l*/, Thingp t, uint32_t iter_index) -> bool
 {
   TRACE();
   if (! thing_is_projectile(t)) {

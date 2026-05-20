@@ -2,14 +2,10 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include "my_charmap.hpp"
-#include "my_globals.hpp"
-#include "my_level.hpp"
-#include "my_main.hpp"
-#include "my_test.hpp"
+#include "my_callstack.hpp"
 #include "my_thing_inlines.hpp"
-#include "my_ui.hpp"
-#include "my_wids.hpp"
+#include "my_types.hpp"
+#include "my_tp.hpp"
 
 auto tp_is_able_to_collect_items(Tpp tp) -> bool
 {

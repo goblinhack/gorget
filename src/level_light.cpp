@@ -2,24 +2,27 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_bpoint.hpp"
 #include "my_callstack.hpp"
-#include "my_globals.hpp"
+#include "my_game_defs.hpp"
+#include "my_gl.hpp"
 #include "my_level.hpp"
-#include "my_level_light_inlines.hpp"
-#include "my_main.hpp"
 #include "my_math.hpp"
+#include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
 #include "my_tile.hpp"
-#include "my_ui.hpp"
+#include "my_types.hpp"
+#include "my_tp.hpp"
 
-#include <array>
-#include <cmath>
+#include <algorithm>
+#include <cstdint>
 #include <cstring>
 #include <thread>
+#include <vector>
 
 static float light_fade[ MAP_WIDTH ];
 
-void level_light_precalculate(Gamep g)
+void level_light_precalculate(Gamep  /*g*/)
 {
   static const char light_fade_map[]
       = "x                                               " // light strength

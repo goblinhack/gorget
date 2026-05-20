@@ -2,16 +2,23 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_bpoint.hpp"
 #include "my_callstack.hpp"
 #include "my_dice_rolls.hpp"
 #include "my_game.hpp"
+#include "my_game_defs.hpp"
 #include "my_game_popups.hpp"
 #include "my_globals.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
-#include "my_pcg_basic.hpp"
+#include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
+#include "my_types.hpp"
+#include "my_time.hpp"
 #include "my_wids.hpp"
+#include <vector>
+#include <cstdint>
+#include <algorithm>
 
 static void level_tick_begin(Gamep g, Levelsp v, Levelp l);
 static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool tick_is_about_to_end = false);
@@ -462,7 +469,7 @@ static void level_tick_begin(Gamep g, Levelsp v, Levelp l)
 // Process monsters per tick. We do this staggered to avoid the framerate being
 // choppy when we process a lot of monsters at the start of a tick.
 //
-static void level_tick_worklist(Gamep g, Levelsp v, Levelp l)
+static void level_tick_worklist(Gamep g, Levelsp v)
 {
   TRACE();
 
@@ -514,7 +521,7 @@ static void level_tick_in_progress(Gamep g, Levelsp v, Levelp l)
   // Process monsters per tick. We do this staggered to avoid the framerate being
   // choppy when we process a lot of monsters at the start of a tick.
   //
-  level_tick_worklist(g, v, l);
+  level_tick_worklist(g, v);
 
   //
   // If we've ran long enough, we're done
@@ -579,7 +586,7 @@ auto level_tick_begin_requested(Gamep g, Levelsp v, Levelp l, const char *why) -
   return ret;
 }
 
-auto level_tick_begin_is_requested(Gamep g, Levelsp v, Levelp l) -> bool
+auto level_tick_begin_is_requested(Gamep g, Levelsp v, Levelp  /*l*/) -> bool
 {
   TRACE();
 
@@ -637,7 +644,7 @@ static void level_tick_end(Gamep g, Levelsp v, Levelp l)
   }
 }
 
-auto level_tick_is_in_progress(Gamep g, Levelsp v, Levelp l) -> bool
+auto level_tick_is_in_progress(Gamep  /*g*/, Levelsp  /*v*/, Levelp l) -> bool
 {
   TRACE();
 
@@ -721,7 +728,7 @@ static void level_tick_select(Gamep g, Levelsp v, Levelp current_level)
 //
 // Do any levels want to tick?
 //
-static auto level_tick_process_pending_request(Gamep g, Levelsp v, Levelp current_level) -> uint32_t
+static auto level_tick_process_pending_request(Gamep g, Levelsp v) -> uint32_t
 {
   TRACE();
 
@@ -825,7 +832,7 @@ static void level_tick_all(Gamep g, Levelsp v, Levelp current_level)
   // Record if a level wants to start ticking, prior to processing the levels in case a level
   // requests to tick during processing.
   //
-  bool const tick_begin_requested = level_tick_process_pending_request(g, v, current_level) > 0;
+  bool const tick_begin_requested = level_tick_process_pending_request(g, v) > 0;
 
   //
   // Do the actual tick of the levels now

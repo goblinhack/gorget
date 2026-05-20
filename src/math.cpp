@@ -3,6 +3,7 @@
 //
 
 #include "my_math.hpp"
+#include <cstdint>
 
 auto nextpoweroftwo(uint32_t val) -> uint32_t
 {

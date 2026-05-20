@@ -4,16 +4,29 @@
 
 // #include "3rdparty/stb_image.hpp"
 #include "my_callstack.hpp"
+#include "my_color.hpp"
 #include "my_file.hpp"
 #include "my_gl.hpp"
+#include "my_main.hpp"
+#include "my_globals.hpp"
 #include "my_pixel.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_string.hpp"
 #include "my_tex.hpp"
+#include "my_types.hpp"
 #include "my_ui.hpp"
 
+#include <cstdint>
+#include <string>
+#include <SDL_surface.h>
+#include <OpenGL/gltypes.h>
+#include <OpenGL/gl.h>
+#include <SDL_endian.h>
+#include <cstring>
+#include <SDL_pixels.h>
 #include <unordered_map>
 #include <utility>
+#include <vector>
 
 extern "C" {
 extern auto stbi_load_from_memory(const uint8_t *buffer, int len, int *x, int *y, int *comp, int req_comp) -> uint8_t *;
@@ -462,7 +475,7 @@ static auto tex_create_masks_from_surface(SDL_Surface *src, const std::string &f
 void tex_load_sprites(Texp *tex, Texp *tex_monochrome, Texp *tex_mask, // newline
                       Texp              *tex_outline_w_black_inside,   // newline
                       Texp              *tex_outline_w_invis_inside,   // newline
-                      const std::string &file, const std::string &name, uint32_t tile_width, uint32_t tile_height, int mode)
+                      const std::string &file, const std::string &name, uint32_t  /*tile_width*/, uint32_t  /*tile_height*/, int mode)
 {
   TRACE();
   Texp t = tex_find(name);

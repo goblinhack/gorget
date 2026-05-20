@@ -3,13 +3,19 @@
 //
 
 #include "my_callstack.hpp"
-#include "my_level.hpp"
+#include "my_game_defs.hpp"
+#include "my_level_inlines.hpp" // NOLINT
+#include "my_main.hpp"
+#include "my_thing_inlines.hpp" // NOLINT
 #include "my_time.hpp"
+#include "my_types.hpp"
+
+#include <cstdint>
 
 //
 // Hidden anim time step
 //
-void thing_hidden_time_step(Gamep g, Levelsp v, Levelp l, Thingp me, int time_step)
+void thing_hidden_time_step(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp me, int /*time_step*/)
 {
   TRACE();
 
@@ -28,7 +34,7 @@ void thing_hidden_time_step(Gamep g, Levelsp v, Levelp l, Thingp me, int time_st
   me->_is_hidden = ((static_cast< uint8_t >(i)) / 2) + 120;
 }
 
-void thing_is_hidden_set(Gamep g, Levelsp v, Levelp l, Thingp me, bool val)
+void thing_is_hidden_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp me, bool val)
 {
   TRACE_DEBUG();
 

@@ -2,17 +2,21 @@
 // Changed by goblinhack@gmail.com
 //
 
+#include "my_bpoint.hpp"
 #include "my_callstack.hpp"
+#include "my_color.hpp"
 #include "my_color_defs.hpp"
 #include "my_game.hpp"
+#include "my_game_defs.hpp"
 #include "my_gl.hpp"
 #include "my_globals.hpp"
 #include "my_level.hpp"
 #include "my_level_inlines.hpp"
 #include "my_main.hpp"
-#include "my_sdl_proto.hpp"
-#include "my_tests.hpp"
 #include "my_tex.hpp"
+#include "my_types.hpp"
+#include "my_thing.hpp"
+#include <OpenGL/gl.h>
 
 static Texp solid_tex;
 static int  solid_tex_id;

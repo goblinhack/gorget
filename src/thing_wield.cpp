@@ -3,7 +3,12 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_thing.hpp"
+#include "my_main.hpp"
+#include "my_game.hpp"
+#include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp"
+#include "my_types.hpp"
 
 //
 // Add an item to the things inventory
@@ -238,7 +243,7 @@ auto thing_on_unwield_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp un
   return tp->on_unwield_request(g, v, l, me, unwieldper);
 }
 
-auto thing_wielding(Gamep g, Levelsp v, Levelp l, Thingp me) -> Thingp
+auto thing_wielding(Gamep g, Levelsp v, Levelp  /*l*/, Thingp me) -> Thingp
 {
   TRACE();
 
@@ -263,8 +268,8 @@ void thing_unwield(Gamep g, Levelsp v, Levelp l, Thingp me)
     return;
   }
 
-  auto item = thing_wielding(g, v, l, me);
-  if (item) {
+  auto *item = thing_wielding(g, v, l, me);
+  if (item != nullptr) {
     if (! thing_unwield_item(g, v, l, item, me)) {
       thing_err(me, "failed to unwield");
     }
@@ -282,7 +287,7 @@ void thing_wield(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item)
     return;
   }
 
-  if (! item) {
+  if (item == nullptr) {
     thing_err(me, "no item to wield");
     return;
   }

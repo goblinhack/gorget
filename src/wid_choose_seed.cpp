@@ -6,13 +6,16 @@
 #include "my_game.hpp"
 #include "my_globals.hpp"
 #include "my_main.hpp"
+#include "my_types.hpp"
 #include "my_ui.hpp"
+#include "my_wid.hpp"
 #include "my_wid_keyboard.hpp"
 #include "my_wids.hpp"
+#include <string>
 
 static Widp wid_choose_seed;
 
-static void selected(Gamep g, Widp w, const std::string &text)
+static void selected(Gamep g, Widp  /*w*/, const std::string &text)
 {
   TRACE();
 

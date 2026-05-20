@@ -2,22 +2,30 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_bpoint.hpp"
 #include "my_callstack.hpp"
 #include "my_charmap.hpp"
-#include "my_dice_rolls.hpp"
 #include "my_game.hpp"
+#include "my_game_defs.hpp"
 #include "my_globals.hpp"
 #include "my_level.hpp"
 #include "my_level_inlines.hpp"
 #include "my_main.hpp"
 #include "my_random.hpp"
-#include "my_sprintf.hpp"
+#include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
+#include "my_types.hpp"
+#include "my_tp.hpp"
 #include "my_ui.hpp"
-#include "my_wids.hpp"
+#include "my_wid_popup.hpp"
+#include "my_wid_text_box.hpp"
 
-#include <algorithm>
-#include <print>
+#include <cmath>
+#include <cstring>
+#include <cstdint>
+#include <map>
+#include <format>
+#include <string>
 
 auto level_select_is_oob(bpoint p) -> bool
 {
@@ -60,7 +68,7 @@ auto level_select_is_oob(int x, int y) -> bool
 //
 // If in level select mode, enter the chosen level
 //
-auto level_select_get_level_at_tile_coords(Gamep g, Levelsp v, bpoint p) -> Levelp
+auto level_select_get_level_at_tile_coords(Gamep g, Levelsp v, bpoint  /*p*/) -> Levelp
 {
   TRACE();
 
@@ -377,7 +385,7 @@ void level_select_assign_levels_to_grid(Gamep g, Levelsp v)
 //
 // Return the level
 //
-auto level_select_get(Gamep g, Levelsp v, bpoint p) -> LevelSelectCell *
+auto level_select_get(Gamep  /*g*/, Levelsp v, bpoint p) -> LevelSelectCell *
 {
   TRACE();
 
@@ -635,7 +643,7 @@ static auto level_select_count_levels(LevelSelect *s) -> int
 //
 // Create the level grid
 //
-static void level_select_create(Gamep g, Levelsp v, LevelSelect *s)
+static void level_select_create(Gamep g, LevelSelect *s)
 {
   TRACE();
 
@@ -687,7 +695,7 @@ void level_select_grid_of_empty_levels(Gamep g)
   (void) game_levels_set(g, v);
   LevelSelect *s = &v->level_select;
 
-  level_select_create(g, v, s);
+  level_select_create(g, s);
   level_select_dump(s);
   level_select_count_levels(s);
 }
@@ -695,7 +703,7 @@ void level_select_grid_of_empty_levels(Gamep g)
 //
 // Clean up the level select snake walk
 //
-void level_select_destroy(Gamep g, Levelsp v, Levelp l)
+void level_select_destroy(Gamep  /*g*/, Levelsp v, Levelp l)
 {
   log("level select destroy");
   TRACE_INDENT();
@@ -926,7 +934,7 @@ void level_select_test(Gamep g)
   (void) game_levels_set(g, v);
   LevelSelect *s = &v->level_select;
 
-  level_select_create(g, v, s);
+  level_select_create(g, s);
   level_select_dump(s);
   level_select_count_levels(s);
 }

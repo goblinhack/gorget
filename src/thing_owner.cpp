@@ -3,9 +3,12 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_main.hpp"
+#include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
+#include "my_types.hpp"
 
-auto thing_owner(Gamep g, Levelsp v, Levelp l, Thingp me) -> Thingp
+auto thing_owner(Gamep g, Levelsp v, Levelp  /*l*/, Thingp me) -> Thingp
 {
   TRACE();
 
@@ -30,8 +33,8 @@ void thing_owner_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
     return;
   }
 
-  auto owner = thing_owner(g, v, l, me);
-  if (owner) {
+  auto *owner = thing_owner(g, v, l, me);
+  if (owner != nullptr) {
     me->owner_id = 0;
   }
 }
@@ -45,7 +48,7 @@ void thing_owner_set(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner)
     return;
   }
 
-  if (! owner) {
+  if (owner == nullptr) {
     thing_err(me, "no owner");
     return;
   }

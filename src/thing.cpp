@@ -2,14 +2,18 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_bpoint.hpp"
 #include "my_callstack.hpp"
 #include "my_game.hpp"
-#include "my_globals.hpp"
+#include "my_game_defs.hpp"
 #include "my_level_inlines.hpp"
 #include "my_main.hpp"
+#include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
+#include "my_types.hpp"
+#include "my_tp.hpp"
 
-#include <iostream>
+#include <cmath>
 
 auto thing_get(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot) -> Thingp
 {
@@ -120,7 +124,7 @@ auto thing_and_tp_get_at(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot
   return t;
 }
 
-void thing_stats_dump(Gamep g, Levelsp v)
+void thing_stats_dump(Gamep  /*g*/, Levelsp v)
 {
   TRACE();
 

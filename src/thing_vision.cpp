@@ -3,18 +3,27 @@
 //
 
 #include "my_age_map_inlines.hpp"
+#include "my_bpoint.hpp"
 #include "my_callstack.hpp"
 #include "my_fov_map.hpp"
 #include "my_fov_map_inlines.hpp"
 #include "my_game.hpp"
+#include "my_game_defs.hpp"
+#include "my_globals.hpp"
 #include "my_level.hpp"
 #include "my_level_inlines.hpp"
+#include "my_thing.hpp"
+#include "my_main.hpp"
 #include "my_thing_inlines.hpp"
+#include "my_types.hpp"
+#include <cstdint>
+#include <string>
+#include "my_tp.hpp"
 
 //
 // Something blocking the fov?
 //
-auto thing_vision_blocker(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it) -> bool
+auto thing_vision_blocker(Gamep  /*g*/, Levelsp  /*v*/, Levelp  /*l*/, Thingp me, Thingp it) -> bool
 {
   //
   // Some monsters can see through walls
@@ -58,7 +67,7 @@ auto thing_vision_blocker(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it) ->
   return false;
 }
 
-void thing_vision_reset(Gamep g, Levelsp v, Levelp l, Thingp t)
+void thing_vision_reset(Gamep g, Levelsp  /*v*/, Levelp  /*l*/, Thingp t)
 {
   TRACE();
 
@@ -282,7 +291,7 @@ auto thing_distance_vision(Gamep g, Levelsp v, Levelp l, Thingp t) -> int
   return d;
 }
 
-auto thing_distance_vision_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+auto thing_distance_vision_set(Gamep  /*g*/, Levelsp  /*v*/, Levelp  /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -293,7 +302,7 @@ auto thing_distance_vision_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) 
   return t->_distance_vision = val;
 }
 
-auto thing_distance_vision_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+auto thing_distance_vision_incr(Gamep  /*g*/, Levelsp  /*v*/, Levelp  /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -304,7 +313,7 @@ auto thing_distance_vision_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_distance_vision += val;
 }
 
-auto thing_distance_vision_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+auto thing_distance_vision_decr(Gamep  /*g*/, Levelsp  /*v*/, Levelp  /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 

@@ -2,18 +2,27 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_callstack.hpp"
+#include "my_ascii.hpp"
 #include "my_console.hpp"
 #include "my_globals.hpp"
 #include "my_main.hpp"
 #include "my_ptrcheck.hpp"
-#include "my_sprintf.hpp"
+#include "my_string.hpp"
 #include "my_test.hpp"
 #include "my_tests.hpp"
 #include "my_time.hpp"
-#include "my_ui.hpp"
+#include "my_types.hpp"
 
+#include <initializer_list>
+#include <cmath>
+#include <format>
+#include <cstdio>
+#include <cstdlib>
 #include <map>
-#include <print>
+#include <string>
+#include <vector>
+#include <utility>
 
 /* clang-format off */
 static std::initializer_list< std::string > tests = {

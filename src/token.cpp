@@ -2,10 +2,15 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "3rdparty/slre.hpp"
 #include "my_callstack.hpp"
-#include "my_main.hpp"
+#include "my_main.hpp" // NOLINT
+#include "my_string.hpp"
 #include "my_token.hpp"
+#include "my_types.hpp"
 
+#include <cmath>
+#include <cstdint>
 #include <cstring>
 #include <print>
 

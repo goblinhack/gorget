@@ -2,10 +2,20 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_bpoint.hpp"
 #include "my_callstack.hpp"
 #include "my_cpp_template.hpp"
-#include "my_level_inlines.hpp"
-#include "my_thing_inlines.hpp"
+#include "my_fpoint.hpp"
+#include "my_game_defs.hpp"
+#include "my_level.hpp"
+#include "my_level_inlines.hpp" // NOLINT
+#include "my_main.hpp"
+#include "my_thing.hpp"
+#include "my_thing_callbacks.hpp"
+#include "my_thing_inlines.hpp" // NOLINT
+#include "my_types.hpp"
+#include <initializer_list>
+#include <vector>
 
 auto thing_is_teleporting(Thingp me) -> bool
 {

@@ -4,11 +4,7 @@
 
 #include "my_backtrace.hpp"
 #include "my_callstack.hpp"
-#include "my_game.hpp"
-#include "my_globals.hpp"
 #include "my_main.hpp"
-#include "my_string.hpp"
-#include "my_wids.hpp"
 
 #include <cerrno>
 #include <csignal>
@@ -16,13 +12,10 @@
 #include <cstdlib>
 #include <cstring>
 #include <ctime>
-#include <strings.h>
-#include <unistd.h>
 
 #include <cassert>
 #include <print>
 #ifndef _WIN32
-#include <sys/wait.h>
 #endif
 
 #ifdef __linux__

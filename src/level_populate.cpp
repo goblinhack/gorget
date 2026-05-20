@@ -2,15 +2,21 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_bpoint.hpp"
 #include "my_callstack.hpp"
 #include "my_charmap.hpp"
 #include "my_dice_rolls.hpp"
+#include "my_game_defs.hpp"
 #include "my_globals.hpp"
 #include "my_level.hpp"
 #include "my_level_ext.hpp"
+#include "my_level_inlines.hpp" // NOLINT
 #include "my_main.hpp"
+#include "my_thing.hpp"
 #include "my_thing_callbacks.hpp"
-#include "my_thing_inlines.hpp"
+#include "my_thing_inlines.hpp" // NOLINT
+#include "my_tp.hpp"
+#include "my_types.hpp"
 
 #include <cstring>
 #include <utility>
@@ -85,7 +91,7 @@ public:
   bool   is_room_secret        = {};
 };
 
-static auto level_populate_biome_dungeon(Gamep g, Levelsp v, Levelp l, class LevelGen *lg, class LevelPopulate &lp) -> Tpp
+static auto level_populate_biome_dungeon(Gamep g, Levelsp v, Levelp l, class LevelPopulate &lp) -> Tpp
 {
   TRACE();
 
@@ -379,7 +385,7 @@ static auto level_populate_biome_bogland(Gamep g, Levelsp v, Levelp l, class Lev
     case CHARMAP_ENTRANCE :    [[fallthrough]];
     case CHARMAP_EXIT :        [[fallthrough]];
     case CHARMAP_KEY :         [[fallthrough]];
-    case CHARMAP_BORDER :      return level_populate_biome_dungeon(g, v, l, lg, lp);
+    case CHARMAP_BORDER :      return level_populate_biome_dungeon(g, v, l, lp);
     default :
       if (! g_opt_do_level_gen) {
         CROAK("unexpected map char '%c'", lp.c);
@@ -432,7 +438,7 @@ static auto level_populate_biome_nethervoid(Gamep g, Levelsp v, Levelp l, class 
     case CHARMAP_FIRE :          [[fallthrough]];
     case CHARMAP_KEY :           [[fallthrough]];
     case CHARMAP_ENTRANCE :      [[fallthrough]];
-    case CHARMAP_EXIT :          return level_populate_biome_dungeon(g, v, l, lg, lp);
+    case CHARMAP_EXIT :          return level_populate_biome_dungeon(g, v, l, lp);
     default :
       if (! g_opt_do_level_gen) {
         CROAK("unexpected map char '%c'", lp.c);
@@ -442,7 +448,7 @@ static auto level_populate_biome_nethervoid(Gamep g, Levelsp v, Levelp l, class 
   return tp;
 }
 
-static auto level_populate_fixup_biome_nethervoid(Gamep g, Levelsp v, Levelp l, class LevelGen *lg, class LevelPopulate &lp, Tpp tp) -> Tpp
+static auto level_populate_fixup_biome_nethervoid(class LevelPopulate &lp, Tpp tp) -> Tpp
 {
   TRACE();
 
@@ -528,7 +534,7 @@ static auto level_populate_biome_graveyard(Gamep g, Levelsp v, Levelp l, class L
     case CHARMAP_FIRE :          [[fallthrough]];
     case CHARMAP_KEY :           [[fallthrough]];
     case CHARMAP_ENTRANCE :      [[fallthrough]];
-    case CHARMAP_EXIT :          return level_populate_biome_dungeon(g, v, l, lg, lp);
+    case CHARMAP_EXIT :          return level_populate_biome_dungeon(g, v, l, lp);
     default :
       if (! g_opt_do_level_gen) {
         CROAK("unexpected map char '%c'", lp.c);
@@ -538,7 +544,7 @@ static auto level_populate_biome_graveyard(Gamep g, Levelsp v, Levelp l, class L
   return tp;
 }
 
-static auto level_populate_fixup_biome_graveyard(Gamep g, Levelsp v, Levelp l, class LevelGen *lg, class LevelPopulate &lp, Tpp tp) -> Tpp
+static auto level_populate_fixup_biome_graveyard(class LevelPopulate &lp, Tpp tp) -> Tpp
 {
   TRACE();
 
@@ -617,7 +623,7 @@ static auto level_populate_biome_underhell(Gamep g, Levelsp v, Levelp l, class L
     case CHARMAP_FIRE :          [[fallthrough]];
     case CHARMAP_KEY :           [[fallthrough]];
     case CHARMAP_ENTRANCE :      [[fallthrough]];
-    case CHARMAP_EXIT :          return level_populate_biome_dungeon(g, v, l, lg, lp);
+    case CHARMAP_EXIT :          return level_populate_biome_dungeon(g, v, l, lp);
     default :
       if (! g_opt_do_level_gen) {
         CROAK("unexpected map char '%c'", lp.c);
@@ -627,7 +633,7 @@ static auto level_populate_biome_underhell(Gamep g, Levelsp v, Levelp l, class L
   return tp;
 }
 
-static auto level_populate_fixup_biome_underhell(Gamep g, Levelsp v, Levelp l, class LevelGen *lg, class LevelPopulate &lp, Tpp tp) -> Tpp
+static auto level_populate_fixup_biome_underhell(class LevelPopulate &lp, Tpp tp) -> Tpp
 {
   TRACE();
 
@@ -756,13 +762,13 @@ auto level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *lg, int w, int
         //
         // Keep these special rooms as is
         //
-        tp = level_populate_biome_dungeon(g, v, l, lg, lp);
+        tp = level_populate_biome_dungeon(g, v, l, lp);
       } else {
         //
         // Per biome tweaks
         //
         switch (lp.biome) {
-          case BIOME_DUNGEON :    tp = level_populate_biome_dungeon(g, v, l, lg, lp); break;
+          case BIOME_DUNGEON :    tp = level_populate_biome_dungeon(g, v, l, lp); break;
           case BIOME_BOGLAND :    tp = level_populate_biome_bogland(g, v, l, lg, lp); break;
           case BIOME_NETHERVOID : tp = level_populate_biome_nethervoid(g, v, l, lg, lp); break;
           case BIOME_GRAVEYARD :  tp = level_populate_biome_graveyard(g, v, l, lg, lp); break;
@@ -776,9 +782,9 @@ auto level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *lg, int w, int
         switch (lp.biome) {
           case BIOME_DUNGEON :    break;
           case BIOME_BOGLAND :    break;
-          case BIOME_NETHERVOID : tp = level_populate_fixup_biome_nethervoid(g, v, l, lg, lp, tp); break;
-          case BIOME_GRAVEYARD :  tp = level_populate_fixup_biome_graveyard(g, v, l, lg, lp, tp); break;
-          case BIOME_UNDERHELL :  tp = level_populate_fixup_biome_underhell(g, v, l, lg, lp, tp); break;
+          case BIOME_NETHERVOID : tp = level_populate_fixup_biome_nethervoid(lp, tp); break;
+          case BIOME_GRAVEYARD :  tp = level_populate_fixup_biome_graveyard(lp, tp); break;
+          case BIOME_UNDERHELL :  tp = level_populate_fixup_biome_underhell(lp, tp); break;
           case BIOME_NONE :       [[fallthrough]];
           case BIOME_ENUM_MAX :   break;
         }

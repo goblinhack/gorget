@@ -3,18 +3,18 @@
 //
 
 #include "my_age_map_inlines.hpp"
+#include "my_bpoint.hpp"
 #include "my_callstack.hpp"
-#include "my_cpp_template.hpp"
-#include "my_fov_map_inlines.hpp"
 #include "my_game.hpp"
-#include "my_globals.hpp"
+#include "my_game_defs.hpp"
 #include "my_level.hpp"
 #include "my_level_inlines.hpp"
-#include "my_line.hpp"
 #include "my_main.hpp"
-#include "my_thing_callbacks.hpp"
+#include "my_thing.hpp"
+#include "my_random.hpp"
 #include "my_thing_inlines.hpp"
-#include "my_wid_warning.hpp"
+#include "my_types.hpp"
+#include <string>
 
 //
 // Can we chase the player?
@@ -503,7 +503,7 @@ auto monst_state_to_string(MonstState state) -> std::string
   return MonstState_to_string(state);
 }
 
-auto monst_state(Gamep g, Levelsp v, Levelp l, Thingp me) -> MonstState
+auto monst_state(Gamep  /*g*/, Levelsp  /*v*/, Levelp  /*l*/, Thingp me) -> MonstState
 {
   TRACE();
   return me->_monst_state;

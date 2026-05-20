@@ -2,20 +2,29 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include <cmath>
-
-#include <algorithm>
-#include <numbers>
-
 #include "my_callstack.hpp"
+#include "my_color.hpp"
 #include "my_color_defs.hpp"
 #include "my_game.hpp"
-#include "my_globals.hpp"
+#include "my_game_defs.hpp"
+#include "my_gl.hpp" // NOLINT
+#include "my_level.hpp"
 #include "my_main.hpp"
-#include "my_math.hpp"
+#include "my_spoint.hpp"
+#include "my_thing.hpp"
 #include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp"
+#include "my_tile.hpp"
+#include "my_tp.hpp"
+#include "my_types.hpp"
 
+#include <OpenGL/gl.h>
+#include <algorithm>
+#include <cmath>
+#include <cstdint>
+#include <numbers>
+
+#include "my_bpoint.hpp"
 void tp_display_init(Tpp tp)
 {
   TRACE();
@@ -194,8 +203,8 @@ static void thing_display_outlined_blit(Gamep g, Tpp tp, spoint tl, spoint br, T
 //
 // Show an outline if obscured? e.g. foliage and the player hiding in it
 //
-[[nodiscard]] static auto thing_display_hidden(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp t_maybe_null, spoint tl,
-                                               spoint br, Tilep tile, float x1, float x2, float y1, float y2, FboEnum fbo, color fg) -> bool
+[[nodiscard]] static auto thing_display_hidden(Thingp t_maybe_null, spoint tl, spoint br, Tilep tile, float x1, float x2, float y1,
+                                               float y2, color fg) -> bool
 {
   TRACE_DEBUG();
 
@@ -235,7 +244,7 @@ static void thing_display_blit(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tp
       //
       // Hidden things need to be shown on top of walls or foliage
       //
-      if (thing_display_hidden(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg)) {
+      if (thing_display_hidden(t_maybe_null, tl, br, tile, x1, x2, y1, y2, fg)) {
         return;
       }
 

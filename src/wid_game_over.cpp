@@ -2,19 +2,28 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include <algorithm>
-
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
+#include "my_color.hpp"
+#include "my_color_defs.hpp"
 #include "my_game.hpp"
-#include "my_gl.hpp"
+#include "my_gl.hpp" // NOLINT
+#include "my_globals.hpp"
 #include "my_main.hpp"
 #include "my_music.hpp"
 #include "my_random.hpp"
-#include "my_sdl_proto.hpp"
-#include "my_sound.hpp"
+#include "my_spoint.hpp"
 #include "my_tile.hpp"
+#include "my_types.hpp"
+#include "my_ui.hpp"
+#include "my_wid.hpp"
+#include "my_wid_popup.hpp"
+#include "my_wid_text_box.hpp"
 #include "my_wids.hpp"
+
+#include <SDL_timer.h>
+#include <algorithm>
+#include <cstdint>
 
 static WidPopup *wid_game_over_window;
 
@@ -29,17 +38,17 @@ static bool      skull_set[ max_skulls ];
 static int       skull_speed[ max_skulls ];
 static float     skull_rotate[ max_skulls ];
 
-static void wid_game_over_destroy(Gamep g)
+static void wid_game_over_destroy()
 {
   TRACE();
   delete wid_game_over_window;
   wid_game_over_window = nullptr;
 }
 
-[[nodiscard]] static auto wid_game_over_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_game_over_mouse_up(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
   TRACE();
-  wid_game_over_destroy(g);
+  wid_game_over_destroy();
 
   TRACE();
   game_cleanup(g);
@@ -474,7 +483,7 @@ static void game_display_game_over(Gamep g)
   blit_flush();
 }
 
-static void wid_game_over_pre_tick(Gamep g, Widp w)
+static void wid_game_over_pre_tick(Gamep g, Widp /*w*/)
 {
   TRACE();
 
@@ -483,7 +492,7 @@ static void wid_game_over_pre_tick(Gamep g, Widp w)
   SDL_Delay(20);
 }
 
-static void wid_game_over_tick(Gamep g, Widp w)
+static void wid_game_over_tick(Gamep g, Widp /*w*/)
 {
   TRACE();
 
@@ -496,7 +505,7 @@ void wid_game_over_select(Gamep g)
   con("The end");
 
   if (wid_game_over_window != nullptr) {
-    wid_game_over_destroy(g);
+    wid_game_over_destroy();
   }
 
   music_play(g, "game over");

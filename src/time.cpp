@@ -2,11 +2,14 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include <SDL_timer.h>
+#include <cstdio>
 #include <ctime>
+#include <string>
 
-#include "my_game.hpp"
 #include "my_string.hpp"
 #include "my_time.hpp"
+#include "my_types.hpp"
 
 //
 // This is the actual time

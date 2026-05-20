@@ -4,6 +4,7 @@
 
 #include "my_callstack.hpp"
 #include "my_level.hpp"
+#include "my_types.hpp"
 
 //
 // Create all exit rooms

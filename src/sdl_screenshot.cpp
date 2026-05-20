@@ -11,8 +11,14 @@
 #include "my_sdl_event.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_string.hpp"
+#include "my_types.hpp"
+#include <OpenGL/gl.h>
+#include <vector>
+#include <cstdint>
+#include <algorithm>
+#include <string>
 
-void sdl_screenshot(Gamep g)
+void sdl_screenshot(Gamep  /*g*/)
 {
   TRACE();
 

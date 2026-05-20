@@ -2,16 +2,20 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_bpoint.hpp"
 #include "my_callstack.hpp"
 #include "my_dmap.hpp"
-#include "my_globals.hpp"
-#include "my_level.hpp"
+#include "my_game_defs.hpp"
 #include "my_main.hpp"
+#include "my_types.hpp"
+#include "my_thing.hpp"
+#include <cstdint>
+#include <cstring>
 
 //
 // Get the dmap associated with the thing
 //
-auto thing_get_dmap(Gamep g, Levelsp v, Levelp l, Thingp me) -> Dmap *
+auto thing_get_dmap(Gamep g, Levelsp  /*v*/, Levelp  /*l*/, Thingp me) -> Dmap *
 {
   TRACE();
 

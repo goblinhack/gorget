@@ -3,8 +3,11 @@
 //
 
 #include "my_main.hpp"
-#include "my_sdl_event.hpp"
 #include "my_sdl_proto.hpp"
+#include <SDL_keyboard.h>
+#include <string>
+#include <SDL_keycode.h>
+#include <SDL_scancode.h>
 
 auto to_string_ignoring_mods(const SDL_Keysym &k) -> std::string
 {

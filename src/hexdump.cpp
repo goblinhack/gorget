@@ -3,10 +3,13 @@
 //
 
 #include "my_string.hpp"
+#include "my_types.hpp"
 
+#include <cstdint>
 #include <cstring>
 #include <iomanip>
 #include <iostream>
+#include <vector>
 
 enum { HEX_DUMP_WIDTH = (16) };
 

@@ -2,10 +2,11 @@
 // Copyright goblinhack@gmail.com
 //
 //
-#include "my_backtrace.hpp"
-#include "my_main.hpp"
-#include "my_string.hpp"
+#include "my_backtrace.hpp" // NOLINT
+#include "my_main.hpp"      // NOLINT
+#include "my_string.hpp"    // NOLINT
 #include "my_wids.hpp"
+
 #include <cstdio>
 #include <cstdlib>
 #include <format>
@@ -34,11 +35,10 @@
 #endif
 #endif
 
+#include <array>
 #include <cerrno>
 #include <cstring>
 #include <cxxabi.h>
-
-#include <array>
 #include <mutex>
 #include <print>
 

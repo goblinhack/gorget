@@ -7,7 +7,15 @@
 #include "my_game.hpp"
 #include "my_main.hpp"
 #include "my_sdl_proto.hpp"
+#include "my_wid_popup.hpp"
+#include "my_types.hpp"
+#include "my_wid.hpp"
+#include "my_ui.hpp"
+#include "my_spoint.hpp"
 #include "my_wids.hpp"
+#include <cstdint>
+#include <SDL_keyboard.h>
+#include <SDL_keycode.h>
 
 static WidPopup *wid_cfg_mouse_window;
 static bool      local_g_config_changed;
@@ -20,7 +28,7 @@ static void wid_cfg_mouse_destroy()
   local_g_config_changed = false;
 }
 
-[[nodiscard]] static auto wid_cfg_mouse_cancel(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_cfg_mouse_cancel(Gamep g, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
   con("Reload config");
@@ -34,7 +42,7 @@ static void wid_cfg_mouse_destroy()
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_mouse_save(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_cfg_mouse_save(Gamep g, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
 
@@ -46,7 +54,7 @@ static void wid_cfg_mouse_destroy()
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_mouse_back(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_cfg_mouse_back(Gamep g, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
   wid_cfg_mouse_destroy();
@@ -54,7 +62,7 @@ static void wid_cfg_mouse_destroy()
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_mouse_wheel_lr_negated(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_cfg_mouse_wheel_lr_negated(Gamep g, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
   local_g_config_changed = true;
@@ -70,7 +78,7 @@ static void wid_cfg_mouse_destroy()
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_mouse_wheel_ud_negated(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_cfg_mouse_wheel_ud_negated(Gamep g, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
   local_g_config_changed = true;
@@ -86,7 +94,7 @@ static void wid_cfg_mouse_destroy()
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_mouse_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
+[[nodiscard]] static auto wid_cfg_mouse_key_down(Gamep g, Widp  /*w*/, const struct SDL_Keysym *key) -> bool
 {
   TRACE();
 

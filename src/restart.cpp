@@ -2,16 +2,19 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_callstack.hpp"
 #include "my_globals.hpp"
 #include "my_main.hpp"
-#include "my_test.hpp"
+#include "my_string.hpp"
+#include "my_types.hpp"
 #include "my_wids.hpp"
 
+#include <cmath>
 #include <csignal>
+#include <cstdio>
+#include <cstdlib>
 #include <cstring>
-#include <iostream>
-#include <strings.h>
-#include <sys/stat.h>
+#include <string>
 #include <unistd.h>
 
 #ifndef PATH_MAX

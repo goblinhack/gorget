@@ -2,11 +2,13 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_bpoint.hpp"
 #include "my_callstack.hpp"
 #include "my_game.hpp"
 #include "my_level.hpp"
 #include "my_sdl_event.hpp"
 #include "my_tile.hpp"
+#include "my_types.hpp"
 
 //
 // Get the mouse position, so when displaying tiles we can work out where the cursor is now.

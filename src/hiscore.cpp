@@ -2,12 +2,18 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "c_plus_plus_serializer.hpp"
 #include "my_callstack.hpp"
 #include "my_game.hpp"
-#include "my_globals.hpp"
+#include "my_hiscore.hpp"
 #include "my_main.hpp"
 #include "my_serialize.hpp"
 #include "my_time.hpp"
+#include "my_types.hpp"
+#include <cstdint>
+#include <string>
+#include <istream>
+#include <ostream>
 
 HiScores::HiScores()
 {

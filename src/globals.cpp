@@ -6,6 +6,7 @@
 #include "my_level.hpp"
 #include "my_main.hpp"
 
+#include <cstdio>
 #include <string>
 
 bool g_do_screenshot; // Grab a screen shot next fram

@@ -119,7 +119,7 @@ tidy:
 			misc-*,\
 			modernize-*,\
 			performance-*,\
-			readability-*,\
+			readability-*" \
 			-header-filter=".*" \
 			$x -- $(CFLAGS); \
 	)

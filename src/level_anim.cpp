@@ -5,8 +5,11 @@
 #include "my_callstack.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
+#include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
 #include "my_time.hpp"
+#include "my_types.hpp"
+#include "my_tp.hpp"
 
 void level_anim(Gamep g, Levelsp v, Levelp l)
 {

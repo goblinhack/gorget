@@ -3,7 +3,9 @@
 //
 
 #include "my_callstack.hpp"
-#include "my_thing_inlines.hpp"
+#include "my_main.hpp"
+#include "my_thing.hpp" // NOLINT
+#include "my_types.hpp"
 
 auto thing_charge_count(Thingp t) -> int
 {
@@ -16,7 +18,7 @@ auto thing_charge_count(Thingp t) -> int
   return t->_charge_count;
 }
 
-auto thing_charge_count_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+auto thing_charge_count_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -27,7 +29,7 @@ auto thing_charge_count_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> 
   return t->_charge_count = val;
 }
 
-auto thing_charge_count_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+auto thing_charge_count_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -38,7 +40,7 @@ auto thing_charge_count_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) ->
   return t->_charge_count += val;
 }
 
-auto thing_charge_count_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+auto thing_charge_count_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 

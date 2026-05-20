@@ -4,11 +4,16 @@
 
 #include "my_callstack.hpp"
 #include "my_game.hpp"
-#include "my_globals.hpp"
+#include "my_level.hpp"
 #include "my_main.hpp"
+#include "my_thing.hpp"
+#include "my_string.hpp"
 #include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp"
+#include "my_types.hpp"
+#include "my_tp.hpp"
 #include "my_ui.hpp"
+#include <string>
 
 //
 // The player has been attacked
@@ -356,8 +361,8 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
   // Detach items from owners
   //
   if (thing_is_carried(me)) {
-    auto owner = thing_owner(g, v, l, me);
-    if (owner) {
+    auto *owner = thing_owner(g, v, l, me);
+    if (owner != nullptr) {
       if (! thing_drop(g, v, l, owner, me)) {
         thing_err(me, "item is carried but could not drop");
       }

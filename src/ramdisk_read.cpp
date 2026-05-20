@@ -3,13 +3,15 @@
 //
 
 #include "my_callstack.hpp"
-#include "my_globals.hpp"
 #include "my_main.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_ramdisk.hpp"
 
+#include <cstdint>
 #include <cstdlib>
 #include <cstring>
+#include <unordered_map>
+#include <string>
 
 std::unordered_map< std::string, RamdiskT > ramdisk_data;
 

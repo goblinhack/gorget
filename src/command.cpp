@@ -6,16 +6,15 @@
 #include "my_callstack.hpp"
 #include "my_command.hpp"
 #include "my_main.hpp"
+#include "my_string.hpp"
 #include "my_token.hpp"
 #include "my_types.hpp"
-#include "my_string.hpp"
 #include "my_ui.hpp"
 
+#include <algorithm>
+#include <cstdint>
 #include <cstring>
 #include <string>
-#include <cstdint>
-#include <algorithm>
-#include <_strings.h>
 #include <unordered_map>
 #include <utility>
 
@@ -135,7 +134,7 @@ auto command_init() -> bool
   return true;
 }
 
-void command_add(Gamep  /*g*/, command_fn_t callback, const std::string &input, const std::string &readable)
+void command_add(Gamep /*g*/, command_fn_t callback, const std::string &input, const std::string &readable)
 {
   TRACE();
 

@@ -3,23 +3,29 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_color.hpp"
 #include "my_color_defs.hpp"
-#include "my_cpp_template.hpp"
-#include "my_game.hpp"
+#include "my_fpoint.hpp"
+#include "my_gl.hpp"
 #include "my_globals.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
-#include "my_pixel.hpp"
 #include "my_ptrcheck.hpp"
-#include "my_sdl_proto.hpp"
 #include "my_size.hpp"
+#include "my_spoint.hpp"
 #include "my_string.hpp"
 #include "my_tex.hpp"
 #include "my_tile.hpp"
+#include "my_types.hpp"
 
+#include <OpenGL/gl.h>
 #include <cmath>
 
-#include <array>
+#include <unordered_map>
+#include <string>
+#include <cstdint>
+#include <cstring>
+#include <utility>
 #ifdef WRITE_TILED
 #include <libgen.h>
 #endif
@@ -1003,7 +1009,7 @@ void tile_blit_outlined(const Tilep &tile, float x1, float x2, float y1, float y
 // Shift the coordinates of a tile by a given percentage, so the bottom is
 // trimmed and looks submerged.
 //
-void tile_blit_apply_submerge_pct(Gamep g, spoint &tl, spoint &br, Tilep tile, float &x1, float &x2, float &y1, float &y2, float percent)
+void tile_blit_apply_submerge_pct(Gamep  /*g*/, spoint &tl, spoint &br, Tilep tile, float & /*x1*/, float & /*x2*/, float &y1, float &y2, float percent)
 {
   TRACE_DEBUG();
 

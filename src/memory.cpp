@@ -6,7 +6,6 @@
 #include "my_globals.hpp"
 #include "my_main.hpp"
 #include "my_ptrcheck.hpp"
-#include "my_types.hpp"
 
 #include <cstdlib>
 #include <cstring>

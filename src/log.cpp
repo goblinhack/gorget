@@ -3,20 +3,25 @@
 //
 
 #include "my_ascii.hpp"
-#include "my_backtrace.hpp"
 #include "my_callstack.hpp"
+#include "my_cfg.hpp"
 #include "my_console.hpp"
 #include "my_globals.hpp"
 #include "my_log.hpp"
 #include "my_main.hpp"
-#include "my_ptrcheck.hpp"
 #include "my_sprintf.hpp"
 #include "my_string.hpp"
+#include "my_types.hpp"
+#include "my_time.hpp"
 #include "my_wids.hpp"
 
+#include <cstdarg>
+#include <cstdio>
+#include <cmath>
 #include <cstdlib>
-#include <mutex>
+#include <cstring>
 #include <print>
+#include <string>
 #include <sys/stat.h>
 
 extern Game *game;

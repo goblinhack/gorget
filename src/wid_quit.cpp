@@ -8,7 +8,16 @@
 #include "my_main.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
+#include "my_wid_popup.hpp"
+#include "my_types.hpp"
+#include "my_wid.hpp"
+#include "my_spoint.hpp"
+#include "my_ui.hpp"
 #include "my_wids.hpp"
+#include <cstdint>
+#include <cmath>
+#include <SDL_keyboard.h>
+#include <SDL_keycode.h>
 
 static WidPopup *wid_quit_window;
 
@@ -23,7 +32,7 @@ void wid_quit_destroy(Gamep g)
   }
 }
 
-[[nodiscard]] static auto wid_quit_yes(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_quit_yes(Gamep g, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
   log("quit, yes");
@@ -43,7 +52,7 @@ void wid_quit_destroy(Gamep g)
   return true;
 }
 
-[[nodiscard]] static auto wid_quit_no(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_quit_no(Gamep g, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
   log("quit, no");
@@ -56,7 +65,7 @@ void wid_quit_destroy(Gamep g)
   return true;
 }
 
-[[nodiscard]] static auto wid_quit_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
+[[nodiscard]] static auto wid_quit_key_down(Gamep g, Widp  /*w*/, const struct SDL_Keysym *key) -> bool
 {
   TRACE();
 

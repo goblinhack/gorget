@@ -3,21 +3,33 @@
 //
 
 #include "my_callstack.hpp"
-#include "my_globals.hpp"
+#include "my_color.hpp"
 #include "my_main.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_string.hpp"
 #include "my_tex.hpp"
 #include "my_tile.hpp"
 #include "my_tp.hpp"
+#include "my_types.hpp"
 
+#include <_strings.h>
+#include <_string.h>
 #include <algorithm>
-#include <iostream>
+#include <cstring>
+#include <cstdint>
+#include <cstddef>
+#include <cctype>
+#include <cstdlib>
+#include <cstdarg>
+#include <cstdio>
+#include <cerrno>
 #include <libgen.h>
+#include <locale>
 #include <ranges>
 #include <sstream>
 #include <string>
 #include <utility>
+#include <vector>
 
 /*
  * Replace chars in replace_set with replace_with.

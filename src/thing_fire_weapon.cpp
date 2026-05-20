@@ -2,8 +2,14 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_bpoint.hpp"
 #include "my_callstack.hpp"
+#include "my_thing_callbacks.hpp"
+#include "my_main.hpp"
+#include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
+#include "my_types.hpp"
+#include "my_tp.hpp"
 
 void thing_on_fire_weapon_request_set(Tpp tp, thing_on_fire_weapon_request_t callback)
 {
@@ -43,7 +49,7 @@ auto thing_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, Tpp fir
   //
   // Decrement charge count if we have a thing
   //
-  if (item) {
+  if (item != nullptr) {
     if (thing_charge_count_decr(g, v, l, item) <= 0) {
       if (thing_is_dead_when_discharged(item)) {
         ThingEvent e {

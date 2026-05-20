@@ -2,22 +2,18 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include "my_ascii.hpp"
-#include "my_backtrace.hpp"
 #include "my_callstack.hpp"
-#include "my_console.hpp"
-#include "my_globals.hpp"
-#include "my_log.hpp"
 #include "my_main.hpp"
-#include "my_ptrcheck.hpp"
-#include "my_sdl_event.hpp"
-#include "my_sdl_proto.hpp"
 #include "my_string.hpp"
-#include "my_wids.hpp"
 
+#include <cstdarg>
+#include <cstdio>
+#include <SDL_version.h>
+#include <SDL_log.h>
+#include <cmath>
+#include <SDL_video.h>
+#include <SDL_messagebox.h>
 #include <cstdlib>
-#include <mutex>
-#include <sys/stat.h>
 
 static void sdl_msgerr_(const char *fmt, va_list args)
 {

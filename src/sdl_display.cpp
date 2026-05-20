@@ -3,7 +3,6 @@
 //
 
 #include "my_callstack.hpp"
-#include "my_color_defs.hpp"
 #include "my_game.hpp"
 #include "my_gl.hpp"
 #include "my_globals.hpp"
@@ -11,7 +10,17 @@
 #include "my_main.hpp"
 #include "my_sdl_event.hpp"
 #include "my_sdl_proto.hpp"
+#include "my_types.hpp"
+#include "my_wid.hpp"
 #include "my_wids.hpp"
+#include <OpenGL/gl.h>
+#include <SDL_timer.h>
+#include <SDL_video.h>
+#include <cmath>
+#include <cstring>
+#include <SDL_error.h>
+#include <cstdint>
+#include <SDL_events.h>
 
 void sdl_display(Gamep g)
 {

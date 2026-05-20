@@ -2,19 +2,12 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include "my_callstack.hpp"
-#include "my_globals.hpp"
+#include "my_bpoint.hpp"
 #include "my_level.hpp"
-#include "my_level_inlines.hpp"
-#include "my_main.hpp"
-#include "my_math.hpp"
-#include "my_thing_inlines.hpp"
-#include "my_tile.hpp"
-#include "my_ui.hpp"
-
-#include <array>
-#include <cmath>
-#include <cstring>
+#include "my_level_inlines.hpp" // NOLINT
+#include "my_thing.hpp"
+#include "my_thing_inlines.hpp" // NOLINT
+#include "my_types.hpp"
 
 //
 // Something blocking the fov?

@@ -2,23 +2,28 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include <algorithm>
-
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
-#include "my_color_defs.hpp"
-#include "my_globals.hpp"
-#include "my_main.hpp"
+#include "my_main.hpp" // NOLINT
 #include "my_ptrcheck.hpp"
 #include "my_sdl_proto.hpp"
+#include "my_spoint.hpp"
+#include "my_tile.hpp"
+#include "my_types.hpp"
+#include "my_ui.hpp"
+#include "my_wid.hpp"
 #include "my_wid_popup.hpp"
 #include "my_wids.hpp"
+
+#include <algorithm>
+#include <cmath>
+#include <string>
 
 static int progress_steps = 32;
 
 static WidPopup *wid_progress_bar_window;
 
-void wid_progress_bar_destroy(Gamep g)
+void wid_progress_bar_destroy(Gamep /*g*/)
 {
   TRACE();
   delete wid_progress_bar_window;

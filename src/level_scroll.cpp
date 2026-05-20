@@ -4,12 +4,19 @@
 
 #include "my_callstack.hpp"
 #include "my_game.hpp"
+#include "my_game_defs.hpp"
 #include "my_gl.hpp"
-#include "my_globals.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
+#include "my_thing.hpp"
+#include "my_spoint.hpp"
+#include "my_ptrcheck.hpp"
 #include "my_thing_inlines.hpp"
 #include "my_time.hpp"
+#include "my_types.hpp"
+#include <algorithm>
+#include <cstdint>
+#include <utility>
 
 //
 // We focus on the current level if on the level select screen.

@@ -2,19 +2,25 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_bpoint.hpp"
 #include "my_callstack.hpp"
 #include "my_cave.hpp"
 #include "my_charmap.hpp"
 #include "my_dice_rolls.hpp"
 #include "my_game.hpp"
-#include "my_globals.hpp"
+#include "my_game_defs.hpp"
 #include "my_level.hpp"
 #include "my_level_inlines.hpp"
 #include "my_main.hpp"
 #include "my_random.hpp"
+#include "my_types.hpp"
 
 #include <algorithm>
+#include <cstdio>
+#include <cstring>
 #include <print>
+#include <vector>
+#include <string>
 
 static const int MAX_ROOM_CORRIDOR = 3;
 static const int ROOM_BORDER       = 2;
@@ -441,7 +447,7 @@ static void room_gen_add_corridor(RoomGen *grid)
 //
 // Inspired by brogue desing
 //
-static void room_gen_design_cross_room(Gamep g, RoomGen *grid)
+static void room_gen_design_cross_room(RoomGen *grid)
 {
   TRACE();
 
@@ -472,7 +478,7 @@ static void room_gen_design_cross_room(Gamep g, RoomGen *grid)
 //
 // Inspired by brogue desing
 //
-static void room_gen_design_cross_room_symmetrical(Gamep g, RoomGen *grid)
+static void room_gen_design_cross_room_symmetrical(RoomGen *grid)
 {
   TRACE();
 
@@ -498,7 +504,7 @@ static void room_gen_design_cross_room_symmetrical(Gamep g, RoomGen *grid)
   room_gen_draw_rectangle(grid, (MAP_WIDTH - minor_width) / 2, (MAP_HEIGHT - major_height) / 2, minor_width, major_height, CHARMAP_FLOOR);
 }
 
-static void room_gen_design_small_room(Gamep g, RoomGen *grid)
+static void room_gen_design_small_room(RoomGen *grid)
 {
   TRACE();
 
@@ -511,7 +517,7 @@ static void room_gen_design_small_room(Gamep g, RoomGen *grid)
   room_gen_draw_rectangle(grid, (MAP_WIDTH - width) / 2, (MAP_HEIGHT - height) / 2, width, height, CHARMAP_FLOOR);
 }
 
-static void room_gen_design_medium_room(Gamep g, RoomGen *grid)
+static void room_gen_design_medium_room(RoomGen *grid)
 {
   TRACE();
 
@@ -524,7 +530,7 @@ static void room_gen_design_medium_room(Gamep g, RoomGen *grid)
   room_gen_draw_rectangle(grid, (MAP_WIDTH - width) / 2, (MAP_HEIGHT - height) / 2, width, height, CHARMAP_FLOOR);
 }
 
-static void room_gen_design_large_room(Gamep g, RoomGen *grid)
+static void room_gen_design_large_room(RoomGen *grid)
 {
   TRACE();
 
@@ -537,7 +543,7 @@ static void room_gen_design_large_room(Gamep g, RoomGen *grid)
   room_gen_draw_rectangle(grid, (MAP_WIDTH - width) / 2, (MAP_HEIGHT - height) / 2, width, height, CHARMAP_FLOOR);
 }
 
-static void room_gen_design_tall_room(Gamep g, RoomGen *grid)
+static void room_gen_design_tall_room(RoomGen *grid)
 {
   TRACE();
 
@@ -550,7 +556,7 @@ static void room_gen_design_tall_room(Gamep g, RoomGen *grid)
   room_gen_draw_rectangle(grid, (MAP_WIDTH - width) / 2, (MAP_HEIGHT - height) / 2, width, height, CHARMAP_FLOOR);
 }
 
-static void room_gen_design_long_room(Gamep g, RoomGen *grid)
+static void room_gen_design_long_room(RoomGen *grid)
 {
   TRACE();
 
@@ -563,7 +569,7 @@ static void room_gen_design_long_room(Gamep g, RoomGen *grid)
   room_gen_draw_rectangle(grid, (MAP_WIDTH - width) / 2, (MAP_HEIGHT - height) / 2, width, height, CHARMAP_FLOOR);
 }
 
-static void room_gen_design_circular_room(Gamep g, RoomGen *grid)
+static void room_gen_design_circular_room(RoomGen *grid)
 {
   int radius = 0;
 
@@ -582,7 +588,7 @@ static void room_gen_design_circular_room(Gamep g, RoomGen *grid)
   }
 }
 
-static void room_gen_design_chunky_room(Gamep g, RoomGen *grid)
+static void room_gen_design_chunky_room(RoomGen *grid)
 {
   TRACE();
 
@@ -663,7 +669,7 @@ static auto fragment_put(Gamep g, class RoomGen *r, class Fragment *f, bpoint at
 //
 // Can we match a fragment against the location
 //
-[[nodiscard]] static auto fragment_match(Gamep g, class RoomGen *r, class Fragment *f, bpoint at) -> bool
+[[nodiscard]] static auto fragment_match(class RoomGen *r, class Fragment *f, bpoint at) -> bool
 {
   for (int ry = 0; ry < fragment_height(f); ry++) {
     for (int rx = 0; rx < fragment_width(f); rx++) {
@@ -720,7 +726,7 @@ static void room_gen_add_fragments(Gamep g, class RoomGen *r)
     for (int y = 0; y < r->room_height + 1; y++) {
       for (int x = 0; x < r->room_width + 1; x++) {
         bpoint const at(r->tl.x + x - 1, r->tl.y + y - 1);
-        if (fragment_match(g, r, f, at)) {
+        if (fragment_match(r, f, at)) {
           cands.push_back(at);
         }
       }
@@ -755,25 +761,25 @@ static void room_gen_add_fragments(Gamep g, class RoomGen *r)
   r.out = out;
 
   switch (which) {
-    case ROOM_TYPE_CROSS :     room_gen_design_cross_room(g, &r); break;
-    case ROOM_TYPE_CROSS_SYM : room_gen_design_cross_room_symmetrical(g, &r); break;
-    case ROOM_TYPE_SMALL :     room_gen_design_small_room(g, &r); break;
-    case ROOM_TYPE_MEDIUM :    room_gen_design_medium_room(g, &r); break;
-    case ROOM_TYPE_LARGE :     room_gen_design_large_room(g, &r); break;
-    case ROOM_TYPE_TALL :      room_gen_design_tall_room(g, &r); break;
-    case ROOM_TYPE_LONG :      room_gen_design_long_room(g, &r); break;
-    case ROOM_TYPE_CIRCULAR :  room_gen_design_circular_room(g, &r); break;
-    case ROOM_TYPE_CHUNKY :    room_gen_design_chunky_room(g, &r); break;
+    case ROOM_TYPE_CROSS :     room_gen_design_cross_room(&r); break;
+    case ROOM_TYPE_CROSS_SYM : room_gen_design_cross_room_symmetrical(&r); break;
+    case ROOM_TYPE_SMALL :     room_gen_design_small_room(&r); break;
+    case ROOM_TYPE_MEDIUM :    room_gen_design_medium_room(&r); break;
+    case ROOM_TYPE_LARGE :     room_gen_design_large_room(&r); break;
+    case ROOM_TYPE_TALL :      room_gen_design_tall_room(&r); break;
+    case ROOM_TYPE_LONG :      room_gen_design_long_room(&r); break;
+    case ROOM_TYPE_CIRCULAR :  room_gen_design_circular_room(&r); break;
+    case ROOM_TYPE_CHUNKY :    room_gen_design_chunky_room(&r); break;
     case ROOM_TYPE_BLEND1 :
-      room_gen_design_cross_room(g, &r);
-      room_gen_design_chunky_room(g, &r);
-      room_gen_design_circular_room(g, &r);
+      room_gen_design_cross_room(&r);
+      room_gen_design_chunky_room(&r);
+      room_gen_design_circular_room(&r);
       break;
     case ROOM_TYPE_BLEND2 :
-      room_gen_design_chunky_room(g, &r);
-      room_gen_design_chunky_room(g, &r);
-      room_gen_design_tall_room(g, &r);
-      room_gen_design_long_room(g, &r);
+      room_gen_design_chunky_room(&r);
+      room_gen_design_chunky_room(&r);
+      room_gen_design_tall_room(&r);
+      room_gen_design_long_room(&r);
       break;
   }
 

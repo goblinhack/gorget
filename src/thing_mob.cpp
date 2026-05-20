@@ -3,14 +3,17 @@
 //
 
 #include "my_callstack.hpp"
-#include "my_thing_inlines.hpp"
-
-#include <cstring>
+#include "my_level.hpp"
+#include "my_level_inlines.hpp" // NOLINT
+#include "my_thing.hpp"
+#include "my_thing_inlines.hpp" // NOLINT
+#include "my_tp.hpp"
+#include "my_types.hpp"
 
 //
-// Howm many minions?
+// How many minions?
 //
-auto thing_mob_minion_count_get(Gamep g, Levelsp v, Levelp l, Thingp mob) -> int
+auto thing_mob_minion_count_get(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp mob) -> int
 {
   TRACE();
 

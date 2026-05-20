@@ -2,7 +2,6 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include "my_math.hpp"
 #include "my_spoint.hpp"
 
 #include <cmath>

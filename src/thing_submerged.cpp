@@ -7,8 +7,8 @@
 #include "my_main.hpp"
 #include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
-#include "my_time.hpp"
 #include "my_tp.hpp"
+#include "my_types.hpp"
 
 auto thing_is_submergible(Thingp t) -> bool
 {
@@ -21,7 +21,7 @@ auto thing_is_submergible(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_submergible) != 0;
 }
 
-auto thing_submerged_pct_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+auto thing_submerged_pct_set(Gamep  /*g*/, Levelsp  /*v*/, Levelp  /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -32,7 +32,7 @@ auto thing_submerged_pct_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) ->
   return t->_submerged_pct = val;
 }
 
-auto thing_submerged_pct_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+auto thing_submerged_pct_incr(Gamep  /*g*/, Levelsp  /*v*/, Levelp  /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -43,7 +43,7 @@ auto thing_submerged_pct_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -
   return t->_submerged_pct += val;
 }
 
-auto thing_submerged_pct_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+auto thing_submerged_pct_decr(Gamep  /*g*/, Levelsp  /*v*/, Levelp  /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 

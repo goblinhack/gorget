@@ -5,12 +5,25 @@
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
 #include "my_game.hpp"
-#include "my_level.hpp"
+#include "my_globals.hpp"
+#include "my_game_defs.hpp"
+#include "my_main.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
+#include "my_thing.hpp"
+#include "my_spoint.hpp"
 #include "my_thing_inlines.hpp"
+#include "my_wid_popup.hpp"
+#include "my_types.hpp"
+#include "my_wid.hpp"
+#include "my_wid_text_box.hpp"
+#include "my_tp.hpp"
+#include "my_ui.hpp"
 #include "my_wids.hpp"
 
+#include <SDL_keyboard.h>
+#include <SDL_keycode.h>
+#include <cstdint>
 #include <format>
 
 static WidPopup *wid_statistics_popup;
@@ -27,7 +40,7 @@ static void wid_statistics_destroy(Gamep g)
   }
 }
 
-[[nodiscard]] static auto wid_statistics_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
+[[nodiscard]] static auto wid_statistics_key_down(Gamep g, Widp  /*w*/, const struct SDL_Keysym *key) -> bool
 {
   TRACE();
 
@@ -70,7 +83,7 @@ static void wid_statistics_destroy(Gamep g)
   return false;
 }
 
-[[nodiscard]] static auto wid_statistics_close(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_statistics_close(Gamep g, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
 {
   TRACE();
   wid_statistics_destroy(g);
@@ -88,7 +101,7 @@ static void wid_statistics_destroy(Gamep g)
   return true;
 }
 
-static void wid_statistics_show_defeated(Gamep g, Levelsp v, Levelp l, Thingp player)
+static void wid_statistics_show_defeated(Gamep g, Levelp l, Thingp player)
 {
   TRACE();
 
@@ -151,7 +164,7 @@ static void wid_statistics_show_defeated(Gamep g, Levelsp v, Levelp l, Thingp pl
   wid_statistics_popup->log_empty_line(g);
 }
 
-static void wid_statistics_show_items(Gamep g, Levelsp v, Levelp l, Thingp player)
+static void wid_statistics_show_items(Gamep g, Levelsp v, Levelp l)
 {
   TRACE();
 
@@ -255,8 +268,8 @@ void wid_statistics_show(Gamep g, Levelsp v, Levelp l, Thingp player)
     wid_statistics_popup->log_empty_line(g);
   }
 
-  wid_statistics_show_defeated(g, v, l, player);
-  wid_statistics_show_items(g, v, l, player);
+  wid_statistics_show_defeated(g, l, player);
+  wid_statistics_show_items(g, v, l);
 
   {
     TRACE();

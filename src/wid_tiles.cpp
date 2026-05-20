@@ -3,13 +3,16 @@
 //
 
 #include "my_callstack.hpp"
-#include "my_globals.hpp"
 #include "my_main.hpp"
 #include "my_tex.hpp"
 #include "my_tile.hpp"
+#include "my_types.hpp"
 #include "my_wid_tiles.hpp"
 
+#include <cstdio>
 #include <map>
+#include <string>
+#include <utility>
 
 static int                                       wid_tiles_init_done;
 static std::map< std::string, class WidTiles * > wid_tiles_all;

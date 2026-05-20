@@ -3,15 +3,21 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_main.hpp"
+#include "my_game_defs.hpp"
 #include "my_random.hpp"
+#include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
+#include "my_types.hpp"
+#include "my_tp.hpp"
+#include "my_tile.hpp"
 
 //
 // Assign an initial tile
 //
 // Or reset back to the first frame
 //
-void thing_anim_init(Gamep g, Levelsp v, Levelp l, Thingp t, ThingAnim anim_type)
+void thing_anim_init(Gamep  /*g*/, Levelsp  /*v*/, Levelp  /*l*/, Thingp t, ThingAnim anim_type)
 {
   TRACE();
 

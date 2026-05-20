@@ -3,9 +3,14 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_fpoint.hpp"
 #include "my_globals.hpp"
+#include "my_level.hpp"
 #include "my_main.hpp"
+#include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
+#include "my_types.hpp"
+#include "my_tp.hpp"
 
 auto thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &real_at) -> Thingp
 {

@@ -6,8 +6,10 @@
 #include "my_game.hpp"
 #include "my_globals.hpp"
 #include "my_level.hpp"
-#include "my_level_inlines.hpp"
 #include "my_sound.hpp"
+#include "my_types.hpp"
+#include <string>
+#include "my_thing.hpp"
 
 void thing_sound_play(Gamep g, Levelsp v, Levelp l, Thingp t, const std::string &alias)
 {

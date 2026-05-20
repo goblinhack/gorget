@@ -3,12 +3,14 @@
 //
 
 #include "my_callstack.hpp"
-#include "my_level.hpp"
+#include "my_game.hpp"
 #include "my_main.hpp"
 #include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
-#include "my_time.hpp"
 #include "my_tp.hpp"
+#include "my_types.hpp"
+#include <limits>
+#include <algorithm>
 
 auto thing_health(Thingp t) -> int
 {
@@ -21,7 +23,7 @@ auto thing_health(Thingp t) -> int
   return t->_health;
 }
 
-auto thing_health_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+auto thing_health_set(Gamep g, Levelsp  /*v*/, Levelp  /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -43,7 +45,7 @@ auto thing_health_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
   return t->_health;
 }
 
-auto thing_health_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+auto thing_health_incr(Gamep g, Levelsp  /*v*/, Levelp  /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -59,7 +61,7 @@ auto thing_health_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
   return t->_health;
 }
 
-auto thing_health_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+auto thing_health_decr(Gamep g, Levelsp  /*v*/, Levelp  /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -87,7 +89,7 @@ auto thing_health_max(Thingp t) -> int
   return t->_health_max;
 }
 
-auto thing_health_max_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+auto thing_health_max_set(Gamep g, Levelsp  /*v*/, Levelp  /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -105,7 +107,7 @@ auto thing_health_max_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> in
   return t->_health_max = val;
 }
 
-auto thing_health_max_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+auto thing_health_max_incr(Gamep g, Levelsp  /*v*/, Levelp  /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -117,7 +119,7 @@ auto thing_health_max_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> i
   return t->_health_max += val;
 }
 
-auto thing_health_max_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+auto thing_health_max_decr(Gamep g, Levelsp  /*v*/, Levelp  /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 

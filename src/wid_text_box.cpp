@@ -3,12 +3,17 @@
 //
 
 #include "my_callstack.hpp"
-#include "my_color_defs.hpp"
-#include "my_globals.hpp"
-#include "my_main.hpp"
+#include "my_color.hpp"
+#include "my_color_defs.hpp" // NOLINT
+#include "my_main.hpp"       // NOLINT
+#include "my_spoint.hpp"
 #include "my_string.hpp"
+#include "my_types.hpp"
 #include "my_ui.hpp"
+#include "my_wid.hpp"
 #include "my_wid_text_box.hpp"
+
+#include <cmath>
 
 WidTextBox::~WidTextBox()
 {

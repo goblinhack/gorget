@@ -3,15 +3,20 @@
 //
 
 #include "my_bits.hpp"
+#include "my_bpoint.hpp"
 #include "my_callstack.hpp"
-#include "my_globals.hpp"
+#include "my_enum.hpp"
+#include "my_game_defs.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_random.hpp"
+#include "my_thing.hpp"
 #include "my_tile.hpp"
+#include "my_types.hpp"
+#include "my_tp.hpp"
 
+#include <cstdint>
 #include <cstring>
-#include <map>
 
 /* clang-format off */
 #define IS_JOIN_ENUM(list_macro)                  \

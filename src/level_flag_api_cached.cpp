@@ -2,14 +2,11 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include "my_charmap.hpp"
-#include "my_globals.hpp"
+#include "my_bpoint.hpp"
+#include "my_callstack.hpp"
 #include "my_level.hpp"
-#include "my_main.hpp"
-#include "my_test.hpp"
-#include "my_thing_inlines.hpp"
-#include "my_ui.hpp"
-#include "my_wids.hpp"
+#include "my_types.hpp"
+#include "my_tp.hpp"
 
 auto level_is_able_to_collect_items_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {

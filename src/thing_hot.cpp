@@ -3,12 +3,15 @@
 //
 
 #include "my_callstack.hpp"
-#include "my_level.hpp"
+#include "my_game_defs.hpp"
 #include "my_main.hpp"
 #include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
 #include "my_time.hpp"
 #include "my_tp.hpp"
+#include "my_types.hpp"
+#include <algorithm>
+#include <cstdint>
 
 auto thing_is_always_hot(Thingp me) -> bool
 {
@@ -28,7 +31,7 @@ auto thing_is_always_hot(Thingp me) -> bool
 //
 // Hot animation time step
 //
-void thing_hot_time_step(Gamep g, Levelsp v, Levelp l, Thingp me, int time_step)
+void thing_hot_time_step(Gamep  /*g*/, Levelsp  /*v*/, Levelp  /*l*/, Thingp me, int  /*time_step*/)
 {
   TRACE();
 
@@ -123,7 +126,7 @@ auto thing_is_hot_check(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
   return false;
 }
 
-void thing_is_hot_set(Gamep g, Levelsp v, Levelp l, Thingp me, bool val)
+void thing_is_hot_set(Gamep  /*g*/, Levelsp  /*v*/, Levelp  /*l*/, Thingp me, bool val)
 {
   TRACE_DEBUG();
 

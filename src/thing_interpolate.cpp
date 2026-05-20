@@ -3,9 +3,11 @@
 //
 
 #include "my_callstack.hpp"
-#include "my_globals.hpp"
-#include "my_level.hpp"
 #include "my_main.hpp"
+#include "my_types.hpp"
+#include "my_thing.hpp"
+#include "my_spoint.hpp"
+#include "my_tile.hpp"
 
 //
 // For things moving between tiles, calculate the pixel they are at based on the timestep

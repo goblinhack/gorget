@@ -2,21 +2,22 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_bpoint.hpp"
 #include "my_callstack.hpp"
-#include "my_globals.hpp"
+#include "my_fpoint.hpp"
+#include "my_game_defs.hpp"
 #include "my_level.hpp"
-#include "my_level_inlines.hpp"
-#include "my_main.hpp"
 #include "my_math.hpp"
-#include "my_thing_callbacks.hpp"
-#include "my_thing_inlines.hpp"
+#include "my_thing.hpp"
+#include "my_types.hpp"
+#include "my_tp.hpp"
 
 #include <cmath>
 
 //
 // Can't shoot too far
 //
-static auto thing_laser_truncate(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint &to) -> float
+static auto thing_laser_truncate(Thingp me, fpoint &to) -> float
 {
   auto        curr_at                 = thing_real_at(me);
   float const how_far_i_want_to_shoot = distance(curr_at, to);
@@ -45,7 +46,7 @@ auto thing_laser_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, cons
   // Can't shoot too far
   //
   auto to       = target;
-  auto distance = thing_laser_truncate(g, v, l, me, to);
+  auto distance = thing_laser_truncate(me, to);
 
   auto delta = to - make_fpoint(thing_at(me));
 

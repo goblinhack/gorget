@@ -9,10 +9,21 @@
 #include "my_globals.hpp"
 #include "my_main.hpp"
 #include "my_sdl_proto.hpp"
+#include "my_types.hpp"
+#include "my_wid.hpp"
+#include "my_string.hpp"
+#include "my_spoint.hpp"
+#include "my_ui.hpp"
 #include "my_wids.hpp"
 
+#include <SDL_keyboard.h>
+#include <SDL_keycode.h>
 #include <algorithm>
+#include <cstdint>
 #include <map>
+#include <string>
+#include <utility>
+#include <vector>
 
 static int wid_console_inited;
 static int wid_console_commands_inited;

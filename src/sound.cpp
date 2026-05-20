@@ -10,9 +10,16 @@
 #include "my_main.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_sound.hpp"
+#include "my_types.hpp"
 
+#include <SDL_error.h>
 #include <SDL_mixer.h>
+#include <SDL_rwops.h>
+#include <cstdint>
+#include <cmath>
 #include <map>
+#include <string>
+#include <unordered_map>
 #include <utility>
 #include <vector>
 
@@ -80,7 +87,7 @@ auto sound_init() -> bool
   return true;
 }
 
-void sound_fade_out(Gamep g)
+void sound_fade_out(Gamep  /*g*/)
 {
   TRACE();
 

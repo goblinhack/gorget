@@ -3,15 +3,16 @@
 //
 
 #include "my_age_map_inlines.hpp"
+#include "my_bpoint.hpp"
 #include "my_callstack.hpp"
-#include "my_fov_map.hpp"
-#include "my_fov_map_inlines.hpp"
-#include "my_game.hpp"
+#include "my_game_defs.hpp"
 #include "my_level.hpp"
 #include "my_level_inlines.hpp"
-#include "my_thing_inlines.hpp"
+#include "my_thing.hpp"
+#include "my_types.hpp"
+#include <cstdint>
 
-auto level_has_seen(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+auto level_has_seen(Gamep g, Levelsp  /*v*/, Levelp  /*l*/, const bpoint &p) -> bool
 {
   TRACE();
 
@@ -35,7 +36,7 @@ auto level_has_seen(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 //
 // Update all tiles the player has seen.
 //
-void level_has_seen_update(Gamep g, Levelsp v, Levelp l)
+void level_has_seen_update(Gamep g, Levelsp  /*v*/, Levelp l)
 {
   TRACE();
 

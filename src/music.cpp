@@ -10,9 +10,15 @@
 #include "my_main.hpp"
 #include "my_music.hpp"
 #include "my_ptrcheck.hpp"
+#include "my_types.hpp"
 
+#include <SDL_error.h>
 #include <SDL_mixer.h>
+#include <SDL_rwops.h>
+#include <cstdint>
+#include <cmath>
 #include <map>
+#include <string>
 #include <utility>
 #include <vector>
 
@@ -106,7 +112,7 @@ static auto find_one(const std::string &alias) -> Music *
   return rand_one_of(out);
 }
 
-auto music_load(Gamep g, uint32_t rate, const char *file, const char *name_alias) -> bool
+auto music_load(Gamep  /*g*/, uint32_t rate, const char *file, const char *name_alias) -> bool
 {
   TRACE();
 
