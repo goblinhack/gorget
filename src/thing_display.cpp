@@ -232,8 +232,8 @@ static void thing_display_outlined_blit(Gamep g, Tpp tp, spoint tl, spoint br, T
   return true;
 }
 
-static void thing_display_blit(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp t_maybe_null, spoint tl, spoint br, Tilep tile,
-                               float x1, float x2, float y1, float y2, FboEnum fbo, color fg, LightPixels *light_pixels = nullptr,
+static void thing_display_blit(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t_maybe_null, spoint tl, spoint br, Tilep tile, float x1,
+                               float x2, float y1, float y2, FboEnum fbo, color fg, LightPixels *light_pixels = nullptr,
                                bool blit_flush_per_line = false)
 {
   TRACE_DEBUG();
@@ -333,7 +333,7 @@ static void thing_display_falling(Gamep g, Levelsp v, Levelp l, const bpoint &p,
   float const ang = dh * 10;
   glRotatef(ang, 0.0F, 0.0F, 1.0F);
   glTranslatef(-mid.x, -mid.y, 0);
-  thing_display_blit(g, v, l, p, tp, t, tl, br, tile, x1, x2, y1, y2, fbo, fg);
+  thing_display_blit(g, v, l, tp, t, tl, br, tile, x1, x2, y1, y2, fbo, fg);
   blit_flush();
   glPopMatrix();
 }
@@ -353,7 +353,7 @@ static void thing_display_rotated(Gamep g, Levelsp v, Levelp l, const bpoint &p,
   float const ang = t->angle * (180.0F / std::numbers::pi_v< float >);
   glRotatef(ang, 0.0F, 0.0F, 1.0F);
   glTranslatef(-mid.x, -mid.y, 0);
-  thing_display_blit(g, v, l, p, tp, t, tl, br, tile, x1, x2, y1, y2, fbo, fg);
+  thing_display_blit(g, v, l, tp, t, tl, br, tile, x1, x2, y1, y2, fbo, fg);
   blit_flush();
   glPopMatrix();
 }
@@ -378,7 +378,7 @@ static void thing_display_it(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp 
     //
     // Probably the cursor
     //
-    thing_display_blit(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg, nullptr, false);
+    thing_display_blit(g, v, l, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg, nullptr, false);
     return;
   }
 
@@ -395,7 +395,7 @@ static void thing_display_it(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp 
   // a visible strip
   //
   bool const is_blit_flush_per_line = thing_is_blit_flush_per_line(t_maybe_null);
-  thing_display_blit(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg, light_pixels, is_blit_flush_per_line);
+  thing_display_blit(g, v, l, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg, light_pixels, is_blit_flush_per_line);
 
   //
   // Flash red outline if hit
@@ -422,7 +422,7 @@ static void thing_display_it(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp 
     fg.g               = is_hot.g;
     fg.b               = is_hot.b;
     fg.a               = static_cast< uint8_t >(a);
-    thing_display_blit(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg, nullptr, false);
+    thing_display_blit(g, v, l, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg, nullptr, false);
     return;
   }
 
@@ -453,7 +453,7 @@ static void thing_display_it(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp 
       fg.b            = hot.b;
       fg.a            = thing_is_hot(t_maybe_null);
       light_pixels    = nullptr;
-      thing_display_blit(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg, light_pixels, is_blit_flush_per_line);
+      thing_display_blit(g, v, l, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg, light_pixels, is_blit_flush_per_line);
 
       if (thing_is_blit_hit_outline_w_invis_inside(t_maybe_null)) {
         tile_blit_outline_w_invis_inside(tile, x1, x2, y1, y2, tl, br, fg);

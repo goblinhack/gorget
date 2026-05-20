@@ -5,8 +5,8 @@
 #include "my_callstack.hpp"
 #include "my_font.hpp"
 #include "my_main.hpp"
-#include "my_types.hpp"
 #include "my_tile.hpp"
+#include "my_types.hpp"
 
 #include <cstdint>
 #include <cstdio>

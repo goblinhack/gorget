@@ -9,19 +9,19 @@
 #include "my_level.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
-#include "my_thing.hpp"
 #include "my_spoint.hpp"
+#include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
-#include "my_types.hpp"
-#include "my_wid.hpp"
-#include "my_ui.hpp"
-#include "my_tp.hpp"
 #include "my_tile.hpp"
+#include "my_tp.hpp"
+#include "my_types.hpp"
+#include "my_ui.hpp"
+#include "my_wid.hpp"
 #include "my_wids.hpp"
-#include <cstring>
-#include <cstdint>
 #include <SDL_keyboard.h>
 #include <SDL_keycode.h>
+#include <cstdint>
+#include <cstring>
 #include <string>
 
 static Widp wid_inventory_window;
@@ -45,7 +45,7 @@ static void wid_inventory_destroy(Gamep g)
   }
 }
 
-void wid_inventory_mouse_over_begin(Gamep g, Widp w, int  /*relx*/, int  /*rely*/, int  /*wheelx*/, int  /*wheely*/)
+void wid_inventory_mouse_over_begin(Gamep g, Widp w, int /*relx*/, int /*rely*/, int /*wheelx*/, int /*wheely*/)
 {
   TRACE();
 
@@ -92,7 +92,7 @@ void wid_inventory_mouse_over_end(Gamep g, Widp w)
   }
 }
 
-[[nodiscard]] auto wid_inventory_mouse_up(Gamep g, Widp w, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
+[[nodiscard]] auto wid_inventory_mouse_up(Gamep g, Widp w, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
   TRACE();
 
@@ -198,7 +198,7 @@ void wid_inventory_mouse_over_end(Gamep g, Widp w)
   return false;
 }
 
-[[nodiscard]] static auto wid_inventory_back(Gamep g, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
+[[nodiscard]] static auto wid_inventory_back(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
   TRACE();
   wid_inventory_destroy(g);

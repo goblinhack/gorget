@@ -8,7 +8,7 @@
 #include "my_thing_inlines.hpp"
 #include "my_types.hpp"
 
-auto thing_owner(Gamep g, Levelsp v, Levelp  /*l*/, Thingp me) -> Thingp
+auto thing_owner(Gamep g, Levelsp v, Levelp /*l*/, Thingp me) -> Thingp
 {
   TRACE();
 

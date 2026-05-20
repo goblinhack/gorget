@@ -5,8 +5,8 @@
 #include "my_bpoint.hpp"
 #include "my_callstack.hpp"
 #include "my_level.hpp"
-#include "my_types.hpp"
 #include "my_tp.hpp"
+#include "my_types.hpp"
 
 auto level_alive_is_able_to_collect_items(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {

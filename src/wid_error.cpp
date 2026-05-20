@@ -8,11 +8,11 @@
 #include "my_main.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
-#include "my_wid_popup.hpp"
-#include "my_types.hpp"
-#include "my_wid.hpp"
 #include "my_spoint.hpp"
+#include "my_types.hpp"
 #include "my_ui.hpp"
+#include "my_wid.hpp"
+#include "my_wid_popup.hpp"
 #include "my_wid_text_box.hpp"
 #include "my_wids.hpp"
 #include <SDL_keyboard.h>
@@ -30,7 +30,7 @@ static void wid_error_destroy(Gamep g)
   con("It all went dark briefly. What happened?");
 }
 
-[[nodiscard]] static auto wid_error_key_down(Gamep g, Widp  /*w*/, const struct SDL_Keysym *key) -> bool
+[[nodiscard]] static auto wid_error_key_down(Gamep g, Widp /*w*/, const struct SDL_Keysym *key) -> bool
 {
   TRACE();
 

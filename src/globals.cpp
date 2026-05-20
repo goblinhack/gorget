@@ -35,13 +35,12 @@ int g_intro_done;       // Have we shown the intro text yet?
 int g_err_count;        // How many ERRs
 int g_memory_allocated; // We've allocated something
 
-char       *g_data_path;
-char       *g_exec_dir;
-char       *g_exec_full_path_and_name;
-char       *g_gfx_path;
-char       *g_ttf_path;
-char      **g_argv;
-int         g_argc;
+char *g_data_path;
+char *g_exec_dir;
+char *g_exec_full_path_and_name;
+char *g_gfx_path;
+char *g_ttf_path;
+
 std::string g_need_restart_with_given_arguments; // Need to restart game
 std::string g_opt_seed_name;
 std::string g_opt_seed_name_weekly;
@@ -49,6 +48,9 @@ std::string g_opt_seed_name_previous;
 std::string g_opt_test_name_filter;
 std::string g_opt_test_current;
 std::string g_program_name;
+
+const char **g_argv;
+int          g_argc;
 
 int                      g_errored_thread_id = -1; // An error has occurred on this thread
 std::string              g_error_last;             // An error has occurred

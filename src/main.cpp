@@ -90,7 +90,7 @@ static void usage()
   con("Written by goblinhack@gmail.com");
 }
 
-static void parse_args(int argc, char *argv[])
+static void parse_args(int argc, const char *argv[])
 {
   TRACE();
   int i = 0;
@@ -261,7 +261,7 @@ static void parse_args(int argc, char *argv[])
   }
 }
 
-auto main(int argc, char *argv[]) -> int
+auto main(int argc, const char *argv[]) -> int
 {
   Gamep g = nullptr;
   g_argv  = argv;

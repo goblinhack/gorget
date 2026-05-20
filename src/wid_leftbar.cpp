@@ -9,9 +9,9 @@
 #include "my_spoint.hpp"
 #include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
-#include "my_wid_popup.hpp"
 #include "my_types.hpp"
 #include "my_ui.hpp"
+#include "my_wid_popup.hpp"
 #include "my_wids.hpp"
 
 static WidPopup *wid_leftbar;
@@ -56,7 +56,7 @@ static WidPopup *wid_leftbar;
   return true;
 }
 
-void wid_leftbar_fini(Gamep  /*g*/)
+void wid_leftbar_fini(Gamep /*g*/)
 {
   TRACE();
 

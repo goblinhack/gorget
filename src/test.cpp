@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include "my_callstack.hpp"
 #include "my_ascii.hpp"
+#include "my_callstack.hpp"
 #include "my_console.hpp"
 #include "my_globals.hpp"
 #include "my_main.hpp"
@@ -14,15 +14,15 @@
 #include "my_time.hpp"
 #include "my_types.hpp"
 
-#include <initializer_list>
 #include <cmath>
-#include <format>
 #include <cstdio>
 #include <cstdlib>
+#include <format>
+#include <initializer_list>
 #include <map>
 #include <string>
-#include <vector>
 #include <utility>
+#include <vector>
 
 /* clang-format off */
 static std::initializer_list< std::string > tests = {

@@ -10,8 +10,8 @@
 #include "my_level.hpp"
 #include "my_level_inlines.hpp"
 #include "my_main.hpp"
-#include "my_thing.hpp"
 #include "my_random.hpp"
+#include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
 #include "my_types.hpp"
 #include <string>
@@ -503,7 +503,7 @@ auto monst_state_to_string(MonstState state) -> std::string
   return MonstState_to_string(state);
 }
 
-auto monst_state(Gamep  /*g*/, Levelsp  /*v*/, Levelp  /*l*/, Thingp me) -> MonstState
+auto monst_state(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp me) -> MonstState
 {
   TRACE();
   return me->_monst_state;

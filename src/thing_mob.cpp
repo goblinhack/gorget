@@ -9,6 +9,7 @@
 #include "my_thing_inlines.hpp" // NOLINT
 #include "my_tp.hpp"
 #include "my_types.hpp"
+#include <cstring>
 
 //
 // How many minions?

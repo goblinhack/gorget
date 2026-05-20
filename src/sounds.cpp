@@ -6,7 +6,7 @@
 #include "my_sound.hpp"
 #include "my_types.hpp"
 
-void sounds_load(Gamep  /*g*/)
+void sounds_load(Gamep /*g*/)
 {
   TRACE();
 

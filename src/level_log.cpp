@@ -9,8 +9,8 @@
 #include "my_log.hpp"
 #include "my_main.hpp"
 #include "my_string.hpp"
-#include "my_types.hpp"
 #include "my_time.hpp"
+#include "my_types.hpp"
 #include "my_wids.hpp"
 
 #include <cstdarg>

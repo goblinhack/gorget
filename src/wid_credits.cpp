@@ -8,11 +8,11 @@
 #include "my_main.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
-#include "my_wid_popup.hpp"
-#include "my_types.hpp"
-#include "my_wid.hpp"
-#include "my_ui.hpp"
 #include "my_spoint.hpp"
+#include "my_types.hpp"
+#include "my_ui.hpp"
+#include "my_wid.hpp"
+#include "my_wid_popup.hpp"
 #include "my_wids.hpp"
 #include <SDL_keyboard.h>
 #include <SDL_keycode.h>
@@ -28,7 +28,7 @@ static void wid_credits_destroy(Gamep g)
   wid_main_menu_select(g);
 }
 
-[[nodiscard]] static auto wid_credits_key_down(Gamep g, Widp  /*w*/, const struct SDL_Keysym *key) -> bool
+[[nodiscard]] static auto wid_credits_key_down(Gamep g, Widp /*w*/, const struct SDL_Keysym *key) -> bool
 {
   TRACE();
 
@@ -64,7 +64,7 @@ static void wid_credits_destroy(Gamep g)
   return false;
 }
 
-[[nodiscard]] static auto wid_credits_mouse_up(Gamep g, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
+[[nodiscard]] static auto wid_credits_mouse_up(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
   TRACE();
   wid_credits_destroy(g);

@@ -4,12 +4,12 @@
 
 #include "my_callstack.hpp" // NOLINT
 #include "my_enum.hpp"
-#include "my_game.hpp"      // NOLINT
-#include "my_globals.hpp"   // NOLINT
-#include "my_level.hpp"     // NOLINT
-#include "my_main.hpp"      // NOLINT
-#include "my_tp.hpp"
+#include "my_game.hpp"    // NOLINT
+#include "my_globals.hpp" // NOLINT
+#include "my_level.hpp"   // NOLINT
+#include "my_main.hpp"    // NOLINT
 #include "my_thing.hpp"
+#include "my_tp.hpp"
 
 ENUM_DEF_C(THING_FLAG_ENUM, ThingFlag)
 ENUM_DEF_C(THING_ANIM_ENUM, ThingAnim)

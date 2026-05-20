@@ -11,12 +11,12 @@
 #include "my_main.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
-#include "my_wid_popup.hpp"
-#include "my_types.hpp"
-#include "my_tile.hpp"
 #include "my_spoint.hpp"
+#include "my_tile.hpp"
+#include "my_types.hpp"
 #include "my_ui.hpp"
 #include "my_wid.hpp"
+#include "my_wid_popup.hpp"
 #include "my_wid_text_box.hpp"
 #include "my_wids.hpp"
 #include <SDL_keyboard.h>
@@ -31,7 +31,7 @@ static void wid_intro_destroy()
   wid_intro_window = nullptr;
 }
 
-[[nodiscard]] static auto wid_intro_key_down(Gamep g, Widp  /*w*/, const struct SDL_Keysym *key) -> bool
+[[nodiscard]] static auto wid_intro_key_down(Gamep g, Widp /*w*/, const struct SDL_Keysym *key) -> bool
 {
   TRACE();
 
@@ -60,7 +60,7 @@ static void wid_intro_destroy()
   return false;
 }
 
-[[nodiscard]] static auto wid_intro_mouse_up(Gamep g, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
+[[nodiscard]] static auto wid_intro_mouse_up(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
   TRACE();
   wid_intro_destroy();
@@ -97,7 +97,7 @@ static void game_display_intro(Gamep g)
   blit_flush();
 }
 
-static void wid_intro_tick(Gamep g, Widp  /*w*/)
+static void wid_intro_tick(Gamep g, Widp /*w*/)
 {
   TRACE();
 

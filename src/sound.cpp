@@ -15,8 +15,8 @@
 #include <SDL_error.h>
 #include <SDL_mixer.h>
 #include <SDL_rwops.h>
-#include <cstdint>
 #include <cmath>
+#include <cstdint>
 #include <map>
 #include <string>
 #include <unordered_map>
@@ -87,7 +87,7 @@ auto sound_init() -> bool
   return true;
 }
 
-void sound_fade_out(Gamep  /*g*/)
+void sound_fade_out(Gamep /*g*/)
 {
   TRACE();
 

@@ -4,8 +4,8 @@
 
 #include "my_callstack.hpp"
 #include "my_level.hpp"
-#include "my_types.hpp"
 #include "my_tp.hpp"
+#include "my_types.hpp"
 
 auto level_type(LevelNum level_num) -> LevelType
 {
@@ -41,7 +41,7 @@ auto level_type(LevelNum level_num) -> LevelType
   return LEVEL_TYPE_NORMAL;
 }
 
-auto level_is_boss_level(Gamep  /*g*/, Levelsp  /*v*/, Levelp l) -> bool
+auto level_is_boss_level(Gamep /*g*/, Levelsp /*v*/, Levelp l) -> bool
 {
   TRACE();
 

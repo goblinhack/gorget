@@ -15,12 +15,12 @@
 #include "my_spoint.hpp"
 #include "my_thing.hpp"
 #include "my_time.hpp"
-#include "my_types.hpp"
 #include "my_tp.hpp"
+#include "my_types.hpp"
 
-#include <string>
-#include <list>
 #include <cstdint>
+#include <list>
+#include <string>
 
 void game_popup_text_add(Gamep g, int x, int y, const std::string &text, color c)
 {

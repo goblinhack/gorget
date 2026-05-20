@@ -92,10 +92,10 @@ auto tp_load_staff_fire() -> bool
   tp_flag_set(tp, is_collectable);
   tp_flag_set(tp, is_collision_circle_small);
   tp_flag_set(tp, is_combustible); // will continue to burn once on fire
+  tp_flag_set(tp, is_dead_when_discharged);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_inventory_item);
   tp_flag_set(tp, is_item_droppable);
-  tp_flag_set(tp, is_dead_when_discharged);
   tp_flag_set(tp, is_item);
   tp_flag_set(tp, is_light_source, 2);
   tp_flag_set(tp, is_loggable);

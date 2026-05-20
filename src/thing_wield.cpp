@@ -3,9 +3,9 @@
 //
 
 #include "my_callstack.hpp"
-#include "my_thing.hpp"
-#include "my_main.hpp"
 #include "my_game.hpp"
+#include "my_main.hpp"
+#include "my_thing.hpp"
 #include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp"
 #include "my_types.hpp"
@@ -243,7 +243,7 @@ auto thing_on_unwield_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp un
   return tp->on_unwield_request(g, v, l, me, unwieldper);
 }
 
-auto thing_wielding(Gamep g, Levelsp v, Levelp  /*l*/, Thingp me) -> Thingp
+auto thing_wielding(Gamep g, Levelsp v, Levelp /*l*/, Thingp me) -> Thingp
 {
   TRACE();
 

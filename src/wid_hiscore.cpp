@@ -16,10 +16,10 @@
 #include "my_sound.hpp"
 #include "my_spoint.hpp"
 #include "my_string.hpp"
-#include "my_wid_popup.hpp"
 #include "my_types.hpp"
-#include "my_wid.hpp"
 #include "my_ui.hpp"
+#include "my_wid.hpp"
+#include "my_wid_popup.hpp"
 #include "my_wids.hpp"
 
 static WidPopup *wid_hiscore_window;
@@ -32,7 +32,7 @@ static void wid_hiscore_destroy(Gamep g)
   wid_main_menu_select(g);
 }
 
-[[nodiscard]] static auto wid_hiscore_key_down(Gamep g, Widp  /*w*/, const struct SDL_Keysym *key) -> bool
+[[nodiscard]] static auto wid_hiscore_key_down(Gamep g, Widp /*w*/, const struct SDL_Keysym *key) -> bool
 {
   TRACE();
 
@@ -72,7 +72,7 @@ static void wid_hiscore_destroy(Gamep g)
   return false;
 }
 
-[[nodiscard]] static auto wid_hiscore_mouse_up(Gamep g, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
+[[nodiscard]] static auto wid_hiscore_mouse_up(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
   TRACE();
   wid_hiscore_destroy(g);

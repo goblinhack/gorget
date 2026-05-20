@@ -10,8 +10,8 @@
 #include "my_main.hpp"
 #include "my_thing.hpp"
 #include "my_thing_callbacks.hpp"
-#include "my_types.hpp"
 #include "my_tp.hpp"
+#include "my_types.hpp"
 
 void thing_is_spawned_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
 {

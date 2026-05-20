@@ -19,8 +19,8 @@
 #include <cstdio>
 #include <cstring>
 #include <print>
-#include <vector>
 #include <string>
+#include <vector>
 
 static const int MAX_ROOM_CORRIDOR = 3;
 static const int ROOM_BORDER       = 2;

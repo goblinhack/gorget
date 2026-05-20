@@ -8,12 +8,12 @@
 #include "my_main.hpp"
 #include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
-#include "my_types.hpp"
 #include "my_tp.hpp"
+#include "my_types.hpp"
 
-#include <cstdint>
 #include <cinttypes>
 #include <cmath>
+#include <cstdint>
 #include <cstring>
 #include <mutex>
 
@@ -255,7 +255,7 @@ static auto thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, ThingIdPacked i
   return t;
 }
 
-auto thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, bpoint  /*p*/) -> Thingp
+auto thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, bpoint /*p*/) -> Thingp
 {
   TRACE();
 
@@ -353,7 +353,7 @@ auto thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, bpoint  /*p*/) -> Thingp
   return nullptr;
 }
 
-void thing_free(Gamep g, Levelsp v, Levelp  /*l*/, Thingp t)
+void thing_free(Gamep g, Levelsp v, Levelp /*l*/, Thingp t)
 {
   TRACE();
 

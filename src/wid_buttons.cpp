@@ -5,15 +5,15 @@
 #include "my_callstack.hpp"
 #include "my_color_defs.hpp"
 #include "my_game_defs.hpp"
-#include "my_types.hpp"
 #include "my_time.hpp"
+#include "my_types.hpp"
 #include "my_ui.hpp"
 #include "my_wid.hpp"
 #include "my_wids.hpp"
-#include <string>
 #include <cstdint>
+#include <string>
 
-void wid_gray_out_button(Gamep  /*g*/, Widp w)
+void wid_gray_out_button(Gamep /*g*/, Widp w)
 {
   TRACE();
 
@@ -54,7 +54,7 @@ auto wid_new_close_button(Gamep g, Widp parent, const std::string &name) -> Widp
   return w;
 }
 
-static void wid_button_pulse(Gamep  /*g*/, Widp w)
+static void wid_button_pulse(Gamep /*g*/, Widp w)
 {
   TRACE();
 

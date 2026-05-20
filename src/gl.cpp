@@ -16,11 +16,12 @@
 #include "my_spoint.hpp"
 #include "my_tile.hpp"
 #include "my_types.hpp"
-#include <cmath>
-#include <cstring>
-#include <cstdint>
-#include <cstddef>
+
 #include <algorithm>
+#include <cmath>
+#include <cstddef>
+#include <cstdint>
+#include <cstring>
 
 ENUM_DEF_C(FBO_ENUM, FboEnum)
 
@@ -217,7 +218,7 @@ void gl_enter_2d_mode(Gamep g, int w, int h)
   in_2d_mode = true;
 }
 
-void gl_leave_2d_mode(Gamep  /*g*/)
+void gl_leave_2d_mode(Gamep /*g*/)
 {
   if (! in_2d_mode) {
     return;
@@ -601,7 +602,7 @@ void blit_fbo(Gamep g, FboEnum fbo)
   blit_flush();
 }
 
-void blit_fbo(Gamep  /*g*/, FboEnum fbo, int tl_x, int tl_y, int br_x, int br_y)
+void blit_fbo(Gamep /*g*/, FboEnum fbo, int tl_x, int tl_y, int br_x, int br_y)
 {
   TRACE_DEBUG();
 

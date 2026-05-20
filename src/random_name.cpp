@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include <string>
 #include <cstdint>
+#include <string>
 #include <utility>
 
 #include "my_random_name.hpp"

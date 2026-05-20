@@ -7,14 +7,14 @@
 #include "my_main.hpp"
 #include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
-#include "my_types.hpp"
 #include "my_tp.hpp"
+#include "my_types.hpp"
 #include "my_ui.hpp"
 
 //
 // Do actions upon burning
 //
-void thing_is_burning_handle(Gamep  /*g*/, Levelsp  /*v*/, Levelp  /*l*/, Thingp t)
+void thing_is_burning_handle(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t)
 {
   TRACE();
 

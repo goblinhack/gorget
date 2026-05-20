@@ -6,8 +6,8 @@
 #include "my_callstack.hpp"
 #include "my_game_defs.hpp"
 #include "my_main.hpp"
-#include "my_thing.hpp"
 #include "my_spoint.hpp"
+#include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
 #include "my_types.hpp"
 #include <cstdint>
@@ -15,7 +15,7 @@
 
 static float lunge_amount[ MAP_WIDTH ];
 
-void level_lunge_precalculate(Gamep  /*g*/)
+void level_lunge_precalculate(Gamep /*g*/)
 {
   static const char lunge_map[]
       // lunge distance ------------------------------>
@@ -81,7 +81,7 @@ void level_lunge_precalculate(Gamep  /*g*/)
   }
 }
 
-void thing_is_lunging_set(Gamep  /*g*/, Levelsp  /*v*/, Levelp  /*l*/, Thingp me, bool val)
+void thing_is_lunging_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp me, bool val)
 {
   TRACE_DEBUG();
 
@@ -198,7 +198,7 @@ void thing_lunge_end_check(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 }
 
-void thing_lunge_modify_position(Gamep  /*g*/, Levelsp  /*v*/, Levelp  /*l*/, Thingp me, spoint &tl, spoint &br)
+void thing_lunge_modify_position(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp me, spoint &tl, spoint &br)
 {
   TRACE();
 

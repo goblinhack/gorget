@@ -6,10 +6,10 @@
 #include "my_callstack.hpp"
 #include "my_fpoint.hpp"
 #include "my_level.hpp"
-#include "my_level_inlines.hpp"
-#include "my_main.hpp" // NOLINT
+#include "my_level_inlines.hpp" // NOLINT
+#include "my_main.hpp"          // NOLINT
 #include "my_thing.hpp"
-#include "my_thing_inlines.hpp"
+#include "my_thing_inlines.hpp" // NOLINT
 #include "my_tp.hpp"
 #include "my_types.hpp"
 
@@ -478,15 +478,13 @@ static auto thing_collision_check_circle_circle(Thingp A, fpoint A_at, Thingp B,
   return false;
 }
 
-[[nodiscard]] static auto thing_collision_check_circle_small_circle_small(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint me_at, Thingp o,
-                                                                          fpoint o_at) -> bool
+[[nodiscard]] static auto thing_collision_check_circle_small_circle_small(Thingp me, fpoint me_at, Thingp o, fpoint o_at) -> bool
 {
   TRACE();
   return thing_collision_check_circle_circle(me, me_at, o, o_at);
 }
 
-[[nodiscard]] static auto thing_collision_check_circle_small_circle_large(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint me_at, Thingp o,
-                                                                          fpoint o_at) -> bool
+[[nodiscard]] static auto thing_collision_check_circle_small_circle_large(Thingp me, fpoint me_at, Thingp o, fpoint o_at) -> bool
 {
   TRACE();
   return thing_collision_check_circle_circle(me, me_at, o, o_at);
@@ -498,8 +496,7 @@ static auto thing_collision_check_circle_circle(Thingp A, fpoint A_at, Thingp B,
   return thing_collision_check_circle_square(me, me_at, o, o_at);
 }
 
-[[nodiscard]] static auto thing_collision_check_circle_large_circle_large(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint me_at, Thingp o,
-                                                                          fpoint o_at) -> bool
+[[nodiscard]] static auto thing_collision_check_circle_large_circle_large(Thingp me, fpoint me_at, Thingp o, fpoint o_at) -> bool
 {
   TRACE();
   return thing_collision_check_circle_circle(me, me_at, o, o_at);
@@ -649,12 +646,12 @@ static void thing_collision_handle_interpolated_delta(Gamep g, Levelsp v, Levelp
 
     if (thing_is_collision_circle_small(me)) {
       if (thing_is_collision_circle_small(o)) {
-        collision = thing_collision_check_circle_small_circle_small(g, v, l, me, interp_at_f, o, o_at);
+        collision = thing_collision_check_circle_small_circle_small(me, interp_at_f, o, o_at);
         if (compiler_unused) {
           THING_DBG(o, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
         }
       } else if (thing_is_collision_circle_large(o)) {
-        collision = thing_collision_check_circle_small_circle_large(g, v, l, me, interp_at_f, o, o_at);
+        collision = thing_collision_check_circle_small_circle_large(me, interp_at_f, o, o_at);
         if (compiler_unused) {
           THING_DBG(o, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
         }
@@ -668,12 +665,12 @@ static void thing_collision_handle_interpolated_delta(Gamep g, Levelsp v, Levelp
       }
     } else if (thing_is_collision_circle_large(me)) {
       if (thing_is_collision_circle_small(o)) {
-        collision = thing_collision_check_circle_small_circle_large(g, v, l, me, interp_at_f, o, o_at);
+        collision = thing_collision_check_circle_small_circle_large(me, interp_at_f, o, o_at);
         if (compiler_unused) {
           THING_DBG(o, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
         }
       } else if (thing_is_collision_circle_large(o)) {
-        collision = thing_collision_check_circle_large_circle_large(g, v, l, me, interp_at_f, o, o_at);
+        collision = thing_collision_check_circle_large_circle_large(me, interp_at_f, o, o_at);
         if (compiler_unused) {
           THING_DBG(o, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
         }

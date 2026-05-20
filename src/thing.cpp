@@ -10,8 +10,8 @@
 #include "my_main.hpp"
 #include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
-#include "my_types.hpp"
 #include "my_tp.hpp"
+#include "my_types.hpp"
 
 #include <cmath>
 
@@ -124,7 +124,7 @@ auto thing_and_tp_get_at(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot
   return t;
 }
 
-void thing_stats_dump(Gamep  /*g*/, Levelsp v)
+void thing_stats_dump(Gamep /*g*/, Levelsp v)
 {
   TRACE();
 

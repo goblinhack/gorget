@@ -11,15 +11,15 @@
 #include "my_level_inlines.hpp"
 #include "my_line.hpp"
 #include "my_main.hpp"
-#include "my_types.hpp"
 #include "my_thing.hpp"
 #include "my_tp.hpp"
+#include "my_types.hpp"
 
 #include <algorithm>
-#include <vector>
-#include <initializer_list>
 #include <cmath>
 #include <cstring>
+#include <initializer_list>
+#include <vector>
 
 static std::vector< bpoint > cursor_path;
 
@@ -28,7 +28,7 @@ using PathCost = struct PathCost {
   int                   cost = {};
 };
 
-void level_cursor_set(Gamep  /*g*/, Levelsp v, bpoint p)
+void level_cursor_set(Gamep /*g*/, Levelsp v, bpoint p)
 {
   TRACE();
 
@@ -50,7 +50,7 @@ void level_cursor_set(Gamep  /*g*/, Levelsp v, bpoint p)
   }
 }
 
-auto level_cursor_is_valid(Gamep  /*g*/, Levelsp v) -> bool
+auto level_cursor_is_valid(Gamep /*g*/, Levelsp v) -> bool
 {
   TRACE();
 
@@ -642,4 +642,4 @@ void level_cursor_copy_mouse_path_to_player(Gamep g, Levelsp v, Levelp l)
   level_select_mouse_motion(g, v, l);
 }
 
-auto level_cursor_path_size(Gamep  /*g*/) -> int { return static_cast< int >(cursor_path.size()); }
+auto level_cursor_path_size(Gamep /*g*/) -> int { return static_cast< int >(cursor_path.size()); }

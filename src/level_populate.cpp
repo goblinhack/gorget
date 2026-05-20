@@ -280,7 +280,7 @@ static auto level_populate_biome_dungeon(Gamep g, Levelsp v, Levelp l, class Lev
   return tp;
 }
 
-static auto level_populate_biome_bogland(Gamep g, Levelsp v, Levelp l, class LevelGen *lg, class LevelPopulate &lp) -> Tpp
+static auto level_populate_biome_bogland(Gamep g, Levelsp v, Levelp l, class LevelPopulate &lp) -> Tpp
 {
   TRACE();
 
@@ -395,7 +395,7 @@ static auto level_populate_biome_bogland(Gamep g, Levelsp v, Levelp l, class Lev
   return tp;
 }
 
-static auto level_populate_biome_nethervoid(Gamep g, Levelsp v, Levelp l, class LevelGen *lg, class LevelPopulate &lp) -> Tpp
+static auto level_populate_biome_nethervoid(Gamep g, Levelsp v, Levelp l, class LevelPopulate &lp) -> Tpp
 {
   TRACE();
 
@@ -476,7 +476,7 @@ static auto level_populate_fixup_biome_nethervoid(class LevelPopulate &lp, Tpp t
   return tp;
 }
 
-static auto level_populate_biome_graveyard(Gamep g, Levelsp v, Levelp l, class LevelGen *lg, class LevelPopulate &lp) -> Tpp
+static auto level_populate_biome_graveyard(Gamep g, Levelsp v, Levelp l, class LevelPopulate &lp) -> Tpp
 {
   TRACE();
 
@@ -570,7 +570,7 @@ static auto level_populate_fixup_biome_graveyard(class LevelPopulate &lp, Tpp tp
   return tp;
 }
 
-static auto level_populate_biome_underhell(Gamep g, Levelsp v, Levelp l, class LevelGen *lg, class LevelPopulate &lp) -> Tpp
+static auto level_populate_biome_underhell(Gamep g, Levelsp v, Levelp l, class LevelPopulate &lp) -> Tpp
 {
   TRACE();
 
@@ -769,10 +769,10 @@ auto level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *lg, int w, int
         //
         switch (lp.biome) {
           case BIOME_DUNGEON :    tp = level_populate_biome_dungeon(g, v, l, lp); break;
-          case BIOME_BOGLAND :    tp = level_populate_biome_bogland(g, v, l, lg, lp); break;
-          case BIOME_NETHERVOID : tp = level_populate_biome_nethervoid(g, v, l, lg, lp); break;
-          case BIOME_GRAVEYARD :  tp = level_populate_biome_graveyard(g, v, l, lg, lp); break;
-          case BIOME_UNDERHELL :  tp = level_populate_biome_underhell(g, v, l, lg, lp); break;
+          case BIOME_BOGLAND :    tp = level_populate_biome_bogland(g, v, l, lp); break;
+          case BIOME_NETHERVOID : tp = level_populate_biome_nethervoid(g, v, l, lp); break;
+          case BIOME_GRAVEYARD :  tp = level_populate_biome_graveyard(g, v, l, lp); break;
+          case BIOME_UNDERHELL :  tp = level_populate_biome_underhell(g, v, l, lp); break;
           case BIOME_NONE :       [[fallthrough]];
           case BIOME_ENUM_MAX :   break;
         }

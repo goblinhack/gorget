@@ -5,14 +5,14 @@
 #include "my_callstack.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
-#include "my_types.hpp"
 #include "my_thing.hpp"
+#include "my_types.hpp"
 #include <cinttypes>
 
 //
 // Slower version, packed with extra warnings
 //
-auto thing_find_non_inline(Gamep  /*g*/, Levelsp v, ThingId id) -> Thingp
+auto thing_find_non_inline(Gamep /*g*/, Levelsp v, ThingId id) -> Thingp
 {
   TRACE_DEBUG(); // expensive
 

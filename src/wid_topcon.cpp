@@ -10,8 +10,8 @@
 #include "my_spoint.hpp"
 #include "my_string.hpp"
 #include "my_types.hpp"
-#include "my_wid.hpp"
 #include "my_ui.hpp"
+#include "my_wid.hpp"
 #include "my_wids.hpp"
 
 #include <cstdint>

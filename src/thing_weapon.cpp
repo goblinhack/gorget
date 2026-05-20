@@ -8,8 +8,8 @@
 #include "my_math.hpp"
 #include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
-#include "my_types.hpp"
 #include "my_tp.hpp"
+#include "my_types.hpp"
 
 #include <cstring>
 
@@ -39,7 +39,7 @@ auto thing_weapon_get_delta_from_dt(Gamep g, Thingp t, float dt) -> fpoint
   return delta;
 }
 
-auto thing_weapon_get_direction(Gamep g, Levelsp  /*v*/, Levelp  /*l*/, Thingp t) -> fpoint
+auto thing_weapon_get_direction(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t) -> fpoint
 {
   TRACE();
 
@@ -126,7 +126,7 @@ auto thing_spawn_weapon(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const
 //
 // Is this weapon attached to a thing?
 //
-auto thing_fired_by_get(Gamep g, Levelsp v, Levelp  /*l*/, Thingp me) -> Thingp
+auto thing_fired_by_get(Gamep g, Levelsp v, Levelp /*l*/, Thingp me) -> Thingp
 {
   if (me == nullptr) {
     return nullptr;
@@ -142,7 +142,7 @@ auto thing_fired_by_get(Gamep g, Levelsp v, Levelp  /*l*/, Thingp me) -> Thingp
 //
 // How many projectils?
 //
-auto thing_fired_by_count_get(Gamep g, Levelsp  /*v*/, Levelp  /*l*/, Thingp me) -> int
+auto thing_fired_by_count_get(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp me) -> int
 {
   if (me == nullptr) {
     return 0;

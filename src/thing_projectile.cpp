@@ -11,9 +11,8 @@
 #include "my_math.hpp"
 #include "my_thing.hpp"
 #include "my_thing_callbacks.hpp"
-#include "my_types.hpp"
 #include "my_tp.hpp"
-
+#include "my_types.hpp"
 
 auto thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const fpoint target) -> bool
 {

@@ -6,8 +6,8 @@
 #include "my_callstack.hpp"
 #include "my_dmap.hpp"
 #include "my_level_inlines.hpp"
-#include "my_thing.hpp"
 #include "my_random.hpp"
+#include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
 #include "my_types.hpp"
 
@@ -17,7 +17,7 @@
 //
 // Is this minion attached to a mob?
 //
-auto thing_minion_mob_get(Gamep g, Levelsp v, Levelp  /*l*/, Thingp me) -> Thingp
+auto thing_minion_mob_get(Gamep g, Levelsp v, Levelp /*l*/, Thingp me) -> Thingp
 {
   if (me == nullptr) {
     return nullptr;

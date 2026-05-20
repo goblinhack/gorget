@@ -7,11 +7,11 @@
 #include "my_level.hpp"
 #include "my_level_inlines.hpp"
 #include "my_main.hpp"
-#include "my_thing_callbacks.hpp"
 #include "my_thing.hpp"
+#include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp"
-#include "my_types.hpp"
 #include "my_tp.hpp"
+#include "my_types.hpp"
 
 //
 // Returns true/false on success/fail
@@ -93,7 +93,7 @@ auto thing_is_unlocked(Thingp t) -> bool
   return t->_is_unlocked;
 }
 
-void thing_is_unlocked_set(Gamep  /*g*/, Levelsp  /*v*/, Levelp  /*l*/, Thingp t, bool val)
+void thing_is_unlocked_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, bool val)
 {
   TRACE_DEBUG();
 

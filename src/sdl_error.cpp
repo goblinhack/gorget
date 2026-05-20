@@ -6,13 +6,13 @@
 #include "my_main.hpp"
 #include "my_string.hpp"
 
+#include <SDL_log.h>
+#include <SDL_messagebox.h>
+#include <SDL_version.h>
+#include <SDL_video.h>
+#include <cmath>
 #include <cstdarg>
 #include <cstdio>
-#include <SDL_version.h>
-#include <SDL_log.h>
-#include <cmath>
-#include <SDL_video.h>
-#include <SDL_messagebox.h>
 #include <cstdlib>
 
 static void sdl_msgerr_(const char *fmt, va_list args)

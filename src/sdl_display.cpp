@@ -13,13 +13,13 @@
 #include "my_types.hpp"
 #include "my_wid.hpp"
 #include "my_wids.hpp"
+#include <SDL_error.h>
+#include <SDL_events.h>
 #include <SDL_timer.h>
 #include <SDL_video.h>
 #include <cmath>
-#include <cstring>
-#include <SDL_error.h>
 #include <cstdint>
-#include <SDL_events.h>
+#include <cstring>
 
 void sdl_display(Gamep g)
 {

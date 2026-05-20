@@ -11,12 +11,12 @@
 #include "my_spoint.hpp"
 #include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
-#include "my_wid_popup.hpp"
-#include "my_types.hpp"
-#include "my_wid.hpp"
-#include "my_ui.hpp"
 #include "my_tile.hpp"
 #include "my_tp.hpp"
+#include "my_types.hpp"
+#include "my_ui.hpp"
+#include "my_wid.hpp"
+#include "my_wid_popup.hpp"
 #include "my_wids.hpp"
 
 #include <format>
@@ -152,7 +152,7 @@ static void wid_rightbar_create_minimap_level(Gamep g)
   return true;
 }
 
-void wid_rightbar_fini(Gamep  /*g*/)
+void wid_rightbar_fini(Gamep /*g*/)
 {
   TRACE();
 

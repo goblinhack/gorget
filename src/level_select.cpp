@@ -14,17 +14,17 @@
 #include "my_random.hpp"
 #include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
-#include "my_types.hpp"
 #include "my_tp.hpp"
+#include "my_types.hpp"
 #include "my_ui.hpp"
 #include "my_wid_popup.hpp"
 #include "my_wid_text_box.hpp"
 
 #include <cmath>
-#include <cstring>
 #include <cstdint>
-#include <map>
+#include <cstring>
 #include <format>
+#include <map>
 #include <string>
 
 auto level_select_is_oob(bpoint p) -> bool
@@ -68,7 +68,7 @@ auto level_select_is_oob(int x, int y) -> bool
 //
 // If in level select mode, enter the chosen level
 //
-auto level_select_get_level_at_tile_coords(Gamep g, Levelsp v, bpoint  /*p*/) -> Levelp
+auto level_select_get_level_at_tile_coords(Gamep g, Levelsp v, bpoint /*p*/) -> Levelp
 {
   TRACE();
 
@@ -385,7 +385,7 @@ void level_select_assign_levels_to_grid(Gamep g, Levelsp v)
 //
 // Return the level
 //
-auto level_select_get(Gamep  /*g*/, Levelsp v, bpoint p) -> LevelSelectCell *
+auto level_select_get(Gamep /*g*/, Levelsp v, bpoint p) -> LevelSelectCell *
 {
   TRACE();
 
@@ -703,7 +703,7 @@ void level_select_grid_of_empty_levels(Gamep g)
 //
 // Clean up the level select snake walk
 //
-void level_select_destroy(Gamep  /*g*/, Levelsp v, Levelp l)
+void level_select_destroy(Gamep /*g*/, Levelsp v, Levelp l)
 {
   log("level select destroy");
   TRACE_INDENT();

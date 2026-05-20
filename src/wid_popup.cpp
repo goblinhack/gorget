@@ -6,9 +6,9 @@
 #include <utility>
 
 #include "my_callstack.hpp"
-#include "my_types.hpp"
 #include "my_spoint.hpp"
 #include "my_tile.hpp"
+#include "my_types.hpp"
 #include "my_ui.hpp"
 #include "my_wid.hpp"
 #include "my_wid_popup.hpp"

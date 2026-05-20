@@ -2,16 +2,16 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include <SDL_keyboard.h>
 #include <SDL_events.h>
+#include <SDL_joystick.h>
+#include <SDL_keyboard.h>
 #include <SDL_keycode.h>
 #include <SDL_mouse.h>
-#include <SDL_joystick.h>
 #include <SDL_scancode.h>
 #include <algorithm>
 #include <cinttypes>
-#include <cstring>
 #include <cstdint>
+#include <cstring>
 
 #include "my_callstack.hpp"
 #include "my_game.hpp"

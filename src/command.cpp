@@ -15,6 +15,7 @@
 #include <cstdint>
 #include <cstring>
 #include <string>
+#include <strings.h>
 #include <unordered_map>
 #include <utility>
 

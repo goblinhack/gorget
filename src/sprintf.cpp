@@ -5,6 +5,7 @@
 #include "my_sprintf.hpp"
 
 #include <cstdarg>
+#include <cstdio>
 #include <cstdlib>
 #include <stdio.h>
 #include <string>

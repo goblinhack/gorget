@@ -1242,7 +1242,7 @@ auto Game::load_snapshot() -> bool
   return game_load_error.empty();
 }
 
-void wid_load_destroy(Gamep  /*g*/)
+void wid_load_destroy(Gamep /*g*/)
 {
   if (wid_load == nullptr) {
     return;
@@ -1255,7 +1255,7 @@ void wid_load_destroy(Gamep  /*g*/)
   wid_load = nullptr;
 }
 
-static auto wid_load_key_up(Gamep g, Widp  /*w*/, const struct SDL_Keysym *key) -> bool
+static auto wid_load_key_up(Gamep g, Widp /*w*/, const struct SDL_Keysym *key) -> bool
 {
   TRACE();
 
@@ -1313,7 +1313,7 @@ static auto wid_load_key_up(Gamep g, Widp  /*w*/, const struct SDL_Keysym *key) 
   return true;
 }
 
-static auto wid_load_key_down(Gamep g, Widp  /*w*/, const struct SDL_Keysym *key) -> bool
+static auto wid_load_key_down(Gamep g, Widp /*w*/, const struct SDL_Keysym *key) -> bool
 {
   TRACE();
 
@@ -1326,7 +1326,7 @@ static auto wid_load_key_down(Gamep g, Widp  /*w*/, const struct SDL_Keysym *key
   return true;
 }
 
-static auto wid_load_mouse_up(Gamep  /*g*/, Widp w, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
+static auto wid_load_mouse_up(Gamep /*g*/, Widp w, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
   log("load selected slot");
   TRACE_INDENT();
@@ -1337,7 +1337,7 @@ static auto wid_load_mouse_up(Gamep  /*g*/, Widp w, int  /*x*/, int  /*y*/, uint
   return true;
 }
 
-static auto wid_load_saved_snapshot(Gamep  /*g*/, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
+static auto wid_load_saved_snapshot(Gamep /*g*/, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
   log("load snapshot");
   TRACE_INDENT();
@@ -1347,7 +1347,7 @@ static auto wid_load_saved_snapshot(Gamep  /*g*/, Widp  /*w*/, int  /*x*/, int  
   return true;
 }
 
-static auto wid_load_cancel(Gamep g, Widp  /*w*/, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
+static auto wid_load_cancel(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
   log("load cancel");
   TRACE_INDENT();

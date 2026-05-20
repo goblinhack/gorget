@@ -29,18 +29,19 @@ extern bool g_ptrcheck_inited;           // Ptrcheck is active
 extern bool g_quitting;                  // Exiting the game
 extern bool g_skip_audio_and_gfx;        // For tests
                                          //
-extern char  *g_data_path;
-extern char  *g_exec_dir;
-extern char  *g_exec_full_path_and_name;
-extern char  *g_gfx_path;
-extern char  *g_ttf_path;
-extern char **g_argv;
+extern char *g_data_path;
+extern char *g_exec_dir;
+extern char *g_exec_full_path_and_name;
+extern char *g_gfx_path;
+extern char *g_ttf_path;
 
-extern int g_intro_done; // Have we shown the intro text yet?
-extern int g_argc;
-extern int g_err_count;                                 // How many ERRs
-extern int g_memory_allocated;                          // We've allocated something
-                                                        //
+extern int g_intro_done;       // Have we shown the intro text yet?
+extern int g_err_count;        // How many ERRs
+extern int g_memory_allocated; // We've allocated something
+                               //
+extern const char **g_argv;
+extern int          g_argc;
+
 extern std::string g_need_restart_with_given_arguments; // Need to restart game with the given arg
 extern std::string g_opt_seed_name;
 extern std::string g_opt_seed_name_weekly;

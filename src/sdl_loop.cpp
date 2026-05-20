@@ -10,13 +10,13 @@
 #include "my_pcg_basic.hpp"
 #include "my_sdl_event.hpp"
 #include "my_sdl_proto.hpp"
-#include "my_types.hpp"
 #include "my_time.hpp"
+#include "my_types.hpp"
 #include "my_ui.hpp"
 #include "my_wid.hpp"
 #include "my_wids.hpp"
-#include <cmath>
 #include <SDL_events.h>
+#include <cmath>
 #include <cstdint>
 
 //

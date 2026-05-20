@@ -11,9 +11,9 @@
 #include "my_time.hpp"
 #include "my_types.hpp"
 #include <cstdint>
-#include <string>
 #include <istream>
 #include <ostream>
+#include <string>
 
 HiScores::HiScores()
 {

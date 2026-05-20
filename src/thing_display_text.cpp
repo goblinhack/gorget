@@ -11,14 +11,15 @@
 #include "my_font.hpp"
 #include "my_game.hpp"
 #include "my_game_defs.hpp"
-#include "my_types.hpp"
 #include "my_spoint.hpp"
 #include "my_string.hpp"
 #include "my_tex.hpp"
-#include "my_tp.hpp"
+#include "my_thing.hpp" // NOLINT
 #include "my_tile.hpp"
+#include "my_tp.hpp"
+#include "my_types.hpp"
 
-void thing_blit_text(Gamep g, Levelsp  /*v*/, Levelp  /*l*/, spoint tl, spoint br, std::string const &text, color fg, bool outline)
+void thing_blit_text(Gamep g, Levelsp /*v*/, Levelp /*l*/, spoint tl, spoint br, std::string const &text, color fg, bool outline)
 {
   TRACE();
 

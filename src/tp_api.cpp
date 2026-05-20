@@ -4,8 +4,8 @@
 
 #include "my_callstack.hpp"
 #include "my_thing_inlines.hpp"
-#include "my_types.hpp"
 #include "my_tp.hpp"
+#include "my_types.hpp"
 
 auto tp_is_able_to_collect_items(Tpp tp) -> bool
 {

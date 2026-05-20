@@ -2,14 +2,14 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include <cstdint>
 #include <SDL_mouse.h>
 #include <cmath>
+#include <cstdint>
 #include <ranges>
 #include <vector>
 
-#include "my_callstack.hpp"
 #include "my_ascii.hpp"
+#include "my_callstack.hpp"
 #include "my_game.hpp"
 #include "my_sdl_event.hpp"
 #include "my_sdl_proto.hpp"
@@ -33,7 +33,7 @@ static int saved_mouse_y;
 
 void wid_mouse_motion_end(Gamep g) {}
 
-void wid_mouse_motion_begin(Gamep g, Widp  /*w*/, int  /*x*/, int  /*y*/) { wid_mouse_motion_end(g); }
+void wid_mouse_motion_begin(Gamep g, Widp /*w*/, int /*x*/, int /*y*/) { wid_mouse_motion_end(g); }
 
 void wid_mouse_focus_end(Gamep g_maybe_null)
 {
@@ -231,7 +231,7 @@ void wid_set_on_mouse_over_end(Widp w, on_mouse_over_end_t fn)
   w->on_mouse_over_end = fn;
 }
 
-auto wid_scroll_trough_mouse_down(Gamep g, Widp w, int x, int y, uint32_t  /*button*/) -> bool
+auto wid_scroll_trough_mouse_down(Gamep g, Widp w, int x, int y, uint32_t /*button*/) -> bool
 {
   TRACE();
 
@@ -282,7 +282,7 @@ auto wid_scroll_trough_mouse_down(Gamep g, Widp w, int x, int y, uint32_t  /*but
   return true;
 }
 
-auto wid_scroll_motion(Gamep g, Widp w, int  /*x*/, int  /*y*/, int relx, int rely, int wheelx, int wheely) -> bool
+auto wid_scroll_motion(Gamep g, Widp w, int /*x*/, int /*y*/, int relx, int rely, int wheelx, int wheely) -> bool
 {
   TRACE();
 
@@ -371,7 +371,7 @@ auto wid_find_under_mouse() -> Widp
   return nullptr;
 }
 
-auto wid_find_under_mouse_when_scrolling(Gamep  /*g*/) -> Widp
+auto wid_find_under_mouse_when_scrolling(Gamep /*g*/) -> Widp
 {
   TRACE();
 
@@ -1131,7 +1131,7 @@ void wid_mouse_warp(Gamep g, Widp w)
   sdl_mouse_warp(g, x, y);
 }
 
-void wid_mouse_move(Gamep  /*g*/, Widp w)
+void wid_mouse_move(Gamep /*g*/, Widp w)
 {
   TRACE();
 

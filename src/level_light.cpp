@@ -11,8 +11,8 @@
 #include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
 #include "my_tile.hpp"
-#include "my_types.hpp"
 #include "my_tp.hpp"
+#include "my_types.hpp"
 
 #include <algorithm>
 #include <cstdint>
@@ -22,7 +22,7 @@
 
 static float light_fade[ MAP_WIDTH ];
 
-void level_light_precalculate(Gamep  /*g*/)
+void level_light_precalculate(Gamep /*g*/)
 {
   static const char light_fade_map[]
       = "x                                               " // light strength

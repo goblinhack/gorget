@@ -31,8 +31,8 @@
 #include "my_main.hpp"
 #include "my_pcg_basic.hpp"
 
-#include <cstdint>
 #include <cmath>
+#include <cstdint>
 #include <cstdlib>
 
 static int pcg_lock_count; // No pcg random numbers allowed here

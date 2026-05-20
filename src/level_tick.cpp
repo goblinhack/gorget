@@ -13,12 +13,12 @@
 #include "my_main.hpp"
 #include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
-#include "my_types.hpp"
 #include "my_time.hpp"
+#include "my_types.hpp"
 #include "my_wids.hpp"
-#include <vector>
-#include <cstdint>
 #include <algorithm>
+#include <cstdint>
+#include <vector>
 
 static void level_tick_begin(Gamep g, Levelsp v, Levelp l);
 static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool tick_is_about_to_end = false);
@@ -586,7 +586,7 @@ auto level_tick_begin_requested(Gamep g, Levelsp v, Levelp l, const char *why) -
   return ret;
 }
 
-auto level_tick_begin_is_requested(Gamep g, Levelsp v, Levelp  /*l*/) -> bool
+auto level_tick_begin_is_requested(Gamep g, Levelsp v, Levelp /*l*/) -> bool
 {
   TRACE();
 
@@ -644,7 +644,7 @@ static void level_tick_end(Gamep g, Levelsp v, Levelp l)
   }
 }
 
-auto level_tick_is_in_progress(Gamep  /*g*/, Levelsp  /*v*/, Levelp l) -> bool
+auto level_tick_is_in_progress(Gamep /*g*/, Levelsp /*v*/, Levelp l) -> bool
 {
   TRACE();
 
@@ -824,7 +824,7 @@ static void level_tick_time_step(Gamep g, Levelsp v, Levelp current_level)
 //
 // Tick all levels that requested it.
 //
-static void level_tick_all(Gamep g, Levelsp v, Levelp current_level)
+static void level_tick_all(Gamep g, Levelsp v)
 {
   TRACE();
 
@@ -908,7 +908,7 @@ void levels_tick(Gamep g, Levelsp v)
   //
   // Tick all levels that requested it.
   //
-  level_tick_all(g, v, current_level);
+  level_tick_all(g, v);
 
   //
   // We need to keep track of how many ticks have ended and how many still run.

@@ -5,14 +5,14 @@
 #include "my_globals.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
-#include "my_types.hpp"
 #include "my_thing.hpp"
+#include "my_types.hpp"
 
 #include <cstdint>
 
 static int g_iter;
 
-MyIter::MyIter(Gamep  /*g*/, Levelsp _v, int *out_iter, const char *_func, const uint16_t _line)
+MyIter::MyIter(Gamep /*g*/, Levelsp _v, int *out_iter, const char *_func, const uint16_t _line)
 {
   if (g_thread_id != MAIN_THREAD) {
     CROAK("using iterator, but not on main thread, thread=%d", g_thread_id);

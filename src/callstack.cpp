@@ -3,8 +3,8 @@
 //
 
 #include <cstdint>
-#include <format>
 #include <cstdio>
+#include <format>
 #include <print>
 #include <string>
 #include <utility>

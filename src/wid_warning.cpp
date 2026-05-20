@@ -8,11 +8,11 @@
 #include "my_main.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
-#include "my_wid_popup.hpp"
-#include "my_types.hpp"
-#include "my_wid.hpp"
 #include "my_spoint.hpp"
+#include "my_types.hpp"
 #include "my_ui.hpp"
+#include "my_wid.hpp"
+#include "my_wid_popup.hpp"
 #include "my_wid_warning.hpp"
 #include "my_wids.hpp"
 #include <SDL_keyboard.h>
@@ -88,7 +88,7 @@ static void wid_warning_destroy()
   return true;
 }
 
-[[nodiscard]] static auto wid_warning_yes(Gamep g, Widp w, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
+[[nodiscard]] static auto wid_warning_yes(Gamep g, Widp w, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
   DBG("widget warning: yes");
   TRACE();
@@ -101,7 +101,7 @@ static void wid_warning_destroy()
   return true;
 }
 
-[[nodiscard]] static auto wid_warning_no(Gamep g, Widp w, int  /*x*/, int  /*y*/, uint32_t  /*button*/) -> bool
+[[nodiscard]] static auto wid_warning_no(Gamep g, Widp w, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
   DBG("widget warning: no");
   TRACE();

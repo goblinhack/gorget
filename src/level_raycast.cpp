@@ -6,20 +6,20 @@
 #include "my_bpoint.hpp"
 #include "my_callstack.hpp"
 #include "my_fov_map_inlines.hpp"
-#include "my_gl.hpp"
 #include "my_game_defs.hpp"
+#include "my_gl.hpp"
 #include "my_globals.hpp"
 #include "my_level.hpp"
 #include "my_level_inlines.hpp"
 #include "my_main.hpp"
 #include "my_math.hpp"
-#include "my_spoint.hpp"
 #include "my_ptrcheck.hpp"
+#include "my_spoint.hpp"
 #include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
 #include "my_tile.hpp"
-#include "my_types.hpp"
 #include "my_tp.hpp"
+#include "my_types.hpp"
 
 #include <algorithm>
 #include <array>
@@ -228,7 +228,7 @@ void Raycast::ray_pixel_line_draw(int16_t index, const spoint p0, const spoint p
 //
 // Generate the right ray lengths.
 //
-void Raycast::ray_lengths_precalculate(Gamep  /*g*/, Levelsp  /*v*/, Levelp  /*l*/)
+void Raycast::ray_lengths_precalculate(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/)
 {
   TRACE();
 
@@ -545,7 +545,7 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
 //
 // Re-generate triangle fans and render to the FBO
 //
-void Raycast::raycast_render(Gamep g, Levelsp  /*v*/, Levelp  /*l*/)
+void Raycast::raycast_render(Gamep g, Levelsp /*v*/, Levelp /*l*/)
 {
   TRACE();
 
@@ -660,7 +660,7 @@ void level_raycast(Gamep g, Levelsp v, Levelp l, FboEnum fbo)
   player_raycast->raycast_do(g, v, l);
 }
 
-void level_raycast_init(Gamep g)
+void level_raycast_init(Gamep /*g*/)
 {
   TRACE();
   level_raycast_precalculate();

@@ -9,8 +9,8 @@
 #include "my_thing_inlines.hpp"
 #include "my_tp.hpp"
 #include "my_types.hpp"
-#include <limits>
 #include <algorithm>
+#include <limits>
 
 auto thing_stamina(Thingp t) -> int
 {
@@ -23,7 +23,7 @@ auto thing_stamina(Thingp t) -> int
   return t->_stamina;
 }
 
-auto thing_stamina_set(Gamep g, Levelsp  /*v*/, Levelp  /*l*/, Thingp t, int val) -> int
+auto thing_stamina_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -45,7 +45,7 @@ auto thing_stamina_set(Gamep g, Levelsp  /*v*/, Levelp  /*l*/, Thingp t, int val
   return t->_stamina;
 }
 
-auto thing_stamina_incr(Gamep g, Levelsp  /*v*/, Levelp  /*l*/, Thingp t, int val) -> int
+auto thing_stamina_incr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -61,7 +61,7 @@ auto thing_stamina_incr(Gamep g, Levelsp  /*v*/, Levelp  /*l*/, Thingp t, int va
   return t->_stamina;
 }
 
-auto thing_stamina_decr(Gamep g, Levelsp  /*v*/, Levelp  /*l*/, Thingp t, int val) -> int
+auto thing_stamina_decr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -89,7 +89,7 @@ auto thing_stamina_max(Thingp t) -> int
   return t->_stamina_max;
 }
 
-auto thing_stamina_max_set(Gamep g, Levelsp  /*v*/, Levelp  /*l*/, Thingp t, int val) -> int
+auto thing_stamina_max_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -107,7 +107,7 @@ auto thing_stamina_max_set(Gamep g, Levelsp  /*v*/, Levelp  /*l*/, Thingp t, int
   return t->_stamina_max = val;
 }
 
-auto thing_stamina_max_incr(Gamep g, Levelsp  /*v*/, Levelp  /*l*/, Thingp t, int val) -> int
+auto thing_stamina_max_incr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -119,7 +119,7 @@ auto thing_stamina_max_incr(Gamep g, Levelsp  /*v*/, Levelp  /*l*/, Thingp t, in
   return t->_stamina_max += val;
 }
 
-auto thing_stamina_max_decr(Gamep g, Levelsp  /*v*/, Levelp  /*l*/, Thingp t, int val) -> int
+auto thing_stamina_max_decr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 

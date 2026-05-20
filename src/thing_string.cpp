@@ -8,13 +8,13 @@
 #include "my_main.hpp"
 #include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
-#include "my_types.hpp"
 #include "my_tp.hpp"
+#include "my_types.hpp"
 
 #include <format>
 #include <string>
 
-auto to_string(Gamep g, Levelsp  /*v*/, Levelp  /*l*/, Thingp t) -> std::string
+auto to_string(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t) -> std::string
 {
   TRACE();
 

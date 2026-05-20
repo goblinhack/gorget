@@ -6,11 +6,11 @@
 #include "my_game.hpp"
 #include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
+#include "my_tp.hpp"
 #include "my_types.hpp"
 #include <string>
-#include "my_tp.hpp"
 
-auto thing_name_pluralize(Gamep  /*g*/, Levelsp  /*v*/, Levelp  /*l*/, Thingp t) -> std::string
+auto thing_name_pluralize(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t) -> std::string
 {
   TRACE();
 
@@ -30,7 +30,7 @@ auto thing_name_pluralize_the(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::st
   return "the " + thing_name_pluralize(g, v, l, t);
 }
 
-auto thing_name_apostrophize(Gamep  /*g*/, Levelsp  /*v*/, Levelp  /*l*/, Thingp t) -> std::string
+auto thing_name_apostrophize(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t) -> std::string
 {
   TRACE();
 

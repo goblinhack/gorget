@@ -5,8 +5,8 @@
 #include "my_callstack.hpp"
 #include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
-#include "my_types.hpp"
 #include "my_tp.hpp"
+#include "my_types.hpp"
 
 #include <cstring>
 
@@ -30,7 +30,7 @@ auto thing_inventory_is_empty(Gamep g, Levelsp v, Levelp l, Thingp carrier) -> b
 //
 // Can we combine identical items?
 //
-auto thing_inventory_item_mergeable(Gamep  /*g*/, Levelsp  /*v*/, Levelp  /*l*/, Thingp a, Thingp b) -> bool
+auto thing_inventory_item_mergeable(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp a, Thingp b) -> bool
 {
   if (! thing_is_item_mergeable(a)) {
     return false;

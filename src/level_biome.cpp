@@ -4,10 +4,10 @@
 
 #include "my_callstack.hpp"
 #include "my_level.hpp"
-#include "my_types.hpp"
 #include "my_tp.hpp"
+#include "my_types.hpp"
 
-auto level_to_biome(Gamep  /*g*/, Levelsp  /*v*/, Levelp l) -> Biome
+auto level_to_biome(Gamep /*g*/, Levelsp /*v*/, Levelp l) -> Biome
 {
   TRACE();
 
