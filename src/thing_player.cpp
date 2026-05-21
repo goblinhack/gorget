@@ -685,7 +685,7 @@ auto player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, con
   return false;
 }
 
-static bool player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy)
+static auto player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy) -> bool
 {
   TRACE();
 

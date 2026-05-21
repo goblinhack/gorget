@@ -10,9 +10,8 @@
 #include "my_ui.hpp"
 #include "my_wid.hpp"
 #include "my_wids.hpp"
+#include <algorithm>
 #include <cstdint>
-#include <cstdio>
-#include <print>
 #include <string>
 
 void wid_gray_out_button(Gamep /*g*/, Widp w)
@@ -60,12 +59,12 @@ static void wid_button_pulse(Gamep /*g*/, Widp w)
 {
   TRACE();
 
-  auto  pulse = THING_IS_HOT_PULSE_ANIM_MS; // ms
-  float mid   = pulse / 2;
-  float n     = (float) (time_ms_cached() % pulse);
-  float i     = 0;
+  auto        pulse = THING_IS_HOT_PULSE_ANIM_MS; // ms
+  float const mid   = pulse / 2;
+  auto const  n     = static_cast< float >(time_ms_cached() % pulse);
+  float       i     = 0;
 
-  uint8_t a;
+  uint8_t a = 0;
 
   if (n == mid) {
     a = 255;
@@ -79,12 +78,8 @@ static void wid_button_pulse(Gamep /*g*/, Widp w)
     i = 155 + i;
   }
 
-  if (i < 0) {
-    i = 0;
-  }
-  if (i > 255) {
-    i = 255;
-  }
+  i = std::max< float >(i, 0);
+  i = std::min< float >(i, 255);
 
   a = static_cast< uint8_t >(i);
 
