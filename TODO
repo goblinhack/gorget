@@ -51,6 +51,12 @@ abilities
 weapon slots
   - etherblast to hit ghosts in walls
   - emergency teleport
+spells
+  - spell points to collect
+  - all spells are availabl
+  - spell coupons
+  - spells need to have a cost that can be influenced by specializing
+  - shrines that reduce spell points
 gameplay
   - brazier kick over sound
   - rustle noise in bushes / bushes quiver when monster is behind?
@@ -60,14 +66,11 @@ gameplay
   - traps must do something / gas effects
   - items can be lost in deep water
   - chests need to contain something and those items destroyed when the chest is
-  - spell points to collect
-  - spells need to have a cost that can be influenced by specializing
   - projectile collision with projectile
   - boulders that can crush
   - cobwebs burns and get you stuck
   - ice weapon and shattering
   - intelligent monsters when hurt should escape
-  - shrines that reduce spell points
   - anti magic areas
   - anti anti magic areas
   - debug shell "add monst"
