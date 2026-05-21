@@ -1021,7 +1021,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup val)
   }
 }
 
-void tp_is_immunity_add(Tpp tp, ThingEventType val)
+void tp_is_immune_add(Tpp tp, ThingEventType val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1055,6 +1055,42 @@ auto tp_is_immune_to(Tpp tp, ThingEventType val) -> bool
   }
 
   return tp->is_immune[ val ];
+}
+
+void tp_is_resistant_add(Tpp tp, ThingEventType val)
+{
+  TRACE();
+  if (tp == nullptr) [[unlikely]] {
+    tp_err(tp, "no thing template pointer");
+    return;
+  }
+
+  if (static_cast< int >(val) >= static_cast< int >(THING_EVENT_ENUM_MAX)) {
+    tp_err(tp, "bad value in tp for %s, %d", __FUNCTION__, val);
+    return;
+  }
+
+  if (tp->is_resistant[ val ]) {
+    return;
+  }
+
+  tp->is_resistant[ val ] = true;
+}
+
+auto tp_is_resistant_to(Tpp tp, ThingEventType val) -> bool
+{
+  TRACE();
+  if (tp == nullptr) [[unlikely]] {
+    tp_err(tp, "no thing template pointer");
+    return false;
+  }
+
+  if (static_cast< int >(val) >= static_cast< int >(THING_EVENT_ENUM_MAX)) {
+    tp_err(tp, "bad value in tp for %s, %d", __FUNCTION__, val);
+    return false;
+  }
+
+  return tp->is_resistant[ val ];
 }
 
 void tp_health_set(Tpp tp, const std::string &val)

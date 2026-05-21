@@ -85,7 +85,7 @@ auto tp_load_potion() -> bool
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_treasure);
   tp_health_set(tp, "1d4");
-  tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
+  tp_is_immune_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_light_color_set(tp, "purple");
   tp_name_a_or_an_set(tp, "a potion");
   tp_name_apostrophize_set(tp, "potions'");

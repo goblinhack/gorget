@@ -40,7 +40,7 @@ auto tp_load_trap() -> bool
   tp_flag_set(tp, is_obs_to_falling_onto);
   tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_trap);
-  tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
+  tp_is_immune_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_name_a_or_an_set(tp, "a trap");
   tp_name_apostrophize_set(tp, "traps'");
   tp_name_long_set(tp, "trap");

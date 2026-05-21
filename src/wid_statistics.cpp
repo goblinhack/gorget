@@ -264,7 +264,11 @@ void wid_statistics_show(Gamep g, Levelsp v, Levelp l, Thingp player)
     wid_statistics_popup->log_empty_line(g);
   }
 
-  if (wid_thing_info_immunities(g, v, l, player, wid_statistics_popup, UI_INVENTORY_WIDTH)) {
+  if (wid_thing_info_immunity(g, v, l, player, wid_statistics_popup, UI_INVENTORY_WIDTH)) {
+    wid_statistics_popup->log_empty_line(g);
+  }
+
+  if (wid_thing_info_resistance(g, v, l, player, wid_statistics_popup, UI_INVENTORY_WIDTH)) {
     wid_statistics_popup->log_empty_line(g);
   }
 

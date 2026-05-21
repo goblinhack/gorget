@@ -78,7 +78,7 @@ auto tp_load_door_secret() -> bool
     tp_flag_set(tp, is_teleport_blocked);
     tp_flag_set(tp, is_tickable);
     tp_health_set(tp, "200");
-    tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
+    tp_is_immune_add(tp, THING_EVENT_WATER_DAMAGE);
     tp_name_a_or_an_set(tp, "a secret door");
     tp_name_apostrophize_set(tp, "secret doors'");
     tp_name_long_set(tp, "secret door");

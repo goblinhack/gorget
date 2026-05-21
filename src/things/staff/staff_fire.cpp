@@ -107,7 +107,7 @@ auto tp_load_staff_fire() -> bool
   tp_flag_set(tp, is_treasure);
   tp_flag_set(tp, is_wood);
   tp_health_set(tp, "1d4");
-  tp_is_immunity_add(tp, THING_EVENT_FIRE_DAMAGE);
+  tp_is_immune_add(tp, THING_EVENT_FIRE_DAMAGE);
   tp_light_color_set(tp, "red");
   tp_name_a_or_an_set(tp, "a staff of fire");
   tp_name_apostrophize_set(tp, "staff of fire's");

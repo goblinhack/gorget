@@ -49,10 +49,10 @@ auto tp_load_pillar() -> bool
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_teleport_blocked);
   tp_health_set(tp, "1d500");
-  tp_is_immunity_add(tp, THING_EVENT_FIRE_DAMAGE);
-  tp_is_immunity_add(tp, THING_EVENT_HEAT_DAMAGE);
-  tp_is_immunity_add(tp, THING_EVENT_MELEE_DAMAGE);
-  tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
+  tp_is_immune_add(tp, THING_EVENT_FIRE_DAMAGE);
+  tp_is_immune_add(tp, THING_EVENT_HEAT_DAMAGE);
+  tp_is_immune_add(tp, THING_EVENT_MELEE_DAMAGE);
+  tp_is_immune_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_name_a_or_an_set(tp, "a pillar");
   tp_name_apostrophize_set(tp, "pillars'");
   tp_name_long_set(tp, "stone pillar");

@@ -15,3 +15,12 @@ auto thing_is_immune_to(Thingp t, ThingEventType val) -> bool
 
   return tp_is_immune_to(tp, val);
 }
+
+auto thing_is_resistant_to(Thingp t, ThingEventType val) -> bool
+{
+  TRACE();
+
+  auto *tp = thing_tp(t);
+
+  return tp_is_resistant_to(tp, val);
+}

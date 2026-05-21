@@ -29,16 +29,16 @@ static auto tp_argusul_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std
 {
   TRACE();
 
-  return                                                                                 //
-      UI_INFO1_FMT_STR                                                                   //
-      "Argusuls are floating many-eyed monsters that are impossible to sneak up on. \n"  //
-      UI_INFO2_FMT_STR                                                                   //
-      "Intelligent, fearful to behold, and immune to many forms of attack, it would be " //
-      "wise to travel in the opposite direction of an Argusul. \n"                       //
-      UI_INFO3_FMT_STR                                                                   //
-      "Beware their central eye that is capable of firing a beam weapon. At you. \n"     //
-      UI_INFO4_FMT_STR                                                                   //
-      "It is rumoured that a greater Argusul lurks in the dungeon somewhere... \n";      //
+  return                                                                                //
+      UI_INFO1_FMT_STR                                                                  //
+      "Argusuls are floating many-eyed monsters that are impossible to sneak up on. \n" //
+      UI_INFO2_FMT_STR                                                                  //
+      "Intelligent, fearful to behold, and resistant to fire, it would be "             //
+      "wise to travel in the opposite direction of an Argusul. \n"                      //
+      UI_INFO3_FMT_STR                                                                  //
+      "Beware their central eye that is capable of firing a beam weapon. At you. \n"    //
+      UI_INFO4_FMT_STR                                                                  //
+      "It is rumoured that a greater Argusul lurks in the dungeon somewhere... \n";     //
 }
 
 static auto tp_argusul_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at, Thingp t) -> ThingEnviron
@@ -137,8 +137,7 @@ auto tp_load_argusul() -> bool
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_vision_360_degrees);
   tp_health_set(tp, "3d4");
-  tp_is_immunity_add(tp, THING_EVENT_FIRE_DAMAGE);
-  tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
+  tp_is_resistant_add(tp, THING_EVENT_FIRE_DAMAGE);
   tp_monst_group_add(tp, MONST_GROUP2);
   tp_name_a_or_an_set(tp, "an argusul");
   tp_name_apostrophize_set(tp, "argusul's");

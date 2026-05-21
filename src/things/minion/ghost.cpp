@@ -102,7 +102,7 @@ auto tp_load_ghost() -> bool
   tp_flag_set(tp, is_undead);
   tp_flag_set(tp, is_vision_180_degrees);
   tp_health_set(tp, "1");
-  tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
+  tp_is_immune_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_light_color_set(tp, "cyan");
   tp_name_a_or_an_set(tp, "a ghost");
   tp_name_apostrophize_set(tp, "ghosts'");

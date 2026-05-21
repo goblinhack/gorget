@@ -759,6 +759,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_hit_when_dead(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_hot_check(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
 [[nodiscard]] auto thing_is_immune_to(Thingp t, ThingEventType val) -> bool;
+[[nodiscard]] auto thing_is_resistant_to(Thingp t, ThingEventType val) -> bool;
 [[nodiscard]] auto thing_is_indestructible(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_insectoid(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_inventory_item(Thingp t) -> bool;
@@ -1064,7 +1065,8 @@ using Thing = struct Thing {
 [[nodiscard]] auto wid_thing_info_detail(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent) -> bool;
 [[nodiscard]] auto wid_thing_info_health_bar(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp tp, WidPopup *parent, int width) -> bool;
 [[nodiscard]] auto wid_thing_info_icon(Gamep g, Tpp tp, WidPopup *parent) -> bool;
-[[nodiscard]] auto wid_thing_info_immunities(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, int width) -> bool;
+[[nodiscard]] auto wid_thing_info_immunity(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, int width) -> bool;
+[[nodiscard]] auto wid_thing_info_resistance(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, int width) -> bool;
 [[nodiscard]] auto wid_thing_info_keys(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent) -> bool;
 [[nodiscard]] auto wid_thing_info_name(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp tp, WidPopup *parent) -> bool;
 [[nodiscard]] auto wid_thing_info_score(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp tp, WidPopup *parent) -> bool;

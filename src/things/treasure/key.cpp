@@ -52,7 +52,7 @@ auto tp_load_key() -> bool
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_metal);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
-  tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
+  tp_is_immune_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_light_color_set(tp, "yellow");
   tp_name_a_or_an_set(tp, "a key");
   tp_name_apostrophize_set(tp, "keys'");

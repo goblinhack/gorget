@@ -50,6 +50,11 @@ public:
   bool is_immune[ THING_EVENT_ENUM_MAX ] {};
 
   //
+  // Resistance to various damage types
+  //
+  bool is_resistant[ THING_EVENT_ENUM_MAX ] {};
+
+  //
   // Chance of this appearing on a level
   //
   int chance_d1000_appearing {};

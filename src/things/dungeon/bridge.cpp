@@ -189,7 +189,7 @@ auto tp_load_bridge() -> bool
   tp_flag_set(tp, is_tiled);
   tp_flag_set(tp, is_wood);
   tp_health_set(tp, "1d12");
-  tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
+  tp_is_immune_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_name_a_or_an_set(tp, "a bridge");
   tp_name_apostrophize_set(tp, "bridges'");
   tp_name_long_set(tp, "bridge");
