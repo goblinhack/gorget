@@ -23,6 +23,8 @@
 
 static WidPopup *wid_item_menu_window;
 
+static bool wid_got_here_from_inventory;
+
 //
 // Used for keypresses, so we know which item to operate on
 //
@@ -57,16 +59,23 @@ static Thingp g_item;
     return false;
   }
 
-  if (thing_inventory_is_empty(g, v, l, player)) {
-    //
-    // If empty, just go back to playing
-    //
-    game_state_change(g, STATE_PLAYING, "close inventory");
+  if (wid_got_here_from_inventory) {
+    if (thing_inventory_is_empty(g, v, l, player)) {
+      //
+      // If empty, just go back to playing
+      //
+      game_state_change(g, STATE_PLAYING, "close inventory");
+    } else {
+      //
+      // Re-open the inventory
+      //
+      wid_inventory_show(g, v, l, player);
+    }
   } else {
     //
-    // Re-open the inventory
+    // Just go back to playing
     //
-    wid_inventory_show(g, v, l, player);
+    game_state_change(g, STATE_PLAYING, "close inventory");
   }
 
   return true;
@@ -217,6 +226,8 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item, bool from_inventory)
 {
   TRACE();
   log("item menu");
+
+  wid_got_here_from_inventory = from_inventory;
 
   auto *l = game_level_get(g, v);
   if (l == nullptr) {
