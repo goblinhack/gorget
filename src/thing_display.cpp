@@ -361,8 +361,8 @@ static void thing_display_rotated(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t
 //
 // Handle all the various lighting modes to display a thing
 //
-static void thing_display_it(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp t_maybe_null, spoint tl, spoint br, Tilep tile,
-                             float x1, float x2, float y1, float y2, FboEnum fbo, color fg, LightPixels *light_pixels = nullptr)
+static void thing_display_it(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t_maybe_null, spoint tl, spoint br, Tilep tile, float x1,
+                             float x2, float y1, float y2, FboEnum fbo, color fg, LightPixels *light_pixels = nullptr)
 {
   TRACE_DEBUG();
 
@@ -604,10 +604,10 @@ void thing_display(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp
       //
       if (submerged_pct != 0) {
         if (thing_is_reeds(t_maybe_null)) {
-          thing_display_it(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg, light_pixels);
+          thing_display_it(g, v, l, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg, light_pixels);
         } else {
           tile_blit_apply_submerge_pct(g, tl, br, tile, x1, x2, y1, y2, thing_submerged_pct(t_maybe_null));
-          thing_display_it(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg, light_pixels);
+          thing_display_it(g, v, l, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg, light_pixels);
         }
 
         //
@@ -633,5 +633,5 @@ void thing_display(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp
     }
   }
 
-  thing_display_it(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg, light_pixels);
+  thing_display_it(g, v, l, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg, light_pixels);
 }

@@ -556,8 +556,6 @@ using Thing = struct Thing {
 // begin sort marker1 {
 [[nodiscard]] auto level_vision_blocker_at(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &at) -> bool;
 [[nodiscard]] auto monst_state_to_string(MonstState state) -> std::string;
-[[nodiscard]] bool thing_unwield(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &);
-[[nodiscard]] bool thing_wield(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, ThingEvent &e);
 [[nodiscard]] auto monst_state(Gamep g, Levelsp v, Levelp l, Thingp me) -> MonstState;
 [[nodiscard]] auto player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, const bpoint &to) -> bool;
 [[nodiscard]] auto player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what = nullptr, bpoint target = bpoint(0, 0)) -> bool;
@@ -639,6 +637,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_inventory_is_empty(Gamep g, Levelsp v, Levelp l, Thingp carrier) -> bool;
 [[nodiscard]] auto thing_inventory_item_mergeable(Gamep g, Levelsp v, Levelp l, Thingp a, Thingp b) -> bool;
 [[nodiscard]] auto thing_inventory_remove(Gamep g, Levelsp v, Levelp l, Thingp drop_item, Thingp carrier) -> bool;
+[[nodiscard]] auto thing_is_able_to_be_equipped(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_be_wielded(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_collect_items(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_collect_keys(Thingp t) -> bool;
@@ -764,7 +763,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_insectoid(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_inventory_item(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_item_droppable(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_able_to_be_equipped(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_item_mergeable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_item(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_key(Thingp t) -> bool;
@@ -979,6 +977,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_temperature_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_temperature_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_temperature(Thingp t) -> int;
+[[nodiscard]] auto thing_unwield(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent & /*e*/) -> bool;
 [[nodiscard]] auto thing_value1_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_value1_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_value1_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
@@ -1055,6 +1054,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_weapon_kill_all_fired(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e) -> bool;
 [[nodiscard]] auto thing_weight_set(Gamep g, Levelsp v, Levelp l, Thingp t, uint32_t val) -> int;
 [[nodiscard]] auto thing_weight(Thingp t) -> int;
+[[nodiscard]] auto thing_wield(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, ThingEvent &e) -> bool;
 [[nodiscard]] auto thing_wielder(Gamep g, Levelsp v, Levelp l, Thingp t) -> Thingp;
 [[nodiscard]] auto thing_wielding(Gamep g, Levelsp v, Levelp l, Thingp me) -> Thingp;
 [[nodiscard]] auto to_death_reason_string(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e) -> std::string;

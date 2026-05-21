@@ -685,18 +685,18 @@ auto player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, con
   return false;
 }
 
-static void player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy)
+static bool player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy)
 {
   TRACE();
 
   if (game_state(g) != STATE_PLAYING) {
     player_move_requests_reset(g, v);
-    return;
+    return false;
   }
 
   auto *me = thing_player(g);
   if (me == nullptr) {
-    return;
+    return false;
   }
 
   //
@@ -708,7 +708,7 @@ static void player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy)
   // Wait until the end of the tick
   //
   if (level_tick_is_in_progress(g, v, l)) {
-    return;
+    return false;
   }
 
   auto         at = thing_at(me);
@@ -717,9 +717,11 @@ static void player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy)
   const bool need_path      = true;
   const bool move_confirmed = false;
 
-  (void) player_move_try(g, v, l, me, to, move_confirmed, need_path);
+  auto success = player_move_try(g, v, l, me, to, move_confirmed, need_path);
 
   player_move_requests_reset(g, v);
+
+  return success;
 }
 
 auto player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what, bpoint target) -> bool
@@ -909,16 +911,41 @@ auto player_move_request(Gamep g, bool up, bool down, bool left, bool right, boo
   if (v->requested_move_up) {
     if (v->requested_move_left) {
       player_move_delta(g, v, l, -1, -1);
+      if (! player_move_delta(g, v, l, -1, -1)) {
+        if (! player_move_delta(g, v, l, -1, 0)) {
+          if (! player_move_delta(g, v, l, 0, -1)) {
+            // success
+          }
+        }
+      }
     } else if (v->requested_move_right) {
-      player_move_delta(g, v, l, 1, -1);
+      if (! player_move_delta(g, v, l, 1, -1)) {
+        if (! player_move_delta(g, v, l, 1, 0)) {
+          if (! player_move_delta(g, v, l, 0, -1)) {
+            // success
+          }
+        }
+      }
     } else {
       player_move_delta(g, v, l, 0, -1);
     }
   } else if (v->requested_move_down) {
     if (v->requested_move_left) {
-      player_move_delta(g, v, l, -1, 1);
+      if (! player_move_delta(g, v, l, -1, 1)) {
+        if (! player_move_delta(g, v, l, -1, 0)) {
+          if (! player_move_delta(g, v, l, 0, 1)) {
+            // success
+          }
+        }
+      }
     } else if (v->requested_move_right) {
-      player_move_delta(g, v, l, 1, 1);
+      if (! player_move_delta(g, v, l, 1, 1)) {
+        if (! player_move_delta(g, v, l, 1, 0)) {
+          if (! player_move_delta(g, v, l, 0, 1)) {
+            // success
+          }
+        }
+      }
     } else {
       player_move_delta(g, v, l, 0, 1);
     }

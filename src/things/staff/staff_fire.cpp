@@ -81,7 +81,7 @@ auto tp_load_staff_fire() -> bool
   thing_on_drop_request_set(tp, tp_staff_fire_on_drop_request);
   thing_on_fire_weapon_request_set(tp, tp_staff_fire_on_fire_weapon_request);
   thing_on_wield_request_set(tp, tp_staff_fire_on_wield_request);
-  tp_charge_count_set(tp, 10);
+  tp_charge_count_set(tp, 1000);
   tp_flag_set(tp, is_able_to_be_wielded);
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);

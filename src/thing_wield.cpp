@@ -8,6 +8,7 @@
 #include "my_thing.hpp"
 #include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp"
+#include "my_tp.hpp"
 #include "my_types.hpp"
 
 //
@@ -265,7 +266,7 @@ auto thing_wielding(Gamep g, Levelsp v, Levelp /*l*/, Thingp me) -> Thingp
   return thing_find_optional(g, v, me->wielding_id);
 }
 
-bool thing_unwield(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
+auto thing_unwield(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e) -> bool
 {
   TRACE();
 
@@ -288,7 +289,7 @@ bool thing_unwield(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
   return true;
 }
 
-bool thing_wield(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, ThingEvent &e)
+auto thing_wield(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, ThingEvent &e) -> bool
 {
   TRACE();
 

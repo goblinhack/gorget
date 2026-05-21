@@ -877,6 +877,7 @@ using FovContext = struct FovContext {
 void level_fov(const FovContext & /*ctx*/);
 
 // begin sort marker3 {
+[[nodiscard]] auto level_is_able_to_be_equipped(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
 [[nodiscard]] auto level_is_able_to_be_wielded(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
 [[nodiscard]] auto level_is_able_to_collect_items(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
 [[nodiscard]] auto level_is_able_to_collect_keys(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
@@ -984,7 +985,6 @@ void level_fov(const FovContext & /*ctx*/);
 [[nodiscard]] auto level_is_insectoid(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
 [[nodiscard]] auto level_is_inventory_item(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
 [[nodiscard]] auto level_is_item_droppable(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
-[[nodiscard]] auto level_is_able_to_be_equipped(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
 [[nodiscard]] auto level_is_item_mergeable(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
 [[nodiscard]] auto level_is_item(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
 [[nodiscard]] auto level_is_key(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
@@ -1098,6 +1098,7 @@ void level_fov(const FovContext & /*ctx*/);
 // end sort marker3 }
 
 // begin sort marker4 {
+[[nodiscard]] auto level_is_able_to_be_equipped_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
 [[nodiscard]] auto level_is_able_to_be_wielded_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
 [[nodiscard]] auto level_is_able_to_collect_items_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
 [[nodiscard]] auto level_is_able_to_collect_keys_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
@@ -1206,7 +1207,6 @@ void level_fov(const FovContext & /*ctx*/);
 [[nodiscard]] auto level_is_inventory_item_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
 [[nodiscard]] auto level_is_item_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
 [[nodiscard]] auto level_is_item_droppable_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
-[[nodiscard]] auto level_is_able_to_be_equipped_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
 [[nodiscard]] auto level_is_item_mergeable_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
 [[nodiscard]] auto level_is_key_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
 [[nodiscard]] auto level_is_kobalos_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
@@ -1317,6 +1317,7 @@ void level_fov(const FovContext & /*ctx*/);
 // end sort marker4 }
 
 // begin sort marker5 {
+[[nodiscard]] auto level_alive_is_able_to_be_equipped(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_able_to_be_wielded(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_able_to_collect_items(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_able_to_collect_keys(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
@@ -1424,7 +1425,6 @@ void level_fov(const FovContext & /*ctx*/);
 [[nodiscard]] auto level_alive_is_insectoid(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_inventory_item(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_item_droppable(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
-[[nodiscard]] auto level_alive_is_able_to_be_equipped(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_item_mergeable(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_item(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_key(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
@@ -1536,6 +1536,7 @@ void level_fov(const FovContext & /*ctx*/);
 // end sort marker5 }
 
 // begin sort marker6 {
+[[nodiscard]] auto level_count_is_able_to_be_equipped(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_able_to_be_wielded(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_able_to_collect_items(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_able_to_collect_keys(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
@@ -1643,7 +1644,6 @@ void level_fov(const FovContext & /*ctx*/);
 [[nodiscard]] auto level_count_is_insectoid(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_inventory_item(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_item_droppable(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
-[[nodiscard]] auto level_count_is_able_to_be_equipped(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_item_mergeable(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_item(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_key(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
@@ -1762,6 +1762,7 @@ void level_fov(const FovContext & /*ctx*/);
 [[nodiscard]] auto fragment_random_get(Gamep g) -> Fragmentp;
 [[nodiscard]] auto fragment_width(Fragmentp f) -> int;
 [[nodiscard]] auto level_has_seen(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
+[[nodiscard]] auto level_open_is_able_to_be_equipped(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_able_to_be_wielded(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_able_to_collect_items(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_able_to_collect_keys(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
@@ -1869,7 +1870,6 @@ void level_fov(const FovContext & /*ctx*/);
 [[nodiscard]] auto level_open_is_insectoid(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_inventory_item(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_item_droppable(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
-[[nodiscard]] auto level_open_is_able_to_be_equipped(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_item_mergeable(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_item(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_key(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;

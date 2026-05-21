@@ -2635,7 +2635,7 @@ void level_gen_stats_dump(Gamep /*g*/)
 //
 // The first room has been placed. Place all the rest.
 //
-static void level_gen_create_remaining_rooms(Gamep g, LevelGen *lg)
+static void level_gen_create_remaining_rooms(LevelGen *lg)
 {
   TRACE();
 
@@ -3128,7 +3128,7 @@ static auto level_proc_gen_create_rooms(Gamep g, LevelNum level_num) -> class Le
     //
     // Place the remaining rooms
     //
-    level_gen_create_remaining_rooms(g, lg);
+    level_gen_create_remaining_rooms(lg);
 
     //
     // Check we have enough rooms. Add a few more for deeper levels.
