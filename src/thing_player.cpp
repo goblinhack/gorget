@@ -734,6 +734,15 @@ auto player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what, bp
     return false;
   }
 
+  //
+  // Wait until the end of the tick
+  //
+  if (level_tick_is_in_progress(g, v, l)) {
+    return false;
+  }
+
+  player_move_requests_reset(g, v);
+
   if (g_opt_tests) {
     if (fire_what == nullptr) {
       fire_what = tp_find_mand("fireball");
@@ -769,16 +778,7 @@ auto player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what, bp
     return false;
   }
 
-  //
-  // Wait until the end of the tick
-  //
-  if (level_tick_is_in_progress(g, v, l)) {
-    return false;
-  }
-
   thing_set_dir_from_delta(me, dx, dy);
-
-  player_move_requests_reset(g, v);
 
   //
   // No firing in deep water

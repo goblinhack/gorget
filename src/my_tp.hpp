@@ -372,11 +372,13 @@ ENUM_DEF_H(THING_ANIM_ENUM, ThingAnim)
       list_macro(THING_EVENT_CRUSH, "crush"),                       /* newline */                                                          \
       list_macro(THING_EVENT_FALL, "fall"),                         /* newline */                                                          \
       list_macro(THING_EVENT_EXPLOSION_DAMAGE, "explosion"),        /* newline */                                                          \
+      list_macro(THING_EVENT_USER_INITIATED, "user initiated"),     /* newline */                                                          \
       list_macro(THING_EVENT_LIFESPAN_EXPIRED, "lifespan expired"), /* newline */                                                          \
       list_macro(THING_EVENT_MELT, "melt"),                         /* newline */                                                          \
       list_macro(THING_EVENT_OPEN, "open"),                         /* newline */                                                          \
       list_macro(THING_EVENT_NONE, "none"),                         /* newline */                                                          \
       list_macro(THING_EVENT_THE_END, "became the new dark lord"),  /* newline */                                                          \
+      list_macro(THING_EVENT_SPAWNED, "spawned"),                   /* newline */                                                          \
       list_macro(THING_EVENT_SHOVED, "shoved"),                     /* newline */                                                          \
       list_macro(THING_EVENT_CARRIED, "carried"),                   /* newline */                                                          \
       list_macro(THING_EVENT_CARRIED_MERGED, "carried-merged"),     /* newline */

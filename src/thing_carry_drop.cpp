@@ -14,7 +14,7 @@
 //
 // Add an item to the things inventory
 //
-static auto thing_carry_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp carrier) -> bool
+static auto thing_carry_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp carrier, ThingEvent &e) -> bool
 {
   TRACE();
 
@@ -51,8 +51,10 @@ static auto thing_carry_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp c
   thing_inventory_dump(g, v, l, carrier);
 
   if (thing_is_player(carrier)) {
-    auto the_thing = thing_name_long_the(g, v, l, item);
-    topcon("You carry %s.", the_thing.c_str());
+    if (e.event_type != THING_EVENT_SPAWNED) {
+      auto the_thing = thing_name_long_the(g, v, l, item);
+      topcon("You carry %s.", the_thing.c_str());
+    }
     game_request_to_remake_ui_set(g);
   }
 
@@ -64,7 +66,7 @@ static auto thing_carry_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp c
 //
 // Drop an item from the things inventory
 //
-static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp dropper) -> bool
+static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp dropper, ThingEvent &e) -> bool
 {
   TRACE();
 
@@ -90,8 +92,10 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp dr
     TRACE_INDENT();
 
     if (thing_is_player(dropper)) {
-      auto the_thing = thing_name_long_the(g, v, l, item);
-      topcon("You fail to drop %s.", the_thing.c_str());
+      if (e.event_type == THING_EVENT_USER_INITIATED) {
+        auto the_thing = thing_name_long_the(g, v, l, item);
+        topcon("You fail to drop %s.", the_thing.c_str());
+      }
     }
     return false;
   }
@@ -100,14 +104,18 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp dr
   // Drop the thing where the player is
   //
   if (! thing_warp_to(g, v, l, item, thing_at(dropper))) {
-    auto the_thing = thing_name_long_the(g, v, l, item);
-    topcon("You fail to place %s.", the_thing.c_str());
+    if (e.event_type == THING_EVENT_USER_INITIATED) {
+      auto the_thing = thing_name_long_the(g, v, l, item);
+      topcon("You fail to place %s.", the_thing.c_str());
+    }
     return false;
   }
 
   if (thing_is_player(dropper)) {
-    auto the_thing = thing_name_long_the(g, v, l, item);
-    topcon("You drop %s.", the_thing.c_str());
+    if (e.event_type == THING_EVENT_USER_INITIATED) {
+      auto the_thing = thing_name_long_the(g, v, l, item);
+      topcon("You drop %s.", the_thing.c_str());
+    }
     game_request_to_remake_ui_set(g);
   }
 
@@ -288,7 +296,7 @@ auto thing_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp dropp
   return tp->on_drop_request(g, v, l, me, dropper);
 }
 
-auto thing_carry(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item) -> bool
+auto thing_carry(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, ThingEvent &e) -> bool
 {
   TRACE();
 
@@ -302,10 +310,10 @@ auto thing_carry(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item) -> bool
     return false;
   }
 
-  return thing_carry_item(g, v, l, item, me);
+  return thing_carry_item(g, v, l, item, me, e);
 }
 
-auto thing_drop(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item) -> bool
+auto thing_drop(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, ThingEvent &e) -> bool
 {
   TRACE();
 
@@ -320,8 +328,8 @@ auto thing_drop(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item) -> bool
   }
 
   if (thing_is_wielded(item)) {
-    thing_unwield(g, v, l, me);
+    thing_unwield(g, v, l, me, e);
   }
 
-  return thing_drop_item(g, v, l, item, me);
+  return thing_drop_item(g, v, l, item, me, e);
 }

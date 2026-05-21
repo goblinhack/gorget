@@ -150,6 +150,12 @@ auto to_death_reason_string(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &
     case THING_EVENT_THE_END : //
       s += "became the new even darker dark lord";
       break;
+    case THING_EVENT_USER_INITIATED : //
+      s += "user initiated";
+      break;
+    case THING_EVENT_SPAWNED : //
+      s += "spawned";
+      break;
     case THING_EVENT_ENUM_MAX : break;
   }
 

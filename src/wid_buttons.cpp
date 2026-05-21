@@ -72,6 +72,7 @@ static void wid_button_pulse(Gamep /*g*/, Widp w)
   float const i = static_cast< int >((255 / static_cast< float >(mid)) * static_cast< float >(n));
   auto        a = ((static_cast< uint8_t >(static_cast< int >(i))) / 2) + 120;
 
+  fprintf(stderr, "ZZZ NEIL %s %s %d button i %f a %d\n", __FILE__, __FUNCTION__, __LINE__, i, a);
   color c = wid_get_color(w, WID_COLOR_BG);
   c.a     = a;
   wid_set_color(w, WID_COLOR_BG, c);

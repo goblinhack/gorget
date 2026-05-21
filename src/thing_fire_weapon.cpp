@@ -57,6 +57,11 @@ auto thing_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, Tpp fir
             .event_type = THING_EVENT_LIFESPAN_EXPIRED, //
         };
 
+        if (thing_is_player(me)) {
+          auto the_thing = thing_name_long_The(g, v, l, item);
+          topcon("%s disintegrates.", the_thing.c_str());
+        }
+
         thing_dead(g, v, l, item, e);
       }
       return false;

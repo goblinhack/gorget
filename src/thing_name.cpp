@@ -133,6 +133,13 @@ auto thing_name_long_the(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags 
   return "the " + thing_name_long(g, v, l, t, f);
 }
 
+auto thing_name_long_The(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) -> std::string
+{
+  TRACE();
+
+  return "The " + thing_name_long(g, v, l, t, f);
+}
+
 auto thing_name_short(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) -> std::string
 {
   TRACE();

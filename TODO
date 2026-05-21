@@ -1,15 +1,13 @@
 bugs
 ----
+"ESC" from item select opens inventiort
 CONTINUE still flickers
-owner for items
+unwield option
 
 todo
 ----
-charge decrement and removal
-charges
-wands
-staffs
 staff of fire in water damage when fully submerged
+wands
 
 essential features
 ------------------

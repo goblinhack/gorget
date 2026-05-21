@@ -76,6 +76,8 @@ static void thing_killed_player(Gamep g, Levelsp v, Levelp l, ThingEvent &e)
       case THING_EVENT_CARRIED :          [[fallthrough]];
       case THING_EVENT_CARRIED_MERGED :   [[fallthrough]];
       case THING_EVENT_MELT :             [[fallthrough]];
+      case THING_EVENT_USER_INITIATED :   [[fallthrough]];
+      case THING_EVENT_SPAWNED :          [[fallthrough]];
       case THING_EVENT_ENUM_MAX : //
         ERR("unexpected event: %s", ThingEventType_to_string(e.event_type).c_str());
         break;
@@ -119,6 +121,8 @@ static void thing_killed_player(Gamep g, Levelsp v, Levelp l, ThingEvent &e)
       case THING_EVENT_CARRIED :        [[fallthrough]];
       case THING_EVENT_CARRIED_MERGED : [[fallthrough]];
       case THING_EVENT_MELT :           [[fallthrough]];
+      case THING_EVENT_USER_INITIATED : [[fallthrough]];
+      case THING_EVENT_SPAWNED :        [[fallthrough]];
       case THING_EVENT_ENUM_MAX : //
         ERR("unexpected event: %s", ThingEventType_to_string(e.event_type).c_str());
         break;
@@ -178,6 +182,8 @@ static void thing_killed_by_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
       case THING_EVENT_FALL :             [[fallthrough]];
       case THING_EVENT_LIFESPAN_EXPIRED : [[fallthrough]];
       case THING_EVENT_MELT :             [[fallthrough]];
+      case THING_EVENT_USER_INITIATED :   [[fallthrough]];
+      case THING_EVENT_SPAWNED :          [[fallthrough]];
       case THING_EVENT_ENUM_MAX : //
         ERR("unexpected event: %s", ThingEventType_to_string(e.event_type).c_str());
         break;
@@ -363,7 +369,7 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
   if (thing_is_carried(me)) {
     auto *owner = thing_owner(g, v, l, me);
     if (owner != nullptr) {
-      if (! thing_drop(g, v, l, owner, me)) {
+      if (! thing_drop(g, v, l, owner, me, e)) {
         thing_err(me, "item is carried but could not drop");
       }
     }

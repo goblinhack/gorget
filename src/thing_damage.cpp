@@ -84,6 +84,8 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
       case THING_EVENT_CARRIED :          [[fallthrough]];
       case THING_EVENT_CARRIED_MERGED :   [[fallthrough]];
       case THING_EVENT_MELT :             [[fallthrough]];
+      case THING_EVENT_USER_INITIATED :   [[fallthrough]];
+      case THING_EVENT_SPAWNED :          [[fallthrough]];
       case THING_EVENT_ENUM_MAX : //
         ERR("unexpected event: %s", ThingEventType_to_string(e.event_type).c_str());
         break;
@@ -124,7 +126,9 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
       case THING_EVENT_CARRIED :          //
       case THING_EVENT_CARRIED_MERGED :   //
       case THING_EVENT_MELT :             //
-      case THING_EVENT_ENUM_MAX :         //
+      case THING_EVENT_USER_INITIATED :   [[fallthrough]];
+      case THING_EVENT_SPAWNED :          [[fallthrough]];
+      case THING_EVENT_ENUM_MAX : //
         ERR("unexpected event: %s", ThingEventType_to_string(e.event_type).c_str());
     }
   }
@@ -190,15 +194,17 @@ static void thing_damage_by_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
           }
         }
         break;
-      case THING_EVENT_NONE :             //
-      case THING_EVENT_OPEN :             //
-      case THING_EVENT_LIFESPAN_EXPIRED : //
-      case THING_EVENT_FALL :             //
-      case THING_EVENT_THE_END :          //
-      case THING_EVENT_CARRIED :          //
-      case THING_EVENT_CARRIED_MERGED :   //
-      case THING_EVENT_MELT :             //
-      case THING_EVENT_ENUM_MAX :         //
+      case THING_EVENT_NONE :             [[fallthrough]];
+      case THING_EVENT_OPEN :             [[fallthrough]];
+      case THING_EVENT_LIFESPAN_EXPIRED : [[fallthrough]];
+      case THING_EVENT_FALL :             [[fallthrough]];
+      case THING_EVENT_THE_END :          [[fallthrough]];
+      case THING_EVENT_CARRIED :          [[fallthrough]];
+      case THING_EVENT_CARRIED_MERGED :   [[fallthrough]];
+      case THING_EVENT_MELT :             [[fallthrough]];
+      case THING_EVENT_USER_INITIATED :   [[fallthrough]];
+      case THING_EVENT_SPAWNED :          [[fallthrough]];
+      case THING_EVENT_ENUM_MAX : //
         ERR("unexpected event: %s", ThingEventType_to_string(e.event_type).c_str());
         break;
     }
@@ -408,6 +414,8 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
       case THING_EVENT_THE_END :        [[fallthrough]];
       case THING_EVENT_CARRIED_MERGED : [[fallthrough]];
       case THING_EVENT_MELT :           [[fallthrough]];
+      case THING_EVENT_USER_INITIATED : [[fallthrough]];
+      case THING_EVENT_SPAWNED :        [[fallthrough]];
       case THING_EVENT_ENUM_MAX : //
         ERR("unexpected event: %s", ThingEventType_to_string(e.event_type).c_str());
         break;
@@ -447,22 +455,16 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
           }
         }
         break;
-      case THING_EVENT_LIGHT_DAMAGE : //
-        break;
-      case THING_EVENT_WATER_DAMAGE : //
-        break;
-      case THING_EVENT_EXPLOSION_DAMAGE : //
-        break;
-      case THING_EVENT_OPEN : //
-        break;
-      case THING_EVENT_CARRIED : //
-        break;
-      case THING_EVENT_THE_END : //
-        break;
-      case THING_EVENT_CARRIED_MERGED : //
-        break;
-      case THING_EVENT_MELT : //
-        break;
+      case THING_EVENT_LIGHT_DAMAGE :     [[fallthrough]];
+      case THING_EVENT_WATER_DAMAGE :     [[fallthrough]];
+      case THING_EVENT_EXPLOSION_DAMAGE : [[fallthrough]];
+      case THING_EVENT_OPEN :             [[fallthrough]];
+      case THING_EVENT_CARRIED :          [[fallthrough]];
+      case THING_EVENT_THE_END :          [[fallthrough]];
+      case THING_EVENT_CARRIED_MERGED :   [[fallthrough]];
+      case THING_EVENT_MELT :             [[fallthrough]];
+      case THING_EVENT_SPAWNED :          [[fallthrough]];
+      case THING_EVENT_USER_INITIATED :   break;
       case THING_EVENT_ENUM_MAX : //
         ERR("unexpected event: %s", ThingEventType_to_string(e.event_type).c_str());
         break;

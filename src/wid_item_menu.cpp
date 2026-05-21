@@ -129,7 +129,13 @@ static Thingp g_item;
     return false;
   }
 
-  if (! thing_drop(g, v, l, player, item)) {
+  ThingEvent e {
+      .reason     = "user dropped",             //
+      .event_type = THING_EVENT_USER_INITIATED, //
+      .source     = player,                     //
+  };
+
+  if (! thing_drop(g, v, l, player, item, e)) {
     sound_play(g, "error");
     return false;
   }

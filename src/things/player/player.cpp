@@ -297,8 +297,13 @@ static void tp_player_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
   if (weapon_tp) {
     auto weapon = thing_spawn(g, v, l, weapon_tp, thing_at(me));
     if (weapon) {
-      if (thing_carry(g, v, l, me, weapon)) {
-        thing_wield(g, v, l, me, weapon);
+      ThingEvent e {
+          .reason     = "spawned",           //
+          .event_type = THING_EVENT_SPAWNED, //
+          .source     = me,                  //
+      };
+      if (thing_carry(g, v, l, me, weapon, e)) {
+        thing_wield(g, v, l, me, weapon, e);
       }
     }
   }

@@ -13,7 +13,7 @@
 //
 // Add an item to the things inventory
 //
-static auto thing_wield_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp wielder) -> bool
+static auto thing_wield_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp wielder, ThingEvent &e) -> bool
 {
   TRACE();
 
@@ -50,8 +50,10 @@ static auto thing_wield_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp w
   thing_inventory_dump(g, v, l, wielder);
 
   if (thing_is_player(wielder)) {
-    auto the_thing = thing_name_long_the(g, v, l, item);
-    topcon("You wield %s.", the_thing.c_str());
+    if (e.event_type != THING_EVENT_SPAWNED) {
+      auto the_thing = thing_name_long_the(g, v, l, item);
+      topcon("You wield %s.", the_thing.c_str());
+    }
     game_request_to_remake_ui_set(g);
   }
 
@@ -61,7 +63,7 @@ static auto thing_wield_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp w
 //
 // Drop an item from the things inventory
 //
-static auto thing_unwield_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp wielder) -> bool
+static auto thing_unwield_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp wielder, ThingEvent &e) -> bool
 {
   TRACE();
 
@@ -87,15 +89,19 @@ static auto thing_unwield_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp
     TRACE_INDENT();
 
     if (thing_is_player(wielder)) {
-      auto the_thing = thing_name_long_the(g, v, l, item);
-      topcon("You fail to unwield %s.", the_thing.c_str());
+      if (e.event_type == THING_EVENT_USER_INITIATED) {
+        auto the_thing = thing_name_long_the(g, v, l, item);
+        topcon("You fail to unwield %s.", the_thing.c_str());
+      }
     }
     return false;
   }
 
   if (thing_is_player(wielder)) {
-    auto the_thing = thing_name_long_the(g, v, l, item);
-    topcon("You unwield %s.", the_thing.c_str());
+    if (e.event_type == THING_EVENT_USER_INITIATED) {
+      auto the_thing = thing_name_long_the(g, v, l, item);
+      topcon("You unwield %s.", the_thing.c_str());
+    }
     game_request_to_remake_ui_set(g);
   }
 
@@ -259,7 +265,7 @@ auto thing_wielding(Gamep g, Levelsp v, Levelp /*l*/, Thingp me) -> Thingp
   return thing_find_optional(g, v, me->wielding_id);
 }
 
-void thing_unwield(Gamep g, Levelsp v, Levelp l, Thingp me)
+void thing_unwield(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
 {
   TRACE();
 
@@ -270,7 +276,7 @@ void thing_unwield(Gamep g, Levelsp v, Levelp l, Thingp me)
 
   auto *item = thing_wielding(g, v, l, me);
   if (item != nullptr) {
-    if (! thing_unwield_item(g, v, l, item, me)) {
+    if (! thing_unwield_item(g, v, l, item, me, e)) {
       thing_err(me, "failed to unwield");
     }
 
@@ -278,7 +284,7 @@ void thing_unwield(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 }
 
-void thing_wield(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item)
+void thing_wield(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, ThingEvent &e)
 {
   TRACE();
 
@@ -292,9 +298,9 @@ void thing_wield(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item)
     return;
   }
 
-  thing_unwield(g, v, l, me);
+  thing_unwield(g, v, l, me, e);
 
-  if (thing_wield_item(g, v, l, item, me)) {
+  if (thing_wield_item(g, v, l, item, me, e)) {
     me->wielding_id = item->id;
   }
 }
