@@ -60,21 +60,34 @@ static void wid_button_pulse(Gamep /*g*/, Widp w)
 {
   TRACE();
 
-  auto pulse = THING_IS_HOT_PULSE_ANIM_MS; // ms
-  auto mid   = pulse / 2;
-  auto n     = time_ms_cached() % pulse;
+  auto  pulse = THING_IS_HOT_PULSE_ANIM_MS; // ms
+  float mid   = pulse / 2;
+  float n     = (float) (time_ms_cached() % pulse);
+  float i     = 0;
 
-  if (n > mid) {
-    n = mid - n;
+  uint8_t a;
+
+  if (n == mid) {
+    a = 255;
+  } else if (n > mid) {
+    i = (n - mid) / mid;
+    i *= 100;
+    i = 255 - i;
+  } else {
+    i = n / mid;
+    i *= 100;
+    i = 155 + i;
   }
-  if (n == 0) {
-    n = -1;
+
+  if (i < 0) {
+    i = 0;
+  }
+  if (i > 255) {
+    i = 255;
   }
 
-  float const i = static_cast< int >((255 / static_cast< float >(mid)) * static_cast< float >(n));
-  auto        a = ((static_cast< uint8_t >(static_cast< int >(i))) / 2) + 120;
+  a = static_cast< uint8_t >(i);
 
-  std::println(stderr, "ZZZ NEIL {} {} {} button i {:f} a {}", __FILE__, __FUNCTION__, __LINE__, i, a);
   color c = wid_get_color(w, WID_COLOR_BG);
   c.a     = a;
   wid_set_color(w, WID_COLOR_BG, c);
