@@ -489,10 +489,10 @@ auto level_count_is_item_droppable(Gamep g, Levelsp v, Levelp l, const bpoint &p
   return level_count(g, v, l, is_item_droppable, p);
 }
 
-auto level_count_is_item_equipable(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+auto level_count_is_able_to_be_equipped(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_item_equipable, p);
+  return level_count(g, v, l, is_able_to_be_equipped, p);
 }
 
 auto level_count_is_item_mergeable(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t

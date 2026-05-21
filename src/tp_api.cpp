@@ -487,10 +487,10 @@ auto tp_is_item_droppable(Tpp tp) -> bool
   return tp_flag(tp, is_item_droppable) != 0;
 }
 
-auto tp_is_item_equipable(Tpp tp) -> bool
+auto tp_is_able_to_be_equipped(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_item_equipable) != 0;
+  return tp_flag(tp, is_able_to_be_equipped) != 0;
 }
 
 auto tp_is_item_mergeable(Tpp tp) -> bool

@@ -78,7 +78,7 @@
       list_macro(is_indestructible, "is_indestructible"),                                   /* newline */                                  \
       list_macro(is_inventory_item, "is_inventory_item"),                                   /* newline */                                  \
       list_macro(is_item_droppable, "is_item_droppable"),                                   /* newline */                                  \
-      list_macro(is_item_equipable, "is_item_equipable"),                                   /* newline */                                  \
+      list_macro(is_able_to_be_equipped, "is_able_to_be_equipped"),                                   /* newline */                                  \
       list_macro(is_item_mergeable, "is_item_mergeable"),                                   /* newline */                                  \
       list_macro(is_item, "is_item"),                                                       /* newline */                                  \
       list_macro(is_key, "is_key"),                                                         /* newline */                                  \
@@ -622,7 +622,7 @@ class Tp;
 [[nodiscard]] auto tp_is_insectoid(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_inventory_item(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_item_droppable(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_item_equipable(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_able_to_be_equipped(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_item_mergeable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_item(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_key(Tpp tp) -> bool;

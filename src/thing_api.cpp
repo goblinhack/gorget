@@ -2952,7 +2952,7 @@ auto thing_is_levitating(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_levitating) != 0;
 }
 
-auto thing_is_item_equipable(Thingp t) -> bool
+auto thing_is_able_to_be_equipped(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2960,7 +2960,7 @@ auto thing_is_item_equipable(Thingp t) -> bool
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_item_equipable) != 0;
+  return tp_flag(thing_tp(t), is_able_to_be_equipped) != 0;
 }
 
 auto thing_is_item_droppable(Thingp t) -> bool

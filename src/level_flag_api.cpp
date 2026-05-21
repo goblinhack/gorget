@@ -488,10 +488,10 @@ auto level_is_item_droppable(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thin
   return level_flag(g, v, l, is_item_droppable, p, me);
 }
 
-auto level_is_item_equipable(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+auto level_is_able_to_be_equipped(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_item_equipable, p, me);
+  return level_flag(g, v, l, is_able_to_be_equipped, p, me);
 }
 
 auto level_is_item_mergeable(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp

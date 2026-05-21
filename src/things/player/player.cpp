@@ -303,7 +303,9 @@ static void tp_player_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
           .source     = me,                  //
       };
       if (thing_carry(g, v, l, me, weapon, e)) {
-        thing_wield(g, v, l, me, weapon, e);
+        if (! thing_wield(g, v, l, me, weapon, e)) {
+          thing_err(me, "failed to auto wield");
+        }
       }
     }
   }

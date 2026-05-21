@@ -328,7 +328,9 @@ auto thing_drop(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, ThingEvent
   }
 
   if (thing_is_wielded(item)) {
-    thing_unwield(g, v, l, me, e);
+    if (! thing_unwield(g, v, l, me, e)) {
+      return false;
+    }
   }
 
   return thing_drop_item(g, v, l, item, me, e);

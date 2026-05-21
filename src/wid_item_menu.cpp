@@ -163,6 +163,110 @@ static Thingp g_item;
   return true;
 }
 
+[[nodiscard]] static auto wid_item_menu_wield(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+{
+  TRACE();
+
+  auto *v = game_levels_get(g);
+  if (v == nullptr) {
+    return false;
+  }
+
+  auto *l = game_level_get(g, v);
+  if (l == nullptr) {
+    return false;
+  }
+
+  auto *player = thing_player(g);
+  if (player == nullptr) [[unlikely]] {
+    return false;
+  }
+
+  auto *item = g_item;
+  if (item == nullptr) {
+    return false;
+  }
+
+  if (! thing_is_able_to_be_wielded(item)) {
+    topcon("Weapon cannot be wielded.");
+    sound_play(g, "error");
+    return false;
+  }
+
+  if (thing_is_wielded(item)) {
+    topcon("Weapon is already wielded.");
+    sound_play(g, "error");
+    return false;
+  }
+
+  ThingEvent e {
+      .reason     = "user wielded",             //
+      .event_type = THING_EVENT_USER_INITIATED, //
+      .source     = player,                     //
+  };
+
+  if (! thing_wield(g, v, l, player, item, e)) {
+    sound_play(g, "error");
+    return false;
+  }
+
+  (void) wid_item_menu_destroy();
+  (void) wid_item_menu_go_back(g);
+  return true;
+}
+
+[[nodiscard]] static auto wid_item_menu_unwield(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+{
+  TRACE();
+
+  auto *v = game_levels_get(g);
+  if (v == nullptr) {
+    return false;
+  }
+
+  auto *l = game_level_get(g, v);
+  if (l == nullptr) {
+    return false;
+  }
+
+  auto *player = thing_player(g);
+  if (player == nullptr) [[unlikely]] {
+    return false;
+  }
+
+  auto *item = g_item;
+  if (item == nullptr) {
+    return false;
+  }
+
+  if (! thing_is_able_to_be_wielded(item)) {
+    topcon("Weapon cannot be wielded.");
+    sound_play(g, "error");
+    return false;
+  }
+
+  if (! thing_is_wielded(item)) {
+    topcon("Weapon is not wielded.");
+    sound_play(g, "error");
+    return false;
+  }
+
+  ThingEvent e {
+      .reason     = "user unwielded",           //
+      .event_type = THING_EVENT_USER_INITIATED, //
+      .source     = player,                     //
+  };
+
+  if (! thing_unwield(g, v, l, player, e)) {
+    sound_play(g, "error");
+    return false;
+  }
+
+  (void) wid_item_menu_destroy();
+  (void) wid_item_menu_go_back(g);
+  return true;
+}
+
 [[nodiscard]] static auto wid_item_menu_back(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
   TRACE();
@@ -202,6 +306,16 @@ static Thingp g_item;
               case 'D' :
                 sound_play(g, "keypress");
                 (void) wid_item_menu_drop(g, nullptr, 0, 0, 0);
+                return true;
+              case 'w' :
+              case 'W' :
+                sound_play(g, "keypress");
+                (void) wid_item_menu_wield(g, nullptr, 0, 0, 0);
+                return true;
+              case 'u' :
+              case 'U' :
+                sound_play(g, "keypress");
+                (void) wid_item_menu_unwield(g, nullptr, 0, 0, 0);
                 return true;
               case 'e' :
               case 'E' :
@@ -253,7 +367,7 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item, bool from_inventory)
     menu_height += box_step;
   }
 
-  if (thing_is_item_equipable(item)) {
+  if (thing_is_able_to_be_equipped(item)) {
     menu_height += box_step;
   }
 
@@ -295,7 +409,7 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item, bool from_inventory)
     y_at += box_step;
   }
 
-  if (thing_is_item_equipable(item)) {
+  if (thing_is_able_to_be_equipped(item)) {
     TRACE();
     auto *p = wid_item_menu_window->wid_text_area->wid_text_area;
     auto *w = wid_new_menu_button(g, p, "Equip");
@@ -306,6 +420,32 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item, bool from_inventory)
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "E" UI_FMT_STR "quip");
     y_at += box_step;
+  }
+
+  if (thing_is_able_to_be_wielded(item)) {
+    if (thing_is_wielded(item)) {
+      TRACE();
+      auto *p = wid_item_menu_window->wid_text_area->wid_text_area;
+      auto *w = wid_new_menu_button(g, p, "Unwield");
+
+      spoint const tl(0, y_at);
+      spoint const br(button_width, y_at + box_height);
+      wid_set_on_mouse_up(w, wid_item_menu_unwield);
+      wid_set_pos(w, tl, br);
+      wid_set_text(w, UI_HIGHLIGHT_FMT_STR "U" UI_FMT_STR "nwield");
+      y_at += box_step;
+    } else {
+      TRACE();
+      auto *p = wid_item_menu_window->wid_text_area->wid_text_area;
+      auto *w = wid_new_menu_button(g, p, "Wield");
+
+      spoint const tl(0, y_at);
+      spoint const br(button_width, y_at + box_height);
+      wid_set_on_mouse_up(w, wid_item_menu_wield);
+      wid_set_pos(w, tl, br);
+      wid_set_text(w, UI_HIGHLIGHT_FMT_STR "W" UI_FMT_STR "ield");
+      y_at += box_step;
+    }
   }
 
   if (from_inventory) {

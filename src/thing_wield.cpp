@@ -265,13 +265,13 @@ auto thing_wielding(Gamep g, Levelsp v, Levelp /*l*/, Thingp me) -> Thingp
   return thing_find_optional(g, v, me->wielding_id);
 }
 
-void thing_unwield(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
+bool thing_unwield(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
 {
   TRACE();
 
   if (me == nullptr) {
     ERR("no thing pointer");
-    return;
+    return false;
   }
 
   auto *item = thing_wielding(g, v, l, me);
@@ -281,26 +281,34 @@ void thing_unwield(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
     }
 
     me->wielding_id = 0;
+  } else {
+    return false;
   }
+
+  return true;
 }
 
-void thing_wield(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, ThingEvent &e)
+bool thing_wield(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, ThingEvent &e)
 {
   TRACE();
 
   if (me == nullptr) {
     ERR("no thing pointer");
-    return;
+    return false;
   }
 
   if (item == nullptr) {
     thing_err(me, "no item to wield");
-    return;
+    return false;
   }
 
-  thing_unwield(g, v, l, me, e);
+  (void) thing_unwield(g, v, l, me, e);
 
   if (thing_wield_item(g, v, l, item, me, e)) {
     me->wielding_id = item->id;
+  } else {
+    return false;
   }
+
+  return true;
 }

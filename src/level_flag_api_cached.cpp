@@ -488,10 +488,10 @@ auto level_is_item_droppable_cached(Gamep g, Levelsp v, Levelp l, const bpoint &
   return level_flag_cached(g, v, l, is_item_droppable, p);
 }
 
-auto level_is_item_equipable_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+auto level_is_able_to_be_equipped_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_item_equipable, p);
+  return level_flag_cached(g, v, l, is_able_to_be_equipped, p);
 }
 
 auto level_is_item_mergeable_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
