@@ -24,14 +24,22 @@ static WidPopup *wid_options_menu_window;
 
 void wid_options_menu_destroy(Gamep /*g*/)
 {
-  TRACE();
+  if (! wid_options_menu_window) {
+    return;
+  }
+
+  con("Options menu: destroy");
+  TRACE_INDENT();
+
   delete wid_options_menu_window;
   wid_options_menu_window = nullptr;
 }
 
 [[nodiscard]] static auto wid_options_menu_gfx(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
-  TRACE();
+  con("Options menu: gfx");
+  TRACE_INDENT();
+
   wid_options_menu_destroy(g);
   wid_cfg_gfx_select(g);
   return true;
@@ -39,7 +47,9 @@ void wid_options_menu_destroy(Gamep /*g*/)
 
 [[nodiscard]] static auto wid_options_menu_seed(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
-  TRACE();
+  con("Options menu: seed");
+  TRACE_INDENT();
+
   wid_options_menu_destroy(g);
   wid_seed_select(g);
   return true;
@@ -47,7 +57,9 @@ void wid_options_menu_destroy(Gamep /*g*/)
 
 [[nodiscard]] static auto wid_options_menu_player_name(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
-  TRACE();
+  con("Options menu: name");
+  TRACE_INDENT();
+
   wid_options_menu_destroy(g);
   wid_player_name_select(g);
   return true;
@@ -55,7 +67,9 @@ void wid_options_menu_destroy(Gamep /*g*/)
 
 [[nodiscard]] static auto wid_options_menu_mouse(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
-  TRACE();
+  con("Options menu: mouse");
+  TRACE_INDENT();
+
   wid_options_menu_destroy(g);
   wid_cfg_mouse_select(g);
   return true;
@@ -63,7 +77,9 @@ void wid_options_menu_destroy(Gamep /*g*/)
 
 [[nodiscard]] static auto wid_options_menu_keyboard(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
-  TRACE();
+  con("Options menu: keyboard");
+  TRACE_INDENT();
+
   wid_options_menu_destroy(g);
   wid_cfg_help_select(g);
   return true;
@@ -71,7 +87,9 @@ void wid_options_menu_destroy(Gamep /*g*/)
 
 [[nodiscard]] static auto wid_options_menu_sound(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
-  TRACE();
+  con("Options menu: sound");
+  TRACE_INDENT();
+
   wid_options_menu_destroy(g);
   wid_cfg_sound_select(g);
   return true;
@@ -79,7 +97,9 @@ void wid_options_menu_destroy(Gamep /*g*/)
 
 [[nodiscard]] static auto wid_options_menu_back(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
-  TRACE();
+  con("Options menu: back");
+  TRACE_INDENT();
+
   wid_options_menu_destroy(g);
   wid_main_menu_select(g);
   return true;
@@ -87,7 +107,8 @@ void wid_options_menu_destroy(Gamep /*g*/)
 
 [[nodiscard]] static auto wid_options_menu_key_down(Gamep g, Widp /*w*/, const struct SDL_Keysym *key) -> bool
 {
-  TRACE();
+  con("Options menu: key down");
+  TRACE_INDENT();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
     sound_play(g, "keypress");
@@ -150,8 +171,8 @@ void wid_options_menu_destroy(Gamep /*g*/)
 
 void wid_options_menu_select(Gamep g)
 {
-  TRACE();
-  log("options menu");
+  con("Options menu: select");
+  TRACE_INDENT();
 
   if (wid_options_menu_window != nullptr) {
     wid_options_menu_destroy(g);

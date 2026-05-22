@@ -14,6 +14,7 @@
 #include "my_wid.hpp"
 #include "my_wid_popup.hpp"
 #include "my_wids.hpp"
+
 #include <SDL_keyboard.h>
 #include <SDL_keycode.h>
 #include <cmath>
@@ -23,19 +24,22 @@ static WidPopup *wid_quit_window;
 
 void wid_quit_destroy(Gamep g)
 {
-  TRACE();
-
-  if (wid_quit_window != nullptr) {
-    delete wid_quit_window;
-    wid_quit_window = nullptr;
-    game_state_reset(g, "widget quit destroy");
+  if (! wid_quit_window) {
+    return;
   }
+
+  con("Quit menu: destroy");
+  TRACE_INDENT();
+
+  delete wid_quit_window;
+  wid_quit_window = nullptr;
+  game_state_reset(g, "widget quit destroy");
 }
 
 [[nodiscard]] static auto wid_quit_yes(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
-  TRACE();
-  log("quit, yes");
+  con("Quit menu: yes");
+  TRACE_INDENT();
 
   if (game_levels_get(g) != nullptr) {
     log("continue game");
@@ -54,8 +58,8 @@ void wid_quit_destroy(Gamep g)
 
 [[nodiscard]] static auto wid_quit_no(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
-  TRACE();
-  log("quit, no");
+  con("Quit menu: no");
+  TRACE_INDENT();
 
   wid_quit_destroy(g);
 
@@ -67,7 +71,8 @@ void wid_quit_destroy(Gamep g)
 
 [[nodiscard]] static auto wid_quit_key_down(Gamep g, Widp /*w*/, const struct SDL_Keysym *key) -> bool
 {
-  TRACE();
+  con("Quit menu: key down");
+  TRACE_INDENT();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
     sound_play(g, "keypress");
@@ -110,8 +115,8 @@ void wid_quit_destroy(Gamep g)
 
 void wid_quit_select(Gamep g)
 {
-  TRACE();
-  log("quit select");
+  con("Quit menu: select");
+  TRACE_INDENT();
 
   if (wid_quit_window != nullptr) {
     wid_quit_destroy(g);

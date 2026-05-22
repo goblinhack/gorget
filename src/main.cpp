@@ -648,22 +648,34 @@ auto main(int argc, char *argv[]) -> int
   if (AN_ERROR_OCCURRED()) {
     wid_console_raise(g);
   } else if (g_opt_restarted_in_gfx_menu) {
+    con("Restarted in gfx menu");
+    TRACE_INDENT();
+
     g_opt_restarted_in_gfx_menu = false;
     wid_hide(g, wid_console_window);
     //
     // Need this to get the background working
     //
-    wid_main_menu_select(g);
+    game_state_reset(g, "g_opt_restarted_in_gfx_menu");
     wid_cfg_gfx_select(g, true /* menu_was_created_due_to_game_restarting */);
   } else if (g_opt_quick_start) {
+    con("Quick start");
+    TRACE_INDENT();
+
     wid_hide(g, wid_console_window);
     wid_new_game(g);
   } else if (g_opt_level_select_menu) {
+    con("Level select menu");
+    TRACE_INDENT();
+
     wid_hide(g, wid_console_window);
     wid_new_game(g);
   } else {
+    con("Open main menu");
+    TRACE_INDENT();
+
     wid_hide(g, wid_console_window);
-    wid_main_menu_select(g);
+    game_state_reset(g, "main");
   }
 
   {

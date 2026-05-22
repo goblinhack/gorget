@@ -24,14 +24,22 @@ static WidPopup *wid_more_window;
 
 static void wid_more_destroy()
 {
-  TRACE();
+  if (! wid_more_window) {
+    return;
+  }
+
+  con("Wid more: destroy");
+  TRACE_INDENT();
+
   delete wid_more_window;
   wid_more_window = nullptr;
 }
 
 [[nodiscard]] static auto wid_more_credits(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
-  TRACE();
+  con("Wid more: credits");
+  TRACE_INDENT();
+
   wid_more_destroy();
   wid_credits_select(g);
   return true;
@@ -39,7 +47,9 @@ static void wid_more_destroy()
 
 [[nodiscard]] static auto wid_more_hiscores(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
-  TRACE();
+  con("Wid more: hiscores");
+  TRACE_INDENT();
+
   wid_more_destroy();
   wid_hiscores_show(g);
   return true;
@@ -47,7 +57,9 @@ static void wid_more_destroy()
 
 [[nodiscard]] static auto wid_more_back(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
-  TRACE();
+  con("Wid more: back");
+  TRACE_INDENT();
+
   wid_more_destroy();
   wid_main_menu_select(g);
   return true;
@@ -55,7 +67,8 @@ static void wid_more_destroy()
 
 [[nodiscard]] static auto wid_more_key_down(Gamep g, Widp /*w*/, const struct SDL_Keysym *key) -> bool
 {
-  TRACE();
+  con("Wid more: key down");
+  TRACE_INDENT();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
     sound_play(g, "keypress");
@@ -98,8 +111,8 @@ static void wid_more_destroy()
 
 void wid_more_select(Gamep g)
 {
-  TRACE();
-  log("more menu");
+  con("More menu: select");
+  TRACE_INDENT();
 
   if (wid_more_window != nullptr) {
     wid_more_destroy();

@@ -8,7 +8,7 @@
 #include "my_color_defs.hpp"
 #include "my_game.hpp"
 #include "my_gl.hpp"
-#include "my_main.hpp"
+#include "my_main.hpp" // NOLINT
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
 #include "my_spoint.hpp"
@@ -19,6 +19,7 @@
 #include "my_wid_popup.hpp"
 #include "my_wid_text_box.hpp"
 #include "my_wids.hpp"
+
 #include <SDL_keyboard.h>
 #include <cstdint>
 
@@ -26,7 +27,13 @@ static WidPopup *wid_intro_window;
 
 static void wid_intro_destroy()
 {
+  if (! wid_intro_window) {
+    return;
+  }
+
+  con("Intro menu: destroy");
   TRACE();
+
   delete wid_intro_window;
   wid_intro_window = nullptr;
 }
@@ -62,9 +69,12 @@ static void wid_intro_destroy()
 
 [[nodiscard]] static auto wid_intro_mouse_up(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
+  con("Intro menu: start");
   TRACE();
+
   wid_intro_destroy();
   wid_new_game(g);
+
   return true;
 }
 
@@ -106,8 +116,8 @@ static void wid_intro_tick(Gamep g, Widp /*w*/)
 
 void wid_intro_select(Gamep g)
 {
+  con("Intro menu: select");
   TRACE();
-  con("Intro");
 
   if (wid_intro_window != nullptr) {
     wid_intro_destroy();

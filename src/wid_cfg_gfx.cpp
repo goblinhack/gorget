@@ -7,7 +7,7 @@
 #include "my_cpp_template.hpp"
 #include "my_game.hpp"
 #include "my_globals.hpp"
-#include "my_main.hpp"
+#include "my_main.hpp" // NOLINT
 #include "my_sdl_event.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
@@ -38,16 +38,22 @@ static bool            menu_was_created_due_to_game_restarting;
 
 static void wid_cfg_gfx_destroy()
 {
-  TRACE();
+  if (! wid_cfg_gfx_window) {
+    return;
+  }
+
+  con("Gfx menu: destroy");
+  TRACE_INDENT();
+
   delete wid_cfg_gfx_window;
   wid_cfg_gfx_window = nullptr;
 }
 
 [[nodiscard]] static auto wid_cfg_gfx_save(Gamep g, int y, uint32_t button) -> bool
 {
-  TRACE();
+  con("Gfx menu: save");
+  TRACE_INDENT();
 
-  con("Save config for gfx");
   game_save_config(g);
 
   wid_cfg_gfx_destroy();
@@ -60,8 +66,9 @@ static void wid_cfg_gfx_destroy()
 
 [[nodiscard]] static auto wid_cfg_gfx_cancel(Gamep g, int y, uint32_t button) -> bool
 {
-  TRACE();
-  con("Reload config");
+  con("Gfx menu: cancel");
+  TRACE_INDENT();
+
   wid_cfg_gfx_destroy();
   if (menu_was_created_due_to_game_restarting) {
     wid_options_menu_destroy(g);
@@ -74,7 +81,9 @@ static void wid_cfg_gfx_destroy()
 
 [[nodiscard]] static auto wid_cfg_gfx_back(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
-  TRACE();
+  con("Gfx menu: back");
+  TRACE_INDENT();
+
   wid_cfg_gfx_destroy();
   if (menu_was_created_due_to_game_restarting) {
     wid_options_menu_destroy(g);
@@ -87,8 +96,9 @@ static void wid_cfg_gfx_destroy()
 
 [[nodiscard]] static auto wid_cfg_gfx_vsync_enable_toggle(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
-  TRACE();
-  con("Toggle vsync");
+  con("Gfx menu: vsync toggle");
+  TRACE_INDENT();
+
   if (game_gfx_vsync_enable_get(g)) {
     game_gfx_vsync_enable_unset(g);
   } else {
@@ -102,8 +112,9 @@ static void wid_cfg_gfx_destroy()
 
 [[nodiscard]] static auto wid_cfg_gfx_fullscreen_toggle(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
-  TRACE();
-  con("Toggle gfx fullscreen");
+  con("Gfx menu: fullscreen toggle");
+  TRACE_INDENT();
+
   if (game_gfx_fullscreen_get(g)) {
     game_gfx_fullscreen_unset(g);
   } else {
@@ -128,8 +139,8 @@ static void wid_cfg_gfx_destroy()
 
 [[nodiscard]] static auto wid_cfg_gfx_fullscreen_desktop_toggle(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
-  TRACE();
-  con("Toggle gfx fullscreen desktop");
+  con("Gfx menu: desktop toggle");
+  TRACE_INDENT();
 
   if (game_gfx_fullscreen_desktop_get(g)) {
     game_gfx_fullscreen_desktop_unset(g);
@@ -155,8 +166,8 @@ static void wid_cfg_gfx_destroy()
 
 [[nodiscard]] static auto wid_cfg_gfx_borderless_toggle(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
-  TRACE();
-  con("Toggle gfx borderless");
+  con("Gfx menu: borderless toggle");
+  TRACE_INDENT();
 
   if (game_gfx_borderless_get(g)) {
     game_gfx_borderless_unset(g);
@@ -172,8 +183,8 @@ static void wid_cfg_gfx_destroy()
 
 [[nodiscard]] static auto wid_cfg_other_fps_counter_toggle(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
-  TRACE();
-  con("Toggle fps counter");
+  con("Gfx menu: fps toggle");
+  TRACE_INDENT();
 
   if (game_fps_counter_get(g)) {
     game_fps_counter_unset(g);
@@ -188,7 +199,8 @@ static void wid_cfg_gfx_destroy()
 
 [[nodiscard]] static auto wid_cfg_gfx_resolution_apply(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
-  TRACE();
+  con("Gfx menu: apply");
+  TRACE_INDENT();
 
   SDL_DisplayMode const mode = pending_mode;
   pending_mode_set           = false;
@@ -262,7 +274,8 @@ static auto wid_cfg_gfx_find_closest_resolution(Gamep g) -> std::string
 
 [[nodiscard]] static auto wid_cfg_gfx_resolution_incr(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
-  TRACE();
+  con("Gfx menu: resolution incr");
+  TRACE_INDENT();
 
   //
   // What is the starting resolution?
@@ -318,7 +331,8 @@ static auto wid_cfg_gfx_find_closest_resolution(Gamep g) -> std::string
 
 [[nodiscard]] static auto wid_cfg_gfx_resolution_decr(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
-  TRACE();
+  con("Gfx menu: resolution decr");
+  TRACE_INDENT();
 
   //
   // What is the starting resolution?
@@ -374,7 +388,8 @@ static auto wid_cfg_gfx_find_closest_resolution(Gamep g) -> std::string
 
 [[nodiscard]] static auto wid_cfg_gfx_key_down(Gamep g, Widp /*w*/, const struct SDL_Keysym *key) -> bool
 {
-  TRACE();
+  con("Gfx menu: key down");
+  TRACE_INDENT();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
     sound_play(g, "keypress");
@@ -417,7 +432,9 @@ static auto wid_cfg_gfx_find_closest_resolution(Gamep g) -> std::string
 
 void wid_cfg_gfx_select(Gamep g, bool menu_was_created_due_to_game_restarting_in)
 {
+  con("Gfx menu: select");
   TRACE();
+
   if (wid_cfg_gfx_window != nullptr) {
     wid_cfg_gfx_destroy();
   }

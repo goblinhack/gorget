@@ -5,7 +5,7 @@
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
 #include "my_game.hpp"
-#include "my_main.hpp"
+#include "my_main.hpp" // NOLINT
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
 #include "my_spoint.hpp"
@@ -14,6 +14,7 @@
 #include "my_wid.hpp"
 #include "my_wid_popup.hpp"
 #include "my_wids.hpp"
+
 #include <SDL_keyboard.h>
 #include <SDL_keycode.h>
 #include <cstdint>
@@ -22,7 +23,13 @@ static WidPopup *wid_credits_window;
 
 static void wid_credits_destroy(Gamep g)
 {
-  TRACE();
+  if (! wid_credits_window) {
+    return;
+  }
+
+  con("Credits menu: destroy");
+  TRACE_INDENT();
+
   delete wid_credits_window;
   wid_credits_window = nullptr;
   wid_main_menu_select(g);
@@ -30,7 +37,8 @@ static void wid_credits_destroy(Gamep g)
 
 [[nodiscard]] static auto wid_credits_key_down(Gamep g, Widp /*w*/, const struct SDL_Keysym *key) -> bool
 {
-  TRACE();
+  con("Credits menu: key down");
+  TRACE_INDENT();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
     sound_play(g, "keypress");
@@ -73,8 +81,8 @@ static void wid_credits_destroy(Gamep g)
 
 void wid_credits_select(Gamep g)
 {
-  TRACE();
-  con("Credits");
+  con("Credits menu: select");
+  TRACE_INDENT();
 
   if (wid_credits_window != nullptr) {
     wid_credits_destroy(g);

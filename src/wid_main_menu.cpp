@@ -10,7 +10,7 @@
 #include "my_game.hpp"
 #include "my_gl.hpp" // NOLINT
 #include "my_globals.hpp"
-#include "my_main.hpp"
+#include "my_main.hpp" // NOLINT
 #include "my_music.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
@@ -32,7 +32,12 @@ static WidPopup *wid_main_menu_window;
 
 void wid_main_menu_destroy(Gamep /*g*/)
 {
-  TRACE();
+  if (! wid_main_menu_window) {
+    return;
+  }
+
+  con("Main menu: destroy");
+  TRACE_INDENT();
 
   delete wid_main_menu_window;
   wid_main_menu_window = nullptr;
@@ -40,7 +45,8 @@ void wid_main_menu_destroy(Gamep /*g*/)
 
 static void wid_main_menu_hide(Gamep g)
 {
-  TRACE();
+  con("Main menu: hide");
+  TRACE_INDENT();
 
   if (wid_main_menu_window == nullptr) {
     return;
@@ -51,14 +57,18 @@ static void wid_main_menu_hide(Gamep g)
 
 [[nodiscard]] static auto wid_main_menu_load(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
-  TRACE();
+  con("Main menu: load");
+  TRACE_INDENT();
+
   wid_load_select(g);
   return true;
 }
 
 [[nodiscard]] static auto wid_main_menu_cfg(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
-  TRACE();
+  con("Main menu: cfg");
+  TRACE_INDENT();
+
   wid_options_menu_select(g);
   wid_main_menu_hide(g);
   return true;
@@ -66,7 +76,9 @@ static void wid_main_menu_hide(Gamep g)
 
 [[nodiscard]] static auto wid_main_menu_more(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
-  TRACE();
+  con("Main menu: more");
+  TRACE_INDENT();
+
   wid_more_select(g);
   wid_main_menu_hide(g);
   return true;
@@ -74,7 +86,9 @@ static void wid_main_menu_hide(Gamep g)
 
 [[nodiscard]] static auto game_menu_new_game(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
-  TRACE();
+  con("Main menu: new game");
+  TRACE_INDENT();
+
   wid_main_menu_hide(g);
   wid_main_menu_destroy(g);
 
@@ -89,7 +103,8 @@ static void wid_main_menu_hide(Gamep g)
 
 [[nodiscard]] static auto game_menu_weekly_seed(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE();
+  con("Main menu: weekly seed");
+  TRACE_INDENT();
 
   game_seed_set(g, g_opt_seed_name_weekly.c_str());
 
@@ -98,7 +113,8 @@ static void wid_main_menu_hide(Gamep g)
 
 [[nodiscard]] static auto game_menu_previous_seed(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  TRACE();
+  con("Main menu: previous seed");
+  TRACE_INDENT();
 
   game_seed_set(g, g_opt_seed_name_previous.c_str());
 
@@ -107,7 +123,9 @@ static void wid_main_menu_hide(Gamep g)
 
 [[nodiscard]] static auto wid_main_menu_quit(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
-  TRACE();
+  con("Main menu: quit");
+  TRACE_INDENT();
+
   wid_quit_select(g);
   wid_main_menu_destroy(g);
   return true;
@@ -115,7 +133,8 @@ static void wid_main_menu_hide(Gamep g)
 
 [[nodiscard]] static auto wid_main_menu_key_down(Gamep g, Widp /*w*/, const struct SDL_Keysym *key) -> bool
 {
-  TRACE();
+  con("Main menu: key wodn");
+  TRACE_INDENT();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
     sound_play(g, "keypress");
@@ -317,8 +336,8 @@ static void wid_main_menu_tick(Gamep g, Widp /*w*/)
 
 void wid_main_menu_select(Gamep g)
 {
-  log("main menu");
-  TRACE();
+  con("Main menu: select");
+  TRACE_INDENT();
 
   sound_fade_out(g);
 
@@ -480,16 +499,6 @@ void wid_main_menu_select(Gamep g)
   }
 
   wid_update(g, wid_main_menu_window->wid_text_area->wid_text_area);
-}
 
-void wid_new_game(Gamep g)
-{
-  log("new game");
-  TRACE();
-
-  game_state_reset(g, "new game");
-  game_create_levels(g);
-  game_map_zoom_in(g);
-  game_start_playing(g);
-  game_state_change(g, STATE_PLAYING, "new game");
+  game_state_change(g, STATE_MAIN_MENU, "main menu");
 }

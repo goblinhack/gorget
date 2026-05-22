@@ -2,16 +2,12 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include <SDL_keyboard.h>
-#include <SDL_keycode.h>
-#include <cstdint>
-#include <cstdio>
-#include <utility>
-
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
 #include "my_game.hpp"
 #include "my_hiscore.hpp"
+#include "my_main.hpp"
+#include "my_main.hpp" // NOLINT
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
 #include "my_spoint.hpp"
@@ -22,11 +18,23 @@
 #include "my_wid_popup.hpp"
 #include "my_wids.hpp"
 
+#include <SDL_keyboard.h>
+#include <SDL_keycode.h>
+#include <cstdint>
+#include <cstdio>
+#include <utility>
+
 static WidPopup *wid_hiscore_window;
 
 static void wid_hiscore_destroy(Gamep g)
 {
-  TRACE();
+  if (! wid_hiscore_window) {
+    return;
+  }
+
+  con("Hiscore menu: destroy");
+  TRACE_INDENT();
+
   delete wid_hiscore_window;
   wid_hiscore_window = nullptr;
   wid_main_menu_select(g);
@@ -34,7 +42,8 @@ static void wid_hiscore_destroy(Gamep g)
 
 [[nodiscard]] static auto wid_hiscore_key_down(Gamep g, Widp /*w*/, const struct SDL_Keysym *key) -> bool
 {
-  TRACE();
+  con("Hiscore menu: key down");
+  TRACE_INDENT();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
     sound_play(g, "keypress");
@@ -81,11 +90,10 @@ static void wid_hiscore_destroy(Gamep g)
 
 void wid_hiscores_show(Gamep g)
 {
-  TRACE();
+  con("Hiscore menu: show");
+  TRACE_INDENT();
 
-  if (wid_hiscore_window != nullptr) {
-    wid_hiscore_destroy(g);
-  }
+  wid_hiscore_destroy(g);
 
   int const menu_height = 26;
   int const menu_width  = 100;

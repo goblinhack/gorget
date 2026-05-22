@@ -15,6 +15,7 @@
 #include "my_wid_popup.hpp"
 #include "my_wid_text_box.hpp"
 #include "my_wids.hpp"
+
 #include <SDL_keyboard.h>
 #include <SDL_keycode.h>
 
@@ -22,7 +23,13 @@ static WidPopup *wid_error_window;
 
 static void wid_error_destroy(Gamep g)
 {
-  TRACE();
+  if (! wid_error_window) {
+    return;
+  }
+
+  con("Error menu: destroy");
+  TRACE_INDENT();
+
   delete wid_error_window;
   wid_error_window = nullptr;
 
@@ -69,8 +76,8 @@ static void wid_error_destroy(Gamep g)
 
 void wid_error(Gamep g, const std::string &error)
 {
-  TRACE();
   con("ERROR: %s", error.c_str());
+  TRACE_INDENT();
 
   if (wid_error_window != nullptr) {
     wid_error_destroy(g);
