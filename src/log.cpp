@@ -130,6 +130,10 @@ static void con_(const char *fmt, va_list args)
   get_timestamp(buf, MAXLONGSTR);
   len = static_cast< int >(strlen(buf));
   if (fmt != nullptr) {
+    snprintf(buf + len, MAXLONGSTR - len, "CON: ");
+  }
+  len = static_cast< int >(strlen(buf));
+  if (fmt != nullptr) {
     vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
   }
 

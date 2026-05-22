@@ -45,7 +45,7 @@ auto file_load(const char *filename, int *outlen) -> uint8_t *
       if (static_cast< bool >(file_exists_and_is_newer_than(filename, g_exec_full_path_and_name))) {
         out = file_io_read_if_exists(filename, outlen);
         if (out != nullptr) {
-          file_log("Read file %s (newer than exec)", filename);
+          file_log("read file %s (newer than exec)", filename);
           return out;
         }
       }
@@ -53,7 +53,7 @@ auto file_load(const char *filename, int *outlen) -> uint8_t *
       if (static_cast< bool >(file_exists_and_is_newer_than(filename, ".o/file.o"))) {
         out = file_io_read_if_exists(filename, outlen);
         if (out != nullptr) {
-          file_log("Read file %s (newer than build)", filename);
+          file_log("read file %s (newer than build)", filename);
           return out;
         }
       }
@@ -61,14 +61,14 @@ auto file_load(const char *filename, int *outlen) -> uint8_t *
       if (static_cast< bool >(file_exists_and_is_newer_than(filename, "src/.o/file.o"))) {
         out = file_io_read_if_exists(filename, outlen);
         if (out != nullptr) {
-          file_log("Read file %s (newer than src build)", filename);
+          file_log("read file %s (newer than src build)", filename);
           return out;
         }
       }
     } else {
       out = file_io_read_if_exists(filename, outlen);
       if (out != nullptr) {
-        file_log("Read file %s (exists locally)", filename);
+        file_log("read file %s (exists locally)", filename);
         return out;
       }
     }
@@ -112,7 +112,7 @@ auto file_load(const char *filename, int *outlen) -> uint8_t *
 
   auto *r = ramdisk_load(filename, outlen);
   if (r != nullptr) {
-    file_log("Read (ramdisk) %s, %d Mb, %d bytes", filename, *outlen / (1024 * 1024), *outlen);
+    file_log("read (ramdisk) %s, %d Mb, %d bytes", filename, *outlen / (1024 * 1024), *outlen);
 
     if (alt_filename != nullptr) {
       MYFREE(alt_filename);
@@ -224,7 +224,7 @@ auto file_io_read(const char *filename, int *out_len) -> uint8_t *
     *out_len = len;
   }
 
-  file_log("Read %s, %d Mb, %d bytes", filename, len / (1024 * 1024), len);
+  file_log("read %s, %d Mb, %d bytes", filename, len / (1024 * 1024), len);
 
   fclose(file);
 
