@@ -156,7 +156,7 @@
       list_macro(is_unused23, "is_unused23"),                                               /* newline */                                  \
       list_macro(is_unused24, "is_unused24"),                                               /* newline */                                  \
       list_macro(is_unused25, "is_unused25"),                                               /* newline */                                  \
-      list_macro(is_unused26, "is_unused26"),                                               /* newline */                                  \
+      list_macro(is_auto_wield, "is_auto_wield"),                                           /* newline */                                  \
       list_macro(is_dead_when_discharged, "is_dead_when_discharged"),                       /* newline */                                  \
       list_macro(is_able_to_be_wielded, "is_able_to_be_wielded"),                           /* newline */                                  \
       list_macro(is_able_to_wield_items, "is_able_to_wield_items"),                         /* newline */                                  \
@@ -538,6 +538,7 @@ class Tp;
 [[nodiscard]] auto tp_is_argusul(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_attackable_by_monst(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_attackable_by_player(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_auto_wield(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_barrel(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_biome_bogland(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_biome_dungeon(Tpp tp) -> bool;
@@ -619,7 +620,6 @@ class Tp;
 [[nodiscard]] auto tp_is_health_visible(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_hit_when_dead(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_immune_to(Tpp tp, ThingEventType val) -> bool;
-[[nodiscard]] auto tp_is_resistant_to(Tpp tp, ThingEventType val) -> bool;
 [[nodiscard]] auto tp_is_indestructible(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_insectoid(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_inventory_item(Tpp tp) -> bool;
@@ -677,6 +677,7 @@ class Tp;
 [[nodiscard]] auto tp_is_reeds(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_removable_on_err(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_removable_when_dead_on_err(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_resistant_to(Tpp tp, ThingEventType val) -> bool;
 [[nodiscard]] auto tp_is_rock(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_shovable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_slime(Tpp tp) -> bool;
@@ -712,7 +713,6 @@ class Tp;
 [[nodiscard]] auto tp_is_unused23(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused24(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused25(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused26(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused3(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused4(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused46(Tpp tp) -> bool;

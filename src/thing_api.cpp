@@ -1556,7 +1556,7 @@ auto thing_is_unused25(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused25) != 0;
 }
 
-auto thing_is_unused26(Thingp t) -> bool
+auto thing_is_auto_wield(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -1564,7 +1564,7 @@ auto thing_is_unused26(Thingp t) -> bool
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused26) != 0;
+  return tp_flag(thing_tp(t), is_auto_wield) != 0;
 }
 
 auto thing_is_dead_when_discharged(Thingp t) -> bool

@@ -137,6 +137,7 @@ static std::initializer_list< std::string > tps = {
     "steam",
     "teleport",
     "trap",
+    "wand_fire",
     "water",
   /* end shell marker1 */
 };

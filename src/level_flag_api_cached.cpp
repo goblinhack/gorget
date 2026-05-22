@@ -986,10 +986,10 @@ auto level_is_unused25_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> 
   return level_flag_cached(g, v, l, is_unused25, p);
 }
 
-auto level_is_unused26_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+auto level_is_auto_wield_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused26, p);
+  return level_flag_cached(g, v, l, is_auto_wield, p);
 }
 
 auto level_is_dead_when_discharged_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

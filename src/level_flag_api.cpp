@@ -986,10 +986,10 @@ auto level_is_unused25(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me)
   return level_flag(g, v, l, is_unused25, p, me);
 }
 
-auto level_is_unused26(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+auto level_is_auto_wield(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused26, p, me);
+  return level_flag(g, v, l, is_auto_wield, p, me);
 }
 
 auto level_is_dead_when_discharged(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp

@@ -662,6 +662,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_argusul(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_attackable_by_monst(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_attackable_by_player(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_auto_wield(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_barrel(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_biome_bogland(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_biome_dungeon(Thingp t) -> bool;
@@ -759,7 +760,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_hit_when_dead(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_hot_check(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
 [[nodiscard]] auto thing_is_immune_to(Thingp t, ThingEventType val) -> bool;
-[[nodiscard]] auto thing_is_resistant_to(Thingp t, ThingEventType val) -> bool;
 [[nodiscard]] auto thing_is_indestructible(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_insectoid(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_inventory_item(Thingp t) -> bool;
@@ -815,6 +815,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_projectile(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_removable_on_err(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_removable_when_dead_on_err(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_resistant_to(Thingp t, ThingEventType val) -> bool;
 [[nodiscard]] auto thing_is_rock(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_scheduled_for_cleanup(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_shovable(Thingp t) -> bool;
@@ -854,7 +855,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused23(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused24(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused25(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused26(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused3(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused4(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused46(Thingp t) -> bool;
@@ -1066,9 +1066,9 @@ using Thing = struct Thing {
 [[nodiscard]] auto wid_thing_info_health_bar(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp tp, WidPopup *parent, int width) -> bool;
 [[nodiscard]] auto wid_thing_info_icon(Gamep g, Tpp tp, WidPopup *parent) -> bool;
 [[nodiscard]] auto wid_thing_info_immunity(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, int width) -> bool;
-[[nodiscard]] auto wid_thing_info_resistance(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, int width) -> bool;
 [[nodiscard]] auto wid_thing_info_keys(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent) -> bool;
 [[nodiscard]] auto wid_thing_info_name(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp tp, WidPopup *parent) -> bool;
+[[nodiscard]] auto wid_thing_info_resistance(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, int width) -> bool;
 [[nodiscard]] auto wid_thing_info_score(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp tp, WidPopup *parent) -> bool;
 [[nodiscard]] auto wid_thing_info_special_damage(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent) -> bool;
 [[nodiscard]] auto wid_thing_info_stamina_bar(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp tp, WidPopup *parent, int width) -> bool;

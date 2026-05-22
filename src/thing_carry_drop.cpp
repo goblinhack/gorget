@@ -310,7 +310,24 @@ auto thing_carry(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, ThingEven
     return false;
   }
 
-  return thing_carry_item(g, v, l, item, me, e);
+  if (! thing_carry_item(g, v, l, item, me, e)) {
+    return false;
+  }
+
+  //
+  // Auto wield if nothing wielded?
+  //
+  if (thing_is_auto_wield(item)) {
+    if (thing_is_wielded(item)) {
+      if (! thing_wielding(g, v, l, me)) {
+        if (! thing_wield(g, v, l, me, item, e)) {
+          return false;
+        }
+      }
+    }
+  }
+
+  return true;
 }
 
 auto thing_drop(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, ThingEvent &e) -> bool
