@@ -80,18 +80,18 @@ auto tp_load_wand_fire() -> bool
 
   // begin sort marker1 {
   thing_description_set(tp, tp_wand_fire_description_get);
+  thing_detail_set(tp, tp_wand_fire_detail_get);
   thing_on_carry_request_set(tp, tp_wand_fire_on_carry_request);
   thing_on_drop_request_set(tp, tp_wand_fire_on_drop_request);
   thing_on_fire_weapon_request_set(tp, tp_wand_fire_on_fire_weapon_request);
-  thing_detail_set(tp, tp_wand_fire_detail_get);
   thing_on_wield_request_set(tp, tp_wand_fire_on_wield_request);
   tp_charge_count_set(tp, 500);
   tp_flag_set(tp, is_able_to_be_wielded);
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated);
-  tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_auto_wield);
+  tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_hit_outline_w_black_inside);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_collectable);
@@ -106,10 +106,10 @@ auto tp_load_wand_fire() -> bool
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
-  tp_flag_set(tp, is_wand);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_treasure);
+  tp_flag_set(tp, is_wand);
   tp_flag_set(tp, is_wood);
   tp_health_set(tp, "1d4");
   tp_is_immune_add(tp, THING_EVENT_FIRE_DAMAGE);
