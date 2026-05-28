@@ -3,23 +3,11 @@
 //
 
 #include "config.hpp"
-#include "my_ascii.hpp"
 #include "my_callstack.hpp"
-#include "my_color.hpp"
-#include "my_color_defs.hpp"
 #include "my_game.hpp"
-#include "my_gl.hpp" // NOLINT
-#include "my_globals.hpp"
+#include "my_gl.hpp"   // NOLINT
 #include "my_main.hpp" // NOLINT
-#include "my_music.hpp"
-#include "my_sdl_proto.hpp"
-#include "my_sound.hpp"
-#include "my_spoint.hpp"
-#include "my_tile.hpp"
 #include "my_types.hpp"
-#include "my_ui.hpp"
-#include "my_wid.hpp"
-#include "my_wid_popup.hpp"
 #include "my_wids.hpp"
 
 void wid_new_game(Gamep g)

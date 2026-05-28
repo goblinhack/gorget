@@ -17,14 +17,13 @@
 
 #include <SDL_keyboard.h>
 #include <SDL_keycode.h>
-#include <cmath>
 #include <cstdint>
 
 static WidPopup *wid_more_window;
 
 static void wid_more_destroy()
 {
-  if (! wid_more_window) {
+  if (wid_more_window == nullptr) {
     return;
   }
 

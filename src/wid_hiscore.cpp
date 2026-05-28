@@ -28,7 +28,7 @@ static WidPopup *wid_hiscore_window;
 
 static void wid_hiscore_destroy(Gamep g)
 {
-  if (! wid_hiscore_window) {
+  if (wid_hiscore_window == nullptr) {
     return;
   }
 

@@ -23,7 +23,7 @@ static WidPopup *wid_credits_window;
 
 static void wid_credits_destroy(Gamep g)
 {
-  if (! wid_credits_window) {
+  if (wid_credits_window == nullptr) {
     return;
   }
 

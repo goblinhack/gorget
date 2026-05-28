@@ -38,7 +38,7 @@ static bool            menu_was_created_due_to_game_restarting;
 
 static void wid_cfg_gfx_destroy()
 {
-  if (! wid_cfg_gfx_window) {
+  if (wid_cfg_gfx_window == nullptr) {
     return;
   }
 

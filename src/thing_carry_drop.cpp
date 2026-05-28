@@ -318,7 +318,7 @@ auto thing_carry(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, ThingEven
   // Auto wield if nothing wielded?
   //
   if (thing_is_auto_wield(item)) {
-    if (! thing_wielding(g, v, l, me)) {
+    if (thing_wielding(g, v, l, me) == nullptr) {
       if (! thing_wield(g, v, l, me, item, e)) {
         return false;
       }

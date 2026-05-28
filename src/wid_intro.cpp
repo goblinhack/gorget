@@ -27,7 +27,7 @@ static WidPopup *wid_intro_window;
 
 static void wid_intro_destroy()
 {
-  if (! wid_intro_window) {
+  if (wid_intro_window == nullptr) {
     return;
   }
 

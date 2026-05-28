@@ -24,7 +24,7 @@ static WidPopup *wid_quit_window;
 
 void wid_quit_destroy(Gamep g)
 {
-  if (! wid_quit_window) {
+  if (wid_quit_window == nullptr) {
     return;
   }
 

@@ -17,14 +17,13 @@
 
 #include <SDL_keyboard.h>
 #include <SDL_keycode.h>
-#include <cmath>
 #include <cstdint>
 
 static WidPopup *wid_options_menu_window;
 
 void wid_options_menu_destroy(Gamep /*g*/)
 {
-  if (! wid_options_menu_window) {
+  if (wid_options_menu_window == nullptr) {
     return;
   }
 

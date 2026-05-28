@@ -23,7 +23,7 @@ static WidPopup *wid_error_window;
 
 static void wid_error_destroy(Gamep g)
 {
-  if (! wid_error_window) {
+  if (wid_error_window == nullptr) {
     return;
   }
 

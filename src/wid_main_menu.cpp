@@ -32,7 +32,7 @@ static WidPopup *wid_main_menu_window;
 
 void wid_main_menu_destroy(Gamep /*g*/)
 {
-  if (! wid_main_menu_window) {
+  if (wid_main_menu_window == nullptr) {
     return;
   }
 

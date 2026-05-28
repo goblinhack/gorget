@@ -7,6 +7,7 @@
 #include "my_fpoint.hpp"
 #include "my_game_defs.hpp"
 #include "my_level.hpp"
+#include "my_main.hpp"
 #include "my_math.hpp"
 #include "my_thing.hpp"
 #include "my_tp.hpp"
