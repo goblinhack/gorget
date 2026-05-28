@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static auto test_projectile_mob(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_projectile_discharge(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -31,19 +31,20 @@
       = "xxxxxxxxxxxxxxxxxxxxxxxxxxx"
         "x.........................x"
         "x.........................x"
-        "x@........-.......-......!x"
+        "x@........................x"
         "x.........................x"
         "x.........................x"
         "xxxxxxxxxxxxxxxxxxxxxxxxxxx";
 
   Overrides overrides;
-  overrides[ 'G' ] = [](char c, bpoint p) -> Tpp { return tp_find_mand("kobalos_mob"); };
-  Levelp  l        = nullptr;
-  Levelsp v        = game_test_init(g, &l, level_num, w, h, start.c_str(), overrides);
-  bool    result   = true;
-
-  auto *tp_fireball = tp_find_mand("fireball");
-  tp_damage_set(tp_fireball, THING_EVENT_FIRE_DAMAGE, "100");
+  overrides[ 'G' ]     = [](char c, bpoint p) -> Tpp { return tp_find_mand("kobalos_mob"); };
+  Levelp     l         = nullptr;
+  Levelsp    v         = game_test_init(g, &l, level_num, w, h, start.c_str(), overrides);
+  bool       result    = true;
+  Thingp     weapon    = nullptr;
+  Thingp     wielding  = nullptr;
+  Tpp        weapon_tp = nullptr;
+  ThingEvent e         = {};
 
   auto *player = thing_player(g);
   if (player == nullptr) [[unlikely]] {
@@ -51,20 +52,58 @@
     goto exit;
   }
 
-  level_dump(g, v, l, w, h);
-  TEST_PROGRESS(t);
+  weapon_tp = tp_find_mand("staff_fire");
+  if (! weapon_tp) {
+    TEST_FAILED(t, "no weapon found");
+    goto exit;
+  }
+
+  weapon = thing_spawn(g, v, l, weapon_tp, thing_at(player));
+  if (! weapon) {
+    TEST_FAILED(t, "no weapon spawned");
+    goto exit;
+  }
+
+  e.reason     = "spawned";           //
+  e.event_type = THING_EVENT_SPAWNED; //
+  e.source     = player;              //
+
+  if (! thing_carry(g, v, l, player, weapon, e)) {
+    TEST_FAILED(t, "no weapon carried");
+    goto exit;
+  }
+
+  if (! thing_wield(g, v, l, player, weapon, e)) {
+    TEST_FAILED(t, "failed to wield");
+    goto exit;
+  }
+
+  (void) thing_charge_count_set(g, v, l, weapon, 10);
 
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 5; tries++) {
+
+  //
+  // Drain the weapon
+  //
+  level_dump(g, v, l, w, h);
+  TEST_PROGRESS(t);
+  for (auto tries = 0; tries < 20; tries++) {
     TEST_LOG(t, "try: %d", tries);
-    (void) player_fire(g, v, l, 1, 0, tp_fireball);
+    (void) player_fire(g, v, l, 1, 0);
     TRACE();
     TEST_ASSERT(t, game_event_wait(g), "failed to wait");
     if (! game_wait_for_tick_to_finish(g, v, l)) {
       TEST_FAILED(t, "wait loop failed");
       goto exit;
     }
+  }
+
+  wielding = thing_wielding(g, v, l, player);
+  if (wielding) {
+    thing_log(wielding, "wielding this");
+    TEST_FAILED(t, "unexpectedly wielding a weapon still");
+    goto exit;
   }
 
   level_dump(g, v, l, w, h);
@@ -74,7 +113,7 @@
     goto exit;
   }
 
-  TEST_ASSERT(t, game_tick_get(g, v) == 5, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 20, "final tick counter value");
 
   level_dump(g, v, l, w, h);
   TEST_PASSED(t);
@@ -85,14 +124,14 @@ exit:
   return result;
 }
 
-auto test_load_projectile_mob() -> bool // NOLINT
+auto test_load_projectile_discharge() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("projectile_mob");
+  Testp test = test_load("projectile_discharge");
 
   // begin sort marker1 {
-  test_callback_set(test, test_projectile_mob);
+  test_callback_set(test, test_projectile_discharge);
   // end sort marker1 }
 
   return true;

@@ -106,6 +106,7 @@ static std::initializer_list< std::string > tests = {
     "player_open_door_unlocked",
     "projectile_barrel_explosion",
     "projectile_border_turns_to_lava",
+    "projectile_discharge",
     "projectile_door_locked",
     "projectile_door_secret",
     "projectile_door_unlocked",

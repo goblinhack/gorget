@@ -745,10 +745,10 @@ auto player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what, bp
 
   player_move_requests_reset(g, v);
 
-  if (g_opt_tests) {
-    if (fire_what == nullptr) {
-      fire_what = tp_find_mand("fireball");
-    }
+  if (fire_what != nullptr) {
+    //
+    // Tests usuall
+    //
   } else {
     item = thing_wielding(g, v, l, me);
     if (item == nullptr) {
