@@ -10,6 +10,7 @@
 #include "my_main.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_sound.hpp"
+#include "my_thing.hpp"
 #include "my_types.hpp"
 
 #include <SDL_error.h>
@@ -180,7 +181,11 @@ auto sound_load(float volume, const std::string &name, const std::string &name_a
   TRACE();
 
   if (m->chunk == nullptr) {
-    ERR("cannot find sound chunk %s", m->name_alias.c_str());
+    if (me) {
+      thing_err(me, "cannot find sound chunk %s", m->name_alias.c_str());
+    } else {
+      ERR("cannot find sound chunk %s", m->name_alias.c_str());
+    }
     return false;
   }
 
@@ -210,7 +215,12 @@ auto sound_load(float volume, const std::string &name, const std::string &name_a
 
   auto chan = Mix_PlayChannel(-1, m->chunk, loops);
   if (chan == -1) {
-    DBG("Failed to play sound %s volume %d channel %d: %s", name_alias.c_str(), static_cast< int >(volume), chan, Mix_GetError());
+    if (me) {
+      THING_DBG(me, "Failed to play sound %s volume %d channel %d: %s", name_alias.c_str(), static_cast< int >(volume), chan,
+                Mix_GetError());
+    } else {
+      DBG("Failed to play sound %s volume %d channel %d: %s", name_alias.c_str(), static_cast< int >(volume), chan, Mix_GetError());
+    }
     return false;
   }
 
@@ -219,7 +229,11 @@ auto sound_load(float volume, const std::string &name, const std::string &name_a
   p.volume                = static_cast< int >(volume);
   already_playing[ chan ] = p;
 
-  DBG("play sound %s volume %d channel %d", name_alias.c_str(), static_cast< int >(volume), chan);
+  if (me) {
+    THING_DBG(me, "play sound %s volume %d channel %d", name_alias.c_str(), static_cast< int >(volume), chan);
+  } else {
+    DBG("play sound %s volume %d channel %d", name_alias.c_str(), static_cast< int >(volume), chan);
+  }
 
   return false;
 }
@@ -235,7 +249,11 @@ auto sound_play(Gamep g, const std::string &name_alias, float scale, int loops, 
   auto *sound = find_one(name_alias);
   if (sound == nullptr) {
     if (! g_opt_tests && ! g_opt_do_level_gen && ! g_opt_do_level_select_gen && ! g_opt_do_room_gen) {
-      ERR("cannot find sound %s", name_alias.c_str());
+      if (me) {
+        thing_err(me, "cannot find sound %s", name_alias.c_str());
+      } else {
+        ERR("cannot find sound %s", name_alias.c_str());
+      }
     }
     return false;
   }
