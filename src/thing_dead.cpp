@@ -18,7 +18,7 @@
 //
 // The player has been attacked
 //
-static void thing_killed_player(Gamep g, Levelsp v, Levelp l, ThingEvent &e)
+static void thing_killed_player(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
 {
   TRACE();
 
@@ -28,7 +28,11 @@ static void thing_killed_player(Gamep g, Levelsp v, Levelp l, ThingEvent &e)
     std::string by_the_thing;
     auto       *fired_by = thing_fired_by_get(g, v, l, it);
     if (fired_by != nullptr) {
-      by_the_thing = thing_name_apostrophize_the(g, v, l, fired_by) + " " + thing_name_long(g, v, l, it);
+      if (fired_by == me) {
+        by_the_thing = "your " + thing_name_long(g, v, l, it);
+      } else {
+        by_the_thing = thing_name_apostrophize_the(g, v, l, fired_by) + " " + thing_name_long(g, v, l, it);
+      }
     } else {
       by_the_thing = thing_name_long_the(g, v, l, it);
     }
@@ -244,7 +248,7 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
   // Call this prior to setting death, else we are told that we killed an already dead thing
   //
   if (thing_is_player(me)) {
-    thing_killed_player(g, v, l, e);
+    thing_killed_player(g, v, l, me, e);
   } else if ((e.source != nullptr) && thing_is_player(e.source)) {
     thing_killed_by_player(g, v, l, me, e);
   }

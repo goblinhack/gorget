@@ -859,7 +859,7 @@ auto level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *lg, int w, int
       }
 
       if (! g_opt_tests) {
-        if (0) {
+        if (compiler_unused) {
           if (tp == lp.tp_player) {
             {
               if (thing_spawn(g, v, l, tp_random(g, v, l, is_item), lp.at + bpoint(2, 0)) == nullptr) {
@@ -875,7 +875,7 @@ auto level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *lg, int w, int
     }
   }
 
-  if (0) {
+  if (compiler_unused) {
     if (l->entrance.x > 0) {
       if (thing_spawn(g, v, l, tp_random(g, v, l, is_exit), l->entrance + bpoint(1, 1)) == nullptr) {
         return false;

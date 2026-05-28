@@ -935,7 +935,7 @@ static void ascii_blit(Gamep g)
             //
             // Looks better without
             //
-            if (0) {
+            if (compiler_unused) {
               auto centralize = (dh - dw) / 2;
               tile_tl.y += centralize;
               tile_br.y += centralize;

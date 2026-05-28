@@ -174,7 +174,8 @@ auto sound_load(float volume, const std::string &name, const std::string &name_a
   return true;
 }
 
-[[nodiscard]] static auto sound_play_internal(Game *g, const std::string &name_alias, class Sound *m, float scale, int loops) -> bool
+[[nodiscard]] static auto sound_play_internal(Game *g, const std::string &name_alias, class Sound *m, float scale, int loops, Thingp me)
+    -> bool
 {
   TRACE();
 
@@ -223,7 +224,7 @@ auto sound_load(float volume, const std::string &name, const std::string &name_a
   return false;
 }
 
-auto sound_play(Gamep g, const std::string &name_alias, float scale, int loops) -> bool
+auto sound_play(Gamep g, const std::string &name_alias, float scale, int loops, Thingp me) -> bool
 {
   TRACE();
 
@@ -239,5 +240,5 @@ auto sound_play(Gamep g, const std::string &name_alias, float scale, int loops) 
     return false;
   }
 
-  return sound_play_internal(g, name_alias, sound, scale, loops);
+  return sound_play_internal(g, name_alias, sound, scale, loops, me);
 }

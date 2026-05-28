@@ -458,14 +458,6 @@ static void game_display_game_over(Gamep g)
   // Paste this code prior to the blend in question
   //
   glBlendFunc(GL_ONE_MINUS_CONSTANT_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-  if (0) {
-    extern int         vals[];
-    extern std::string vals_str[];
-    extern int         g_blend_a;
-    extern int         g_blend_b;
-    con("glBlendFunc(%s, %s)", vals_str[ g_blend_a ].c_str(), vals_str[ g_blend_b ].c_str());
-    glBlendFunc(vals[ g_blend_a ], vals[ g_blend_b ]);
-  }
   glBlendFunc(GL_ONE, GL_ONE);
 
   blit_init();

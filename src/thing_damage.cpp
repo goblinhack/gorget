@@ -36,7 +36,11 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
     std::string by_the_thing;
     auto       *fired_by = thing_fired_by_get(g, v, l, it);
     if (fired_by != nullptr) {
-      by_the_thing = thing_name_apostrophize_the(g, v, l, fired_by) + " " + thing_name_long(g, v, l, it);
+      if (fired_by == me) {
+        by_the_thing = "your " + thing_name_long(g, v, l, it);
+      } else {
+        by_the_thing = thing_name_apostrophize_the(g, v, l, fired_by) + " " + thing_name_long(g, v, l, it);
+      }
     } else {
       by_the_thing = thing_name_long_the(g, v, l, it);
     }

@@ -75,7 +75,7 @@ auto thing_laser_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, cons
   auto        laser_target_distance = ceil(distance);
   const float avoid_gaps_in_tiles   = 0.94F;
   for (auto step = 0; step < laser_target_distance; step++) {
-    if (0) {
+    if (compiler_unused) {
       thing_topcon(me, "%f,%f step %d", laser_at.x, laser_at.y, step);
     }
 

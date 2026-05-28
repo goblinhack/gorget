@@ -426,7 +426,7 @@ static void thing_display_it(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t_mayb
     return;
   }
 
-  if (0) {
+  if (compiler_unused) {
     if (thing_is_monst(t_maybe_null) && ! thing_is_dead(t_maybe_null)) {
       //
       // If low on health, orange outline

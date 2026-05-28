@@ -290,11 +290,16 @@ static void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp obstacle
     }
   }
 
+  auto *owner = thing_owner(g, v, l, me);
+  if (obstacle == owner) {
+    return;
+  }
+
   //
   // No overlapping lasers
   //
-  auto *owner = thing_fired_by_get(g, v, l, me);
-  if ((owner != nullptr) && (thing_fired_by_get(g, v, l, obstacle) == owner)) {
+  auto *fired_by = thing_fired_by_get(g, v, l, me);
+  if ((fired_by != nullptr) && (thing_fired_by_get(g, v, l, obstacle) == fired_by)) {
     return;
   }
 
@@ -545,26 +550,31 @@ static void thing_collision_interpolated_expand_candidates(Gamep g, Levelsp v, L
 
   auto at = thing_real_at(me);
 
-  auto *owner = thing_owner(g, v, l, me);
+  auto *owner    = thing_owner(g, v, l, me);
+  auto *fired_by = thing_fired_by_get(g, v, l, me);
 
   //
   // For all other things on the same tile as the collision
   //
-  FOR_ALL_THINGS_AT(g, v, l, o, collision_at)
+  FOR_ALL_THINGS_AT(g, v, l, obstacle, collision_at)
   {
     //
     // Filter to only things that can be hit
     //
-    if (! thing_is_collision_detection_enabled(o)) {
+    if (! thing_is_collision_detection_enabled(obstacle)) {
       continue;
     }
 
-    if (o == me) {
+    if (obstacle == me) {
       continue;
     }
 
-    if (o == owner) {
+    if (obstacle == owner) {
       continue;
+    }
+
+    if ((fired_by != nullptr) && (thing_fired_by_get(g, v, l, obstacle) == fired_by)) {
+      return;
     }
 
     //
@@ -572,7 +582,7 @@ static void thing_collision_interpolated_expand_candidates(Gamep g, Levelsp v, L
     //
     bool already_cand = false;
     for (auto a_cand : cands) {
-      if (a_cand.second == o) {
+      if (a_cand.second == obstacle) {
         already_cand = true;
       }
       break;
@@ -583,10 +593,12 @@ static void thing_collision_interpolated_expand_candidates(Gamep g, Levelsp v, L
       // Sort by center of the tile distance. This allows walls and ghost in walls to have
       // the same distance
       //
-      auto            o_tiled_at = make_fpoint(thing_at(o)) + fpoint(0.5, 0.5);
+      auto            o_tiled_at = make_fpoint(thing_at(obstacle)) + fpoint(0.5, 0.5);
       float const     o_dist     = distance(at, o_tiled_at);
-      ThingCand const p          = std::make_pair(o_dist, o);
+      ThingCand const p          = std::make_pair(o_dist, obstacle);
       cands.push_back(p);
+
+      THING_DBG(obstacle, "add candidate as on same tile");
     }
   }
 }
