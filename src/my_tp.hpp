@@ -258,8 +258,8 @@ ENUM_DEF_H(MAP_Z_DEPTH_ENUM, MapZDepthType)
 #define MAP_Z_DEPTH_ENUM_FIRST ((MapZDepthType) 0)
 
 #define FOR_ALL_MAP_Z_DEPTH(_iter_)                                                                                                        \
-  for (MapZDepthType _iter_ = MAP_Z_DEPTH_ENUM_FIRST; /* newline */                                                                            \
-       (_iter_) < MAP_Z_DEPTH_ENUM_MAX;           /* newline */                                                                            \
+  for (MapZDepthType _iter_ = MAP_Z_DEPTH_ENUM_FIRST; /* newline */                                                                        \
+       (_iter_) < MAP_Z_DEPTH_ENUM_MAX;               /* newline */                                                                        \
        (_iter_) = static_cast< MapZDepthType >(static_cast< int >(_iter_) + 1))
 
 //
@@ -407,8 +407,8 @@ ENUM_DEF_H(THING_ENVIRON_ENUM, ThingEnvironType)
 #define THING_ENVIRON_ENUM_FIRST ((ThingEnvironType) 0)
 
 #define FOR_ALL_THING_ENVIRON(_iter_)                                                                                                      \
-  for (ThingEnvironType _iter_ = THING_ENVIRON_ENUM_FIRST; /* newline */                                                                       \
-       (_iter_) < THING_ENVIRON_ENUM_MAX;              /* newline */                                                                       \
+  for (ThingEnvironType _iter_ = THING_ENVIRON_ENUM_FIRST; /* newline */                                                                   \
+       (_iter_) < THING_ENVIRON_ENUM_MAX;                  /* newline */                                                                   \
        (_iter_) = static_cast< ThingEnvironType >(static_cast< int >(_iter_) + 1))
 
 //

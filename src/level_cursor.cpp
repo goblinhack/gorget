@@ -212,7 +212,7 @@ static auto level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Th
         //
         // Here the cursor is over a hazard. Plot a course that allows travel via other hazards.
         //
-        bool                                     got_one = false;
+        bool                                         got_one = false;
         std::initializer_list< ThingFlagType > const init    = {is_lava, is_chasm, is_water};
 
         for (auto i : init) {

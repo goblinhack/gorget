@@ -2363,8 +2363,8 @@ static void level_gen_dump(class LevelGen *lg, const char *msg)
 
   for (int y = 0; y < MAP_HEIGHT; y++) {
     std::string tmp;
-    for (int x = 0; x < MAP_WIDTH; x++) {
-      char c = lg->data[ x ][ y ].c;
+    for (auto &x : lg->data) {
+      char const c = x[ y ].c;
       tmp += c;
     }
     log("[%s]", tmp.c_str());
@@ -4719,7 +4719,7 @@ static void level_gen_add_missing_teleports(class LevelGen *lg)
   if (lg->debug) [[unlikely]] {
     log("teleport count:      %d", lg->info.teleport_count);
     log("reachable teleports: %d", reachable_teleports);
-    log("teleport cands:      %d", (int) cands.size());
+    log("teleport cands:      %d", static_cast< int >(cands.size()));
   }
 
   //
