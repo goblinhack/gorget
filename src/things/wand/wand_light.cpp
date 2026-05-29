@@ -12,25 +12,26 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
-static auto tp_staff_fire_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
+static auto tp_wand_light_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
   TRACE();
 
-  return "staff_fire";
+  return "wand_light";
 }
 
-static auto tp_staff_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
+static auto tp_wand_light_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
   TRACE();
 
-  return                                                                                                  //
-      UI_INFO1_FMT_STR "A firey red staff. Burning sparks drop from it. \n"                               //
-      UI_INFO2_FMT_STR "Strategy: fire multiple rounds down long corridors. \n"                           //
-      UI_INFO3_FMT_STR "Strategy: firebolts have a set speed and monsters can avoid them potentially. \n" //
+  return                                                                                                       //
+      UI_INFO1_FMT_STR "This wand of light unleashes a dazzling beam of pure energy but without heat. \n"      //
+      UI_INFO2_FMT_STR "Strategy: unlike wands of fire, this wand is safe to use in dense foliage. \n"         //
+      UI_INFO2_FMT_STR "Strategy: for extra points, line up certain types of enemies for group punishment. \n" //
+      UI_INFO3_FMT_STR "Strategy: wands operate at near infinite speed and monsters cannot avoid them. \n"     //
       UI_INFO4_FMT_STR "Info: wands are generally more powerful than staffs, but have fewer charges. \n";
 }
 
-[[nodiscard]] static auto tp_staff_fire_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp collector) -> bool
+[[nodiscard]] static auto tp_wand_light_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp collector) -> bool
 {
   TRACE();
 
@@ -41,7 +42,7 @@ static auto tp_staff_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> 
   return true;
 }
 
-[[nodiscard]] static auto tp_staff_fire_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp dropper) -> bool
+[[nodiscard]] static auto tp_wand_light_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp dropper) -> bool
 {
   TRACE();
 
@@ -52,40 +53,40 @@ static auto tp_staff_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> 
   return true;
 }
 
-[[nodiscard]] static auto tp_staff_fire_on_wield_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp user) -> bool
+[[nodiscard]] static auto tp_wand_light_on_wield_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp user) -> bool
 {
   TRACE();
 
   return true;
 }
 
-[[nodiscard]] static auto tp_staff_fire_on_use_weapon_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp user) -> Tpp
+[[nodiscard]] static auto tp_wand_light_on_light_weapon_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp user) -> Tpp
 {
   TRACE();
 
   static Tpp what;
   if (! what) {
-    what = tp_find_mand("fireball");
+    what = tp_find_mand("laser_light");
   }
 
   return what;
 }
 
-auto tp_load_staff_fire() -> bool
+auto tp_load_wand_light() -> bool
 {
   TRACE();
 
-  auto *tp   = tp_load("staff_fire"); // keep as string for scripts
+  auto *tp   = tp_load("wand_light"); // keep as string for scripts
   auto  name = tp_name(tp);
 
   // begin sort marker1 {
-  thing_description_set(tp, tp_staff_fire_description_get);
-  thing_detail_set(tp, tp_staff_fire_detail_get);
-  thing_on_carry_request_set(tp, tp_staff_fire_on_carry_request);
-  thing_on_drop_request_set(tp, tp_staff_fire_on_drop_request);
-  thing_on_use_weapon_request_set(tp, tp_staff_fire_on_use_weapon_request);
-  thing_on_wield_request_set(tp, tp_staff_fire_on_wield_request);
-  tp_charge_count_set(tp, 5000);
+  thing_description_set(tp, tp_wand_light_description_get);
+  thing_detail_set(tp, tp_wand_light_detail_get);
+  thing_on_carry_request_set(tp, tp_wand_light_on_carry_request);
+  thing_on_drop_request_set(tp, tp_wand_light_on_drop_request);
+  thing_on_use_weapon_request_set(tp, tp_wand_light_on_light_weapon_request);
+  thing_on_wield_request_set(tp, tp_wand_light_on_wield_request);
+  tp_charge_count_set(tp, 500);
   tp_flag_set(tp, is_able_to_be_wielded);
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
@@ -96,7 +97,7 @@ auto tp_load_staff_fire() -> bool
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_collectable);
   tp_flag_set(tp, is_collision_circle_small);
-  tp_flag_set(tp, is_combustible); // will continue to burn once on fire
+  tp_flag_set(tp, is_combustible); // will continue to burn once on light
   tp_flag_set(tp, is_dead_when_discharged);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_inventory_item);
@@ -106,19 +107,19 @@ auto tp_load_staff_fire() -> bool
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
-  tp_flag_set(tp, is_staff);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_treasure);
+  tp_flag_set(tp, is_wand);
   tp_flag_set(tp, is_wood);
   tp_health_set(tp, "1d4");
   tp_is_immune_add(tp, THING_EVENT_FIRE_DAMAGE);
   tp_light_color_set(tp, "red");
-  tp_name_a_or_an_set(tp, "a staff of fire");
-  tp_name_apostrophize_set(tp, "staff of fire's");
-  tp_name_long_set(tp, "staff of fire");
-  tp_name_pluralize_set(tp, "staffs of fire");
-  tp_name_short_set(tp, "staff of fire");
+  tp_name_a_or_an_set(tp, "a wand of light");
+  tp_name_apostrophize_set(tp, "wand of light's");
+  tp_name_long_set(tp, "wand of light");
+  tp_name_pluralize_set(tp, "wands of light");
+  tp_name_short_set(tp, "wand of light");
   tp_priority_set(tp, THING_PRIORITY_OBJECT);
   tp_rarity_set(tp, THING_RARITY_UNCOMMON);
   tp_temperature_burns_at_set(tp, 30);  // celsius

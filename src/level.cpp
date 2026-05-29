@@ -344,7 +344,7 @@ auto level_get_thing_id_at(Gamep /*g*/, Levelsp /*v*/, Levelp l, const bpoint &p
 //
 // Additional level flag filters e.g. open doors are not obstacles
 //
-[[nodiscard]] static auto level_flag_filter(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp me, Thingp it) -> bool
+[[nodiscard]] static auto level_flag_filter(Gamep g, Levelsp v, Levelp l, ThingFlagType f, Thingp me, Thingp it) -> bool
 {
   TRACE_DEBUG();
 
@@ -411,14 +411,14 @@ auto level_get_thing_id_at(Gamep /*g*/, Levelsp /*v*/, Levelp l, const bpoint &p
 //
 // Additional level flag filters e.g. open doors are not obstacles
 //
-[[nodiscard]] static auto level_flag_filter_needed(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp me) -> bool
+[[nodiscard]] static auto level_flag_filter_needed(Gamep g, Levelsp v, Levelp l, ThingFlagType f, Thingp me) -> bool
 {
   Thingp it = nullptr;
 
   return level_flag_filter(g, v, l, f, me, it);
 }
 
-auto level_find_all(Gamep g, Levelsp v, Levelp l, ThingFlag f) -> std::vector< Thingp >
+auto level_find_all(Gamep g, Levelsp v, Levelp l, ThingFlagType f) -> std::vector< Thingp >
 {
   TRACE();
 
@@ -449,7 +449,7 @@ auto level_find_all(Gamep g, Levelsp v, Levelp l, ThingFlag f) -> std::vector< T
   return out;
 }
 
-auto level_find_all(Gamep g, Levelsp v, Levelp l, ThingFlag f, bpoint p) -> std::vector< Thingp >
+auto level_find_all(Gamep g, Levelsp v, Levelp l, ThingFlagType f, bpoint p) -> std::vector< Thingp >
 {
   TRACE();
 
@@ -497,14 +497,14 @@ void level_update_flags(Gamep g, Levelsp v, Levelp l)
   }
 }
 
-auto level_flag_cached(Gamep /*g*/, Levelsp /*v*/, Levelp l, ThingFlag f, bpoint p) -> bool
+auto level_flag_cached(Gamep /*g*/, Levelsp /*v*/, Levelp l, ThingFlagType f, bpoint p) -> bool
 {
   TRACE_DEBUG();
 
   return l->flag[ p.x ][ p.y ][ f ] != 0;
 }
 
-auto level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, bpoint p, Thingp me) -> Thingp
+auto level_flag(Gamep g, Levelsp v, Levelp l, ThingFlagType f, bpoint p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
 
@@ -533,7 +533,7 @@ auto level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, bpoint p, Thingp me) 
   return nullptr;
 }
 
-auto level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp me) -> Thingp
+auto level_flag(Gamep g, Levelsp v, Levelp l, ThingFlagType f, Thingp me) -> Thingp
 {
   TRACE();
 
@@ -548,7 +548,7 @@ auto level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp me) -> Thingp
 //
 // Filter to only alive things
 //
-auto level_alive(Gamep g, Levelsp v, Levelp l, ThingFlag f, bpoint p, Thingp me) -> Thingp
+auto level_alive(Gamep g, Levelsp v, Levelp l, ThingFlagType f, bpoint p, Thingp me) -> Thingp
 {
   TRACE();
 
@@ -584,7 +584,7 @@ auto level_alive(Gamep g, Levelsp v, Levelp l, ThingFlag f, bpoint p, Thingp me)
   return nullptr;
 }
 
-auto level_alive(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp me) -> Thingp
+auto level_alive(Gamep g, Levelsp v, Levelp l, ThingFlagType f, Thingp me) -> Thingp
 {
   TRACE();
 
@@ -599,7 +599,7 @@ auto level_alive(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp me) -> Thingp
 //
 // Flag + is open
 //
-auto level_open(Gamep g, Levelsp v, Levelp l, ThingFlag f, bpoint p, Thingp me) -> Thingp
+auto level_open(Gamep g, Levelsp v, Levelp l, ThingFlagType f, bpoint p, Thingp me) -> Thingp
 {
   TRACE();
 
@@ -635,7 +635,7 @@ auto level_open(Gamep g, Levelsp v, Levelp l, ThingFlag f, bpoint p, Thingp me) 
   return nullptr;
 }
 
-auto level_open(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp me) -> Thingp
+auto level_open(Gamep g, Levelsp v, Levelp l, ThingFlagType f, Thingp me) -> Thingp
 {
   TRACE();
 
@@ -650,7 +650,7 @@ auto level_open(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp me) -> Thingp
 //
 // Count things
 //
-auto level_count(Gamep g, Levelsp v, Levelp l, ThingFlag f, bpoint p) -> int
+auto level_count(Gamep g, Levelsp v, Levelp l, ThingFlagType f, bpoint p) -> int
 {
   TRACE();
 
@@ -690,7 +690,7 @@ auto level_count(Gamep g, Levelsp v, Levelp l, ThingFlag f, bpoint p) -> int
   return count;
 }
 
-auto level_count(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp t) -> int
+auto level_count(Gamep g, Levelsp v, Levelp l, ThingFlagType f, Thingp t) -> int
 {
   TRACE();
 

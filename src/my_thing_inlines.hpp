@@ -14,7 +14,7 @@
 #include "my_thing.hpp"
 #include "my_tp_class.hpp"
 
-static inline auto tp_flag(Tpp tp, ThingFlag f) -> int
+static inline auto tp_flag(Tpp tp, ThingFlagType f) -> int
 {
 #ifdef DEBUG_BUILD
   TRACE_DEBUG(); // expensive

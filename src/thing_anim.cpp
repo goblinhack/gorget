@@ -17,14 +17,14 @@
 //
 // Or reset back to the first frame
 //
-void thing_anim_init(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, ThingAnim anim_type)
+void thing_anim_init(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, ThingAnimType anim_type)
 {
   TRACE();
 
   Tpp tp = thing_tp(t);
 
   if (compiler_unused) {
-    THING_DBG(t, "thing_anim_init: anim class %s/%d", ThingAnim_to_string(anim_type).c_str(), anim_type);
+    THING_DBG(t, "thing_anim_init: anim class %s/%d", ThingAnimType_to_string(anim_type).c_str(), anim_type);
   }
 
   t->anim_index        = 0;
@@ -143,7 +143,7 @@ void thing_anim_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, int ti
 
   if (compiler_unused) {
     if (thing_is_level_curr(t)) {
-      THING_DBG(t, "anim %s index %d [%s]", tile_name(tile).c_str(), t->anim_index, ThingAnim_to_string(t->anim_type).c_str());
+      THING_DBG(t, "anim %s index %d [%s]", tile_name(tile).c_str(), t->anim_index, ThingAnimType_to_string(t->anim_type).c_str());
     }
   }
 

@@ -17,7 +17,7 @@ static auto tp_foliage_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -
   return "sickly looking foliage";
 }
 
-static auto tp_foliage_z_depth_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> MapZDepth
+static auto tp_foliage_z_depth_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> MapZDepthType
 {
   TRACE();
 

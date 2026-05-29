@@ -41,7 +41,7 @@ static auto tp_argusul_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std
       "It is rumoured that a greater Argusul lurks in the dungeon somewhere... \n";     //
 }
 
-static auto tp_argusul_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at, Thingp t) -> ThingEnviron
+static auto tp_argusul_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at, Thingp t) -> ThingEnvironType
 {
   TRACE_DEBUG();
 

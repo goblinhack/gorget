@@ -263,7 +263,7 @@ public:
   //
   // Temporary. Global states
   //
-  GameState state {STATE_INIT};
+  GameStateType state {STATE_INIT};
 
   //
   // Temporary. Dampens mouse clicks
@@ -321,7 +321,7 @@ public:
   void seed_set(const char *seed = nullptr);
   void seed_previous_set() const;
   void start_playing();
-  void state_change(GameState state, const std::string &why);
+  void state_change(GameStateType state, const std::string &why);
   void state_reset(const std::string &why);
   void tick();
 
@@ -969,10 +969,10 @@ void Game::destroy_levels()
 }
 void game_destroy_levels(Gamep g) { g->destroy_levels(); }
 
-static auto game_state_to_string(GameState state) -> std::string
+static auto game_state_to_string(GameStateType state) -> std::string
 {
   TRACE();
-  return GameState_to_string(state);
+  return GameStateType_to_string(state);
 }
 
 //
@@ -1002,9 +1002,9 @@ void Game::state_reset(const std::string &why)
 }
 void game_state_reset(Gamep g, const char *why) { g->state_reset(why); }
 
-auto game_state(Gamep g) -> GameState { return g->state; }
+auto game_state(Gamep g) -> GameStateType { return g->state; }
 
-void Game::state_change(GameState new_state, const std::string &why)
+void Game::state_change(GameStateType new_state, const std::string &why)
 {
   auto *g = this;
   if (g->state == new_state) {
@@ -1166,7 +1166,7 @@ void Game::state_change(GameState new_state, const std::string &why)
   //
   state = new_state;
 }
-void game_state_change(Gamep g, GameState new_state, const char *why)
+void game_state_change(Gamep g, GameStateType new_state, const char *why)
 {
   TRACE();
 

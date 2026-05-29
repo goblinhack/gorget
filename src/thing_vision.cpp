@@ -243,7 +243,7 @@ void thing_vision_calculate(Gamep g, Levelsp v, Levelp l, Thingp me)
   IF_DEBUG
   {
     if (compiler_unused) {
-      THING_DBG(me, "dir %s", ThingDir_to_string(me->dir).c_str());
+      THING_DBG(me, "dir %s", ThingDirType_to_string(me->dir).c_str());
       thing_can_see_dump(g, v, l, me);
     }
   }

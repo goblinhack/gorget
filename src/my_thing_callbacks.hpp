@@ -16,17 +16,17 @@ using thing_display_get_tile_info_t = Tilep (*)(Gamep, Levelsp, Levelp, const bp
 void thing_display_get_tile_info_set(Tpp tp, thing_display_get_tile_info_t callback);
 auto thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp t_maybe_null) -> Tilep;
 
-using thing_assess_tile_t = ThingEnviron (*)(Gamep, Levelsp, Levelp l, const bpoint &p, Thingp me);
+using thing_assess_tile_t = ThingEnvironType (*)(Gamep, Levelsp, Levelp l, const bpoint &p, Thingp me);
 void thing_assess_tile_set(Tpp tp, thing_assess_tile_t callback);
-auto thing_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> ThingEnviron;
+auto thing_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> ThingEnvironType;
 
 using thing_description_get_t = std::string (*)(Gamep, Levelsp, Levelp, Thingp me);
 void thing_description_set(Tpp tp, thing_description_get_t callback);
 auto thing_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string;
 
-using thing_z_depth_get_t = MapZDepth (*)(Gamep, Levelsp, Levelp, Thingp me);
+using thing_z_depth_get_t = MapZDepthType (*)(Gamep, Levelsp, Levelp, Thingp me);
 void thing_z_depth_set(Tpp tp, thing_z_depth_get_t callback);
-auto thing_z_depth_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> MapZDepth;
+auto thing_z_depth_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> MapZDepthType;
 
 using thing_detail_get_t = std::string (*)(Gamep, Levelsp, Levelp, Thingp me);
 void thing_detail_set(Tpp tp, thing_detail_get_t callback);
@@ -60,9 +60,9 @@ using thing_on_drop_request_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thin
 void thing_on_drop_request_set(Tpp tp, thing_on_drop_request_t callback);
 auto thing_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp dropper) -> bool;
 
-using thing_on_fire_weapon_request_t = Tpp (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp user);
-void thing_on_fire_weapon_request_set(Tpp tp, thing_on_fire_weapon_request_t callback);
-auto thing_on_fire_weapon_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user) -> Tpp;
+using thing_on_use_weapon_request_t = Tpp (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp user);
+void thing_on_use_weapon_request_set(Tpp tp, thing_on_use_weapon_request_t callback);
+auto thing_on_use_weapon_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user) -> Tpp;
 
 using thing_on_wield_request_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp carrier);
 void thing_on_wield_request_set(Tpp tp, thing_on_wield_request_t callback);

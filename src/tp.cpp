@@ -138,6 +138,7 @@ static std::initializer_list< std::string > tps = {
     "teleport",
     "trap",
     "wand_fire",
+    "wand_light",
     "water",
   /* end shell marker1 */
 };
@@ -351,7 +352,7 @@ static void tp_fixup()
   }
 }
 
-auto tp_first_tile(Tpp tp, ThingAnim val) -> Tilep
+auto tp_first_tile(Tpp tp, ThingAnimType val) -> Tilep
 {
   TRACE();
 
@@ -496,12 +497,12 @@ auto tp_random_monst(Gamep g, Levelsp v, Levelp l, int c) -> Tpp
   return tp_random(g, v, l, tp_monst_vec[ c ]);
 }
 
-auto tp_random(Gamep g, Levelsp v, Levelp l, ThingFlag f) -> Tpp
+auto tp_random(Gamep g, Levelsp v, Levelp l, ThingFlagType f) -> Tpp
 {
   TRACE();
 
   if ((tp_flag_vec[ f ].empty())) [[unlikely]] {
-    ERR("tp_random: no tp found for ThingFlag %d/%s", f, ThingFlag_to_c_str(f));
+    ERR("tp_random: no tp found for ThingFlagType %d/%s", f, ThingFlagType_to_c_str(f));
     return nullptr;
   }
 
@@ -512,7 +513,7 @@ auto tp_random(Gamep g, Levelsp v, Levelp l, ThingFlag f) -> Tpp
   return tp_random(g, v, l, tp_flag_vec[ f ]);
 }
 
-auto tp_variant(ThingFlag f, int variant) -> Tpp
+auto tp_variant(ThingFlagType f, int variant) -> Tpp
 {
   TRACE();
 
@@ -522,16 +523,16 @@ auto tp_variant(ThingFlag f, int variant) -> Tpp
     }
   }
 
-  ERR("tp_variant: failed to find %d/%s variant %d", f, ThingFlag_to_c_str(f), variant);
+  ERR("tp_variant: failed to find %d/%s variant %d", f, ThingFlagType_to_c_str(f), variant);
   return nullptr;
 }
 
-auto tp_first(ThingFlag f) -> Tpp
+auto tp_first(ThingFlagType f) -> Tpp
 {
   TRACE();
 
   if ((tp_flag_vec[ f ].empty())) [[unlikely]] {
-    ERR("tp_first: no tp found for ThingFlag %d/%s", f, ThingFlag_to_c_str(f));
+    ERR("tp_first: no tp found for ThingFlagType %d/%s", f, ThingFlagType_to_c_str(f));
     return nullptr;
   }
   return tp_flag_vec[ f ][ 0 ];
@@ -675,7 +676,7 @@ auto tp_chance_fail(Tpp tp, ThingChanceType val) -> bool
   return tp->chance[ val ].roll() == 1;
 }
 
-auto tp_tiles_get(Tpp tp, ThingAnim val, int index) -> Tilep
+auto tp_tiles_get(Tpp tp, ThingAnimType val, int index) -> Tilep
 {
   TRACE();
 
@@ -685,13 +686,14 @@ auto tp_tiles_get(Tpp tp, ThingAnim val, int index) -> Tilep
   }
 
   if (std::cmp_greater_equal(index, tp->tiles[ val ].size())) {
-    tp_err(tp, "tp_tiles_get: tile overflow tp %s class %s/%d index %d", tp->name.c_str(), ThingAnim_to_string(val).c_str(), val, index);
+    tp_err(tp, "tp_tiles_get: tile overflow tp %s class %s/%d index %d", tp->name.c_str(), ThingAnimType_to_string(val).c_str(), val,
+           index);
   }
 
   return tp->tiles[ val ][ index ];
 }
 
-void tp_tiles_push_back(Tpp tp, ThingAnim val, Tilep tile)
+void tp_tiles_push_back(Tpp tp, ThingAnimType val, Tilep tile)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -707,7 +709,7 @@ void tp_tiles_push_back(Tpp tp, ThingAnim val, Tilep tile)
   tp->tiles[ val ].push_back(tile);
 }
 
-auto tp_tiles_size(Tpp tp, ThingAnim val) -> int
+auto tp_tiles_size(Tpp tp, ThingAnimType val) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -917,7 +919,7 @@ auto tp_light_color(Tpp tp) -> color
   return tp->light_color;
 }
 
-void tp_flag_set(Tpp tp, ThingFlag f, int val)
+void tp_flag_set(Tpp tp, ThingFlagType f, int val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -927,7 +929,7 @@ void tp_flag_set(Tpp tp, ThingFlag f, int val)
   tp->flag[ f ] = val;
 }
 
-void tp_z_depth_set(Tpp tp, MapZDepth val)
+void tp_z_depth_set(Tpp tp, MapZDepthType val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -937,7 +939,7 @@ void tp_z_depth_set(Tpp tp, MapZDepth val)
   tp->z_depth = val;
 }
 
-auto tp_z_depth_get(Tpp tp) -> MapZDepth
+auto tp_z_depth_get(Tpp tp) -> MapZDepthType
 {
 #ifdef DEBUG_BUILD
   TRACE();
@@ -1782,6 +1784,26 @@ auto tp_priority_get(Tpp tp) -> ThingPriorityType
     return THING_PRIORITY_LOWEST;
   }
   return tp->priority;
+}
+
+void tp_rarity_set(Tpp tp, ThingRarityType val)
+{
+  TRACE();
+  if (tp == nullptr) [[unlikely]] {
+    tp_err(tp, "no thing template pointer");
+    return;
+  }
+  tp->rarity = val;
+}
+
+auto tp_rarity_get(Tpp tp) -> ThingRarityType
+{
+  TRACE();
+  if (tp == nullptr) [[unlikely]] {
+    tp_err(tp, "no thing template pointer");
+    return THING_RARITY_COMMON;
+  }
+  return tp->rarity;
 }
 
 void tp_distance_jump_set(Tpp tp, int val)

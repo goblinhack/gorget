@@ -109,7 +109,7 @@ static void level_display_cursor(Gamep g, Levelsp v, Levelp l, FboEnum fbo)
   }
 }
 
-static void level_display_slot(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot, MapZDepth depth, FboEnum fbo)
+static void level_display_slot(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot, MapZDepthType depth, FboEnum fbo)
 {
   TRACE_DEBUG();
 

@@ -71,7 +71,7 @@ void thing_z_depth_set(Tpp tp, thing_z_depth_get_t callback)
   tp->z_depth_get = callback;
 }
 
-auto thing_z_depth_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> MapZDepth
+auto thing_z_depth_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> MapZDepthType
 {
   TRACE();
   auto *tp = thing_tp(me);
@@ -660,7 +660,7 @@ void thing_assess_tile_set(Tpp tp, thing_assess_tile_t callback)
   tp->assess_tile = callback;
 }
 
-auto thing_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> ThingEnviron
+auto thing_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> ThingEnvironType
 {
   TRACE_DEBUG();
 

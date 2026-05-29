@@ -22,7 +22,7 @@ public:
   //
   // This allows us to draw floors, then objs and walls in order
   //
-  MapZDepth z_depth {};
+  MapZDepthType z_depth {};
 
   //
   // This is for objects at the same z depth
@@ -30,7 +30,7 @@ public:
   uint8_t z_layer {};
 
   //
-  // See ThingFlag
+  // See ThingFlagType
   //
   int flag[ THING_FLAG_ENUM_MAX ] = {};
 
@@ -103,6 +103,11 @@ public:
   // For event processing. Lower is higher priority.
   //
   ThingPriorityType priority {THING_PRIORITY_NONE};
+
+  //
+  // For treasure
+  //
+  ThingRarityType rarity {THING_RARITY_COMMON};
 
   //
   // In tiles
@@ -237,37 +242,37 @@ public:
   //
   // Callbacks
   //
-  thing_description_get_t        description_get        = {};
-  thing_detail_get_t             detail_get             = {};
-  thing_z_depth_get_t            z_depth_get            = {};
-  thing_mouse_down_t             mouse_down             = {};
-  thing_on_spawned_t             on_spawned             = {};
-  thing_on_level_populated_t     on_level_populated     = {};
-  thing_on_level_enter_t         on_level_enter         = {};
-  thing_on_level_leave_t         on_level_leave         = {};
-  thing_on_open_request_t        on_open_request        = {};
-  thing_on_carry_request_t       on_carry_request       = {};
-  thing_on_drop_request_t        on_drop_request        = {};
-  thing_on_fire_weapon_request_t on_fire_weapon_request = {};
-  thing_on_wield_request_t       on_wield_request       = {};
-  thing_on_unwield_request_t     on_unwield_request     = {};
-  thing_on_close_request_t       on_close_request       = {};
-  thing_on_tick_idle_t           tick_idle              = {};
-  thing_on_tick_begin_t          tick_begin             = {};
-  thing_on_tick_end_t            tick_end               = {};
-  thing_on_death_t               on_death               = {};
-  thing_on_damage_t              on_damage              = {};
-  thing_on_attacking_t           on_attacking           = {};
-  thing_on_moved_t               on_moved               = {};
-  thing_on_teleported_t          on_teleported          = {};
-  thing_on_shoved_t              on_shoved              = {};
-  thing_on_jump_end_t            on_jump_end            = {};
-  thing_on_jump_begin_t          on_jump_begin          = {};
-  thing_on_fall_begin_t          on_fall_begin          = {};
-  thing_on_melt_t                on_melt                = {};
-  thing_on_fall_end_t            on_fall_end            = {};
-  thing_display_get_tile_info_t  display_get_tile_info  = {};
-  thing_assess_tile_t            assess_tile            = {};
+  thing_description_get_t       description_get       = {};
+  thing_detail_get_t            detail_get            = {};
+  thing_z_depth_get_t           z_depth_get           = {};
+  thing_mouse_down_t            mouse_down            = {};
+  thing_on_spawned_t            on_spawned            = {};
+  thing_on_level_populated_t    on_level_populated    = {};
+  thing_on_level_enter_t        on_level_enter        = {};
+  thing_on_level_leave_t        on_level_leave        = {};
+  thing_on_open_request_t       on_open_request       = {};
+  thing_on_carry_request_t      on_carry_request      = {};
+  thing_on_drop_request_t       on_drop_request       = {};
+  thing_on_use_weapon_request_t on_use_weapon_request = {};
+  thing_on_wield_request_t      on_wield_request      = {};
+  thing_on_unwield_request_t    on_unwield_request    = {};
+  thing_on_close_request_t      on_close_request      = {};
+  thing_on_tick_idle_t          tick_idle             = {};
+  thing_on_tick_begin_t         tick_begin            = {};
+  thing_on_tick_end_t           tick_end              = {};
+  thing_on_death_t              on_death              = {};
+  thing_on_damage_t             on_damage             = {};
+  thing_on_attacking_t          on_attacking          = {};
+  thing_on_moved_t              on_moved              = {};
+  thing_on_teleported_t         on_teleported         = {};
+  thing_on_shoved_t             on_shoved             = {};
+  thing_on_jump_end_t           on_jump_end           = {};
+  thing_on_jump_begin_t         on_jump_begin         = {};
+  thing_on_fall_begin_t         on_fall_begin         = {};
+  thing_on_melt_t               on_melt               = {};
+  thing_on_fall_end_t           on_fall_end           = {};
+  thing_display_get_tile_info_t display_get_tile_info = {};
+  thing_assess_tile_t           assess_tile           = {};
 
   Tp();
   ~Tp();

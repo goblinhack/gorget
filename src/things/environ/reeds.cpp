@@ -17,7 +17,7 @@ static auto tp_reeds_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> 
   return "sickly looking reeds";
 }
 
-static auto tp_reeds_z_depth_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> MapZDepth
+static auto tp_reeds_z_depth_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> MapZDepthType
 {
   TRACE();
 

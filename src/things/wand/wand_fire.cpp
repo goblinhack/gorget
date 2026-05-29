@@ -59,7 +59,7 @@ static auto tp_wand_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> s
   return true;
 }
 
-[[nodiscard]] static auto tp_wand_fire_on_fire_weapon_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp user) -> Tpp
+[[nodiscard]] static auto tp_wand_fire_on_use_weapon_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp user) -> Tpp
 {
   TRACE();
 
@@ -83,7 +83,7 @@ auto tp_load_wand_fire() -> bool
   thing_detail_set(tp, tp_wand_fire_detail_get);
   thing_on_carry_request_set(tp, tp_wand_fire_on_carry_request);
   thing_on_drop_request_set(tp, tp_wand_fire_on_drop_request);
-  thing_on_fire_weapon_request_set(tp, tp_wand_fire_on_fire_weapon_request);
+  thing_on_use_weapon_request_set(tp, tp_wand_fire_on_use_weapon_request);
   thing_on_wield_request_set(tp, tp_wand_fire_on_wield_request);
   tp_charge_count_set(tp, 500);
   tp_flag_set(tp, is_able_to_be_wielded);
@@ -120,6 +120,7 @@ auto tp_load_wand_fire() -> bool
   tp_name_pluralize_set(tp, "wands of fire");
   tp_name_short_set(tp, "wand of fire");
   tp_priority_set(tp, THING_PRIORITY_OBJECT);
+  tp_rarity_set(tp, THING_RARITY_UNCOMMON);
   tp_temperature_burns_at_set(tp, 30);  // celsius
   tp_temperature_damage_at_set(tp, 30); // celsius
   tp_temperature_initial_set(tp, 20);   // celsius

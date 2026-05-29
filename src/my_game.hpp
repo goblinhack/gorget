@@ -32,7 +32,7 @@
       list_macro(STATE_SAVE_MENU, "SAVE-MENU"),                 /* newline */                                                              \
       list_macro(STATE_QUIT_MENU, "QUIT-MENU"),                 /* newline */
 
-ENUM_DEF_H(GAME_STATE_ENUM, GameState)
+ENUM_DEF_H(GAME_STATE_ENUM, GameStateType)
 
 using SeedSource = enum SeedSource_ {
   SEED_SOURCE_RANDOM,
@@ -299,7 +299,7 @@ void game_request_to_end_game_reason_set(Gamep g, const std::string &val);
 [[nodiscard]] auto game_mouse_up(Gamep g, int x, int y, uint32_t button) -> bool;
 [[nodiscard]] auto game_save(Gamep g, const std::string &file_to_save) -> bool;
 [[nodiscard]] auto game_place_str(Gamep g, uint32_t score) -> const char *;
-[[nodiscard]] auto game_state(Gamep g) -> GameState;
+[[nodiscard]] auto game_state(Gamep g) -> GameStateType;
 [[nodiscard]] auto game_map_single_pix_size_get(Gamep g) -> int;
 [[nodiscard]] auto game_map_zoom_def_get(Gamep g) -> int;
 [[nodiscard]] auto game_map_zoom_get(Gamep g) -> int;
@@ -320,7 +320,7 @@ void game_map_zoom_toggle(Gamep g);
 void game_save_config(Gamep g);
 void game_set_currently_saving_snapshot(Gamep);
 void game_start_playing(Gamep g);
-void game_state_change(Gamep g, GameState state, const char *why);
+void game_state_change(Gamep g, GameStateType state, const char *why);
 void game_state_reset(Gamep g, const char *why);
 void game_tick(Gamep g);
 void game_unset_currently_saving_snapshot(Gamep);

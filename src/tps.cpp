@@ -71,6 +71,7 @@ auto templates_init() -> bool
   if (!tp_load_vault()) { return false; }
   if (!tp_load_wall()) { return false; }
   if (!tp_load_wand_fire()) { return false; }
+  if (!tp_load_wand_light()) { return false; }
   if (!tp_load_water()) { return false; }
   /* end shell marker1 */
   // clang-format on

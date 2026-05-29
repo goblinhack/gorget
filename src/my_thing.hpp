@@ -77,7 +77,7 @@ using ThingTextFlags = uint8_t;
       list_macro(PLAYER_STATE_MOVE_CONFIRM_REQUESTED, "MOVE-CONFIRM-REQ"), /* newline */                                                   \
       list_macro(PLAYER_STATE_FOLLOWING_PATH, "FOLLOWING-PATH"),           /* newline */
 
-ENUM_DEF_H(PLAYER_STATE_ENUM, PlayerState)
+ENUM_DEF_H(PLAYER_STATE_ENUM, PlayerStateType)
 
 //
 // Monst state
@@ -248,7 +248,7 @@ using Thing = struct Thing {
   //
   // Direction
   //
-  ThingDir dir;
+  ThingDirType dir;
   //
   // The current tiles[] index for this object
   //
@@ -352,7 +352,7 @@ using Thing = struct Thing {
   //
   // Idle etc...
   //
-  ThingAnim anim_type;
+  ThingAnimType anim_type;
   //
   // Which level am I on?
   //
@@ -1095,7 +1095,7 @@ void player_reached_entrance(Gamep g, Levelsp v, Levelp l);
 void player_reached_exit_do(Gamep g, Levelsp v, Levelp l);
 void player_reached_exit(Gamep g, Levelsp v, Levelp l);
 void player_warp_to_specific_level(Gamep g, Levelsp v, LevelNum level_num);
-void thing_anim_init(Gamep g, Levelsp v, Levelp l, Thingp t, ThingAnim anim_type);
+void thing_anim_init(Gamep g, Levelsp v, Levelp l, Thingp t, ThingAnimType anim_type);
 void thing_anim_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, int time_step);
 void thing_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, const bpoint &val);
 void thing_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, const fpoint &val);

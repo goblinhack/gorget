@@ -34,7 +34,7 @@ static auto tp_mantisman_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> s
       UI_INFO4_FMT_STR "Watch out for their jump attack!\n";
 }
 
-static auto tp_mantisman_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at, Thingp t) -> ThingEnviron
+static auto tp_mantisman_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at, Thingp t) -> ThingEnvironType
 {
   TRACE_DEBUG();
 

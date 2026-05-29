@@ -51,7 +51,7 @@ class LevelPopulate
 public:
   char   c = {};
   bpoint at {};
-  Biome  biome                 = {BIOME_DUNGEON};
+  BiomeType  biome                 = {BIOME_DUNGEON};
   Tpp    tp_wall               = {};
   Tpp    tp_vault              = {};
   Tpp    tp_border             = {};

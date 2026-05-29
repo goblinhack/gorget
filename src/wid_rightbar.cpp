@@ -92,7 +92,7 @@ static void wid_rightbar_create_minimap_level(Gamep g)
     // Normal level contents
     //
     wid_rightbar->log_empty_line(g);
-    auto        bs = Biome_to_string(l->biome);
+    auto        bs = BiomeType_to_string(l->biome);
     std::string s;
     auto        ln = (l->level_num % 5) + 1;
     if (ln == 5) {

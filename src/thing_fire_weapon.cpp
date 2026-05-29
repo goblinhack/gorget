@@ -11,17 +11,17 @@
 #include "my_tp.hpp"
 #include "my_types.hpp"
 
-void thing_on_fire_weapon_request_set(Tpp tp, thing_on_fire_weapon_request_t callback)
+void thing_on_use_weapon_request_set(Tpp tp, thing_on_use_weapon_request_t callback)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
     ERR("no thing template pointer");
     return;
   }
-  tp->on_fire_weapon_request = callback;
+  tp->on_use_weapon_request = callback;
 }
 
-auto thing_on_fire_weapon_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user) -> Tpp
+auto thing_on_use_weapon_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user) -> Tpp
 {
   TRACE();
   auto *tp = thing_tp(me);
@@ -29,7 +29,7 @@ auto thing_on_fire_weapon_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thing
     ERR("no thing template pointer");
     return nullptr;
   }
-  if (tp->on_fire_weapon_request == nullptr) {
+  if (tp->on_use_weapon_request == nullptr) {
     //
     // Assume success
     //
@@ -39,7 +39,7 @@ auto thing_on_fire_weapon_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thing
     thing_err(user, "unexpected thing for %s", __FUNCTION__);
     return nullptr;
   }
-  return tp->on_fire_weapon_request(g, v, l, me, user);
+  return tp->on_use_weapon_request(g, v, l, me, user);
 }
 
 auto thing_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, Tpp fire_what, const bpoint &target) -> bool

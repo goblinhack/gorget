@@ -274,19 +274,19 @@ void thing_player_event_loop(Gamep g, Levelsp v, Levelp l)
   }
 }
 
-auto player_state_to_string(PlayerState state) -> std::string
+auto player_state_to_string(PlayerStateType state) -> std::string
 {
   TRACE();
-  return PlayerState_to_string(state);
+  return PlayerStateType_to_string(state);
 }
 
-auto player_state(Gamep /*g*/, Levelsp v) -> PlayerState
+auto player_state(Gamep /*g*/, Levelsp v) -> PlayerStateType
 {
   TRACE();
   return v->_player_state;
 }
 
-void player_state_change(Gamep g, Levelsp v, Levelp l, PlayerState new_state)
+void player_state_change(Gamep g, Levelsp v, Levelp l, PlayerStateType new_state)
 {
   TRACE();
 
@@ -756,7 +756,7 @@ auto player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what, bp
       return false;
     }
 
-    fire_what = thing_on_fire_weapon_request(g, v, l, item, me);
+    fire_what = thing_on_use_weapon_request(g, v, l, item, me);
     if (item == nullptr) {
       auto the_thing = thing_name_long_the(g, v, l, item);
       topcon("You fail to fire %s.", the_thing.c_str());

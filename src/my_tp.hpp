@@ -234,7 +234,7 @@
       list_macro(is_wall, "is_wall"),                                                       /* newline */                                  \
       list_macro(is_water, "is_water"),                                                     /* newline */
 
-ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
+ENUM_DEF_H(THING_FLAG_ENUM, ThingFlagType)
 
 //
 // Things all at the same z layer that can be drawn at the same x,y
@@ -253,14 +253,14 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
       list_macro(MAP_Z_DEPTH_WEAPON, "projectile"),        /* newline */                                                                   \
       list_macro(MAP_Z_DEPTH_GAS, "fire, smoke"),          /* newline */
 
-ENUM_DEF_H(MAP_Z_DEPTH_ENUM, MapZDepth)
+ENUM_DEF_H(MAP_Z_DEPTH_ENUM, MapZDepthType)
 
-#define MAP_Z_DEPTH_ENUM_FIRST ((MapZDepth) 0)
+#define MAP_Z_DEPTH_ENUM_FIRST ((MapZDepthType) 0)
 
 #define FOR_ALL_MAP_Z_DEPTH(_iter_)                                                                                                        \
-  for (MapZDepth _iter_ = MAP_Z_DEPTH_ENUM_FIRST; /* newline */                                                                            \
+  for (MapZDepthType _iter_ = MAP_Z_DEPTH_ENUM_FIRST; /* newline */                                                                            \
        (_iter_) < MAP_Z_DEPTH_ENUM_MAX;           /* newline */                                                                            \
-       (_iter_) = static_cast< MapZDepth >(static_cast< int >(_iter_) + 1))
+       (_iter_) = static_cast< MapZDepthType >(static_cast< int >(_iter_) + 1))
 
 //
 // Level Type
@@ -281,7 +281,7 @@ ENUM_DEF_H(LEVEL_TYPE_ENUM, LevelType)
 #define LEVEL_TYPE_FIRST LEVEL_TYPE_NORMAL
 
 //
-// Biome
+// BiomeType
 //
 #define BIOME_ENUM(list_macro)                                                                                                             \
   CLANG_FORMAT_INDENT()                           /* dummy line for clang indentation fixup */                                             \
@@ -292,7 +292,7 @@ ENUM_DEF_H(LEVEL_TYPE_ENUM, LevelType)
       list_macro(BIOME_GRAVEYARD, "Graveyard"),   /* newline */                                                                            \
       list_macro(BIOME_UNDERHELL, "Underhell"),   /* newline */
 
-ENUM_DEF_H(BIOME_ENUM, Biome)
+ENUM_DEF_H(BIOME_ENUM, BiomeType)
 
 //
 // Thing anim enum
@@ -357,7 +357,7 @@ ENUM_DEF_H(BIOME_ENUM, Biome)
       list_macro(THING_ANIM_CURSOR_HAZARD, "cursor-at-hazard"),   /* newline */                                                            \
       list_macro(THING_ANIM_CURSOR_WARNING, "cursor-at-warning"), /* newline */
 
-ENUM_DEF_H(THING_ANIM_ENUM, ThingAnim)
+ENUM_DEF_H(THING_ANIM_ENUM, ThingAnimType)
 
 //
 // Thing event enum
@@ -402,14 +402,14 @@ ENUM_DEF_H(THING_EVENT_ENUM, ThingEventType)
       list_macro(THING_ENVIRON_NEUTRAL, "neutral"), /* newline */                                                                          \
       list_macro(THING_ENVIRON_LIKES, "likes"),     /* newline */
 
-ENUM_DEF_H(THING_ENVIRON_ENUM, ThingEnviron)
+ENUM_DEF_H(THING_ENVIRON_ENUM, ThingEnvironType)
 
-#define THING_ENVIRON_ENUM_FIRST ((ThingEnviron) 0)
+#define THING_ENVIRON_ENUM_FIRST ((ThingEnvironType) 0)
 
 #define FOR_ALL_THING_ENVIRON(_iter_)                                                                                                      \
-  for (ThingEnviron _iter_ = THING_ENVIRON_ENUM_FIRST; /* newline */                                                                       \
+  for (ThingEnvironType _iter_ = THING_ENVIRON_ENUM_FIRST; /* newline */                                                                       \
        (_iter_) < THING_ENVIRON_ENUM_MAX;              /* newline */                                                                       \
-       (_iter_) = static_cast< ThingEnviron >(static_cast< int >(_iter_) + 1))
+       (_iter_) = static_cast< ThingEnvironType >(static_cast< int >(_iter_) + 1))
 
 //
 // Thing priority enum
@@ -458,7 +458,7 @@ ENUM_DEF_H(THING_CHANCE_ENUM, ThingChanceType)
       list_macro(THING_RARITY_VERY_RARE, "very_rare"), /* newline */                                                                       \
       list_macro(THING_RARITY_UNIQUE, "unique"),       /* newline */
 
-ENUM_DEF_H(THING_RARITY_ENUM, ThingRarity)
+ENUM_DEF_H(THING_RARITY_ENUM, ThingRarityType)
 
 //
 // Thing dir enum
@@ -475,7 +475,7 @@ ENUM_DEF_H(THING_RARITY_ENUM, ThingRarity)
       list_macro(THING_DIR_TR, "THING_DIR_TR"),       /* newline */                                                                        \
       list_macro(THING_DIR_BR, "THING_DIR_BR"),       /* newline */
 
-ENUM_DEF_H(THING_DIR_ENUM, ThingDir)
+ENUM_DEF_H(THING_DIR_ENUM, ThingDirType)
 
 //
 // Monst challenge level
@@ -508,8 +508,8 @@ class Tp;
 [[nodiscard]] auto tp_find_opt(const std::string &val) -> Tpp;
 [[nodiscard]] auto tp_find(TpId id) -> Tpp;
 [[nodiscard]] auto tp_fired_weapon_count_max_get(Tpp tp) -> int;
-[[nodiscard]] auto tp_first_tile(class Tp *tp, ThingAnim val) -> Tilep;
-[[nodiscard]] auto tp_first(ThingFlag f) -> Tpp;
+[[nodiscard]] auto tp_first_tile(class Tp *tp, ThingAnimType val) -> Tilep;
+[[nodiscard]] auto tp_first(ThingFlagType f) -> Tpp;
 [[nodiscard]] auto tp_health_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_health_max_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_id_get(Tpp tp) -> TpId;
@@ -750,7 +750,7 @@ class Tp;
 [[nodiscard]] auto tp_random_monst(Gamep g, Levelsp v, Levelp l, int c) -> Tpp;
 [[nodiscard]] auto tp_random_player() -> Tpp;
 [[nodiscard]] auto tp_random_wall() -> Tpp;
-[[nodiscard]] auto tp_random(Gamep g, Levelsp v, Levelp l, ThingFlag f) -> Tpp;
+[[nodiscard]] auto tp_random(Gamep g, Levelsp v, Levelp l, ThingFlagType f) -> Tpp;
 [[nodiscard]] auto tp_score_value_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_speed_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_stamina_get(Tpp tp) -> int;
@@ -762,8 +762,8 @@ class Tp;
 [[nodiscard]] auto tp_temperature_melts_at_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_temperature_thermal_conductivity_get(Tpp tp) -> float;
 [[nodiscard]] auto tp_tile_name(Tpp tp) -> std::string;
-[[nodiscard]] auto tp_tiles_get(Tpp tp, ThingAnim val, int index) -> Tilep;
-[[nodiscard]] auto tp_tiles_size(Tpp tp, ThingAnim val) -> int;
+[[nodiscard]] auto tp_tiles_get(Tpp tp, ThingAnimType val, int index) -> Tilep;
+[[nodiscard]] auto tp_tiles_size(Tpp tp, ThingAnimType val) -> int;
 [[nodiscard]] auto tp_value1_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_value10_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_value11_get(Tpp tp) -> int;
@@ -781,13 +781,14 @@ class Tp;
 [[nodiscard]] auto tp_value8_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_value9_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_variant_get(Tpp tp) -> int;
-[[nodiscard]] auto tp_variant(ThingFlag f, int /*variant*/) -> Tpp;
+[[nodiscard]] auto tp_variant(ThingFlagType f, int /*variant*/) -> Tpp;
 [[nodiscard]] auto tp_weight_get(Tpp tp) -> uint32_t;
-[[nodiscard]] auto tp_z_depth_get(Tpp tp) -> MapZDepth;
+[[nodiscard]] auto tp_z_depth_get(Tpp tp) -> MapZDepthType;
 // end sort marker1 }
 
 // begin sort marker2 {
 auto tp_priority_get(Tpp tp) -> ThingPriorityType;
+auto tp_rarity_get(Tpp tp) -> ThingRarityType;
 void tp_chance_set(Tpp tp, ThingChanceType e, const std::string &val);
 void tp_charge_count_set(Tpp tp, int val);
 void tp_con_(Tpp tp, const char *fmt, va_list args); // compile error without
@@ -804,7 +805,7 @@ void tp_err_(Tpp tp, const char *fmt, va_list args); // compile error without
 void tp_err(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void tp_fini();
 void tp_fired_weapon_count_max_set(Tpp tp, int val);
-void tp_flag_set(Tpp tp, ThingFlag f, int val = 1);
+void tp_flag_set(Tpp tp, ThingFlagType f, int val = 1);
 void tp_get_id(const char *, int *id);
 void tp_health_set(Tpp tp, const std::string &val);
 void tp_is_immune_add(Tpp tp, ThingEventType val);
@@ -823,6 +824,7 @@ void tp_name_pluralize_set(Tpp tp, const std::string &val);
 void tp_name_real_set(Tpp tp, const std::string &val);
 void tp_name_short_set(Tpp tp, const std::string &val);
 void tp_priority_set(Tpp tp, ThingPriorityType val);
+void tp_rarity_set(Tpp tp, ThingRarityType val);
 void tp_score_value_set(Tpp tp, int val);
 void tp_speed_set(Tpp tp, int val);
 void tp_stamina_set(Tpp tp, const std::string &val);
@@ -833,7 +835,7 @@ void tp_temperature_initial_set(Tpp tp, int val);
 void tp_temperature_melts_at_set(Tpp tp, int val);
 void tp_temperature_thermal_conductivity_set(Tpp tp, float val);
 void tp_tile_name_set(Tpp tp, const std::string &val);
-void tp_tiles_push_back(Tpp tp, ThingAnim val, Tilep tile_p);
+void tp_tiles_push_back(Tpp tp, ThingAnimType val, Tilep tile_p);
 void tp_value1_set(Tpp tp, int val);
 void tp_value10_set(Tpp tp, int val);
 void tp_value11_set(Tpp tp, int val);
@@ -852,7 +854,7 @@ void tp_value8_set(Tpp tp, int val);
 void tp_value9_set(Tpp tp, int val);
 void tp_variant_set(Tpp tp, int val);
 void tp_weight_set(Tpp tp, uint32_t val);
-void tp_z_depth_set(Tpp tp, MapZDepth val);
+void tp_z_depth_set(Tpp tp, MapZDepthType val);
 // end sort marker2 }
 
 //
