@@ -625,34 +625,72 @@ static auto room_flip_horiz(class Room *r) -> class Room *
 //
 // Has to be a tile you could walk or swim on
 //
-[[nodiscard]] static auto room_tile_is_traversable(class Room *r, int x, int y) -> bool
+// Need to include chasms as we use this in pathing entrance to exit and that might involve a jump
+//
+[[nodiscard]] static auto level_char_is_traversable(char c) -> bool
 {
-  auto c = r->data[ (y * r->width) + x ];
   switch (c) {
     case CHARMAP_BARREL :        return true;
+    case CHARMAP_BORDER :        return false;
+    case CHARMAP_BRAZIER :       return true;
     case CHARMAP_BRIDGE :        return true;
+    case CHARMAP_CHASM :         return true;
+    case CHARMAP_CHASM_50 :      return true;
     case CHARMAP_CORRIDOR :      return true;
     case CHARMAP_DEEP_WATER :    return true;
+    case CHARMAP_DIRT :          return true;
     case CHARMAP_DOOR_LOCKED :   return true;
+    case CHARMAP_DOOR_SECRET :   return true;
     case CHARMAP_DOOR_UNLOCKED : return true;
-    case CHARMAP_DOOR_SECRET :   return true; // needed
+    case CHARMAP_EMPTY :         return false;
     case CHARMAP_ENTRANCE :      return true;
     case CHARMAP_EXIT :          return true;
+    case CHARMAP_FIRE :          return true;
     case CHARMAP_FLOOR :         return true;
+    case CHARMAP_FLOOR_50 :      return true;
     case CHARMAP_FOLIAGE :       return true;
-    case CHARMAP_REEDS :         return true;
     case CHARMAP_GRASS :         return true;
     case CHARMAP_JOIN :          return true;
     case CHARMAP_KEY :           return true;
+    case CHARMAP_LAVA :          return true;
     case CHARMAP_MOB1 :          return true;
     case CHARMAP_MOB2 :          return true;
     case CHARMAP_MONST1 :        return true;
     case CHARMAP_MONST2 :        return true;
+    case CHARMAP_PILLAR :        return false;
+    case CHARMAP_REEDS :         return true;
+    case CHARMAP_ROCK :          return false;
+    case CHARMAP_SMOKE :         return true;
+    case CHARMAP_STEAM :         return true;
+    case CHARMAP_TELEPORT :      return true;
     case CHARMAP_TRAP :          return true;
     case CHARMAP_TREASURE :      return true;
+    case CHARMAP_VAULT :         return false;
+    case CHARMAP_WALL :          return false;
     case CHARMAP_WATER :         return true;
-    default :                    return false;
+    case CHARMAP_WEAPON :        return true;
+    case CHARMAP_WILDCARD :      return false;
   }
+  return false;
+}
+
+//
+// Has to be a tile you could walk or swim on
+//
+// Need to include chasms as we use this in pathing entrance to exit and that might involve a jump
+//
+[[nodiscard]] static auto room_tile_is_traversable(class Room *r, int x, int y) -> bool
+{
+  auto c = r->data[ (y * r->width) + x ];
+  return level_char_is_traversable(c);
+}
+
+//
+// Has to be a tile you could walk or swim on
+//
+[[nodiscard]] static auto level_gen_tile_is_traversable(class LevelGen *lg, int x, int y) -> bool
+{
+  return level_char_is_traversable(lg->data[ x ][ y ].c);
 }
 
 //
@@ -2325,8 +2363,8 @@ static void level_gen_dump(class LevelGen *lg, const char *msg)
 
   for (int y = 0; y < MAP_HEIGHT; y++) {
     std::string tmp;
-    for (auto &x : lg->data) {
-      auto c = x[ y ].c;
+    for (int x = 0; x < MAP_WIDTH; x++) {
+      char c = lg->data[ x ][ y ].c;
       tmp += c;
     }
     log("[%s]", tmp.c_str());
@@ -2337,7 +2375,7 @@ static void level_gen_dump(class LevelGen *lg, const char *msg)
   //
   // Sometimes useful to see walkable paths
   //
-  if (compiler_unused) {
+  if (lg->debug) [[unlikely]] {
     for (int y = 0; y < MAP_HEIGHT; y++) {
       std::string tmp;
       for (int x = 0; x < MAP_WIDTH; x++) {
@@ -3168,38 +3206,6 @@ static auto level_proc_gen_create_rooms(Gamep g, LevelNum level_num) -> class Le
   }
 
   return nullptr;
-}
-
-//
-// Has to be a tile you could walk or swim on
-//
-[[nodiscard]] static auto level_gen_tile_is_traversable(class LevelGen *lg, int x, int y) -> bool
-{
-  switch (lg->data[ x ][ y ].c) {
-    case CHARMAP_BARREL :        return true;
-    case CHARMAP_BRIDGE :        return true;
-    case CHARMAP_CORRIDOR :      return true;
-    case CHARMAP_DEEP_WATER :    return true;
-    case CHARMAP_DOOR_LOCKED :   return true;
-    case CHARMAP_DOOR_UNLOCKED : return true;
-    case CHARMAP_DOOR_SECRET :   return true; // needed
-    case CHARMAP_ENTRANCE :      return true;
-    case CHARMAP_EXIT :          return true;
-    case CHARMAP_FLOOR :         return true;
-    case CHARMAP_FOLIAGE :       return true;
-    case CHARMAP_REEDS :         return true;
-    case CHARMAP_GRASS :         return true;
-    case CHARMAP_JOIN :          return true;
-    case CHARMAP_KEY :           return true;
-    case CHARMAP_MOB1 :          return true;
-    case CHARMAP_MOB2 :          return true;
-    case CHARMAP_MONST1 :        return true;
-    case CHARMAP_MONST2 :        return true;
-    case CHARMAP_TRAP :          return true;
-    case CHARMAP_TREASURE :      return true;
-    case CHARMAP_WATER :         return true;
-    default :                    return false;
-  }
 }
 
 //
@@ -4710,6 +4716,12 @@ static void level_gen_add_missing_teleports(class LevelGen *lg)
     }
   }
 
+  if (lg->debug) [[unlikely]] {
+    log("teleport count:      %d", lg->info.teleport_count);
+    log("reachable teleports: %d", reachable_teleports);
+    log("teleport cands:      %d", (int) cands.size());
+  }
+
   //
   // Place an additional teleport
   //
@@ -4717,6 +4729,9 @@ static void level_gen_add_missing_teleports(class LevelGen *lg)
     auto tries = MAX_LEVEL_GEN_PLACE_ADDITIONAL_TELEPORT_TRIES;
     while (tries-- > 0) {
       if (level_gen_add_missing_teleport_do(lg, cands)) {
+        if (lg->debug) [[unlikely]] {
+          log("added missing reachable teleport");
+        }
         return;
       }
     }
@@ -4725,6 +4740,9 @@ static void level_gen_add_missing_teleports(class LevelGen *lg)
   auto tries = MAX_LEVEL_GEN_PLACE_ADDITIONAL_TELEPORT_TRIES;
   while (tries-- > 0) {
     if (level_gen_add_missing_teleport_do(lg, cands)) {
+      if (lg->debug) [[unlikely]] {
+        log("added additional teleport");
+      }
       return;
     }
   }

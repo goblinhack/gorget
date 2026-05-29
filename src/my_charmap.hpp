@@ -35,7 +35,6 @@ enum : char {
   CHARMAP_MONST1        = 'm',
   CHARMAP_MONST2        = 'M',
   CHARMAP_PILLAR        = '|',
-  CHARMAP_PLAYER        = '@',
   CHARMAP_REEDS         = '"',
   CHARMAP_ROCK          = 'R',
   CHARMAP_SMOKE         = ';',

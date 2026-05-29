@@ -146,7 +146,7 @@ auto level_string(Gamep g, Levelsp v, Levelp l, int w, int h) -> std::string
         c = CHARMAP_FIRE;
       }
       if (level_is_player(g, v, l, p) != nullptr) {
-        c = CHARMAP_PLAYER;
+        c = CHARMAP_ENTRANCE;
       }
       if (level_is_steam(g, v, l, p) != nullptr) {
         c = CHARMAP_STEAM;
