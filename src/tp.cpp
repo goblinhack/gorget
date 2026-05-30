@@ -373,6 +373,48 @@ auto tp_first_tile(Tpp tp, ThingAnimType val) -> Tilep
   return tp->tiles[ val ][ 0 ];
 }
 
+static auto tp_random_select_with_rarity(Gamep g, Levelsp v, Levelp l, TpVec &m) -> Tpp
+{
+  TRACE();
+
+  int tries = 100;
+  while (tries-- > 0) {
+    auto  index = PCG_RAND() % m.size();
+    auto *tp    = m[ index ];
+
+    if (tp == nullptr) [[unlikely]] {
+      break;
+    }
+
+    switch (tp_rarity_get(tp)) {
+      case THING_RARITY_COMMON : return tp;
+      case THING_RARITY_UNCOMMON :
+        if (d100() < 20) {
+          return tp;
+        }
+        break;
+      case THING_RARITY_RARE :
+        if (d100() < 10) {
+          return tp;
+        }
+        break;
+      case THING_RARITY_VERY_RARE :
+        if (d100() < 5) {
+          return tp;
+        }
+        break;
+      case THING_RARITY_UNIQUE :
+        if (d1000() == 0) {
+          return tp;
+        }
+        break;
+      case THING_RARITY_ENUM_MAX : break;
+    }
+  }
+
+  return nullptr;
+}
+
 static auto tp_random(Gamep g, Levelsp v, Levelp l, TpVec &m) -> Tpp
 {
   TRACE();
@@ -384,8 +426,7 @@ static auto tp_random(Gamep g, Levelsp v, Levelp l, TpVec &m) -> Tpp
 
   int tries = 100;
   while (tries-- > 0) {
-    auto  index = PCG_RAND() % m.size();
-    auto *tp    = m[ index ];
+    auto *tp = tp_random_select_with_rarity(g, v, l, m);
     if (tp == nullptr) [[unlikely]] {
       break;
     }
@@ -452,8 +493,7 @@ static auto tp_random(Gamep g, Levelsp v, Levelp l, TpVec &m) -> Tpp
   //
   tries = 100;
   while (tries-- > 0) {
-    auto  index = PCG_RAND() % m.size();
-    auto *tp    = m[ index ];
+    auto *tp = tp_random_select_with_rarity(g, v, l, m);
     if (tp == nullptr) [[unlikely]] {
       break;
     }
