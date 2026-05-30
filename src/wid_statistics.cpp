@@ -120,12 +120,12 @@ static void wid_statistics_show_defeated(Gamep g, Levelp l, Thingp player)
   //
   for (auto i = 1; i < TP_ID_MAX; i++) {
 
-    auto *monst_tp = tp_find(i);
-    if (monst_tp == nullptr) {
+    auto *defeated_tp = tp_find(i);
+    if (defeated_tp == nullptr) {
       continue;
     }
 
-    if (! tp_is_monst(monst_tp)) {
+    if (! tp_is_monst(defeated_tp) && ! tp_is_mob(defeated_tp) && ! tp_is_minion(defeated_tp)) {
       continue;
     }
 
@@ -138,10 +138,10 @@ static void wid_statistics_show_defeated(Gamep g, Levelp l, Thingp player)
     auto s = std::format("{:<3}", player_struct->defeated[ i ]);
 
     s += " %%tp=";
-    s += tp_name(monst_tp);
+    s += tp_name(defeated_tp);
     s += "$";
     s += " ";
-    s += std::format("{:<20}", tp_name(monst_tp));
+    s += std::format("{:<20}", tp_name(defeated_tp));
 
     if (line.empty()) {
       line = s;
