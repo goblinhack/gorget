@@ -155,7 +155,7 @@
       list_macro(is_unused22, "is_unused22"),                                               /* newline */                                  \
       list_macro(is_unused23, "is_unused23"),                                               /* newline */                                  \
       list_macro(is_unused24, "is_unused24"),                                               /* newline */                                  \
-      list_macro(is_unused25, "is_unused25"),                                               /* newline */                                  \
+      list_macro(is_flammable, "is_flammable"),                                             /* newline */                                  \
       list_macro(is_auto_wield, "is_auto_wield"),                                           /* newline */                                  \
       list_macro(is_dead_when_discharged, "is_dead_when_discharged"),                       /* newline */                                  \
       list_macro(is_able_to_be_wielded, "is_able_to_be_wielded"),                           /* newline */                                  \
@@ -605,6 +605,7 @@ class Tp;
 [[nodiscard]] auto tp_is_extinguished_on_death(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_fire(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_fireball(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_flammable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_flat(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_flesh(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_floating(Tpp tp) -> bool;
@@ -712,7 +713,6 @@ class Tp;
 [[nodiscard]] auto tp_is_unused22(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused23(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused24(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused25(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused3(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused4(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused46(Tpp tp) -> bool;

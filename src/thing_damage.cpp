@@ -393,8 +393,12 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
         break;
       case THING_EVENT_FIRE_DAMAGE :
         if (level_is_fire(g, v, l, thing_at(me)) == nullptr) {
-          if (thing_is_combustible(me)) {
-            THING_DBG(me, "spawn flames due to fire damage");
+          if (level_is_flammable(g, v, l, thing_at(me)) != nullptr) {
+            THING_DBG(me, "spawn flames as tile is flammable");
+            TRACE_INDENT();
+            (void) thing_spawn(g, v, l, tp_first(is_fire), me);
+          } else if (thing_is_combustible(me)) {
+            THING_DBG(me, "spawn flames as thing is combustible");
             TRACE_INDENT();
             (void) thing_spawn(g, v, l, tp_first(is_fire), me);
           }

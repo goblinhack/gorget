@@ -979,10 +979,10 @@ auto tp_is_unused24(Tpp tp) -> bool
   return tp_flag(tp, is_unused24) != 0;
 }
 
-auto tp_is_unused25(Tpp tp) -> bool
+auto tp_is_flammable(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused25) != 0;
+  return tp_flag(tp, is_flammable) != 0;
 }
 
 auto tp_is_auto_wield(Tpp tp) -> bool

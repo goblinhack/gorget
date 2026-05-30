@@ -981,10 +981,10 @@ auto level_count_is_unused24(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> u
   return level_count(g, v, l, is_unused24, p);
 }
 
-auto level_count_is_unused25(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+auto level_count_is_flammable(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused25, p);
+  return level_count(g, v, l, is_flammable, p);
 }
 
 auto level_count_is_auto_wield(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t

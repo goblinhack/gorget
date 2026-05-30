@@ -50,6 +50,7 @@ auto tp_load_foliage() -> bool
   tp_flag_set(tp, is_combustible); // will continue to burn once on fire
   tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_described_cursor);
+  tp_flag_set(tp, is_flammable); // easily catches fire
   tp_flag_set(tp, is_foliage);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_obs_to_vision);

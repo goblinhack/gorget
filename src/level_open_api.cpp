@@ -980,10 +980,10 @@ auto level_open_is_unused24(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Th
   return level_open(g, v, l, is_unused24, p);
 }
 
-auto level_open_is_unused25(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+auto level_open_is_flammable(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_open(g, v, l, is_unused25, p);
+  return level_open(g, v, l, is_flammable, p);
 }
 
 auto level_open_is_auto_wield(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp

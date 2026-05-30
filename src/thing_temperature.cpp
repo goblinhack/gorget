@@ -42,7 +42,7 @@ void thing_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thing
       //
       // No fire here. Set it on fire.
       //
-      if (thing_is_combustible(t)) {
+      if (thing_is_flammable(t) || thing_is_combustible(t)) {
         //
         // But only if combustible.
         //
@@ -81,7 +81,7 @@ static void thing_temperature_damage_apply(Gamep g, Levelsp v, Levelp l, Thingp 
     damage *= 2;
   }
 
-  if (thing_is_combustible(t)) {
+  if (thing_is_flammable(t) || thing_is_combustible(t)) {
     damage *= 2;
   }
 

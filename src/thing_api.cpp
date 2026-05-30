@@ -1545,7 +1545,7 @@ auto thing_is_unused24(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused24) != 0;
 }
 
-auto thing_is_unused25(Thingp t) -> bool
+auto thing_is_flammable(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -1553,7 +1553,7 @@ auto thing_is_unused25(Thingp t) -> bool
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused25) != 0;
+  return tp_flag(thing_tp(t), is_flammable) != 0;
 }
 
 auto thing_is_auto_wield(Thingp t) -> bool

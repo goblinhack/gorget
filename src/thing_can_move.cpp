@@ -291,7 +291,7 @@ auto thing_can_move_to_possible(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint 
           return false;
         }
 
-        if (thing_is_combustible(me)) {
+        if (thing_is_flammable(me) || thing_is_combustible(me)) {
           return false;
         }
       }
