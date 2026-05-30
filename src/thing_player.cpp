@@ -267,6 +267,7 @@ void thing_player_event_loop(Gamep g, Levelsp v, Levelp l)
     case STATE_SAVE_MENU :         [[fallthrough]];
     case STATE_QUIT_MENU :         [[fallthrough]];
     case STATE_INVENTORY_MENU :    [[fallthrough]];
+    case STATE_COLLECT_MENU :      [[fallthrough]];
     case STATE_ITEM_MENU :         [[fallthrough]];
     case STATE_GENERATING :        [[fallthrough]];
     case STATE_GENERATED :         [[fallthrough]];

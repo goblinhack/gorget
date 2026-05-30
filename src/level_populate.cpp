@@ -273,7 +273,7 @@ static auto level_populate_biome_dungeon(Gamep g, Levelsp v, Levelp l, class Lev
       break;
     default :
       if (! g_opt_do_level_gen) {
-        CROAK("unexpected map char '%c'", lp.c);
+        CROAK("unexpected map char in level populate '%c'", lp.c);
       }
   }
 

@@ -1083,6 +1083,7 @@ void Game::state_change(GameStateType new_state, const std::string &why)
     case STATE_SAVE_MENU :         [[fallthrough]];
     case STATE_QUIT_MENU :         [[fallthrough]];
     case STATE_INVENTORY_MENU :    [[fallthrough]];
+    case STATE_COLLECT_MENU :      [[fallthrough]];
     case STATE_ITEM_MENU :         wid_actionbar_fini(g); break;
     case STATE_GENERATING :        [[fallthrough]];
     case STATE_GENERATED :         [[fallthrough]];
@@ -1128,6 +1129,7 @@ void Game::state_change(GameStateType new_state, const std::string &why)
         case STATE_KEYBOARD_MENU :     [[fallthrough]];
         case STATE_MAIN_MENU :         [[fallthrough]];
         case STATE_INVENTORY_MENU :    [[fallthrough]];
+        case STATE_COLLECT_MENU :      [[fallthrough]];
         case STATE_ITEM_MENU :
           (void) wid_leftbar_init(g);
           (void) wid_rightbar_init(g);
@@ -1155,6 +1157,7 @@ void Game::state_change(GameStateType new_state, const std::string &why)
     case STATE_SAVE_MENU :         [[fallthrough]];
     case STATE_QUIT_MENU :         [[fallthrough]];
     case STATE_INVENTORY_MENU :    [[fallthrough]];
+    case STATE_COLLECT_MENU :      [[fallthrough]];
     case STATE_ITEM_MENU :         [[fallthrough]];
     case STATE_GENERATING :        [[fallthrough]];
     case STATE_GENERATED :         [[fallthrough]];
@@ -1197,6 +1200,7 @@ void Game::handle_game_request_to_remake_ui()
     case STATE_THE_END_MENU :      [[fallthrough]];
     case STATE_PLAYING :           [[fallthrough]];
     case STATE_LEVEL_SELECT_MENU : [[fallthrough]];
+    case STATE_COLLECT_MENU :      [[fallthrough]];
     case STATE_INVENTORY_MENU :
       if (v != nullptr) {
         (void) wid_leftbar_init(g);
@@ -1255,6 +1259,7 @@ void Game::tick()
       case STATE_SAVE_MENU :         [[fallthrough]];
       case STATE_QUIT_MENU :         [[fallthrough]];
       case STATE_INVENTORY_MENU :    [[fallthrough]];
+      case STATE_COLLECT_MENU :      [[fallthrough]];
       case STATE_ITEM_MENU :         [[fallthrough]];
       case STATE_GENERATING :        [[fallthrough]];
       case STATE_GENERATED :         [[fallthrough]];
@@ -1382,10 +1387,11 @@ void Game::display()
       //
       // Needed else we can't see the level select things
       //
-    case STATE_INVENTORY_MENU :
-    case STATE_ITEM_MENU :
-    case STATE_PLAYING :
-    case STATE_DEAD_MENU :
+    case STATE_INVENTORY_MENU :    [[fallthrough]];
+    case STATE_COLLECT_MENU :      [[fallthrough]];
+    case STATE_ITEM_MENU :         [[fallthrough]];
+    case STATE_PLAYING :           [[fallthrough]];
+    case STATE_DEAD_MENU :         [[fallthrough]];
     case STATE_THE_END_MENU :
       level_mouse_position_get(g, v, l);
       level_display(g, v, l);

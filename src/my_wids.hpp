@@ -37,6 +37,7 @@ void wid_intro_select(Gamep g);
 void wid_inventory_mouse_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely);
 void wid_inventory_mouse_over_end(Gamep g, Widp w);
 void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player);
+void wid_collect_show(Gamep g, Levelsp v, Levelp l, Thingp player, std::vector< Thingp >);
 void wid_item_menu_select(Gamep g, Levelsp v, Thingp it, bool from_inventory);
 void wid_leftbar_fini(Gamep g);
 void wid_load_destroy(Gamep g);

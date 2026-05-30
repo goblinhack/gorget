@@ -32,19 +32,25 @@ void levels_test(Gamep g)
                   /* line */ (const char *) "xxxxxxxxxxx",
                   /* end */ nullptr);
 
-  level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "treasure", __FUNCTION__, __LINE__, no_overrides, 0,
-                  /* line */ (const char *) "xxxxxxxxxxx",
-                  /* line */ (const char *) "xxxxxxxxxxx",
-                  /* line */ (const char *) "xx.......xx",
-                  /* line */ (const char *) "xx...$$$$xx",
-                  /* line */ (const char *) "xx...$$$$xx",
-                  /* line */ (const char *) "xx.@.$$$$xx",
-                  /* line */ (const char *) "xx...$$$$xx",
-                  /* line */ (const char *) "xx...$$$$xx",
-                  /* line */ (const char *) "xx...$$$$xx",
-                  /* line */ (const char *) "xxxxxxxxxxx",
-                  /* line */ (const char *) "xxxxxxxxxxx",
-                  /* end */ nullptr);
+  {
+    Overrides overrides;
+
+    overrides[ 'c' ] = [](char /*c*/, bpoint /*p*/) -> Tpp { return tp_find_mand("chest"); };
+
+    level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "treasure", __FUNCTION__, __LINE__, overrides, 0,
+                    /* line */ (const char *) "xxxxxxxxxxx",
+                    /* line */ (const char *) "xxxxxxxxxxx",
+                    /* line */ (const char *) "xx.......xx",
+                    /* line */ (const char *) "xx.......xx",
+                    /* line */ (const char *) "xx.......xx",
+                    /* line */ (const char *) "xx.@.c...xx",
+                    /* line */ (const char *) "xx.......xx",
+                    /* line */ (const char *) "xx.......xx",
+                    /* line */ (const char *) "xx.......xx",
+                    /* line */ (const char *) "xxxxxxxxxxx",
+                    /* line */ (const char *) "xxxxxxxxxxx",
+                    /* end */ nullptr);
+  }
 
   {
     Overrides overrides;
@@ -71,8 +77,25 @@ void levels_test(Gamep g)
 
     level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "test2", __FUNCTION__, __LINE__, overrides, 0,
                     /* line */ (const char *) "XXXXXXX",
-                    /* line */ (const char *) "X.~~~.X",
                     /* line */ (const char *) "X.===.X",
+                    /* line */ (const char *) "X.~~~.X",
+                    /* line */ (const char *) "X.~~~.X",
+                    /* line */ (const char *) "X.~~~.X",
+                    /* line */ (const char *) "X.~~~.X",
+                    /* line */ (const char *) "X.~~~.X",
+                    /* line */ (const char *) "X.~~~.X",
+                    /* line */ (const char *) "X.~~~.X",
+                    /* line */ (const char *) "X.~~~.X",
+                    /* line */ (const char *) "X.~~~.X",
+                    /* line */ (const char *) "X.~~~.X",
+                    /* line */ (const char *) "X.~~~.X",
+                    /* line */ (const char *) "X.~~~.X",
+                    /* line */ (const char *) "X.~~~.X",
+                    /* line */ (const char *) "X.~~~.X",
+                    /* line */ (const char *) "X.~~~.X",
+                    /* line */ (const char *) "X.~~~.X",
+                    /* line */ (const char *) "X.~~~.X",
+                    /* line */ (const char *) "X.~~~.X",
                     /* line */ (const char *) "X.~~~.X",
                     /* line */ (const char *) "X@~~~mX",
                     /* line */ (const char *) "XXXXXXX",
@@ -87,10 +110,10 @@ void levels_test(Gamep g)
     level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "test3", __FUNCTION__, __LINE__, overrides, 0,
                     /* line */ (const char *) "XXXXXXXXXXXXXXX",
                     /* line */ (const char *) "X.~~~.~~~.~~~.X",
-                    /* line */ (const char *) "X@===========mX",
+                    /* line */ (const char *) "X.===.~~~.===.X",
                     /* line */ (const char *) "X.~~~.~~~.~~~.X",
-                    /* line */ (const char *) "X.~~~.~~~.~~~.X",
-                    /* line */ (const char *) "X.~~~.~~~.~~~.X",
+                    /* line */ (const char *) "X.~~~.===.~~~.X",
+                    /* line */ (const char *) "X@~~~.~~~.~~~mX",
                     /* line */ (const char *) "XXXXXXXXXXXXXXX",
                     /* end */ nullptr);
   }
