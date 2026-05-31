@@ -12,7 +12,7 @@
 //
 // Slower version, packed with extra warnings
 //
-[[nodiscard]] auto thing_find_non_inline(Gamep /*g*/, Levelsp v, ThingId id) ->  Thingp
+[[nodiscard]] auto thing_find_non_inline(Gamep /*g*/, Levelsp v, ThingId id) -> Thingp
 {
   TRACE_DEBUG(); // expensive
 

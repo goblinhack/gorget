@@ -141,7 +141,7 @@ void cave_create(Gamep /*g*/, Cave *c, uint32_t fill_prob, uint8_t r1, uint8_t r
 //
 // Recursive flood fill
 //
-[[nodiscard]] auto cave_generation_fill_blob_cand(Gamep g, Cave *c, int x, int y, uint16_t size, uint16_t id) ->  int
+[[nodiscard]] auto cave_generation_fill_blob_cand(Gamep g, Cave *c, int x, int y, uint16_t size, uint16_t id) -> int
 {
   //
   // Already walked?

@@ -7,8 +7,8 @@
 
 #include <string>
 
-void backtrace_dump();
-void backtrace_dump(FILE *fp);
-[[nodiscard]] auto backtrace_string() ->  std::string;
+void               backtrace_dump();
+void               backtrace_dump(FILE *fp);
+[[nodiscard]] auto backtrace_string() -> std::string;
 
 #endif

@@ -123,7 +123,7 @@ Tile::Tile() { NEWPTR(MTYPE_TILE, this, "Tile"); }
 
 Tile::~Tile() { OLDPTR(MTYPE_TILE, this); }
 
-[[nodiscard]] auto tile_init() ->  bool
+[[nodiscard]] auto tile_init() -> bool
 {
   TRACE();
 
@@ -568,7 +568,7 @@ void tile_from_fbo(Gamep g, FboEnum fbo)
 //
 // Find an existing tile.
 //
-[[nodiscard]] auto tile_find(const std::string &name) ->  Tilep
+[[nodiscard]] auto tile_find(const std::string &name) -> Tilep
 {
   TRACE();
 
@@ -584,7 +584,7 @@ void tile_from_fbo(Gamep g, FboEnum fbo)
   return result->second;
 }
 
-[[nodiscard]] auto tile_find_mand(const std::string &name) ->  Tilep
+[[nodiscard]] auto tile_find_mand(const std::string &name) -> Tilep
 {
   TRACE();
 
@@ -602,25 +602,25 @@ void tile_from_fbo(Gamep g, FboEnum fbo)
   return result->second;
 }
 
-[[nodiscard]] auto tile_width(Tilep tile) ->  int
+[[nodiscard]] auto tile_width(Tilep tile) -> int
 {
   TRACE_DEBUG();
   return tile->pix_width;
 }
 
-[[nodiscard]] auto tile_height(Tilep tile) ->  int
+[[nodiscard]] auto tile_height(Tilep tile) -> int
 {
   TRACE_DEBUG();
   return tile->pix_height;
 }
 
-[[nodiscard]] auto tile_tex(Tilep tile) ->  Texp
+[[nodiscard]] auto tile_tex(Tilep tile) -> Texp
 {
   TRACE_DEBUG();
   return tile->tex;
 }
 
-[[nodiscard]] auto tile_index(Tilep tile) ->  uint16_t
+[[nodiscard]] auto tile_index(Tilep tile) -> uint16_t
 {
   TRACE_DEBUG();
   return tile->index;
@@ -636,7 +636,7 @@ void tile_coords(Tilep tile, float *x1, float *y1, float *x2, float *y2)
   *y2 = tile->y2;
 }
 
-[[nodiscard]] auto string2tile(const char **s, int *len) ->  Tilep
+[[nodiscard]] auto string2tile(const char **s, int *len) -> Tilep
 {
   TRACE();
   static char        name[ MAXSHORTSTR ];
@@ -672,7 +672,7 @@ void tile_coords(Tilep tile, float *x1, float *y1, float *x2, float *y2)
   return result->second;
 }
 
-[[nodiscard]] auto string2tile(std::string &s, int *len) ->  Tilep
+[[nodiscard]] auto string2tile(std::string &s, int *len) -> Tilep
 {
   TRACE();
   auto        iter = s.begin();
@@ -705,7 +705,7 @@ void tile_coords(Tilep tile, float *x1, float *y1, float *x2, float *y2)
   return result->second;
 }
 
-[[nodiscard]] auto tile_index_to_tile(int i) ->  Tilep
+[[nodiscard]] auto tile_index_to_tile(int i) -> Tilep
 {
   TRACE_DEBUG();
 
@@ -716,13 +716,13 @@ void tile_coords(Tilep tile, float *x1, float *y1, float *x2, float *y2)
   return all_tiles_array[ i - 1 ];
 }
 
-[[nodiscard]] auto tile_name(Tilep t) ->  std::string
+[[nodiscard]] auto tile_name(Tilep t) -> std::string
 {
   TRACE();
   return t->name;
 }
 
-[[nodiscard]] auto tile_delay_ms(Tilep t) ->  uint32_t
+[[nodiscard]] auto tile_delay_ms(Tilep t) -> uint32_t
 {
   TRACE_DEBUG();
 
@@ -755,7 +755,7 @@ void tile_size_set(Tilep t, uint32_t w, uint32_t h)
   t->pix_height = h;
 }
 
-[[nodiscard]] auto tile_global_index(Tilep t) ->  uint32_t
+[[nodiscard]] auto tile_global_index(Tilep t) -> uint32_t
 {
   TRACE();
   return t->global_index;
@@ -766,19 +766,19 @@ void tile_global_index_set(Tilep t, uint32_t val)
   t->global_index = val;
 }
 
-[[nodiscard]] auto tile_is_loggable(Tilep t) ->  bool
+[[nodiscard]] auto tile_is_loggable(Tilep t) -> bool
 {
   TRACE();
   return t->is_loggable;
 }
 
-[[nodiscard]] auto tile_is_end_of_anim(Tilep t) ->  bool
+[[nodiscard]] auto tile_is_end_of_anim(Tilep t) -> bool
 {
   TRACE();
   return t->is_end_of_anim;
 }
 
-[[nodiscard]] auto tile_is_cleanup_on_end_of_anim(Tilep t) ->  bool
+[[nodiscard]] auto tile_is_cleanup_on_end_of_anim(Tilep t) -> bool
 {
   TRACE();
   return t->is_cleanup_on_end_of_anim;
@@ -790,7 +790,7 @@ void tile_is_cleanup_on_end_of_anim_set(Tilep t)
   t->is_cleanup_on_end_of_anim = true;
 }
 
-[[nodiscard]] auto tile_is_alive_on_end_of_anim(Tilep t) ->  bool
+[[nodiscard]] auto tile_is_alive_on_end_of_anim(Tilep t) -> bool
 {
   TRACE();
   return t->is_alive_on_end_of_anim;
@@ -802,7 +802,7 @@ void tile_is_alive_on_end_of_anim_set(Tilep t)
   t->is_alive_on_end_of_anim = true;
 }
 
-[[nodiscard]] auto Tile::gl_binding() const ->  int
+[[nodiscard]] auto Tile::gl_binding() const -> int
 {
   TRACE();
   if (g_monochrome) {
@@ -817,13 +817,13 @@ void Tile::set_gl_binding(int v)
   _gl_binding = v;
 }
 
-[[nodiscard]] auto tile_gl_binding(Tilep t) ->  int
+[[nodiscard]] auto tile_gl_binding(Tilep t) -> int
 {
   TRACE();
   return t->gl_binding();
 }
 
-[[nodiscard]] auto Tile::gl_binding_monochrome() const ->  int
+[[nodiscard]] auto Tile::gl_binding_monochrome() const -> int
 {
   TRACE();
   return _gl_binding_monochrome;
@@ -835,7 +835,7 @@ void Tile::set_gl_binding_monochrome(int v)
   _gl_binding_monochrome = v;
 }
 
-[[nodiscard]] auto Tile::gl_binding_mask() const ->  int
+[[nodiscard]] auto Tile::gl_binding_mask() const -> int
 {
   TRACE();
   return _gl_binding_mask;
@@ -847,7 +847,7 @@ void Tile::set_gl_binding_mask(int v)
   _gl_binding_mask = v;
 }
 
-[[nodiscard]] auto Tile::gl_binding_outline_w_black_inside() const ->  int
+[[nodiscard]] auto Tile::gl_binding_outline_w_black_inside() const -> int
 {
   TRACE();
   return _gl_binding_outline_w_black_inside;
@@ -859,7 +859,7 @@ void Tile::set_gl_binding_outline_w_black_inside(int v)
   _gl_binding_outline_w_black_inside = v;
 }
 
-[[nodiscard]] auto Tile::gl_binding_outline_w_invis_inside() const ->  int
+[[nodiscard]] auto Tile::gl_binding_outline_w_invis_inside() const -> int
 {
   TRACE();
   return _gl_binding_outline_w_invis_inside;

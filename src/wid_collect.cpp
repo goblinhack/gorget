@@ -20,9 +20,12 @@
 #include "my_wids.hpp"
 #include <SDL_keyboard.h>
 #include <SDL_keycode.h>
+#include <algorithm>
 #include <cstdint>
 #include <cstring>
 #include <string>
+#include <utility>
+#include <vector>
 
 static Widp wid_collect_window;
 
@@ -124,10 +127,10 @@ static void wid_collect_mouse_over_end(Gamep g, Widp w)
   };
 
   if (! thing_carry(g, v, l, player, item, e)) {
-      (void) sound_play(g, "error");
+    (void) sound_play(g, "error");
   }
 
-  items.erase(find(items.begin(), items.end(), item));
+  items.erase(std::ranges::find(items, item));
 
   if (items.empty()) {
     wid_collect_destroy(g);
@@ -143,7 +146,7 @@ static void wid_collect_mouse_over_end(Gamep g, Widp w)
   TRACE();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
-      (void) sound_play(g, "keypress");
+    (void) sound_play(g, "keypress");
     return false;
   }
 
@@ -209,7 +212,7 @@ static void wid_collect_mouse_over_end(Gamep g, Widp w)
               case SDLK_ESCAPE :
                 {
                   TRACE();
-                    (void) sound_play(g, "keypress");
+                  (void) sound_play(g, "keypress");
                   wid_collect_destroy(g);
                   return true;
                 }
@@ -231,7 +234,7 @@ static void wid_collect_mouse_over_end(Gamep g, Widp w)
   return true;
 }
 
-void wid_collect_show(Gamep g, Levelsp v, Levelp l, Thingp player, std::vector< Thingp > items_in)
+void wid_collect_show(Gamep g, Levelsp v, Levelp /*l*/, Thingp player, std::vector< Thingp > items_in)
 {
   TRACE();
 
@@ -239,7 +242,7 @@ void wid_collect_show(Gamep g, Levelsp v, Levelp l, Thingp player, std::vector< 
     wid_collect_destroy(g);
   }
 
-  items = items_in;
+  items = std::move(items_in);
 
   if (thing_is_dead(player)) {
     return;
@@ -297,9 +300,9 @@ void wid_collect_show(Gamep g, Levelsp v, Levelp l, Thingp player, std::vector< 
   memset(wid_item, 0, sizeof(wid_item));
 
   auto _n_ = 0;
-  for (auto item : items) {
+  for (auto *item : items) {
 
-    auto tp = thing_tp(item);
+    auto *tp = thing_tp(item);
 
     //
     // Item icon

@@ -13,7 +13,7 @@
 //
 // "me" here could be a barrel
 //
-[[nodiscard]] auto thing_crush(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp crusher) ->  bool
+[[nodiscard]] auto thing_crush(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp crusher) -> bool
 {
   TRACE();
 

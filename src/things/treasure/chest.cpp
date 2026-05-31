@@ -104,6 +104,7 @@ static auto tp_chest_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::
   tp_flag_set(tp, is_blit_hit_outline_w_black_inside);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_burnable); // is capable of being burned by fire
+  tp_flag_set(tp, is_chest);
   tp_flag_set(tp, is_collision_circle_large);
   tp_flag_set(tp, is_combustible); // will continue to burn once on fire
   tp_flag_set(tp, is_described_cursor);
@@ -114,7 +115,6 @@ static auto tp_chest_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_treasure);
-  tp_flag_set(tp, is_chest);
   tp_flag_set(tp, is_wood);
   tp_health_set(tp, "1d20");
   tp_is_immune_add(tp, THING_EVENT_WATER_DAMAGE);

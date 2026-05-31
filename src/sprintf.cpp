@@ -57,7 +57,7 @@ int asprintf(char *strp[], const char *fmt, ...)
 #endif // asprintf
 #endif
 
-[[nodiscard]] auto string_sprintf(const char *format, ...) ->  std::string
+[[nodiscard]] auto string_sprintf(const char *format, ...) -> std::string
 {
   va_list args = {};
   char   *buf  = nullptr;
@@ -76,7 +76,7 @@ int asprintf(char *strp[], const char *fmt, ...)
   return ret;
 }
 
-[[nodiscard]] auto string_sprintf(const char *format, va_list args) ->  std::string
+[[nodiscard]] auto string_sprintf(const char *format, va_list args) -> std::string
 {
   char *buf = nullptr;
 

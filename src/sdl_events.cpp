@@ -161,7 +161,7 @@ static void __attribute__((noinline)) sdl_event_keyup(Gamep g, SDL_Keysym *key, 
     g_grab_next_key = false;
     sdl.grabbed_key = sdlk_normalize(event->key.keysym);
     if (sdl.on_sdl_key_grab != nullptr) {
-      (void)   (void) sound_play(g, "keypress");
+      ((void) sound_play(g, "keypress"));
       (*sdl.on_sdl_key_grab)(g, sdl.grabbed_key);
     }
     return;

@@ -38,6 +38,6 @@
 #define RAD_360 (2.0 * 3.14159265358979323846) // 2pi
 #define RAD_270 (RAD_180 + RAD_90)
 
-[[nodiscard]] auto nextpoweroftwo(uint32_t val) ->  uint32_t;
+[[nodiscard]] auto nextpoweroftwo(uint32_t val) -> uint32_t;
 
 #endif

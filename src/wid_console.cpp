@@ -55,7 +55,7 @@ void wid_console_fini(Gamep g)
   wid_destroy(g, &wid_console_window);
 }
 
-[[nodiscard]] auto wid_console_init(Gamep g) ->  bool
+[[nodiscard]] auto wid_console_init(Gamep g) -> bool
 {
   TRACE();
 
@@ -162,7 +162,7 @@ void wid_console_log(const std::string &s)
 //
 // Key down etc...
 //
-[[nodiscard]] auto wid_console_receive_input(Gamep g, Widp w, const SDL_Keysym *key) ->  bool
+[[nodiscard]] auto wid_console_receive_input(Gamep g, Widp w, const SDL_Keysym *key) -> bool
 {
   TRACE();
 
@@ -269,7 +269,7 @@ static void wid_console_wid_create(Gamep g)
   wid_update(g, wid_console_window);
 }
 
-[[nodiscard]] auto wid_console_serialize() ->  std::vector< std::string >
+[[nodiscard]] auto wid_console_serialize() -> std::vector< std::string >
 {
   TRACE();
   std::vector< std::string > r;

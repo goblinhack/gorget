@@ -84,7 +84,7 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_monst_secret_door() ->  bool // NOLINT
+[[nodiscard]] auto test_load_monst_secret_door() -> bool // NOLINT
 {
   TRACE();
 

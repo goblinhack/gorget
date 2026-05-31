@@ -21,7 +21,7 @@ static auto tp_grass_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> 
   return "dry grass";
 }
 
-[[nodiscard]] auto tp_load_grass() ->  bool
+[[nodiscard]] auto tp_load_grass() -> bool
 {
   TRACE();
 

@@ -64,7 +64,7 @@ void wid_leftbar_fini(Gamep /*g*/)
   wid_leftbar = nullptr;
 }
 
-[[nodiscard]] auto wid_leftbar_init(Gamep g) ->  bool
+[[nodiscard]] auto wid_leftbar_init(Gamep g) -> bool
 {
   TRACE();
   return wid_leftbar_create_window(g);

@@ -118,7 +118,7 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_bridge_on_fire_over_lava() ->  bool // NOLINT
+[[nodiscard]] auto test_load_bridge_on_fire_over_lava() -> bool // NOLINT
 {
   TRACE();
 

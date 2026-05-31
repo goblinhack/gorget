@@ -52,7 +52,7 @@ static void tp_ghost_mob_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 }
 
-[[nodiscard]] auto tp_load_ghost_mob() ->  bool
+[[nodiscard]] auto tp_load_ghost_mob() -> bool
 {
   auto *tp   = tp_load("ghost_mob"); // keep as string for scripts
   auto  name = tp_name(tp);

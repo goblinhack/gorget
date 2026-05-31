@@ -46,7 +46,7 @@ void level_verify(Gamep g, Levelsp v, Levelp l)
 //
 // Are we on the level selection level?
 //
-[[nodiscard]] auto level_is_level_select(Gamep g, Levelsp v, Levelp l) ->  bool
+[[nodiscard]] auto level_is_level_select(Gamep g, Levelsp v, Levelp l) -> bool
 {
   TRACE();
 
@@ -68,7 +68,7 @@ void level_init(Gamep g, Levelsp v, Levelp l, LevelNum n)
   l->biome          = level_to_biome(g, v, l);
 }
 
-[[nodiscard]] auto levels_memory_alloc(Gamep g) ->  Levelsp
+[[nodiscard]] auto levels_memory_alloc(Gamep g) -> Levelsp
 {
   log("levels alloc memory");
   TRACE_INDENT();
@@ -189,7 +189,7 @@ void level_is_completed_by_player_falling(Gamep /*g*/, Levelsp /*v*/, Levelp l)
 //
 // Change the current level
 //
-[[nodiscard]] auto level_change(Gamep g, Levelsp v, LevelNum level_num) ->  Levelp
+[[nodiscard]] auto level_change(Gamep g, Levelsp v, LevelNum level_num) -> Levelp
 {
   log("level change to %u", level_num);
   TRACE_INDENT();
@@ -318,7 +318,7 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
   memset(l, 0, SIZEOF(*l));
 }
 
-[[nodiscard]] auto level_populate_thing_id_at(Gamep /*g*/, Levelsp /*v*/, Levelp l, const bpoint &p, int slot, ThingId id) ->  bool
+[[nodiscard]] auto level_populate_thing_id_at(Gamep /*g*/, Levelsp /*v*/, Levelp l, const bpoint &p, int slot, ThingId id) -> bool
 {
   TRACE();
 
@@ -330,7 +330,7 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
   return true;
 }
 
-[[nodiscard]] auto level_get_thing_id_at(Gamep /*g*/, Levelsp /*v*/, Levelp l, const bpoint &p, int slot) ->  ThingId
+[[nodiscard]] auto level_get_thing_id_at(Gamep /*g*/, Levelsp /*v*/, Levelp l, const bpoint &p, int slot) -> ThingId
 {
   TRACE();
 
@@ -418,7 +418,7 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
   return level_flag_filter(g, v, l, f, me, it);
 }
 
-[[nodiscard]] auto level_find_all(Gamep g, Levelsp v, Levelp l, ThingFlagType f) ->  std::vector< Thingp >
+[[nodiscard]] auto level_find_all(Gamep g, Levelsp v, Levelp l, ThingFlagType f) -> std::vector< Thingp >
 {
   TRACE();
 
@@ -449,7 +449,7 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
   return out;
 }
 
-[[nodiscard]] auto level_find_all(Gamep g, Levelsp v, Levelp l, ThingFlagType f, bpoint p) ->  std::vector< Thingp >
+[[nodiscard]] auto level_find_all(Gamep g, Levelsp v, Levelp l, ThingFlagType f, bpoint p) -> std::vector< Thingp >
 {
   TRACE();
 
@@ -497,14 +497,14 @@ void level_update_flags(Gamep g, Levelsp v, Levelp l)
   }
 }
 
-[[nodiscard]] auto level_flag_cached(Gamep /*g*/, Levelsp /*v*/, Levelp l, ThingFlagType f, bpoint p) ->  bool
+[[nodiscard]] auto level_flag_cached(Gamep /*g*/, Levelsp /*v*/, Levelp l, ThingFlagType f, bpoint p) -> bool
 {
   TRACE_DEBUG();
 
   return l->flag[ p.x ][ p.y ][ f ] != 0;
 }
 
-[[nodiscard]] auto level_flag(Gamep g, Levelsp v, Levelp l, ThingFlagType f, bpoint p, Thingp me) ->  Thingp
+[[nodiscard]] auto level_flag(Gamep g, Levelsp v, Levelp l, ThingFlagType f, bpoint p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
 
@@ -533,7 +533,7 @@ void level_update_flags(Gamep g, Levelsp v, Levelp l)
   return nullptr;
 }
 
-[[nodiscard]] auto level_flag(Gamep g, Levelsp v, Levelp l, ThingFlagType f, Thingp me) ->  Thingp
+[[nodiscard]] auto level_flag(Gamep g, Levelsp v, Levelp l, ThingFlagType f, Thingp me) -> Thingp
 {
   TRACE();
 
@@ -548,7 +548,7 @@ void level_update_flags(Gamep g, Levelsp v, Levelp l)
 //
 // Filter to only alive things
 //
-[[nodiscard]] auto level_alive(Gamep g, Levelsp v, Levelp l, ThingFlagType f, bpoint p, Thingp me) ->  Thingp
+[[nodiscard]] auto level_alive(Gamep g, Levelsp v, Levelp l, ThingFlagType f, bpoint p, Thingp me) -> Thingp
 {
   TRACE();
 
@@ -584,7 +584,7 @@ void level_update_flags(Gamep g, Levelsp v, Levelp l)
   return nullptr;
 }
 
-[[nodiscard]] auto level_alive(Gamep g, Levelsp v, Levelp l, ThingFlagType f, Thingp me) ->  Thingp
+[[nodiscard]] auto level_alive(Gamep g, Levelsp v, Levelp l, ThingFlagType f, Thingp me) -> Thingp
 {
   TRACE();
 
@@ -599,7 +599,7 @@ void level_update_flags(Gamep g, Levelsp v, Levelp l)
 //
 // Flag + is open
 //
-[[nodiscard]] auto level_open(Gamep g, Levelsp v, Levelp l, ThingFlagType f, bpoint p, Thingp me) ->  Thingp
+[[nodiscard]] auto level_open(Gamep g, Levelsp v, Levelp l, ThingFlagType f, bpoint p, Thingp me) -> Thingp
 {
   TRACE();
 
@@ -635,7 +635,7 @@ void level_update_flags(Gamep g, Levelsp v, Levelp l)
   return nullptr;
 }
 
-[[nodiscard]] auto level_open(Gamep g, Levelsp v, Levelp l, ThingFlagType f, Thingp me) ->  Thingp
+[[nodiscard]] auto level_open(Gamep g, Levelsp v, Levelp l, ThingFlagType f, Thingp me) -> Thingp
 {
   TRACE();
 
@@ -650,7 +650,7 @@ void level_update_flags(Gamep g, Levelsp v, Levelp l)
 //
 // Count things
 //
-[[nodiscard]] auto level_count(Gamep g, Levelsp v, Levelp l, ThingFlagType f, bpoint p) ->  int
+[[nodiscard]] auto level_count(Gamep g, Levelsp v, Levelp l, ThingFlagType f, bpoint p) -> int
 {
   TRACE();
 
@@ -690,14 +690,14 @@ void level_update_flags(Gamep g, Levelsp v, Levelp l)
   return count;
 }
 
-[[nodiscard]] auto level_count(Gamep g, Levelsp v, Levelp l, ThingFlagType f, Thingp t) ->  int
+[[nodiscard]] auto level_count(Gamep g, Levelsp v, Levelp l, ThingFlagType f, Thingp t) -> int
 {
   TRACE();
 
   return level_count(g, v, l, f, thing_at(t));
 }
 
-[[nodiscard]] auto level_is_same_obj_type_at(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp) ->  bool
+[[nodiscard]] auto level_is_same_obj_type_at(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp) -> bool
 {
   TRACE();
 

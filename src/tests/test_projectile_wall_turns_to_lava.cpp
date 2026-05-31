@@ -87,7 +87,7 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_projectile_wall_turns_to_lava() ->  bool // NOLINT
+[[nodiscard]] auto test_load_projectile_wall_turns_to_lava() -> bool // NOLINT
 {
   TRACE();
 

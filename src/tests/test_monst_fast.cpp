@@ -159,7 +159,7 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_monst_fast() ->  bool // NOLINT
+[[nodiscard]] auto test_load_monst_fast() -> bool // NOLINT
 {
   TRACE();
 

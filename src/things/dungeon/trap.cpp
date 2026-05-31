@@ -22,7 +22,7 @@ static auto tp_trap_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> s
   return "odd looking floor tile";
 }
 
-[[nodiscard]] auto tp_load_trap() ->  bool
+[[nodiscard]] auto tp_load_trap() -> bool
 {
   TRACE();
 

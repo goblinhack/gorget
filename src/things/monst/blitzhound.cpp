@@ -74,7 +74,7 @@ static bool tp_blitzhound_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, 
   return true;
 }
 
-[[nodiscard]] auto tp_load_blitzhound() ->  bool
+[[nodiscard]] auto tp_load_blitzhound() -> bool
 {
   auto *tp   = tp_load("blitzhound"); // keep as string for scripts
   auto  name = tp_name(tp);

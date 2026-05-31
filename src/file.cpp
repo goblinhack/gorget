@@ -27,7 +27,7 @@
 static auto file_io_read_if_exists(const char *filename, int *out_len) -> uint8_t *;
 static auto file_io_read(const char *filename, int *len) -> uint8_t *;
 
-[[nodiscard]] auto file_load(const char *filename, int *outlen) ->  uint8_t *
+[[nodiscard]] auto file_load(const char *filename, int *outlen) -> uint8_t *
 {
   TRACE();
 
@@ -171,7 +171,7 @@ static auto file_io_read(const char *filename, int *len) -> uint8_t *;
   return nullptr;
 }
 
-[[nodiscard]] auto file_io_read(const char *filename, int *out_len) ->  uint8_t *
+[[nodiscard]] auto file_io_read(const char *filename, int *out_len) -> uint8_t *
 {
   TRACE();
 
@@ -231,7 +231,7 @@ static auto file_io_read(const char *filename, int *len) -> uint8_t *;
   return buffer;
 }
 
-[[nodiscard]] auto file_write(const char *filename, uint8_t *buffer, int len) ->  int
+[[nodiscard]] auto file_write(const char *filename, uint8_t *buffer, int len) -> int
 {
   TRACE();
 
@@ -270,7 +270,7 @@ static auto file_io_read(const char *filename, int *len) -> uint8_t *;
 /*
  * Does the requested file exist?
  */
-[[nodiscard]] auto file_exists(const char *filename) ->  uint8_t
+[[nodiscard]] auto file_exists(const char *filename) -> uint8_t
 {
   TRACE();
 
@@ -290,7 +290,7 @@ static auto file_io_read(const char *filename, int *len) -> uint8_t *;
   return 0;
 }
 
-[[nodiscard]] auto file_io_read_if_exists(const char *filename, int *out_len) ->  uint8_t *
+[[nodiscard]] auto file_io_read_if_exists(const char *filename, int *out_len) -> uint8_t *
 {
   TRACE();
 
@@ -331,7 +331,7 @@ static auto file_io_read(const char *filename, int *len) -> uint8_t *;
 /*
  * How large is the file?
  */
-[[nodiscard]] auto file_size(const char *filename) ->  int
+[[nodiscard]] auto file_size(const char *filename) -> int
 {
   TRACE();
 
@@ -347,7 +347,7 @@ static auto file_io_read(const char *filename, int *len) -> uint8_t *;
 /*
  * Does the requested file exist?
  */
-[[nodiscard]] auto file_non_zero_size_exists(const char *filename) ->  uint8_t
+[[nodiscard]] auto file_non_zero_size_exists(const char *filename) -> uint8_t
 {
   TRACE();
 
@@ -365,7 +365,7 @@ static auto file_io_read(const char *filename, int *len) -> uint8_t *;
 /*
  * Remove the file if it exists.
  */
-[[nodiscard]] auto file_unlink(const char *filename) ->  uint8_t
+[[nodiscard]] auto file_unlink(const char *filename) -> uint8_t
 {
   TRACE();
 
@@ -381,7 +381,7 @@ static auto file_io_read(const char *filename, int *len) -> uint8_t *;
 /*
  * Modification time.
  */
-[[nodiscard]] auto file_age(const char *filename) ->  double
+[[nodiscard]] auto file_age(const char *filename) -> double
 {
   TRACE();
 
@@ -399,7 +399,7 @@ static auto file_io_read(const char *filename, int *len) -> uint8_t *;
 /*
  * If the first filename newer than the second ?
  */
-[[nodiscard]] auto file_exists_and_is_newer_than(const char *filename1, const char *filename2) ->  uint8_t
+[[nodiscard]] auto file_exists_and_is_newer_than(const char *filename1, const char *filename2) -> uint8_t
 {
   TRACE();
 

@@ -45,7 +45,7 @@ static void wid_statistics_destroy(Gamep g)
   TRACE();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
-      (void) sound_play(g, "keypress");
+    (void) sound_play(g, "keypress");
     return false;
   }
 
@@ -68,7 +68,7 @@ static void wid_statistics_destroy(Gamep g)
               case SDLK_ESCAPE :
                 {
                   TRACE();
-                    (void) sound_play(g, "keypress");
+                  (void) sound_play(g, "keypress");
                   wid_statistics_destroy(g);
                   return true;
                 }

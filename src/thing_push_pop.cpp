@@ -14,7 +14,7 @@
 //
 // Push the thing onto the level
 //
-[[nodiscard]] auto thing_push(Gamep g, Levelsp v, Levelp l, Thingp t) ->  bool
+[[nodiscard]] auto thing_push(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool
 {
   TRACE();
 
@@ -140,7 +140,7 @@
 //
 // Pop the thing off the level
 //
-[[nodiscard]] auto thing_pop(Gamep g, Levelsp v, Thingp t) ->  bool
+[[nodiscard]] auto thing_pop(Gamep g, Levelsp v, Thingp t) -> bool
 {
   TRACE();
 

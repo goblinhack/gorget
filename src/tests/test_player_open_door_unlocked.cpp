@@ -155,7 +155,7 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_player_open_door_unlocked() ->  bool // NOLINT
+[[nodiscard]] auto test_player_open_door_unlocked() -> bool // NOLINT
 {
   TRACE();
 

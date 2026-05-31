@@ -91,7 +91,7 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_monst_mobbing() ->  bool // NOLINT
+[[nodiscard]] auto test_load_monst_mobbing() -> bool // NOLINT
 {
   TRACE();
 

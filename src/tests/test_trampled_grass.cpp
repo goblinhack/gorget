@@ -117,7 +117,7 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_trampled_grass() ->  bool // NOLINT
+[[nodiscard]] auto test_load_trampled_grass() -> bool // NOLINT
 {
   TRACE();
 

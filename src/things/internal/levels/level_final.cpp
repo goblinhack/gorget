@@ -8,7 +8,7 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-[[nodiscard]] auto tp_load_level_final() ->  bool
+[[nodiscard]] auto tp_load_level_final() -> bool
 {
   TRACE();
 

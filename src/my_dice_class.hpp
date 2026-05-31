@@ -31,13 +31,13 @@ public:
   auto operator()() const -> int;
 };
 
-[[nodiscard]] auto d20_ge(int stat_total, int dice_roll_to_exceed) ->  bool;
-[[nodiscard]] auto d20_ge(int stat_total, int dice_roll_to_exceed, bool &fumble, bool &critical) ->  bool;
+[[nodiscard]] auto d20_ge(int stat_total, int dice_roll_to_exceed) -> bool;
+[[nodiscard]] auto d20_ge(int stat_total, int dice_roll_to_exceed, bool &fumble, bool &critical) -> bool;
 
-[[nodiscard]] auto stat_to_bonus(int stat) ->  int;
+[[nodiscard]] auto stat_to_bonus(int stat) -> int;
 
-[[nodiscard]] auto stat_to_bonus_string(int stat) ->  std::string;
-[[nodiscard]] auto stat_to_bonus_slash_str(int stat) ->  std::string;
-[[nodiscard]] auto bonus_to_string(int stat) ->  std::string;
+[[nodiscard]] auto stat_to_bonus_string(int stat) -> std::string;
+[[nodiscard]] auto stat_to_bonus_slash_str(int stat) -> std::string;
+[[nodiscard]] auto bonus_to_string(int stat) -> std::string;
 
 #endif

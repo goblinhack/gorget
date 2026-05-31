@@ -116,7 +116,7 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_alloc_free_walls() ->  bool // NOLINT
+[[nodiscard]] auto test_load_alloc_free_walls() -> bool // NOLINT
 {
   TRACE();
 

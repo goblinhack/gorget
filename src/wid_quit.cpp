@@ -75,7 +75,7 @@ void wid_quit_destroy(Gamep g)
   TRACE_INDENT();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
-      (void) sound_play(g, "keypress");
+    (void) sound_play(g, "keypress");
     return false;
   }
 
@@ -91,18 +91,18 @@ void wid_quit_destroy(Gamep g)
             switch (c) {
               case 'y' :
               case 'Y' :
-                  (void) sound_play(g, "keypress");
+                (void) sound_play(g, "keypress");
                 (void) wid_quit_yes(g, nullptr, 0, 0, 0);
                 return true;
               case 'n' :
               case 'N' :
-                  (void) sound_play(g, "keypress");
+                (void) sound_play(g, "keypress");
                 (void) wid_quit_no(g, nullptr, 0, 0, 0);
                 return true;
               case 'b' :
               case 'B' :
               case SDLK_ESCAPE :
-                  (void) sound_play(g, "keypress");
+                (void) sound_play(g, "keypress");
                 (void) wid_quit_no(g, nullptr, 0, 0, 0);
                 return true;
             }

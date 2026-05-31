@@ -87,7 +87,7 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_laser_door_locked() ->  bool // NOLINT
+[[nodiscard]] auto test_load_laser_door_locked() -> bool // NOLINT
 {
   TRACE();
 

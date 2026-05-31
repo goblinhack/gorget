@@ -103,7 +103,7 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_save_load() ->  bool // NOLINT
+[[nodiscard]] auto test_load_save_load() -> bool // NOLINT
 {
   TRACE();
 

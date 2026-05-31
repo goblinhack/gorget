@@ -43,7 +43,7 @@ static void wid_intro_destroy()
   TRACE();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
-      (void) sound_play(g, "keypress");
+    (void) sound_play(g, "keypress");
     return false;
   }
 
@@ -51,7 +51,7 @@ static void wid_intro_destroy()
 
   if (s == "<Return>" || s == "n" || s == "N") {
     TRACE();
-      (void) sound_play(g, "keypress");
+    (void) sound_play(g, "keypress");
     wid_intro_destroy();
     wid_new_game(g);
     return true;

@@ -195,7 +195,7 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_player_fall_chasm_twice_into_lava() ->  bool // NOLINT
+[[nodiscard]] auto test_load_player_fall_chasm_twice_into_lava() -> bool // NOLINT
 {
   TRACE();
 

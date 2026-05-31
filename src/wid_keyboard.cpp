@@ -379,7 +379,7 @@ static void wid_keyboard_set_focus(Gamep g, wid_keyboard_ctx *ctx, int focusx, i
     return false;
   }
 
-    (void) sound_play(g, "keypress");
+  (void) sound_play(g, "keypress");
 
   switch (key->sym) {
     case '`' :         return false;
@@ -501,7 +501,7 @@ static void wid_keyboard_set_focus(Gamep g, wid_keyboard_ctx *ctx, int focusx, i
     return false;
   }
 
-    (void) sound_play(g, "keypress");
+  (void) sound_play(g, "keypress");
 
   switch (key->sym) {
     case '`' :            return false;
@@ -617,7 +617,7 @@ static void wid_keyboard_set_focus(Gamep g, wid_keyboard_ctx *ctx, int focusx, i
     return false;
   }
 
-    (void) sound_play(g, "keypress");
+  (void) sound_play(g, "keypress");
 
   switch (key->sym) {
     case SDLK_ESCAPE :    (ctx->cancelled)(g, ctx->w, wid_get_text(ctx->input)); return true;

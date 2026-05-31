@@ -11,7 +11,7 @@
 //
 // Add a key to the things inventory
 //
-[[nodiscard]] auto thing_collect_key(Gamep g, Levelsp v, Levelp l, Thingp carrier, Thingp it) ->  bool
+[[nodiscard]] auto thing_collect_key(Gamep g, Levelsp v, Levelp l, Thingp carrier, Thingp it) -> bool
 {
   TRACE();
 

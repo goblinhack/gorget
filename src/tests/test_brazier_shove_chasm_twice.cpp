@@ -230,7 +230,7 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_brazier_shove_chasm_twice() ->  bool // NOLINT
+[[nodiscard]] auto test_load_brazier_shove_chasm_twice() -> bool // NOLINT
 {
   TRACE();
 

@@ -193,7 +193,7 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_player_hiding_behind_bush() ->  bool // NOLINT
+[[nodiscard]] auto test_load_player_hiding_behind_bush() -> bool // NOLINT
 {
   TRACE();
 

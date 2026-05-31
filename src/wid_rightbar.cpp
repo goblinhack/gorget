@@ -160,7 +160,7 @@ void wid_rightbar_fini(Gamep /*g*/)
   wid_rightbar = nullptr;
 }
 
-[[nodiscard]] auto wid_rightbar_init(Gamep g) ->  bool
+[[nodiscard]] auto wid_rightbar_init(Gamep g) -> bool
 {
   TRACE();
   return wid_rightbar_create_window(g);

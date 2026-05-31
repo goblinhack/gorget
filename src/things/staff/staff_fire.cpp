@@ -71,7 +71,7 @@ static auto tp_staff_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> 
   return what;
 }
 
-[[nodiscard]] auto tp_load_staff_fire() ->  bool
+[[nodiscard]] auto tp_load_staff_fire() -> bool
 {
   TRACE();
 

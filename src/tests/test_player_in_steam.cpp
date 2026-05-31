@@ -123,7 +123,7 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_player_in_steam() ->  bool // NOLINT
+[[nodiscard]] auto test_load_player_in_steam() -> bool // NOLINT
 {
   TRACE();
 

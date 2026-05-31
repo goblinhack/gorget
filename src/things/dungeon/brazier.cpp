@@ -110,7 +110,7 @@ static void tp_brazier_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEve
   }
 }
 
-[[nodiscard]] auto tp_load_brazier() ->  bool
+[[nodiscard]] auto tp_load_brazier() -> bool
 {
   TRACE();
 

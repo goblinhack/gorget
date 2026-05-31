@@ -193,7 +193,7 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_monst_vision_direction() ->  bool // NOLINT
+[[nodiscard]] auto test_load_monst_vision_direction() -> bool // NOLINT
 {
   TRACE();
 

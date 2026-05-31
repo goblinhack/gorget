@@ -88,7 +88,7 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_laser_barrel_explosion() ->  bool // NOLINT
+[[nodiscard]] auto test_load_laser_barrel_explosion() -> bool // NOLINT
 {
   TRACE();
 

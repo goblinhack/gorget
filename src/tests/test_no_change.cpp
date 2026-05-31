@@ -78,7 +78,7 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_no_change() ->  bool // NOLINT
+[[nodiscard]] auto test_load_no_change() -> bool // NOLINT
 {
   TRACE();
 

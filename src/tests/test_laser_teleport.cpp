@@ -121,7 +121,7 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_laser_teleport() ->  bool // NOLINT
+[[nodiscard]] auto test_load_laser_teleport() -> bool // NOLINT
 {
   TRACE();
 

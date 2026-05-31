@@ -13,7 +13,7 @@
 
 #include <cstring>
 
-[[nodiscard]] auto thing_weapon_get_delta_from_dt(Gamep g, Thingp t, float dt) ->  fpoint
+[[nodiscard]] auto thing_weapon_get_delta_from_dt(Gamep g, Thingp t, float dt) -> fpoint
 {
   TRACE();
 
@@ -39,7 +39,7 @@
   return delta;
 }
 
-[[nodiscard]] auto thing_weapon_get_direction(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t) ->  fpoint
+[[nodiscard]] auto thing_weapon_get_direction(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t) -> fpoint
 {
   TRACE();
 
@@ -49,7 +49,7 @@
 //
 // Add a weapon if possible
 //
-[[nodiscard]] auto thing_spawn_weapon(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const fpoint target) ->  Thingp
+[[nodiscard]] auto thing_spawn_weapon(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const fpoint target) -> Thingp
 {
   TRACE();
 
@@ -126,7 +126,7 @@
 //
 // Is this weapon attached to a thing?
 //
-[[nodiscard]] auto thing_fired_by_get(Gamep g, Levelsp v, Levelp /*l*/, Thingp me) ->  Thingp
+[[nodiscard]] auto thing_fired_by_get(Gamep g, Levelsp v, Levelp /*l*/, Thingp me) -> Thingp
 {
   if (me == nullptr) {
     return nullptr;
@@ -142,7 +142,7 @@
 //
 // How many projectils?
 //
-[[nodiscard]] auto thing_fired_by_count_get(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp me) ->  int
+[[nodiscard]] auto thing_fired_by_count_get(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp me) -> int
 {
   if (me == nullptr) {
     return 0;
@@ -231,7 +231,7 @@
 //
 // Detach all projectiles from their owner
 //
-[[nodiscard]] auto thing_weapon_detach_all_fired(Gamep g, Levelsp v, Levelp l, Thingp me) ->  bool
+[[nodiscard]] auto thing_weapon_detach_all_fired(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
 {
   TRACE();
 
@@ -242,7 +242,7 @@
 //
 // Kill all projectiles
 //
-[[nodiscard]] auto thing_weapon_kill_all_fired(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e) ->  bool
+[[nodiscard]] auto thing_weapon_kill_all_fired(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e) -> bool
 {
   TRACE();
 
@@ -263,7 +263,7 @@ static auto thing_weapon_detach_from_firer(Gamep g, Levelsp v, Levelp l, Thingp 
 //
 // Detach a weapon from its firer
 //
-[[nodiscard]] auto thing_weapon_detach_me_from_firer(Gamep g, Levelsp v, Levelp l, Thingp me) ->  bool
+[[nodiscard]] auto thing_weapon_detach_me_from_firer(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
 {
   TRACE();
 

@@ -140,7 +140,7 @@ WidTextBox::WidTextBox(Gamep g, spoint vtl, spoint vbr, Widp vparent, bool horiz
 //
 // Get the wid on the bottom of the list/screen.
 //
-[[nodiscard]] auto WidTextBox::log_internal(Gamep g, const std::string &str, wid_text_format format, const std::string &col) ->  Widp
+[[nodiscard]] auto WidTextBox::log_internal(Gamep g, const std::string &str, wid_text_format format, const std::string &col) -> Widp
 {
   TRACE();
 
@@ -203,7 +203,7 @@ WidTextBox::WidTextBox(Gamep g, spoint vtl, spoint vbr, Widp vparent, bool horiz
 //
 // Log a message to the text box
 //
-[[nodiscard]] auto WidTextBox::log(Gamep g, const std::string &s, wid_text_format format, const std::string &col) ->  Widp
+[[nodiscard]] auto WidTextBox::log(Gamep g, const std::string &s, wid_text_format format, const std::string &col) -> Widp
 {
   TRACE();
 
@@ -226,7 +226,7 @@ WidTextBox::WidTextBox(Gamep g, spoint vtl, spoint vbr, Widp vparent, bool horiz
 //
 // Log a blank line to the text box
 //
-[[nodiscard]] auto WidTextBox::log_empty_line(Gamep g) ->  Widp
+[[nodiscard]] auto WidTextBox::log_empty_line(Gamep g) -> Widp
 {
   TRACE();
 

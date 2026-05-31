@@ -7,7 +7,7 @@
 #include "my_tp.hpp"
 #include "my_types.hpp"
 
-[[nodiscard]] auto level_type(LevelNum level_num) ->  LevelType
+[[nodiscard]] auto level_type(LevelNum level_num) -> LevelType
 {
   TRACE();
 
@@ -41,7 +41,7 @@
   return LEVEL_TYPE_NORMAL;
 }
 
-[[nodiscard]] auto level_is_boss_level(Gamep /*g*/, Levelsp /*v*/, Levelp l) ->  bool
+[[nodiscard]] auto level_is_boss_level(Gamep /*g*/, Levelsp /*v*/, Levelp l) -> bool
 {
   TRACE();
 

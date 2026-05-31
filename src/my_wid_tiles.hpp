@@ -26,11 +26,11 @@ public:
   std::array< std::array< Tilep, 32 >, 32 > tile {};
 };
 
-[[nodiscard]] auto wid_tiles_init() ->  bool;
+[[nodiscard]] auto wid_tiles_init() -> bool;
 
 void wid_tiles_fini();
 
-[[nodiscard]] auto wid_tiles_load(const std::string &name, float scale) ->  wid_tilesp;
-[[nodiscard]] auto wid_tiles_find(const std::string &file) ->  wid_tilesp;
+[[nodiscard]] auto wid_tiles_load(const std::string &name, float scale) -> wid_tilesp;
+[[nodiscard]] auto wid_tiles_find(const std::string &file) -> wid_tilesp;
 
 #endif

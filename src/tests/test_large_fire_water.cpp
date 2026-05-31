@@ -152,7 +152,7 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_large_fire_water() ->  bool // NOLINT
+[[nodiscard]] auto test_load_large_fire_water() -> bool // NOLINT
 {
   TRACE();
 

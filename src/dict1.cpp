@@ -238,14 +238,14 @@ static const char *dict1_names[] = {
     /* newline */ "zar",
 };
 
-[[nodiscard]] auto os_rand_dict1_name() ->  const char *
+[[nodiscard]] auto os_rand_dict1_name() -> const char *
 {
   TRACE();
 
   return dict1_names[ OS_RANDOM_RANGE(0, ARRAY_SIZE(dict1_names)) ];
 }
 
-[[nodiscard]] auto os_rand_dict1_name(uint32_t h) ->  const char *
+[[nodiscard]] auto os_rand_dict1_name(uint32_t h) -> const char *
 {
   TRACE();
 

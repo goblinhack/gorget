@@ -440,7 +440,8 @@ void game_init(Gamep g) { g->init(); }
 //
 // Create a level with the given contents and start the game into playing state
 //
-[[nodiscard]] auto game_test_init(Gamep g, Levelp *l_out, LevelNum level_num, int w, int h, const char *contents, const Overrides &overrides) ->  Levelsp
+[[nodiscard]] auto game_test_init(Gamep g, Levelp *l_out, LevelNum level_num, int w, int h, const char *contents,
+                                  const Overrides &overrides) -> Levelsp
 {
   log("test init");
   TRACE_INDENT();
@@ -594,7 +595,7 @@ void game_save_config(Gamep g)
   g->save_config();
 }
 
-[[nodiscard]] auto game_popups_get(Gamep g, int x, int y) ->  std::list< GamePopup * > *
+[[nodiscard]] auto game_popups_get(Gamep g, int x, int y) -> std::list< GamePopup * > *
 {
   TRACE();
   return &g->popups[ x ][ y ].all;
@@ -606,7 +607,7 @@ void game_popups_set(Gamep g, int x, int y, std::list< GamePopup * > &l)
   g->popups[ x ][ y ].all = l;
 }
 
-[[nodiscard]] auto game_popups_present(Gamep g, int x, int y) ->  bool
+[[nodiscard]] auto game_popups_present(Gamep g, int x, int y) -> bool
 {
   TRACE();
   return ! g->popups[ x ][ y ].all.empty();
@@ -747,7 +748,7 @@ void game_seed_set(Gamep g, uint32_t seed)
   game_seed_set(g, seed_name.c_str());
 }
 
-[[nodiscard]] auto game_seed_name_get(Gamep g) ->  const char *
+[[nodiscard]] auto game_seed_name_get(Gamep g) -> const char *
 {
   TRACE();
 
@@ -760,7 +761,7 @@ void game_seed_set(Gamep g, uint32_t seed)
   return g->config.seed_name.c_str();
 }
 
-[[nodiscard]] auto game_seed_source_get(Gamep g) ->  SeedSource
+[[nodiscard]] auto game_seed_source_get(Gamep g) -> SeedSource
 {
   TRACE();
 
@@ -772,7 +773,7 @@ void game_seed_set(Gamep g, uint32_t seed)
   return g->config.seed_source;
 }
 
-[[nodiscard]] auto game_seed_num_get(Gamep g) ->  uint32_t
+[[nodiscard]] auto game_seed_num_get(Gamep g) -> uint32_t
 {
   TRACE();
 
@@ -813,7 +814,7 @@ void game_player_name_set(Gamep g, const char *maybe_player_name)
   g->player_name_set(maybe_player_name);
 }
 
-[[nodiscard]] auto game_player_name_get(Gamep g) ->  const char *
+[[nodiscard]] auto game_player_name_get(Gamep g) -> const char *
 {
   TRACE();
 
@@ -1002,7 +1003,7 @@ void Game::state_reset(const std::string &why)
 }
 void game_state_reset(Gamep g, const char *why) { g->state_reset(why); }
 
-[[nodiscard]] auto game_state(Gamep g) -> GameStateType { return g-> state; }
+[[nodiscard]] auto game_state(Gamep g) -> GameStateType { return g->state; }
 
 void Game::state_change(GameStateType new_state, const std::string &why)
 {
@@ -1299,7 +1300,7 @@ void game_tick(Gamep g)
   g->tick();
 }
 
-[[nodiscard]] auto game_tick_get(Gamep g, Levelsp v) ->  uint32_t
+[[nodiscard]] auto game_tick_get(Gamep g, Levelsp v) -> uint32_t
 {
   TRACE();
 
@@ -1317,7 +1318,7 @@ void game_tick(Gamep g)
 //
 // Wait for completion of the tick.
 //
-[[nodiscard]] auto game_wait_for_tick_to_finish(Gamep g, Levelsp v, Levelp l) ->  bool
+[[nodiscard]] auto game_wait_for_tick_to_finish(Gamep g, Levelsp v, Levelp l) -> bool
 {
   TRACE();
 
@@ -1423,7 +1424,7 @@ void game_display(Gamep g)
   g->display();
 }
 
-[[nodiscard]] auto game_load_config(Gamep g) ->  bool
+[[nodiscard]] auto game_load_config(Gamep g) -> bool
 {
   TRACE();
 
@@ -1434,7 +1435,7 @@ void game_display(Gamep g)
   return g->load_config().empty() /* no error */;
 }
 
-[[nodiscard]] auto game_hiscores_get(Gamep g) ->  class HiScores *
+[[nodiscard]] auto game_hiscores_get(Gamep g) -> class HiScores *
 {
   TRACE();
 
@@ -1445,7 +1446,7 @@ void game_display(Gamep g)
   return &g->config.hiscores;
 }
 
-[[nodiscard]] auto game_hiscore_get(Gamep g) ->  uint32_t
+[[nodiscard]] auto game_hiscore_get(Gamep g) -> uint32_t
 {
   TRACE();
 
@@ -1467,7 +1468,7 @@ void game_add_new_hiscore(Gamep g, uint32_t score, LevelNum level_num, const cha
   g->config.hiscores.add_new_hiscore(g, score, level_num, name, reason);
 }
 
-[[nodiscard]] auto game_is_new_hiscore(Gamep g, uint32_t score) ->  bool
+[[nodiscard]] auto game_is_new_hiscore(Gamep g, uint32_t score) -> bool
 {
   TRACE();
 
@@ -1478,7 +1479,7 @@ void game_add_new_hiscore(Gamep g, uint32_t score, LevelNum level_num, const cha
   return g->config.hiscores.is_new_hiscore(score);
 }
 
-[[nodiscard]] auto game_is_new_highest_hiscore(Gamep g, uint32_t score) ->  bool
+[[nodiscard]] auto game_is_new_highest_hiscore(Gamep g, uint32_t score) -> bool
 {
   TRACE();
 
@@ -1489,7 +1490,7 @@ void game_add_new_hiscore(Gamep g, uint32_t score, LevelNum level_num, const cha
   return g->config.hiscores.is_new_highest_hiscore(score);
 }
 
-[[nodiscard]] auto game_place_str(Gamep g, uint32_t score) ->  const char *
+[[nodiscard]] auto game_place_str(Gamep g, uint32_t score) -> const char *
 {
   TRACE();
 
@@ -1536,7 +1537,7 @@ void game_visible_map_pix_set(Gamep g, int visible_map_tl_x, int visible_map_tl_
   g->visible_map_br_y = visible_map_br_y;
 }
 
-[[nodiscard]] auto game_tiles_visible_across_get(Gamep g) ->  int
+[[nodiscard]] auto game_tiles_visible_across_get(Gamep g) -> int
 {
   TRACE();
 
@@ -1557,7 +1558,7 @@ void game_tiles_visible_across_set(Gamep g, int val)
   g->config.tiles_visible_across = val;
 }
 
-[[nodiscard]] auto game_tiles_visible_down_get(Gamep g) ->  int
+[[nodiscard]] auto game_tiles_visible_down_get(Gamep g) -> int
 {
   TRACE();
 
@@ -1578,7 +1579,7 @@ void game_tiles_visible_down_set(Gamep g, int val)
   g->config.tiles_visible_down = val;
 }
 
-[[nodiscard]] auto game_last_mouse_down_get(Gamep g) ->  int
+[[nodiscard]] auto game_last_mouse_down_get(Gamep g) -> int
 {
   TRACE();
 
@@ -1598,7 +1599,7 @@ void game_last_mouse_down_set(Gamep g, int val)
   g->last_mouse_down = val;
 }
 
-[[nodiscard]] auto game_aspect_ratio_get(Gamep g) ->  float
+[[nodiscard]] auto game_aspect_ratio_get(Gamep g) -> float
 {
   TRACE();
   if (g == nullptr) [[unlikely]] {
@@ -1618,7 +1619,7 @@ void game_aspect_ratio_set(Gamep g, float val)
   g->config.aspect_ratio = val;
 }
 
-[[nodiscard]] auto game_ui_term_height_get(Gamep g) ->  int
+[[nodiscard]] auto game_ui_term_height_get(Gamep g) -> int
 {
   TRACE();
 
@@ -1639,7 +1640,7 @@ void game_ui_term_height_set(Gamep g, int val)
   g->config.ui_term_height = val;
 }
 
-[[nodiscard]] auto game_ui_term_width_get(Gamep g) ->  int
+[[nodiscard]] auto game_ui_term_width_get(Gamep g) -> int
 {
   TRACE();
 
@@ -1660,7 +1661,7 @@ void game_ui_term_width_set(Gamep g, int val)
   g->config.ui_term_width = val;
 }
 
-[[nodiscard]] auto game_debug_mode_get(Gamep g) ->  bool
+[[nodiscard]] auto game_debug_mode_get(Gamep g) -> bool
 {
   TRACE();
 
@@ -1681,7 +1682,7 @@ void game_debug_mode_set(Gamep g, bool val)
   g->config.debug_mode = val;
 }
 
-[[nodiscard]] auto game_fps_counter_get(Gamep g) ->  bool
+[[nodiscard]] auto game_fps_counter_get(Gamep g) -> bool
 {
   TRACE();
 
@@ -1712,7 +1713,7 @@ void game_fps_counter_unset(Gamep g)
   g->config.fps_counter = false;
 }
 
-[[nodiscard]] auto game_fps_value_get(Gamep g) ->  int
+[[nodiscard]] auto game_fps_value_get(Gamep g) -> int
 {
   TRACE();
 
@@ -1733,7 +1734,7 @@ void game_fps_value_set(Gamep g, int val)
   g->fps_value = val;
 }
 
-[[nodiscard]] auto game_gfx_borderless_get(Gamep g) ->  bool
+[[nodiscard]] auto game_gfx_borderless_get(Gamep g) -> bool
 {
   TRACE();
 
@@ -1764,7 +1765,7 @@ void game_gfx_borderless_unset(Gamep g)
   g->config.gfx_borderless = false;
 }
 
-[[nodiscard]] auto game_gfx_fullscreen_get(Gamep g) ->  bool
+[[nodiscard]] auto game_gfx_fullscreen_get(Gamep g) -> bool
 {
   TRACE();
 
@@ -1795,7 +1796,7 @@ void game_gfx_fullscreen_unset(Gamep g)
   g->config.gfx_fullscreen = false;
 }
 
-[[nodiscard]] auto game_gfx_fullscreen_desktop_get(Gamep g) ->  bool
+[[nodiscard]] auto game_gfx_fullscreen_desktop_get(Gamep g) -> bool
 {
   TRACE();
 
@@ -1826,7 +1827,7 @@ void game_gfx_fullscreen_desktop_unset(Gamep g)
   g->config.gfx_fullscreen_desktop = false;
 }
 
-[[nodiscard]] auto game_gfx_vsync_enable_get(Gamep g) ->  bool
+[[nodiscard]] auto game_gfx_vsync_enable_get(Gamep g) -> bool
 {
   TRACE();
 
@@ -1855,7 +1856,7 @@ void game_gfx_vsync_enable_unset(Gamep g)
   g->config.gfx_vsync_enable = false;
 }
 
-[[nodiscard]] auto game_mouse_wheel_lr_negated_get(Gamep g) ->  bool
+[[nodiscard]] auto game_mouse_wheel_lr_negated_get(Gamep g) -> bool
 {
   TRACE();
   if (g == nullptr) [[unlikely]] {
@@ -1885,7 +1886,7 @@ void game_mouse_wheel_lr_negated_unset(Gamep g)
   g->config.mouse_wheel_lr_negated = false;
 }
 
-[[nodiscard]] auto game_mouse_wheel_ud_negated_get(Gamep g) ->  bool
+[[nodiscard]] auto game_mouse_wheel_ud_negated_get(Gamep g) -> bool
 {
   TRACE();
 
@@ -1916,7 +1917,7 @@ void game_mouse_wheel_ud_negated_unset(Gamep g)
   g->config.mouse_wheel_ud_negated = false;
 }
 
-[[nodiscard]] auto game_config_pix_height_get(Gamep g) ->  int
+[[nodiscard]] auto game_config_pix_height_get(Gamep g) -> int
 {
   TRACE();
 
@@ -1937,7 +1938,7 @@ void game_config_pix_height_set(Gamep g, int val)
   g->config.config_pix_height = val;
 }
 
-[[nodiscard]] auto game_config_pix_width_get(Gamep g) ->  int
+[[nodiscard]] auto game_config_pix_width_get(Gamep g) -> int
 {
   TRACE();
 
@@ -1958,7 +1959,7 @@ void game_config_pix_width_set(Gamep g, int val)
   g->config.config_pix_width = val;
 }
 
-[[nodiscard]] auto game_map_fbo_height_get(Gamep g) ->  int
+[[nodiscard]] auto game_map_fbo_height_get(Gamep g) -> int
 {
   TRACE();
 
@@ -1969,7 +1970,7 @@ void game_config_pix_width_set(Gamep g, int val)
   return g->config.map_fbo_height;
 }
 
-[[nodiscard]] auto game_map_fbo_width_get(Gamep g) ->  int
+[[nodiscard]] auto game_map_fbo_width_get(Gamep g) -> int
 {
   TRACE();
 
@@ -2002,7 +2003,7 @@ void game_map_fbo_width_set(Gamep g, int val)
   g->config.map_fbo_width = val;
 }
 
-[[nodiscard]] auto game_window_pix_height_get(Gamep g) ->  int
+[[nodiscard]] auto game_window_pix_height_get(Gamep g) -> int
 {
   TRACE();
 
@@ -2023,7 +2024,7 @@ void game_window_pix_height_set(Gamep g, int val)
   g->config.window_pix_height = val;
 }
 
-[[nodiscard]] auto game_window_pix_width_get(Gamep g) ->  int
+[[nodiscard]] auto game_window_pix_width_get(Gamep g) -> int
 {
   TRACE();
   if (g == nullptr) [[unlikely]] {
@@ -2043,7 +2044,7 @@ void game_window_pix_width_set(Gamep g, int val)
   g->config.window_pix_width = val;
 }
 
-[[nodiscard]] auto game_ascii_pix_height_get(Gamep g) ->  int
+[[nodiscard]] auto game_ascii_pix_height_get(Gamep g) -> int
 {
   TRACE();
 
@@ -2064,7 +2065,7 @@ void game_ascii_pix_height_set(Gamep g, int val)
   g->config.ascii_pix_height = val;
 }
 
-[[nodiscard]] auto game_ascii_pix_width_get(Gamep g) ->  int
+[[nodiscard]] auto game_ascii_pix_width_get(Gamep g) -> int
 {
   TRACE();
 
@@ -2085,7 +2086,7 @@ void game_ascii_pix_width_set(Gamep g, int val)
   g->config.ascii_pix_width = val;
 }
 
-[[nodiscard]] auto game_music_volume_get(Gamep g) ->  int
+[[nodiscard]] auto game_music_volume_get(Gamep g) -> int
 {
   TRACE();
 
@@ -2106,7 +2107,7 @@ void game_music_volume_set(Gamep g, int val)
   g->config.music_volume = val;
 }
 
-[[nodiscard]] auto game_sdl_delay_get(Gamep g) ->  int
+[[nodiscard]] auto game_sdl_delay_get(Gamep g) -> int
 {
   TRACE();
 
@@ -2127,7 +2128,7 @@ void game_sdl_delay_set(Gamep g, int val)
   g->config.sdl_delay = val;
 }
 
-[[nodiscard]] auto game_sound_volume_get(Gamep g) ->  int
+[[nodiscard]] auto game_sound_volume_get(Gamep g) -> int
 {
   TRACE();
 
@@ -2148,7 +2149,7 @@ void game_sound_volume_set(Gamep g, int val)
   g->config.sound_volume = val;
 }
 
-[[nodiscard]] auto game_levels_get(Gamep g) ->  Levelsp
+[[nodiscard]] auto game_levels_get(Gamep g) -> Levelsp
 {
   TRACE();
 
@@ -2161,7 +2162,7 @@ void game_sound_volume_set(Gamep g, int val)
   }
   return g->levels;
 }
-[[nodiscard]] auto game_levels_set(Gamep g, Levelsp val) ->  Levelsp
+[[nodiscard]] auto game_levels_set(Gamep g, Levelsp val) -> Levelsp
 {
   TRACE();
 
@@ -2172,7 +2173,7 @@ void game_sound_volume_set(Gamep g, int val)
   return g->levels = val;
 }
 
-[[nodiscard]] auto game_level_get(Gamep g, Levelsp v) ->  Levelp
+[[nodiscard]] auto game_level_get(Gamep g, Levelsp v) -> Levelp
 {
   TRACE();
 
@@ -2188,7 +2189,7 @@ void game_sound_volume_set(Gamep g, int val)
   return &v->level[ n ];
 }
 
-[[nodiscard]] auto game_level_get(Gamep g, Levelsp v, LevelNum n) ->  Levelp
+[[nodiscard]] auto game_level_get(Gamep g, Levelsp v, LevelNum n) -> Levelp
 {
   TRACE();
 
@@ -2207,7 +2208,7 @@ void game_sound_volume_set(Gamep g, int val)
   return &v->level[ n ];
 }
 
-[[nodiscard]] auto game_level_populate(Gamep g, Levelsp v, LevelNum n) ->  Levelp
+[[nodiscard]] auto game_level_populate(Gamep g, Levelsp v, LevelNum n) -> Levelp
 {
   TRACE();
 
@@ -2227,7 +2228,7 @@ void game_sound_volume_set(Gamep g, int val)
   return game_level_get(g, v);
 }
 
-[[nodiscard]] auto game_key_wait_get(Gamep g) ->  SDL_Keysym
+[[nodiscard]] auto game_key_wait_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
 
@@ -2246,7 +2247,7 @@ void game_key_wait_set(Gamep g, SDL_Keysym key)
   g->config.key_wait = key;
 }
 
-[[nodiscard]] auto game_key_console_get(Gamep g) ->  SDL_Keysym
+[[nodiscard]] auto game_key_console_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
 
@@ -2265,7 +2266,7 @@ void game_key_console_set(Gamep g, SDL_Keysym key)
   g->config.key_console = key;
 }
 
-[[nodiscard]] auto game_key_help_get(Gamep g) ->  SDL_Keysym
+[[nodiscard]] auto game_key_help_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
 
@@ -2284,7 +2285,7 @@ void game_key_help_set(Gamep g, SDL_Keysym key)
   g->config.key_help = key;
 }
 
-[[nodiscard]] auto game_key_load_get(Gamep g) ->  SDL_Keysym
+[[nodiscard]] auto game_key_load_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
 
@@ -2303,7 +2304,7 @@ void game_key_load_set(Gamep g, SDL_Keysym key)
   g->config.key_load = key;
 }
 
-[[nodiscard]] auto game_key_move_down_get(Gamep g) ->  SDL_Keysym
+[[nodiscard]] auto game_key_move_down_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
 
@@ -2322,7 +2323,7 @@ void game_key_move_down_set(Gamep g, SDL_Keysym key)
   g->config.key_move_down = key;
 }
 
-[[nodiscard]] auto game_key_move_left_get(Gamep g) ->  SDL_Keysym
+[[nodiscard]] auto game_key_move_left_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
 
@@ -2341,7 +2342,7 @@ void game_key_move_left_set(Gamep g, SDL_Keysym key)
   g->config.key_move_left = key;
 }
 
-[[nodiscard]] auto game_key_move_right_get(Gamep g) ->  SDL_Keysym
+[[nodiscard]] auto game_key_move_right_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
 
@@ -2360,7 +2361,7 @@ void game_key_move_right_set(Gamep g, SDL_Keysym key)
   g->config.key_move_right = key;
 }
 
-[[nodiscard]] auto game_key_move_up_get(Gamep g) ->  SDL_Keysym
+[[nodiscard]] auto game_key_move_up_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
 
@@ -2379,7 +2380,7 @@ void game_key_move_up_set(Gamep g, SDL_Keysym key)
   g->config.key_move_up = key;
 }
 
-[[nodiscard]] auto game_key_quit_get(Gamep g) ->  SDL_Keysym
+[[nodiscard]] auto game_key_quit_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
 
@@ -2398,7 +2399,7 @@ void game_key_quit_set(Gamep g, SDL_Keysym key)
   g->config.key_quit = key;
 }
 
-[[nodiscard]] auto game_key_save_get(Gamep g) ->  SDL_Keysym
+[[nodiscard]] auto game_key_save_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
 
@@ -2417,7 +2418,7 @@ void game_key_save_set(Gamep g, SDL_Keysym key)
   g->config.key_save = key;
 }
 
-[[nodiscard]] auto game_key_screenshot_get(Gamep g) ->  SDL_Keysym
+[[nodiscard]] auto game_key_screenshot_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
 
@@ -2436,7 +2437,7 @@ void game_key_screenshot_set(Gamep g, SDL_Keysym key)
   g->config.key_screenshot = key;
 }
 
-[[nodiscard]] auto game_key_unused1_get(Gamep g) ->  SDL_Keysym
+[[nodiscard]] auto game_key_unused1_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
 
@@ -2456,7 +2457,7 @@ void game_key_unused1_set(Gamep g, SDL_Keysym key)
   g->config.key_unused1 = key;
 }
 
-[[nodiscard]] auto game_key_unused2_get(Gamep g) ->  SDL_Keysym
+[[nodiscard]] auto game_key_unused2_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
 
@@ -2476,7 +2477,7 @@ void game_key_unused2_set(Gamep g, SDL_Keysym key)
   g->config.key_unused2 = key;
 }
 
-[[nodiscard]] auto game_key_unused3_get(Gamep g) ->  SDL_Keysym
+[[nodiscard]] auto game_key_unused3_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
 
@@ -2496,7 +2497,7 @@ void game_key_unused3_set(Gamep g, SDL_Keysym key)
   g->config.key_unused3 = key;
 }
 
-[[nodiscard]] auto game_key_unused4_get(Gamep g) ->  SDL_Keysym
+[[nodiscard]] auto game_key_unused4_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
 
@@ -2516,7 +2517,7 @@ void game_key_unused4_set(Gamep g, SDL_Keysym key)
   g->config.key_unused4 = key;
 }
 
-[[nodiscard]] auto game_key_unused5_get(Gamep g) ->  SDL_Keysym
+[[nodiscard]] auto game_key_unused5_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
 
@@ -2536,7 +2537,7 @@ void game_key_unused5_set(Gamep g, SDL_Keysym key)
   g->config.key_unused5 = key;
 }
 
-[[nodiscard]] auto game_key_unused6_get(Gamep g) ->  SDL_Keysym
+[[nodiscard]] auto game_key_unused6_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
 
@@ -2556,7 +2557,7 @@ void game_key_unused6_set(Gamep g, SDL_Keysym key)
   g->config.key_unused6 = key;
 }
 
-[[nodiscard]] auto game_key_unused7_get(Gamep g) ->  SDL_Keysym
+[[nodiscard]] auto game_key_unused7_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
 
@@ -2576,7 +2577,7 @@ void game_key_unused7_set(Gamep g, SDL_Keysym key)
   g->config.key_unused7 = key;
 }
 
-[[nodiscard]] auto game_key_unused8_get(Gamep g) ->  SDL_Keysym
+[[nodiscard]] auto game_key_unused8_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
 
@@ -2596,7 +2597,7 @@ void game_key_unused8_set(Gamep g, SDL_Keysym key)
   g->config.key_unused8 = key;
 }
 
-[[nodiscard]] auto game_key_unused9_get(Gamep g) ->  SDL_Keysym
+[[nodiscard]] auto game_key_unused9_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
 
@@ -2616,7 +2617,7 @@ void game_key_unused9_set(Gamep g, SDL_Keysym key)
   g->config.key_unused9 = key;
 }
 
-[[nodiscard]] auto game_key_unused10_get(Gamep g) ->  SDL_Keysym
+[[nodiscard]] auto game_key_unused10_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
 
@@ -2636,7 +2637,7 @@ void game_key_unused10_set(Gamep g, SDL_Keysym key)
   g->config.key_unused10 = key;
 }
 
-[[nodiscard]] auto game_key_unused11_get(Gamep g) ->  SDL_Keysym
+[[nodiscard]] auto game_key_unused11_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
 
@@ -2656,7 +2657,7 @@ void game_key_unused11_set(Gamep g, SDL_Keysym key)
   g->config.key_unused11 = key;
 }
 
-[[nodiscard]] auto game_key_unused12_get(Gamep g) ->  SDL_Keysym
+[[nodiscard]] auto game_key_unused12_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
 
@@ -2676,7 +2677,7 @@ void game_key_unused12_set(Gamep g, SDL_Keysym key)
   g->config.key_unused12 = key;
 }
 
-[[nodiscard]] auto game_key_unused13_get(Gamep g) ->  SDL_Keysym
+[[nodiscard]] auto game_key_unused13_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
 
@@ -2696,7 +2697,7 @@ void game_key_unused13_set(Gamep g, SDL_Keysym key)
   g->config.key_unused13 = key;
 }
 
-[[nodiscard]] auto game_key_unused14_get(Gamep g) ->  SDL_Keysym
+[[nodiscard]] auto game_key_unused14_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
 
@@ -2716,7 +2717,7 @@ void game_key_unused14_set(Gamep g, SDL_Keysym key)
   g->config.key_unused14 = key;
 }
 
-[[nodiscard]] auto game_key_fire_get(Gamep g) ->  SDL_Keysym
+[[nodiscard]] auto game_key_fire_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
 
@@ -2736,7 +2737,7 @@ void game_key_fire_set(Gamep g, SDL_Keysym key)
   g->config.key_fire = key;
 }
 
-[[nodiscard]] auto game_key_inventory_get(Gamep g) ->  SDL_Keysym
+[[nodiscard]] auto game_key_inventory_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
 
@@ -2756,7 +2757,7 @@ void game_key_inventory_set(Gamep g, SDL_Keysym key)
   g->config.key_inventory = key;
 }
 
-[[nodiscard]] auto game_key_jump_get(Gamep g) ->  SDL_Keysym
+[[nodiscard]] auto game_key_jump_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
 
@@ -2776,7 +2777,7 @@ void game_key_jump_set(Gamep g, SDL_Keysym key)
   g->config.key_jump = key;
 }
 
-[[nodiscard]] auto game_key_ascend_get(Gamep g) ->  SDL_Keysym
+[[nodiscard]] auto game_key_ascend_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
 
@@ -2796,7 +2797,7 @@ void game_key_ascend_set(Gamep g, SDL_Keysym key)
   g->config.key_ascend = key;
 }
 
-[[nodiscard]] auto game_key_descend_get(Gamep g) ->  SDL_Keysym
+[[nodiscard]] auto game_key_descend_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
 
@@ -2816,7 +2817,7 @@ void game_key_descend_set(Gamep g, SDL_Keysym key)
   g->config.key_descend = key;
 }
 
-[[nodiscard]] auto game_key_zoom_get(Gamep g) ->  SDL_Keysym
+[[nodiscard]] auto game_key_zoom_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
 
@@ -2836,7 +2837,7 @@ void game_key_zoom_set(Gamep g, SDL_Keysym key)
   g->config.key_zoom = key;
 }
 
-[[nodiscard]] auto game_map_zoom_get(Gamep g) ->  int
+[[nodiscard]] auto game_map_zoom_get(Gamep g) -> int
 {
   TRACE();
 
@@ -2864,7 +2865,7 @@ void game_map_zoom_set(Gamep g, int val)
 
   g->zoom = val;
 }
-[[nodiscard]] auto game_map_zoom_is_full_map_visible(Gamep g) ->  bool
+[[nodiscard]] auto game_map_zoom_is_full_map_visible(Gamep g) -> bool
 {
   TRACE();
 
@@ -2875,7 +2876,7 @@ void game_map_zoom_set(Gamep g, int val)
   return g->zoom == MAP_ZOOM_FULL_MAP;
 }
 
-[[nodiscard]] auto game_map_zoom_def_get(Gamep g) ->  int
+[[nodiscard]] auto game_map_zoom_def_get(Gamep g) -> int
 {
   TRACE();
 
@@ -2987,7 +2988,7 @@ void game_map_zoom_out(Gamep g)
   game_map_zoom_update(g);
 }
 
-[[nodiscard]] auto game_map_single_pix_size_get(Gamep g) ->  int
+[[nodiscard]] auto game_map_single_pix_size_get(Gamep g) -> int
 {
   TRACE();
 
@@ -3013,7 +3014,7 @@ void game_map_single_pix_size_set(Gamep g, int val)
   g->single_pix_size = val;
 }
 
-[[nodiscard]] auto game_request_to_remake_ui_get(Gamep g) ->  bool
+[[nodiscard]] auto game_request_to_remake_ui_get(Gamep g) -> bool
 {
   TRACE();
 
@@ -3045,7 +3046,7 @@ void game_request_to_remake_ui_unset(Gamep g)
   g->request_to_remake_ui = false;
 }
 
-[[nodiscard]] auto game_request_to_save_game_get(Gamep g) ->  bool
+[[nodiscard]] auto game_request_to_save_game_get(Gamep g) -> bool
 {
   TRACE();
 
@@ -3077,7 +3078,7 @@ void game_request_to_save_game_unset(Gamep g)
   g->request_to_save_game = false;
 }
 
-[[nodiscard]] auto game_request_to_update_cursor_get(Gamep g) ->  bool
+[[nodiscard]] auto game_request_to_update_cursor_get(Gamep g) -> bool
 {
   TRACE();
 
@@ -3109,7 +3110,7 @@ void game_request_to_update_cursor_unset(Gamep g)
   g->request_to_update_cursor = false;
 }
 
-[[nodiscard]] auto game_request_reached_exit_get(Gamep g) ->  bool
+[[nodiscard]] auto game_request_reached_exit_get(Gamep g) -> bool
 {
   TRACE();
 
@@ -3141,7 +3142,7 @@ void game_request_reached_exit_unset(Gamep g)
   g->request_reached_exit = false;
 }
 
-[[nodiscard]] auto game_request_reached_entrance_get(Gamep g) ->  bool
+[[nodiscard]] auto game_request_reached_entrance_get(Gamep g) -> bool
 {
   TRACE();
 
@@ -3173,7 +3174,7 @@ void game_request_reached_entrance_unset(Gamep g)
   g->request_reached_entrance = false;
 }
 
-[[nodiscard]] auto game_request_to_end_game_get(Gamep g) ->  bool
+[[nodiscard]] auto game_request_to_end_game_get(Gamep g) -> bool
 {
   TRACE();
 
@@ -3205,7 +3206,7 @@ void game_request_to_end_game_unset(Gamep g)
   g->request_to_end_game = false;
 }
 
-[[nodiscard]] auto game_request_to_end_game_reason_get(Gamep g) ->  std::string
+[[nodiscard]] auto game_request_to_end_game_reason_get(Gamep g) -> std::string
 {
   TRACE();
 

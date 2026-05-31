@@ -5,7 +5,7 @@
 #include "my_math.hpp"
 #include <cstdint>
 
-[[nodiscard]] auto nextpoweroftwo(uint32_t val) ->  uint32_t
+[[nodiscard]] auto nextpoweroftwo(uint32_t val) -> uint32_t
 {
   val--;
   val = (val >> 1) | val;

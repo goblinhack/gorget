@@ -376,7 +376,7 @@ static void tp_fixup()
   return tp->tiles[ val ][ 0 ];
 }
 
-static auto tp_random_select_with_rarity(Gamep g, Levelsp v, Levelp l, TpVec &m) -> Tpp
+static auto tp_random_select_with_rarity(TpVec &m) -> Tpp
 {
   TRACE();
 
@@ -429,7 +429,7 @@ static auto tp_random(Gamep g, Levelsp v, Levelp l, TpVec &m) -> Tpp
 
   int tries = 100;
   while (tries-- > 0) {
-    auto *tp = tp_random_select_with_rarity(g, v, l, m);
+    auto *tp = tp_random_select_with_rarity(m);
     if (tp == nullptr) [[unlikely]] {
       break;
     }
@@ -496,7 +496,7 @@ static auto tp_random(Gamep g, Levelsp v, Levelp l, TpVec &m) -> Tpp
   //
   tries = 100;
   while (tries-- > 0) {
-    auto *tp = tp_random_select_with_rarity(g, v, l, m);
+    auto *tp = tp_random_select_with_rarity(m);
     if (tp == nullptr) [[unlikely]] {
       break;
     }

@@ -112,7 +112,7 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_slots() ->  bool // NOLINT
+[[nodiscard]] auto test_load_slots() -> bool // NOLINT
 {
   TRACE();
 

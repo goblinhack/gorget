@@ -137,7 +137,7 @@ static void wid_main_menu_hide(Gamep g)
   TRACE_INDENT();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
-    (void) (void) sound_play(g, "keypress");
+    ((void) sound_play(g, "keypress"));
     return false;
   }
 
@@ -145,31 +145,31 @@ static void wid_main_menu_hide(Gamep g)
 
   if (s == "<Return>" || s == "n" || s == "N") {
     TRACE();
-    (void) (void) sound_play(g, "keypress");
+    ((void) sound_play(g, "keypress"));
     (void) game_menu_new_game(g, nullptr, 0, 0, 0);
     return true;
   }
 
   if (s == "l" || s == "L") {
-    (void) (void) sound_play(g, "keypress");
+    ((void) sound_play(g, "keypress"));
     (void) wid_main_menu_load(g, nullptr, 0, 0, 0);
     return true;
   }
 
   if (s == "o" || s == "O") {
-    (void) (void) sound_play(g, "keypress");
+    ((void) sound_play(g, "keypress"));
     (void) wid_main_menu_cfg(g, nullptr, 0, 0, 0);
     return true;
   }
 
   if (s == "m" || s == "M") {
-    (void) (void) sound_play(g, "keypress");
+    ((void) sound_play(g, "keypress"));
     (void) wid_main_menu_more(g, nullptr, 0, 0, 0);
     return true;
   }
 
   if (s == "q" || s == "Q") {
-    (void) (void) sound_play(g, "keypress");
+    ((void) sound_play(g, "keypress"));
     (void) wid_main_menu_quit(g, nullptr, 0, 0, 0);
     return true;
   }

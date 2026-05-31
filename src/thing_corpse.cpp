@@ -13,7 +13,7 @@
 //
 // Allowed to place a corpse here?
 //
-[[nodiscard]] auto thing_corpse_allowed(Gamep g, Levelsp v, Levelp l, Thingp t) ->  bool
+[[nodiscard]] auto thing_corpse_allowed(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool
 {
   TRACE();
 

@@ -231,7 +231,7 @@ void wid_set_on_mouse_over_end(Widp w, on_mouse_over_end_t fn)
   w->on_mouse_over_end = fn;
 }
 
-[[nodiscard]] auto wid_scroll_trough_mouse_down(Gamep g, Widp w, int x, int y, uint32_t /*button*/) ->  bool
+[[nodiscard]] auto wid_scroll_trough_mouse_down(Gamep g, Widp w, int x, int y, uint32_t /*button*/) -> bool
 {
   TRACE();
 
@@ -282,7 +282,7 @@ void wid_set_on_mouse_over_end(Widp w, on_mouse_over_end_t fn)
   return true;
 }
 
-[[nodiscard]] auto wid_scroll_motion(Gamep g, Widp w, int /*x*/, int /*y*/, int relx, int rely, int wheelx, int wheely) ->  bool
+[[nodiscard]] auto wid_scroll_motion(Gamep g, Widp w, int /*x*/, int /*y*/, int relx, int rely, int wheelx, int wheely) -> bool
 {
   TRACE();
 
@@ -351,7 +351,7 @@ void wid_update_mouse(Gamep g)
   wid_mouse_motion(g, x, y, 0, 0, 0, 0);
 }
 
-[[nodiscard]] auto wid_find_under_mouse() ->  Widp
+[[nodiscard]] auto wid_find_under_mouse() -> Widp
 {
   TRACE();
 
@@ -371,7 +371,7 @@ void wid_update_mouse(Gamep g)
   return nullptr;
 }
 
-[[nodiscard]] auto wid_find_under_mouse_when_scrolling(Gamep /*g*/) ->  Widp
+[[nodiscard]] auto wid_find_under_mouse_when_scrolling(Gamep /*g*/) -> Widp
 {
   TRACE();
 
@@ -980,7 +980,7 @@ void wid_mouse_down(Gamep g, uint32_t button, int x, int y)
   // Raise on mouse.
   //
   if (((w->on_mouse_down != nullptr) && (w->on_mouse_down)(g, w, x, y, button)) || wid_get_moveable(w)) {
-      (void) sound_play(g, "click");
+    (void) sound_play(g, "click");
 
     wid_set_focus(g, w);
     wid_set_mode(w, WID_MODE_ACTIVE);
@@ -1012,7 +1012,7 @@ void wid_mouse_down(Gamep g, uint32_t button, int x, int y)
   }
 
   if (game_mouse_down(g, x, y, button)) {
-      (void) sound_play(g, "click");
+    (void) sound_play(g, "click");
 
     if (g != nullptr) {
       game_last_mouse_down_set(g, time_ms_cached());
@@ -1087,7 +1087,7 @@ void wid_mouse_up(Gamep g, uint32_t button, int x, int y)
   }
 
   if (((w->on_mouse_up != nullptr) && (w->on_mouse_up)(g, w, x, y, button)) || wid_get_moveable(w)) {
-      (void) sound_play(g, "click");
+    (void) sound_play(g, "click");
 
     wid_set_mode(w, WID_MODE_ACTIVE);
     wid_raise(g, w);

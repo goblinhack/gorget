@@ -14,7 +14,7 @@
 #include <format>
 #include <string>
 
-[[nodiscard]] auto to_string(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t) ->  std::string
+[[nodiscard]] auto to_string(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t) -> std::string
 {
   TRACE();
 
@@ -65,7 +65,7 @@
                   /* newline */ thing_is_scheduled_for_cleanup(t) ? "/fre" : ""));
 }
 
-[[nodiscard]] auto to_string(Gamep g, Levelsp v, Levelp l, ThingEvent &e) ->  std::string
+[[nodiscard]] auto to_string(Gamep g, Levelsp v, Levelp l, ThingEvent &e) -> std::string
 {
   TRACE();
 
@@ -96,7 +96,7 @@
   return s;
 }
 
-[[nodiscard]] auto to_death_reason_string(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e) ->  std::string
+[[nodiscard]] auto to_death_reason_string(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e) -> std::string
 {
   TRACE();
 

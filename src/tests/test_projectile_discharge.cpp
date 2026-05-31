@@ -124,7 +124,7 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_projectile_discharge() ->  bool // NOLINT
+[[nodiscard]] auto test_load_projectile_discharge() -> bool // NOLINT
 {
   TRACE();
 

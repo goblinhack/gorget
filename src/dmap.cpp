@@ -571,7 +571,7 @@ static auto dmap_solve_manhattan(const Dmap *D, const bpoint start) -> std::vect
 //
 // Try to solve diagonally first. Then fallback to manhattan if we cannot.
 //
-[[nodiscard]] auto dmap_solve(Gamep g, Levelsp v, Levelp l, Thingp t, const Dmap *D, const bpoint start) ->  std::vector< bpoint >
+[[nodiscard]] auto dmap_solve(Gamep g, Levelsp v, Levelp l, Thingp t, const Dmap *D, const bpoint start) -> std::vector< bpoint >
 {
   //
   // No path? Intentionally not allowing diagonal moves here as that allows the

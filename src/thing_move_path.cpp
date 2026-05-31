@@ -47,7 +47,7 @@ void thing_move_path_confirm(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp me)
 //
 // Get the move path size
 //
-[[nodiscard]] auto thing_move_path_size(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp me) ->  int
+[[nodiscard]] auto thing_move_path_size(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp me) -> int
 {
   TRACE();
 
@@ -62,7 +62,7 @@ void thing_move_path_confirm(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp me)
 //
 // Return true if there is a move to pop (and pop it)
 //
-[[nodiscard]] auto thing_move_path_pop(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint &out) ->  bool
+[[nodiscard]] auto thing_move_path_pop(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint &out) -> bool
 {
   bool move_confirmed = {};
   return thing_move_path_pop(g, v, l, me, move_confirmed, out);
@@ -71,7 +71,7 @@ void thing_move_path_confirm(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp me)
 //
 // Return true if there is a move to pop (and pop it)
 //
-[[nodiscard]] auto thing_move_path_pop(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp me, bool &move_confirmed, bpoint &out) ->  bool
+[[nodiscard]] auto thing_move_path_pop(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp me, bool &move_confirmed, bpoint &out) -> bool
 {
   TRACE();
 
@@ -140,7 +140,8 @@ static auto thing_move_path_confirmed(Gamep g, Thingp me, const std::vector< bpo
 //
 // Copy the confirmed path to the thing
 //
-[[nodiscard]] auto thing_move_path_confirmed(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp me, const std::vector< bpoint > &move_path) ->  bool
+[[nodiscard]] auto thing_move_path_confirmed(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp me, const std::vector< bpoint > &move_path)
+    -> bool
 {
   TRACE();
 
@@ -150,7 +151,7 @@ static auto thing_move_path_confirmed(Gamep g, Thingp me, const std::vector< bpo
 //
 // Copy the non confirmed path to the thing
 //
-[[nodiscard]] auto thing_move_path_apply(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp me, const std::vector< bpoint > &move_path) ->  bool
+[[nodiscard]] auto thing_move_path_apply(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp me, const std::vector< bpoint > &move_path) -> bool
 {
   TRACE();
 
@@ -160,7 +161,7 @@ static auto thing_move_path_confirmed(Gamep g, Thingp me, const std::vector< bpo
 //
 // Return true if there is a move to pop.
 //
-[[nodiscard]] auto thing_move_path_target(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp me, bpoint &out) ->  bool
+[[nodiscard]] auto thing_move_path_target(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp me, bpoint &out) -> bool
 {
   TRACE();
 

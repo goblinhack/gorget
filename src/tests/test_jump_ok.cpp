@@ -89,7 +89,7 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_jump_ok() ->  bool // NOLINT
+[[nodiscard]] auto test_load_jump_ok() -> bool // NOLINT
 {
   TRACE();
 

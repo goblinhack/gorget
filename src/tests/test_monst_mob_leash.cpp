@@ -105,7 +105,7 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_monst_mob_leash() ->  bool // NOLINT
+[[nodiscard]] auto test_load_monst_mob_leash() -> bool // NOLINT
 {
   TRACE();
 

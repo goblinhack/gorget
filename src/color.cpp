@@ -48,7 +48,7 @@ void color_fini()
   // color_map.clear();
 }
 
-[[nodiscard]] auto string2color(const char **s) ->  color
+[[nodiscard]] auto string2color(const char **s) -> color
 {
   TRACE();
 
@@ -88,7 +88,7 @@ void color_fini()
   return result->second;
 }
 
-[[nodiscard]] auto string2colorname(std::string &s, int *len) ->  std::string
+[[nodiscard]] auto string2colorname(std::string &s, int *len) -> std::string
 {
   TRACE();
 
@@ -113,7 +113,7 @@ void color_fini()
   return out;
 }
 
-[[nodiscard]] auto string2color(std::string &s, int *len) ->  color
+[[nodiscard]] auto string2color(std::string &s, int *len) -> color
 {
   TRACE();
 
@@ -151,7 +151,7 @@ void color_fini()
   return result->second;
 }
 
-[[nodiscard]] auto string2color(std::string &s) ->  color
+[[nodiscard]] auto string2color(std::string &s) -> color
 {
   auto        iter = s.begin();
   std::string out;
@@ -183,7 +183,7 @@ void color_fini()
   return result->second;
 }
 
-[[nodiscard]] auto color_find(const char *s) ->  color
+[[nodiscard]] auto color_find(const char *s) -> color
 {
   TRACE();
 

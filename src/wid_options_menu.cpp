@@ -110,7 +110,7 @@ void wid_options_menu_destroy(Gamep /*g*/)
   TRACE_INDENT();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
-      (void) sound_play(g, "keypress");
+    (void) sound_play(g, "keypress");
     return false;
   }
 
@@ -126,38 +126,38 @@ void wid_options_menu_destroy(Gamep /*g*/)
             switch (c) {
               case 'g' :
               case 'G' :
-                  (void) sound_play(g, "keypress");
+                (void) sound_play(g, "keypress");
                 (void) wid_options_menu_gfx(g, nullptr, 0, 0, 0);
                 return true;
               case 'm' :
               case 'M' :
-                  (void) sound_play(g, "keypress");
+                (void) sound_play(g, "keypress");
                 (void) wid_options_menu_mouse(g, nullptr, 0, 0, 0);
                 return true;
               case 's' :
               case 'S' :
-                  (void) sound_play(g, "keypress");
+                (void) sound_play(g, "keypress");
                 (void) wid_options_menu_sound(g, nullptr, 0, 0, 0);
                 return true;
               case 'k' :
               case 'K' :
-                  (void) sound_play(g, "keypress");
+                (void) sound_play(g, "keypress");
                 (void) wid_options_menu_keyboard(g, nullptr, 0, 0, 0);
                 return true;
               case 'c' :
               case 'C' :
-                  (void) sound_play(g, "keypress");
+                (void) sound_play(g, "keypress");
                 (void) wid_options_menu_seed(g, nullptr, 0, 0, 0);
                 return true;
               case 'p' :
               case 'P' :
-                  (void) sound_play(g, "keypress");
+                (void) sound_play(g, "keypress");
                 (void) wid_options_menu_player_name(g, nullptr, 0, 0, 0);
                 return true;
               case 'b' :
               case 'B' :
               case SDLK_ESCAPE :
-                  (void) sound_play(g, "keypress");
+                (void) sound_play(g, "keypress");
                 (void) wid_options_menu_back(g, nullptr, 0, 0, 0);
                 return true;
             }

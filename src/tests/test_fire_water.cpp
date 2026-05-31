@@ -118,7 +118,7 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_fire_on_water() ->  bool // NOLINT
+[[nodiscard]] auto test_load_fire_on_water() -> bool // NOLINT
 {
   TRACE();
 

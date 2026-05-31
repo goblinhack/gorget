@@ -21,14 +21,14 @@
 //
 // Get thing direction
 //
-[[nodiscard]] auto thing_is_dir_br(Thingp me) -> bool { return (me-> dir == THING_DIR_BR); }
-[[nodiscard]] auto thing_is_dir_tr(Thingp me) -> bool { return (me-> dir == THING_DIR_TR); }
-[[nodiscard]] auto thing_is_dir_bl(Thingp me) -> bool { return (me-> dir == THING_DIR_BL); }
-[[nodiscard]] auto thing_is_dir_tl(Thingp me) -> bool { return (me-> dir == THING_DIR_TL); }
-[[nodiscard]] auto thing_is_dir_right(Thingp me) -> bool { return (me-> dir == THING_DIR_RIGHT); }
-[[nodiscard]] auto thing_is_dir_down(Thingp me) -> bool { return (me-> dir == THING_DIR_DOWN); }
-[[nodiscard]] auto thing_is_dir_up(Thingp me) -> bool { return (me-> dir == THING_DIR_UP); }
-[[nodiscard]] auto thing_is_dir_left(Thingp me) -> bool { return (me-> dir == THING_DIR_LEFT); }
+[[nodiscard]] auto thing_is_dir_br(Thingp me) -> bool { return (me->dir == THING_DIR_BR); }
+[[nodiscard]] auto thing_is_dir_tr(Thingp me) -> bool { return (me->dir == THING_DIR_TR); }
+[[nodiscard]] auto thing_is_dir_bl(Thingp me) -> bool { return (me->dir == THING_DIR_BL); }
+[[nodiscard]] auto thing_is_dir_tl(Thingp me) -> bool { return (me->dir == THING_DIR_TL); }
+[[nodiscard]] auto thing_is_dir_right(Thingp me) -> bool { return (me->dir == THING_DIR_RIGHT); }
+[[nodiscard]] auto thing_is_dir_down(Thingp me) -> bool { return (me->dir == THING_DIR_DOWN); }
+[[nodiscard]] auto thing_is_dir_up(Thingp me) -> bool { return (me->dir == THING_DIR_UP); }
+[[nodiscard]] auto thing_is_dir_left(Thingp me) -> bool { return (me->dir == THING_DIR_LEFT); }
 
 void thing_is_moving_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
 {
@@ -258,7 +258,7 @@ void thing_set_dir_from_delta(Thingp me, const bpoint &p)
 //
 // Get direction; need to also account for projectiles that move at an angle.
 //
-[[nodiscard]] auto thing_get_direction(Gamep g, Levelsp v, Levelp l, Thingp me) ->  fpoint
+[[nodiscard]] auto thing_get_direction(Gamep g, Levelsp v, Levelp l, Thingp me) -> fpoint
 {
   TRACE();
 
@@ -283,7 +283,7 @@ void thing_set_dir_from_delta(Thingp me, const bpoint &p)
 //
 // Get direction; need to also account for projectiles that move at an angle.
 //
-[[nodiscard]] auto thing_get_direction_grid(Gamep g, Levelsp v, Levelp l, Thingp me) ->  bpoint
+[[nodiscard]] auto thing_get_direction_grid(Gamep g, Levelsp v, Levelp l, Thingp me) -> bpoint
 {
   TRACE();
 
@@ -328,7 +328,7 @@ void thing_set_dir_from_delta(Thingp me, const bpoint &p)
 //
 // Handles manual and mouse follow moves
 //
-[[nodiscard]] auto thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) ->  bool
+[[nodiscard]] auto thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool
 {
   TRACE();
 
@@ -361,7 +361,7 @@ void thing_set_dir_from_delta(Thingp me, const bpoint &p)
 //
 // Handles shoving to a location. We can't move there yet.
 //
-[[nodiscard]] auto thing_shove_to(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) ->  bool
+[[nodiscard]] auto thing_shove_to(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool
 {
   TRACE();
 
@@ -389,7 +389,7 @@ void thing_set_dir_from_delta(Thingp me, const bpoint &p)
 //
 // This is used for teleporting, falling etc...
 //
-[[nodiscard]] auto thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp me, bpoint to) ->  bool
+[[nodiscard]] auto thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp me, bpoint to) -> bool
 {
   TRACE();
 

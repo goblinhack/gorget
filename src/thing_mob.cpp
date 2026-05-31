@@ -14,7 +14,7 @@
 //
 // How many minions?
 //
-[[nodiscard]] auto thing_mob_minion_count_get(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp mob) ->  int
+[[nodiscard]] auto thing_mob_minion_count_get(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp mob) -> int
 {
   TRACE();
 
@@ -37,7 +37,7 @@
 //
 // Add a minion to the mob if possible
 //
-[[nodiscard]] auto thing_mob_spawn_a_minion(Gamep g, Levelsp v, Levelp l, Thingp mob, Tpp tp_minion) ->  Thingp
+[[nodiscard]] auto thing_mob_spawn_a_minion(Gamep g, Levelsp v, Levelp l, Thingp mob, Tpp tp_minion) -> Thingp
 {
   TRACE();
 
@@ -178,7 +178,7 @@
 //
 // Detach all minions from their mob
 //
-[[nodiscard]] auto thing_mob_detach_all_minions(Gamep g, Levelsp v, Levelp l, Thingp mob) ->  bool
+[[nodiscard]] auto thing_mob_detach_all_minions(Gamep g, Levelsp v, Levelp l, Thingp mob) -> bool
 {
   TRACE();
 
@@ -189,7 +189,7 @@
 //
 // Kill all minions
 //
-[[nodiscard]] auto thing_mob_kill_all_minions(Gamep g, Levelsp v, Levelp l, Thingp mob, ThingEvent &e) ->  bool
+[[nodiscard]] auto thing_mob_kill_all_minions(Gamep g, Levelsp v, Levelp l, Thingp mob, ThingEvent &e) -> bool
 {
   TRACE();
 
@@ -199,7 +199,7 @@
 //
 // Detach a minion from its mob
 //
-[[nodiscard]] auto thing_mob_detach_minion(Gamep g, Levelsp v, Levelp l, Thingp mob, Thingp minion) ->  bool
+[[nodiscard]] auto thing_mob_detach_minion(Gamep g, Levelsp v, Levelp l, Thingp mob, Thingp minion) -> bool
 {
   TRACE();
 

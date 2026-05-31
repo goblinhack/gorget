@@ -47,7 +47,7 @@ void thing_player_init(Gamep g)
   player_state_change(g, v, l, PLAYER_STATE_NORMAL);
 }
 
-[[nodiscard]] auto thing_player(Gamep g) ->  Thingp
+[[nodiscard]] auto thing_player(Gamep g) -> Thingp
 {
   TRACE();
 
@@ -63,7 +63,7 @@ void thing_player_init(Gamep g)
   return thing_find(g, v, v->player_id);
 }
 
-[[nodiscard]] auto thing_player_level(Gamep g) ->  Levelp
+[[nodiscard]] auto thing_player_level(Gamep g) -> Levelp
 {
   TRACE();
 
@@ -125,7 +125,7 @@ void thing_player_init(Gamep g)
 //
 // Return true on the event being consumed
 //
-[[nodiscard]] auto thing_player_mouse_down(Gamep g, Levelsp v, Levelp l, int x, int y, uint32_t button) ->  bool
+[[nodiscard]] auto thing_player_mouse_down(Gamep g, Levelsp v, Levelp l, int x, int y, uint32_t button) -> bool
 {
   log("thing mouse down");
   TRACE_INDENT();
@@ -275,13 +275,13 @@ void thing_player_event_loop(Gamep g, Levelsp v, Levelp l)
   }
 }
 
-[[nodiscard]] auto player_state_to_string(PlayerStateType state) ->  std::string
+[[nodiscard]] auto player_state_to_string(PlayerStateType state) -> std::string
 {
   TRACE();
   return PlayerStateType_to_string(state);
 }
 
-[[nodiscard]] auto player_state(Gamep /*g*/, Levelsp v) ->  PlayerStateType
+[[nodiscard]] auto player_state(Gamep /*g*/, Levelsp v) -> PlayerStateType
 {
   TRACE();
   return v->_player_state;
@@ -486,7 +486,7 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
 //
 // Return true on the event being consumed
 //
-[[nodiscard]] auto player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, const bpoint &to) ->  bool
+[[nodiscard]] auto player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, const bpoint &to) -> bool
 {
   auto *me = thing_player(g);
   if (me == nullptr) {
@@ -725,7 +725,7 @@ static auto player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy) -> b
   return success;
 }
 
-[[nodiscard]] auto player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what, bpoint target) ->  bool
+[[nodiscard]] auto player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what, bpoint target) -> bool
 {
   TRACE();
 
@@ -855,7 +855,7 @@ void player_move_accum(Gamep /*g*/, Levelsp v, Levelp /*l*/, bool up, bool down,
 //
 // Attempt to move
 //
-[[nodiscard]] auto player_move_request(Gamep g, bool up, bool down, bool left, bool right, bool fire) ->  bool
+[[nodiscard]] auto player_move_request(Gamep g, bool up, bool down, bool left, bool right, bool fire) -> bool
 {
   TRACE();
 
@@ -1176,7 +1176,7 @@ void player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
 //
 // Handle me jumping
 //
-[[nodiscard]] auto player_jump(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) ->  bool
+[[nodiscard]] auto player_jump(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool
 {
   TRACE();
   THING_DBG(me, "player jump");
@@ -1217,7 +1217,7 @@ void player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
 //
 // Move to the next path on the popped path if it exits.
 //
-[[nodiscard]] auto player_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp me) ->  bool
+[[nodiscard]] auto player_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
 {
   //
   // If already moving, do not pop the next path tile

@@ -88,7 +88,7 @@ static void tp_barrel_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
   thing_dead(g, v, l, t, e);
 }
 
-[[nodiscard]] auto tp_load_barrel() ->  bool
+[[nodiscard]] auto tp_load_barrel() -> bool
 {
   TRACE();
 

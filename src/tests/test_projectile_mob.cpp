@@ -85,7 +85,7 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_projectile_mob() ->  bool // NOLINT
+[[nodiscard]] auto test_load_projectile_mob() -> bool // NOLINT
 {
   TRACE();
 

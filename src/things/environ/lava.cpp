@@ -16,7 +16,7 @@ static auto tp_lava_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> s
   return "lovely lava";
 }
 
-[[nodiscard]] auto tp_load_lava() ->  bool
+[[nodiscard]] auto tp_load_lava() -> bool
 {
   TRACE();
 

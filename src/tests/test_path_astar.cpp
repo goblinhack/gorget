@@ -169,7 +169,7 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_path_astar() ->  bool // NOLINT
+[[nodiscard]] auto test_load_path_astar() -> bool // NOLINT
 {
   TRACE();
 

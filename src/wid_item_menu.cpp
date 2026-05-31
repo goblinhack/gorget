@@ -135,7 +135,7 @@ static Thingp g_item;
 
   if (level_is_level_select(g, v, l)) {
     topcon(UI_WARNING_FMT_STR "You can't drop things here!" UI_RESET_FMT);
-      (void) sound_play(g, "error");
+    (void) sound_play(g, "error");
     return false;
   }
 
@@ -146,7 +146,7 @@ static Thingp g_item;
   };
 
   if (! thing_drop(g, v, l, player, item, e)) {
-      (void) sound_play(g, "error");
+    (void) sound_play(g, "error");
     return false;
   }
 
@@ -190,13 +190,13 @@ static Thingp g_item;
 
   if (! thing_is_able_to_be_wielded(item)) {
     topcon("Weapon cannot be wielded.");
-      (void) sound_play(g, "error");
+    (void) sound_play(g, "error");
     return false;
   }
 
   if (thing_is_wielded(item)) {
     topcon("Weapon is already wielded.");
-      (void) sound_play(g, "error");
+    (void) sound_play(g, "error");
     return false;
   }
 
@@ -207,7 +207,7 @@ static Thingp g_item;
   };
 
   if (! thing_wield(g, v, l, player, item, e)) {
-      (void) sound_play(g, "error");
+    (void) sound_play(g, "error");
     return false;
   }
 
@@ -242,13 +242,13 @@ static Thingp g_item;
 
   if (! thing_is_able_to_be_wielded(item)) {
     topcon("Weapon cannot be wielded.");
-      (void) sound_play(g, "error");
+    (void) sound_play(g, "error");
     return false;
   }
 
   if (! thing_is_wielded(item)) {
     topcon("Weapon is not wielded.");
-      (void) sound_play(g, "error");
+    (void) sound_play(g, "error");
     return false;
   }
 
@@ -259,7 +259,7 @@ static Thingp g_item;
   };
 
   if (! thing_unwield(g, v, l, player, e)) {
-      (void) sound_play(g, "error");
+    (void) sound_play(g, "error");
     return false;
   }
 
@@ -289,7 +289,7 @@ static Thingp g_item;
   TRACE();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
-      (void) sound_play(g, "keypress");
+    (void) sound_play(g, "keypress");
     return false;
   }
 
@@ -305,28 +305,28 @@ static Thingp g_item;
             switch (c) {
               case 'd' :
               case 'D' :
-                  (void) sound_play(g, "keypress");
+                (void) sound_play(g, "keypress");
                 (void) wid_item_menu_drop(g, nullptr, 0, 0, 0);
                 return true;
               case 'w' :
               case 'W' :
-                  (void) sound_play(g, "keypress");
+                (void) sound_play(g, "keypress");
                 (void) wid_item_menu_wield(g, nullptr, 0, 0, 0);
                 return true;
               case 'u' :
               case 'U' :
-                  (void) sound_play(g, "keypress");
+                (void) sound_play(g, "keypress");
                 (void) wid_item_menu_unwield(g, nullptr, 0, 0, 0);
                 return true;
               case 'e' :
               case 'E' :
-                  (void) sound_play(g, "keypress");
+                (void) sound_play(g, "keypress");
                 (void) wid_item_menu_equip(g, nullptr, 0, 0, 0);
                 return true;
               case 'b' :
               case 'B' :
               case SDLK_ESCAPE :
-                  (void) sound_play(g, "keypress");
+                (void) sound_play(g, "keypress");
                 (void) wid_item_menu_back(g, nullptr, 0, 0, 0);
                 return true;
             }

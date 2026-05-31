@@ -5,13 +5,13 @@
 #include "my_callstack.hpp"
 #include "my_tps.hpp"
 
-[[nodiscard]] auto templates_init() ->  bool
+[[nodiscard]] auto templates_init() -> bool
 {
   TRACE();
 
   // clang-format off
   /* begin shell marker1 */
-  /* shell for i in $(find things -name "*.cpp" | xargs grep -h "^auto tp_load" | sort | awk '{print $2}' | cut -d'(' -f1 ) */
+  /* shell for i in $(find things -name "*.cpp" | xargs grep -h "^..nodiscard.. auto tp_load" | sort | awk '{print $3}' | cut -d'(' -f1 ) */
   /* shell do */
   /* shell echo "  if (!$i()) { return false; }" */
   /* shell done */

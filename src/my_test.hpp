@@ -15,8 +15,8 @@
 
 class Test;
 
-[[nodiscard]] auto test_name(Testp test) ->  const char *;
-[[nodiscard]] auto test_load(const char * /*name_in*/) ->  Testp;
+[[nodiscard]] auto test_name(Testp test) -> const char *;
+[[nodiscard]] auto test_load(const char * /*name_in*/) -> Testp;
 
 using test_callback_t = bool (*)(Gamep, Testp);
 void test_callback_set(Testp test, test_callback_t callback);

@@ -34,7 +34,7 @@ static void wid_warning_destroy()
   TRACE();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
-      (void) sound_play(g, "keypress");
+    (void) sound_play(g, "keypress");
     return false;
   }
 
@@ -53,7 +53,7 @@ static void wid_warning_destroy()
               case 'Y' :
                 DBG("widget warning: yes");
                 if (callback != nullptr) {
-                    (void) sound_play(g, "keypress");
+                  (void) sound_play(g, "keypress");
                   (callback)(g, true);
                 }
                 wid_warning_destroy();
@@ -62,7 +62,7 @@ static void wid_warning_destroy()
               case 'N' :
                 DBG("widget warning: no");
                 if (callback != nullptr) {
-                    (void) sound_play(g, "keypress");
+                  (void) sound_play(g, "keypress");
                   (callback)(g, false);
                 }
                 wid_warning_destroy();
@@ -74,7 +74,7 @@ static void wid_warning_destroy()
                 {
                   if (callback != nullptr) {
                     DBG("widget warning: default, no");
-                      (void) sound_play(g, "keypress");
+                    (void) sound_play(g, "keypress");
                     (callback)(g, false);
                   }
                   wid_warning_destroy();

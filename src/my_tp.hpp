@@ -154,7 +154,7 @@
       list_macro(is_unused21, "is_unused21"),                                               /* newline */                                  \
       list_macro(is_unused22, "is_unused22"),                                               /* newline */                                  \
       list_macro(is_unused23, "is_unused23"),                                               /* newline */                                  \
-      list_macro(is_chest, "is_chest"),                                               /* newline */                                  \
+      list_macro(is_chest, "is_chest"),                                                     /* newline */                                  \
       list_macro(is_flammable, "is_flammable"),                                             /* newline */                                  \
       list_macro(is_auto_wield, "is_auto_wield"),                                           /* newline */                                  \
       list_macro(is_dead_when_discharged, "is_dead_when_discharged"),                       /* newline */                                  \
@@ -567,6 +567,7 @@ class Tp;
 [[nodiscard]] auto tp_is_broken_on_death(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_burnable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_chasm(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_chest(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_collectable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_collision_circle_large(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_collision_circle_small(Tpp tp) -> bool;
@@ -712,7 +713,6 @@ class Tp;
 [[nodiscard]] auto tp_is_unused21(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused22(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused23(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_chest(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused3(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused4(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused46(Tpp tp) -> bool;
@@ -787,74 +787,74 @@ class Tp;
 // end sort marker1 }
 
 // begin sort marker2 {
-[[nodiscard]] auto tp_priority_get(Tpp tp) ->  ThingPriorityType;
-[[nodiscard]] auto tp_rarity_get(Tpp tp) ->  ThingRarityType;
-void tp_chance_set(Tpp tp, ThingChanceType e, const std::string &val);
-void tp_charge_count_set(Tpp tp, int val);
-void tp_con_(Tpp tp, const char *fmt, va_list args); // compile error without
-void tp_con(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
-void tp_damage_set(Tpp tp, ThingEventType e, const std::string &val);
-void tp_dbg_(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
-void tp_die_(Tpp tp, const char *fmt, va_list args); // compile error without
-void tp_die(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
-void tp_distance_avoid_target_set(Tpp tp, int val);
-void tp_distance_jump_set(Tpp tp, int val);
-void tp_distance_minion_from_mob_max_set(Tpp tp, int val);
-void tp_distance_vision_set(Tpp tp, int val);
-void tp_err_(Tpp tp, const char *fmt, va_list args); // compile error without
-void tp_err(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
-void tp_fini();
-void tp_fired_weapon_count_max_set(Tpp tp, int val);
-void tp_flag_set(Tpp tp, ThingFlagType f, int val = 1);
-void tp_get_id(const char *, int *id);
-void tp_health_set(Tpp tp, const std::string &val);
-void tp_is_immune_add(Tpp tp, ThingEventType val);
-void tp_is_resistant_add(Tpp tp, ThingEventType val);
-void tp_lifespan_set(Tpp tp, const std::string &val);
-void tp_light_color_apply(Tpp tp);
-void tp_light_color_set(Tpp tp, const std::string &val);
-void tp_log_(Tpp tp, const char *fmt, va_list args); // compile error without
-void tp_log(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
-void tp_minion_max_set(Tpp tp, int val);
-void tp_monst_group_add(Tpp tp, ThingMonstGroup val);
-void tp_name_a_or_an_set(Tpp tp, const std::string &val);
-void tp_name_apostrophize_set(Tpp tp, const std::string &val);
-void tp_name_long_set(Tpp tp, const std::string &val);
-void tp_name_pluralize_set(Tpp tp, const std::string &val);
-void tp_name_real_set(Tpp tp, const std::string &val);
-void tp_name_short_set(Tpp tp, const std::string &val);
-void tp_priority_set(Tpp tp, ThingPriorityType val);
-void tp_rarity_set(Tpp tp, ThingRarityType val);
-void tp_score_value_set(Tpp tp, int val);
-void tp_speed_set(Tpp tp, int val);
-void tp_stamina_set(Tpp tp, const std::string &val);
-void tp_temperature_burns_at_set(Tpp tp, int val);
-void tp_temperature_damage_at_set(Tpp tp, int val);
-void tp_temperature_heat_capacity_set(Tpp tp, float val);
-void tp_temperature_initial_set(Tpp tp, int val);
-void tp_temperature_melts_at_set(Tpp tp, int val);
-void tp_temperature_thermal_conductivity_set(Tpp tp, float val);
-void tp_tile_name_set(Tpp tp, const std::string &val);
-void tp_tiles_push_back(Tpp tp, ThingAnimType val, Tilep tile_p);
-void tp_value1_set(Tpp tp, int val);
-void tp_value10_set(Tpp tp, int val);
-void tp_value11_set(Tpp tp, int val);
-void tp_value12_set(Tpp tp, int val);
-void tp_value13_set(Tpp tp, int val);
-void tp_value14_set(Tpp tp, int val);
-void tp_value15_set(Tpp tp, int val);
-void tp_value16_set(Tpp tp, int val);
-void tp_value2_set(Tpp tp, int val);
-void tp_value3_set(Tpp tp, int val);
-void tp_value4_set(Tpp tp, int val);
-void tp_value5_set(Tpp tp, int val);
-void tp_value6_set(Tpp tp, int val);
-void tp_value7_set(Tpp tp, int val);
-void tp_value8_set(Tpp tp, int val);
-void tp_value9_set(Tpp tp, int val);
-void tp_variant_set(Tpp tp, int val);
-void tp_weight_set(Tpp tp, uint32_t val);
-void tp_z_depth_set(Tpp tp, MapZDepthType val);
+[[nodiscard]] auto tp_priority_get(Tpp tp) -> ThingPriorityType;
+[[nodiscard]] auto tp_rarity_get(Tpp tp) -> ThingRarityType;
+void               tp_chance_set(Tpp tp, ThingChanceType e, const std::string &val);
+void               tp_charge_count_set(Tpp tp, int val);
+void               tp_con_(Tpp tp, const char *fmt, va_list args); // compile error without
+void               tp_con(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void               tp_damage_set(Tpp tp, ThingEventType e, const std::string &val);
+void               tp_dbg_(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void               tp_die_(Tpp tp, const char *fmt, va_list args); // compile error without
+void               tp_die(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void               tp_distance_avoid_target_set(Tpp tp, int val);
+void               tp_distance_jump_set(Tpp tp, int val);
+void               tp_distance_minion_from_mob_max_set(Tpp tp, int val);
+void               tp_distance_vision_set(Tpp tp, int val);
+void               tp_err_(Tpp tp, const char *fmt, va_list args); // compile error without
+void               tp_err(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void               tp_fini();
+void               tp_fired_weapon_count_max_set(Tpp tp, int val);
+void               tp_flag_set(Tpp tp, ThingFlagType f, int val = 1);
+void               tp_get_id(const char *, int *id);
+void               tp_health_set(Tpp tp, const std::string &val);
+void               tp_is_immune_add(Tpp tp, ThingEventType val);
+void               tp_is_resistant_add(Tpp tp, ThingEventType val);
+void               tp_lifespan_set(Tpp tp, const std::string &val);
+void               tp_light_color_apply(Tpp tp);
+void               tp_light_color_set(Tpp tp, const std::string &val);
+void               tp_log_(Tpp tp, const char *fmt, va_list args); // compile error without
+void               tp_log(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void               tp_minion_max_set(Tpp tp, int val);
+void               tp_monst_group_add(Tpp tp, ThingMonstGroup val);
+void               tp_name_a_or_an_set(Tpp tp, const std::string &val);
+void               tp_name_apostrophize_set(Tpp tp, const std::string &val);
+void               tp_name_long_set(Tpp tp, const std::string &val);
+void               tp_name_pluralize_set(Tpp tp, const std::string &val);
+void               tp_name_real_set(Tpp tp, const std::string &val);
+void               tp_name_short_set(Tpp tp, const std::string &val);
+void               tp_priority_set(Tpp tp, ThingPriorityType val);
+void               tp_rarity_set(Tpp tp, ThingRarityType val);
+void               tp_score_value_set(Tpp tp, int val);
+void               tp_speed_set(Tpp tp, int val);
+void               tp_stamina_set(Tpp tp, const std::string &val);
+void               tp_temperature_burns_at_set(Tpp tp, int val);
+void               tp_temperature_damage_at_set(Tpp tp, int val);
+void               tp_temperature_heat_capacity_set(Tpp tp, float val);
+void               tp_temperature_initial_set(Tpp tp, int val);
+void               tp_temperature_melts_at_set(Tpp tp, int val);
+void               tp_temperature_thermal_conductivity_set(Tpp tp, float val);
+void               tp_tile_name_set(Tpp tp, const std::string &val);
+void               tp_tiles_push_back(Tpp tp, ThingAnimType val, Tilep tile_p);
+void               tp_value1_set(Tpp tp, int val);
+void               tp_value10_set(Tpp tp, int val);
+void               tp_value11_set(Tpp tp, int val);
+void               tp_value12_set(Tpp tp, int val);
+void               tp_value13_set(Tpp tp, int val);
+void               tp_value14_set(Tpp tp, int val);
+void               tp_value15_set(Tpp tp, int val);
+void               tp_value16_set(Tpp tp, int val);
+void               tp_value2_set(Tpp tp, int val);
+void               tp_value3_set(Tpp tp, int val);
+void               tp_value4_set(Tpp tp, int val);
+void               tp_value5_set(Tpp tp, int val);
+void               tp_value6_set(Tpp tp, int val);
+void               tp_value7_set(Tpp tp, int val);
+void               tp_value8_set(Tpp tp, int val);
+void               tp_value9_set(Tpp tp, int val);
+void               tp_variant_set(Tpp tp, int val);
+void               tp_weight_set(Tpp tp, uint32_t val);
+void               tp_z_depth_set(Tpp tp, MapZDepthType val);
 // end sort marker2 }
 
 //

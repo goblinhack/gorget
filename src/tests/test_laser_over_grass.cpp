@@ -82,7 +82,7 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_laser_over_grass() ->  bool // NOLINT
+[[nodiscard]] auto test_load_laser_over_grass() -> bool // NOLINT
 {
   TRACE();
 

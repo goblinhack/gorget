@@ -40,7 +40,7 @@ void wid_botcon_fini(Gamep g)
   wid_destroy(g, &wid_botcon_window);
 }
 
-[[nodiscard]] auto wid_botcon_init(Gamep g) ->  bool
+[[nodiscard]] auto wid_botcon_init(Gamep g) -> bool
 {
   TRACE();
   wid_botcon_wid_create(g);

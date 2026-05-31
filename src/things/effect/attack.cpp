@@ -10,7 +10,7 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-[[nodiscard]] auto tp_load_effect_attack() ->  bool
+[[nodiscard]] auto tp_load_effect_attack() -> bool
 {
   TRACE();
 

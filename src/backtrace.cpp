@@ -301,7 +301,7 @@ std::string backtrace_string(void)
   return out;
 }
 #else
-[[nodiscard]] auto backtrace_string() ->  std::string
+[[nodiscard]] auto backtrace_string() -> std::string
 {
   backtrace_mutex.lock();
 

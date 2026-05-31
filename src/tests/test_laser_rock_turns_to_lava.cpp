@@ -89,7 +89,7 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_laser_rock_turns_to_lava() ->  bool // NOLINT
+[[nodiscard]] auto test_load_laser_rock_turns_to_lava() -> bool // NOLINT
 {
   TRACE();
 

@@ -10,30 +10,30 @@
 
 #include <string>
 
-[[nodiscard]] auto log_dir_create() ->  std::string;
-[[nodiscard]] auto redirect_stderr() ->  FILE *;
-[[nodiscard]] auto redirect_stdout() ->  FILE *;
-void botcon_newline();
-void botcon(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
-void cleanup();
-void close_stderr();
-void close_stdout();
-void con_newline();
-void con(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
-void crash_handler(int sig);
-void croak_handler(bool clean, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
-void ctrlc_handler(int sig);
-void error_clear(Gamep g);
-void error_message(Gamep g, const std::string &error);
-void find_file_locations();
-void log(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
-void err(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
-void reset_globals();
-void restart(Gamep g, const std::string & /*restart_arg*/);
-void sdl_msg_box(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
-void topcon_newline();
-void topcon(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
-void warn(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
+[[nodiscard]] auto log_dir_create() -> std::string;
+[[nodiscard]] auto redirect_stderr() -> FILE *;
+[[nodiscard]] auto redirect_stdout() -> FILE *;
+void               botcon_newline();
+void               botcon(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
+void               cleanup();
+void               close_stderr();
+void               close_stdout();
+void               con_newline();
+void               con(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
+void               crash_handler(int sig);
+void               croak_handler(bool clean, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void               ctrlc_handler(int sig);
+void               error_clear(Gamep g);
+void               error_message(Gamep g, const std::string &error);
+void               find_file_locations();
+void               log(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
+void               err(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
+void               reset_globals();
+void               restart(Gamep g, const std::string               &/*restart_arg*/);
+void               sdl_msg_box(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
+void               topcon_newline();
+void               topcon(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
+void               warn(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 
 #define MY_STDOUT (g_log_stdout ? g_log_stdout : redirect_stdout())
 #define MY_STDERR (g_log_stderr ? g_log_stderr : redirect_stderr())

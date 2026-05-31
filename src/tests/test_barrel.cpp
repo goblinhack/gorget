@@ -117,7 +117,7 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_barrel() ->  bool // NOLINT
+[[nodiscard]] auto test_load_barrel() -> bool // NOLINT
 {
   TRACE();
 

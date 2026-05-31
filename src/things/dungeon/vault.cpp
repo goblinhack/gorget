@@ -26,7 +26,7 @@ static void tp_vault_melt(Gamep g, Levelsp v, Levelp l, Thingp t)
   (void) thing_spawn(g, v, l, tp_first(is_lava), t);
 }
 
-[[nodiscard]] auto tp_load_vault() ->  bool
+[[nodiscard]] auto tp_load_vault() -> bool
 {
   TRACE();
 

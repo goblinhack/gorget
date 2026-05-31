@@ -229,7 +229,7 @@ static void tp_door_locked_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, Thi
   }
 }
 
-[[nodiscard]] auto tp_load_door_locked() ->  bool
+[[nodiscard]] auto tp_load_door_locked() -> bool
 {
   TRACE();
 

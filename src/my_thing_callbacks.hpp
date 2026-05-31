@@ -13,28 +13,28 @@
 #include <string>
 
 using thing_display_get_tile_info_t = Tilep (*)(Gamep, Levelsp, Levelp, const bpoint &p, Tpp tp, Thingp t_maybe_null);
-void thing_display_get_tile_info_set(Tpp tp, thing_display_get_tile_info_t callback);
-[[nodiscard]] auto thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp t_maybe_null) ->  Tilep;
+void               thing_display_get_tile_info_set(Tpp tp, thing_display_get_tile_info_t callback);
+[[nodiscard]] auto thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp t_maybe_null) -> Tilep;
 
 using thing_assess_tile_t = ThingEnvironType (*)(Gamep, Levelsp, Levelp l, const bpoint &p, Thingp me);
-void thing_assess_tile_set(Tpp tp, thing_assess_tile_t callback);
-[[nodiscard]] auto thing_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) ->  ThingEnvironType;
+void               thing_assess_tile_set(Tpp tp, thing_assess_tile_t callback);
+[[nodiscard]] auto thing_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> ThingEnvironType;
 
 using thing_description_get_t = std::string (*)(Gamep, Levelsp, Levelp, Thingp me);
-void thing_description_set(Tpp tp, thing_description_get_t callback);
-[[nodiscard]] auto thing_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->  std::string;
+void               thing_description_set(Tpp tp, thing_description_get_t callback);
+[[nodiscard]] auto thing_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string;
 
 using thing_z_depth_get_t = MapZDepthType (*)(Gamep, Levelsp, Levelp, Thingp me);
-void thing_z_depth_set(Tpp tp, thing_z_depth_get_t callback);
-[[nodiscard]] auto thing_z_depth_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->  MapZDepthType;
+void               thing_z_depth_set(Tpp tp, thing_z_depth_get_t callback);
+[[nodiscard]] auto thing_z_depth_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> MapZDepthType;
 
 using thing_detail_get_t = std::string (*)(Gamep, Levelsp, Levelp, Thingp me);
-void thing_detail_set(Tpp tp, thing_detail_get_t callback);
-[[nodiscard]] auto thing_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->  std::string;
+void               thing_detail_set(Tpp tp, thing_detail_get_t callback);
+[[nodiscard]] auto thing_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string;
 
 using thing_mouse_down_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, int x, int y, int button);
-void thing_mouse_down_set(Tpp tp, thing_mouse_down_t callback);
-[[nodiscard]] auto thing_mouse_down(Gamep g, Levelsp v, Levelp l, Thingp me, int x, int y, int button) ->  bool;
+void               thing_mouse_down_set(Tpp tp, thing_mouse_down_t callback);
+[[nodiscard]] auto thing_mouse_down(Gamep g, Levelsp v, Levelp l, Thingp me, int x, int y, int button) -> bool;
 
 using thing_on_spawned_t = void (*)(Gamep, Levelsp, Levelp, Thingp me);
 void thing_on_spawned_set(Tpp tp, thing_on_spawned_t callback);
@@ -53,32 +53,32 @@ void thing_on_level_populated_set(Tpp tp, thing_on_level_populated_t callback);
 void thing_on_level_populated(Gamep g, Levelsp v, Levelp l, Thingp me);
 
 using thing_on_carry_request_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp carrier);
-void thing_on_carry_request_set(Tpp tp, thing_on_carry_request_t callback);
-[[nodiscard]] auto thing_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp carrier) ->  bool;
+void               thing_on_carry_request_set(Tpp tp, thing_on_carry_request_t callback);
+[[nodiscard]] auto thing_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp carrier) -> bool;
 
 using thing_on_drop_request_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp dropper);
-void thing_on_drop_request_set(Tpp tp, thing_on_drop_request_t callback);
-[[nodiscard]] auto thing_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp dropper) ->  bool;
+void               thing_on_drop_request_set(Tpp tp, thing_on_drop_request_t callback);
+[[nodiscard]] auto thing_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp dropper) -> bool;
 
 using thing_on_use_weapon_request_t = Tpp (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp user);
-void thing_on_use_weapon_request_set(Tpp tp, thing_on_use_weapon_request_t callback);
-[[nodiscard]] auto thing_on_use_weapon_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user) ->  Tpp;
+void               thing_on_use_weapon_request_set(Tpp tp, thing_on_use_weapon_request_t callback);
+[[nodiscard]] auto thing_on_use_weapon_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user) -> Tpp;
 
 using thing_on_wield_request_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp carrier);
-void thing_on_wield_request_set(Tpp tp, thing_on_wield_request_t callback);
-[[nodiscard]] auto thing_on_wield_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp wielder) ->  bool;
+void               thing_on_wield_request_set(Tpp tp, thing_on_wield_request_t callback);
+[[nodiscard]] auto thing_on_wield_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp wielder) -> bool;
 
 using thing_on_unwield_request_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp unwieldper);
-void thing_on_unwield_request_set(Tpp tp, thing_on_unwield_request_t callback);
-[[nodiscard]] auto thing_on_unwield_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp unwieldper) ->  bool;
+void               thing_on_unwield_request_set(Tpp tp, thing_on_unwield_request_t callback);
+[[nodiscard]] auto thing_on_unwield_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp unwieldper) -> bool;
 
 using thing_on_open_request_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp opener);
-void thing_on_open_request_set(Tpp tp, thing_on_open_request_t callback);
-[[nodiscard]] auto thing_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp opener) ->  bool;
+void               thing_on_open_request_set(Tpp tp, thing_on_open_request_t callback);
+[[nodiscard]] auto thing_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp opener) -> bool;
 
 using thing_on_close_request_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp closer);
-void thing_on_close_request_set(Tpp tp, thing_on_close_request_t callback);
-[[nodiscard]] auto thing_on_close_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp closer) ->  bool;
+void               thing_on_close_request_set(Tpp tp, thing_on_close_request_t callback);
+[[nodiscard]] auto thing_on_close_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp closer) -> bool;
 
 using thing_on_tick_idle_t = void (*)(Gamep, Levelsp, Levelp, Thingp me);
 void thing_on_tick_idle_set(Tpp tp, thing_on_tick_idle_t callback);
@@ -97,12 +97,12 @@ void thing_on_death_set(Tpp tp, thing_on_death_t callback);
 void thing_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e);
 
 using thing_on_damage_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, ThingEvent &);
-void thing_on_damage_set(Tpp tp, thing_on_damage_t callback);
-[[nodiscard]] auto thing_on_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e) ->  bool;
+void               thing_on_damage_set(Tpp tp, thing_on_damage_t callback);
+[[nodiscard]] auto thing_on_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e) -> bool;
 
 using thing_on_attacking_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp it, ThingEvent &);
-void thing_on_attacking_set(Tpp tp, thing_on_attacking_t callback);
-[[nodiscard]] auto thing_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, ThingEvent &e) ->  bool;
+void               thing_on_attacking_set(Tpp tp, thing_on_attacking_t callback);
+[[nodiscard]] auto thing_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, ThingEvent &e) -> bool;
 
 using thing_on_moved_t = void (*)(Gamep, Levelsp, Levelp, Thingp me);
 void thing_on_moved_set(Tpp tp, thing_on_moved_t callback);

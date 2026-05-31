@@ -13,7 +13,7 @@
 //
 // Return the level of the thing
 //
-[[nodiscard]] auto thing_level(Gamep g, Levelsp v, Thingp t) ->  Levelp
+[[nodiscard]] auto thing_level(Gamep g, Levelsp v, Thingp t) -> Levelp
 {
   TRACE();
 
@@ -25,7 +25,7 @@
   return game_level_get(g, v, t->level_num);
 }
 
-[[nodiscard]] auto thing_on_same_level_as_player(Gamep g, Levelsp v, Thingp t) ->  bool
+[[nodiscard]] auto thing_on_same_level_as_player(Gamep g, Levelsp v, Thingp t) -> bool
 {
   TRACE();
 

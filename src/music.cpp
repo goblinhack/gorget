@@ -53,7 +53,7 @@ static std::string music_current;
 
 static bool music_init_done;
 
-[[nodiscard]] auto music_init() ->  bool
+[[nodiscard]] auto music_init() -> bool
 {
   TRACE();
 
@@ -112,7 +112,7 @@ static auto find_one(const std::string &alias) -> Music *
   return rand_one_of(out);
 }
 
-[[nodiscard]] auto music_load(Gamep /*g*/, uint32_t rate, const char *file, const char *name_alias) ->  bool
+[[nodiscard]] auto music_load(Gamep /*g*/, uint32_t rate, const char *file, const char *name_alias) -> bool
 {
   TRACE();
 
@@ -154,7 +154,7 @@ void music_update_volume(Gamep g)
   SDL_ClearError();
 }
 
-[[nodiscard]] auto music_play(Gamep g, const std::string &name) ->  bool
+[[nodiscard]] auto music_play(Gamep g, const std::string &name) -> bool
 {
   TRACE();
 
@@ -184,7 +184,7 @@ void music_update_volume(Gamep g)
   return true;
 }
 
-[[nodiscard]] auto music_halt() ->  bool
+[[nodiscard]] auto music_halt() -> bool
 {
   TRACE();
   music_current = "";

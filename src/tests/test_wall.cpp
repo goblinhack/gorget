@@ -163,7 +163,7 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_wall() ->  bool // NOLINT
+[[nodiscard]] auto test_load_wall() -> bool // NOLINT
 {
   TRACE();
 

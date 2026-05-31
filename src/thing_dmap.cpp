@@ -15,7 +15,7 @@
 //
 // Get the dmap associated with the thing
 //
-[[nodiscard]] auto thing_get_dmap(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp me) ->  Dmap *
+[[nodiscard]] auto thing_get_dmap(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp me) -> Dmap *
 {
   TRACE();
 

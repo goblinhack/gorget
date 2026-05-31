@@ -159,7 +159,7 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_monst_pass_through_walls() ->  bool // NOLINT
+[[nodiscard]] auto test_load_monst_pass_through_walls() -> bool // NOLINT
 {
   TRACE();
 

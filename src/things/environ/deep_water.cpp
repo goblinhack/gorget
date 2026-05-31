@@ -26,7 +26,7 @@ static auto tp_deep_water_description_get(Gamep g, Levelsp v, Levelp l, Thingp t
   return "deep water";
 }
 
-[[nodiscard]] auto tp_load_deep_water() ->  bool
+[[nodiscard]] auto tp_load_deep_water() -> bool
 {
   TRACE();
 

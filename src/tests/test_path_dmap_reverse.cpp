@@ -160,7 +160,7 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_path_dmap_reverse() ->  bool // NOLINT
+[[nodiscard]] auto test_load_path_dmap_reverse() -> bool // NOLINT
 {
   TRACE();
 

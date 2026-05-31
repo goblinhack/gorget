@@ -20,7 +20,7 @@
 //
 // This can be done for a thread also.
 //
-[[nodiscard]] auto redirect_stdout() ->  FILE *
+[[nodiscard]] auto redirect_stdout() -> FILE *
 {
 #if 0
   //
@@ -79,7 +79,7 @@
 //
 // This can be done for a thread also.
 //
-[[nodiscard]] auto redirect_stderr() ->  FILE *
+[[nodiscard]] auto redirect_stderr() -> FILE *
 {
 #if 0
   //

@@ -5,13 +5,13 @@
 #include "my_callstack.hpp"
 #include "my_tests.hpp"
 
-[[nodiscard]] auto tests_init() ->  bool
+[[nodiscard]] auto tests_init() -> bool
 {
   TRACE();
 
   // clang-format off
   /* begin shell marker1 */
-  /* shell for i in $(find tests -name "*.cpp" | xargs grep -h "^auto test_load" | sort | awk '{print $2}' | cut -d'(' -f1 ) */
+  /* shell for i in $(find tests -name "*.cpp" | xargs grep -h "^..nodiscard.. auto test_load" | sort | awk '{print $3}' | cut -d'(' -f1 ) */
   /* shell do */
   /* shell echo "  if (!$i()) { return false; }" */
   /* shell done */

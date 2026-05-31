@@ -27,7 +27,7 @@ using wid_mode = enum wid_mode_ {
 
 #define WID_MODE_FIRST WID_MODE_NORMAL
 
-[[nodiscard]] auto wid_event_to_char(const struct SDL_Keysym *evt) ->  char;
+[[nodiscard]] auto wid_event_to_char(const struct SDL_Keysym *evt) -> char;
 
 using on_joy_button_t   = bool (*)(Gamep, Widp, int x, int y);
 using on_key_down_t     = bool (*)(Gamep, Widp, const struct SDL_Keysym *);

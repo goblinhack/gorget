@@ -21,7 +21,7 @@ void thing_on_use_weapon_request_set(Tpp tp, thing_on_use_weapon_request_t callb
   tp->on_use_weapon_request = callback;
 }
 
-[[nodiscard]] auto thing_on_use_weapon_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user) ->  Tpp
+[[nodiscard]] auto thing_on_use_weapon_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user) -> Tpp
 {
   TRACE();
   auto *tp = thing_tp(me);
@@ -42,7 +42,7 @@ void thing_on_use_weapon_request_set(Tpp tp, thing_on_use_weapon_request_t callb
   return tp->on_use_weapon_request(g, v, l, me, user);
 }
 
-[[nodiscard]] auto thing_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, Tpp fire_what, const bpoint &target) ->  bool
+[[nodiscard]] auto thing_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, Tpp fire_what, const bpoint &target) -> bool
 {
   TRACE();
 

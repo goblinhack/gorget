@@ -15,7 +15,7 @@
 
 #include <cmath>
 
-[[nodiscard]] auto thing_get(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot) ->  Thingp
+[[nodiscard]] auto thing_get(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot) -> Thingp
 {
   TRACE_DEBUG();
 
@@ -47,7 +47,7 @@
   return t;
 }
 
-[[nodiscard]] auto thing_get_at_safe(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot) ->  Thingp
+[[nodiscard]] auto thing_get_at_safe(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot) -> Thingp
 {
   TRACE_DEBUG();
 
@@ -65,7 +65,7 @@
   return t;
 }
 
-[[nodiscard]] auto thing_and_tp_get_at_safe(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot, Tpp *out) ->  Thingp
+[[nodiscard]] auto thing_and_tp_get_at_safe(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot, Tpp *out) -> Thingp
 {
   TRACE_DEBUG();
 
@@ -87,7 +87,7 @@
   return t;
 }
 
-[[nodiscard]] auto thing_and_tp_get_at(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot, Tpp *out) ->  Thingp
+[[nodiscard]] auto thing_and_tp_get_at(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot, Tpp *out) -> Thingp
 {
   TRACE_DEBUG();
 
@@ -154,7 +154,7 @@ void thing_stats_dump(Gamep /*g*/, Levelsp v)
   log("- Ext mem things      %u out of max %u", v->thing_ext_count, THING_EXT_MAX);
 }
 
-[[nodiscard]] auto thing_ext_struct(Gamep g, Thingp t) ->  ThingExtp
+[[nodiscard]] auto thing_ext_struct(Gamep g, Thingp t) -> ThingExtp
 {
   TRACE();
 
@@ -171,7 +171,7 @@ void thing_stats_dump(Gamep /*g*/, Levelsp v)
   return &v->thing_ext[ ext_id ];
 }
 
-[[nodiscard]] auto thing_light_struct(Gamep g, Thingp t) ->  ThingLightp
+[[nodiscard]] auto thing_light_struct(Gamep g, Thingp t) -> ThingLightp
 {
   TRACE();
 
@@ -188,7 +188,7 @@ void thing_stats_dump(Gamep /*g*/, Levelsp v)
   return &v->thing_light[ light_id ];
 }
 
-[[nodiscard]] auto thing_player_struct(Gamep g) ->  ThingPlayerp
+[[nodiscard]] auto thing_player_struct(Gamep g) -> ThingPlayerp
 {
   TRACE();
 

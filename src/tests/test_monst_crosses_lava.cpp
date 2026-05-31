@@ -91,7 +91,7 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_monst_crosses_lava() ->  bool // NOLINT
+[[nodiscard]] auto test_load_monst_crosses_lava() -> bool // NOLINT
 {
   TRACE();
 

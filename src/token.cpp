@@ -194,7 +194,7 @@ void tokens_test()
   tokens_print(tokens_to_string("set god \"mode on\"", &tmp));
 }
 
-[[nodiscard]] auto tokens_to_string(const char *input, class Tokens *tokens) ->  class Tokens *
+[[nodiscard]] auto tokens_to_string(const char *input, class Tokens *tokens) -> class Tokens *
 {
   TRACE();
 

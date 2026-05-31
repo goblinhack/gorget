@@ -42,7 +42,7 @@ static void tp_fireball_on_moved(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 }
 
-[[nodiscard]] auto tp_load_fireball() ->  bool
+[[nodiscard]] auto tp_load_fireball() -> bool
 {
   auto *tp   = tp_load("fireball"); // keep as string for scripts
   auto  name = tp_name(tp);
