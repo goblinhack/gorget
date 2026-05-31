@@ -27,7 +27,7 @@
 #include <map>
 #include <string>
 
-auto level_select_is_oob(bpoint p) -> bool
+[[nodiscard]] auto level_select_is_oob(bpoint p) ->  bool
 {
   TRACE();
 
@@ -46,7 +46,7 @@ auto level_select_is_oob(bpoint p) -> bool
   return false;
 }
 
-auto level_select_is_oob(int x, int y) -> bool
+[[nodiscard]] auto level_select_is_oob(int x, int y) ->  bool
 {
   TRACE();
 
@@ -68,7 +68,7 @@ auto level_select_is_oob(int x, int y) -> bool
 //
 // If in level select mode, enter the chosen level
 //
-auto level_select_get_level_at_tile_coords(Gamep g, Levelsp v, bpoint /*p*/) -> Levelp
+[[nodiscard]] auto level_select_get_level_at_tile_coords(Gamep g, Levelsp v, bpoint /*p*/) ->  Levelp
 {
   TRACE();
 
@@ -135,7 +135,7 @@ static auto level_select_get_level_from_grid_coords(Levelsp v, bpoint p) -> Leve
 //
 // Attempt to find the next level for this thing to fall into
 //
-auto level_select_get_next_level_down(Gamep g, Levelsp v, Levelp l) -> Levelp
+[[nodiscard]] auto level_select_get_next_level_down(Gamep g, Levelsp v, Levelp l) ->  Levelp
 {
   TRACE();
 
@@ -149,7 +149,7 @@ auto level_select_get_next_level_down(Gamep g, Levelsp v, Levelp l) -> Levelp
 //
 // Attempt to find the next level for this thing to fall into
 //
-auto level_select_calculate_next_level_down(Gamep g, Levelsp v, Levelp l, bool redo) -> Levelp
+[[nodiscard]] auto level_select_calculate_next_level_down(Gamep g, Levelsp v, Levelp l, bool redo) ->  Levelp
 {
   TRACE();
 
@@ -301,7 +301,7 @@ got_level:
 //
 // This is the thing that is used to represent the current level. We focus the mouse zoom on this.
 //
-auto thing_level_select(Gamep g) -> Thingp
+[[nodiscard]] auto thing_level_select(Gamep g) ->  Thingp
 {
   TRACE();
 
@@ -385,7 +385,7 @@ void level_select_assign_levels_to_grid(Gamep g, Levelsp v)
 //
 // Return the level
 //
-auto level_select_get(Gamep /*g*/, Levelsp v, bpoint p) -> LevelSelectCell *
+[[nodiscard]] auto level_select_get(Gamep /*g*/, Levelsp v, bpoint p) ->  LevelSelectCell *
 {
   TRACE();
 

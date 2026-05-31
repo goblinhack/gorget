@@ -157,7 +157,7 @@ exit:
   return result;
 }
 
-auto test_load_player_fall_while_on_fire() -> bool // NOLINT
+[[nodiscard]] auto test_load_player_fall_while_on_fire() ->  bool // NOLINT
 {
   TRACE();
 

@@ -91,7 +91,7 @@ exit:
   return result;
 }
 
-auto test_load_teleport_shove_barrel() -> bool // NOLINT
+[[nodiscard]] auto test_load_teleport_shove_barrel() ->  bool // NOLINT
 {
   TRACE();
 

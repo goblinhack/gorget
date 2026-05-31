@@ -48,7 +48,7 @@ void level_cursor_describe_update(Gamep g, Levelsp v)
 //
 // Add a thing to be described
 //
-auto level_cursor_describe_add(Gamep g, Levelsp v, Thingp t) -> bool
+[[nodiscard]] auto level_cursor_describe_add(Gamep g, Levelsp v, Thingp t) ->  bool
 {
   TRACE();
 
@@ -89,7 +89,7 @@ auto level_cursor_describe_add(Gamep g, Levelsp v, Thingp t) -> bool
 //
 // Remove a thing from the describe array
 //
-auto level_cursor_describe_remove(Gamep g, Levelsp v, Thingp t) -> bool
+[[nodiscard]] auto level_cursor_describe_remove(Gamep g, Levelsp v, Thingp t) ->  bool
 {
   TRACE();
 

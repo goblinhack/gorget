@@ -72,7 +72,7 @@ static auto tp_wand_light_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> 
   return what;
 }
 
-auto tp_load_wand_light() -> bool
+[[nodiscard]] auto tp_load_wand_light() ->  bool
 {
   TRACE();
 

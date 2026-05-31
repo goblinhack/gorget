@@ -7,7 +7,7 @@
 #include "my_tp.hpp"
 #include "my_types.hpp"
 
-auto thing_is_immune_to(Thingp t, ThingEventType val) -> bool
+[[nodiscard]] auto thing_is_immune_to(Thingp t, ThingEventType val) ->  bool
 {
   TRACE();
 
@@ -16,7 +16,7 @@ auto thing_is_immune_to(Thingp t, ThingEventType val) -> bool
   return tp_is_immune_to(tp, val);
 }
 
-auto thing_is_resistant_to(Thingp t, ThingEventType val) -> bool
+[[nodiscard]] auto thing_is_resistant_to(Thingp t, ThingEventType val) ->  bool
 {
   TRACE();
 

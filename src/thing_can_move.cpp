@@ -15,7 +15,7 @@
 //
 // Returns true if the thing can move to this location
 //
-auto thing_can_move_to_diagonal_is_blocked(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool
+[[nodiscard]] auto thing_can_move_to_diagonal_is_blocked(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) ->  bool
 {
   TRACE();
 
@@ -108,7 +108,7 @@ auto thing_can_move_to_diagonal_is_blocked(Gamep g, Levelsp v, Levelp l, Thingp 
 //
 // Returns true if the thing can move to this location
 //
-auto thing_can_move_to_attempt(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool
+[[nodiscard]] auto thing_can_move_to_attempt(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) ->  bool
 {
   TRACE();
 
@@ -159,7 +159,7 @@ auto thing_can_move_to_attempt(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint t
 // True - can move here
 // False - cannot move here, or don't want to move here
 //
-auto thing_can_move_to_ai(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool
+[[nodiscard]] auto thing_can_move_to_ai(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) ->  bool
 {
   TRACE_DEBUG();
 
@@ -219,7 +219,7 @@ auto thing_can_move_to_ai(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) ->
 //
 // We do not change direction upon this attempt; purely a check only
 //
-auto thing_can_move_to_possible(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool
+[[nodiscard]] auto thing_can_move_to_possible(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) ->  bool
 {
   TRACE_DEBUG();
 
@@ -331,7 +331,7 @@ auto thing_can_move_to_possible(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint 
 //
 // Returns true if we can move to this location by shoving
 //
-auto thing_can_move_to_attempt_by_shoving(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool
+[[nodiscard]] auto thing_can_move_to_attempt_by_shoving(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) ->  bool
 {
   TRACE();
 

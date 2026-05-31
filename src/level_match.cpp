@@ -18,7 +18,7 @@
 //
 // Compare level contents
 //
-auto level_match_contents(Gamep g, Levelsp v, Levelp l, Testp t, int w, int h, const char *expected) -> bool
+[[nodiscard]] auto level_match_contents(Gamep g, Levelsp v, Levelp l, Testp t, int w, int h, const char *expected) ->  bool
 {
   TRACE();
 

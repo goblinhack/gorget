@@ -162,7 +162,7 @@ Wid::~Wid() { OLDPTR(MTYPE_WID, this); }
   return wid_init_done && ! wid_exiting && ! g_dying && ! g_quitting && (g_thread_id == MAIN_THREAD);
 }
 
-auto wid_init() -> bool
+[[nodiscard]] auto wid_init() ->  bool
 {
   TRACE();
 
@@ -237,7 +237,7 @@ void wid_dump(Widp w, int depth)
   }
 }
 
-auto wid_count(Widp w, int depth) -> int
+[[nodiscard]] auto wid_count(Widp w, int depth) ->  int
 {
   TRACE();
 
@@ -260,7 +260,7 @@ auto wid_count(Widp w, int depth) -> int
   return count;
 }
 
-auto wid_get_tl_x(Widp w) -> int
+[[nodiscard]] auto wid_get_tl_x(Widp w) ->  int
 {
   TRACE();
 
@@ -269,7 +269,7 @@ auto wid_get_tl_x(Widp w) -> int
   return cx - (cx - w->key.tl.x);
 }
 
-auto wid_get_tl_y(Widp w) -> int
+[[nodiscard]] auto wid_get_tl_y(Widp w) ->  int
 {
   TRACE();
 
@@ -278,7 +278,7 @@ auto wid_get_tl_y(Widp w) -> int
   return cy - (cy - w->key.tl.y);
 }
 
-auto wid_get_br_x(Widp w) -> int
+[[nodiscard]] auto wid_get_br_x(Widp w) ->  int
 {
   TRACE();
 
@@ -287,7 +287,7 @@ auto wid_get_br_x(Widp w) -> int
   return cx + (w->key.br.x - cx);
 }
 
-auto wid_get_br_y(Widp w) -> int
+[[nodiscard]] auto wid_get_br_y(Widp w) ->  int
 {
   TRACE();
 
@@ -431,7 +431,7 @@ void wid_set_string_context(Widp w, std::string string_context)
   w->string_context = std::move(string_context);
 }
 
-auto wid_get_string_context(Widp w) -> std::string
+[[nodiscard]] auto wid_get_string_context(Widp w) ->  std::string
 {
   TRACE();
 
@@ -453,7 +453,7 @@ void wid_set_int_context(Widp w, int int_context)
   w->int_context = int_context;
 }
 
-auto wid_get_int_context(Widp w) -> int
+[[nodiscard]] auto wid_get_int_context(Widp w) ->  int
 {
   TRACE();
 
@@ -475,7 +475,7 @@ void wid_set_void_context(Widp w, void *void_context)
   w->void_context = void_context;
 }
 
-auto wid_get_void_context(Widp w) -> void *
+[[nodiscard]] auto wid_get_void_context(Widp w) ->  void *
 {
   TRACE();
 
@@ -559,7 +559,7 @@ void wid_unset_thing_context(Gamep g, Levelsp v, Widp w, Thingp t)
   }
 }
 
-auto wid_get_thing_context(Gamep g, Levelsp v, Widp w, int which) -> Thingp
+[[nodiscard]] auto wid_get_thing_context(Gamep g, Levelsp v, Widp w, int which) ->  Thingp
 {
   TRACE();
 
@@ -605,7 +605,7 @@ void wid_set_prev(Widp w, Widp prev)
   }
 }
 
-auto wid_get_prev(Widp w) -> Widp
+[[nodiscard]] auto wid_get_prev(Widp w) ->  Widp
 {
   TRACE();
 
@@ -620,7 +620,7 @@ auto wid_get_prev(Widp w) -> Widp
   return w->prev;
 }
 
-auto wid_get_next(Widp w) -> Widp
+[[nodiscard]] auto wid_get_next(Widp w) ->  Widp
 {
   TRACE();
 
@@ -635,7 +635,7 @@ auto wid_get_next(Widp w) -> Widp
   return w->next;
 }
 
-auto wid_get_head(Widp w) -> Widp
+[[nodiscard]] auto wid_get_head(Widp w) ->  Widp
 {
   TRACE();
 
@@ -653,7 +653,7 @@ auto wid_get_head(Widp w) -> Widp
   return w;
 }
 
-auto wid_get_tail(Widp w) -> Widp
+[[nodiscard]] auto wid_get_tail(Widp w) ->  Widp
 {
   TRACE();
 
@@ -671,7 +671,7 @@ auto wid_get_tail(Widp w) -> Widp
   return w;
 }
 
-auto wid_get_top_parent(Widp w) -> Widp
+[[nodiscard]] auto wid_get_top_parent(Widp w) ->  Widp
 {
   TRACE();
 
@@ -690,20 +690,20 @@ auto wid_get_top_parent(Widp w) -> Widp
   return w;
 }
 
-auto wid_get_parent(Widp w) -> Widp
+[[nodiscard]] auto wid_get_parent(Widp w) ->  Widp
 {
   TRACE();
 
   return w->parent;
 }
 
-auto wid_get_scrollbar_vert(Widp w) -> Widp
+[[nodiscard]] auto wid_get_scrollbar_vert(Widp w) ->  Widp
 {
   TRACE();
   return w->scrollbar_vert;
 }
 
-auto wid_get_scrollbar_horiz(Widp w) -> Widp
+[[nodiscard]] auto wid_get_scrollbar_horiz(Widp w) ->  Widp
 {
   TRACE();
   return w->scrollbar_horiz;
@@ -735,7 +735,7 @@ static void wid_set_scissors(int tlx, int tly, int brx, int bry)
 //
 // Should this widget be ignored for events?
 //
-auto wid_ignore_events(Widp w) -> bool
+[[nodiscard]] auto wid_ignore_events(Widp w) ->  bool
 {
   TRACE();
 
@@ -764,7 +764,7 @@ auto wid_ignore_events(Widp w) -> bool
   return false;
 }
 
-auto wid_ignore_events_only(Widp w) -> bool
+[[nodiscard]] auto wid_ignore_events_only(Widp w) ->  bool
 {
   TRACE();
 
@@ -783,7 +783,7 @@ auto wid_ignore_events_only(Widp w) -> bool
   return false;
 }
 
-auto wid_ignore_scroll_events(Widp w) -> bool
+[[nodiscard]] auto wid_ignore_scroll_events(Widp w) ->  bool
 {
   TRACE();
 
@@ -812,7 +812,7 @@ auto wid_ignore_scroll_events(Widp w) -> bool
   return false;
 }
 
-auto wid_ignore_for_focus(Widp w) -> bool
+[[nodiscard]] auto wid_ignore_for_focus(Widp w) ->  bool
 {
   TRACE();
 
@@ -840,7 +840,7 @@ auto wid_ignore_for_focus(Widp w) -> bool
 //
 // Should this widget be ignored for events?
 //
-auto wid_ignore_being_destroyed(Widp w) -> bool
+[[nodiscard]] auto wid_ignore_being_destroyed(Widp w) ->  bool
 {
   TRACE();
 
@@ -865,7 +865,7 @@ auto wid_ignore_being_destroyed(Widp w) -> bool
   return false;
 }
 
-auto wid_get_current_focus() -> Widp
+[[nodiscard]] auto wid_get_current_focus() ->  Widp
 {
   TRACE();
 
@@ -879,7 +879,7 @@ auto wid_get_current_focus() -> Widp
 //
 // Map an SDL key event to the char the user typed
 //
-auto wid_event_to_char(const struct SDL_Keysym *evt) -> char
+[[nodiscard]] auto wid_event_to_char(const struct SDL_Keysym *evt) ->  char
 {
   TRACE();
 
@@ -1091,7 +1091,7 @@ void wid_set_mode(Widp w, wid_mode mode)
 //
 // Widget mode, whether it is active, inactive etc...
 //
-auto wid_get_mode(Widp w) -> wid_mode
+[[nodiscard]] auto wid_get_mode(Widp w) ->  wid_mode
 {
   TRACE();
 
@@ -1107,25 +1107,25 @@ auto wid_get_mode(Widp w) -> wid_mode
   return w->mode;
 }
 
-auto to_string(Widp w) -> std::string
+[[nodiscard]] auto to_string(Widp w) ->  std::string
 {
   TRACE();
   return w->to_string;
 }
 
-auto wid_name(Widp w) -> std::string
+[[nodiscard]] auto wid_name(Widp w) ->  std::string
 {
   TRACE();
   return w->name;
 }
 
-auto wid_get_text(Widp w) -> std::string
+[[nodiscard]] auto wid_get_text(Widp w) ->  std::string
 {
   TRACE();
   return w->text;
 }
 
-auto wid_get_name(Widp w) -> std::string
+[[nodiscard]] auto wid_get_name(Widp w) ->  std::string
 {
   TRACE();
   return w->name;
@@ -1225,7 +1225,7 @@ void wid_set_text(Widp w, int v)
   wid_set_text(w, std::to_string(v));
 }
 
-auto wid_get_received_input(Widp w) -> bool
+[[nodiscard]] auto wid_get_received_input(Widp w) ->  bool
 {
   TRACE();
   return static_cast< bool >(w->received_input);
@@ -1243,19 +1243,19 @@ void wid_set_cursor(Widp w, uint32_t val)
   w->cursor = val;
 }
 
-auto wid_get_width(Widp w) -> int
+[[nodiscard]] auto wid_get_width(Widp w) ->  int
 {
   TRACE();
   return (wid_get_br_x(w) - wid_get_tl_x(w)) + 1;
 }
 
-auto wid_get_height(Widp w) -> int
+[[nodiscard]] auto wid_get_height(Widp w) ->  int
 {
   TRACE();
   return (wid_get_br_y(w) - wid_get_tl_y(w)) + 1;
 }
 
-auto wid_get_focusable(Widp w) -> bool
+[[nodiscard]] auto wid_get_focusable(Widp w) ->  bool
 {
   TRACE();
   return static_cast< bool >(w->focus_order);
@@ -1267,7 +1267,7 @@ void wid_set_focusable(Widp w, bool val)
   w->focus_order = static_cast< uint8_t >(val);
 }
 
-auto wid_get_show_cursor(Widp w) -> bool
+[[nodiscard]] auto wid_get_show_cursor(Widp w) ->  bool
 {
   TRACE();
   return static_cast< bool >(w->show_cursor);
@@ -1279,7 +1279,7 @@ void wid_set_show_cursor(Widp w, bool val)
   w->show_cursor = static_cast< uint8_t >(val);
 }
 
-auto wid_get_do_not_raise(Widp w) -> bool
+[[nodiscard]] auto wid_get_do_not_raise(Widp w) ->  bool
 {
   TRACE();
   return static_cast< bool >(w->do_not_raise);
@@ -1291,7 +1291,7 @@ void wid_set_do_not_raise(Widp w, bool val)
   w->do_not_raise = static_cast< uint8_t >(val);
 }
 
-auto wid_get_do_not_lower(Widp w) -> bool
+[[nodiscard]] auto wid_get_do_not_lower(Widp w) ->  bool
 {
   TRACE();
   return static_cast< bool >(w->do_not_lower);
@@ -1303,7 +1303,7 @@ void wid_set_do_not_lower(Widp w, bool val)
   w->do_not_lower = static_cast< uint8_t >(val);
 }
 
-auto wid_get_moveable(Widp w) -> bool
+[[nodiscard]] auto wid_get_moveable(Widp w) ->  bool
 {
   TRACE();
 
@@ -1333,7 +1333,7 @@ void wid_set_moveable(Gamep g, Widp w, bool val)
   wid_set_moveable_vert(g, w, val);
 }
 
-auto wid_get_moveable_horiz(Widp w) -> bool
+[[nodiscard]] auto wid_get_moveable_horiz(Widp w) ->  bool
 {
   TRACE();
 
@@ -1356,7 +1356,7 @@ void wid_set_moveable_horiz(Gamep g, Widp w, bool val)
   w->moveable_horiz_set = 1U;
 }
 
-auto wid_get_moveable_vert(Widp w) -> bool
+[[nodiscard]] auto wid_get_moveable_vert(Widp w) ->  bool
 {
   TRACE();
 
@@ -1379,7 +1379,7 @@ void wid_set_moveable_vert(Gamep g, Widp w, bool val)
   w->moveable_vert_set = 1U;
 }
 
-auto wid_get_moveable_bounded(Widp w) -> bool
+[[nodiscard]] auto wid_get_moveable_bounded(Widp w) ->  bool
 {
   TRACE();
 
@@ -1402,7 +1402,7 @@ void wid_set_moveable_bounded(Gamep g, Widp w, bool val)
   w->moveable_bounded_set = 1U;
 }
 
-auto wid_get_moveable_no_user_scroll(Widp w) -> bool
+[[nodiscard]] auto wid_get_moveable_no_user_scroll(Widp w) ->  bool
 {
   TRACE();
 
@@ -1425,7 +1425,7 @@ void wid_set_moveable_no_user_scroll(Gamep g, Widp w, bool val)
   w->moveable_no_user_scroll_set = 1U;
 }
 
-auto wid_get_text_lhs(Widp w) -> bool
+[[nodiscard]] auto wid_get_text_lhs(Widp w) ->  bool
 {
   TRACE();
   return static_cast< bool >(w->text_lhs);
@@ -1437,7 +1437,7 @@ void wid_set_text_lhs(Widp w, bool val)
   w->text_lhs = static_cast< uint8_t >(val);
 }
 
-auto wid_get_text_rhs(Widp w) -> bool
+[[nodiscard]] auto wid_get_text_rhs(Widp w) ->  bool
 {
   TRACE();
   return static_cast< bool >(w->text_rhs);
@@ -1449,7 +1449,7 @@ void wid_set_text_rhs(Widp w, bool /*val*/)
   w->text_rhs = 1U;
 }
 
-auto wid_get_text_centerx(Widp w) -> bool
+[[nodiscard]] auto wid_get_text_centerx(Widp w) ->  bool
 {
   TRACE();
   return static_cast< bool >(w->text_centerx);
@@ -1461,7 +1461,7 @@ void wid_set_text_centerx(Widp w, bool val)
   w->text_centerx = static_cast< uint8_t >(val);
 }
 
-auto wid_get_text_top(Widp w) -> bool
+[[nodiscard]] auto wid_get_text_top(Widp w) ->  bool
 {
   TRACE();
   return static_cast< bool >(w->text_top);
@@ -1473,7 +1473,7 @@ void wid_set_text_top(Widp w, bool val)
   w->text_top = static_cast< uint8_t >(val);
 }
 
-auto wid_get_text_bot(Widp w) -> bool
+[[nodiscard]] auto wid_get_text_bot(Widp w) ->  bool
 {
   TRACE();
   return static_cast< bool >(w->text_bot);
@@ -1485,7 +1485,7 @@ void wid_set_text_bot(Widp w, bool val)
   w->text_bot = static_cast< uint8_t >(val);
 }
 
-auto wid_get_text_centery(Widp w) -> bool
+[[nodiscard]] auto wid_get_text_centery(Widp w) ->  bool
 {
   TRACE();
   return static_cast< bool >(w->text_centery);
@@ -1497,7 +1497,7 @@ void wid_set_text_centery(Widp w, bool val)
   w->text_centery = static_cast< uint8_t >(val);
 }
 
-auto wid_get_text_pos(Widp w, int *x, int *y) -> bool
+[[nodiscard]] auto wid_get_text_pos(Widp w, int *x, int *y) ->  bool
 {
   TRACE();
 
@@ -1540,7 +1540,7 @@ void wid_set_tilename(int depth, Widp w, const std::string &name)
 //
 // Look at all the wid modes and return the most relevent setting
 //
-auto wid_get_color(Widp w, wid_color which) -> color
+[[nodiscard]] auto wid_get_color(Widp w, wid_color which) ->  color
 {
   TRACE();
 
@@ -1568,7 +1568,7 @@ auto wid_get_color(Widp w, wid_color which) -> color
   return WHITE;
 }
 
-auto wid_get_style(Widp w) -> int
+[[nodiscard]] auto wid_get_style(Widp w) ->  int
 {
   TRACE();
 
@@ -2300,7 +2300,7 @@ void wid_destroy_in(Gamep /*g*/, Widp w, uint32_t ms)
 //
 // Initialize a top level wid with basic settings
 //
-auto wid_new_container(Gamep g, Widp parent, const std::string &name) -> Widp
+[[nodiscard]] auto wid_new_container(Gamep g, Widp parent, const std::string &name) ->  Widp
 {
   TRACE();
 
@@ -2339,7 +2339,7 @@ auto wid_new_container(Gamep g, Widp parent, const std::string &name) -> Widp
 //
 // Initialize a top level wid with basic settings
 //
-auto wid_new_window(Gamep g, const std::string &name) -> Widp
+[[nodiscard]] auto wid_new_window(Gamep g, const std::string &name) ->  Widp
 {
   TRACE();
 
@@ -2369,7 +2369,7 @@ auto wid_new_window(Gamep g, const std::string &name) -> Widp
   return w;
 }
 
-auto wid_new_square_button(Gamep g, Widp parent, const std::string &name) -> Widp
+[[nodiscard]] auto wid_new_square_button(Gamep g, Widp parent, const std::string &name) ->  Widp
 {
   TRACE();
 
@@ -2414,7 +2414,7 @@ auto wid_new_square_button(Gamep g, Widp parent, const std::string &name) -> Wid
   return w;
 }
 
-auto wid_new_plain(Gamep g, Widp parent, const std::string &name) -> Widp
+[[nodiscard]] auto wid_new_plain(Gamep g, Widp parent, const std::string &name) ->  Widp
 {
   TRACE();
 
@@ -2572,7 +2572,7 @@ static auto wid_new_scroll_bar(Gamep g, Widp parent, const std::string &name, Wi
   return w;
 }
 
-auto wid_new_vert_scroll_bar(Gamep g, Widp parent, const std::string &name, Widp scrollbar_owner) -> Widp
+[[nodiscard]] auto wid_new_vert_scroll_bar(Gamep g, Widp parent, const std::string &name, Widp scrollbar_owner) ->  Widp
 {
   TRACE();
 
@@ -2634,7 +2634,7 @@ auto wid_new_vert_scroll_bar(Gamep g, Widp parent, const std::string &name, Widp
   }
 }
 
-auto wid_new_horiz_scroll_bar(Gamep g, Widp parent, const std::string &name, Widp scrollbar_owner) -> Widp
+[[nodiscard]] auto wid_new_horiz_scroll_bar(Gamep g, Widp parent, const std::string &name, Widp scrollbar_owner) ->  Widp
 {
   TRACE();
 
@@ -2988,7 +2988,7 @@ static void wid_find_last_child_focus(Widp w, Widp *best)
   }
 }
 
-auto wid_get_focus(Widp w) -> Widp
+[[nodiscard]] auto wid_get_focus(Widp w) ->  Widp
 {
   TRACE();
 
@@ -3149,7 +3149,7 @@ static void wid_set_prev_focus(Gamep g)
   }
 }
 
-auto wid_find(Widp w, const std::string &name) -> Widp
+[[nodiscard]] auto wid_find(Widp w, const std::string &name) ->  Widp
 {
   TRACE();
 
@@ -3170,7 +3170,7 @@ auto wid_find(Widp w, const std::string &name) -> Widp
   return nullptr;
 }
 
-auto wid_find(const std::string &name) -> Widp
+[[nodiscard]] auto wid_find(const std::string &name) ->  Widp
 {
   TRACE();
 
@@ -3209,7 +3209,7 @@ void wid_visible(Gamep g, Widp w)
   wid_set_top_focus(g);
 }
 
-auto wid_is_visible(Widp w) -> bool
+[[nodiscard]] auto wid_is_visible(Widp w) ->  bool
 {
   TRACE();
 
@@ -3599,7 +3599,7 @@ void wid_scroll_with_input(Gamep /*g*/, Widp w, const std::string &str)
   }
 }
 
-auto wid_receive_input(Gamep g, Widp w, const SDL_Keysym *key) -> bool
+[[nodiscard]] auto wid_receive_input(Gamep g, Widp w, const SDL_Keysym *key) ->  bool
 {
   TRACE();
 
@@ -3613,11 +3613,11 @@ auto wid_receive_input(Gamep g, Widp w, const SDL_Keysym *key) -> bool
   uint32_t          cnt     = 0;
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
-    sound_play(g, "keypress");
+      (void) sound_play(g, "keypress");
     return false;
   }
 
-  sound_play(g, "keypress");
+    (void) sound_play(g, "keypress");
 
   newchar += wid_event_to_char(key);
   origtext = wid_get_text(w);
@@ -3934,7 +3934,7 @@ auto wid_receive_input(Gamep g, Widp w, const SDL_Keysym *key) -> bool
   return true;
 }
 
-auto wid_find_at(int x, int y) -> Widp
+[[nodiscard]] auto wid_find_at(int x, int y) ->  Widp
 {
   TRACE();
 
@@ -5548,7 +5548,7 @@ printf("========================================= %d\n", wid_total_count);
   gl_enter_2d_mode(g, game_window_pix_width_get(g), game_window_pix_height_get(g));
 }
 
-auto wid_is_hidden(Widp w) -> bool
+[[nodiscard]] auto wid_is_hidden(Widp w) ->  bool
 {
   TRACE();
 
@@ -5571,7 +5571,7 @@ auto wid_is_hidden(Widp w) -> bool
   return false;
 }
 
-auto wid_is_always_hidden(const Widp w) -> bool
+[[nodiscard]] auto wid_is_always_hidden(const Widp w) ->  bool
 {
   TRACE();
 
@@ -5657,7 +5657,7 @@ void wid_move_to_abs_centered(Gamep g, Widp w, int x, int y)
   wid_move_delta(g, w, dx, dy);
 }
 
-auto wid_some_recent_event_occurred() -> bool
+[[nodiscard]] auto wid_some_recent_event_occurred() ->  bool
 {
   TRACE();
 

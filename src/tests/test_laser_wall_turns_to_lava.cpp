@@ -87,7 +87,7 @@ exit:
   return result;
 }
 
-auto test_load_laser_wall_turns_to_lava() -> bool // NOLINT
+[[nodiscard]] auto test_load_laser_wall_turns_to_lava() ->  bool // NOLINT
 {
   TRACE();
 

@@ -126,7 +126,7 @@ void command_fini()
   }
 }
 
-auto command_init() -> bool
+[[nodiscard]] auto command_init() -> bool
 {
   TRACE();
 
@@ -152,9 +152,9 @@ void command_add(Gamep /*g*/, command_fn_t callback, const std::string &input, c
   //
   // Convert the command into tokens for matching.
   //
-  tokens_to_string(input.c_str(), &command->tokens);
-  tokens_to_string(input.c_str(), &command->input_tokens);
-  tokens_to_string(readable.c_str(), &command->readable_tokens);
+  (void) tokens_to_string(input.c_str(), &command->tokens);
+  (void) tokens_to_string(input.c_str(), &command->input_tokens);
+  (void) tokens_to_string(readable.c_str(), &command->readable_tokens);
 }
 
 static auto command_matches(Gamep g, const char *input, char *output, uint8_t show_ambiguous, uint8_t show_complete,
@@ -181,7 +181,7 @@ static auto command_matches(Gamep g, const char *input, char *output, uint8_t sh
   /*
    * Convert the input into tokens for matching.
    */
-  tokens_to_string(input, &input_tokens);
+  (void) tokens_to_string(input, &input_tokens);
 
   /*
    * Find the command(s) with the most number of matching tokens.
@@ -256,7 +256,7 @@ static auto command_matches(Gamep g, const char *input, char *output, uint8_t sh
         }
 
         if (output != nullptr) {
-          my_strlcpy(output, completes_to, MAXSTR);
+          (void) my_strlcpy(output, completes_to, MAXSTR);
         }
       }
 
@@ -319,7 +319,7 @@ static auto command_matches(Gamep g, const char *input, char *output, uint8_t sh
             common_len               = strcommon(expands_to, cand_expand_to);
             expands_to[ common_len ] = '\0';
           } else {
-            my_strlcpy(expands_to, cand_expand_to, SIZEOF(expands_to));
+            (void) my_strlcpy(expands_to, cand_expand_to, SIZEOF(expands_to));
           }
         }
       }
@@ -328,7 +328,7 @@ static auto command_matches(Gamep g, const char *input, char *output, uint8_t sh
        * Expands to:
        */
       if (output != nullptr) {
-        my_strlcpy(output, expands_to, MAXSTR);
+        (void) my_strlcpy(output, expands_to, MAXSTR);
       }
     }
   }

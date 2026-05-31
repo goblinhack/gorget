@@ -13,7 +13,7 @@
 //
 // Anything in the inventory
 //
-auto thing_inventory_is_empty(Gamep g, Levelsp v, Levelp l, Thingp carrier) -> bool
+[[nodiscard]] auto thing_inventory_is_empty(Gamep g, Levelsp v, Levelp l, Thingp carrier) ->  bool
 {
   TRACE();
 
@@ -30,7 +30,7 @@ auto thing_inventory_is_empty(Gamep g, Levelsp v, Levelp l, Thingp carrier) -> b
 //
 // Can we combine identical items?
 //
-auto thing_inventory_item_mergeable(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp a, Thingp b) -> bool
+[[nodiscard]] auto thing_inventory_item_mergeable(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp a, Thingp b) ->  bool
 {
   if (! thing_is_item_mergeable(a)) {
     return false;
@@ -50,7 +50,7 @@ auto thing_inventory_item_mergeable(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Th
 //
 // Add an item to the inventory
 //
-auto thing_inventory_add(Gamep g, Levelsp v, Levelp l, Thingp new_item, Thingp carrier) -> bool
+[[nodiscard]] auto thing_inventory_add(Gamep g, Levelsp v, Levelp l, Thingp new_item, Thingp carrier) ->  bool
 {
   TRACE();
 
@@ -121,7 +121,7 @@ auto thing_inventory_add(Gamep g, Levelsp v, Levelp l, Thingp new_item, Thingp c
 //
 // Drop an item to the inventory
 //
-auto thing_inventory_remove(Gamep g, Levelsp v, Levelp l, Thingp drop_item, Thingp carrier) -> bool
+[[nodiscard]] auto thing_inventory_remove(Gamep g, Levelsp v, Levelp l, Thingp drop_item, Thingp carrier) ->  bool
 {
   TRACE();
 

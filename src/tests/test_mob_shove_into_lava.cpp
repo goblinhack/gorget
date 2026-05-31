@@ -194,7 +194,7 @@ exit:
   return result;
 }
 
-auto test_load_mob_shove_into_lava() -> bool // NOLINT
+[[nodiscard]] auto test_load_mob_shove_into_lava() ->  bool // NOLINT
 {
   TRACE();
 

@@ -19,7 +19,7 @@ static void tp_laser_light_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp t)
   thing_sound_play(g, v, l, t, "laser");
 }
 
-auto tp_load_laser_light() -> bool
+[[nodiscard]] auto tp_load_laser_light() ->  bool
 {
   auto *tp   = tp_load("laser_light"); // keep as string for scripts
   auto  name = tp_name(tp);

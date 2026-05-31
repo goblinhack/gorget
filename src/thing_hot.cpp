@@ -13,7 +13,7 @@
 #include <algorithm>
 #include <cstdint>
 
-auto thing_is_always_hot(Thingp me) -> bool
+[[nodiscard]] auto thing_is_always_hot(Thingp me) ->  bool
 {
   TRACE();
   if (thing_is_fire(me)) {
@@ -87,7 +87,7 @@ void thing_hot_time_step(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp me, in
 //
 // Hot animation time step
 //
-auto thing_is_hot_check(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
+[[nodiscard]] auto thing_is_hot_check(Gamep g, Levelsp v, Levelp l, Thingp me) ->  bool
 {
   TRACE();
 

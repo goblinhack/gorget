@@ -261,7 +261,7 @@ static void parse_args(int argc, char *argv[])
   }
 }
 
-auto main(int argc, char *argv[]) -> int
+[[nodiscard]] auto main(int argc, char *argv[]) -> int
 {
   Gamep g = nullptr;
   g_argv  = argv;
@@ -273,11 +273,11 @@ auto main(int argc, char *argv[]) -> int
   auto appdata = log_dir_create(); // Want this first so we get all logs
 
   TRACE_DEBUG();
-  redirect_stdout();
+  (void) redirect_stdout();
   log("will use STDOUT as '%s'", g_log_stdout_filename.c_str());
 
   TRACE_DEBUG();
-  redirect_stderr();
+  (void) redirect_stderr();
   log("will use STDERR as '%s'", g_log_stderr_filename.c_str());
 
   //////////////////////////////////////////////////////////////////////////////

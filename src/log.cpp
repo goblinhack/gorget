@@ -29,7 +29,7 @@ extern Game *game;
 //
 // Where all logs go
 //
-auto log_dir_create() -> std::string
+[[nodiscard]] auto log_dir_create() ->  std::string
 {
   TRACE();
 

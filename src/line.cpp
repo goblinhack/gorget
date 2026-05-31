@@ -11,7 +11,7 @@
 #include <cstdint>
 #include <vector>
 
-auto draw_line(const spoint s, const spoint e, size_t max_elems) -> std::vector< spoint >
+[[nodiscard]] auto draw_line(const spoint s, const spoint e, size_t max_elems) ->  std::vector< spoint >
 {
   std::vector< spoint > out;
 
@@ -53,7 +53,7 @@ auto draw_line(const spoint s, const spoint e, size_t max_elems) -> std::vector<
   return out;
 }
 
-auto draw_line(const bpoint s, const bpoint e, size_t max_elems) -> std::vector< bpoint >
+[[nodiscard]] auto draw_line(const bpoint s, const bpoint e, size_t max_elems) ->  std::vector< bpoint >
 {
   std::vector< bpoint > out;
 

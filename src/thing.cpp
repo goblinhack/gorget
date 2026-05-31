@@ -15,7 +15,7 @@
 
 #include <cmath>
 
-auto thing_get(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot) -> Thingp
+[[nodiscard]] auto thing_get(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot) ->  Thingp
 {
   TRACE_DEBUG();
 
@@ -47,7 +47,7 @@ auto thing_get(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot) -> Thing
   return t;
 }
 
-auto thing_get_at_safe(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot) -> Thingp
+[[nodiscard]] auto thing_get_at_safe(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot) ->  Thingp
 {
   TRACE_DEBUG();
 
@@ -65,7 +65,7 @@ auto thing_get_at_safe(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot) 
   return t;
 }
 
-auto thing_and_tp_get_at_safe(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot, Tpp *out) -> Thingp
+[[nodiscard]] auto thing_and_tp_get_at_safe(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot, Tpp *out) ->  Thingp
 {
   TRACE_DEBUG();
 
@@ -87,7 +87,7 @@ auto thing_and_tp_get_at_safe(Gamep g, Levelsp v, Levelp l, const bpoint &p, int
   return t;
 }
 
-auto thing_and_tp_get_at(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot, Tpp *out) -> Thingp
+[[nodiscard]] auto thing_and_tp_get_at(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot, Tpp *out) ->  Thingp
 {
   TRACE_DEBUG();
 
@@ -154,7 +154,7 @@ void thing_stats_dump(Gamep /*g*/, Levelsp v)
   log("- Ext mem things      %u out of max %u", v->thing_ext_count, THING_EXT_MAX);
 }
 
-auto thing_ext_struct(Gamep g, Thingp t) -> ThingExtp
+[[nodiscard]] auto thing_ext_struct(Gamep g, Thingp t) ->  ThingExtp
 {
   TRACE();
 
@@ -171,7 +171,7 @@ auto thing_ext_struct(Gamep g, Thingp t) -> ThingExtp
   return &v->thing_ext[ ext_id ];
 }
 
-auto thing_light_struct(Gamep g, Thingp t) -> ThingLightp
+[[nodiscard]] auto thing_light_struct(Gamep g, Thingp t) ->  ThingLightp
 {
   TRACE();
 
@@ -188,7 +188,7 @@ auto thing_light_struct(Gamep g, Thingp t) -> ThingLightp
   return &v->thing_light[ light_id ];
 }
 
-auto thing_player_struct(Gamep g) -> ThingPlayerp
+[[nodiscard]] auto thing_player_struct(Gamep g) ->  ThingPlayerp
 {
   TRACE();
 

@@ -71,7 +71,7 @@ static void tp_glorp_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent
   thing_sound_play(g, v, l, t, "monst_death");
 }
 
-auto tp_load_glorp() -> bool
+[[nodiscard]] auto tp_load_glorp() ->  bool
 {
   auto *tp   = tp_load("glorp"); // keep as string for scripts
   auto  name = tp_name(tp);

@@ -67,7 +67,7 @@ static void wid_dead_close(Gamep g)
   TRACE();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
-    sound_play(g, "keypress");
+    (void)   (void) sound_play(g, "keypress");
     return false;
   }
 
@@ -90,7 +90,7 @@ static void wid_dead_close(Gamep g)
               case SDLK_ESCAPE :
                 {
                   TRACE();
-                  sound_play(g, "keypress");
+                  (void)   (void) sound_play(g, "keypress");
                   wid_dead_close(g);
                   return true;
                 }
@@ -124,7 +124,7 @@ void wid_dead_select(Gamep g, const std::string &reason)
     return;
   }
 
-  music_play(g, "dead");
+  (void) music_play(g, "dead");
 
   log("open dead select: %s", reason.c_str());
 

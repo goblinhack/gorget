@@ -174,7 +174,7 @@ static void tp_fire_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 }
 
-auto tp_load_fire() -> bool
+[[nodiscard]] auto tp_load_fire() ->  bool
 {
   TRACE();
 

@@ -10,7 +10,7 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-auto tp_load_effect_blood() -> bool
+[[nodiscard]] auto tp_load_effect_blood() ->  bool
 {
   TRACE();
 

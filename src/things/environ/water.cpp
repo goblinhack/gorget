@@ -26,7 +26,7 @@ static auto tp_water_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> 
   return "shallow water";
 }
 
-auto tp_load_water() -> bool
+[[nodiscard]] auto tp_load_water() ->  bool
 {
   TRACE();
 

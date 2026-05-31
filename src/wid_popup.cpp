@@ -85,7 +85,7 @@ WidPopup::WidPopup(Gamep g, std::string vname, spoint vtl, spoint vbr, Tilep vti
 //
 // Log a message to the popup
 //
-auto WidPopup::log(Gamep g, const std::string &s, wid_text_format format, const std::string &col) const -> Widp
+[[nodiscard]] auto WidPopup::log(Gamep g, const std::string &s, wid_text_format format, const std::string &col) const ->  Widp
 {
   TRACE();
 
@@ -95,7 +95,7 @@ auto WidPopup::log(Gamep g, const std::string &s, wid_text_format format, const 
 //
 // Log a blank line to the popup
 //
-auto WidPopup::log_empty_line(Gamep g) const -> Widp
+[[nodiscard]] auto WidPopup::log_empty_line(Gamep g) const ->  Widp
 {
   TRACE();
 

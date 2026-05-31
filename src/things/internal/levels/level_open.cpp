@@ -8,7 +8,7 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-auto tp_load_level_open() -> bool
+[[nodiscard]] auto tp_load_level_open() ->  bool
 {
   TRACE();
 

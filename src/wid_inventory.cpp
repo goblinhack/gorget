@@ -117,7 +117,7 @@ void wid_inventory_mouse_over_end(Gamep g, Widp w)
   TRACE();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
-    sound_play(g, "keypress");
+      (void) sound_play(g, "keypress");
     return false;
   }
 
@@ -183,7 +183,7 @@ void wid_inventory_mouse_over_end(Gamep g, Widp w)
               case SDLK_ESCAPE :
                 {
                   TRACE();
-                  sound_play(g, "keypress");
+                    (void) sound_play(g, "keypress");
                   wid_inventory_destroy(g);
                   return true;
                 }

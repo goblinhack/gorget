@@ -137,7 +137,7 @@ static void wid_main_menu_hide(Gamep g)
   TRACE_INDENT();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
-    sound_play(g, "keypress");
+    (void) (void) sound_play(g, "keypress");
     return false;
   }
 
@@ -145,43 +145,43 @@ static void wid_main_menu_hide(Gamep g)
 
   if (s == "<Return>" || s == "n" || s == "N") {
     TRACE();
-    sound_play(g, "keypress");
+    (void) (void) sound_play(g, "keypress");
     (void) game_menu_new_game(g, nullptr, 0, 0, 0);
     return true;
   }
 
   if (s == "l" || s == "L") {
-    sound_play(g, "keypress");
+    (void) (void) sound_play(g, "keypress");
     (void) wid_main_menu_load(g, nullptr, 0, 0, 0);
     return true;
   }
 
   if (s == "o" || s == "O") {
-    sound_play(g, "keypress");
+    (void) (void) sound_play(g, "keypress");
     (void) wid_main_menu_cfg(g, nullptr, 0, 0, 0);
     return true;
   }
 
   if (s == "m" || s == "M") {
-    sound_play(g, "keypress");
+    (void) (void) sound_play(g, "keypress");
     (void) wid_main_menu_more(g, nullptr, 0, 0, 0);
     return true;
   }
 
   if (s == "q" || s == "Q") {
-    sound_play(g, "keypress");
+    (void) (void) sound_play(g, "keypress");
     (void) wid_main_menu_quit(g, nullptr, 0, 0, 0);
     return true;
   }
 
   if (s == "p" || s == "P") {
-    sound_play(g, "keypress");
+    (void) sound_play(g, "keypress");
     (void) game_menu_previous_seed(g, nullptr, 0, 0, 0);
     return true;
   }
 
   if (s == "w" || s == "W") {
-    sound_play(g, "keypress");
+    (void) sound_play(g, "keypress");
     (void) game_menu_weekly_seed(g, nullptr, 0, 0, 0);
     return true;
   }
@@ -286,7 +286,7 @@ static auto clamp(float v) -> uint8_t // define a function to bound and round th
 }
 
 // https://stackoverflow.com/questions/8507885/shift-hue-of-an-rgb-color#8509802
-auto color_change_hue(const color &in, const float fHue) -> color
+[[nodiscard]] auto color_change_hue(const color &in, const float fHue) -> color
 {
   TRACE();
 
@@ -342,7 +342,7 @@ void wid_main_menu_select(Gamep g)
   sound_fade_out(g);
 
   if (wid_main_menu_window == nullptr) {
-    music_play(g, "intro");
+    (void) music_play(g, "intro");
   }
 
   if (wid_main_menu_window != nullptr) {

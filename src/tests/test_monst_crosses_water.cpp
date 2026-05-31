@@ -125,7 +125,7 @@ exit:
   return result;
 }
 
-auto test_load_monst_crosses_water() -> bool // NOLINT
+[[nodiscard]] auto test_load_monst_crosses_water() ->  bool // NOLINT
 {
   TRACE();
 

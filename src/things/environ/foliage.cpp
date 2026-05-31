@@ -27,7 +27,7 @@ static auto tp_foliage_z_depth_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> Ma
   return MAP_Z_DEPTH_FOLIAGE;
 }
 
-auto tp_load_foliage() -> bool
+[[nodiscard]] auto tp_load_foliage() ->  bool
 {
   TRACE();
 

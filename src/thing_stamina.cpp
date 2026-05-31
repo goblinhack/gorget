@@ -12,7 +12,7 @@
 #include <algorithm>
 #include <limits>
 
-auto thing_stamina(Thingp t) -> int
+[[nodiscard]] auto thing_stamina(Thingp t) ->  int
 {
   TRACE_DEBUG();
 
@@ -23,7 +23,7 @@ auto thing_stamina(Thingp t) -> int
   return t->_stamina;
 }
 
-auto thing_stamina_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_stamina_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -45,7 +45,7 @@ auto thing_stamina_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) 
   return t->_stamina;
 }
 
-auto thing_stamina_incr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_stamina_incr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -61,7 +61,7 @@ auto thing_stamina_incr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val)
   return t->_stamina;
 }
 
-auto thing_stamina_decr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_stamina_decr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -78,7 +78,7 @@ auto thing_stamina_decr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val)
   return t->_stamina -= val;
 }
 
-auto thing_stamina_max(Thingp t) -> int
+[[nodiscard]] auto thing_stamina_max(Thingp t) ->  int
 {
   TRACE_DEBUG();
 
@@ -89,7 +89,7 @@ auto thing_stamina_max(Thingp t) -> int
   return t->_stamina_max;
 }
 
-auto thing_stamina_max_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_stamina_max_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -107,7 +107,7 @@ auto thing_stamina_max_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int v
   return t->_stamina_max = val;
 }
 
-auto thing_stamina_max_incr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_stamina_max_incr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -119,7 +119,7 @@ auto thing_stamina_max_incr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int 
   return t->_stamina_max += val;
 }
 
-auto thing_stamina_max_decr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_stamina_max_decr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -136,7 +136,7 @@ auto thing_stamina_max_decr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int 
   return t->_stamina_max -= val;
 }
 
-auto thing_is_stamina_visible(Thingp t) -> bool
+[[nodiscard]] auto thing_is_stamina_visible(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 

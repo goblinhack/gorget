@@ -66,7 +66,7 @@ static auto tp_cursor_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l, con
   return tile;
 }
 
-auto tp_load_cursor_at() -> bool
+[[nodiscard]] auto tp_load_cursor_at() ->  bool
 {
   auto *tp   = tp_load("cursor_at"); // keep as string for scripts
   auto  name = tp_name(tp);

@@ -462,7 +462,7 @@ static auto ptrcheck_verify_pointer(int mtype, const void *ptr, const char *func
       l->line = line;
 
       l->bt = callstack_string();
-      timestamp(l->ts, SIZEOF(l->ts));
+      (void) timestamp(l->ts, SIZEOF(l->ts));
 
 #ifdef ENABLE_DEBUG_PTRCHECK
       std::cerr << std::format("PTRCHECK: {} verified at \"{}\" ({} bytes) at {}:{} line {} at {}\n", ptr, pc->what, pc->size, file, func,
@@ -559,7 +559,7 @@ static auto ptrcheck_alloc_(int mtype, const void *ptr, const char *what, int si
   a->func = func;
   a->file = file;
   a->line = line;
-  timestamp(a->ts, SIZEOF(a->ts));
+  (void) timestamp(a->ts, SIZEOF(a->ts));
   a->bt = callstack_string();
 
   //
@@ -616,7 +616,7 @@ static auto ptrcheck_free_(int mtype, void *ptr, const char *func, const char *f
   f->func = func;
   f->line = line;
   f->bt   = callstack_string();
-  timestamp(f->ts, SIZEOF(f->ts));
+  (void) timestamp(f->ts, SIZEOF(f->ts));
 
   //
   // Add the free info to the ring buffer.

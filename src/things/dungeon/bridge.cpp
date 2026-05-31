@@ -157,7 +157,7 @@ static void tp_bridge_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
   thing_dead(g, v, l, t, e);
 }
 
-auto tp_load_bridge() -> bool
+[[nodiscard]] auto tp_load_bridge() ->  bool
 {
   TRACE();
 

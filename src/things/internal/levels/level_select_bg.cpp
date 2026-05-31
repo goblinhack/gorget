@@ -8,7 +8,7 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-auto tp_load_level_select_bg() -> bool
+[[nodiscard]] auto tp_load_level_select_bg() ->  bool
 {
   TRACE();
 

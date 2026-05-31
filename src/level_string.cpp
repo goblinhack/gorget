@@ -12,7 +12,7 @@
 #include <format>
 #include <string>
 
-auto to_string(Gamep g, Levelsp v, Levelp l) -> std::string
+[[nodiscard]] auto to_string(Gamep g, Levelsp v, Levelp l) ->  std::string
 {
   TRACE();
 
@@ -29,7 +29,7 @@ auto to_string(Gamep g, Levelsp v, Levelp l) -> std::string
 //
 // Convert a level into a single string
 //
-auto level_string(Gamep g, Levelsp v, Levelp l, int w, int h) -> std::string
+[[nodiscard]] auto level_string(Gamep g, Levelsp v, Levelp l, int w, int h) ->  std::string
 {
   std::string out;
 

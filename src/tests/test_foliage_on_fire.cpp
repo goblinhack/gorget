@@ -118,7 +118,7 @@ exit:
   return result;
 }
 
-auto test_load_foliage_on_fire() -> bool // NOLINT
+[[nodiscard]] auto test_load_foliage_on_fire() ->  bool // NOLINT
 {
   TRACE();
 

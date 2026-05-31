@@ -31,7 +31,7 @@
 
 static struct SDL_Keysym last_key_pressed;
 
-auto sdl_filter_events(void * /*userdata*/, SDL_Event *event) -> int
+[[nodiscard]] auto sdl_filter_events(void * /*userdata*/, SDL_Event *event) -> int
 {
   TRACE_DEBUG();
 
@@ -161,7 +161,7 @@ static void __attribute__((noinline)) sdl_event_keyup(Gamep g, SDL_Keysym *key, 
     g_grab_next_key = false;
     sdl.grabbed_key = sdlk_normalize(event->key.keysym);
     if (sdl.on_sdl_key_grab != nullptr) {
-      sound_play(g, "keypress");
+      (void)   (void) sound_play(g, "keypress");
       (*sdl.on_sdl_key_grab)(g, sdl.grabbed_key);
     }
     return;
@@ -186,7 +186,7 @@ static void __attribute__((noinline)) sdl_event_mousemotion(Gamep g, SDL_Event *
   TRACE_DEBUG();
 
   sdl.event_count++;
-  sdl.mouse_down = sdl_get_mouse();
+  sdl.mouse_down = sdl_mouse_read_position();
   int        mx  = 0;
   int        my  = 0;
   static int last_mx;
@@ -219,7 +219,7 @@ static void __attribute__((noinline)) sdl_event_mousedown(Gamep g, SDL_Event *ev
   TRACE_DEBUG();
 
   sdl.event_count++;
-  sdl.mouse_down                = sdl_get_mouse();
+  sdl.mouse_down                = sdl_mouse_read_position();
   sdl.last_mouse_held_down_when = time_ms();
   sdl.held_mouse_x              = sdl.mouse_x;
   sdl.held_mouse_y              = sdl.mouse_y;
@@ -239,7 +239,7 @@ static void __attribute__((noinline)) sdl_event_mouseup(Gamep g, SDL_Event *even
   TRACE_DEBUG();
 
   sdl.event_count++;
-  sdl.mouse_down                = sdl_get_mouse();
+  sdl.mouse_down                = sdl_mouse_read_position();
   sdl.last_mouse_held_down_when = 0;
   sdl.held_mouse_x              = 0;
   sdl.held_mouse_y              = 0;
@@ -289,7 +289,7 @@ void sdl_event(Gamep g, SDL_Event *event, bool &processed_mouse_motion_event)
         sdl.event_count++;
         DBG("SDL: Mouse: Wheel scrolled %d in x and %d in y in window %d", event->wheel.x, event->wheel.y, event->wheel.windowID);
 
-        sdl_get_mouse();
+        (void) sdl_mouse_read_position();
 
         static double accel = 1.0;
 
@@ -378,7 +378,7 @@ void sdl_event(Gamep g, SDL_Event *event, bool &processed_mouse_motion_event)
         }
 
         if ((sdl.right_fire != 0) || (sdl.left_fire != 0)) {
-          sdl_get_mouse();
+          (void) sdl_mouse_read_position();
           wid_joy_button(g, sdl.mouse_x, sdl.mouse_y);
         }
 
@@ -458,7 +458,7 @@ void sdl_event(Gamep g, SDL_Event *event, bool &processed_mouse_motion_event)
         sdl.event_count++;
         DBG("SDL: Joystick %d: Button %d pressed", event->jbutton.which, event->jbutton.button);
         sdl.joy_buttons[ event->jbutton.button ] = 1U;
-        sdl_get_mouse();
+        (void) sdl_mouse_read_position();
         wid_joy_button(g, sdl.mouse_x, sdl.mouse_y);
         break;
       }

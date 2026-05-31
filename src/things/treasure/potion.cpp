@@ -48,7 +48,7 @@ static auto tp_potion_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std:
   return true;
 }
 
-auto tp_load_potion() -> bool
+[[nodiscard]] auto tp_load_potion() ->  bool
 {
   TRACE();
 

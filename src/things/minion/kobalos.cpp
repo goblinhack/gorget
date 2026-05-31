@@ -68,7 +68,7 @@ static bool tp_kobalos_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thi
   return true;
 }
 
-auto tp_load_kobalos() -> bool
+[[nodiscard]] auto tp_load_kobalos() ->  bool
 {
   auto *tp   = tp_load("kobalos"); // keep as string for scripts
   auto  name = tp_name(tp);

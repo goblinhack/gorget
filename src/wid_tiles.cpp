@@ -17,7 +17,7 @@
 static int                                       wid_tiles_init_done;
 static std::map< std::string, class WidTiles * > wid_tiles_all;
 
-auto wid_tiles_init() -> bool
+[[nodiscard]] auto wid_tiles_init() ->  bool
 {
   TRACE();
   wid_tiles_init_done = 1;
@@ -42,7 +42,7 @@ void wid_tiles_fini()
   }
 }
 
-auto wid_tiles_load(const std::string &name, float scale) -> wid_tilesp
+[[nodiscard]] auto wid_tiles_load(const std::string &name, float scale) ->  wid_tilesp
 {
   TRACE();
   auto *t = wid_tiles_find(name);
@@ -216,7 +216,7 @@ auto wid_tiles_load(const std::string &name, float scale) -> wid_tilesp
   return t;
 }
 
-auto wid_tiles_find(const std::string &file) -> wid_tilesp
+[[nodiscard]] auto wid_tiles_find(const std::string &file) ->  wid_tilesp
 {
   TRACE();
   if (file.empty()) {

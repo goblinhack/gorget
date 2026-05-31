@@ -84,7 +84,7 @@ exit:
   return result;
 }
 
-auto test_load_alloc_free_monsts() -> bool // NOLINT
+[[nodiscard]] auto test_load_alloc_free_monsts() ->  bool // NOLINT
 {
   TRACE();
 

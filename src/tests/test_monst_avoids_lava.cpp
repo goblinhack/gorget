@@ -159,7 +159,7 @@ exit:
   return result;
 }
 
-auto test_load_monst_avoids_lava() -> bool // NOLINT
+[[nodiscard]] auto test_load_monst_avoids_lava() ->  bool // NOLINT
 {
   TRACE();
 

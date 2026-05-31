@@ -12,7 +12,7 @@
 #include "my_tp.hpp"
 #include "my_types.hpp"
 
-auto thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &real_at) -> Thingp
+[[nodiscard]] auto thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &real_at) ->  Thingp
 {
   TRACE();
 
@@ -125,4 +125,4 @@ auto thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &real_at) -> 
   return t;
 }
 
-auto thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const bpoint &at) -> Thingp { return thing_init(g, v, l, tp, make_fpoint(at)); }
+[[nodiscard]] auto thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const bpoint &at) ->  Thingp { return thing_init(g, v, l, tp, make_fpoint(at)); }

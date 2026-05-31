@@ -91,7 +91,7 @@ exit:
   return result;
 }
 
-auto test_load_projectile_teleport() -> bool // NOLINT
+[[nodiscard]] auto test_load_projectile_teleport() ->  bool // NOLINT
 {
   TRACE();
 

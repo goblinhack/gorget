@@ -19,8 +19,8 @@ extern Fontp font_ui;
 #define FONT_TILENAME_POINTER_STR "1.100"
 
 void font_fini();
-auto font_init() -> bool;
-auto font_find(const std::string &file) -> Fontp;
+[[nodiscard]] auto font_init() ->  bool;
+[[nodiscard]] auto font_find(const std::string &file) ->  Fontp;
 
 class Font
 {

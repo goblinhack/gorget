@@ -945,7 +945,7 @@ void wid_actionbar_fini(Gamep g)
   last_menu_string = "";
 }
 
-auto wid_actionbar_init(Gamep g) -> bool
+[[nodiscard]] auto wid_actionbar_init(Gamep g) ->  bool
 {
   TRACE();
   return wid_actionbar_create_window(g);

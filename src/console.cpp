@@ -138,7 +138,7 @@ void term_log(const char *s)
   }
 }
 
-auto term_color_to_console_color(color c) -> int
+[[nodiscard]] auto term_color_to_console_color(color c) ->  int
 {
   if (color_eq(c, BLACK)) {
     return TERM_COLOR_BLACK;

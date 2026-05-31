@@ -17,7 +17,7 @@
 #include <initializer_list>
 #include <vector>
 
-auto thing_is_teleporting(Thingp me) -> bool
+[[nodiscard]] auto thing_is_teleporting(Thingp me) ->  bool
 {
   TRACE_DEBUG();
 
@@ -171,7 +171,7 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
 //
 // Handles player and monster teleports
 //
-auto thing_teleport_handle(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
+[[nodiscard]] auto thing_teleport_handle(Gamep g, Levelsp v, Levelp l, Thingp me) ->  bool
 {
   THING_DBG(me, "teleport, try");
   TRACE_INDENT();

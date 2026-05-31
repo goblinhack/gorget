@@ -178,7 +178,9 @@ void test_init()
 
   test_init_done = 1u;
 
-  tests_init();
+  if (! tests_init()) {
+    CROAK("tests_init failed");
+  }
 }
 
 void test_fini()
@@ -207,7 +209,7 @@ void test_callback_set(Testp test, test_callback_t callback)
   test->callback = callback;
 }
 
-auto test_load(const char *name_in) -> Testp
+[[nodiscard]] auto test_load(const char *name_in) -> Testp
 {
   TRACE();
 
@@ -230,7 +232,7 @@ auto test_load(const char *name_in) -> Testp
   return test;
 }
 
-auto test_name(Testp test) -> const char *
+[[nodiscard]] auto test_name(Testp test) -> const char *
 {
   TRACE();
 

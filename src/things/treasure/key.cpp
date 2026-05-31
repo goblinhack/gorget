@@ -28,7 +28,7 @@ static auto tp_key_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> st
   return "a... key";
 }
 
-auto tp_load_key() -> bool
+[[nodiscard]] auto tp_load_key() ->  bool
 {
   TRACE();
 

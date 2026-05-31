@@ -40,7 +40,7 @@ void wid_topcon_fini(Gamep g)
   wid_destroy(g, &wid_topcon_window);
 }
 
-auto wid_topcon_init(Gamep g) -> bool
+[[nodiscard]] auto wid_topcon_init(Gamep g) ->  bool
 {
   TRACE();
   wid_topcon_wid_create(g);

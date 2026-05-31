@@ -8,7 +8,7 @@
 
 #include "my_random_name.hpp"
 
-auto os_random_name(int len) -> std::string
+[[nodiscard]] auto os_random_name(int len) ->  std::string
 {
   for (;;) {
     std::string const d1(os_rand_dict1_name());
@@ -21,7 +21,7 @@ auto os_random_name(int len) -> std::string
   }
 }
 
-auto os_random_name_from_hash(uint32_t h, int len) -> std::string
+[[nodiscard]] auto os_random_name_from_hash(uint32_t h, int len) ->  std::string
 {
   for (;;) {
     std::string const d1(os_rand_dict1_name(h));
@@ -47,7 +47,7 @@ static auto hash(const char *s) -> uint32_t
   return hash;
 }
 
-auto string_to_hash(const std::string &str) -> uint32_t
+[[nodiscard]] auto string_to_hash(const std::string &str) ->  uint32_t
 {
 #ifdef FANCY_BUT_GIVES_DIFFERENT_RESULTS_ON_DIFFERENT_PLATFORMS
   return static_cast< uint32_t >(std::hash< std::string > {}(str));

@@ -10,7 +10,7 @@
 #include <cstdlib>
 #include <cstring>
 
-auto MYZALLOC_(int size, const char *what, const char *file, const char *func, int line) -> void *
+[[nodiscard]] auto MYZALLOC_(int size, const char *what, const char *file, const char *func, int line) -> void *
 {
   TRACE();
 
@@ -22,7 +22,7 @@ auto MYZALLOC_(int size, const char *what, const char *file, const char *func, i
 
   IF_DEBUG2
   { //
-    ptrcheck_alloc(MTYPE_MISC, ptr, what, size, file, func, line);
+    (void) ptrcheck_alloc(MTYPE_MISC, ptr, what, size, file, func, line);
   }
 
   // callstack_dump();
@@ -31,7 +31,7 @@ auto MYZALLOC_(int size, const char *what, const char *file, const char *func, i
   return ptr;
 }
 
-auto MYMALLOC_(int size, const char *what, const char *file, const char *func, int line) -> void *
+[[nodiscard]] auto MYMALLOC_(int size, const char *what, const char *file, const char *func, int line) -> void *
 {
   TRACE();
 
@@ -43,7 +43,7 @@ auto MYMALLOC_(int size, const char *what, const char *file, const char *func, i
 
   IF_DEBUG2
   { //
-    ptrcheck_alloc(MTYPE_MISC, ptr, what, size, file, func, line);
+    (void) ptrcheck_alloc(MTYPE_MISC, ptr, what, size, file, func, line);
   }
 
   // callstack_dump();
@@ -52,12 +52,12 @@ auto MYMALLOC_(int size, const char *what, const char *file, const char *func, i
   return ptr;
 }
 
-auto MYREALLOC_(void *ptr, int size, const char *what, const char *file, const char *func, int line) -> void *
+[[nodiscard]] auto MYREALLOC_(void *ptr, int size, const char *what, const char *file, const char *func, int line) -> void *
 {
   TRACE();
   IF_DEBUG2
   { //
-    ptrcheck_free(MTYPE_MISC, ptr, file, func, line);
+    (void) ptrcheck_free(MTYPE_MISC, ptr, file, func, line);
   }
 
   ptr = realloc(ptr, size);
@@ -67,7 +67,7 @@ auto MYREALLOC_(void *ptr, int size, const char *what, const char *file, const c
 
   IF_DEBUG2
   { //
-    ptrcheck_alloc(MTYPE_MISC, ptr, what, size, file, func, line);
+    (void) ptrcheck_alloc(MTYPE_MISC, ptr, what, size, file, func, line);
   }
 
   // callstack_dump();
@@ -82,7 +82,7 @@ void MYFREE_(void *ptr, const char *file, const char *func, int line)
 
   IF_DEBUG2
   { //
-    ptrcheck_free(MTYPE_MISC, ptr, file, func, line);
+    (void) ptrcheck_free(MTYPE_MISC, ptr, file, func, line);
   }
 
   // callstack_dump();
@@ -91,7 +91,7 @@ void MYFREE_(void *ptr, const char *file, const char *func, int line)
   free(ptr);
 }
 
-auto MYDUPSTR_(const char *in, const char *what, const char *file, const char *func, int line) -> char *
+[[nodiscard]] auto MYDUPSTR_(const char *in, const char *what, const char *file, const char *func, int line) -> char *
 {
   TRACE();
 
@@ -109,7 +109,7 @@ auto MYDUPSTR_(const char *in, const char *what, const char *file, const char *f
   {
     auto const size = strlen(in);
 
-    ptrcheck_alloc(MTYPE_MISC, ptr, what, size, file, func, line);
+    (void) ptrcheck_alloc(MTYPE_MISC, ptr, what, size, file, func, line);
   }
 
   // callstack_dump();

@@ -225,7 +225,7 @@ exit:
   return result;
 }
 
-auto test_load_monst_door_slam_attack() -> bool // NOLINT
+[[nodiscard]] auto test_load_monst_door_slam_attack() ->  bool // NOLINT
 {
   TRACE();
 

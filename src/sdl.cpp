@@ -139,7 +139,7 @@ static void sdl_init_joystick()
   }
 }
 
-auto sdl_init() -> bool
+[[nodiscard]] auto sdl_init() -> bool
 {
   gl_ext_init();
 
@@ -169,7 +169,7 @@ auto sdl_init() -> bool
   return true;
 }
 
-auto sdl_get_mouse() -> int
+[[nodiscard]] auto sdl_mouse_read_position() -> int
 {
   TRACE();
 
@@ -243,7 +243,7 @@ void sdl_tick(Gamep g)
   sdl.joy2_down  = 0;
   sdl.joy2_up    = 0;
 
-  sdl_get_mouse();
+  (void) sdl_mouse_read_position();
 
   //
   // Right stick
@@ -364,7 +364,7 @@ void sdl_prepare_to_exit(Gamep /*g*/)
 //
 // User has entered a command, run it
 //
-auto config_fps_counter_set(Gamep g, class Tokens *tokens, void * /*context*/) -> uint8_t
+[[nodiscard]] auto config_fps_counter_set(Gamep g, class Tokens *tokens, void * /*context*/) -> uint8_t
 {
   TRACE();
 
@@ -392,7 +392,7 @@ auto config_fps_counter_set(Gamep g, class Tokens *tokens, void * /*context*/) -
 //
 // User wants to change the debug level
 //
-auto config_debug_set(Gamep /*g*/, class Tokens *tokens, void * /*context*/) -> uint8_t
+[[nodiscard]] auto config_debug_set(Gamep /*g*/, class Tokens *tokens, void * /*context*/) -> uint8_t
 {
   TRACE();
 
@@ -422,7 +422,7 @@ auto config_debug_set(Gamep /*g*/, class Tokens *tokens, void * /*context*/) -> 
 //
 // User has entered a command, run it
 //
-auto config_gfx_vsync_enable(Gamep g, class Tokens *tokens, void * /*context*/) -> uint8_t
+[[nodiscard]] auto config_gfx_vsync_enable(Gamep g, class Tokens *tokens, void * /*context*/) -> uint8_t
 {
   TRACE();
 
@@ -465,7 +465,7 @@ void config_gfx_vsync_update(Gamep g)
 //
 // User has entered a command, run it
 //
-auto config_errored_clear(Gamep g, class Tokens * /*tokens*/, void * /*context*/) -> uint8_t
+[[nodiscard]] auto config_errored_clear(Gamep g, class Tokens * /*tokens*/, void * /*context*/) -> uint8_t
 {
   TRACE();
 
@@ -485,7 +485,7 @@ auto config_errored_clear(Gamep g, class Tokens * /*tokens*/, void * /*context*/
   return 1U;
 }
 
-auto show_error(Gamep g, class Tokens * /*tokens*/, void * /*context*/) -> uint8_t
+[[nodiscard]] auto show_error(Gamep g, class Tokens * /*tokens*/, void * /*context*/) -> uint8_t
 {
   TRACE();
 
@@ -516,7 +516,7 @@ void sdl_config_update_all(Gamep g)
 //
 // User has entered a command, run it
 //
-auto sdl_user_exit(Gamep g, class Tokens * /*tokens*/, void * /*context*/) -> uint8_t
+[[nodiscard]] auto sdl_user_exit(Gamep g, class Tokens * /*tokens*/, void * /*context*/) -> uint8_t
 {
   TRACE();
   sdl_prepare_to_exit(g);

@@ -73,7 +73,7 @@ exit:
   return result;
 }
 
-auto test_load_laser() -> bool // NOLINT
+[[nodiscard]] auto test_load_laser() ->  bool // NOLINT
 {
   TRACE();
 

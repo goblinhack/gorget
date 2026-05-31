@@ -5,7 +5,7 @@
 #include "my_callstack.hpp"
 #include "my_tps.hpp"
 
-auto templates_init() -> bool
+[[nodiscard]] auto templates_init() ->  bool
 {
   TRACE();
 

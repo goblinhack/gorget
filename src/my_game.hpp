@@ -51,8 +51,8 @@ enum {
   CONFIG_MAGIC_6 = 0xfeedface
 };
 
-auto game_hiscores_get(Gamep g) -> class HiScores *;
-auto game_hiscore_get(Gamep g) -> uint32_t;
+[[nodiscard]] auto game_hiscores_get(Gamep g) ->  class HiScores *;
+[[nodiscard]] auto game_hiscore_get(Gamep g) ->  uint32_t;
 
 void game_visible_map_pix_get(Gamep g, int *visible_map_tl_x, int *visible_map_tl_y, int *visible_map_br_x, int *visible_map_br_y);
 void game_visible_map_pix_set(Gamep g, int visible_map_tl_x, int visible_map_tl_y, int visible_map_br_x, int visible_map_br_y);
@@ -66,7 +66,7 @@ void               game_tiles_visible_down_set(Gamep g, int val);
 [[nodiscard]] auto game_last_mouse_down_get(Gamep g) -> int;
 void               game_last_mouse_down_set(Gamep g, int val);
 
-auto game_aspect_ratio_get(Gamep g) -> float;
+[[nodiscard]] auto game_aspect_ratio_get(Gamep g) ->  float;
 void game_aspect_ratio_set(Gamep g, float val);
 
 [[nodiscard]] auto game_ui_term_height_get(Gamep g) -> int;
@@ -275,7 +275,7 @@ void               game_request_reached_entrance_unset(Gamep g);
 void               game_request_to_end_game_set(Gamep g);
 void               game_request_to_end_game_unset(Gamep g);
 
-auto game_request_to_end_game_reason_get(Gamep g) -> std::string;
+[[nodiscard]] auto game_request_to_end_game_reason_get(Gamep g) ->  std::string;
 void game_request_to_end_game_reason_set(Gamep g, const std::string &val);
 
 [[nodiscard]] auto game_is_new_highest_hiscore(Gamep g, uint32_t score) -> bool;

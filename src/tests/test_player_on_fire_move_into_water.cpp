@@ -140,7 +140,7 @@ exit:
   return result;
 }
 
-auto test_load_player_on_fire_move_into_water() -> bool // NOLINT
+[[nodiscard]] auto test_load_player_on_fire_move_into_water() ->  bool // NOLINT
 {
   TRACE();
 

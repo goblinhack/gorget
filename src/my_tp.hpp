@@ -154,7 +154,7 @@
       list_macro(is_unused21, "is_unused21"),                                               /* newline */                                  \
       list_macro(is_unused22, "is_unused22"),                                               /* newline */                                  \
       list_macro(is_unused23, "is_unused23"),                                               /* newline */                                  \
-      list_macro(is_unused24, "is_unused24"),                                               /* newline */                                  \
+      list_macro(is_chest, "is_chest"),                                               /* newline */                                  \
       list_macro(is_flammable, "is_flammable"),                                             /* newline */                                  \
       list_macro(is_auto_wield, "is_auto_wield"),                                           /* newline */                                  \
       list_macro(is_dead_when_discharged, "is_dead_when_discharged"),                       /* newline */                                  \
@@ -712,7 +712,7 @@ class Tp;
 [[nodiscard]] auto tp_is_unused21(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused22(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused23(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused24(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_chest(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused3(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused4(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused46(Tpp tp) -> bool;
@@ -787,8 +787,8 @@ class Tp;
 // end sort marker1 }
 
 // begin sort marker2 {
-auto tp_priority_get(Tpp tp) -> ThingPriorityType;
-auto tp_rarity_get(Tpp tp) -> ThingRarityType;
+[[nodiscard]] auto tp_priority_get(Tpp tp) ->  ThingPriorityType;
+[[nodiscard]] auto tp_rarity_get(Tpp tp) ->  ThingRarityType;
 void tp_chance_set(Tpp tp, ThingChanceType e, const std::string &val);
 void tp_charge_count_set(Tpp tp, int val);
 void tp_con_(Tpp tp, const char *fmt, va_list args); // compile error without

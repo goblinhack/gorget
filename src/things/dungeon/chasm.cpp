@@ -16,7 +16,7 @@ static auto tp_chasm_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> 
   return "gaping chasm";
 }
 
-auto tp_load_chasm() -> bool
+[[nodiscard]] auto tp_load_chasm() ->  bool
 {
   TRACE();
 

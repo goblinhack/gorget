@@ -194,7 +194,7 @@ exit:
   return result;
 }
 
-auto test_load_move_ok() -> bool // NOLINT
+[[nodiscard]] auto test_load_move_ok() ->  bool // NOLINT
 {
   TRACE();
 

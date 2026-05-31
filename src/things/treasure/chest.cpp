@@ -3,6 +3,7 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_dice_rolls.hpp"
 #include "my_thing.hpp"
 #include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp"
@@ -11,6 +12,7 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 #include "my_ui.hpp"
+#include "my_wids.hpp"
 
 static auto tp_chest_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
@@ -44,10 +46,46 @@ static auto tp_chest_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::
 
   thing_sound_play(g, v, l, t, "chest_open");
 
+  std::vector< Thingp > items;
+
+  auto nitems = 2;
+
+  while (d100() < 20) {
+    nitems++;
+  }
+
+  nitems = std::min(nitems, THING_INVENTORY_MAX);
+
+  thing_log(t, "spawn items");
+  TRACE_INDENT();
+
+  for (auto i = 0; i < nitems; i++) {
+    auto tp = tp_random(g, v, l, is_treasure);
+    if (tp_is_chest(tp)) {
+      nitems++;
+      continue;
+    }
+
+    auto item = thing_spawn(g, v, l, tp, thing_at(t));
+    if (item) {
+      //
+      // Needed to stop auto collect
+      //
+      (void) thing_collision_handle_done_already(v, item, opener);
+
+      items.push_back(item);
+      thing_log(item, "spawned for chest");
+    }
+  }
+
+  if (thing_is_player(opener)) {
+    wid_collect_show(g, v, l, opener, items);
+  }
+
   return true;
 }
 
-auto tp_load_chest() -> bool
+[[nodiscard]] auto tp_load_chest() -> bool
 {
   TRACE();
 
@@ -76,6 +114,7 @@ auto tp_load_chest() -> bool
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_treasure);
+  tp_flag_set(tp, is_chest);
   tp_flag_set(tp, is_wood);
   tp_health_set(tp, "1d20");
   tp_is_immune_add(tp, THING_EVENT_WATER_DAMAGE);

@@ -232,7 +232,7 @@ static void thing_collision_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thi
 //
 // Check we only collide once between objects per tick
 //
-static auto thing_collision_handle_done_already(Levelsp v, Thingp obstacle, Thingp me) -> bool
+[[nodiscard]] auto thing_collision_handle_done_already(Levelsp v, Thingp obstacle, Thingp me) -> bool
 {
   static std::unordered_set< uint64_t > collided;
 
@@ -370,7 +370,7 @@ void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 }
 
-static auto thing_collision_check_circle_circle(Thingp A, fpoint A_at, Thingp B, fpoint B_at) -> bool
+[[nodiscard]] static auto thing_collision_check_circle_circle(Thingp A, fpoint A_at, Thingp B, fpoint B_at) -> bool
 {
   float const A_radius = thing_collision_radius(A);
   float const B_radius = thing_collision_radius(B);

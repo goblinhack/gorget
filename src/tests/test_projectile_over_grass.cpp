@@ -82,7 +82,7 @@ exit:
   return result;
 }
 
-auto test_load_projectile_over_grass() -> bool // NOLINT
+[[nodiscard]] auto test_load_projectile_over_grass() ->  bool // NOLINT
 {
   TRACE();
 

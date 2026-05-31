@@ -108,7 +108,7 @@ static auto thing_jump_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thingp
 //
 // Handles player and monster jumps
 //
-auto thing_jump_to(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to, bool warn) -> bool
+[[nodiscard]] auto thing_jump_to(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to, bool warn) ->  bool
 {
   THING_DBG(me, "jump to %d,%d", to.x, to.y);
   TRACE_INDENT();
@@ -207,7 +207,7 @@ auto thing_jump_to(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to, bool warn
   return true;
 }
 
-auto thing_distance_jump_max(Thingp me) -> int
+[[nodiscard]] auto thing_distance_jump_max(Thingp me) ->  int
 {
   TRACE_DEBUG();
 
@@ -219,7 +219,7 @@ auto thing_distance_jump_max(Thingp me) -> int
   return me->_distance_jump;
 }
 
-auto thing_distance_jump(Thingp me) -> int
+[[nodiscard]] auto thing_distance_jump(Thingp me) ->  int
 {
   TRACE_DEBUG();
 
@@ -250,7 +250,7 @@ auto thing_distance_jump(Thingp me) -> int
   return d;
 }
 
-auto thing_distance_jump_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp me, int val) -> int
+[[nodiscard]] auto thing_distance_jump_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp me, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -261,7 +261,7 @@ auto thing_distance_jump_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp me
   return me->_distance_jump = val;
 }
 
-auto thing_distance_jump_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp me, int val) -> int
+[[nodiscard]] auto thing_distance_jump_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp me, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -272,7 +272,7 @@ auto thing_distance_jump_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp m
   return me->_distance_jump += val;
 }
 
-auto thing_distance_jump_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp me, int val) -> int
+[[nodiscard]] auto thing_distance_jump_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp me, int val) ->  int
 {
   TRACE_DEBUG();
 

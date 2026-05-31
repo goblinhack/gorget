@@ -17,7 +17,7 @@
 //
 // Is this minion attached to a mob?
 //
-auto thing_minion_mob_get(Gamep g, Levelsp v, Levelp /*l*/, Thingp me) -> Thingp
+[[nodiscard]] auto thing_minion_mob_get(Gamep g, Levelsp v, Levelp /*l*/, Thingp me) ->  Thingp
 {
   if (me == nullptr) {
     return nullptr;
@@ -37,7 +37,7 @@ auto thing_minion_mob_get(Gamep g, Levelsp v, Levelp /*l*/, Thingp me) -> Thingp
 //
 // Get the dmap associated with the mob
 //
-auto thing_minion_get_mob_dmap(Gamep g, Levelsp v, Levelp l, Thingp me) -> Dmap *
+[[nodiscard]] auto thing_minion_get_mob_dmap(Gamep g, Levelsp v, Levelp l, Thingp me) ->  Dmap *
 {
   TRACE();
 
@@ -58,7 +58,7 @@ auto thing_minion_get_mob_dmap(Gamep g, Levelsp v, Levelp l, Thingp me) -> Dmap 
 //
 // Detach a minion from its mob
 //
-auto thing_minion_detach_me_from_mob(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
+[[nodiscard]] auto thing_minion_detach_me_from_mob(Gamep g, Levelsp v, Levelp l, Thingp me) ->  bool
 {
   TRACE();
 
@@ -124,7 +124,7 @@ auto thing_minion_detach_me_from_mob(Gamep g, Levelsp v, Levelp l, Thingp me) ->
 //
 // Given a mob, choose somewhere to wander, near the mob.
 //
-auto thing_minion_choose_target_near_mob(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
+[[nodiscard]] auto thing_minion_choose_target_near_mob(Gamep g, Levelsp v, Levelp l, Thingp me) ->  bool
 {
   THING_DBG(me, "choose target: near mob");
   TRACE_INDENT();
@@ -187,7 +187,7 @@ auto thing_minion_choose_target_near_mob(Gamep g, Levelsp v, Levelp l, Thingp me
 //
 // We do not change direction upon this attempt; purely a check only
 //
-auto thing_minion_can_move_to_possible(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &to) -> bool
+[[nodiscard]] auto thing_minion_can_move_to_possible(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &to) ->  bool
 {
   TRACE();
 

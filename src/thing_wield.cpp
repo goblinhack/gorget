@@ -109,7 +109,7 @@ static auto thing_unwield_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp
   return true;
 }
 
-auto thing_is_wielded(Thingp t) -> bool
+[[nodiscard]] auto thing_is_wielded(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -123,7 +123,7 @@ auto thing_is_wielded(Thingp t) -> bool
 //
 // Returns true/false on success/fail
 //
-auto thing_is_wielded_try_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp wielder, bool val) -> bool
+[[nodiscard]] auto thing_is_wielded_try_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp wielder, bool val) ->  bool
 {
   TRACE_DEBUG();
 
@@ -181,7 +181,7 @@ auto thing_is_wielded_try_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp 
   return true;
 }
 
-auto thing_is_wielded_try_unset(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp wielder) -> bool
+[[nodiscard]] auto thing_is_wielded_try_unset(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp wielder) ->  bool
 {
   TRACE_DEBUG();
 
@@ -198,7 +198,7 @@ void thing_on_wield_request_set(Tpp tp, thing_on_wield_request_t callback)
   tp->on_wield_request = callback;
 }
 
-auto thing_on_wield_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp wielder) -> bool
+[[nodiscard]] auto thing_on_wield_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp wielder) ->  bool
 {
   TRACE();
   auto *tp = thing_tp(me);
@@ -229,7 +229,7 @@ void thing_on_unwield_request_set(Tpp tp, thing_on_unwield_request_t callback)
   tp->on_unwield_request = callback;
 }
 
-auto thing_on_unwield_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp unwieldper) -> bool
+[[nodiscard]] auto thing_on_unwield_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp unwieldper) ->  bool
 {
   TRACE();
   auto *tp = thing_tp(me);
@@ -250,7 +250,7 @@ auto thing_on_unwield_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp un
   return tp->on_unwield_request(g, v, l, me, unwieldper);
 }
 
-auto thing_wielding(Gamep g, Levelsp v, Levelp /*l*/, Thingp me) -> Thingp
+[[nodiscard]] auto thing_wielding(Gamep g, Levelsp v, Levelp /*l*/, Thingp me) ->  Thingp
 {
   TRACE();
 
@@ -266,7 +266,7 @@ auto thing_wielding(Gamep g, Levelsp v, Levelp /*l*/, Thingp me) -> Thingp
   return thing_find_optional(g, v, me->wielding_id);
 }
 
-auto thing_unwield(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e) -> bool
+[[nodiscard]] auto thing_unwield(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e) ->  bool
 {
   TRACE();
 
@@ -289,7 +289,7 @@ auto thing_unwield(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e) -> bo
   return true;
 }
 
-auto thing_wield(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, ThingEvent &e) -> bool
+[[nodiscard]] auto thing_wield(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, ThingEvent &e) ->  bool
 {
   TRACE();
 

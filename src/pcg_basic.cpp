@@ -46,7 +46,7 @@ struct PcgStateSetseq64 { // Internals are *Private*.
 #define PCG32_INITIALIZER {0x853c49e6748fea9bULL, 0xda3e39cb94b95bdbULL}
 static thread_local pcg32_random_t pcg32_global = PCG32_INITIALIZER;
 
-auto pcg32_random_r(pcg32_random_t *rng) -> uint32_t
+[[nodiscard]] auto pcg32_random_r(pcg32_random_t *rng) -> uint32_t
 {
   uint64_t const oldstate   = rng->state;
   rng->state                = (oldstate * 6364136223846793005ULL) + rng->inc;
@@ -62,9 +62,9 @@ void pcg32_srandom_r(pcg32_random_t *rng, uint64_t initstate, uint64_t initseq)
   pcg32_global = PCG32_INITIALIZER;
   rng->state   = 0U;
   rng->inc     = (initseq << 1) | 1U;
-  pcg32_random_r(rng);
+  (void) pcg32_random_r(rng);
   rng->state += initstate;
-  pcg32_random_r(rng);
+  (void) pcg32_random_r(rng);
 }
 
 void pcg32_srandom(uint64_t seed, uint64_t seq)
@@ -79,7 +79,7 @@ void pcg32_srandom(uint64_t seed, uint64_t seq)
 // pcg32_random_r(rng)
 //     Generate a uniformly distributed 32-bit random number
 
-auto pcg32_random(const char *func, int line) -> uint32_t
+[[nodiscard]] auto pcg32_random(const char *func, int line) -> uint32_t
 {
   if ((pcg_lock_count) != 0) [[unlikely]] {
     CROAK("trying to generate a PCG random number when blocked");
@@ -96,7 +96,7 @@ auto pcg32_random(const char *func, int line) -> uint32_t
 // pcg32_boundedrand_r(rng, bound):
 //     Generate a uniformly distributed number, r, where 0 <= r < bound
 
-auto pcg32_boundedrand_r(pcg32_random_t *rng, uint32_t bound) -> uint32_t
+[[nodiscard]] auto pcg32_boundedrand_r(pcg32_random_t *rng, uint32_t bound) -> uint32_t
 {
   if (bound == 0U) {
     return 0;
@@ -133,7 +133,7 @@ auto pcg32_boundedrand_r(pcg32_random_t *rng, uint32_t bound) -> uint32_t
   }
 }
 
-auto pcg32_boundedrand(const char *func, int line, uint32_t bound) -> uint32_t
+[[nodiscard]] auto pcg32_boundedrand(const char *func, int line, uint32_t bound) -> uint32_t
 {
   if ((pcg_lock_count) != 0) [[unlikely]] {
     CROAK("trying to generate a PCG random number when blocked");

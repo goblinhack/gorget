@@ -15,7 +15,7 @@
 
 std::unordered_map< std::string, RamdiskT > ramdisk_data;
 
-auto ramdisk_load(const char *filename, int *outlen) -> uint8_t *
+[[nodiscard]] auto ramdisk_load(const char *filename, int *outlen) ->  uint8_t *
 {
   TRACE();
 

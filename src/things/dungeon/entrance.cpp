@@ -26,7 +26,7 @@ static auto tp_entrance_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> st
   return UI_INFO1_FMT_STR "Enter here to cowardly return to level selection.";
 }
 
-auto tp_load_entrance() -> bool
+[[nodiscard]] auto tp_load_entrance() ->  bool
 {
   TRACE();
 

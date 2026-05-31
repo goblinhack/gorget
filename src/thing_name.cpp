@@ -10,7 +10,7 @@
 #include "my_types.hpp"
 #include <string>
 
-auto thing_name_pluralize(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t) -> std::string
+[[nodiscard]] auto thing_name_pluralize(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t) ->  std::string
 {
   TRACE();
 
@@ -24,13 +24,13 @@ auto thing_name_pluralize(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t) ->
   return out;
 }
 
-auto thing_name_pluralize_the(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
+[[nodiscard]] auto thing_name_pluralize_the(Gamep g, Levelsp v, Levelp l, Thingp t) ->  std::string
 {
   TRACE();
   return "the " + thing_name_pluralize(g, v, l, t);
 }
 
-auto thing_name_apostrophize(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t) -> std::string
+[[nodiscard]] auto thing_name_apostrophize(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t) ->  std::string
 {
   TRACE();
 
@@ -44,13 +44,13 @@ auto thing_name_apostrophize(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t)
   return out;
 }
 
-auto thing_name_apostrophize_the(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
+[[nodiscard]] auto thing_name_apostrophize_the(Gamep g, Levelsp v, Levelp l, Thingp t) ->  std::string
 {
   TRACE();
   return "the " + thing_name_apostrophize(g, v, l, t);
 }
 
-auto thing_name_a_or_an(Thingp t) -> std::string
+[[nodiscard]] auto thing_name_a_or_an(Thingp t) ->  std::string
 {
   TRACE();
 
@@ -58,7 +58,7 @@ auto thing_name_a_or_an(Thingp t) -> std::string
   return tp_name_a_or_an(tp);
 }
 
-auto thing_name_long(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) -> std::string
+[[nodiscard]] auto thing_name_long(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) ->  std::string
 {
   TRACE();
 
@@ -126,21 +126,21 @@ auto thing_name_long(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) -
   return out;
 }
 
-auto thing_name_long_the(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) -> std::string
+[[nodiscard]] auto thing_name_long_the(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) ->  std::string
 {
   TRACE();
 
   return "the " + thing_name_long(g, v, l, t, f);
 }
 
-auto thing_name_long_The(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) -> std::string
+[[nodiscard]] auto thing_name_long_The(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) ->  std::string
 {
   TRACE();
 
   return "The " + thing_name_long(g, v, l, t, f);
 }
 
-auto thing_name_short(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) -> std::string
+[[nodiscard]] auto thing_name_short(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) ->  std::string
 {
   TRACE();
 
@@ -204,7 +204,7 @@ auto thing_name_short(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) 
   return out;
 }
 
-auto thing_name_short_the(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) -> std::string
+[[nodiscard]] auto thing_name_short_the(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f) ->  std::string
 {
   TRACE();
 

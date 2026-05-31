@@ -87,7 +87,7 @@ static void tp_argusul_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 }
 
-auto tp_load_argusul() -> bool
+[[nodiscard]] auto tp_load_argusul() ->  bool
 {
   auto *tp   = tp_load("argusul"); // keep as string for scripts
   auto  name = tp_name(tp);

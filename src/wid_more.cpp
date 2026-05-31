@@ -70,7 +70,7 @@ static void wid_more_destroy()
   TRACE_INDENT();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
-    sound_play(g, "keypress");
+      (void) sound_play(g, "keypress");
     return false;
   }
 
@@ -86,18 +86,18 @@ static void wid_more_destroy()
             switch (c) {
               case 'c' :
               case 'C' :
-                sound_play(g, "keypress");
+                  (void) sound_play(g, "keypress");
                 (void) wid_more_credits(g, nullptr, 0, 0, 0);
                 return true;
               case 'h' :
               case 'H' :
-                sound_play(g, "keypress");
+                  (void) sound_play(g, "keypress");
                 (void) wid_more_hiscores(g, nullptr, 0, 0, 0);
                 return true;
               case 'b' :
               case 'B' :
               case SDLK_ESCAPE :
-                sound_play(g, "keypress");
+                  (void) sound_play(g, "keypress");
                 (void) wid_more_back(g, nullptr, 0, 0, 0);
                 return true;
             }

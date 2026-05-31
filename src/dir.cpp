@@ -17,7 +17,7 @@
 /*
  * Does the requested dir exist?
  */
-auto dir_exists(const char *indir) -> bool
+[[nodiscard]] auto dir_exists(const char *indir) -> bool
 {
   TRACE();
 
@@ -45,13 +45,13 @@ auto dir_exists(const char *indir) -> bool
 /*
  * Given a directory, find out what ./ is.
  */
-auto dir_dot() -> char *
+[[nodiscard]] auto dir_dot() -> char *
 {
   TRACE();
 
   static char buf[ MAXPATHLEN ];
 
-  dospath2unix(getcwd(buf, SIZEOF(buf)));
+  (void) dospath2unix(getcwd(buf, SIZEOF(buf)));
 
   return buf;
 }
@@ -60,7 +60,7 @@ auto dir_dot() -> char *
  * Remove \ and change to /
  * Given a directory, find out what ../ is.
  */
-auto dir_dotdot(char *s) -> char *
+[[nodiscard]] auto dir_dotdot(char *s) -> char *
 {
   TRACE();
 
@@ -88,7 +88,7 @@ auto dir_dotdot(char *s) -> char *
 /*
  * Remove \ and change to /
  */
-auto dospath2unix(char *in) -> char *
+[[nodiscard]] auto dospath2unix(char *in) -> char *
 {
   TRACE();
 

@@ -84,7 +84,7 @@ exit:
   return result;
 }
 
-auto test_load_monst_door_locked() -> bool // NOLINT
+[[nodiscard]] auto test_load_monst_door_locked() ->  bool // NOLINT
 {
   TRACE();
 

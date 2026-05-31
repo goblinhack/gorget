@@ -11,7 +11,7 @@
 
 template < class T, template < typename ELEM, typename ALLOC = std::allocator< ELEM > > class C >
 
-auto contains(C< T > *c, T t) -> bool
+[[nodiscard]] auto contains(C< T > *c, T t) ->  bool
 {
   typename C< T >::iterator i = c->begin();
 

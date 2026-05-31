@@ -17,7 +17,7 @@ static auto tp_steam_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> 
   return "thick steam";
 }
 
-auto tp_load_steam() -> bool
+[[nodiscard]] auto tp_load_steam() ->  bool
 {
   TRACE();
 

@@ -16,7 +16,7 @@
 //
 // Returns true/false on success/fail
 //
-auto thing_is_open_try_set(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener, bool val) -> bool
+[[nodiscard]] auto thing_is_open_try_set(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener, bool val) ->  bool
 {
   THING_DBG(t, "%s", __FUNCTION__);
   TRACE_INDENT();
@@ -75,14 +75,14 @@ auto thing_is_open_try_set(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener
   return true;
 }
 
-auto thing_is_open_try_unset(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp closer) -> bool
+[[nodiscard]] auto thing_is_open_try_unset(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp closer) ->  bool
 {
   TRACE_DEBUG();
 
   return thing_is_open_try_set(g, v, l, t, closer, false);
 }
 
-auto thing_is_unlocked(Thingp t) -> bool
+[[nodiscard]] auto thing_is_unlocked(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -114,7 +114,7 @@ void thing_is_unlocked_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
 //
 // Open doors
 //
-auto thing_open(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp opener) -> bool
+[[nodiscard]] auto thing_open(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp opener) ->  bool
 {
   THING_DBG(me, "%s", __FUNCTION__);
   TRACE_INDENT();
@@ -142,7 +142,7 @@ auto thing_open(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp opener) -> bool
 //
 // Close doors
 //
-auto thing_close(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp closer) -> bool
+[[nodiscard]] auto thing_close(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp closer) ->  bool
 {
   THING_DBG(me, "%s", __FUNCTION__);
   TRACE_INDENT();
@@ -170,7 +170,7 @@ auto thing_close(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp closer) -> bool
 //
 // Returns true if we can move to this location by opening a door
 //
-auto thing_can_move_to_attempt_by_opening(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool
+[[nodiscard]] auto thing_can_move_to_attempt_by_opening(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) ->  bool
 {
   THING_DBG(me, "%s", __FUNCTION__);
   TRACE_INDENT();

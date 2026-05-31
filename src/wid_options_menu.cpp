@@ -110,7 +110,7 @@ void wid_options_menu_destroy(Gamep /*g*/)
   TRACE_INDENT();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
-    sound_play(g, "keypress");
+      (void) sound_play(g, "keypress");
     return false;
   }
 
@@ -126,38 +126,38 @@ void wid_options_menu_destroy(Gamep /*g*/)
             switch (c) {
               case 'g' :
               case 'G' :
-                sound_play(g, "keypress");
+                  (void) sound_play(g, "keypress");
                 (void) wid_options_menu_gfx(g, nullptr, 0, 0, 0);
                 return true;
               case 'm' :
               case 'M' :
-                sound_play(g, "keypress");
+                  (void) sound_play(g, "keypress");
                 (void) wid_options_menu_mouse(g, nullptr, 0, 0, 0);
                 return true;
               case 's' :
               case 'S' :
-                sound_play(g, "keypress");
+                  (void) sound_play(g, "keypress");
                 (void) wid_options_menu_sound(g, nullptr, 0, 0, 0);
                 return true;
               case 'k' :
               case 'K' :
-                sound_play(g, "keypress");
+                  (void) sound_play(g, "keypress");
                 (void) wid_options_menu_keyboard(g, nullptr, 0, 0, 0);
                 return true;
               case 'c' :
               case 'C' :
-                sound_play(g, "keypress");
+                  (void) sound_play(g, "keypress");
                 (void) wid_options_menu_seed(g, nullptr, 0, 0, 0);
                 return true;
               case 'p' :
               case 'P' :
-                sound_play(g, "keypress");
+                  (void) sound_play(g, "keypress");
                 (void) wid_options_menu_player_name(g, nullptr, 0, 0, 0);
                 return true;
               case 'b' :
               case 'B' :
               case SDLK_ESCAPE :
-                sound_play(g, "keypress");
+                  (void) sound_play(g, "keypress");
                 (void) wid_options_menu_back(g, nullptr, 0, 0, 0);
                 return true;
             }

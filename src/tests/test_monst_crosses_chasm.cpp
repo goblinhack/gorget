@@ -91,7 +91,7 @@ exit:
   return result;
 }
 
-auto test_load_monst_crosses_chasm() -> bool // NOLINT
+[[nodiscard]] auto test_load_monst_crosses_chasm() ->  bool // NOLINT
 {
   TRACE();
 

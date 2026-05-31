@@ -18,7 +18,7 @@ static auto tp_smoke_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> 
   return "thick smoke";
 }
 
-auto tp_load_smoke() -> bool
+[[nodiscard]] auto tp_load_smoke() ->  bool
 {
   TRACE();
 

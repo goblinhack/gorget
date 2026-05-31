@@ -7,7 +7,7 @@
 #include "my_thing.hpp"
 #include "my_types.hpp"
 
-auto thing_is_sleeping(Thingp me) -> bool
+[[nodiscard]] auto thing_is_sleeping(Thingp me) ->  bool
 {
   TRACE_DEBUG();
 

@@ -24,7 +24,7 @@ static auto tp_teleport_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> st
   return UI_INFO1_FMT_STR "Run of the mill teleport.";
 }
 
-auto tp_load_teleport() -> bool
+[[nodiscard]] auto tp_load_teleport() ->  bool
 {
   TRACE();
 

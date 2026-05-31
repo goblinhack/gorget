@@ -61,7 +61,7 @@ static auto font_load(const std::string &name) -> Fontp
   return f;
 }
 
-auto font_find(const std::string &file) -> Fontp
+[[nodiscard]] auto font_find(const std::string &file) ->  Fontp
 {
   TRACE();
 
@@ -78,7 +78,7 @@ auto font_find(const std::string &file) -> Fontp
   return result->second;
 }
 
-auto Font::font_get_tile(int u) -> Tilep
+[[nodiscard]] auto Font::font_get_tile(int u) ->  Tilep
 {
   Font const *me = this;
   if (me == nullptr) [[unlikely]] {
@@ -132,7 +132,7 @@ auto Font::font_get_tile(int u) -> Tilep
   return tile;
 }
 
-auto font_init() -> bool
+[[nodiscard]] auto font_init() ->  bool
 {
   TRACE();
 

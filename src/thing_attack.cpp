@@ -56,7 +56,7 @@ static auto thing_attack(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, Thi
 //
 // We're trying to attack at this tile. What do we hit first?
 //
-auto thing_attack_at(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &attack_at, ThingEvent *e) -> bool
+[[nodiscard]] auto thing_attack_at(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &attack_at, ThingEvent *e) ->  bool
 {
   THING_DBG(me, "%s", __FUNCTION__);
   TRACE_INDENT();

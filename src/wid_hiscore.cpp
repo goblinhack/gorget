@@ -46,7 +46,7 @@ static void wid_hiscore_destroy(Gamep g)
   TRACE_INDENT();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
-    sound_play(g, "keypress");
+      (void) sound_play(g, "keypress");
     return false;
   }
 
@@ -66,7 +66,7 @@ static void wid_hiscore_destroy(Gamep g)
               case SDLK_ESCAPE :
                 {
                   TRACE();
-                  sound_play(g, "keypress");
+                    (void) sound_play(g, "keypress");
                   wid_hiscore_destroy(g);
                   return true;
                 }

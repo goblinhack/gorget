@@ -10,7 +10,7 @@
 
 #include <vector>
 
-auto draw_line(spoint s, spoint e, size_t max_elems = -1) -> std::vector< spoint >;
-auto draw_line(bpoint s, bpoint e, size_t max_elems = -1) -> std::vector< bpoint >;
+[[nodiscard]] auto draw_line(spoint s, spoint e, size_t max_elems = -1) ->  std::vector< spoint >;
+[[nodiscard]] auto draw_line(bpoint s, bpoint e, size_t max_elems = -1) ->  std::vector< bpoint >;
 
 #endif

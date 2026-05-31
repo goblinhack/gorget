@@ -23,7 +23,7 @@
 //
 // Something blocking the fov?
 //
-auto thing_vision_blocker(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp me, Thingp it) -> bool
+[[nodiscard]] auto thing_vision_blocker(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp me, Thingp it) -> bool
 {
   //
   // Some monsters can see through walls
@@ -83,7 +83,7 @@ void thing_vision_reset(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t)
   }
 }
 
-auto thing_vision_can_see_tile(Gamep g, Levelsp v, Levelp l, Thingp t, bpoint p) -> bool
+[[nodiscard]] auto thing_vision_can_see_tile(Gamep g, Levelsp v, Levelp l, Thingp t, bpoint p) -> bool
 {
   TRACE();
 
@@ -217,8 +217,8 @@ void thing_vision_calculate(Gamep g, Levelsp v, Levelp l, Thingp me)
   IF_DEBUG
   {
     g_thread_id = VISION_THREAD;
-    redirect_stdout();
-    redirect_stderr();
+    (void) redirect_stdout();
+    (void) redirect_stderr();
   }
 
   FovContext ctx;
@@ -255,7 +255,7 @@ void thing_vision_calculate(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 }
 
-auto thing_distance_vision(Gamep g, Levelsp v, Levelp l, Thingp t) -> int
+[[nodiscard]] auto thing_distance_vision(Gamep g, Levelsp v, Levelp l, Thingp t) -> int
 {
   TRACE_DEBUG();
 
@@ -291,7 +291,7 @@ auto thing_distance_vision(Gamep g, Levelsp v, Levelp l, Thingp t) -> int
   return d;
 }
 
-auto thing_distance_vision_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_distance_vision_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -302,7 +302,7 @@ auto thing_distance_vision_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp 
   return t->_distance_vision = val;
 }
 
-auto thing_distance_vision_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_distance_vision_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -313,7 +313,7 @@ auto thing_distance_vision_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp
   return t->_distance_vision += val;
 }
 
-auto thing_distance_vision_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_distance_vision_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -327,7 +327,7 @@ auto thing_distance_vision_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp
   return t->_distance_vision -= val;
 }
 
-auto thing_is_vision_360_degrees(Thingp t) -> bool
+[[nodiscard]] auto thing_is_vision_360_degrees(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -338,7 +338,7 @@ auto thing_is_vision_360_degrees(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_vision_360_degrees) != 0;
 }
 
-auto thing_is_vision_180_degrees(Thingp t) -> bool
+[[nodiscard]] auto thing_is_vision_180_degrees(Thingp t) -> bool
 {
   TRACE_DEBUG();
 

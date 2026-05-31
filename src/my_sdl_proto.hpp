@@ -12,34 +12,34 @@
 #include <string>
 #include <vector>
 
-auto sdlk_eq(const SDL_Keysym &a, const SDL_Keysym &b) -> bool;
-auto sdlk_eq(const SDL_Scancode &s, const SDL_Keysym &k) -> bool;
+[[nodiscard]] auto sdlk_eq(const SDL_Keysym &a, const SDL_Keysym &b) ->  bool;
+[[nodiscard]] auto sdlk_eq(const SDL_Scancode &s, const SDL_Keysym &k) ->  bool;
 
-auto sdl_filter_events(void *userdata, SDL_Event *event) -> int;
-auto sdl_get_mouse() -> int;
+[[nodiscard]] auto sdl_filter_events(void *userdata, SDL_Event *event) ->  int;
+[[nodiscard]] auto sdl_mouse_read_position() ->  int;
 
-auto sdlk_normalize(SDL_Keysym k) -> SDL_Keysym;
-auto sdlk_to_scancode(const SDL_Keysym &k) -> SDL_Scancode;
+[[nodiscard]] auto sdlk_normalize(SDL_Keysym k) ->  SDL_Keysym;
+[[nodiscard]] auto sdlk_to_scancode(const SDL_Keysym &k) ->  SDL_Scancode;
 
-auto to_string(const SDL_Keysym &k) -> std::string;
-auto to_string_ignoring_mods(const SDL_Keysym &k) -> std::string;
+[[nodiscard]] auto to_string(const SDL_Keysym &k) ->  std::string;
+[[nodiscard]] auto to_string_ignoring_mods(const SDL_Keysym &k) ->  std::string;
 
-auto sdl_fbo_save(Gamep /*g*/, FboEnum fbo) -> std::vector< uint8_t >;
+[[nodiscard]] auto sdl_fbo_save(Gamep /*g*/, FboEnum fbo) ->  std::vector< uint8_t >;
 
-auto config_errored_clear(Gamep g, class Tokens *tokens, void *context) -> uint8_t;
-auto show_error(Gamep g, class Tokens *tokens, void *context) -> uint8_t;
-auto config_fps_counter_set(Gamep g, class Tokens *tokens, void *context) -> uint8_t;
-auto config_debug_set(Gamep g, class Tokens *tokens, void *context) -> uint8_t;
-auto config_gfx_vsync_enable(Gamep g, class Tokens *tokens, void *context) -> uint8_t;
-auto sdl_init() -> bool;
+[[nodiscard]] auto config_errored_clear(Gamep g, class Tokens *tokens, void *context) ->  uint8_t;
+[[nodiscard]] auto show_error(Gamep g, class Tokens *tokens, void *context) ->  uint8_t;
+[[nodiscard]] auto config_fps_counter_set(Gamep g, class Tokens *tokens, void *context) ->  uint8_t;
+[[nodiscard]] auto config_debug_set(Gamep g, class Tokens *tokens, void *context) ->  uint8_t;
+[[nodiscard]] auto config_gfx_vsync_enable(Gamep g, class Tokens *tokens, void *context) ->  uint8_t;
+[[nodiscard]] auto sdl_init() ->  bool;
 
 class Tokens;
-auto sdl_user_exit(Gamep g, class Tokens *tokens, void *context) -> uint8_t;
+[[nodiscard]] auto sdl_user_exit(Gamep g, class Tokens *tokens, void *context) ->  uint8_t;
 
 void config_game_gfx_update(Gamep g);
 void config_gfx_vsync_update(Gamep g);
 void sdl_config_update_all(Gamep g);
-auto sdl_display_init(Gamep g) -> bool;
+[[nodiscard]] auto sdl_display_init(Gamep g) ->  bool;
 void sdl_display(Gamep g);
 void sdl_display_reset(Gamep g);
 void sdl_event(Gamep g, SDL_Event *event, bool &processed_mouse_motion_event);

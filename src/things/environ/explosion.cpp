@@ -17,7 +17,7 @@ static void tp_explosion_spawned(Gamep g, Levelsp v, Levelp l, Thingp t)
   thing_sound_play(g, v, l, t, "explosion");
 }
 
-auto tp_load_explosion() -> bool
+[[nodiscard]] auto tp_load_explosion() ->  bool
 {
   TRACE();
 

@@ -82,7 +82,7 @@ exit:
   return result;
 }
 
-auto test_load_laser_over_water() -> bool // NOLINT
+[[nodiscard]] auto test_load_laser_over_water() ->  bool // NOLINT
 {
   TRACE();
 

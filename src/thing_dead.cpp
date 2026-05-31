@@ -72,13 +72,13 @@ static void thing_killed_player(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEv
           topcon(UI_IMPORTANT_FMT_STR "You are burnt by %s." UI_RESET_FMT, by_the_thing.c_str());
         }
         break;
+      case THING_EVENT_CARRIED :          [[fallthrough]];
+      case THING_EVENT_CARRIED_MERGED :   break;
       case THING_EVENT_OPEN :             [[fallthrough]];
       case THING_EVENT_NONE :             [[fallthrough]];
       case THING_EVENT_FALL :             [[fallthrough]];
       case THING_EVENT_THE_END :          [[fallthrough]];
       case THING_EVENT_LIFESPAN_EXPIRED : [[fallthrough]];
-      case THING_EVENT_CARRIED :          [[fallthrough]];
-      case THING_EVENT_CARRIED_MERGED :   [[fallthrough]];
       case THING_EVENT_MELT :             [[fallthrough]];
       case THING_EVENT_USER_INITIATED :   [[fallthrough]];
       case THING_EVENT_SPAWNED :          [[fallthrough]];
@@ -176,10 +176,8 @@ static void thing_killed_by_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
       case THING_EVENT_LIGHT_DAMAGE : //
         topcon("%s is blasted to death by %s.", the_thing.c_str(), by_player.c_str());
         break;
-      case THING_EVENT_CARRIED : [[fallthrough]];
-      case THING_EVENT_CARRIED_MERGED : //
-        topcon("%s is carried by %s.", the_thing.c_str(), by_player.c_str());
-        break;
+      case THING_EVENT_CARRIED :          [[fallthrough]];
+      case THING_EVENT_CARRIED_MERGED :   break;
       case THING_EVENT_OPEN :             [[fallthrough]];
       case THING_EVENT_NONE :             [[fallthrough]];
       case THING_EVENT_THE_END :          [[fallthrough]];

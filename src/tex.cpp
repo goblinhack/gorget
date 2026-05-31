@@ -68,7 +68,7 @@ static std::unordered_map< std::string, Texp > textures_mask;
 static std::unordered_map< std::string, Texp > textures_outline_w_black_inside;
 static std::unordered_map< std::string, Texp > textures_outline_w_invis_inside;
 
-auto tex_init() -> bool
+[[nodiscard]] auto tex_init() ->  bool
 {
   TRACE();
   return true;
@@ -281,7 +281,7 @@ static void load_images(SDL_Surface **surf1_out, const std::string &filename)
 //
 // Load a texture
 //
-auto tex_load(const std::string &file, const std::string &name, int mode) -> Texp
+[[nodiscard]] auto tex_load(const std::string &file, const std::string &name, int mode) ->  Texp
 {
   TRACE();
   Texp t = tex_find(name);
@@ -512,7 +512,7 @@ void tex_load_sprites(Texp *tex, Texp *tex_monochrome, Texp *tex_mask, // newlin
 //
 // Find an existing tex.
 //
-auto tex_find(const std::string &file) -> Texp
+[[nodiscard]] auto tex_find(const std::string &file) ->  Texp
 {
   TRACE();
   if (file.empty()) {
@@ -530,7 +530,7 @@ auto tex_find(const std::string &file) -> Texp
 //
 // Creae a texture from a surface
 //
-auto tex_from_surface(SDL_Surface *surface, const std::string &file, const std::string &name, int mode) -> Texp
+[[nodiscard]] auto tex_from_surface(SDL_Surface *surface, const std::string &file, const std::string &name, int mode) ->  Texp
 {
   TRACE();
 
@@ -627,7 +627,7 @@ auto tex_from_surface(SDL_Surface *surface, const std::string &file, const std::
 //
 // Creae a texture from an FBO
 //
-auto tex_from_fbo(Gamep g, FboEnum fbo) -> Texp
+[[nodiscard]] auto tex_from_fbo(Gamep g, FboEnum fbo) ->  Texp
 {
   TRACE();
 
@@ -653,13 +653,13 @@ auto tex_from_fbo(Gamep g, FboEnum fbo) -> Texp
   return t;
 }
 
-auto tex_get_gl_binding(Texp tex) -> int
+[[nodiscard]] auto tex_get_gl_binding(Texp tex) ->  int
 {
   TRACE();
   return tex->gl_surface_binding;
 }
 
-auto tex_get_width(Texp tex) -> uint32_t
+[[nodiscard]] auto tex_get_width(Texp tex) ->  uint32_t
 {
   TRACE();
   if (tex == nullptr) {
@@ -669,7 +669,7 @@ auto tex_get_width(Texp tex) -> uint32_t
   return tex->width;
 }
 
-auto tex_get_height(Texp tex) -> uint32_t
+[[nodiscard]] auto tex_get_height(Texp tex) ->  uint32_t
 {
   TRACE();
   if (tex == nullptr) {
@@ -679,13 +679,13 @@ auto tex_get_height(Texp tex) -> uint32_t
   return tex->height;
 }
 
-auto tex_get_surface(Texp tex) -> SDL_Surface *
+[[nodiscard]] auto tex_get_surface(Texp tex) ->  SDL_Surface *
 {
   TRACE();
   return tex->surface;
 }
 
-auto string2tex(const char **s) -> Texp
+[[nodiscard]] auto string2tex(const char **s) ->  Texp
 {
   TRACE();
 
@@ -717,7 +717,7 @@ auto string2tex(const char **s) -> Texp
   return result->second;
 }
 
-auto string2tex(std::string &s, int *len) -> Texp
+[[nodiscard]] auto string2tex(std::string &s, int *len) ->  Texp
 {
   TRACE();
   auto        iter = s.begin();

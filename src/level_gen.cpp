@@ -1246,7 +1246,7 @@ void rooms_fini(Gamep /*g*/)
 //
 // Read a fragment_alt char
 //
-auto fragment_alt_char(class FragmentAlt *r, int x, int y) -> char
+[[nodiscard]] auto fragment_alt_char(class FragmentAlt *r, int x, int y) -> char
 {
   if (x < 0) {
     return CHARMAP_EMPTY;
@@ -1329,7 +1329,7 @@ static auto fragment_alt_flip_horiz(class FragmentAlt *r) -> class FragmentAlt *
 //
 // Add a fragment_alt and copies with all possible rotations
 //
-auto fragment_alt_add(Gamep /*g*/, int chance, uint32_t room_flags, const char *file, int line, ...) -> bool
+[[nodiscard]] auto fragment_alt_add(Gamep /*g*/, int chance, uint32_t room_flags, const char *file, int line, ...) -> bool
 {
   TRACE();
 
@@ -1486,7 +1486,7 @@ auto fragment_alt_add(Gamep /*g*/, int chance, uint32_t room_flags, const char *
 //
 // Get a random alt fragment.
 //
-auto fragment_alt_random_get(Gamep /*g*/, Fragment *f, bpoint /*at*/) -> class FragmentAlt *
+[[nodiscard]] auto fragment_alt_random_get(Gamep /*g*/, Fragment *f, bpoint /*at*/) -> class FragmentAlt *
 {
   TRACE();
 
@@ -1615,14 +1615,14 @@ void fragment_alts_fini(Gamep /*g*/)
   }
 }
 
-auto fragment_width(class Fragment *f) -> int { return f->width; }
+[[nodiscard]] auto fragment_width(class Fragment *f) -> int { return f->width; }
 
-auto fragment_height(class Fragment *f) -> int { return f->height; }
+[[nodiscard]] auto fragment_height(class Fragment *f) -> int { return f->height; }
 
 //
 // Read a fragment char
 //
-auto fragment_char(class Fragment *f, int x, int y) -> char
+[[nodiscard]] auto fragment_char(class Fragment *f, int x, int y) -> char
 {
   if (x < 0) {
     return CHARMAP_EMPTY;
@@ -1703,7 +1703,7 @@ static auto fragment_flip_horiz(class Fragment *f) -> class Fragment *
 //
 // Add a fragment and copies with all possible rotations
 //
-auto fragment_add(Gamep /*g*/, int chance, const char *file, int line, ...) -> bool
+[[nodiscard]] auto fragment_add(Gamep /*g*/, int chance, const char *file, int line, ...) -> bool
 {
   TRACE();
 
@@ -1852,7 +1852,7 @@ auto fragment_add(Gamep /*g*/, int chance, const char *file, int line, ...) -> b
 //
 // Get a random fragment.
 //
-auto fragment_random_get(Gamep /*g*/) -> class Fragment *
+[[nodiscard]] auto fragment_random_get(Gamep /*g*/) -> class Fragment *
 {
   TRACE();
 
@@ -3807,7 +3807,7 @@ static void level_gen_add_walls_around_rooms(class LevelGen *lg)
 //
 // Is this tile in the entrance?
 //
-auto level_gen_is_room_entrance(Gamep /*g*/, class LevelGen *lg, int x, int y) -> bool
+[[nodiscard]] auto level_gen_is_room_entrance(Gamep /*g*/, class LevelGen *lg, int x, int y) -> bool
 {
   TRACE();
 
@@ -3826,12 +3826,15 @@ auto level_gen_is_room_entrance(Gamep /*g*/, class LevelGen *lg, int x, int y) -
 //
 // Is this tile in the entrance?
 //
-auto level_gen_is_room_entrance(Gamep g, class LevelGen *lg, bpoint at) -> bool { return level_gen_is_room_entrance(g, lg, at.x, at.y); }
+[[nodiscard]] auto level_gen_is_room_entrance(Gamep g, class LevelGen *lg, bpoint at) -> bool
+{
+  return level_gen_is_room_entrance(g, lg, at.x, at.y);
+}
 
 //
 // Is this tile in the exit?
 //
-auto level_gen_is_room_exit(Gamep /*g*/, class LevelGen *lg, int x, int y) -> bool
+[[nodiscard]] auto level_gen_is_room_exit(Gamep /*g*/, class LevelGen *lg, int x, int y) -> bool
 {
   TRACE();
 
@@ -3850,12 +3853,15 @@ auto level_gen_is_room_exit(Gamep /*g*/, class LevelGen *lg, int x, int y) -> bo
 //
 // Is this tile in the exit?
 //
-auto level_gen_is_room_exit(Gamep g, class LevelGen *lg, bpoint at) -> bool { return level_gen_is_room_exit(g, lg, at.x, at.y); }
+[[nodiscard]] auto level_gen_is_room_exit(Gamep g, class LevelGen *lg, bpoint at) -> bool
+{
+  return level_gen_is_room_exit(g, lg, at.x, at.y);
+}
 
 //
 // Is this room locked?
 //
-auto level_gen_is_room_locked(Gamep /*g*/, class LevelGen *lg, int x, int y) -> bool
+[[nodiscard]] auto level_gen_is_room_locked(Gamep /*g*/, class LevelGen *lg, int x, int y) -> bool
 {
   TRACE();
 
@@ -3874,12 +3880,15 @@ auto level_gen_is_room_locked(Gamep /*g*/, class LevelGen *lg, int x, int y) -> 
 //
 // Is this tile in the entrance?
 //
-auto level_gen_is_room_locked(Gamep g, class LevelGen *lg, bpoint at) -> bool { return level_gen_is_room_locked(g, lg, at.x, at.y); }
+[[nodiscard]] auto level_gen_is_room_locked(Gamep g, class LevelGen *lg, bpoint at) -> bool
+{
+  return level_gen_is_room_locked(g, lg, at.x, at.y);
+}
 
 //
 // Is this room secret?
 //
-auto level_gen_is_room_secret(Gamep /*g*/, class LevelGen *lg, int x, int y) -> bool
+[[nodiscard]] auto level_gen_is_room_secret(Gamep /*g*/, class LevelGen *lg, int x, int y) -> bool
 {
   TRACE();
 
@@ -3898,12 +3907,15 @@ auto level_gen_is_room_secret(Gamep /*g*/, class LevelGen *lg, int x, int y) -> 
 //
 // Is this tile in the entrance?
 //
-auto level_gen_is_room_secret(Gamep g, class LevelGen *lg, bpoint at) -> bool { return level_gen_is_room_secret(g, lg, at.x, at.y); }
+[[nodiscard]] auto level_gen_is_room_secret(Gamep g, class LevelGen *lg, bpoint at) -> bool
+{
+  return level_gen_is_room_secret(g, lg, at.x, at.y);
+}
 
 //
 // Is this room has_key?
 //
-auto level_gen_is_room_has_key(Gamep /*g*/, class LevelGen *lg, int x, int y) -> bool
+[[nodiscard]] auto level_gen_is_room_has_key(Gamep /*g*/, class LevelGen *lg, int x, int y) -> bool
 {
   TRACE();
 
@@ -3922,7 +3934,10 @@ auto level_gen_is_room_has_key(Gamep /*g*/, class LevelGen *lg, int x, int y) ->
 //
 // Is this tile in the entrance?
 //
-auto level_gen_is_room_has_key(Gamep g, class LevelGen *lg, bpoint at) -> bool { return level_gen_is_room_has_key(g, lg, at.x, at.y); }
+[[nodiscard]] auto level_gen_is_room_has_key(Gamep g, class LevelGen *lg, bpoint at) -> bool
+{
+  return level_gen_is_room_has_key(g, lg, at.x, at.y);
+}
 
 //
 // Hide secret doors
@@ -5444,8 +5459,8 @@ static void level_gen_create_fixed_or_proc_gen_level(Gamep g, LevelNum level_num
   // We need to create the log files now, even if empty, as if we get a crash we will
   // not be able to call fopen during the segv signal
   //
-  redirect_stdout();
-  redirect_stderr();
+  (void) redirect_stdout();
+  (void) redirect_stderr();
 
   do {
     auto *v = game_levels_get(g);

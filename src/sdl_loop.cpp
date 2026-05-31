@@ -159,7 +159,7 @@ void sdl_loop(Gamep g)
       // Mouse held?
       //
       if (found == 0) [[unlikely]] {
-        auto mouse_down = sdl_get_mouse();
+        auto mouse_down = sdl_mouse_read_position();
         if (mouse_down != 0) {
           if (static_cast< bool >(sdl.last_mouse_held_down_when)) {
             if (time_have_x_hundredths_passed_since(50, sdl.last_mouse_held_down_when)) {

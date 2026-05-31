@@ -322,7 +322,7 @@ static auto wid_cfg_gfx_find_closest_resolution(Gamep g) -> std::string
     con("Pending resolution %s", chosen.c_str());
     wid_cfg_gfx_select(g);
   } else {
-    sound_play(g, "error");
+      (void) sound_play(g, "error");
     con("At maximum resolution (current %s)", current_res.c_str());
   }
 
@@ -379,7 +379,7 @@ static auto wid_cfg_gfx_find_closest_resolution(Gamep g) -> std::string
     con("Pending resolution %s", chosen.c_str());
     wid_cfg_gfx_select(g);
   } else {
-    sound_play(g, "error");
+      (void) sound_play(g, "error");
     con("At minimum resolution (current %s)", current_res.c_str());
   }
 
@@ -392,7 +392,7 @@ static auto wid_cfg_gfx_find_closest_resolution(Gamep g) -> std::string
   TRACE_INDENT();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
-    sound_play(g, "keypress");
+      (void) sound_play(g, "keypress");
     return false;
   }
 
@@ -408,18 +408,18 @@ static auto wid_cfg_gfx_find_closest_resolution(Gamep g) -> std::string
             switch (c) {
               case 'c' :
               case 'C' :
-                sound_play(g, "keypress");
+                  (void) sound_play(g, "keypress");
                 (void) wid_cfg_gfx_cancel(g, 0, 0);
                 return true;
               case 's' :
               case 'S' :
-                sound_play(g, "keypress");
+                  (void) sound_play(g, "keypress");
                 (void) wid_cfg_gfx_save(g, 0, 0);
                 return true;
               case 'b' :
               case 'B' :
               case SDLK_ESCAPE :
-                sound_play(g, "keypress");
+                  (void) sound_play(g, "keypress");
                 (void) wid_cfg_gfx_cancel(g, 0, 0);
                 return true;
             }

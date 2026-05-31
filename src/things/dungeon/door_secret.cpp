@@ -47,7 +47,7 @@ static auto tp_door_secret_description_get(Gamep g, Levelsp v, Levelp l, Thingp 
   return true;
 }
 
-auto tp_load_door_secret() -> bool
+[[nodiscard]] auto tp_load_door_secret() ->  bool
 {
   TRACE();
 

@@ -9,6 +9,6 @@
 
 void backtrace_dump();
 void backtrace_dump(FILE *fp);
-auto backtrace_string() -> std::string;
+[[nodiscard]] auto backtrace_string() ->  std::string;
 
 #endif

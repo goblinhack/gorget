@@ -124,7 +124,7 @@ static void wid_collect_mouse_over_end(Gamep g, Widp w)
   };
 
   if (! thing_carry(g, v, l, player, item, e)) {
-    sound_play(g, "error");
+      (void) sound_play(g, "error");
   }
 
   items.erase(find(items.begin(), items.end(), item));
@@ -143,7 +143,7 @@ static void wid_collect_mouse_over_end(Gamep g, Widp w)
   TRACE();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
-    sound_play(g, "keypress");
+      (void) sound_play(g, "keypress");
     return false;
   }
 
@@ -209,7 +209,7 @@ static void wid_collect_mouse_over_end(Gamep g, Widp w)
               case SDLK_ESCAPE :
                 {
                   TRACE();
-                  sound_play(g, "keypress");
+                    (void) sound_play(g, "keypress");
                   wid_collect_destroy(g);
                   return true;
                 }

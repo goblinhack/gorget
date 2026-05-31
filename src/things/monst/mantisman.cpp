@@ -73,7 +73,7 @@ static bool tp_mantisman_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, T
   return true;
 }
 
-auto tp_load_mantisman() -> bool
+[[nodiscard]] auto tp_load_mantisman() ->  bool
 {
   auto *tp   = tp_load("mantisman"); // keep as string for scripts
   auto  name = tp_name(tp);

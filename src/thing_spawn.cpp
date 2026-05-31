@@ -42,7 +42,7 @@ void thing_is_spawned_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   thing_is_spawned_set(g, v, l, t, false);
 }
 
-auto thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &at) -> Thingp
+[[nodiscard]] auto thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &at) ->  Thingp
 {
   TRACE();
 
@@ -77,9 +77,9 @@ auto thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &at) -> Thin
   return t;
 }
 
-auto thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, const bpoint &at) -> Thingp { return thing_spawn(g, v, l, tp, make_fpoint(at)); }
+[[nodiscard]] auto thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, const bpoint &at) ->  Thingp { return thing_spawn(g, v, l, tp, make_fpoint(at)); }
 
-auto thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp spawner) -> Thingp
+[[nodiscard]] auto thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp spawner) ->  Thingp
 {
   TRACE();
 

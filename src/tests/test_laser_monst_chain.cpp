@@ -124,7 +124,7 @@ exit:
   return result;
 }
 
-auto test_load_laser_monst_chain() -> bool // NOLINT
+[[nodiscard]] auto test_load_laser_monst_chain() ->  bool // NOLINT
 {
   TRACE();
 

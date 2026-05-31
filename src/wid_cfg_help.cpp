@@ -895,7 +895,7 @@ static void grab_key(const std::string &which)
   TRACE();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
-    sound_play(g, "keypress");
+    (void)   (void) sound_play(g, "keypress");
     return false;
   }
 
@@ -912,7 +912,7 @@ static void grab_key(const std::string &which)
               case 'b' :
               case 'B' :
               case SDLK_ESCAPE :
-                sound_play(g, "keypress");
+                (void)   (void) sound_play(g, "keypress");
                 (void) wid_cfg_help_cancel(g, nullptr, 0, 0, 0);
                 return true;
             }

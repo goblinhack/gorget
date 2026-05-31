@@ -21,7 +21,7 @@
 #include "my_tp.hpp"
 #include "my_types.hpp"
 
-auto thing_at(Thingp t) -> bpoint
+[[nodiscard]] auto thing_at(Thingp t) ->  bpoint
 {
   TRACE_DEBUG();
 
@@ -51,7 +51,7 @@ void thing_at_set(Gamep /*g*/, Levelsp /*v*/, Levelp l, Thingp t, const bpoint &
   t->_at     = valf;
 }
 
-auto thing_real_at(Thingp t) -> fpoint
+[[nodiscard]] auto thing_real_at(Thingp t) ->  fpoint
 {
   TRACE_DEBUG();
 
@@ -79,7 +79,7 @@ void thing_at_set(Gamep /*g*/, Levelsp /*v*/, Levelp l, Thingp t, const fpoint &
   t->_at     = val;
 }
 
-auto thing_old_at(Thingp t) -> bpoint
+[[nodiscard]] auto thing_old_at(Thingp t) ->  bpoint
 {
   TRACE_DEBUG();
 
@@ -89,7 +89,7 @@ auto thing_old_at(Thingp t) -> bpoint
   return make_bpoint(t->_old_at);
 }
 
-auto thing_prev_pix_at(Thingp t) -> spoint
+[[nodiscard]] auto thing_prev_pix_at(Thingp t) ->  spoint
 {
   TRACE_DEBUG();
 
@@ -147,7 +147,7 @@ void thing_pix_at_set(Gamep /*g*/, Levelsp /*v*/, Levelp l, Thingp t, short x, s
   t->_curr_pix_at = val;
 }
 
-auto thing_moving_from(Thingp t) -> bpoint
+[[nodiscard]] auto thing_moving_from(Thingp t) ->  bpoint
 {
   TRACE_DEBUG();
 
@@ -167,7 +167,7 @@ void thing_moving_from_set(Thingp t, const bpoint &val)
   t->_moving_from = val;
 }
 
-auto thing_speed(Thingp t) -> int
+[[nodiscard]] auto thing_speed(Thingp t) ->  int
 {
   TRACE_DEBUG();
 
@@ -178,7 +178,7 @@ auto thing_speed(Thingp t) -> int
   return t->_speed;
 }
 
-auto thing_speed_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_speed_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -195,7 +195,7 @@ auto thing_speed_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val
   return t->_speed = val;
 }
 
-auto thing_weight(Thingp t) -> int
+[[nodiscard]] auto thing_weight(Thingp t) ->  int
 {
   TRACE_DEBUG();
 
@@ -206,7 +206,7 @@ auto thing_weight(Thingp t) -> int
   return t->_weight;
 }
 
-auto thing_weight_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, uint32_t val) -> int
+[[nodiscard]] auto thing_weight_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, uint32_t val) ->  int
 {
   TRACE_DEBUG();
 
@@ -259,7 +259,7 @@ void thing_is_falling_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
   }
 }
 
-auto thing_is_falling_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_is_falling_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -275,7 +275,7 @@ auto thing_is_falling_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, i
   return t->_fall_ms += val;
 }
 
-auto thing_is_falling_continues(Thingp t) -> bool
+[[nodiscard]] auto thing_is_falling_continues(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -315,7 +315,7 @@ void thing_is_falling_continues_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   thing_is_falling_continues_set(g, v, l, t, false);
 }
 
-auto thing_temperature(Thingp t) -> int
+[[nodiscard]] auto thing_temperature(Thingp t) ->  int
 {
   TRACE_DEBUG();
 
@@ -326,7 +326,7 @@ auto thing_temperature(Thingp t) -> int
   return t->_temperature;
 }
 
-auto thing_temperature_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_temperature_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -361,7 +361,7 @@ auto thing_temperature_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, i
   return t->_temperature = val;
 }
 
-auto thing_temperature_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_temperature_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -372,7 +372,7 @@ auto thing_temperature_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> 
   return thing_temperature_set(g, v, l, t, t->_temperature + val);
 }
 
-auto thing_temperature_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_temperature_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -383,7 +383,7 @@ auto thing_temperature_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> 
   return thing_temperature_set(g, v, l, t, t->_temperature - val);
 }
 
-auto thing_damage_this_tick(Thingp t) -> int
+[[nodiscard]] auto thing_damage_this_tick(Thingp t) ->  int
 {
   TRACE_DEBUG();
 
@@ -394,7 +394,7 @@ auto thing_damage_this_tick(Thingp t) -> int
   return t->_damage_this_tick;
 }
 
-auto thing_damage_this_tick_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_damage_this_tick_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -411,7 +411,7 @@ auto thing_damage_this_tick_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp
   return t->_damage_this_tick = val;
 }
 
-auto thing_damage_this_tick_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_damage_this_tick_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -422,7 +422,7 @@ auto thing_damage_this_tick_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thing
   return t->_damage_this_tick += val;
 }
 
-auto thing_damage_this_tick_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_damage_this_tick_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -433,7 +433,7 @@ auto thing_damage_this_tick_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thing
   return t->_damage_this_tick -= val;
 }
 
-auto thing_keys_carried(Thingp t) -> int
+[[nodiscard]] auto thing_keys_carried(Thingp t) ->  int
 {
   TRACE_DEBUG();
 
@@ -444,7 +444,7 @@ auto thing_keys_carried(Thingp t) -> int
   return t->_keys_carried;
 }
 
-auto thing_keys_carried_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_keys_carried_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -461,7 +461,7 @@ auto thing_keys_carried_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, 
   return t->_keys_carried = val;
 }
 
-auto thing_keys_carried_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_keys_carried_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -472,7 +472,7 @@ auto thing_keys_carried_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t,
   return t->_keys_carried += val;
 }
 
-auto thing_keys_carried_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_keys_carried_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -514,7 +514,7 @@ void thing_is_dead_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   thing_is_dead_set(g, v, l, t, false);
 }
 
-auto thing_is_burning(Thingp t) -> bool
+[[nodiscard]] auto thing_is_burning(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -561,7 +561,7 @@ void thing_is_burning_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   thing_is_burning_set(g, v, l, t, false);
 }
 
-auto thing_is_corpse(Thingp t) -> bool
+[[nodiscard]] auto thing_is_corpse(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -598,7 +598,7 @@ void thing_is_corpse_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   thing_is_corpse_set(g, v, l, t, false);
 }
 
-auto thing_is_scheduled_for_cleanup(Thingp t) -> bool
+[[nodiscard]] auto thing_is_scheduled_for_cleanup(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -638,7 +638,7 @@ void thing_is_scheduled_for_cleanup_unset(Gamep g, Levelsp v, Levelp l, Thingp t
   thing_is_scheduled_for_cleanup_set(g, v, l, t, false);
 }
 
-auto thing_is_on_map(Thingp t) -> bool
+[[nodiscard]] auto thing_is_on_map(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -667,7 +667,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   thing_is_on_map_set(g, v, l, t, false);
 }
 
-auto thing_is_animated_can_hflip(Thingp t) -> bool
+[[nodiscard]] auto thing_is_animated_can_hflip(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -678,7 +678,7 @@ auto thing_is_animated_can_hflip(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_animated_can_hflip) != 0;
 }
 
-auto thing_is_animated_no_dir(Thingp t) -> bool
+[[nodiscard]] auto thing_is_animated_no_dir(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -689,7 +689,7 @@ auto thing_is_animated_no_dir(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_animated_no_dir) != 0;
 }
 
-auto thing_is_animated_sync_first(Thingp t) -> bool
+[[nodiscard]] auto thing_is_animated_sync_first(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -700,7 +700,7 @@ auto thing_is_animated_sync_first(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_animated_sync_first) != 0;
 }
 
-auto thing_is_animated(Thingp t) -> bool
+[[nodiscard]] auto thing_is_animated(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -711,7 +711,7 @@ auto thing_is_animated(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_animated) != 0;
 }
 
-auto thing_is_barrel(Thingp t) -> bool
+[[nodiscard]] auto thing_is_barrel(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -722,7 +722,7 @@ auto thing_is_barrel(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_barrel) != 0;
 }
 
-auto thing_is_blit_centered(Thingp t) -> bool
+[[nodiscard]] auto thing_is_blit_centered(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -733,7 +733,7 @@ auto thing_is_blit_centered(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_blit_centered) != 0;
 }
 
-auto thing_is_blit_flush_per_line(Thingp t) -> bool
+[[nodiscard]] auto thing_is_blit_flush_per_line(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -744,7 +744,7 @@ auto thing_is_blit_flush_per_line(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_blit_flush_per_line) != 0;
 }
 
-auto thing_is_blit_outlined(Thingp t) -> bool
+[[nodiscard]] auto thing_is_blit_outlined(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -755,7 +755,7 @@ auto thing_is_blit_outlined(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_blit_outlined) != 0;
 }
 
-auto thing_is_blit_square_outlined(Thingp t) -> bool
+[[nodiscard]] auto thing_is_blit_square_outlined(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -766,7 +766,7 @@ auto thing_is_blit_square_outlined(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_blit_square_outlined) != 0;
 }
 
-auto thing_is_brazier(Thingp t) -> bool
+[[nodiscard]] auto thing_is_brazier(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -777,7 +777,7 @@ auto thing_is_brazier(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_brazier) != 0;
 }
 
-auto thing_is_bridge(Thingp t) -> bool
+[[nodiscard]] auto thing_is_bridge(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -788,7 +788,7 @@ auto thing_is_bridge(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_bridge) != 0;
 }
 
-auto thing_is_chasm(Thingp t) -> bool
+[[nodiscard]] auto thing_is_chasm(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -799,7 +799,7 @@ auto thing_is_chasm(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_chasm) != 0;
 }
 
-auto thing_is_corridor(Thingp t) -> bool
+[[nodiscard]] auto thing_is_corridor(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -810,7 +810,7 @@ auto thing_is_corridor(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_corridor) != 0;
 }
 
-auto thing_is_collision_square(Thingp t) -> bool
+[[nodiscard]] auto thing_is_collision_square(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -821,7 +821,7 @@ auto thing_is_collision_square(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_collision_square) != 0;
 }
 
-auto thing_is_obs_to_cursor_path(Thingp t) -> bool
+[[nodiscard]] auto thing_is_obs_to_cursor_path(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -842,7 +842,7 @@ auto thing_is_obs_to_cursor_path(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_obs_to_cursor_path) != 0;
 }
 
-auto thing_is_cursor_path_hazard(Thingp t) -> bool
+[[nodiscard]] auto thing_is_cursor_path_hazard(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -853,7 +853,7 @@ auto thing_is_cursor_path_hazard(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_cursor_path_hazard) != 0;
 }
 
-auto thing_is_cursor_path(Thingp t) -> bool
+[[nodiscard]] auto thing_is_cursor_path(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -864,7 +864,7 @@ auto thing_is_cursor_path(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_cursor_path) != 0;
 }
 
-auto thing_is_cursor(Thingp t) -> bool
+[[nodiscard]] auto thing_is_cursor(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -875,7 +875,7 @@ auto thing_is_cursor(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_cursor) != 0;
 }
 
-auto thing_is_deep_water(Thingp t) -> bool
+[[nodiscard]] auto thing_is_deep_water(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -886,7 +886,7 @@ auto thing_is_deep_water(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_deep_water) != 0;
 }
 
-auto thing_is_described_cursor(Thingp t) -> bool
+[[nodiscard]] auto thing_is_described_cursor(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -897,7 +897,7 @@ auto thing_is_described_cursor(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_described_cursor) != 0;
 }
 
-auto thing_is_dirt(Thingp t) -> bool
+[[nodiscard]] auto thing_is_dirt(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -908,7 +908,7 @@ auto thing_is_dirt(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_dirt) != 0;
 }
 
-auto thing_is_door_unlocked(Thingp t) -> bool
+[[nodiscard]] auto thing_is_door_unlocked(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -919,7 +919,7 @@ auto thing_is_door_unlocked(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_door_unlocked) != 0;
 }
 
-auto thing_is_dungeon_entrance(Thingp t) -> bool
+[[nodiscard]] auto thing_is_dungeon_entrance(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -930,7 +930,7 @@ auto thing_is_dungeon_entrance(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_dungeon_entrance) != 0;
 }
 
-auto thing_is_entrance(Thingp t) -> bool
+[[nodiscard]] auto thing_is_entrance(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -941,7 +941,7 @@ auto thing_is_entrance(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_entrance) != 0;
 }
 
-auto thing_is_exit(Thingp t) -> bool
+[[nodiscard]] auto thing_is_exit(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -952,7 +952,7 @@ auto thing_is_exit(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_exit) != 0;
 }
 
-auto thing_is_ghost(Thingp t) -> bool
+[[nodiscard]] auto thing_is_ghost(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -963,7 +963,7 @@ auto thing_is_ghost(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_ghost) != 0;
 }
 
-auto thing_is_kobalos(Thingp t) -> bool
+[[nodiscard]] auto thing_is_kobalos(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -974,7 +974,7 @@ auto thing_is_kobalos(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_kobalos) != 0;
 }
 
-auto thing_is_grass(Thingp t) -> bool
+[[nodiscard]] auto thing_is_grass(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -985,7 +985,7 @@ auto thing_is_grass(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_grass) != 0;
 }
 
-auto thing_is_key(Thingp t) -> bool
+[[nodiscard]] auto thing_is_key(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -996,7 +996,7 @@ auto thing_is_key(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_key) != 0;
 }
 
-auto thing_is_lava(Thingp t) -> bool
+[[nodiscard]] auto thing_is_lava(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1007,7 +1007,7 @@ auto thing_is_lava(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_lava) != 0;
 }
 
-auto thing_is_unused46(Thingp t) -> bool
+[[nodiscard]] auto thing_is_unused46(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1018,7 +1018,7 @@ auto thing_is_unused46(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused46) != 0;
 }
 
-auto thing_is_level_curr(Thingp t) -> bool
+[[nodiscard]] auto thing_is_level_curr(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1029,7 +1029,7 @@ auto thing_is_level_curr(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_level_curr) != 0;
 }
 
-auto thing_is_unused47(Thingp t) -> bool
+[[nodiscard]] auto thing_is_unused47(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1040,7 +1040,7 @@ auto thing_is_unused47(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused47) != 0;
 }
 
-auto thing_is_level_final_icon(Thingp t) -> bool
+[[nodiscard]] auto thing_is_level_final_icon(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1051,7 +1051,7 @@ auto thing_is_level_final_icon(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_level_final_icon) != 0;
 }
 
-auto thing_is_level_next_icon(Thingp t) -> bool
+[[nodiscard]] auto thing_is_level_next_icon(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1062,7 +1062,7 @@ auto thing_is_level_next_icon(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_level_next_icon) != 0;
 }
 
-auto thing_is_level_locked_icon(Thingp t) -> bool
+[[nodiscard]] auto thing_is_level_locked_icon(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1073,7 +1073,7 @@ auto thing_is_level_locked_icon(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_level_locked_icon) != 0;
 }
 
-auto thing_is_level_closed_icon(Thingp t) -> bool
+[[nodiscard]] auto thing_is_level_closed_icon(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1084,7 +1084,7 @@ auto thing_is_level_closed_icon(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_level_closed_icon) != 0;
 }
 
-auto thing_is_minion(Thingp t) -> bool
+[[nodiscard]] auto thing_is_minion(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1095,7 +1095,7 @@ auto thing_is_minion(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_minion) != 0;
 }
 
-auto thing_is_mob(Thingp t) -> bool
+[[nodiscard]] auto thing_is_mob(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1106,7 +1106,7 @@ auto thing_is_mob(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_mob) != 0;
 }
 
-auto thing_is_mob1(Thingp t) -> bool
+[[nodiscard]] auto thing_is_mob1(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1117,7 +1117,7 @@ auto thing_is_mob1(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_mob1) != 0;
 }
 
-auto thing_is_mob2(Thingp t) -> bool
+[[nodiscard]] auto thing_is_mob2(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1128,7 +1128,7 @@ auto thing_is_mob2(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_mob2) != 0;
 }
 
-auto thing_is_monst(Thingp t) -> bool
+[[nodiscard]] auto thing_is_monst(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1139,7 +1139,7 @@ auto thing_is_monst(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_monst) != 0;
 }
 
-auto thing_is_monst1(Thingp t) -> bool
+[[nodiscard]] auto thing_is_monst1(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1150,7 +1150,7 @@ auto thing_is_monst1(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_monst1) != 0;
 }
 
-auto thing_is_monst2(Thingp t) -> bool
+[[nodiscard]] auto thing_is_monst2(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1161,7 +1161,7 @@ auto thing_is_monst2(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_monst2) != 0;
 }
 
-auto thing_is_obs_to_movement(Thingp t) -> bool
+[[nodiscard]] auto thing_is_obs_to_movement(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1182,7 +1182,7 @@ auto thing_is_obs_to_movement(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_obs_to_movement) != 0;
 }
 
-auto thing_is_pillar(Thingp t) -> bool
+[[nodiscard]] auto thing_is_pillar(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1193,7 +1193,7 @@ auto thing_is_pillar(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_pillar) != 0;
 }
 
-auto thing_is_rock(Thingp t) -> bool
+[[nodiscard]] auto thing_is_rock(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1204,7 +1204,7 @@ auto thing_is_rock(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_rock) != 0;
 }
 
-auto thing_is_door_secret(Thingp t) -> bool
+[[nodiscard]] auto thing_is_door_secret(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1215,7 +1215,7 @@ auto thing_is_door_secret(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_door_secret) != 0;
 }
 
-auto thing_is_slime(Thingp t) -> bool
+[[nodiscard]] auto thing_is_slime(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1226,7 +1226,7 @@ auto thing_is_slime(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_slime) != 0;
 }
 
-auto thing_is_teleport(Thingp t) -> bool
+[[nodiscard]] auto thing_is_teleport(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1237,7 +1237,7 @@ auto thing_is_teleport(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_teleport) != 0;
 }
 
-auto thing_is_tickable(Thingp t) -> bool
+[[nodiscard]] auto thing_is_tickable(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1248,7 +1248,7 @@ auto thing_is_tickable(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_tickable) != 0;
 }
 
-auto thing_is_tiled(Thingp t) -> bool
+[[nodiscard]] auto thing_is_tiled(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1259,7 +1259,7 @@ auto thing_is_tiled(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_tiled) != 0;
 }
 
-auto thing_is_trap(Thingp t) -> bool
+[[nodiscard]] auto thing_is_trap(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1270,7 +1270,7 @@ auto thing_is_trap(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_trap) != 0;
 }
 
-auto thing_is_treasure(Thingp t) -> bool
+[[nodiscard]] auto thing_is_treasure(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1281,7 +1281,7 @@ auto thing_is_treasure(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_treasure) != 0;
 }
 
-auto thing_is_unused1(Thingp t) -> bool
+[[nodiscard]] auto thing_is_unused1(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1292,7 +1292,7 @@ auto thing_is_unused1(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused1) != 0;
 }
 
-auto thing_is_unused2(Thingp t) -> bool
+[[nodiscard]] auto thing_is_unused2(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1303,7 +1303,7 @@ auto thing_is_unused2(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused2) != 0;
 }
 
-auto thing_is_unused3(Thingp t) -> bool
+[[nodiscard]] auto thing_is_unused3(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1314,7 +1314,7 @@ auto thing_is_unused3(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused3) != 0;
 }
 
-auto thing_is_unused4(Thingp t) -> bool
+[[nodiscard]] auto thing_is_unused4(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1325,7 +1325,7 @@ auto thing_is_unused4(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused4) != 0;
 }
 
-auto thing_is_unused5(Thingp t) -> bool
+[[nodiscard]] auto thing_is_unused5(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1336,7 +1336,7 @@ auto thing_is_unused5(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused5) != 0;
 }
 
-auto thing_is_unused6(Thingp t) -> bool
+[[nodiscard]] auto thing_is_unused6(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1347,7 +1347,7 @@ auto thing_is_unused6(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused6) != 0;
 }
 
-auto thing_is_unused7(Thingp t) -> bool
+[[nodiscard]] auto thing_is_unused7(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1358,7 +1358,7 @@ auto thing_is_unused7(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused7) != 0;
 }
 
-auto thing_is_unused8(Thingp t) -> bool
+[[nodiscard]] auto thing_is_unused8(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1369,7 +1369,7 @@ auto thing_is_unused8(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused8) != 0;
 }
 
-auto thing_is_unused9(Thingp t) -> bool
+[[nodiscard]] auto thing_is_unused9(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1380,7 +1380,7 @@ auto thing_is_unused9(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused9) != 0;
 }
 
-auto thing_is_unused10(Thingp t) -> bool
+[[nodiscard]] auto thing_is_unused10(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1391,7 +1391,7 @@ auto thing_is_unused10(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused10) != 0;
 }
 
-auto thing_is_unused11(Thingp t) -> bool
+[[nodiscard]] auto thing_is_unused11(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1402,7 +1402,7 @@ auto thing_is_unused11(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused11) != 0;
 }
 
-auto thing_is_unused12(Thingp t) -> bool
+[[nodiscard]] auto thing_is_unused12(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1413,7 +1413,7 @@ auto thing_is_unused12(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused12) != 0;
 }
 
-auto thing_is_unused13(Thingp t) -> bool
+[[nodiscard]] auto thing_is_unused13(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1424,7 +1424,7 @@ auto thing_is_unused13(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused13) != 0;
 }
 
-auto thing_is_unused14(Thingp t) -> bool
+[[nodiscard]] auto thing_is_unused14(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1435,7 +1435,7 @@ auto thing_is_unused14(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused14) != 0;
 }
 
-auto thing_is_unused15(Thingp t) -> bool
+[[nodiscard]] auto thing_is_unused15(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1446,7 +1446,7 @@ auto thing_is_unused15(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused15) != 0;
 }
 
-auto thing_is_unused16(Thingp t) -> bool
+[[nodiscard]] auto thing_is_unused16(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1457,7 +1457,7 @@ auto thing_is_unused16(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused16) != 0;
 }
 
-auto thing_is_unused17(Thingp t) -> bool
+[[nodiscard]] auto thing_is_unused17(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1468,7 +1468,7 @@ auto thing_is_unused17(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused17) != 0;
 }
 
-auto thing_is_unused18(Thingp t) -> bool
+[[nodiscard]] auto thing_is_unused18(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1479,7 +1479,7 @@ auto thing_is_unused18(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused18) != 0;
 }
 
-auto thing_is_unused19(Thingp t) -> bool
+[[nodiscard]] auto thing_is_unused19(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1490,7 +1490,7 @@ auto thing_is_unused19(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused19) != 0;
 }
 
-auto thing_is_unused20(Thingp t) -> bool
+[[nodiscard]] auto thing_is_unused20(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1501,7 +1501,7 @@ auto thing_is_unused20(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused20) != 0;
 }
 
-auto thing_is_unused21(Thingp t) -> bool
+[[nodiscard]] auto thing_is_unused21(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1512,7 +1512,7 @@ auto thing_is_unused21(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused21) != 0;
 }
 
-auto thing_is_unused22(Thingp t) -> bool
+[[nodiscard]] auto thing_is_unused22(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1523,7 +1523,7 @@ auto thing_is_unused22(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused22) != 0;
 }
 
-auto thing_is_unused23(Thingp t) -> bool
+[[nodiscard]] auto thing_is_unused23(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1534,7 +1534,7 @@ auto thing_is_unused23(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused23) != 0;
 }
 
-auto thing_is_unused24(Thingp t) -> bool
+[[nodiscard]] auto thing_is_chest(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1542,10 +1542,10 @@ auto thing_is_unused24(Thingp t) -> bool
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused24) != 0;
+  return tp_flag(thing_tp(t), is_chest) != 0;
 }
 
-auto thing_is_flammable(Thingp t) -> bool
+[[nodiscard]] auto thing_is_flammable(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1556,7 +1556,7 @@ auto thing_is_flammable(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_flammable) != 0;
 }
 
-auto thing_is_auto_wield(Thingp t) -> bool
+[[nodiscard]] auto thing_is_auto_wield(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1567,7 +1567,7 @@ auto thing_is_auto_wield(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_auto_wield) != 0;
 }
 
-auto thing_is_dead_when_discharged(Thingp t) -> bool
+[[nodiscard]] auto thing_is_dead_when_discharged(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1578,7 +1578,7 @@ auto thing_is_dead_when_discharged(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_dead_when_discharged) != 0;
 }
 
-auto thing_is_able_to_fire_weapons(Thingp t) -> bool
+[[nodiscard]] auto thing_is_able_to_fire_weapons(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1589,7 +1589,7 @@ auto thing_is_able_to_fire_weapons(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_able_to_fire_weapons) != 0;
 }
 
-auto thing_is_able_to_be_wielded(Thingp t) -> bool
+[[nodiscard]] auto thing_is_able_to_be_wielded(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1600,7 +1600,7 @@ auto thing_is_able_to_be_wielded(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_able_to_be_wielded) != 0;
 }
 
-auto thing_is_able_to_wield_items(Thingp t) -> bool
+[[nodiscard]] auto thing_is_able_to_wield_items(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1611,7 +1611,7 @@ auto thing_is_able_to_wield_items(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_able_to_wield_items) != 0;
 }
 
-auto thing_is_wand(Thingp t) -> bool
+[[nodiscard]] auto thing_is_wand(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1622,7 +1622,7 @@ auto thing_is_wand(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_wand) != 0;
 }
 
-auto thing_is_staff(Thingp t) -> bool
+[[nodiscard]] auto thing_is_staff(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1633,7 +1633,7 @@ auto thing_is_staff(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_staff) != 0;
 }
 
-auto thing_is_argusul(Thingp t) -> bool
+[[nodiscard]] auto thing_is_argusul(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1644,7 +1644,7 @@ auto thing_is_argusul(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_argusul) != 0;
 }
 
-auto thing_is_wait_on_anim(Thingp t) -> bool
+[[nodiscard]] auto thing_is_wait_on_anim(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1655,7 +1655,7 @@ auto thing_is_wait_on_anim(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_wait_on_anim) != 0;
 }
 
-auto thing_is_flat(Thingp t) -> bool
+[[nodiscard]] auto thing_is_flat(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1666,7 +1666,7 @@ auto thing_is_flat(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_flat) != 0;
 }
 
-auto thing_is_obs_to_laser(Thingp t) -> bool
+[[nodiscard]] auto thing_is_obs_to_laser(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1677,7 +1677,7 @@ auto thing_is_obs_to_laser(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_obs_to_laser) != 0;
 }
 
-auto thing_is_laser(Thingp t) -> bool
+[[nodiscard]] auto thing_is_laser(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1688,7 +1688,7 @@ auto thing_is_laser(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_laser) != 0;
 }
 
-auto thing_is_vault(Thingp t) -> bool
+[[nodiscard]] auto thing_is_vault(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1699,7 +1699,7 @@ auto thing_is_vault(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_vault) != 0;
 }
 
-auto thing_is_biome_underhell(Thingp t) -> bool
+[[nodiscard]] auto thing_is_biome_underhell(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1710,7 +1710,7 @@ auto thing_is_biome_underhell(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_biome_underhell) != 0;
 }
 
-auto thing_is_biome_graveyard(Thingp t) -> bool
+[[nodiscard]] auto thing_is_biome_graveyard(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1721,7 +1721,7 @@ auto thing_is_biome_graveyard(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_biome_graveyard) != 0;
 }
 
-auto thing_is_biome_nethervoid(Thingp t) -> bool
+[[nodiscard]] auto thing_is_biome_nethervoid(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1732,7 +1732,7 @@ auto thing_is_biome_nethervoid(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_biome_nethervoid) != 0;
 }
 
-auto thing_is_biome_bogland(Thingp t) -> bool
+[[nodiscard]] auto thing_is_biome_bogland(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1743,7 +1743,7 @@ auto thing_is_biome_bogland(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_biome_bogland) != 0;
 }
 
-auto thing_is_biome_dungeon(Thingp t) -> bool
+[[nodiscard]] auto thing_is_biome_dungeon(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1754,7 +1754,7 @@ auto thing_is_biome_dungeon(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_biome_dungeon) != 0;
 }
 
-auto thing_is_level_open_icon(Thingp t) -> bool
+[[nodiscard]] auto thing_is_level_open_icon(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1765,7 +1765,7 @@ auto thing_is_level_open_icon(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_level_open_icon) != 0;
 }
 
-auto thing_is_blit_bg(Thingp t) -> bool
+[[nodiscard]] auto thing_is_blit_bg(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1776,7 +1776,7 @@ auto thing_is_blit_bg(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_blit_bg) != 0;
 }
 
-auto thing_is_level_select_bg(Thingp t) -> bool
+[[nodiscard]] auto thing_is_level_select_bg(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1787,7 +1787,7 @@ auto thing_is_level_select_bg(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_level_select_bg) != 0;
 }
 
-auto thing_is_blit_hit_outline_w_black_inside(Thingp t) -> bool
+[[nodiscard]] auto thing_is_blit_hit_outline_w_black_inside(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1798,7 +1798,7 @@ auto thing_is_blit_hit_outline_w_black_inside(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_blit_hit_outline_w_black_inside) != 0;
 }
 
-auto thing_is_able_to_fall_sound(Thingp t) -> bool
+[[nodiscard]] auto thing_is_able_to_fall_sound(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1809,7 +1809,7 @@ auto thing_is_able_to_fall_sound(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_able_to_fall_sound) != 0;
 }
 
-auto thing_is_collision_hit_first_on_tile(Thingp t) -> bool
+[[nodiscard]] auto thing_is_collision_hit_first_on_tile(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1820,7 +1820,7 @@ auto thing_is_collision_hit_first_on_tile(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_collision_hit_first_on_tile) != 0;
 }
 
-auto thing_is_collision_hit_all_on_tile(Thingp t) -> bool
+[[nodiscard]] auto thing_is_collision_hit_all_on_tile(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1831,7 +1831,7 @@ auto thing_is_collision_hit_all_on_tile(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_collision_hit_all_on_tile) != 0;
 }
 
-auto thing_is_blit_hit_outline_w_invis_inside(Thingp t) -> bool
+[[nodiscard]] auto thing_is_blit_hit_outline_w_invis_inside(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1842,7 +1842,7 @@ auto thing_is_blit_hit_outline_w_invis_inside(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_blit_hit_outline_w_invis_inside) != 0;
 }
 
-auto thing_is_blit_when_obscured_outline(Thingp t) -> bool
+[[nodiscard]] auto thing_is_blit_when_obscured_outline(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1853,7 +1853,7 @@ auto thing_is_blit_when_obscured_outline(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_blit_when_obscured_outline) != 0;
 }
 
-auto thing_is_attackable_by_player(Thingp t) -> bool
+[[nodiscard]] auto thing_is_attackable_by_player(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1864,7 +1864,7 @@ auto thing_is_attackable_by_player(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_attackable_by_player) != 0;
 }
 
-auto thing_is_attackable_by_monst(Thingp t) -> bool
+[[nodiscard]] auto thing_is_attackable_by_monst(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1875,7 +1875,7 @@ auto thing_is_attackable_by_monst(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_attackable_by_monst) != 0;
 }
 
-auto thing_is_effect(Thingp t) -> bool
+[[nodiscard]] auto thing_is_effect(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1886,7 +1886,7 @@ auto thing_is_effect(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_effect) != 0;
 }
 
-auto thing_is_effect_attack(Thingp t) -> bool
+[[nodiscard]] auto thing_is_effect_attack(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1897,7 +1897,7 @@ auto thing_is_effect_attack(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_effect_attack) != 0;
 }
 
-auto thing_is_effect_blood(Thingp t) -> bool
+[[nodiscard]] auto thing_is_effect_blood(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1908,7 +1908,7 @@ auto thing_is_effect_blood(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_effect_blood) != 0;
 }
 
-auto thing_is_hit_when_dead(Thingp t) -> bool
+[[nodiscard]] auto thing_is_hit_when_dead(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1919,7 +1919,7 @@ auto thing_is_hit_when_dead(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_hit_when_dead) != 0;
 }
 
-auto thing_is_blitzhound(Thingp t) -> bool
+[[nodiscard]] auto thing_is_blitzhound(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1930,7 +1930,7 @@ auto thing_is_blitzhound(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_blitzhound) != 0;
 }
 
-auto thing_is_unused63(Thingp t) -> bool
+[[nodiscard]] auto thing_is_unused63(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1941,7 +1941,7 @@ auto thing_is_unused63(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_unused63) != 0;
 }
 
-auto thing_is_grouped_thing(Thingp t) -> bool
+[[nodiscard]] auto thing_is_grouped_thing(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1952,7 +1952,7 @@ auto thing_is_grouped_thing(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_grouped_thing) != 0;
 }
 
-auto thing_is_able_to_lunge(Thingp t) -> bool
+[[nodiscard]] auto thing_is_able_to_lunge(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1963,7 +1963,7 @@ auto thing_is_able_to_lunge(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_able_to_lunge) != 0;
 }
 
-auto thing_is_obs_to_paths(Thingp t) -> bool
+[[nodiscard]] auto thing_is_obs_to_paths(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1974,7 +1974,7 @@ auto thing_is_obs_to_paths(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_obs_to_paths) != 0;
 }
 
-auto thing_is_removable_when_dead_on_err(Thingp t) -> bool
+[[nodiscard]] auto thing_is_removable_when_dead_on_err(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1985,7 +1985,7 @@ auto thing_is_removable_when_dead_on_err(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_removable_when_dead_on_err) != 0;
 }
 
-auto thing_is_removable_on_err(Thingp t) -> bool
+[[nodiscard]] auto thing_is_removable_on_err(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -1996,7 +1996,7 @@ auto thing_is_removable_on_err(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_removable_on_err) != 0;
 }
 
-auto thing_is_obs_when_dead(Thingp t) -> bool
+[[nodiscard]] auto thing_is_obs_when_dead(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2007,7 +2007,7 @@ auto thing_is_obs_when_dead(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_obs_when_dead) != 0;
 }
 
-auto thing_is_able_to_fall_repeatedly(Thingp t) -> bool
+[[nodiscard]] auto thing_is_able_to_fall_repeatedly(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2018,7 +2018,7 @@ auto thing_is_able_to_fall_repeatedly(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_able_to_fall_repeatedly) != 0;
 }
 
-auto thing_is_able_to_move_through_walls(Thingp t) -> bool
+[[nodiscard]] auto thing_is_able_to_move_through_walls(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2029,7 +2029,7 @@ auto thing_is_able_to_move_through_walls(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_able_to_move_through_walls) != 0;
 }
 
-auto thing_is_able_to_move_diagonally(Thingp t) -> bool
+[[nodiscard]] auto thing_is_able_to_move_diagonally(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2040,7 +2040,7 @@ auto thing_is_able_to_move_diagonally(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_able_to_move_diagonally) != 0;
 }
 
-auto thing_is_blit_on_ground(Thingp t) -> bool
+[[nodiscard]] auto thing_is_blit_on_ground(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2051,7 +2051,7 @@ auto thing_is_blit_on_ground(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_blit_on_ground) != 0;
 }
 
-auto thing_is_insectoid(Thingp t) -> bool
+[[nodiscard]] auto thing_is_insectoid(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2062,7 +2062,7 @@ auto thing_is_insectoid(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_insectoid) != 0;
 }
 
-auto thing_is_mantisman(Thingp t) -> bool
+[[nodiscard]] auto thing_is_mantisman(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2073,7 +2073,7 @@ auto thing_is_mantisman(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_mantisman) != 0;
 }
 
-auto thing_is_dmap(Thingp t) -> bool
+[[nodiscard]] auto thing_is_dmap(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2084,7 +2084,7 @@ auto thing_is_dmap(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_dmap) != 0;
 }
 
-auto thing_is_obs_to_spawning(Thingp t) -> bool
+[[nodiscard]] auto thing_is_obs_to_spawning(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2095,7 +2095,7 @@ auto thing_is_obs_to_spawning(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_obs_to_spawning) != 0;
 }
 
-auto thing_is_mob_kill_minions_on_death(Thingp t) -> bool
+[[nodiscard]] auto thing_is_mob_kill_minions_on_death(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2106,7 +2106,7 @@ auto thing_is_mob_kill_minions_on_death(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_mob_kill_minions_on_death) != 0;
 }
 
-auto thing_is_border(Thingp t) -> bool
+[[nodiscard]] auto thing_is_border(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2117,7 +2117,7 @@ auto thing_is_border(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_border) != 0;
 }
 
-auto thing_is_collision_detection_enabled(Thingp t) -> bool
+[[nodiscard]] auto thing_is_collision_detection_enabled(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2128,7 +2128,7 @@ auto thing_is_collision_detection_enabled(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_collision_detection_enabled) != 0;
 }
 
-auto thing_is_gold(Thingp t) -> bool
+[[nodiscard]] auto thing_is_gold(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2139,7 +2139,7 @@ auto thing_is_gold(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_gold) != 0;
 }
 
-auto thing_is_glass(Thingp t) -> bool
+[[nodiscard]] auto thing_is_glass(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2150,7 +2150,7 @@ auto thing_is_glass(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_glass) != 0;
 }
 
-auto thing_is_plant(Thingp t) -> bool
+[[nodiscard]] auto thing_is_plant(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2161,7 +2161,7 @@ auto thing_is_plant(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_plant) != 0;
 }
 
-auto thing_is_wood(Thingp t) -> bool
+[[nodiscard]] auto thing_is_wood(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2172,7 +2172,7 @@ auto thing_is_wood(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_wood) != 0;
 }
 
-auto thing_is_metal(Thingp t) -> bool
+[[nodiscard]] auto thing_is_metal(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2183,7 +2183,7 @@ auto thing_is_metal(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_metal) != 0;
 }
 
-auto thing_is_flesh(Thingp t) -> bool
+[[nodiscard]] auto thing_is_flesh(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2194,7 +2194,7 @@ auto thing_is_flesh(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_flesh) != 0;
 }
 
-auto thing_is_stone(Thingp t) -> bool
+[[nodiscard]] auto thing_is_stone(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2205,7 +2205,7 @@ auto thing_is_stone(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_stone) != 0;
 }
 
-auto thing_is_meltable(Thingp t) -> bool
+[[nodiscard]] auto thing_is_meltable(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2216,7 +2216,7 @@ auto thing_is_meltable(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_meltable) != 0;
 }
 
-auto thing_is_blit_per_pixel_lighting(Thingp t) -> bool
+[[nodiscard]] auto thing_is_blit_per_pixel_lighting(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2227,7 +2227,7 @@ auto thing_is_blit_per_pixel_lighting(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_blit_per_pixel_lighting) != 0;
 }
 
-auto thing_is_dead_on_collision(Thingp t) -> bool
+[[nodiscard]] auto thing_is_dead_on_collision(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2238,7 +2238,7 @@ auto thing_is_dead_on_collision(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_dead_on_collision) != 0;
 }
 
-auto thing_is_obs_to_jumping_out_of(Thingp t) -> bool
+[[nodiscard]] auto thing_is_obs_to_jumping_out_of(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2249,7 +2249,7 @@ auto thing_is_obs_to_jumping_out_of(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_obs_to_jumping_out_of) != 0;
 }
 
-auto thing_is_cursor_path_warning(Thingp t) -> bool
+[[nodiscard]] auto thing_is_cursor_path_warning(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2260,7 +2260,7 @@ auto thing_is_cursor_path_warning(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_cursor_path_warning) != 0;
 }
 
-auto thing_is_collision_circle_large(Thingp t) -> bool
+[[nodiscard]] auto thing_is_collision_circle_large(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2271,7 +2271,7 @@ auto thing_is_collision_circle_large(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_collision_circle_large) != 0;
 }
 
-auto thing_is_collision_circle_small(Thingp t) -> bool
+[[nodiscard]] auto thing_is_collision_circle_small(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2282,7 +2282,7 @@ auto thing_is_collision_circle_small(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_collision_circle_small) != 0;
 }
 
-auto thing_is_fireball(Thingp t) -> bool
+[[nodiscard]] auto thing_is_fireball(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2293,7 +2293,7 @@ auto thing_is_fireball(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_fireball) != 0;
 }
 
-auto thing_is_projectile(Thingp t) -> bool
+[[nodiscard]] auto thing_is_projectile(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2304,7 +2304,7 @@ auto thing_is_projectile(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_projectile) != 0;
 }
 
-auto thing_is_item_mergeable(Thingp t) -> bool
+[[nodiscard]] auto thing_is_item_mergeable(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2315,7 +2315,7 @@ auto thing_is_item_mergeable(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_item_mergeable) != 0;
 }
 
-auto thing_is_door_locked(Thingp t) -> bool
+[[nodiscard]] auto thing_is_door_locked(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2326,7 +2326,7 @@ auto thing_is_door_locked(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_door_locked) != 0;
 }
 
-auto thing_is_inventory_item(Thingp t) -> bool
+[[nodiscard]] auto thing_is_inventory_item(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2337,7 +2337,7 @@ auto thing_is_inventory_item(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_inventory_item) != 0;
 }
 
-auto thing_is_able_to_open_things(Thingp t) -> bool
+[[nodiscard]] auto thing_is_able_to_open_things(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2348,7 +2348,7 @@ auto thing_is_able_to_open_things(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_able_to_open_things) != 0;
 }
 
-auto thing_is_item(Thingp t) -> bool
+[[nodiscard]] auto thing_is_item(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2359,7 +2359,7 @@ auto thing_is_item(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_item) != 0;
 }
 
-auto thing_is_able_to_crush_grass(Thingp t) -> bool
+[[nodiscard]] auto thing_is_able_to_crush_grass(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2370,7 +2370,7 @@ auto thing_is_able_to_crush_grass(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_able_to_crush_grass) != 0;
 }
 
-auto thing_is_able_to_collect_keys(Thingp t) -> bool
+[[nodiscard]] auto thing_is_able_to_collect_keys(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2381,7 +2381,7 @@ auto thing_is_able_to_collect_keys(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_able_to_collect_keys) != 0;
 }
 
-auto thing_is_able_to_collect_items(Thingp t) -> bool
+[[nodiscard]] auto thing_is_able_to_collect_items(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2392,7 +2392,7 @@ auto thing_is_able_to_collect_items(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_able_to_collect_items) != 0;
 }
 
-auto thing_is_collectable(Thingp t) -> bool
+[[nodiscard]] auto thing_is_collectable(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2403,7 +2403,7 @@ auto thing_is_collectable(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_collectable) != 0;
 }
 
-auto thing_is_blit_when_obscured_faded(Thingp t) -> bool
+[[nodiscard]] auto thing_is_blit_when_obscured_faded(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2414,7 +2414,7 @@ auto thing_is_blit_when_obscured_faded(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_blit_when_obscured_faded) != 0;
 }
 
-auto thing_is_openable(Thingp t) -> bool
+[[nodiscard]] auto thing_is_openable(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2425,7 +2425,7 @@ auto thing_is_openable(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_openable) != 0;
 }
 
-auto thing_is_tick_end_delay(Thingp t) -> bool
+[[nodiscard]] auto thing_is_tick_end_delay(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2436,7 +2436,7 @@ auto thing_is_tick_end_delay(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_tick_end_delay) != 0;
 }
 
-auto thing_is_damage_capped(Thingp t) -> bool
+[[nodiscard]] auto thing_is_damage_capped(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2447,7 +2447,7 @@ auto thing_is_damage_capped(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_damage_capped) != 0;
 }
 
-auto thing_is_physics_explosion(Thingp t) -> bool
+[[nodiscard]] auto thing_is_physics_explosion(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2458,7 +2458,7 @@ auto thing_is_physics_explosion(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_physics_explosion) != 0;
 }
 
-auto thing_is_explosion(Thingp t) -> bool
+[[nodiscard]] auto thing_is_explosion(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2469,7 +2469,7 @@ auto thing_is_explosion(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_explosion) != 0;
 }
 
-auto thing_is_obs_to_explosion(Thingp t) -> bool
+[[nodiscard]] auto thing_is_obs_to_explosion(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2490,7 +2490,7 @@ auto thing_is_obs_to_explosion(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_obs_to_explosion) != 0;
 }
 
-auto thing_is_obs_to_jump_over(Thingp t) -> bool
+[[nodiscard]] auto thing_is_obs_to_jump_over(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2511,7 +2511,7 @@ auto thing_is_obs_to_jump_over(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_obs_to_jump_over) != 0;
 }
 
-auto thing_is_teleport_blocked(Thingp t) -> bool
+[[nodiscard]] auto thing_is_teleport_blocked(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2522,7 +2522,7 @@ auto thing_is_teleport_blocked(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_teleport_blocked) != 0;
 }
 
-auto thing_is_cursor_path_none(Thingp t) -> bool
+[[nodiscard]] auto thing_is_cursor_path_none(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2533,7 +2533,7 @@ auto thing_is_cursor_path_none(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_cursor_path_none) != 0;
 }
 
-auto thing_is_able_to_jump(Thingp t) -> bool
+[[nodiscard]] auto thing_is_able_to_jump(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2544,7 +2544,7 @@ auto thing_is_able_to_jump(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_able_to_jump) != 0;
 }
 
-auto thing_is_blit_obscures(Thingp t) -> bool
+[[nodiscard]] auto thing_is_blit_obscures(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2555,7 +2555,7 @@ auto thing_is_blit_obscures(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_blit_obscures) != 0;
 }
 
-auto thing_is_flying(Thingp t) -> bool
+[[nodiscard]] auto thing_is_flying(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2566,7 +2566,7 @@ auto thing_is_flying(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_flying) != 0;
 }
 
-auto thing_is_needs_move_confirm(Thingp t) -> bool
+[[nodiscard]] auto thing_is_needs_move_confirm(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2577,7 +2577,7 @@ auto thing_is_needs_move_confirm(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_needs_move_confirm) != 0;
 }
 
-auto thing_is_obs_to_falling_onto(Thingp t) -> bool
+[[nodiscard]] auto thing_is_obs_to_falling_onto(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2598,7 +2598,7 @@ auto thing_is_obs_to_falling_onto(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_obs_to_falling_onto) != 0;
 }
 
-auto thing_is_obs_to_jumping_onto(Thingp t) -> bool
+[[nodiscard]] auto thing_is_obs_to_jumping_onto(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2619,7 +2619,7 @@ auto thing_is_obs_to_jumping_onto(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_obs_to_jumping_onto) != 0;
 }
 
-auto thing_is_obs_to_teleporting_onto(Thingp t) -> bool
+[[nodiscard]] auto thing_is_obs_to_teleporting_onto(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2640,7 +2640,7 @@ auto thing_is_obs_to_teleporting_onto(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_obs_to_teleporting_onto) != 0;
 }
 
-auto thing_is_able_to_fall(Thingp t) -> bool
+[[nodiscard]] auto thing_is_able_to_fall(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2651,7 +2651,7 @@ auto thing_is_able_to_fall(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_able_to_fall) != 0;
 }
 
-auto thing_is_physics_water(Thingp t) -> bool
+[[nodiscard]] auto thing_is_physics_water(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2662,7 +2662,7 @@ auto thing_is_physics_water(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_physics_water) != 0;
 }
 
-auto thing_is_indestructible(Thingp t) -> bool
+[[nodiscard]] auto thing_is_indestructible(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2673,7 +2673,7 @@ auto thing_is_indestructible(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_indestructible) != 0;
 }
 
-auto thing_is_floating(Thingp t) -> bool
+[[nodiscard]] auto thing_is_floating(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2684,7 +2684,7 @@ auto thing_is_floating(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_floating) != 0;
 }
 
-auto thing_is_obs_to_fire(Thingp t) -> bool
+[[nodiscard]] auto thing_is_obs_to_fire(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2705,7 +2705,7 @@ auto thing_is_obs_to_fire(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_obs_to_fire) != 0;
 }
 
-auto thing_is_combustible(Thingp t) -> bool
+[[nodiscard]] auto thing_is_combustible(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2716,7 +2716,7 @@ auto thing_is_combustible(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_combustible) != 0;
 }
 
-auto thing_is_blit_shown_in_chasms(Thingp t) -> bool
+[[nodiscard]] auto thing_is_blit_shown_in_chasms(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2727,7 +2727,7 @@ auto thing_is_blit_shown_in_chasms(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_blit_shown_in_chasms) != 0;
 }
 
-auto thing_is_gaseous(Thingp t) -> bool
+[[nodiscard]] auto thing_is_gaseous(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2738,7 +2738,7 @@ auto thing_is_gaseous(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_gaseous) != 0;
 }
 
-auto thing_is_extinguished_on_death(Thingp t) -> bool
+[[nodiscard]] auto thing_is_extinguished_on_death(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2749,7 +2749,7 @@ auto thing_is_extinguished_on_death(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_extinguished_on_death) != 0;
 }
 
-auto thing_is_broken_on_death(Thingp t) -> bool
+[[nodiscard]] auto thing_is_broken_on_death(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2760,7 +2760,7 @@ auto thing_is_broken_on_death(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_broken_on_death) != 0;
 }
 
-auto thing_is_undead(Thingp t) -> bool
+[[nodiscard]] auto thing_is_undead(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2771,7 +2771,7 @@ auto thing_is_undead(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_undead) != 0;
 }
 
-auto thing_is_wait_on_dead_anim(Thingp t) -> bool
+[[nodiscard]] auto thing_is_wait_on_dead_anim(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2782,7 +2782,7 @@ auto thing_is_wait_on_dead_anim(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_wait_on_dead_anim) != 0;
 }
 
-auto thing_is_corpse_on_death(Thingp t) -> bool
+[[nodiscard]] auto thing_is_corpse_on_death(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2793,7 +2793,7 @@ auto thing_is_corpse_on_death(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_corpse_on_death) != 0;
 }
 
-auto thing_is_blit_if_has_seen(Thingp t) -> bool
+[[nodiscard]] auto thing_is_blit_if_has_seen(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2804,7 +2804,7 @@ auto thing_is_blit_if_has_seen(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_blit_if_has_seen) != 0;
 }
 
-auto thing_is_smoke(Thingp t) -> bool
+[[nodiscard]] auto thing_is_smoke(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2815,7 +2815,7 @@ auto thing_is_smoke(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_smoke) != 0;
 }
 
-auto thing_is_steam(Thingp t) -> bool
+[[nodiscard]] auto thing_is_steam(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2826,7 +2826,7 @@ auto thing_is_steam(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_steam) != 0;
 }
 
-auto thing_is_fire(Thingp t) -> bool
+[[nodiscard]] auto thing_is_fire(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2837,7 +2837,7 @@ auto thing_is_fire(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_fire) != 0;
 }
 
-auto thing_is_burnable(Thingp t) -> bool
+[[nodiscard]] auto thing_is_burnable(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2848,7 +2848,7 @@ auto thing_is_burnable(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_burnable) != 0;
 }
 
-auto thing_is_dead_on_shoving(Thingp t) -> bool
+[[nodiscard]] auto thing_is_dead_on_shoving(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2859,7 +2859,7 @@ auto thing_is_dead_on_shoving(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_dead_on_shoving) != 0;
 }
 
-auto thing_is_able_to_shove(Thingp t) -> bool
+[[nodiscard]] auto thing_is_able_to_shove(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2870,7 +2870,7 @@ auto thing_is_able_to_shove(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_able_to_shove) != 0;
 }
 
-auto thing_is_shovable(Thingp t) -> bool
+[[nodiscard]] auto thing_is_shovable(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2881,7 +2881,7 @@ auto thing_is_shovable(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_shovable) != 0;
 }
 
-auto thing_is_loggable(Thingp t) -> bool
+[[nodiscard]] auto thing_is_loggable(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2908,7 +2908,7 @@ auto thing_is_loggable(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_loggable) != 0;
 }
 
-auto thing_is_crushable(Thingp t) -> bool
+[[nodiscard]] auto thing_is_crushable(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2919,7 +2919,7 @@ auto thing_is_crushable(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_crushable) != 0;
 }
 
-auto thing_is_ethereal(Thingp t) -> bool
+[[nodiscard]] auto thing_is_ethereal(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2930,7 +2930,7 @@ auto thing_is_ethereal(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_ethereal) != 0;
 }
 
-auto thing_is_blit_shown_in_overlay(Thingp t) -> bool
+[[nodiscard]] auto thing_is_blit_shown_in_overlay(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2941,7 +2941,7 @@ auto thing_is_blit_shown_in_overlay(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_blit_shown_in_overlay) != 0;
 }
 
-auto thing_is_levitating(Thingp t) -> bool
+[[nodiscard]] auto thing_is_levitating(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2952,7 +2952,7 @@ auto thing_is_levitating(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_levitating) != 0;
 }
 
-auto thing_is_able_to_be_equipped(Thingp t) -> bool
+[[nodiscard]] auto thing_is_able_to_be_equipped(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2963,7 +2963,7 @@ auto thing_is_able_to_be_equipped(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_able_to_be_equipped) != 0;
 }
 
-auto thing_is_item_droppable(Thingp t) -> bool
+[[nodiscard]] auto thing_is_item_droppable(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2974,7 +2974,7 @@ auto thing_is_item_droppable(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_item_droppable) != 0;
 }
 
-auto thing_is_able_to_walk_through_walls(Thingp t) -> bool
+[[nodiscard]] auto thing_is_able_to_walk_through_walls(Thingp t) ->  bool
 {
   TRACE_DEBUG();
 
@@ -2985,7 +2985,7 @@ auto thing_is_able_to_walk_through_walls(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_able_to_walk_through_walls) != 0;
 }
 
-auto thing_value1(Thingp t) -> int
+[[nodiscard]] auto thing_value1(Thingp t) ->  int
 {
   TRACE_DEBUG();
 
@@ -2996,7 +2996,7 @@ auto thing_value1(Thingp t) -> int
   return t->_value1;
 }
 
-auto thing_value1_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value1_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3007,7 +3007,7 @@ auto thing_value1_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int va
   return t->_value1 = val;
 }
 
-auto thing_value1_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value1_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3018,7 +3018,7 @@ auto thing_value1_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int v
   return t->_value1 += val;
 }
 
-auto thing_value1_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value1_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3031,7 +3031,7 @@ auto thing_value1_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int v
   }
   return t->_value1 -= val;
 }
-auto thing_value2(Thingp t) -> int
+[[nodiscard]] auto thing_value2(Thingp t) ->  int
 {
   TRACE_DEBUG();
 
@@ -3042,7 +3042,7 @@ auto thing_value2(Thingp t) -> int
   return t->_value2;
 }
 
-auto thing_value2_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value2_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3053,7 +3053,7 @@ auto thing_value2_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int va
   return t->_value2 = val;
 }
 
-auto thing_value2_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value2_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3064,7 +3064,7 @@ auto thing_value2_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int v
   return t->_value2 += val;
 }
 
-auto thing_value2_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value2_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3077,7 +3077,7 @@ auto thing_value2_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int v
   }
   return t->_value2 -= val;
 }
-auto thing_value3(Thingp t) -> int
+[[nodiscard]] auto thing_value3(Thingp t) ->  int
 {
   TRACE_DEBUG();
 
@@ -3088,7 +3088,7 @@ auto thing_value3(Thingp t) -> int
   return t->_value3;
 }
 
-auto thing_value3_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value3_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3099,7 +3099,7 @@ auto thing_value3_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int va
   return t->_value3 = val;
 }
 
-auto thing_value3_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value3_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3110,7 +3110,7 @@ auto thing_value3_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int v
   return t->_value3 += val;
 }
 
-auto thing_value3_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value3_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3123,7 +3123,7 @@ auto thing_value3_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int v
   }
   return t->_value3 -= val;
 }
-auto thing_value4(Thingp t) -> int
+[[nodiscard]] auto thing_value4(Thingp t) ->  int
 {
   TRACE_DEBUG();
 
@@ -3134,7 +3134,7 @@ auto thing_value4(Thingp t) -> int
   return t->_value4;
 }
 
-auto thing_value4_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value4_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3145,7 +3145,7 @@ auto thing_value4_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int va
   return t->_value4 = val;
 }
 
-auto thing_value4_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value4_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3156,7 +3156,7 @@ auto thing_value4_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int v
   return t->_value4 += val;
 }
 
-auto thing_value4_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value4_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3169,7 +3169,7 @@ auto thing_value4_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int v
   }
   return t->_value4 -= val;
 }
-auto thing_value5(Thingp t) -> int
+[[nodiscard]] auto thing_value5(Thingp t) ->  int
 {
   TRACE_DEBUG();
 
@@ -3180,7 +3180,7 @@ auto thing_value5(Thingp t) -> int
   return t->_value5;
 }
 
-auto thing_value5_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value5_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3191,7 +3191,7 @@ auto thing_value5_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int va
   return t->_value5 = val;
 }
 
-auto thing_value5_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value5_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3202,7 +3202,7 @@ auto thing_value5_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int v
   return t->_value5 += val;
 }
 
-auto thing_value5_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value5_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3215,7 +3215,7 @@ auto thing_value5_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int v
   }
   return t->_value5 -= val;
 }
-auto thing_value6(Thingp t) -> int
+[[nodiscard]] auto thing_value6(Thingp t) ->  int
 {
   TRACE_DEBUG();
 
@@ -3226,7 +3226,7 @@ auto thing_value6(Thingp t) -> int
   return t->_value6;
 }
 
-auto thing_value6_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value6_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3237,7 +3237,7 @@ auto thing_value6_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int va
   return t->_value6 = val;
 }
 
-auto thing_value6_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value6_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3248,7 +3248,7 @@ auto thing_value6_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int v
   return t->_value6 += val;
 }
 
-auto thing_value6_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value6_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3261,7 +3261,7 @@ auto thing_value6_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int v
   }
   return t->_value6 -= val;
 }
-auto thing_value7(Thingp t) -> int
+[[nodiscard]] auto thing_value7(Thingp t) ->  int
 {
   TRACE_DEBUG();
 
@@ -3272,7 +3272,7 @@ auto thing_value7(Thingp t) -> int
   return t->_value7;
 }
 
-auto thing_value7_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value7_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3283,7 +3283,7 @@ auto thing_value7_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int va
   return t->_value7 = val;
 }
 
-auto thing_value7_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value7_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3294,7 +3294,7 @@ auto thing_value7_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int v
   return t->_value7 += val;
 }
 
-auto thing_value7_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value7_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3307,7 +3307,7 @@ auto thing_value7_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int v
   }
   return t->_value7 -= val;
 }
-auto thing_value8(Thingp t) -> int
+[[nodiscard]] auto thing_value8(Thingp t) ->  int
 {
   TRACE_DEBUG();
 
@@ -3318,7 +3318,7 @@ auto thing_value8(Thingp t) -> int
   return t->_value8;
 }
 
-auto thing_value8_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value8_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3329,7 +3329,7 @@ auto thing_value8_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int va
   return t->_value8 = val;
 }
 
-auto thing_value8_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value8_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3340,7 +3340,7 @@ auto thing_value8_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int v
   return t->_value8 += val;
 }
 
-auto thing_value8_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value8_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3353,7 +3353,7 @@ auto thing_value8_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int v
   }
   return t->_value8 -= val;
 }
-auto thing_value9(Thingp t) -> int
+[[nodiscard]] auto thing_value9(Thingp t) ->  int
 {
   TRACE_DEBUG();
 
@@ -3364,7 +3364,7 @@ auto thing_value9(Thingp t) -> int
   return t->_value9;
 }
 
-auto thing_value9_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value9_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3375,7 +3375,7 @@ auto thing_value9_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int va
   return t->_value9 = val;
 }
 
-auto thing_value9_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value9_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3386,7 +3386,7 @@ auto thing_value9_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int v
   return t->_value9 += val;
 }
 
-auto thing_value9_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value9_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3399,7 +3399,7 @@ auto thing_value9_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int v
   }
   return t->_value9 -= val;
 }
-auto thing_value10(Thingp t) -> int
+[[nodiscard]] auto thing_value10(Thingp t) ->  int
 {
   TRACE_DEBUG();
 
@@ -3410,7 +3410,7 @@ auto thing_value10(Thingp t) -> int
   return t->_value10;
 }
 
-auto thing_value10_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value10_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3421,7 +3421,7 @@ auto thing_value10_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int v
   return t->_value10 = val;
 }
 
-auto thing_value10_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value10_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3432,7 +3432,7 @@ auto thing_value10_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int 
   return t->_value10 += val;
 }
 
-auto thing_value10_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value10_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3445,7 +3445,7 @@ auto thing_value10_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int 
   }
   return t->_value10 -= val;
 }
-auto thing_value11(Thingp t) -> int
+[[nodiscard]] auto thing_value11(Thingp t) ->  int
 {
   TRACE_DEBUG();
 
@@ -3456,7 +3456,7 @@ auto thing_value11(Thingp t) -> int
   return t->_value11;
 }
 
-auto thing_value11_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value11_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3467,7 +3467,7 @@ auto thing_value11_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int v
   return t->_value11 = val;
 }
 
-auto thing_value11_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value11_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3478,7 +3478,7 @@ auto thing_value11_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int 
   return t->_value11 += val;
 }
 
-auto thing_value11_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value11_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3491,7 +3491,7 @@ auto thing_value11_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int 
   }
   return t->_value11 -= val;
 }
-auto thing_value12(Thingp t) -> int
+[[nodiscard]] auto thing_value12(Thingp t) ->  int
 {
   TRACE_DEBUG();
 
@@ -3502,7 +3502,7 @@ auto thing_value12(Thingp t) -> int
   return t->_value12;
 }
 
-auto thing_value12_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value12_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3513,7 +3513,7 @@ auto thing_value12_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int v
   return t->_value12 = val;
 }
 
-auto thing_value12_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value12_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3524,7 +3524,7 @@ auto thing_value12_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int 
   return t->_value12 += val;
 }
 
-auto thing_value12_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value12_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3537,7 +3537,7 @@ auto thing_value12_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int 
   }
   return t->_value12 -= val;
 }
-auto thing_value13(Thingp t) -> int
+[[nodiscard]] auto thing_value13(Thingp t) ->  int
 {
   TRACE_DEBUG();
 
@@ -3548,7 +3548,7 @@ auto thing_value13(Thingp t) -> int
   return t->_value13;
 }
 
-auto thing_value13_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value13_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3559,7 +3559,7 @@ auto thing_value13_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int v
   return t->_value13 = val;
 }
 
-auto thing_value13_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value13_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3570,7 +3570,7 @@ auto thing_value13_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int 
   return t->_value13 += val;
 }
 
-auto thing_value13_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value13_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3583,7 +3583,7 @@ auto thing_value13_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int 
   }
   return t->_value13 -= val;
 }
-auto thing_value14(Thingp t) -> int
+[[nodiscard]] auto thing_value14(Thingp t) ->  int
 {
   TRACE_DEBUG();
 
@@ -3594,7 +3594,7 @@ auto thing_value14(Thingp t) -> int
   return t->_value14;
 }
 
-auto thing_value14_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value14_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3605,7 +3605,7 @@ auto thing_value14_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int v
   return t->_value14 = val;
 }
 
-auto thing_value14_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value14_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3616,7 +3616,7 @@ auto thing_value14_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int 
   return t->_value14 += val;
 }
 
-auto thing_value14_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value14_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3629,7 +3629,7 @@ auto thing_value14_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int 
   }
   return t->_value14 -= val;
 }
-auto thing_value15(Thingp t) -> int
+[[nodiscard]] auto thing_value15(Thingp t) ->  int
 {
   TRACE_DEBUG();
 
@@ -3640,7 +3640,7 @@ auto thing_value15(Thingp t) -> int
   return t->_value15;
 }
 
-auto thing_value15_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value15_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3651,7 +3651,7 @@ auto thing_value15_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int v
   return t->_value15 = val;
 }
 
-auto thing_value15_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value15_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3662,7 +3662,7 @@ auto thing_value15_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int 
   return t->_value15 += val;
 }
 
-auto thing_value15_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value15_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3675,7 +3675,7 @@ auto thing_value15_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int 
   }
   return t->_value15 -= val;
 }
-auto thing_value16(Thingp t) -> int
+[[nodiscard]] auto thing_value16(Thingp t) ->  int
 {
   TRACE_DEBUG();
 
@@ -3686,7 +3686,7 @@ auto thing_value16(Thingp t) -> int
   return t->_value16;
 }
 
-auto thing_value16_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value16_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3697,7 +3697,7 @@ auto thing_value16_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int v
   return t->_value16 = val;
 }
 
-auto thing_value16_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value16_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3708,7 +3708,7 @@ auto thing_value16_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int 
   return t->_value16 += val;
 }
 
-auto thing_value16_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value16_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3721,7 +3721,7 @@ auto thing_value16_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int 
   }
   return t->_value16 -= val;
 }
-auto thing_distance_avoid_target(Thingp t) -> int
+[[nodiscard]] auto thing_distance_avoid_target(Thingp t) ->  int
 {
   TRACE_DEBUG();
 
@@ -3732,7 +3732,7 @@ auto thing_distance_avoid_target(Thingp t) -> int
   return t->_distance_avoid_target;
 }
 
-auto thing_distance_avoid_target_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_distance_avoid_target_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3743,7 +3743,7 @@ auto thing_distance_avoid_target_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, T
   return t->_distance_avoid_target = val;
 }
 
-auto thing_distance_avoid_target_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_distance_avoid_target_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3754,7 +3754,7 @@ auto thing_distance_avoid_target_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, 
   return t->_distance_avoid_target += val;
 }
 
-auto thing_distance_avoid_target_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_distance_avoid_target_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3768,7 +3768,7 @@ auto thing_distance_avoid_target_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, 
   return t->_distance_avoid_target -= val;
 }
 
-auto thing_minion_max(Thingp t) -> int
+[[nodiscard]] auto thing_minion_max(Thingp t) ->  int
 {
   TRACE_DEBUG();
 
@@ -3779,7 +3779,7 @@ auto thing_minion_max(Thingp t) -> int
   return t->_minion_max;
 }
 
-auto thing_minion_max_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_minion_max_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3796,7 +3796,7 @@ auto thing_minion_max_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, in
   return t->_minion_max = val;
 }
 
-auto thing_minion_max_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_minion_max_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3812,7 +3812,7 @@ auto thing_minion_max_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, i
   return t->_minion_max += val;
 }
 
-auto thing_minion_max_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_minion_max_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3826,7 +3826,7 @@ auto thing_minion_max_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, i
   return t->_minion_max -= val;
 }
 
-auto thing_fired_weapon_count_max(Thingp t) -> int
+[[nodiscard]] auto thing_fired_weapon_count_max(Thingp t) ->  int
 {
   TRACE_DEBUG();
 
@@ -3837,7 +3837,7 @@ auto thing_fired_weapon_count_max(Thingp t) -> int
   return t->_fired_weapon_count_max;
 }
 
-auto thing_fired_weapon_count_max_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_fired_weapon_count_max_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3854,7 +3854,7 @@ auto thing_fired_weapon_count_max_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, 
   return t->_fired_weapon_count_max = val;
 }
 
-auto thing_fired_weapon_count_max_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_fired_weapon_count_max_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3870,7 +3870,7 @@ auto thing_fired_weapon_count_max_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/,
   return t->_fired_weapon_count_max += val;
 }
 
-auto thing_fired_weapon_count_max_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_fired_weapon_count_max_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3884,7 +3884,7 @@ auto thing_fired_weapon_count_max_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/,
   return t->_fired_weapon_count_max -= val;
 }
 
-auto thing_distance_minion_from_mob_max(Thingp t) -> int
+[[nodiscard]] auto thing_distance_minion_from_mob_max(Thingp t) ->  int
 {
   TRACE_DEBUG();
 
@@ -3895,7 +3895,7 @@ auto thing_distance_minion_from_mob_max(Thingp t) -> int
   return t->_distance_minion_from_mob_max;
 }
 
-auto thing_distance_minion_from_mob_max_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_distance_minion_from_mob_max_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3906,7 +3906,7 @@ auto thing_distance_minion_from_mob_max_set(Gamep /*g*/, Levelsp /*v*/, Levelp /
   return t->_distance_minion_from_mob_max = val;
 }
 
-auto thing_variant(Thingp t) -> int
+[[nodiscard]] auto thing_variant(Thingp t) ->  int
 {
   TRACE_DEBUG();
 
@@ -3917,7 +3917,7 @@ auto thing_variant(Thingp t) -> int
   return t->_variant;
 }
 
-auto thing_variant_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_variant_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3928,7 +3928,7 @@ auto thing_variant_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int v
   return t->_variant = val;
 }
 
-auto thing_priority(Thingp t) -> ThingPriorityType
+[[nodiscard]] auto thing_priority(Thingp t) ->  ThingPriorityType
 {
   TRACE_DEBUG();
 
@@ -3942,7 +3942,7 @@ auto thing_priority(Thingp t) -> ThingPriorityType
   return t->_priority;
 }
 
-auto thing_priority_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, ThingPriorityType val) -> ThingPriorityType
+[[nodiscard]] auto thing_priority_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, ThingPriorityType val) ->  ThingPriorityType
 {
   TRACE_DEBUG();
 
@@ -3953,7 +3953,7 @@ auto thing_priority_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, Thin
   return t->_priority = val;
 }
 
-auto thing_lifespan(Thingp t) -> int
+[[nodiscard]] auto thing_lifespan(Thingp t) ->  int
 {
   TRACE_DEBUG();
 
@@ -3964,7 +3964,7 @@ auto thing_lifespan(Thingp t) -> int
   return t->_lifespan;
 }
 
-auto thing_lifespan_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_lifespan_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3975,7 +3975,7 @@ auto thing_lifespan_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int 
   return t->_lifespan = val;
 }
 
-auto thing_lifespan_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_lifespan_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -3986,7 +3986,7 @@ auto thing_lifespan_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int
   return t->_lifespan += val;
 }
 
-auto thing_lifespan_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_lifespan_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -4000,7 +4000,7 @@ auto thing_lifespan_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int
   return t->_lifespan -= val;
 }
 
-auto thing_age(Thingp t) -> int
+[[nodiscard]] auto thing_age(Thingp t) ->  int
 {
   TRACE_DEBUG();
 
@@ -4011,7 +4011,7 @@ auto thing_age(Thingp t) -> int
   return t->_age;
 }
 
-auto thing_age_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_age_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -4022,7 +4022,7 @@ auto thing_age_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) 
   return t->_age = val;
 }
 
-auto thing_age_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_age_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -4033,7 +4033,7 @@ auto thing_age_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val)
   return t->_age += val;
 }
 
-auto thing_age_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_age_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -4047,7 +4047,7 @@ auto thing_age_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val)
   return t->_age -= val;
 }
 
-auto thing_move_remaining(Thingp t) -> int
+[[nodiscard]] auto thing_move_remaining(Thingp t) ->  int
 {
   TRACE_DEBUG();
 
@@ -4058,7 +4058,7 @@ auto thing_move_remaining(Thingp t) -> int
   return t->_move_remaining;
 }
 
-auto thing_move_remaining_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_move_remaining_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -4069,7 +4069,7 @@ auto thing_move_remaining_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t
   return t->_move_remaining = val;
 }
 
-auto thing_move_remaining_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_move_remaining_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -4080,7 +4080,7 @@ auto thing_move_remaining_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp 
   return t->_move_remaining += val;
 }
 
-auto thing_move_remaining_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_move_remaining_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -4094,14 +4094,14 @@ auto thing_move_remaining_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp 
   return t->_move_remaining -= val;
 }
 
-auto thing_collision_radius(Thingp t) -> float
+[[nodiscard]] auto thing_collision_radius(Thingp t) ->  float
 {
   TRACE_DEBUG();
 
   return thing_is_collision_circle_small(t) ? THING_COLLISION_CIRCLE_SMALL_RADIUS : THING_COLLISION_CIRCLE_LARGE_RADIUS;
 }
 
-auto thing_target(Thingp t) -> bpoint
+[[nodiscard]] auto thing_target(Thingp t) ->  bpoint
 {
   TRACE_DEBUG();
 

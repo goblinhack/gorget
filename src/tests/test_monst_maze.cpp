@@ -193,7 +193,7 @@ exit:
   return result;
 }
 
-auto test_load_monst_maze() -> bool // NOLINT
+[[nodiscard]] auto test_load_monst_maze() ->  bool // NOLINT
 {
   TRACE();
 

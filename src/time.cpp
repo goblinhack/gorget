@@ -25,9 +25,9 @@ ts_t time_game;
 
 static char buf_[ MAXSHORTSTR ];
 
-auto time_ms_cached() -> ts_t { return time_now; }
+[[nodiscard]] auto time_ms_cached() -> ts_t { return time_now; }
 
-auto time_ms() -> ts_t
+[[nodiscard]] auto time_ms() -> ts_t
 {
   time_now = SDL_GetTicks();
 
@@ -39,14 +39,14 @@ auto time_ms() -> ts_t
   return time_now;
 }
 
-auto time_game_ms() -> ts_t
+[[nodiscard]] auto time_game_ms() -> ts_t
 {
   time_game = time_ms();
   return time_game;
 }
-auto time_game_ms_cached() -> ts_t { return time_game; }
+[[nodiscard]] auto time_game_ms_cached() -> ts_t { return time_game; }
 
-auto time2str(ts_t ms, char *buf, int len) -> const char *
+[[nodiscard]] auto time2str(ts_t ms, char *buf, int len) -> const char *
 {
   int       log_msec = ms;
   int       log_secs = log_msec / ONESEC;
@@ -72,7 +72,7 @@ auto time2str(ts_t ms, char *buf, int len) -> const char *
   return buf_;
 }
 
-auto timestamp(char *buf, int len) -> const char *
+[[nodiscard]] auto timestamp(char *buf, int len) -> const char *
 {
   int       log_msec = time_ms();
   int       log_secs = log_msec / ONESEC;
@@ -98,9 +98,9 @@ auto timestamp(char *buf, int len) -> const char *
   return buf_;
 }
 
-auto time_have_x_hundredths_passed_since(ts_t val, ts_t since) -> bool
+[[nodiscard]] auto time_have_x_hundredths_passed_since(ts_t val, ts_t since) -> bool
 {
-  time_ms();
+  (void) time_ms();
 
   //
   // Cater for negative future times.
@@ -110,9 +110,9 @@ auto time_have_x_hundredths_passed_since(ts_t val, ts_t since) -> bool
   return static_cast< ts_t >(delay / 10) > val;
 }
 
-auto time_have_x_ms_passed_since(ts_t val, ts_t since) -> bool
+[[nodiscard]] auto time_have_x_ms_passed_since(ts_t val, ts_t since) -> bool
 {
-  time_ms();
+  (void) time_ms();
 
   //
   // Cater for negative future times.
@@ -122,9 +122,9 @@ auto time_have_x_ms_passed_since(ts_t val, ts_t since) -> bool
   return delay >= val;
 }
 
-auto time_have_x_tenths_passed_since(ts_t val, ts_t since) -> bool
+[[nodiscard]] auto time_have_x_tenths_passed_since(ts_t val, ts_t since) -> bool
 {
-  time_ms();
+  (void) time_ms();
 
   //
   // Cater for negative future times.
@@ -134,9 +134,9 @@ auto time_have_x_tenths_passed_since(ts_t val, ts_t since) -> bool
   return static_cast< ts_t >(delay / 100) >= val;
 }
 
-auto time_have_x_secs_passed_since(ts_t val, ts_t since) -> bool
+[[nodiscard]] auto time_have_x_secs_passed_since(ts_t val, ts_t since) -> bool
 {
-  time_ms();
+  (void) time_ms();
 
   //
   // Cater for negative future times.
@@ -153,14 +153,14 @@ void get_timestamp(char *buf, int len)
   string_timestamp(tmp, len);
   snprintf(buf, len, "%s %s", timestamp().c_str(), tmp);
 #else
-  timestamp(buf, len);
+  (void) timestamp(buf, len);
 #endif
 }
 
 // avoid: warning: ‘%c’ yields only last 2 digits of year in some locales [-Wformat-y2k]
 static auto my_strftime(char *s, size_t max, const char *fmt, const struct tm *tm) -> size_t { return strftime(s, max, fmt, tm); }
 
-auto current_date() -> std::string
+[[nodiscard]] auto current_date() -> std::string
 {
   struct tm const *timeinfo = nullptr;
   time_t           rawtime  = 0;
@@ -210,7 +210,7 @@ auto current_date() -> std::string
   return {buffer};
 }
 
-auto string_timestamp() -> std::string &
+[[nodiscard]] auto string_timestamp() -> std::string &
 {
   static ts_t        time_last;
   static std::string last_timestamp;

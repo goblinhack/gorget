@@ -170,7 +170,7 @@ exit:
   return result;
 }
 
-auto test_load_brazier_shove_fail() -> bool // NOLINT
+[[nodiscard]] auto test_load_brazier_shove_fail() ->  bool // NOLINT
 {
   TRACE();
 

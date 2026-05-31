@@ -5,7 +5,7 @@
 #include "my_callstack.hpp"
 #include "my_tests.hpp"
 
-auto tests_init() -> bool
+[[nodiscard]] auto tests_init() ->  bool
 {
   TRACE();
 

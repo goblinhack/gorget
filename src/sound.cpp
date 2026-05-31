@@ -77,7 +77,7 @@ static void sound_finished(int channel)
   }
 }
 
-auto sound_init() -> bool
+[[nodiscard]] auto sound_init() -> bool
 {
   TRACE();
   Mix_AllocateChannels(max_channels);
@@ -135,7 +135,7 @@ static auto find_one(const std::string &name_alias) -> Sound *
   return rand_one_of(out);
 }
 
-auto sound_load(float volume, const std::string &name, const std::string &name_alias, int concurrent_max) -> bool
+[[nodiscard]] auto sound_load(float volume, const std::string &name, const std::string &name_alias, int concurrent_max) -> bool
 {
   TRACE();
 
@@ -238,7 +238,7 @@ auto sound_load(float volume, const std::string &name, const std::string &name_a
   return false;
 }
 
-auto sound_play(Gamep g, const std::string &name_alias, float scale, int loops, Thingp me) -> bool
+[[nodiscard]] auto sound_play(Gamep g, const std::string &name_alias, float scale, int loops, Thingp me) -> bool
 {
   TRACE();
 

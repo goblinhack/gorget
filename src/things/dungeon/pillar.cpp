@@ -16,7 +16,7 @@ static auto tp_pillar_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) ->
   return "ancient moss covered pillar";
 }
 
-auto tp_load_pillar() -> bool
+[[nodiscard]] auto tp_load_pillar() ->  bool
 {
   TRACE();
 

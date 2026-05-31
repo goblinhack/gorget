@@ -49,7 +49,7 @@ void thing_is_hit_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int va
   t->_is_hit = val;
 }
 
-auto thing_is_hit_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_is_hit_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 
@@ -65,7 +65,7 @@ auto thing_is_hit_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int v
   return t->_is_hit += val;
 }
 
-auto thing_is_hit_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_is_hit_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->  int
 {
   TRACE_DEBUG();
 

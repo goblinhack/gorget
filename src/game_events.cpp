@@ -25,7 +25,7 @@
 //
 // Return true on the event being consumed
 //
-auto game_mouse_down(Gamep g, int x, int y, uint32_t button) -> bool
+[[nodiscard]] auto game_mouse_down(Gamep g, int x, int y, uint32_t button) ->  bool
 {
   DBG("game mouse down");
   TRACE_INDENT();
@@ -85,9 +85,9 @@ auto game_mouse_down(Gamep g, int x, int y, uint32_t button) -> bool
   return thing_player_mouse_down(g, v, l, x, y, button);
 }
 
-auto game_mouse_up(Gamep /*g*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool { return false; }
+[[nodiscard]] auto game_mouse_up(Gamep /*g*/, int /*x*/, int /*y*/, uint32_t /*button*/) ->  bool { return false; }
 
-auto game_mouse_motion(Gamep g, int /*x*/, int /*y*/, int /*relx*/, int /*rely*/, int wheelx, int wheely) -> bool
+[[nodiscard]] auto game_mouse_motion(Gamep g, int /*x*/, int /*y*/, int /*relx*/, int /*rely*/, int wheelx, int wheely) ->  bool
 {
   DBG("game mouse motion");
   TRACE();
@@ -132,7 +132,7 @@ auto game_mouse_motion(Gamep g, int /*x*/, int /*y*/, int /*relx*/, int /*rely*/
   return true;
 }
 
-auto game_event_save(Gamep g) -> bool
+[[nodiscard]] auto game_event_save(Gamep g) ->  bool
 {
   DBG("saving");
   TRACE();
@@ -166,7 +166,7 @@ auto game_event_save(Gamep g) -> bool
       // No saves
       //
       topcon(UI_WARNING_FMT_STR "You can only save games when you exit the level." UI_RESET_FMT);
-      sound_play(g, "error");
+        (void) sound_play(g, "error");
       return true;
     }
   }
@@ -180,7 +180,7 @@ auto game_event_save(Gamep g) -> bool
   return true;
 }
 
-auto game_event_load(Gamep g) -> bool
+[[nodiscard]] auto game_event_load(Gamep g) ->  bool
 {
   DBG("loading");
   TRACE_INDENT();
@@ -190,7 +190,7 @@ auto game_event_load(Gamep g) -> bool
   return true;
 }
 
-auto game_event_wait(Gamep g) -> bool
+[[nodiscard]] auto game_event_wait(Gamep g) ->  bool
 {
   DBG("wait");
   TRACE_INDENT();
@@ -227,7 +227,7 @@ auto game_event_wait(Gamep g) -> bool
   return true;
 }
 
-auto game_event_inventory(Gamep g) -> bool
+[[nodiscard]] auto game_event_inventory(Gamep g) ->  bool
 {
   DBG("inventory");
   TRACE_INDENT();
@@ -256,7 +256,7 @@ auto game_event_inventory(Gamep g) -> bool
   return true;
 }
 
-auto game_event_descend(Gamep g) -> bool
+[[nodiscard]] auto game_event_descend(Gamep g) ->  bool
 {
   DBG("descend");
   TRACE_INDENT();
@@ -286,7 +286,7 @@ auto game_event_descend(Gamep g) -> bool
 
   if (level_is_exit(g, v, l, thing_at(player)) == nullptr) {
     topcon(UI_WARNING_FMT_STR "There is no level exit here to descend." UI_RESET_FMT);
-    sound_play(g, "error");
+      (void) sound_play(g, "error");
     return false;
   }
 
@@ -295,7 +295,7 @@ auto game_event_descend(Gamep g) -> bool
   return true;
 }
 
-auto game_event_ascend(Gamep g) -> bool
+[[nodiscard]] auto game_event_ascend(Gamep g) ->  bool
 {
   DBG("ascend");
   TRACE_INDENT();
@@ -325,7 +325,7 @@ auto game_event_ascend(Gamep g) -> bool
 
   if (level_is_entrance(g, v, l, thing_at(player)) == nullptr) {
     topcon(UI_WARNING_FMT_STR "There is no level entrance here to ascend." UI_RESET_FMT);
-    sound_play(g, "error");
+      (void) sound_play(g, "error");
     return false;
   }
 
@@ -414,7 +414,7 @@ static auto game_event_jump(Gamep g) -> bool
   return player_jump(g, v, l, player, v->cursor_at);
 }
 
-auto game_event_help(Gamep g) -> bool
+[[nodiscard]] auto game_event_help(Gamep g) ->  bool
 {
   DBG("help");
   TRACE_INDENT();
@@ -433,7 +433,7 @@ auto game_event_help(Gamep g) -> bool
   return true;
 }
 
-auto game_event_quit(Gamep g) -> bool
+[[nodiscard]] auto game_event_quit(Gamep g) ->  bool
 {
   DBG("quitting");
   TRACE_INDENT();
@@ -451,7 +451,7 @@ auto game_event_quit(Gamep g) -> bool
   return true;
 }
 
-auto game_input(Gamep g, const SDL_Keysym *key) -> bool
+[[nodiscard]] auto game_input(Gamep g, const SDL_Keysym *key) ->  bool
 {
   DBG("pressed a key");
   TRACE_INDENT();
@@ -475,13 +475,13 @@ auto game_input(Gamep g, const SDL_Keysym *key) -> bool
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
     DBG("pressed a key; over console, ignore");
-    sound_play(g, "keypress");
+      (void) sound_play(g, "keypress");
     return false;
   }
 
   if (sdlk_eq(*key, game_key_quit_get(g))) {
     DBG("pressed quit key");
-    sound_play(g, "keypress");
+      (void) sound_play(g, "keypress");
     (void) game_event_quit(g);
     return true;
   }
@@ -489,7 +489,7 @@ auto game_input(Gamep g, const SDL_Keysym *key) -> bool
   if (sdlk_eq(*key, game_key_help_get(g))) {
     DBG("pressed help key");
     TRACE_INDENT();
-    sound_play(g, "keypress");
+      (void) sound_play(g, "keypress");
     (void) game_event_help(g);
     return true;
   }
@@ -498,7 +498,7 @@ auto game_input(Gamep g, const SDL_Keysym *key) -> bool
     DBG("pressed load key");
     TRACE_INDENT();
     DBG("Loading game");
-    sound_play(g, "keypress");
+      (void) sound_play(g, "keypress");
     (void) game_event_load(g);
     return true;
   }
@@ -506,7 +506,7 @@ auto game_input(Gamep g, const SDL_Keysym *key) -> bool
   if (sdlk_eq(*key, game_key_save_get(g))) {
     DBG("pressed save key");
     TRACE_INDENT();
-    sound_play(g, "keypress");
+      (void) sound_play(g, "keypress");
     (void) game_event_save(g);
     return true;
   }
@@ -518,7 +518,7 @@ auto game_input(Gamep g, const SDL_Keysym *key) -> bool
   if (sdlk_eq(*key, game_key_zoom_get(g))) {
     DBG("Zoom alt");
     game_map_zoom_toggle(g);
-    sound_play(g, "keypress");
+      (void) sound_play(g, "keypress");
     return false; // To avoid click noise
   }
 
@@ -536,14 +536,14 @@ auto game_input(Gamep g, const SDL_Keysym *key) -> bool
 
   if (sdlk_eq(*key, game_key_ascend_get(g))) {
     DBG("pressed ascend key");
-    sound_play(g, "keypress");
+      (void) sound_play(g, "keypress");
     (void) game_event_ascend(g);
     return false; // To avoid click noise
   }
 
   if (sdlk_eq(*key, game_key_descend_get(g))) {
     DBG("pressed descend key");
-    sound_play(g, "keypress");
+      (void) sound_play(g, "keypress");
     (void) game_event_descend(g);
     return false; // To avoid click noise
   }

@@ -1178,19 +1178,19 @@ auto Game::load(int slot) -> bool
 
   if (slot < 0) {
     con("no game at that slot; bad slot.");
-    sound_play(this, "error");
+    (void) sound_play(this, "error");
     return false;
   }
 
   if (slot >= UI_MAX_SAVE_SLOTS) {
     con("no game at that slot; bad slot.");
-    sound_play(this, "error");
+    (void) sound_play(this, "error");
     return false;
   }
 
   if (! slot_valid[ slot ]) {
     con("no game at that slot.");
-    sound_play(this, "error");
+    (void) sound_play(this, "error");
     return false;
   }
 
@@ -1212,7 +1212,7 @@ auto Game::load(int slot) -> bool
   state_change(STATE_PLAYING, "loaded game");
 
   if (! game_load_error.empty()) {
-    sound_play(this, "error");
+    (void) sound_play(this, "error");
     topcon("failed to load the game from %s", this_save_file.c_str());
   } else {
     topcon("Loaded the game from %s", this_save_file.c_str());
@@ -1285,7 +1285,7 @@ static auto wid_load_key_up(Gamep g, Widp /*w*/, const struct SDL_Keysym *key) -
                 {
                   int const slot = c - '0';
                   if (! slot_valid[ slot ]) {
-                    sound_play(g, "error");
+                    (void) sound_play(g, "error");
                     con("no game at that slot.");
                   } else {
                     game->load(slot);
@@ -1318,11 +1318,11 @@ static auto wid_load_key_down(Gamep g, Widp /*w*/, const struct SDL_Keysym *key)
   TRACE();
 
   if (sdlk_eq(*key, game->config.key_console)) {
-    sound_play(g, "keypress");
+    (void) sound_play(g, "keypress");
     return false;
   }
 
-  sound_play(g, "keypress");
+  (void) sound_play(g, "keypress");
   return true;
 }
 

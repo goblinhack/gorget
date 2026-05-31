@@ -23,7 +23,7 @@ void thing_description_set(Tpp tp, thing_description_get_t callback)
   tp->description_get = callback;
 }
 
-auto thing_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
+[[nodiscard]] auto thing_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->  std::string
 {
   TRACE();
   auto *tp = thing_tp(me);
@@ -47,7 +47,7 @@ void thing_detail_set(Tpp tp, thing_detail_get_t callback)
   tp->detail_get = callback;
 }
 
-auto thing_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
+[[nodiscard]] auto thing_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->  std::string
 {
   TRACE();
   auto *tp = thing_tp(me);
@@ -71,7 +71,7 @@ void thing_z_depth_set(Tpp tp, thing_z_depth_get_t callback)
   tp->z_depth_get = callback;
 }
 
-auto thing_z_depth_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> MapZDepthType
+[[nodiscard]] auto thing_z_depth_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->  MapZDepthType
 {
   TRACE();
   auto *tp = thing_tp(me);
@@ -95,7 +95,7 @@ void thing_mouse_down_set(Tpp tp, thing_mouse_down_t callback)
   tp->mouse_down = callback;
 }
 
-auto thing_mouse_down(Gamep g, Levelsp v, Levelp l, Thingp me, int x, int y, int button) -> bool
+[[nodiscard]] auto thing_mouse_down(Gamep g, Levelsp v, Levelp l, Thingp me, int x, int y, int button) ->  bool
 {
   TRACE();
   auto *tp = thing_tp(me);
@@ -287,7 +287,7 @@ void thing_on_open_request_set(Tpp tp, thing_on_open_request_t callback)
   tp->on_open_request = callback;
 }
 
-auto thing_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp opener) -> bool
+[[nodiscard]] auto thing_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp opener) ->  bool
 {
   THING_DBG(me, "%s", __FUNCTION__);
   TRACE_INDENT();
@@ -326,7 +326,7 @@ void thing_on_close_request_set(Tpp tp, thing_on_close_request_t callback)
   tp->on_close_request = callback;
 }
 
-auto thing_on_close_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp closer) -> bool
+[[nodiscard]] auto thing_on_close_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp closer) ->  bool
 {
   THING_DBG(me, "%s", __FUNCTION__);
   TRACE_INDENT();
@@ -389,7 +389,7 @@ void thing_on_damage_set(Tpp tp, thing_on_damage_t callback)
   tp->on_damage = callback;
 }
 
-auto thing_on_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e) -> bool
+[[nodiscard]] auto thing_on_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e) ->  bool
 {
   TRACE();
   auto *tp = thing_tp(me);
@@ -413,7 +413,7 @@ void thing_on_attacking_set(Tpp tp, thing_on_attacking_t callback)
   tp->on_attacking = callback;
 }
 
-auto thing_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, ThingEvent &e) -> bool
+[[nodiscard]] auto thing_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, ThingEvent &e) ->  bool
 {
   TRACE();
   auto *tp = thing_tp(me);
@@ -636,7 +636,7 @@ void thing_display_get_tile_info_set(Tpp tp, thing_display_get_tile_info_t callb
   tp->display_get_tile_info = callback;
 }
 
-auto thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp t_maybe_null) -> Tilep
+[[nodiscard]] auto thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp t_maybe_null) ->  Tilep
 {
   TRACE_DEBUG();
 
@@ -660,7 +660,7 @@ void thing_assess_tile_set(Tpp tp, thing_assess_tile_t callback)
   tp->assess_tile = callback;
 }
 
-auto thing_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> ThingEnvironType
+[[nodiscard]] auto thing_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) ->  ThingEnvironType
 {
   TRACE_DEBUG();
 

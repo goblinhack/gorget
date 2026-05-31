@@ -79,7 +79,7 @@ void sdl_screenshot_do(Gamep g)
   count++;
 }
 
-auto sdl_fbo_save(Gamep g, FboEnum fbo) -> std::vector< uint8_t >
+[[nodiscard]] auto sdl_fbo_save(Gamep g, FboEnum fbo) ->  std::vector< uint8_t >
 {
   TRACE();
   int w = 0;

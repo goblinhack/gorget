@@ -121,7 +121,7 @@ exit:
   return result;
 }
 
-auto test_load_laser_mob() -> bool // NOLINT
+[[nodiscard]] auto test_load_laser_mob() ->  bool // NOLINT
 {
   TRACE();
 

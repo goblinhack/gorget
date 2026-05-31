@@ -19,12 +19,12 @@ using color = struct Color {
   uint8_t a;
 };
 
-auto color_change_hue(const color &in, float fHue) -> color;
-auto color_find(const char *s) -> color;
-auto string2color(const char **s) -> color;
-auto string2color(std::string &s) -> color;
-auto string2color(std::string &s, int *len) -> color;
-auto string2colorname(std::string &s, int *len) -> std::string;
+[[nodiscard]] auto color_change_hue(const color &in, float fHue) ->  color;
+[[nodiscard]] auto color_find(const char *s) ->  color;
+[[nodiscard]] auto string2color(const char **s) ->  color;
+[[nodiscard]] auto string2color(std::string &s) ->  color;
+[[nodiscard]] auto string2color(std::string &s, int *len) ->  color;
+[[nodiscard]] auto string2colorname(std::string &s, int *len) ->  std::string;
 void color_fini();
 void color_init1();
 void color_init2();

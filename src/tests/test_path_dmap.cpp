@@ -174,7 +174,7 @@ exit:
   return result;
 }
 
-auto test_load_path_dmap() -> bool // NOLINT
+[[nodiscard]] auto test_load_path_dmap() ->  bool // NOLINT
 {
   TRACE();
 

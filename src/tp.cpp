@@ -162,7 +162,7 @@ Tp::Tp() { NEWPTR(MTYPE_TP, this, "Tp"); }
 
 Tp::~Tp() { OLDPTR(MTYPE_TP, this); }
 
-auto tp_find_mand(const std::string &val) -> Tpp
+[[nodiscard]] auto tp_find_mand(const std::string &val) -> Tpp
 {
   TRACE();
 
@@ -177,7 +177,7 @@ auto tp_find_mand(const std::string &val) -> Tpp
   return nullptr;
 }
 
-auto tp_find_opt(const std::string &val) -> Tpp
+[[nodiscard]] auto tp_find_opt(const std::string &val) -> Tpp
 {
   TRACE();
 
@@ -191,7 +191,7 @@ auto tp_find_opt(const std::string &val) -> Tpp
   return nullptr;
 }
 
-auto tp_find(TpId id) -> Tpp
+[[nodiscard]] auto tp_find(TpId id) -> Tpp
 {
 #ifdef DEBUG_BUILD
   TRACE(); // expensive
@@ -217,20 +217,23 @@ auto tp_find(TpId id) -> Tpp
   return result;
 }
 
-auto tp_id_get(Tpp tp) -> TpId
+[[nodiscard]] auto tp_id_get(Tpp tp) -> TpId
 {
   TRACE_DEBUG(); // expensive
 
   return tp->id;
 }
 
-auto tp_init() -> bool
+[[nodiscard]] auto tp_init() -> bool
 {
   TRACE();
 
   tp_init_done = true;
 
-  templates_init();
+  if (! templates_init()) {
+    CROAK("templates_init failed");
+  }
+
   tp_fixup();
 
   return true;
@@ -300,7 +303,7 @@ static void tp_assign_id(const std::string &tp_name, int *id_out)
   *id_out = tp_preferred_id[ tp_name ];
 }
 
-auto tp_load(const std::string &val) -> Tpp
+[[nodiscard]] auto tp_load(const std::string &val) -> Tpp
 {
   TRACE();
 
@@ -352,7 +355,7 @@ static void tp_fixup()
   }
 }
 
-auto tp_first_tile(Tpp tp, ThingAnimType val) -> Tilep
+[[nodiscard]] auto tp_first_tile(Tpp tp, ThingAnimType val) -> Tilep
 {
   TRACE();
 
@@ -520,7 +523,7 @@ static auto tp_random(Gamep g, Levelsp v, Levelp l, TpVec &m) -> Tpp
   return tp;
 }
 
-auto tp_random_monst(Gamep g, Levelsp v, Levelp l, int c) -> Tpp
+[[nodiscard]] auto tp_random_monst(Gamep g, Levelsp v, Levelp l, int c) -> Tpp
 {
   TRACE();
 
@@ -537,7 +540,7 @@ auto tp_random_monst(Gamep g, Levelsp v, Levelp l, int c) -> Tpp
   return tp_random(g, v, l, tp_monst_vec[ c ]);
 }
 
-auto tp_random(Gamep g, Levelsp v, Levelp l, ThingFlagType f) -> Tpp
+[[nodiscard]] auto tp_random(Gamep g, Levelsp v, Levelp l, ThingFlagType f) -> Tpp
 {
   TRACE();
 
@@ -553,7 +556,7 @@ auto tp_random(Gamep g, Levelsp v, Levelp l, ThingFlagType f) -> Tpp
   return tp_random(g, v, l, tp_flag_vec[ f ]);
 }
 
-auto tp_variant(ThingFlagType f, int variant) -> Tpp
+[[nodiscard]] auto tp_variant(ThingFlagType f, int variant) -> Tpp
 {
   TRACE();
 
@@ -567,7 +570,7 @@ auto tp_variant(ThingFlagType f, int variant) -> Tpp
   return nullptr;
 }
 
-auto tp_first(ThingFlagType f) -> Tpp
+[[nodiscard]] auto tp_first(ThingFlagType f) -> Tpp
 {
   TRACE();
 
@@ -597,7 +600,7 @@ void tp_damage_set(Tpp tp, ThingEventType ev, const std::string &val)
 //
 // Roll for damage
 //
-auto tp_damage(Tpp tp, ThingEventType val) -> int
+[[nodiscard]] auto tp_damage(Tpp tp, ThingEventType val) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -613,7 +616,7 @@ auto tp_damage(Tpp tp, ThingEventType val) -> int
   return tp->damage[ val ].roll();
 }
 
-auto tp_damage_random_type_get(Tpp tp) -> ThingEventType
+[[nodiscard]] auto tp_damage_random_type_get(Tpp tp) -> ThingEventType
 {
   TRACE();
 
@@ -657,7 +660,7 @@ void tp_chance_set(Tpp tp, ThingChanceType ev, const std::string &val)
 //
 // Roll for chance
 //
-auto tp_chance(Tpp tp, ThingChanceType val) -> int
+[[nodiscard]] auto tp_chance(Tpp tp, ThingChanceType val) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -676,7 +679,7 @@ auto tp_chance(Tpp tp, ThingChanceType val) -> int
 //
 // Roll for chance of success
 //
-auto tp_chance_success(Tpp tp, ThingChanceType val) -> bool
+[[nodiscard]] auto tp_chance_success(Tpp tp, ThingChanceType val) -> bool
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -700,7 +703,7 @@ auto tp_chance_success(Tpp tp, ThingChanceType val) -> bool
 //
 // Roll for chance of success
 //
-auto tp_chance_fail(Tpp tp, ThingChanceType val) -> bool
+[[nodiscard]] auto tp_chance_fail(Tpp tp, ThingChanceType val) -> bool
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -716,7 +719,7 @@ auto tp_chance_fail(Tpp tp, ThingChanceType val) -> bool
   return tp->chance[ val ].roll() == 1;
 }
 
-auto tp_tiles_get(Tpp tp, ThingAnimType val, int index) -> Tilep
+[[nodiscard]] auto tp_tiles_get(Tpp tp, ThingAnimType val, int index) -> Tilep
 {
   TRACE();
 
@@ -749,7 +752,7 @@ void tp_tiles_push_back(Tpp tp, ThingAnimType val, Tilep tile)
   tp->tiles[ val ].push_back(tile);
 }
 
-auto tp_tiles_size(Tpp tp, ThingAnimType val) -> int
+[[nodiscard]] auto tp_tiles_size(Tpp tp, ThingAnimType val) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -759,7 +762,7 @@ auto tp_tiles_size(Tpp tp, ThingAnimType val) -> int
   return static_cast< int >(tp->tiles[ val ].size());
 }
 
-auto tp_name(Tpp tp) -> std::string
+[[nodiscard]] auto tp_name(Tpp tp) -> std::string
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -769,7 +772,7 @@ auto tp_name(Tpp tp) -> std::string
   return tp->name;
 }
 
-auto tp_tile_name(Tpp tp) -> std::string
+[[nodiscard]] auto tp_tile_name(Tpp tp) -> std::string
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -799,7 +802,7 @@ void tp_name_short_set(Tpp tp, const std::string &val)
   tp->name_short = std::string(val);
 }
 
-auto tp_name_short(Tpp tp) -> std::string
+[[nodiscard]] auto tp_name_short(Tpp tp) -> std::string
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -822,7 +825,7 @@ void tp_name_long_set(Tpp tp, const std::string &val)
   tp->name_long = std::string(val);
 }
 
-auto tp_name_long(Tpp tp) -> std::string
+[[nodiscard]] auto tp_name_long(Tpp tp) -> std::string
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -845,7 +848,7 @@ void tp_name_apostrophize_set(Tpp tp, const std::string &val)
   tp->name_apostrophize = std::string(val);
 }
 
-auto tp_name_apostrophize(Tpp tp) -> std::string
+[[nodiscard]] auto tp_name_apostrophize(Tpp tp) -> std::string
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -868,7 +871,7 @@ void tp_name_a_or_an_set(Tpp tp, const std::string &val)
   tp->name_a_or_an = std::string(val);
 }
 
-auto tp_name_a_or_an(Tpp tp) -> std::string
+[[nodiscard]] auto tp_name_a_or_an(Tpp tp) -> std::string
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -891,7 +894,7 @@ void tp_name_pluralize_set(Tpp tp, const std::string &val)
   tp->name_pluralize = std::string(val);
 }
 
-auto tp_name_pluralize(Tpp tp) -> std::string
+[[nodiscard]] auto tp_name_pluralize(Tpp tp) -> std::string
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -914,7 +917,7 @@ void tp_name_real_set(Tpp tp, const std::string &val)
   tp->name_real = std::string(val);
 }
 
-auto tp_name_real(Tpp tp) -> std::string
+[[nodiscard]] auto tp_name_real(Tpp tp) -> std::string
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -947,7 +950,7 @@ void tp_light_color_apply(Tpp tp)
   GLCOLOR(tp->light_color);
 }
 
-auto tp_light_color(Tpp tp) -> color
+[[nodiscard]] auto tp_light_color(Tpp tp) -> color
 {
 #ifdef DEBUG_BUILD
   TRACE();
@@ -979,7 +982,7 @@ void tp_z_depth_set(Tpp tp, MapZDepthType val)
   tp->z_depth = val;
 }
 
-auto tp_z_depth_get(Tpp tp) -> MapZDepthType
+[[nodiscard]] auto tp_z_depth_get(Tpp tp) -> MapZDepthType
 {
 #ifdef DEBUG_BUILD
   TRACE();
@@ -1001,7 +1004,7 @@ void tp_speed_set(Tpp tp, int val)
   tp->speed = val;
 }
 
-auto tp_speed_get(Tpp tp) -> int
+[[nodiscard]] auto tp_speed_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1021,7 +1024,7 @@ void tp_weight_set(Tpp tp, uint32_t val)
   tp->weight = val;
 }
 
-auto tp_weight_get(Tpp tp) -> uint32_t
+[[nodiscard]] auto tp_weight_get(Tpp tp) -> uint32_t
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1084,7 +1087,7 @@ void tp_is_immune_add(Tpp tp, ThingEventType val)
   tp->is_immune[ val ] = true;
 }
 
-auto tp_is_immune_to(Tpp tp, ThingEventType val) -> bool
+[[nodiscard]] auto tp_is_immune_to(Tpp tp, ThingEventType val) -> bool
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1120,7 +1123,7 @@ void tp_is_resistant_add(Tpp tp, ThingEventType val)
   tp->is_resistant[ val ] = true;
 }
 
-auto tp_is_resistant_to(Tpp tp, ThingEventType val) -> bool
+[[nodiscard]] auto tp_is_resistant_to(Tpp tp, ThingEventType val) -> bool
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1146,7 +1149,7 @@ void tp_health_set(Tpp tp, const std::string &val)
   tp->health_initial = Dice(std::string(val));
 }
 
-auto tp_health_get(Tpp tp) -> int
+[[nodiscard]] auto tp_health_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1156,7 +1159,7 @@ auto tp_health_get(Tpp tp) -> int
   return tp->health_initial.roll();
 }
 
-auto tp_health_max_get(Tpp tp) -> int
+[[nodiscard]] auto tp_health_max_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1176,7 +1179,7 @@ void tp_stamina_set(Tpp tp, const std::string &val)
   tp->stamina_initial = Dice(std::string(val));
 }
 
-auto tp_stamina_get(Tpp tp) -> int
+[[nodiscard]] auto tp_stamina_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1186,7 +1189,7 @@ auto tp_stamina_get(Tpp tp) -> int
   return tp->stamina;
 }
 
-auto tp_stamina_max_get(Tpp tp) -> int
+[[nodiscard]] auto tp_stamina_max_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1206,7 +1209,7 @@ void tp_temperature_initial_set(Tpp tp, int val)
   tp->temperature_initial = val;
 }
 
-auto tp_temperature_initial_get(Tpp tp) -> int
+[[nodiscard]] auto tp_temperature_initial_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1226,7 +1229,7 @@ void tp_temperature_burns_at_set(Tpp tp, int val)
   tp->temperature_burns_at = val;
 }
 
-auto tp_temperature_burns_at_get(Tpp tp) -> int
+[[nodiscard]] auto tp_temperature_burns_at_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1246,7 +1249,7 @@ void tp_temperature_melts_at_set(Tpp tp, int val)
   tp->temperature_melts_at = val;
 }
 
-auto tp_temperature_melts_at_get(Tpp tp) -> int
+[[nodiscard]] auto tp_temperature_melts_at_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1266,7 +1269,7 @@ void tp_temperature_damage_at_set(Tpp tp, int val)
   tp->temperature_damage_at = val;
 }
 
-auto tp_temperature_damage_at_get(Tpp tp) -> int
+[[nodiscard]] auto tp_temperature_damage_at_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1286,7 +1289,7 @@ void tp_value1_set(Tpp tp, int val)
   tp->value1 = val;
 }
 
-auto tp_value1_get(Tpp tp) -> int
+[[nodiscard]] auto tp_value1_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1306,7 +1309,7 @@ void tp_value2_set(Tpp tp, int val)
   tp->value2 = val;
 }
 
-auto tp_value2_get(Tpp tp) -> int
+[[nodiscard]] auto tp_value2_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1326,7 +1329,7 @@ void tp_value3_set(Tpp tp, int val)
   tp->value3 = val;
 }
 
-auto tp_value3_get(Tpp tp) -> int
+[[nodiscard]] auto tp_value3_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1346,7 +1349,7 @@ void tp_value4_set(Tpp tp, int val)
   tp->value4 = val;
 }
 
-auto tp_value4_get(Tpp tp) -> int
+[[nodiscard]] auto tp_value4_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1366,7 +1369,7 @@ void tp_value5_set(Tpp tp, int val)
   tp->value5 = val;
 }
 
-auto tp_value5_get(Tpp tp) -> int
+[[nodiscard]] auto tp_value5_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1386,7 +1389,7 @@ void tp_value6_set(Tpp tp, int val)
   tp->value6 = val;
 }
 
-auto tp_value6_get(Tpp tp) -> int
+[[nodiscard]] auto tp_value6_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1406,7 +1409,7 @@ void tp_value7_set(Tpp tp, int val)
   tp->value7 = val;
 }
 
-auto tp_value7_get(Tpp tp) -> int
+[[nodiscard]] auto tp_value7_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1426,7 +1429,7 @@ void tp_value8_set(Tpp tp, int val)
   tp->value8 = val;
 }
 
-auto tp_value8_get(Tpp tp) -> int
+[[nodiscard]] auto tp_value8_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1446,7 +1449,7 @@ void tp_value9_set(Tpp tp, int val)
   tp->value9 = val;
 }
 
-auto tp_value9_get(Tpp tp) -> int
+[[nodiscard]] auto tp_value9_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1466,7 +1469,7 @@ void tp_value10_set(Tpp tp, int val)
   tp->value10 = val;
 }
 
-auto tp_value10_get(Tpp tp) -> int
+[[nodiscard]] auto tp_value10_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1486,7 +1489,7 @@ void tp_value11_set(Tpp tp, int val)
   tp->value11 = val;
 }
 
-auto tp_value11_get(Tpp tp) -> int
+[[nodiscard]] auto tp_value11_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1506,7 +1509,7 @@ void tp_value12_set(Tpp tp, int val)
   tp->value12 = val;
 }
 
-auto tp_value12_get(Tpp tp) -> int
+[[nodiscard]] auto tp_value12_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1526,7 +1529,7 @@ void tp_value13_set(Tpp tp, int val)
   tp->value13 = val;
 }
 
-auto tp_value13_get(Tpp tp) -> int
+[[nodiscard]] auto tp_value13_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1546,7 +1549,7 @@ void tp_value14_set(Tpp tp, int val)
   tp->value14 = val;
 }
 
-auto tp_value14_get(Tpp tp) -> int
+[[nodiscard]] auto tp_value14_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1566,7 +1569,7 @@ void tp_value15_set(Tpp tp, int val)
   tp->value15 = val;
 }
 
-auto tp_value15_get(Tpp tp) -> int
+[[nodiscard]] auto tp_value15_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1586,7 +1589,7 @@ void tp_value16_set(Tpp tp, int val)
   tp->value16 = val;
 }
 
-auto tp_value16_get(Tpp tp) -> int
+[[nodiscard]] auto tp_value16_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1606,7 +1609,7 @@ void tp_charge_count_set(Tpp tp, int val)
   tp->charge_count = val;
 }
 
-auto tp_charge_count_get(Tpp tp) -> int
+[[nodiscard]] auto tp_charge_count_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1626,7 +1629,7 @@ void tp_distance_avoid_target_set(Tpp tp, int val)
   tp->distance_avoid_target = val;
 }
 
-auto tp_distance_avoid_target_get(Tpp tp) -> int
+[[nodiscard]] auto tp_distance_avoid_target_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1646,7 +1649,7 @@ void tp_score_value_set(Tpp tp, int val)
   tp->score_value = val;
 }
 
-auto tp_score_value_get(Tpp tp) -> int
+[[nodiscard]] auto tp_score_value_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1671,7 +1674,7 @@ void tp_minion_max_set(Tpp tp, int val)
   tp->minion_max = val;
 }
 
-auto tp_minion_max_get(Tpp tp) -> int
+[[nodiscard]] auto tp_minion_max_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1696,7 +1699,7 @@ void tp_fired_weapon_count_max_set(Tpp tp, int val)
   tp->fired_weapon_count_max = val;
 }
 
-auto tp_fired_weapon_count_max_get(Tpp tp) -> int
+[[nodiscard]] auto tp_fired_weapon_count_max_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1716,7 +1719,7 @@ void tp_distance_minion_from_mob_max_set(Tpp tp, int val)
   tp->distance_minion_from_mob_max = val;
 }
 
-auto tp_distance_minion_from_mob_max_get(Tpp tp) -> int
+[[nodiscard]] auto tp_distance_minion_from_mob_max_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1736,7 +1739,7 @@ void tp_distance_vision_set(Tpp tp, int val)
   tp->distance_vision = val;
 }
 
-auto tp_distance_vision_get(Tpp tp) -> int
+[[nodiscard]] auto tp_distance_vision_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1756,7 +1759,7 @@ void tp_temperature_thermal_conductivity_set(Tpp tp, float val)
   tp->temperature_thermal_conductivity = val;
 }
 
-auto tp_temperature_thermal_conductivity_get(Tpp tp) -> float
+[[nodiscard]] auto tp_temperature_thermal_conductivity_get(Tpp tp) -> float
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1776,7 +1779,7 @@ void tp_temperature_heat_capacity_set(Tpp tp, float val)
   tp->temperature_heat_capacity = val;
 }
 
-auto tp_temperature_heat_capacity_get(Tpp tp) -> float
+[[nodiscard]] auto tp_temperature_heat_capacity_get(Tpp tp) -> float
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1796,7 +1799,7 @@ void tp_variant_set(Tpp tp, int val)
   tp->variant = val;
 }
 
-auto tp_variant_get(Tpp tp) -> int
+[[nodiscard]] auto tp_variant_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1816,7 +1819,7 @@ void tp_priority_set(Tpp tp, ThingPriorityType val)
   tp->priority = val;
 }
 
-auto tp_priority_get(Tpp tp) -> ThingPriorityType
+[[nodiscard]] auto tp_priority_get(Tpp tp) -> ThingPriorityType
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1836,7 +1839,7 @@ void tp_rarity_set(Tpp tp, ThingRarityType val)
   tp->rarity = val;
 }
 
-auto tp_rarity_get(Tpp tp) -> ThingRarityType
+[[nodiscard]] auto tp_rarity_get(Tpp tp) -> ThingRarityType
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1856,7 +1859,7 @@ void tp_distance_jump_set(Tpp tp, int val)
   tp->distance_jump = val;
 }
 
-auto tp_distance_jump_get(Tpp tp) -> int
+[[nodiscard]] auto tp_distance_jump_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1876,7 +1879,7 @@ void tp_lifespan_set(Tpp tp, const std::string &val)
   tp->lifespan = Dice(std::string(val));
 }
 
-auto tp_lifespan_get(Tpp tp) -> int
+[[nodiscard]] auto tp_lifespan_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1886,7 +1889,7 @@ auto tp_lifespan_get(Tpp tp) -> int
   return tp->lifespan.roll();
 }
 
-auto tp_lifespan_max_get(Tpp tp) -> int
+[[nodiscard]] auto tp_lifespan_max_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1896,7 +1899,7 @@ auto tp_lifespan_max_get(Tpp tp) -> int
   return tp->lifespan.max_roll();
 }
 
-auto tp_collision_radius(Tpp t) -> float
+[[nodiscard]] auto tp_collision_radius(Tpp t) -> float
 {
   TRACE();
 

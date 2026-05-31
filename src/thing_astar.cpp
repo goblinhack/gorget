@@ -181,7 +181,7 @@ void Astar::remove_from_open(Node *n)
   open_nodes.erase(n->cost);
 }
 
-auto Astar::heuristic(const bpoint at) const -> Cost
+[[nodiscard]] auto Astar::heuristic(const bpoint at) const ->  Cost
 {
   //
   // This can create wiggles in the path as we're always looking at the distance
@@ -194,7 +194,7 @@ auto Astar::heuristic(const bpoint at) const -> Cost
   // return std::max(abs(dst.x - at.x), abs(dst.y - at.y));
 }
 
-auto Astar::node_init(const bpoint next_hop, Nodecost cost) -> Node *
+[[nodiscard]] auto Astar::node_init(const bpoint next_hop, Nodecost cost) ->  Node *
 {
   auto *n = &nodes[ next_hop.x ][ next_hop.y ];
 
@@ -255,7 +255,7 @@ void Astar::eval_neighbor(Node *current, const bpoint &delta)
   }
 }
 
-auto Astar::create_path(const Node *came_from) -> std::vector< bpoint >
+[[nodiscard]] auto Astar::create_path(const Node *came_from) ->  std::vector< bpoint >
 {
   static const std::vector< bpoint > empty;
 
@@ -281,7 +281,7 @@ void Astar::init()
 #endif
 }
 
-auto Astar::can_move_to_ai(const bpoint &to) -> bool
+[[nodiscard]] auto Astar::can_move_to_ai(const bpoint &to) ->  bool
 {
   if (to == dst) {
     return true;
@@ -295,7 +295,7 @@ auto Astar::can_move_to_ai(const bpoint &to) -> bool
   return can_move_to_ai_cached[ to.x ][ to.y ];
 }
 
-auto Astar::can_move_to_possible(const bpoint &to) -> bool
+[[nodiscard]] auto Astar::can_move_to_possible(const bpoint &to) ->  bool
 {
   if (to == dst) {
     return true;
@@ -309,7 +309,7 @@ auto Astar::can_move_to_possible(const bpoint &to) -> bool
   return can_move_to_possible_cached[ to.x ][ to.y ];
 }
 
-auto Astar::can_move_to_cost(const bpoint &to) -> uint8_t
+[[nodiscard]] auto Astar::can_move_to_cost(const bpoint &to) ->  uint8_t
 {
   if (to == dst) {
     return 0;
@@ -332,7 +332,7 @@ auto Astar::can_move_to_cost(const bpoint &to) -> uint8_t
   return can_move_to_cost_cached[ to.x ][ to.y ];
 }
 
-auto Astar::solve(bool allow_diagonal) -> std::vector< bpoint >
+[[nodiscard]] auto Astar::solve(bool allow_diagonal) ->  std::vector< bpoint >
 {
   static const std::vector< bpoint > empty;
 
@@ -510,7 +510,7 @@ void Astar::dump()
   }
 }
 
-auto astar_solve(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint src, bpoint dst) -> std::vector< bpoint >
+[[nodiscard]] auto astar_solve(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint src, bpoint dst) ->  std::vector< bpoint >
 {
   TRACE();
 

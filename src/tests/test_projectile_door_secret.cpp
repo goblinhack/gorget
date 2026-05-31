@@ -87,7 +87,7 @@ exit:
   return result;
 }
 
-auto test_load_projectile_door_secret() -> bool // NOLINT
+[[nodiscard]] auto test_load_projectile_door_secret() ->  bool // NOLINT
 {
   TRACE();
 

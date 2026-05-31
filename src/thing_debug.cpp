@@ -8,7 +8,7 @@
 #include "my_types.hpp"
 #include <cstdint>
 
-auto thing_debug(Gamep /*g*/, Levelsp v, Levelp /*l*/, Thingp t, uint32_t iter_index) -> bool
+[[nodiscard]] auto thing_debug(Gamep /*g*/, Levelsp v, Levelp /*l*/, Thingp t, uint32_t iter_index) ->  bool
 {
   TRACE();
   if (! thing_is_projectile(t)) {

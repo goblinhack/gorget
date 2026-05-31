@@ -497,13 +497,13 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 }
 
-auto monst_state_to_string(MonstState state) -> std::string
+[[nodiscard]] auto monst_state_to_string(MonstState state) ->  std::string
 {
   TRACE();
   return MonstState_to_string(state);
 }
 
-auto monst_state(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp me) -> MonstState
+[[nodiscard]] auto monst_state(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp me) ->  MonstState
 {
   TRACE();
   return me->_monst_state;

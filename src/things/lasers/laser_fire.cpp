@@ -27,7 +27,7 @@ static void tp_laser_fire_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 }
 
-auto tp_load_laser_fire() -> bool
+[[nodiscard]] auto tp_load_laser_fire() ->  bool
 {
   auto *tp   = tp_load("laser_fire"); // keep as string for scripts
   auto  name = tp_name(tp);

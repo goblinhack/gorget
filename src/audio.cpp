@@ -21,7 +21,7 @@ void audio_fini()
   audio_init_done = 0u;
 }
 
-auto audio_init() -> bool
+[[nodiscard]] auto audio_init() ->  bool
 {
   TRACE();
 

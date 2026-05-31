@@ -73,7 +73,7 @@ static spoint scissors_br;
 static bool scissors_enabled = false;
 static bool mouse_found      = 0;
 
-auto ascii_ok(int x, int y) -> int
+[[nodiscard]] auto ascii_ok(int x, int y) ->  int
 {
   if ((x < 0)) [[unlikely]] {
     return 0;
@@ -94,7 +94,7 @@ auto ascii_ok(int x, int y) -> int
   return 1;
 }
 
-auto ascii_x_ok(int x) -> int
+[[nodiscard]] auto ascii_x_ok(int x) ->  int
 {
   if ((x < 0)) [[unlikely]] {
     return 0;
@@ -107,7 +107,7 @@ auto ascii_x_ok(int x) -> int
   return 1;
 }
 
-auto ascii_y_ok(int y) -> int
+[[nodiscard]] auto ascii_y_ok(int y) ->  int
 {
   if ((y < 0)) [[unlikely]] {
     return 0;
@@ -156,7 +156,7 @@ void pixel_to_ascii(Gamep g, int *x, int *y)
   // topcon("%d,%d", *x, *y);
 }
 
-auto ascii_ok_for_scissors(int x, int y) -> int
+[[nodiscard]] auto ascii_ok_for_scissors(int x, int y) ->  int
 {
   if ((x < 0) || (y < 0) || (x >= TERM_WIDTH) || (y >= TERM_HEIGHT)) {
     return 0;
@@ -175,7 +175,7 @@ auto ascii_ok_for_scissors(int x, int y) -> int
   return ascii_ok(x, y);
 }
 
-auto ascii_is_empty(int x, int y) -> bool
+[[nodiscard]] auto ascii_is_empty(int x, int y) ->  bool
 {
   AsciiCell const *cell = &(*cells)[ x ][ y ];
 
@@ -219,7 +219,7 @@ void ascii_set_context(int x, int y, void *context)
   cell->context = context;
 }
 
-auto ascii_get_stat_context(int x, int y) -> void *
+[[nodiscard]] auto ascii_get_stat_context(int x, int y) ->  void *
 {
   if (ascii_ok(x, y) == 0) {
     return nullptr;
@@ -490,7 +490,7 @@ void ascii_putf_internal2(int x, int y, color fg, color bg, const std::string &t
   }
 }
 
-auto ascii_strlen(std::string const &text) -> int
+[[nodiscard]] auto ascii_strlen(std::string const &text) ->  int
 {
   auto text_iter = text.begin();
   int  x         = 0;
@@ -580,7 +580,7 @@ auto ascii_strlen(std::string const &text) -> int
   return x;
 }
 
-auto ascii_strip(std::string const &text) -> std::string
+[[nodiscard]] auto ascii_strip(std::string const &text) ->  std::string
 {
   auto        text_iter = text.begin();
   std::string out;

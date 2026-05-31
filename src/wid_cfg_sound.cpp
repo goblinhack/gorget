@@ -130,7 +130,7 @@ static void wid_cfg_sound_destroy()
   TRACE();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
-    sound_play(g, "keypress");
+    (void)   (void) sound_play(g, "keypress");
     return false;
   }
 
@@ -146,18 +146,18 @@ static void wid_cfg_sound_destroy()
             switch (c) {
               case 'c' :
               case 'C' :
-                sound_play(g, "keypress");
+                (void)   (void) sound_play(g, "keypress");
                 (void) wid_cfg_sound_cancel(g, nullptr, 0, 0, 0);
                 return true;
               case 's' :
               case 'S' :
-                sound_play(g, "keypress");
+                (void)   (void) sound_play(g, "keypress");
                 (void) wid_cfg_sound_save(g, nullptr, 0, 0, 0);
                 return true;
               case 'b' :
               case 'B' :
               case SDLK_ESCAPE :
-                sound_play(g, "keypress");
+                (void)   (void) sound_play(g, "keypress");
                 (void) wid_cfg_sound_cancel(g, nullptr, 0, 0, 0);
                 return true;
             }

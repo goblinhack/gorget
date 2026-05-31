@@ -10,9 +10,9 @@
 
 #include <string>
 
-auto log_dir_create() -> std::string;
-auto redirect_stderr() -> FILE *;
-auto redirect_stdout() -> FILE *;
+[[nodiscard]] auto log_dir_create() ->  std::string;
+[[nodiscard]] auto redirect_stderr() ->  FILE *;
+[[nodiscard]] auto redirect_stdout() ->  FILE *;
 void botcon_newline();
 void botcon(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 void cleanup();

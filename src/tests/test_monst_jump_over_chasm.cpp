@@ -159,7 +159,7 @@ exit:
   return result;
 }
 
-auto test_load_monst_jump_over_chasm() -> bool // NOLINT
+[[nodiscard]] auto test_load_monst_jump_over_chasm() ->  bool // NOLINT
 {
   TRACE();
 

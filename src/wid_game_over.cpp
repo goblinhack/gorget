@@ -500,7 +500,7 @@ void wid_game_over_select(Gamep g)
     wid_game_over_destroy();
   }
 
-  music_play(g, "game over");
+  (void) music_play(g, "game over");
   game_state_change(g, STATE_THE_END_MENU, "game over");
 
   int const    menu_height = 38;

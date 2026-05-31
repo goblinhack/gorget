@@ -56,7 +56,7 @@ static void tp_ghost_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent
   thing_sound_play(g, v, l, t, "monst_death");
 }
 
-auto tp_load_ghost() -> bool
+[[nodiscard]] auto tp_load_ghost() ->  bool
 {
   auto *tp   = tp_load("ghost"); // keep as string for scripts
   auto  name = tp_name(tp);

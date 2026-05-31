@@ -154,7 +154,7 @@ auto strsub_(const char *in, const char *look_for, const char *replace_with, con
  *
  * strappend("foo", ".zip"); -> "foo.zip"
  */
-auto strappend(const char *in, const char *append) -> char *
+[[nodiscard]] auto strappend(const char *in, const char *append) -> char *
 {
   TRACE();
   char *buf    = nullptr;
@@ -183,7 +183,7 @@ auto strappend(const char *in, const char *append) -> char *
  *
  * strprepend("foo", "bar"); -> "barfoo"
  */
-auto strprepend(const char *in, const char *prepend) -> char *
+[[nodiscard]] auto strprepend(const char *in, const char *prepend) -> char *
 {
   TRACE();
   char *buf    = nullptr;
@@ -210,7 +210,7 @@ auto strprepend(const char *in, const char *prepend) -> char *
 /*
  * Return the common matching length of two strings.
  */
-auto strcommon(const char *a, const char *b) -> uint32_t
+[[nodiscard]] auto strcommon(const char *a, const char *b) -> uint32_t
 {
   TRACE();
   const char *o = nullptr;
@@ -269,7 +269,7 @@ void strchopc(char *s, char c)
   *(end + 1) = '\0';
 }
 
-auto strisregexp(const char *in) -> int
+[[nodiscard]] auto strisregexp(const char *in) -> int
 {
   TRACE();
   const char *a = in;
@@ -292,7 +292,7 @@ auto strisregexp(const char *in) -> int
   return 0;
 }
 
-auto my_strlcpy(char *dst, const char *src, size_t max_len) -> size_t
+[[nodiscard]] auto my_strlcpy(char *dst, const char *src, size_t max_len) -> size_t
 {
   TRACE();
   size_t const srclen = strlen(src);
@@ -304,13 +304,13 @@ auto my_strlcpy(char *dst, const char *src, size_t max_len) -> size_t
   return srclen;
 }
 
-auto my_strlcat(char *dst, const char *src, size_t max_len) -> size_t
+[[nodiscard]] auto my_strlcat(char *dst, const char *src, size_t max_len) -> size_t
 {
   TRACE();
   uint32_t const dstlen = strlen(dst);
   uint32_t const srclen = strlen(src);
   if (dstlen < max_len) {
-    my_strlcpy(dst + dstlen, src, max_len - dstlen);
+    (void) my_strlcpy(dst + dstlen, src, max_len - dstlen);
   }
   return (dstlen + srclen);
 }
@@ -374,7 +374,7 @@ static auto dynvprintf_(const char *fmt, va_list args) -> const char *
  * dynamically allocate a printf formatted string. e.g.
  * dynprintf("%sbar", "foo"); => "foobar"
  */
-auto dynprintf(const char *fmt, ...) -> char *
+[[nodiscard]] auto dynprintf(const char *fmt, ...) -> char *
 {
   TRACE();
   const char *ret  = nullptr;
@@ -392,7 +392,7 @@ auto dynprintf(const char *fmt, ...) -> char *
  *
  * A safe wrapper for basename to avoid modifications to the input string.
  */
-auto mybasename(const char *in, const char *who) -> std::string
+[[nodiscard]] auto mybasename(const char *in, const char *who) -> std::string
 {
   TRACE();
   char       *tmp = MYDUPSTR(in, who);
@@ -441,7 +441,7 @@ auto mybasename(const char *in, const char *who) -> std::string
 /*
  * Find the first occurrence of find in s, ignore case.
  */
-auto my_strcasestr(const char *s, const char *find) -> char *
+[[nodiscard]] auto my_strcasestr(const char *s, const char *find) -> char *
 {
   TRACE();
   char   c   = 0;
@@ -463,7 +463,7 @@ auto my_strcasestr(const char *s, const char *find) -> char *
   return (const_cast< char * >(s));
 }
 
-auto split(const std::string &text, int max_line_len) -> std::vector< std::string >
+[[nodiscard]] auto split(const std::string &text, int max_line_len) -> std::vector< std::string >
 {
   TRACE();
   bool found_format_string = false;
@@ -671,7 +671,7 @@ auto split(const std::string &text, int max_line_len) -> std::vector< std::strin
   return result;
 }
 
-auto length_without_format(const std::string &text) -> int
+[[nodiscard]] auto length_without_format(const std::string &text) -> int
 {
   TRACE();
   bool found_format_string = false;
@@ -768,7 +768,7 @@ auto length_without_format(const std::string &text) -> int
   return line_len;
 }
 
-auto split_tokens(const std::string &s, const char delimiter) -> std::vector< std::string >
+[[nodiscard]] auto split_tokens(const std::string &s, const char delimiter) -> std::vector< std::string >
 {
   std::string                token;
   std::istringstream         s_stream(s);
@@ -780,14 +780,14 @@ auto split_tokens(const std::string &s, const char delimiter) -> std::vector< st
 }
 
 // https://www.techiedelight.com/trim-string-cpp-remove-leading-trailing-spaces/
-auto ltrim(std::string &s) -> std::string &
+[[nodiscard]] auto ltrim(std::string &s) -> std::string &
 {
   auto it = std::ranges::find_if(s, [](char c) -> bool { return ! std::isspace< char >(c, std::locale::classic()); });
   s.erase(s.begin(), it);
   return s;
 }
 
-auto rtrim(std::string &s) -> std::string &
+[[nodiscard]] auto rtrim(std::string &s) -> std::string &
 {
   auto it = std::ranges::find_if(std::ranges::reverse_view(s),
                                  [](char c) -> bool { return ! std::isspace< char >(c, std::locale::classic()); });
@@ -795,28 +795,28 @@ auto rtrim(std::string &s) -> std::string &
   return s;
 }
 
-auto trim(std::string &s) -> std::string & { return ltrim(rtrim(s)); }
+[[nodiscard]] auto trim(std::string &s) -> std::string & { return ltrim(rtrim(s)); }
 
 const std::string WHITESPACE = " \n\r\t\f\v";
 
-auto ltrim_ws(const std::string &s) -> std::string
+[[nodiscard]] auto ltrim_ws(const std::string &s) -> std::string
 {
   size_t const start = s.find_first_not_of(WHITESPACE);
   return (start == std::string::npos) ? "" : s.substr(start);
 }
 
-auto rtrim_ws(const std::string &s) -> std::string
+[[nodiscard]] auto rtrim_ws(const std::string &s) -> std::string
 {
   size_t const end = s.find_last_not_of(WHITESPACE);
   return (end == std::string::npos) ? "" : s.substr(0, end + 1);
 }
 
-auto trim_ws(const std::string &s) -> std::string { return rtrim_ws(ltrim_ws(s)); }
+[[nodiscard]] auto trim_ws(const std::string &s) -> std::string { return rtrim_ws(ltrim_ws(s)); }
 
 //
 // Concert errno to a std::string
 //
-auto strerror_to_string(const int err) -> std::string
+[[nodiscard]] auto strerror_to_string(const int err) -> std::string
 {
   static const auto MAX_ERRNO_BUF_SIZE = 1024U;
   char              err_out[ MAX_ERRNO_BUF_SIZE ];
@@ -847,7 +847,7 @@ auto strerror_to_string(const int err) -> std::string
 //
 // foo bar -> Foo Bar
 //
-auto capitalize(std::string in) -> std::string
+[[nodiscard]] auto capitalize(std::string in) -> std::string
 {
   TRACE();
   std::string out = std::move(in);
@@ -875,7 +875,7 @@ auto capitalize(std::string in) -> std::string
 //
 // foo bar -> Foo bar
 //
-auto capitalize_first(const std::string &in) -> std::string
+[[nodiscard]] auto capitalize_first(const std::string &in) -> std::string
 {
   TRACE();
   std::string out = in;
@@ -914,7 +914,7 @@ void replace(std::string &input, const std::string &pattern, const std::string &
   }
 }
 
-auto string2tp(const char **s, int *len) -> Tpp
+[[nodiscard]] auto string2tp(const char **s, int *len) -> Tpp
 {
   TRACE();
   static char        tmp[ MAXSHORTSTR ];
