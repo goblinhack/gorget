@@ -96,7 +96,7 @@ void dmap_print(const Dmap *D, bpoint at, bpoint tl, bpoint br)
     }
   }
 
-  log("DMAP: %p tl %d,%d br %d %d at %d,%d", (void *) D, minx, miny, maxx, maxy, at.x, at.y);
+  log("DMAP: %p tl %d,%d br %d %d at (%d,%d)", (void *) D, minx, miny, maxx, maxy, at.x, at.y);
 
   for (y = miny; y <= maxy; y++) {
     std::string debug;

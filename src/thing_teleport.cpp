@@ -216,11 +216,11 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
     return false;
   }
 
-  THING_DBG(me, "pre teleport, warp to %d,%d", to.x, to.y);
+  THING_DBG(me, "pre teleport, warp to (%d,%d)", to.x, to.y);
   TRACE_INDENT();
 
   if (! thing_warp_to(g, v, l, me, to)) {
-    THING_DBG(me, "pre teleport, warp to %d,%d failed", to.x, to.y);
+    THING_DBG(me, "pre teleport, warp to (%d,%d) failed", to.x, to.y);
     return false;
   }
 

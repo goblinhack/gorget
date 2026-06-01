@@ -590,7 +590,7 @@ static void level_cursor_path_create(Gamep g, Levelsp v, Levelp l)
     v->cursor[ p.x ][ p.y ] = CURSOR_PATH;
     IF_DEBUG2
     { //
-      THING_DBG(player, " - cursor path: %d,%d", p.x, p.y);
+      THING_DBG(player, " - cursor path: (%d,%d)", p.x, p.y);
     }
   }
   v->cursor[ v->cursor_at.x ][ v->cursor_at.y ] = CURSOR_AT;

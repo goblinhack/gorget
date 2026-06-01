@@ -734,7 +734,7 @@ void config_game_gfx_update(Gamep g)
 
   game_visible_map_pix_set(g, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
 
-  log("SDL: - map location            : %d,%d -> %d,%d", visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
+  log("SDL: - map location            : (%d,%d) -> %d,%d", visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
   log("SDL: - map onscreen sz         : %dx%d", map_w, map_h);
   log("SDL: - map w to h ratio        : %g", map_w_h_ratio);
   log("SDL: - map pix sz              : %dx%d", fbo_w, fbo_h);

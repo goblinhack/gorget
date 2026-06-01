@@ -99,12 +99,12 @@
   }
 
   if (is_oob(p)) [[unlikely]] {
-    ERR("out of bounds thing_and_tp_get_at %d,%d, slot %d", p.x, p.y, slot);
+    ERR("out of bounds thing_and_tp_get_at (%d,%d), slot %d", p.x, p.y, slot);
     return nullptr;
   }
 
   if ((slot < 0) || (slot >= MAP_SLOTS)) {
-    ERR("slot out of bounds thing_and_tp_get_at %d,%d, slot %d", p.x, p.y, slot);
+    ERR("slot out of bounds thing_and_tp_get_at (%d,%d), slot %d", p.x, p.y, slot);
     return nullptr;
   }
 

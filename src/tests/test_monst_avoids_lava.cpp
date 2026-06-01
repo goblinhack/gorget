@@ -30,16 +30,16 @@
   std::string const expect1
       = "XXXXXXXXXXXXXXX"
         "X.LLL.LLL.LLL.X"
-        "X.===.LLLm===.X"
+        "X.===.LLL.===.X"
         "X.LLL.LLL.LLL.X"
-        "X.LLL.===.LLL.X"
+        "X.LLL.==m.LLL.X"
         "X@LLL.LLL.LLL.X"
         "XXXXXXXXXXXXXXX";
   std::string const expect2
       = "XXXXXXXXXXXXXXX"
         "X.LLL.LLL.LLL.X"
         "X.===.LLL.===.X"
-        "X.LLLmLLL.LLL.X"
+        "XmLLL.LLL.LLL.X"
         "X.LLL.===.LLL.X"
         "X@LLL.LLL.LLL.X"
         "XXXXXXXXXXXXXXX";

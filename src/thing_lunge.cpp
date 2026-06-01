@@ -164,7 +164,7 @@ void thing_lunge_time_step(Gamep g, Levelsp v, Levelp l, Thingp me, int time_ste
   }
 
   if (compiler_unused) {
-    THING_DBG(me, "lunge to @%d,%d", to.x, to.y);
+    THING_DBG(me, "lunge to (%d,%d)", to.x, to.y);
   }
 
   //
@@ -191,7 +191,7 @@ void thing_lunge_end_check(Gamep g, Levelsp v, Levelp l, Thingp me)
 
   if (thing_is_lunging(me) >= THING_LUNGE_ANIM_MS) {
     if (compiler_unused) {
-      THING_DBG(me, "lunge to @%d,%d done", me->lunging_to.x, me->lunging_to.y);
+      THING_DBG(me, "lunge to (%d,%d) done", me->lunging_to.x, me->lunging_to.y);
     }
 
     thing_is_lunging_set(g, v, l, me, false);
@@ -224,7 +224,7 @@ void thing_lunge_modify_position(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thing
   auto off_y = static_cast< float >(dir.y) * w * amount;
 
   if (compiler_unused) {
-    THING_DBG(me, "lunge to @%d,%d idx %d off %f,%f am %f w %f", me->lunging_to.x, me->lunging_to.y, idx, off_x, off_y, amount, w);
+    THING_DBG(me, "lunge to (%d,%d) idx %d off %f,%f am %f w %f", me->lunging_to.x, me->lunging_to.y, idx, off_x, off_y, amount, w);
   }
 
   tl.x += static_cast< short >(off_x);

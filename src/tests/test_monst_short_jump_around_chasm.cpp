@@ -31,8 +31,8 @@
       = "XXXXXXXXXXXXXXX"
         "X.C...........X"
         "X.CC..........X"
-        "X.CCC.m.......X"
-        "X.CCCC........X"
+        "X.CCC.........X"
+        "X.CCCCm.......X"
         "X@CCCC........X"
         "XXXXXXXXXXXXXXX";
   std::string const expect2
@@ -45,9 +45,9 @@
         "XXXXXXXXXXXXXXX";
   std::string const expect3
       = "XXXXXXXXXXXXXXX"
-        "XmC...........X"
+        "X.C...........X"
         "X.CC..........X"
-        "X.CCC.........X"
+        "XmCCC.........X"
         "X.CCCC........X"
         "X@CCCC........X"
         "XXXXXXXXXXXXXXX";

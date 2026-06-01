@@ -35,15 +35,15 @@
         "x...x.x"
         "x...x.x"
         "x..@+.x"
-        "x...xmx"
         "x...x.x"
+        "x...xmx"
         "xxxxxxx";
   std::string const expect2
       = "xxxxxxx"
         "x...x.x"
         "x...x.x"
-        "x...@mx"
-        "x...x.x"
+        "x...@.x"
+        "x...xmx"
         "x...x.x"
         "xxxxxxx";
   std::string const expect3
@@ -148,6 +148,14 @@
     }
   }
 
+  {
+    TEST_ASSERT(t, game_event_wait(g), "failed to wait");
+    if (! game_wait_for_tick_to_finish(g, v, l)) {
+      TEST_FAILED(t, "wait loop failed");
+      goto exit;
+    }
+  }
+
   if (! (result = level_match_contents(g, v, l, t, w, h, expect3.c_str()))) {
     TEST_FAILED(t, "unexpected contents");
     goto exit;
@@ -214,7 +222,7 @@
 
   TEST_ASSERT(t, thing_is_dead(monst), "monster not killed in slam attack");
 
-  TEST_ASSERT(t, game_tick_get(g, v) == 24, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 25, "final tick counter value");
 
   level_dump(g, v, l, w, h);
   TEST_PASSED(t);

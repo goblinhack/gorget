@@ -55,17 +55,38 @@ void levels_test(Gamep g)
   {
     Overrides overrides;
 
+    level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "generator", __FUNCTION__, __LINE__, no_overrides, 0,
+                    /* line */ (const char *) "XXXXXXXXXXXXXX",
+                    /* line */ (const char *) "X............X",
+                    /* line */ (const char *) "X............X",
+                    /* line */ (const char *) "X............X",
+                    /* line */ (const char *) "X............X",
+                    /* line */ (const char *) "X............X",
+                    /* line */ (const char *) "X.@........g.X",
+                    /* line */ (const char *) "X............X",
+                    /* line */ (const char *) "X............X",
+                    /* line */ (const char *) "X............X",
+                    /* line */ (const char *) "X............X",
+                    /* line */ (const char *) "X............X",
+                    /* line */ (const char *) "X............X",
+                    /* line */ (const char *) "XXXXXXXXXXXXXX",
+                    /* end */ nullptr);
+  }
+
+  {
+    Overrides overrides;
+
     overrides[ 'm' ] = [](char /*c*/, bpoint /*p*/) -> Tpp { return tp_find_mand("mantisman"); };
 
     level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "test1", __FUNCTION__, __LINE__, overrides, 0,
                     /* line */ (const char *) "XXXXXXXXXX",
-                    /* line */ (const char *) "X..x@x...X",
-                    /* line */ (const char *) "X..x=C...X",
-                    /* line */ (const char *) "X..x=C...X",
-                    /* line */ (const char *) "X..x=C...X",
-                    /* line */ (const char *) "X..xmx...X",
-                    /* line */ (const char *) "X..xmx...X",
-                    /* line */ (const char *) "X........X",
+                    /* line */ (const char *) "X....C...X",
+                    /* line */ (const char *) "X....C...X",
+                    /* line */ (const char *) "X....C...X",
+                    /* line */ (const char *) "X@...C...X",
+                    /* line */ (const char *) "X....C...X",
+                    /* line */ (const char *) "X....C...X",
+                    /* line */ (const char *) "X....C..mX",
                     /* line */ (const char *) "XXXXXXXXXX",
                     /* end */ nullptr);
   }
@@ -78,26 +99,24 @@ void levels_test(Gamep g)
     level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "test2", __FUNCTION__, __LINE__, overrides, 0,
                     /* line */ (const char *) "XXXXXXX",
                     /* line */ (const char *) "X.===.X",
-                    /* line */ (const char *) "X.~~~.X",
-                    /* line */ (const char *) "X.~~~.X",
-                    /* line */ (const char *) "X.~~~.X",
-                    /* line */ (const char *) "X.~~~.X",
-                    /* line */ (const char *) "X.~~~.X",
-                    /* line */ (const char *) "X.~~~.X",
-                    /* line */ (const char *) "X.~~~.X",
-                    /* line */ (const char *) "X.~~~.X",
-                    /* line */ (const char *) "X.~~~.X",
-                    /* line */ (const char *) "X.~~~.X",
-                    /* line */ (const char *) "X.~~~.X",
-                    /* line */ (const char *) "X.~~~.X",
-                    /* line */ (const char *) "X.~~~.X",
-                    /* line */ (const char *) "X.~~~.X",
-                    /* line */ (const char *) "X.~~~.X",
-                    /* line */ (const char *) "X.~~~.X",
-                    /* line */ (const char *) "X.~~~.X",
-                    /* line */ (const char *) "X.~~~.X",
-                    /* line */ (const char *) "X.~~~.X",
-                    /* line */ (const char *) "X@~~~mX",
+                    /* line */ (const char *) "X.LLL.X",
+                    /* line */ (const char *) "X.LLL.X",
+                    /* line */ (const char *) "X@LLLmX",
+                    /* line */ (const char *) "XXXXXXX",
+                    /* end */ nullptr);
+  }
+
+  {
+    Overrides overrides;
+
+    overrides[ 'm' ] = [](char /*c*/, bpoint /*p*/) -> Tpp { return tp_find_mand("mantisman"); };
+
+    level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "test2b", __FUNCTION__, __LINE__, overrides, 0,
+                    /* line */ (const char *) "XXXXXXX",
+                    /* line */ (const char *) "X.===.X",
+                    /* line */ (const char *) "X.CCC.X",
+                    /* line */ (const char *) "X.CCC.X",
+                    /* line */ (const char *) "X@CCCmX",
                     /* line */ (const char *) "XXXXXXX",
                     /* end */ nullptr);
   }
@@ -109,11 +128,27 @@ void levels_test(Gamep g)
 
     level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "test3", __FUNCTION__, __LINE__, overrides, 0,
                     /* line */ (const char *) "XXXXXXXXXXXXXXX",
-                    /* line */ (const char *) "X.~~~.~~~.~~~.X",
-                    /* line */ (const char *) "X.===.~~~.===.X",
-                    /* line */ (const char *) "X.~~~.~~~.~~~.X",
-                    /* line */ (const char *) "X.~~~.===.~~~.X",
-                    /* line */ (const char *) "X@~~~.~~~.~~~mX",
+                    /* line */ (const char *) "X.CCC.CCC.CCC.X",
+                    /* line */ (const char *) "X.===.CCC.===.X",
+                    /* line */ (const char *) "X.CCC.CCC.CCC.X",
+                    /* line */ (const char *) "X.CCC.===.CCC.X",
+                    /* line */ (const char *) "X@CCC.CCC.CCCmX",
+                    /* line */ (const char *) "XXXXXXXXXXXXXXX",
+                    /* end */ nullptr);
+  }
+
+  {
+    Overrides overrides;
+
+    overrides[ 'm' ] = [](char /*c*/, bpoint /*p*/) -> Tpp { return tp_find_mand("mantisman"); };
+
+    level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "test3b", __FUNCTION__, __LINE__, overrides, 0,
+                    /* line */ (const char *) "XXXXXXXXXXXXXXX",
+                    /* line */ (const char *) "X.LLL.LLL.LLL.X",
+                    /* line */ (const char *) "X.===.LLL.===.X",
+                    /* line */ (const char *) "X.LLL.LLL.LLL.X",
+                    /* line */ (const char *) "X.LLL.===.LLL.X",
+                    /* line */ (const char *) "X@LLL.LLL.LLLmX",
                     /* line */ (const char *) "XXXXXXXXXXXXXXX",
                     /* end */ nullptr);
   }
@@ -141,11 +176,11 @@ void levels_test(Gamep g)
 
     level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "test5", __FUNCTION__, __LINE__, overrides, 0,
                     /* line */ (const char *) "XXXXXXX",
+                    /* line */ (const char *) "X.C...X",
+                    /* line */ (const char *) "X.CC..X",
                     /* line */ (const char *) "X.CCC.X",
                     /* line */ (const char *) "X.CCC.X",
                     /* line */ (const char *) "X@CCCmX",
-                    /* line */ (const char *) "X.CxC.X",
-                    /* line */ (const char *) "X.CxC.X",
                     /* line */ (const char *) "XxxxXXX",
                     /* end */ nullptr);
   }
@@ -479,7 +514,7 @@ void levels_test(Gamep g)
                   /* line */ (const char *) " xxxxx     ",
                   /* line */ (const char *) " x...x     ",
                   /* line */ (const char *) " x...xxxxx ",
-                  /* line */ (const char *) " x...x...x ",
+                  /* line */ (const char *) " x...x..mx ",
                   /* line */ (const char *) " x@.k+...x ",
                   /* line */ (const char *) " x...x...x ",
                   /* line */ (const char *) " x...xxxxx ",
@@ -572,7 +607,7 @@ void levels_test(Gamep g)
                   /* line */ (const char *) "x..............................................x",
                   /* line */ (const char *) "x...xxxxxxxxx..................................x",
                   /* line */ (const char *) "x...x..........................................x",
-                  /* line */ (const char *) "x...x...@...G..................................x",
+                  /* line */ (const char *) "x...x...@.....g................................x",
                   /* line */ (const char *) "x...x..........................................x",
                   /* line */ (const char *) "x...x..........................................x",
                   /* line */ (const char *) "x...x..........................................x",

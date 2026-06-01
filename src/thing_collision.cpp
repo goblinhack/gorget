@@ -782,7 +782,7 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
       for (auto dx = -1; dx <= 1; dx++) {
         for (auto dy = -1; dy <= 1; dy++) {
           bpoint collision_at(interp_at.x + dx, interp_at.y + dy);
-          THING_DBG(me, "- at %d,%d", collision_at.x, collision_at.y);
+          THING_DBG(me, "- at (%d,%d)", collision_at.x, collision_at.y);
           FOR_ALL_THINGS_AT(g, v, l, o, collision_at)
           {
             if (o != me) {

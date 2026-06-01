@@ -275,7 +275,18 @@ void tests_run(Gamep g)
     // Skip the test if needed
     //
     if (! g_opt_test_name_filter.empty()) {
-      if (name != g_opt_test_name_filter) {
+      if (g_opt_test_name_filter == "all") {
+        //
+        // All tests or "--tests"
+        //
+      } else if (name.find(g_opt_test_name_filter) != std::string::npos) {
+        //
+        // Partial match e.g. "monst" for all monst tests
+        //
+      } else if (name != g_opt_test_name_filter) {
+        //
+        // Failed to match
+        //
         skipped = true;
         continue;
       }

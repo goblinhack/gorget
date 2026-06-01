@@ -203,7 +203,7 @@ static void __attribute__((noinline)) sdl_event_mousemotion(Gamep g, SDL_Event *
   last_mx = mx;
   last_my = my;
 
-  DBG2("SDL: Mouse: Moved to @%d,%d (rel %d,%d) state %d (actually at %d,%d)", event->motion.x, event->motion.y, event->motion.xrel,
+  DBG2("SDL: Mouse: Moved to (%d,%d) (rel %d,%d) state %d (actually at (%d,%d))", event->motion.x, event->motion.y, event->motion.xrel,
        event->motion.yrel, sdl.mouse_down, mx, my);
 
   wid_mouse_visible = true;
@@ -224,7 +224,7 @@ static void __attribute__((noinline)) sdl_event_mousedown(Gamep g, SDL_Event *ev
   sdl.held_mouse_x              = sdl.mouse_x;
   sdl.held_mouse_y              = sdl.mouse_y;
 
-  DBG("SDL: Mouse DOWN: button %d pressed at %d,%d state %X", event->button.button, event->button.x, event->button.y, sdl.mouse_down);
+  DBG("SDL: Mouse DOWN: button %d pressed at (%d,%d) state %X", event->button.button, event->button.x, event->button.y, sdl.mouse_down);
 
   auto now             = time_ms();
   wid_mouse_visible    = true;
@@ -244,7 +244,7 @@ static void __attribute__((noinline)) sdl_event_mouseup(Gamep g, SDL_Event *even
   sdl.held_mouse_x              = 0;
   sdl.held_mouse_y              = 0;
 
-  DBG("SDL: Mouse UP: button %d released at %d,%d state %d", event->button.button, event->button.x, event->button.y, sdl.mouse_down);
+  DBG("SDL: Mouse UP: button %d released at (%d,%d) state %d", event->button.button, event->button.x, event->button.y, sdl.mouse_down);
 
   wid_mouse_up(g, event->button.button, sdl.mouse_x, sdl.mouse_y);
 }

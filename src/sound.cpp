@@ -258,5 +258,9 @@ static auto find_one(const std::string &name_alias) -> Sound *
     return false;
   }
 
+  if (g_opt_tests || g_opt_do_level_gen || g_opt_do_level_select_gen || g_opt_do_room_gen) {
+    return true;
+  }
+
   return sound_play_internal(g, name_alias, sound, scale, loops, me);
 }

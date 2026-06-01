@@ -5,6 +5,7 @@
 #include "my_bpoint.hpp"
 #include "my_callstack.hpp"
 #include "my_game_defs.hpp"
+#include "my_level.hpp"
 #include "my_main.hpp" // NOLINT
 #include "my_thing.hpp"
 #include "my_thing_callbacks.hpp"
@@ -108,16 +109,12 @@ public:
   //
   // Cache of where this thing can move to
   //
-  std::array< std::array< bool, MAP_HEIGHT >, MAP_WIDTH > can_move_to_ai_cached     = {};
-  std::array< std::array< bool, MAP_HEIGHT >, MAP_WIDTH > can_move_to_ai_cached_set = {};
-
   std::array< std::array< bool, MAP_HEIGHT >, MAP_WIDTH > can_move_to_possible_cached     = {};
   std::array< std::array< bool, MAP_HEIGHT >, MAP_WIDTH > can_move_to_possible_cached_set = {};
 
   std::array< std::array< uint8_t, MAP_HEIGHT >, MAP_WIDTH > can_move_to_cost_cached     = {};
   std::array< std::array< uint8_t, MAP_HEIGHT >, MAP_WIDTH > can_move_to_cost_cached_set = {};
 
-  [[nodiscard]] auto        can_move_to_ai(const bpoint &to) -> bool;
   [[nodiscard]] auto        can_move_to_possible(const bpoint &to) -> bool;
   [[nodiscard]] auto        can_move_to_cost(const bpoint &to) -> uint8_t;
   [[nodiscard]] auto        heuristic(bpoint at) const -> Cost;
@@ -221,18 +218,14 @@ void Astar::eval_neighbor(Node *current, const bpoint &delta)
   Cost cost = current->cost.cost + (heuristic(next_hop) / 10);
 
   //
-  // These are hard obstacles that the AI cannot see past
-  //
-  if (! can_move_to_ai(next_hop)) {
-    return;
-  }
-
-  //
   // If there is something in the way that would block us moving here,
   // like another monster, then encourage a path around that
   //
   if (! can_move_to_possible(next_hop)) {
-    cost += 20;
+#ifdef ENABLE_DEBUG_AI_ASTAR
+    astar_debug[ next_hop.x ][ next_hop.y ] = 'X';
+#endif
+    return;
   }
 
   cost += can_move_to_cost(next_hop);
@@ -281,20 +274,6 @@ void Astar::init()
 #endif
 }
 
-[[nodiscard]] auto Astar::can_move_to_ai(const bpoint &to) -> bool
-{
-  if (to == dst) {
-    return true;
-  }
-
-  if (! can_move_to_ai_cached_set[ to.x ][ to.y ]) {
-    can_move_to_ai_cached_set[ to.x ][ to.y ]    = true;
-    return can_move_to_ai_cached[ to.x ][ to.y ] = thing_can_move_to_ai(g, v, l, me, to);
-  }
-
-  return can_move_to_ai_cached[ to.x ][ to.y ];
-}
-
 [[nodiscard]] auto Astar::can_move_to_possible(const bpoint &to) -> bool
 {
   if (to == dst) {
@@ -326,6 +305,13 @@ void Astar::init()
       case THING_ENVIRON_LIKES :    cost = -1; break;
       case THING_ENVIRON_ENUM_MAX : break;
     }
+
+    if (! thing_is_floating(me)) {
+      if (level_is_chasm(g, v, l, to)) {
+        cost += 150;
+      }
+    }
+
     return can_move_to_cost_cached[ to.x ][ to.y ] = cost;
   }
 
@@ -485,7 +471,7 @@ void Astar::dump()
     for (auto x = 0; x < MAP_WIDTH; x++) {
       std::string buf;
 
-      if (can_move_to_ai(bpoint(x, y))) {
+      if (can_move_to_possible(bpoint(x, y))) {
         buf = ".";
       } else {
         buf = "#";
@@ -531,15 +517,6 @@ void Astar::dump()
   }
 
   a.dump();
-
-  //
-  // Tests don't have floors everywhere
-  //
-  if (level_is_floor(g, v, l, dst)) {
-    if (! path.size()) {
-      CROAK("no path");
-    }
-  }
 #endif
 
   return path;

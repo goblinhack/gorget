@@ -100,8 +100,8 @@ void level_debug(Gamep g, Levelsp v, Levelp l)
 
   if (l->info.room_count != 0) {
     level_log(g, v, l, "room count        : %d", l->info.room_count);
-    level_log(g, v, l, "entrance at       : %d,%d", l->info.entrance_at.x, l->info.entrance_at.y);
-    level_log(g, v, l, "exit at           : %d,%d", l->info.exit_at.x, l->info.exit_at.y);
+    level_log(g, v, l, "entrance at       : (%d,%d)", l->info.entrance_at.x, l->info.entrance_at.y);
+    level_log(g, v, l, "exit at           : (%d,%d)", l->info.exit_at.x, l->info.exit_at.y);
     level_log(g, v, l, "fragment count    : %d", l->info.fragment_count);
     level_log(g, v, l, "treasure count    : %d", l->info.treasure_count);
     level_log(g, v, l, "monst count       : %d (group1:%d group2:%d)", l->info.monst_count, l->info.monst1_count, l->info.monst2_count);

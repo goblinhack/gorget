@@ -119,7 +119,7 @@ static auto thing_move_path_confirmed(Gamep g, Thingp me, const std::vector< bpo
   {
     THING_DBG(me, "apply path size: %d", static_cast< int >(move_path.size()));
     for (auto p : move_path) {
-      THING_DBG(me, " - path: %d,%d", p.x, p.y);
+      THING_DBG(me, " - path: (%d,%d)", p.x, p.y);
     }
   }
 

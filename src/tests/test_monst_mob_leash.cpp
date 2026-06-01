@@ -38,14 +38,14 @@
       = "XXXXXXXXXXXXXX"
         "X............X"
         "X............X"
+        "X.........m..X"
         "X............X"
         "X............X"
-        "X.....m......X"
-        "X.@..mm....g.X"
+        "X.@....m...g.X"
         "X............X"
         "X............X"
         "X............X"
-        "X............X"
+        "X.......m....X"
         "X............X"
         "X............X"
         "XXXXXXXXXXXXXX";
@@ -65,7 +65,7 @@
 
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 30; tries++) {
+  for (auto tries = 0; tries < 40; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE();
     level_dump(g, v, l, w, h);
@@ -94,7 +94,7 @@
   //
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  TEST_ASSERT(t, game_tick_get(g, v) == 30, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 40, "final tick counter value");
 
   level_dump(g, v, l, w, h);
   TEST_PASSED(t);

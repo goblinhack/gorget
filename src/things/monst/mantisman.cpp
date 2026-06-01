@@ -42,10 +42,6 @@ static auto tp_mantisman_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint 
     return THING_ENVIRON_HATES;
   }
 
-  if (level_is_chasm_cached(g, v, l, at)) {
-    return THING_ENVIRON_HATES;
-  }
-
   if (level_is_water_cached(g, v, l, at)) {
     return THING_ENVIRON_DISLIKES;
   }
@@ -88,7 +84,7 @@ static bool tp_mantisman_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, T
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // roll max to continue burning
   tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d3");
   tp_distance_jump_set(tp, 2);
-  tp_distance_vision_set(tp, 10);
+  tp_distance_vision_set(tp, 12);
   tp_flag_set(tp, is_able_to_crush_grass);
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);

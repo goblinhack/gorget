@@ -62,7 +62,7 @@ static auto thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thing
   THING_DBG(me, "astar thing_monst_choose_target_player");
   auto p = astar_solve(g, v, l, me, monst_at, target);
   if (p.empty()) {
-    THING_DBG(me, "choose target: no path to player at %d,%d", target.x, target.y);
+    THING_DBG(me, "choose target: no path to player at (%d,%d)", target.x, target.y);
     return false;
   }
 
@@ -146,7 +146,7 @@ static auto thing_monst_choose_something_we_can_see(Gamep g, Levelsp v, Levelp l
     target.x = static_cast< int >(at.x) - radius + PCG_RANDOM_RANGE(0, diameter);
     target.y = static_cast< int >(at.y) - radius + PCG_RANDOM_RANGE(0, diameter);
 
-    THING_DBG(me, "choose target: try: %d,%d", target.x, target.y);
+    THING_DBG(me, "choose target: try: (%d,%d)", target.x, target.y);
     TRACE_INDENT();
 
     if (is_oob_or_border(target)) {
@@ -271,7 +271,11 @@ static auto thing_monst_choose_something_we_can_see(Gamep g, Levelsp v, Levelp l
 {
   TRACE();
 
-  THING_DBG(me, "move to next");
+  auto target = thing_target(me);
+  THING_DBG(me, "move to next, target (%d,%d)", target.x, target.y);
+  TRACE_INDENT();
+
+  auto at = thing_at(me);
 
   //
   // If already moving, do not pop the next path tile
@@ -284,9 +288,9 @@ static auto thing_monst_choose_something_we_can_see(Gamep g, Levelsp v, Levelp l
   //
   // Get the next tile to move to
   //
-  bpoint move_next = {};
+  bpoint nexthop = {};
 
-  if (! thing_move_path_pop(g, v, l, me, move_next)) {
+  if (! thing_move_path_pop(g, v, l, me, nexthop)) {
     //
     // If could not pop, then no path is left
     //
@@ -294,27 +298,50 @@ static auto thing_monst_choose_something_we_can_see(Gamep g, Levelsp v, Levelp l
     return false;
   }
 
-  THING_DBG(me, "move to next: (%d,%d) got", move_next.x, move_next.y);
+  THING_DBG(me, "move to next: nexthop (%d,%d)", nexthop.x, nexthop.y);
+  TRACE_INDENT();
 
   //
   // If we have remaining moves and it is not possible to move to the next tile
   // then we pop moves off of the path to see if we can reach any of them
   //
   if (thing_move_path_size(g, v, l, me) != 0) {
-    if (! thing_can_move_to_possible(g, v, l, me, move_next)) {
-      THING_DBG(me, "move to next: not possible, try remaining path (size %d)", thing_move_path_size(g, v, l, me));
+    if (thing_can_move_to_ai(g, v, l, me, nexthop)) {
+      THING_DBG(me, "nexthop allowed by ai");
+    } else {
+      THING_DBG(me, "nexthop blocked by ai (remaining path size %d)", thing_move_path_size(g, v, l, me));
       TRACE_INDENT();
 
-      while (thing_move_path_pop(g, v, l, me, move_next)) {
-        THING_DBG(me, "move to next: (%d,%d) got", move_next.x, move_next.y);
+      while (thing_move_path_pop(g, v, l, me, nexthop)) {
+        THING_DBG(me, "pop nexthop (%d,%d)", nexthop.x, nexthop.y);
         TRACE_INDENT();
 
-        if (thing_jump_to(g, v, l, me, move_next)) {
-          //
-          // If could jump, then abort the path walk
-          //
-          THING_DBG(me, "move to next: can jump to destination");
-          return false;
+        //
+        // Need to check the truncated path isn't something we don't like, like lava
+        //
+        if (thing_can_move_to_ai(g, v, l, me, nexthop)) {
+          THING_DBG(me, "nexthop (%d,%d) allowed by ai", nexthop.x, nexthop.y);
+          TRACE_INDENT();
+
+          if (adjacent(at, nexthop)) {
+            if (thing_move_to(g, v, l, me, nexthop)) {
+              //
+              // If could jump, then abort the path walk
+              //
+              THING_DBG(me, "moved to nexthop");
+              return false;
+            }
+          } else {
+            if (thing_jump_to(g, v, l, me, nexthop)) {
+              //
+              // If could jump, then abort the path walk
+              //
+              THING_DBG(me, "jumped to nexthop");
+              return false;
+            }
+          }
+        } else {
+          THING_DBG(me, "nexthop (%d,%d) blocked by ai", nexthop.x, nexthop.y);
         }
       }
 
@@ -322,13 +349,13 @@ static auto thing_monst_choose_something_we_can_see(Gamep g, Levelsp v, Levelp l
       // Something was in the way of jumping. Best to stop rather than accidentally
       // walk into a chasm.
       //
-      (void) thing_lunge(g, v, l, me, move_next);
       THING_DBG(me, "move to next: not possible, lunge");
+      (void) thing_lunge(g, v, l, me, nexthop);
       return false;
     }
   }
 
-  if (! thing_monst_move_try(g, v, l, me, move_next)) {
+  if (! thing_monst_move_try(g, v, l, me, nexthop)) {
     //
     // If could not move, then abort the path walk
     //
@@ -336,13 +363,47 @@ static auto thing_monst_choose_something_we_can_see(Gamep g, Levelsp v, Levelp l
     return false;
   }
 
-  return thing_move_to(g, v, l, me, move_next);
+  if (! thing_is_floating(me)) {
+    if (thing_is_able_to_jump(me)) {
+      //
+      // Jump over chasm?
+      //
+      if (level_is_chasm(g, v, l, nexthop)) {
+        if (thing_jump_to(g, v, l, me, target)) {
+          return true;
+        }
+        return false;
+      }
+
+      //
+      // Jump over lava or something else we hate?
+      //
+      switch (thing_assess_tile(g, v, l, nexthop, me)) {
+        case THING_ENVIRON_HATES :
+          if (thing_jump_to(g, v, l, me, target)) {
+            return true;
+          }
+          return false;
+        case THING_ENVIRON_DISLIKES : break;
+        case THING_ENVIRON_NEUTRAL :  break;
+        case THING_ENVIRON_LIKES :    break;
+        case THING_ENVIRON_ENUM_MAX : break;
+      }
+    }
+  }
+
+  return thing_move_to(g, v, l, me, nexthop);
 }
 
 [[nodiscard]] static auto thing_monst_choose_target(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
 {
   THING_DBG(me, "choose target");
   TRACE_INDENT();
+
+  if (thing_is_jumping(me)) {
+    THING_DBG(me, "choose target: wait for jump to complete");
+    return true;
+  }
 
   if (thing_monst_choose_target_player(g, v, l, me)) {
     THING_DBG(me, "choose target: found player");
@@ -434,7 +495,7 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me)
       // If we are unable to move, or we reach the target, move back to normal state so we can decide what to do.
       //
       if (! thing_monst_move_to_next(g, v, l, me)) {
-        THING_DBG(me, "end of move, old target %d,%d", old_target.x, old_target.y);
+        THING_DBG(me, "end of move, old target (%d,%d)", old_target.x, old_target.y);
 
         monst_state_change(g, v, l, me, MONST_STATE_NORMAL);
 
@@ -488,7 +549,7 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me)
           break;
         }
 
-        THING_DBG(me, "end of move: have a new target %d,%d", new_target.x, new_target.y);
+        THING_DBG(me, "end of move: have a new target (%d,%d)", new_target.x, new_target.y);
         (void) thing_monst_move_to_next(g, v, l, me);
         THING_DBG(me, "end of move: done");
       }

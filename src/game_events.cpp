@@ -365,7 +365,7 @@ static auto game_event_jump(Gamep g) -> bool
   auto to = v->cursor_at;
   auto at = thing_at(player);
 
-  THING_DBG(player, "jump attempt to %d,%d", to.x, to.y);
+  THING_DBG(player, "jump attempt to (%d,%d)", to.x, to.y);
 
   if (level_is_cursor_path_hazard(g, v, l, to) != nullptr) {
     //

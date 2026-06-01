@@ -51,7 +51,7 @@
       // b#.
       // #a.
       // ...
-      THING_DBG(me, "check diagonal move to %d,%d; blocked (a)", to.x, to.y);
+      THING_DBG(me, "check diagonal move to (%d,%d); blocked (a)", to.x, to.y);
       return true;
     }
   }
@@ -66,7 +66,7 @@
       // ...
       // #a.
       // b#.
-      THING_DBG(me, "check diagonal move to %d,%d; blocked (b)", to.x, to.y);
+      THING_DBG(me, "check diagonal move to (%d,%d); blocked (b)", to.x, to.y);
       return true;
     }
   }
@@ -81,7 +81,7 @@
       // .#b
       // .a#
       // ...
-      THING_DBG(me, "check diagonal move to %d,%d; blocked (c)", to.x, to.y);
+      THING_DBG(me, "check diagonal move to (%d,%d); blocked (c)", to.x, to.y);
       return true;
     }
   }
@@ -96,12 +96,12 @@
       // ...
       // .a#
       // .#b
-      THING_DBG(me, "check diagonal move to %d,%d; blocked (d)", to.x, to.y);
+      THING_DBG(me, "check diagonal move to (%d,%d); blocked (d)", to.x, to.y);
       return true;
     }
   }
 
-  THING_DBG(me, "check diagonal move to %d,%d; ok", to.x, to.y);
+  THING_DBG(me, "check diagonal move to (%d,%d); ok", to.x, to.y);
   return false;
 }
 
@@ -122,10 +122,10 @@
     return true;
   }
 
-  THING_DBG(me, "can move to attempt to %d,%d", to.x, to.y);
+  THING_DBG(me, "can move to: (%d,%d) ?", to.x, to.y);
 
   if (! adjacent(at, to)) {
-    THING_DBG(me, "can move to attempt to %d,%d; not adjacent", to.x, to.y);
+    THING_DBG(me, "can move to: (%d,%d); not adjacent", to.x, to.y);
     return false;
   }
 
@@ -207,6 +207,46 @@
     if (thing_is_obs_to_paths(it)) {
       return false;
     }
+
+    //
+    // AI will create paths over chasms. This allows monsters to try to cross
+    // them. However if they cannot jump over, then they will just lunge at the
+    // player.
+    //
+    if (thing_is_monst(me)) {
+      if (thing_is_floating(me)) {
+        //
+        // Avoids hazards when floating
+        //
+      } else {
+        //
+        // Avoids hazards when floating
+        //
+        if (thing_is_chasm(it)) {
+          if (thing_is_able_to_fall(me)) {
+            return false;
+          }
+        }
+
+        if (thing_is_lava(it)) {
+          if (thing_is_burnable(me)) {
+            return false;
+          }
+
+          if (thing_is_flammable(me) || thing_is_combustible(me)) {
+            return false;
+          }
+        }
+      }
+    }
+
+    switch (thing_assess_tile(g, v, l, to, me)) {
+      case THING_ENVIRON_HATES :    return false;
+      case THING_ENVIRON_DISLIKES :
+      case THING_ENVIRON_NEUTRAL :
+      case THING_ENVIRON_LIKES :
+      case THING_ENVIRON_ENUM_MAX : break;
+    }
   }
 
   return true;
@@ -234,6 +274,10 @@
 
   FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, to)
   {
+    if (it == me) {
+      continue;
+    }
+
     //
     // Allow walking over the dead
     //
@@ -265,39 +309,6 @@
     }
 
     //
-    // AI will create paths over chasms. This allows monsters to try to cross
-    // them. Howver if they cannot jump over, then they will just lunge at the
-    // player.
-    //
-    if (thing_is_chasm(it)) {
-      if (thing_is_monst(me)) {
-        if (! thing_is_able_to_fall(me)) {
-          continue;
-        }
-        if (! thing_is_able_to_jump(me)) {
-          return false;
-        }
-      }
-    }
-
-    //
-    // AI will create paths over lava. This allows monsters to try to cross
-    // them. Howver if they cannot jump over, then they will just lunge at the
-    // player.
-    //
-    if (thing_is_lava(it)) {
-      if (thing_is_monst(me)) {
-        if (thing_is_burnable(me)) {
-          return false;
-        }
-
-        if (thing_is_flammable(me) || thing_is_combustible(me)) {
-          return false;
-        }
-      }
-    }
-
-    //
     // No stacking of monsters
     //
     if (thing_is_monst(me)) {
@@ -311,17 +322,6 @@
     //
     if (thing_is_obs_to_movement(it)) {
       return false;
-    }
-
-    //
-    // Avoid tiles we do not like
-    //
-    switch (thing_assess_tile(g, v, l, to, me)) {
-      case THING_ENVIRON_HATES :    return false;
-      case THING_ENVIRON_DISLIKES :
-      case THING_ENVIRON_NEUTRAL :
-      case THING_ENVIRON_LIKES :
-      case THING_ENVIRON_ENUM_MAX : break;
     }
   }
 

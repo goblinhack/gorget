@@ -171,6 +171,10 @@ void music_update_volume(Gamep g)
     return false;
   }
 
+  if (g_opt_tests || g_opt_do_level_gen || g_opt_do_level_select_gen || g_opt_do_room_gen) {
+    return true;
+  }
+
   if (Mix_FadeInMusicPos(m->m, -1, 2000, 0) == -1) {
     ERR("cannot play music %s: %s", name.c_str(), Mix_GetError());
     SDL_ClearError();
