@@ -12,7 +12,9 @@
 #include "my_main.hpp"
 #include "my_random.hpp"
 #include "my_thing.hpp"
+#include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp"
+#include "my_tp.hpp"
 #include "my_types.hpp"
 #include <string>
 
@@ -368,22 +370,15 @@ static auto thing_monst_choose_something_we_can_see(Gamep g, Levelsp v, Levelp l
       //
       // Jump over chasm?
       //
-      if (level_is_chasm(g, v, l, nexthop)) {
-        if (thing_jump_to(g, v, l, me, target)) {
-          return true;
-        }
-        return false;
+      if (level_is_chasm(g, v, l, nexthop) != nullptr) {
+        return thing_jump_to(g, v, l, me, target);
       }
 
       //
       // Jump over lava or something else we hate?
       //
       switch (thing_assess_tile(g, v, l, nexthop, me)) {
-        case THING_ENVIRON_HATES :
-          if (thing_jump_to(g, v, l, me, target)) {
-            return true;
-          }
-          return false;
+        case THING_ENVIRON_HATES :    return thing_jump_to(g, v, l, me, target);
         case THING_ENVIRON_DISLIKES : break;
         case THING_ENVIRON_NEUTRAL :  break;
         case THING_ENVIRON_LIKES :    break;

@@ -53,7 +53,7 @@ void levels_test(Gamep g)
   }
 
   {
-    Overrides overrides;
+    Overrides const overrides;
 
     level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "generator", __FUNCTION__, __LINE__, no_overrides, 0,
                     /* line */ (const char *) "XXXXXXXXXXXXXX",

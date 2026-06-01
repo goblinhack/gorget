@@ -221,7 +221,7 @@ static auto thing_get_killer(Gamep g, Levelsp v, Levelp l, ThingEvent &e) -> Thi
     return fired_by;
   }
 
-  auto owner = thing_owner(g, v, l, killer);
+  auto *owner = thing_owner(g, v, l, killer);
   if (owner != nullptr) {
     return owner;
   }
@@ -266,7 +266,7 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
   //
   if (thing_is_player(me)) {
     thing_killed_player(g, v, l, me, e);
-  } else if (killer && thing_is_player(killer)) {
+  } else if ((killer != nullptr) && thing_is_player(killer)) {
     thing_killed_by_player(g, v, l, me, e);
   }
 
