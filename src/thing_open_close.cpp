@@ -172,8 +172,7 @@ void thing_is_unlocked_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
 //
 [[nodiscard]] auto thing_can_move_to_attempt_by_opening(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool
 {
-  THING_DBG(me, "%s", __FUNCTION__);
-  TRACE_INDENT();
+  TRACE();
 
   if (is_oob_or_border(to)) [[unlikely]] {
     return false;
