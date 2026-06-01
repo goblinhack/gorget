@@ -149,7 +149,19 @@ static void thing_killed_by_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
 
   if ((it != nullptr) && thing_is_loggable(me)) {
     auto the_thing = capitalize_first(thing_name_long_the(g, v, l, me));
-    auto by_player = thing_name_long(g, v, l, it);
+
+    std::string by_player;
+    auto       *player   = thing_player(g);
+    auto       *fired_by = thing_fired_by_get(g, v, l, it);
+    if (fired_by != nullptr) {
+      if (fired_by == player) {
+        by_player = "your " + thing_name_long(g, v, l, it);
+      } else {
+        by_player = thing_name_apostrophize_the(g, v, l, fired_by) + " " + thing_name_long(g, v, l, it);
+      }
+    } else {
+      by_player = thing_name_long_the(g, v, l, it);
+    }
 
     switch (e.event_type) {
       case THING_EVENT_SHOVED : //
@@ -201,7 +213,7 @@ static auto thing_get_killer(Gamep g, Levelsp v, Levelp l, ThingEvent &e) -> Thi
   auto *killer = e.source;
 
   if (killer == nullptr) {
-    return killer;
+    return nullptr;
   }
 
   auto *fired_by = thing_fired_by_get(g, v, l, killer);
@@ -209,7 +221,12 @@ static auto thing_get_killer(Gamep g, Levelsp v, Levelp l, ThingEvent &e) -> Thi
     return fired_by;
   }
 
-  return thing_owner(g, v, l, killer);
+  auto owner = thing_owner(g, v, l, killer);
+  if (owner != nullptr) {
+    return owner;
+  }
+
+  return killer;
 }
 
 //
@@ -242,12 +259,14 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
     THING_DBG(me, "%s: dead", to_string(g, v, l, e).c_str());
   }
 
+  auto *killer = thing_get_killer(g, v, l, e);
+
   //
   // Call this prior to setting death, else we are told that we killed an already dead thing
   //
   if (thing_is_player(me)) {
     thing_killed_player(g, v, l, me, e);
-  } else if ((e.source != nullptr) && thing_is_player(e.source)) {
+  } else if (killer && thing_is_player(killer)) {
     thing_killed_by_player(g, v, l, me, e);
   }
 
@@ -393,7 +412,6 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
   //
   // Give score bonus to the player
   //
-  auto *killer = thing_get_killer(g, v, l, e);
   if ((killer != nullptr) && (killer != me) && thing_is_player(killer)) {
     auto bonus = tp_score_value_get(tp);
     (void) thing_score_incr(g, v, l, killer, bonus);
