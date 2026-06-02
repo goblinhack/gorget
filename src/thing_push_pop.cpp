@@ -35,7 +35,7 @@
     if (o_id == t->id) {
       return true;
     }
-    if (o_id != 0u) {
+    if (o_id != 0U) {
       slot_count++;
     }
   }

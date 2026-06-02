@@ -4,6 +4,7 @@
 
 #include "my_callstack.hpp"
 #include "my_game_defs.hpp"
+#include "my_globals.hpp"
 #include "my_main.hpp"
 #include "my_random.hpp"
 #include "my_thing.hpp"
