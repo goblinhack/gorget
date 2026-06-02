@@ -536,10 +536,10 @@
   return level_flag(g, v, l, is_level_curr, p, me);
 }
 
-[[nodiscard]] auto level_is_unused47(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_critical_to_level(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused47, p, me);
+  return level_flag(g, v, l, is_critical_to_level, p, me);
 }
 
 [[nodiscard]] auto level_is_level_final_icon(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp

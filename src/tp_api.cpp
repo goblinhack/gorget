@@ -535,10 +535,10 @@
   return tp_flag(tp, is_level_curr) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused47(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_critical_to_level(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused47) != 0;
+  return tp_flag(tp, is_critical_to_level) != 0;
 }
 
 [[nodiscard]] auto tp_is_level_final_icon(Tpp tp) -> bool

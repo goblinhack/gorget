@@ -537,10 +537,10 @@
   return level_count(g, v, l, is_level_curr, p);
 }
 
-[[nodiscard]] auto level_count_is_unused47(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_critical_to_level(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused47, p);
+  return level_count(g, v, l, is_critical_to_level, p);
 }
 
 [[nodiscard]] auto level_count_is_level_final_icon(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t

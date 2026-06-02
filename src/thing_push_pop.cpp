@@ -6,6 +6,7 @@
 #include "my_game_defs.hpp"
 #include "my_level_inlines.hpp"
 #include "my_main.hpp"
+#include "my_random.hpp"
 #include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
 #include "my_tp.hpp"
@@ -14,7 +15,7 @@
 //
 // Push the thing onto the level
 //
-[[nodiscard]] auto thing_push(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool
+[[nodiscard]] auto thing_push_internal(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool
 {
   TRACE();
 
@@ -26,10 +27,23 @@
   //
   // Already at this location?
   //
+  auto slot_count = 0;
   for (auto slot = 0; slot < MAP_SLOTS; slot++) {
     auto o_id = l->thing_id[ at.x ][ at.y ][ slot ];
     if (o_id == t->id) {
       return true;
+    }
+    if (o_id) {
+      slot_count++;
+    }
+  }
+
+  //
+  // Try and keep some space for critical things like the player
+  //
+  if (slot_count > MAP_SLOTS - 2) {
+    if (! thing_is_critical_to_level(t)) {
+      return false;
     }
   }
 
@@ -122,6 +136,116 @@
     break;
   }
 
+  return false;
+}
+
+[[nodiscard]] auto thing_push(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool
+{
+  TRACE();
+
+  auto at = thing_at(t);
+  if (is_oob(at)) [[unlikely]] {
+    return false;
+  }
+
+  if (thing_push_internal(g, v, l, t)) {
+    return true;
+  }
+
+  //
+  // Failed. Try pushing on an adjacent tile
+  //
+  static const std::vector< bpoint > all_deltas = {
+      bpoint(0, -1),
+      bpoint(-1, 0),
+      bpoint(1, 0),
+      bpoint(0, 1),
+      bpoint(-1, -1),
+      bpoint(-1, 1),
+      bpoint(1, -1),
+      bpoint(1, 1),
+
+      //
+      bpoint(-2, -2),
+      bpoint(-2, -1),
+      bpoint(-2, 0),
+      bpoint(-2, 1),
+      bpoint(-2, 2),
+      //
+      bpoint(-1, -2),
+      bpoint(-1, -1),
+      bpoint(-1, 0),
+      bpoint(-1, 1),
+      bpoint(-1, 2),
+      //
+      bpoint(0, -2),
+      bpoint(0, -1),
+      bpoint(0, 1),
+      bpoint(0, 2),
+      //
+      bpoint(1, -2),
+      bpoint(1, -1),
+      bpoint(1, 0),
+      bpoint(1, 1),
+      bpoint(1, 2),
+      //
+      bpoint(2, -2),
+      bpoint(2, -1),
+      bpoint(2, 0),
+      bpoint(2, 1),
+      bpoint(2, 2),
+  };
+
+  for (const auto &d : all_deltas) {
+    auto new_at = at + d;
+
+    if (is_oob(new_at)) [[unlikely]] {
+      continue;
+    }
+
+    if (level_is_obs_to_movement(g, v, l, new_at)) {
+      continue;
+    }
+
+    thing_at_set(g, v, l, t, new_at); // INTENTIONAL
+    thing_at_set(g, v, l, t, new_at); // INTENTIONAL Doing it twice sets old_at too
+    thing_moving_from_set(t, new_at);
+
+    if (thing_push_internal(g, v, l, t)) {
+      return true;
+    }
+  }
+
+  //
+  // Last resort. Try anywhere.
+  //
+  auto tries  = 100;
+  auto border = 1;
+  while (tries-- > 0) {
+    auto x = PCG_RANDOM_RANGE(border, MAP_WIDTH - border);
+    auto y = PCG_RANDOM_RANGE(border, MAP_HEIGHT - border);
+
+    auto new_at = bpoint(x, y);
+
+    if (is_oob(new_at)) [[unlikely]] {
+      continue;
+    }
+
+    if (level_is_obs_to_movement(g, v, l, new_at)) {
+      continue;
+    }
+
+    thing_at_set(g, v, l, t, new_at); // INTENTIONAL
+    thing_at_set(g, v, l, t, new_at); // INTENTIONAL Doing it twice sets old_at too
+    thing_moving_from_set(t, new_at);
+
+    if (thing_push_internal(g, v, l, t)) {
+      return true;
+    }
+  }
+
+  thing_err(t, "out of thing slots");
+
   //
   // Dump the contents of slots if we were unable to push
   //
@@ -133,7 +257,6 @@
     }
   }
 
-  thing_err(t, "out of thing slots");
   return false;
 }
 

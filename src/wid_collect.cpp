@@ -216,18 +216,7 @@ static void wid_collect_mouse_over_end(Gamep g, Widp w)
                 }
 
                 wid_unset_focus(g);
-
-                w = wid_icon[ c - 'a' ];
-                if (w != nullptr) {
-                  (void) wid_collect_all(g, w, -1, -1, 0);
-                }
-
-                w = wid_item[ c - 'a' ];
-                if (w != nullptr) {
-                  wid_set_style(w, UI_WID_STYLE_SOLID_WHITE);
-                  wid_set_color(w, WID_COLOR_BG, GREEN);
-                  wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
-                }
+                (void) wid_collect_all(g, w, -1, -1, 0);
                 return true;
               case 'b' :
               case 'c' :

@@ -217,7 +217,7 @@
       list_macro(is_unused3, "is_unused3"),                                                 /* newline */                                  \
       list_macro(is_unused4, "is_unused4"),                                                 /* newline */                                  \
       list_macro(is_unused46, "is_unused46"),                                               /* newline */                                  \
-      list_macro(is_unused47, "is_unused47"),                                               /* newline */                                  \
+      list_macro(is_critical_to_level, "is_critical_to_level"),                                               /* newline */                                  \
       list_macro(is_unused5, "is_unused5"),                                                 /* newline */                                  \
       list_macro(is_unused6, "is_unused6"),                                                 /* newline */                                  \
       list_macro(is_unused63, "is_unused63"),                                               /* newline */                                  \
@@ -716,7 +716,7 @@ class Tp;
 [[nodiscard]] auto tp_is_unused3(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused4(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused46(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused47(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_critical_to_level(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused5(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused6(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused63(Tpp tp) -> bool;
