@@ -96,8 +96,8 @@ static auto tp_wand_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> s
   thing_description_set(tp, tp_wand_fire_description_get);
   thing_detail_set(tp, tp_wand_fire_detail_get);
   thing_on_carry_request_set(tp, tp_wand_fire_on_carry_request);
-  thing_on_drop_request_set(tp, tp_wand_fire_on_drop_request);
   thing_on_carry_success_set(tp, tp_wand_fire_on_carry_success);
+  thing_on_drop_request_set(tp, tp_wand_fire_on_drop_request);
   thing_on_drop_success_set(tp, tp_wand_fire_on_drop_success);
   thing_on_use_weapon_request_set(tp, tp_wand_fire_on_use_weapon_request);
   thing_on_wield_request_set(tp, tp_wand_fire_on_wield_request);

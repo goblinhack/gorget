@@ -73,8 +73,8 @@ static auto tp_potion_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std:
   thing_description_set(tp, tp_potion_description_get);
   thing_detail_set(tp, tp_potion_detail_get);
   thing_on_carry_request_set(tp, tp_potion_on_carry_request);
-  thing_on_drop_request_set(tp, tp_potion_on_drop_request);
   thing_on_carry_success_set(tp, tp_potion_on_carry_success);
+  thing_on_drop_request_set(tp, tp_potion_on_drop_request);
   thing_on_drop_success_set(tp, tp_potion_on_drop_success);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // roll max to continue burning
   tp_flag_set(tp, is_able_to_fall_sound);

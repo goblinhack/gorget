@@ -708,6 +708,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_corpse_on_death(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_corpse(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_corridor(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_critical_to_level(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_crushable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_cursor_path_hazard(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_cursor_path_none(Thingp t) -> bool;
@@ -859,7 +860,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused3(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused4(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused46(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_critical_to_level(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused5(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused6(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused63(Thingp t) -> bool;

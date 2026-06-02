@@ -22,9 +22,6 @@ using ts_t = int;
 [[nodiscard]] auto time2str(ts_t ms, char *buf, int len) -> const char *;
 [[nodiscard]] auto timestamp(char *buf, int len) -> const char *;
 
-[[nodiscard]] auto time_game_ms() -> ts_t;
-[[nodiscard]] auto time_game_ms_cached() -> ts_t;
-
 [[nodiscard]] auto time_ms() -> ts_t;
 [[nodiscard]] auto time_ms_cached() -> ts_t;
 

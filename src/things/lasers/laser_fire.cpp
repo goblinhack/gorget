@@ -27,7 +27,7 @@ static void tp_laser_fire_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 }
 
-[[nodiscard]] auto tp_load_laser_fire() ->  bool
+[[nodiscard]] auto tp_load_laser_fire() -> bool
 {
   auto *tp   = tp_load("laser_fire"); // keep as string for scripts
   auto  name = tp_name(tp);
@@ -65,7 +65,7 @@ static void tp_laser_fire_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp t)
   tp_z_depth_set(tp, MAP_Z_DEPTH_WEAPON);
   // end sort marker1 }
 
-  auto delay = 5;
+  auto delay = 10;
 
   for (auto frame = 0; frame < THING_LASER_TILES_MAX; frame++) {
     for (auto step = 0; step < THING_LASER_TILES_MAX; step++) {

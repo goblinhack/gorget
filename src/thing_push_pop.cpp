@@ -4,6 +4,7 @@
 
 #include "my_callstack.hpp"
 #include "my_game_defs.hpp"
+#include "my_level.hpp"
 #include "my_level_inlines.hpp"
 #include "my_main.hpp"
 #include "my_random.hpp"
@@ -11,11 +12,12 @@
 #include "my_thing_inlines.hpp"
 #include "my_tp.hpp"
 #include "my_types.hpp"
+#include <vector>
 
 //
 // Push the thing onto the level
 //
-[[nodiscard]] auto thing_push_internal(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool
+[[nodiscard]] static auto thing_push_internal(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool
 {
   TRACE();
 
@@ -33,7 +35,7 @@
     if (o_id == t->id) {
       return true;
     }
-    if (o_id) {
+    if (o_id != 0u) {
       slot_count++;
     }
   }
@@ -203,7 +205,7 @@
       continue;
     }
 
-    if (level_is_obs_to_movement(g, v, l, new_at)) {
+    if (level_is_obs_to_movement(g, v, l, new_at) != nullptr) {
       continue;
     }
 
@@ -231,7 +233,7 @@
       continue;
     }
 
-    if (level_is_obs_to_movement(g, v, l, new_at)) {
+    if (level_is_obs_to_movement(g, v, l, new_at) != nullptr) {
       continue;
     }
 

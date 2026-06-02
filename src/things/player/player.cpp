@@ -363,6 +363,7 @@ static void tp_player_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_flag_set(tp, is_collision_circle_large);
   tp_flag_set(tp, is_combustible);
   tp_flag_set(tp, is_corpse_on_death);
+  tp_flag_set(tp, is_critical_to_level);
   tp_flag_set(tp, is_damage_capped);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_dmap);
@@ -375,7 +376,6 @@ static void tp_player_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_flag_set(tp, is_obs_to_movement);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
-  tp_flag_set(tp, is_critical_to_level);
   tp_flag_set(tp, is_player);
   tp_flag_set(tp, is_stamina_visible);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water

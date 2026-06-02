@@ -7,6 +7,7 @@
 #include "my_color_defs.hpp"
 #include "my_game.hpp"
 #include "my_level.hpp"
+#include "my_main.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
 #include "my_spoint.hpp"
@@ -96,7 +97,7 @@ static void wid_collect_mouse_over_end(Gamep g, Widp w)
   }
 }
 
-[[nodiscard]] static auto wid_collect_all(Gamep g, Widp w, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+[[nodiscard]] static auto wid_collect_all(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
   TRACE();
 
@@ -116,7 +117,7 @@ static void wid_collect_mouse_over_end(Gamep g, Widp w)
   }
 
   while (! items.empty()) {
-    auto item = items[ 0 ];
+    auto *item = items[ 0 ];
 
     ThingEvent e {
         .reason     = "collected via menu", //
@@ -368,7 +369,7 @@ void wid_collect_show(Gamep g, Levelsp v, Levelp /*l*/, Thingp player, std::vect
       auto *w = wid_new_square_button(g, wid_collect_window, "Key");
 
       std::string s;
-      s += static_cast< char >('a');
+      s += 'a';
       s += ')';
 
       spoint const tl(3, y_at);

@@ -2,26 +2,20 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_globals.hpp"
+#include "my_string.hpp"
+#include "my_time.hpp"
+#include "my_types.hpp"
+
 #include <SDL_timer.h>
 #include <cstdio>
 #include <ctime>
 #include <string>
 
-#include "my_string.hpp"
-#include "my_time.hpp"
-#include "my_types.hpp"
-
 //
 // This is the actual time
 //
 ts_t time_now;
-
-//
-// This is the game time. Game time starts out the same as normal time, but if
-// things are slow or we need to end a tick, then we can fast forward time. All
-// thing animation and movement is based off of this time.
-//
-ts_t time_game;
 
 static char buf_[ MAXSHORTSTR ];
 
@@ -29,22 +23,14 @@ static char buf_[ MAXSHORTSTR ];
 
 [[nodiscard]] auto time_ms() -> ts_t
 {
-  time_now = SDL_GetTicks();
-
-  //
-  // Update the game time too
-  //
-  time_game = time_now;
+  if (g_opt_tests) {
+    time_now++;
+  } else {
+    time_now = SDL_GetTicks();
+  }
 
   return time_now;
 }
-
-[[nodiscard]] auto time_game_ms() -> ts_t
-{
-  time_game = time_ms();
-  return time_game;
-}
-[[nodiscard]] auto time_game_ms_cached() -> ts_t { return time_game; }
 
 [[nodiscard]] auto time2str(ts_t ms, char *buf, int len) -> const char *
 {

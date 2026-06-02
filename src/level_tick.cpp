@@ -780,15 +780,6 @@ static void level_tick_update_frame_counter(Levelsp v)
   static uint32_t level_ts_now;
   auto            t = time_ms();
 
-  //
-  // We need a more consistent tick for tests that does not vary with time
-  //
-  static uint32_t test_t;
-  if (g_opt_tests) {
-    test_t++;
-    t = test_t;
-  }
-
   if (level_ts_begin == 0U) [[unlikely]] {
     level_ts_begin = t;
   }
