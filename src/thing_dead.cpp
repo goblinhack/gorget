@@ -140,68 +140,80 @@ static void thing_killed_player(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEv
 static void thing_killed_by_player(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
 {
   TRACE();
-  auto *it = e.source;
 
+  auto *player = e.source;
+  if (! player) {
+    return;
+  }
+
+  //
+  // Record the death count
+  //
   auto *p = thing_player_struct(g);
   if (p != nullptr) {
     p->defeated[ tp_id_get(thing_tp(me)) ]++;
   }
 
-  if ((it != nullptr) && thing_is_loggable(me)) {
-    auto the_thing = capitalize_first(thing_name_long_the(g, v, l, me));
+  if (! thing_is_described_when_killed(me)) {
+    return;
+  }
 
-    std::string by_player;
-    auto       *player   = thing_player(g);
-    auto       *fired_by = thing_fired_by_get(g, v, l, it);
-    if (fired_by != nullptr) {
-      if (fired_by == player) {
-        by_player = "your " + thing_name_long(g, v, l, it);
-      } else {
-        by_player = thing_name_apostrophize_the(g, v, l, fired_by) + " " + thing_name_long(g, v, l, it);
-      }
+  auto the_thing = capitalize_first(thing_name_long_the(g, v, l, me));
+
+  std::string by_player;
+  auto       *fired_by = thing_fired_by_get(g, v, l, player);
+  if (fired_by != nullptr) {
+    if (fired_by == player) {
+      by_player = "your " + thing_name_long(g, v, l, player);
     } else {
-      by_player = thing_name_long_the(g, v, l, it);
+      by_player = thing_name_apostrophize_the(g, v, l, fired_by) + " " + thing_name_long(g, v, l, player);
     }
+  } else {
+    by_player = thing_name_long_the(g, v, l, player);
+  }
 
-    switch (e.event_type) {
-      case THING_EVENT_SHOVED : //
-        topcon("%s is knocked over by %s.", the_thing.c_str(), by_player.c_str());
-        break;
-      case THING_EVENT_CRUSH : //
-        topcon("%s is crushed by %s.", the_thing.c_str(), by_player.c_str());
-        break;
-      case THING_EVENT_MELEE_DAMAGE : //
+  switch (e.event_type) {
+    case THING_EVENT_SHOVED : //
+      topcon("%s is knocked over by %s.", the_thing.c_str(), by_player.c_str());
+      break;
+    case THING_EVENT_CRUSH : //
+      topcon("%s is crushed by %s.", the_thing.c_str(), by_player.c_str());
+      break;
+    case THING_EVENT_MELEE_DAMAGE : //
+      topcon("%s is killed by %s.", the_thing.c_str(), by_player.c_str());
+      break;
+    case THING_EVENT_HEAT_DAMAGE : //
+      topcon("%s is killed by heat damage from %s.", the_thing.c_str(), by_player.c_str());
+      break;
+    case THING_EVENT_WATER_DAMAGE : //
+      topcon("%s is killed by water damage from %s.", the_thing.c_str(), by_player.c_str());
+      break;
+    case THING_EVENT_EXPLOSION_DAMAGE : //
+      topcon("%s is killed by blast damage from %s.", the_thing.c_str(), by_player.c_str());
+      break;
+    case THING_EVENT_FIRE_DAMAGE : //
+      if (thing_is_burning(me)) {
         topcon("%s is killed by %s.", the_thing.c_str(), by_player.c_str());
-        break;
-      case THING_EVENT_HEAT_DAMAGE : //
-        topcon("%s is killed by heat damage from %s.", the_thing.c_str(), by_player.c_str());
-        break;
-      case THING_EVENT_WATER_DAMAGE : //
-        topcon("%s is killed by water damage from %s.", the_thing.c_str(), by_player.c_str());
-        break;
-      case THING_EVENT_EXPLOSION_DAMAGE : //
-        topcon("%s is killed by blast damage from %s.", the_thing.c_str(), by_player.c_str());
-        break;
-      case THING_EVENT_FIRE_DAMAGE : //
+      } else {
         topcon("%s is burnt to death by %s.", the_thing.c_str(), by_player.c_str());
-        break;
-      case THING_EVENT_LIGHT_DAMAGE : //
-        topcon("%s is blasted to death by %s.", the_thing.c_str(), by_player.c_str());
-        break;
-      case THING_EVENT_CARRIED :          [[fallthrough]];
-      case THING_EVENT_CARRIED_MERGED :   break;
-      case THING_EVENT_OPEN :             [[fallthrough]];
-      case THING_EVENT_NONE :             [[fallthrough]];
-      case THING_EVENT_THE_END :          [[fallthrough]];
-      case THING_EVENT_FALL :             [[fallthrough]];
-      case THING_EVENT_LIFESPAN_EXPIRED : [[fallthrough]];
-      case THING_EVENT_MELT :             [[fallthrough]];
-      case THING_EVENT_USER_INITIATED :   [[fallthrough]];
-      case THING_EVENT_SPAWNED :          [[fallthrough]];
-      case THING_EVENT_ENUM_MAX : //
-        ERR("unexpected event: %s", ThingEventType_to_string(e.event_type).c_str());
-        break;
-    }
+      }
+      break;
+    case THING_EVENT_LIGHT_DAMAGE : //
+      topcon("%s is blasted to death by %s.", the_thing.c_str(), by_player.c_str());
+      break;
+    case THING_EVENT_CARRIED :          [[fallthrough]];
+    case THING_EVENT_CARRIED_MERGED :   break;
+    case THING_EVENT_OPEN :             [[fallthrough]];
+    case THING_EVENT_NONE :             [[fallthrough]];
+    case THING_EVENT_THE_END :          [[fallthrough]];
+    case THING_EVENT_FALL :             [[fallthrough]];
+    case THING_EVENT_LIFESPAN_EXPIRED : [[fallthrough]];
+    case THING_EVENT_MELT :             [[fallthrough]];
+    case THING_EVENT_USER_INITIATED :   [[fallthrough]];
+    case THING_EVENT_SPAWNED :          [[fallthrough]];
+    case THING_EVENT_ENUM_MAX : //
+      ERR("unexpected event: %s", ThingEventType_to_string(e.event_type).c_str());
+      break;
   }
 }
 

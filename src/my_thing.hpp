@@ -720,6 +720,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_dead_when_discharged(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_deep_water(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_described_cursor(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_described_when_killed(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_dir_bl(Thingp me) -> bool;
 [[nodiscard]] auto thing_is_dir_br(Thingp me) -> bool;
 [[nodiscard]] auto thing_is_dir_down(Thingp me) -> bool;
@@ -855,7 +856,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused20(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused21(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused22(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused23(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused3(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused4(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused46(Thingp t) -> bool;

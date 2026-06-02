@@ -969,10 +969,10 @@
   return level_count(g, v, l, is_unused22, p);
 }
 
-[[nodiscard]] auto level_count_is_unused23(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_described_when_killed(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused23, p);
+  return level_count(g, v, l, is_described_when_killed, p);
 }
 
 [[nodiscard]] auto level_count_is_chest(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t

@@ -1523,7 +1523,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_unused22) != 0;
 }
 
-[[nodiscard]] auto thing_is_unused23(Thingp t) -> bool
+[[nodiscard]] auto thing_is_described_when_killed(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -1531,7 +1531,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused23) != 0;
+  return tp_flag(thing_tp(t), is_described_when_killed) != 0;
 }
 
 [[nodiscard]] auto thing_is_chest(Thingp t) -> bool

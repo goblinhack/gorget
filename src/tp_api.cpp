@@ -967,10 +967,10 @@
   return tp_flag(tp, is_unused22) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused23(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_described_when_killed(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused23) != 0;
+  return tp_flag(tp, is_described_when_killed) != 0;
 }
 
 [[nodiscard]] auto tp_is_chest(Tpp tp) -> bool

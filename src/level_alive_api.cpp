@@ -968,10 +968,10 @@
   return level_alive(g, v, l, is_unused22, p);
 }
 
-[[nodiscard]] auto level_alive_is_unused23(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_alive_is_described_when_killed(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_alive(g, v, l, is_unused23, p);
+  return level_alive(g, v, l, is_described_when_killed, p);
 }
 
 [[nodiscard]] auto level_alive_is_chest(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
