@@ -96,6 +96,52 @@ static void wid_collect_mouse_over_end(Gamep g, Widp w)
   }
 }
 
+[[nodiscard]] static auto wid_collect_all(Gamep g, Widp w, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+{
+  TRACE();
+
+  auto *v = game_levels_get(g);
+  if (v == nullptr) {
+    return false;
+  }
+
+  auto *l = game_level_get(g, v);
+  if (l == nullptr) {
+    return false;
+  }
+
+  auto *player = thing_player(g);
+  if (player == nullptr) [[unlikely]] {
+    return false;
+  }
+
+  while (! items.empty()) {
+    auto item = items[ 0 ];
+
+    ThingEvent e {
+        .reason     = "collected via menu", //
+        .event_type = THING_EVENT_CARRIED,  //
+        .source     = player,               //
+    };
+
+    if (! thing_carry(g, v, l, player, item, e)) {
+      (void) sound_play(g, "error");
+      topcon("Could not collect all items!");
+      break;
+    }
+
+    items.erase(std::ranges::find(items, item));
+  }
+
+  if (items.empty()) {
+    wid_collect_destroy(g);
+  } else {
+    wid_collect_show(g, v, l, player, items);
+  }
+
+  return true;
+}
+
 [[nodiscard]] static auto wid_collect_mouse_up(Gamep g, Widp w, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
   TRACE();
@@ -161,6 +207,28 @@ static void wid_collect_mouse_over_end(Gamep g, Widp w)
             auto c = wid_event_to_char(key);
             switch (c) {
               case 'a' :
+                for (auto &n : wid_item) {
+                  w = n;
+                  if (w != nullptr) {
+                    wid_set_style(w, UI_WID_STYLE_SOLID_WHITE);
+                    wid_set_color(w, WID_COLOR_BG, GRAY20);
+                  }
+                }
+
+                wid_unset_focus(g);
+
+                w = wid_icon[ c - 'a' ];
+                if (w != nullptr) {
+                  (void) wid_collect_all(g, w, -1, -1, 0);
+                }
+
+                w = wid_item[ c - 'a' ];
+                if (w != nullptr) {
+                  wid_set_style(w, UI_WID_STYLE_SOLID_WHITE);
+                  wid_set_color(w, WID_COLOR_BG, GREEN);
+                  wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
+                }
+                return true;
               case 'b' :
               case 'c' :
               case 'd' :
@@ -196,18 +264,18 @@ static void wid_collect_mouse_over_end(Gamep g, Widp w)
 
                 wid_unset_focus(g);
 
-                w = wid_icon[ c - 'a' ];
+                w = wid_icon[ c - 'b' ];
                 if (w != nullptr) {
                   (void) wid_collect_mouse_up(g, w, -1, -1, 0);
                 }
 
-                w = wid_item[ c - 'a' ];
+                w = wid_item[ c - 'b' ];
                 if (w != nullptr) {
                   wid_set_style(w, UI_WID_STYLE_SOLID_WHITE);
                   wid_set_color(w, WID_COLOR_BG, GREEN);
                   wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
                 }
-                break;
+                return true;
               case '\n' :
               case SDLK_ESCAPE :
                 {
@@ -299,6 +367,51 @@ void wid_collect_show(Gamep g, Levelsp v, Levelp /*l*/, Thingp player, std::vect
   memset(wid_icon, 0, sizeof(wid_icon));
   memset(wid_item, 0, sizeof(wid_item));
 
+  //
+  // Collect all items
+  //
+  {
+    //
+    // Key shortcut
+    //
+    {
+      TRACE();
+      auto *w = wid_new_square_button(g, wid_collect_window, "Key");
+
+      std::string s;
+      s += static_cast< char >('a');
+      s += ')';
+
+      spoint const tl(3, y_at);
+      spoint const br(6, y_at + button_height);
+      wid_set_text_lhs(w, 1u);
+
+      wid_set_mode(w, WID_MODE_NORMAL);
+      wid_set_color(w, WID_COLOR_TEXT_FG, GRAY50);
+      wid_set_style(w, button_style);
+      wid_set_pos(w, tl, br);
+      wid_set_text(w, s);
+      wid_set_on_mouse_up(w, wid_collect_all);
+    }
+
+    //
+    // "Collect all"
+    //
+    {
+      TRACE();
+      auto *w = wid_new_button(g, wid_collect_window, "collect all");
+
+      spoint const tl(6, y_at);
+      spoint const br(button_width, y_at + button_height);
+      wid_set_text_lhs(w, 1u);
+      wid_set_pos(w, tl, br);
+      wid_set_text(w, "collect all items");
+      wid_set_on_mouse_up(w, wid_collect_all);
+    }
+
+    y_at += button_step;
+  }
+
   auto _n_ = 0;
   for (auto *item : items) {
 
@@ -338,7 +451,7 @@ void wid_collect_show(Gamep g, Levelsp v, Levelp /*l*/, Thingp player, std::vect
       auto *w = wid_new_square_button(g, wid_collect_window, "Key");
 
       std::string s;
-      s += static_cast< char >('a' + _n_);
+      s += static_cast< char >('b' + _n_);
       s += ')';
 
       spoint const tl(3, y_at);
