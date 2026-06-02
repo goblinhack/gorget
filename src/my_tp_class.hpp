@@ -253,6 +253,8 @@ public:
   thing_on_open_request_t       on_open_request       = {};
   thing_on_carry_request_t      on_carry_request      = {};
   thing_on_drop_request_t       on_drop_request       = {};
+  thing_on_carry_success_t      on_carry_success      = {};
+  thing_on_drop_success_t       on_drop_success       = {};
   thing_on_use_weapon_request_t on_use_weapon_request = {};
   thing_on_wield_request_t      on_wield_request      = {};
   thing_on_unwield_request_t    on_unwield_request    = {};

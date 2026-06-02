@@ -181,7 +181,12 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp dr
     //
     // Add to the inventory.
     //
-    if (! thing_inventory_add(g, v, l, item, carrier)) {
+    if (thing_inventory_add(g, v, l, item, carrier)) {
+      //
+      // Success
+      //
+      (void) thing_on_carry_success(g, v, l, item, carrier);
+    } else {
       //
       // Possibly out of slots
       //
@@ -210,7 +215,15 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp dr
     //
     // Remove from the inventory.
     //
-    if (! thing_inventory_remove(g, v, l, item, carrier)) {
+    if (thing_inventory_remove(g, v, l, item, carrier)) {
+      //
+      // Success
+      //
+      (void) thing_on_carry_success(g, v, l, item, carrier);
+    } else {
+      //
+      // Remove failed
+      //
       item->_is_carried = old_value;
 
       auto s = to_string(g, v, l, item);
@@ -294,6 +307,68 @@ void thing_on_drop_request_set(Tpp tp, thing_on_drop_request_t callback)
     return false;
   }
   return tp->on_drop_request(g, v, l, me, dropper);
+}
+
+void thing_on_carry_success_set(Tpp tp, thing_on_carry_success_t callback)
+{
+  TRACE();
+  if (tp == nullptr) [[unlikely]] {
+    ERR("no thing template pointer");
+    return;
+  }
+  tp->on_carry_success = callback;
+}
+
+[[nodiscard]] auto thing_on_carry_success(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp carrier) -> bool
+{
+  TRACE();
+  auto *tp = thing_tp(me);
+  if (tp == nullptr) [[unlikely]] {
+    ERR("no thing template pointer");
+    return false;
+  }
+  if (tp->on_carry_success == nullptr) {
+    //
+    // Assume success
+    //
+    return true;
+  }
+  if (! thing_is_player(carrier) && ! thing_is_monst(carrier)) {
+    thing_err(carrier, "unexpected thing for %s", __FUNCTION__);
+    return false;
+  }
+  return tp->on_carry_success(g, v, l, me, carrier);
+}
+
+void thing_on_drop_success_set(Tpp tp, thing_on_drop_success_t callback)
+{
+  TRACE();
+  if (tp == nullptr) [[unlikely]] {
+    ERR("no thing template pointer");
+    return;
+  }
+  tp->on_drop_success = callback;
+}
+
+[[nodiscard]] auto thing_on_drop_success(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp dropper) -> bool
+{
+  TRACE();
+  auto *tp = thing_tp(me);
+  if (tp == nullptr) [[unlikely]] {
+    ERR("no thing template pointer");
+    return false;
+  }
+  if (tp->on_drop_success == nullptr) {
+    //
+    // Assume success
+    //
+    return true;
+  }
+  if (! thing_is_player(dropper) && ! thing_is_monst(dropper)) {
+    thing_err(dropper, "unexpected thing for %s", __FUNCTION__);
+    return false;
+  }
+  return tp->on_drop_success(g, v, l, me, dropper);
 }
 
 [[nodiscard]] auto thing_carry(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, ThingEvent &e) -> bool

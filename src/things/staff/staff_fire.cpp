@@ -34,6 +34,20 @@ static auto tp_staff_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> 
 {
   TRACE();
 
+  return true;
+}
+
+[[nodiscard]] static auto tp_staff_fire_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp dropper) -> bool
+{
+  TRACE();
+
+  return true;
+}
+
+[[nodiscard]] static auto tp_staff_fire_on_carry_success(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp collector) -> bool
+{
+  TRACE();
+
   if (thing_is_player(collector)) {
     thing_sound_play(g, v, l, collector, "item_collect");
   }
@@ -41,7 +55,7 @@ static auto tp_staff_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> 
   return true;
 }
 
-[[nodiscard]] static auto tp_staff_fire_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp dropper) -> bool
+[[nodiscard]] static auto tp_staff_fire_on_drop_success(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp dropper) -> bool
 {
   TRACE();
 
@@ -83,6 +97,8 @@ static auto tp_staff_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> 
   thing_detail_set(tp, tp_staff_fire_detail_get);
   thing_on_carry_request_set(tp, tp_staff_fire_on_carry_request);
   thing_on_drop_request_set(tp, tp_staff_fire_on_drop_request);
+  thing_on_carry_success_set(tp, tp_staff_fire_on_carry_success);
+  thing_on_drop_success_set(tp, tp_staff_fire_on_drop_success);
   thing_on_use_weapon_request_set(tp, tp_staff_fire_on_use_weapon_request);
   thing_on_wield_request_set(tp, tp_staff_fire_on_wield_request);
   tp_charge_count_set(tp, 5000);
