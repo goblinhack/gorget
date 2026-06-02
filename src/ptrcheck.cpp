@@ -23,7 +23,7 @@
 static std::mutex ptrcheck_mutex;
 
 class PtrcheckHistory;
-static std::vector< class PtrcheckHistory * > all_Ptrcheck_history {};
+static std::vector< class PtrcheckHistory * > all_history {};
 
 //
 // A single event in the life of a pointer.
@@ -40,11 +40,11 @@ public:
   PtrcheckHistory()
   {
     ts[ 0 ] = '\0';
-    all_Ptrcheck_history.push_back(this);
+    all_history.push_back(this);
   }
   PtrcheckHistory(const PtrcheckHistory &other) : file(other.file), func(other.func), line(other.line), bt(other.bt)
   {
-    all_Ptrcheck_history.push_back(this);
+    all_history.push_back(this);
 
     strcpy(ts, other.ts);
   }
@@ -743,10 +743,10 @@ static void ptrcheck_fini(int mtype)
     return;
   }
 
-  for (auto *p : all_Ptrcheck_history) {
+  for (auto *p : all_history) {
     delete p;
   }
-  all_Ptrcheck_history.clear();
+  all_history.clear();
 
   for (i = 0; i < ptrcheck_hash[ mtype ]->hash_size; i++) {
     slot = &ptrcheck_hash[ mtype ]->elements[ i ];

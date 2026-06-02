@@ -60,7 +60,11 @@ static char buf_[ MAXSHORTSTR ];
 
 [[nodiscard]] auto timestamp(char *buf, int len) -> const char *
 {
-  int       log_msec = time_ms();
+  //
+  // Beware, changing this to time_ms() will have an impact on tests as we use time_ms()
+  // hacked to a constant time
+  //
+  int       log_msec = time_ms_cached();
   int       log_secs = log_msec / ONESEC;
   int       log_mins = log_secs / 60;
   int const log_hrs  = log_mins / 60;
