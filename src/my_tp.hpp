@@ -81,6 +81,7 @@
       list_macro(is_combustible, "is_combustible"),                                         /* newline */                                  \
       list_macro(is_corpse_on_death, "is_corpse_on_death"),                                 /* newline */                                  \
       list_macro(is_corridor, "is_corridor"),                                               /* newline */                                  \
+      list_macro(is_critical_to_level, "is_critical_to_level"),                             /* newline */                                  \
       list_macro(is_crushable, "is_crushable"),                                             /* newline */                                  \
       list_macro(is_cursor_path_hazard, "is_cursor_path_hazard"),                           /* newline */                                  \
       list_macro(is_cursor_path_none, "is_cursor_path_none"),                               /* newline */                                  \
@@ -128,6 +129,7 @@
       list_macro(is_indestructible, "is_indestructible"),                                   /* newline */                                  \
       list_macro(is_insectoid, "is_insectoid"),                                             /* newline */                                  \
       list_macro(is_inventory_item, "is_inventory_item"),                                   /* newline */                                  \
+      list_macro(is_item_consumable, "is_item_consumable"),                                 /* newline */                                  \
       list_macro(is_item_droppable, "is_item_droppable"),                                   /* newline */                                  \
       list_macro(is_item_mergeable, "is_item_mergeable"),                                   /* newline */                                  \
       list_macro(is_item, "is_item"),                                                       /* newline */                                  \
@@ -178,6 +180,7 @@
       list_macro(is_pillar, "is_pillar"),                                                   /* newline */                                  \
       list_macro(is_plant, "is_plant"),                                                     /* newline */                                  \
       list_macro(is_player, "is_player"),                                                   /* newline */                                  \
+      list_macro(is_potion, "is_potion"),                                                   /* newline */                                  \
       list_macro(is_projectile, "is_projectile"),                                           /* newline */                                  \
       list_macro(is_reeds, "is_reeds"),                                                     /* newline */                                  \
       list_macro(is_removable_on_err, "is_removable_on_err"),                               /* newline */                                  \
@@ -216,11 +219,8 @@
       list_macro(is_unused22, "is_unused22"),                                               /* newline */                                  \
       list_macro(is_unused3, "is_unused3"),                                                 /* newline */                                  \
       list_macro(is_unused4, "is_unused4"),                                                 /* newline */                                  \
-      list_macro(is_unused46, "is_unused46"),                                               /* newline */                                  \
-      list_macro(is_critical_to_level, "is_critical_to_level"),                             /* newline */                                  \
       list_macro(is_unused5, "is_unused5"),                                                 /* newline */                                  \
       list_macro(is_unused6, "is_unused6"),                                                 /* newline */                                  \
-      list_macro(is_unused63, "is_unused63"),                                               /* newline */                                  \
       list_macro(is_unused7, "is_unused7"),                                                 /* newline */                                  \
       list_macro(is_unused8, "is_unused8"),                                                 /* newline */                                  \
       list_macro(is_unused9, "is_unused9"),                                                 /* newline */                                  \
@@ -627,6 +627,7 @@ class Tp;
 [[nodiscard]] auto tp_is_indestructible(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_insectoid(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_inventory_item(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_item_consumable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_item_droppable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_item_mergeable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_item(Tpp tp) -> bool;
@@ -677,6 +678,7 @@ class Tp;
 [[nodiscard]] auto tp_is_pillar(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_plant(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_player(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_potion(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_projectile(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_reeds(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_removable_on_err(Tpp tp) -> bool;
@@ -716,10 +718,8 @@ class Tp;
 [[nodiscard]] auto tp_is_unused22(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused3(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused4(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused46(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused5(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused6(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused63(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused7(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused8(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused9(Tpp tp) -> bool;

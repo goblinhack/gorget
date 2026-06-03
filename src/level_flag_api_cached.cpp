@@ -524,10 +524,10 @@
   return level_flag_cached(g, v, l, is_lava, p);
 }
 
-[[nodiscard]] auto level_is_unused46_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_item_consumable_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused46, p);
+  return level_flag_cached(g, v, l, is_item_consumable, p);
 }
 
 [[nodiscard]] auto level_is_level_curr_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
@@ -1226,10 +1226,10 @@
   return level_flag_cached(g, v, l, is_blitzhound, p);
 }
 
-[[nodiscard]] auto level_is_unused63_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_potion_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused63, p);
+  return level_flag_cached(g, v, l, is_potion, p);
 }
 
 [[nodiscard]] auto level_is_grouped_thing_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

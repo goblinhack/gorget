@@ -155,6 +155,52 @@ static Thingp g_item;
   return true;
 }
 
+[[nodiscard]] static auto wid_item_menu_use(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+{
+  TRACE();
+
+  auto *v = game_levels_get(g);
+  if (v == nullptr) {
+    return false;
+  }
+
+  auto *l = game_level_get(g, v);
+  if (l == nullptr) {
+    return false;
+  }
+
+  auto *player = thing_player(g);
+  if (player == nullptr) [[unlikely]] {
+    return false;
+  }
+
+  auto *item = g_item;
+  if (item == nullptr) {
+    return false;
+  }
+
+  if (level_is_level_select(g, v, l)) {
+    topcon(UI_WARNING_FMT_STR "You can't drop things here!" UI_RESET_FMT);
+    (void) sound_play(g, "error");
+    return false;
+  }
+
+  ThingEvent e {
+      .reason     = "user dropped",             //
+      .event_type = THING_EVENT_USER_INITIATED, //
+      .source     = player,                     //
+  };
+
+  if (! thing_drop(g, v, l, player, item, e)) {
+    (void) sound_play(g, "error");
+    return false;
+  }
+
+  (void) wid_item_menu_destroy();
+  (void) wid_item_menu_go_back(g);
+  return true;
+}
+
 [[nodiscard]] static auto wid_item_menu_equip(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
   TRACE();
@@ -368,6 +414,10 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item, bool from_inventory)
     menu_height += box_step;
   }
 
+  if (thing_is_item_consumable(item)) {
+    menu_height += box_step;
+  }
+
   if (thing_is_able_to_be_equipped(item)) {
     menu_height += box_step;
   }
@@ -407,6 +457,28 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item, bool from_inventory)
     wid_set_on_mouse_up(w, wid_item_menu_drop);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "D" UI_FMT_STR "rop");
+    y_at += box_step;
+  }
+
+  if (thing_is_item_consumable(item)) {
+    TRACE();
+    auto *p = wid_item_menu_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_menu_button(g, p, "Use");
+
+    spoint const tl(0, y_at);
+    spoint const br(button_width, y_at + box_height);
+
+    if (level_is_level_select(g, v, l)) {
+      wid_gray_out_button(g, w);
+    }
+
+    wid_set_on_mouse_up(w, wid_item_menu_use);
+    wid_set_pos(w, tl, br);
+    if (thing_is_potion(item)) {
+      wid_set_text(w, UI_HIGHLIGHT_FMT_STR "U" UI_FMT_STR "se (drink)");
+    } else {
+      wid_set_text(w, UI_HIGHLIGHT_FMT_STR "U" UI_FMT_STR "se (consume)");
+    }
     y_at += box_step;
   }
 

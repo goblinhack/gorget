@@ -25,7 +25,7 @@ extern bool g_opt_quick_start;           // Start in the main menu
 extern bool g_opt_restarted_in_gfx_menu; // Post restart
 extern bool g_opt_restarted;             // Post restart
 extern bool g_opt_tests;                 // Dungeon tests
-extern int  g_opt_test_repeat;                // Repeat tests
+extern int  g_opt_test_repeat;           // Repeat tests
 extern bool g_ptrcheck_inited;           // Ptrcheck is active
 extern bool g_quitting;                  // Exiting the game
 extern bool g_skip_audio_and_gfx;        // For tests

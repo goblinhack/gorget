@@ -14,6 +14,7 @@
 #include "my_time.hpp"
 #include "my_types.hpp"
 
+#include <SDL_timer.h>
 #include <cmath>
 #include <cstdio>
 #include <cstdlib>
@@ -271,9 +272,11 @@ void tests_run(Gamep g)
     }
   }
 
-  if (! g_opt_test_repeat) {
+  if (g_opt_test_repeat == 0) {
     g_opt_test_repeat = 1;
   }
+
+  auto started_tests = SDL_GetTicks();
 
   for (auto repeat = 0; repeat < g_opt_test_repeat; repeat++) {
     for (auto &test : test_name_map) {
@@ -333,11 +336,11 @@ void tests_run(Gamep g)
       //
       // Run the test
       //
-      auto started = time_ms();
+      auto started = SDL_GetTicks();
       if (! skipped) {
         result = t->callback(g, t);
       }
-      auto elapsed  = time_ms() - started;
+      auto elapsed  = SDL_GetTicks() - started;
       auto how_long = std::format("(took {:.2f} secs, {} ms)", static_cast< float >(elapsed) / 1000.0, elapsed);
 
       //
@@ -418,7 +421,8 @@ void tests_run(Gamep g)
     term_log("%%fg=red$Some tests failed%%fg=reset$\n");
     exit(1);
   } else {
-    con("Results: %d tests passed", passed);
+    auto elapsed = SDL_GetTicks() - started_tests;
+    con("Results: %d tests passed, took %.2f secs %u ms", passed, static_cast< float >(elapsed) / 1000.0, elapsed);
     term_log("%%fg=green$All tests passed%%fg=reset$\n");
     DIE_CLEAN("done");
   }

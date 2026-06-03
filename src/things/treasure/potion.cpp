@@ -23,7 +23,7 @@ static auto tp_potion_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std:
 {
   TRACE();
 
-  return UI_INFO1_FMT_STR "A mysterious purple potion.";
+  return UI_INFO1_FMT_STR "Consume this potion to restore your health. Other problems in life may remain.";
 }
 
 [[nodiscard]] static auto tp_potion_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp collector) -> bool
@@ -90,6 +90,7 @@ static auto tp_potion_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std:
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_glass);
   tp_flag_set(tp, is_inventory_item);
+  tp_flag_set(tp, is_item_consumable);
   tp_flag_set(tp, is_item_droppable);
   tp_flag_set(tp, is_item_mergeable);
   tp_flag_set(tp, is_item);

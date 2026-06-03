@@ -524,10 +524,10 @@
   return level_open(g, v, l, is_lava, p);
 }
 
-[[nodiscard]] auto level_open_is_unused46(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_open_is_item_consumable(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_open(g, v, l, is_unused46, p);
+  return level_open(g, v, l, is_item_consumable, p);
 }
 
 [[nodiscard]] auto level_open_is_level_curr(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
@@ -1226,10 +1226,10 @@
   return level_open(g, v, l, is_blitzhound, p);
 }
 
-[[nodiscard]] auto level_open_is_unused63(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_open_is_potion(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_open(g, v, l, is_unused63, p);
+  return level_open(g, v, l, is_potion, p);
 }
 
 [[nodiscard]] auto level_open_is_grouped_thing(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp

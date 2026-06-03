@@ -524,10 +524,10 @@
   return level_flag(g, v, l, is_lava, p, me);
 }
 
-[[nodiscard]] auto level_is_unused46(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_item_consumable(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused46, p, me);
+  return level_flag(g, v, l, is_item_consumable, p, me);
 }
 
 [[nodiscard]] auto level_is_level_curr(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
@@ -1226,10 +1226,10 @@
   return level_flag(g, v, l, is_blitzhound, p, me);
 }
 
-[[nodiscard]] auto level_is_unused63(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_potion(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused63, p, me);
+  return level_flag(g, v, l, is_potion, p, me);
 }
 
 [[nodiscard]] auto level_is_grouped_thing(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp

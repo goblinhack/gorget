@@ -768,6 +768,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_indestructible(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_insectoid(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_inventory_item(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_item_consumable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_item_droppable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_item_mergeable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_item(Thingp t) -> bool;
@@ -817,6 +818,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_physics_water(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_pillar(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_plant(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_potion(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_projectile(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_removable_on_err(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_removable_when_dead_on_err(Thingp t) -> bool;
@@ -859,10 +861,8 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused22(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused3(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused4(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused46(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused5(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused6(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused63(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused7(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused8(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused9(Thingp t) -> bool;

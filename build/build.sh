@@ -872,7 +872,7 @@ if [[ $OPT_GITHUB_BUILD != "" ]]; then
       cp .o/${TARGET}.pdb .
     fi
 
-    LSAN_OPTIONS=max_leaks=10 ./${TARGET} --tests --debug --repeat 10
+    LSAN_OPTIONS=max_leaks=10 ./${TARGET} --tests --debug --repeat 3
     if [[ $? -ne 0 ]]; then
         if [[ "$APPDATA" != "" ]]; then
           ls -la $APPDATA

@@ -523,10 +523,10 @@
   return tp_flag(tp, is_lava) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused46(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_item_consumable(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused46) != 0;
+  return tp_flag(tp, is_item_consumable) != 0;
 }
 
 [[nodiscard]] auto tp_is_level_curr(Tpp tp) -> bool
@@ -1225,10 +1225,10 @@
   return tp_flag(tp, is_blitzhound) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused63(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_potion(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused63) != 0;
+  return tp_flag(tp, is_potion) != 0;
 }
 
 [[nodiscard]] auto tp_is_grouped_thing(Tpp tp) -> bool

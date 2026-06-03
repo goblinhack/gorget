@@ -48,7 +48,7 @@ static auto tp_chest_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::
 
   std::vector< Thingp > items;
 
-  auto nitems = 20;
+  auto nitems = 2;
 
   while (d100() < 20) {
     nitems++;

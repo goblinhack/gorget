@@ -12,6 +12,7 @@
 #include "my_tile.hpp"
 #include "my_tp.hpp"
 #include "my_types.hpp"
+#include <cstdint>
 
 //
 // Assign an initial tile
@@ -34,7 +35,7 @@ void thing_anim_init(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, ThingAn
 
   auto ntiles = tp_tiles_size(tp, t->anim_type);
   if (ntiles != 0) {
-    uint32_t index;
+    uint32_t index = 0;
     if (g_opt_tests) {
       //
       // Tests need to be predictable
@@ -109,7 +110,7 @@ void thing_anim_init(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, ThingAn
             // Choose a random first tile. Cannot use animated check here, as things like grass
             // want different tiles, but are not animated.
             //
-            uint32_t index_new;
+            uint32_t index_new = 0;
             if (g_opt_tests) {
               //
               // Tests need to be predictable
