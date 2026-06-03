@@ -31,7 +31,7 @@
       = "xxxxxxxxxxxxxx"
         "x............x"
         "x............x"
-        "x@:::::::::::x"
+        "x@~:::~::~:~:x"
         "x............x"
         "x............x"
         "xxxxxxxxxxxxxx";
@@ -49,11 +49,11 @@
   }
 
   //
-  // Wait for the laser to ignite a barrel
+  // Wait for the steam
   //
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 5; tries++) {
+  for (auto tries = 0; tries < 10; tries++) {
     TEST_LOG(t, "try: %d", tries);
     (void) player_fire(g, v, l, 1, 0, tp_laser_fire, bpoint(13, 3));
     TRACE();
@@ -71,7 +71,7 @@
     goto exit;
   }
 
-  TEST_ASSERT(t, game_tick_get(g, v) == 5, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 10, "final tick counter value");
 
   level_dump(g, v, l, w, h);
   TEST_PASSED(t);

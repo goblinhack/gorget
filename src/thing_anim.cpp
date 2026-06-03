@@ -34,8 +34,19 @@ void thing_anim_init(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, ThingAn
 
   auto ntiles = tp_tiles_size(tp, t->anim_type);
   if (ntiles != 0) {
-    auto  index = OS_RAND() % ntiles;
-    auto *tile  = tp_tiles_get(tp, t->anim_type, index);
+    uint32_t index;
+    if (g_opt_tests) {
+      //
+      // Tests need to be predictable
+      //
+      index = PCG_RAND() % ntiles;
+    } else {
+      //
+      // But gameplay needs to be predictable when playing and animation is time based
+      //
+      index = OS_RAND() % ntiles;
+    }
+    auto *tile = tp_tiles_get(tp, t->anim_type, index);
     if (tile != nullptr) {
       switch (t->anim_type) {
         case THING_ANIM_JOIN_BL :
@@ -98,8 +109,19 @@ void thing_anim_init(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, ThingAn
             // Choose a random first tile. Cannot use animated check here, as things like grass
             // want different tiles, but are not animated.
             //
-            auto i        = OS_RANDOM_RANGE_INCLUSIVE(0, ntiles - 1);
-            t->anim_index = i;
+            uint32_t index_new;
+            if (g_opt_tests) {
+              //
+              // Tests need to be predictable
+              //
+              index_new = PCG_RANDOM_RANGE_INCLUSIVE(0, ntiles - 1);
+            } else {
+              //
+              // But gameplay needs to be predictable when playing and animation is time based
+              //
+              index_new = OS_RANDOM_RANGE_INCLUSIVE(0, ntiles - 1);
+            }
+            t->anim_index = index_new;
           }
           break;
         case THING_ANIM_CURSOR_NORMAL :

@@ -33,12 +33,12 @@
         "X.x.x.X"
         "X.x.x.X"
         "X.x.x.X"
-        "X@x..mX"
+        "X@x.m.X"
         "XXXXXXX";
   std::string const expect2
       = "XXXXXXX"
-        "X...x.X"
-        "X.xmx.X"
+        "X..mx.X"
+        "X.x.x.X"
         "X.x.x.X"
         "X.x.x.X"
         "X@x...X"
@@ -47,8 +47,8 @@
       = "XXXXXXX"
         "X...x.X"
         "X.x.x.X"
-        "Xmx.x.X"
         "X.x.x.X"
+        "Xmx.x.X"
         "X@x...X"
         "XXXXXXX";
   std::string const expect4

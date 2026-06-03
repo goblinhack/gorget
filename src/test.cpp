@@ -259,119 +259,154 @@ void tests_run(Gamep g)
   term_log("Running tests\n");
   term_log("-------------\n");
 
-  for (auto &test : test_name_map) {
+  bool found_match       = {};
+  bool exact_match_found = {};
 
-    bool result  = false;
-    bool skipped = false;
-
-    //
-    // Test name
-    //
-    auto  name = "test_" + test.first;
-    auto *t    = test.second;
-    auto  pre  = std::format("Running {:<70s}", name);
-
-    //
-    // Skip the test if needed
-    //
-    if (! g_opt_test_name_filter.empty()) {
-      if (g_opt_test_name_filter == "all") {
-        //
-        // All tests or "--tests"
-        //
-      } else if (name.find(g_opt_test_name_filter) != std::string::npos) {
-        //
-        // Partial match e.g. "monst" for all monst tests
-        //
-      } else if (name != g_opt_test_name_filter) {
-        //
-        // Failed to match
-        //
-        skipped = true;
-        continue;
+  if (! g_opt_test_name_filter.empty()) {
+    for (auto &test : test_name_map) {
+      auto name = "test_" + test.first;
+      if (g_opt_test_name_filter == name) {
+        exact_match_found = true;
       }
     }
+  }
 
-    g_opt_test_current = name;
+  if (! g_opt_test_repeat) {
+    g_opt_test_repeat = 1;
+  }
 
-    //
-    // Preamble
-    //
-    if (! skipped) {
-      log("running test: %s", name.c_str());
-      log("-------------------------------------------");
-    }
+  for (auto repeat = 0; repeat < g_opt_test_repeat; repeat++) {
+    for (auto &test : test_name_map) {
 
-    //
-    // Run the test
-    //
-    auto started = time_ms();
-    if (! skipped) {
-      result = t->callback(g, t);
-    }
-    auto elapsed  = time_ms() - started;
-    auto how_long = std::format("(took {:.2f} secs, {} ms)", static_cast< float >(elapsed) / 1000.0, elapsed);
+      bool result  = false;
+      bool skipped = false;
 
-    //
-    // Print the timestamp
-    //
-    char buf[ MAXLONGSTR ];
-    buf[ 0 ] = '\0';
-    get_timestamp(buf, MAXLONGSTR);
+      //
+      // Test name
+      //
+      auto  name = "test_" + test.first;
+      auto *t    = test.second;
+      auto  pre  = std::format("Running {:<70s}", name);
+
+      //
+      // Skip the test if needed
+      //
+      if (! g_opt_test_name_filter.empty()) {
+        if (g_opt_test_name_filter == "all") {
+          //
+          // All tests or "--tests"
+          //
+          found_match = true;
+        } else if (exact_match_found) {
+          //
+          // Exact match
+          //
+          if (g_opt_test_name_filter == name) {
+            found_match = true;
+          } else {
+            continue;
+          }
+        } else if (name.find(g_opt_test_name_filter) != std::string::npos) {
+          //
+          // Partial match e.g. "monst" for all monst tests
+          //
+          found_match = true;
+        } else if (name != g_opt_test_name_filter) {
+          //
+          // Failed to match
+          //
+          skipped = true;
+          continue;
+        }
+      }
+
+      g_opt_test_current = name;
+
+      //
+      // Preamble
+      //
+      if (! skipped) {
+        log("running test: %s", name.c_str());
+        log("-------------------------------------------");
+      }
+
+      //
+      // Run the test
+      //
+      auto started = time_ms();
+      if (! skipped) {
+        result = t->callback(g, t);
+      }
+      auto elapsed  = time_ms() - started;
+      auto how_long = std::format("(took {:.2f} secs, {} ms)", static_cast< float >(elapsed) / 1000.0, elapsed);
+
+      //
+      // Print the timestamp
+      //
+      char buf[ MAXLONGSTR ];
+      buf[ 0 ] = '\0';
+      get_timestamp(buf, MAXLONGSTR);
 
 #ifdef GITHUB_BUILD
-    std::string out(buf);
+      std::string out(buf);
 
-    //
-    // Test preamble. We print this after the test has ran to avoid messing up the output.
-    //
-    out += pre;
+      //
+      // Test preamble. We print this after the test has ran to avoid messing up the output.
+      //
+      out += pre;
 
-    if (skipped) {
-      out += "skipped";
-    } else if (result) {
-      passed++;
-      out += "OK ";
-      out += how_long;
+      if (skipped) {
+        out += "skipped";
+      } else if (result) {
+        passed++;
+        out += "OK ";
+        out += how_long;
 
-      log("passed %s", how_long.c_str());
-    } else {
-      failed++;
-      out += "FAILED";
-      log("failed");
-    }
-    std::println("{}", out);
+        log("passed %s", how_long.c_str());
+      } else {
+        failed++;
+        out += "FAILED";
+        log("failed");
+      }
+      std::println("{}", out);
 #else
-    term_log(buf);
-    //
-    // Test preamble. We print this after the test has ran to avoid messing up the output.
-    //
-    term_log(pre.c_str());
+      term_log(buf);
+      //
+      // Test preamble. We print this after the test has ran to avoid messing up the output.
+      //
+      term_log(pre.c_str());
 
-    if (skipped) {
-      term_log("%%fg=yellow$skipped%%fg=reset$\n");
-    } else if (result) {
-      passed++;
-      term_log("%%fg=green$OK%%fg=reset$ ");
-      term_log(how_long.c_str());
-      term_log("\n");
-      log("passed %s", how_long.c_str());
-    } else {
-      failed++;
-      term_log("%%fg=red$FAILED%%fg=reset$\n");
-      log("failed");
-    }
+      if (skipped) {
+        term_log("%%fg=yellow$skipped%%fg=reset$\n");
+      } else if (result) {
+        passed++;
+        term_log("%%fg=green$OK%%fg=reset$ ");
+        term_log(how_long.c_str());
+        term_log("\n");
+        log("passed %s", how_long.c_str());
+      } else {
+        failed++;
+        term_log("%%fg=red$FAILED%%fg=reset$\n");
+        log("failed");
+      }
 #endif
 
-    if (! skipped) {
-      log("-");
-    }
+      if (! skipped) {
+        log("-");
+      }
 
-    //
-    // github output seems to be buffered.
-    //
-    fflush(stdout);
-    fflush(stderr);
+      //
+      // github output seems to be buffered.
+      //
+      fflush(stdout);
+      fflush(stderr);
+    }
+  }
+
+  if (! g_opt_test_name_filter.empty()) {
+    if (! found_match) {
+      CROAK("found no test matching filter: %s", g_opt_test_name_filter.c_str());
+    }
   }
 
   test_fini();

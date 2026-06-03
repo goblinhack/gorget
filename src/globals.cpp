@@ -27,6 +27,7 @@ bool g_opt_quick_start;           // Start in the main menu
 bool g_opt_restarted_in_gfx_menu; // Post restart
 bool g_opt_restarted;             // Post restart
 bool g_opt_tests;                 // Run tests.
+int  g_opt_test_repeat;           // Repeat tests.
 bool g_ptrcheck_inited;           // Ptrcheck is active
 bool g_quitting;                  // Exiting the game
 bool g_skip_audio_and_gfx;        // For tests

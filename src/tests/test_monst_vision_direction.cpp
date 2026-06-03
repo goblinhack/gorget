@@ -13,52 +13,112 @@
   TRACE();
 
   LevelNum const level_num = 0;
-  auto           w         = 7;
-  auto           h         = 7;
+  auto           w         = 26;
+  auto           h         = 19;
 
   //
   // How the dungeon starts out, and how we expect it to change
   //
   std::string const start
-      = "XXXXXXX"
-        "X.....X"
-        "X....mX"
-        "Xxxx.xX"
-        "Xxxx.xX"
-        "Xxxx@xX"
-        "XXXXXXX";
+      = "XXXXXXXXXXXXXXXXXXXXXXXXXX"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X.......................mX"
+        "X...................xxxxxX"
+        "X...................xxxxxX"
+        "X..................@xxxxxX"
+        "XXXXXXXXXXXXXXXXXXXXXXXXXX";
   std::string const expect1
-      = "XXXXXXX"
-        "X..m..X"
-        "X.....X"
-        "Xxxx.xX"
-        "Xxxx.xX"
-        "Xxxx@xX"
-        "XXXXXXX";
+      = "XXXXXXXXXXXXXXXXXXXXXXXXXX"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X.........m..............X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X...................xxxxxX"
+        "X...................xxxxxX"
+        "X..................@xxxxxX"
+        "XXXXXXXXXXXXXXXXXXXXXXXXXX";
   std::string const expect2
-      = "XXXXXXX"
-        "Xm....X"
-        "X.....X"
-        "Xxxx.xX"
-        "Xxxx.xX"
-        "Xxxx@xX"
-        "XXXXXXX";
+      = "XXXXXXXXXXXXXXXXXXXXXXXXXX"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X......m.................X"
+        "X...................xxxxxX"
+        "X...................xxxxxX"
+        "X..................@xxxxxX"
+        "XXXXXXXXXXXXXXXXXXXXXXXXXX";
   std::string const expect3
-      = "XXXXXXX"
-        "X.....X"
-        "X.....X"
-        "XxxxmxX"
-        "Xxxx.xX"
-        "Xxxx@xX"
-        "XXXXXXX";
+      = "XXXXXXXXXXXXXXXXXXXXXXXXXX"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X...................xxxxxX"
+        "X...........m.......xxxxxX"
+        "X..................@xxxxxX"
+        "XXXXXXXXXXXXXXXXXXXXXXXXXX";
   std::string const expect4
-      = "XXXXXXX"
-        "X.....X"
-        "X.....X"
-        "Xxxx.xX"
-        "XxxxmxX"
-        "Xxxx@xX"
-        "XXXXXXX";
+      = "XXXXXXXXXXXXXXXXXXXXXXXXXX"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X........................X"
+        "X...................xxxxxX"
+        "X...................xxxxxX"
+        "X.................m@xxxxxX"
+        "XXXXXXXXXXXXXXXXXXXXXXXXXX";
 
   //
   // Create the level and start playing
@@ -75,7 +135,7 @@
 
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 5; tries++) {
+  for (auto tries = 0; tries < 15; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE();
     level_dump(g, v, l, w, h);
@@ -153,7 +213,7 @@
 
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 5; tries++) {
+  for (auto tries = 0; tries < 10; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE();
     level_dump(g, v, l, w, h);
@@ -182,7 +242,7 @@
   //
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  TEST_ASSERT(t, game_tick_get(g, v) == 20, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 35, "final tick counter value");
 
   level_dump(g, v, l, w, h);
   TEST_PASSED(t);

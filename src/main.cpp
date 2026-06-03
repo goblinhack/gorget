@@ -74,6 +74,7 @@ static void usage()
   con(" --quick-start                     -- Quick start inside level.");
   con(" --test <name>                     -- Run test foo only.");
   con(" --tests                           -- Run all tests.");
+  con(" --repeat <n>                      -- Repeat tests n times.");
   con(" ");
   con("Code generation:");
   con(" --do-level-gen                    -- Do level gen only.");
@@ -203,6 +204,27 @@ static void parse_args(int argc, char *argv[])
       g_opt_tests          = true;
       g_opt_debug1         = true;
       g_skip_audio_and_gfx = true;
+      continue;
+    }
+
+    if ((strcasecmp(argv[ i ], "--repeat") == 0) || (strcasecmp(argv[ i ], "-repeat") == 0)) {
+      if (i == argc - 1) {
+        usage();
+        CROAK("missing parameter for argument, %s", argv[ i ]);
+      }
+
+      char *p   = nullptr; // NOLINT
+      auto  num = strtol(argv[ i + 1 ], &p, 10);
+      if (*p != 0) {
+        //
+        // Level name
+        //
+        CROAK("specify an integer for parameter, %s", argv[ i ]);
+      } else if (num > 0) {
+        g_opt_test_repeat = num;
+      }
+
+      i++;
       continue;
     }
 
