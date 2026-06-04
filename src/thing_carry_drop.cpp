@@ -232,7 +232,7 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp dr
       //
       // If counts remain, keep the item as carried
       //
-      if (thing_inventory_get_item_count(g, v, l, item, carrier)) {
+      if (thing_inventory_get_item_count(g, v, l, item, carrier) != 0) {
         item->_is_carried = old_value;
       }
     } else {

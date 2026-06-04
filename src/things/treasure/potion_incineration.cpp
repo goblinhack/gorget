@@ -151,10 +151,10 @@ static void tp_potion_incineration_on_death(Gamep g, Levelsp v, Levelp l, Thingp
   thing_on_carry_request_set(tp, tp_potion_incineration_on_carry_request);
   thing_on_carry_success_set(tp, tp_potion_incineration_on_carry_success);
   thing_on_death_set(tp, tp_potion_incineration_on_death);
-  thing_on_use_set(tp, tp_potion_incineration_on_use);
   thing_on_drop_request_set(tp, tp_potion_incineration_on_drop_request);
   thing_on_drop_success_set(tp, tp_potion_incineration_on_drop_success);
   thing_on_thrown_set(tp, tp_potion_incinertaion_on_thrown);
+  thing_on_use_set(tp, tp_potion_incineration_on_use);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1"); // roll max to continue burning
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);

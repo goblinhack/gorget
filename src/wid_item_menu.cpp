@@ -375,9 +375,8 @@ static Thingp g_item;
 
   if (thing_is_wielded(item)) {
     return wid_item_menu_unwield(g, w, x, y, button);
-  } else {
-    return wid_item_menu_wield(g, w, x, y, button);
   }
+  return wid_item_menu_wield(g, w, x, y, button);
 }
 
 [[nodiscard]] static auto wid_item_menu_back(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
