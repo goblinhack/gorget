@@ -1007,7 +1007,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_lava) != 0;
 }
 
-[[nodiscard]] auto thing_is_item_consumable(Thingp t) -> bool
+[[nodiscard]] auto thing_is_usable(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -1015,7 +1015,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_item_consumable) != 0;
+  return tp_flag(thing_tp(t), is_usable) != 0;
 }
 
 [[nodiscard]] auto thing_is_level_curr(Thingp t) -> bool
@@ -1501,7 +1501,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_unused20) != 0;
 }
 
-[[nodiscard]] auto thing_is_unused21(Thingp t) -> bool
+[[nodiscard]] auto thing_is_able_to_throw_items(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -1509,10 +1509,10 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused21) != 0;
+  return tp_flag(thing_tp(t), is_able_to_throw_items) != 0;
 }
 
-[[nodiscard]] auto thing_is_unused22(Thingp t) -> bool
+[[nodiscard]] auto thing_is_throwable(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -1520,7 +1520,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused22) != 0;
+  return tp_flag(thing_tp(t), is_throwable) != 0;
 }
 
 [[nodiscard]] auto thing_is_described_when_killed(Thingp t) -> bool
@@ -1589,7 +1589,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_able_to_fire_weapons) != 0;
 }
 
-[[nodiscard]] auto thing_is_able_to_be_wielded(Thingp t) -> bool
+[[nodiscard]] auto thing_wieldable(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -1597,7 +1597,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_able_to_be_wielded) != 0;
+  return tp_flag(thing_tp(t), wieldable) != 0;
 }
 
 [[nodiscard]] auto thing_is_able_to_wield_items(Thingp t) -> bool
@@ -2952,7 +2952,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_levitating) != 0;
 }
 
-[[nodiscard]] auto thing_is_able_to_be_equipped(Thingp t) -> bool
+[[nodiscard]] auto thing_is_equippable(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2960,10 +2960,10 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_able_to_be_equipped) != 0;
+  return tp_flag(thing_tp(t), is_equippable) != 0;
 }
 
-[[nodiscard]] auto thing_is_item_droppable(Thingp t) -> bool
+[[nodiscard]] auto thing_is_droppable(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2971,7 +2971,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_item_droppable) != 0;
+  return tp_flag(thing_tp(t), is_droppable) != 0;
 }
 
 [[nodiscard]] auto thing_is_able_to_walk_through_walls(Thingp t) -> bool

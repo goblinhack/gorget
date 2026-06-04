@@ -350,6 +350,7 @@ static void tp_player_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_flag_set(tp, is_able_to_move_diagonally);
   tp_flag_set(tp, is_able_to_open_things);
   tp_flag_set(tp, is_able_to_shove);
+  tp_flag_set(tp, is_able_to_throw_items);
   tp_flag_set(tp, is_able_to_wield_items);
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);

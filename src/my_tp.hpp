@@ -18,8 +18,8 @@
 #define THING_FLAG_ENUM(list_macro)                                                                                                        \
   CLANG_FORMAT_INDENT()                                                                     /* dummy line for clang indentation fixup */   \
   list_macro(is_able_to_collect_items, "is_able_to_collect_items"),                         /* newline */                                  \
-      list_macro(is_able_to_be_equipped, "is_able_to_be_equipped"),                         /* newline */                                  \
-      list_macro(is_able_to_be_wielded, "is_able_to_be_wielded"),                           /* newline */                                  \
+      list_macro(is_equippable, "is_equippable"),                                           /* newline */                                  \
+      list_macro(wieldable, "wieldable"),                                                   /* newline */                                  \
       list_macro(is_able_to_collect_keys, "is_able_to_collect_keys"),                       /* newline */                                  \
       list_macro(is_able_to_crush_grass, "is_able_to_crush_grass"),                         /* newline */                                  \
       list_macro(is_able_to_fall_repeatedly, "is_able_to_fall_repeatedly"),                 /* newline */                                  \
@@ -129,8 +129,8 @@
       list_macro(is_indestructible, "is_indestructible"),                                   /* newline */                                  \
       list_macro(is_insectoid, "is_insectoid"),                                             /* newline */                                  \
       list_macro(is_inventory_item, "is_inventory_item"),                                   /* newline */                                  \
-      list_macro(is_item_consumable, "is_item_consumable"),                                 /* newline */                                  \
-      list_macro(is_item_droppable, "is_item_droppable"),                                   /* newline */                                  \
+      list_macro(is_usable, "is_usable"),                                                   /* newline */                                  \
+      list_macro(is_droppable, "is_droppable"),                                             /* newline */                                  \
       list_macro(is_item_mergeable, "is_item_mergeable"),                                   /* newline */                                  \
       list_macro(is_item, "is_item"),                                                       /* newline */                                  \
       list_macro(is_key, "is_key"),                                                         /* newline */                                  \
@@ -215,8 +215,8 @@
       list_macro(is_unused19, "is_unused19"),                                               /* newline */                                  \
       list_macro(is_unused2, "is_unused2"),                                                 /* newline */                                  \
       list_macro(is_unused20, "is_unused20"),                                               /* newline */                                  \
-      list_macro(is_unused21, "is_unused21"),                                               /* newline */                                  \
-      list_macro(is_unused22, "is_unused22"),                                               /* newline */                                  \
+      list_macro(is_able_to_throw_items, "is_able_to_throw_items"),                         /* newline */                                  \
+      list_macro(is_throwable, "is_throwable"),                                             /* newline */                                  \
       list_macro(is_unused3, "is_unused3"),                                                 /* newline */                                  \
       list_macro(is_unused4, "is_unused4"),                                                 /* newline */                                  \
       list_macro(is_unused5, "is_unused5"),                                                 /* newline */                                  \
@@ -376,6 +376,8 @@ ENUM_DEF_H(THING_ANIM_ENUM, ThingAnimType)
       list_macro(THING_EVENT_LIFESPAN_EXPIRED, "lifespan expired"), /* newline */                                                          \
       list_macro(THING_EVENT_MELT, "melt"),                         /* newline */                                                          \
       list_macro(THING_EVENT_OPEN, "open"),                         /* newline */                                                          \
+      list_macro(THING_EVENT_THROWN, "thrown"),                     /* newline */                                                          \
+      list_macro(THING_EVENT_USED, "used"),                         /* newline */                                                          \
       list_macro(THING_EVENT_NONE, "none"),                         /* newline */                                                          \
       list_macro(THING_EVENT_THE_END, "became the new dark lord"),  /* newline */                                                          \
       list_macro(THING_EVENT_SPAWNED, "spawned"),                   /* newline */                                                          \
@@ -514,8 +516,6 @@ class Tp;
 [[nodiscard]] auto tp_health_max_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_id_get(Tpp tp) -> TpId;
 [[nodiscard]] auto tp_init() -> bool;
-[[nodiscard]] auto tp_is_able_to_be_equipped(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_able_to_be_wielded(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_collect_items(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_collect_keys(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_crush_grass(Tpp tp) -> bool;
@@ -529,6 +529,7 @@ class Tp;
 [[nodiscard]] auto tp_is_able_to_move_through_walls(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_open_things(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_shove(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_able_to_throw_items(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_walk_through_walls(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_wield_items(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_animated_can_hflip(Tpp tp) -> bool;
@@ -597,11 +598,13 @@ class Tp;
 [[nodiscard]] auto tp_is_door_locked(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_door_secret(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_door_unlocked(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_droppable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_dungeon_entrance(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_effect_attack(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_effect_blood(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_effect(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_entrance(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_equippable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_ethereal(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_exit(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_explosion(Tpp tp) -> bool;
@@ -627,8 +630,6 @@ class Tp;
 [[nodiscard]] auto tp_is_indestructible(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_insectoid(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_inventory_item(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_item_consumable(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_item_droppable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_item_mergeable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_item(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_key(Tpp tp) -> bool;
@@ -695,6 +696,7 @@ class Tp;
 [[nodiscard]] auto tp_is_submergible(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_teleport_blocked(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_teleport(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_throwable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_tick_end_delay(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_tickable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_tiled(Tpp tp) -> bool;
@@ -714,8 +716,6 @@ class Tp;
 [[nodiscard]] auto tp_is_unused19(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused2(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused20(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused21(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused22(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused3(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused4(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused5(Tpp tp) -> bool;
@@ -723,6 +723,7 @@ class Tp;
 [[nodiscard]] auto tp_is_unused7(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused8(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused9(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_usable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_vault(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_vision_180_degrees(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_vision_360_degrees(Tpp tp) -> bool;
@@ -783,6 +784,7 @@ class Tp;
 [[nodiscard]] auto tp_variant_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_variant(ThingFlagType f, int /*variant*/) -> Tpp;
 [[nodiscard]] auto tp_weight_get(Tpp tp) -> uint32_t;
+[[nodiscard]] auto tp_wieldable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_z_depth_get(Tpp tp) -> MapZDepthType;
 // end sort marker1 }
 

@@ -60,7 +60,9 @@
   if (!tp_load_mantisman()) { return false; }
   if (!tp_load_pillar()) { return false; }
   if (!tp_load_player()) { return false; }
-  if (!tp_load_potion()) { return false; }
+  if (!tp_load_potion_endurance()) { return false; }
+  if (!tp_load_potion_healing()) { return false; }
+  if (!tp_load_potion_incineration()) { return false; }
   if (!tp_load_reeds()) { return false; }
   if (!tp_load_rock()) { return false; }
   if (!tp_load_smoke()) { return false; }

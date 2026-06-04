@@ -180,18 +180,42 @@ static Thingp g_item;
   }
 
   if (level_is_level_select(g, v, l)) {
-    topcon(UI_WARNING_FMT_STR "You can't drop things here!" UI_RESET_FMT);
+    topcon(UI_WARNING_FMT_STR "You can't use things here!" UI_RESET_FMT);
     (void) sound_play(g, "error");
     return false;
   }
 
-  ThingEvent e {
-      .reason     = "user dropped",             //
-      .event_type = THING_EVENT_USER_INITIATED, //
-      .source     = player,                     //
-  };
+  (void) wid_item_menu_destroy();
+  (void) wid_item_menu_go_back(g);
+  return true;
+}
 
-  if (! thing_drop(g, v, l, player, item, e)) {
+[[nodiscard]] static auto wid_item_menu_throw(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+{
+  TRACE();
+
+  auto *v = game_levels_get(g);
+  if (v == nullptr) {
+    return false;
+  }
+
+  auto *l = game_level_get(g, v);
+  if (l == nullptr) {
+    return false;
+  }
+
+  auto *player = thing_player(g);
+  if (player == nullptr) [[unlikely]] {
+    return false;
+  }
+
+  auto *item = g_item;
+  if (item == nullptr) {
+    return false;
+  }
+
+  if (level_is_level_select(g, v, l)) {
+    topcon(UI_WARNING_FMT_STR "You can't throw things here!" UI_RESET_FMT);
     (void) sound_play(g, "error");
     return false;
   }
@@ -234,7 +258,7 @@ static Thingp g_item;
     return false;
   }
 
-  if (! thing_is_able_to_be_wielded(item)) {
+  if (! thing_wieldable(item)) {
     topcon("Weapon cannot be wielded.");
     (void) sound_play(g, "error");
     return false;
@@ -286,7 +310,7 @@ static Thingp g_item;
     return false;
   }
 
-  if (! thing_is_able_to_be_wielded(item)) {
+  if (! thing_wieldable(item)) {
     topcon("Weapon cannot be wielded.");
     (void) sound_play(g, "error");
     return false;
@@ -349,6 +373,11 @@ static Thingp g_item;
             TRACE();
             auto c = wid_event_to_char(key);
             switch (c) {
+              case 't' :
+              case 'T' :
+                (void) sound_play(g, "keypress");
+                (void) wid_item_menu_throw(g, nullptr, 0, 0, 0);
+                return true;
               case 'd' :
               case 'D' :
                 (void) sound_play(g, "keypress");
@@ -410,15 +439,19 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item, bool from_inventory)
   auto box_step    = 3;
   auto menu_height = 2;
 
-  if (thing_is_item_droppable(item)) {
+  if (thing_is_droppable(item)) {
     menu_height += box_step;
   }
 
-  if (thing_is_item_consumable(item)) {
+  if (thing_is_throwable(item)) {
     menu_height += box_step;
   }
 
-  if (thing_is_able_to_be_equipped(item)) {
+  if (thing_is_equippable(item)) {
+    menu_height += box_step;
+  }
+
+  if (thing_is_usable(item)) {
     menu_height += box_step;
   }
 
@@ -442,25 +475,7 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item, bool from_inventory)
 
   int y_at = 0;
 
-  if (thing_is_item_droppable(item)) {
-    TRACE();
-    auto *p = wid_item_menu_window->wid_text_area->wid_text_area;
-    auto *w = wid_new_menu_button(g, p, "Drop");
-
-    spoint const tl(0, y_at);
-    spoint const br(button_width, y_at + box_height);
-
-    if (level_is_level_select(g, v, l)) {
-      wid_gray_out_button(g, w);
-    }
-
-    wid_set_on_mouse_up(w, wid_item_menu_drop);
-    wid_set_pos(w, tl, br);
-    wid_set_text(w, UI_HIGHLIGHT_FMT_STR "D" UI_FMT_STR "rop");
-    y_at += box_step;
-  }
-
-  if (thing_is_item_consumable(item)) {
+  if (thing_is_usable(item)) {
     TRACE();
     auto *p = wid_item_menu_window->wid_text_area->wid_text_area;
     auto *w = wid_new_menu_button(g, p, "Use");
@@ -482,7 +497,7 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item, bool from_inventory)
     y_at += box_step;
   }
 
-  if (thing_is_able_to_be_equipped(item)) {
+  if (thing_is_equippable(item)) {
     TRACE();
     auto *p = wid_item_menu_window->wid_text_area->wid_text_area;
     auto *w = wid_new_menu_button(g, p, "Equip");
@@ -495,7 +510,7 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item, bool from_inventory)
     y_at += box_step;
   }
 
-  if (thing_is_able_to_be_wielded(item)) {
+  if (thing_wieldable(item)) {
     if (thing_is_wielded(item)) {
       TRACE();
       auto *p = wid_item_menu_window->wid_text_area->wid_text_area;
@@ -519,6 +534,42 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item, bool from_inventory)
       wid_set_text(w, UI_HIGHLIGHT_FMT_STR "W" UI_FMT_STR "ield");
       y_at += box_step;
     }
+  }
+
+  if (thing_is_throwable(item)) {
+    TRACE();
+    auto *p = wid_item_menu_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_menu_button(g, p, "Throw");
+
+    spoint const tl(0, y_at);
+    spoint const br(button_width, y_at + box_height);
+
+    if (level_is_level_select(g, v, l)) {
+      wid_gray_out_button(g, w);
+    }
+
+    wid_set_on_mouse_up(w, wid_item_menu_throw);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, UI_HIGHLIGHT_FMT_STR "T" UI_FMT_STR "row");
+    y_at += box_step;
+  }
+
+  if (thing_is_droppable(item)) {
+    TRACE();
+    auto *p = wid_item_menu_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_menu_button(g, p, "Drop");
+
+    spoint const tl(0, y_at);
+    spoint const br(button_width, y_at + box_height);
+
+    if (level_is_level_select(g, v, l)) {
+      wid_gray_out_button(g, w);
+    }
+
+    wid_set_on_mouse_up(w, wid_item_menu_drop);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, UI_HIGHLIGHT_FMT_STR "D" UI_FMT_STR "rop");
+    y_at += box_step;
   }
 
   if (from_inventory) {

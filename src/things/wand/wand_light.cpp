@@ -103,7 +103,6 @@ static auto tp_wand_light_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> 
   thing_on_use_weapon_request_set(tp, tp_wand_light_on_light_weapon_request);
   thing_on_wield_request_set(tp, tp_wand_light_on_wield_request);
   tp_charge_count_set(tp, 500);
-  tp_flag_set(tp, is_able_to_be_wielded);
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated);
@@ -116,8 +115,8 @@ static auto tp_wand_light_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> 
   tp_flag_set(tp, is_combustible); // will continue to burn once on light
   tp_flag_set(tp, is_dead_when_discharged);
   tp_flag_set(tp, is_described_cursor);
+  tp_flag_set(tp, is_droppable);
   tp_flag_set(tp, is_inventory_item);
-  tp_flag_set(tp, is_item_droppable);
   tp_flag_set(tp, is_item);
   tp_flag_set(tp, is_light_source, 2);
   tp_flag_set(tp, is_loggable);
@@ -128,6 +127,7 @@ static auto tp_wand_light_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> 
   tp_flag_set(tp, is_treasure);
   tp_flag_set(tp, is_wand);
   tp_flag_set(tp, is_wood);
+  tp_flag_set(tp, wieldable);
   tp_health_set(tp, "1d4");
   tp_is_immune_add(tp, THING_EVENT_FIRE_DAMAGE);
   tp_light_color_set(tp, "red");

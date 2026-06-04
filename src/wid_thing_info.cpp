@@ -340,6 +340,8 @@
       case THING_EVENT_CARRIED_MERGED :   [[fallthrough]];
       case THING_EVENT_USER_INITIATED :   [[fallthrough]];
       case THING_EVENT_SPAWNED :          [[fallthrough]];
+      case THING_EVENT_THROWN :           [[fallthrough]];
+      case THING_EVENT_USED :             [[fallthrough]];
       case THING_EVENT_ENUM_MAX : //
         show_string = false;
         break;
@@ -409,6 +411,8 @@
       case THING_EVENT_CARRIED_MERGED :   [[fallthrough]];
       case THING_EVENT_USER_INITIATED :   [[fallthrough]];
       case THING_EVENT_SPAWNED :          [[fallthrough]];
+      case THING_EVENT_THROWN :           [[fallthrough]];
+      case THING_EVENT_USED :             [[fallthrough]];
       case THING_EVENT_ENUM_MAX : //
         show_string = false;
         break;

@@ -481,16 +481,16 @@
   return tp_flag(tp, is_inventory_item) != 0;
 }
 
-[[nodiscard]] auto tp_is_item_droppable(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_droppable(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_item_droppable) != 0;
+  return tp_flag(tp, is_droppable) != 0;
 }
 
-[[nodiscard]] auto tp_is_able_to_be_equipped(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_equippable(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_able_to_be_equipped) != 0;
+  return tp_flag(tp, is_equippable) != 0;
 }
 
 [[nodiscard]] auto tp_is_item_mergeable(Tpp tp) -> bool
@@ -523,10 +523,10 @@
   return tp_flag(tp, is_lava) != 0;
 }
 
-[[nodiscard]] auto tp_is_item_consumable(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_usable(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_item_consumable) != 0;
+  return tp_flag(tp, is_usable) != 0;
 }
 
 [[nodiscard]] auto tp_is_level_curr(Tpp tp) -> bool
@@ -955,16 +955,16 @@
   return tp_flag(tp, is_unused20) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused21(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_able_to_throw_items(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused21) != 0;
+  return tp_flag(tp, is_able_to_throw_items) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused22(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_throwable(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused22) != 0;
+  return tp_flag(tp, is_throwable) != 0;
 }
 
 [[nodiscard]] auto tp_is_described_when_killed(Tpp tp) -> bool
@@ -1003,10 +1003,10 @@
   return tp_flag(tp, is_able_to_fire_weapons) != 0;
 }
 
-[[nodiscard]] auto tp_is_able_to_be_wielded(Tpp tp) -> bool
+[[nodiscard]] auto tp_wieldable(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_able_to_be_wielded) != 0;
+  return tp_flag(tp, wieldable) != 0;
 }
 
 [[nodiscard]] auto tp_is_unused3(Tpp tp) -> bool

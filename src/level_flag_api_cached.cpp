@@ -482,16 +482,16 @@
   return level_flag_cached(g, v, l, is_inventory_item, p);
 }
 
-[[nodiscard]] auto level_is_item_droppable_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_droppable_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_item_droppable, p);
+  return level_flag_cached(g, v, l, is_droppable, p);
 }
 
-[[nodiscard]] auto level_is_able_to_be_equipped_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_equippable_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_able_to_be_equipped, p);
+  return level_flag_cached(g, v, l, is_equippable, p);
 }
 
 [[nodiscard]] auto level_is_item_mergeable_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
@@ -524,10 +524,10 @@
   return level_flag_cached(g, v, l, is_lava, p);
 }
 
-[[nodiscard]] auto level_is_item_consumable_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_usable_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_item_consumable, p);
+  return level_flag_cached(g, v, l, is_usable, p);
 }
 
 [[nodiscard]] auto level_is_level_curr_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
@@ -956,16 +956,16 @@
   return level_flag_cached(g, v, l, is_unused20, p);
 }
 
-[[nodiscard]] auto level_is_unused21_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_able_to_throw_items_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused21, p);
+  return level_flag_cached(g, v, l, is_able_to_throw_items, p);
 }
 
-[[nodiscard]] auto level_is_unused22_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_throwable_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused22, p);
+  return level_flag_cached(g, v, l, is_throwable, p);
 }
 
 [[nodiscard]] auto level_is_described_when_killed_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
@@ -1004,10 +1004,10 @@
   return level_flag_cached(g, v, l, is_able_to_fire_weapons, p);
 }
 
-[[nodiscard]] auto level_is_able_to_be_wielded_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_wieldable_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_able_to_be_wielded, p);
+  return level_flag_cached(g, v, l, wieldable, p);
 }
 
 [[nodiscard]] auto level_is_unused3_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

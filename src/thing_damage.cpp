@@ -46,6 +46,9 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
     }
 
     switch (e.event_type) {
+      case THING_EVENT_THROWN : //
+        topcon(UI_WARNING_FMT_STR "You are thrown by %s!" UI_RESET_FMT, by_the_thing.c_str());
+        break;
       case THING_EVENT_SHOVED : //
         topcon(UI_WARNING_FMT_STR "You are shoved by %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
@@ -81,6 +84,7 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
         }
         break;
       case THING_EVENT_NONE :             [[fallthrough]];
+      case THING_EVENT_USED :             [[fallthrough]];
       case THING_EVENT_OPEN :             [[fallthrough]];
       case THING_EVENT_THE_END :          [[fallthrough]];
       case THING_EVENT_LIFESPAN_EXPIRED : [[fallthrough]];
@@ -96,6 +100,9 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
     }
   } else {
     switch (e.event_type) {
+      case THING_EVENT_THROWN : //
+        topcon(UI_WARNING_FMT_STR "You took %d damage from being thrown!" UI_RESET_FMT, e.damage);
+        break;
       case THING_EVENT_FALL : //
         topcon(UI_WARNING_FMT_STR "You took %d damage from falling." UI_RESET_FMT, e.damage);
         break;
@@ -125,6 +132,7 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
         break;
       case THING_EVENT_NONE :             //
       case THING_EVENT_OPEN :             //
+      case THING_EVENT_USED :             //
       case THING_EVENT_LIFESPAN_EXPIRED : //
       case THING_EVENT_THE_END :          //
       case THING_EVENT_CARRIED :          //
@@ -156,6 +164,9 @@ static void thing_damage_by_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
     auto by_player            = thing_name_long(g, v, l, the_player);
 
     switch (e.event_type) {
+      case THING_EVENT_THROWN : //
+        topcon("%s is thrown by %s.", the_thing_name_long.c_str(), by_player.c_str());
+        break;
       case THING_EVENT_SHOVED : //
         topcon("%s is shoved by %s.", the_thing_name_long.c_str(), by_player.c_str());
         break;
@@ -200,6 +211,7 @@ static void thing_damage_by_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
         break;
       case THING_EVENT_NONE :             [[fallthrough]];
       case THING_EVENT_OPEN :             [[fallthrough]];
+      case THING_EVENT_USED :             [[fallthrough]];
       case THING_EVENT_LIFESPAN_EXPIRED : [[fallthrough]];
       case THING_EVENT_FALL :             [[fallthrough]];
       case THING_EVENT_THE_END :          [[fallthrough]];
@@ -358,19 +370,17 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
     // Damage type specifics
     //
     switch (e.event_type) {
-      case THING_EVENT_NONE : //
-        break;
-      case THING_EVENT_LIFESPAN_EXPIRED : //
-        break;
-      case THING_EVENT_FALL : //
-        break;
-      case THING_EVENT_SHOVED : //
-        break;
-      case THING_EVENT_CRUSH : //
-        break;
-      case THING_EVENT_MELEE_DAMAGE : //
-        break;
-      case THING_EVENT_HEAT_DAMAGE : //
+      case THING_EVENT_NONE :             [[fallthrough]];
+      case THING_EVENT_LIGHT_DAMAGE :     [[fallthrough]];
+      case THING_EVENT_EXPLOSION_DAMAGE : [[fallthrough]];
+      case THING_EVENT_USED :             [[fallthrough]];
+      case THING_EVENT_LIFESPAN_EXPIRED : [[fallthrough]];
+      case THING_EVENT_FALL :             [[fallthrough]];
+      case THING_EVENT_THROWN :           [[fallthrough]];
+      case THING_EVENT_SHOVED :           [[fallthrough]];
+      case THING_EVENT_CRUSH :            [[fallthrough]];
+      case THING_EVENT_MELEE_DAMAGE :     break;
+      case THING_EVENT_HEAT_DAMAGE :
         {
           auto temp_burn = tp_temperature_burns_at_get(tp);
           if ((temp_burn != 0) && (thing_temperature(me) > temp_burn)) {
@@ -382,9 +392,7 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
               }
             }
           }
-        }
 
-        {
           auto temp_melt = tp_temperature_melts_at_get(tp);
           if ((temp_melt != 0) && (thing_temperature(me) > temp_melt)) {
             thing_melt(g, v, l, me);
@@ -392,38 +400,38 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
         }
         break;
       case THING_EVENT_FIRE_DAMAGE :
-        if (level_is_fire(g, v, l, thing_at(me)) == nullptr) {
-          if (level_is_flammable(g, v, l, thing_at(me)) != nullptr) {
-            THING_DBG(me, "spawn flames as tile is flammable");
-            TRACE_INDENT();
-            (void) thing_spawn(g, v, l, tp_first(is_fire), me);
-          } else if (thing_is_combustible(me)) {
-            THING_DBG(me, "spawn flames as thing is combustible");
-            TRACE_INDENT();
-            (void) thing_spawn(g, v, l, tp_first(is_fire), me);
+        {
+          if (level_is_fire(g, v, l, thing_at(me)) == nullptr) {
+            if (level_is_flammable(g, v, l, thing_at(me)) != nullptr) {
+              THING_DBG(me, "spawn flames as tile is flammable");
+              TRACE_INDENT();
+              (void) thing_spawn(g, v, l, tp_first(is_fire), me);
+            } else if (thing_is_combustible(me)) {
+              THING_DBG(me, "spawn flames as thing is combustible");
+              TRACE_INDENT();
+              (void) thing_spawn(g, v, l, tp_first(is_fire), me);
+            }
           }
-        }
 
-        if (level_is_water(g, v, l, thing_at(me)) != nullptr) {
+          if (level_is_water(g, v, l, thing_at(me)) != nullptr) {
+            if (level_is_steam(g, v, l, thing_at(me)) == nullptr) {
+              THING_DBG(me, "spawn steam over water due to fire damage");
+              TRACE_INDENT();
+              (void) thing_spawn(g, v, l, tp_first(is_steam), me);
+            }
+          }
+
+          thing_is_burning_set(g, v, l, me);
+        }
+        break;
+      case THING_EVENT_WATER_DAMAGE :
+        {
           if (level_is_steam(g, v, l, thing_at(me)) == nullptr) {
-            THING_DBG(me, "spawn steam over water due to fire damage");
+            THING_DBG(me, "spawn steam due to water damage");
             TRACE_INDENT();
             (void) thing_spawn(g, v, l, tp_first(is_steam), me);
           }
         }
-
-        thing_is_burning_set(g, v, l, me);
-        break;
-      case THING_EVENT_WATER_DAMAGE : //
-        if (level_is_steam(g, v, l, thing_at(me)) == nullptr) {
-          THING_DBG(me, "spawn steam due to water damage");
-          TRACE_INDENT();
-          (void) thing_spawn(g, v, l, tp_first(is_steam), me);
-        }
-        break;
-      case THING_EVENT_LIGHT_DAMAGE : //
-        break;
-      case THING_EVENT_EXPLOSION_DAMAGE : //
         break;
       case THING_EVENT_OPEN :           [[fallthrough]];
       case THING_EVENT_CARRIED :        [[fallthrough]];
@@ -446,19 +454,15 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
     // Damage type specifics
     //
     switch (e.event_type) {
-      case THING_EVENT_NONE : //
-        break;
-      case THING_EVENT_LIFESPAN_EXPIRED : //
-        break;
-      case THING_EVENT_FALL : //
-        break;
-      case THING_EVENT_SHOVED : //
-        break;
-      case THING_EVENT_CRUSH : //
-        break;
-      case THING_EVENT_MELEE_DAMAGE : //
-        break;
-      case THING_EVENT_HEAT_DAMAGE : [[fallthrough]];
+      case THING_EVENT_NONE :             [[fallthrough]];
+      case THING_EVENT_USED :             [[fallthrough]];
+      case THING_EVENT_LIFESPAN_EXPIRED : [[fallthrough]];
+      case THING_EVENT_FALL :             [[fallthrough]];
+      case THING_EVENT_THROWN :           [[fallthrough]];
+      case THING_EVENT_SHOVED :           [[fallthrough]];
+      case THING_EVENT_CRUSH :            [[fallthrough]];
+      case THING_EVENT_MELEE_DAMAGE :     break;
+      case THING_EVENT_HEAT_DAMAGE :      [[fallthrough]];
       case THING_EVENT_FIRE_DAMAGE :
         //
         // Needed to allow things like projectiles to heat targets

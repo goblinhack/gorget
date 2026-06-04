@@ -483,16 +483,16 @@
   return level_count(g, v, l, is_inventory_item, p);
 }
 
-[[nodiscard]] auto level_count_is_item_droppable(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_droppable(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_item_droppable, p);
+  return level_count(g, v, l, is_droppable, p);
 }
 
-[[nodiscard]] auto level_count_is_able_to_be_equipped(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_equippable(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_able_to_be_equipped, p);
+  return level_count(g, v, l, is_equippable, p);
 }
 
 [[nodiscard]] auto level_count_is_item_mergeable(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
@@ -525,10 +525,10 @@
   return level_count(g, v, l, is_lava, p);
 }
 
-[[nodiscard]] auto level_count_is_item_consumable(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_usable(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_item_consumable, p);
+  return level_count(g, v, l, is_usable, p);
 }
 
 [[nodiscard]] auto level_count_is_level_curr(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
@@ -957,16 +957,16 @@
   return level_count(g, v, l, is_unused20, p);
 }
 
-[[nodiscard]] auto level_count_is_unused21(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_able_to_throw_items(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused21, p);
+  return level_count(g, v, l, is_able_to_throw_items, p);
 }
 
-[[nodiscard]] auto level_count_is_unused22(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_throwable(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused22, p);
+  return level_count(g, v, l, is_throwable, p);
 }
 
 [[nodiscard]] auto level_count_is_described_when_killed(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
@@ -1005,10 +1005,10 @@
   return level_count(g, v, l, is_able_to_fire_weapons, p);
 }
 
-[[nodiscard]] auto level_count_is_able_to_be_wielded(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_wieldable(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_able_to_be_wielded, p);
+  return level_count(g, v, l, wieldable, p);
 }
 
 [[nodiscard]] auto level_count_is_unused3(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t

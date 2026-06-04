@@ -156,6 +156,12 @@
     case THING_EVENT_SPAWNED : //
       s += "spawned";
       break;
+    case THING_EVENT_USED : //
+      s += "used";
+      break;
+    case THING_EVENT_THROWN : //
+      s += "thrown";
+      break;
     case THING_EVENT_ENUM_MAX : break;
   }
 

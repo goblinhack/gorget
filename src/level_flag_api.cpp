@@ -482,16 +482,16 @@
   return level_flag(g, v, l, is_inventory_item, p, me);
 }
 
-[[nodiscard]] auto level_is_item_droppable(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_droppable(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_item_droppable, p, me);
+  return level_flag(g, v, l, is_droppable, p, me);
 }
 
-[[nodiscard]] auto level_is_able_to_be_equipped(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_equippable(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_able_to_be_equipped, p, me);
+  return level_flag(g, v, l, is_equippable, p, me);
 }
 
 [[nodiscard]] auto level_is_item_mergeable(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
@@ -524,10 +524,10 @@
   return level_flag(g, v, l, is_lava, p, me);
 }
 
-[[nodiscard]] auto level_is_item_consumable(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_usable(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_item_consumable, p, me);
+  return level_flag(g, v, l, is_usable, p, me);
 }
 
 [[nodiscard]] auto level_is_level_curr(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
@@ -956,16 +956,16 @@
   return level_flag(g, v, l, is_unused20, p, me);
 }
 
-[[nodiscard]] auto level_is_unused21(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_able_to_throw_items(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused21, p, me);
+  return level_flag(g, v, l, is_able_to_throw_items, p, me);
 }
 
-[[nodiscard]] auto level_is_unused22(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_throwable(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused22, p, me);
+  return level_flag(g, v, l, is_throwable, p, me);
 }
 
 [[nodiscard]] auto level_is_described_when_killed(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
@@ -1004,10 +1004,10 @@
   return level_flag(g, v, l, is_able_to_fire_weapons, p, me);
 }
 
-[[nodiscard]] auto level_is_able_to_be_wielded(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_wieldable(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_able_to_be_wielded, p, me);
+  return level_flag(g, v, l, wieldable, p, me);
 }
 
 [[nodiscard]] auto level_is_unused3(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp

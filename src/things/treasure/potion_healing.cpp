@@ -12,35 +12,35 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
-static auto tp_potion_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
+static auto tp_potion_healing_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
   TRACE();
 
-  return "potion";
+  return "potion, healing";
 }
 
-static auto tp_potion_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
+static auto tp_potion_healing_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
   TRACE();
 
   return UI_INFO1_FMT_STR "Consume this potion to restore your health. Other problems in life may remain.";
 }
 
-[[nodiscard]] static auto tp_potion_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp collector) -> bool
+[[nodiscard]] static auto tp_potion_healing_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp collector) -> bool
 {
   TRACE();
 
   return true;
 }
 
-[[nodiscard]] static auto tp_potion_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp dropper) -> bool
+[[nodiscard]] static auto tp_potion_healing_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp dropper) -> bool
 {
   TRACE();
 
   return true;
 }
 
-[[nodiscard]] static auto tp_potion_on_carry_success(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp collector) -> bool
+[[nodiscard]] static auto tp_potion_healing_on_carry_success(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp collector) -> bool
 {
   TRACE();
 
@@ -51,7 +51,7 @@ static auto tp_potion_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std:
   return true;
 }
 
-[[nodiscard]] static auto tp_potion_on_drop_success(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp dropper) -> bool
+[[nodiscard]] static auto tp_potion_healing_on_drop_success(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp dropper) -> bool
 {
   TRACE();
 
@@ -62,20 +62,53 @@ static auto tp_potion_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std:
   return true;
 }
 
-[[nodiscard]] auto tp_load_potion() -> bool
+static void tp_potion_healing_on_thrown(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE();
 
-  auto *tp   = tp_load("potion"); // keep as string for scripts
+  //
+  // Soft landing?
+  //
+  if ((level_is_chasm(g, v, l, thing_at(t)) != nullptr) || // newline
+      (level_is_water(g, v, l, thing_at(t)) != nullptr) || // newline
+      (level_is_foliage(g, v, l, thing_at(t)) != nullptr)) {
+    return;
+  }
+
+  ThingEvent e {
+      .reason     = "by being thrown",  //
+      .event_type = THING_EVENT_THROWN, //
+  };
+
+  THING_DBG(t, "dead due to being thrown");
+  TRACE_INDENT();
+
+  thing_dead(g, v, l, t, e);
+}
+
+static void tp_potion_healing_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
+{
+  TRACE();
+
+  (void) thing_spawn(g, v, l, tp_first(is_water), thing_at(t));
+}
+
+[[nodiscard]] auto tp_load_potion_healing() -> bool
+{
+  TRACE();
+
+  auto *tp   = tp_load("potion_healing"); // keep as string for scripts
   auto  name = tp_name(tp);
 
   // begin sort marker1 {
-  thing_description_set(tp, tp_potion_description_get);
-  thing_detail_set(tp, tp_potion_detail_get);
-  thing_on_carry_request_set(tp, tp_potion_on_carry_request);
-  thing_on_carry_success_set(tp, tp_potion_on_carry_success);
-  thing_on_drop_request_set(tp, tp_potion_on_drop_request);
-  thing_on_drop_success_set(tp, tp_potion_on_drop_success);
+  thing_description_set(tp, tp_potion_healing_description_get);
+  thing_detail_set(tp, tp_potion_healing_detail_get);
+  thing_on_carry_request_set(tp, tp_potion_healing_on_carry_request);
+  thing_on_carry_success_set(tp, tp_potion_healing_on_carry_success);
+  thing_on_death_set(tp, tp_potion_healing_on_death);
+  thing_on_drop_request_set(tp, tp_potion_healing_on_drop_request);
+  thing_on_drop_success_set(tp, tp_potion_healing_on_drop_success);
+  thing_on_thrown_set(tp, tp_potion_healing_on_thrown);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // roll max to continue burning
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
@@ -88,10 +121,9 @@ static auto tp_potion_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std:
   tp_flag_set(tp, is_collision_circle_small);
   tp_flag_set(tp, is_combustible); // will continue to burn once on fire
   tp_flag_set(tp, is_described_cursor);
+  tp_flag_set(tp, is_droppable);
   tp_flag_set(tp, is_glass);
   tp_flag_set(tp, is_inventory_item);
-  tp_flag_set(tp, is_item_consumable);
-  tp_flag_set(tp, is_item_droppable);
   tp_flag_set(tp, is_item_mergeable);
   tp_flag_set(tp, is_item);
   tp_flag_set(tp, is_light_source, 2);
@@ -99,16 +131,18 @@ static auto tp_potion_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std:
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
+  tp_flag_set(tp, is_throwable);
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_treasure);
+  tp_flag_set(tp, is_usable);
   tp_health_set(tp, "1d4");
   tp_is_immune_add(tp, THING_EVENT_WATER_DAMAGE);
-  tp_light_color_set(tp, "purple");
-  tp_name_a_or_an_set(tp, "a potion");
-  tp_name_apostrophize_set(tp, "potions'");
-  tp_name_long_set(tp, "potion");
-  tp_name_pluralize_set(tp, "potions");
-  tp_name_short_set(tp, "potion");
+  tp_light_color_set(tp, "white");
+  tp_name_a_or_an_set(tp, "a potion of healing");
+  tp_name_apostrophize_set(tp, "potion of healing's");
+  tp_name_long_set(tp, "potion of healing");
+  tp_name_pluralize_set(tp, "potions of healing");
+  tp_name_short_set(tp, "potion, healing");
   tp_priority_set(tp, THING_PRIORITY_OBJECT);
   tp_rarity_set(tp, THING_RARITY_COMMON);
   tp_temperature_burns_at_set(tp, 30);  // celsius

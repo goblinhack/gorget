@@ -267,6 +267,7 @@ public:
   thing_on_attacking_t          on_attacking          = {};
   thing_on_moved_t              on_moved              = {};
   thing_on_teleported_t         on_teleported         = {};
+  thing_on_thrown_t             on_thrown             = {};
   thing_on_shoved_t             on_shoved             = {};
   thing_on_jump_end_t           on_jump_end           = {};
   thing_on_jump_begin_t         on_jump_begin         = {};

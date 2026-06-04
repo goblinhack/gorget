@@ -638,8 +638,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_inventory_is_empty(Gamep g, Levelsp v, Levelp l, Thingp carrier) -> bool;
 [[nodiscard]] auto thing_inventory_item_mergeable(Gamep g, Levelsp v, Levelp l, Thingp a, Thingp b) -> bool;
 [[nodiscard]] auto thing_inventory_remove(Gamep g, Levelsp v, Levelp l, Thingp drop_item, Thingp carrier) -> bool;
-[[nodiscard]] auto thing_is_able_to_be_equipped(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_able_to_be_wielded(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_collect_items(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_collect_keys(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_crush_grass(Thingp t) -> bool;
@@ -653,6 +651,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_able_to_move_through_walls(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_open_things(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_shove(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_able_to_throw_items(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_walk_through_walls(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_wield_items(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_always_hot(Thingp me) -> bool;
@@ -735,11 +734,13 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_door_locked(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_door_secret(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_door_unlocked(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_droppable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_dungeon_entrance(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_effect_attack(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_effect_blood(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_effect(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_entrance(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_equippable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_ethereal(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_exit(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_explosion(Thingp t) -> bool;
@@ -768,8 +769,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_indestructible(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_insectoid(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_inventory_item(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_item_consumable(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_item_droppable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_item_mergeable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_item(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_key(Thingp t) -> bool;
@@ -837,6 +836,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_teleport_blocked(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_teleport(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_teleporting(Thingp me) -> bool;
+[[nodiscard]] auto thing_is_throwable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_tick_end_delay(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_tickable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_tiled(Thingp t) -> bool;
@@ -857,8 +857,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused19(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused2(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused20(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused21(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused22(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused3(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused4(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused5(Thingp t) -> bool;
@@ -866,6 +864,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused7(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused8(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused9(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_usable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_vault(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_vision_180_degrees(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_vision_360_degrees(Thingp t) -> bool;
@@ -1057,6 +1056,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_weight_set(Gamep g, Levelsp v, Levelp l, Thingp t, uint32_t val) -> int;
 [[nodiscard]] auto thing_weight(Thingp t) -> int;
 [[nodiscard]] auto thing_wield(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, ThingEvent &e) -> bool;
+[[nodiscard]] auto thing_wieldable(Thingp t) -> bool;
 [[nodiscard]] auto thing_wielder(Gamep g, Levelsp v, Levelp l, Thingp t) -> Thingp;
 [[nodiscard]] auto thing_wielding(Gamep g, Levelsp v, Levelp l, Thingp me) -> Thingp;
 [[nodiscard]] auto to_death_reason_string(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e) -> std::string;
