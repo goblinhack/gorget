@@ -95,7 +95,7 @@ static void tp_potion_incineration_spawn_explosion(Gamep g, Levelsp v, Levelp l,
   }
 }
 
-static void tp_potion_incinertaion_on_thrown(Gamep g, Levelsp v, Levelp l, Thingp t)
+static void tp_potion_incinertaion_on_thrown(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp thrower)
 {
   TRACE();
 
@@ -118,9 +118,22 @@ static void tp_potion_incinertaion_on_thrown(Gamep g, Levelsp v, Levelp l, Thing
   thing_dead(g, v, l, t, e);
 }
 
+static bool tp_potion_incineration_on_use(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp user)
+{
+  TRACE();
+
+  return true;
+}
+
 static void tp_potion_incineration_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 {
   TRACE();
+
+  if ((e.event_type == THING_EVENT_CARRIED) ||        //
+      (e.event_type == THING_EVENT_CARRIED_MERGED) || //
+      (e.event_type == THING_EVENT_USED)) {
+    return;
+  }
 
   tp_potion_incineration_spawn_explosion(g, v, l, t);
 }
@@ -138,6 +151,7 @@ static void tp_potion_incineration_on_death(Gamep g, Levelsp v, Levelp l, Thingp
   thing_on_carry_request_set(tp, tp_potion_incineration_on_carry_request);
   thing_on_carry_success_set(tp, tp_potion_incineration_on_carry_success);
   thing_on_death_set(tp, tp_potion_incineration_on_death);
+  thing_on_use_set(tp, tp_potion_incineration_on_use);
   thing_on_drop_request_set(tp, tp_potion_incineration_on_drop_request);
   thing_on_drop_success_set(tp, tp_potion_incineration_on_drop_success);
   thing_on_thrown_set(tp, tp_potion_incinertaion_on_thrown);

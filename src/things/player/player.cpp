@@ -293,18 +293,24 @@ static void tp_player_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
     return;
   }
 
-  auto weapon_tp = tp_find_mand("staff_fire");
-  if (weapon_tp) {
-    auto weapon = thing_spawn(g, v, l, weapon_tp, thing_at(me));
-    if (weapon) {
-      ThingEvent e {
-          .reason     = "spawned",           //
-          .event_type = THING_EVENT_SPAWNED, //
-          .source     = me,                  //
-      };
-      if (thing_carry(g, v, l, me, weapon, e)) {
-        if (! thing_wield(g, v, l, me, weapon, e)) {
-          thing_err(me, "failed to auto wield");
+  static std::initializer_list< std::string > carry = {
+      "staff_fire",
+      "potion_healing",
+      "potion_healing",
+  };
+
+  for (auto tp : carry) {
+    auto weapon_tp = tp_find_mand(tp);
+    if (weapon_tp) {
+      auto weapon = thing_spawn(g, v, l, weapon_tp, thing_at(me));
+      if (weapon) {
+        ThingEvent e {
+            .reason     = "spawned",           //
+            .event_type = THING_EVENT_SPAWNED, //
+            .source     = me,                  //
+        };
+        if (! thing_carry(g, v, l, me, weapon, e)) {
+          thing_err(me, "failed to carry");
         }
       }
     }

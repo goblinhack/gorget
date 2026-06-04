@@ -18,16 +18,16 @@ static auto thing_carry_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp c
 {
   TRACE();
 
-  if (! thing_is_item(item)) {
-    return false;
-  }
-
   if (! thing_is_able_to_collect_items(carrier)) {
     return false;
   }
 
+  if (! thing_is_item(item)) {
+    return false;
+  }
+
   if (! thing_is_player(carrier) && ! thing_is_monst(carrier)) {
-    thing_err(carrier, "unexpected thing for %s", __FUNCTION__);
+    thing_err(carrier, "unexpected thing, %s", __FUNCTION__);
     return false;
   }
 
@@ -71,15 +71,17 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp dr
   TRACE();
 
   if (! thing_is_item(item)) {
+    thing_err(dropper, "unexpected non thing, %s", __FUNCTION__);
     return false;
   }
 
   if (! thing_is_carried(item)) {
+    thing_err(dropper, "unexpected uncarried thing, %s", __FUNCTION__);
     return false;
   }
 
   if (! thing_is_player(dropper) && ! thing_is_monst(dropper)) {
-    thing_err(dropper, "unexpected thing for %s", __FUNCTION__);
+    thing_err(dropper, "unexpected thing, %s", __FUNCTION__);
     return false;
   }
 
@@ -167,6 +169,9 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp dr
     //
     // Try to collect
     //
+    THING_DBG(item, "carry request");
+    TRACE_INDENT();
+
     if (! thing_on_carry_request(g, v, l, item, carrier)) {
       //
       // Collect failed
@@ -201,6 +206,9 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp dr
     //
     // Try to drop
     //
+    THING_DBG(item, "drop request");
+    TRACE_INDENT();
+
     if (! thing_on_drop_request(g, v, l, item, carrier)) {
       //
       // Drop failed
@@ -219,7 +227,14 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp dr
       //
       // Success
       //
-      (void) thing_on_carry_success(g, v, l, item, carrier);
+      (void) thing_on_drop_success(g, v, l, item, carrier);
+
+      //
+      // If counts remain, keep the item as carried
+      //
+      if (thing_inventory_get_item_count(g, v, l, item, carrier)) {
+        item->_is_carried = old_value;
+      }
     } else {
       //
       // Remove failed

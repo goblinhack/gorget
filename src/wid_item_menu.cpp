@@ -185,6 +185,17 @@ static Thingp g_item;
     return false;
   }
 
+  ThingEvent e {
+      .reason     = "user used item",           //
+      .event_type = THING_EVENT_USER_INITIATED, //
+      .source     = player,                     //
+  };
+
+  if (! thing_use(g, v, l, player, item, e)) {
+    (void) sound_play(g, "error");
+    return false;
+  }
+
   (void) wid_item_menu_destroy();
   (void) wid_item_menu_go_back(g);
   return true;
@@ -338,6 +349,37 @@ static Thingp g_item;
   return true;
 }
 
+[[nodiscard]] static auto wid_item_menu_wield_toggle(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+{
+  TRACE();
+
+  auto *v = game_levels_get(g);
+  if (v == nullptr) {
+    return false;
+  }
+
+  auto *l = game_level_get(g, v);
+  if (l == nullptr) {
+    return false;
+  }
+
+  auto *player = thing_player(g);
+  if (player == nullptr) [[unlikely]] {
+    return false;
+  }
+
+  auto *item = g_item;
+  if (item == nullptr) {
+    return false;
+  }
+
+  if (thing_is_wielded(item)) {
+    return wid_item_menu_unwield(g, w, x, y, button);
+  } else {
+    return wid_item_menu_wield(g, w, x, y, button);
+  }
+}
+
 [[nodiscard]] static auto wid_item_menu_back(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
   TRACE();
@@ -373,6 +415,11 @@ static Thingp g_item;
             TRACE();
             auto c = wid_event_to_char(key);
             switch (c) {
+              case 'u' :
+              case 'U' :
+                (void) sound_play(g, "keypress");
+                (void) wid_item_menu_use(g, nullptr, 0, 0, 0);
+                return true;
               case 't' :
               case 'T' :
                 (void) sound_play(g, "keypress");
@@ -386,12 +433,7 @@ static Thingp g_item;
               case 'w' :
               case 'W' :
                 (void) sound_play(g, "keypress");
-                (void) wid_item_menu_wield(g, nullptr, 0, 0, 0);
-                return true;
-              case 'u' :
-              case 'U' :
-                (void) sound_play(g, "keypress");
-                (void) wid_item_menu_unwield(g, nullptr, 0, 0, 0);
+                (void) wid_item_menu_wield_toggle(g, nullptr, 0, 0, 0);
                 return true;
               case 'e' :
               case 'E' :
@@ -520,7 +562,7 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item, bool from_inventory)
       spoint const br(button_width, y_at + box_height);
       wid_set_on_mouse_up(w, wid_item_menu_unwield);
       wid_set_pos(w, tl, br);
-      wid_set_text(w, UI_HIGHLIGHT_FMT_STR "U" UI_FMT_STR "nwield");
+      wid_set_text(w, "Unwield (" UI_HIGHLIGHT_FMT_STR "W" UI_FMT_STR ")");
       y_at += box_step;
     } else {
       TRACE();
@@ -550,7 +592,7 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item, bool from_inventory)
 
     wid_set_on_mouse_up(w, wid_item_menu_throw);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, UI_HIGHLIGHT_FMT_STR "T" UI_FMT_STR "row");
+    wid_set_text(w, UI_HIGHLIGHT_FMT_STR "T" UI_FMT_STR "hrow");
     y_at += box_step;
   }
 

@@ -72,6 +72,10 @@ using thing_on_use_weapon_request_t = Tpp (*)(Gamep, Levelsp, Levelp, Thingp me,
 void               thing_on_use_weapon_request_set(Tpp tp, thing_on_use_weapon_request_t callback);
 [[nodiscard]] auto thing_on_use_weapon_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user) -> Tpp;
 
+using thing_on_use_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp user);
+void               thing_on_use_set(Tpp tp, thing_on_use_t callback);
+[[nodiscard]] auto thing_on_use(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user) -> bool;
+
 using thing_on_wield_request_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp carrier);
 void               thing_on_wield_request_set(Tpp tp, thing_on_wield_request_t callback);
 [[nodiscard]] auto thing_on_wield_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp wielder) -> bool;
@@ -120,9 +124,9 @@ using thing_on_teleported_t = void (*)(Gamep, Levelsp, Levelp, Thingp me);
 void thing_on_teleported_set(Tpp tp, thing_on_teleported_t callback);
 void thing_on_teleported(Gamep g, Levelsp v, Levelp l, Thingp me);
 
-using thing_on_thrown_t = void (*)(Gamep, Levelsp, Levelp, Thingp me);
+using thing_on_thrown_t = void (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp thrower);
 void thing_on_thrown_set(Tpp tp, thing_on_thrown_t callback);
-void thing_on_thrown(Gamep g, Levelsp v, Levelp l, Thingp me);
+void thing_on_thrown(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp thrower);
 
 using thing_on_shoved_t = void (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp shover);
 void thing_on_shoved_set(Tpp tp, thing_on_shoved_t callback);

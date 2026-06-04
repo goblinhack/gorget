@@ -52,6 +52,7 @@
 //
 [[nodiscard]] auto thing_inventory_add(Gamep g, Levelsp v, Levelp l, Thingp new_item, Thingp carrier) -> bool
 {
+  THING_DBG(new_item, "inventory add");
   TRACE();
 
   if (! thing_is_player(carrier) && ! thing_is_monst(carrier)) {
@@ -123,6 +124,7 @@
 //
 [[nodiscard]] auto thing_inventory_remove(Gamep g, Levelsp v, Levelp l, Thingp drop_item, Thingp carrier) -> bool
 {
+  THING_DBG(drop_item, "inventory remove");
   TRACE();
 
   if (! thing_is_player(carrier) && ! thing_is_monst(carrier)) {
@@ -152,17 +154,56 @@
       continue;
     }
 
+    THING_DBG(item, "slot %d: count %d", _n_, slot->count);
+    TRACE_INDENT();
+
     slot->count--;
 
     if (slot->count > 0) {
-      continue;
+      THING_DBG(item, "item count remains");
+      return true;
     }
 
     memset(slot, 0, sizeof(*slot));
     return true;
   }
 
-  return true;
+  return false;
+}
+
+//
+// Get a single items slot count
+//
+[[nodiscard]] auto thing_inventory_get_item_count(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp carrier) -> int
+{
+  TRACE();
+
+  if (item == nullptr) {
+    return -1;
+  }
+
+  auto *ext_struct = thing_ext_struct(g, carrier);
+  if (ext_struct == nullptr) {
+    return -1;
+  }
+
+  //
+  // Look for the thing
+  //
+  FOR_ALL_INVENTORY_SLOTS(g, v, l, carrier, slot, an_item)
+  {
+    if (item == nullptr) {
+      continue;
+    }
+
+    if (an_item != item) {
+      continue;
+    }
+
+    return slot->count;
+  }
+
+  return -1;
 }
 
 //
