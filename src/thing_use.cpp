@@ -92,6 +92,10 @@ static auto thing_use_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp use
     new_event.event_type = THING_EVENT_USED;
 
     (void) thing_drop(g, v, l, user, item, new_event);
+
+    if (thing_inventory_get_item_count(g, v, l, item, user) == -1) {
+      thing_dead(g, v, l, item, new_event);
+    }
   }
 
   if (thing_is_player(user)) {
