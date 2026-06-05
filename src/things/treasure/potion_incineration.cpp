@@ -128,6 +128,11 @@ static bool tp_potion_incineration_on_use(Gamep g, Levelsp v, Levelp l, Thingp t
 {
   TRACE();
 
+  if (thing_is_player(user)) {
+    (void) thing_spawn(g, v, l, tp_first(is_fire), thing_at(user));
+    topcon("Flames engulf you!");
+  }
+
   return true;
 }
 

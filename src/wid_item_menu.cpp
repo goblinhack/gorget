@@ -197,7 +197,12 @@ static Thingp g_item;
   }
 
   (void) wid_item_menu_destroy();
-  (void) wid_item_menu_go_back(g);
+
+  //
+  // Just go back to playing
+  //
+  game_state_change(g, STATE_PLAYING, "close inventory");
+
   return true;
 }
 
@@ -232,7 +237,12 @@ static Thingp g_item;
   }
 
   (void) wid_item_menu_destroy();
-  (void) wid_item_menu_go_back(g);
+
+  //
+  // Just go back to playing
+  //
+  game_state_change(g, STATE_PLAYING, "close inventory");
+
   return true;
 }
 
@@ -241,7 +251,12 @@ static Thingp g_item;
   TRACE();
   topcon("TODO equip");
   (void) wid_item_menu_destroy();
-  (void) wid_item_menu_go_back(g);
+
+  //
+  // Just go back to playing
+  //
+  game_state_change(g, STATE_PLAYING, "close inventory");
+
   return true;
 }
 
@@ -293,7 +308,12 @@ static Thingp g_item;
   }
 
   (void) wid_item_menu_destroy();
-  (void) wid_item_menu_go_back(g);
+
+  //
+  // Just go back to playing
+  //
+  game_state_change(g, STATE_PLAYING, "close inventory");
+
   return true;
 }
 
@@ -345,7 +365,12 @@ static Thingp g_item;
   }
 
   (void) wid_item_menu_destroy();
-  (void) wid_item_menu_go_back(g);
+
+  //
+  // Just go back to playing
+  //
+  game_state_change(g, STATE_PLAYING, "close inventory");
+
   return true;
 }
 

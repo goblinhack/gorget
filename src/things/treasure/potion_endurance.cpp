@@ -99,10 +99,12 @@ static bool tp_potion_endurance_on_use(Gamep g, Levelsp v, Levelp l, Thingp t, T
   if (old_stamina == new_stamina) {
     if (thing_is_player(user)) {
       topcon("That potion seemed to have no effect.");
+      thing_sound_play(g, v, l, user, "error");
     }
   } else {
     if (thing_is_player(user)) {
       topcon("You feel invigorated.");
+      thing_sound_play(g, v, l, user, "bonus");
     }
   }
 

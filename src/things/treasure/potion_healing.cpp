@@ -99,10 +99,12 @@ static bool tp_potion_healing_on_use(Gamep g, Levelsp v, Levelp l, Thingp t, Thi
   if (old_health == new_health) {
     if (thing_is_player(user)) {
       topcon("That potion seemed to have no effect.");
+      thing_sound_play(g, v, l, user, "error");
     }
   } else {
     if (thing_is_player(user)) {
       topcon("You feel your old evil self again.");
+      thing_sound_play(g, v, l, user, "bonus");
     }
   }
 

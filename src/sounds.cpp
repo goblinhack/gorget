@@ -22,6 +22,7 @@ void sounds_load(Gamep /*g*/)
   (void) sound_load(1.0F, "data/sounds/impacts/explosion.ogg", "explosion", 10 /* concurrent_max */);
   (void) sound_load(1.0F, "data/sounds/impacts/splash.ogg", "splash");
   (void) sound_load(1.0F, "data/sounds/interface/chest_open.ogg", "chest_open", 2);
+  (void) sound_load(1.0F, "data/sounds/interface/bonus.ogg", "bonus", 2);
   (void) sound_load(1.0F, "data/sounds/interface/door_open.ogg", "door_open", 2);
   (void) sound_load(1.0F, "data/sounds/interface/door_stone.ogg", "door_open_secret", 2);
   (void) sound_load(1.0F, "data/sounds/interface/item_collect.ogg", "item_collect", 2);
