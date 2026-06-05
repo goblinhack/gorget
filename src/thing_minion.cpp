@@ -147,7 +147,7 @@
   //
   // How far to look for a target?
   //
-  auto radius = thing_distance_minion_from_mob_max(me);
+  auto radius = thing_distance_minion_from_mob_max(g, v, l, me);
   if (radius == 0) {
     thing_err(me, "unexpected value for radius");
     return false;
@@ -206,7 +206,7 @@
     return true;
   }
 
-  if (distance(thing_at(mob), to) > thing_distance_minion_from_mob_max(me)) {
+  if (distance(thing_at(mob), to) > thing_distance_minion_from_mob_max(g, v, l, me)) {
     return false;
   }
 

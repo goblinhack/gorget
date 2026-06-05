@@ -1479,7 +1479,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_unused18) != 0;
 }
 
-[[nodiscard]] auto thing_is_unused19(Thingp t) -> bool
+[[nodiscard]] auto thing_is_tick_on_drop(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -1487,10 +1487,10 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused19) != 0;
+  return tp_flag(thing_tp(t), is_tick_on_drop) != 0;
 }
 
-[[nodiscard]] auto thing_is_unused20(Thingp t) -> bool
+[[nodiscard]] auto thing_is_tick_on_use(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -1498,7 +1498,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused20) != 0;
+  return tp_flag(thing_tp(t), is_tick_on_use) != 0;
 }
 
 [[nodiscard]] auto thing_is_able_to_throw_items(Thingp t) -> bool
@@ -3768,7 +3768,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_distance_avoid_target -= val;
 }
 
-[[nodiscard]] auto thing_minion_max(Thingp t) -> int
+[[nodiscard]] auto thing_minion_max(Gamep g, Levelsp v, Levelp l, Thingp t) -> int
 {
   TRACE_DEBUG();
 
@@ -3826,7 +3826,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_minion_max -= val;
 }
 
-[[nodiscard]] auto thing_fired_weapon_count_max(Thingp t) -> int
+[[nodiscard]] auto thing_fired_weapon_count_max(Gamep g, Levelsp v, Levelp l, Thingp t) -> int
 {
   TRACE_DEBUG();
 
@@ -3884,7 +3884,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_fired_weapon_count_max -= val;
 }
 
-[[nodiscard]] auto thing_distance_minion_from_mob_max(Thingp t) -> int
+[[nodiscard]] auto thing_distance_minion_from_mob_max(Gamep g, Levelsp v, Levelp l, Thingp t) -> int
 {
   TRACE_DEBUG();
 

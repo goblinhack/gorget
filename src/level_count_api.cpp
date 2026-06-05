@@ -939,10 +939,10 @@
   return level_count(g, v, l, is_unused18, p);
 }
 
-[[nodiscard]] auto level_count_is_unused19(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_tick_on_drop(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused19, p);
+  return level_count(g, v, l, is_tick_on_drop, p);
 }
 
 [[nodiscard]] auto level_count_is_unused2(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
@@ -951,10 +951,10 @@
   return level_count(g, v, l, is_unused2, p);
 }
 
-[[nodiscard]] auto level_count_is_unused20(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_tick_on_use(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused20, p);
+  return level_count(g, v, l, is_tick_on_use, p);
 }
 
 [[nodiscard]] auto level_count_is_able_to_throw_items(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t

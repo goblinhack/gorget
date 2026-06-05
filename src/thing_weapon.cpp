@@ -76,7 +76,7 @@
   //
   // Too many projectiles
   //
-  if (thing_fired_by_count_get(g, v, l, me) >= thing_fired_weapon_count_max(me)) {
+  if (thing_fired_by_count_get(g, v, l, me) >= thing_fired_weapon_count_max(g, v, l, me)) {
     THING_DBG(me, "trying to fire too many weapons");
     thing_dump_weapons(g, v, l, me);
 

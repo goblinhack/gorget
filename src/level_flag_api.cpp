@@ -938,10 +938,10 @@
   return level_flag(g, v, l, is_unused18, p, me);
 }
 
-[[nodiscard]] auto level_is_unused19(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_tick_on_drop(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused19, p, me);
+  return level_flag(g, v, l, is_tick_on_drop, p, me);
 }
 
 [[nodiscard]] auto level_is_unused2(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
@@ -950,10 +950,10 @@
   return level_flag(g, v, l, is_unused2, p, me);
 }
 
-[[nodiscard]] auto level_is_unused20(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_tick_on_use(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused20, p, me);
+  return level_flag(g, v, l, is_tick_on_use, p, me);
 }
 
 [[nodiscard]] auto level_is_able_to_throw_items(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp

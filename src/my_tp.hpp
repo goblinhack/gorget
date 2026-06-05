@@ -212,9 +212,9 @@
       list_macro(is_unused16, "is_unused16"),                                               /* newline */                                  \
       list_macro(is_unused17, "is_unused17"),                                               /* newline */                                  \
       list_macro(is_unused18, "is_unused18"),                                               /* newline */                                  \
-      list_macro(is_unused19, "is_unused19"),                                               /* newline */                                  \
+      list_macro(is_tick_on_drop, "is_tick_on_drop"),                                       /* newline */                                  \
       list_macro(is_unused2, "is_unused2"),                                                 /* newline */                                  \
-      list_macro(is_unused20, "is_unused20"),                                               /* newline */                                  \
+      list_macro(is_tick_on_use, "is_tick_on_use"),                                         /* newline */                                  \
       list_macro(is_able_to_throw_items, "is_able_to_throw_items"),                         /* newline */                                  \
       list_macro(is_throwable, "is_throwable"),                                             /* newline */                                  \
       list_macro(is_unused3, "is_unused3"),                                                 /* newline */                                  \
@@ -698,6 +698,8 @@ class Tp;
 [[nodiscard]] auto tp_is_teleport(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_throwable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_tick_end_delay(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_tick_on_drop(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_tick_on_use(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_tickable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_tiled(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_trap(Tpp tp) -> bool;
@@ -713,9 +715,7 @@ class Tp;
 [[nodiscard]] auto tp_is_unused16(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused17(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused18(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused19(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused2(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused20(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused3(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused4(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused5(Tpp tp) -> bool;

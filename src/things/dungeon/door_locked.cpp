@@ -27,7 +27,7 @@ static auto tp_door_locked_description_get(Gamep g, Levelsp v, Levelp l, Thingp 
   if (thing_is_dead(me)) {
     return "broken locked door";
   }
-  if (thing_health(me) < thing_health_max(me)) {
+  if (thing_health(g, v, l, me) < thing_health_max(g, v, l, me)) {
     return "damaged locked door";
   }
   return "locked door";
@@ -41,7 +41,7 @@ static auto tp_door_locked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l
     return nullptr;
   }
 
-  if (thing_health(t_maybe_null) < thing_health_max(t_maybe_null)) {
+  if (thing_health(g, v, l, t_maybe_null) < thing_health_max(g, v, l, t_maybe_null)) {
     if (thing_is_open(t_maybe_null)) {
       return door_locked_open_damaged;
     }
@@ -114,7 +114,7 @@ static auto tp_door_locked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l
   THING_DBG(me, "%s", __FUNCTION__);
   TRACE_INDENT();
 
-  if (thing_health(me) < thing_health_max(me)) {
+  if (thing_health(g, v, l, me) < thing_health_max(g, v, l, me)) {
     if (thing_is_player(opener)) {
       topcon("The locked door is damaged and won't open!");
     }

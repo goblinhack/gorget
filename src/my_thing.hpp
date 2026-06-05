@@ -600,11 +600,11 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_distance_avoid_target(Thingp t) -> int;
 [[nodiscard]] auto thing_distance_jump_decr(Gamep g, Levelsp v, Levelp l, Thingp me, int val = 1) -> int;
 [[nodiscard]] auto thing_distance_jump_incr(Gamep g, Levelsp v, Levelp l, Thingp me, int val = 1) -> int;
-[[nodiscard]] auto thing_distance_jump_max(Thingp me) -> int;
+[[nodiscard]] auto thing_distance_jump_max(Gamep g, Levelsp v, Levelp l, Thingp me) -> int;
 [[nodiscard]] auto thing_distance_jump_set(Gamep g, Levelsp v, Levelp l, Thingp me, int val) -> int;
-[[nodiscard]] auto thing_distance_jump(Thingp me) -> int;
+[[nodiscard]] auto thing_distance_jump(Gamep g, Levelsp v, Levelp l, Thingp me) -> int;
 [[nodiscard]] auto thing_distance_minion_from_mob_max_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
-[[nodiscard]] auto thing_distance_minion_from_mob_max(Thingp t) -> int;
+[[nodiscard]] auto thing_distance_minion_from_mob_max(Gamep g, Levelsp v, Levelp l, Thingp t) -> int;
 [[nodiscard]] auto thing_distance_vision_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_distance_vision_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_distance_vision_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
@@ -618,7 +618,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_fired_weapon_count_max_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_fired_weapon_count_max_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_fired_weapon_count_max_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
-[[nodiscard]] auto thing_fired_weapon_count_max(Thingp t) -> int;
+[[nodiscard]] auto thing_fired_weapon_count_max(Gamep g, Levelsp v, Levelp l, Thingp t) -> int;
 [[nodiscard]] auto thing_get_at_safe(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot) -> Thingp;
 [[nodiscard]] auto thing_get_direction_grid(Gamep g, Levelsp v, Levelp l, Thingp me) -> bpoint;
 [[nodiscard]] auto thing_get_direction(Gamep g, Levelsp v, Levelp l, Thingp me) -> fpoint;
@@ -629,9 +629,9 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_health_max_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_health_max_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_health_max_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
-[[nodiscard]] auto thing_health_max(Thingp t) -> int;
+[[nodiscard]] auto thing_health_max(Gamep g, Levelsp v, Levelp l, Thingp t) -> int;
 [[nodiscard]] auto thing_health_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
-[[nodiscard]] auto thing_health(Thingp t) -> int;
+[[nodiscard]] auto thing_health(Gamep g, Levelsp v, Levelp l, Thingp t) -> int;
 [[nodiscard]] auto thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const bpoint &at) -> Thingp;
 [[nodiscard]] auto thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &real_at) -> Thingp;
 [[nodiscard]] auto thing_inventory_add(Gamep g, Levelsp v, Levelp l, Thingp new_item, Thingp carrier) -> bool;
@@ -692,8 +692,8 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_broken_on_death(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_burnable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_burning(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_carried_try_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp carrier, bool val = true) -> bool;
-[[nodiscard]] auto thing_is_carried_try_unset(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp carrier) -> bool;
+[[nodiscard]] auto thing_is_carried_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp carrier, ThingEvent &, bool val = true) -> bool;
+[[nodiscard]] auto thing_is_carried_unset(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp carrier, ThingEvent &) -> bool;
 [[nodiscard]] auto thing_is_carried(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_chasm(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_chest(Thingp t) -> bool;
@@ -839,6 +839,8 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_teleporting(Thingp me) -> bool;
 [[nodiscard]] auto thing_is_throwable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_tick_end_delay(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_tick_on_drop(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_tick_on_use(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_tickable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_tiled(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_trap(Thingp t) -> bool;
@@ -855,9 +857,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused16(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused17(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused18(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused19(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused2(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused20(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused3(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused4(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused5(Thingp t) -> bool;
@@ -897,7 +897,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_minion_max_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_minion_max_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_minion_max_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
-[[nodiscard]] auto thing_minion_max(Thingp t) -> int;
+[[nodiscard]] auto thing_minion_max(Gamep g, Levelsp v, Levelp l, Thingp t) -> int;
 [[nodiscard]] auto thing_minion_mob_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> Thingp;
 [[nodiscard]] auto thing_mob_detach_all_minions(Gamep g, Levelsp v, Levelp l, Thingp mob) -> bool;
 [[nodiscard]] auto thing_mob_detach_minion(Gamep g, Levelsp v, Levelp l, Thingp mob, Thingp minion) -> bool;
@@ -967,9 +967,9 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_stamina_max_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_stamina_max_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_stamina_max_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
-[[nodiscard]] auto thing_stamina_max(Thingp t) -> int;
+[[nodiscard]] auto thing_stamina_max(Gamep g, Levelsp v, Levelp l, Thingp t) -> int;
 [[nodiscard]] auto thing_stamina_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
-[[nodiscard]] auto thing_stamina(Thingp t) -> int;
+[[nodiscard]] auto thing_stamina(Gamep g, Levelsp v, Levelp l, Thingp t) -> int;
 [[nodiscard]] auto thing_submerged_pct_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_submerged_pct_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_submerged_pct_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;

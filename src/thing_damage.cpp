@@ -234,7 +234,7 @@ static void thing_damage_cap_for_this_event(Gamep g, Levelsp v, Levelp l, Thingp
 {
   TRACE();
 
-  const auto h = thing_health_max(me);
+  const auto h = thing_health_max(g, v, l, me);
 
   //
   // Limit the damage that can occur this event.
@@ -256,7 +256,7 @@ static void thing_damage_cap_for_this_tick(Gamep g, Levelsp v, Levelp l, Thingp 
 {
   TRACE();
 
-  const auto h = thing_health_max(me);
+  const auto h = thing_health_max(g, v, l, me);
 
   //
   // Limit the total damage that can occur per tick.

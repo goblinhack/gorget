@@ -937,10 +937,10 @@
   return tp_flag(tp, is_unused18) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused19(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_tick_on_drop(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused19) != 0;
+  return tp_flag(tp, is_tick_on_drop) != 0;
 }
 
 [[nodiscard]] auto tp_is_unused2(Tpp tp) -> bool
@@ -949,10 +949,10 @@
   return tp_flag(tp, is_unused2) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused20(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_tick_on_use(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused20) != 0;
+  return tp_flag(tp, is_tick_on_use) != 0;
 }
 
 [[nodiscard]] auto tp_is_able_to_throw_items(Tpp tp) -> bool

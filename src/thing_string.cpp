@@ -14,7 +14,7 @@
 #include <format>
 #include <string>
 
-[[nodiscard]] auto to_string(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t) -> std::string
+[[nodiscard]] auto to_string(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
 {
   TRACE();
 
@@ -53,7 +53,7 @@
                   /* newline */ t->id,
                   /* newline */ t->level_num + 1,
                   /* newline */ t->tick,
-                  /* newline */ thing_health(t),
+                  /* newline */ thing_health(g, v, l, t),
                   /* newline */ at.x, at.y,
                   /* newline */ name,
                   /* newline */ thing_is_moving(t) ? "/mv" : "",

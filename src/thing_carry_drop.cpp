@@ -35,7 +35,7 @@ static auto thing_carry_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp c
   THING_DBG(carrier, "carry: %s", s.c_str());
   TRACE_INDENT();
 
-  if (! thing_is_carried_try_set(g, v, l, item, carrier)) {
+  if (! thing_is_carried_set(g, v, l, item, carrier, e)) {
     THING_DBG(carrier, "carry: %s (failed)", s.c_str());
     TRACE_INDENT();
 
@@ -89,7 +89,7 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp dr
   THING_DBG(dropper, "drop: %s", s.c_str());
   TRACE_INDENT();
 
-  if (! thing_is_carried_try_unset(g, v, l, item, dropper)) {
+  if (! thing_is_carried_unset(g, v, l, item, dropper, e)) {
     THING_DBG(dropper, "drop: %s (failed)", s.c_str());
     TRACE_INDENT();
 
@@ -121,6 +121,10 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp dr
     game_request_to_remake_ui_set(g);
   }
 
+  if (thing_is_tick_on_drop(item)) {
+    (void) level_tick_begin_requested(g, v, l, "player dropped an item");
+  }
+
   thing_owner_unset(g, v, l, item);
 
   return true;
@@ -140,7 +144,7 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp dr
 //
 // Returns true/false on success/fail
 //
-[[nodiscard]] auto thing_is_carried_try_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp carrier, bool val) -> bool
+[[nodiscard]] auto thing_is_carried_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp carrier, ThingEvent &e, bool val) -> bool
 {
   TRACE_DEBUG();
 
@@ -172,7 +176,7 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp dr
     THING_DBG(item, "carry request");
     TRACE_INDENT();
 
-    if (! thing_on_carry_request(g, v, l, item, carrier)) {
+    if (! thing_on_carry_request(g, v, l, item, carrier, e)) {
       //
       // Collect failed
       //
@@ -190,7 +194,7 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp dr
       //
       // Success
       //
-      (void) thing_on_carry_success(g, v, l, item, carrier);
+      (void) thing_on_carry_success(g, v, l, item, carrier, e);
     } else {
       //
       // Possibly out of slots
@@ -209,7 +213,7 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp dr
     THING_DBG(item, "drop request");
     TRACE_INDENT();
 
-    if (! thing_on_drop_request(g, v, l, item, carrier)) {
+    if (! thing_on_drop_request(g, v, l, item, carrier, e)) {
       //
       // Drop failed
       //
@@ -227,7 +231,7 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp dr
       //
       // Success
       //
-      (void) thing_on_drop_success(g, v, l, item, carrier);
+      (void) thing_on_drop_success(g, v, l, item, carrier, e);
 
       //
       // If counts remain, keep the item as carried
@@ -255,11 +259,11 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp dr
   return true;
 }
 
-[[nodiscard]] auto thing_is_carried_try_unset(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp carrier) -> bool
+[[nodiscard]] auto thing_is_carried_unset(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp carrier, ThingEvent &e) -> bool
 {
   TRACE_DEBUG();
 
-  return thing_is_carried_try_set(g, v, l, item, carrier, false);
+  return thing_is_carried_set(g, v, l, item, carrier, e, false);
 }
 
 void thing_on_carry_request_set(Tpp tp, thing_on_carry_request_t callback)
@@ -272,7 +276,7 @@ void thing_on_carry_request_set(Tpp tp, thing_on_carry_request_t callback)
   tp->on_carry_request = callback;
 }
 
-[[nodiscard]] auto thing_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp carrier) -> bool
+[[nodiscard]] auto thing_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp carrier, ThingEvent &e) -> bool
 {
   TRACE();
   auto *tp = thing_tp(me);
@@ -290,7 +294,7 @@ void thing_on_carry_request_set(Tpp tp, thing_on_carry_request_t callback)
     thing_err(carrier, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
-  return tp->on_carry_request(g, v, l, me, carrier);
+  return tp->on_carry_request(g, v, l, me, carrier, e);
 }
 
 void thing_on_drop_request_set(Tpp tp, thing_on_drop_request_t callback)
@@ -303,7 +307,7 @@ void thing_on_drop_request_set(Tpp tp, thing_on_drop_request_t callback)
   tp->on_drop_request = callback;
 }
 
-[[nodiscard]] auto thing_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp dropper) -> bool
+[[nodiscard]] auto thing_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp dropper, ThingEvent &e) -> bool
 {
   TRACE();
   auto *tp = thing_tp(me);
@@ -321,7 +325,7 @@ void thing_on_drop_request_set(Tpp tp, thing_on_drop_request_t callback)
     thing_err(dropper, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
-  return tp->on_drop_request(g, v, l, me, dropper);
+  return tp->on_drop_request(g, v, l, me, dropper, e);
 }
 
 void thing_on_carry_success_set(Tpp tp, thing_on_carry_success_t callback)
@@ -334,7 +338,7 @@ void thing_on_carry_success_set(Tpp tp, thing_on_carry_success_t callback)
   tp->on_carry_success = callback;
 }
 
-[[nodiscard]] auto thing_on_carry_success(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp carrier) -> bool
+[[nodiscard]] auto thing_on_carry_success(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp carrier, ThingEvent &e) -> bool
 {
   TRACE();
   auto *tp = thing_tp(me);
@@ -352,7 +356,7 @@ void thing_on_carry_success_set(Tpp tp, thing_on_carry_success_t callback)
     thing_err(carrier, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
-  return tp->on_carry_success(g, v, l, me, carrier);
+  return tp->on_carry_success(g, v, l, me, carrier, e);
 }
 
 void thing_on_drop_success_set(Tpp tp, thing_on_drop_success_t callback)
@@ -365,7 +369,7 @@ void thing_on_drop_success_set(Tpp tp, thing_on_drop_success_t callback)
   tp->on_drop_success = callback;
 }
 
-[[nodiscard]] auto thing_on_drop_success(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp dropper) -> bool
+[[nodiscard]] auto thing_on_drop_success(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp dropper, ThingEvent &e) -> bool
 {
   TRACE();
   auto *tp = thing_tp(me);
@@ -383,7 +387,7 @@ void thing_on_drop_success_set(Tpp tp, thing_on_drop_success_t callback)
     thing_err(dropper, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
-  return tp->on_drop_success(g, v, l, me, dropper);
+  return tp->on_drop_success(g, v, l, me, dropper, e);
 }
 
 [[nodiscard]] auto thing_carry(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, ThingEvent &e) -> bool

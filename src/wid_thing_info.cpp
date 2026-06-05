@@ -171,7 +171,7 @@
 //
 // Health bar
 //
-[[nodiscard]] auto wid_thing_info_health_bar(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp me, Tpp tp, WidPopup *parent, int width) -> bool
+[[nodiscard]] auto wid_thing_info_health_bar(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp tp, WidPopup *parent, int width) -> bool
 {
   TRACE();
 
@@ -196,8 +196,8 @@
   //
   // "Health         a/b"
   //
-  auto health_max = thing_health_max(me);
-  auto h          = thing_health(me);
+  auto health_max = thing_health_max(g, v, l, me);
+  auto h          = thing_health(g, v, l, me);
   h               = std::max(h, 0);
 
   std::string const health_str = std::to_string(h) + "/" + std::to_string(health_max);
@@ -210,7 +210,7 @@
   //
   auto *w = parent->log(g, std::string(tmp));
   if (w != nullptr) {
-    int health_how_much = static_cast< int >((static_cast< float >(thing_health(me)) / static_cast< float >(health_max))
+    int health_how_much = static_cast< int >((static_cast< float >(thing_health(g, v, l, me)) / static_cast< float >(health_max))
                                              * (static_cast< float > UI_STAT_BAR_STEPS - 1));
     health_how_much     = std::min(health_how_much, UI_STAT_BAR_STEPS - 1);
     health_how_much     = std::max(health_how_much, 0);
@@ -229,7 +229,7 @@
 //
 // Stamina bar
 //
-[[nodiscard]] auto wid_thing_info_stamina_bar(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp me, Tpp tp, WidPopup *parent, int width) -> bool
+[[nodiscard]] auto wid_thing_info_stamina_bar(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp tp, WidPopup *parent, int width) -> bool
 {
   TRACE();
 
@@ -249,7 +249,7 @@
   memset(tmp, 0, sizeof(tmp));
   memset(tmp, ' ', sizeof(tmp) - 1);
 
-  if (thing_distance_jump(me) != thing_distance_jump_max(me)) {
+  if (thing_distance_jump(g, v, l, me) != thing_distance_jump_max(g, v, l, me)) {
     my_strlcpy(tmp + 1, "Jumping impacted", sizeof("Jumping impacted "));
   } else {
     my_strlcpy(tmp + 1, "Stamina", sizeof("Stamina "));
@@ -258,8 +258,8 @@
   //
   // "Stamina        a/b"
   //
-  auto stamina_max = thing_stamina_max(me);
-  auto h           = thing_stamina(me);
+  auto stamina_max = thing_stamina_max(g, v, l, me);
+  auto h           = thing_stamina(g, v, l, me);
   h                = std::max(h, 0);
 
   std::string const stamina_str = std::to_string(h) + "/" + std::to_string(stamina_max);
@@ -272,7 +272,7 @@
   //
   auto *w = parent->log(g, std::string(tmp));
   if (w != nullptr) {
-    int stamina_how_much = static_cast< int >((static_cast< float >(thing_stamina(me)) / static_cast< float >(stamina_max))
+    int stamina_how_much = static_cast< int >((static_cast< float >(thing_stamina(g, v, l, me)) / static_cast< float >(stamina_max))
                                               * (static_cast< float > UI_STAT_BAR_STEPS - 1));
     stamina_how_much     = std::min(stamina_how_much, UI_STAT_BAR_STEPS - 1);
     stamina_how_much     = std::max(stamina_how_much, 0);

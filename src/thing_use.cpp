@@ -73,7 +73,7 @@ static auto thing_use_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp use
   if (! thing_on_use(g, v, l, item, user)) {
     if (e.event_type == THING_EVENT_USER_INITIATED) {
       auto the_thing = thing_name_long_the(g, v, l, item);
-      topcon("You fail to use %s.", the_thing.c_str());
+      topcon("You failed to use %s.", the_thing.c_str());
     }
     return false;
   }
@@ -97,9 +97,13 @@ static auto thing_use_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp use
   if (thing_is_player(user)) {
     if (e.event_type == THING_EVENT_USER_INITIATED) {
       auto the_thing = thing_name_long_the(g, v, l, item);
-      topcon("You use %s.", the_thing.c_str());
+      topcon("You used %s.", the_thing.c_str());
     }
     game_request_to_remake_ui_set(g);
+  }
+
+  if (thing_is_tick_on_use(item)) {
+    (void) level_tick_begin_requested(g, v, l, "player used an item");
   }
 
   return true;

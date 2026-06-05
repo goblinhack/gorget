@@ -112,7 +112,7 @@ static auto thing_monst_choose_something_we_can_see(Gamep g, Levelsp v, Levelp l
   if (mob == nullptr) {
     radius = thing_distance_vision(g, v, l, me) * 2;
   } else {
-    radius = thing_distance_minion_from_mob_max(me);
+    radius = thing_distance_minion_from_mob_max(g, v, l, me);
   }
 
   THING_DBG(me, "choose target: radius: %d", radius);
@@ -172,7 +172,7 @@ static auto thing_monst_choose_something_we_can_see(Gamep g, Levelsp v, Levelp l
     // If we get here for a minion, make sure the minion stays close to the mob
     //
     if (mob != nullptr) {
-      if (distance(target, thing_at(mob)) >= thing_distance_minion_from_mob_max(me)) {
+      if (distance(target, thing_at(mob)) >= thing_distance_minion_from_mob_max(g, v, l, me)) {
         continue;
       }
     }

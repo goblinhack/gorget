@@ -113,6 +113,7 @@ static auto tp_chest_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
+  tp_flag_set(tp, is_tick_on_drop);
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_treasure);
   tp_flag_set(tp, is_wood);

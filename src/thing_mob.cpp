@@ -76,7 +76,7 @@
   //
   // Too many minions
   //
-  if (thing_mob_minion_count_get(g, v, l, mob) >= thing_minion_max(mob)) {
+  if (thing_mob_minion_count_get(g, v, l, mob) >= thing_minion_max(g, v, l, mob)) {
     return nullptr;
   }
 

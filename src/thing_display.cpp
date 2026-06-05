@@ -431,8 +431,8 @@ static void thing_display_it(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t_mayb
       //
       // If low on health, orange outline
       //
-      auto h_max = thing_health_max(t_maybe_null);
-      auto h     = thing_health(t_maybe_null);
+      auto h_max = thing_health_max(g, v, l, t_maybe_null);
+      auto h     = thing_health(g, v, l, t_maybe_null);
 
       if (h < h_max) {
         color const c = CYAN;

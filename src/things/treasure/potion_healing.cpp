@@ -26,21 +26,23 @@ static auto tp_potion_healing_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
   return UI_INFO1_FMT_STR "Consume this potion to restore your health. Other problems in life may remain.";
 }
 
-[[nodiscard]] static auto tp_potion_healing_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp collector) -> bool
+[[nodiscard]] static auto tp_potion_healing_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp collector, ThingEvent &e)
+    -> bool
 {
   TRACE();
 
   return true;
 }
 
-[[nodiscard]] static auto tp_potion_healing_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp dropper) -> bool
+[[nodiscard]] static auto tp_potion_healing_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp dropper, ThingEvent &e) -> bool
 {
   TRACE();
 
   return true;
 }
 
-[[nodiscard]] static auto tp_potion_healing_on_carry_success(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp collector) -> bool
+[[nodiscard]] static auto tp_potion_healing_on_carry_success(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp collector, ThingEvent &e)
+    -> bool
 {
   TRACE();
 
@@ -51,12 +53,14 @@ static auto tp_potion_healing_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
   return true;
 }
 
-[[nodiscard]] static auto tp_potion_healing_on_drop_success(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp dropper) -> bool
+[[nodiscard]] static auto tp_potion_healing_on_drop_success(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp dropper, ThingEvent &e) -> bool
 {
   TRACE();
 
-  if (thing_is_player(dropper)) {
-    thing_sound_play(g, v, l, dropper, "item_drop");
+  if (e.event_type == THING_EVENT_USER_INITIATED) {
+    if (thing_is_player(dropper)) {
+      thing_sound_play(g, v, l, dropper, "item_drop");
+    }
   }
 
   return true;
@@ -89,6 +93,18 @@ static void tp_potion_healing_on_thrown(Gamep g, Levelsp v, Levelp l, Thingp t, 
 static bool tp_potion_healing_on_use(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp user)
 {
   TRACE();
+
+  auto old_health = thing_health(g, v, l, user);
+  auto new_health = thing_health_incr(g, v, l, user, thing_health_max(g, v, l, user) / 2);
+  if (old_health == new_health) {
+    if (thing_is_player(user)) {
+      topcon("That potion seemed to have no effect.");
+    }
+  } else {
+    if (thing_is_player(user)) {
+      topcon("You feel your old evil self again.");
+    }
+  }
 
   return true;
 }
@@ -146,6 +162,8 @@ static void tp_potion_healing_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, T
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_throwable);
+  tp_flag_set(tp, is_tick_on_drop);
+  tp_flag_set(tp, is_tick_on_use);
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_treasure);
   tp_flag_set(tp, is_usable);

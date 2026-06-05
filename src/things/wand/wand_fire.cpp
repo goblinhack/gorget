@@ -30,21 +30,21 @@ static auto tp_wand_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> s
       UI_INFO4_FMT_STR "Info: wands are generally more powerful than staffs, but have fewer charges. \n";
 }
 
-[[nodiscard]] static auto tp_wand_fire_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp collector) -> bool
+[[nodiscard]] static auto tp_wand_fire_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp collector, ThingEvent &e) -> bool
 {
   TRACE();
 
   return true;
 }
 
-[[nodiscard]] static auto tp_wand_fire_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp dropper) -> bool
+[[nodiscard]] static auto tp_wand_fire_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp dropper, ThingEvent &e) -> bool
 {
   TRACE();
 
   return true;
 }
 
-[[nodiscard]] static auto tp_wand_fire_on_carry_success(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp collector) -> bool
+[[nodiscard]] static auto tp_wand_fire_on_carry_success(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp collector, ThingEvent &e) -> bool
 {
   TRACE();
 
@@ -55,12 +55,14 @@ static auto tp_wand_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> s
   return true;
 }
 
-[[nodiscard]] static auto tp_wand_fire_on_drop_success(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp dropper) -> bool
+[[nodiscard]] static auto tp_wand_fire_on_drop_success(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp dropper, ThingEvent &e) -> bool
 {
   TRACE();
 
-  if (thing_is_player(dropper)) {
-    thing_sound_play(g, v, l, dropper, "item_drop");
+  if (e.event_type == THING_EVENT_USER_INITIATED) {
+    if (thing_is_player(dropper)) {
+      thing_sound_play(g, v, l, dropper, "item_drop");
+    }
   }
 
   return true;
@@ -122,6 +124,7 @@ static auto tp_wand_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> s
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
+  tp_flag_set(tp, is_tick_on_drop);
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_treasure);
   tp_flag_set(tp, is_wand);

@@ -12,7 +12,7 @@
 #include <algorithm>
 #include <limits>
 
-[[nodiscard]] auto thing_stamina(Thingp t) -> int
+[[nodiscard]] auto thing_stamina(Gamep g, Levelsp v, Levelp l, Thingp t) -> int
 {
   TRACE_DEBUG();
 
@@ -78,7 +78,7 @@
   return t->_stamina -= val;
 }
 
-[[nodiscard]] auto thing_stamina_max(Thingp t) -> int
+[[nodiscard]] auto thing_stamina_max(Gamep g, Levelsp v, Levelp l, Thingp t) -> int
 {
   TRACE_DEBUG();
 
