@@ -3768,7 +3768,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_distance_avoid_target -= val;
 }
 
-[[nodiscard]] auto thing_minion_max(Gamep g, Levelsp v, Levelp l, Thingp t) -> int
+[[nodiscard]] auto thing_minion_max(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t) -> int
 {
   TRACE_DEBUG();
 
@@ -3826,7 +3826,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_minion_max -= val;
 }
 
-[[nodiscard]] auto thing_fired_weapon_count_max(Gamep g, Levelsp v, Levelp l, Thingp t) -> int
+[[nodiscard]] auto thing_fired_weapon_count_max(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t) -> int
 {
   TRACE_DEBUG();
 
@@ -3884,7 +3884,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_fired_weapon_count_max -= val;
 }
 
-[[nodiscard]] auto thing_distance_minion_from_mob_max(Gamep g, Levelsp v, Levelp l, Thingp t) -> int
+[[nodiscard]] auto thing_distance_minion_from_mob_max(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t) -> int
 {
   TRACE_DEBUG();
 

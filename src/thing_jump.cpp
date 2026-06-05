@@ -245,7 +245,7 @@ static auto thing_jump_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thingp
   return true;
 }
 
-[[nodiscard]] auto thing_distance_jump_max(Gamep g, Levelsp v, Levelp l, Thingp me) -> int
+[[nodiscard]] auto thing_distance_jump_max(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp me) -> int
 {
   TRACE_DEBUG();
 

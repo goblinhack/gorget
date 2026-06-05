@@ -12,7 +12,7 @@
 #include <algorithm>
 #include <limits>
 
-[[nodiscard]] auto thing_health(Gamep g, Levelsp v, Levelp l, Thingp t) -> int
+[[nodiscard]] auto thing_health(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t) -> int
 {
   TRACE_DEBUG();
 
@@ -78,7 +78,7 @@
   return t->_health -= val;
 }
 
-[[nodiscard]] auto thing_health_max(Gamep g, Levelsp v, Levelp l, Thingp t) -> int
+[[nodiscard]] auto thing_health_max(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t) -> int
 {
   TRACE_DEBUG();
 

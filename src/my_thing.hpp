@@ -692,8 +692,9 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_broken_on_death(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_burnable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_burning(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_carried_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp carrier, ThingEvent &, bool val = true) -> bool;
-[[nodiscard]] auto thing_is_carried_unset(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp carrier, ThingEvent &) -> bool;
+[[nodiscard]] auto thing_is_carried_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp carrier, ThingEvent & /*e*/, bool val = true)
+    -> bool;
+[[nodiscard]] auto thing_is_carried_unset(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp carrier, ThingEvent & /*e*/) -> bool;
 [[nodiscard]] auto thing_is_carried(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_chasm(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_chest(Thingp t) -> bool;
