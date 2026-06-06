@@ -925,16 +925,16 @@
   return tp_flag(tp, is_unused16) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused17(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_buff(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused17) != 0;
+  return tp_flag(tp, is_buff) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused18(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_able_to_be_buffed(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused18) != 0;
+  return tp_flag(tp, is_able_to_be_buffed) != 0;
 }
 
 [[nodiscard]] auto tp_is_tick_on_drop(Tpp tp) -> bool

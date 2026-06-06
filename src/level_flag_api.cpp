@@ -926,16 +926,16 @@
   return level_flag(g, v, l, is_unused16, p, me);
 }
 
-[[nodiscard]] auto level_is_unused17(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_buff(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused17, p, me);
+  return level_flag(g, v, l, is_buff, p, me);
 }
 
-[[nodiscard]] auto level_is_unused18(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_able_to_be_buffed(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused18, p, me);
+  return level_flag(g, v, l, is_able_to_be_buffed, p, me);
 }
 
 [[nodiscard]] auto level_is_tick_on_drop(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp

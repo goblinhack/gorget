@@ -48,6 +48,7 @@ using ThingIdPacked = union {
 #define THING_LIGHT_MAX     (LEVEL_MAX * 200)        // The size of thing_light
 #define THING_MOVE_PATH_MAX (MAP_WIDTH + MAP_HEIGHT) // Player/monster move paths (max size uint8_t)
 #define THING_INVENTORY_MAX 26
+#define THING_BUFF_MAX      20
 #define THING_MINION_MAX    10
 
 //
@@ -130,7 +131,22 @@ using ThingMinions = struct ThingMinions {
 };
 
 //
-// Weapons
+// Buffs
+//
+using ThingBuff = struct ThingBuff {
+  ThingId buff_id;
+};
+
+//
+// Per monster/player buffs
+//
+using ThingBuffs = struct ThingBuffs {
+  ThingBuff buff[ THING_BUFF_MAX ];
+  int8_t    count;
+};
+
+//
+// Missiles
 //
 using ThingMissile = struct ThingMissile {
   ThingId missile_id;
@@ -157,6 +173,10 @@ using ThingExt = struct ThingExt {
   // All projectiles currently en-route
   //
   ThingMissiles missiles;
+  //
+  // All buffs active for this thing
+  //
+  ThingBuffs buffs;
   //
   // Can be per monster or shared per mob memory of the preferred target,
   // usually the player.
@@ -499,6 +519,10 @@ using Thing = struct Thing {
   //
   ThingId fired_by_id;
   //
+  // If buffed, attached to who
+  //
+  ThingId buff_owner_id;
+  //
   // If this is a thing that is tied to other things, e.g. a bridge tile then
   // they all share this id; which is the id of the first thing in the group
   //
@@ -572,6 +596,9 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_and_tp_get_at(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot, Tpp *out) -> Thingp;
 [[nodiscard]] auto thing_at(Thingp t) -> bpoint;
 [[nodiscard]] auto thing_attack_at(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &attack_at, ThingEvent *e = nullptr) -> bool;
+[[nodiscard]] auto thing_buff_detach_all(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
+[[nodiscard]] auto thing_buff_detach_me_from_owner(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
+[[nodiscard]] auto thing_buff_owner_get(Gamep g, Levelsp v, Levelp /*l*/, Thingp me) -> Thingp;
 [[nodiscard]] auto thing_can_move_to_ai(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool;
 [[nodiscard]] auto thing_can_move_to_attempt_by_opening(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool;
 [[nodiscard]] auto thing_can_move_to_attempt_by_shoving(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool;
@@ -633,6 +660,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_inventory_is_empty(Gamep g, Levelsp v, Levelp l, Thingp owner) -> bool;
 [[nodiscard]] auto thing_inventory_item_mergeable(Gamep g, Levelsp v, Levelp l, Thingp a, Thingp b) -> bool;
 [[nodiscard]] auto thing_inventory_remove(Gamep g, Levelsp v, Levelp l, Thingp drop_item, Thingp owner) -> bool;
+[[nodiscard]] auto thing_is_able_to_be_buffed(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_collect_items(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_collect_keys(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_crush_grass(Thingp t) -> bool;
@@ -684,6 +712,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_brazier(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_bridge(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_broken_on_death(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_buff(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_burnable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_burning(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_carried_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp owner, ThingEvent & /*e*/, bool val = true) -> bool;
@@ -849,8 +878,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused14(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused15(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused16(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused17(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused18(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused2(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused3(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused4(Thingp t) -> bool;
@@ -903,7 +930,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_missile_fired_by_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> Thingp;
 [[nodiscard]] auto thing_missile_get_delta_from_dt(Gamep g, Thingp t, float dt) -> fpoint;
 [[nodiscard]] auto thing_missile_get_direction(Gamep g, Levelsp v, Levelp l, Thingp t) -> fpoint;
-[[nodiscard]] auto thing_missile_kill_all_fired(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e) -> bool;
 [[nodiscard]] auto thing_mob_detach_all_minions(Gamep g, Levelsp v, Levelp l, Thingp mob) -> bool;
 [[nodiscard]] auto thing_mob_detach_minion(Gamep g, Levelsp v, Levelp l, Thingp mob, Thingp minion) -> bool;
 [[nodiscard]] auto thing_mob_kill_all_minions(Gamep g, Levelsp v, Levelp l, Thingp mob, ThingEvent &e) -> bool;
@@ -960,6 +986,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_score(Gamep g, Thingp t) -> int;
 [[nodiscard]] auto thing_shove_handle(Gamep g, Levelsp v, Levelp l, Thingp shover, bpoint at) -> bool;
 [[nodiscard]] auto thing_shove_to(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool;
+[[nodiscard]] auto thing_spawn_buff(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const fpoint target) -> Thingp;
 [[nodiscard]] auto thing_spawn_missile(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp tp_projectile) -> Thingp;
 [[nodiscard]] auto thing_spawn_missile(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, fpoint target) -> Thingp;
 [[nodiscard]] auto thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, const bpoint &at) -> Thingp;
@@ -1238,19 +1265,33 @@ void thing_display(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp
         for (auto _slot_ = &_ext_->minions.minion[ _n_ ]; _slot_; _slot_ = nullptr)                                                             \
           for (Thingp _minion_ = thing_find_optional(g, v, _slot_->minion_id); _minion_; (_minion_) = nullptr)
 
-#define FOR_ALL_MISSILE_SLOTS(_g_, _v_, _l_, _mob_, _slot_, _projectile_)                                                                       \
+#define FOR_ALL_MISSILE_SLOTS(_g_, _v_, _l_, _mob_, _slot_, _missile_)                                                                          \
   if ((_g_) && (_v_) && (_l_))                                                                                                                  \
     for (auto _ext_ = thing_ext_struct(_g_, _mob_); _ext_; _ext_ = nullptr)                                                                     \
-      for (auto _n_ = 0; _n_ < THING_MISSILE_MAX; _n_++)                                                                                         \
+      for (auto _n_ = 0; _n_ < THING_MISSILE_MAX; _n_++)                                                                                        \
         for (AUTO(_slot_) = &_ext_->missiles.missile[ _n_ ]; _slot_; (_slot_) = nullptr)                                                        \
-          for (AUTO(_projectile_) = thing_find_optional(g, v, (_slot_)->missile_id), loop2 = (Thingp) 1; loop2 == (Thingp) 1; loop2 = (Thingp) 0)
+          for (AUTO(_missile_) = thing_find_optional(g, v, (_slot_)->missile_id), loop2 = (Thingp) 1; loop2 == (Thingp) 1; loop2 = (Thingp) 0)
 
-#define FOR_ALL_MISSILES(_g_, _v_, _l_, _mob_, _projectile_)                                                                                    \
+#define FOR_ALL_MISSILES(_g_, _v_, _l_, _mob_, _missile_)                                                                                       \
   if ((_g_) && (_v_) && (_l_))                                                                                                                  \
     for (auto _ext_ = thing_ext_struct(_g_, _mob_); _ext_; _ext_ = nullptr)                                                                     \
-      for (auto _n_ = 0; _n_ < THING_MISSILE_MAX; _n_++)                                                                                         \
+      for (auto _n_ = 0; _n_ < THING_MISSILE_MAX; _n_++)                                                                                        \
         for (auto _slot_ = &_ext_->missiles.missile[ _n_ ]; _slot_; _slot_ = nullptr)                                                           \
-          for (Thingp _projectile_ = thing_find_optional(g, v, _slot_->missile_id); _projectile_; (_projectile_) = nullptr)
+          for (Thingp _missile_ = thing_find_optional(g, v, _slot_->missile_id); _missile_; (_missile_) = nullptr)
+
+#define FOR_ALL_BUFF_SLOTS(_g_, _v_, _l_, _mob_, _slot_, _buff_)                                                                                \
+  if ((_g_) && (_v_) && (_l_))                                                                                                                  \
+    for (auto _ext_ = thing_ext_struct(_g_, _mob_); _ext_; _ext_ = nullptr)                                                                     \
+      for (auto _n_ = 0; _n_ < THING_BUFF_MAX; _n_++)                                                                                           \
+        for (AUTO(_slot_) = &_ext_->buffs.buff[ _n_ ]; _slot_; (_slot_) = nullptr)                                                              \
+          for (AUTO(_buff_) = thing_find_optional(g, v, (_slot_)->buff_id), loop2 = (Thingp) 1; loop2 == (Thingp) 1; loop2 = (Thingp) 0)
+
+#define FOR_ALL_BUFFS(_g_, _v_, _l_, _mob_, _buff_)                                                                                             \
+  if ((_g_) && (_v_) && (_l_))                                                                                                                  \
+    for (auto _ext_ = thing_ext_struct(_g_, _mob_); _ext_; _ext_ = nullptr)                                                                     \
+      for (auto _n_ = 0; _n_ < THING_BUFF_MAX; _n_++)                                                                                           \
+        for (auto _slot_ = &_ext_->buffs.buff[ _n_ ]; _slot_; _slot_ = nullptr)                                                                 \
+          for (Thingp _buff_ = thing_find_optional(g, v, _slot_->buff_id); _buff_; (_buff_) = nullptr)
 
 #define FOR_ALL_INVENTORY_SLOTS(_g_, _v_, _l_, _owner_, _slot_, _item_)                                                                         \
   if ((_g_) && (_v_) && (_l_))                                                                                                                  \

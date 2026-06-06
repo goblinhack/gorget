@@ -1457,7 +1457,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_unused16) != 0;
 }
 
-[[nodiscard]] auto thing_is_unused17(Thingp t) -> bool
+[[nodiscard]] auto thing_is_buff(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -1465,10 +1465,10 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused17) != 0;
+  return tp_flag(thing_tp(t), is_buff) != 0;
 }
 
-[[nodiscard]] auto thing_is_unused18(Thingp t) -> bool
+[[nodiscard]] auto thing_is_able_to_be_buffed(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -1476,7 +1476,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused18) != 0;
+  return tp_flag(thing_tp(t), is_able_to_be_buffed) != 0;
 }
 
 [[nodiscard]] auto thing_is_tick_on_drop(Thingp t) -> bool

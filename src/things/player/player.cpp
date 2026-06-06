@@ -343,6 +343,7 @@ static void tp_player_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d4");
   tp_distance_jump_set(tp, 3);
   tp_distance_vision_set(tp, MAP_WIDTH / 2); // tiles
+  tp_flag_set(tp, is_able_to_be_buffed);
   tp_flag_set(tp, is_able_to_collect_items);
   tp_flag_set(tp, is_able_to_collect_keys);
   tp_flag_set(tp, is_able_to_crush_grass);

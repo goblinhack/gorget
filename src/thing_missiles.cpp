@@ -58,7 +58,7 @@
   }
 
   if (! thing_is_able_to_fire_weapons(me)) {
-    thing_err(me, "thing trying to spawn projectiles when it cannot");
+    thing_err(me, "thing trying to spawn missiles when it cannot");
     return nullptr;
   }
 
@@ -74,7 +74,7 @@
   }
 
   //
-  // Too many projectiles
+  // Too many missiles
   //
   if (thing_missile_fired_by_count_get(g, v, l, me) >= thing_missile_count_max(g, v, l, me)) {
     THING_DBG(me, "trying to fire too many missiles");
@@ -90,29 +90,29 @@
   //
   // Look for a free slot
   //
-  FOR_ALL_MISSILE_SLOTS(g, v, l, me, slot, existing_projectile)
+  FOR_ALL_MISSILE_SLOTS(g, v, l, me, slot, existing_missile)
   {
-    if (existing_projectile != nullptr) {
+    if (existing_missile != nullptr) {
       continue;
     }
 
     //
     // Create the missile. Should be no chance to fail now.
     //
-    auto *new_projectile = thing_spawn(g, v, l, what, target);
-    if (new_projectile == nullptr) {
+    auto *new_missile = thing_spawn(g, v, l, what, target);
+    if (new_missile == nullptr) {
       return nullptr;
     }
 
     memset(slot, 0, sizeof(*slot));
-    slot->missile_id            = new_projectile->id;
-    new_projectile->fired_by_id = me->id;
+    slot->missile_id         = new_missile->id;
+    new_missile->fired_by_id = me->id;
     ext_struct->missiles.count++;
 
-    THING_DBG(me, "spawned missile %s", to_string(g, v, l, new_projectile).c_str());
-    THING_DBG(new_projectile, "new born missile");
+    THING_DBG(me, "spawned missile %s", to_string(g, v, l, new_missile).c_str());
+    THING_DBG(new_missile, "new born missile");
 
-    return new_projectile;
+    return new_missile;
   }
 
   //
@@ -161,9 +161,9 @@
 }
 
 //
-// Detach or kill all projectiles (or a specific one)
+// Detach or kill all missiles (or a specific one)
 //
-[[nodiscard]] static auto thing_missile_process_all(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp specific_projectile, ThingEvent &e) -> bool
+[[nodiscard]] static auto thing_missile_process_all(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp specific_missile, ThingEvent &e) -> bool
 {
   TRACE();
 
@@ -172,7 +172,7 @@
   }
 
   if (! thing_is_able_to_fire_weapons(me)) {
-    thing_err(me, "non owner trying to detach projectiles");
+    thing_err(me, "non owner trying to detach missiles");
     return false;
   }
 
@@ -189,8 +189,8 @@
       continue;
     }
 
-    if (specific_projectile != nullptr) {
-      if (missile != specific_projectile) {
+    if (specific_missile != nullptr) {
+      if (missile != specific_missile) {
         continue;
       }
     }
@@ -228,23 +228,13 @@
 }
 
 //
-// Detach all projectiles from their owner
+// Detach all missiles from their owner
 //
 [[nodiscard]] auto thing_missile_detach_all_fired(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
 {
   TRACE();
 
   ThingEvent e = {};
-  return thing_missile_process_all(g, v, l, me, nullptr, e);
-}
-
-//
-// Kill all projectiles
-//
-[[nodiscard]] auto thing_missile_kill_all_fired(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e) -> bool
-{
-  TRACE();
-
   return thing_missile_process_all(g, v, l, me, nullptr, e);
 }
 
@@ -271,7 +261,7 @@ static auto thing_missile_detach_from_firer(Gamep g, Levelsp v, Levelp l, Thingp
   }
 
   if (! thing_is_projectile(me) && ! thing_is_laser(me)) {
-    thing_err(me, "non missile trying to detach itself");
+    thing_err(me, "non missile thing trying to detach itself");
     return false;
   }
 
@@ -287,7 +277,7 @@ static auto thing_missile_detach_from_firer(Gamep g, Levelsp v, Levelp l, Thingp
 }
 
 //
-// Dump all projectiles
+// Dump all missiles
 //
 void thing_dump_missiles(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
@@ -307,14 +297,14 @@ void thing_dump_missiles(Gamep g, Levelsp v, Levelp l, Thingp me)
     return;
   }
 
-  FOR_ALL_MISSILE_SLOTS(g, v, l, me, slot, existing_projectile)
+  FOR_ALL_MISSILE_SLOTS(g, v, l, me, slot, existing_missile)
   {
-    if (existing_projectile == nullptr) {
+    if (existing_missile == nullptr) {
       THING_DBG(me, "slot %d: -", _n_);
       continue;
     }
 
-    auto s = to_string(g, v, l, existing_projectile);
+    auto s = to_string(g, v, l, existing_missile);
     THING_DBG(me, "slot %d: %s", _n_, s.c_str());
   }
 }

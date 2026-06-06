@@ -210,8 +210,8 @@
       list_macro(is_unused14, "is_unused14"),                                               /* newline */                                       \
       list_macro(is_unused15, "is_unused15"),                                               /* newline */                                       \
       list_macro(is_unused16, "is_unused16"),                                               /* newline */                                       \
-      list_macro(is_unused17, "is_unused17"),                                               /* newline */                                       \
-      list_macro(is_unused18, "is_unused18"),                                               /* newline */                                       \
+      list_macro(is_buff, "is_buff"),                                                       /* newline */                                       \
+      list_macro(is_able_to_be_buffed, "is_able_to_be_buffed"),                             /* newline */                                       \
       list_macro(is_tick_on_drop, "is_tick_on_drop"),                                       /* newline */                                       \
       list_macro(is_unused2, "is_unused2"),                                                 /* newline */                                       \
       list_macro(is_tick_on_use, "is_tick_on_use"),                                         /* newline */                                       \
@@ -515,6 +515,7 @@ class Tp;
 [[nodiscard]] auto tp_health_max_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_id_get(Tpp tp) -> TpId;
 [[nodiscard]] auto tp_init() -> bool;
+[[nodiscard]] auto tp_is_able_to_be_buffed(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_collect_items(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_collect_keys(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_crush_grass(Tpp tp) -> bool;
@@ -565,6 +566,7 @@ class Tp;
 [[nodiscard]] auto tp_is_brazier(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_bridge(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_broken_on_death(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_buff(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_burnable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_chasm(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_chest(Tpp tp) -> bool;
@@ -712,8 +714,6 @@ class Tp;
 [[nodiscard]] auto tp_is_unused14(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused15(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused16(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused17(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused18(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused2(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused3(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused4(Tpp tp) -> bool;
