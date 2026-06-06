@@ -129,6 +129,7 @@ tidy:
 	splat "if (0)" "if (compiler_unused)" "*cpp" do
 	splat-del "include.*OpenGL" "*cpp" do
 	splat "<_" "<" "*cpp" do
+	splat "Levelsp \/\*v\*\/, Levelp \/\*l\*\/" "Levelsp v, Levelp l" "*" do
 	git checkout 3rdparty
 	@echo "Done"
 

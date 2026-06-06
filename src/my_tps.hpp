@@ -19,7 +19,7 @@ auto tp_load_blitzhound() -> bool;
 auto tp_load_border() -> bool;
 auto tp_load_brazier() -> bool;
 auto tp_load_bridge() -> bool;
-auto tp_load_buff_immunity_fire_damage() -> bool;
+auto tp_load_buff_immunity_fire() -> bool;
 auto tp_load_chasm() -> bool;
 auto tp_load_chest() -> bool;
 auto tp_load_corridor() -> bool;

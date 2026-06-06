@@ -316,7 +316,7 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
   //
   // Immune to this attack?
   //
-  if (thing_is_immune_to(me, e.event_type)) {
+  if (thing_is_immune_to(g, v, l, me, e.event_type)) {
     THING_DBG(me, "%s: no damage as immune", to_string(g, v, l, e).c_str());
     return;
   }
@@ -324,7 +324,7 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
   //
   // Resistant to this attack?
   //
-  if (thing_is_resistant_to(me, e.event_type)) {
+  if (thing_is_resistant_to(g, v, l, me, e.event_type)) {
     THING_DBG(me, "%s: half damage as resistant", to_string(g, v, l, e).c_str());
     e.damage /= 2;
   }

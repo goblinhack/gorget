@@ -7,11 +7,11 @@
 #include "my_tp.hpp"
 #include "my_tps.hpp"
 
-[[nodiscard]] auto tp_load_buff_immunity_fire_damage() -> bool
+[[nodiscard]] auto tp_load_buff_immunity_fire() -> bool
 {
   TRACE();
 
-  auto *tp   = tp_load("buff_immunity_fire_damage"); // keep as string for scripts
+  auto *tp   = tp_load("buff_immunity_fire"); // keep as string for scripts
   auto  name = tp_name(tp);
 
   // begin sort marker1 {

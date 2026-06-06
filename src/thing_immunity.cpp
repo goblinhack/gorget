@@ -7,20 +7,34 @@
 #include "my_tp.hpp"
 #include "my_types.hpp"
 
-[[nodiscard]] auto thing_is_immune_to(Thingp t, ThingEventType val) -> bool
+[[nodiscard]] auto thing_is_immune_to(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEventType val) -> bool
 {
   TRACE();
 
-  auto *tp = thing_tp(t);
+  auto *tp = thing_tp(me);
+
+  FOR_ALL_BUFFS(g, v, l, me, buff)
+  {
+    if (thing_is_immune_to(g, v, l, buff, val)) {
+      return true;
+    }
+  }
 
   return tp_is_immune_to(tp, val);
 }
 
-[[nodiscard]] auto thing_is_resistant_to(Thingp t, ThingEventType val) -> bool
+[[nodiscard]] auto thing_is_resistant_to(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEventType val) -> bool
 {
   TRACE();
 
-  auto *tp = thing_tp(t);
+  auto *tp = thing_tp(me);
+
+  FOR_ALL_BUFFS(g, v, l, me, buff)
+  {
+    if (thing_is_resistant_to(g, v, l, buff, val)) {
+      return true;
+    }
+  }
 
   return tp_is_resistant_to(tp, val);
 }

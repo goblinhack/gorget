@@ -49,7 +49,7 @@ static void thing_dump_buffs(Gamep g, Levelsp v, Levelp l, Thingp me)
 //
 // How many projectils?
 //
-[[nodiscard]] static auto thing_buff_count_get(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp me) -> int
+[[nodiscard]] static auto thing_buff_count_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> int
 {
   if (me == nullptr) {
     return 0;
@@ -70,7 +70,7 @@ static void thing_dump_buffs(Gamep g, Levelsp v, Levelp l, Thingp me)
 //
 // Add a buff if possible
 //
-[[nodiscard]] auto thing_spawn_buff(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const fpoint target) -> Thingp
+[[nodiscard]] auto thing_buff_add(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what) -> Thingp
 {
   TRACE();
 
@@ -120,7 +120,7 @@ static void thing_dump_buffs(Gamep g, Levelsp v, Levelp l, Thingp me)
     //
     // Create the buff. Should be no chance to fail now.
     //
-    auto *new_buff = thing_spawn(g, v, l, what, target);
+    auto *new_buff = thing_spawn(g, v, l, what, thing_at(me));
     if (new_buff == nullptr) {
       return nullptr;
     }
@@ -130,7 +130,7 @@ static void thing_dump_buffs(Gamep g, Levelsp v, Levelp l, Thingp me)
     new_buff->buff_owner_id = me->id;
     ext_struct->buffs.count++;
 
-    THING_DBG(me, "spawned buff %s", to_string(g, v, l, new_buff).c_str());
+    THING_DBG(me, "added buff %s", to_string(g, v, l, new_buff).c_str());
     THING_DBG(new_buff, "new born buff");
 
     return new_buff;

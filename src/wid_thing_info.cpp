@@ -53,7 +53,7 @@
   return true;
 }
 
-[[nodiscard]] auto wid_thing_info_keys(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp me, WidPopup *parent) -> bool
+[[nodiscard]] auto wid_thing_info_keys(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent) -> bool
 {
   TRACE();
 
@@ -132,7 +132,7 @@
 //
 // Score
 //
-[[nodiscard]] auto wid_thing_info_score(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp me, Tpp /*tp*/, WidPopup *parent) -> bool
+[[nodiscard]] auto wid_thing_info_score(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp /*tp*/, WidPopup *parent) -> bool
 {
   TRACE();
 
@@ -291,7 +291,7 @@
 //
 // Add immunities
 //
-[[nodiscard]] auto wid_thing_info_immunity(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp me, WidPopup *parent, int width) -> bool
+[[nodiscard]] auto wid_thing_info_immunity(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, int width) -> bool
 {
   TRACE();
 
@@ -299,7 +299,7 @@
 
   FOR_ALL_THING_EVENT(e)
   {
-    if (! thing_is_immune_to(me, e)) {
+    if (! thing_is_immune_to(g, v, l, me, e)) {
       continue;
     }
 
@@ -362,7 +362,7 @@
 //
 // Add resistances
 //
-[[nodiscard]] auto wid_thing_info_resistance(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp me, WidPopup *parent, int width) -> bool
+[[nodiscard]] auto wid_thing_info_resistance(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, int width) -> bool
 {
   TRACE();
 
@@ -370,7 +370,7 @@
 
   FOR_ALL_THING_EVENT(e)
   {
-    if (! thing_is_resistant_to(me, e)) {
+    if (! thing_is_resistant_to(g, v, l, me, e)) {
       continue;
     }
 

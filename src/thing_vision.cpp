@@ -23,7 +23,7 @@
 //
 // Something blocking the fov?
 //
-[[nodiscard]] auto thing_vision_blocker(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp me, Thingp it) -> bool
+[[nodiscard]] auto thing_vision_blocker(Gamep /*g*/, Levelsp v, Levelp l, Thingp me, Thingp it) -> bool
 {
   //
   // Some monsters can see through walls
@@ -67,7 +67,7 @@
   return false;
 }
 
-void thing_vision_reset(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t)
+void thing_vision_reset(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE();
 
@@ -291,7 +291,7 @@ void thing_vision_calculate(Gamep g, Levelsp v, Levelp l, Thingp me)
   return d;
 }
 
-[[nodiscard]] auto thing_distance_vision_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_distance_vision_set(Gamep /*g*/, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -302,7 +302,7 @@ void thing_vision_calculate(Gamep g, Levelsp v, Levelp l, Thingp me)
   return t->_distance_vision = val;
 }
 
-[[nodiscard]] auto thing_distance_vision_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_distance_vision_incr(Gamep /*g*/, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -313,7 +313,7 @@ void thing_vision_calculate(Gamep g, Levelsp v, Levelp l, Thingp me)
   return t->_distance_vision += val;
 }
 
-[[nodiscard]] auto thing_distance_vision_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_distance_vision_decr(Gamep /*g*/, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 

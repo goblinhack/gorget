@@ -10,7 +10,7 @@
 #include "my_types.hpp"
 #include <string>
 
-[[nodiscard]] auto thing_name_pluralize(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t) -> std::string
+[[nodiscard]] auto thing_name_pluralize(Gamep /*g*/, Levelsp v, Levelp l, Thingp t) -> std::string
 {
   TRACE();
 
@@ -30,7 +30,7 @@
   return "the " + thing_name_pluralize(g, v, l, t);
 }
 
-[[nodiscard]] auto thing_name_apostrophize(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t) -> std::string
+[[nodiscard]] auto thing_name_apostrophize(Gamep /*g*/, Levelsp v, Levelp l, Thingp t) -> std::string
 {
   TRACE();
 

@@ -19,7 +19,7 @@
 //
 // Or reset back to the first frame
 //
-void thing_anim_init(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, ThingAnimType anim_type)
+void thing_anim_init(Gamep /*g*/, Levelsp v, Levelp l, Thingp t, ThingAnimType anim_type)
 {
   TRACE();
 

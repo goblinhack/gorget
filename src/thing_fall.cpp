@@ -95,7 +95,7 @@ static auto thing_fall_damage(Gamep g, Levelsp v, Levelp l, Thingp t) -> int
   // Landing in lava is bad
   //
   if (level_is_lava(g, v, l, thing_at(t)) != nullptr) {
-    if (! thing_is_immune_to(t, THING_EVENT_HEAT_DAMAGE)) {
+    if (! thing_is_immune_to(g, v, l, t, THING_EVENT_HEAT_DAMAGE)) {
       fall_dmg *= 4;
     }
   }
@@ -104,7 +104,7 @@ static auto thing_fall_damage(Gamep g, Levelsp v, Levelp l, Thingp t) -> int
   // Water dampens the fall
   //
   if (level_is_water(g, v, l, thing_at(t)) != nullptr) {
-    if (thing_is_immune_to(t, THING_EVENT_WATER_DAMAGE)) {
+    if (thing_is_immune_to(g, v, l, t, THING_EVENT_WATER_DAMAGE)) {
       fall_dmg /= 2;
     }
   }
@@ -113,7 +113,7 @@ static auto thing_fall_damage(Gamep g, Levelsp v, Levelp l, Thingp t) -> int
   // Deep water dampens it further
   //
   if (level_is_deep_water(g, v, l, thing_at(t)) != nullptr) {
-    if (thing_is_immune_to(t, THING_EVENT_WATER_DAMAGE)) {
+    if (thing_is_immune_to(g, v, l, t, THING_EVENT_WATER_DAMAGE)) {
       fall_dmg /= 2;
     }
   }

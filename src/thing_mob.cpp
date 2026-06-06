@@ -14,7 +14,7 @@
 //
 // How many minions?
 //
-[[nodiscard]] auto thing_mob_minion_count_get(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp mob) -> int
+[[nodiscard]] auto thing_mob_minion_count_get(Gamep g, Levelsp v, Levelp l, Thingp mob) -> int
 {
   TRACE();
 

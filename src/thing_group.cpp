@@ -9,7 +9,7 @@
 #include "my_thing_inlines.hpp" // NOLINT
 #include "my_types.hpp"
 
-void thing_group_join(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, Thingp group)
+void thing_group_join(Gamep /*g*/, Levelsp v, Levelp l, Thingp t, Thingp group)
 {
   TRACE();
 
@@ -31,7 +31,7 @@ void thing_group_join(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, Thingp
   THING_DBG(t, "join group %d", group->id);
 }
 
-void thing_group_member_leave(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t)
+void thing_group_member_leave(Gamep /*g*/, Levelsp v, Levelp l, Thingp t)
 {
   TRACE();
 

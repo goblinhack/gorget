@@ -245,7 +245,7 @@ static auto thing_jump_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thingp
   return true;
 }
 
-[[nodiscard]] auto thing_distance_jump_max(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp me) -> int
+[[nodiscard]] auto thing_distance_jump_max(Gamep /*g*/, Levelsp v, Levelp l, Thingp me) -> int
 {
   TRACE_DEBUG();
 
@@ -288,7 +288,7 @@ static auto thing_jump_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thingp
   return d;
 }
 
-[[nodiscard]] auto thing_distance_jump_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp me, int val) -> int
+[[nodiscard]] auto thing_distance_jump_set(Gamep /*g*/, Levelsp v, Levelp l, Thingp me, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -299,7 +299,7 @@ static auto thing_jump_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thingp
   return me->_distance_jump = val;
 }
 
-[[nodiscard]] auto thing_distance_jump_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp me, int val) -> int
+[[nodiscard]] auto thing_distance_jump_incr(Gamep /*g*/, Levelsp v, Levelp l, Thingp me, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -310,7 +310,7 @@ static auto thing_jump_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thingp
   return me->_distance_jump += val;
 }
 
-[[nodiscard]] auto thing_distance_jump_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp me, int val) -> int
+[[nodiscard]] auto thing_distance_jump_decr(Gamep /*g*/, Levelsp v, Levelp l, Thingp me, int val) -> int
 {
   TRACE_DEBUG();
 

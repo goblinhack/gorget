@@ -93,7 +93,7 @@ static std::initializer_list< std::string > tps = {
     "blitzhound",
     "brazier",
     "bridge",
-    "buff_immunity_fire_damage",
+    "buff_immunity_fire",
     "chasm",
     "chest",
     "corridor",

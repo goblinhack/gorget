@@ -39,7 +39,7 @@
   return delta;
 }
 
-[[nodiscard]] auto thing_missile_get_direction(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t) -> fpoint
+[[nodiscard]] auto thing_missile_get_direction(Gamep g, Levelsp v, Levelp l, Thingp t) -> fpoint
 {
   TRACE();
 
@@ -142,7 +142,7 @@
 //
 // How many projectils?
 //
-[[nodiscard]] auto thing_missile_fired_by_count_get(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp me) -> int
+[[nodiscard]] auto thing_missile_fired_by_count_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> int
 {
   if (me == nullptr) {
     return 0;
@@ -309,7 +309,7 @@ void thing_dump_missiles(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 }
 
-[[nodiscard]] auto thing_missile_count_max(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t) -> int
+[[nodiscard]] auto thing_missile_count_max(Gamep /*g*/, Levelsp v, Levelp l, Thingp t) -> int
 {
   TRACE_DEBUG();
 
@@ -320,7 +320,7 @@ void thing_dump_missiles(Gamep g, Levelsp v, Levelp l, Thingp me)
   return t->_missile_count_max;
 }
 
-[[nodiscard]] auto thing_missile_count_max_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_missile_count_max_set(Gamep /*g*/, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -337,7 +337,7 @@ void thing_dump_missiles(Gamep g, Levelsp v, Levelp l, Thingp me)
   return t->_missile_count_max = val;
 }
 
-[[nodiscard]] auto thing_missile_count_max_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_missile_count_max_incr(Gamep /*g*/, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -353,7 +353,7 @@ void thing_dump_missiles(Gamep g, Levelsp v, Levelp l, Thingp me)
   return t->_missile_count_max += val;
 }
 
-[[nodiscard]] auto thing_missile_count_max_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_missile_count_max_decr(Gamep /*g*/, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
