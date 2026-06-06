@@ -48,14 +48,33 @@ help_full()
     Linux)
       if [ "$DISTRO" = "fedora" ]; then
         log_warn "You may need to install:"
+        log_warn "  dnf install -y automake"
         log_warn "  dnf install -y findutils"
-        log_warn "  dnf install -y SDL2_mixer-devel SDL2_mixer"
-        log_warn "  dnf install -y SDL2 SDL2-devel"
+        log_warn "  dnf install -y gcc-c++"
         log_warn "  dnf install -y git"
-        log_warn "  dnf install -y make automake gcc-c++"
-        log_warn "  dnf install -y vim"
-        log_warn "  dnf install -y libmikmod-devel"
         log_warn "  dnf install -y libfishsound-devel"
+        log_warn "  dnf install -y libmikmod-devel"
+        log_warn "  dnf install -y make"
+        log_warn "  dnf install -y SDL2 SDL2-devel"
+        log_warn "  dnf install -y SDL2_mixer-devel"
+        log_warn "  dnf install -y SDL2_mixer"
+        log_warn "  dnf install -y vim"
+        echo "Enter 'y' to run the above?"
+        read answer
+        if [[ "$answer" = "y" ]]; then
+          dnf install -y \
+                automake \
+                findutils \
+                gcc-c++ \
+                git \
+                libfishsound-devel \
+                libmikmod-devel \
+                make \
+                SDL2 SDL2-devel \
+                SDL2_mixer \
+                SDL2_mixer-devel \
+                vim
+        fi
       fi
 
       if [ "$DISTRO" = "ubuntu" ]; then
@@ -87,6 +106,38 @@ help_full()
         log_warn "  sudo apt-get install -y ssh"
         log_warn "  sudo apt-get install -y vim"
         log_warn "  sudo apt-get install -y xutils-d"
+
+        echo "Enter 'y' to run the above?"
+        read answer
+        if [[ "$answer" = "y" ]]; then
+          sudo apt-get install -y \
+                     build-essential \
+                     clang \
+                     clang-format \
+                     g++ \
+                     git \
+                     libegl1 \
+                     libfishsound1-dev \
+                     libflac-dev \
+                     libfluidsynth-dev \
+                     libfreetype6-dev \
+                     libgl1 \
+                     libglvnd0 \
+                     libglx0 \
+                     libmikmod-dev \
+                     liboggz2-dev \
+                     libsdl2-2.0-0 \
+                     libsdl2-dev \
+                     libsdl2-mixer-2.0-0 \
+                     libsdl2-mixer-dev \
+                     libsmpeg-dev \
+                     libx11-6 \
+                     libxext6 \
+                     liblz4-dev \
+                     ssh \
+                     vim \
+                     xutils-d
+        fi
       fi
       ;;
     *MING*|*MSYS*)
@@ -147,6 +198,67 @@ help_full()
       log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-winpthreads-git"
       log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-xz"
       log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-zl"
+
+      echo "Enter 'y' to run the above?"
+      read answer
+      if [[ "$answer" = "y" ]]; then
+        pacman -S git make vim base-devel --needed \
+                           ${MINGW_PKG_TYPE}-x86_64-ag \
+                           ${MINGW_PKG_TYPE}-x86_64-binutils \
+                           ${MINGW_PKG_TYPE}-x86_64-bzip2 \
+                           ${MINGW_PKG_TYPE}-x86_64-clang \
+                           ${MINGW_PKG_TYPE}-x86_64-clang-tools-extra \
+                           ${MINGW_PKG_TYPE}-x86_64-crt-git \
+                           ${MINGW_PKG_TYPE}-x86_64-expat \
+                           ${MINGW_PKG_TYPE}-x86_64-flac \
+                           ${MINGW_PKG_TYPE}-x86_64-fluidsynth \
+                           ${MINGW_PKG_TYPE}-x86_64-gcc \
+                           ${MINGW_PKG_TYPE}-x86_64-gcc-libs \
+                           ${MINGW_PKG_TYPE}-x86_64-gdb \
+                           ${MINGW_PKG_TYPE}-x86_64-gdbm \
+                           ${MINGW_PKG_TYPE}-x86_64-gettext \
+                           ${MINGW_PKG_TYPE}-x86_64-giflib \
+                           ${MINGW_PKG_TYPE}-x86_64-glib2 \
+                           ${MINGW_PKG_TYPE}-x86_64-gmp \
+                           ${MINGW_PKG_TYPE}-x86_64-headers-git \
+                           ${MINGW_PKG_TYPE}-x86_64-isl \
+                           ${MINGW_PKG_TYPE}-x86_64-libffi \
+                           ${MINGW_PKG_TYPE}-x86_64-libiconv \
+                           ${MINGW_PKG_TYPE}-x86_64-libjpeg-turbo \
+                           ${MINGW_PKG_TYPE}-x86_64-libmad \
+                           ${MINGW_PKG_TYPE}-x86_64-libmodplug \
+                           ${MINGW_PKG_TYPE}-x86_64-libogg \
+                           ${MINGW_PKG_TYPE}-x86_64-libpng \
+                           ${MINGW_PKG_TYPE}-x86_64-libsndfile \
+                           ${MINGW_PKG_TYPE}-x86_64-libsystre \
+                           ${MINGW_PKG_TYPE}-x86_64-libtiff \
+                           ${MINGW_PKG_TYPE}-x86_64-libtre-git \
+                           ${MINGW_PKG_TYPE}-x86_64-libunwind \
+                           ${MINGW_PKG_TYPE}-x86_64-libvorbis \
+                           ${MINGW_PKG_TYPE}-x86_64-libwebp \
+                           ${MINGW_PKG_TYPE}-x86_64-libwinpthread-git \
+                           ${MINGW_PKG_TYPE}-x86_64-lld \
+                           ${MINGW_PKG_TYPE}-x86_64-llvm \
+                           ${MINGW_PKG_TYPE}-x86_64-lz4 \
+                           ${MINGW_PKG_TYPE}-x86_64-mpc \
+                           ${MINGW_PKG_TYPE}-x86_64-mpfr \
+                           ${MINGW_PKG_TYPE}-x86_64-ncurses \
+                           ${MINGW_PKG_TYPE}-x86_64-openssl \
+                           ${MINGW_PKG_TYPE}-x86_64-portaudio \
+                           ${MINGW_PKG_TYPE}-x86_64-python3 \
+                           ${MINGW_PKG_TYPE}-x86_64-readline \
+                           ${MINGW_PKG_TYPE}-x86_64-SDL \
+                           ${MINGW_PKG_TYPE}-x86_64-SDL2 \
+                           ${MINGW_PKG_TYPE}-x86_64-SDL2_mixer \
+                           ${MINGW_PKG_TYPE}-x86_64-smpeg2 \
+                           ${MINGW_PKG_TYPE}-x86_64-speex \
+                           ${MINGW_PKG_TYPE}-x86_64-speexdsp \
+                           ${MINGW_PKG_TYPE}-x86_64-termcap \
+                           ${MINGW_PKG_TYPE}-x86_64-windows-default-manifest \
+                           ${MINGW_PKG_TYPE}-x86_64-winpthreads-git \
+                           ${MINGW_PKG_TYPE}-x86_64-xz \
+                           ${MINGW_PKG_TYPE}-x86_64-zl
+      fi
       ;;
     *Darwin*)
       log_warn "For MAC ports install:"
