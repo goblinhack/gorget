@@ -38,6 +38,10 @@
   auto *text = parent->wid_text_area;
   auto *b    = parent->wid_text_area->wid_text_area;
 
+  if (! tp_tiles_size(tp, THING_ANIM_IDLE)) {
+    return false;
+  }
+
   Tilep tile = tp_tiles_get(tp, THING_ANIM_IDLE, 0);
   if (tile == nullptr) {
     return false;
@@ -496,11 +500,13 @@ static void wid_thing_info_item_mouse_over_end(Gamep g, Widp w)
 {
   TRACE();
 
-  bool const printed_something = false;
+  bool printed_something = false;
 
   if (! thing_is_player(me)) {
     return printed_something;
   }
+
+  bool first = true;
 
   FOR_ALL_INVENTORY_SLOTS(g, v, l, me, slot, item)
   {
@@ -508,6 +514,13 @@ static void wid_thing_info_item_mouse_over_end(Gamep g, Widp w)
     if (item_tp == nullptr) {
       continue;
     }
+
+    if (first) {
+      first = false;
+      (void) parent->log(g, "Carrying:", TEXT_FORMAT_LHS);
+    }
+
+    printed_something = true;
 
     std::string line = "- ";
 
@@ -540,6 +553,90 @@ static void wid_thing_info_item_mouse_over_end(Gamep g, Widp w)
     wid_set_on_mouse_up(w, wid_thing_info_item_mouse_up);
     wid_set_on_mouse_over_begin(w, wid_thing_info_item_mouse_over_begin);
     wid_set_on_mouse_over_end(w, wid_thing_info_item_mouse_over_end);
+  }
+
+  return printed_something;
+}
+
+//
+// Buffs
+//
+[[nodiscard]] static auto wid_thing_info_buffs(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, int width) -> bool
+{
+  TRACE();
+
+  bool printed_something = false;
+
+  if (! thing_is_player(me)) {
+    return printed_something;
+  }
+
+  bool first = true;
+
+  FOR_ALL_BUFFS(g, v, l, me, buff)
+  {
+    if (first) {
+      first = false;
+      (void) parent->log(g, "Buffs:", TEXT_FORMAT_LHS);
+    }
+
+    printed_something = true;
+
+    std::string line = "- ";
+
+    line += thing_name_short(g, v, l, buff);
+
+    line += " ";
+
+    auto lifespan = thing_lifespan(buff);
+    if (lifespan > 0) {
+      line += std::to_string(lifespan);
+      line += " moves";
+    }
+
+    Widp w = parent->log(g, line, TEXT_FORMAT_LHS);
+
+    wid_set_thing_context(g, v, w, buff);
+    wid_set_on_mouse_over_begin(w, wid_thing_info_item_mouse_over_begin);
+    wid_set_on_mouse_over_end(w, wid_thing_info_item_mouse_over_end);
+
+    {
+      char tmp[ MAXSHORTSTR ];
+
+      memset(tmp, 0, sizeof(tmp));
+      memset(tmp, ' ', sizeof(tmp) - 1);
+
+      auto tp           = thing_tp(buff);
+      auto lifespan_max = tp_lifespan_max_get(tp);
+      auto h            = thing_lifespan(buff);
+      h                 = std::max(h, 0);
+
+      std::string const lifespan_str = std::to_string(h) + "/" + std::to_string(lifespan_max);
+      my_strlcpy(tmp + width - lifespan_str.size() - 3, lifespan_str.c_str(), width - lifespan_str.size());
+      tmp[ strlen(tmp) ] = ' ';
+
+      //
+      // "Health         a/b"
+      // "xxxxxxxxxxxxxxxxxx"
+      //
+      {
+        my_strlcpy(tmp, line.c_str(), line.size() + 1);
+        auto *w2 = parent->log(g, std::string(tmp));
+        if (w2 != nullptr) {
+          int lifespan_how_much = static_cast< int >((static_cast< float >(thing_lifespan(buff)) / static_cast< float >(lifespan_max))
+                                                     * (static_cast< float > UI_STAT_BAR_STEPS - 1));
+          lifespan_how_much     = std::min(lifespan_how_much, UI_STAT_BAR_STEPS - 1);
+          lifespan_how_much     = std::max(lifespan_how_much, 0);
+          auto icon             = "stat_bar." + std::to_string(lifespan_how_much + 1);
+
+          wid_set_shape_square(w2);
+          wid_set_style(w2, UI_WID_STYLE_SPARSE_NONE);
+          wid_set_color(w2, WID_COLOR_TEXT_FG, UI_HIGHLIGHT_COLOR);
+          wid_set_tilename(TILE_LAYER_BOX_BG, w2, icon);
+          wid_set_text_lhs(w2, 1u);
+        }
+      }
+    }
   }
 
   return printed_something;
@@ -601,6 +698,10 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, i
   }
 
   if (wid_thing_info_items(g, v, l, me, parent)) {
+    parent->log_empty_line(g);
+  }
+
+  if (wid_thing_info_buffs(g, v, l, me, parent, width)) {
     parent->log_empty_line(g);
   }
 
