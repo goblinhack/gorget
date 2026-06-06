@@ -39,7 +39,7 @@
   return delta;
 }
 
-[[nodiscard]] auto thing_missile_get_direction(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t) -> fpoint
+[[nodiscard]] auto thing_missile_get_direction(Gamep g, Levelsp v, Levelp l, Thingp t) -> fpoint
 {
   TRACE();
 
@@ -142,7 +142,7 @@
 //
 // How many projectils?
 //
-[[nodiscard]] auto thing_missile_fired_by_count_get(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp me) -> int
+[[nodiscard]] auto thing_missile_fired_by_count_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> int
 {
   if (me == nullptr) {
     return 0;

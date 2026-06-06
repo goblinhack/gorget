@@ -67,7 +67,7 @@
   return false;
 }
 
-void thing_vision_reset(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t)
+void thing_vision_reset(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE();
 

@@ -57,7 +57,7 @@
   return true;
 }
 
-[[nodiscard]] auto wid_thing_info_keys(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp me, WidPopup *parent) -> bool
+[[nodiscard]] auto wid_thing_info_keys(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent) -> bool
 {
   TRACE();
 
@@ -136,7 +136,7 @@
 //
 // Score
 //
-[[nodiscard]] auto wid_thing_info_score(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp me, Tpp /*tp*/, WidPopup *parent) -> bool
+[[nodiscard]] auto wid_thing_info_score(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp /*tp*/, WidPopup *parent) -> bool
 {
   TRACE();
 
@@ -561,7 +561,7 @@ static void wid_thing_info_item_mouse_over_end(Gamep g, Widp w)
 //
 // Buffs
 //
-[[nodiscard]] static auto wid_thing_info_buffs(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, int width) -> bool
+[[nodiscard]] static auto wid_thing_info_buffs(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent) -> bool
 {
   TRACE();
 
@@ -672,7 +672,7 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, i
     parent->log_empty_line(g);
   }
 
-  if (wid_thing_info_buffs(g, v, l, me, parent, width)) {
+  if (wid_thing_info_buffs(g, v, l, me, parent)) {
     parent->log_empty_line(g);
   }
 

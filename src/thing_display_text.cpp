@@ -19,7 +19,7 @@
 #include "my_tp.hpp"
 #include "my_types.hpp"
 
-void thing_blit_text(Gamep g, Levelsp /*v*/, Levelp /*l*/, spoint tl, spoint br, std::string const &text, color fg, bool outline)
+void thing_blit_text(Gamep g, Levelsp v, Levelp l, spoint tl, spoint br, std::string const &text, color fg, bool outline)
 {
   TRACE();
 

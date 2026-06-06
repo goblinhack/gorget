@@ -545,7 +545,7 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
 //
 // Re-generate triangle fans and render to the FBO
 //
-void Raycast::raycast_render(Gamep g, Levelsp /*v*/, Levelp /*l*/)
+void Raycast::raycast_render(Gamep g, Levelsp v, Levelp l)
 {
   TRACE();
 
