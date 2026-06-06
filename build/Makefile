@@ -19,6 +19,7 @@ FORMAT_DIRS=$(DIRS) \
 	    src/things/minion \
 	    src/things/mob \
 	    src/things/treasure \
+	    src/things/buffs \
 	    src/things/internal/levels \
 	    src/things/internal/cursor \
 	    src/tests
