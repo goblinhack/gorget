@@ -298,7 +298,7 @@ static void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp obstacle
   //
   // Don't get hit by your own weapon
   //
-  auto *fired_by = thing_fired_by_get(g, v, l, me);
+  auto *fired_by = thing_missile_fired_by_get(g, v, l, me);
   if (obstacle == fired_by) {
     return;
   }
@@ -306,7 +306,7 @@ static void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp obstacle
   //
   // No overlapping weapon blasts from the same player
   //
-  if ((fired_by != nullptr) && (thing_fired_by_get(g, v, l, obstacle) == fired_by)) {
+  if ((fired_by != nullptr) && (thing_missile_fired_by_get(g, v, l, obstacle) == fired_by)) {
     return;
   }
 
@@ -558,7 +558,7 @@ static void thing_collision_interpolated_expand_candidates(Gamep g, Levelsp v, L
   auto at = thing_real_at(me);
 
   auto *owner    = thing_owner(g, v, l, me);
-  auto *fired_by = thing_fired_by_get(g, v, l, me);
+  auto *fired_by = thing_missile_fired_by_get(g, v, l, me);
 
   //
   // For all other things on the same tile as the collision
@@ -590,7 +590,7 @@ static void thing_collision_interpolated_expand_candidates(Gamep g, Levelsp v, L
     //
     // No overlapping weapon blasts from the same player
     //
-    if ((fired_by != nullptr) && (thing_fired_by_get(g, v, l, obstacle) == fired_by)) {
+    if ((fired_by != nullptr) && (thing_missile_fired_by_get(g, v, l, obstacle) == fired_by)) {
       return;
     }
 

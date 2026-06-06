@@ -3826,64 +3826,6 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_minion_max -= val;
 }
 
-[[nodiscard]] auto thing_fired_weapon_count_max(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  return t->_fired_weapon_count_max;
-}
-
-[[nodiscard]] auto thing_fired_weapon_count_max_set(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-
-  if (val > THING_WEAPON_MAX) {
-    thing_err(t, "trying to set projectile max too high");
-    val = THING_WEAPON_MAX;
-  }
-
-  return t->_fired_weapon_count_max = val;
-}
-
-[[nodiscard]] auto thing_fired_weapon_count_max_incr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-
-  if (t->_fired_weapon_count_max + val >= THING_WEAPON_MAX) {
-    return t->_fired_weapon_count_max = THING_WEAPON_MAX;
-  }
-
-  return t->_fired_weapon_count_max += val;
-}
-
-[[nodiscard]] auto thing_fired_weapon_count_max_decr(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  if (static_cast< int >(t->_fired_weapon_count_max) - val <= 0) {
-    return t->_fired_weapon_count_max = 0;
-  }
-  return t->_fired_weapon_count_max -= val;
-}
-
 [[nodiscard]] auto thing_distance_minion_from_mob_max(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, Thingp t) -> int
 {
   TRACE_DEBUG();

@@ -26,7 +26,7 @@ static void thing_killed_player(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEv
 
   if (it != nullptr) {
     std::string by_the_thing;
-    auto       *fired_by = thing_fired_by_get(g, v, l, it);
+    auto       *fired_by = thing_missile_fired_by_get(g, v, l, it);
     if (fired_by != nullptr) {
       if (fired_by == me) {
         by_the_thing = "your " + thing_name_long(g, v, l, it);
@@ -169,7 +169,7 @@ static void thing_killed_by_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
   auto the_thing = capitalize_first(thing_name_long_the(g, v, l, me));
 
   std::string by_player;
-  auto       *fired_by = thing_fired_by_get(g, v, l, player);
+  auto       *fired_by = thing_missile_fired_by_get(g, v, l, player);
   if (fired_by != nullptr) {
     if (fired_by == player) {
       by_player = "your " + thing_name_long(g, v, l, player);
@@ -240,7 +240,7 @@ static auto thing_get_killer(Gamep g, Levelsp v, Levelp l, ThingEvent &e) -> Thi
     return nullptr;
   }
 
-  auto *fired_by = thing_fired_by_get(g, v, l, killer);
+  auto *fired_by = thing_missile_fired_by_get(g, v, l, killer);
   if (fired_by != nullptr) {
     return fired_by;
   }
@@ -398,14 +398,14 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
   // Not sure if we kill or just detach projectiles
   //
   if (thing_is_able_to_fire_weapons(me)) {
-    (void) thing_weapon_detach_all_fired(g, v, l, me);
+    (void) thing_missile_detach_all_fired(g, v, l, me);
   }
 
   //
   // Detach weapons from owners
   //
   if (thing_is_projectile(me) || thing_is_laser(me)) {
-    (void) thing_weapon_detach_me_from_firer(g, v, l, me);
+    (void) thing_missile_detach_me_from_firer(g, v, l, me);
   }
 
   //

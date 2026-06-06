@@ -80,7 +80,7 @@ auto thing_laser_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, cons
       thing_topcon(me, "%f,%f step %d", laser_at.x, laser_at.y, step);
     }
 
-    auto *laser = thing_spawn_weapon(g, v, l, me, what, laser_at);
+    auto *laser = thing_spawn_missile(g, v, l, me, what, laser_at);
 
     if (laser == nullptr) {
       return false;

@@ -1685,29 +1685,29 @@ void tp_minion_max_set(Tpp tp, int val)
   return tp->minion_max;
 }
 
-void tp_fired_weapon_count_max_set(Tpp tp, int val)
+void tp_missile_count_max_set(Tpp tp, int val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
     tp_err(tp, "no thing template pointer");
     return;
   }
-  if (val > THING_WEAPON_MAX) {
-    tp_err(tp, "projectile max too high: %d", val);
+  if (val > THING_MISSILE_MAX) {
+    tp_err(tp, "missile max too high: %d", val);
     return;
   }
 
-  tp->fired_weapon_count_max = val;
+  tp->missile_count_max = val;
 }
 
-[[nodiscard]] auto tp_fired_weapon_count_max_get(Tpp tp) -> int
+[[nodiscard]] auto tp_missile_count_max_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
     tp_err(tp, "no thing template pointer");
     return 0;
   }
-  return tp->fired_weapon_count_max;
+  return tp->missile_count_max;
 }
 
 void tp_distance_minion_from_mob_max_set(Tpp tp, int val)

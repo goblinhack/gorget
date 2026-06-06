@@ -104,7 +104,6 @@ static void tp_argusul_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d4");
   tp_distance_avoid_target_set(tp, 3);
   tp_distance_vision_set(tp, 12);
-  tp_fired_weapon_count_max_set(tp, THING_WEAPON_MAX);
   tp_flag_set(tp, is_able_to_fire_weapons);
   tp_flag_set(tp, is_able_to_lunge);
   tp_flag_set(tp, is_able_to_move_diagonally);
@@ -138,6 +137,7 @@ static void tp_argusul_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_flag_set(tp, is_vision_360_degrees);
   tp_health_set(tp, "3d4");
   tp_is_resistant_add(tp, THING_EVENT_FIRE_DAMAGE);
+  tp_missile_count_max_set(tp, THING_MISSILE_MAX);
   tp_monst_group_add(tp, MONST_GROUP2);
   tp_name_a_or_an_set(tp, "an argusul");
   tp_name_apostrophize_set(tp, "argusul's");

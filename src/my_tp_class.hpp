@@ -153,7 +153,7 @@ public:
   //
   // Max number of projectiles the thing can fire
   //
-  int fired_weapon_count_max {0};
+  int missile_count_max {0};
 
   //
   // Heat capacity indicates the amount of heat energy required to

@@ -343,7 +343,6 @@ static void tp_player_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d4");
   tp_distance_jump_set(tp, 3);
   tp_distance_vision_set(tp, MAP_WIDTH / 2); // tiles
-  tp_fired_weapon_count_max_set(tp, THING_WEAPON_MAX);
   tp_flag_set(tp, is_able_to_collect_items);
   tp_flag_set(tp, is_able_to_collect_keys);
   tp_flag_set(tp, is_able_to_crush_grass);
@@ -389,6 +388,7 @@ static void tp_player_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_flag_set(tp, is_tickable);
   tp_health_set(tp, "100");
   tp_light_color_set(tp, "white");
+  tp_missile_count_max_set(tp, THING_MISSILE_MAX);
   tp_priority_set(tp, THING_PRIORITY_PLAYER);
   tp_speed_set(tp, 100);
   tp_stamina_set(tp, "100");

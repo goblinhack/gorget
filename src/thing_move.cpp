@@ -263,7 +263,7 @@ void thing_set_dir_from_delta(Thingp me, const bpoint &p)
   TRACE();
 
   if (thing_is_projectile(me) || thing_is_laser(me)) {
-    return thing_weapon_get_direction(g, v, l, me);
+    return thing_missile_get_direction(g, v, l, me);
   }
 
   switch (me->dir) {
@@ -291,7 +291,7 @@ void thing_set_dir_from_delta(Thingp me, const bpoint &p)
     //
     // Convert to a grid direction. This is very rough.
     //
-    fpoint dir = thing_weapon_get_direction(g, v, l, me);
+    fpoint dir = thing_missile_get_direction(g, v, l, me);
     bpoint dir_out;
 
     dir.x = static_cast< int >(std::round(dir.x));
