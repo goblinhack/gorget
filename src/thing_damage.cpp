@@ -154,39 +154,41 @@ static void thing_damage_by_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
   TRACE();
   auto *the_player = e.source;
 
-  std::string const msg = "-" + std::to_string(e.damage);
-  auto              at  = thing_at(me);
-  game_popup_text_add(g, at.x, at.y, msg, WHITE);
+  if (thing_is_monst(me)) {
+    std::string const msg = "-" + std::to_string(e.damage);
+    auto              at  = thing_at(me);
+    game_popup_text_add(g, at.x, at.y, msg, WHITE);
+  }
 
   if ((the_player != nullptr) && thing_is_loggable(me)) {
-    auto the_thing_name_long  = capitalize_first(thing_name_long_the(g, v, l, me));
-    auto the_thing_name_short = capitalize_first(thing_name_short_the(g, v, l, me));
+    auto The_thing_name_long  = capitalize_first(thing_name_long_the(g, v, l, me));
+    auto the_thing_name_short = thing_name_short_the(g, v, l, me);
     auto by_player            = thing_name_long(g, v, l, the_player);
 
     switch (e.event_type) {
       case THING_EVENT_THROWN : //
-        topcon("%s is thrown by %s.", the_thing_name_long.c_str(), by_player.c_str());
+        topcon("%s is thrown by %s.", The_thing_name_long.c_str(), by_player.c_str());
         break;
       case THING_EVENT_SHOVED : //
-        topcon("%s is shoved by %s.", the_thing_name_long.c_str(), by_player.c_str());
+        topcon("%s is shoved by %s.", The_thing_name_long.c_str(), by_player.c_str());
         break;
       case THING_EVENT_CRUSH : //
-        topcon("%s is crushed by %s.", the_thing_name_long.c_str(), by_player.c_str());
+        topcon("%s is crushed by %s.", The_thing_name_long.c_str(), by_player.c_str());
         break;
       case THING_EVENT_MELEE_DAMAGE : //
-        topcon("%s is hit by %s.", the_thing_name_long.c_str(), by_player.c_str());
+        topcon("%s is hit by %s.", The_thing_name_long.c_str(), by_player.c_str());
         break;
       case THING_EVENT_HEAT_DAMAGE : //
-        topcon("%s suffers heat damage from %s.", the_thing_name_long.c_str(), by_player.c_str());
+        topcon("%s suffers heat damage from %s.", The_thing_name_long.c_str(), by_player.c_str());
         break;
       case THING_EVENT_WATER_DAMAGE : //
-        topcon("%s suffers water damage from %s.", the_thing_name_long.c_str(), by_player.c_str());
+        topcon("%s suffers water damage from %s.", The_thing_name_long.c_str(), by_player.c_str());
         break;
       case THING_EVENT_EXPLOSION_DAMAGE : //
-        topcon("%s suffers blast damage from %s.", the_thing_name_long.c_str(), by_player.c_str());
+        topcon("%s suffers blast damage from %s.", The_thing_name_long.c_str(), by_player.c_str());
         break;
       case THING_EVENT_LIGHT_DAMAGE : //
-        topcon("%s suffers dazzling damage from %s.", the_thing_name_long.c_str(), by_player.c_str());
+        topcon("%s suffers dazzling damage from %s.", The_thing_name_long.c_str(), by_player.c_str());
         break;
       case THING_EVENT_FIRE_DAMAGE : //
         if (thing_is_burning(the_player)) {
@@ -335,18 +337,18 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
   thing_damage_cap(g, v, l, me, e);
 
   //
-  // Per thing callback
-  //
-  if (! thing_on_damage(g, v, l, me, e)) {
-    THING_DBG(me, "%s: no damage due to callback", to_string(g, v, l, e).c_str());
-    return;
-  }
-
-  //
   // No damage?
   //
   if (e.damage <= 0) {
     THING_DBG(me, "%s: no damage to apply", to_string(g, v, l, e).c_str());
+    return;
+  }
+
+  //
+  // Per thing callback
+  //
+  if (! thing_on_damage(g, v, l, me, e)) {
+    THING_DBG(me, "%s: no damage due to callback", to_string(g, v, l, e).c_str());
     return;
   }
 

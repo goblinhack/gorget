@@ -14,39 +14,43 @@
 //
 // Do actions upon burning
 //
-void thing_is_burning_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
+void thing_is_burning_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
-  if (thing_is_burning(t)) {
-    if (thing_is_player(t)) {
-      topcon(UI_IMPORTANT_FMT_STR "You are burning!" UI_RESET_FMT);
+  if (thing_is_burning(me)) {
+    if (thing_is_player(me)) {
+      if (thing_is_immune_to(g, v, l, me, THING_EVENT_FIRE_DAMAGE)) {
+        topcon(UI_IMPORTANT_FMT_STR "You are burning and bask in the flames!" UI_RESET_FMT);
+      } else {
+        topcon(UI_IMPORTANT_FMT_STR "You are burning!" UI_RESET_FMT);
+      }
     }
   }
 }
 
-void thing_continue_to_burn_check(Gamep g, Levelsp v, Levelp l, Thingp t)
+void thing_continue_to_burn_check(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
-  auto *tp = thing_tp(t);
+  auto *tp = thing_tp(me);
 
-  if (! thing_is_burning(t)) {
+  if (! thing_is_burning(me)) {
     return;
   }
 
   //
   // Over water?
   //
-  if (level_is_water(g, v, l, thing_at(t)) != nullptr) {
-    thing_is_burning_unset(g, v, l, t);
+  if (level_is_water(g, v, l, thing_at(me)) != nullptr) {
+    thing_is_burning_unset(g, v, l, me);
 
-    if (thing_is_player(t)) {
+    if (thing_is_player(me)) {
       topcon(UI_GOOD_FMT_STR "You extinguish the flames in the cool water!" UI_RESET_FMT);
     }
 
-    if (level_is_steam(g, v, l, thing_at(t)) == nullptr) {
-      (void) thing_spawn(g, v, l, tp_first(is_steam), t);
+    if (level_is_steam(g, v, l, thing_at(me)) == nullptr) {
+      (void) thing_spawn(g, v, l, tp_first(is_steam), me);
     }
     return;
   }
@@ -58,9 +62,9 @@ void thing_continue_to_burn_check(Gamep g, Levelsp v, Levelp l, Thingp t)
     //
     // Poor thing
     //
-    thing_is_burning_unset(g, v, l, t);
+    thing_is_burning_unset(g, v, l, me);
 
-    if (thing_is_player(t)) {
+    if (thing_is_player(me)) {
       topcon(UI_GOOD_FMT_STR "You stop burning!" UI_RESET_FMT);
     }
     return;
@@ -73,13 +77,13 @@ void thing_continue_to_burn_check(Gamep g, Levelsp v, Levelp l, Thingp t)
     //
     // Spawn more flames?
     //
-    if (thing_is_flying(t) || thing_is_combustible(t)) {
-      if (level_count_is_fire(g, v, l, thing_at(t)) < 2) {
-        THING_DBG(t, "spawn additional flames");
+    if (thing_is_flying(me) || thing_is_combustible(me)) {
+      if (level_count_is_fire(g, v, l, thing_at(me)) < 2) {
+        THING_DBG(me, "spawn additional flames");
         TRACE_INDENT();
-        (void) thing_spawn(g, v, l, tp_first(is_fire), t);
+        (void) thing_spawn(g, v, l, tp_first(is_fire), me);
 
-        if (thing_is_player(t)) {
+        if (thing_is_player(me)) {
           topcon(UI_IMPORTANT_FMT_STR "The flames intensify!" UI_RESET_FMT);
         }
       }
@@ -88,9 +92,9 @@ void thing_continue_to_burn_check(Gamep g, Levelsp v, Levelp l, Thingp t)
     //
     // Don't let the fire age out.
     //
-    auto *f = level_is_fire(g, v, l, thing_at(t));
+    auto *f = level_is_fire(g, v, l, thing_at(me));
     if (f != nullptr) {
-      THING_DBG(t, "keep the fire burning");
+      THING_DBG(me, "keep the fire burning");
       (void) thing_lifespan_incr(g, v, l, f, 2);
     }
   }
@@ -98,13 +102,13 @@ void thing_continue_to_burn_check(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // Continue to burn
   //
-  if (level_is_fire(g, v, l, thing_at(t)) == nullptr) {
-    THING_DBG(t, "spawn flames");
-    (void) thing_spawn(g, v, l, tp_first(is_fire), t);
+  if (level_is_fire(g, v, l, thing_at(me)) == nullptr) {
+    THING_DBG(me, "spawn flames");
+    (void) thing_spawn(g, v, l, tp_first(is_fire), me);
   }
 
-  if (level_is_smoke(g, v, l, thing_at(t)) == nullptr) {
-    THING_DBG(t, "spawn smoke");
-    (void) thing_spawn(g, v, l, tp_first(is_smoke), t);
+  if (level_is_smoke(g, v, l, thing_at(me)) == nullptr) {
+    THING_DBG(me, "spawn smoke");
+    (void) thing_spawn(g, v, l, tp_first(is_smoke), me);
   }
 }

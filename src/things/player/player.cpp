@@ -17,45 +17,45 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
-static auto tp_player_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
+static auto tp_player_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
-  if (thing_is_dead(t)) {
+  if (thing_is_dead(me)) {
     return "dead you";
   }
   return "You";
 }
 
-static auto tp_player_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
+static auto tp_player_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
   return UI_INFO1_FMT_STR "You: a luckless wizard hoping to reclaim forgotten skills.";
 }
 
-static void tp_player_on_moved(Gamep g, Levelsp v, Levelp l, Thingp t)
+static void tp_player_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
   //
   // If we fell into another chasm, don't make an oof sound
   //
-  if (level_is_chasm(g, v, l, thing_at(t)) != nullptr) {
+  if (level_is_chasm(g, v, l, thing_at(me)) != nullptr) {
     return;
   }
 
-  if (level_is_water(g, v, l, thing_at(t)) != nullptr) {
-    thing_sound_play(g, v, l, t, "splash");
+  if (level_is_water(g, v, l, thing_at(me)) != nullptr) {
+    thing_sound_play(g, v, l, me, "splash");
   } else {
-    thing_sound_play(g, v, l, t, "footstep");
+    thing_sound_play(g, v, l, me, "footstep");
   }
 
-  auto at                   = thing_at(t);
+  auto at                   = thing_at(me);
   v->cursor[ at.x ][ at.y ] = CURSOR_NONE;
 }
 
-static bool tp_player_on_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
+static bool tp_player_on_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
 {
   TRACE();
 
@@ -64,73 +64,73 @@ static bool tp_player_on_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEve
   //
   player_state_change(g, v, l, PLAYER_STATE_NORMAL);
 
-  (void) thing_spawn(g, v, l, tp_first(is_effect_blood), t);
+  (void) thing_spawn(g, v, l, tp_first(is_effect_blood), me);
 
-  thing_sound_play(g, v, l, t, "player_hit");
+  thing_sound_play(g, v, l, me, "player_hit");
 
   return true; // allow the damage to be applied
 }
 
-static void tp_player_on_jump_end(Gamep g, Levelsp v, Levelp l, Thingp t)
+static void tp_player_on_jump_end(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
-  if (level_is_water(g, v, l, thing_at(t)) != nullptr) {
-    thing_sound_play(g, v, l, t, "splash");
+  if (level_is_water(g, v, l, thing_at(me)) != nullptr) {
+    thing_sound_play(g, v, l, me, "splash");
   }
 
-  if (thing_is_falling(t) != 0) {
+  if (thing_is_falling(me) != 0) {
     return;
   }
 
-  if (level_is_water(g, v, l, thing_at(t)) != nullptr) {
+  if (level_is_water(g, v, l, thing_at(me)) != nullptr) {
     //
     // We already have a splash noise
     //
   } else {
-    thing_sound_play(g, v, l, t, "player_oof");
+    thing_sound_play(g, v, l, me, "player_oof");
 
-    auto at = thing_at(t);
+    auto at = thing_at(me);
     game_popup_text_add(g, at.x, at.y, std::string("Oof!"));
   }
 }
 
-static void tp_player_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
+static void tp_player_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
-  auto at = thing_at(t);
+  auto at = thing_at(me);
   game_popup_text_add(g, at.x, at.y, std::string("Aargh!"));
 }
 
-static void tp_player_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
+static void tp_player_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
   //
   // If we fell into another chasm, don't make an oof sound
   //
-  if (level_is_chasm(g, v, l, thing_at(t)) != nullptr) {
+  if (level_is_chasm(g, v, l, thing_at(me)) != nullptr) {
     return;
   }
 
-  if (level_is_water(g, v, l, thing_at(t)) != nullptr) {
-    thing_sound_play(g, v, l, t, "splash");
+  if (level_is_water(g, v, l, thing_at(me)) != nullptr) {
+    thing_sound_play(g, v, l, me, "splash");
   } else {
-    thing_sound_play(g, v, l, t, "player_oof");
+    thing_sound_play(g, v, l, me, "player_oof");
   }
 }
 
-static void tp_player_level_leave(Gamep g, Levelsp v, Levelp l, Thingp t)
+static void tp_player_level_leave(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
-  thing_vision_reset(g, v, l, t);
+  thing_vision_reset(g, v, l, me);
 
   sound_fade_out(g);
 }
 
-static void tp_player_level_enter(Gamep g, Levelsp v, Levelp l, Thingp t)
+static void tp_player_level_enter(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
@@ -143,7 +143,7 @@ static void tp_player_level_enter(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // Needed to make sure the light resets as it looks for pixel changes.
   //
-  thing_prev_pix_at_set(g, v, l, t, spoint(-1, -1));
+  thing_prev_pix_at_set(g, v, l, me, spoint(-1, -1));
 
   switch (l->level_num + 1) {
     case 1 :
@@ -249,39 +249,41 @@ static void tp_player_level_enter(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 }
 
-static void tp_player_level_populated(Gamep g, Levelsp v, Levelp l, Thingp t) { TRACE(); }
+static void tp_player_level_populated(Gamep g, Levelsp v, Levelp l, Thingp me) { TRACE(); }
 
-static void tp_player_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t) { TRACE(); }
+static void tp_player_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me) { TRACE(); }
 
-static void tp_player_on_teleported(Gamep g, Levelsp v, Levelp l, Thingp t)
+static void tp_player_on_teleported(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
-  auto at = thing_at(t);
+  auto at = thing_at(me);
   game_popup_text_add(g, at.x, at.y, std::string("Urgh"));
 }
 
-static void tp_player_tick_idle(Gamep g, Levelsp v, Levelp l, Thingp t)
+static void tp_player_tick_idle(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
   //
   // If asked to follow the mouse path, start walking
   //
-  (void) player_move_to_next(g, v, l, t);
+  (void) player_move_to_next(g, v, l, me);
 }
 
-static void tp_player_tick_end(Gamep g, Levelsp v, Levelp l, Thingp t)
+static void tp_player_tick_end(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
   //
   // If asked to follow the mouse path, start walking
   //
-  (void) player_move_to_next(g, v, l, t);
+  (void) player_move_to_next(g, v, l, me);
 
-  if (thing_is_burning(t)) {
-    thing_sound_play(g, v, l, t, "player_ouch");
+  if (thing_is_burning(me)) {
+    if (! thing_is_immune_to(g, v, l, me, THING_EVENT_FIRE_DAMAGE)) {
+      thing_sound_play(g, v, l, me, "player_ouch");
+    }
   }
 }
 

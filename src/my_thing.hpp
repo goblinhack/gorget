@@ -451,6 +451,7 @@ using Thing = struct Thing {
   // Lifespan remaining in ticks
   //
   int16_t _lifespan; // can be decremented, so signed is safer
+  int16_t _lifespan_initial;
   //
   // How long this thing has lived
   //
@@ -910,6 +911,10 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_lifespan_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_lifespan_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_lifespan(Thingp t) -> int;
+[[nodiscard]] auto thing_lifespan_initial_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
+[[nodiscard]] auto thing_lifespan_initial_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
+[[nodiscard]] auto thing_lifespan_initial_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
+[[nodiscard]] auto thing_lifespan_initial(Thingp t) -> int;
 [[nodiscard]] auto thing_light_struct(Gamep g, Thingp t) -> ThingLightp;
 [[nodiscard]] auto thing_lunge(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &to) -> bool;
 [[nodiscard]] auto thing_minion_can_move_to_possible(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &to) -> bool;

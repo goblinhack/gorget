@@ -183,18 +183,18 @@
     return false;
   }
 
-  char tmp[ MAXSHORTSTR ];
+  char line_bar[ MAXSHORTSTR ];
 
   //
   // "Health            "
   //
-  memset(tmp, 0, sizeof(tmp));
-  memset(tmp, ' ', sizeof(tmp) - 1);
+  memset(line_bar, 0, sizeof(line_bar));
+  memset(line_bar, ' ', sizeof(line_bar) - 1);
 
   if (thing_is_dead(me)) {
-    my_strlcpy(tmp + 1, "Dead", sizeof("Dead "));
+    my_strlcpy(line_bar + 1, "Dead", sizeof("Dead "));
   } else {
-    my_strlcpy(tmp + 1, "Health", sizeof("Health "));
+    my_strlcpy(line_bar + 1, "Health", sizeof("Health "));
   }
 
   //
@@ -205,14 +205,14 @@
   h               = std::max(h, 0);
 
   std::string const health_str = std::to_string(h) + "/" + std::to_string(health_max);
-  my_strlcpy(tmp + width - health_str.size() - 3, health_str.c_str(), width - health_str.size());
-  tmp[ strlen(tmp) ] = ' ';
+  my_strlcpy(line_bar + width - health_str.size() - 3, health_str.c_str(), width - health_str.size());
+  line_bar[ strlen(line_bar) ] = ' ';
 
   //
   // "Health         a/b"
   // "xxxxxxxxxxxxxxxxxx"
   //
-  auto *w = parent->log(g, std::string(tmp));
+  auto *w = parent->log(g, std::string(line_bar));
   if (w != nullptr) {
     int health_how_much = static_cast< int >((static_cast< float >(thing_health(g, v, l, me)) / static_cast< float >(health_max))
                                              * (static_cast< float > UI_STAT_BAR_STEPS - 1));
@@ -245,18 +245,18 @@
     return false;
   }
 
-  char tmp[ MAXSHORTSTR ];
+  char line_bar[ MAXSHORTSTR ];
 
   //
   // "Stamina           "
   //
-  memset(tmp, 0, sizeof(tmp));
-  memset(tmp, ' ', sizeof(tmp) - 1);
+  memset(line_bar, 0, sizeof(line_bar));
+  memset(line_bar, ' ', sizeof(line_bar) - 1);
 
   if (thing_distance_jump(g, v, l, me) != thing_distance_jump_max(g, v, l, me)) {
-    my_strlcpy(tmp + 1, "Jumping impacted", sizeof("Jumping impacted "));
+    my_strlcpy(line_bar + 1, "Jumping impacted", sizeof("Jumping impacted "));
   } else {
-    my_strlcpy(tmp + 1, "Stamina", sizeof("Stamina "));
+    my_strlcpy(line_bar + 1, "Stamina", sizeof("Stamina "));
   }
 
   //
@@ -267,14 +267,14 @@
   h                = std::max(h, 0);
 
   std::string const stamina_str = std::to_string(h) + "/" + std::to_string(stamina_max);
-  my_strlcpy(tmp + width - stamina_str.size() - 3, stamina_str.c_str(), width - stamina_str.size());
-  tmp[ strlen(tmp) ] = ' ';
+  my_strlcpy(line_bar + width - stamina_str.size() - 3, stamina_str.c_str(), width - stamina_str.size());
+  line_bar[ strlen(line_bar) ] = ' ';
 
   //
   // "Stamina        a/b"
   // "xxxxxxxxxxxxxxxxxx"
   //
-  auto *w = parent->log(g, std::string(tmp));
+  auto *w = parent->log(g, std::string(line_bar));
   if (w != nullptr) {
     int stamina_how_much = static_cast< int >((static_cast< float >(thing_stamina(g, v, l, me)) / static_cast< float >(stamina_max))
                                               * (static_cast< float > UI_STAT_BAR_STEPS - 1));
@@ -586,56 +586,39 @@ static void wid_thing_info_item_mouse_over_end(Gamep g, Widp w)
 
     line += thing_name_short(g, v, l, buff);
 
-    line += " ";
-
     auto lifespan = thing_lifespan(buff);
     if (lifespan > 0) {
+      line += ", ";
       line += std::to_string(lifespan);
       line += " moves";
     }
 
-    Widp w = parent->log(g, line, TEXT_FORMAT_LHS);
+    char line_bar[ MAXSHORTSTR ];
 
-    wid_set_thing_context(g, v, w, buff);
-    wid_set_on_mouse_over_begin(w, wid_thing_info_item_mouse_over_begin);
-    wid_set_on_mouse_over_end(w, wid_thing_info_item_mouse_over_end);
+    memset(line_bar, 0, sizeof(line_bar));
+    memset(line_bar, ' ', sizeof(line_bar) - 1);
 
-    {
-      char tmp[ MAXSHORTSTR ];
+    auto lifespan_max = thing_lifespan_initial(buff);
+    auto h            = thing_lifespan(buff);
+    h                 = std::max(h, 0);
 
-      memset(tmp, 0, sizeof(tmp));
-      memset(tmp, ' ', sizeof(tmp) - 1);
+    my_strlcpy(line_bar, line.c_str(), line.size() + 1);
+    auto *w = parent->log(g, std::string(line_bar));
+    if (w != nullptr) {
+      int lifespan_how_much = static_cast< int >((static_cast< float >(thing_lifespan(buff)) / static_cast< float >(lifespan_max))
+                                                 * (static_cast< float > UI_STAT_BAR_STEPS - 1));
+      lifespan_how_much     = std::min(lifespan_how_much, UI_STAT_BAR_STEPS - 1);
+      lifespan_how_much     = std::max(lifespan_how_much, 0);
+      auto icon             = "stat_bar." + std::to_string(lifespan_how_much + 1);
 
-      auto *tp           = thing_tp(buff);
-      auto  lifespan_max = tp_lifespan_max_get(tp);
-      auto  h            = thing_lifespan(buff);
-      h                  = std::max(h, 0);
-
-      std::string const lifespan_str = std::to_string(h) + "/" + std::to_string(lifespan_max);
-      my_strlcpy(tmp + width - lifespan_str.size() - 3, lifespan_str.c_str(), width - lifespan_str.size());
-      tmp[ strlen(tmp) ] = ' ';
-
-      //
-      // "Health         a/b"
-      // "xxxxxxxxxxxxxxxxxx"
-      //
-      {
-        my_strlcpy(tmp, line.c_str(), line.size() + 1);
-        auto *w2 = parent->log(g, std::string(tmp));
-        if (w2 != nullptr) {
-          int lifespan_how_much = static_cast< int >((static_cast< float >(thing_lifespan(buff)) / static_cast< float >(lifespan_max))
-                                                     * (static_cast< float > UI_STAT_BAR_STEPS - 1));
-          lifespan_how_much     = std::min(lifespan_how_much, UI_STAT_BAR_STEPS - 1);
-          lifespan_how_much     = std::max(lifespan_how_much, 0);
-          auto icon             = "stat_bar." + std::to_string(lifespan_how_much + 1);
-
-          wid_set_shape_square(w2);
-          wid_set_style(w2, UI_WID_STYLE_SPARSE_NONE);
-          wid_set_color(w2, WID_COLOR_TEXT_FG, UI_HIGHLIGHT_COLOR);
-          wid_set_tilename(TILE_LAYER_BOX_BG, w2, icon);
-          wid_set_text_lhs(w2, 1u);
-        }
-      }
+      wid_set_shape_square(w);
+      wid_set_style(w, UI_WID_STYLE_SPARSE_NONE);
+      wid_set_color(w, WID_COLOR_TEXT_FG, UI_HIGHLIGHT_COLOR);
+      wid_set_tilename(TILE_LAYER_BOX_BG, w, icon);
+      wid_set_text_lhs(w, 1u);
+      wid_set_thing_context(g, v, w, buff);
+      wid_set_on_mouse_over_begin(w, wid_thing_info_item_mouse_over_begin);
+      wid_set_on_mouse_over_end(w, wid_thing_info_item_mouse_over_end);
     }
   }
 
@@ -689,19 +672,24 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, i
     parent->log_empty_line(g);
   }
 
-  if (wid_thing_info_immunity(g, v, l, me, parent, width)) {
+  if (wid_thing_info_buffs(g, v, l, me, parent, width)) {
     parent->log_empty_line(g);
   }
 
-  if (wid_thing_info_resistance(g, v, l, me, parent, width)) {
-    parent->log_empty_line(g);
+  if (thing_is_monst(me)) {
+    //
+    // Not sure if useful, given buffs
+    //
+    if (wid_thing_info_immunity(g, v, l, me, parent, width)) {
+      parent->log_empty_line(g);
+    }
+
+    if (wid_thing_info_resistance(g, v, l, me, parent, width)) {
+      parent->log_empty_line(g);
+    }
   }
 
   if (wid_thing_info_items(g, v, l, me, parent)) {
-    parent->log_empty_line(g);
-  }
-
-  if (wid_thing_info_buffs(g, v, l, me, parent, width)) {
     parent->log_empty_line(g);
   }
 
