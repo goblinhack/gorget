@@ -163,8 +163,7 @@
 //
 // Detach or kill all projectiles (or a specific one)
 //
-[[nodiscard]] static auto thing_weapon_process_all(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp specific_projectile, ThingEvent &e)
-    -> bool
+[[nodiscard]] static auto thing_weapon_process_all(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp specific_projectile, ThingEvent &e) -> bool
 {
   TRACE();
 

@@ -13,16 +13,16 @@
 //
 // Anything in the inventory
 //
-[[nodiscard]] auto thing_inventory_is_empty(Gamep g, Levelsp v, Levelp l, Thingp carrier) -> bool
+[[nodiscard]] auto thing_inventory_is_empty(Gamep g, Levelsp v, Levelp l, Thingp owner) -> bool
 {
   TRACE();
 
-  if (! thing_is_player(carrier) && ! thing_is_monst(carrier)) {
-    thing_err(carrier, "unexpected thing for %s", __FUNCTION__);
+  if (! thing_is_player(owner) && ! thing_is_monst(owner)) {
+    thing_err(owner, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
 
-  FOR_ALL_INVENTORY_ITEMS(g, v, l, carrier, item) { return false; }
+  FOR_ALL_INVENTORY_ITEMS(g, v, l, owner, item) { return false; }
 
   return true;
 }
@@ -50,13 +50,13 @@
 //
 // Add an item to the inventory
 //
-[[nodiscard]] auto thing_inventory_add(Gamep g, Levelsp v, Levelp l, Thingp new_item, Thingp carrier) -> bool
+[[nodiscard]] auto thing_inventory_add(Gamep g, Levelsp v, Levelp l, Thingp new_item, Thingp owner) -> bool
 {
   THING_DBG(new_item, "inventory add");
   TRACE();
 
-  if (! thing_is_player(carrier) && ! thing_is_monst(carrier)) {
-    thing_err(carrier, "unexpected thing for %s", __FUNCTION__);
+  if (! thing_is_player(owner) && ! thing_is_monst(owner)) {
+    thing_err(owner, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
 
@@ -64,7 +64,7 @@
     return false;
   }
 
-  auto *ext_struct = thing_ext_struct(g, carrier);
+  auto *ext_struct = thing_ext_struct(g, owner);
   if (ext_struct == nullptr) {
     return false;
   }
@@ -72,7 +72,7 @@
   //
   // Look for a matching item first.
   //
-  FOR_ALL_INVENTORY_SLOTS(g, v, l, carrier, slot, item)
+  FOR_ALL_INVENTORY_SLOTS(g, v, l, owner, slot, item)
   {
     if (item == nullptr) {
       continue;
@@ -87,7 +87,7 @@
     ThingEvent e {
         .reason     = "by merging",               //
         .event_type = THING_EVENT_CARRIED_MERGED, //
-        .source     = carrier                     //
+        .source     = owner                       //
     };
 
     THING_DBG(new_item, "dead due to merging");
@@ -101,7 +101,7 @@
   //
   // Look for a free slot
   //
-  FOR_ALL_INVENTORY_SLOTS(g, v, l, carrier, slot, item)
+  FOR_ALL_INVENTORY_SLOTS(g, v, l, owner, slot, item)
   {
     if (item != nullptr) {
       continue;
@@ -122,13 +122,13 @@
 //
 // Drop an item to the inventory
 //
-[[nodiscard]] auto thing_inventory_remove(Gamep g, Levelsp v, Levelp l, Thingp drop_item, Thingp carrier) -> bool
+[[nodiscard]] auto thing_inventory_remove(Gamep g, Levelsp v, Levelp l, Thingp drop_item, Thingp owner) -> bool
 {
   THING_DBG(drop_item, "inventory remove");
   TRACE();
 
-  if (! thing_is_player(carrier) && ! thing_is_monst(carrier)) {
-    thing_err(carrier, "unexpected thing for %s", __FUNCTION__);
+  if (! thing_is_player(owner) && ! thing_is_monst(owner)) {
+    thing_err(owner, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
 
@@ -136,7 +136,7 @@
     return false;
   }
 
-  auto *ext_struct = thing_ext_struct(g, carrier);
+  auto *ext_struct = thing_ext_struct(g, owner);
   if (ext_struct == nullptr) {
     return false;
   }
@@ -144,7 +144,7 @@
   //
   // Look for the thing
   //
-  FOR_ALL_INVENTORY_SLOTS(g, v, l, carrier, slot, item)
+  FOR_ALL_INVENTORY_SLOTS(g, v, l, owner, slot, item)
   {
     if (item == nullptr) {
       continue;
@@ -174,7 +174,7 @@
 //
 // Get a single items slot count
 //
-[[nodiscard]] auto thing_inventory_get_item_count(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp carrier) -> int
+[[nodiscard]] auto thing_inventory_get_item_count(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp owner) -> int
 {
   TRACE();
 
@@ -182,7 +182,7 @@
     return -1;
   }
 
-  auto *ext_struct = thing_ext_struct(g, carrier);
+  auto *ext_struct = thing_ext_struct(g, owner);
   if (ext_struct == nullptr) {
     return -1;
   }
@@ -190,7 +190,7 @@
   //
   // Look for the thing
   //
-  FOR_ALL_INVENTORY_SLOTS(g, v, l, carrier, slot, an_item)
+  FOR_ALL_INVENTORY_SLOTS(g, v, l, owner, slot, an_item)
   {
     if (item == nullptr) {
       continue;
@@ -209,32 +209,32 @@
 //
 // Drop an item to the inventory
 //
-void thing_inventory_dump(Gamep g, Levelsp v, Levelp l, Thingp carrier)
+void thing_inventory_dump(Gamep g, Levelsp v, Levelp l, Thingp owner)
 {
   TRACE();
 
-  if (! thing_is_player(carrier) && ! thing_is_monst(carrier)) {
-    thing_err(carrier, "unexpected thing for %s", __FUNCTION__);
+  if (! thing_is_player(owner) && ! thing_is_monst(owner)) {
+    thing_err(owner, "unexpected thing for %s", __FUNCTION__);
     return;
   }
 
-  auto *ext_struct = thing_ext_struct(g, carrier);
+  auto *ext_struct = thing_ext_struct(g, owner);
   if (ext_struct == nullptr) {
     return;
   }
 
-  FOR_ALL_INVENTORY_SLOTS(g, v, l, carrier, slot, item)
+  FOR_ALL_INVENTORY_SLOTS(g, v, l, owner, slot, item)
   { //
     if (item == nullptr) {
-      THING_DBG(carrier, "slot %d: -", _n_);
+      THING_DBG(owner, "slot %d: -", _n_);
       continue;
     }
 
     auto s = to_string(g, v, l, item);
     if (slot->count != 0) {
-      THING_DBG(carrier, "slot %d: %s, count %d", _n_, s.c_str(), slot->count);
+      THING_DBG(owner, "slot %d: %s, count %d", _n_, s.c_str(), slot->count);
     } else {
-      THING_DBG(carrier, "slot %d: %s", _n_, s.c_str());
+      THING_DBG(owner, "slot %d: %s", _n_, s.c_str());
     }
   }
 }

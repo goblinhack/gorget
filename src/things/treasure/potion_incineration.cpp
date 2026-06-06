@@ -34,8 +34,7 @@ static auto tp_potion_incineration_detail_get(Gamep g, Levelsp v, Levelp l, Thin
   return true;
 }
 
-[[nodiscard]] static auto tp_potion_incineration_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp dropper, ThingEvent &e)
-    -> bool
+[[nodiscard]] static auto tp_potion_incineration_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp dropper, ThingEvent &e) -> bool
 {
   TRACE();
 
@@ -54,8 +53,7 @@ static auto tp_potion_incineration_detail_get(Gamep g, Levelsp v, Levelp l, Thin
   return true;
 }
 
-[[nodiscard]] static auto tp_potion_incineration_on_drop_success(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp dropper, ThingEvent &e)
-    -> bool
+[[nodiscard]] static auto tp_potion_incineration_on_drop_success(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp dropper, ThingEvent &e) -> bool
 {
   TRACE();
 

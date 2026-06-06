@@ -52,17 +52,17 @@ using thing_on_level_populated_t = void (*)(Gamep, Levelsp, Levelp, Thingp me);
 void thing_on_level_populated_set(Tpp tp, thing_on_level_populated_t callback);
 void thing_on_level_populated(Gamep g, Levelsp v, Levelp l, Thingp me);
 
-using thing_on_carry_request_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp carrier, ThingEvent &);
+using thing_on_carry_request_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp owner, ThingEvent &);
 void               thing_on_carry_request_set(Tpp tp, thing_on_carry_request_t callback);
-[[nodiscard]] auto thing_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp carrier, ThingEvent & /*e*/) -> bool;
+[[nodiscard]] auto thing_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, ThingEvent & /*e*/) -> bool;
 
 using thing_on_drop_request_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp dropper, ThingEvent &);
 void               thing_on_drop_request_set(Tpp tp, thing_on_drop_request_t callback);
 [[nodiscard]] auto thing_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp dropper, ThingEvent & /*e*/) -> bool;
 
-using thing_on_carry_success_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp carrier, ThingEvent &);
+using thing_on_carry_success_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp owner, ThingEvent &);
 void               thing_on_carry_success_set(Tpp tp, thing_on_carry_success_t callback);
-[[nodiscard]] auto thing_on_carry_success(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp carrier, ThingEvent & /*e*/) -> bool;
+[[nodiscard]] auto thing_on_carry_success(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, ThingEvent & /*e*/) -> bool;
 
 using thing_on_drop_success_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp dropper, ThingEvent &);
 void               thing_on_drop_success_set(Tpp tp, thing_on_drop_success_t callback);
@@ -76,7 +76,7 @@ using thing_on_use_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp user);
 void               thing_on_use_set(Tpp tp, thing_on_use_t callback);
 [[nodiscard]] auto thing_on_use(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user) -> bool;
 
-using thing_on_wield_request_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp carrier);
+using thing_on_wield_request_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp owner);
 void               thing_on_wield_request_set(Tpp tp, thing_on_wield_request_t callback);
 [[nodiscard]] auto thing_on_wield_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp wielder) -> bool;
 

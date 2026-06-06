@@ -175,8 +175,7 @@ static auto find_one(const std::string &name_alias) -> Sound *
   return true;
 }
 
-[[nodiscard]] static auto sound_play_internal(Game *g, const std::string &name_alias, class Sound *m, float scale, int loops, Thingp me)
-    -> bool
+[[nodiscard]] static auto sound_play_internal(Game *g, const std::string &name_alias, class Sound *m, float scale, int loops, Thingp me) -> bool
 {
   TRACE();
 
@@ -216,8 +215,7 @@ static auto find_one(const std::string &name_alias) -> Sound *
   auto chan = Mix_PlayChannel(-1, m->chunk, loops);
   if (chan == -1) {
     if (me != nullptr) {
-      THING_DBG(me, "Failed to play sound %s volume %d channel %d: %s", name_alias.c_str(), static_cast< int >(volume), chan,
-                Mix_GetError());
+      THING_DBG(me, "Failed to play sound %s volume %d channel %d: %s", name_alias.c_str(), static_cast< int >(volume), chan, Mix_GetError());
     } else {
       DBG("Failed to play sound %s volume %d channel %d: %s", name_alias.c_str(), static_cast< int >(volume), chan, Mix_GetError());
     }

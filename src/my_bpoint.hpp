@@ -36,10 +36,7 @@ static inline auto make_bpoint(int8_t x, int8_t y) -> bpoint { return bpoint(x, 
 
 static inline auto sort_distance(const bpoint &a, const bpoint &b) -> int { return SORT_DISTANCEf(a.x, a.y, b.x, b.y); }
 
-static inline auto distance(const bpoint &a, const bpoint &b) -> float
-{
-  return DISTANCEf((float) a.x, (float) a.y, (float) b.x, (float) b.y);
-}
+static inline auto distance(const bpoint &a, const bpoint &b) -> float { return DISTANCEf((float) a.x, (float) a.y, (float) b.x, (float) b.y); }
 
 auto adjacent_vert_or_horiz(const bpoint &a, const bpoint &b) -> bool;
 auto unit(const bpoint &p) -> bpoint;

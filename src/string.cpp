@@ -789,8 +789,7 @@ static auto dynvprintf_(const char *fmt, va_list args) -> const char *
 
 [[nodiscard]] auto rtrim(std::string &s) -> std::string &
 {
-  auto it = std::ranges::find_if(std::ranges::reverse_view(s),
-                                 [](char c) -> bool { return ! std::isspace< char >(c, std::locale::classic()); });
+  auto it = std::ranges::find_if(std::ranges::reverse_view(s), [](char c) -> bool { return ! std::isspace< char >(c, std::locale::classic()); });
   s.erase(it.base(), s.end());
   return s;
 }

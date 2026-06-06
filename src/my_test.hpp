@@ -22,22 +22,22 @@ using test_callback_t = bool (*)(Gamep, Testp);
 void test_callback_set(Testp test, test_callback_t callback);
 void tests_run(Gamep g);
 
-#define TEST_FAILED(test, why)                                                                                                             \
-  {                                                                                                                                        \
-    TRACE();                                                                                                                               \
-    log("test %s: failed at %s:%u, reason: %s", test_name(test), __FUNCTION__, __LINE__, why);                                             \
-    result = false;                                                                                                                        \
-    goto exit;                                                                                                                             \
+#define TEST_FAILED(test, why)                                                                                                                  \
+  {                                                                                                                                             \
+    TRACE();                                                                                                                                    \
+    log("test %s: failed at %s:%u, reason: %s", test_name(test), __FUNCTION__, __LINE__, why);                                                  \
+    result = false;                                                                                                                             \
+    goto exit;                                                                                                                                  \
   }
 
-#define TEST_ASSERT(test, what, why)                                                                                                       \
-  {                                                                                                                                        \
-    TRACE();                                                                                                                               \
-    if (! (what)) {                                                                                                                        \
-      log("test %s: assertion failed at %s:%u, reason: %s", test_name(test), __FUNCTION__, __LINE__, why);                                 \
-      result = false;                                                                                                                      \
-      goto exit;                                                                                                                           \
-    }                                                                                                                                      \
+#define TEST_ASSERT(test, what, why)                                                                                                            \
+  {                                                                                                                                             \
+    TRACE();                                                                                                                                    \
+    if (! (what)) {                                                                                                                             \
+      log("test %s: assertion failed at %s:%u, reason: %s", test_name(test), __FUNCTION__, __LINE__, why);                                      \
+      result = false;                                                                                                                           \
+      goto exit;                                                                                                                                \
+    }                                                                                                                                           \
   }
 
 #define TEST_PASSED(test) log("test %s: passed at %s:%u", test_name(test), __FUNCTION__, __LINE__);
@@ -50,18 +50,18 @@ void tests_run(Gamep g);
 #pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
 #endif
 
-#define TEST_LOG(test, msg, ...)                                                                                                           \
-  {                                                                                                                                        \
-    char tmp[ MAXSTR ];                                                                                                                    \
-    snprintf(tmp, sizeof(tmp), msg, ##__VA_ARGS__);                                                                                        \
-    log("test %s: %s:%u: %s", test_name(test), __FUNCTION__, __LINE__, tmp);                                                               \
+#define TEST_LOG(test, msg, ...)                                                                                                                \
+  {                                                                                                                                             \
+    char tmp[ MAXSTR ];                                                                                                                         \
+    snprintf(tmp, sizeof(tmp), msg, ##__VA_ARGS__);                                                                                             \
+    log("test %s: %s:%u: %s", test_name(test), __FUNCTION__, __LINE__, tmp);                                                                    \
   }
 
-#define TEST_CON(test, msg, ...)                                                                                                           \
-  {                                                                                                                                        \
-    char tmp[ MAXSTR ];                                                                                                                    \
-    snprintf(tmp, sizeof(tmp), msg, ##__VA_ARGS__);                                                                                        \
-    con("test %s: %s:%u: %s", test_name(test), __FUNCTION__, __LINE__, tmp);                                                               \
+#define TEST_CON(test, msg, ...)                                                                                                                \
+  {                                                                                                                                             \
+    char tmp[ MAXSTR ];                                                                                                                         \
+    snprintf(tmp, sizeof(tmp), msg, ##__VA_ARGS__);                                                                                             \
+    con("test %s: %s:%u: %s", test_name(test), __FUNCTION__, __LINE__, tmp);                                                                    \
   }
 
 #ifdef __clang__

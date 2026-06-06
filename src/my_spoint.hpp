@@ -36,9 +36,6 @@ static inline auto make_spoint(short x, short y) -> spoint { return spoint(x, y)
 
 static inline auto sort_distance(const spoint &a, const spoint &b) -> int { return SORT_DISTANCEf(a.x, a.y, b.x, b.y); }
 
-static inline auto distance(const spoint &a, const spoint &b) -> float
-{
-  return DISTANCEf((float) a.x, (float) a.y, (float) b.x, (float) b.y);
-}
+static inline auto distance(const spoint &a, const spoint &b) -> float { return DISTANCEf((float) a.x, (float) a.y, (float) b.x, (float) b.y); }
 
 #endif // MY_SPOINT_HPP

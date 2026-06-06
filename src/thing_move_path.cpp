@@ -140,8 +140,7 @@ static auto thing_move_path_confirmed(Gamep g, Thingp me, const std::vector< bpo
 //
 // Copy the confirmed path to the thing
 //
-[[nodiscard]] auto thing_move_path_confirmed(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp me, const std::vector< bpoint > &move_path)
-    -> bool
+[[nodiscard]] auto thing_move_path_confirmed(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp me, const std::vector< bpoint > &move_path) -> bool
 {
   TRACE();
 

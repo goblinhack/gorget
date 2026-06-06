@@ -170,7 +170,7 @@ void game_popups_display(Gamep g, Levelsp v, Levelp l)
         // Rise up
         //
         const auto tile_height = br.y - tl.y;
-        auto ascend_height = static_cast< int >(pct * static_cast< float >(tile_height) * static_cast< float >(POPUP_DURATION_TILE_HEIGHT));
+        auto ascend_height     = static_cast< int >(pct * static_cast< float >(tile_height) * static_cast< float >(POPUP_DURATION_TILE_HEIGHT));
         tl.y -= ascend_height;
         br.y -= ascend_height;
 

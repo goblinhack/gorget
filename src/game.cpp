@@ -440,8 +440,8 @@ void game_init(Gamep g) { g->init(); }
 //
 // Create a level with the given contents and start the game into playing state
 //
-[[nodiscard]] auto game_test_init(Gamep g, Levelp *l_out, LevelNum level_num, int w, int h, const char *contents,
-                                  const Overrides &overrides) -> Levelsp
+[[nodiscard]] auto game_test_init(Gamep g, Levelp *l_out, LevelNum level_num, int w, int h, const char *contents, const Overrides &overrides)
+    -> Levelsp
 {
   log("test init");
   TRACE_INDENT();
@@ -523,8 +523,7 @@ void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num,
   levels_finalize(g, v);
 }
 
-void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num, int w, int h, const char *contents,
-                          const Overrides &overrides)
+void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num, int w, int h, const char *contents, const Overrides &overrides)
 {
   game_test_init_level(g, v, l_out, level_num, bpoint(0, level_num), w, h, contents, overrides);
 }
@@ -1022,8 +1021,7 @@ void Game::state_change(GameStateType new_state, const std::string &why)
   //
   // Why oh why change state
   //
-  log("game state change: %s -> %s, reason: %s", game_state_to_string(old_state).c_str(), game_state_to_string(new_state).c_str(),
-      why.c_str());
+  log("game state change: %s -> %s, reason: %s", game_state_to_string(old_state).c_str(), game_state_to_string(new_state).c_str(), why.c_str());
   TRACE_INDENT();
 
   //

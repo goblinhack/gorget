@@ -3800,8 +3800,8 @@ void wid_scroll_with_input(Gamep /*g*/, Widp w, const std::string &str)
               case SDLK_ESCAPE :
               case '?' :
                 if (w == wid_console_input_line) {
-                  command_handle(g, wid_get_text(w), &updatedtext, 1U /* show ambiguous */, 0U /* show complete */,
-                                 0U /* execute command */, nullptr /* context */);
+                  command_handle(g, wid_get_text(w), &updatedtext, 1U /* show ambiguous */, 0U /* show complete */, 0U /* execute command */,
+                                 nullptr /* context */);
 
                   if (! updatedtext.empty()) {
                     wid_set_text(w, updatedtext);

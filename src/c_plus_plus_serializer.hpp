@@ -479,8 +479,7 @@ static inline auto operator>>(std::istream &in, Bits< M< K > & > m) -> std::istr
 // Read/write pair
 ////////////////////////////////////////////////////////////////////////////
 
-template < typename K, typename V >
-static inline auto operator<<(std::ostream &out, Bits< std::pair< K, V > & > const wrapped) -> std::ostream &
+template < typename K, typename V > static inline auto operator<<(std::ostream &out, Bits< std::pair< K, V > & > const wrapped) -> std::ostream &
 {
 #ifdef DEBUG_C_PLUS_PLUS_SERIALIZER
   std::cout << "read pair<K,V>" << std::endl;
@@ -500,8 +499,7 @@ template < typename K, typename V > static inline auto operator>>(std::istream &
   return in;
 }
 
-template < typename K, typename V >
-static inline auto operator>>(std::istream &in, Bits< const std::pair< K, V > & > wrapped) -> std::istream &
+template < typename K, typename V > static inline auto operator>>(std::istream &in, Bits< const std::pair< K, V > & > wrapped) -> std::istream &
 {
 #ifdef DEBUG_C_PLUS_PLUS_SERIALIZER
   std::cout << "const write pair<K,V>" << std::endl;

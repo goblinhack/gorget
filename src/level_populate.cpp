@@ -666,8 +666,8 @@ static auto level_populate_fixup_biome_underhell(class LevelPopulate &lp, Tpp tp
   return tp;
 }
 
-[[nodiscard]] auto level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *lg, int w, int h, const char *in,
-                                  const Overrides &overrides) -> bool
+[[nodiscard]] auto level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *lg, int w, int h, const char *in, const Overrides &overrides)
+    -> bool
 {
   TRACE();
 

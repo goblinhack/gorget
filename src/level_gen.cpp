@@ -3853,10 +3853,7 @@ static void level_gen_add_walls_around_rooms(class LevelGen *lg)
 //
 // Is this tile in the exit?
 //
-[[nodiscard]] auto level_gen_is_room_exit(Gamep g, class LevelGen *lg, bpoint at) -> bool
-{
-  return level_gen_is_room_exit(g, lg, at.x, at.y);
-}
+[[nodiscard]] auto level_gen_is_room_exit(Gamep g, class LevelGen *lg, bpoint at) -> bool { return level_gen_is_room_exit(g, lg, at.x, at.y); }
 
 //
 // Is this room locked?

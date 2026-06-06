@@ -37,11 +37,11 @@ enum { TILE_HEIGHT = 12, TILE_WIDTH = 12 };
 //
 // Frame buffer objects
 //
-#define TILE_LAYER_ENUM(list_macro)                                                                                                        \
-  CLANG_FORMAT_INDENT()                                     /* dummy line for clang indentation fixup */                                   \
-  list_macro(TILE_LAYER_BOX_BG, "TILE_LAYER_BOX_BG"),       /* newline */                                                                  \
-      list_macro(TILE_LAYER_BOX_FG, "TILE_LAYER_BOX_FG"),   /* newline */                                                                  \
-      list_macro(TILE_LAYER_TEXT_BG, "TILE_LAYER_TEXT_BG"), /* newline */                                                                  \
+#define TILE_LAYER_ENUM(list_macro)                                                                                                             \
+  CLANG_FORMAT_INDENT()                                     /* dummy line for clang indentation fixup */                                        \
+  list_macro(TILE_LAYER_BOX_BG, "TILE_LAYER_BOX_BG"),       /* newline */                                                                       \
+      list_macro(TILE_LAYER_BOX_FG, "TILE_LAYER_BOX_FG"),   /* newline */                                                                       \
+      list_macro(TILE_LAYER_TEXT_BG, "TILE_LAYER_TEXT_BG"), /* newline */                                                                       \
       list_macro(TILE_LAYER_TEXT_FG, "TILE_LAYER_TEXT_FG"), /* newline */
 
 ENUM_DEF_H(TILE_LAYER_ENUM, TileLayerEnum);
@@ -88,14 +88,14 @@ struct LightPixels;
 
 void tile_blit(const Tilep &tile, spoint tl, spoint br, const color &c);
 void tile_blit(const Tilep &tile, float x1, float x2, float y1, float y2, spoint tl, spoint br, const color &c);
-void tile_blit(const Tilep &tile, float x1, float x2, float y1, float y2, spoint tl, spoint br, const color &c,
-               struct LightPixels *light_pixels, bool blit_flush_per_line);
+void tile_blit(const Tilep &tile, float x1, float x2, float y1, float y2, spoint tl, spoint br, const color &c, struct LightPixels *light_pixels,
+               bool blit_flush_per_line);
 void tile_blit(const Tilep &tile, spoint tl, spoint br, const color &color_tl, const color &color_tr, const color &color_bl,
                const color &color_br);
 void tile_blit_section(const Tilep &tile, const fpoint &tile_tl, const fpoint &tile_br, spoint tl, spoint br, const color &color_tl,
                        const color &color_tr, const color &color_bl, const color &color_br);
-void tile_blit_outlined(const Tilep &tile, float x1, float x2, float y1, float y2, spoint tl, spoint br, const color &c,
-                        const color &outline, int single_pix_size, bool square);
+void tile_blit_outlined(const Tilep &tile, float x1, float x2, float y1, float y2, spoint tl, spoint br, const color &c, const color &outline,
+                        int single_pix_size, bool square);
 void tile_blit_outline_w_black_inside(const Tilep &tile, float x1, float x2, float y1, float y2, spoint tl, spoint br, const color &c);
 void tile_blit_outline_w_invis_inside(const Tilep &tile, float x1, float x2, float y1, float y2, spoint tl, spoint br, const color &c);
 

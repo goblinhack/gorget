@@ -528,12 +528,11 @@ void wid_game_over_select(Gamep g)
                             TEXT_FORMAT_LHS);
   wid_game_over_window->log_empty_line(g);
 
-  wid_game_over_window->log(
-      g,
-      UI_INFO3_FMT_STR // newline
-      "As you sit in the dark and wonder at the many corpses lying in your wake and as you listen to the utter silence "
-      "of the dungeon, you think to yourself... I'm going to need new employees.",
-      TEXT_FORMAT_LHS);
+  wid_game_over_window->log(g,
+                            UI_INFO3_FMT_STR // newline
+                            "As you sit in the dark and wonder at the many corpses lying in your wake and as you listen to the utter silence "
+                            "of the dungeon, you think to yourself... I'm going to need new employees.",
+                            TEXT_FORMAT_LHS);
   wid_game_over_window->log_empty_line(g);
 
   wid_game_over_window->log(g,

@@ -609,15 +609,15 @@ void config_game_gfx_update(Gamep g)
     }
 
     if (font_width * TERM_WIDTH < game_window_pix_width_get(g) - font_width - 1) {
-      log("SDL: Terminal (try %ux%u min %ux%u max %ux%u font %ux%u) can grow horiz", TERM_WIDTH, TERM_HEIGHT, TERM_WIDTH_MIN,
-          TERM_HEIGHT_MIN, TERM_WIDTH_MAX, TERM_HEIGHT_MAX, font_width, font_height);
+      log("SDL: Terminal (try %ux%u min %ux%u max %ux%u font %ux%u) can grow horiz", TERM_WIDTH, TERM_HEIGHT, TERM_WIDTH_MIN, TERM_HEIGHT_MIN,
+          TERM_WIDTH_MAX, TERM_HEIGHT_MAX, font_width, font_height);
       TERM_WIDTH++;
       continue;
     }
 
     if (font_height * TERM_HEIGHT < game_window_pix_height_get(g) - font_height - 1) {
-      log("SDL: Terminal (try %ux%u min %ux%u max %ux%u font %ux%u) can grow vert", TERM_WIDTH, TERM_HEIGHT, TERM_WIDTH_MIN,
-          TERM_HEIGHT_MIN, TERM_WIDTH_MAX, TERM_HEIGHT_MAX, font_width, font_height);
+      log("SDL: Terminal (try %ux%u min %ux%u max %ux%u font %ux%u) can grow vert", TERM_WIDTH, TERM_HEIGHT, TERM_WIDTH_MIN, TERM_HEIGHT_MIN,
+          TERM_WIDTH_MAX, TERM_HEIGHT_MAX, font_width, font_height);
       TERM_HEIGHT++;
       continue;
     }
@@ -658,15 +658,15 @@ void config_game_gfx_update(Gamep g)
     }
 
     if (font_width * TERM_WIDTH < game_window_pix_width_get(g) - font_width - 1) {
-      log("SDL: Terminal (try %ux%u min %ux%u max %ux%u font %ux%u) can grow horiz", TERM_WIDTH, TERM_HEIGHT, TERM_WIDTH_MIN,
-          TERM_HEIGHT_MIN, TERM_WIDTH_MAX, TERM_HEIGHT_MAX, font_width, font_height);
+      log("SDL: Terminal (try %ux%u min %ux%u max %ux%u font %ux%u) can grow horiz", TERM_WIDTH, TERM_HEIGHT, TERM_WIDTH_MIN, TERM_HEIGHT_MIN,
+          TERM_WIDTH_MAX, TERM_HEIGHT_MAX, font_width, font_height);
       TERM_WIDTH++;
       continue;
     }
 
     if (font_height * TERM_HEIGHT < game_window_pix_height_get(g) - font_height - 1) {
-      log("SDL: Terminal (try %ux%u min %ux%u max %ux%u font %ux%u) can grow vert", TERM_WIDTH, TERM_HEIGHT, TERM_WIDTH_MIN,
-          TERM_HEIGHT_MIN, TERM_WIDTH_MAX, TERM_HEIGHT_MAX, font_width, font_height);
+      log("SDL: Terminal (try %ux%u min %ux%u max %ux%u font %ux%u) can grow vert", TERM_WIDTH, TERM_HEIGHT, TERM_WIDTH_MIN, TERM_HEIGHT_MIN,
+          TERM_WIDTH_MAX, TERM_HEIGHT_MAX, font_width, font_height);
       TERM_HEIGHT++;
       continue;
     }

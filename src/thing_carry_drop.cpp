@@ -15,11 +15,11 @@
 //
 // Add an item to the things inventory
 //
-static auto thing_carry_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp carrier, ThingEvent &e) -> bool
+static auto thing_carry_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp owner, ThingEvent &e) -> bool
 {
   TRACE();
 
-  if (! thing_is_able_to_collect_items(carrier)) {
+  if (! thing_is_able_to_collect_items(owner)) {
     return false;
   }
 
@@ -27,20 +27,20 @@ static auto thing_carry_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp c
     return false;
   }
 
-  if (! thing_is_player(carrier) && ! thing_is_monst(carrier)) {
-    thing_err(carrier, "unexpected thing, %s", __FUNCTION__);
+  if (! thing_is_player(owner) && ! thing_is_monst(owner)) {
+    thing_err(owner, "unexpected thing, %s", __FUNCTION__);
     return false;
   }
 
   auto s = to_string(g, v, l, item);
-  THING_DBG(carrier, "carry: %s", s.c_str());
+  THING_DBG(owner, "carry: %s", s.c_str());
   TRACE_INDENT();
 
-  if (! thing_is_carried_set(g, v, l, item, carrier, e)) {
-    THING_DBG(carrier, "carry: %s (failed)", s.c_str());
+  if (! thing_is_carried_set(g, v, l, item, owner, e)) {
+    THING_DBG(owner, "carry: %s (failed)", s.c_str());
     TRACE_INDENT();
 
-    if (thing_is_player(carrier)) {
+    if (thing_is_player(owner)) {
       auto the_thing = thing_name_long_the(g, v, l, item);
       topcon("You fail to carry %s.", the_thing.c_str());
     }
@@ -49,9 +49,9 @@ static auto thing_carry_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp c
 
   (void) thing_pop(g, v, item);
 
-  thing_inventory_dump(g, v, l, carrier);
+  thing_inventory_dump(g, v, l, owner);
 
-  if (thing_is_player(carrier)) {
+  if (thing_is_player(owner)) {
     if (e.event_type != THING_EVENT_SPAWNED) {
       auto the_thing = thing_name_long_the(g, v, l, item);
       topcon("You carry %s.", the_thing.c_str());
@@ -59,7 +59,7 @@ static auto thing_carry_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp c
     game_request_to_remake_ui_set(g);
   }
 
-  thing_owner_set(g, v, l, item, carrier);
+  thing_owner_set(g, v, l, item, owner);
 
   return true;
 }
@@ -145,12 +145,12 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp dr
 //
 // Returns true/false on success/fail
 //
-[[nodiscard]] auto thing_is_carried_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp carrier, ThingEvent &e, bool val) -> bool
+[[nodiscard]] auto thing_is_carried_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp owner, ThingEvent &e, bool val) -> bool
 {
   TRACE_DEBUG();
 
-  if (! thing_is_player(carrier) && ! thing_is_monst(carrier)) {
-    thing_err(carrier, "unexpected thing for %s", __FUNCTION__);
+  if (! thing_is_player(owner) && ! thing_is_monst(owner)) {
+    thing_err(owner, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
 
@@ -161,7 +161,7 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp dr
 
   if (item->_is_carried == static_cast< int >(val)) {
     auto s = to_string(g, v, l, item);
-    THING_DBG(carrier, "carry-try: %s (failed, already carried)", s.c_str());
+    THING_DBG(owner, "carry-try: %s (failed, already carried)", s.c_str());
     return true;
   }
   auto old_value    = item->_is_carried;
@@ -177,25 +177,25 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp dr
     THING_DBG(item, "carry request");
     TRACE_INDENT();
 
-    if (! thing_on_carry_request(g, v, l, item, carrier, e)) {
+    if (! thing_on_carry_request(g, v, l, item, owner, e)) {
       //
       // Collect failed
       //
       item->_is_carried = old_value;
 
       auto s = to_string(g, v, l, item);
-      THING_DBG(carrier, "carry-try: %s (failed, carry request)", s.c_str());
+      THING_DBG(owner, "carry-try: %s (failed, carry request)", s.c_str());
       return false;
     }
 
     //
     // Add to the inventory.
     //
-    if (thing_inventory_add(g, v, l, item, carrier)) {
+    if (thing_inventory_add(g, v, l, item, owner)) {
       //
       // Success
       //
-      (void) thing_on_carry_success(g, v, l, item, carrier, e);
+      (void) thing_on_carry_success(g, v, l, item, owner, e);
     } else {
       //
       // Possibly out of slots
@@ -203,7 +203,7 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp dr
       item->_is_carried = old_value;
 
       auto s = to_string(g, v, l, item);
-      THING_DBG(carrier, "carry-try: %s (failed, inventory add)", s.c_str());
+      THING_DBG(owner, "carry-try: %s (failed, inventory add)", s.c_str());
       return false;
     }
 
@@ -214,30 +214,30 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp dr
     THING_DBG(item, "drop request");
     TRACE_INDENT();
 
-    if (! thing_on_drop_request(g, v, l, item, carrier, e)) {
+    if (! thing_on_drop_request(g, v, l, item, owner, e)) {
       //
       // Drop failed
       //
       item->_is_carried = old_value;
 
       auto s = to_string(g, v, l, item);
-      THING_DBG(carrier, "drop-try: %s (failed, drop request)", s.c_str());
+      THING_DBG(owner, "drop-try: %s (failed, drop request)", s.c_str());
       return false;
     }
 
     //
     // Remove from the inventory.
     //
-    if (thing_inventory_remove(g, v, l, item, carrier)) {
+    if (thing_inventory_remove(g, v, l, item, owner)) {
       //
       // Success
       //
-      (void) thing_on_drop_success(g, v, l, item, carrier, e);
+      (void) thing_on_drop_success(g, v, l, item, owner, e);
 
       //
       // If counts remain, keep the item as carried
       //
-      if (thing_inventory_get_item_count(g, v, l, item, carrier) != 0) {
+      if (thing_inventory_get_item_count(g, v, l, item, owner) != 0) {
         item->_is_carried = old_value;
       }
     } else {
@@ -247,7 +247,7 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp dr
       item->_is_carried = old_value;
 
       auto s = to_string(g, v, l, item);
-      THING_DBG(carrier, "drop-try: %s (failed, inventory remove)", s.c_str());
+      THING_DBG(owner, "drop-try: %s (failed, inventory remove)", s.c_str());
       return false;
     }
   }
@@ -260,11 +260,11 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp dr
   return true;
 }
 
-[[nodiscard]] auto thing_is_carried_unset(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp carrier, ThingEvent &e) -> bool
+[[nodiscard]] auto thing_is_carried_unset(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp owner, ThingEvent &e) -> bool
 {
   TRACE_DEBUG();
 
-  return thing_is_carried_set(g, v, l, item, carrier, e, false);
+  return thing_is_carried_set(g, v, l, item, owner, e, false);
 }
 
 void thing_on_carry_request_set(Tpp tp, thing_on_carry_request_t callback)
@@ -277,7 +277,7 @@ void thing_on_carry_request_set(Tpp tp, thing_on_carry_request_t callback)
   tp->on_carry_request = callback;
 }
 
-[[nodiscard]] auto thing_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp carrier, ThingEvent &e) -> bool
+[[nodiscard]] auto thing_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, ThingEvent &e) -> bool
 {
   TRACE();
   auto *tp = thing_tp(me);
@@ -291,11 +291,11 @@ void thing_on_carry_request_set(Tpp tp, thing_on_carry_request_t callback)
     //
     return true;
   }
-  if (! thing_is_player(carrier) && ! thing_is_monst(carrier)) {
-    thing_err(carrier, "unexpected thing for %s", __FUNCTION__);
+  if (! thing_is_player(owner) && ! thing_is_monst(owner)) {
+    thing_err(owner, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
-  return tp->on_carry_request(g, v, l, me, carrier, e);
+  return tp->on_carry_request(g, v, l, me, owner, e);
 }
 
 void thing_on_drop_request_set(Tpp tp, thing_on_drop_request_t callback)
@@ -339,7 +339,7 @@ void thing_on_carry_success_set(Tpp tp, thing_on_carry_success_t callback)
   tp->on_carry_success = callback;
 }
 
-[[nodiscard]] auto thing_on_carry_success(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp carrier, ThingEvent &e) -> bool
+[[nodiscard]] auto thing_on_carry_success(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, ThingEvent &e) -> bool
 {
   TRACE();
   auto *tp = thing_tp(me);
@@ -353,11 +353,11 @@ void thing_on_carry_success_set(Tpp tp, thing_on_carry_success_t callback)
     //
     return true;
   }
-  if (! thing_is_player(carrier) && ! thing_is_monst(carrier)) {
-    thing_err(carrier, "unexpected thing for %s", __FUNCTION__);
+  if (! thing_is_player(owner) && ! thing_is_monst(owner)) {
+    thing_err(owner, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
-  return tp->on_carry_success(g, v, l, me, carrier, e);
+  return tp->on_carry_success(g, v, l, me, owner, e);
 }
 
 void thing_on_drop_success_set(Tpp tp, thing_on_drop_success_t callback)

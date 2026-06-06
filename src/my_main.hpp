@@ -38,59 +38,59 @@ void               warn(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 #define MY_STDOUT (g_log_stdout ? g_log_stdout : redirect_stdout())
 #define MY_STDERR (g_log_stderr ? g_log_stderr : redirect_stderr())
 
-#define CROAK(...)                                                                                                                         \
-  /* Log this now, just in case we crash later */                                                                                          \
-  fprintf(stderr, "CROAK: " __VA_ARGS__);                                                                                                  \
-  fprintf(stderr, "\n");                                                                                                                   \
-  if (stderr != MY_STDERR) {                                                                                                               \
-    fprintf(MY_STDERR, "CROAK: " __VA_ARGS__);                                                                                             \
-    fprintf(MY_STDERR, "\n");                                                                                                              \
-  }                                                                                                                                        \
-  if (g_thread_id == MAIN_THREAD) {                                                                                                        \
-    fprintf(stderr, "croaked it at %s:%s():%u, main thread\n", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM);                                \
-    if (stderr != MY_STDERR) {                                                                                                             \
-      fprintf(MY_STDERR, "croaked it at %s:%s():%u, main thread\n", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM);                           \
-    }                                                                                                                                      \
-    croak_handler(false, __VA_ARGS__);                                                                                                     \
-    cleanup();                                                                                                                             \
-    exit(1);                                                                                                                               \
-  } else {                                                                                                                                 \
-    fprintf(stderr, "croaked it at %s:%s():%u, thread %u\n", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM, g_thread_id);                     \
-    if (stderr != MY_STDERR) {                                                                                                             \
-      fprintf(MY_STDERR, "croaked it at %s:%s():%u, thread %u\n", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM, g_thread_id);                \
-    }                                                                                                                                      \
-    croak_handler(false, __VA_ARGS__);                                                                                                     \
-    exit(1);                                                                                                                               \
+#define CROAK(...)                                                                                                                              \
+  /* Log this now, just in case we crash later */                                                                                               \
+  fprintf(stderr, "CROAK: " __VA_ARGS__);                                                                                                       \
+  fprintf(stderr, "\n");                                                                                                                        \
+  if (stderr != MY_STDERR) {                                                                                                                    \
+    fprintf(MY_STDERR, "CROAK: " __VA_ARGS__);                                                                                                  \
+    fprintf(MY_STDERR, "\n");                                                                                                                   \
+  }                                                                                                                                             \
+  if (g_thread_id == MAIN_THREAD) {                                                                                                             \
+    fprintf(stderr, "croaked it at %s:%s():%u, main thread\n", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM);                                     \
+    if (stderr != MY_STDERR) {                                                                                                                  \
+      fprintf(MY_STDERR, "croaked it at %s:%s():%u, main thread\n", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM);                                \
+    }                                                                                                                                           \
+    croak_handler(false, __VA_ARGS__);                                                                                                          \
+    cleanup();                                                                                                                                  \
+    exit(1);                                                                                                                                    \
+  } else {                                                                                                                                      \
+    fprintf(stderr, "croaked it at %s:%s():%u, thread %u\n", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM, g_thread_id);                          \
+    if (stderr != MY_STDERR) {                                                                                                                  \
+      fprintf(MY_STDERR, "croaked it at %s:%s():%u, thread %u\n", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM, g_thread_id);                     \
+    }                                                                                                                                           \
+    croak_handler(false, __VA_ARGS__);                                                                                                          \
+    exit(1);                                                                                                                                    \
   }
 
-#define DIE_CLEAN(...)                                                                                                                     \
-  croak_handler(true, "Exiting at %s:%s():%u", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM);                                                \
-  cleanup();                                                                                                                               \
+#define DIE_CLEAN(...)                                                                                                                          \
+  croak_handler(true, "Exiting at %s:%s():%u", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM);                                                     \
+  cleanup();                                                                                                                                    \
   exit(0);
 
 #ifdef DEBUG_BUILD
 #define ERR CROAK
 #else
-#define ERR(...)                                                                                                                           \
-  /* Log this now, just in case we crash later */                                                                                          \
-  fprintf(stderr, "ERR: " __VA_ARGS__);                                                                                                    \
-  fprintf(stderr, "\n");                                                                                                                   \
-  if (stderr != MY_STDERR) {                                                                                                               \
-    fprintf(MY_STDERR, "ERR: " __VA_ARGS__);                                                                                               \
-    fprintf(MY_STDERR, "\n");                                                                                                              \
-  }                                                                                                                                        \
-  if (g_thread_id == MAIN_THREAD) {                                                                                                        \
-    fprintf(stderr, "error at %s:%s():%u, main thread\n", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM);                                     \
-    if (stderr != MY_STDERR) {                                                                                                             \
-      fprintf(MY_STDERR, "error at %s:%s():%u, main thread\n", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM);                                \
-    }                                                                                                                                      \
-    err(__VA_ARGS__);                                                                                                                      \
-  } else {                                                                                                                                 \
-    fprintf(stderr, "error at %s:%s():%u, thread %u\n", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM, g_thread_id);                          \
-    if (stderr != MY_STDERR) {                                                                                                             \
-      fprintf(MY_STDERR, "error at %s:%s():%u, thread %u\n", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM, g_thread_id);                     \
-    }                                                                                                                                      \
-    err(__VA_ARGS__);                                                                                                                      \
+#define ERR(...)                                                                                                                                \
+  /* Log this now, just in case we crash later */                                                                                               \
+  fprintf(stderr, "ERR: " __VA_ARGS__);                                                                                                         \
+  fprintf(stderr, "\n");                                                                                                                        \
+  if (stderr != MY_STDERR) {                                                                                                                    \
+    fprintf(MY_STDERR, "ERR: " __VA_ARGS__);                                                                                                    \
+    fprintf(MY_STDERR, "\n");                                                                                                                   \
+  }                                                                                                                                             \
+  if (g_thread_id == MAIN_THREAD) {                                                                                                             \
+    fprintf(stderr, "error at %s:%s():%u, main thread\n", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM);                                          \
+    if (stderr != MY_STDERR) {                                                                                                                  \
+      fprintf(MY_STDERR, "error at %s:%s():%u, main thread\n", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM);                                     \
+    }                                                                                                                                           \
+    err(__VA_ARGS__);                                                                                                                           \
+  } else {                                                                                                                                      \
+    fprintf(stderr, "error at %s:%s():%u, thread %u\n", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM, g_thread_id);                               \
+    if (stderr != MY_STDERR) {                                                                                                                  \
+      fprintf(MY_STDERR, "error at %s:%s():%u, thread %u\n", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM, g_thread_id);                          \
+    }                                                                                                                                           \
+    err(__VA_ARGS__);                                                                                                                           \
   }
 #endif
 
@@ -103,12 +103,12 @@ void               warn(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 #define IF_NODEBUG  if (NODEBUG) [[unlikely]]
 #define IF_NODEBUG2 if (NODEBUG2) [[unlikely]]
 
-#define DBG                                                                                                                                \
-  if (DEBUG)                                                                                                                               \
+#define DBG                                                                                                                                     \
+  if (DEBUG)                                                                                                                                    \
   log
 
-#define DBG2                                                                                                                               \
-  if (DEBUG2)                                                                                                                              \
+#define DBG2                                                                                                                                    \
+  if (DEBUG2)                                                                                                                                   \
   log
 
 //

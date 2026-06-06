@@ -42,8 +42,7 @@
   // Don't allow shortcuts across chasms, hence _possible instead of _ai
   //
   if ((to.x == at.x - 1) && (to.y == at.y - 1)) {
-    if (! thing_can_move_to_possible(g, v, l, me, bpoint(at.x - 1, at.y))
-        && ! thing_can_move_to_possible(g, v, l, me, bpoint(at.x, at.y - 1))) {
+    if (! thing_can_move_to_possible(g, v, l, me, bpoint(at.x - 1, at.y)) && ! thing_can_move_to_possible(g, v, l, me, bpoint(at.x, at.y - 1))) {
       //
       // Block these paths
       //
@@ -57,8 +56,7 @@
   }
 
   if ((to.x == at.x - 1) && (to.y == at.y + 1)) {
-    if (! thing_can_move_to_possible(g, v, l, me, bpoint(at.x - 1, at.y))
-        && ! thing_can_move_to_possible(g, v, l, me, bpoint(at.x, at.y + 1))) {
+    if (! thing_can_move_to_possible(g, v, l, me, bpoint(at.x - 1, at.y)) && ! thing_can_move_to_possible(g, v, l, me, bpoint(at.x, at.y + 1))) {
       //
       // Block these paths
       //
@@ -72,8 +70,7 @@
   }
 
   if ((to.x == at.x + 1) && (to.y == at.y - 1)) {
-    if (! thing_can_move_to_possible(g, v, l, me, bpoint(at.x + 1, at.y))
-        && ! thing_can_move_to_possible(g, v, l, me, bpoint(at.x, at.y - 1))) {
+    if (! thing_can_move_to_possible(g, v, l, me, bpoint(at.x + 1, at.y)) && ! thing_can_move_to_possible(g, v, l, me, bpoint(at.x, at.y - 1))) {
       //
       // Block these paths
       //
@@ -87,8 +84,7 @@
   }
 
   if ((to.x == at.x + 1) && (to.y == at.y + 1)) {
-    if (! thing_can_move_to_possible(g, v, l, me, bpoint(at.x + 1, at.y))
-        && ! thing_can_move_to_possible(g, v, l, me, bpoint(at.x, at.y + 1))) {
+    if (! thing_can_move_to_possible(g, v, l, me, bpoint(at.x + 1, at.y)) && ! thing_can_move_to_possible(g, v, l, me, bpoint(at.x, at.y + 1))) {
       //
       // Block these paths
       //

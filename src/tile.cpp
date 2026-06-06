@@ -925,8 +925,8 @@ void tile_blit(const Tilep &tile, spoint tl, spoint br, const color &color_tl, c
   blit(tile->gl_binding(), x1, y2, x2, y1, tl.x, br.y, br.x, tl.y, color_tl, color_tr, color_bl, color_br);
 }
 
-void tile_blit_section(const Tilep &tile, const fpoint &tile_tl, const fpoint &tile_br, const spoint tl, const spoint br,
-                       const color &color_tl, const color &color_tr, const color &color_bl, const color &color_br)
+void tile_blit_section(const Tilep &tile, const fpoint &tile_tl, const fpoint &tile_br, const spoint tl, const spoint br, const color &color_tl,
+                       const color &color_tr, const color &color_bl, const color &color_br)
 {
   TRACE_DEBUG();
 

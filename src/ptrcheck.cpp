@@ -131,12 +131,12 @@ void ERROR(const char *fmt, ...)
   va_end(args);
 }
 
-#define CROAK(args...)                                                                                                                     \
-  std::cerr << std::format("Died at {}:{} line {}", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM);                                           \
+#define CROAK(args...)                                                                                                                          \
+  std::cerr << std::format("Died at {}:{} line {}", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM);                                                \
   CLEANUP(args);
 
-#define ERR(args...)                                                                                                                       \
-  std::cerr << std::format("Error at {}:{} line {}", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM);                                          \
+#define ERR(args...)                                                                                                                            \
+  std::cerr << std::format("Error at {}:{} line {}", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM);                                               \
   ERROR(args);
 
 #endif
@@ -322,8 +322,8 @@ static auto ptrcheck_describe_pointer(int mtype, const void *ptr) -> Ptrcheck *
 
     auto *a = pc->allocated_by;
     if (a != nullptr) {
-      std::println(stderr, "PTRCHECK: Currently allocated at {} \"{}\" ({} bytes) at {}:{} line {} at {}", pc->ptr, pc->what, pc->size,
-                   a->file, a->func, a->line, a->ts);
+      std::println(stderr, "PTRCHECK: Currently allocated at {} \"{}\" ({} bytes) at {}:{} line {} at {}", pc->ptr, pc->what, pc->size, a->file,
+                   a->func, a->line, a->ts);
 
       std::print(stderr, "{}", a->bt);
     }
@@ -371,8 +371,8 @@ static auto ptrcheck_describe_pointer(int mtype, const void *ptr) -> Ptrcheck *
     if (pc->ptr == ptr) {
       auto *a = pc->allocated_by;
       if (a != nullptr) {
-        std::println(stderr, "PTRCHECK: {} allocated at \"{}\" ({} bytes) at {}:{} line {} at {}\n{}", ptr, pc->what, pc->size, a->file,
-                     a->func, a->line, a->ts, a->bt);
+        std::println(stderr, "PTRCHECK: {} allocated at \"{}\" ({} bytes) at {}:{} line {} at {}\n{}", ptr, pc->what, pc->size, a->file, a->func,
+                     a->line, a->ts, a->bt);
       }
 
       auto *f = pc->freed_by;
@@ -392,8 +392,7 @@ static auto ptrcheck_describe_pointer(int mtype, const void *ptr) -> Ptrcheck *
 
         auto *H = pc->last_seen[ h ];
         if (H != nullptr) {
-          std::println(stderr, "PTRCHECK: {} last seen at [{}] at {}:{} line {} at {}\n{}", ptr, i, H->file, H->func, H->line, H->ts,
-                       H->bt);
+          std::println(stderr, "PTRCHECK: {} last seen at [{}] at {}:{} line {} at {}\n{}", ptr, i, H->file, H->func, H->line, H->ts, H->bt);
         }
       }
 #endif
@@ -465,8 +464,8 @@ static auto ptrcheck_verify_pointer(int mtype, const void *ptr, const char *func
       (void) timestamp(l->ts, SIZEOF(l->ts));
 
 #ifdef ENABLE_DEBUG_PTRCHECK
-      std::cerr << std::format("PTRCHECK: {} verified at \"{}\" ({} bytes) at {}:{} line {} at {}\n", ptr, pc->what, pc->size, file, func,
-                               line, l->ts);
+      std::cerr << std::format("PTRCHECK: {} verified at \"{}\" ({} bytes) at {}:{} line {} at {}\n", ptr, pc->what, pc->size, file, func, line,
+                               l->ts);
 #endif
 
       pc->last_seen_at++;
@@ -591,8 +590,7 @@ static auto ptrcheck_free_(int mtype, void *ptr, const char *func, const char *f
 #ifdef ENABLE_DEBUG_PTRCHECK
   char tmp[ MY_TIMESTAMP_SIZE ];
   auto ts = timestamp(tmp, SIZEOF(tmp));
-  fprintf(stderr, "%s: PTRCHECK: Free %p at %s:%s line %u ringbuf_current_size %u\n", ts, ptr, file, func, line,
-          ringbuf_current_size[ mtype ]);
+  fprintf(stderr, "%s: PTRCHECK: Free %p at %s:%s line %u ringbuf_current_size %u\n", ts, ptr, file, func, line, ringbuf_current_size[ mtype ]);
 #endif
 
   if (ptr == nullptr) {
@@ -695,8 +693,8 @@ void ptrcheck_leak_print(int mtype)
 
       auto *a = pc->allocated_by;
       if (a != nullptr) {
-        std::println(stderr, "PTRCHECK: Leak {} \"{}\" ({} bytes) at {}:{} line {} at {}\n{}", pc->ptr, pc->what, pc->size, a->file,
-                     a->func, a->line, a->ts, a->bt);
+        std::println(stderr, "PTRCHECK: Leak {} \"{}\" ({} bytes) at {}:{} line {} at {}\n{}", pc->ptr, pc->what, pc->size, a->file, a->func,
+                     a->line, a->ts, a->bt);
       } else {
         std::println(stderr, "PTRCHECK: Leak \"{}\" ({} bytes)", pc->what, pc->size);
       }

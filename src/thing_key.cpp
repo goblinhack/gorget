@@ -11,7 +11,7 @@
 //
 // Add a key to the things inventory
 //
-[[nodiscard]] auto thing_collect_key(Gamep g, Levelsp v, Levelp l, Thingp carrier, Thingp it) -> bool
+[[nodiscard]] auto thing_collect_key(Gamep g, Levelsp v, Levelp l, Thingp owner, Thingp it) -> bool
 {
   TRACE();
 
@@ -19,19 +19,19 @@
     return false;
   }
 
-  if (! thing_is_able_to_collect_keys(carrier)) {
+  if (! thing_is_able_to_collect_keys(owner)) {
     return false;
   }
 
-  if (! thing_is_player(carrier) && ! thing_is_monst(carrier)) {
-    thing_err(carrier, "unexpected thing for %s", __FUNCTION__);
+  if (! thing_is_player(owner) && ! thing_is_monst(owner)) {
+    thing_err(owner, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
 
   ThingEvent e {
       .reason     = "by carrying",       //
       .event_type = THING_EVENT_CARRIED, //
-      .source     = carrier              //
+      .source     = owner                //
   };
 
   THING_DBG(it, "dead due to carrying");
@@ -39,7 +39,7 @@
 
   thing_dead(g, v, l, it, e);
 
-  (void) thing_keys_carried_incr(g, v, l, carrier, 1);
+  (void) thing_keys_carried_incr(g, v, l, owner, 1);
 
   return true;
 }

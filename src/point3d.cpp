@@ -18,17 +18,11 @@ template < typename T > auto operator-(MyApoint3d< T > const &a, MyApoint3d< T >
 template MyApoint3d< short > operator- < short >(MyApoint3d< short > const &, MyApoint3d< short > const &);
 template MyApoint3d< float > operator- < float >(MyApoint3d< float > const &, MyApoint3d< float > const &);
 
-template < typename T > auto operator*(MyApoint3d< T > const &a, T b) -> MyApoint3d< T >
-{
-  return MyApoint3d< T >(a.x * b, a.y * b, a.z * b);
-}
+template < typename T > auto operator*(MyApoint3d< T > const &a, T b) -> MyApoint3d< T > { return MyApoint3d< T >(a.x * b, a.y * b, a.z * b); }
 template MyApoint3d< short > operator* < short >(MyApoint3d< short > const &, short);
 template MyApoint3d< float > operator* < float >(MyApoint3d< float > const &, float);
 
-template < typename T > auto operator/(MyApoint3d< T > const &a, T b) -> MyApoint3d< T >
-{
-  return MyApoint3d< T >(a.x / b, a.y / b, a.z / b);
-}
+template < typename T > auto operator/(MyApoint3d< T > const &a, T b) -> MyApoint3d< T > { return MyApoint3d< T >(a.x / b, a.y / b, a.z / b); }
 template MyApoint3d< short > operator/ < short >(MyApoint3d< short > const &, short);
 template MyApoint3d< float > operator/ < float >(MyApoint3d< float > const &, float);
 

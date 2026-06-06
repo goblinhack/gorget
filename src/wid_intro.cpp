@@ -135,15 +135,13 @@ void wid_intro_select(Gamep g)
   wid_intro_window->log(g, UI_GREEN_FMT_STR + std::string("Greetings, foolish ") + name + ".");
   wid_intro_window->log_empty_line(g);
   wid_intro_window->log_empty_line(g);
-  wid_intro_window->log(
-      g,
-      UI_INFO1_FMT_STR
-      "You were a once powerful dark wizard, cast out of the underhell realms by the slightly darker wizard, Lord Batcat III.",
-      TEXT_FORMAT_LHS);
+  wid_intro_window->log(g,
+                        UI_INFO1_FMT_STR
+                        "You were a once powerful dark wizard, cast out of the underhell realms by the slightly darker wizard, Lord Batcat III.",
+                        TEXT_FORMAT_LHS);
   wid_intro_window->log_empty_line(g);
 
-  wid_intro_window->log(g,
-                        UI_INFO2_FMT_STR "Your quest is to reclaim your vantablack throne by fighting through twenty five levels of doom.",
+  wid_intro_window->log(g, UI_INFO2_FMT_STR "Your quest is to reclaim your vantablack throne by fighting through twenty five levels of doom.",
                         TEXT_FORMAT_LHS);
   wid_intro_window->log_empty_line(g);
 

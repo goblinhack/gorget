@@ -878,8 +878,8 @@ static void ascii_blit(Gamep g)
           color const color_br = cell->color_br[ depth ];
 
           tile_blit_section(cell->tile[ depth ], fpoint(cell->tx[ depth ], cell->ty[ depth ]),
-                            fpoint(cell->tx[ depth ] + cell->dx[ depth ], cell->ty[ depth ] + cell->dy[ depth ]), tile_tl, tile_br,
-                            color_tl, color_tr, color_bl, color_br);
+                            fpoint(cell->tx[ depth ] + cell->dx[ depth ], cell->ty[ depth ] + cell->dy[ depth ]), tile_tl, tile_br, color_tl,
+                            color_tr, color_bl, color_br);
         }
       }
 
@@ -893,8 +893,8 @@ static void ascii_blit(Gamep g)
           color const color_br = cell->color_br[ depth ];
 
           tile_blit_section(tile, fpoint(cell->tx[ depth ], cell->ty[ depth ]),
-                            fpoint(cell->tx[ depth ] + cell->dx[ depth ], cell->ty[ depth ] + cell->dy[ depth ]), tile_tl, tile_br,
-                            color_tl, color_tr, color_bl, color_br);
+                            fpoint(cell->tx[ depth ] + cell->dx[ depth ], cell->ty[ depth ] + cell->dy[ depth ]), tile_tl, tile_br, color_tl,
+                            color_tr, color_bl, color_br);
         }
       }
 
@@ -1165,8 +1165,8 @@ static void ascii_put_box_(int style, const TileLayers tiles_in, int x1, int y1,
   }
 }
 
-static void ascii_put_box_(int style, const TileLayers tiles, int x, int y, int width, int height, color col_bg, color col_text,
-                           const char *fmt, va_list args)
+static void ascii_put_box_(int style, const TileLayers tiles, int x, int y, int width, int height, color col_bg, color col_text, const char *fmt,
+                           va_list args)
 {
   if (*fmt == 0) {
     ascii_put_box_(style, tiles, x, y, x + width - 1, y + height - 1, col_bg, col_text, nullptr /* context */);

@@ -26,8 +26,7 @@ static auto tp_potion_healing_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
   return UI_INFO1_FMT_STR "Consume this potion to restore your health. Other problems in life may remain.";
 }
 
-[[nodiscard]] static auto tp_potion_healing_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp collector, ThingEvent &e)
-    -> bool
+[[nodiscard]] static auto tp_potion_healing_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp collector, ThingEvent &e) -> bool
 {
   TRACE();
 
@@ -41,8 +40,7 @@ static auto tp_potion_healing_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
   return true;
 }
 
-[[nodiscard]] static auto tp_potion_healing_on_carry_success(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp collector, ThingEvent &e)
-    -> bool
+[[nodiscard]] static auto tp_potion_healing_on_carry_success(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp collector, ThingEvent &e) -> bool
 {
   TRACE();
 

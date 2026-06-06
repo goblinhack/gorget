@@ -41,8 +41,8 @@ void tp_display_init(Tpp tp)
   }
 }
 
-void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp_maybe_null, Thingp t_maybe_null, spoint &tl,
-                                 spoint &br, uint16_t *tile_index)
+void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp_maybe_null, Thingp t_maybe_null, spoint &tl, spoint &br,
+                                 uint16_t *tile_index)
 {
   TRACE_DEBUG();
 
@@ -202,8 +202,8 @@ static void thing_display_outlined_blit(Gamep g, Tpp tp, spoint tl, spoint br, T
 //
 // Show an outline if obscured? e.g. foliage and the player hiding in it
 //
-[[nodiscard]] static auto thing_display_hidden(Thingp t_maybe_null, spoint tl, spoint br, Tilep tile, float x1, float x2, float y1,
-                                               float y2, color fg) -> bool
+[[nodiscard]] static auto thing_display_hidden(Thingp t_maybe_null, spoint tl, spoint br, Tilep tile, float x1, float x2, float y1, float y2,
+                                               color fg) -> bool
 {
   TRACE_DEBUG();
 
@@ -232,9 +232,8 @@ static void thing_display_outlined_blit(Gamep g, Tpp tp, spoint tl, spoint br, T
   return true;
 }
 
-static void thing_display_blit(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t_maybe_null, spoint tl, spoint br, Tilep tile, float x1,
-                               float x2, float y1, float y2, FboEnum fbo, color fg, LightPixels *light_pixels = nullptr,
-                               bool blit_flush_per_line = false)
+static void thing_display_blit(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t_maybe_null, spoint tl, spoint br, Tilep tile, float x1, float x2,
+                               float y1, float y2, FboEnum fbo, color fg, LightPixels *light_pixels = nullptr, bool blit_flush_per_line = false)
 {
   TRACE_DEBUG();
 
@@ -312,14 +311,13 @@ static void thing_display_blit(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t_ma
 //
 // Display a spinning falling thing
 //
-static void thing_display_falling(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t, spoint tl, spoint br, Tilep tile, float x1, float x2,
-                                  float y1, float y2, FboEnum fbo, color fg)
+static void thing_display_falling(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t, spoint tl, spoint br, Tilep tile, float x1, float x2, float y1,
+                                  float y2, FboEnum fbo, color fg)
 {
   TRACE_DEBUG();
 
   int const fall_height = thing_is_falling(t);
-  int const dh
-      = static_cast< int >(((0.5F * (static_cast< float >(br.y - tl.y))) / static_cast< float >(THING_FALL_ANIM_MS)) * fall_height);
+  int const dh = static_cast< int >(((0.5F * (static_cast< float >(br.y - tl.y))) / static_cast< float >(THING_FALL_ANIM_MS)) * fall_height);
 
   tl.x += dh;
   tl.y += dh;
@@ -341,8 +339,8 @@ static void thing_display_falling(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t
 //
 // Display a spinning thing
 //
-static void thing_display_rotated(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t, spoint tl, spoint br, Tilep tile, float x1, float x2,
-                                  float y1, float y2, FboEnum fbo, color fg)
+static void thing_display_rotated(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t, spoint tl, spoint br, Tilep tile, float x1, float x2, float y1,
+                                  float y2, FboEnum fbo, color fg)
 {
   TRACE_DEBUG();
 
@@ -361,8 +359,8 @@ static void thing_display_rotated(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t
 //
 // Handle all the various lighting modes to display a thing
 //
-static void thing_display_it(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t_maybe_null, spoint tl, spoint br, Tilep tile, float x1,
-                             float x2, float y1, float y2, FboEnum fbo, color fg, LightPixels *light_pixels = nullptr)
+static void thing_display_it(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t_maybe_null, spoint tl, spoint br, Tilep tile, float x1, float x2,
+                             float y1, float y2, FboEnum fbo, color fg, LightPixels *light_pixels = nullptr)
 {
   TRACE_DEBUG();
 

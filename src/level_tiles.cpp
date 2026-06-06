@@ -110,17 +110,17 @@ static void level_assign_tiles_at(Gamep g, Levelsp v, Levelp l, const bpoint &p)
       int8_t   block_type       = -1;
       uint16_t mask             = 0;
 
-#define BLOCK(a, b, c, d, e, f, g, h, i, _index_)                                                                                          \
-  mask = ((i) << 8) | ((h) << 7) | ((g) << 6) | ((f) << 5) | ((e) << 4) | ((d) << 3) | ((c) << 2) | ((b) << 1) | ((a) << 0);               \
-                                                                                                                                           \
-  if ((mask & omask) == mask) {                                                                                                            \
-    uint32_t difference = mask ^ omask;                                                                                                    \
-    BITCOUNT(difference);                                                                                                                  \
-    block_type_score = 32 - difference;                                                                                                    \
-    if (block_type_score > best_block_type) {                                                                                              \
-      best_block_type = block_type_score;                                                                                                  \
-      block_type      = _index_;                                                                                                           \
-    }                                                                                                                                      \
+#define BLOCK(a, b, c, d, e, f, g, h, i, _index_)                                                                                               \
+  mask = ((i) << 8) | ((h) << 7) | ((g) << 6) | ((f) << 5) | ((e) << 4) | ((d) << 3) | ((c) << 2) | ((b) << 1) | ((a) << 0);                    \
+                                                                                                                                                \
+  if ((mask & omask) == mask) {                                                                                                                 \
+    uint32_t difference = mask ^ omask;                                                                                                         \
+    BITCOUNT(difference);                                                                                                                       \
+    block_type_score = 32 - difference;                                                                                                         \
+    if (block_type_score > best_block_type) {                                                                                                   \
+      best_block_type = block_type_score;                                                                                                       \
+      block_type      = _index_;                                                                                                                \
+    }                                                                                                                                           \
   }
 
       BLOCK(1, 1, 1, 1, 1, 1, 1, 1, 1, IS_JOIN_BLOCK)

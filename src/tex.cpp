@@ -322,8 +322,7 @@ static void load_images(SDL_Surface **surf1_out, const std::string &filename)
 // 3 - white outline with black interior
 // 4 - white outline with empty interior
 //
-static auto tex_create_masks_from_surface(SDL_Surface *src, const std::string &file, const std::string &name, int mode)
-    -> std::vector< Texp >
+static auto tex_create_masks_from_surface(SDL_Surface *src, const std::string &file, const std::string &name, int mode) -> std::vector< Texp >
 {
   auto name_monochrome             = name + "_monochrome";
   auto name_mask                   = name + "_mask";
@@ -403,9 +402,8 @@ static auto tex_create_masks_from_surface(SDL_Surface *src, const std::string &f
       //
       if (col_orig.a > 0) {
         auto          col_monochrome = col_orig;
-        uint8_t const avg
-            = (static_cast< int >(col_monochrome.r) + static_cast< int >(col_monochrome.g) + static_cast< int >(col_monochrome.b))
-            / UI_LIGHT_BACKGROUND;
+        uint8_t const avg = (static_cast< int >(col_monochrome.r) + static_cast< int >(col_monochrome.g) + static_cast< int >(col_monochrome.b))
+                          / UI_LIGHT_BACKGROUND;
         col_monochrome.r = avg;
         col_monochrome.g = avg;
         col_monochrome.b = avg;

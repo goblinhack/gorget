@@ -37,107 +37,107 @@
 //
 // Push elements onto the array buffer.
 //
-#define GL_PUSH_TEXCOORD(p, x, y)                                                                                                          \
-  {                                                                                                                                        \
-    *(p)++ = x;                                                                                                                            \
-    *(p)++ = y;                                                                                                                            \
+#define GL_PUSH_TEXCOORD(p, x, y)                                                                                                               \
+  {                                                                                                                                             \
+    *(p)++ = x;                                                                                                                                 \
+    *(p)++ = y;                                                                                                                                 \
   }
 
 //
 // Push elements onto the array buffer.
 //
-#define GL_PUSH_VERTEX(p, x, y)                                                                                                            \
-  {                                                                                                                                        \
-    auto c = (GLshort *) (p);                                                                                                              \
-    *c++   = x;                                                                                                                            \
-    *c++   = y;                                                                                                                            \
-    (p)    = (GLfloat *) c;                                                                                                                \
+#define GL_PUSH_VERTEX(p, x, y)                                                                                                                 \
+  {                                                                                                                                             \
+    auto c = (GLshort *) (p);                                                                                                                   \
+    *c++   = x;                                                                                                                                 \
+    *c++   = y;                                                                                                                                 \
+    (p)    = (GLfloat *) c;                                                                                                                     \
   }
 
 //
 // Push elements onto the array buffer.
 //
-#define GL_PUSH_RGBA(p, r, g, b, a)                                                                                                        \
-  {                                                                                                                                        \
-    auto c = (GLubyte *) (p);                                                                                                              \
-    *c++   = r;                                                                                                                            \
-    *c++   = g;                                                                                                                            \
-    *c++   = b;                                                                                                                            \
-    *c++   = a;                                                                                                                            \
-    (p)    = (GLfloat *) c;                                                                                                                \
+#define GL_PUSH_RGBA(p, r, g, b, a)                                                                                                             \
+  {                                                                                                                                             \
+    auto c = (GLubyte *) (p);                                                                                                                   \
+    *c++   = r;                                                                                                                                 \
+    *c++   = g;                                                                                                                                 \
+    *c++   = b;                                                                                                                                 \
+    *c++   = a;                                                                                                                                 \
+    (p)    = (GLfloat *) c;                                                                                                                     \
   }
 
-#define Vertex2(x, y)                                                                                                                      \
-  *xyp++ = x;                                                                                                                              \
+#define Vertex2(x, y)                                                                                                                           \
+  *xyp++ = x;                                                                                                                                   \
   *xyp++ = y;
 
 //
 // GL_PUSH_TRIANGLE
 //
-#define GL_PUSH_TRIANGLE_COLORED(p, p_end, x1, y1, x2, y2, x3, y3, r1, g1, b1, a1, r2, g2, b2, a2, r3, g3, b3, a3)                         \
-  {                                                                                                                                        \
-    GL_PUSH_VERTEX(p, x1, y1);                                                                                                             \
-    GL_PUSH_RGBA(p, r1, g1, b1, a1);                                                                                                       \
-    GL_PUSH_VERTEX(p, x2, y2);                                                                                                             \
-    GL_PUSH_RGBA(p, r2, g2, b2, a2);                                                                                                       \
-    GL_PUSH_VERTEX(p, x3, y3);                                                                                                             \
-    GL_PUSH_RGBA(p, r2, g3, b3, a3);                                                                                                       \
+#define GL_PUSH_TRIANGLE_COLORED(p, p_end, x1, y1, x2, y2, x3, y3, r1, g1, b1, a1, r2, g2, b2, a2, r3, g3, b3, a3)                              \
+  {                                                                                                                                             \
+    GL_PUSH_VERTEX(p, x1, y1);                                                                                                                  \
+    GL_PUSH_RGBA(p, r1, g1, b1, a1);                                                                                                            \
+    GL_PUSH_VERTEX(p, x2, y2);                                                                                                                  \
+    GL_PUSH_RGBA(p, r2, g2, b2, a2);                                                                                                            \
+    GL_PUSH_VERTEX(p, x3, y3);                                                                                                                  \
+    GL_PUSH_RGBA(p, r2, g3, b3, a3);                                                                                                            \
   }
 
-#define GL_PUSH_COLORED_POINT(p, p_end, x1, y1, r1, g1, b1, a1)                                                                            \
-  {                                                                                                                                        \
-    GL_PUSH_VERTEX(p, x1, y1);                                                                                                             \
-    GL_PUSH_RGBA(p, r1, g1, b1, a1);                                                                                                       \
+#define GL_PUSH_COLORED_POINT(p, p_end, x1, y1, r1, g1, b1, a1)                                                                                 \
+  {                                                                                                                                             \
+    GL_PUSH_VERTEX(p, x1, y1);                                                                                                                  \
+    GL_PUSH_RGBA(p, r1, g1, b1, a1);                                                                                                            \
   }
 
-#define GL_PUSH_POINT(p, p_end, x1, y1)                                                                                                    \
-  {                                                                                                                                        \
-    GL_PUSH_VERTEX(p, x1, y1);                                                                                                             \
+#define GL_PUSH_POINT(p, p_end, x1, y1)                                                                                                         \
+  {                                                                                                                                             \
+    GL_PUSH_VERTEX(p, x1, y1);                                                                                                                  \
   }
 
 //
 // GL_PUSH_TEX_POINT
 //
-#define GL_PUSH_TEX_POINT(p, p_end, tx, ty, x1, y1, r1, g1, b1, a1)                                                                        \
-  {                                                                                                                                        \
-    GL_PUSH_TEXCOORD(p, tx, ty);                                                                                                           \
-    GL_PUSH_VERTEX(p, x1, y1);                                                                                                             \
-    GL_PUSH_RGBA(p, r1, g1, b1, a1);                                                                                                       \
+#define GL_PUSH_TEX_POINT(p, p_end, tx, ty, x1, y1, r1, g1, b1, a1)                                                                             \
+  {                                                                                                                                             \
+    GL_PUSH_TEXCOORD(p, tx, ty);                                                                                                                \
+    GL_PUSH_VERTEX(p, x1, y1);                                                                                                                  \
+    GL_PUSH_RGBA(p, r1, g1, b1, a1);                                                                                                            \
   }
 
-#define TRIANGLE_COLORED(x1, y1, x2, y2, x3, y3, r1, g1, b1, a1, r2, g2, b2, a2, r3, g3, b3, a3)                                           \
-  {                                                                                                                                        \
-    GL_PUSH_TRIANGLE_COLORED(bufp, bufp_end, x1, y1, x2, y2, x3, y3, r1, g1, b1, a1, r2, g2, b2, a2, r3, g3, b3, a3);                      \
+#define TRIANGLE_COLORED(x1, y1, x2, y2, x3, y3, r1, g1, b1, a1, r2, g2, b2, a2, r3, g3, b3, a3)                                                \
+  {                                                                                                                                             \
+    GL_PUSH_TRIANGLE_COLORED(bufp, bufp_end, x1, y1, x2, y2, x3, y3, r1, g1, b1, a1, r2, g2, b2, a2, r3, g3, b3, a3);                           \
   }
 
-#define PUSH_COLORED_POINT(x1, y1, r1, g1, b1, a1)                                                                                         \
-  {                                                                                                                                        \
-    GL_PUSH_COLORED_POINT(bufp, bufp_end, x1, y1, r1, g1, b1, a1);                                                                         \
+#define PUSH_COLORED_POINT(x1, y1, r1, g1, b1, a1)                                                                                              \
+  {                                                                                                                                             \
+    GL_PUSH_COLORED_POINT(bufp, bufp_end, x1, y1, r1, g1, b1, a1);                                                                              \
   }
 
-#define PUSH_POINT(x1, y1)                                                                                                                 \
-  {                                                                                                                                        \
-    GL_PUSH_POINT(bufp, bufp_end, x1, y1);                                                                                                 \
+#define PUSH_POINT(x1, y1)                                                                                                                      \
+  {                                                                                                                                             \
+    GL_PUSH_POINT(bufp, bufp_end, x1, y1);                                                                                                      \
   }
 
-#define PUSH_TEX_POINT(tx, ty, x1, y1, r1, g1, b1, a1)                                                                                     \
-  {                                                                                                                                        \
-    GL_PUSH_TEX_POINT(bufp, bufp_end, tx, ty, x1, y1, r1, g1, b1, a1);                                                                     \
+#define PUSH_TEX_POINT(tx, ty, x1, y1, r1, g1, b1, a1)                                                                                          \
+  {                                                                                                                                             \
+    GL_PUSH_TEX_POINT(bufp, bufp_end, tx, ty, x1, y1, r1, g1, b1, a1);                                                                          \
   }
 
 //
 // GL_PUSH_TRIANGLE
 //
-#define GL_PUSH_TRIANGLE(p, p_end, x1, y1, x2, y2, x3, y3)                                                                                 \
-  {                                                                                                                                        \
-    GL_PUSH_VERTEX(p, x1, y1);                                                                                                             \
-    GL_PUSH_VERTEX(p, x2, y2);                                                                                                             \
-    GL_PUSH_VERTEX(p, x3, y3);                                                                                                             \
+#define GL_PUSH_TRIANGLE(p, p_end, x1, y1, x2, y2, x3, y3)                                                                                      \
+  {                                                                                                                                             \
+    GL_PUSH_VERTEX(p, x1, y1);                                                                                                                  \
+    GL_PUSH_VERTEX(p, x2, y2);                                                                                                                  \
+    GL_PUSH_VERTEX(p, x3, y3);                                                                                                                  \
   }
 
-#define triangle(x1, y1, x2, y2, x3, y3)                                                                                                   \
-  {                                                                                                                                        \
-    GL_PUSH_TRIANGLE(bufp, bufp_end, x1, y1, x2, y2, x3, y3);                                                                              \
+#define triangle(x1, y1, x2, y2, x3, y3)                                                                                                        \
+  {                                                                                                                                             \
+    GL_PUSH_TRIANGLE(bufp, bufp_end, x1, y1, x2, y2, x3, y3);                                                                                   \
   }
 
 #ifdef _WIN32
@@ -217,18 +217,18 @@ extern PFNGLDEBUGMESSAGECALLBACKPROC    glDebugMessageCallback_EXT;
 //
 // Frame buffer objects
 //
-#define FBO_ENUM(list_macro)                                                                                                               \
-  list_macro(FBO_MAP_BG, "FBO_MAP_BG"),                     /* newline */                                                                  \
-      list_macro(FBO_MAP_FG, "FBO_MAP_FG"),                 /* newline */                                                                  \
-      list_macro(FBO_MAP_BG_MERGED, "FBO_MAP_BG_MERGED"),   /* newline */                                                                  \
-      list_macro(FBO_MAP_FG_MERGED, "FBO_MAP_FG_MERGED"),   /* newline */                                                                  \
-      list_macro(FBO_MAP_FG_OVERLAY, "FBO_MAP_FG_OVERLAY"), /* newline */                                                                  \
-      list_macro(FBO_MAP_LIGHT, "FBO_MAP_LIGHT"),           /* newline */                                                                  \
-      list_macro(FBO_MINIMAP_LEVEL, "FBO_MINIMAP_LEVEL"),   /* newline */                                                                  \
-      list_macro(FBO_WID, "FBO_WID"),                       /* newline */                                                                  \
-      list_macro(FBO_SPRITE1, "FBO_SPRITE1"),               /* newline */                                                                  \
-      list_macro(FBO_FLAMES, "FBO_FLAMES"),                 /* newline */                                                                  \
-      list_macro(FBO_SKULLS, "FBO_SKULLS"),                 /* newline */                                                                  \
+#define FBO_ENUM(list_macro)                                                                                                                    \
+  list_macro(FBO_MAP_BG, "FBO_MAP_BG"),                     /* newline */                                                                       \
+      list_macro(FBO_MAP_FG, "FBO_MAP_FG"),                 /* newline */                                                                       \
+      list_macro(FBO_MAP_BG_MERGED, "FBO_MAP_BG_MERGED"),   /* newline */                                                                       \
+      list_macro(FBO_MAP_FG_MERGED, "FBO_MAP_FG_MERGED"),   /* newline */                                                                       \
+      list_macro(FBO_MAP_FG_OVERLAY, "FBO_MAP_FG_OVERLAY"), /* newline */                                                                       \
+      list_macro(FBO_MAP_LIGHT, "FBO_MAP_LIGHT"),           /* newline */                                                                       \
+      list_macro(FBO_MINIMAP_LEVEL, "FBO_MINIMAP_LEVEL"),   /* newline */                                                                       \
+      list_macro(FBO_WID, "FBO_WID"),                       /* newline */                                                                       \
+      list_macro(FBO_SPRITE1, "FBO_SPRITE1"),               /* newline */                                                                       \
+      list_macro(FBO_FLAMES, "FBO_FLAMES"),                 /* newline */                                                                       \
+      list_macro(FBO_SKULLS, "FBO_SKULLS"),                 /* newline */                                                                       \
       list_macro(FBO_FINAL, "FBO_FINAL"),                   /* newline */
 
 ENUM_DEF_H(FBO_ENUM, FboEnum);
@@ -236,9 +236,9 @@ ENUM_DEF_H(FBO_ENUM, FboEnum);
 #define FBO_ENUM_FIRST ((FboEnum) 0)
 #define FBO_NONE       ((FboEnum) (FBO_ENUM_MAX))
 
-#define FOR_ALL_FBO(_iter_)                                                                                                                \
-  for (FboEnum _iter_ = FBO_ENUM_FIRST; /* newline */                                                                                      \
-       (_iter_) < FBO_ENUM_MAX;         /* newline */                                                                                      \
+#define FOR_ALL_FBO(_iter_)                                                                                                                     \
+  for (FboEnum _iter_ = FBO_ENUM_FIRST; /* newline */                                                                                           \
+       (_iter_) < FBO_ENUM_MAX;         /* newline */                                                                                           \
        (_iter_) = static_cast< FboEnum >(static_cast< int >(_iter_) + 1))
 
 extern uint32_t NUMBER_BYTES_PER_VERTICE_2D;
@@ -304,14 +304,14 @@ void gl_init_fbo(Gamep g, FboEnum fbo = FBO_NONE);
 void gl_leave_2d_mode(Gamep g);
 void gl_clear();
 
-#define GL_ERROR_CHECK()                                                                                                                   \
-  {                                                                                                                                        \
-    auto errCode = glGetError();                                                                                                           \
-    [[likely]] if ((errCode == GL_NO_ERROR)) { /* log("GFX: ok at %s:%s line %u", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM); */          \
-    } else {                                                                                                                               \
-      log("GFX: error at %s:%s line %u", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM);                                                      \
-      gl_error(errCode);                                                                                                                   \
-    }                                                                                                                                      \
+#define GL_ERROR_CHECK()                                                                                                                        \
+  {                                                                                                                                             \
+    auto errCode = glGetError();                                                                                                                \
+    [[likely]] if ((errCode == GL_NO_ERROR)) { /* log("GFX: ok at %s:%s line %u", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM); */               \
+    } else {                                                                                                                                    \
+      log("GFX: error at %s:%s line %u", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM);                                                           \
+      gl_error(errCode);                                                                                                                        \
+    }                                                                                                                                           \
   }
 
 #endif

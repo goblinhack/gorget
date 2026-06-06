@@ -731,8 +731,7 @@ void tp_chance_set(Tpp tp, ThingChanceType ev, const std::string &val)
   }
 
   if (std::cmp_greater_equal(index, tp->tiles[ val ].size())) {
-    tp_err(tp, "tp_tiles_get: tile overflow tp %s class %s/%d index %d", tp->name.c_str(), ThingAnimType_to_string(val).c_str(), val,
-           index);
+    tp_err(tp, "tp_tiles_get: tile overflow tp %s class %s/%d index %d", tp->name.c_str(), ThingAnimType_to_string(val).c_str(), val, index);
   }
 
   return tp->tiles[ val ][ index ];

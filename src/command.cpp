@@ -157,8 +157,8 @@ void command_add(Gamep /*g*/, command_fn_t callback, const std::string &input, c
   (void) tokens_to_string(readable.c_str(), &command->readable_tokens);
 }
 
-static auto command_matches(Gamep g, const char *input, char *output, uint8_t show_ambiguous, uint8_t show_complete,
-                            uint8_t execute_command, void *context) -> int
+static auto command_matches(Gamep g, const char *input, char *output, uint8_t show_ambiguous, uint8_t show_complete, uint8_t execute_command,
+                            void *context) -> int
 {
   TRACE();
 

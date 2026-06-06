@@ -671,8 +671,8 @@ void blit_fbo_unbind_locked()
 //
 #define NUMBER_COMPONENTS_PER_COLOR 4
 
-uint32_t NUMBER_BYTES_PER_VERTICE_2D = (SIZEOF(GLfloat) * NUMBER_DIMENSIONS_PER_COORD_2D)
-                                     + (SIZEOF(GLshort) * NUMBER_DIMENSIONS_PER_COORD_2D) + (SIZEOF(GLubyte) * NUMBER_COMPONENTS_PER_COLOR);
+uint32_t NUMBER_BYTES_PER_VERTICE_2D = (SIZEOF(GLfloat) * NUMBER_DIMENSIONS_PER_COORD_2D) + (SIZEOF(GLshort) * NUMBER_DIMENSIONS_PER_COORD_2D)
+                                     + (SIZEOF(GLubyte) * NUMBER_COMPONENTS_PER_COLOR);
 //
 // Two arrays, xy and uv.
 //
@@ -1460,10 +1460,9 @@ static void gl_push(float **P, const float *p_end, bool first_vertex, float tex_
   *P                    = p;
 }
 
-static void gl_push(float **P, float *p_end, bool first_vertex, float tex_left, float tex_top, float tex_right, float tex_bottom,
-                    GLshort left, GLshort top, GLshort right, GLshort bottom, uint8_t r1, uint8_t g1, uint8_t b1, uint8_t a1, uint8_t r2,
-                    uint8_t g2, uint8_t b2, uint8_t a2, uint8_t r3, uint8_t g3, uint8_t b3, uint8_t a3, uint8_t r4, uint8_t g4, uint8_t b4,
-                    uint8_t a4)
+static void gl_push(float **P, float *p_end, bool first_vertex, float tex_left, float tex_top, float tex_right, float tex_bottom, GLshort left,
+                    GLshort top, GLshort right, GLshort bottom, uint8_t r1, uint8_t g1, uint8_t b1, uint8_t a1, uint8_t r2, uint8_t g2,
+                    uint8_t b2, uint8_t a2, uint8_t r3, uint8_t g3, uint8_t b3, uint8_t a3, uint8_t r4, uint8_t g4, uint8_t b4, uint8_t a4)
 {
   TRACE_DEBUG();
 
@@ -1472,8 +1471,8 @@ static void gl_push(float **P, float *p_end, bool first_vertex, float tex_left, 
   spoint const bl(left, bottom);
   spoint const br(right, bottom);
 
-  gl_push(P, p_end, first_vertex, tex_left, tex_top, tex_right, tex_bottom, tl, tr, bl, br, r1, g1, b1, a1, r2, g2, b2, a2, r3, g3, b3, a3,
-          r4, g4, b4, a4);
+  gl_push(P, p_end, first_vertex, tex_left, tex_top, tex_right, tex_bottom, tl, tr, bl, br, r1, g1, b1, a1, r2, g2, b2, a2, r3, g3, b3, a3, r4,
+          g4, b4, a4);
 }
 
 static bool first_vertex;
@@ -1500,8 +1499,8 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
   uint8_t const b = c.b;
   uint8_t const a = c.a;
 
-  gl_push(&bufp, bufp_end, first_vertex, texMinX, texMinY, texMaxX, texMaxY, left, top, right, bottom, r, g, b, a, r, g, b, a, r, g, b, a,
-          r, g, b, a);
+  gl_push(&bufp, bufp_end, first_vertex, texMinX, texMinY, texMaxX, texMaxY, left, top, right, bottom, r, g, b, a, r, g, b, a, r, g, b, a, r, g,
+          b, a);
 }
 
 void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLshort pixMinX, GLshort pixMinY, GLshort pixMaxX,
@@ -1553,8 +1552,8 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
       auto        pixMinX2 = static_cast< GLshort >(static_cast< float >(pixMinX) + (static_cast< float >(x) * pixDiffX));
       auto        pixMaxX2 = static_cast< GLshort >(static_cast< float >(pixMinX) + (static_cast< float >(x + 1) * pixDiffX));
 
-      gl_push(&bufp, bufp_end, first_vertex, texMinX2, texMinY2, texMaxX2, texMaxY2, pixMinX2, pixMinY2, pixMaxX2, pixMaxY2, r, g, b, a, r,
-              g, b, a, r, g, b, a, r, g, b, a);
+      gl_push(&bufp, bufp_end, first_vertex, texMinX2, texMinY2, texMaxX2, texMaxY2, pixMinX2, pixMinY2, pixMaxX2, pixMaxY2, r, g, b, a, r, g, b,
+              a, r, g, b, a, r, g, b, a);
     }
 
     //
@@ -1613,8 +1612,8 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
       auto        pixMinX2 = static_cast< GLshort >(static_cast< float >(pixMinX) + (static_cast< float >(x) * pixDiffX));
       auto        pixMaxX2 = static_cast< GLshort >(static_cast< float >(pixMinX) + (static_cast< float >(x + 1) * pixDiffX));
 
-      gl_push(&bufp, bufp_end, first_vertex, texMinX2, texMinY2, texMaxX2, texMaxY2, pixMinX2, pixMinY2, pixMaxX2, pixMaxY2, r, g, b, a, r,
-              g, b, a, r, g, b, a, r, g, b, a);
+      gl_push(&bufp, bufp_end, first_vertex, texMinX2, texMinY2, texMaxX2, texMaxY2, pixMinX2, pixMinY2, pixMaxX2, pixMaxY2, r, g, b, a, r, g, b,
+              a, r, g, b, a, r, g, b, a);
     }
 
     //
@@ -1646,8 +1645,8 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
   buf_tex = tex;
 
   gl_push(&bufp, bufp_end, first_vertex, texMinX, texMinY, texMaxX, texMaxY, left, top, right, bottom, color_tl.r, color_tl.g, color_tl.b,
-          color_tl.a, color_bl.r, color_bl.g, color_bl.b, color_bl.a, color_tr.r, color_tr.g, color_tr.b, color_tr.a, color_br.r,
-          color_br.g, color_br.b, color_br.a);
+          color_tl.a, color_bl.r, color_bl.g, color_bl.b, color_bl.a, color_tr.r, color_tr.g, color_tr.b, color_tr.a, color_br.r, color_br.g,
+          color_br.b, color_br.a);
 }
 
 void blit(int tex, GLshort left, GLshort top, GLshort right, GLshort bottom, const color &c)
