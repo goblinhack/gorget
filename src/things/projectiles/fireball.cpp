@@ -12,31 +12,31 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-static void tp_fireball_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp t)
+static void tp_fireball_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
-  thing_sound_play(g, v, l, t, "fireball");
+  thing_sound_play(g, v, l, me, "fireball");
 }
 
-static void tp_fireball_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
+static void tp_fireball_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
 {
   TRACE();
 
-  thing_sound_play(g, v, l, t, "explosion");
+  thing_sound_play(g, v, l, me, "explosion");
 }
 
-static void tp_fireball_on_moved(Gamep g, Levelsp v, Levelp l, Thingp t)
+static void tp_fireball_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
   //
   // The fireball doesn't heat water up quick enough, so add this cheap effect
   //
-  if (level_is_water(g, v, l, thing_at(t)) != nullptr) {
-    if (level_is_steam(g, v, l, thing_at(t)) == nullptr) {
+  if (level_is_water(g, v, l, thing_at(me)) != nullptr) {
+    if (level_is_steam(g, v, l, thing_at(me)) == nullptr) {
       if (d100() < 50) {
-        (void) thing_spawn(g, v, l, tp_first(is_steam), thing_at(t));
+        (void) thing_spawn(g, v, l, tp_first(is_steam), thing_at(me));
       }
     }
   }

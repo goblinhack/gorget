@@ -14,17 +14,17 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
-static auto tp_blitzhound_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
+static auto tp_blitzhound_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
-  if (thing_is_dead(t)) {
+  if (thing_is_dead(me)) {
     return "dead blitzhound";
   }
   return "blitzhound";
 }
 
-static auto tp_blitzhound_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
+static auto tp_blitzhound_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
@@ -39,7 +39,7 @@ static auto tp_blitzhound_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> 
       "Also make good pets.";
 }
 
-static auto tp_blitzhound_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at, Thingp t) -> ThingEnvironType
+static auto tp_blitzhound_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at, Thingp me) -> ThingEnvironType
 {
   TRACE_DEBUG();
 
@@ -54,13 +54,13 @@ static auto tp_blitzhound_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint
   return THING_ENVIRON_NEUTRAL;
 }
 
-static void tp_blitzhound_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
+static void tp_blitzhound_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
 {
   TRACE();
 
-  (void) thing_spawn(g, v, l, tp_first(is_effect_blood), t);
+  (void) thing_spawn(g, v, l, tp_first(is_effect_blood), me);
 
-  thing_sound_play(g, v, l, t, "monst_death");
+  thing_sound_play(g, v, l, me, "monst_death");
 }
 
 static bool tp_blitzhound_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, ThingEvent &e)

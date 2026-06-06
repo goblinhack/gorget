@@ -10,11 +10,11 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-static void tp_explosion_spawned(Gamep g, Levelsp v, Levelp l, Thingp t)
+static void tp_explosion_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
-  thing_sound_play(g, v, l, t, "explosion");
+  thing_sound_play(g, v, l, me, "explosion");
 }
 
 [[nodiscard]] auto tp_load_explosion() -> bool

@@ -14,14 +14,14 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-static auto tp_bridge_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
+static auto tp_bridge_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
   return "rickety bridge";
 }
 
-static void thing_bridge_replace(Gamep g, Levelsp v, Levelp l, Thingp t)
+static void thing_bridge_replace(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
@@ -38,7 +38,7 @@ static void thing_bridge_replace(Gamep g, Levelsp v, Levelp l, Thingp t)
     auto chasm_count = 0;
 
     for (auto delta : points) {
-      auto at = thing_at(t);
+      auto at = thing_at(me);
       auto p  = at + delta;
       lava_count += (level_is_lava(g, v, l, p) != nullptr) ? 1 : 0;
       water_count += (level_is_water(g, v, l, p) != nullptr) ? 1 : 0;
@@ -48,48 +48,48 @@ static void thing_bridge_replace(Gamep g, Levelsp v, Levelp l, Thingp t)
     auto max_count = std::max({lava_count, water_count, chasm_count});
     if (max_count != 0) {
       if (max_count == chasm_count) {
-        if (level_is_chasm(g, v, l, thing_at(t)) == nullptr) {
-          (void) thing_spawn(g, v, l, tp_first(is_chasm), t);
+        if (level_is_chasm(g, v, l, thing_at(me)) == nullptr) {
+          (void) thing_spawn(g, v, l, tp_first(is_chasm), me);
         }
       } else if (max_count == water_count) {
         //
         // Water needs dirt under it so we can see the transparency
         //
-        if (level_is_water(g, v, l, thing_at(t)) == nullptr) {
-          (void) thing_spawn(g, v, l, tp_first(is_water), t);
+        if (level_is_water(g, v, l, thing_at(me)) == nullptr) {
+          (void) thing_spawn(g, v, l, tp_first(is_water), me);
         }
-        if (level_is_dirt(g, v, l, thing_at(t)) == nullptr) {
-          (void) thing_spawn(g, v, l, tp_first(is_dirt), t);
+        if (level_is_dirt(g, v, l, thing_at(me)) == nullptr) {
+          (void) thing_spawn(g, v, l, tp_first(is_dirt), me);
         }
       } else if (max_count == lava_count) {
-        if (level_is_lava(g, v, l, thing_at(t)) == nullptr) {
-          (void) thing_spawn(g, v, l, tp_first(is_lava), t);
+        if (level_is_lava(g, v, l, thing_at(me)) == nullptr) {
+          (void) thing_spawn(g, v, l, tp_first(is_lava), me);
         }
-        if (level_is_dirt(g, v, l, thing_at(t)) == nullptr) {
-          (void) thing_spawn(g, v, l, tp_first(is_dirt), t);
+        if (level_is_dirt(g, v, l, thing_at(me)) == nullptr) {
+          (void) thing_spawn(g, v, l, tp_first(is_dirt), me);
         }
       }
     } else {
       //
       // If nothing we can gather from the surronds, default to chasm
       //
-      if (level_is_chasm(g, v, l, thing_at(t)) == nullptr) {
-        (void) thing_spawn(g, v, l, tp_first(is_chasm), t);
+      if (level_is_chasm(g, v, l, thing_at(me)) == nullptr) {
+        (void) thing_spawn(g, v, l, tp_first(is_chasm), me);
       }
     }
   }
 }
 
-static void tp_bridge_group_destroy(Gamep g, Levelsp v, Levelp l, Thingp t)
+static void tp_bridge_group_destroy(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
-  if (! t->group_id) {
+  if (! me->group_id) {
     return;
   }
 
   std::vector< Thingp > group;
-  auto                  group_id = t->group_id;
+  auto                  group_id = me->group_id;
 
   FOR_ALL_GROUP_THINGS_ON_LEVEL(g, v, l, o, group_id)
   {
@@ -103,16 +103,16 @@ static void tp_bridge_group_destroy(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 }
 
-static void tp_bridge_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
+static void tp_bridge_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
 {
   TRACE();
 
-  if (t->group_id) {
+  if (me->group_id) {
     auto *player = thing_player(g);
     if (player != nullptr) {
       auto player_at = thing_at(player);
-      if (thing_on_same_level_as_player(g, v, t)) {
-        if (thing_at(t) == player_at) {
+      if (thing_on_same_level_as_player(g, v, me)) {
+        if (thing_at(me) == player_at) {
           topcon("The bridge collapses under you!");
         } else if (thing_vision_can_see_tile(g, v, l, player, player_at)) {
           topcon("The bridge collapses!");
@@ -125,24 +125,24 @@ static void tp_bridge_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEven
     }
   }
 
-  tp_bridge_group_destroy(g, v, l, t);
+  tp_bridge_group_destroy(g, v, l, me);
 }
 
-static void tp_bridge_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
+static void tp_bridge_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
-  tp_bridge_group_destroy(g, v, l, t);
+  tp_bridge_group_destroy(g, v, l, me);
 }
 
-static void tp_bridge_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
+static void tp_bridge_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
   //
   // If we fell into another chasm, don't kill the thing yet
   //
-  if (level_is_chasm(g, v, l, thing_at(t)) != nullptr) {
+  if (level_is_chasm(g, v, l, thing_at(me)) != nullptr) {
     return;
   }
 
@@ -151,10 +151,10 @@ static void tp_bridge_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
       .event_type = THING_EVENT_FALL,  //
   };
 
-  THING_DBG(t, "dead due to bridge breaking");
+  THING_DBG(me, "dead due to bridge breaking");
   TRACE_INDENT();
 
-  thing_dead(g, v, l, t, e);
+  thing_dead(g, v, l, me, e);
 }
 
 [[nodiscard]] auto tp_load_bridge() -> bool

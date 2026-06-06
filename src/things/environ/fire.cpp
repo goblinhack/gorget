@@ -15,21 +15,21 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-static auto tp_fire_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
+static auto tp_fire_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
   return "brightly burning fire";
 }
 
-static void tp_fire_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
+static void tp_fire_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
   //
   // Don't spawn fire too soon after creation or we get a firestorm
   //
-  if (thing_age(t) <= 1) {
+  if (thing_age(me) <= 1) {
     return;
   }
 
@@ -41,7 +41,7 @@ static void tp_fire_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
   // Spawn adjacent fire
   //
   for (auto delta : points) {
-    auto at = thing_at(t);
+    auto at = thing_at(me);
     auto p  = at + delta;
 
     //
@@ -81,7 +81,7 @@ static void tp_fire_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
       }
     }
 
-    if (d100() < 20 + (thing_age(t) * 10)) {
+    if (d100() < 20 + (thing_age(me) * 10)) {
       //
       // The older the fire gets, the more chance of spreading
       //
@@ -115,35 +115,35 @@ static void tp_fire_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
       continue;
     }
 
-    THING_DBG(t, "spawn spreading fire");
+    THING_DBG(me, "spawn spreading fire");
 
     (void) thing_spawn(g, v, l, tp_first(is_fire), p);
   }
 }
 
-static void tp_fire_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
+static void tp_fire_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
 {
   TRACE();
 
   //
   // Allow things to continue to burn if we still have some burnable material
   //
-  if (level_alive_is_combustible(g, v, l, thing_at(t)) != nullptr) {
-    if (level_is_fire(g, v, l, thing_at(t)) == nullptr) {
-      THING_DBG(t, "spawn fire to continue to burn");
-      (void) thing_spawn(g, v, l, tp_first(is_fire), t);
+  if (level_alive_is_combustible(g, v, l, thing_at(me)) != nullptr) {
+    if (level_is_fire(g, v, l, thing_at(me)) == nullptr) {
+      THING_DBG(me, "spawn fire to continue to burn");
+      (void) thing_spawn(g, v, l, tp_first(is_fire), me);
     }
   }
 
-  if (level_is_smoke(g, v, l, thing_at(t)) == nullptr) {
-    if (level_is_combustible(g, v, l, thing_at(t)) != nullptr) {
-      THING_DBG(t, "spawn smoke over dying fire");
-      (void) thing_spawn(g, v, l, tp_first(is_smoke), t);
+  if (level_is_smoke(g, v, l, thing_at(me)) == nullptr) {
+    if (level_is_combustible(g, v, l, thing_at(me)) != nullptr) {
+      THING_DBG(me, "spawn smoke over dying fire");
+      (void) thing_spawn(g, v, l, tp_first(is_smoke), me);
     }
   }
 }
 
-static void tp_fire_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
+static void tp_fire_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
@@ -154,23 +154,23 @@ static void tp_fire_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
   // die, else they follow them down and they stay on fire.
   //
   auto *player = thing_player(g);
-  auto  at     = thing_at(t);
+  auto  at     = thing_at(me);
   if ((player != nullptr) && (at == thing_at(player))) {
     ThingEvent e {
         .reason     = "by falling",     //
         .event_type = THING_EVENT_FALL, //
     };
 
-    THING_DBG(t, "dead due to falling");
+    THING_DBG(me, "dead due to falling");
     TRACE_INDENT();
 
-    thing_dead(g, v, l, t, e);
+    thing_dead(g, v, l, me, e);
     return;
   }
 
-  if (level_is_smoke(g, v, l, thing_at(t)) == nullptr) {
-    THING_DBG(t, "spawn smoke over falling fire");
-    (void) thing_spawn(g, v, l, tp_random(g, v, l, is_smoke), t);
+  if (level_is_smoke(g, v, l, thing_at(me)) == nullptr) {
+    THING_DBG(me, "spawn smoke over falling fire");
+    (void) thing_spawn(g, v, l, tp_random(g, v, l, is_smoke), me);
   }
 }
 

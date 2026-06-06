@@ -15,17 +15,17 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
-static auto tp_argusul_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
+static auto tp_argusul_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
-  if (thing_is_dead(t)) {
+  if (thing_is_dead(me)) {
     return "dead argusul";
   }
   return "argusul";
 }
 
-static auto tp_argusul_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
+static auto tp_argusul_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
@@ -41,20 +41,20 @@ static auto tp_argusul_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std
       "It is rumoured that a greater Argusul lurks in the dungeon somewhere... \n";     //
 }
 
-static auto tp_argusul_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at, Thingp t) -> ThingEnvironType
+static auto tp_argusul_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at, Thingp me) -> ThingEnvironType
 {
   TRACE_DEBUG();
 
   return THING_ENVIRON_NEUTRAL;
 }
 
-static void tp_argusul_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
+static void tp_argusul_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
 {
   TRACE();
 
-  (void) thing_spawn(g, v, l, tp_first(is_effect_blood), t);
+  (void) thing_spawn(g, v, l, tp_first(is_effect_blood), me);
 
-  thing_sound_play(g, v, l, t, "monst_death");
+  thing_sound_play(g, v, l, me, "monst_death");
 }
 
 static bool tp_argusul_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, ThingEvent &e)

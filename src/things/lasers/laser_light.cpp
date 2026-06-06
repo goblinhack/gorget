@@ -12,11 +12,11 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-static void tp_laser_light_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp t)
+static void tp_laser_light_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
-  thing_sound_play(g, v, l, t, "laser");
+  thing_sound_play(g, v, l, me, "laser");
 }
 
 [[nodiscard]] auto tp_load_laser_light() ->  bool

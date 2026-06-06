@@ -10,7 +10,7 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-static void tp_wall_melt(Gamep g, Levelsp v, Levelp l, Thingp t)
+static void tp_wall_melt(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
@@ -19,11 +19,11 @@ static void tp_wall_melt(Gamep g, Levelsp v, Levelp l, Thingp t)
       .event_type = THING_EVENT_MELT, //
   };
 
-  THING_DBG(t, "dead due to melting");
+  THING_DBG(me, "dead due to melting");
   TRACE_INDENT();
 
-  thing_dead(g, v, l, t, e);
-  (void) thing_spawn(g, v, l, tp_first(is_lava), t);
+  thing_dead(g, v, l, me, e);
+  (void) thing_spawn(g, v, l, tp_first(is_lava), me);
 }
 
 [[nodiscard]] auto tp_load_wall() -> bool

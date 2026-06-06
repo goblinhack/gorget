@@ -10,14 +10,14 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
-static auto tp_teleport_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
+static auto tp_teleport_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
   return "teleport";
 }
 
-static auto tp_teleport_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
+static auto tp_teleport_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 

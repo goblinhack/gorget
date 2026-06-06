@@ -11,17 +11,17 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-static void tp_key_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
+static void tp_key_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
 {
   TRACE();
 
   if ((e.event_type == THING_EVENT_CARRIED) || //
       (e.event_type == THING_EVENT_CARRIED_MERGED)) {
-    thing_sound_play(g, v, l, t, "key");
+    thing_sound_play(g, v, l, me, "key");
   }
 }
 
-static auto tp_key_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
+static auto tp_key_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 

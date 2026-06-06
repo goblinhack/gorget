@@ -11,14 +11,14 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
-static auto tp_ghost_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
+static auto tp_ghost_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
   return "vengeful spirit";
 }
 
-static auto tp_ghost_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
+static auto tp_ghost_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
@@ -27,7 +27,7 @@ static auto tp_ghost_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::
       UI_INFO2_FMT_STR "Beware, such spirits can traverse chasms and float through solid rock.";
 }
 
-static auto tp_ghost_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at, Thingp t) -> ThingEnvironType
+static auto tp_ghost_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at, Thingp me) -> ThingEnvironType
 {
   TRACE_DEBUG();
 
@@ -49,11 +49,11 @@ static bool tp_ghost_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thing
   return true;
 }
 
-static void tp_ghost_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
+static void tp_ghost_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
 {
   TRACE();
 
-  thing_sound_play(g, v, l, t, "monst_death");
+  thing_sound_play(g, v, l, me, "monst_death");
 }
 
 [[nodiscard]] auto tp_load_ghost() -> bool

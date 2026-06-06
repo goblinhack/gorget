@@ -12,21 +12,21 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
-static auto tp_barrel_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
+static auto tp_barrel_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
   return "barrel of oil";
 }
 
-static auto tp_barrel_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
+static auto tp_barrel_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
   return UI_INFO1_FMT_STR "A not-out-of-place-in-a-dungeon, barrel of oil.";
 }
 
-static void tp_barrel_spawn_explosion(Gamep g, Levelsp v, Levelp l, Thingp t)
+static void tp_barrel_spawn_explosion(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
@@ -34,7 +34,7 @@ static void tp_barrel_spawn_explosion(Gamep g, Levelsp v, Levelp l, Thingp t)
       bpoint(-1, -1), bpoint(1, -1), bpoint(0, -1), bpoint(-1, 0), bpoint(1, 0), bpoint(0, 0), bpoint(-1, 1), bpoint(1, 1), bpoint(0, 1),
   };
 
-  auto at = thing_at(t);
+  auto at = thing_at(me);
 
   for (auto delta : points) {
     auto p = at + delta;
@@ -47,7 +47,7 @@ static void tp_barrel_spawn_explosion(Gamep g, Levelsp v, Levelp l, Thingp t)
 
   auto *player = thing_player(g);
   if (player != nullptr) {
-    if (thing_on_same_level_as_player(g, v, t)) {
+    if (thing_on_same_level_as_player(g, v, me)) {
       if (thing_vision_can_see_tile(g, v, l, player, at)) {
         topcon("The barrel explodes!");
       } else {
@@ -59,21 +59,21 @@ static void tp_barrel_spawn_explosion(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 }
 
-static void tp_barrel_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
+static void tp_barrel_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
 {
   TRACE();
 
-  tp_barrel_spawn_explosion(g, v, l, t);
+  tp_barrel_spawn_explosion(g, v, l, me);
 }
 
-static void tp_barrel_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
+static void tp_barrel_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
   //
   // If we fell into another chasm, don't kill the thing yet
   //
-  if (level_is_chasm(g, v, l, thing_at(t)) != nullptr) {
+  if (level_is_chasm(g, v, l, thing_at(me)) != nullptr) {
     return;
   }
 
@@ -82,10 +82,10 @@ static void tp_barrel_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
       .event_type = THING_EVENT_FALL,    //
   };
 
-  THING_DBG(t, "dead due to fall end");
+  THING_DBG(me, "dead due to fall end");
   TRACE_INDENT();
 
-  thing_dead(g, v, l, t, e);
+  thing_dead(g, v, l, me, e);
 }
 
 [[nodiscard]] auto tp_load_barrel() -> bool

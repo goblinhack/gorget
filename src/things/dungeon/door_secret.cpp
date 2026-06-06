@@ -13,18 +13,18 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-static auto tp_door_secret_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
+static auto tp_door_secret_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
-  if (thing_is_open(t)) {
+  if (thing_is_open(me)) {
     return "secret door";
   }
 
   return "odd looking rock";
 }
 
-[[nodiscard]] static auto tp_door_secret_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener) -> bool
+[[nodiscard]] static auto tp_door_secret_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp opener) -> bool
 {
   TRACE();
 
@@ -37,12 +37,12 @@ static auto tp_door_secret_description_get(Gamep g, Levelsp v, Levelp l, Thingp 
     topcon("A secret door creaks open!");
   }
 
-  thing_sound_play(g, v, l, t, "door_open_secret");
+  thing_sound_play(g, v, l, me, "door_open_secret");
 
-  THING_DBG(t, "dead due to opening");
+  THING_DBG(me, "dead due to opening");
   TRACE_INDENT();
 
-  thing_dead(g, v, l, t, e);
+  thing_dead(g, v, l, me, e);
 
   return true;
 }

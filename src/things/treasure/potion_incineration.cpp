@@ -12,21 +12,21 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
-static auto tp_potion_incineration_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
+static auto tp_potion_incineration_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
   return "potion, incineration";
 }
 
-static auto tp_potion_incineration_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
+static auto tp_potion_incineration_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
   return UI_INFO1_FMT_STR "Consume this potion to set yourself on fire! Or give it to someone else...";
 }
 
-[[nodiscard]] static auto tp_potion_incineration_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp collector, ThingEvent &e)
+[[nodiscard]] static auto tp_potion_incineration_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp collector, ThingEvent &e)
     -> bool
 {
   TRACE();
@@ -34,14 +34,14 @@ static auto tp_potion_incineration_detail_get(Gamep g, Levelsp v, Levelp l, Thin
   return true;
 }
 
-[[nodiscard]] static auto tp_potion_incineration_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp dropper, ThingEvent &e) -> bool
+[[nodiscard]] static auto tp_potion_incineration_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp dropper, ThingEvent &e) -> bool
 {
   TRACE();
 
   return true;
 }
 
-[[nodiscard]] static auto tp_potion_incineration_on_carry_success(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp collector, ThingEvent &e)
+[[nodiscard]] static auto tp_potion_incineration_on_carry_success(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp collector, ThingEvent &e)
     -> bool
 {
   TRACE();
@@ -53,7 +53,7 @@ static auto tp_potion_incineration_detail_get(Gamep g, Levelsp v, Levelp l, Thin
   return true;
 }
 
-[[nodiscard]] static auto tp_potion_incineration_on_drop_success(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp dropper, ThingEvent &e) -> bool
+[[nodiscard]] static auto tp_potion_incineration_on_drop_success(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp dropper, ThingEvent &e) -> bool
 {
   TRACE();
 
@@ -66,7 +66,7 @@ static auto tp_potion_incineration_detail_get(Gamep g, Levelsp v, Levelp l, Thin
   return true;
 }
 
-static void tp_potion_incineration_spawn_explosion(Gamep g, Levelsp v, Levelp l, Thingp t)
+static void tp_potion_incineration_spawn_explosion(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
@@ -74,7 +74,7 @@ static void tp_potion_incineration_spawn_explosion(Gamep g, Levelsp v, Levelp l,
       bpoint(-1, -1), bpoint(1, -1), bpoint(0, -1), bpoint(-1, 0), bpoint(1, 0), bpoint(0, 0), bpoint(-1, 1), bpoint(1, 1), bpoint(0, 1),
   };
 
-  auto at = thing_at(t);
+  auto at = thing_at(me);
 
   for (auto delta : points) {
     auto p = at + delta;
@@ -87,7 +87,7 @@ static void tp_potion_incineration_spawn_explosion(Gamep g, Levelsp v, Levelp l,
 
   auto *player = thing_player(g);
   if (player != nullptr) {
-    if (thing_on_same_level_as_player(g, v, t)) {
+    if (thing_on_same_level_as_player(g, v, me)) {
       if (thing_vision_can_see_tile(g, v, l, player, at)) {
         topcon("The potion explodes!");
       } else {
@@ -99,15 +99,15 @@ static void tp_potion_incineration_spawn_explosion(Gamep g, Levelsp v, Levelp l,
   }
 }
 
-static void tp_potion_incinertaion_on_thrown(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp thrower)
+static void tp_potion_incinertaion_on_thrown(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp mehrower)
 {
   TRACE();
 
   //
   // Soft landing?
   //
-  if ((level_is_chasm(g, v, l, thing_at(t)) != nullptr) || // newline
-      (level_is_water(g, v, l, thing_at(t)) != nullptr)) {
+  if ((level_is_chasm(g, v, l, thing_at(me)) != nullptr) || // newline
+      (level_is_water(g, v, l, thing_at(me)) != nullptr)) {
     return;
   }
 
@@ -116,13 +116,13 @@ static void tp_potion_incinertaion_on_thrown(Gamep g, Levelsp v, Levelp l, Thing
       .event_type = THING_EVENT_THROWN, //
   };
 
-  THING_DBG(t, "dead due to being thrown");
+  THING_DBG(me, "dead due to being thrown");
   TRACE_INDENT();
 
-  thing_dead(g, v, l, t, e);
+  thing_dead(g, v, l, me, e);
 }
 
-static bool tp_potion_incineration_on_use(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp user)
+static bool tp_potion_incineration_on_use(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user)
 {
   TRACE();
 
@@ -136,7 +136,7 @@ static bool tp_potion_incineration_on_use(Gamep g, Levelsp v, Levelp l, Thingp t
   return true;
 }
 
-static void tp_potion_incineration_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
+static void tp_potion_incineration_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
 {
   TRACE();
 
@@ -146,7 +146,7 @@ static void tp_potion_incineration_on_death(Gamep g, Levelsp v, Levelp l, Thingp
     return;
   }
 
-  tp_potion_incineration_spawn_explosion(g, v, l, t);
+  tp_potion_incineration_spawn_explosion(g, v, l, me);
 }
 
 [[nodiscard]] auto tp_load_potion_incineration() -> bool

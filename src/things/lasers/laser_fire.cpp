@@ -12,16 +12,16 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-static void tp_laser_fire_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp t)
+static void tp_laser_fire_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
-  thing_sound_play(g, v, l, t, "laser");
+  thing_sound_play(g, v, l, me, "laser");
 
-  if (level_is_water(g, v, l, thing_at(t)) != nullptr) {
-    if (level_is_steam(g, v, l, thing_at(t)) == nullptr) {
+  if (level_is_water(g, v, l, thing_at(me)) != nullptr) {
+    if (level_is_steam(g, v, l, thing_at(me)) == nullptr) {
       if (d100() < 50) {
-        (void) thing_spawn(g, v, l, tp_first(is_steam), thing_at(t));
+        (void) thing_spawn(g, v, l, tp_first(is_steam), thing_at(me));
       }
     }
   }

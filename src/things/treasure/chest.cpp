@@ -14,37 +14,37 @@
 #include "my_ui.hpp"
 #include "my_wids.hpp"
 
-static auto tp_chest_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
+static auto tp_chest_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
-  if (thing_is_open(t)) {
+  if (thing_is_open(me)) {
     return "open chest";
   }
-  if (thing_is_dead(t)) {
+  if (thing_is_dead(me)) {
     return "broken chest";
   }
   return "closed chest";
 }
 
-static auto tp_chest_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
+static auto tp_chest_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
-  if (thing_is_open(t)) {
+  if (thing_is_open(me)) {
     return UI_INFO1_FMT_STR "An open chest.";
   }
-  if (thing_is_dead(t)) {
+  if (thing_is_dead(me)) {
     return UI_INFO1_FMT_STR "A broken chest.";
   }
   return UI_INFO1_FMT_STR "A closed chest. What wonders might it contain? Probably none.";
 }
 
-[[nodiscard]] static auto tp_chest_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener) -> bool
+[[nodiscard]] static auto tp_chest_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp opener) -> bool
 {
   TRACE();
 
-  thing_sound_play(g, v, l, t, "chest_open");
+  thing_sound_play(g, v, l, me, "chest_open");
 
   std::vector< Thingp > items;
 
@@ -56,7 +56,7 @@ static auto tp_chest_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::
 
   nitems = std::min(nitems, THING_INVENTORY_MAX);
 
-  thing_log(t, "spawn items");
+  thing_log(me, "spawn items");
   TRACE_INDENT();
 
   for (auto i = 0; i < nitems; i++) {
@@ -66,7 +66,7 @@ static auto tp_chest_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::
       continue;
     }
 
-    auto item = thing_spawn(g, v, l, tp, thing_at(t));
+    auto item = thing_spawn(g, v, l, tp, thing_at(me));
     if (item) {
       //
       // Needed to stop auto collect

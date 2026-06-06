@@ -10,18 +10,18 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-static auto tp_reeds_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
+static auto tp_reeds_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
   return "sickly looking reeds";
 }
 
-static auto tp_reeds_z_depth_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> MapZDepthType
+static auto tp_reeds_z_depth_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> MapZDepthType
 {
   TRACE();
 
-  if (thing_is_dead(t)) {
+  if (thing_is_dead(me)) {
     return MAP_Z_DEPTH_GRASS;
   }
   return MAP_Z_DEPTH_FOLIAGE;

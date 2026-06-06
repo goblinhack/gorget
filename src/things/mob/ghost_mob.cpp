@@ -13,14 +13,14 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
-static auto tp_ghost_mob_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
+static auto tp_ghost_mob_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
   return "pile of bones";
 }
 
-static auto tp_ghost_mob_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
+static auto tp_ghost_mob_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
@@ -29,14 +29,14 @@ static auto tp_ghost_mob_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> s
       UI_INFO2_FMT_STR "When such devices are destroyed, all that they summoned will also vanish into oblivion.";
 }
 
-static void tp_ghost_mob_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
+static void tp_ghost_mob_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
 {
   TRACE();
 
-  thing_sound_play(g, v, l, t, "explosion");
+  thing_sound_play(g, v, l, me, "explosion");
 }
 
-static void tp_ghost_mob_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
+static void tp_ghost_mob_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
@@ -47,8 +47,8 @@ static void tp_ghost_mob_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
     return;
   }
 
-  if (level_is_monst(g, v, l, thing_at(t)) == nullptr) {
-    (void) thing_mob_spawn_a_minion(g, v, l, t, tp_first(is_ghost));
+  if (level_is_monst(g, v, l, thing_at(me)) == nullptr) {
+    (void) thing_mob_spawn_a_minion(g, v, l, me, tp_first(is_ghost));
   }
 }
 

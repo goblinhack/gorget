@@ -9,7 +9,7 @@
 #include "my_tps.hpp"
 #include "my_ui.hpp"
 
-static auto tp_buff_immunity_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
+static auto tp_buff_immunity_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 

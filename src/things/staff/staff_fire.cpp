@@ -12,14 +12,14 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
-static auto tp_staff_fire_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
+static auto tp_staff_fire_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
   return "staff_fire";
 }
 
-static auto tp_staff_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
+static auto tp_staff_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
@@ -30,21 +30,21 @@ static auto tp_staff_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> 
       UI_INFO4_FMT_STR "Info: wands are generally more powerful than staffs, but have fewer charges. \n";
 }
 
-[[nodiscard]] static auto tp_staff_fire_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp collector, ThingEvent &e) -> bool
+[[nodiscard]] static auto tp_staff_fire_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp collector, ThingEvent &e) -> bool
 {
   TRACE();
 
   return true;
 }
 
-[[nodiscard]] static auto tp_staff_fire_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp dropper, ThingEvent &e) -> bool
+[[nodiscard]] static auto tp_staff_fire_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp dropper, ThingEvent &e) -> bool
 {
   TRACE();
 
   return true;
 }
 
-[[nodiscard]] static auto tp_staff_fire_on_carry_success(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp collector, ThingEvent &e) -> bool
+[[nodiscard]] static auto tp_staff_fire_on_carry_success(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp collector, ThingEvent &e) -> bool
 {
   TRACE();
 
@@ -55,7 +55,7 @@ static auto tp_staff_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> 
   return true;
 }
 
-[[nodiscard]] static auto tp_staff_fire_on_drop_success(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp dropper, ThingEvent &e) -> bool
+[[nodiscard]] static auto tp_staff_fire_on_drop_success(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp dropper, ThingEvent &e) -> bool
 {
   TRACE();
 
@@ -68,14 +68,14 @@ static auto tp_staff_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> 
   return true;
 }
 
-[[nodiscard]] static auto tp_staff_fire_on_wield_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp user) -> bool
+[[nodiscard]] static auto tp_staff_fire_on_wield_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user) -> bool
 {
   TRACE();
 
   return true;
 }
 
-[[nodiscard]] static auto tp_staff_fire_on_use_weapon_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp user) -> Tpp
+[[nodiscard]] static auto tp_staff_fire_on_use_weapon_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user) -> Tpp
 {
   TRACE();
 

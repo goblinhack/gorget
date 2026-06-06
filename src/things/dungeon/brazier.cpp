@@ -13,31 +13,31 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-static auto tp_brazier_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
+static auto tp_brazier_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
-  if (thing_is_dead(t)) {
+  if (thing_is_dead(me)) {
     return "extinguished brazier";
   }
 
   return "brightly burning brazier";
 }
 
-static void tp_brazier_on_shoved(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp shover)
+static void tp_brazier_on_shoved(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp shover)
 {
   TRACE();
 
   //
   // If extinguished, do not generate more smoke
   //
-  if (thing_is_dead(t)) {
+  if (thing_is_dead(me)) {
     //
     // Only if recently dead
     //
-    if (v->tick - t->tick_dead < 5) {
-      if (level_is_smoke(g, v, l, thing_at(t)) == nullptr) {
-        (void) thing_spawn(g, v, l, tp_first(is_smoke), t);
+    if (v->tick - me->tick_dead < 5) {
+      if (level_is_smoke(g, v, l, thing_at(me)) == nullptr) {
+        (void) thing_spawn(g, v, l, tp_first(is_smoke), me);
       }
     }
     return;
@@ -47,7 +47,7 @@ static void tp_brazier_on_shoved(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp 
   // Attempt to spawn fire in the direction of shoving
   //
   if (shover != nullptr) {
-    auto at        = thing_at(t);
+    auto at        = thing_at(me);
     auto direction = at - thing_at(shover);
     auto fire_at   = at + direction;
 
@@ -55,29 +55,29 @@ static void tp_brazier_on_shoved(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp 
       //
       // If we can't, then spawn over the brazier
       //
-      if (level_is_fire(g, v, l, thing_at(t)) == nullptr) {
-        (void) thing_spawn(g, v, l, tp_first(is_fire), t);
+      if (level_is_fire(g, v, l, thing_at(me)) == nullptr) {
+        (void) thing_spawn(g, v, l, tp_first(is_fire), me);
       }
     } else {
       if (level_is_fire(g, v, l, fire_at) == nullptr) {
         (void) thing_spawn(g, v, l, tp_first(is_fire), fire_at);
       }
 
-      if (level_is_smoke(g, v, l, thing_at(t)) == nullptr) {
-        (void) thing_spawn(g, v, l, tp_first(is_smoke), t);
+      if (level_is_smoke(g, v, l, thing_at(me)) == nullptr) {
+        (void) thing_spawn(g, v, l, tp_first(is_smoke), me);
       }
     }
   } else {
     //
     // Spawn over the brazier
     //
-    if (level_is_fire(g, v, l, thing_at(t)) == nullptr) {
-      (void) thing_spawn(g, v, l, tp_first(is_fire), t);
+    if (level_is_fire(g, v, l, thing_at(me)) == nullptr) {
+      (void) thing_spawn(g, v, l, tp_first(is_fire), me);
     }
   }
 }
 
-static void tp_brazier_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
+static void tp_brazier_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
 {
   TRACE();
 
@@ -85,20 +85,20 @@ static void tp_brazier_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEve
   // Allow things to continue to burn if we still have some burnable material
   //
   if (e.event_type != THING_EVENT_SHOVED) {
-    if (level_is_fire(g, v, l, thing_at(t)) == nullptr) {
-      (void) thing_spawn(g, v, l, tp_first(is_fire), t);
+    if (level_is_fire(g, v, l, thing_at(me)) == nullptr) {
+      (void) thing_spawn(g, v, l, tp_first(is_fire), me);
     }
   }
 
-  if (level_is_smoke(g, v, l, thing_at(t)) == nullptr) {
-    (void) thing_spawn(g, v, l, tp_first(is_smoke), t);
+  if (level_is_smoke(g, v, l, thing_at(me)) == nullptr) {
+    (void) thing_spawn(g, v, l, tp_first(is_smoke), me);
   }
 
   auto *player = thing_player(g);
   if (player != nullptr) {
-    THING_DBG(t, "brazier is dead");
-    if (thing_on_same_level_as_player(g, v, t)) {
-      auto at = thing_at(t);
+    THING_DBG(me, "brazier is dead");
+    if (thing_on_same_level_as_player(g, v, me)) {
+      auto at = thing_at(me);
       if (thing_vision_can_see_tile(g, v, l, player, at)) {
         topcon("The brazier falls over!");
       } else {

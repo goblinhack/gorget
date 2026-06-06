@@ -12,14 +12,14 @@
 
 #include <string>
 
-static auto tp_exit_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
+static auto tp_exit_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
   return "slime covered stairs leading down";
 }
 
-static auto tp_exit_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
+static auto tp_exit_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 

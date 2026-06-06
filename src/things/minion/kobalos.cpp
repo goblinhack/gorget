@@ -14,17 +14,17 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
-static auto tp_kobalos_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
+static auto tp_kobalos_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
-  if (thing_is_dead(t)) {
+  if (thing_is_dead(me)) {
     return "dead kobalos";
   }
   return "kobalos";
 }
 
-static auto tp_kobalos_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
+static auto tp_kobalos_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
@@ -33,7 +33,7 @@ static auto tp_kobalos_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std
       UI_INFO2_FMT_STR "Kobalos are vindictive, greedy little things and have a habit of thievery...";
 }
 
-static auto tp_kobalos_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at, Thingp t) -> ThingEnvironType
+static auto tp_kobalos_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at, Thingp me) -> ThingEnvironType
 {
   TRACE_DEBUG();
 
@@ -44,13 +44,13 @@ static auto tp_kobalos_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &a
   return THING_ENVIRON_NEUTRAL;
 }
 
-static void tp_kobalos_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
+static void tp_kobalos_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
 {
   TRACE();
 
-  (void) thing_spawn(g, v, l, tp_first(is_effect_blood), t);
+  (void) thing_spawn(g, v, l, tp_first(is_effect_blood), me);
 
-  thing_sound_play(g, v, l, t, "monst_death");
+  thing_sound_play(g, v, l, me, "monst_death");
 }
 
 static bool tp_kobalos_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, ThingEvent &e)

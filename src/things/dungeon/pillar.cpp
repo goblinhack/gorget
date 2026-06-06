@@ -9,7 +9,7 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-static auto tp_pillar_description_get(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string
+static auto tp_pillar_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
