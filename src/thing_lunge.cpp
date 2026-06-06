@@ -81,7 +81,7 @@ void level_lunge_precalculate(Gamep /*g*/)
   }
 }
 
-void thing_is_lunging_set(Gamep /*g*/, Levelsp v, Levelp l, Thingp me, bool val)
+void thing_is_lunging_set(Gamep g, Levelsp v, Levelp l, Thingp me, bool val)
 {
   TRACE_DEBUG();
 
@@ -198,7 +198,7 @@ void thing_lunge_end_check(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 }
 
-void thing_lunge_modify_position(Gamep /*g*/, Levelsp v, Levelp l, Thingp me, spoint &tl, spoint &br)
+void thing_lunge_modify_position(Gamep g, Levelsp v, Levelp l, Thingp me, spoint &tl, spoint &br)
 {
   TRACE();
 

@@ -38,7 +38,7 @@
   auto *text = parent->wid_text_area;
   auto *b    = parent->wid_text_area->wid_text_area;
 
-  if (! tp_tiles_size(tp, THING_ANIM_IDLE)) {
+  if (tp_tiles_size(tp, THING_ANIM_IDLE) == 0) {
     return false;
   }
 
@@ -57,7 +57,7 @@
   return true;
 }
 
-[[nodiscard]] auto wid_thing_info_keys(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent) -> bool
+[[nodiscard]] auto wid_thing_info_keys(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp me, WidPopup *parent) -> bool
 {
   TRACE();
 
@@ -136,7 +136,7 @@
 //
 // Score
 //
-[[nodiscard]] auto wid_thing_info_score(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp /*tp*/, WidPopup *parent) -> bool
+[[nodiscard]] auto wid_thing_info_score(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp me, Tpp /*tp*/, WidPopup *parent) -> bool
 {
   TRACE();
 
@@ -606,10 +606,10 @@ static void wid_thing_info_item_mouse_over_end(Gamep g, Widp w)
       memset(tmp, 0, sizeof(tmp));
       memset(tmp, ' ', sizeof(tmp) - 1);
 
-      auto tp           = thing_tp(buff);
-      auto lifespan_max = tp_lifespan_max_get(tp);
-      auto h            = thing_lifespan(buff);
-      h                 = std::max(h, 0);
+      auto *tp           = thing_tp(buff);
+      auto  lifespan_max = tp_lifespan_max_get(tp);
+      auto  h            = thing_lifespan(buff);
+      h                  = std::max(h, 0);
 
       std::string const lifespan_str = std::to_string(h) + "/" + std::to_string(lifespan_max);
       my_strlcpy(tmp + width - lifespan_str.size() - 3, lifespan_str.c_str(), width - lifespan_str.size());

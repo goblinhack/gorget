@@ -12,7 +12,7 @@
 #include "my_types.hpp"
 #include <cstdint>
 
-[[nodiscard]] auto level_has_seen(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_has_seen(Gamep g, Levelsp /*v*/, Levelp /*l*/, const bpoint &p) -> bool
 {
   TRACE();
 

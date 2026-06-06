@@ -559,7 +559,7 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me)
   return MonstState_to_string(state);
 }
 
-[[nodiscard]] auto monst_state(Gamep /*g*/, Levelsp v, Levelp l, Thingp me) -> MonstState
+[[nodiscard]] auto monst_state(Gamep g, Levelsp v, Levelp l, Thingp me) -> MonstState
 {
   TRACE();
   return me->_monst_state;

@@ -3,9 +3,7 @@
 //
 
 #include "my_callstack.hpp"
-#include "my_fpoint.hpp"
 #include "my_main.hpp"
-#include "my_math.hpp"
 #include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
 #include "my_tp.hpp"
@@ -49,7 +47,7 @@ static void thing_dump_buffs(Gamep g, Levelsp v, Levelp l, Thingp me)
 //
 // How many projectils?
 //
-[[nodiscard]] static auto thing_buff_count_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> int
+[[nodiscard]] static auto thing_buff_count_get(Gamep g, Thingp me) -> int
 {
   if (me == nullptr) {
     return 0;
@@ -97,7 +95,7 @@ static void thing_dump_buffs(Gamep g, Levelsp v, Levelp l, Thingp me)
   //
   // Too many buffs
   //
-  if (thing_buff_count_get(g, v, l, me) >= THING_BUFF_MAX) {
+  if (thing_buff_count_get(g, me) >= THING_BUFF_MAX) {
     THING_DBG(me, "trying to apply too many buffs");
     thing_dump_buffs(g, v, l, me);
 

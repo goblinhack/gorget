@@ -18,7 +18,7 @@
   return me->_is_sleeping;
 }
 
-void thing_is_sleeping_set(Gamep /*g*/, Levelsp v, Levelp l, Thingp me, bool val)
+void thing_is_sleeping_set(Gamep g, Levelsp v, Levelp l, Thingp me, bool val)
 {
   TRACE_DEBUG();
 

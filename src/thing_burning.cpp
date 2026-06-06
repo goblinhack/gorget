@@ -14,7 +14,7 @@
 //
 // Do actions upon burning
 //
-void thing_is_burning_handle(Gamep /*g*/, Levelsp v, Levelp l, Thingp t)
+void thing_is_burning_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE();
 

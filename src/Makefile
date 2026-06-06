@@ -130,6 +130,7 @@ tidy:
 	splat-del "include.*OpenGL" "*cpp" do
 	splat "<_" "<" "*cpp" do
 	splat "Levelsp \/\*v\*\/, Levelp \/\*l\*\/" "Levelsp v, Levelp l" "*" do
+	splat "Gamep \/\*g\*\/, Levelsp \/\*v\*\/, Levelp \/\*l\*\/" "Gamep g, Levelsp v, Levelp l" "*" do
 	git checkout 3rdparty
 	@echo "Done"
 

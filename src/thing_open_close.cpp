@@ -93,7 +93,7 @@
   return t->_is_unlocked;
 }
 
-void thing_is_unlocked_set(Gamep /*g*/, Levelsp v, Levelp l, Thingp t, bool val)
+void thing_is_unlocked_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
 {
   TRACE_DEBUG();
 

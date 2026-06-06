@@ -31,7 +31,7 @@
 //
 // Hot animation time step
 //
-void thing_hot_time_step(Gamep /*g*/, Levelsp v, Levelp l, Thingp me, int /*time_step*/)
+void thing_hot_time_step(Gamep g, Levelsp v, Levelp l, Thingp me, int /*time_step*/)
 {
   TRACE();
 
@@ -126,7 +126,7 @@ void thing_hot_time_step(Gamep /*g*/, Levelsp v, Levelp l, Thingp me, int /*time
   return false;
 }
 
-void thing_is_hot_set(Gamep /*g*/, Levelsp v, Levelp l, Thingp me, bool val)
+void thing_is_hot_set(Gamep g, Levelsp v, Levelp l, Thingp me, bool val)
 {
   TRACE_DEBUG();
 

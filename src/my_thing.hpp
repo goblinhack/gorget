@@ -790,7 +790,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_hit_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_is_hit_when_dead(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_hot_check(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
-[[nodiscard]] auto thing_is_immune_to(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEventType val) -> bool;
+[[nodiscard]] auto thing_is_immune_to(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEventType val) -> bool;
 [[nodiscard]] auto thing_is_indestructible(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_insectoid(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_inventory_item(Thingp t) -> bool;
@@ -846,7 +846,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_projectile(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_removable_on_err(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_removable_when_dead_on_err(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_resistant_to(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEventType val) -> bool;
+[[nodiscard]] auto thing_is_resistant_to(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEventType val) -> bool;
 [[nodiscard]] auto thing_is_rock(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_scheduled_for_cleanup(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_shovable(Thingp t) -> bool;
