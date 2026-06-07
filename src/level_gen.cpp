@@ -2055,8 +2055,8 @@ void fragments_fini(Gamep g)
 //
 // Add a level
 //
-void level_fixed_add(Gamep g, int chance, LevelType level_type, const std::string &alias, const char *file, int line,
-                     const Overrides &overrides, int dummy, ...)
+void level_fixed_add(Gamep g, int chance, LevelType level_type, const std::string &alias, const char *file, int line, const Overrides &overrides,
+                     int dummy, ...)
 {
   TRACE();
 

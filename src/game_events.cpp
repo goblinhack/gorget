@@ -85,7 +85,7 @@
   return thing_player_mouse_down(g, v, l, x, y, button);
 }
 
-[[nodiscard]] auto game_mouse_up(Gamep  /*g*/, int x, int y, uint32_t button) -> bool { return false; }
+[[nodiscard]] auto game_mouse_up(Gamep g, int x, int y, uint32_t button) -> bool { return false; }
 
 [[nodiscard]] auto game_mouse_motion(Gamep g, int x, int y, int /*relx*/, int /*rely*/, int wheelx, int wheely) -> bool
 {

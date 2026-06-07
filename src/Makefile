@@ -100,7 +100,7 @@ $(TARGET_GAME): $(OBJ_FILES)
 #			// NOLINTEND
 #####################################################
 tidy:
-	$(foreach x,$(XCPP_SOURCES_NO_TESTS),\
+	$(foreach x,$(CPP_SOURCES_NO_TESTS),\
 		echo "Running tidy on $x..." ; \
 		clang-tidy \
 			-fix \
@@ -131,13 +131,13 @@ tidy:
 	$(SCRIPT_DIR)/splat "if (0)" "if (compiler_unused)" "*cpp" do
 	$(SCRIPT_DIR)/splat-del "include.*OpenGL" "*cpp" do
 	$(SCRIPT_DIR)/splat "<_" "<" "*cpp" do
-	$(SCRIPT_DIR)/splat "Gamep \/\*g\*\/" "Gamep g" "*" do
-	$(SCRIPT_DIR)/splat "Levelsp \/\*v\*\/" "Levelsp v" "*" do
-	$(SCRIPT_DIR)/splat "Levelp \/\*l\*\/" "Levelp l" "*" do
-	$(SCRIPT_DIR)/splat "Widp \/\*w\*\/" "Widp w" "*" do
-	$(SCRIPT_DIR)/splat "int \/\*x\*\/" "int x" "*" do
-	$(SCRIPT_DIR)/splat "int \/\*y\*\/" "int y" "*" do
-	$(SCRIPT_DIR)/splat "uint32_t \/\*button\*\/" "uint32_t button" "*" do
+	$(SCRIPT_DIR)/splat "Gamep *\/\*g\*\/" "Gamep g" "*" do
+	$(SCRIPT_DIR)/splat "Levelsp *\/\*v\*\/" "Levelsp v" "*" do
+	$(SCRIPT_DIR)/splat "Levelp *\/\*l\*\/" "Levelp l" "*" do
+	$(SCRIPT_DIR)/splat "Widp *\/\*w\*\/" "Widp w" "*" do
+	$(SCRIPT_DIR)/splat "int *\/\*x\*\/" "int x" "*" do
+	$(SCRIPT_DIR)/splat "int *\/\*y\*\/" "int y" "*" do
+	$(SCRIPT_DIR)/splat "uint32_t *\/\*button\*\/" "uint32_t button" "*" do
 	@echo "Done"
 
 .PHONY: format tidy
