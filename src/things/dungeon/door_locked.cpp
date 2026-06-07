@@ -242,8 +242,8 @@ static void tp_door_locked_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, Thi
   thing_on_close_request_set(tp, tp_door_locked_on_close_request);
   thing_on_death_set(tp, tp_door_locked_on_death);
   thing_on_open_request_set(tp, tp_door_locked_on_open_request);
-  tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // roll max to continue burning
-  tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // roll max to continue burning
+  tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // fumble => intensify / keep burning / crit => stop burning
+  tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2"); // fumble => flames spread to you
   tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d4");
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);

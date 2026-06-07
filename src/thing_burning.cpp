@@ -3,6 +3,7 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_dice_rolls.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_thing.hpp"
@@ -10,24 +11,6 @@
 #include "my_tp.hpp"
 #include "my_types.hpp"
 #include "my_ui.hpp"
-
-//
-// Do actions upon burning
-//
-void thing_is_burning_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
-{
-  TRACE();
-
-  if (thing_is_burning(me)) {
-    if (thing_is_player(me)) {
-      if (thing_is_immune_to(g, v, l, me, THING_EVENT_FIRE_DAMAGE)) {
-        topcon(UI_IMPORTANT_FMT_STR "You are burning and bask in the flames!" UI_RESET_FMT);
-      } else {
-        topcon(UI_IMPORTANT_FMT_STR "You are burning!" UI_RESET_FMT);
-      }
-    }
-  }
-}
 
 void thing_continue_to_burn_check(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
@@ -103,12 +86,16 @@ void thing_continue_to_burn_check(Gamep g, Levelsp v, Levelp l, Thingp me)
     }
   }
 
-  //
-  // Continue to burn
-  //
+  ThingEvent e {
+      .reason     = {},                      //
+      .event_type = THING_EVENT_FIRE_DAMAGE, //
+      .damage     = d4(),                    //
+  };
+
   if (level_is_fire(g, v, l, thing_at(me)) == nullptr) {
-    THING_DBG(me, "spawn flames");
-    (void) thing_spawn(g, v, l, tp_first(is_fire), me);
+    if (thing_is_burning(me)) {
+      thing_damage(g, v, l, me, e);
+    }
   }
 
   if (level_is_smoke(g, v, l, thing_at(me)) == nullptr) {

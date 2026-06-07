@@ -139,7 +139,7 @@ static void tp_potion_endurance_on_death(Gamep g, Levelsp v, Levelp l, Thingp me
   thing_on_drop_success_set(tp, tp_potion_endurance_on_drop_success);
   thing_on_thrown_set(tp, tp_potion_endurance_on_thrown);
   thing_on_use_set(tp, tp_potion_endurance_on_use);
-  tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // roll max to continue burning
+  tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // fumble => intensify / keep burning / crit => stop burning
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated);

@@ -67,34 +67,34 @@ static auto thing_carry_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp o
 //
 // Drop an item from the things inventory
 //
-static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp dropper, ThingEvent &e) -> bool
+static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp user, ThingEvent &e) -> bool
 {
   TRACE();
 
   if (! thing_is_item(item)) {
-    thing_err(dropper, "unexpected non thing, %s", __FUNCTION__);
+    thing_err(user, "unexpected non thing, %s", __FUNCTION__);
     return false;
   }
 
   if (! thing_is_carried(item)) {
-    thing_err(dropper, "unexpected uncarried thing, %s", __FUNCTION__);
+    thing_err(user, "unexpected uncarried thing, %s", __FUNCTION__);
     return false;
   }
 
-  if (! thing_is_player(dropper) && ! thing_is_monst(dropper)) {
-    thing_err(dropper, "unexpected thing, %s", __FUNCTION__);
+  if (! thing_is_player(user) && ! thing_is_monst(user)) {
+    thing_err(user, "unexpected thing, %s", __FUNCTION__);
     return false;
   }
 
   auto s = to_string(g, v, l, item);
-  THING_DBG(dropper, "drop: %s", s.c_str());
+  THING_DBG(user, "drop: %s", s.c_str());
   TRACE_INDENT();
 
-  if (! thing_is_carried_unset(g, v, l, item, dropper, e)) {
-    THING_DBG(dropper, "drop: %s (failed)", s.c_str());
+  if (! thing_is_carried_unset(g, v, l, item, user, e)) {
+    THING_DBG(user, "drop: %s (failed)", s.c_str());
     TRACE_INDENT();
 
-    if (thing_is_player(dropper)) {
+    if (thing_is_player(user)) {
       if (e.event_type == THING_EVENT_USER_INITIATED) {
         auto the_thing = thing_name_long_the(g, v, l, item);
         topcon("You fail to drop %s.", the_thing.c_str());
@@ -106,15 +106,20 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp dr
   //
   // Drop the thing where the player is
   //
-  if (! thing_warp_to(g, v, l, item, thing_at(dropper))) {
-    if (e.event_type == THING_EVENT_USER_INITIATED) {
-      auto the_thing = thing_name_long_the(g, v, l, item);
-      topcon("You fail to place %s.", the_thing.c_str());
+  if (thing_inventory_get_item_count(g, v, l, item, user) == -1) {
+    //
+    // But only if the last item
+    //
+    if (! thing_warp_to(g, v, l, item, thing_at(user))) {
+      if (e.event_type == THING_EVENT_USER_INITIATED) {
+        auto the_thing = thing_name_long_the(g, v, l, item);
+        topcon("You fail to place %s.", the_thing.c_str());
+      }
+      return false;
     }
-    return false;
   }
 
-  if (thing_is_player(dropper)) {
+  if (thing_is_player(user)) {
     if (e.event_type == THING_EVENT_USER_INITIATED) {
       auto the_thing = thing_name_long_the(g, v, l, item);
       topcon("You drop %s.", the_thing.c_str());
@@ -308,7 +313,7 @@ void thing_on_drop_request_set(Tpp tp, thing_on_drop_request_t callback)
   tp->on_drop_request = callback;
 }
 
-[[nodiscard]] auto thing_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp dropper, ThingEvent &e) -> bool
+[[nodiscard]] auto thing_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user, ThingEvent &e) -> bool
 {
   TRACE();
   auto *tp = thing_tp(me);
@@ -322,11 +327,11 @@ void thing_on_drop_request_set(Tpp tp, thing_on_drop_request_t callback)
     //
     return true;
   }
-  if (! thing_is_player(dropper) && ! thing_is_monst(dropper)) {
-    thing_err(dropper, "unexpected thing for %s", __FUNCTION__);
+  if (! thing_is_player(user) && ! thing_is_monst(user)) {
+    thing_err(user, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
-  return tp->on_drop_request(g, v, l, me, dropper, e);
+  return tp->on_drop_request(g, v, l, me, user, e);
 }
 
 void thing_on_carry_success_set(Tpp tp, thing_on_carry_success_t callback)
@@ -370,7 +375,7 @@ void thing_on_drop_success_set(Tpp tp, thing_on_drop_success_t callback)
   tp->on_drop_success = callback;
 }
 
-[[nodiscard]] auto thing_on_drop_success(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp dropper, ThingEvent &e) -> bool
+[[nodiscard]] auto thing_on_drop_success(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user, ThingEvent &e) -> bool
 {
   TRACE();
   auto *tp = thing_tp(me);
@@ -384,11 +389,11 @@ void thing_on_drop_success_set(Tpp tp, thing_on_drop_success_t callback)
     //
     return true;
   }
-  if (! thing_is_player(dropper) && ! thing_is_monst(dropper)) {
-    thing_err(dropper, "unexpected thing for %s", __FUNCTION__);
+  if (! thing_is_player(user) && ! thing_is_monst(user)) {
+    thing_err(user, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
-  return tp->on_drop_success(g, v, l, me, dropper, e);
+  return tp->on_drop_success(g, v, l, me, user, e);
 }
 
 [[nodiscard]] auto thing_carry(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, ThingEvent &e) -> bool

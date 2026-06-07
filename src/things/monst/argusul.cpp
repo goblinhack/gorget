@@ -99,8 +99,8 @@ static void tp_argusul_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
   thing_on_attacking_set(tp, tp_argusul_on_attacking);
   thing_on_death_set(tp, tp_argusul_on_death);
   thing_on_tick_begin_set(tp, tp_argusul_tick_begin);
-  tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6"); // roll max to continue burning
-  tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // roll max to continue burning
+  tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6"); // fumble => intensify / keep burning / crit => stop burning
+  tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2"); // fumble => flames spread to you
   tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d4");
   tp_distance_avoid_target_set(tp, 3);
   tp_distance_vision_set(tp, 12);

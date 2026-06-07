@@ -21,7 +21,8 @@
   if (!tp_load_border()) { return false; }
   if (!tp_load_brazier()) { return false; }
   if (!tp_load_bridge()) { return false; }
-  if (!tp_load_buff_immunity_fire()) { return false; }
+  if (!tp_load_buff_immune_fire()) { return false; }
+  if (!tp_load_buff_resistant_fire()) { return false; }
   if (!tp_load_chasm()) { return false; }
   if (!tp_load_chest()) { return false; }
   if (!tp_load_corridor()) { return false; }

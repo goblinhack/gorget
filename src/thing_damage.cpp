@@ -71,9 +71,9 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
         if (thing_is_lava(it)) {
           topcon(UI_WARNING_FMT_STR "You are burning in lava!" UI_RESET_FMT);
         } else if (thing_is_fire(it)) {
-          topcon(UI_WARNING_FMT_STR "The flames wrap around you!" UI_RESET_FMT);
+          topcon(UI_WARNING_FMT_STR "You are standing in flames!" UI_RESET_FMT);
         } else if (thing_is_water(it)) {
-          topcon(UI_WARNING_FMT_STR "You are burnt by scalding %s." UI_RESET_FMT, by_the_thing.c_str());
+          topcon(UI_WARNING_FMT_STR "You are boiling %s." UI_RESET_FMT, by_the_thing.c_str());
         } else if (thing_is_steam(it)) {
           topcon(UI_WARNING_FMT_STR "You scalded by %s." UI_RESET_FMT, by_the_thing.c_str());
         } else {
@@ -122,7 +122,7 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
         topcon(UI_WARNING_FMT_STR "You suffer dazzling damage." UI_RESET_FMT);
         break;
       case THING_EVENT_FIRE_DAMAGE : //
-        topcon(UI_WARNING_FMT_STR "You are burnt." UI_RESET_FMT);
+        topcon(UI_WARNING_FMT_STR "You are burning." UI_RESET_FMT);
         break;
       case THING_EVENT_NONE :             //
       case THING_EVENT_OPEN :             //
@@ -311,6 +311,9 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
   //
   if (thing_is_immune_to(g, v, l, me, e.event_type)) {
     THING_DBG(me, "%s: no damage as immune", to_string(g, v, l, e).c_str());
+    if (thing_is_player(me)) {
+      topcon("You take no damage from the heat.");
+    }
     return;
   }
 
@@ -318,8 +321,19 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
   // Resistant to this attack?
   //
   if (thing_is_resistant_to(g, v, l, me, e.event_type)) {
-    THING_DBG(me, "%s: half damage as resistant", to_string(g, v, l, e).c_str());
     e.damage /= 2;
+    THING_DBG(me, "%s: half damage as resistant", to_string(g, v, l, e).c_str());
+
+    if (e.damage <= 0) {
+      if (thing_is_player(me)) {
+        topcon("You take no damage from the heat.");
+      }
+      return;
+    }
+
+    if (thing_is_player(me)) {
+      topcon("You take half damage from the heat.");
+    }
   }
 
   //

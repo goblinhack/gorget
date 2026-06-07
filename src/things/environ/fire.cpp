@@ -105,7 +105,7 @@ static void tp_fire_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
 
     FOR_ALL_THINGS_AT(g, v, l, it, p)
     {
-      if (tp_chance_success(thing_tp(it), THING_CHANCE_START_BURNING)) {
+      if (tp_chance_fail(thing_tp(it), THING_CHANCE_START_BURNING)) {
         THING_DBG(it, "can spawn fire here");
         something_to_burn_here = true;
       }

@@ -37,8 +37,8 @@ static auto tp_reeds_z_depth_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> Map
   // begin sort marker1 {
   thing_description_set(tp, tp_reeds_description_get);
   thing_z_depth_set(tp, tp_reeds_z_depth_get);
-  tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // roll max to continue burning
-  tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // roll max to continue burning
+  tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // fumble => intensify / keep burning / crit => stop burning
+  tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2"); // fumble => flames spread to you
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_blit_hit_outline_w_black_inside);
   tp_flag_set(tp, is_blit_if_has_seen);

@@ -279,12 +279,6 @@ static void tp_player_tick_end(Gamep g, Levelsp v, Levelp l, Thingp me)
   // If asked to follow the mouse path, start walking
   //
   (void) player_move_to_next(g, v, l, me);
-
-  if (thing_is_burning(me)) {
-    if (! thing_is_immune_to(g, v, l, me, THING_EVENT_FIRE_DAMAGE)) {
-      thing_sound_play(g, v, l, me, "player_ouch");
-    }
-  }
 }
 
 static void tp_player_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
@@ -296,9 +290,7 @@ static void tp_player_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 
   static std::initializer_list< std::string > carry = {
-      "staff_fire",
-      "potion_incineration",
-      "potion_healing",
+      "staff_fire", "potion_incineration", "potion_incineration", "potion_incineration", "potion_healing",
   };
 
   for (auto tp : carry) {
@@ -317,9 +309,14 @@ static void tp_player_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
       }
     }
   }
-  if (! thing_buff_add(g, v, l, me, tp_find_mand("buff_immunity_fire"))) {
-    thing_err(me, "failed to add buff");
-  }
+  if (0)
+    if (! thing_buff_add(g, v, l, me, tp_find_mand("buff_resistant_fire"))) {
+      thing_err(me, "failed to add buff");
+    }
+  if (0)
+    if (! thing_buff_add(g, v, l, me, tp_find_mand("buff_immune_fire"))) {
+      thing_err(me, "failed to add buff");
+    }
 }
 
 [[nodiscard]] auto tp_load_player() -> bool
@@ -343,8 +340,8 @@ static void tp_player_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
   thing_on_tick_begin_set(tp, tp_player_tick_begin);
   thing_on_tick_end_set(tp, tp_player_tick_end);
   thing_on_tick_idle_set(tp, tp_player_tick_idle);
-  tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6"); // roll max to stop burning
-  tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d100");  // roll max to continue burning
+  tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6"); // fumble => intensify / keep burning / crit => stop burning
+  tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d100");  // fumble => flames spread to you
   tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d4");
   tp_distance_jump_set(tp, 3);
   tp_distance_vision_set(tp, MAP_WIDTH / 2); // tiles

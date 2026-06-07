@@ -93,7 +93,8 @@ static std::initializer_list< std::string > tps = {
     "blitzhound",
     "brazier",
     "bridge",
-    "buff_immunity_fire",
+    "buff_immune_fire",
+    "buff_resistant_fire",
     "chasm",
     "chest",
     "corridor",
@@ -700,11 +701,15 @@ void tp_chance_set(Tpp tp, ThingChanceType ev, const std::string &val)
     return false;
   }
 
+  if (compiler_unused) {
+    tp_con(tp, " tp_chance_success roll %d", roll);
+  }
+
   return roll == tp->chance[ val ].max_roll();
 }
 
 //
-// Roll for chance of success
+// Roll for chance of failure
 //
 [[nodiscard]] auto tp_chance_fail(Tpp tp, ThingChanceType val) -> bool
 {
@@ -719,7 +724,13 @@ void tp_chance_set(Tpp tp, ThingChanceType ev, const std::string &val)
     return false;
   }
 
-  return tp->chance[ val ].roll() == 1;
+  auto roll = tp->chance[ val ].roll();
+
+  if (compiler_unused) {
+    tp_con(tp, " tp_chance_fail roll %d", roll);
+  }
+
+  return roll == 1;
 }
 
 [[nodiscard]] auto tp_tiles_get(Tpp tp, ThingAnimType val, int index) -> Tilep

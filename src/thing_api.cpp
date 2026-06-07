@@ -550,8 +550,6 @@ void thing_is_burning_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
 
     THING_DBG(t, "is no longer burning, %u degrees", thing_temperature(t));
   }
-
-  thing_is_burning_handle(g, v, l, t);
 }
 
 void thing_is_burning_unset(Gamep g, Levelsp v, Levelp l, Thingp t)

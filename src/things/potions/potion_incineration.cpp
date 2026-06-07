@@ -3,6 +3,7 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_dice_rolls.hpp"
 #include "my_main.hpp"
 #include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp"
@@ -127,10 +128,19 @@ static bool tp_potion_incineration_on_use(Gamep g, Levelsp v, Levelp l, Thingp m
   TRACE();
 
   if (thing_is_player(user)) {
+    auto roll = d100();
+    if (roll < 10) {
+      (void) thing_buff_add(g, v, l, user, tp_find_mand("buff_immune_fire"));
+      topcon("Pleasing flames engulf you!");
+    } else if (roll < 20) {
+      (void) thing_buff_add(g, v, l, user, tp_find_mand("buff_resistant_fire"));
+      topcon("Flames engulf you, but you seem oddly calm");
+    } else {
+      topcon("Flames engulf you as you drink the strangely tasty potion!");
+      thing_is_burning_set(g, v, l, user);
+    }
+
     (void) thing_spawn(g, v, l, tp_first(is_fire), thing_at(user));
-    (void) thing_spawn(g, v, l, tp_first(is_fire), thing_at(user));
-    topcon("Flames engulf you!");
-    thing_is_burning_set(g, v, l, user);
   }
 
   return true;
@@ -166,7 +176,7 @@ static void tp_potion_incineration_on_death(Gamep g, Levelsp v, Levelp l, Thingp
   thing_on_drop_success_set(tp, tp_potion_incineration_on_drop_success);
   thing_on_thrown_set(tp, tp_potion_incinertaion_on_thrown);
   thing_on_use_set(tp, tp_potion_incineration_on_use);
-  tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1"); // roll max to continue burning
+  tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1"); // fumble => intensify / keep burning / crit => stop burning
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated);

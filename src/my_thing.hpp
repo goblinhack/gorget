@@ -1173,7 +1173,6 @@ void               thing_hit_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, i
 void               thing_hot_time_step(Gamep g, Levelsp v, Levelp l, Thingp me, int time_step);
 void               thing_interpolate(Gamep g, Levelsp v, Levelp l, Thingp t, float dt);
 void               thing_inventory_dump(Gamep g, Levelsp v, Levelp l, Thingp owner);
-void               thing_is_burning_handle(Gamep g, Levelsp v, Levelp l, Thingp me);
 void               thing_is_burning_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val = true);
 void               thing_is_burning_unset(Gamep g, Levelsp v, Levelp l, Thingp t);
 void               thing_is_corpse_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val = true);
