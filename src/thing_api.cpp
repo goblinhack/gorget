@@ -31,7 +31,7 @@
   return make_bpoint(t->_at);
 }
 
-void thing_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, const bpoint &val)
+void thing_at_set(Gamep g, Levelsp /*v*/, Levelp l, Thingp t, const bpoint &val)
 {
   TRACE_DEBUG();
 
@@ -61,7 +61,7 @@ void thing_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, const bpoint &val)
   return t->_at;
 }
 
-void thing_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, const fpoint &val)
+void thing_at_set(Gamep g, Levelsp /*v*/, Levelp l, Thingp t, const fpoint &val)
 {
   TRACE_DEBUG();
 
@@ -99,7 +99,7 @@ void thing_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, const fpoint &val)
   return t->_prev_pix_at;
 }
 
-void thing_prev_pix_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, const spoint &val)
+void thing_prev_pix_at_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, const spoint &val)
 {
   TRACE_DEBUG();
 
@@ -109,7 +109,7 @@ void thing_prev_pix_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, const spoint 
   t->_prev_pix_at = val;
 }
 
-void thing_pix_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, const spoint &val)
+void thing_pix_at_set(Gamep g, Levelsp /*v*/, Levelp l, Thingp t, const spoint &val)
 {
   TRACE_DEBUG();
 
@@ -127,7 +127,7 @@ void thing_pix_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, const spoint &val)
   t->_curr_pix_at = val;
 }
 
-void thing_pix_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, short x, short y)
+void thing_pix_at_set(Gamep g, Levelsp /*v*/, Levelp l, Thingp t, short x, short y)
 {
   TRACE_DEBUG();
 
@@ -178,7 +178,7 @@ void thing_moving_from_set(Thingp t, const bpoint &val)
   return t->_speed;
 }
 
-[[nodiscard]] auto thing_speed_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_speed_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -206,7 +206,7 @@ void thing_moving_from_set(Thingp t, const bpoint &val)
   return t->_weight;
 }
 
-[[nodiscard]] auto thing_weight_set(Gamep g, Levelsp v, Levelp l, Thingp t, uint32_t val) -> int
+[[nodiscard]] auto thing_weight_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, uint32_t val) -> int
 {
   TRACE_DEBUG();
 
@@ -259,7 +259,7 @@ void thing_is_falling_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
   }
 }
 
-[[nodiscard]] auto thing_is_falling_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_is_falling_incr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -326,7 +326,7 @@ void thing_is_falling_continues_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_temperature;
 }
 
-[[nodiscard]] auto thing_temperature_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_temperature_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -394,7 +394,7 @@ void thing_is_falling_continues_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_damage_this_tick;
 }
 
-[[nodiscard]] auto thing_damage_this_tick_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_damage_this_tick_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -411,7 +411,7 @@ void thing_is_falling_continues_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_damage_this_tick = val;
 }
 
-[[nodiscard]] auto thing_damage_this_tick_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_damage_this_tick_incr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -422,7 +422,7 @@ void thing_is_falling_continues_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_damage_this_tick += val;
 }
 
-[[nodiscard]] auto thing_damage_this_tick_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_damage_this_tick_decr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -444,7 +444,7 @@ void thing_is_falling_continues_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_keys_carried;
 }
 
-[[nodiscard]] auto thing_keys_carried_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_keys_carried_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -461,7 +461,7 @@ void thing_is_falling_continues_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_keys_carried = val;
 }
 
-[[nodiscard]] auto thing_keys_carried_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_keys_carried_incr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -472,7 +472,7 @@ void thing_is_falling_continues_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_keys_carried += val;
 }
 
-[[nodiscard]] auto thing_keys_carried_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_keys_carried_decr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -488,7 +488,7 @@ void thing_is_falling_continues_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_keys_carried -= val;
 }
 
-void thing_is_dead_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
+void thing_is_dead_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, bool val)
 {
   TRACE_DEBUG();
 
@@ -570,7 +570,7 @@ void thing_is_burning_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_is_corpse;
 }
 
-void thing_is_corpse_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
+void thing_is_corpse_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, bool val)
 {
   TRACE_DEBUG();
 
@@ -647,7 +647,7 @@ void thing_is_scheduled_for_cleanup_unset(Gamep g, Levelsp v, Levelp l, Thingp t
   return t->_is_on_map;
 }
 
-void thing_is_on_map_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
+void thing_is_on_map_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, bool val)
 {
   TRACE_DEBUG();
 
@@ -2994,7 +2994,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value1;
 }
 
-[[nodiscard]] auto thing_value1_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value1_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3005,7 +3005,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value1 = val;
 }
 
-[[nodiscard]] auto thing_value1_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value1_incr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3016,7 +3016,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value1 += val;
 }
 
-[[nodiscard]] auto thing_value1_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value1_decr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3040,7 +3040,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value2;
 }
 
-[[nodiscard]] auto thing_value2_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value2_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3051,7 +3051,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value2 = val;
 }
 
-[[nodiscard]] auto thing_value2_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value2_incr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3062,7 +3062,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value2 += val;
 }
 
-[[nodiscard]] auto thing_value2_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value2_decr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3086,7 +3086,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value3;
 }
 
-[[nodiscard]] auto thing_value3_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value3_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3097,7 +3097,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value3 = val;
 }
 
-[[nodiscard]] auto thing_value3_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value3_incr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3108,7 +3108,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value3 += val;
 }
 
-[[nodiscard]] auto thing_value3_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value3_decr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3132,7 +3132,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value4;
 }
 
-[[nodiscard]] auto thing_value4_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value4_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3143,7 +3143,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value4 = val;
 }
 
-[[nodiscard]] auto thing_value4_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value4_incr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3154,7 +3154,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value4 += val;
 }
 
-[[nodiscard]] auto thing_value4_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value4_decr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3178,7 +3178,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value5;
 }
 
-[[nodiscard]] auto thing_value5_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value5_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3189,7 +3189,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value5 = val;
 }
 
-[[nodiscard]] auto thing_value5_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value5_incr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3200,7 +3200,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value5 += val;
 }
 
-[[nodiscard]] auto thing_value5_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value5_decr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3224,7 +3224,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value6;
 }
 
-[[nodiscard]] auto thing_value6_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value6_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3235,7 +3235,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value6 = val;
 }
 
-[[nodiscard]] auto thing_value6_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value6_incr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3246,7 +3246,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value6 += val;
 }
 
-[[nodiscard]] auto thing_value6_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value6_decr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3270,7 +3270,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value7;
 }
 
-[[nodiscard]] auto thing_value7_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value7_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3281,7 +3281,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value7 = val;
 }
 
-[[nodiscard]] auto thing_value7_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value7_incr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3292,7 +3292,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value7 += val;
 }
 
-[[nodiscard]] auto thing_value7_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value7_decr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3316,7 +3316,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value8;
 }
 
-[[nodiscard]] auto thing_value8_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value8_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3327,7 +3327,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value8 = val;
 }
 
-[[nodiscard]] auto thing_value8_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value8_incr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3338,7 +3338,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value8 += val;
 }
 
-[[nodiscard]] auto thing_value8_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value8_decr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3362,7 +3362,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value9;
 }
 
-[[nodiscard]] auto thing_value9_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value9_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3373,7 +3373,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value9 = val;
 }
 
-[[nodiscard]] auto thing_value9_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value9_incr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3384,7 +3384,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value9 += val;
 }
 
-[[nodiscard]] auto thing_value9_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value9_decr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3408,7 +3408,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value10;
 }
 
-[[nodiscard]] auto thing_value10_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value10_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3419,7 +3419,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value10 = val;
 }
 
-[[nodiscard]] auto thing_value10_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value10_incr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3430,7 +3430,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value10 += val;
 }
 
-[[nodiscard]] auto thing_value10_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value10_decr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3454,7 +3454,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value11;
 }
 
-[[nodiscard]] auto thing_value11_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value11_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3465,7 +3465,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value11 = val;
 }
 
-[[nodiscard]] auto thing_value11_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value11_incr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3476,7 +3476,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value11 += val;
 }
 
-[[nodiscard]] auto thing_value11_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value11_decr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3500,7 +3500,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value12;
 }
 
-[[nodiscard]] auto thing_value12_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value12_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3511,7 +3511,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value12 = val;
 }
 
-[[nodiscard]] auto thing_value12_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value12_incr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3522,7 +3522,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value12 += val;
 }
 
-[[nodiscard]] auto thing_value12_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value12_decr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3546,7 +3546,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value13;
 }
 
-[[nodiscard]] auto thing_value13_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value13_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3557,7 +3557,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value13 = val;
 }
 
-[[nodiscard]] auto thing_value13_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value13_incr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3568,7 +3568,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value13 += val;
 }
 
-[[nodiscard]] auto thing_value13_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value13_decr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3592,7 +3592,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value14;
 }
 
-[[nodiscard]] auto thing_value14_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value14_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3603,7 +3603,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value14 = val;
 }
 
-[[nodiscard]] auto thing_value14_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value14_incr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3614,7 +3614,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value14 += val;
 }
 
-[[nodiscard]] auto thing_value14_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value14_decr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3638,7 +3638,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value15;
 }
 
-[[nodiscard]] auto thing_value15_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value15_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3649,7 +3649,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value15 = val;
 }
 
-[[nodiscard]] auto thing_value15_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value15_incr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3660,7 +3660,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value15 += val;
 }
 
-[[nodiscard]] auto thing_value15_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value15_decr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3684,7 +3684,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value16;
 }
 
-[[nodiscard]] auto thing_value16_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value16_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3695,7 +3695,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value16 = val;
 }
 
-[[nodiscard]] auto thing_value16_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value16_incr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3706,7 +3706,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_value16 += val;
 }
 
-[[nodiscard]] auto thing_value16_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_value16_decr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3730,7 +3730,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_distance_avoid_target;
 }
 
-[[nodiscard]] auto thing_distance_avoid_target_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_distance_avoid_target_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3741,7 +3741,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_distance_avoid_target = val;
 }
 
-[[nodiscard]] auto thing_distance_avoid_target_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_distance_avoid_target_incr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3752,7 +3752,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_distance_avoid_target += val;
 }
 
-[[nodiscard]] auto thing_distance_avoid_target_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_distance_avoid_target_decr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3766,7 +3766,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_distance_avoid_target -= val;
 }
 
-[[nodiscard]] auto thing_minion_max(Gamep g, Levelsp v, Levelp l, Thingp t) -> int
+[[nodiscard]] auto thing_minion_max(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t) -> int
 {
   TRACE_DEBUG();
 
@@ -3777,7 +3777,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_minion_max;
 }
 
-[[nodiscard]] auto thing_minion_max_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_minion_max_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3794,7 +3794,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_minion_max = val;
 }
 
-[[nodiscard]] auto thing_minion_max_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_minion_max_incr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3810,7 +3810,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_minion_max += val;
 }
 
-[[nodiscard]] auto thing_minion_max_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_minion_max_decr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3824,7 +3824,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_minion_max -= val;
 }
 
-[[nodiscard]] auto thing_distance_minion_from_mob_max(Gamep g, Levelsp v, Levelp l, Thingp t) -> int
+[[nodiscard]] auto thing_distance_minion_from_mob_max(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t) -> int
 {
   TRACE_DEBUG();
 
@@ -3835,7 +3835,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_distance_minion_from_mob_max;
 }
 
-[[nodiscard]] auto thing_distance_minion_from_mob_max_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_distance_minion_from_mob_max_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3857,7 +3857,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_variant;
 }
 
-[[nodiscard]] auto thing_variant_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_variant_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3882,7 +3882,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_priority;
 }
 
-[[nodiscard]] auto thing_priority_set(Gamep g, Levelsp v, Levelp l, Thingp t, ThingPriorityType val) -> ThingPriorityType
+[[nodiscard]] auto thing_priority_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, ThingPriorityType val) -> ThingPriorityType
 {
   TRACE_DEBUG();
 
@@ -3904,7 +3904,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_lifespan;
 }
 
-[[nodiscard]] auto thing_lifespan_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_lifespan_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3915,7 +3915,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_lifespan = val;
 }
 
-[[nodiscard]] auto thing_lifespan_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_lifespan_incr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3926,7 +3926,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_lifespan += val;
 }
 
-[[nodiscard]] auto thing_lifespan_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_lifespan_decr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3951,7 +3951,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_lifespan_initial;
 }
 
-[[nodiscard]] auto thing_lifespan_initial_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_lifespan_initial_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3962,7 +3962,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_lifespan_initial = val;
 }
 
-[[nodiscard]] auto thing_lifespan_initial_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_lifespan_initial_incr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3973,7 +3973,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_lifespan_initial += val;
 }
 
-[[nodiscard]] auto thing_lifespan_initial_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_lifespan_initial_decr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3998,7 +3998,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_age;
 }
 
-[[nodiscard]] auto thing_age_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_age_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -4009,7 +4009,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_age = val;
 }
 
-[[nodiscard]] auto thing_age_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_age_incr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -4020,7 +4020,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_age += val;
 }
 
-[[nodiscard]] auto thing_age_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_age_decr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -4045,7 +4045,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_move_remaining;
 }
 
-[[nodiscard]] auto thing_move_remaining_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_move_remaining_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -4056,7 +4056,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_move_remaining = val;
 }
 
-[[nodiscard]] auto thing_move_remaining_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_move_remaining_incr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -4067,7 +4067,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_move_remaining += val;
 }
 
-[[nodiscard]] auto thing_move_remaining_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_move_remaining_decr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -4099,7 +4099,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_target;
 }
 
-void thing_target_set(Gamep g, Levelsp v, Levelp l, Thingp t, const bpoint &val)
+void thing_target_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, const bpoint &val)
 {
   TRACE_DEBUG();
 

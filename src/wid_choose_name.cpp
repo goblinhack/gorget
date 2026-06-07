@@ -14,7 +14,7 @@
 
 static Widp wid_choose_player_name;
 
-static void selected(Gamep g, Widp w, const std::string &text)
+static void selected(Gamep g, Widp /*w*/, const std::string &text)
 {
   TRACE();
 

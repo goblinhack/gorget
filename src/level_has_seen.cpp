@@ -12,7 +12,7 @@
 #include "my_types.hpp"
 #include <cstdint>
 
-[[nodiscard]] auto level_has_seen(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_has_seen(Gamep g, Levelsp /*v*/, Levelp /*l*/, const bpoint &p) -> bool
 {
   TRACE();
 
@@ -36,7 +36,7 @@
 //
 // Update all tiles the player has seen.
 //
-void level_has_seen_update(Gamep g, Levelsp v, Levelp l)
+void level_has_seen_update(Gamep g, Levelsp /*v*/, Levelp l)
 {
   TRACE();
 

@@ -38,7 +38,7 @@ static void wid_intro_destroy()
   wid_intro_window = nullptr;
 }
 
-[[nodiscard]] static auto wid_intro_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
+[[nodiscard]] static auto wid_intro_key_down(Gamep g, Widp /*w*/, const struct SDL_Keysym *key) -> bool
 {
   TRACE();
 
@@ -67,7 +67,7 @@ static void wid_intro_destroy()
   return false;
 }
 
-[[nodiscard]] static auto wid_intro_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_intro_mouse_up(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
   con("Intro menu: start");
   TRACE();
@@ -107,7 +107,7 @@ static void game_display_intro(Gamep g)
   blit_flush();
 }
 
-static void wid_intro_tick(Gamep g, Widp w)
+static void wid_intro_tick(Gamep g, Widp /*w*/)
 {
   TRACE();
 

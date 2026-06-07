@@ -259,7 +259,7 @@ void thing_on_unwield_request_set(Tpp tp, thing_on_unwield_request_t callback)
   return tp->on_unwield_request(g, v, l, me, unwieldper);
 }
 
-[[nodiscard]] auto thing_wielding(Gamep g, Levelsp v, Levelp l, Thingp me) -> Thingp
+[[nodiscard]] auto thing_wielding(Gamep g, Levelsp v, Levelp /*l*/, Thingp me) -> Thingp
 {
   TRACE();
 

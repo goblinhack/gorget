@@ -827,7 +827,7 @@ void player_move_requests_reset(Gamep g, Levelsp v)
 //
 // Allow moves to accumulate so we can do diagonal moves.
 //
-void player_move_accum(Gamep g, Levelsp v, Levelp l, bool up, bool down, bool left, bool right, bool fire)
+void player_move_accum(Gamep g, Levelsp v, Levelp /*l*/, bool up, bool down, bool left, bool right, bool fire)
 {
   TRACE();
 

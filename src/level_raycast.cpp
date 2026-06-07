@@ -228,7 +228,7 @@ void Raycast::ray_pixel_line_draw(int16_t index, const spoint p0, const spoint p
 //
 // Generate the right ray lengths.
 //
-void Raycast::ray_lengths_precalculate(Gamep g, Levelsp v, Levelp l)
+void Raycast::ray_lengths_precalculate(Gamep g, Levelsp /*v*/, Levelp /*l*/)
 {
   TRACE();
 
@@ -545,7 +545,7 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
 //
 // Re-generate triangle fans and render to the FBO
 //
-void Raycast::raycast_render(Gamep g, Levelsp v, Levelp l)
+void Raycast::raycast_render(Gamep g, Levelsp /*v*/, Levelp /*l*/)
 {
   TRACE();
 

@@ -33,7 +33,7 @@ static int saved_mouse_y;
 
 void wid_mouse_motion_end(Gamep g) {}
 
-void wid_mouse_motion_begin(Gamep g, Widp w, int x, int y) { wid_mouse_motion_end(g); }
+void wid_mouse_motion_begin(Gamep g, Widp /*w*/, int /*x*/, int /*y*/) { wid_mouse_motion_end(g); }
 
 void wid_mouse_focus_end(Gamep g_maybe_null)
 {
@@ -231,7 +231,7 @@ void wid_set_on_mouse_over_end(Widp w, on_mouse_over_end_t fn)
   w->on_mouse_over_end = fn;
 }
 
-[[nodiscard]] auto wid_scroll_trough_mouse_down(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] auto wid_scroll_trough_mouse_down(Gamep g, Widp w, int x, int y, uint32_t /*button*/) -> bool
 {
   TRACE();
 
@@ -282,7 +282,7 @@ void wid_set_on_mouse_over_end(Widp w, on_mouse_over_end_t fn)
   return true;
 }
 
-[[nodiscard]] auto wid_scroll_motion(Gamep g, Widp w, int x, int y, int relx, int rely, int wheelx, int wheely) -> bool
+[[nodiscard]] auto wid_scroll_motion(Gamep g, Widp w, int /*x*/, int /*y*/, int relx, int rely, int wheelx, int wheely) -> bool
 {
   TRACE();
 

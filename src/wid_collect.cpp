@@ -97,7 +97,7 @@ static void wid_collect_mouse_over_end(Gamep g, Widp w)
   }
 }
 
-[[nodiscard]] static auto wid_collect_all(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_collect_all(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
   TRACE();
 
@@ -143,7 +143,7 @@ static void wid_collect_mouse_over_end(Gamep g, Widp w)
   return true;
 }
 
-[[nodiscard]] static auto wid_collect_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_collect_mouse_up(Gamep g, Widp w, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
   TRACE();
 
@@ -285,14 +285,14 @@ static void wid_collect_mouse_over_end(Gamep g, Widp w)
   return false;
 }
 
-[[nodiscard]] static auto wid_collect_back(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_collect_back(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
   TRACE();
   wid_collect_destroy(g);
   return true;
 }
 
-void wid_collect_show(Gamep g, Levelsp v, Levelp l, Thingp player, std::vector< Thingp > items_in)
+void wid_collect_show(Gamep g, Levelsp v, Levelp /*l*/, Thingp player, std::vector< Thingp > items_in)
 {
   TRACE();
 

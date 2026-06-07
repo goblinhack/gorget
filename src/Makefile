@@ -123,6 +123,7 @@ tidy:
 			-header-filter=".*" \
 			$x -- $(CFLAGS); \
 	)
+	git checkout 3rdparty
 	splat "if (ext == nullptr) [[unlikely]] {" "if (ext == nullptr) [[unlikely]] {" "*" do
 	splat "if (player == nullptr) [[unlikely]] {" "if (player == nullptr) [[unlikely]] {" "*" do
 	splat "if (tp == nullptr) [[unlikely]] {" "if (tp == nullptr) [[unlikely]] {" "*" do
@@ -136,7 +137,6 @@ tidy:
 	splat "int \/\*x\*\/" "int x" "*" do
 	splat "int \/\*y\*\/" "int y" "*" do
 	splat "uint32_t \/\*button\*\/" "uint32_t button" "*" do
-	git checkout 3rdparty
 	@echo "Done"
 
 .PHONY: style check-style tidy

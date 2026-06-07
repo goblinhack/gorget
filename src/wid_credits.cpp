@@ -35,7 +35,7 @@ static void wid_credits_destroy(Gamep g)
   wid_main_menu_select(g);
 }
 
-[[nodiscard]] static auto wid_credits_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
+[[nodiscard]] static auto wid_credits_key_down(Gamep g, Widp /*w*/, const struct SDL_Keysym *key) -> bool
 {
   con("Credits menu: key down");
   TRACE_INDENT();
@@ -72,7 +72,7 @@ static void wid_credits_destroy(Gamep g)
   return false;
 }
 
-[[nodiscard]] static auto wid_credits_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_credits_mouse_up(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
 {
   TRACE();
   wid_credits_destroy(g);

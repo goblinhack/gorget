@@ -145,7 +145,7 @@ static void thing_dump_buffs(Gamep g, Levelsp v, Levelp l, Thingp me)
 //
 // Is this buff attached to a thing?
 //
-[[nodiscard]] auto thing_buff_owner_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> Thingp
+[[nodiscard]] auto thing_buff_owner_get(Gamep g, Levelsp v, Levelp /*l*/, Thingp me) -> Thingp
 {
   if (me == nullptr) {
     return nullptr;
