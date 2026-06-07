@@ -36,7 +36,7 @@ void wid_quit_destroy(Gamep g)
   game_state_reset(g, "widget quit destroy");
 }
 
-[[nodiscard]] static auto wid_quit_yes(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+[[nodiscard]] static auto wid_quit_yes(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   con("Quit menu: yes");
   TRACE_INDENT();
@@ -56,7 +56,7 @@ void wid_quit_destroy(Gamep g)
   return true;
 }
 
-[[nodiscard]] static auto wid_quit_no(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+[[nodiscard]] static auto wid_quit_no(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   con("Quit menu: no");
   TRACE_INDENT();
@@ -69,7 +69,7 @@ void wid_quit_destroy(Gamep g)
   return true;
 }
 
-[[nodiscard]] static auto wid_quit_key_down(Gamep g, Widp /*w*/, const struct SDL_Keysym *key) -> bool
+[[nodiscard]] static auto wid_quit_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
 {
   con("Quit menu: key down");
   TRACE_INDENT();

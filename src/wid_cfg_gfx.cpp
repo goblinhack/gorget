@@ -79,7 +79,7 @@ static void wid_cfg_gfx_destroy()
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_gfx_back(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+[[nodiscard]] static auto wid_cfg_gfx_back(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   con("Gfx menu: back");
   TRACE_INDENT();
@@ -94,7 +94,7 @@ static void wid_cfg_gfx_destroy()
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_gfx_vsync_enable_toggle(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+[[nodiscard]] static auto wid_cfg_gfx_vsync_enable_toggle(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   con("Gfx menu: vsync toggle");
   TRACE_INDENT();
@@ -110,7 +110,7 @@ static void wid_cfg_gfx_destroy()
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_gfx_fullscreen_toggle(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+[[nodiscard]] static auto wid_cfg_gfx_fullscreen_toggle(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   con("Gfx menu: fullscreen toggle");
   TRACE_INDENT();
@@ -137,7 +137,7 @@ static void wid_cfg_gfx_destroy()
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_gfx_fullscreen_desktop_toggle(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+[[nodiscard]] static auto wid_cfg_gfx_fullscreen_desktop_toggle(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   con("Gfx menu: desktop toggle");
   TRACE_INDENT();
@@ -164,7 +164,7 @@ static void wid_cfg_gfx_destroy()
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_gfx_borderless_toggle(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+[[nodiscard]] static auto wid_cfg_gfx_borderless_toggle(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   con("Gfx menu: borderless toggle");
   TRACE_INDENT();
@@ -181,7 +181,7 @@ static void wid_cfg_gfx_destroy()
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_other_fps_counter_toggle(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+[[nodiscard]] static auto wid_cfg_other_fps_counter_toggle(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   con("Gfx menu: fps toggle");
   TRACE_INDENT();
@@ -197,7 +197,7 @@ static void wid_cfg_gfx_destroy()
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_gfx_resolution_apply(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+[[nodiscard]] static auto wid_cfg_gfx_resolution_apply(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   con("Gfx menu: apply");
   TRACE_INDENT();
@@ -272,7 +272,7 @@ static auto wid_cfg_gfx_find_closest_resolution(Gamep g) -> std::string
   return best_cand;
 }
 
-[[nodiscard]] static auto wid_cfg_gfx_resolution_incr(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+[[nodiscard]] static auto wid_cfg_gfx_resolution_incr(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   con("Gfx menu: resolution incr");
   TRACE_INDENT();
@@ -329,7 +329,7 @@ static auto wid_cfg_gfx_find_closest_resolution(Gamep g) -> std::string
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_gfx_resolution_decr(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+[[nodiscard]] static auto wid_cfg_gfx_resolution_decr(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   con("Gfx menu: resolution decr");
   TRACE_INDENT();
@@ -386,7 +386,7 @@ static auto wid_cfg_gfx_find_closest_resolution(Gamep g) -> std::string
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_gfx_key_down(Gamep g, Widp /*w*/, const struct SDL_Keysym *key) -> bool
+[[nodiscard]] static auto wid_cfg_gfx_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
 {
   con("Gfx menu: key down");
   TRACE_INDENT();

@@ -45,7 +45,7 @@ static void wid_game_over_destroy()
   wid_game_over_window = nullptr;
 }
 
-[[nodiscard]] static auto wid_game_over_mouse_up(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+[[nodiscard]] static auto wid_game_over_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
   wid_game_over_destroy();
@@ -475,7 +475,7 @@ static void game_display_game_over(Gamep g)
   blit_flush();
 }
 
-static void wid_game_over_pre_tick(Gamep g, Widp /*w*/)
+static void wid_game_over_pre_tick(Gamep g, Widp w)
 {
   TRACE();
 
@@ -484,7 +484,7 @@ static void wid_game_over_pre_tick(Gamep g, Widp /*w*/)
   SDL_Delay(20);
 }
 
-static void wid_game_over_tick(Gamep g, Widp /*w*/)
+static void wid_game_over_tick(Gamep g, Widp w)
 {
   TRACE();
 

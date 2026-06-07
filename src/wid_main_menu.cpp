@@ -55,7 +55,7 @@ static void wid_main_menu_hide(Gamep g)
   wid_hide(g, wid_main_menu_window->wid_popup_container);
 }
 
-[[nodiscard]] static auto wid_main_menu_load(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+[[nodiscard]] static auto wid_main_menu_load(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   con("Main menu: load");
   TRACE_INDENT();
@@ -64,7 +64,7 @@ static void wid_main_menu_hide(Gamep g)
   return true;
 }
 
-[[nodiscard]] static auto wid_main_menu_cfg(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+[[nodiscard]] static auto wid_main_menu_cfg(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   con("Main menu: cfg");
   TRACE_INDENT();
@@ -74,7 +74,7 @@ static void wid_main_menu_hide(Gamep g)
   return true;
 }
 
-[[nodiscard]] static auto wid_main_menu_more(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+[[nodiscard]] static auto wid_main_menu_more(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   con("Main menu: more");
   TRACE_INDENT();
@@ -84,7 +84,7 @@ static void wid_main_menu_hide(Gamep g)
   return true;
 }
 
-[[nodiscard]] static auto game_menu_new_game(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+[[nodiscard]] static auto game_menu_new_game(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   con("Main menu: new game");
   TRACE_INDENT();
@@ -121,7 +121,7 @@ static void wid_main_menu_hide(Gamep g)
   return game_menu_new_game(g, w, x, y, button);
 }
 
-[[nodiscard]] static auto wid_main_menu_quit(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+[[nodiscard]] static auto wid_main_menu_quit(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   con("Main menu: quit");
   TRACE_INDENT();
@@ -131,7 +131,7 @@ static void wid_main_menu_hide(Gamep g)
   return true;
 }
 
-[[nodiscard]] static auto wid_main_menu_key_down(Gamep g, Widp /*w*/, const struct SDL_Keysym *key) -> bool
+[[nodiscard]] static auto wid_main_menu_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
 {
   con("Main menu: key wodn");
   TRACE_INDENT();
@@ -310,7 +310,7 @@ static auto clamp(float v) -> uint8_t // define a function to bound and round th
   return out;
 }
 
-static void wid_main_menu_tick(Gamep g, Widp /*w*/)
+static void wid_main_menu_tick(Gamep g, Widp w)
 {
   TRACE();
 

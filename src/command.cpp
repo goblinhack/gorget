@@ -11,11 +11,11 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
+#include <strings.h>
 #include <algorithm>
 #include <cstdint>
 #include <cstring>
 #include <string>
-#include <strings.h>
 #include <unordered_map>
 #include <utility>
 
@@ -135,7 +135,7 @@ void command_fini()
   return true;
 }
 
-void command_add(Gamep g, command_fn_t callback, const std::string &input, const std::string &readable)
+void command_add(Gamep  /*g*/, command_fn_t callback, const std::string &input, const std::string &readable)
 {
   TRACE();
 

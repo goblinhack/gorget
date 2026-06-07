@@ -41,7 +41,7 @@
   return LEVEL_TYPE_NORMAL;
 }
 
-[[nodiscard]] auto level_is_boss_level(Gamep g, Levelsp /*v*/, Levelp l) -> bool
+[[nodiscard]] auto level_is_boss_level(Gamep g, Levelsp v, Levelp l) -> bool
 {
   TRACE();
 

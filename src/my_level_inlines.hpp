@@ -55,7 +55,7 @@ static inline auto is_oob_or_border(int x, int y) -> bool
 //
 // Has the player seen this tile?
 //
-static inline auto level_has_seen_cached(Gamep g, Levelsp /*v*/, Levelp l, const bpoint &p) -> bool
+static inline auto level_has_seen_cached(Gamep  /*g*/, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   return l->player_has_seen_tile_cache[ p.x ][ p.y ] != 0;
 }

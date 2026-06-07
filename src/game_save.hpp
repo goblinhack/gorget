@@ -722,7 +722,7 @@ void wid_save_destroy(Gamep g)
   g->state_reset("widget save destroy");
 }
 
-static auto wid_save_key_up(Gamep g, Widp /*w*/, const struct SDL_Keysym *key) -> bool
+static auto wid_save_key_up(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
 {
   TRACE();
 
@@ -772,7 +772,7 @@ static auto wid_save_key_up(Gamep g, Widp /*w*/, const struct SDL_Keysym *key) -
   return true;
 }
 
-static auto wid_save_key_down(Gamep g, Widp /*w*/, const struct SDL_Keysym *key) -> bool
+static auto wid_save_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
 {
   TRACE();
 
@@ -785,7 +785,7 @@ static auto wid_save_key_down(Gamep g, Widp /*w*/, const struct SDL_Keysym *key)
   return true;
 }
 
-static auto wid_save_mouse_up(Gamep g, Widp w, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+static auto wid_save_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
 
@@ -795,7 +795,7 @@ static auto wid_save_mouse_up(Gamep g, Widp w, int /*x*/, int /*y*/, uint32_t /*
   return true;
 }
 
-static auto wid_save_cancel(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+static auto wid_save_cancel(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
 

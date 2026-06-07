@@ -17,7 +17,7 @@
 //
 // Is this minion attached to a mob?
 //
-[[nodiscard]] auto thing_minion_mob_get(Gamep g, Levelsp v, Levelp /*l*/, Thingp me) -> Thingp
+[[nodiscard]] auto thing_minion_mob_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> Thingp
 {
   if (me == nullptr) {
     return nullptr;

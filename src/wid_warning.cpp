@@ -88,7 +88,7 @@ static void wid_warning_destroy()
   return true;
 }
 
-[[nodiscard]] static auto wid_warning_yes(Gamep g, Widp w, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+[[nodiscard]] static auto wid_warning_yes(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   DBG("widget warning: yes");
   TRACE();
@@ -101,7 +101,7 @@ static void wid_warning_destroy()
   return true;
 }
 
-[[nodiscard]] static auto wid_warning_no(Gamep g, Widp w, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+[[nodiscard]] static auto wid_warning_no(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   DBG("widget warning: no");
   TRACE();

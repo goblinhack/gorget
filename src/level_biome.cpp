@@ -7,7 +7,7 @@
 #include "my_tp.hpp"
 #include "my_types.hpp"
 
-[[nodiscard]] auto level_to_biome(Gamep g, Levelsp /*v*/, Levelp l) -> BiomeType
+[[nodiscard]] auto level_to_biome(Gamep g, Levelsp v, Levelp l) -> BiomeType
 {
   TRACE();
 

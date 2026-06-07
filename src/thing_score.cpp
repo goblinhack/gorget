@@ -25,7 +25,7 @@ auto thing_score(Gamep g, Thingp t) -> int
   return ext->score;
 }
 
-auto thing_score_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+auto thing_score_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -43,7 +43,7 @@ auto thing_score_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) ->
   return ext->score = val;
 }
 
-auto thing_score_incr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+auto thing_score_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -61,7 +61,7 @@ auto thing_score_incr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -
   return ext->score += val;
 }
 
-auto thing_score_decr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+auto thing_score_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -94,7 +94,7 @@ auto thing_score_value(Thingp t) -> int
   return t->_score_value;
 }
 
-auto thing_score_value_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+auto thing_score_value_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -105,7 +105,7 @@ auto thing_score_value_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int v
   return t->_score_value = val;
 }
 
-auto thing_score_value_incr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+auto thing_score_value_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -116,7 +116,7 @@ auto thing_score_value_incr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int 
   return t->_score_value += val;
 }
 
-auto thing_score_value_decr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+auto thing_score_value_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 

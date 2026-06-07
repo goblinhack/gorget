@@ -9,6 +9,7 @@ include ../build/Makefile.template
 
 NAME=sacrecant
 BUILD_DIR=../.o
+SCRIPT_DIR=../build/
 
 TARGET_GAME=../$(NAME)$(EXE)
 SRC_DIR=.
@@ -99,7 +100,7 @@ $(TARGET_GAME): $(OBJ_FILES)
 #			// NOLINTEND
 #####################################################
 tidy:
-	$(foreach x,$(CPP_SOURCES_NO_TESTS),\
+	$(foreach x,$(XCPP_SOURCES_NO_TESTS),\
 		echo "Running tidy on $x..." ; \
 		clang-tidy \
 			-fix \
@@ -124,22 +125,22 @@ tidy:
 			$x -- $(CFLAGS); \
 	)
 	git checkout 3rdparty
-	splat "if (ext == nullptr) [[unlikely]] {" "if (ext == nullptr) [[unlikely]] {" "*" do
-	splat "if (player == nullptr) [[unlikely]] {" "if (player == nullptr) [[unlikely]] {" "*" do
-	splat "if (tp == nullptr) [[unlikely]] {" "if (tp == nullptr) [[unlikely]] {" "*" do
-	splat "if (0)" "if (compiler_unused)" "*cpp" do
-	splat-del "include.*OpenGL" "*cpp" do
-	splat "<_" "<" "*cpp" do
-	splat "Gamep \/\*g\*\/" "Gamep g" "*" do
-	splat "Levelsp \/\*v\*\/" "Levelsp v" "*" do
-	splat "Levelp \/\*l\*\/" "Levelp l" "*" do
-	splat "Widp \/\*w\*\/" "Widp w" "*" do
-	splat "int \/\*x\*\/" "int x" "*" do
-	splat "int \/\*y\*\/" "int y" "*" do
-	splat "uint32_t \/\*button\*\/" "uint32_t button" "*" do
+	$(SCRIPT_DIR)/splat "if (ext == nullptr) [[unlikely]] {" "if (ext == nullptr) [[unlikely]] {" "*" do
+	$(SCRIPT_DIR)/splat "if (player == nullptr) [[unlikely]] {" "if (player == nullptr) [[unlikely]] {" "*" do
+	$(SCRIPT_DIR)/splat "if (tp == nullptr) [[unlikely]] {" "if (tp == nullptr) [[unlikely]] {" "*" do
+	$(SCRIPT_DIR)/splat "if (0)" "if (compiler_unused)" "*cpp" do
+	$(SCRIPT_DIR)/splat-del "include.*OpenGL" "*cpp" do
+	$(SCRIPT_DIR)/splat "<_" "<" "*cpp" do
+	$(SCRIPT_DIR)/splat "Gamep \/\*g\*\/" "Gamep g" "*" do
+	$(SCRIPT_DIR)/splat "Levelsp \/\*v\*\/" "Levelsp v" "*" do
+	$(SCRIPT_DIR)/splat "Levelp \/\*l\*\/" "Levelp l" "*" do
+	$(SCRIPT_DIR)/splat "Widp \/\*w\*\/" "Widp w" "*" do
+	$(SCRIPT_DIR)/splat "int \/\*x\*\/" "int x" "*" do
+	$(SCRIPT_DIR)/splat "int \/\*y\*\/" "int y" "*" do
+	$(SCRIPT_DIR)/splat "uint32_t \/\*button\*\/" "uint32_t button" "*" do
 	@echo "Done"
 
-.PHONY: style check-style tidy
+.PHONY: format tidy
 
 clean:
 	rm -f $(TARGET_GAME) ../stdout.txt ../stderr.txt

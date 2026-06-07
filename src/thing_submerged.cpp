@@ -21,7 +21,7 @@
   return tp_flag(thing_tp(t), is_submergible) != 0;
 }
 
-[[nodiscard]] auto thing_submerged_pct_set(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_submerged_pct_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -32,7 +32,7 @@
   return t->_submerged_pct = val;
 }
 
-[[nodiscard]] auto thing_submerged_pct_incr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_submerged_pct_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -43,7 +43,7 @@
   return t->_submerged_pct += val;
 }
 
-[[nodiscard]] auto thing_submerged_pct_decr(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp t, int val) -> int
+[[nodiscard]] auto thing_submerged_pct_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 

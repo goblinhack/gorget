@@ -30,7 +30,7 @@
 //
 // Can we combine identical items?
 //
-[[nodiscard]] auto thing_inventory_item_mergeable(Gamep g, Levelsp /*v*/, Levelp /*l*/, Thingp a, Thingp b) -> bool
+[[nodiscard]] auto thing_inventory_item_mergeable(Gamep g, Levelsp v, Levelp l, Thingp a, Thingp b) -> bool
 {
   if (! thing_is_item_mergeable(a)) {
     return false;
