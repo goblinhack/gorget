@@ -24,7 +24,7 @@ static auto tp_lava_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> 
   auto  name = tp_name(tp);
   // begin sort marker1 {
   thing_description_set(tp, tp_lava_description_get);
-  tp_damage_set(tp, THING_EVENT_HEAT_DAMAGE, "1d20+20");
+  tp_damage_set(tp, THING_EVENT_FIRE_DAMAGE, "1d20+20");
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_if_has_seen);
@@ -45,7 +45,6 @@ static auto tp_lava_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> 
   tp_flag_set(tp, is_tick_end_delay);
   tp_flag_set(tp, is_tiled);
   tp_is_immune_add(tp, THING_EVENT_FIRE_DAMAGE);
-  tp_is_immune_add(tp, THING_EVENT_HEAT_DAMAGE);
   tp_is_immune_add(tp, THING_EVENT_MELEE_DAMAGE);
   tp_light_color_set(tp, "red");
   tp_name_a_or_an_set(tp, "lava");

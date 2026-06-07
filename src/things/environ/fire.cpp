@@ -208,7 +208,6 @@ static void tp_fire_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_flag_set(tp, is_tickable);
   tp_health_set(tp, "1d5"); // to allow it to be damaged by water
   tp_is_immune_add(tp, THING_EVENT_FIRE_DAMAGE);
-  tp_is_immune_add(tp, THING_EVENT_HEAT_DAMAGE);
   tp_lifespan_set(tp, "1d6+3");
   tp_light_color_set(tp, "orange");
   tp_name_a_or_an_set(tp, "fire");

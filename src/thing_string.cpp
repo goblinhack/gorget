@@ -120,9 +120,6 @@
     case THING_EVENT_MELEE_DAMAGE : //
       s += "hacked to bits";
       break;
-    case THING_EVENT_HEAT_DAMAGE : //
-      s += "cooked";
-      break;
     case THING_EVENT_WATER_DAMAGE : //
       s += "drowned";
       break;

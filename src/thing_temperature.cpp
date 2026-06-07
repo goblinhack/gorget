@@ -90,23 +90,20 @@ static void thing_temperature_damage_apply(Gamep g, Levelsp v, Levelp l, Thingp 
   }
 
   ThingEvent e {
-      .reason = {},     //
-      .damage = damage, //
-      .source = source, //
+      .reason     = {},                      //
+      .event_type = THING_EVENT_FIRE_DAMAGE, //
+      .damage     = damage,                  //
+      .source     = source,                  //
   };
 
   if (thing_is_steam(source)) {
-    e.event_type = THING_EVENT_HEAT_DAMAGE;
-    e.reason     = "by steam";
+    e.reason = "by steam";
   } else if (level_is_lava(g, v, l, thing_at(t)) != nullptr) {
-    e.event_type = THING_EVENT_FIRE_DAMAGE;
-    e.reason     = "by lava";
+    e.reason = "by lava";
   } else if (level_is_fire(g, v, l, thing_at(t)) != nullptr) {
-    e.event_type = THING_EVENT_FIRE_DAMAGE;
-    e.reason     = "by fire";
+    e.reason = "by fire";
   } else {
-    e.event_type = THING_EVENT_HEAT_DAMAGE;
-    e.reason     = "by heat damage";
+    e.reason = "by heat damage";
   }
 
   thing_damage(g, v, l, t, e);

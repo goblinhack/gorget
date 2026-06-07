@@ -552,7 +552,7 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
       //
       if (level_is_lava(g, v, l, thing_at(me)) == nullptr) {
         if (level_is_lava(g, v, l, to) != nullptr) {
-          if (! thing_is_immune_to(g, v, l, me, THING_EVENT_HEAT_DAMAGE) && ! thing_is_immune_to(g, v, l, me, THING_EVENT_FIRE_DAMAGE)) {
+          if (! thing_is_immune_to(g, v, l, me, THING_EVENT_FIRE_DAMAGE)) {
             std::string const msg = "Do you really want to leap into lava?";
             player_state_change(g, v, l, PLAYER_STATE_MOVE_CONFIRM_REQUESTED);
             game_state_change(g, STATE_MOVE_WARNING_MENU, "need warning confirmation");

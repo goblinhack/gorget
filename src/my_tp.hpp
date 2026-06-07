@@ -366,7 +366,6 @@ ENUM_DEF_H(THING_ANIM_ENUM, ThingAnimType)
   CLANG_FORMAT_INDENT()                                             /* dummy line for clang indentation fixup */                                \
   list_macro(THING_EVENT_FIRE_DAMAGE, "fire damage"),               /* newline */                                                               \
       list_macro(THING_EVENT_LIGHT_DAMAGE, "light damage"),         /* newline */                                                               \
-      list_macro(THING_EVENT_HEAT_DAMAGE, "heat damage"),           /* newline */                                                               \
       list_macro(THING_EVENT_MELEE_DAMAGE, "melee damage"),         /* newline */                                                               \
       list_macro(THING_EVENT_WATER_DAMAGE, "water damage"),         /* newline */                                                               \
       list_macro(THING_EVENT_CRUSH, "crush"),                       /* newline */                                                               \

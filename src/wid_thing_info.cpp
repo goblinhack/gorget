@@ -322,9 +322,6 @@
       case THING_EVENT_MELEE_DAMAGE : //
         show_string = true;
         break;
-      case THING_EVENT_HEAT_DAMAGE : //
-        show_string = true;
-        break;
       case THING_EVENT_EXPLOSION_DAMAGE : //
         show_string = true;
         break;
@@ -391,9 +388,6 @@
         show_string = true;
         break;
       case THING_EVENT_MELEE_DAMAGE : //
-        show_string = true;
-        break;
-      case THING_EVENT_HEAT_DAMAGE : //
         show_string = true;
         break;
       case THING_EVENT_EXPLOSION_DAMAGE : //

@@ -70,7 +70,6 @@ static void tp_fireball_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_flag_set(tp, is_tickable);
   tp_health_set(tp, "1");
   tp_is_immune_add(tp, THING_EVENT_FIRE_DAMAGE);
-  tp_is_immune_add(tp, THING_EVENT_HEAT_DAMAGE);
   tp_light_color_set(tp, "orange");
   tp_name_a_or_an_set(tp, "a fireball");
   tp_name_apostrophize_set(tp, "fireballs'");
