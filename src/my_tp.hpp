@@ -208,8 +208,8 @@
       list_macro(is_unused12, "is_unused12"),                                               /* newline */                                       \
       list_macro(is_unused13, "is_unused13"),                                               /* newline */                                       \
       list_macro(is_unused14, "is_unused14"),                                               /* newline */                                       \
-      list_macro(is_unused15, "is_unused15"),                                               /* newline */                                       \
-      list_macro(is_unused16, "is_unused16"),                                               /* newline */                                       \
+      list_macro(is_tick_on_unwield, "is_tick_on_unwield"),                                 /* newline */                                       \
+      list_macro(is_tick_on_wield, "is_tick_on_wield"),                                     /* newline */                                       \
       list_macro(is_buff, "is_buff"),                                                       /* newline */                                       \
       list_macro(is_able_to_be_buffed, "is_able_to_be_buffed"),                             /* newline */                                       \
       list_macro(is_tick_on_drop, "is_tick_on_drop"),                                       /* newline */                                       \
@@ -699,7 +699,9 @@ class Tp;
 [[nodiscard]] auto tp_is_throwable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_tick_end_delay(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_tick_on_drop(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_tick_on_unwield(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_tick_on_use(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_tick_on_wield(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_tickable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_tiled(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_trap(Tpp tp) -> bool;
@@ -711,8 +713,6 @@ class Tp;
 [[nodiscard]] auto tp_is_unused12(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused13(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused14(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused15(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused16(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused2(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused3(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused4(Tpp tp) -> bool;

@@ -913,16 +913,16 @@
   return tp_flag(tp, is_unused14) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused15(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_tick_on_unwield(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused15) != 0;
+  return tp_flag(tp, is_tick_on_unwield) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused16(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_tick_on_wield(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused16) != 0;
+  return tp_flag(tp, is_tick_on_wield) != 0;
 }
 
 [[nodiscard]] auto tp_is_buff(Tpp tp) -> bool

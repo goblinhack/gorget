@@ -23,11 +23,11 @@ static auto tp_wand_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> 
 {
   TRACE();
 
-  return                                                                                                       //
-      UI_INFO1_FMT_STR "This wand of fire unleashes a devastating beam of... fire. \n"                         //
-      UI_INFO2_FMT_STR "Strategy: for extra points, line up certain types of enemies for group punishment. \n" //
-      UI_INFO3_FMT_STR "Strategy: wands operate at near infinite speed and monsters cannot avoid them. \n"     //
-      UI_INFO4_FMT_STR "Info: wands are generally more powerful than staffs, but have fewer charges. \n";
+  return                                                                                                      //
+      UI_INFO1_FMT_STR "This wand of fire unleashes a devastating beam of... fire.\n"                         //
+      UI_INFO2_FMT_STR "Strategy: for extra points, line up certain types of enemies for group punishment.\n" //
+      UI_INFO3_FMT_STR "Strategy: wands operate at near infinite speed and monsters cannot avoid them.\n"     //
+      UI_INFO4_FMT_STR "Info: wands less powerful than staffs, can be wielded without penalty, but have fewer charges.\n";
 }
 
 [[nodiscard]] static auto tp_wand_fire_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp collector, ThingEvent &e) -> bool

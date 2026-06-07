@@ -29,16 +29,16 @@ static auto tp_argusul_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> st
 {
   TRACE();
 
-  return                                                                                //
-      UI_INFO1_FMT_STR                                                                  //
-      "Argusuls are floating many-eyed monsters that are impossible to sneak up on. \n" //
-      UI_INFO2_FMT_STR                                                                  //
-      "Intelligent, fearful to behold, and resistant to fire, it would be "             //
-      "wise to travel in the opposite direction of an Argusul. \n"                      //
-      UI_INFO3_FMT_STR                                                                  //
-      "Beware their central eye that is capable of firing a beam weapon. At you. \n"    //
-      UI_INFO4_FMT_STR                                                                  //
-      "It is rumoured that a greater Argusul lurks in the dungeon somewhere... \n";     //
+  return                                                                               //
+      UI_INFO1_FMT_STR                                                                 //
+      "Argusuls are floating many-eyed monsters that are impossible to sneak up on.\n" //
+      UI_INFO2_FMT_STR                                                                 //
+      "Intelligent, fearful to behold, and resistant to fire, it would be "            //
+      "wise to travel in the opposite direction of an Argusul.\n"                      //
+      UI_INFO3_FMT_STR                                                                 //
+      "Beware their central eye that is capable of firing a beam weapon. At you.\n"    //
+      UI_INFO4_FMT_STR                                                                 //
+      "It is rumoured that a greater Argusul lurks in the dungeon somewhere...\n";     //
 }
 
 static auto tp_argusul_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at, Thingp me) -> ThingEnvironType
@@ -100,7 +100,7 @@ static void tp_argusul_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
   thing_on_death_set(tp, tp_argusul_on_death);
   thing_on_tick_begin_set(tp, tp_argusul_tick_begin);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6"); // fumble => intensify / keep burning / crit => stop burning
-  tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2"); // fumble => flames spread to you
+  tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // fumble => flames spread to you
   tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d4");
   tp_distance_avoid_target_set(tp, 3);
   tp_distance_vision_set(tp, 12);

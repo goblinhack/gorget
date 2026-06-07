@@ -100,7 +100,7 @@ void wid_mouse_over_end(Gamep g)
 
   w = wid_over;
   if (wid_over != nullptr) {
-    wid_last_over_event = time_ms_cached();
+    wid_last_over_event = time_ms();
   }
   wid_over = nullptr;
 
@@ -171,7 +171,7 @@ void wid_mouse_over_end(Gamep g)
 
   wid_over = w;
   if (! wid_ignore_events(wid_over)) {
-    wid_last_over_event = time_ms_cached();
+    wid_last_over_event = time_ms();
     // DBG("mouse over %s mouse %d,%d.", wid_over->name.c_str(), ascii_mouse_x, ascii_mouse_y);
   }
 
@@ -790,7 +790,7 @@ void wid_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx, int
   ascii_mouse_y = y;
 
   if ((relx != 0) || (rely != 0)) {
-    wid_last_mouse_motion = time_ms_cached();
+    wid_last_mouse_motion = time_ms();
   }
 
   if (wid_mouse_motion_recursion != 0) {
@@ -996,7 +996,7 @@ void wid_mouse_down(Gamep g, uint32_t button, int x, int y)
     }
 
     if (g != nullptr) {
-      game_last_mouse_down_set(g, time_ms_cached());
+      game_last_mouse_down_set(g, time_ms());
     }
 
     log("widget mouse down, processed, raise on mouse");
@@ -1015,7 +1015,7 @@ void wid_mouse_down(Gamep g, uint32_t button, int x, int y)
     (void) sound_play(g, "click");
 
     if (g != nullptr) {
-      game_last_mouse_down_set(g, time_ms_cached());
+      game_last_mouse_down_set(g, time_ms());
     }
   }
 }

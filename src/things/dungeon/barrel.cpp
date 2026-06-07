@@ -101,7 +101,7 @@ static void tp_barrel_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp me)
   thing_on_death_set(tp, tp_barrel_on_death);
   thing_on_fall_end_set(tp, tp_barrel_on_fall_end);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // fumble => intensify / keep burning / crit => stop burning
-  tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2"); // fumble => flames spread to you
+  tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // fumble => flames spread to you
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated);

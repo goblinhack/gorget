@@ -915,16 +915,16 @@
   return level_count(g, v, l, is_unused14, p);
 }
 
-[[nodiscard]] auto level_count_is_unused15(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_tick_on_unwield(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused15, p);
+  return level_count(g, v, l, is_tick_on_unwield, p);
 }
 
-[[nodiscard]] auto level_count_is_unused16(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_tick_on_wield(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused16, p);
+  return level_count(g, v, l, is_tick_on_wield, p);
 }
 
 [[nodiscard]] auto level_count_is_buff(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t

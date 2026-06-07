@@ -31,7 +31,7 @@ static auto tp_grass_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
   // begin sort marker1 {
   thing_description_set(tp, tp_grass_description_get);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // fumble => intensify / keep burning / crit => stop burning
-  tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d100"); // fumble => flames spread to you
+  tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d100");  // fumble => flames spread to you
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_hit_outline_w_black_inside);

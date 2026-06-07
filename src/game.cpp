@@ -1144,23 +1144,33 @@ void Game::state_change(GameStateType new_state, const std::string &why)
         case STATE_GENERATED :         [[fallthrough]];
         case GAME_STATE_ENUM_MAX :     break;
       }
+
+      //
+      // Don't want the player to keep moving to an old path when we exit this menu
+      //
+      level_cursor_path_reset(g);
       break;
-    case STATE_QUITTING :          [[fallthrough]];
-    case STATE_INIT :              [[fallthrough]];
     case STATE_DEAD_MENU :         [[fallthrough]];
     case STATE_THE_END_MENU :      [[fallthrough]];
     case STATE_MOVE_WARNING_MENU : [[fallthrough]];
     case STATE_KEYBOARD_MENU :     [[fallthrough]];
     case STATE_LOAD_MENU :         [[fallthrough]];
-    case STATE_LOADED :            [[fallthrough]];
     case STATE_SAVE_MENU :         [[fallthrough]];
     case STATE_QUIT_MENU :         [[fallthrough]];
-    case STATE_INVENTORY_MENU :    [[fallthrough]];
     case STATE_COLLECT_MENU :      [[fallthrough]];
-    case STATE_ITEM_MENU :         [[fallthrough]];
-    case STATE_GENERATING :        [[fallthrough]];
-    case STATE_GENERATED :         [[fallthrough]];
-    case GAME_STATE_ENUM_MAX :     break;
+    case STATE_INVENTORY_MENU :    [[fallthrough]];
+    case STATE_ITEM_MENU :
+      //
+      // Don't want the player to keep moving to an old path when we exit this menu
+      //
+      level_cursor_path_reset(g);
+      break;
+    case STATE_QUITTING :      [[fallthrough]];
+    case STATE_INIT :          [[fallthrough]];
+    case STATE_LOADED :        [[fallthrough]];
+    case STATE_GENERATING :    [[fallthrough]];
+    case STATE_GENERATED :     [[fallthrough]];
+    case GAME_STATE_ENUM_MAX : break;
   }
 
   //

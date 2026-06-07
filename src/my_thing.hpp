@@ -865,7 +865,9 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_throwable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_tick_end_delay(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_tick_on_drop(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_tick_on_unwield(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_tick_on_use(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_tick_on_wield(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_tickable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_tiled(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_trap(Thingp t) -> bool;
@@ -878,8 +880,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused12(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused13(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused14(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused15(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused16(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused2(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused3(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused4(Thingp t) -> bool;

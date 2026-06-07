@@ -287,13 +287,13 @@ static Thingp g_item;
   if (! thing_wieldable(item)) {
     topcon("Weapon cannot be wielded.");
     (void) sound_play(g, "error");
-    return false;
+    return true;
   }
 
   if (thing_is_wielded(item)) {
     topcon("Weapon is already wielded.");
     (void) sound_play(g, "error");
-    return false;
+    return true;
   }
 
   ThingEvent e {
@@ -304,7 +304,7 @@ static Thingp g_item;
 
   if (! thing_wield(g, v, l, player, item, e)) {
     (void) sound_play(g, "error");
-    return false;
+    return true;
   }
 
   (void) wid_item_menu_destroy();
@@ -344,13 +344,13 @@ static Thingp g_item;
   if (! thing_wieldable(item)) {
     topcon("Weapon cannot be wielded.");
     (void) sound_play(g, "error");
-    return false;
+    return true;
   }
 
   if (! thing_is_wielded(item)) {
     topcon("Weapon is not wielded.");
     (void) sound_play(g, "error");
-    return false;
+    return true;
   }
 
   ThingEvent e {
@@ -361,7 +361,7 @@ static Thingp g_item;
 
   if (! thing_unwield(g, v, l, player, e)) {
     (void) sound_play(g, "error");
-    return false;
+    return true;
   }
 
   (void) wid_item_menu_destroy();

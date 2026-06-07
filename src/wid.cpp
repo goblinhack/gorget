@@ -93,6 +93,7 @@ static wid_key_map_int wid_pre_tick_top_level;
 // Last time we changed what we were over.
 //
 ts_t wid_last_over_event;
+ts_t wid_last_processed_key_event;
 
 //
 // Scope the focus to children of this widget and do not change it.
@@ -192,18 +193,19 @@ void wid_fini(Gamep g_maybe_null)
     wid_destroy_immediate(g_maybe_null, child);
   }
 
-  wid_top_level          = {};
-  wid_global             = {};
-  wid_top_level2         = {};
-  wid_top_level3         = {};
-  wid_top_level4         = {};
-  wid_tick_top_level     = {};
-  wid_pre_tick_top_level = {};
-  wid_last_over_event    = {};
-  wid_focus_locked       = {};
-  wid_focus              = {};
-  wid_over               = {};
-  wid_time               = {};
+  wid_top_level                = {};
+  wid_global                   = {};
+  wid_top_level2               = {};
+  wid_top_level3               = {};
+  wid_top_level4               = {};
+  wid_tick_top_level           = {};
+  wid_pre_tick_top_level       = {};
+  wid_last_over_event          = {};
+  wid_last_processed_key_event = {};
+  wid_focus_locked             = {};
+  wid_focus                    = {};
+  wid_over                     = {};
+  wid_time                     = {};
 }
 
 void wid_dump(Widp w, int depth)
@@ -4458,7 +4460,7 @@ void wid_joy_button(Gamep g, int x, int y)
     if (static_cast< bool >(sdl.joy_buttons[ b ])) {
       if (time_have_x_tenths_passed_since(2, ts[ b ])) {
         changed = 1;
-        ts[ b ] = time_ms_cached();
+        ts[ b ] = time_ms();
       }
     }
   }
@@ -4757,6 +4759,7 @@ void wid_key_down(Gamep g, const struct SDL_Keysym *key, int x, int y)
 #endif
   if ((wid_focus != nullptr) && ! wid_is_hidden(wid_focus) && ((wid_focus->on_key_down) != nullptr)) {
     if ((wid_focus->on_key_down)(g, wid_focus, key)) {
+      wid_last_processed_key_event = time_ms();
       if (wid_focus != nullptr) {
         DBG("WID: key grabbed by focused wid: %s at (%d,%d)", wid_focus->name.c_str(), ascii_mouse_x, ascii_mouse_y);
       }
@@ -4784,6 +4787,7 @@ void wid_key_down(Gamep g, const struct SDL_Keysym *key, int x, int y)
   {
     DBG("WID: Key over by wid: %s for (%d,%d)", w->name.c_str(), ascii_mouse_x, ascii_mouse_y);
     if ((w->on_key_down)(g, w, key)) {
+      wid_last_processed_key_event = time_ms();
       DBG("WID: Key grabbed by wid: %s for (%d,%d)", w->name.c_str(), ascii_mouse_x, ascii_mouse_y);
       //
       // Do not raise, gets in the way of popups the callback creates.
@@ -4804,6 +4808,7 @@ try_parent:
     while (w != nullptr) {
       if (w->on_key_down != nullptr) {
         if ((w->on_key_down)(g, w, key)) {
+          wid_last_processed_key_event = time_ms();
           DBG("WID: key grabbed by wid: %s for (%d,%d)", w->name.c_str(), ascii_mouse_x, ascii_mouse_y);
           //
           // Do not raise, gets in the way of popups the callback
@@ -4842,6 +4847,7 @@ void wid_key_up(Gamep g, const struct SDL_Keysym *key, int x, int y)
   if ((wid_focus != nullptr) && ! wid_is_hidden(wid_focus) && ((wid_focus->on_key_up) != nullptr)) {
 
     if ((wid_focus->on_key_up)(g, wid_focus, key)) {
+      wid_last_processed_key_event = time_ms();
       if (wid_focus != nullptr) {
         wid_set_mode(wid_focus, WID_MODE_ACTIVE);
       }
@@ -4867,6 +4873,7 @@ void wid_key_up(Gamep g, const struct SDL_Keysym *key, int x, int y)
   }
 
   if ((w->on_key_up)(g, w, key)) {
+    wid_last_processed_key_event = time_ms();
     wid_set_mode(w, WID_MODE_ACTIVE);
 
     //
@@ -4886,6 +4893,7 @@ try_parent:
     while (w != nullptr) {
       if (w->on_key_up != nullptr) {
         if ((w->on_key_up)(g, w, key)) {
+          wid_last_processed_key_event = time_ms();
           wid_set_mode(w, WID_MODE_ACTIVE);
 
           //
@@ -5413,7 +5421,7 @@ static void wid_tick_all(Gamep g)
 {
   TRACE();
 
-  wid_time = time_ms_cached();
+  wid_time = time_ms();
 
   std::vector< Widp > work;
   for (auto &iter : wid_tick_top_level) {
@@ -5437,7 +5445,7 @@ static void wid_pre_tick_all(Gamep g)
 {
   TRACE();
 
-  wid_time = time_ms_cached();
+  wid_time = time_ms();
 
   std::vector< Widp > work;
   for (auto &iter : wid_pre_tick_top_level) {
@@ -5666,6 +5674,10 @@ void wid_move_to_abs_centered(Gamep g, Widp w, int x, int y)
   // immediately allow a double click on a chasm that was behind the
   // widget for example.
   //
+  if (! time_have_x_tenths_passed_since(2, wid_last_processed_key_event)) {
+    // DBG("wid_some_recent_event_occurred: Too soon since last wid over event");
+    return true;
+  }
   if (! time_have_x_tenths_passed_since(2, wid_last_over_event)) {
     // DBG("wid_some_recent_event_occurred: Too soon since last wid over event");
     return true;

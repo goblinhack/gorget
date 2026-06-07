@@ -914,16 +914,16 @@
   return level_flag_cached(g, v, l, is_unused14, p);
 }
 
-[[nodiscard]] auto level_is_unused15_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_tick_on_unwield_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused15, p);
+  return level_flag_cached(g, v, l, is_tick_on_unwield, p);
 }
 
-[[nodiscard]] auto level_is_unused16_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_tick_on_wield_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused16, p);
+  return level_flag_cached(g, v, l, is_tick_on_wield, p);
 }
 
 [[nodiscard]] auto level_is_buff_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

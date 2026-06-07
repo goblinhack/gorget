@@ -290,7 +290,12 @@ static void tp_player_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 
   static std::initializer_list< std::string > carry = {
-      "staff_fire", "potion_incineration", "potion_incineration", "potion_incineration", "potion_healing",
+      "staff_fire",          //
+      "wand_fire",           //
+      "wand_light",          //
+      "potion_incineration", //
+      "potion_incineration", //
+      "potion_healing",      //
   };
 
   for (auto tp : carry) {

@@ -914,16 +914,16 @@
   return level_open(g, v, l, is_unused14, p);
 }
 
-[[nodiscard]] auto level_open_is_unused15(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_open_is_tick_on_unwield(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_open(g, v, l, is_unused15, p);
+  return level_open(g, v, l, is_tick_on_unwield, p);
 }
 
-[[nodiscard]] auto level_open_is_unused16(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_open_is_tick_on_wield(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_open(g, v, l, is_unused16, p);
+  return level_open(g, v, l, is_tick_on_wield, p);
 }
 
 [[nodiscard]] auto level_open_is_buff(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp

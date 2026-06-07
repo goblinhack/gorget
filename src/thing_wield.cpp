@@ -56,6 +56,10 @@ static auto thing_wield_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp w
       topcon("You wield %s.", the_thing.c_str());
     }
     game_request_to_remake_ui_set(g);
+
+    if (thing_is_tick_on_wield(item)) {
+      (void) level_tick_begin_requested(g, v, l, "player wielded an item");
+    }
   }
 
   return true;
@@ -104,6 +108,10 @@ static auto thing_unwield_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp
       topcon("You unwield %s.", the_thing.c_str());
     }
     game_request_to_remake_ui_set(g);
+
+    if (thing_is_tick_on_unwield(item)) {
+      (void) level_tick_begin_requested(g, v, l, "player wielded an item");
+    }
   }
 
   return true;

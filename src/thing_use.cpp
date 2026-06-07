@@ -105,10 +105,10 @@ static auto thing_use_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp use
       topcon("You used %s.", the_thing.c_str());
     }
     game_request_to_remake_ui_set(g);
-  }
 
-  if (thing_is_tick_on_use(item)) {
-    (void) level_tick_begin_requested(g, v, l, "player used an item");
+    if (thing_is_tick_on_use(item)) {
+      (void) level_tick_begin_requested(g, v, l, "player used an item");
+    }
   }
 
   return true;

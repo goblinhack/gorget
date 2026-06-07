@@ -817,8 +817,8 @@ void player_move_requests_reset(Gamep /*g*/, Levelsp v)
 {
   TRACE();
 
-  v->requested_fire       = false;
-  v->requested_move_up    = false;
+  v->requested_fire    = false;
+  v->requested_move_up = false;
   v->requested_move_down  = false;
   v->requested_move_left  = false;
   v->requested_move_right = false;

@@ -23,12 +23,12 @@ static auto tp_wand_light_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
 {
   TRACE();
 
-  return                                                                                                       //
-      UI_INFO1_FMT_STR "This wand of light unleashes a dazzling beam of pure energy but without heat. \n"      //
-      UI_INFO2_FMT_STR "Strategy: unlike wands of fire, this wand is safe to use in dense foliage. \n"         //
-      UI_INFO2_FMT_STR "Strategy: for extra points, line up certain types of enemies for group punishment. \n" //
-      UI_INFO3_FMT_STR "Strategy: wands operate at near infinite speed and monsters cannot avoid them. \n"     //
-      UI_INFO4_FMT_STR "Info: wands are generally more powerful than staffs, but have fewer charges. \n";
+  return                                                                                                      //
+      UI_INFO1_FMT_STR "This wand of light unleashes a dazzling beam of pure energy but without heat.\n"      //
+      UI_INFO2_FMT_STR "Strategy: unlike wands of fire, this wand is safe to use in dense foliage.\n"         //
+      UI_INFO2_FMT_STR "Strategy: for extra points, line up certain types of enemies for group punishment.\n" //
+      UI_INFO3_FMT_STR "Strategy: wands operate at near infinite speed and monsters cannot avoid them.\n"     //
+      UI_INFO4_FMT_STR "Info: wands less powerful than staffs, can be wielded without penalty, but have fewer charges.\n";
 }
 
 [[nodiscard]] static auto tp_wand_light_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp collector, ThingEvent &e) -> bool

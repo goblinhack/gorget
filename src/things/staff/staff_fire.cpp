@@ -23,11 +23,11 @@ static auto tp_staff_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
 {
   TRACE();
 
-  return                                                                                                  //
-      UI_INFO1_FMT_STR "A firey red staff. Burning sparks drop from it. \n"                               //
-      UI_INFO2_FMT_STR "Strategy: fire multiple rounds down long corridors. \n"                           //
-      UI_INFO3_FMT_STR "Strategy: firebolts have a set speed and monsters can avoid them potentially. \n" //
-      UI_INFO4_FMT_STR "Info: wands are generally more powerful than staffs, but have fewer charges. \n";
+  return                                                                                                 //
+      UI_INFO1_FMT_STR "A firey red staff. Burning sparks drop from it.\n"                               //
+      UI_INFO2_FMT_STR "Strategy: fire multiple rounds down long corridors.\n"                           //
+      UI_INFO3_FMT_STR "Strategy: firebolts have a set speed and monsters can avoid them potentially.\n" //
+      UI_INFO4_FMT_STR "Info: wands less powerful than staffs, can be wielded without penalty, but have fewer charges.\n";
 }
 
 [[nodiscard]] static auto tp_staff_fire_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp collector, ThingEvent &e) -> bool
@@ -126,6 +126,8 @@ static auto tp_staff_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
   tp_flag_set(tp, is_staff);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_tick_on_drop);
+  tp_flag_set(tp, is_tick_on_unwield);
+  tp_flag_set(tp, is_tick_on_wield);
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_treasure);
   tp_flag_set(tp, is_wood);
