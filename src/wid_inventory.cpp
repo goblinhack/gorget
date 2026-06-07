@@ -92,7 +92,7 @@ void wid_inventory_mouse_over_end(Gamep g, Widp w)
   }
 }
 
-[[nodiscard]] auto wid_inventory_mouse_up(Gamep g, Widp w, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+[[nodiscard]] auto wid_inventory_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
 
@@ -198,7 +198,7 @@ void wid_inventory_mouse_over_end(Gamep g, Widp w)
   return false;
 }
 
-[[nodiscard]] static auto wid_inventory_back(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+[[nodiscard]] static auto wid_inventory_back(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
   wid_inventory_destroy(g);

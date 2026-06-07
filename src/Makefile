@@ -129,8 +129,13 @@ tidy:
 	splat "if (0)" "if (compiler_unused)" "*cpp" do
 	splat-del "include.*OpenGL" "*cpp" do
 	splat "<_" "<" "*cpp" do
-	splat "Gamep \/\*g\*\/, Levelsp \/\*v\*\/, Levelp \/\*l\*\/" "Gamep g, Levelsp v, Levelp l" "*" do
-	splat "Levelsp \/\*v\*\/, Levelp \/\*l\*\/" "Levelsp v, Levelp l" "*" do
+	splat "Gamep \/\*g\*\/" "Gamep g" "*" do
+	splat "Levelsp \/\*v\*\/" "Levelsp v" "*" do
+	splat "Levelp \/\*l\*\/" "Levelp l" "*" do
+	splat "Widp \/\*w\*\/" "Widp w" "*" do
+	splat "int \/\*x\*\/" "int x" "*" do
+	splat "int \/\*y\*\/" "int y" "*" do
+	splat "uint32_t \/\*button\*\/" "uint32_t button" "*" do
 	git checkout 3rdparty
 	@echo "Done"
 

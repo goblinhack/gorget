@@ -660,7 +660,7 @@ void level_raycast(Gamep g, Levelsp v, Levelp l, FboEnum fbo)
   player_raycast->raycast_do(g, v, l);
 }
 
-void level_raycast_init(Gamep /*g*/)
+void level_raycast_init(Gamep g)
 {
   TRACE();
   level_raycast_precalculate();

@@ -345,7 +345,7 @@ void sdl_tick(Gamep g)
   }
 }
 
-void sdl_prepare_to_exit(Gamep /*g*/)
+void sdl_prepare_to_exit(Gamep g)
 {
   if (! g_main_loop_running) {
     return;
@@ -392,7 +392,7 @@ void sdl_prepare_to_exit(Gamep /*g*/)
 //
 // User wants to change the debug level
 //
-[[nodiscard]] auto config_debug_set(Gamep /*g*/, class Tokens *tokens, void * /*context*/) -> uint8_t
+[[nodiscard]] auto config_debug_set(Gamep g, class Tokens *tokens, void * /*context*/) -> uint8_t
 {
   TRACE();
 

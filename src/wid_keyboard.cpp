@@ -284,7 +284,7 @@ static void wid_keyboard_event(Gamep g, Widp w, int focusx, int focusy, const SD
   return true;
 }
 
-[[nodiscard]] static auto wid_keyboard_button_mouse_event(Gamep g, Widp w, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+[[nodiscard]] static auto wid_keyboard_button_mouse_event(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
   int const focus  = wid_get_int_context(w);
@@ -410,7 +410,7 @@ static void wid_keyboard_set_focus(Gamep g, wid_keyboard_ctx *ctx, int focusx, i
   return true;
 }
 
-[[nodiscard]] static auto wid_keyboard_parent_joy_button(Gamep g, Widp w, int /*x*/, int /*y*/) -> bool
+[[nodiscard]] static auto wid_keyboard_parent_joy_button(Gamep g, Widp w, int x, int y) -> bool
 {
   TRACE();
   auto *ctx = static_cast< wid_keyboard_ctx * >(wid_get_void_context(w));
@@ -525,7 +525,7 @@ static void wid_keyboard_set_focus(Gamep g, wid_keyboard_ctx *ctx, int focusx, i
   return false;
 }
 
-[[nodiscard]] static auto wid_keyboard_button_joy_button_event(Gamep g, Widp w, int /*x*/, int /*y*/) -> bool
+[[nodiscard]] static auto wid_keyboard_button_joy_button_event(Gamep g, Widp w, int x, int y) -> bool
 {
   TRACE();
   auto *ctx = static_cast< wid_keyboard_ctx * >(wid_get_void_context(w));
@@ -639,7 +639,7 @@ static void wid_keyboard_set_focus(Gamep g, wid_keyboard_ctx *ctx, int focusx, i
   return false;
 }
 
-static void wid_keyboard_destroy(Gamep /*g*/, Widp w)
+static void wid_keyboard_destroy(Gamep g, Widp w)
 {
   TRACE();
   auto *ctx = static_cast< wid_keyboard_ctx * >(wid_get_void_context(w));
@@ -651,7 +651,7 @@ static void wid_keyboard_destroy(Gamep /*g*/, Widp w)
   wid_keyboard_visible = 0;
 }
 
-static void wid_keyboard_tick(Gamep /*g*/, Widp w)
+static void wid_keyboard_tick(Gamep g, Widp w)
 {
   TRACE();
   auto *ctx = static_cast< wid_keyboard_ctx * >(wid_get_void_context(w));

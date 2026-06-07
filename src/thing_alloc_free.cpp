@@ -353,7 +353,7 @@ static auto thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, ThingIdPacked i
   return nullptr;
 }
 
-void thing_free(Gamep g, Levelsp v, Levelp /*l*/, Thingp t)
+void thing_free(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE();
 

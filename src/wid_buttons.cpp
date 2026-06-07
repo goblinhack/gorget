@@ -14,7 +14,7 @@
 #include <cstdint>
 #include <string>
 
-void wid_gray_out_button(Gamep /*g*/, Widp w)
+void wid_gray_out_button(Gamep g, Widp w)
 {
   TRACE();
 
@@ -55,7 +55,7 @@ void wid_gray_out_button(Gamep /*g*/, Widp w)
   return w;
 }
 
-static void wid_button_pulse(Gamep /*g*/, Widp w)
+static void wid_button_pulse(Gamep g, Widp w)
 {
   TRACE();
 

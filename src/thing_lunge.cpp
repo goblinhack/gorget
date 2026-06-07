@@ -15,7 +15,7 @@
 
 static float lunge_amount[ MAP_WIDTH ];
 
-void level_lunge_precalculate(Gamep /*g*/)
+void level_lunge_precalculate(Gamep g)
 {
   static const char lunge_map[]
       // lunge distance ------------------------------>

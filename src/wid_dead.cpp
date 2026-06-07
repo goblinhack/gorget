@@ -28,7 +28,7 @@
 
 static WidPopup *wid_dead_window;
 
-void wid_dead_fini(Gamep /*g*/)
+void wid_dead_fini(Gamep g)
 {
   TRACE();
 
@@ -62,7 +62,7 @@ static void wid_dead_close(Gamep g)
   wid_dead_fini(g);
 }
 
-[[nodiscard]] static auto wid_dead_key_down(Gamep g, Widp /*w*/, const struct SDL_Keysym *key) -> bool
+[[nodiscard]] static auto wid_dead_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
 {
   TRACE();
 
@@ -105,7 +105,7 @@ static void wid_dead_close(Gamep g)
   return false;
 }
 
-[[nodiscard]] static auto wid_dead_mouse_up(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+[[nodiscard]] static auto wid_dead_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
   wid_dead_close(g);

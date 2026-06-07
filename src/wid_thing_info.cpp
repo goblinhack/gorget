@@ -464,7 +464,7 @@ static void wid_thing_info_item_mouse_over_end(Gamep g, Widp w)
   (void) wid_rightbar_init(g);
 }
 
-[[nodiscard]] static auto wid_thing_info_item_mouse_up(Gamep g, Widp w, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+[[nodiscard]] static auto wid_thing_info_item_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
 

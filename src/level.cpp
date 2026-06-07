@@ -179,7 +179,7 @@ void level_is_completed_by_player_exiting(Gamep g, Levelsp v, Levelp l)
   }
 }
 
-void level_is_completed_by_player_falling(Gamep /*g*/, Levelsp /*v*/, Levelp l)
+void level_is_completed_by_player_falling(Gamep g, Levelsp v, Levelp l)
 {
   l->player_fell_out_of_level = true;
 
@@ -318,7 +318,7 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
   memset(l, 0, SIZEOF(*l));
 }
 
-[[nodiscard]] auto level_populate_thing_id_at(Gamep /*g*/, Levelsp /*v*/, Levelp l, const bpoint &p, int slot, ThingId id) -> bool
+[[nodiscard]] auto level_populate_thing_id_at(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot, ThingId id) -> bool
 {
   TRACE();
 
@@ -330,7 +330,7 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
   return true;
 }
 
-[[nodiscard]] auto level_get_thing_id_at(Gamep /*g*/, Levelsp /*v*/, Levelp l, const bpoint &p, int slot) -> ThingId
+[[nodiscard]] auto level_get_thing_id_at(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot) -> ThingId
 {
   TRACE();
 
@@ -497,7 +497,7 @@ void level_update_flags(Gamep g, Levelsp v, Levelp l)
   }
 }
 
-[[nodiscard]] auto level_flag_cached(Gamep /*g*/, Levelsp /*v*/, Levelp l, ThingFlagType f, bpoint p) -> bool
+[[nodiscard]] auto level_flag_cached(Gamep g, Levelsp v, Levelp l, ThingFlagType f, bpoint p) -> bool
 {
   TRACE_DEBUG();
 

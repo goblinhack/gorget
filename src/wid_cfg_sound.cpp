@@ -33,7 +33,7 @@ static void wid_cfg_sound_destroy()
   local_g_config_changed = false;
 }
 
-[[nodiscard]] static auto wid_cfg_sound_cancel(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+[[nodiscard]] static auto wid_cfg_sound_cancel(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
   con("Reload config");
@@ -47,7 +47,7 @@ static void wid_cfg_sound_destroy()
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_sound_save(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+[[nodiscard]] static auto wid_cfg_sound_save(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
 
@@ -59,7 +59,7 @@ static void wid_cfg_sound_destroy()
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_sound_back(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+[[nodiscard]] static auto wid_cfg_sound_back(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
   wid_cfg_sound_destroy();
@@ -67,7 +67,7 @@ static void wid_cfg_sound_destroy()
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_sound_effects_volume_incr(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+[[nodiscard]] static auto wid_cfg_sound_effects_volume_incr(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
   local_g_config_changed = true;
@@ -81,7 +81,7 @@ static void wid_cfg_sound_destroy()
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_sound_effects_volume_decr(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+[[nodiscard]] static auto wid_cfg_sound_effects_volume_decr(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
   local_g_config_changed = true;
@@ -95,7 +95,7 @@ static void wid_cfg_sound_destroy()
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_sound_music_volume_incr(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+[[nodiscard]] static auto wid_cfg_sound_music_volume_incr(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
   local_g_config_changed = true;
@@ -110,7 +110,7 @@ static void wid_cfg_sound_destroy()
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_sound_music_volume_decr(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+[[nodiscard]] static auto wid_cfg_sound_music_volume_decr(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
   local_g_config_changed = true;
@@ -125,7 +125,7 @@ static void wid_cfg_sound_destroy()
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_sound_key_down(Gamep g, Widp /*w*/, const struct SDL_Keysym *key) -> bool
+[[nodiscard]] static auto wid_cfg_sound_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
 {
   TRACE();
 

@@ -36,7 +36,7 @@
 //
 // Update all tiles the player has seen.
 //
-void level_has_seen_update(Gamep g, Levelsp /*v*/, Levelp l)
+void level_has_seen_update(Gamep g, Levelsp v, Levelp l)
 {
   TRACE();
 

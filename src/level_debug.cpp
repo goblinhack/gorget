@@ -59,7 +59,7 @@ void game_debug_info(Gamep g)
   thing_stats_dump(g, v);
 }
 
-[[nodiscard]] auto levels_thing_count(Gamep /*g*/, Levelsp v) -> int
+[[nodiscard]] auto levels_thing_count(Gamep g, Levelsp v) -> int
 {
   TRACE();
 
@@ -84,7 +84,7 @@ void game_debug_info(Gamep g)
   return thing_count;
 }
 
-[[nodiscard]] auto levels_thing_ext_count(Gamep /*g*/, Levelsp v) -> int
+[[nodiscard]] auto levels_thing_ext_count(Gamep g, Levelsp v) -> int
 {
   TRACE();
 

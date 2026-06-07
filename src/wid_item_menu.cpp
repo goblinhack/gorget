@@ -109,7 +109,7 @@ static Thingp g_item;
   return true;
 }
 
-[[nodiscard]] static auto wid_item_menu_drop(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+[[nodiscard]] static auto wid_item_menu_drop(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
 
@@ -155,7 +155,7 @@ static Thingp g_item;
   return true;
 }
 
-[[nodiscard]] static auto wid_item_menu_use(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+[[nodiscard]] static auto wid_item_menu_use(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
 
@@ -206,7 +206,7 @@ static Thingp g_item;
   return true;
 }
 
-[[nodiscard]] static auto wid_item_menu_throw(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+[[nodiscard]] static auto wid_item_menu_throw(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
 
@@ -246,7 +246,7 @@ static Thingp g_item;
   return true;
 }
 
-[[nodiscard]] static auto wid_item_menu_equip(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+[[nodiscard]] static auto wid_item_menu_equip(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
   topcon("TODO equip");
@@ -260,7 +260,7 @@ static Thingp g_item;
   return true;
 }
 
-[[nodiscard]] static auto wid_item_menu_wield(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+[[nodiscard]] static auto wid_item_menu_wield(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
 
@@ -317,7 +317,7 @@ static Thingp g_item;
   return true;
 }
 
-[[nodiscard]] static auto wid_item_menu_unwield(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+[[nodiscard]] static auto wid_item_menu_unwield(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
 
@@ -404,7 +404,7 @@ static Thingp g_item;
   return wid_item_menu_wield(g, w, x, y, button);
 }
 
-[[nodiscard]] static auto wid_item_menu_back(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+[[nodiscard]] static auto wid_item_menu_back(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
   (void) wid_item_menu_destroy();
@@ -412,7 +412,7 @@ static Thingp g_item;
   return true;
 }
 
-[[nodiscard]] static auto wid_item_menu_close(Gamep g, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+[[nodiscard]] static auto wid_item_menu_close(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
   (void) wid_item_menu_destroy();
@@ -420,7 +420,7 @@ static Thingp g_item;
   return true;
 }
 
-[[nodiscard]] static auto wid_item_menu_key_down(Gamep g, Widp /*w*/, const struct SDL_Keysym *key) -> bool
+[[nodiscard]] static auto wid_item_menu_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
 {
   TRACE();
 

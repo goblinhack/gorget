@@ -385,7 +385,7 @@ void level_select_assign_levels_to_grid(Gamep g, Levelsp v)
 //
 // Return the level
 //
-[[nodiscard]] auto level_select_get(Gamep /*g*/, Levelsp v, bpoint p) -> LevelSelectCell *
+[[nodiscard]] auto level_select_get(Gamep g, Levelsp v, bpoint p) -> LevelSelectCell *
 {
   TRACE();
 
@@ -703,7 +703,7 @@ void level_select_grid_of_empty_levels(Gamep g)
 //
 // Clean up the level select snake walk
 //
-void level_select_destroy(Gamep /*g*/, Levelsp v, Levelp l)
+void level_select_destroy(Gamep g, Levelsp v, Levelp l)
 {
   log("level select destroy");
   TRACE_INDENT();

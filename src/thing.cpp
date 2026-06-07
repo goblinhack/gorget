@@ -124,7 +124,7 @@
   return t;
 }
 
-void thing_stats_dump(Gamep /*g*/, Levelsp v)
+void thing_stats_dump(Gamep g, Levelsp v)
 {
   TRACE();
 

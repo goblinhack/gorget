@@ -88,7 +88,7 @@ static void sound_finished(int channel)
   return true;
 }
 
-void sound_fade_out(Gamep /*g*/)
+void sound_fade_out(Gamep g)
 {
   TRACE();
 

@@ -590,7 +590,7 @@ static void level_tick_idle(Gamep g, Levelsp v, Levelp l)
   return ret;
 }
 
-[[nodiscard]] auto level_tick_begin_is_requested(Gamep g, Levelsp v, Levelp /*l*/) -> bool
+[[nodiscard]] auto level_tick_begin_is_requested(Gamep g, Levelsp v, Levelp l) -> bool
 {
   TRACE();
 
@@ -648,7 +648,7 @@ static void level_tick_end(Gamep g, Levelsp v, Levelp l)
   }
 }
 
-[[nodiscard]] auto level_tick_is_in_progress(Gamep /*g*/, Levelsp /*v*/, Levelp l) -> bool
+[[nodiscard]] auto level_tick_is_in_progress(Gamep g, Levelsp v, Levelp l) -> bool
 {
   TRACE();
 

@@ -696,7 +696,7 @@ static auto room_flip_horiz(class Room *r) -> class Room *
 //
 // Add a room and copies with all possible rotations
 //
-void room_add(Gamep /*g*/, int chance, int room_flags, const char *file, int line, ...)
+void room_add(Gamep g, int chance, int room_flags, const char *file, int line, ...)
 {
   TRACE();
 
@@ -1232,7 +1232,7 @@ static void room_place_at(class LevelGen *lg, class Room *r, bpoint at)
 //
 // Clean up rooms
 //
-void rooms_fini(Gamep /*g*/)
+void rooms_fini(Gamep g)
 {
   TRACE();
 
@@ -1329,7 +1329,7 @@ static auto fragment_alt_flip_horiz(class FragmentAlt *r) -> class FragmentAlt *
 //
 // Add a fragment_alt and copies with all possible rotations
 //
-[[nodiscard]] auto fragment_alt_add(Gamep /*g*/, int chance, uint32_t room_flags, const char *file, int line, ...) -> bool
+[[nodiscard]] auto fragment_alt_add(Gamep g, int chance, uint32_t room_flags, const char *file, int line, ...) -> bool
 {
   TRACE();
 
@@ -1486,7 +1486,7 @@ static auto fragment_alt_flip_horiz(class FragmentAlt *r) -> class FragmentAlt *
 //
 // Get a random alt fragment.
 //
-[[nodiscard]] auto fragment_alt_random_get(Gamep /*g*/, Fragment *f, bpoint /*at*/) -> class FragmentAlt *
+[[nodiscard]] auto fragment_alt_random_get(Gamep g, Fragment *f, bpoint /*at*/) -> class FragmentAlt *
 {
   TRACE();
 
@@ -1606,7 +1606,7 @@ void fragment_alts_dump(Gamep g)
 //
 // Clean up fragment_alts
 //
-void fragment_alts_fini(Gamep /*g*/)
+void fragment_alts_fini(Gamep g)
 {
   TRACE();
 
@@ -1703,7 +1703,7 @@ static auto fragment_flip_horiz(class Fragment *f) -> class Fragment *
 //
 // Add a fragment and copies with all possible rotations
 //
-[[nodiscard]] auto fragment_add(Gamep /*g*/, int chance, const char *file, int line, ...) -> bool
+[[nodiscard]] auto fragment_add(Gamep g, int chance, const char *file, int line, ...) -> bool
 {
   TRACE();
 
@@ -1852,7 +1852,7 @@ static auto fragment_flip_horiz(class Fragment *f) -> class Fragment *
 //
 // Get a random fragment.
 //
-[[nodiscard]] auto fragment_random_get(Gamep /*g*/) -> class Fragment *
+[[nodiscard]] auto fragment_random_get(Gamep g) -> class Fragment *
 {
   TRACE();
 
@@ -2043,7 +2043,7 @@ static void level_gen_add_fragments(Gamep g, class LevelGen *lg)
 //
 // Clean up fragments
 //
-void fragments_fini(Gamep /*g*/)
+void fragments_fini(Gamep g)
 {
   TRACE();
 
@@ -2055,7 +2055,7 @@ void fragments_fini(Gamep /*g*/)
 //
 // Add a level
 //
-void level_fixed_add(Gamep /*g*/, int chance, LevelType level_type, const std::string &alias, const char *file, int line,
+void level_fixed_add(Gamep g, int chance, LevelType level_type, const std::string &alias, const char *file, int line,
                      const Overrides &overrides, int dummy, ...)
 {
   TRACE();
@@ -2243,7 +2243,7 @@ void level_fixed_add(Gamep /*g*/, int chance, LevelType level_type, const std::s
 //
 // Clean up levels
 //
-void levels_fini(Gamep /*g*/)
+void levels_fini(Gamep g)
 {
   TRACE();
 
@@ -2448,7 +2448,7 @@ static auto level_gen_string(class LevelGen *lg) -> std::string
 //
 // Level stats
 //
-void level_gen_stats_dump(Gamep /*g*/)
+void level_gen_stats_dump(Gamep g)
 {
   TRACE();
 
@@ -3807,7 +3807,7 @@ static void level_gen_add_walls_around_rooms(class LevelGen *lg)
 //
 // Is this tile in the entrance?
 //
-[[nodiscard]] auto level_gen_is_room_entrance(Gamep /*g*/, class LevelGen *lg, int x, int y) -> bool
+[[nodiscard]] auto level_gen_is_room_entrance(Gamep g, class LevelGen *lg, int x, int y) -> bool
 {
   TRACE();
 
@@ -3834,7 +3834,7 @@ static void level_gen_add_walls_around_rooms(class LevelGen *lg)
 //
 // Is this tile in the exit?
 //
-[[nodiscard]] auto level_gen_is_room_exit(Gamep /*g*/, class LevelGen *lg, int x, int y) -> bool
+[[nodiscard]] auto level_gen_is_room_exit(Gamep g, class LevelGen *lg, int x, int y) -> bool
 {
   TRACE();
 
@@ -3858,7 +3858,7 @@ static void level_gen_add_walls_around_rooms(class LevelGen *lg)
 //
 // Is this room locked?
 //
-[[nodiscard]] auto level_gen_is_room_locked(Gamep /*g*/, class LevelGen *lg, int x, int y) -> bool
+[[nodiscard]] auto level_gen_is_room_locked(Gamep g, class LevelGen *lg, int x, int y) -> bool
 {
   TRACE();
 
@@ -3885,7 +3885,7 @@ static void level_gen_add_walls_around_rooms(class LevelGen *lg)
 //
 // Is this room secret?
 //
-[[nodiscard]] auto level_gen_is_room_secret(Gamep /*g*/, class LevelGen *lg, int x, int y) -> bool
+[[nodiscard]] auto level_gen_is_room_secret(Gamep g, class LevelGen *lg, int x, int y) -> bool
 {
   TRACE();
 
@@ -3912,7 +3912,7 @@ static void level_gen_add_walls_around_rooms(class LevelGen *lg)
 //
 // Is this room has_key?
 //
-[[nodiscard]] auto level_gen_is_room_has_key(Gamep /*g*/, class LevelGen *lg, int x, int y) -> bool
+[[nodiscard]] auto level_gen_is_room_has_key(Gamep g, class LevelGen *lg, int x, int y) -> bool
 {
   TRACE();
 

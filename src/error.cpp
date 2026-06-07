@@ -116,7 +116,7 @@ void error_message(Gamep g, const std::string &error_msg)
   error_message_do(g, tech_support);
 }
 
-void error_clear(Gamep /*g*/)
+void error_clear(Gamep g)
 {
   TRACE();
 

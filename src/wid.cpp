@@ -92,8 +92,8 @@ static wid_key_map_int wid_pre_tick_top_level;
 //
 // Last time we changed what we were over.
 //
-ts_t wid_last_over_event;
-ts_t wid_last_processed_key_event;
+ts_t        wid_last_over_event;
+static ts_t wid_last_processed_key_event;
 
 //
 // Scope the focus to children of this widget and do not change it.
@@ -2290,7 +2290,7 @@ void wid_destroy_nodelay(Gamep g, Widp *wp)
   wid_destroy_delay(g, wp, 0);
 }
 
-void wid_destroy_in(Gamep /*g*/, Widp w, uint32_t ms)
+void wid_destroy_in(Gamep g, Widp w, uint32_t ms)
 {
   TRACE();
 
@@ -3576,7 +3576,7 @@ void wid_scroll_text(Widp w)
 // Replace the 2nd last line of text and scroll. The assumption is the last
 // line is the input line.
 //
-void wid_scroll_with_input(Gamep /*g*/, Widp w, const std::string &str)
+void wid_scroll_with_input(Gamep g, Widp w, const std::string &str)
 {
   TRACE();
 
@@ -4230,7 +4230,7 @@ void wid_move_delta(Gamep g, Widp w, int dx, int dy)
   wid_update_internal(g, w);
 }
 
-void wid_resize(Gamep /*g*/, Widp w, int width, int height)
+void wid_resize(Gamep g, Widp w, int width, int height)
 {
   TRACE();
 
@@ -5363,7 +5363,7 @@ static void wid_gc(Gamep g, Widp w)
 //
 // Check widgets are not getting out of hand
 //
-void wid_sanity_check(Gamep /*g*/)
+void wid_sanity_check(Gamep g)
 {
   TRACE();
 

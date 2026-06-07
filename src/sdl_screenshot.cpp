@@ -17,7 +17,7 @@
 #include <string>
 #include <vector>
 
-void sdl_screenshot(Gamep /*g*/)
+void sdl_screenshot(Gamep g)
 {
   TRACE();
 

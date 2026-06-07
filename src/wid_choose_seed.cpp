@@ -15,7 +15,7 @@
 
 static Widp wid_choose_seed;
 
-static void selected(Gamep g, Widp /*w*/, const std::string &text)
+static void selected(Gamep g, Widp w, const std::string &text)
 {
   TRACE();
 

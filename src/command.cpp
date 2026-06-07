@@ -135,7 +135,7 @@ void command_fini()
   return true;
 }
 
-void command_add(Gamep /*g*/, command_fn_t callback, const std::string &input, const std::string &readable)
+void command_add(Gamep g, command_fn_t callback, const std::string &input, const std::string &readable)
 {
   TRACE();
 

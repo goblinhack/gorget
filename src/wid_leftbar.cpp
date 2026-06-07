@@ -56,7 +56,7 @@ static WidPopup *wid_leftbar;
   return true;
 }
 
-void wid_leftbar_fini(Gamep /*g*/)
+void wid_leftbar_fini(Gamep g)
 {
   TRACE();
 

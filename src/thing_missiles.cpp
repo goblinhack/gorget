@@ -126,7 +126,7 @@
 //
 // Is this missile attached to a thing?
 //
-[[nodiscard]] auto thing_missile_fired_by_get(Gamep g, Levelsp v, Levelp /*l*/, Thingp me) -> Thingp
+[[nodiscard]] auto thing_missile_fired_by_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> Thingp
 {
   if (me == nullptr) {
     return nullptr;

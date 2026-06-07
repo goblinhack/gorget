@@ -112,7 +112,7 @@ static auto find_one(const std::string &alias) -> Music *
   return rand_one_of(out);
 }
 
-[[nodiscard]] auto music_load(Gamep /*g*/, uint32_t rate, const char *file, const char *name_alias) -> bool
+[[nodiscard]] auto music_load(Gamep g, uint32_t rate, const char *file, const char *name_alias) -> bool
 {
   TRACE();
 

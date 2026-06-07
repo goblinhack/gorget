@@ -324,7 +324,7 @@ static inline auto thing_is_open(Thingp t) -> bool
   return t->_is_open;
 }
 
-static inline auto thing_find_optional(Gamep /*g*/, Levelsp v, ThingId id) -> Thingp
+static inline auto thing_find_optional(Gamep g, Levelsp v, ThingId id) -> Thingp
 {
 #ifdef DEBUG_BUILD
   TRACE_DEBUG(); // expensive

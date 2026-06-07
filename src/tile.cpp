@@ -1008,7 +1008,7 @@ void tile_blit_outlined(const Tilep &tile, float x1, float x2, float y1, float y
 // Shift the coordinates of a tile by a given percentage, so the bottom is
 // trimmed and looks submerged.
 //
-void tile_blit_apply_submerge_pct(Gamep /*g*/, spoint &tl, spoint &br, Tilep tile, float & /*x1*/, float & /*x2*/, float &y1, float &y2,
+void tile_blit_apply_submerge_pct(Gamep g, spoint &tl, spoint &br, Tilep tile, float & /*x1*/, float & /*x2*/, float &y1, float &y2,
                                   float percent)
 {
   TRACE_DEBUG();

@@ -24,7 +24,7 @@
 [[nodiscard]] auto to_string(const SDL_Keysym &k) -> std::string;
 [[nodiscard]] auto to_string_ignoring_mods(const SDL_Keysym &k) -> std::string;
 
-[[nodiscard]] auto sdl_fbo_save(Gamep /*g*/, FboEnum fbo) -> std::vector< uint8_t >;
+[[nodiscard]] auto sdl_fbo_save(Gamep g, FboEnum fbo) -> std::vector< uint8_t >;
 
 [[nodiscard]] auto config_errored_clear(Gamep g, class Tokens *tokens, void *context) -> uint8_t;
 [[nodiscard]] auto show_error(Gamep g, class Tokens *tokens, void *context) -> uint8_t;
@@ -44,8 +44,8 @@ void               sdl_display(Gamep g);
 void               sdl_display_reset(Gamep g);
 void               sdl_event(Gamep g, SDL_Event *event, bool &processed_mouse_motion_event);
 void               sdl_prepare_to_exit(Gamep g);
-void               sdl_fbo_dump(Gamep /*g*/, FboEnum fbo, const std::string &name);
-void               sdl_fbo_load(Gamep /*g*/, FboEnum fbo, const std::vector< uint8_t > &pixels);
+void               sdl_fbo_dump(Gamep g, FboEnum fbo, const std::string &name);
+void               sdl_fbo_load(Gamep g, FboEnum fbo, const std::vector< uint8_t > &pixels);
 void               sdl_fini(Gamep g);
 void               sdl_display_fini(Gamep g);
 void               sdl_flush_display(Gamep g, bool force = false);
@@ -54,8 +54,8 @@ void               sdl_key_repeat_events(Gamep g);
 void               sdl_loop(Gamep g);
 void               sdl_mouse_center(Gamep g);
 void               sdl_mouse_warp(Gamep g, int x, int y);
-void               sdl_screenshot_do(Gamep /*g*/);
-void               sdl_screenshot(Gamep /*g*/);
+void               sdl_screenshot_do(Gamep g);
+void               sdl_screenshot(Gamep g);
 void               sdl_tick(Gamep g);
 
 #endif

@@ -31,7 +31,7 @@
   return make_bpoint(t->_at);
 }
 
-void thing_at_set(Gamep /*g*/, Levelsp /*v*/, Levelp l, Thingp t, const bpoint &val)
+void thing_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, const bpoint &val)
 {
   TRACE_DEBUG();
 
@@ -61,7 +61,7 @@ void thing_at_set(Gamep /*g*/, Levelsp /*v*/, Levelp l, Thingp t, const bpoint &
   return t->_at;
 }
 
-void thing_at_set(Gamep /*g*/, Levelsp /*v*/, Levelp l, Thingp t, const fpoint &val)
+void thing_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, const fpoint &val)
 {
   TRACE_DEBUG();
 
@@ -109,7 +109,7 @@ void thing_prev_pix_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, const spoint 
   t->_prev_pix_at = val;
 }
 
-void thing_pix_at_set(Gamep /*g*/, Levelsp /*v*/, Levelp l, Thingp t, const spoint &val)
+void thing_pix_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, const spoint &val)
 {
   TRACE_DEBUG();
 
@@ -127,7 +127,7 @@ void thing_pix_at_set(Gamep /*g*/, Levelsp /*v*/, Levelp l, Thingp t, const spoi
   t->_curr_pix_at = val;
 }
 
-void thing_pix_at_set(Gamep /*g*/, Levelsp /*v*/, Levelp l, Thingp t, short x, short y)
+void thing_pix_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, short x, short y)
 {
   TRACE_DEBUG();
 

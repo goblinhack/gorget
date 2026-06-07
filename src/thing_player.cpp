@@ -281,7 +281,7 @@ void thing_player_event_loop(Gamep g, Levelsp v, Levelp l)
   return PlayerStateType_to_string(state);
 }
 
-[[nodiscard]] auto player_state(Gamep /*g*/, Levelsp v) -> PlayerStateType
+[[nodiscard]] auto player_state(Gamep g, Levelsp v) -> PlayerStateType
 {
   TRACE();
   return v->_player_state;
@@ -813,12 +813,12 @@ static auto player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy) -> b
 //
 // All keys have been released, forget any accumulation of events
 //
-void player_move_requests_reset(Gamep /*g*/, Levelsp v)
+void player_move_requests_reset(Gamep g, Levelsp v)
 {
   TRACE();
 
-  v->requested_fire    = false;
-  v->requested_move_up = false;
+  v->requested_fire       = false;
+  v->requested_move_up    = false;
   v->requested_move_down  = false;
   v->requested_move_left  = false;
   v->requested_move_right = false;
@@ -827,7 +827,7 @@ void player_move_requests_reset(Gamep /*g*/, Levelsp v)
 //
 // Allow moves to accumulate so we can do diagonal moves.
 //
-void player_move_accum(Gamep /*g*/, Levelsp v, Levelp /*l*/, bool up, bool down, bool left, bool right, bool fire)
+void player_move_accum(Gamep g, Levelsp v, Levelp l, bool up, bool down, bool left, bool right, bool fire)
 {
   TRACE();
 

@@ -28,7 +28,7 @@ using PathCost = struct PathCost {
   int                   cost = {};
 };
 
-void level_cursor_set(Gamep /*g*/, Levelsp v, bpoint p)
+void level_cursor_set(Gamep g, Levelsp v, bpoint p)
 {
   TRACE();
 
@@ -50,7 +50,7 @@ void level_cursor_set(Gamep /*g*/, Levelsp v, bpoint p)
   }
 }
 
-[[nodiscard]] auto level_cursor_is_valid(Gamep /*g*/, Levelsp v) -> bool
+[[nodiscard]] auto level_cursor_is_valid(Gamep g, Levelsp v) -> bool
 {
   TRACE();
 
@@ -642,4 +642,4 @@ void level_cursor_copy_mouse_path_to_player(Gamep g, Levelsp v, Levelp l)
   level_select_mouse_motion(g, v, l);
 }
 
-[[nodiscard]] auto level_cursor_path_size(Gamep /*g*/) -> int { return static_cast< int >(cursor_path.size()); }
+[[nodiscard]] auto level_cursor_path_size(Gamep g) -> int { return static_cast< int >(cursor_path.size()); }

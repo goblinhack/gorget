@@ -23,14 +23,14 @@ void wid_notice_destroy()
   wid_notice_window = nullptr;
 }
 
-[[nodiscard]] static auto wid_notice_ok(Gamep /*g*/, Widp /*w*/, int /*x*/, int /*y*/, uint32_t /*button*/) -> bool
+[[nodiscard]] static auto wid_notice_ok(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
   wid_notice_destroy();
   return true;
 }
 
-[[nodiscard]] static auto wid_notice_key_down(Gamep g, Widp /*w*/, const struct SDL_Keysym * /*key*/) -> bool
+[[nodiscard]] static auto wid_notice_key_down(Gamep g, Widp w, const struct SDL_Keysym * /*key*/) -> bool
 {
   TRACE();
   (void) wid_notice_ok(g, nullptr, 0, 0, 0);

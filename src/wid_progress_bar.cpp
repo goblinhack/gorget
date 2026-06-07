@@ -23,7 +23,7 @@ static int progress_steps = 32;
 
 static WidPopup *wid_progress_bar_window;
 
-void wid_progress_bar_destroy(Gamep /*g*/)
+void wid_progress_bar_destroy(Gamep g)
 {
   TRACE();
   delete wid_progress_bar_window;

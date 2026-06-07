@@ -152,7 +152,7 @@ static void wid_rightbar_create_minimap_level(Gamep g)
   return true;
 }
 
-void wid_rightbar_fini(Gamep /*g*/)
+void wid_rightbar_fini(Gamep g)
 {
   TRACE();
 
