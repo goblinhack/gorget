@@ -12,39 +12,39 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
-static auto tp_staff_fire_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
+static auto tp_staff_light_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
-  return "staff_fire";
+  return "staff_light";
 }
 
-static auto tp_staff_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
+static auto tp_staff_light_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
-  return                                                                                                 //
-      UI_INFO1_FMT_STR "A firey red staff. Burning sparks drop from it.\n"                               //
-      UI_INFO2_FMT_STR "Strategy: fire multiple rounds down long corridors.\n"                           //
-      UI_INFO3_FMT_STR "Strategy: firebolts have a set speed and monsters can avoid them potentially.\n" //
+  return                                                                                                  //
+      UI_INFO1_FMT_STR "A lighty red staff. Burning sparks drop from it.\n"                               //
+      UI_INFO2_FMT_STR "Strategy: light multiple rounds down long corridors.\n"                           //
+      UI_INFO3_FMT_STR "Strategy: lightbolts have a set speed and monsters can avoid them potentially.\n" //
       UI_INFO4_FMT_STR "Info: wands less powerful than staffs, can be wielded without penalty, but have fewer charges.\n";
 }
 
-[[nodiscard]] static auto tp_staff_fire_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp collector, ThingEvent &e) -> bool
+[[nodiscard]] static auto tp_staff_light_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp collector, ThingEvent &e) -> bool
 {
   TRACE();
 
   return true;
 }
 
-[[nodiscard]] static auto tp_staff_fire_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp dropper, ThingEvent &e) -> bool
+[[nodiscard]] static auto tp_staff_light_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp dropper, ThingEvent &e) -> bool
 {
   TRACE();
 
   return true;
 }
 
-[[nodiscard]] static auto tp_staff_fire_on_carry_success(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp collector, ThingEvent &e) -> bool
+[[nodiscard]] static auto tp_staff_light_on_carry_success(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp collector, ThingEvent &e) -> bool
 {
   TRACE();
 
@@ -55,7 +55,7 @@ static auto tp_staff_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
   return true;
 }
 
-[[nodiscard]] static auto tp_staff_fire_on_drop_success(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp dropper, ThingEvent &e) -> bool
+[[nodiscard]] static auto tp_staff_light_on_drop_success(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp dropper, ThingEvent &e) -> bool
 {
   TRACE();
 
@@ -68,41 +68,41 @@ static auto tp_staff_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
   return true;
 }
 
-[[nodiscard]] static auto tp_staff_fire_on_wield_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user) -> bool
+[[nodiscard]] static auto tp_staff_light_on_wield_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user) -> bool
 {
   TRACE();
 
   return true;
 }
 
-[[nodiscard]] static auto tp_staff_fire_on_use_weapon_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user) -> Tpp
+[[nodiscard]] static auto tp_staff_light_on_use_weapon_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user) -> Tpp
 {
   TRACE();
 
   static Tpp what;
   if (! what) {
-    what = tp_find_mand("projectile_fire");
+    what = tp_find_mand("lightball");
   }
 
   return what;
 }
 
-[[nodiscard]] auto tp_load_staff_fire() -> bool
+[[nodiscard]] auto tp_load_staff_light() -> bool
 {
   TRACE();
 
-  auto *tp   = tp_load("staff_fire"); // keep as string for scripts
+  auto *tp   = tp_load("staff_light"); // keep as string for scripts
   auto  name = tp_name(tp);
 
   // begin sort marker1 {
-  thing_description_set(tp, tp_staff_fire_description_get);
-  thing_detail_set(tp, tp_staff_fire_detail_get);
-  thing_on_carry_request_set(tp, tp_staff_fire_on_carry_request);
-  thing_on_carry_success_set(tp, tp_staff_fire_on_carry_success);
-  thing_on_drop_request_set(tp, tp_staff_fire_on_drop_request);
-  thing_on_drop_success_set(tp, tp_staff_fire_on_drop_success);
-  thing_on_use_weapon_request_set(tp, tp_staff_fire_on_use_weapon_request);
-  thing_on_wield_request_set(tp, tp_staff_fire_on_wield_request);
+  thing_description_set(tp, tp_staff_light_description_get);
+  thing_detail_set(tp, tp_staff_light_detail_get);
+  thing_on_carry_request_set(tp, tp_staff_light_on_carry_request);
+  thing_on_carry_success_set(tp, tp_staff_light_on_carry_success);
+  thing_on_drop_request_set(tp, tp_staff_light_on_drop_request);
+  thing_on_drop_success_set(tp, tp_staff_light_on_drop_success);
+  thing_on_use_weapon_request_set(tp, tp_staff_light_on_use_weapon_request);
+  thing_on_wield_request_set(tp, tp_staff_light_on_wield_request);
   tp_charge_count_set(tp, 5000);
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
@@ -113,7 +113,7 @@ static auto tp_staff_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_collectable);
   tp_flag_set(tp, is_collision_circle_small);
-  tp_flag_set(tp, is_combustible); // will continue to burn once on fire
+  tp_flag_set(tp, is_combustible); // will continue to burn once on light
   tp_flag_set(tp, is_dead_when_discharged);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_droppable);
@@ -135,11 +135,11 @@ static auto tp_staff_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
   tp_health_set(tp, "1d4");
   tp_is_immune_add(tp, THING_EVENT_FIRE_DAMAGE);
   tp_light_color_set(tp, "red");
-  tp_name_a_or_an_set(tp, "a staff of fire");
-  tp_name_apostrophize_set(tp, "staff of fire's");
-  tp_name_long_set(tp, "staff of fire");
-  tp_name_pluralize_set(tp, "staffs of fire");
-  tp_name_short_set(tp, "staff of fire");
+  tp_name_a_or_an_set(tp, "a staff of light");
+  tp_name_apostrophize_set(tp, "staff of light's");
+  tp_name_long_set(tp, "staff of light");
+  tp_name_pluralize_set(tp, "staffs of light");
+  tp_name_short_set(tp, "staff of light");
   tp_priority_set(tp, THING_PRIORITY_OBJECT);
   tp_rarity_set(tp, THING_RARITY_UNCOMMON);
   tp_temperature_burns_at_set(tp, 30);  // celsius

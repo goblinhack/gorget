@@ -1,0 +1,29 @@
+#
+# Adds a backslash to every but the last line of a file.
+#
+NO_LINES=`awk '
+{
+	if ( $NF > 0 )
+	{
+		no_lines+=1
+	}
+}
+END { printf("%d",no_lines); }
+' $1`
+
+awk '
+{
+	line_no++
+
+	if ( line_no<'"$NO_LINES"' )
+	{
+		printf("%s\\\n",$0);
+	}
+	else
+	{
+		printf("%s",$0);
+	}
+}
+' $1 > $1.awk
+
+mv $1.awk $1

@@ -101,7 +101,7 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
   bpoint to    = make_bpoint(tof);
 
   //
-  // No need to check for collisions for things like fireballs otherwise we will
+  // No need to check for collisions for things like projectile_fires otherwise we will
   // not be able to say fire through a teleport and hit a barrel.
   //
   if (thing_is_projectile(me) || thing_is_laser(me)) {

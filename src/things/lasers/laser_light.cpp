@@ -19,7 +19,7 @@ static void tp_laser_light_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
   thing_sound_play(g, v, l, me, "laser");
 }
 
-[[nodiscard]] auto tp_load_laser_light() ->  bool
+[[nodiscard]] auto tp_load_laser_light() -> bool
 {
   auto *tp   = tp_load("laser_light"); // keep as string for scripts
   auto  name = tp_name(tp);
@@ -45,7 +45,7 @@ static void tp_laser_light_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_flag_set(tp, is_removable_on_err);
   tp_flag_set(tp, is_tickable);
   tp_health_set(tp, "1");
-  tp_light_color_set(tp, "orange");
+  tp_light_color_set(tp, "cyan");
   tp_name_a_or_an_set(tp, "a beam of light");
   tp_name_apostrophize_set(tp, "beam of light's");
   tp_name_long_set(tp, "beam of light");

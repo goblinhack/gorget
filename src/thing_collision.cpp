@@ -544,7 +544,7 @@ static void thing_collision_interpolated_expand_candidates(Gamep g, Levelsp v, L
   TRACE();
 
   //
-  // If this is a fireball hitting a wall, then we want to hit the ghost that is
+  // If this is a projectile_fire hitting a wall, then we want to hit the ghost that is
   // also hiding inside the wall
   //
   if (cands.empty()) {

@@ -392,10 +392,10 @@
   return level_alive(g, v, l, is_fire, p);
 }
 
-[[nodiscard]] auto level_alive_is_fireball(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_alive_is_unused_99(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_alive(g, v, l, is_fireball, p);
+  return level_alive(g, v, l, is_unused_99, p);
 }
 
 [[nodiscard]] auto level_alive_is_flesh(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
@@ -908,10 +908,10 @@
   return level_alive(g, v, l, is_unused13, p);
 }
 
-[[nodiscard]] auto level_alive_is_unused14(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_alive_is_unused_98(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_alive(g, v, l, is_unused14, p);
+  return level_alive(g, v, l, is_unused_98, p);
 }
 
 [[nodiscard]] auto level_alive_is_tick_on_unwield(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp

@@ -392,10 +392,10 @@
   return level_flag_cached(g, v, l, is_fire, p);
 }
 
-[[nodiscard]] auto level_is_fireball_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_unused_99_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_fireball, p);
+  return level_flag_cached(g, v, l, is_unused_99, p);
 }
 
 [[nodiscard]] auto level_is_flesh_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
@@ -908,10 +908,10 @@
   return level_flag_cached(g, v, l, is_unused13, p);
 }
 
-[[nodiscard]] auto level_is_unused14_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_unused_98_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused14, p);
+  return level_flag_cached(g, v, l, is_unused_98, p);
 }
 
 [[nodiscard]] auto level_is_tick_on_unwield_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

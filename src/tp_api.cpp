@@ -391,10 +391,10 @@
   return tp_flag(tp, is_fire) != 0;
 }
 
-[[nodiscard]] auto tp_is_fireball(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_unused_99(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_fireball) != 0;
+  return tp_flag(tp, is_unused_99) != 0;
 }
 
 [[nodiscard]] auto tp_is_flesh(Tpp tp) -> bool
@@ -907,10 +907,10 @@
   return tp_flag(tp, is_unused13) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused14(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_unused_98(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused14) != 0;
+  return tp_flag(tp, is_unused_98) != 0;
 }
 
 [[nodiscard]] auto tp_is_tick_on_unwield(Tpp tp) -> bool

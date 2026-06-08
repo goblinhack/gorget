@@ -393,10 +393,10 @@
   return level_count(g, v, l, is_fire, p);
 }
 
-[[nodiscard]] auto level_count_is_fireball(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_unused_99(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_fireball, p);
+  return level_count(g, v, l, is_unused_99, p);
 }
 
 [[nodiscard]] auto level_count_is_flesh(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
@@ -909,10 +909,10 @@
   return level_count(g, v, l, is_unused13, p);
 }
 
-[[nodiscard]] auto level_count_is_unused14(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_unused_98(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused14, p);
+  return level_count(g, v, l, is_unused_98, p);
 }
 
 [[nodiscard]] auto level_count_is_tick_on_unwield(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t

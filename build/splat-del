@@ -1,0 +1,179 @@
+#!/bin/sh
+#
+# splat-del "pattern" "files" [do]
+#
+# Searches for <pattern> and uses sed to remove matching lines from the
+# given list of files.
+#
+# Nothing is done unless [do] is added, so you can test out that it works.
+# 
+# NOTE needs "addchar", found in the same dir as this tool.
+#
+print() {
+        case "`echo -n`" in
+                -n) n= c="\c" ;;
+                *)  n=-n c=   ;;
+        esac
+
+        echo $n "$*$c"
+}
+
+if test $# -lt 2
+then
+	echo
+	echo "Performs recursive file pattern removal"
+	echo
+	echo "usage: splat-del \"<pattern>\" \"<files>\" [do]"
+	echo
+	echo "e.g:"
+	echo "	splat \"rm\" \"Makefile\""
+	echo "Then when sure it works:"
+	echo "	splat \"rm\" \"Makefile\" do"
+	echo
+	echo "splat $*"
+	exit
+fi
+
+TOP=/tmp
+
+mkdir -p $TOP 2>/dev/null
+
+pattern=$1
+doit=$3
+
+echo "### $0: Searching for <$pattern>, deleting"
+
+SPLATFILE=${TOP}/.splatfile$$
+SPLATFILE_TMP=${TOP}/.splatfile_tmp$$
+SPLATLIST=${TOP}/.splatlist$$
+SPL=${TOP}/.spl$$
+
+###############################################################################
+# Build our sed line
+###############################################################################
+echo "/$pattern/d" > ${SPLATFILE}
+
+###############################################################################
+# Add backslashes for sed to understand multi-line changes
+###############################################################################
+addchar ${SPLATFILE}
+
+###############################################################################
+# Need a newline for sed
+###############################################################################
+echo "" >> ${SPLATFILE}
+
+sed "
+s/NEWLINE/\\\\012/g
+s/#/\\\\#/g" ${SPLATFILE} >${SPLATFILE_TMP}
+
+mv -f ${SPLATFILE_TMP} ${SPLATFILE}
+
+print "### sed command: "
+cat  ${SPLATFILE}
+
+print "### Finding relevant files that match <$3>..."
+
+find ./ -follow -name "$2" -type f  -not -wholename "*.svn*" -print > ${SPLATLIST}
+
+echo "done"
+
+for i in `cat ${SPLATLIST}`
+do
+	file=$i
+
+	if [ `file $i | egrep "(Visual|bmp|jpg|CVS|SPARC|ELF|binary|ar archive)" | wc -l` -gt 0 ]
+	then
+		# echo "### Skipping <$i>"
+		continue
+	fi
+
+	if [ -d $file ]
+	then
+		continue
+	fi
+
+	case "$i" in
+	    *unix-*|*mz|*ms|*.bmp|*.jpg|*.gz|*.tar|*dll|*.lib|*.o|*.a|*.exe|*.bz*|*.zip)
+	    continue
+	    ;;
+            *.dSYM*)
+	    continue
+	    ;;
+            *.ACME*)
+	    continue
+	    ;;
+            *.CC*)
+	    continue
+	    ;;
+            *.maker/*)
+	    continue
+	    ;;
+            *target/*)
+	    continue
+	    ;;
+            *.jar*)
+	    continue
+	    ;;
+            *.jar*)
+	    continue
+	    ;;
+            *.logs*)
+	    continue
+	    ;;
+            *transforms.json*)
+	    continue
+	    ;;
+            *.hg*)
+	    continue
+	    ;;
+            *.git*)
+	    continue
+	    ;;
+            *.o$)
+	    continue
+	    ;;
+	    *symbolic*)
+	    continue
+	    ;;
+	    *ELF*)
+	    continue
+	    ;;
+	esac
+
+	sed -f ${SPLATFILE} $file >${SPL}
+
+	diff -ru $file ${SPL} > ${SPL}.diff
+
+	if [ $? -ne 0 ]
+	then
+		if [ "$doit" != "do" ]
+		then
+			echo "NOT REMOVING, diffs found:"
+		else
+			if [ -s ${SPL} ]
+			then
+#				print "diffs found, splatting..."
+				echo
+				cp -r ${SPL} $file
+				rm ${SPL}
+				echo "done"
+			else
+				echo "!!! Splat file has no size: $i, skipping"
+			fi
+		fi
+		cat ${SPL}.diff
+	fi
+done
+
+if [ -f ${SPL} ]
+then
+	rm ${SPL}
+fi
+
+if [ -f ${SPLATFILE} ]
+then
+	rm ${SPLATFILE}
+fi
+
+#echo "### Done."

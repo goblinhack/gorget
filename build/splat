@@ -1,0 +1,194 @@
+#!/bin/bash
+#
+# splat "pattern" "replacement" "files" [do]
+#
+# Searches for <pattern> and uses sed to replace with <replacement> in
+# the given filelist.
+#
+# Nothing is done unless [do] is added, so you can test out that it works.
+# 
+# NOTE needs "addchar", found in the same dir as this tool.
+#
+# on macos, so /[[:<:]]myWord[[:>:]]/
+#
+print() {
+        case "`echo -n`" in
+                -n) n= c="\c" ;;
+                *)  n=-n c=   ;;
+        esac
+
+        echo $n "$*$c"
+}
+
+if test $# -lt 3
+then
+	echo
+	echo "Performs recursive file pattern changes"
+	echo
+	echo "usage: splat \"<pattern>\" \"<replacement>\" \"<files>\" [do]"
+	echo
+	echo "e.g:"
+	echo "	splat \"rm\" \"remove\" \"Makefile\""
+	echo "Then when sure it works:"
+	echo "	splat \"rm\" \"remove\" \"Makefile\" do"
+	echo
+	echo "splat $*"
+	exit
+fi
+
+TOP=/tmp
+
+mkdir -p $TOP 2>/dev/null
+
+pattern=$1
+replacement=$2
+doit=$4
+
+#echo "### $0: Searching for <$pattern>, replacing with <$replacement>"
+
+SPLATFILE=${TOP}/.splatfile$$
+SPLATFILE_TMP=${TOP}/.splatfile_tmp$$
+SPL=${TOP}/.spl$$
+
+
+pattern=$(echo $pattern | sed -e "s/\\\</[[:<:]]/g" -e "s/\\\>/[[:>:]]/g")
+
+###############################################################################
+# Build our complex sed line
+###############################################################################
+echo "s/$pattern/$replacement/g" > ${SPLATFILE}
+
+###############################################################################
+# Add backslashes for sed to understand multi-line changes
+###############################################################################
+addchar ${SPLATFILE}
+
+###############################################################################
+# Need a newline for sed
+###############################################################################
+echo "" >> ${SPLATFILE}
+
+sed "
+s/NEWLINE/\\\\012/g
+s/#/\\\\#/g" ${SPLATFILE} >${SPLATFILE_TMP}
+
+mv -f ${SPLATFILE_TMP} ${SPLATFILE}
+
+print "### sed command: "
+cat  ${SPLATFILE}
+
+# print "### Finding relevant files that match <$3>..."
+
+# DIRS=`find . -type d -name "[a-z]*" -maxdepth 1 | xargs echo`
+# echo "find $DIRS -follow -name \"$3\" -type f -print > ${SPLATLIST}"
+# find $DIRS -follow -name "$3" -type f -print > ${SPLATLIST}
+
+#echo "done"
+
+find ./ -follow -name "$3" -type f | egrep -v ".logs\/|.hg\/|.git\/|.maker\/|\/target\/" |
+while read -r i; do
+        NEED_FILE_CHECK=true
+	case "$i" in
+	    *unix-*|*mz|*ms|*.bmp|*.jpg|*.gz|*.tar|*dll|*.o|*.a|*.exe|*.zip)
+#echo skip $i
+	    continue
+            ;;
+            */data/*)
+#echo skip $i
+	    continue
+	    ;;
+            *.session)
+#echo skip $i
+	    continue
+	    ;;
+            *.dSYM*)
+#echo skip $i
+	    continue
+	    ;;
+            *.orig*)
+#echo skip $i
+	    continue
+	    ;;
+            *.modified*)
+#echo skip $i
+	    continue
+	    ;;
+            *.logs*)
+#echo skip $i
+	    continue
+	    ;;
+#            *transforms.json*)
+#	    continue
+#	    ;;
+            *.hg*)
+#echo skip $i
+	    continue
+	    ;;
+            .git*)
+#echo skip $i
+	    continue
+	    ;;
+	    *symbolic*)
+#echo skip $i
+	    continue
+	    ;;
+	    *ELF*)
+#echo skip $i
+	    continue
+	    ;;
+	    *.cpp|*.c|*.h|*.sh|*.py|*.txt)
+            NEED_FILE_CHECK=
+	    ;;
+	esac
+
+	file=$i
+
+        if [ "$NEED_FILE_CHECK" != "" ]; then
+            file "$file" | grep -vq 'text'
+            if [ $? -eq 0 ]; then
+#                echo "### Skipping binary $i..."
+                continue
+            fi
+        fi
+
+#	echo "### Diffing $i..."
+
+	sed -f ${SPLATFILE} $file >${SPL}
+
+	#diff  --ignore-all-space --strip-trailing-cr  -ru $file ${SPL} > ${SPL}.diff
+	diff  --strip-trailing-cr  -ru $file ${SPL} > ${SPL}.diff
+
+	if [ $? -ne 0 ]
+	then
+		if [ "$doit" != "do" ]
+		then
+			echo "diffs found:"
+		else
+			if [ -s ${SPL} ]
+			then
+#				print "diffs found, splatting..."
+echo
+				cp -r ${SPL} $file
+				rm ${SPL}
+#				echo "done"
+			else
+				echo "!!! Splat file has no size: $i, skipping"
+			fi
+		fi
+		cat ${SPL}.diff
+#	else
+#		echo "no diffs"
+	fi
+done
+
+if [ -f ${SPL} ]
+then
+	rm ${SPL}
+fi
+
+if [ -f ${SPLATFILE} ]
+then
+	rm ${SPLATFILE}
+fi
+
+#echo "### Done."

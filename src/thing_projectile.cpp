@@ -14,7 +14,7 @@
 #include "my_tp.hpp"
 #include "my_types.hpp"
 
-[[nodiscard]] auto thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const fpoint target) -> bool
+[[nodiscard]] auto thing_projectile_launch_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const fpoint target) -> bool
 {
   THING_DBG(me, "fire projectile");
   TRACE_INDENT();
@@ -65,9 +65,9 @@
   return true;
 }
 
-[[nodiscard]] auto thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const bpoint target) -> bool
+[[nodiscard]] auto thing_projectile_launch_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const bpoint target) -> bool
 {
-  return thing_projectile_fire_at(g, v, l, me, what, make_fpoint(target));
+  return thing_projectile_launch_at(g, v, l, me, what, make_fpoint(target));
 }
 
 void thing_projectile_move(Gamep g, Levelsp v, Levelp l, Thingp me, float dt)
