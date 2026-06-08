@@ -7,40 +7,40 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static auto test_projectile(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_wand_rock_turns_to_lava(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
 
   LevelNum const level_num = 0;
-  auto           w         = 27;
+  auto           w         = 7;
   auto           h         = 7;
 
   //
   // How the dungeon starts out, and how we expect it to change
   //
   std::string const start
-      = "xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-        "x.........................x"
-        "x.........................x"
-        "x@........................x"
-        "x.........................x"
-        "x.........................x"
-        "xxxxxxxxxxxxxxxxxxxxxxxxxxx";
+      = "xxxxxxx"
+        "x..x..x"
+        "x..x..x"
+        "x@.R..x"
+        "x..x..x"
+        "x..x..x"
+        "xxxxxxx";
   std::string const expect1
-      = "xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-        "x.........................x"
-        "x.........................x"
-        "x@........-...............x"
-        "x.........................x"
-        "x.........................x"
-        "xxxxxxxxxxxxxxxxxxxxxxxxxxx";
+      = "xxxxxxx"
+        "x..x..x"
+        "x..x..x"
+        "x@.L..x"
+        "x..x..x"
+        "x..x..x"
+        "xxxxxxx";
   Levelp  l      = nullptr;
   Levelsp v      = game_test_init(g, &l, level_num, w, h, start.c_str());
   bool    result = true;
 
   auto *tp_projectile_fire = tp_find_mand("projectile_fire");
-  tp_damage_set(tp_projectile_fire, THING_EVENT_FIRE_DAMAGE, "100");
+  tp_damage_set(tp_projectile_fire, THING_EVENT_FIRE_DAMAGE, "1d4");
 
   auto *player = thing_player(g);
   if (player == nullptr) [[unlikely]] {
@@ -48,16 +48,15 @@
     goto exit;
   }
 
-  //
-  // Spawn fire. This should be enough to blow up all the barrels
-  //
-  level_dump(g, v, l, w, h);
-  TEST_PROGRESS(t);
-  (void) player_fire(g, v, l, 1, 0, tp_projectile_fire);
+  for (auto tries = 0; tries < 50; tries++) {
+    (void) player_fire(g, v, l, 1, 0, tp_projectile_fire);
+    TEST_ASSERT(t, game_event_wait(g), "failed to wait");
+    if (! game_wait_for_tick_to_finish(g, v, l)) {
+      TEST_FAILED(t, "wait loop failed");
+      goto exit;
+    }
+  }
 
-  //
-  // Wait for the projectile to ignite a barrel
-  //
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   for (auto tries = 0; tries < 1; tries++) {
@@ -77,7 +76,7 @@
     goto exit;
   }
 
-  TEST_ASSERT(t, game_tick_get(g, v) == 1, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 51, "final tick counter value");
 
   level_dump(g, v, l, w, h);
   TEST_PASSED(t);
@@ -88,14 +87,14 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_projectile() -> bool // NOLINT
+[[nodiscard]] auto test_load_projectile_rock_turns_to_lava() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("projectile");
+  Testp test = test_load("projectile_rock_turns_to_lava");
 
   // begin sort marker1 {
-  test_callback_set(test, test_projectile);
+  test_callback_set(test, test_wand_rock_turns_to_lava);
   // end sort marker1 }
 
   return true;

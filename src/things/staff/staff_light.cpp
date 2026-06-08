@@ -23,11 +23,11 @@ static auto tp_staff_light_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -
 {
   TRACE();
 
-  return                                                                                                  //
-      UI_INFO1_FMT_STR "A lighty red staff. Burning sparks drop from it.\n"                               //
-      UI_INFO2_FMT_STR "Strategy: light multiple rounds down long corridors.\n"                           //
-      UI_INFO3_FMT_STR "Strategy: lightbolts have a set speed and monsters can avoid them potentially.\n" //
-      UI_INFO4_FMT_STR "Info: wands less powerful than staffs, can be wielded without penalty, but have fewer charges.\n";
+  return                                                                                                          //
+      UI_INFO1_FMT_STR "A brilliantly lit staff. White sparks drip from it.\n"                                    //
+      UI_INFO2_FMT_STR "Tip: staves fire a single blast at a time, unavoidable by monsters.\n"                    //
+      UI_INFO3_FMT_STR "Tip: blast can pass through multiple monsters, so aim to create a conga line of death.\n" //
+      UI_INFO4_FMT_STR "Info: staves are more powerful than staves, but have fewer charges and are wielded with a move penalty.\n";
 }
 
 [[nodiscard]] static auto tp_staff_light_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp collector, ThingEvent &e) -> bool
@@ -48,8 +48,10 @@ static auto tp_staff_light_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -
 {
   TRACE();
 
-  if (thing_is_player(collector)) {
-    thing_sound_play(g, v, l, collector, "item_collect");
+  if (e.event_type == THING_EVENT_USER_INITIATED) {
+    if (thing_is_player(collector)) {
+      thing_sound_play(g, v, l, collector, "item_collect");
+    }
   }
 
   return true;
@@ -59,10 +61,8 @@ static auto tp_staff_light_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -
 {
   TRACE();
 
-  if (e.event_type == THING_EVENT_USER_INITIATED) {
-    if (thing_is_player(dropper)) {
-      thing_sound_play(g, v, l, dropper, "item_drop");
-    }
+  if (thing_is_player(dropper)) {
+    thing_sound_play(g, v, l, dropper, "item_drop");
   }
 
   return true;
@@ -75,13 +75,13 @@ static auto tp_staff_light_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -
   return true;
 }
 
-[[nodiscard]] static auto tp_staff_light_on_use_weapon_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user) -> Tpp
+[[nodiscard]] static auto tp_staff_light_on_light_weapon_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user) -> Tpp
 {
   TRACE();
 
   static Tpp what;
   if (! what) {
-    what = tp_find_mand("lightball");
+    what = tp_find_mand("laser_light");
   }
 
   return what;
@@ -101,9 +101,9 @@ static auto tp_staff_light_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -
   thing_on_carry_success_set(tp, tp_staff_light_on_carry_success);
   thing_on_drop_request_set(tp, tp_staff_light_on_drop_request);
   thing_on_drop_success_set(tp, tp_staff_light_on_drop_success);
-  thing_on_use_weapon_request_set(tp, tp_staff_light_on_use_weapon_request);
+  thing_on_use_weapon_request_set(tp, tp_staff_light_on_light_weapon_request);
   thing_on_wield_request_set(tp, tp_staff_light_on_wield_request);
-  tp_charge_count_set(tp, 5000);
+  tp_charge_count_set(tp, 500);
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated);
@@ -126,19 +126,16 @@ static auto tp_staff_light_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -
   tp_flag_set(tp, is_staff);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_tick_on_drop);
-  tp_flag_set(tp, is_tick_on_unwield);
-  tp_flag_set(tp, is_tick_on_wield);
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_treasure);
   tp_flag_set(tp, is_wood);
   tp_flag_set(tp, wieldable);
   tp_health_set(tp, "1d4");
-  tp_is_immune_add(tp, THING_EVENT_FIRE_DAMAGE);
   tp_light_color_set(tp, "red");
   tp_name_a_or_an_set(tp, "a staff of light");
   tp_name_apostrophize_set(tp, "staff of light's");
   tp_name_long_set(tp, "staff of light");
-  tp_name_pluralize_set(tp, "staffs of light");
+  tp_name_pluralize_set(tp, "staves of light");
   tp_name_short_set(tp, "staff of light");
   tp_priority_set(tp, THING_PRIORITY_OBJECT);
   tp_rarity_set(tp, THING_RARITY_UNCOMMON);

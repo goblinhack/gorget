@@ -51,7 +51,7 @@ static void tp_projectile_light_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me
   thing_on_death_set(tp, tp_projectile_light_on_death);
   thing_on_moved_set(tp, tp_projectile_light_on_moved);
   thing_on_spawned_set(tp, tp_projectile_light_on_spawned);
-  tp_damage_set(tp, THING_EVENT_LIGHT_DAMAGE, "1d4");
+  tp_damage_set(tp, THING_EVENT_LIGHT_DAMAGE, "1d6");
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_if_has_seen);

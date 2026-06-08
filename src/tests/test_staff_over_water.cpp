@@ -7,40 +7,40 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static auto test_projectile_door_locked(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_staff_over_water(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
 
   LevelNum const level_num = 0;
-  auto           w         = 7;
+  auto           w         = 14;
   auto           h         = 7;
 
   //
   // How the dungeon starts out, and how we expect it to change
   //
   std::string const start
-      = "xxxxxxx"
-        "x..x..x"
-        "x..x..x"
-        "x@.+..x"
-        "x..x..x"
-        "x..x..x"
-        "xxxxxxx";
+      = "xxxxxxxxxxxxxx"
+        "x............x"
+        "x............x"
+        "x@~~~~~~~~~~~x"
+        "x............x"
+        "x............x"
+        "xxxxxxxxxxxxxx";
   std::string const expect1
-      = "xxxxxxx"
-        "x..x..x"
-        "x..x..x"
-        "x@....."
-        "x..x..x"
-        "x..x..x"
-        "xxxxxxx";
+      = "xxxxxxxxxxxxxx"
+        "x............x"
+        "x............x"
+        "x@~:::~::~:~:x"
+        "x............x"
+        "x............x"
+        "xxxxxxxxxxxxxx";
   Levelp  l      = nullptr;
   Levelsp v      = game_test_init(g, &l, level_num, w, h, start.c_str());
   bool    result = true;
 
-  auto *tp_projectile_fire = tp_find_mand("projectile_fire");
-  tp_damage_set(tp_projectile_fire, THING_EVENT_FIRE_DAMAGE, "100");
+  auto *tp_laser_fire = tp_find_mand("laser_fire");
+  tp_damage_set(tp_laser_fire, THING_EVENT_FIRE_DAMAGE, "100");
 
   auto *player = thing_player(g);
   if (player == nullptr) [[unlikely]] {
@@ -48,19 +48,14 @@
     goto exit;
   }
 
-  for (auto tries = 0; tries < 5; tries++) {
-    (void) player_fire(g, v, l, 1, 0, tp_projectile_fire);
-    TEST_ASSERT(t, game_event_wait(g), "failed to wait");
-    if (! game_wait_for_tick_to_finish(g, v, l)) {
-      TEST_FAILED(t, "wait loop failed");
-      goto exit;
-    }
-  }
-
+  //
+  // Wait for the steam
+  //
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   for (auto tries = 0; tries < 10; tries++) {
     TEST_LOG(t, "try: %d", tries);
+    (void) player_fire(g, v, l, 1, 0, tp_laser_fire, bpoint(13, 3));
     TRACE();
     TEST_ASSERT(t, game_event_wait(g), "failed to wait");
     if (! game_wait_for_tick_to_finish(g, v, l)) {
@@ -76,7 +71,7 @@
     goto exit;
   }
 
-  TEST_ASSERT(t, game_tick_get(g, v) == 15, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 10, "final tick counter value");
 
   level_dump(g, v, l, w, h);
   TEST_PASSED(t);
@@ -87,14 +82,14 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_projectile_door_locked() -> bool // NOLINT
+[[nodiscard]] auto test_load_laser_over_water() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("projectile_door_locked");
+  Testp test = test_load("laser_over_water");
 
   // begin sort marker1 {
-  test_callback_set(test, test_projectile_door_locked);
+  test_callback_set(test, test_staff_over_water);
   // end sort marker1 }
 
   return true;

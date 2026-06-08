@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static auto test_laser_mob(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_staff_teleport(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -23,24 +23,24 @@
       = "xxxxxxxxxxxxxxxxx"
         "x...............x"
         "x...............x"
-        "x@......G.......x"
-        "x...............x"
+        "x@......T.......x"
+        "x........T.....Gx"
         "x...............x"
         "xxxxxxxxxxxxxxxxx";
   std::string const expect1
       = "xxxxxxxxxxxxxxxxx"
         "x...............x"
         "x...............x"
-        "x@-------.......x"
-        "x...............x"
+        "x@------T.......x"
+        "x........T------x"
         "x...............x"
         "xxxxxxxxxxxxxxxxx";
   std::string const expect2
       = "xxxxxxxxxxxxxxxxx"
         "x...............x"
         "x...............x"
-        "x@......!.......x"
-        "x...............x"
+        "x@......T.......x"
+        "x........T.....!x"
         "x...............x"
         "xxxxxxxxxxxxxxxxx";
   Levelp  l      = nullptr;
@@ -121,14 +121,14 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_laser_mob() -> bool // NOLINT
+[[nodiscard]] auto test_load_laser_teleport() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("laser_mob");
+  Testp test = test_load("laser_teleport");
 
   // begin sort marker1 {
-  test_callback_set(test, test_laser_mob);
+  test_callback_set(test, test_staff_teleport);
   // end sort marker1 }
 
   return true;

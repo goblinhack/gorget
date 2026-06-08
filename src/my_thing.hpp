@@ -844,8 +844,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_pillar(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_plant(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_potion(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused_99(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused_98(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_projectile(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_removable_on_err(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_removable_when_dead_on_err(Thingp t) -> bool;
@@ -876,6 +874,8 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_treasure(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_undead(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unlocked(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_unused_98(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_unused_99(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused1(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused10(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused11(Thingp t) -> bool;

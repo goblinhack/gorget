@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static auto test_laser_over_grass(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_staff_over_grass(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -89,7 +89,7 @@ exit:
   Testp test = test_load("laser_over_grass");
 
   // begin sort marker1 {
-  test_callback_set(test, test_laser_over_grass);
+  test_callback_set(test, test_staff_over_grass);
   // end sort marker1 }
 
   return true;

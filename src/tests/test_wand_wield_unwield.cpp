@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static auto test_projectile_wield(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_wand_wield(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -51,7 +51,7 @@
     goto exit;
   }
 
-  weapon_tp = tp_find_mand("staff_fire");
+  weapon_tp = tp_find_mand("wand_fire");
   if (! weapon_tp) {
     TEST_FAILED(t, "no weapon found");
     goto exit;
@@ -139,7 +139,7 @@ exit:
   Testp test = test_load("projectile_wield");
 
   // begin sort marker1 {
-  test_callback_set(test, test_projectile_wield);
+  test_callback_set(test, test_wand_wield);
   // end sort marker1 }
 
   return true;

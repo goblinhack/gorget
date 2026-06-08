@@ -181,8 +181,8 @@
       list_macro(is_plant, "is_plant"),                                                     /* newline */                                       \
       list_macro(is_player, "is_player"),                                                   /* newline */                                       \
       list_macro(is_potion, "is_potion"),                                                   /* newline */                                       \
-      list_macro(is_unused_99, "is_unused_99"),                                 /* newline */                                       \
-      list_macro(is_unused_98, "is_unused_98"),                               /* newline */                                       \
+      list_macro(is_unused_99, "is_unused_99"),                                             /* newline */                                       \
+      list_macro(is_unused_98, "is_unused_98"),                                             /* newline */                                       \
       list_macro(is_projectile, "is_projectile"),                                           /* newline */                                       \
       list_macro(is_reeds, "is_reeds"),                                                     /* newline */                                       \
       list_macro(is_removable_on_err, "is_removable_on_err"),                               /* newline */                                       \
@@ -679,8 +679,6 @@ class Tp;
 [[nodiscard]] auto tp_is_plant(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_player(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_potion(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused_99(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused_98(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_projectile(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_reeds(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_removable_on_err(Tpp tp) -> bool;
@@ -708,6 +706,8 @@ class Tp;
 [[nodiscard]] auto tp_is_trap(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_treasure(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_undead(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused_98(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused_99(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused1(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused10(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused11(Tpp tp) -> bool;

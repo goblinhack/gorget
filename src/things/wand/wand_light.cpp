@@ -23,12 +23,10 @@ static auto tp_wand_light_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
 {
   TRACE();
 
-  return                                                                                                      //
-      UI_INFO1_FMT_STR "This wand of light unleashes a dazzling beam of pure energy but without heat.\n"      //
-      UI_INFO2_FMT_STR "Strategy: unlike wands of fire, this wand is safe to use in dense foliage.\n"         //
-      UI_INFO2_FMT_STR "Strategy: for extra points, line up certain types of enemies for group punishment.\n" //
-      UI_INFO3_FMT_STR "Strategy: wands operate at near infinite speed and monsters cannot avoid them.\n"     //
-      UI_INFO4_FMT_STR "Info: wands less powerful than staffs, can be wielded without penalty, but have fewer charges.\n";
+  return                                                                                                                                     //
+      UI_INFO1_FMT_STR "A brilliant lit wand. White sparks drip from it.\n"                                                                  //
+      UI_INFO2_FMT_STR "Tip: wands can fire multiple rounds down long corridors, however, this means monsters can potentially avoid them.\n" //
+      UI_INFO3_FMT_STR "Info: wands are less powerful than wands, but have more charges and be wielded without a move penalty.\n";
 }
 
 [[nodiscard]] static auto tp_wand_light_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp collector, ThingEvent &e) -> bool
@@ -49,10 +47,8 @@ static auto tp_wand_light_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
 {
   TRACE();
 
-  if (e.event_type == THING_EVENT_USER_INITIATED) {
-    if (thing_is_player(collector)) {
-      thing_sound_play(g, v, l, collector, "item_collect");
-    }
+  if (thing_is_player(collector)) {
+    thing_sound_play(g, v, l, collector, "item_collect");
   }
 
   return true;
@@ -62,8 +58,10 @@ static auto tp_wand_light_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
 {
   TRACE();
 
-  if (thing_is_player(dropper)) {
-    thing_sound_play(g, v, l, dropper, "item_drop");
+  if (e.event_type == THING_EVENT_USER_INITIATED) {
+    if (thing_is_player(dropper)) {
+      thing_sound_play(g, v, l, dropper, "item_drop");
+    }
   }
 
   return true;
@@ -76,13 +74,13 @@ static auto tp_wand_light_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
   return true;
 }
 
-[[nodiscard]] static auto tp_wand_light_on_light_weapon_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user) -> Tpp
+[[nodiscard]] static auto tp_wand_light_on_use_weapon_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user) -> Tpp
 {
   TRACE();
 
   static Tpp what;
   if (! what) {
-    what = tp_find_mand("laser_light");
+    what = tp_find_mand("projectile_light");
   }
 
   return what;
@@ -102,9 +100,9 @@ static auto tp_wand_light_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
   thing_on_carry_success_set(tp, tp_wand_light_on_carry_success);
   thing_on_drop_request_set(tp, tp_wand_light_on_drop_request);
   thing_on_drop_success_set(tp, tp_wand_light_on_drop_success);
-  thing_on_use_weapon_request_set(tp, tp_wand_light_on_light_weapon_request);
+  thing_on_use_weapon_request_set(tp, tp_wand_light_on_use_weapon_request);
   thing_on_wield_request_set(tp, tp_wand_light_on_wield_request);
-  tp_charge_count_set(tp, 500);
+  tp_charge_count_set(tp, 5000);
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated);
@@ -126,12 +124,15 @@ static auto tp_wand_light_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_tick_on_drop);
+  tp_flag_set(tp, is_tick_on_unwield);
+  tp_flag_set(tp, is_tick_on_wield);
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_treasure);
   tp_flag_set(tp, is_wand);
   tp_flag_set(tp, is_wood);
   tp_flag_set(tp, wieldable);
   tp_health_set(tp, "1d4");
+  tp_is_immune_add(tp, THING_EVENT_FIRE_DAMAGE);
   tp_light_color_set(tp, "red");
   tp_name_a_or_an_set(tp, "a wand of light");
   tp_name_apostrophize_set(tp, "wand of light's");

@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static auto test_laser_monst_chain(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_staff_mob(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -23,7 +23,7 @@
       = "xxxxxxxxxxxxxxxxx"
         "x...............x"
         "x...............x"
-        "x@mmmmmmm.......x"
+        "x@......G.......x"
         "x...............x"
         "x...............x"
         "xxxxxxxxxxxxxxxxx";
@@ -31,24 +31,21 @@
       = "xxxxxxxxxxxxxxxxx"
         "x...............x"
         "x...............x"
-        "x@-----------...x"
+        "x@-------.......x"
         "x...............x"
         "x...............x"
         "xxxxxxxxxxxxxxxxx";
   std::string const expect2
       = "xxxxxxxxxxxxxxxxx"
         "x...............x"
-        "x.m.............x"
-        "x@..............x"
+        "x...............x"
+        "x@......!.......x"
         "x...............x"
         "x...............x"
         "xxxxxxxxxxxxxxxxx";
-
-  Overrides overrides;
-  overrides[ 'm' ] = [](char c, bpoint p) -> Tpp { return tp_find_mand("ghost"); };
-  Levelp  l        = nullptr;
-  Levelsp v        = game_test_init(g, &l, level_num, w, h, start.c_str(), overrides);
-  bool    result   = true;
+  Levelp  l      = nullptr;
+  Levelsp v      = game_test_init(g, &l, level_num, w, h, start.c_str());
+  bool    result = true;
 
   auto *tp_laser_fire = tp_find_mand("laser_fire");
   tp_damage_set(tp_laser_fire, THING_EVENT_FIRE_DAMAGE, "100");
@@ -124,14 +121,14 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_laser_monst_chain() -> bool // NOLINT
+[[nodiscard]] auto test_load_laser_mob() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("laser_monst_chain");
+  Testp test = test_load("laser_mob");
 
   // begin sort marker1 {
-  test_callback_set(test, test_laser_monst_chain);
+  test_callback_set(test, test_staff_mob);
   // end sort marker1 }
 
   return true;

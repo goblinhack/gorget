@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static auto test_projectile_teleport(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_wand_mob(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -23,16 +23,16 @@
       = "xxxxxxxxxxxxxxxxxxxxxxxxxxx"
         "x.........................x"
         "x.........................x"
-        "x@......T.................x"
-        "x........T...............Gx"
+        "x@.......................Gx"
+        "x.........................x"
         "x.........................x"
         "xxxxxxxxxxxxxxxxxxxxxxxxxxx";
   std::string const expect1
       = "xxxxxxxxxxxxxxxxxxxxxxxxxxx"
         "x.........................x"
         "x.........................x"
-        "x@......T.................x"
-        "x........T..-.......-....!x"
+        "x@........-.......-......!x"
+        "x.........................x"
         "x.........................x"
         "xxxxxxxxxxxxxxxxxxxxxxxxxxx";
 
@@ -51,15 +51,9 @@
     goto exit;
   }
 
-  //
-  // Spawn fire. This should be enough to blow up all the barrels
-  //
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
 
-  //
-  // Wait for the projectile to ignite a barrel
-  //
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   for (auto tries = 0; tries < 5; tries++) {
@@ -91,14 +85,14 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_projectile_teleport() -> bool // NOLINT
+[[nodiscard]] auto test_load_projectile_mob() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("projectile_teleport");
+  Testp test = test_load("projectile_mob");
 
   // begin sort marker1 {
-  test_callback_set(test, test_projectile_teleport);
+  test_callback_set(test, test_wand_mob);
   // end sort marker1 }
 
   return true;

@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static auto test_projectile_door_secret(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_staff_rock_turns_to_lava(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -23,7 +23,7 @@
       = "xxxxxxx"
         "x..x..x"
         "x..x..x"
-        "x@.s..x"
+        "x@.R..x"
         "x..x..x"
         "x..x..x"
         "xxxxxxx";
@@ -31,7 +31,7 @@
       = "xxxxxxx"
         "x..x..x"
         "x..x..x"
-        "x@....."
+        "x@.L..x"
         "x..x..x"
         "x..x..x"
         "xxxxxxx";
@@ -39,8 +39,8 @@
   Levelsp v      = game_test_init(g, &l, level_num, w, h, start.c_str());
   bool    result = true;
 
-  auto *tp_projectile_fire = tp_find_mand("projectile_fire");
-  tp_damage_set(tp_projectile_fire, THING_EVENT_FIRE_DAMAGE, "100");
+  auto *tp_laser_fire = tp_find_mand("laser_fire");
+  tp_damage_set(tp_laser_fire, THING_EVENT_FIRE_DAMAGE, "1d4");
 
   auto *player = thing_player(g);
   if (player == nullptr) [[unlikely]] {
@@ -48,18 +48,20 @@
     goto exit;
   }
 
-  for (auto tries = 0; tries < 5; tries++) {
-    (void) player_fire(g, v, l, 1, 0, tp_projectile_fire);
+  for (auto tries = 0; tries < 50; tries++) {
+    (void) player_fire(g, v, l, 1, 0, tp_laser_fire, bpoint(3, 3));
+    level_dump(g, v, l, w, h);
     TEST_ASSERT(t, game_event_wait(g), "failed to wait");
     if (! game_wait_for_tick_to_finish(g, v, l)) {
       TEST_FAILED(t, "wait loop failed");
       goto exit;
     }
+    level_dump(g, v, l, w, h);
   }
 
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 10; tries++) {
+  for (auto tries = 0; tries < 1; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE();
     TEST_ASSERT(t, game_event_wait(g), "failed to wait");
@@ -76,7 +78,7 @@
     goto exit;
   }
 
-  TEST_ASSERT(t, game_tick_get(g, v) == 15, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 51, "final tick counter value");
 
   level_dump(g, v, l, w, h);
   TEST_PASSED(t);
@@ -87,14 +89,14 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_projectile_door_secret() -> bool // NOLINT
+[[nodiscard]] auto test_load_laser_rock_turns_to_lava() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("projectile_door_secret");
+  Testp test = test_load("laser_rock_turns_to_lava");
 
   // begin sort marker1 {
-  test_callback_set(test, test_projectile_door_secret);
+  test_callback_set(test, test_staff_rock_turns_to_lava);
   // end sort marker1 }
 
   return true;

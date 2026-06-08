@@ -23,11 +23,10 @@ static auto tp_wand_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> 
 {
   TRACE();
 
-  return                                                                                                      //
-      UI_INFO1_FMT_STR "This wand of fire unleashes a devastating beam of... fire.\n"                         //
-      UI_INFO2_FMT_STR "Strategy: for extra points, line up certain types of enemies for group punishment.\n" //
-      UI_INFO3_FMT_STR "Strategy: wands operate at near infinite speed and monsters cannot avoid them.\n"     //
-      UI_INFO4_FMT_STR "Info: wands less powerful than staffs, can be wielded without penalty, but have fewer charges.\n";
+  return                                                                                                                                     //
+      UI_INFO1_FMT_STR "A firey red wand. Burning sparks drip from it.\n"                                                                    //
+      UI_INFO2_FMT_STR "Tip: wands can fire multiple rounds down long corridors, however, this means monsters can potentially avoid them.\n" //
+      UI_INFO3_FMT_STR "Info: wands are less powerful than wands, but have more charges and be wielded without a move penalty.\n";
 }
 
 [[nodiscard]] static auto tp_wand_fire_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp collector, ThingEvent &e) -> bool
@@ -81,7 +80,7 @@ static auto tp_wand_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> 
 
   static Tpp what;
   if (! what) {
-    what = tp_find_mand("laser_fire");
+    what = tp_find_mand("projectile_fire");
   }
 
   return what;
@@ -103,7 +102,7 @@ static auto tp_wand_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> 
   thing_on_drop_success_set(tp, tp_wand_fire_on_drop_success);
   thing_on_use_weapon_request_set(tp, tp_wand_fire_on_use_weapon_request);
   thing_on_wield_request_set(tp, tp_wand_fire_on_wield_request);
-  tp_charge_count_set(tp, 500);
+  tp_charge_count_set(tp, 5000);
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated);
@@ -125,6 +124,8 @@ static auto tp_wand_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> 
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_tick_on_drop);
+  tp_flag_set(tp, is_tick_on_unwield);
+  tp_flag_set(tp, is_tick_on_wield);
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_treasure);
   tp_flag_set(tp, is_wand);

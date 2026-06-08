@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static auto test_laser_teleport(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_staff_monst_chain(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -23,29 +23,32 @@
       = "xxxxxxxxxxxxxxxxx"
         "x...............x"
         "x...............x"
-        "x@......T.......x"
-        "x........T.....Gx"
+        "x@mmmmmmm.......x"
+        "x...............x"
         "x...............x"
         "xxxxxxxxxxxxxxxxx";
   std::string const expect1
       = "xxxxxxxxxxxxxxxxx"
         "x...............x"
         "x...............x"
-        "x@------T.......x"
-        "x........T------x"
+        "x@-----------...x"
+        "x...............x"
         "x...............x"
         "xxxxxxxxxxxxxxxxx";
   std::string const expect2
       = "xxxxxxxxxxxxxxxxx"
         "x...............x"
+        "x.m.............x"
+        "x@..............x"
         "x...............x"
-        "x@......T.......x"
-        "x........T.....!x"
         "x...............x"
         "xxxxxxxxxxxxxxxxx";
-  Levelp  l      = nullptr;
-  Levelsp v      = game_test_init(g, &l, level_num, w, h, start.c_str());
-  bool    result = true;
+
+  Overrides overrides;
+  overrides[ 'm' ] = [](char c, bpoint p) -> Tpp { return tp_find_mand("ghost"); };
+  Levelp  l        = nullptr;
+  Levelsp v        = game_test_init(g, &l, level_num, w, h, start.c_str(), overrides);
+  bool    result   = true;
 
   auto *tp_laser_fire = tp_find_mand("laser_fire");
   tp_damage_set(tp_laser_fire, THING_EVENT_FIRE_DAMAGE, "100");
@@ -121,14 +124,14 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_laser_teleport() -> bool // NOLINT
+[[nodiscard]] auto test_load_laser_monst_chain() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("laser_teleport");
+  Testp test = test_load("laser_monst_chain");
 
   // begin sort marker1 {
-  test_callback_set(test, test_laser_teleport);
+  test_callback_set(test, test_staff_monst_chain);
   // end sort marker1 }
 
   return true;

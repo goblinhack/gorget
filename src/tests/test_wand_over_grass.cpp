@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static auto test_projectile_barrel_explosion(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_wand_over_grass(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -23,7 +23,7 @@
       = "xxxxxxxxxxxxxxxxxxxxxxxxxxx"
         "x.........................x"
         "x.........................x"
-        "x@.......................bx"
+        "x@''''''''''''''''''''''''x"
         "x.........................x"
         "x.........................x"
         "xxxxxxxxxxxxxxxxxxxxxxxxxxx";
@@ -31,7 +31,7 @@
       = "xxxxxxxxxxxxxxxxxxxxxxxxxxx"
         "x.........................x"
         "x.........................x"
-        "x@.......................!x"
+        "x@''''''''-'''''''-'''''''."
         "x.........................x"
         "x.........................x"
         "xxxxxxxxxxxxxxxxxxxxxxxxxxx";
@@ -49,19 +49,13 @@
   }
 
   //
-  // Spawn fire. This should be enough to blow up all the barrels
-  //
-  level_dump(g, v, l, w, h);
-  TEST_PROGRESS(t);
-  (void) player_fire(g, v, l, 1, 0, tp_projectile_fire);
-
-  //
   // Wait for the projectile to ignite a barrel
   //
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   for (auto tries = 0; tries < 5; tries++) {
     TEST_LOG(t, "try: %d", tries);
+    (void) player_fire(g, v, l, 1, 0, tp_projectile_fire);
     TRACE();
     TEST_ASSERT(t, game_event_wait(g), "failed to wait");
     if (! game_wait_for_tick_to_finish(g, v, l)) {
@@ -88,14 +82,14 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_projectile_barrel_explosion() -> bool // NOLINT
+[[nodiscard]] auto test_load_projectile_over_grass() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("projectile_barrel_explosion");
+  Testp test = test_load("projectile_over_grass");
 
   // begin sort marker1 {
-  test_callback_set(test, test_projectile_barrel_explosion);
+  test_callback_set(test, test_wand_over_grass);
   // end sort marker1 }
 
   return true;

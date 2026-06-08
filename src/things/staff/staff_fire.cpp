@@ -23,11 +23,11 @@ static auto tp_staff_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
 {
   TRACE();
 
-  return                                                                                                 //
-      UI_INFO1_FMT_STR "A firey red staff. Burning sparks drop from it.\n"                               //
-      UI_INFO2_FMT_STR "Strategy: fire multiple rounds down long corridors.\n"                           //
-      UI_INFO3_FMT_STR "Strategy: firebolts have a set speed and monsters can avoid them potentially.\n" //
-      UI_INFO4_FMT_STR "Info: wands less powerful than staffs, can be wielded without penalty, but have fewer charges.\n";
+  return                                                                                                          //
+      UI_INFO1_FMT_STR "A firey red staff. Burning sparks drip from it.\n"                                        //
+      UI_INFO2_FMT_STR "Tip: staves fire a single blast at a time, unavoidable by monsters.\n"                    //
+      UI_INFO3_FMT_STR "Tip: blast can pass through multiple monsters, so aim to create a conga line of death.\n" //
+      UI_INFO4_FMT_STR "Info: staves are more powerful than staves, but have fewer charges and are wielded with a move penalty.\n";
 }
 
 [[nodiscard]] static auto tp_staff_fire_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp collector, ThingEvent &e) -> bool
@@ -81,7 +81,7 @@ static auto tp_staff_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
 
   static Tpp what;
   if (! what) {
-    what = tp_find_mand("projectile_fire");
+    what = tp_find_mand("laser_fire");
   }
 
   return what;
@@ -103,7 +103,7 @@ static auto tp_staff_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
   thing_on_drop_success_set(tp, tp_staff_fire_on_drop_success);
   thing_on_use_weapon_request_set(tp, tp_staff_fire_on_use_weapon_request);
   thing_on_wield_request_set(tp, tp_staff_fire_on_wield_request);
-  tp_charge_count_set(tp, 5000);
+  tp_charge_count_set(tp, 500);
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated);
@@ -126,8 +126,6 @@ static auto tp_staff_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
   tp_flag_set(tp, is_staff);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_tick_on_drop);
-  tp_flag_set(tp, is_tick_on_unwield);
-  tp_flag_set(tp, is_tick_on_wield);
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_treasure);
   tp_flag_set(tp, is_wood);
@@ -138,7 +136,7 @@ static auto tp_staff_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
   tp_name_a_or_an_set(tp, "a staff of fire");
   tp_name_apostrophize_set(tp, "staff of fire's");
   tp_name_long_set(tp, "staff of fire");
-  tp_name_pluralize_set(tp, "staffs of fire");
+  tp_name_pluralize_set(tp, "staves of fire");
   tp_name_short_set(tp, "staff of fire");
   tp_priority_set(tp, THING_PRIORITY_OBJECT);
   tp_rarity_set(tp, THING_RARITY_UNCOMMON);

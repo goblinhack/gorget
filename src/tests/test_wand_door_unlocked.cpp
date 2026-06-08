@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static auto test_projectile_rock_turns_to_lava(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_wand_door_unlocked(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -23,7 +23,7 @@
       = "xxxxxxx"
         "x..x..x"
         "x..x..x"
-        "x@.R..x"
+        "x@.D..x"
         "x..x..x"
         "x..x..x"
         "xxxxxxx";
@@ -31,7 +31,7 @@
       = "xxxxxxx"
         "x..x..x"
         "x..x..x"
-        "x@.L..x"
+        "x@....."
         "x..x..x"
         "x..x..x"
         "xxxxxxx";
@@ -40,7 +40,7 @@
   bool    result = true;
 
   auto *tp_projectile_fire = tp_find_mand("projectile_fire");
-  tp_damage_set(tp_projectile_fire, THING_EVENT_FIRE_DAMAGE, "1d4");
+  tp_damage_set(tp_projectile_fire, THING_EVENT_FIRE_DAMAGE, "100");
 
   auto *player = thing_player(g);
   if (player == nullptr) [[unlikely]] {
@@ -48,7 +48,7 @@
     goto exit;
   }
 
-  for (auto tries = 0; tries < 50; tries++) {
+  for (auto tries = 0; tries < 5; tries++) {
     (void) player_fire(g, v, l, 1, 0, tp_projectile_fire);
     TEST_ASSERT(t, game_event_wait(g), "failed to wait");
     if (! game_wait_for_tick_to_finish(g, v, l)) {
@@ -59,7 +59,7 @@
 
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 1; tries++) {
+  for (auto tries = 0; tries < 10; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE();
     TEST_ASSERT(t, game_event_wait(g), "failed to wait");
@@ -76,7 +76,7 @@
     goto exit;
   }
 
-  TEST_ASSERT(t, game_tick_get(g, v) == 51, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 15, "final tick counter value");
 
   level_dump(g, v, l, w, h);
   TEST_PASSED(t);
@@ -87,14 +87,14 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_projectile_rock_turns_to_lava() -> bool // NOLINT
+[[nodiscard]] auto test_load_projectile_door_unlocked() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("projectile_rock_turns_to_lava");
+  Testp test = test_load("projectile_door_unlocked");
 
   // begin sort marker1 {
-  test_callback_set(test, test_projectile_rock_turns_to_lava);
+  test_callback_set(test, test_wand_door_unlocked);
   // end sort marker1 }
 
   return true;
