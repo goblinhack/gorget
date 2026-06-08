@@ -43,13 +43,13 @@ static void tp_vault_melt(Gamep g, Levelsp v, Levelp l, Thingp me)
     tp_flag_set(tp, is_blit_shown_in_chasms);
     tp_flag_set(tp, is_collision_square);
     tp_flag_set(tp, is_meltable);
+    tp_flag_set(tp, is_obs_to_beam);
     tp_flag_set(tp, is_obs_to_cursor_path);
     tp_flag_set(tp, is_obs_to_explosion);
     tp_flag_set(tp, is_obs_to_falling_onto);
     tp_flag_set(tp, is_obs_to_fire);
     tp_flag_set(tp, is_obs_to_jump_over);
     tp_flag_set(tp, is_obs_to_jumping_onto);
-    tp_flag_set(tp, is_obs_to_laser);
     tp_flag_set(tp, is_obs_to_movement);
     tp_flag_set(tp, is_obs_to_paths);
     tp_flag_set(tp, is_obs_to_spawning);

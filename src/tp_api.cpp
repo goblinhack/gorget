@@ -1051,16 +1051,16 @@
   return tp_flag(tp, is_flat) != 0;
 }
 
-[[nodiscard]] auto tp_is_obs_to_laser(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_obs_to_beam(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_obs_to_laser) != 0;
+  return tp_flag(tp, is_obs_to_beam) != 0;
 }
 
-[[nodiscard]] auto tp_is_laser(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_beam_weapon(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_laser) != 0;
+  return tp_flag(tp, is_beam_weapon) != 0;
 }
 
 [[nodiscard]] auto tp_is_stamina_visible(Tpp tp) -> bool

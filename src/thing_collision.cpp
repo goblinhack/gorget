@@ -120,7 +120,7 @@ static void thing_collision_handle_dead_thing(Gamep g, Levelsp v, Levelp l, Thin
     return;
   }
 
-  if (thing_is_projectile(me) || thing_is_laser(me)) {
+  if (thing_is_projectile(me) || thing_is_beam_weapon(me)) {
     auto *source     = me;
     auto *source_tp  = thing_tp(source);
     auto  event_type = tp_damage_random_type_get(source_tp);
@@ -196,7 +196,7 @@ static void thing_collision_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thi
     }
   }
 
-  if (thing_is_projectile(me) || thing_is_laser(me)) {
+  if (thing_is_projectile(me) || thing_is_beam_weapon(me)) {
     auto *source     = me;
     auto *source_tp  = thing_tp(source);
     auto  event_type = tp_damage_random_type_get(source_tp);
@@ -285,7 +285,7 @@ static void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp obstacle
   // Projectiles do not hit grass
   //
   if (thing_is_flat(obstacle)) {
-    if (thing_is_projectile(me) || thing_is_laser(me)) {
+    if (thing_is_projectile(me) || thing_is_beam_weapon(me)) {
       return;
     }
   }

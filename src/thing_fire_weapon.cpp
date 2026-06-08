@@ -71,8 +71,8 @@ void thing_on_use_weapon_request_set(Tpp tp, thing_on_use_weapon_request_t callb
   //
   // Fire away!
   //
-  if (tp_is_laser(fire_what)) {
-    if (! thing_laser_fire_at(g, v, l, me, fire_what, target)) {
+  if (tp_is_beam_weapon(fire_what)) {
+    if (! thing_beam_weapon_fire_at(g, v, l, me, fire_what, target)) {
       return false;
     }
   } else {

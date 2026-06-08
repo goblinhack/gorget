@@ -260,7 +260,7 @@ static auto thing_missile_detach_from_firer(Gamep g, Levelsp v, Levelp l, Thingp
     return false;
   }
 
-  if (! thing_is_projectile(me) && ! thing_is_laser(me)) {
+  if (! thing_is_projectile(me) && ! thing_is_beam_weapon(me)) {
     thing_err(me, "non missile thing trying to detach itself");
     return false;
   }

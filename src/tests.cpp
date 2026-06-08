@@ -19,6 +19,19 @@
   if (!test_load_alloc_free_walls()) { return false; }
   if (!test_load_barrel_explosion()) { return false; }
   if (!test_load_barrel()) { return false; }
+  if (!test_load_beam_weapon_barrel_explosion()) { return false; }
+  if (!test_load_beam_weapon_border_turns_to_lava()) { return false; }
+  if (!test_load_beam_weapon_door_locked()) { return false; }
+  if (!test_load_beam_weapon_door_secret()) { return false; }
+  if (!test_load_beam_weapon_door_unlocked()) { return false; }
+  if (!test_load_beam_weapon_mob()) { return false; }
+  if (!test_load_beam_weapon_monst_chain()) { return false; }
+  if (!test_load_beam_weapon_over_grass()) { return false; }
+  if (!test_load_beam_weapon_over_water()) { return false; }
+  if (!test_load_beam_weapon_rock_turns_to_lava()) { return false; }
+  if (!test_load_beam_weapon_teleport()) { return false; }
+  if (!test_load_beam_weapon_wall_turns_to_lava()) { return false; }
+  if (!test_load_beam_weapon()) { return false; }
   if (!test_load_brazier_shove_chasm_twice()) { return false; }
   if (!test_load_brazier_shove_chasm()) { return false; }
   if (!test_load_brazier_shove_fail()) { return false; }
@@ -32,19 +45,6 @@
   if (!test_load_jump_ok()) { return false; }
   if (!test_load_jump_truncated()) { return false; }
   if (!test_load_large_fire_water()) { return false; }
-  if (!test_load_laser_barrel_explosion()) { return false; }
-  if (!test_load_laser_border_turns_to_lava()) { return false; }
-  if (!test_load_laser_door_locked()) { return false; }
-  if (!test_load_laser_door_secret()) { return false; }
-  if (!test_load_laser_door_unlocked()) { return false; }
-  if (!test_load_laser_mob()) { return false; }
-  if (!test_load_laser_monst_chain()) { return false; }
-  if (!test_load_laser_over_grass()) { return false; }
-  if (!test_load_laser_over_water()) { return false; }
-  if (!test_load_laser_rock_turns_to_lava()) { return false; }
-  if (!test_load_laser_teleport()) { return false; }
-  if (!test_load_laser_wall_turns_to_lava()) { return false; }
-  if (!test_load_laser()) { return false; }
   if (!test_load_mob_shove_into_lava()) { return false; }
   if (!test_load_mob_water()) { return false; }
   if (!test_load_mob()) { return false; }
@@ -86,7 +86,6 @@
   if (!test_load_player_on_fire()) { return false; }
   if (!test_load_projectile_barrel_explosion()) { return false; }
   if (!test_load_projectile_border_turns_to_lava()) { return false; }
-  if (!test_load_projectile_discharge()) { return false; }
   if (!test_load_projectile_door_locked()) { return false; }
   if (!test_load_projectile_door_secret()) { return false; }
   if (!test_load_projectile_door_unlocked()) { return false; }
@@ -96,7 +95,6 @@
   if (!test_load_projectile_rock_turns_to_lava()) { return false; }
   if (!test_load_projectile_teleport()) { return false; }
   if (!test_load_projectile_wall_turns_to_lava()) { return false; }
-  if (!test_load_projectile_wield()) { return false; }
   if (!test_load_projectile()) { return false; }
   if (!test_load_save_load()) { return false; }
   if (!test_load_slots()) { return false; }
@@ -107,6 +105,8 @@
   if (!test_load_teleport()) { return false; }
   if (!test_load_trampled_grass()) { return false; }
   if (!test_load_wall()) { return false; }
+  if (!test_load_weapon_discharge()) { return false; }
+  if (!test_load_weapon_wield_unwield()) { return false; }
   /* end shell marker1 */
   // clang-format on
 

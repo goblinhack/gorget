@@ -96,9 +96,9 @@ enum {
   THING_DESCRIBE_MAX = 10,
 
   //
-  // The laser is fixed length due to the animation.
+  // The beam weapon weapon is fixed length due to the animation.
   //
-  THING_LASER_TILES_MAX = 16,
+  THING_BEAM_WEAPON_TILES_MAX = 16,
 
   POPUP_DURATION_MS          = 1000,
   POPUP_DURATION_TILE_HEIGHT = 3,

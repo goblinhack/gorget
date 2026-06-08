@@ -262,7 +262,7 @@ void thing_set_dir_from_delta(Thingp me, const bpoint &p)
 {
   TRACE();
 
-  if (thing_is_projectile(me) || thing_is_laser(me)) {
+  if (thing_is_projectile(me) || thing_is_beam_weapon(me)) {
     return thing_missile_get_direction(g, v, l, me);
   }
 
@@ -287,7 +287,7 @@ void thing_set_dir_from_delta(Thingp me, const bpoint &p)
 {
   TRACE();
 
-  if (thing_is_projectile(me) || thing_is_laser(me)) {
+  if (thing_is_projectile(me) || thing_is_beam_weapon(me)) {
     //
     // Convert to a grid direction. This is very rough.
     //
@@ -448,7 +448,7 @@ void thing_set_dir_from_delta(Thingp me, const bpoint &p)
   thing_at_set(g, v, new_level, me, to);
 
   //
-  // For newly spawned things, like a laser, we do not want to see interpolation else
+  // For newly spawned things, like a beam_weapon weapon, we do not want to see interpolation else
   // the thing will glide over the level to the new location
   //
   thing_moving_from_set(me, to);

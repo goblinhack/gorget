@@ -135,7 +135,7 @@ static void level_tick_ok_to_end_check(Gamep g, Levelsp v, Levelp l)
       }
 
       //
-      // Lasers only die when the anim ends
+      // Beam weapons only die when the anim ends
       //
       if (thing_is_wait_on_anim(t)) {
         l->tick_wait_on_anim = true;
@@ -359,7 +359,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool tick_is
     // speed 100  tick                tick
     // speed 50   tick
     //
-    if (! thing_is_moving(t) && ! thing_is_jumping(t) && ! thing_is_projectile(t) && ! thing_is_laser(t)) {
+    if (! thing_is_moving(t) && ! thing_is_jumping(t) && ! thing_is_projectile(t) && ! thing_is_beam_weapon(t)) {
       continue;
     }
 

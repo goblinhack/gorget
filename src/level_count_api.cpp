@@ -1053,16 +1053,16 @@
   return level_count(g, v, l, is_flat, p);
 }
 
-[[nodiscard]] auto level_count_is_obs_to_laser(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_obs_to_beam(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_obs_to_laser, p);
+  return level_count(g, v, l, is_obs_to_beam, p);
 }
 
-[[nodiscard]] auto level_count_is_laser(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_beam_weapon(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_laser, p);
+  return level_count(g, v, l, is_beam_weapon, p);
 }
 
 [[nodiscard]] auto level_count_is_stamina_visible(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t

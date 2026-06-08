@@ -379,7 +379,7 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
     case is_obs_to_teleporting_onto :
     case is_obs_to_movement :
     case is_obs_to_paths :
-    case is_obs_to_laser :
+    case is_obs_to_beam :
       //
       // Should be able to move onto dead things
       //

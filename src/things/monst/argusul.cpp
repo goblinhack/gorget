@@ -29,16 +29,16 @@ static auto tp_argusul_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> st
 {
   TRACE();
 
-  return                                                                               //
-      UI_INFO1_FMT_STR                                                                 //
-      "Argusuls are floating many-eyed monsters that are impossible to sneak up on.\n" //
-      UI_INFO2_FMT_STR                                                                 //
-      "Intelligent, fearful to behold, and resistant to fire, it would be "            //
-      "wise to travel in the opposite direction of an Argusul.\n"                      //
-      UI_INFO3_FMT_STR                                                                 //
-      "Beware their central eye that is capable of firing a beam weapon. At you.\n"    //
-      UI_INFO4_FMT_STR                                                                 //
-      "It is rumoured that a greater Argusul lurks in the dungeon somewhere...\n";     //
+  return                                                                                          //
+      UI_INFO1_FMT_STR                                                                            //
+      "Argusuls are floating many-eyed monsters that are impossible to sneak up on.\n"            //
+      UI_INFO2_FMT_STR                                                                            //
+      "Intelligent, fearful to behold, and resistant to fire, it would be "                       //
+      "wise to travel in the opposite direction of an Argusul.\n"                                 //
+      UI_INFO3_FMT_STR                                                                            //
+      "Beware their central eye that is capable of firing a beam_weapon weapon weapon. At you.\n" //
+      UI_INFO4_FMT_STR                                                                            //
+      "It is rumoured that a greater Argusul lurks in the dungeon somewhere...\n";                //
 }
 
 static auto tp_argusul_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at, Thingp me) -> ThingEnvironType
@@ -63,9 +63,9 @@ static bool tp_argusul_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thi
 
   auto target = thing_at(it);
   if (! adjacent(thing_at(me), target)) {
-    auto fire_what = tp_find_mand("laser_light");
+    auto fire_what = tp_find_mand("beam_of_light");
     if (d100() < 50) {
-      (void) thing_laser_fire_at(g, v, l, me, fire_what, target);
+      (void) thing_beam_weapon_fire_at(g, v, l, me, fire_what, target);
     }
     return false; // prevent melee attack
   }
@@ -126,8 +126,8 @@ static void tp_argusul_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_flag_set(tp, is_hit_when_dead);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_monst);
+  tp_flag_set(tp, is_obs_to_beam);
   tp_flag_set(tp, is_obs_to_jumping_onto);
-  tp_flag_set(tp, is_obs_to_laser);
   tp_flag_set(tp, is_obs_to_movement);
   tp_flag_set(tp, is_obs_to_teleporting_onto);
   tp_flag_set(tp, is_physics_explosion);

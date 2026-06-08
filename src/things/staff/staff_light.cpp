@@ -81,7 +81,7 @@ static auto tp_staff_light_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -
 
   static Tpp what;
   if (! what) {
-    what = tp_find_mand("laser_light");
+    what = tp_find_mand("beam_of_light");
   }
 
   return what;

@@ -103,8 +103,8 @@ static bool tp_kobalos_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thi
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_minion);
   tp_flag_set(tp, is_monst);
+  tp_flag_set(tp, is_obs_to_beam);
   tp_flag_set(tp, is_obs_to_jumping_onto);
-  tp_flag_set(tp, is_obs_to_laser);
   tp_flag_set(tp, is_obs_to_movement);
   tp_flag_set(tp, is_obs_to_teleporting_onto);
   tp_flag_set(tp, is_physics_explosion);

@@ -90,6 +90,8 @@ static std::initializer_list< std::string > tps = {
     /* shell done */
     "argusul",
     "barrel",
+    "beam_of_fire",
+    "beam_of_light",
     "blitzhound",
     "brazier",
     "bridge",
@@ -118,8 +120,6 @@ static std::initializer_list< std::string > tps = {
     "key",
     "kobalos_mob",
     "kobalos",
-    "laser_fire",
-    "laser_light",
     "lava",
     "level_closed",
     "level_curr",

@@ -1052,16 +1052,16 @@
   return level_flag_cached(g, v, l, is_flat, p);
 }
 
-[[nodiscard]] auto level_is_obs_to_laser_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_obs_to_beam_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_obs_to_laser, p);
+  return level_flag_cached(g, v, l, is_obs_to_beam, p);
 }
 
-[[nodiscard]] auto level_is_laser_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_beam_weapon_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_laser, p);
+  return level_flag_cached(g, v, l, is_beam_weapon, p);
 }
 
 [[nodiscard]] auto level_is_stamina_visible_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

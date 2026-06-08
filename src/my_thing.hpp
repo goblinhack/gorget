@@ -52,9 +52,9 @@ using ThingIdPacked = union {
 #define THING_MINION_MAX    10
 
 //
-// Enough for one laser or many projectiles.
+// Enough for one beam_weapon weapon or many projectiles.
 //
-#define THING_MISSILE_MAX THING_LASER_TILES_MAX
+#define THING_MISSILE_MAX THING_BEAM_WEAPON_TILES_MAX
 
 enum {
   TEXT_INCLUDE_OWNER = 1,
@@ -153,7 +153,7 @@ using ThingMissile = struct ThingMissile {
 };
 
 //
-// Per monster/player projectiles and lasers fired
+// Per monster/player projectiles and beams fired
 //
 using ThingMissiles = struct ThingMissiles {
   ThingMissile missile[ THING_MISSILE_MAX ];
@@ -598,6 +598,8 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_and_tp_get_at(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot, Tpp *out) -> Thingp;
 [[nodiscard]] auto thing_at(Thingp t) -> bpoint;
 [[nodiscard]] auto thing_attack_at(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &attack_at, ThingEvent *e = nullptr) -> bool;
+[[nodiscard]] auto thing_beam_weapon_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, bpoint target) -> bool;
+[[nodiscard]] auto thing_beam_weapon_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, fpoint target) -> bool;
 [[nodiscard]] auto thing_buff_add(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what) -> Thingp;
 [[nodiscard]] auto thing_buff_detach_all(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
 [[nodiscard]] auto thing_buff_detach_me_from_owner(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
@@ -690,6 +692,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_attackable_by_player(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_auto_wield(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_barrel(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_beam_weapon(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_biome_bogland(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_biome_dungeon(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_biome_graveyard(Thingp t) -> bool;
@@ -799,7 +802,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_item(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_key(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_kobalos(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_laser(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_lava(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_level_closed_icon(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_level_curr(Thingp t) -> bool;
@@ -822,6 +824,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_monst1(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_monst2(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_needs_move_confirm(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_obs_to_beam(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_cursor_path(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_explosion(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_falling_onto(Thingp t) -> bool;
@@ -829,7 +832,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_obs_to_jump_over(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_jumping_onto(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_jumping_out_of(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_obs_to_laser(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_movement(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_paths(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_spawning(Thingp t) -> bool;
@@ -905,8 +907,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_keys_carried_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_keys_carried_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_keys_carried(Thingp t) -> int;
-[[nodiscard]] auto thing_laser_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, bpoint target) -> bool;
-[[nodiscard]] auto thing_laser_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, fpoint target) -> bool;
 [[nodiscard]] auto thing_level(Gamep g, Levelsp v, Thingp t) -> Levelp;
 [[nodiscard]] auto thing_lifespan_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_lifespan_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;

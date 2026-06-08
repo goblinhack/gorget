@@ -1052,16 +1052,16 @@
   return level_flag(g, v, l, is_flat, p, me);
 }
 
-[[nodiscard]] auto level_is_obs_to_laser(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_obs_to_beam(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_obs_to_laser, p, me);
+  return level_flag(g, v, l, is_obs_to_beam, p, me);
 }
 
-[[nodiscard]] auto level_is_laser(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_beam_weapon(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_laser, p, me);
+  return level_flag(g, v, l, is_beam_weapon, p, me);
 }
 
 [[nodiscard]] auto level_is_stamina_visible(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp

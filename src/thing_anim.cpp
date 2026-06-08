@@ -197,7 +197,7 @@ void thing_anim_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, int ti
     thing_is_scheduled_for_cleanup_set(g, v, l, t);
 
     //
-    // If not dead (laser), make sure it is.
+    // If not dead (beam weapon weapon), make sure it is.
     //
     ThingEvent e {
         .reason     = "by cleanup on end of anim",  //
@@ -208,8 +208,8 @@ void thing_anim_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, int ti
     return;
   }
 
-  if (thing_is_laser(t)) {
-    t->anim_index += THING_LASER_TILES_MAX;
+  if (thing_is_beam_weapon(t)) {
+    t->anim_index += THING_BEAM_WEAPON_TILES_MAX;
   } else {
     t->anim_index++;
   }

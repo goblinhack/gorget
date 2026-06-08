@@ -17,6 +17,8 @@
   /* shell done */
   if (!tp_load_argusul()) { return false; }
   if (!tp_load_barrel()) { return false; }
+  if (!tp_load_beam_of_fire()) { return false; }
+  if (!tp_load_beam_of_light()) { return false; }
   if (!tp_load_blitzhound()) { return false; }
   if (!tp_load_border()) { return false; }
   if (!tp_load_brazier()) { return false; }
@@ -48,8 +50,6 @@
   if (!tp_load_key()) { return false; }
   if (!tp_load_kobalos_mob()) { return false; }
   if (!tp_load_kobalos()) { return false; }
-  if (!tp_load_laser_fire()) { return false; }
-  if (!tp_load_laser_light()) { return false; }
   if (!tp_load_lava()) { return false; }
   if (!tp_load_level_closed()) { return false; }
   if (!tp_load_level_curr()) { return false; }

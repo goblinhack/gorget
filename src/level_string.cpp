@@ -157,7 +157,7 @@
       if (level_is_projectile(g, v, l, p) != nullptr) {
         c = CHARMAP_WEAPON;
       }
-      if (level_is_laser(g, v, l, p) != nullptr) {
+      if (level_is_beam_weapon(g, v, l, p) != nullptr) {
         c = CHARMAP_WEAPON;
       }
       if (level_is_border(g, v, l, p) != nullptr) {

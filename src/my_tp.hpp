@@ -135,7 +135,7 @@
       list_macro(is_item, "is_item"),                                                       /* newline */                                       \
       list_macro(is_key, "is_key"),                                                         /* newline */                                       \
       list_macro(is_kobalos, "is_kobalos"),                                                 /* newline */                                       \
-      list_macro(is_laser, "is_laser"),                                                     /* newline */                                       \
+      list_macro(is_beam_weapon, "is_beam_weapon"),                                         /* newline */                                       \
       list_macro(is_lava, "is_lava"),                                                       /* newline */                                       \
       list_macro(is_level_closed_icon, "is_level_closed_icon"),                             /* newline */                                       \
       list_macro(is_level_curr, "is_level_curr"),                                           /* newline */                                       \
@@ -166,7 +166,7 @@
       list_macro(is_obs_to_jump_over, "is_obs_to_jump_over"),                               /* newline */                                       \
       list_macro(is_obs_to_jumping_onto, "is_obs_to_jumping_onto"),                         /* newline */                                       \
       list_macro(is_obs_to_jumping_out_of, "is_obs_to_jumping_out_of"),                     /* newline */                                       \
-      list_macro(is_obs_to_laser, "is_obs_to_laser"),                                       /* newline */                                       \
+      list_macro(is_obs_to_beam, "is_obs_to_beam"),                                         /* newline */                                       \
       list_macro(is_obs_to_movement, "is_obs_to_movement"),                                 /* newline */                                       \
       list_macro(is_obs_to_paths, "is_obs_to_paths"),                                       /* newline */                                       \
       list_macro(is_obs_to_spawning, "is_obs_to_spawning"),                                 /* newline */                                       \
@@ -540,6 +540,7 @@ class Tp;
 [[nodiscard]] auto tp_is_attackable_by_player(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_auto_wield(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_barrel(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_beam_weapon(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_biome_bogland(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_biome_dungeon(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_biome_graveyard(Tpp tp) -> bool;
@@ -633,7 +634,6 @@ class Tp;
 [[nodiscard]] auto tp_is_item(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_key(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_kobalos(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_laser(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_lava(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_level_closed_icon(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_level_curr(Tpp tp) -> bool;
@@ -657,6 +657,7 @@ class Tp;
 [[nodiscard]] auto tp_is_monst1(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_monst2(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_needs_move_confirm(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_obs_to_beam(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_obs_to_cursor_path(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_obs_to_explosion(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_obs_to_falling_onto(Tpp tp) -> bool;
@@ -664,7 +665,6 @@ class Tp;
 [[nodiscard]] auto tp_is_obs_to_jump_over(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_obs_to_jumping_onto(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_obs_to_jumping_out_of(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_obs_to_laser(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_obs_to_movement(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_obs_to_paths(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_obs_to_spawning(Tpp tp) -> bool;

@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static auto test_wand_discharge(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_wand_wield(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -23,7 +23,7 @@
       = "xxxxxxxxxxxxxxxxxxxxxxxxxxx"
         "x.........................x"
         "x.........................x"
-        "x@.......................Gx"
+        "x@........................x"
         "x.........................x"
         "x.........................x"
         "xxxxxxxxxxxxxxxxxxxxxxxxxxx";
@@ -36,10 +36,9 @@
         "x.........................x"
         "xxxxxxxxxxxxxxxxxxxxxxxxxxx";
 
-  Overrides overrides;
-  overrides[ 'G' ]     = [](char c, bpoint p) -> Tpp { return tp_find_mand("kobalos_mob"); };
+  Overrides  overrides;
   Levelp     l         = nullptr;
-  Levelsp    v         = game_test_init(g, &l, level_num, w, h, start.c_str(), overrides);
+  Levelsp    v         = game_test_init(g, &l, level_num, w, h, start.c_str());
   bool       result    = true;
   Thingp     weapon    = nullptr;
   Thingp     wielding  = nullptr;
@@ -73,37 +72,46 @@
     goto exit;
   }
 
-  if (! thing_wield(g, v, l, player, weapon, e)) {
-    TEST_FAILED(t, "failed to wield");
-    goto exit;
-  }
-
-  (void) thing_charge_count_set(g, v, l, weapon, 10);
-
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
 
   //
-  // Drain the weapon
+  // Wield and unwield over and over
   //
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   for (auto tries = 0; tries < 20; tries++) {
     TEST_LOG(t, "try: %d", tries);
-    (void) player_fire(g, v, l, 1, 0);
+
+    if (! thing_wield(g, v, l, player, weapon, e)) {
+      TEST_FAILED(t, "failed to wield");
+      goto exit;
+    }
+
+    wielding = thing_wielding(g, v, l, player);
+    if (! wielding) {
+      TEST_FAILED(t, "unexpectedly not wielding a weapon");
+      goto exit;
+    }
+
+    if (! thing_unwield(g, v, l, player, e)) {
+      TEST_FAILED(t, "failed to unwield");
+      goto exit;
+    }
+
+    wielding = thing_wielding(g, v, l, player);
+    if (wielding) {
+      thing_log(wielding, "wielding this");
+      TEST_FAILED(t, "unexpectedly wielding a weapon");
+      goto exit;
+    }
+
     TRACE();
     TEST_ASSERT(t, game_event_wait(g), "failed to wait");
     if (! game_wait_for_tick_to_finish(g, v, l)) {
       TEST_FAILED(t, "wait loop failed");
       goto exit;
     }
-  }
-
-  wielding = thing_wielding(g, v, l, player);
-  if (wielding) {
-    thing_log(wielding, "wielding this");
-    TEST_FAILED(t, "unexpectedly wielding a weapon still");
-    goto exit;
   }
 
   level_dump(g, v, l, w, h);
@@ -124,14 +132,14 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_projectile_discharge() -> bool // NOLINT
+[[nodiscard]] auto test_load_weapon_wield_unwield() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("projectile_discharge");
+  Testp test = test_load("weapon_wield_unwield");
 
   // begin sort marker1 {
-  test_callback_set(test, test_wand_discharge);
+  test_callback_set(test, test_wand_wield);
   // end sort marker1 }
 
   return true;

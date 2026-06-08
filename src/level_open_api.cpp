@@ -1052,16 +1052,16 @@
   return level_open(g, v, l, is_flat, p);
 }
 
-[[nodiscard]] auto level_open_is_obs_to_laser(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_open_is_obs_to_beam(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_open(g, v, l, is_obs_to_laser, p);
+  return level_open(g, v, l, is_obs_to_beam, p);
 }
 
-[[nodiscard]] auto level_open_is_laser(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_open_is_beam_weapon(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_open(g, v, l, is_laser, p);
+  return level_open(g, v, l, is_beam_weapon, p);
 }
 
 [[nodiscard]] auto level_open_is_stamina_visible(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp

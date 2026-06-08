@@ -81,7 +81,7 @@ static auto tp_staff_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
 
   static Tpp what;
   if (! what) {
-    what = tp_find_mand("laser_fire");
+    what = tp_find_mand("beam_of_fire");
   }
 
   return what;

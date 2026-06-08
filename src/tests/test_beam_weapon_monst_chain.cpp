@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static auto test_staff_mob(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_beam_weapon_monst_chain(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -23,7 +23,7 @@
       = "xxxxxxxxxxxxxxxxx"
         "x...............x"
         "x...............x"
-        "x@......G.......x"
+        "x@mmmmmmm.......x"
         "x...............x"
         "x...............x"
         "xxxxxxxxxxxxxxxxx";
@@ -31,24 +31,27 @@
       = "xxxxxxxxxxxxxxxxx"
         "x...............x"
         "x...............x"
-        "x@-------.......x"
+        "x@-----------...x"
         "x...............x"
         "x...............x"
         "xxxxxxxxxxxxxxxxx";
   std::string const expect2
       = "xxxxxxxxxxxxxxxxx"
         "x...............x"
-        "x...............x"
-        "x@......!.......x"
+        "x.m.............x"
+        "x@..............x"
         "x...............x"
         "x...............x"
         "xxxxxxxxxxxxxxxxx";
-  Levelp  l      = nullptr;
-  Levelsp v      = game_test_init(g, &l, level_num, w, h, start.c_str());
-  bool    result = true;
 
-  auto *tp_laser_fire = tp_find_mand("laser_fire");
-  tp_damage_set(tp_laser_fire, THING_EVENT_FIRE_DAMAGE, "100");
+  Overrides overrides;
+  overrides[ 'm' ] = [](char c, bpoint p) -> Tpp { return tp_find_mand("ghost"); };
+  Levelp  l        = nullptr;
+  Levelsp v        = game_test_init(g, &l, level_num, w, h, start.c_str(), overrides);
+  bool    result   = true;
+
+  auto *tp_beam_of_fire = tp_find_mand("beam_of_fire");
+  tp_damage_set(tp_beam_of_fire, THING_EVENT_FIRE_DAMAGE, "100");
 
   auto *player = thing_player(g);
   if (player == nullptr) [[unlikely]] {
@@ -63,7 +66,7 @@
   TEST_PROGRESS(t);
 
   //
-  // Wait for the laser to ignite a barrel
+  // Wait for the weapon to ignite a barrel
   //
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
@@ -71,7 +74,7 @@
     TEST_LOG(t, "try: %d", tries);
     level_dump(g, v, l, w, h);
 
-    (void) player_fire(g, v, l, 1, 0, tp_laser_fire, bpoint(13, 3));
+    (void) player_fire(g, v, l, 1, 0, tp_beam_of_fire, bpoint(13, 3));
     TRACE();
 
     if (tries == 0) {
@@ -90,7 +93,7 @@
   }
 
   //
-  // Wait for the laser to fade away
+  // Wait for the weapon to fade away
   //
   for (auto tries = 0; tries < 2; tries++) {
     TEST_LOG(t, "try: %d", tries);
@@ -121,14 +124,14 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_laser_mob() -> bool // NOLINT
+[[nodiscard]] auto test_load_beam_weapon_monst_chain() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("laser_mob");
+  Testp test = test_load("beam_weapon_monst_chain");
 
   // begin sort marker1 {
-  test_callback_set(test, test_staff_mob);
+  test_callback_set(test, test_beam_weapon_monst_chain);
   // end sort marker1 }
 
   return true;

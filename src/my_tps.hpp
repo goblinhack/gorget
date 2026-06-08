@@ -15,6 +15,8 @@
 /* shell done */
 auto tp_load_argusul() -> bool;
 auto tp_load_barrel() -> bool;
+auto tp_load_beam_of_fire() -> bool;
+auto tp_load_beam_of_light() -> bool;
 auto tp_load_blitzhound() -> bool;
 auto tp_load_border() -> bool;
 auto tp_load_brazier() -> bool;
@@ -46,8 +48,6 @@ auto tp_load_grass() -> bool;
 auto tp_load_key() -> bool;
 auto tp_load_kobalos_mob() -> bool;
 auto tp_load_kobalos() -> bool;
-auto tp_load_laser_fire() -> bool;
-auto tp_load_laser_light() -> bool;
 auto tp_load_lava() -> bool;
 auto tp_load_level_closed() -> bool;
 auto tp_load_level_curr() -> bool;

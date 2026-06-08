@@ -31,15 +31,6 @@ static void tp_projectile_light_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me
   TRACE();
 
   //
-  // The projectile_light doesn't heat water up quick enough, so add this cheap effect
-  //
-  if (level_is_water(g, v, l, thing_at(me)) != nullptr) {
-    if (level_is_steam(g, v, l, thing_at(me)) == nullptr) {
-      if (d100() < 50) {
-        (void) thing_spawn(g, v, l, tp_first(is_steam), thing_at(me));
-      }
-    }
-  }
 }
 
 [[nodiscard]] auto tp_load_projectile_light() -> bool

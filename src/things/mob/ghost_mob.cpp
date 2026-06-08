@@ -85,8 +85,8 @@ static void tp_ghost_mob_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_mob_kill_minions_on_death);
   tp_flag_set(tp, is_mob);
+  tp_flag_set(tp, is_obs_to_beam);
   tp_flag_set(tp, is_obs_to_jumping_onto);
-  tp_flag_set(tp, is_obs_to_laser);
   tp_flag_set(tp, is_obs_to_movement);
   tp_flag_set(tp, is_obs_to_teleporting_onto);
   tp_flag_set(tp, is_physics_explosion);

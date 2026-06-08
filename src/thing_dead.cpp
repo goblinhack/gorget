@@ -395,7 +395,7 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
   //
   // Detach weapons from owners
   //
-  if (thing_is_projectile(me) || thing_is_laser(me)) {
+  if (thing_is_projectile(me) || thing_is_beam_weapon(me)) {
     (void) thing_missile_detach_me_from_firer(g, v, l, me);
   }
 
