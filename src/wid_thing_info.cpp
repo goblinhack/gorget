@@ -442,6 +442,7 @@ static void wid_thing_info_item_mouse_over_begin(Gamep g, Widp w, int /*relx*/, 
     return;
   }
 
+  level_cursor_describe_clear(g, v);
   (void) level_cursor_describe_add(g, v, t);
   (void) wid_rightbar_init(g);
 }

@@ -68,6 +68,7 @@ void wid_inventory_mouse_over_begin(Gamep g, Widp w, int /*relx*/, int /*rely*/,
     return;
   }
 
+  level_cursor_describe_clear(g, v);
   if (level_cursor_describe_add(g, v, t)) {
     game_request_to_remake_ui_set(g);
   }
