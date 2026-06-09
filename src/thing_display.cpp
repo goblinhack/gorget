@@ -415,10 +415,10 @@ static void thing_display_it(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t_mayb
       tile_blit_outline_w_black_inside(tile, x1, x2, y1, y2, tl, br, outline);
       return;
     }
-    color const is_hot = RED;
-    fg.r               = is_hot.r;
-    fg.g               = is_hot.g;
-    fg.b               = is_hot.b;
+    color const is_hit = RED;
+    fg.r               = is_hit.r;
+    fg.g               = is_hit.g;
+    fg.b               = is_hit.b;
     fg.a               = static_cast< uint8_t >(a);
     thing_display_blit(g, v, l, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg, nullptr, false);
     return;

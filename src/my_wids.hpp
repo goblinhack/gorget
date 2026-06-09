@@ -83,4 +83,9 @@ void wid_topcon_log(const std::string &s);
 [[nodiscard]] auto wid_rightbar_init(Gamep g) -> bool;
 [[nodiscard]] auto wid_topcon_init(Gamep g) -> bool;
 
+//
+// For buttons that pulse
+//
+#define WID_PULSE_ANIM_MS 1500
+
 #endif

@@ -69,19 +69,33 @@ void thing_hot_time_step(Gamep g, Levelsp v, Levelp l, Thingp me, int /*time_ste
     return;
   }
 
-  auto pulse = THING_IS_HOT_PULSE_ANIM_MS; // ms
-  auto mid   = pulse / 2;
-  auto n     = time_ms_cached() % pulse;
+  //
+  // Pulse the animation
+  //
+  auto        pulse = THING_IS_HOT_PULSE_ANIM_MS; // ms
+  float const mid   = pulse / 2;
+  auto const  n     = static_cast< float >(time_ms_cached() % pulse);
+  float       i     = 0;
+  uint8_t     a     = 0;
 
-  if (n > mid) {
-    n = mid - n;
-  }
-  if (n == 0) {
-    n = -1;
+  if (n == mid) {
+    i = 0;
+  } else if (n > mid) {
+    i = (n - mid) / mid;
+    i *= 100;
+    i = 255 - i;
+  } else {
+    i = n / mid;
+    i *= 100;
+    i = 155 + i;
   }
 
-  auto i      = static_cast< int >((255 / static_cast< float >(mid)) * static_cast< float >(n));
-  me->_is_hot = ((static_cast< uint8_t >(i)) / 2) + 120;
+  i = std::max< float >(i, 0);
+  i = std::min< float >(i, 255);
+
+  a = static_cast< uint8_t >(i);
+
+  me->_is_hot = (a / 2) + 120;
 }
 
 //
