@@ -28,35 +28,6 @@
 #include <format>
 #include <string>
 
-//
-// The thing icon
-//
-[[nodiscard]] auto wid_thing_info_icon(Gamep g, Tpp tp, WidPopup *parent) -> bool
-{
-  TRACE();
-
-  auto *text = parent->wid_text_area;
-  auto *b    = parent->wid_text_area->wid_text_area;
-
-  if (tp_tiles_size(tp, THING_ANIM_IDLE) == 0) {
-    return false;
-  }
-
-  Tilep tile = tp_tiles_get(tp, THING_ANIM_IDLE, 0);
-  if (tile == nullptr) {
-    return false;
-  }
-
-  auto        *w = wid_new_square_button(g, b, "Icon");
-  spoint const tl(0, text->line_count);
-  spoint const br(3, text->line_count + 2);
-  wid_set_tile(TILE_LAYER_BOX_BG, w, tile);
-  wid_set_style(w, UI_WID_STYLE_SPARSE_NONE);
-  wid_set_pos(w, tl, br);
-
-  return true;
-}
-
 [[nodiscard]] auto wid_thing_info_keys(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent) -> bool
 {
   TRACE();
@@ -100,7 +71,7 @@
 //
 // The thing name
 //
-[[nodiscard]] auto wid_thing_info_name(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp /*tp*/, WidPopup *parent) -> bool
+[[nodiscard]] auto wid_thing_info_name(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent) -> bool
 {
   TRACE();
 
@@ -136,7 +107,7 @@
 //
 // Score
 //
-[[nodiscard]] auto wid_thing_info_score(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp /*tp*/, WidPopup *parent) -> bool
+[[nodiscard]] auto wid_thing_info_score(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent) -> bool
 {
   TRACE();
 
@@ -428,6 +399,94 @@
   return printed_something;
 }
 
+//
+// Add abilities
+//
+[[nodiscard]] auto wid_thing_info_abilities(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, int width) -> bool
+{
+  TRACE();
+
+  bool printed_something = false;
+
+  if (thing_is_ethereal(me)) {
+    auto immune_str = string_sprintf("Abilitiy:  %*s", width - 13, "Ethereal");
+    parent->log(g, immune_str, TEXT_FORMAT_LHS);
+    printed_something = true;
+  } else {
+    //
+    // Non ethereal
+    //
+    if (thing_is_able_to_walk_through_walls(me)) {
+      auto immune_str = string_sprintf("Abilitiy:  %*s", width - 13, "Wall walker");
+      parent->log(g, immune_str, TEXT_FORMAT_LHS);
+      printed_something = true;
+    }
+    if (thing_is_floating(me)) {
+      auto immune_str = string_sprintf("Abilitiy:  %*s", width - 13, "Floating");
+      parent->log(g, immune_str, TEXT_FORMAT_LHS);
+      printed_something = true;
+    }
+    if (thing_is_flying(me)) {
+      auto immune_str = string_sprintf("Abilitiy:  %*s", width - 13, "Flying");
+      parent->log(g, immune_str, TEXT_FORMAT_LHS);
+      printed_something = true;
+    }
+  }
+
+  if (thing_is_gaseous(me)) {
+    auto immune_str = string_sprintf("Abilitiy:  %*s", width - 13, "Gaseous");
+    parent->log(g, immune_str, TEXT_FORMAT_LHS);
+    printed_something = true;
+  }
+  if (thing_is_slime(me)) {
+    auto immune_str = string_sprintf("Abilitiy:  %*s", width - 13, "Slimey");
+    parent->log(g, immune_str, TEXT_FORMAT_LHS);
+    printed_something = true;
+  }
+  if (thing_is_able_to_collect_items(me)) {
+    auto immune_str = string_sprintf("Abilitiy:  %*s", width - 13, "Collector");
+    parent->log(g, immune_str, TEXT_FORMAT_LHS);
+    printed_something = true;
+  }
+  if (thing_is_able_to_be_buffed(me)) {
+    auto immune_str = string_sprintf("Abilitiy:  %*s", width - 13, "Buffable");
+    parent->log(g, immune_str, TEXT_FORMAT_LHS);
+    printed_something = true;
+  }
+  if (thing_is_able_to_jump(me)) {
+    auto immune_str = string_sprintf("Abilitiy:  %*s", width - 13, "Jumper");
+    parent->log(g, immune_str, TEXT_FORMAT_LHS);
+    printed_something = true;
+  }
+  if (thing_is_able_to_throw_items(me)) {
+    auto immune_str = string_sprintf("Abilitiy:  %*s", width - 13, "Thrower");
+    parent->log(g, immune_str, TEXT_FORMAT_LHS);
+    printed_something = true;
+  }
+  if (thing_is_able_to_wield_items(me)) {
+    auto immune_str = string_sprintf("Abilitiy:  %*s", width - 13, "Wielder");
+    parent->log(g, immune_str, TEXT_FORMAT_LHS);
+    printed_something = true;
+  }
+  if (thing_is_burning(me)) {
+    auto immune_str = string_sprintf("Abilitiy:  %*s", width - 13, "Burnable");
+    parent->log(g, immune_str, TEXT_FORMAT_LHS);
+    printed_something = true;
+  }
+  if (thing_is_flammable(me)) {
+    auto immune_str = string_sprintf("Abilitiy:  %*s", width - 13, "Flammable");
+    parent->log(g, immune_str, TEXT_FORMAT_LHS);
+    printed_something = true;
+  }
+  if (thing_is_combustible(me)) {
+    auto immune_str = string_sprintf("Abilitiy:  %*s", width - 13, "Combustible");
+    parent->log(g, immune_str, TEXT_FORMAT_LHS);
+    printed_something = true;
+  }
+
+  return printed_something;
+}
+
 static void wid_thing_info_item_mouse_over_begin(Gamep g, Widp w, int /*relx*/, int /*rely*/, int /*wheelx*/, int /*wheely*/)
 {
   TRACE();
@@ -641,13 +700,13 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, i
     return;
   }
 
-  if (wid_thing_info_icon(g, tp, parent)) {
+  if (wid_tp_info_icon(g, tp, parent)) {
     parent->log_empty_line(g);
   }
 
   (void) wid_thing_info_keys(g, v, l, me, parent);
 
-  if (wid_thing_info_name(g, v, l, me, tp, parent)) {
+  if (wid_thing_info_name(g, v, l, me, parent)) {
     parent->log_empty_line(g);
   }
 
@@ -655,7 +714,7 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, i
     parent->log_empty_line(g);
   }
 
-  if (wid_thing_info_score(g, v, l, me, tp, parent)) {
+  if (wid_thing_info_score(g, v, l, me, parent)) {
     parent->log_empty_line(g);
   }
 
@@ -672,9 +731,10 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, i
   }
 
   if (thing_is_monst(me)) {
-    //
-    // Not sure if useful, given buffs
-    //
+    if (wid_tp_info_damage(g, v, l, tp, parent, width)) {
+      parent->log_empty_line(g);
+    }
+
     if (wid_thing_info_immunity(g, v, l, me, parent, width)) {
       parent->log_empty_line(g);
     }
@@ -682,10 +742,22 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, i
     if (wid_thing_info_resistance(g, v, l, me, parent, width)) {
       parent->log_empty_line(g);
     }
+
+    if (wid_thing_info_abilities(g, v, l, me, parent, width)) {
+      parent->log_empty_line(g);
+    }
   }
 
   if (wid_thing_info_items(g, v, l, me, parent)) {
     parent->log_empty_line(g);
+  }
+
+  auto owner = thing_owner(g, v, l, me);
+  if (owner) {
+    auto fire_what_tp = thing_on_use_weapon_request(g, v, l, me, owner);
+    if (fire_what_tp) {
+      wid_tp_info(g, v, l, fire_what_tp, parent, width);
+    }
   }
 
   IF_DEBUG

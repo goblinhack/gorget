@@ -252,15 +252,15 @@ void wid_statistics_show(Gamep g, Levelsp v, Levelp l, Thingp player)
 
   auto *tp = thing_tp(player);
 
-  if (wid_thing_info_icon(g, tp, wid_statistics_popup)) {
+  if (wid_tp_info_icon(g, tp, wid_statistics_popup)) {
     wid_statistics_popup->log_empty_line(g);
   }
 
-  if (wid_thing_info_name(g, v, l, player, tp, wid_statistics_popup)) {
+  if (wid_thing_info_name(g, v, l, player, wid_statistics_popup)) {
     wid_statistics_popup->log_empty_line(g);
   }
 
-  if (wid_thing_info_score(g, v, l, player, tp, wid_statistics_popup)) {
+  if (wid_thing_info_score(g, v, l, player, wid_statistics_popup)) {
     wid_statistics_popup->log_empty_line(g);
   }
 
