@@ -161,8 +161,6 @@ void level_minimaps_update(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
-  IF_NODEBUG { return; }
-
   TRACE();
 
   //

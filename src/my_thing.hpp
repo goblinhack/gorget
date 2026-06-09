@@ -1004,6 +1004,8 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &at) -> Thingp;
 [[nodiscard]] auto thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp spawner) -> Thingp;
 [[nodiscard]] auto thing_speed_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
+[[nodiscard]] auto thing_speed_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
+[[nodiscard]] auto thing_speed_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_speed(Thingp t) -> int;
 [[nodiscard]] auto thing_stamina_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_stamina_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
@@ -1148,6 +1150,7 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
 void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me);
 void thing_con(Thingp t, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void thing_continue_to_burn_check(Gamep g, Levelsp v, Levelp l, Thingp me);
+void thing_merge(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp tp);
 void thing_croak(Thingp t, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e);
 void thing_dbg(Thingp t, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);

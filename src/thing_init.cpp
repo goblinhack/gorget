@@ -63,9 +63,11 @@
     }
   }
 
+  // *******************************************************************
+  // * consider thing_merge if changing code here
+  // *******************************************************************
   (void) thing_health_max_set(g, v, l, t, thing_health_set(g, v, l, t, tp_health_max_get(tp)));
   (void) thing_stamina_max_set(g, v, l, t, thing_stamina_set(g, v, l, t, tp_stamina_max_get(tp)));
-
   (void) thing_distance_jump_set(g, v, l, t, tp_distance_jump_get(tp));
   (void) thing_distance_minion_from_mob_max_set(g, v, l, t, tp_distance_minion_from_mob_max_get(tp));
   (void) thing_distance_vision_set(g, v, l, t, tp_distance_vision_get(tp));
@@ -79,7 +81,6 @@
   (void) thing_weight_set(g, v, l, t, tp_weight_get(tp));
   (void) thing_charge_count_set(g, v, l, t, tp_charge_count_get(tp));
   (void) thing_distance_avoid_target_set(g, v, l, t, tp_distance_avoid_target_get(tp));
-
   (void) thing_value1_set(g, v, l, t, tp_value1_get(tp));
   (void) thing_value10_set(g, v, l, t, tp_value10_get(tp));
   (void) thing_value11_set(g, v, l, t, tp_value11_get(tp));
@@ -96,6 +97,9 @@
   (void) thing_value7_set(g, v, l, t, tp_value7_get(tp));
   (void) thing_value8_set(g, v, l, t, tp_value8_get(tp));
   (void) thing_value9_set(g, v, l, t, tp_value9_get(tp));
+  // *******************************************************************
+  // * consider thing_merge if changing code here
+  // *******************************************************************
 
   //
   // More consistent for tests to use max values

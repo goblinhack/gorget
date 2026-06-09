@@ -32,14 +32,14 @@ static void thing_dump_buffs(Gamep g, Levelsp v, Levelp l, Thingp me)
     return;
   }
 
-  FOR_ALL_BUFF_SLOTS(g, v, l, me, slot, existing_buff)
+  FOR_ALL_BUFF_SLOTS(g, v, l, me, slot, a_buff)
   {
-    if (existing_buff == nullptr) {
+    if (a_buff == nullptr) {
       THING_DBG(me, "slot %d: -", _n_);
       continue;
     }
 
-    auto s = to_string(g, v, l, existing_buff);
+    auto s = to_string(g, v, l, a_buff);
     THING_DBG(me, "slot %d: %s", _n_, s.c_str());
   }
 }
@@ -63,6 +63,40 @@ static void thing_dump_buffs(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 
   return ext_struct->buffs.count;
+}
+
+//
+// Does the buff exist already?
+//
+[[nodiscard]] static auto thing_buff_find(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what) -> Thingp
+{
+  TRACE();
+
+  if (me == nullptr) {
+    return nullptr;
+  }
+
+  if (! thing_is_able_to_be_buffed(me)) {
+    return nullptr;
+  }
+
+  if (what == nullptr) {
+    return nullptr;
+  }
+
+  auto *ext_struct = thing_ext_struct(g, me);
+  if (ext_struct == nullptr) {
+    return nullptr;
+  }
+
+  FOR_ALL_BUFFS(g, v, l, me, a_buff)
+  {
+    if (thing_tp(a_buff) == what) {
+      return a_buff;
+    }
+  }
+
+  return nullptr;
 }
 
 //
@@ -93,6 +127,18 @@ static void thing_dump_buffs(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 
   //
+  // One of this type exists already?
+  //
+  auto existing_buff = thing_buff_find(g, v, l, me, what);
+  if (existing_buff) {
+    //
+    // Merge a new tp buff into an existing thing buff
+    //
+    thing_merge(g, v, l, existing_buff, what);
+    return existing_buff;
+  }
+
+  //
   // Too many buffs
   //
   if (thing_buff_count_get(g, me) >= THING_BUFF_MAX) {
@@ -109,9 +155,9 @@ static void thing_dump_buffs(Gamep g, Levelsp v, Levelp l, Thingp me)
   //
   // Look for a free slot
   //
-  FOR_ALL_BUFF_SLOTS(g, v, l, me, slot, existing_buff)
+  FOR_ALL_BUFF_SLOTS(g, v, l, me, slot, a_buff)
   {
-    if (existing_buff != nullptr) {
+    if (a_buff != nullptr) {
       continue;
     }
 

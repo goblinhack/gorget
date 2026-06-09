@@ -13,10 +13,10 @@ static auto tp_buff_resistant_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thin
 {
   TRACE();
 
-  return                                                                              //
-      UI_INFO1_FMT_STR                                                                //
-      "With this buff you are temporarily take half damage from fire like effects.\n" //
-      UI_INFO3_FMT_STR                                                                //
+  return                                                                          //
+      UI_INFO1_FMT_STR                                                            //
+      "With this buff you temporarily take half damage from fire like effects.\n" //
+      UI_INFO2_FMT_STR                                                            //
       "This includes lava, steam and other unpleasantly hot things.\n";
 }
 
@@ -34,7 +34,7 @@ static auto tp_buff_resistant_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thin
   tp_flag_set(tp, is_tick_on_use);
   tp_flag_set(tp, is_tickable);
   tp_is_resistant_add(tp, THING_EVENT_FIRE_DAMAGE);
-  tp_lifespan_set(tp, "1d100+100");
+  tp_lifespan_set(tp, "100+100");
   tp_name_short_set(tp, "fire resistant");
   // end sort marker1 }
 

@@ -103,7 +103,6 @@ static void wid_rightbar_create_minimap_level(Gamep g)
 
     wid_rightbar->log(g, s);
 
-    IF_DEBUG
     {
       s = std::format("Move:{}", v->tick);
       wid_rightbar->log(g, s);
@@ -145,7 +144,7 @@ static void wid_rightbar_create_minimap_level(Gamep g)
   //
   // Minimaps
   //
-  IF_DEBUG { wid_rightbar_create_minimap_level(g); }
+  wid_rightbar_create_minimap_level(g);
 
   wid_update(g, wid_rightbar->wid_popup_container);
 
