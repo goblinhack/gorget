@@ -143,7 +143,7 @@ public:
   SDL_Keysym key_unused11   = {};
   SDL_Keysym key_unused12   = {};
   SDL_Keysym key_unused13   = {};
-  SDL_Keysym key_unused14   = {};
+  SDL_Keysym key_throw      = {};
   SDL_Keysym key_fire       = {};
   SDL_Keysym key_inventory  = {};
   SDL_Keysym key_jump       = {};
@@ -376,6 +376,7 @@ void Config::reset()
   key_inventory.sym  = SDLK_i;
   key_fire.sym       = SDLK_SPACE;
   key_jump.sym       = SDLK_j;
+  key_throw.sym      = SDLK_t;
   key_load.sym       = SDLK_F1;
   key_move_down.sym  = SDLK_s;
   key_move_left.sym  = SDLK_a;
@@ -389,8 +390,6 @@ void Config::reset()
   music_volume       = {MIX_MAX_VOLUME / 4};
   sdl_delay          = 1;
   sound_volume       = {MIX_MAX_VOLUME};
-
-  key_unused1.sym = SDLK_TAB;
 }
 
 void game_config_reset(Gamep g) { g->config.reset(); }
@@ -2704,16 +2703,16 @@ void game_key_unused13_set(Gamep g, SDL_Keysym key)
   g->config.key_unused13 = key;
 }
 
-[[nodiscard]] auto game_key_unused14_get(Gamep g) -> SDL_Keysym
+[[nodiscard]] auto game_key_throw_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
 
   if (g == nullptr) {
     return no_key;
   }
-  return g->config.key_unused14;
+  return g->config.key_throw;
 }
-void game_key_unused14_set(Gamep g, SDL_Keysym key)
+void game_key_throw_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
 
@@ -2721,7 +2720,7 @@ void game_key_unused14_set(Gamep g, SDL_Keysym key)
     ERR("no game pointer");
     return;
   }
-  g->config.key_unused14 = key;
+  g->config.key_throw = key;
 }
 
 [[nodiscard]] auto game_key_fire_get(Gamep g) -> SDL_Keysym

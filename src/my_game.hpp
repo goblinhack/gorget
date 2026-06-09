@@ -230,8 +230,8 @@ void               game_key_unused12_set(Gamep g, SDL_Keysym key);
 [[nodiscard]] auto game_key_unused13_get(Gamep g) -> SDL_Keysym;
 void               game_key_unused13_set(Gamep g, SDL_Keysym key);
 
-[[nodiscard]] auto game_key_unused14_get(Gamep g) -> SDL_Keysym;
-void               game_key_unused14_set(Gamep g, SDL_Keysym key);
+[[nodiscard]] auto game_key_throw_get(Gamep g) -> SDL_Keysym;
+void               game_key_throw_set(Gamep g, SDL_Keysym key);
 
 [[nodiscard]] auto game_key_fire_get(Gamep g) -> SDL_Keysym;
 void               game_key_fire_set(Gamep g, SDL_Keysym key);

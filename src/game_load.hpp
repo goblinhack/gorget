@@ -342,8 +342,8 @@ auto operator>>(std::istream &in, Bits< Config & > my) -> std::istream &
       return in;
     }
     in >> bits(tmp);
-    if (tmp != offsetof(Config, key_unused14)) {
-      game_load_error = "Config structure changed: offsetof(Config, key_unused14))";
+    if (tmp != offsetof(Config, key_throw)) {
+      game_load_error = "Config structure changed: offsetof(Config, key_throw))";
       return in;
     }
     in >> bits(tmp);
@@ -434,7 +434,7 @@ auto operator>>(std::istream &in, Bits< Config & > my) -> std::istream &
   in >> bits(my.t.key_unused11);
   in >> bits(my.t.key_unused12);
   in >> bits(my.t.key_unused13);
-  in >> bits(my.t.key_unused14);
+  in >> bits(my.t.key_throw);
   in >> bits(my.t.key_fire);
   in >> bits(my.t.key_inventory);
   in >> bits(my.t.key_jump);
