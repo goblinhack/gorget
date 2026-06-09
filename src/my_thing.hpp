@@ -48,8 +48,13 @@ using ThingIdPacked = union {
 #define THING_LIGHT_MAX     (LEVEL_MAX * 200)        // The size of thing_light
 #define THING_MOVE_PATH_MAX (MAP_WIDTH + MAP_HEIGHT) // Player/monster move paths (max size uint8_t)
 #define THING_INVENTORY_MAX 26
-#define THING_BUFF_MAX      20
 #define THING_MINION_MAX    10
+
+/* begin shell marker1 */
+/* shell printf "#define THING_BUFF_MAX " */
+/* shell find . -name "*.cpp" | xargs grep "tp_flag_set(tp, is_buff);" | wc -l */
+#define THING_BUFF_MAX 2
+/* end shell marker1 */
 
 //
 // Enough for one beam_weapon weapon or many projectiles.
@@ -1100,8 +1105,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto wid_get_thing_context(Gamep g, Levelsp v, Widp w, int which) -> Thingp;
 [[nodiscard]] auto wid_thing_info_detail(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent) -> bool;
 [[nodiscard]] auto wid_thing_info_health_bar(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp tp, WidPopup *parent, int width) -> bool;
-[[nodiscard]] auto wid_tp_info_icon(Gamep g, Tpp me, WidPopup *parent) -> bool;
-[[nodiscard]] auto wid_tp_info_damage(Gamep g, Levelsp v, Levelp l, Tpp me, WidPopup *parent, int width) -> bool;
 [[nodiscard]] auto wid_thing_info_immunity(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, int width) -> bool;
 [[nodiscard]] auto wid_thing_info_keys(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent) -> bool;
 [[nodiscard]] auto wid_thing_info_name(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent) -> bool;
@@ -1109,10 +1112,11 @@ using Thing = struct Thing {
 [[nodiscard]] auto wid_thing_info_score(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent) -> bool;
 [[nodiscard]] auto wid_thing_info_special_damage(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent) -> bool;
 [[nodiscard]] auto wid_thing_info_stamina_bar(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp tp, WidPopup *parent, int width) -> bool;
+[[nodiscard]] auto wid_tp_info_damage(Gamep g, Levelsp v, Levelp l, Tpp me, WidPopup *parent, int width) -> bool;
+[[nodiscard]] auto wid_tp_info_icon(Gamep g, Tpp me, WidPopup *parent) -> bool;
 // end sort marker1 }
 
 // begin sort marker2 {
-void wid_tp_info(Gamep g, Levelsp v, Levelp l, Tpp me, WidPopup *parent, int width);
 void level_botcon(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
 void level_con(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
 void level_dbg(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
@@ -1248,6 +1252,7 @@ void tp_display_init(Tpp tp);
 void tp_temperature_init(Tpp tp);
 void wid_set_thing_context(Gamep g, Levelsp v, Widp w, Thingp t);
 void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, int width);
+void wid_tp_info(Gamep g, Levelsp v, Levelp l, Tpp me, WidPopup *parent, int width);
 void wid_unset_thing_context(Gamep g, Levelsp v, Widp w, Thingp t);
 // end sort marker2 }
 
