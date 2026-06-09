@@ -86,6 +86,6 @@ void wid_topcon_log(const std::string &s);
 //
 // For buttons that pulse
 //
-#define WID_PULSE_ANIM_MS 1500
+enum { WID_PULSE_ANIM_MS = 1500 };
 
 #endif

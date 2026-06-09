@@ -10,6 +10,7 @@
 #include "my_time.hpp"
 #include "my_types.hpp"
 
+#include <algorithm>
 #include <cstdint>
 
 //

@@ -36,6 +36,50 @@ todo
 ----
 staff of fire in water damage when fully submerged
 
+sacrifice altar
+---------------
+                      sacrifice                        bonus
+                      ---------------------------      ---------------
+- clumsy              hiding in bushes does not work   +10  spell points
+
+- fire prone          x2 damage from fire              +10  spell points
+                                                       2    spell coupons
+
+- hollow bones        x2 damage from melee             +10  spell points
+                                                       -50% fall damage
+                                                       +25% speed
+                                                       +50% jump distance
+                         
+- tunnel vision       no peripheral vision             +10  spell points
+                                                       +25% speed
+
+- defenceless         no weapon at start               +20  spell points
+                                                       +1   emergency teleport per level
+
+- myopic              -50% vision distance             +20  spell points
+                                                       5    spell coupons
+
+- breathless          -50% stamina                     +20  spell points
+                      -50% speed                       gas  has no effect
+
+- wraithlike          -80% health                      +30  spell points
+                                                       limited wall walk
+                                                       +25 magical armour
+
+- glass bones         x2 damage from melee             +30  spell points
+                      x4 damage from falling           +50% speed
+                                                       -50% jump distance
+                                                       +1   emergency teleport per level
+                                                       +50 magical armour
+                                                       regeneration
+
+- one legged          every move is a tiring jump      +40  spell points
+                                                       +1   emergency teleport per level
+                                                       +50% stamina recovery
+                                                       x2   all damage dealt
+                                                       limited levitation
+
+
 essential features
 ------------------
 gods

@@ -3,15 +3,11 @@
 //
 
 #include "my_callstack.hpp"
-#include "my_game.hpp"
-#include "my_level.hpp"
 #include "my_level_inlines.hpp" // NOLINT
-#include "my_main.hpp"
 #include "my_spoint.hpp"
 #include "my_sprintf.hpp"
 #include "my_string.hpp"
 #include "my_thing.hpp"
-#include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp" // NOLINT
 #include "my_tile.hpp"
 #include "my_tp.hpp"
@@ -20,12 +16,8 @@
 #include "my_wid.hpp"
 #include "my_wid_popup.hpp"
 #include "my_wid_text_box.hpp"
-#include "my_wids.hpp"
 
-#include <algorithm>
-#include <cstdint>
 #include <cstring>
-#include <format>
 #include <string>
 
 //
@@ -60,7 +52,7 @@
 //
 // The tp name
 //
-[[nodiscard]] auto wid_tp_info_name(Gamep g, Levelsp v, Levelp l, Tpp me, WidPopup *parent) -> bool
+[[nodiscard]] static auto wid_tp_info_name(Gamep g, Levelsp v, Levelp l, Tpp me, WidPopup *parent) -> bool
 {
   TRACE();
 
@@ -148,7 +140,7 @@
 //
 // Add immunities
 //
-[[nodiscard]] auto wid_tp_info_immunity(Gamep g, Levelsp v, Levelp l, Tpp me, WidPopup *parent, int width) -> bool
+[[nodiscard]] static auto wid_tp_info_immunity(Gamep g, Levelsp v, Levelp l, Tpp me, WidPopup *parent, int width) -> bool
 {
   TRACE();
 
@@ -216,7 +208,7 @@
 //
 // Add resistances
 //
-[[nodiscard]] auto wid_tp_info_resistance(Gamep g, Levelsp v, Levelp l, Tpp me, WidPopup *parent, int width) -> bool
+[[nodiscard]] static auto wid_tp_info_resistance(Gamep g, Levelsp v, Levelp l, Tpp me, WidPopup *parent, int width) -> bool
 {
   TRACE();
 

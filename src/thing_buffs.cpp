@@ -129,8 +129,8 @@ static void thing_dump_buffs(Gamep g, Levelsp v, Levelp l, Thingp me)
   //
   // One of this type exists already?
   //
-  auto existing_buff = thing_buff_find(g, v, l, me, what);
-  if (existing_buff) {
+  auto *existing_buff = thing_buff_find(g, v, l, me, what);
+  if (existing_buff != nullptr) {
     //
     // Merge a new tp buff into an existing thing buff
     //

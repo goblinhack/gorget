@@ -402,7 +402,7 @@
 //
 // Add abilities
 //
-[[nodiscard]] auto wid_thing_info_abilities(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, int width) -> bool
+[[nodiscard]] static auto wid_thing_info_abilities(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, int width) -> bool
 {
   TRACE();
 
@@ -752,10 +752,10 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, i
     parent->log_empty_line(g);
   }
 
-  auto owner = thing_owner(g, v, l, me);
-  if (owner) {
-    auto fire_what_tp = thing_on_use_weapon_request(g, v, l, me, owner);
-    if (fire_what_tp) {
+  auto *owner = thing_owner(g, v, l, me);
+  if (owner != nullptr) {
+    auto *fire_what_tp = thing_on_use_weapon_request(g, v, l, me, owner);
+    if (fire_what_tp != nullptr) {
       wid_tp_info(g, v, l, fire_what_tp, parent, width);
     }
   }
