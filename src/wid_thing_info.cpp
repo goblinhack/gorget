@@ -402,7 +402,7 @@
 //
 // Add abilities
 //
-[[nodiscard]] static auto wid_thing_info_abilities(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, int width) -> bool
+[[nodiscard]] static auto wid_thing_info_abilities(Gamep g, Thingp me, WidPopup *parent, int width) -> bool
 {
   TRACE();
 
@@ -743,7 +743,7 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, i
       parent->log_empty_line(g);
     }
 
-    if (wid_thing_info_abilities(g, v, l, me, parent, width)) {
+    if (wid_thing_info_abilities(g, me, parent, width)) {
       parent->log_empty_line(g);
     }
   }
