@@ -110,12 +110,14 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp us
     //
     // But only if the last item
     //
-    if (! thing_warp_to(g, v, l, item, thing_at(user))) {
-      if (e.event_type == THING_EVENT_USER_INITIATED) {
-        auto the_thing = thing_name_long_the(g, v, l, item);
-        topcon("You fail to place %s.", the_thing.c_str());
+    if (! thing_is_thrown(item)) {
+      if (! thing_warp_to(g, v, l, item, thing_at(user))) {
+        if (e.event_type == THING_EVENT_USER_INITIATED) {
+          auto the_thing = thing_name_long_the(g, v, l, item);
+          topcon("You fail to place %s.", the_thing.c_str());
+        }
+        return false;
       }
-      return false;
     }
   }
 

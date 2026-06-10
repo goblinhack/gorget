@@ -374,8 +374,12 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool tick_is
       continue;
     }
 
-    float const t_speed      = thing_speed(t);
-    auto        old_thing_dt = t->thing_dt;
+    float t_speed = thing_speed(t);
+    if (t_speed == 0) {
+      t_speed = (float) player_speed;
+    }
+
+    auto old_thing_dt = t->thing_dt;
 
     if (thing_is_projectile(t)) {
       t->thing_dt = v->time_step;
@@ -389,13 +393,13 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool tick_is
 
     auto thing_dt_change = t->thing_dt - old_thing_dt;
 
-    if (compiler_unused) {
+    if (1 || compiler_unused) {
       THING_DBG(t, "level dt %f old_thing_dt %f thing_dt %f thing_dt_change %f speed %d v %d",
                 dt,              //
                 old_thing_dt,    //
                 t->thing_dt,     //
                 thing_dt_change, //
-                thing_speed(t),  //
+                (int) t_speed,   //
                 player_speed     //
       );
     }

@@ -31,15 +31,30 @@ void thing_is_thrown_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp throw
   if (item->_is_thrown == static_cast< int >(val)) {
     return;
   }
-  item->_is_thrown = val;
 
   if (val) {
     thing_on_thrown_begin(g, v, l, item, thrower);
   } else {
     thing_on_thrown_end(g, v, l, item, thrower);
 
+    //
+    // Remove association with thrower
+    //
+    auto owner = thing_owner(g, v, l, item);
+    if (owner) {
+      ThingEvent e {
+          .reason     = "user threw item",  //
+          .event_type = THING_EVENT_THROWN, //
+          .source     = owner,              //
+      };
+
+      (void) thing_drop(g, v, l, owner, item, e);
+    }
+
     thing_owner_unset(g, v, l, item);
   }
+
+  item->_is_thrown = val;
 }
 
 void thing_is_thrown_unset(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp thrower)
@@ -218,7 +233,7 @@ static auto thing_throw_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thing
     return false;
   }
 
-  (void) thing_pop(g, v, item);
+  (void) thing_warp_to(g, v, l, item, thing_at(thrower));
 
   spoint pix_at;
   pix_at.x = at.x * TILE_WIDTH;
@@ -237,6 +252,12 @@ static auto thing_throw_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thing
   auto dx = to.x - at.x;
   auto dy = to.y - at.y;
   thing_set_dir_from_delta(item, dx, dy);
+
+  if (thing_is_player(thrower)) {
+    auto the_thing = thing_name_long_the(g, v, l, item);
+    topcon("You throw the %s.", the_thing.c_str());
+    (void) level_tick_begin_requested(g, v, l, "throw item");
+  }
 
   THING_DBG(item, "throw begin delta %d,%d", dx, dy);
 

@@ -157,7 +157,7 @@ auto operator<<(std::ostream &out, Bits< const Config & > const my) -> std::ostr
     out << bits(tmp);
     tmp = offsetof(Config, key_unused12);
     out << bits(tmp);
-    tmp = offsetof(Config, key_unused13);
+    tmp = offsetof(Config, key_abort);
     out << bits(tmp);
     tmp = offsetof(Config, key_throw);
     out << bits(tmp);
@@ -232,7 +232,7 @@ auto operator<<(std::ostream &out, Bits< const Config & > const my) -> std::ostr
   out << bits(my.t.key_unused10);
   out << bits(my.t.key_unused11);
   out << bits(my.t.key_unused12);
-  out << bits(my.t.key_unused13);
+  out << bits(my.t.key_abort);
   out << bits(my.t.key_throw);
   out << bits(my.t.key_fire);
   out << bits(my.t.key_inventory);

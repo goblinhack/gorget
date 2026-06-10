@@ -29,7 +29,7 @@ extern int  g_opt_test_repeat;           // Repeat tests
 extern bool g_ptrcheck_inited;           // Ptrcheck is active
 extern bool g_quitting;                  // Exiting the game
 extern bool g_skip_audio_and_gfx;        // For tests
-                                         //
+
 extern char *g_data_path;
 extern char *g_exec_dir;
 extern char *g_exec_full_path_and_name;

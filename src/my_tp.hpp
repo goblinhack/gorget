@@ -355,6 +355,7 @@ ENUM_DEF_H(BIOME_ENUM, BiomeType)
       list_macro(THING_ANIM_CURSOR_NORMAL, "cursor-at-normal"),   /* newline */                                                                 \
       list_macro(THING_ANIM_CURSOR_NOPATH, "cursor-at-nopath"),   /* newline */                                                                 \
       list_macro(THING_ANIM_CURSOR_HAZARD, "cursor-at-hazard"),   /* newline */                                                                 \
+      list_macro(THING_ANIM_CURSOR_TARGET, "cursor-at-target"),   /* newline */                                                                 \
       list_macro(THING_ANIM_CURSOR_WARNING, "cursor-at-warning"), /* newline */
 
 ENUM_DEF_H(THING_ANIM_ENUM, ThingAnimType)

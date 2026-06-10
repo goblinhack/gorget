@@ -27,6 +27,8 @@
       list_macro(STATE_LOADED, "LOADED"),                       /* newline */                                                                   \
       list_macro(STATE_INVENTORY_MENU, "INVENTORY-MENU"),       /* newline */                                                                   \
       list_macro(STATE_COLLECT_MENU, "COLLECT-MENU"),           /* newline */                                                                   \
+      list_macro(STATE_THROW_MENU, "THROW-MENU"),               /* newline */                                                                   \
+      list_macro(STATE_THROW_ITEM, "THROW-ITEM"),               /* newline */                                                                   \
       list_macro(STATE_ITEM_MENU, "ITEM-MENU"),                 /* newline */                                                                   \
       list_macro(STATE_DEAD_MENU, "DEAD-MENU"),                 /* newline */                                                                   \
       list_macro(STATE_THE_END_MENU, "THE-END-MENU"),           /* newline */                                                                   \
@@ -227,8 +229,8 @@ void               game_key_unused11_set(Gamep g, SDL_Keysym key);
 [[nodiscard]] auto game_key_unused12_get(Gamep g) -> SDL_Keysym;
 void               game_key_unused12_set(Gamep g, SDL_Keysym key);
 
-[[nodiscard]] auto game_key_unused13_get(Gamep g) -> SDL_Keysym;
-void               game_key_unused13_set(Gamep g, SDL_Keysym key);
+[[nodiscard]] auto game_key_abort_get(Gamep g) -> SDL_Keysym;
+void               game_key_abort_set(Gamep g, SDL_Keysym key);
 
 [[nodiscard]] auto game_key_throw_get(Gamep g) -> SDL_Keysym;
 void               game_key_throw_set(Gamep g, SDL_Keysym key);

@@ -74,9 +74,28 @@
     return true;
   }
 
-  if (game_state(g) != STATE_PLAYING) {
-    DBG("game mouse down, ignore, not playing");
-    return false;
+  switch (game_state(g)) {
+    case STATE_THROW_ITEM :        [[fallthrough]];
+    case STATE_PLAYING :           break;
+    case STATE_COLLECT_MENU :      [[fallthrough]];
+    case STATE_DEAD_MENU :         [[fallthrough]];
+    case STATE_GENERATED :         [[fallthrough]];
+    case STATE_GENERATING :        [[fallthrough]];
+    case STATE_INIT :              [[fallthrough]];
+    case STATE_INVENTORY_MENU :    [[fallthrough]];
+    case STATE_ITEM_MENU :         [[fallthrough]];
+    case STATE_KEYBOARD_MENU :     [[fallthrough]];
+    case STATE_LEVEL_SELECT_MENU : [[fallthrough]];
+    case STATE_LOAD_MENU :         [[fallthrough]];
+    case STATE_LOADED :            [[fallthrough]];
+    case STATE_MAIN_MENU :         [[fallthrough]];
+    case STATE_MOVE_WARNING_MENU : [[fallthrough]];
+    case STATE_QUIT_MENU :         [[fallthrough]];
+    case STATE_QUITTING :          [[fallthrough]];
+    case STATE_SAVE_MENU :         [[fallthrough]];
+    case STATE_THE_END_MENU :      [[fallthrough]];
+    case STATE_THROW_MENU :        [[fallthrough]];
+    case GAME_STATE_ENUM_MAX :     DBG("game mouse down, ignore, not playing"); return false;
   }
 
   //
@@ -97,9 +116,28 @@
     return false;
   }
 
-  if (game_state(g) != STATE_PLAYING) {
-    DBG("game motion, ignore, not playing");
-    return false;
+  switch (game_state(g)) {
+    case STATE_THROW_ITEM :        [[fallthrough]];
+    case STATE_PLAYING :           break;
+    case STATE_COLLECT_MENU :      [[fallthrough]];
+    case STATE_DEAD_MENU :         [[fallthrough]];
+    case STATE_GENERATED :         [[fallthrough]];
+    case STATE_GENERATING :        [[fallthrough]];
+    case STATE_INIT :              [[fallthrough]];
+    case STATE_INVENTORY_MENU :    [[fallthrough]];
+    case STATE_ITEM_MENU :         [[fallthrough]];
+    case STATE_KEYBOARD_MENU :     [[fallthrough]];
+    case STATE_LEVEL_SELECT_MENU : [[fallthrough]];
+    case STATE_LOAD_MENU :         [[fallthrough]];
+    case STATE_LOADED :            [[fallthrough]];
+    case STATE_MAIN_MENU :         [[fallthrough]];
+    case STATE_MOVE_WARNING_MENU : [[fallthrough]];
+    case STATE_QUIT_MENU :         [[fallthrough]];
+    case STATE_QUITTING :          [[fallthrough]];
+    case STATE_SAVE_MENU :         [[fallthrough]];
+    case STATE_THE_END_MENU :      [[fallthrough]];
+    case STATE_THROW_MENU :        [[fallthrough]];
+    case GAME_STATE_ENUM_MAX :     DBG("game motion, ignore, not playing"); return false;
   }
 
   auto *v = game_levels_get(g);
@@ -414,6 +452,95 @@ static auto game_event_jump(Gamep g) -> bool
   return player_jump(g, v, l, player, v->cursor_at);
 }
 
+static auto game_event_throw(Gamep g) -> bool
+{
+  DBG("throw");
+  TRACE_INDENT();
+
+  auto *v = game_levels_get(g);
+  if (v == nullptr) {
+    return false;
+  }
+
+  auto *l = game_level_get(g, v);
+  if (l == nullptr) {
+    return false;
+  }
+
+  if (level_is_level_select(g, v, l)) {
+    return false;
+  }
+
+  auto *player = thing_player(g);
+  if (player == nullptr) [[unlikely]] {
+    return false;
+  }
+
+  if (thing_is_dead(player)) {
+    return false;
+  }
+
+  if (level_tick_is_in_progress(g, v, l) || level_tick_begin_is_requested(g, v, l)) {
+    return false;
+  }
+
+  std::vector< Thingp > items;
+
+  FOR_ALL_INVENTORY_ITEMS(g, v, l, player, item)
+  {
+    if (thing_is_able_to_be_thrown(item)) {
+      items.push_back(item);
+    }
+  }
+
+  if (items.empty()) {
+    topcon(UI_WARNING_FMT_STR "You have nothing that can be thrown." UI_RESET_FMT);
+    (void) sound_play(g, "error");
+    return true;
+  }
+
+  wid_throw_item_show(g, v, l, player, items);
+
+  return true;
+}
+
+static auto game_event_abort(Gamep g) -> bool
+{
+  DBG("throw");
+  TRACE_INDENT();
+
+  auto *v = game_levels_get(g);
+  if (v == nullptr) {
+    return false;
+  }
+
+  auto *l = game_level_get(g, v);
+  if (l == nullptr) {
+    return false;
+  }
+
+  if (level_is_level_select(g, v, l)) {
+    return false;
+  }
+
+  auto *player = thing_player(g);
+  if (player == nullptr) [[unlikely]] {
+    return false;
+  }
+
+  if (thing_is_dead(player)) {
+    return false;
+  }
+
+  if (level_tick_is_in_progress(g, v, l) || level_tick_begin_is_requested(g, v, l)) {
+    return false;
+  }
+
+  game_state_reset(g, "aborted task");
+  (void) sound_play(g, "error");
+  return true;
+}
+
 [[nodiscard]] auto game_event_help(Gamep g) -> bool
 {
   DBG("help");
@@ -552,6 +679,20 @@ static auto game_event_jump(Gamep g) -> bool
     DBG("pressed jump key");
     TRACE_INDENT();
     game_event_jump(g);
+    return true;
+  }
+
+  if (sdlk_eq(*key, game_key_throw_get(g))) {
+    DBG("pressed throw key");
+    TRACE_INDENT();
+    game_event_throw(g);
+    return true;
+  }
+
+  if (sdlk_eq(*key, game_key_abort_get(g))) {
+    DBG("pressed abort key");
+    TRACE_INDENT();
+    game_event_abort(g);
     return true;
   }
 

@@ -142,7 +142,7 @@ public:
   SDL_Keysym key_unused10   = {};
   SDL_Keysym key_unused11   = {};
   SDL_Keysym key_unused12   = {};
-  SDL_Keysym key_unused13   = {};
+  SDL_Keysym key_abort      = {};
   SDL_Keysym key_throw      = {};
   SDL_Keysym key_fire       = {};
   SDL_Keysym key_inventory  = {};
@@ -377,6 +377,7 @@ void Config::reset()
   key_fire.sym       = SDLK_SPACE;
   key_jump.sym       = SDLK_j;
   key_throw.sym      = SDLK_t;
+  key_abort.sym      = SDLK_ESCAPE;
   key_load.sym       = SDLK_F1;
   key_move_down.sym  = SDLK_s;
   key_move_left.sym  = SDLK_a;
@@ -1066,6 +1067,13 @@ void Game::state_change(GameStateType new_state, const std::string &why)
       //
       g_opt_level_select_menu = false;
       break;
+    case STATE_THROW_ITEM :
+      //
+      // After a window closes, and we transition back to playing state,
+      // the cursor is missing. We need to recreate it.
+      //
+      game_request_to_update_cursor_set(g);
+      break;
     case STATE_DEAD_MENU :
       wid_actionbar_fini(g);
 
@@ -1079,6 +1087,7 @@ void Game::state_change(GameStateType new_state, const std::string &why)
     case STATE_LOAD_MENU :         [[fallthrough]];
     case STATE_LOADED :            [[fallthrough]];
     case STATE_SAVE_MENU :         [[fallthrough]];
+    case STATE_THROW_MENU :        [[fallthrough]];
     case STATE_QUIT_MENU :         [[fallthrough]];
     case STATE_INVENTORY_MENU :    [[fallthrough]];
     case STATE_COLLECT_MENU :      [[fallthrough]];
@@ -1110,6 +1119,7 @@ void Game::state_change(GameStateType new_state, const std::string &why)
       break;
     case STATE_LEVEL_SELECT_MENU : [[fallthrough]];
     case STATE_PLAYING :
+    case STATE_THROW_ITEM :
       switch (old_state) {
         case STATE_LOADED :
           (void) wid_leftbar_init(g);
@@ -1128,6 +1138,8 @@ void Game::state_change(GameStateType new_state, const std::string &why)
         case STATE_MAIN_MENU :         [[fallthrough]];
         case STATE_INVENTORY_MENU :    [[fallthrough]];
         case STATE_COLLECT_MENU :      [[fallthrough]];
+        case STATE_THROW_ITEM :        [[fallthrough]];
+        case STATE_THROW_MENU :        [[fallthrough]];
         case STATE_ITEM_MENU :
           (void) wid_leftbar_init(g);
           (void) wid_rightbar_init(g);
@@ -1148,6 +1160,7 @@ void Game::state_change(GameStateType new_state, const std::string &why)
     case STATE_THE_END_MENU :   [[fallthrough]];
     case STATE_KEYBOARD_MENU :  [[fallthrough]];
     case STATE_LOAD_MENU :      [[fallthrough]];
+    case STATE_THROW_MENU :     [[fallthrough]];
     case STATE_SAVE_MENU :      [[fallthrough]];
     case STATE_QUIT_MENU :      [[fallthrough]];
     case STATE_COLLECT_MENU :   [[fallthrough]];
@@ -1208,6 +1221,8 @@ void Game::handle_game_request_to_remake_ui()
     case STATE_PLAYING :           [[fallthrough]];
     case STATE_LEVEL_SELECT_MENU : [[fallthrough]];
     case STATE_COLLECT_MENU :      [[fallthrough]];
+    case STATE_THROW_ITEM :        [[fallthrough]];
+    case STATE_THROW_MENU :        [[fallthrough]];
     case STATE_INVENTORY_MENU :
       if (v != nullptr) {
         (void) wid_leftbar_init(g);
@@ -1267,6 +1282,8 @@ void Game::tick()
       case STATE_QUIT_MENU :         [[fallthrough]];
       case STATE_INVENTORY_MENU :    [[fallthrough]];
       case STATE_COLLECT_MENU :      [[fallthrough]];
+      case STATE_THROW_MENU :        [[fallthrough]];
+      case STATE_THROW_ITEM :        [[fallthrough]];
       case STATE_ITEM_MENU :         [[fallthrough]];
       case STATE_GENERATING :        [[fallthrough]];
       case STATE_GENERATED :         [[fallthrough]];
@@ -1394,9 +1411,7 @@ void Game::display()
       //
       // Needed else we can't see the level select things
       //
-    case STATE_INVENTORY_MENU :    [[fallthrough]];
-    case STATE_COLLECT_MENU :      [[fallthrough]];
-    case STATE_ITEM_MENU :         [[fallthrough]];
+    case STATE_THROW_ITEM :        [[fallthrough]];
     case STATE_PLAYING :           [[fallthrough]];
     case STATE_DEAD_MENU :         [[fallthrough]];
     case STATE_THE_END_MENU :
@@ -1407,8 +1422,12 @@ void Game::display()
     case STATE_INIT :              [[fallthrough]];
     case STATE_MAIN_MENU :         [[fallthrough]];
     case STATE_QUITTING :          [[fallthrough]];
+    case STATE_INVENTORY_MENU :    [[fallthrough]];
+    case STATE_COLLECT_MENU :      [[fallthrough]];
     case STATE_MOVE_WARNING_MENU : [[fallthrough]];
     case STATE_KEYBOARD_MENU :     [[fallthrough]];
+    case STATE_THROW_MENU :        [[fallthrough]];
+    case STATE_ITEM_MENU :         [[fallthrough]];
     case STATE_LOAD_MENU :         [[fallthrough]];
     case STATE_LOADED :            [[fallthrough]];
     case STATE_SAVE_MENU :         [[fallthrough]];
@@ -2683,16 +2702,16 @@ void game_key_unused12_set(Gamep g, SDL_Keysym key)
   g->config.key_unused12 = key;
 }
 
-[[nodiscard]] auto game_key_unused13_get(Gamep g) -> SDL_Keysym
+[[nodiscard]] auto game_key_abort_get(Gamep g) -> SDL_Keysym
 {
   TRACE();
 
   if (g == nullptr) {
     return no_key;
   }
-  return g->config.key_unused13;
+  return g->config.key_abort;
 }
-void game_key_unused13_set(Gamep g, SDL_Keysym key)
+void game_key_abort_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
 
@@ -2700,7 +2719,7 @@ void game_key_unused13_set(Gamep g, SDL_Keysym key)
     ERR("no game pointer");
     return;
   }
-  g->config.key_unused13 = key;
+  g->config.key_abort = key;
 }
 
 [[nodiscard]] auto game_key_throw_get(Gamep g) -> SDL_Keysym

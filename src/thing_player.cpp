@@ -12,12 +12,14 @@
 #include "my_level_inlines.hpp" // NOLINT
 #include "my_line.hpp"
 #include "my_main.hpp"
+#include "my_sound.hpp"
 #include "my_thing.hpp"
 #include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp" // NOLINT
 #include "my_tp.hpp"
 #include "my_types.hpp"
 #include "my_wid_warning.hpp"
+#include "my_wids.hpp"
 
 #include <cmath>
 #include <cstdint>
@@ -130,47 +132,85 @@ void thing_player_init(Gamep g)
   log("thing mouse down");
   TRACE_INDENT();
 
-  switch (player_state(g, v)) {
-    case PLAYER_STATE_INIT :
-      //
-      // Player not initialized yet
-      //
+  switch (game_state(g)) {
+    case STATE_THROW_ITEM :
+      {
+        auto *player = thing_player(g);
+        if (player) {
+          auto item = thing_find(g, v, g_thing_throw_id);
+          if (item) {
+            if (! thing_throw_to(g, v, l, player, item, v->cursor_at)) {
+              topcon("You failed to throw the item.");
+              (void) sound_play(g, "error");
+            }
+          }
+        }
+        game_state_reset(g, "finished throwing");
+      }
       break;
-    case PLAYER_STATE_DEAD :
-      //
-      // No player mouse events when dead
-      //
-      break;
-    case PLAYER_STATE_NORMAL :
-      //
-      // Give a chance to open/close doors first.
-      //
-      if (thing_player_pass_event_to_other_things(g, v, l, x, y, button)) {
-        break;
+    case STATE_PLAYING :
+      switch (player_state(g, v)) {
+        case PLAYER_STATE_INIT :
+          //
+          // Player not initialized yet
+          //
+          break;
+        case PLAYER_STATE_DEAD :
+          //
+          // No player mouse events when dead
+          //
+          break;
+        case PLAYER_STATE_NORMAL :
+          //
+          // Give a chance to open/close doors first.
+          //
+          if (thing_player_pass_event_to_other_things(g, v, l, x, y, button)) {
+            break;
+          }
+
+          //
+          // Replace the mouse path
+          //
+          (void) thing_player_replace_current_mouse_path(g, v, l);
+          break;
+        case PLAYER_STATE_PATH_REQUESTED :
+          //
+          // Player wants to start following or replace the current path.
+          //
+          break;
+        case PLAYER_STATE_MOVE_CONFIRM_REQUESTED :
+          //
+          // Wait for confirmation.
+          //
+          break;
+        case PLAYER_STATE_FOLLOWING_PATH :
+          //
+          // Already following a path. Allow the me to change the path.
+          //
+          (void) thing_player_replace_current_mouse_path(g, v, l);
+          break;
+        case PLAYER_STATE_ENUM_MAX : break;
       }
 
-      //
-      // Replace the mouse path
-      //
-      (void) thing_player_replace_current_mouse_path(g, v, l);
-      break;
-    case PLAYER_STATE_PATH_REQUESTED :
-      //
-      // Player wants to start following or replace the current path.
-      //
-      break;
-    case PLAYER_STATE_MOVE_CONFIRM_REQUESTED :
-      //
-      // Wait for confirmation.
-      //
-      break;
-    case PLAYER_STATE_FOLLOWING_PATH :
-      //
-      // Already following a path. Allow the me to change the path.
-      //
-      (void) thing_player_replace_current_mouse_path(g, v, l);
-      break;
-    case PLAYER_STATE_ENUM_MAX : break;
+    case STATE_COLLECT_MENU :      [[fallthrough]];
+    case STATE_DEAD_MENU :         [[fallthrough]];
+    case STATE_GENERATED :         [[fallthrough]];
+    case STATE_GENERATING :        [[fallthrough]];
+    case STATE_INIT :              [[fallthrough]];
+    case STATE_INVENTORY_MENU :    [[fallthrough]];
+    case STATE_ITEM_MENU :         [[fallthrough]];
+    case STATE_KEYBOARD_MENU :     [[fallthrough]];
+    case STATE_LEVEL_SELECT_MENU : [[fallthrough]];
+    case STATE_LOAD_MENU :         [[fallthrough]];
+    case STATE_LOADED :            [[fallthrough]];
+    case STATE_MAIN_MENU :         [[fallthrough]];
+    case STATE_MOVE_WARNING_MENU : [[fallthrough]];
+    case STATE_QUIT_MENU :         [[fallthrough]];
+    case STATE_QUITTING :          [[fallthrough]];
+    case STATE_SAVE_MENU :         [[fallthrough]];
+    case STATE_THE_END_MENU :      [[fallthrough]];
+    case STATE_THROW_MENU :        [[fallthrough]];
+    case GAME_STATE_ENUM_MAX :     DBG("game motion, ignore, not playing"); return false;
   }
 
   //
@@ -205,6 +245,7 @@ void thing_player_event_loop(Gamep g, Levelsp v, Levelp l)
 
   switch (game_state(g)) {
     case STATE_PLAYING :
+    case STATE_THROW_ITEM :
       //
       // If the me pressed the mouse, we need to apply the current cursor path and start moving.
       //
@@ -268,6 +309,7 @@ void thing_player_event_loop(Gamep g, Levelsp v, Levelp l)
     case STATE_QUIT_MENU :         [[fallthrough]];
     case STATE_INVENTORY_MENU :    [[fallthrough]];
     case STATE_COLLECT_MENU :      [[fallthrough]];
+    case STATE_THROW_MENU :        [[fallthrough]];
     case STATE_ITEM_MENU :         [[fallthrough]];
     case STATE_GENERATING :        [[fallthrough]];
     case STATE_GENERATED :         [[fallthrough]];

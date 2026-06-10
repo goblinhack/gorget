@@ -90,6 +90,10 @@ static void wid_cfg_check_for_conflicts(Gamep g, SDL_Keysym code)
     con("%%fg=orange$Conflicting keyboard mapping, disabling key for jump" UI_RESET_FMT);
     game_key_jump_set(g, none);
   }
+  if (sdlk_eq(game_key_abort_get(g), code)) {
+    con("%%fg=orange$Conflicting keyboard mapping, disabling key for abort" UI_RESET_FMT);
+    game_key_abort_set(g, none);
+  }
   if (sdlk_eq(game_key_throw_get(g), code)) {
     con("%%fg=orange$Conflicting keyboard mapping, disabling key for throwing" UI_RESET_FMT);
     game_key_throw_set(g, none);
@@ -145,10 +149,6 @@ static void wid_cfg_check_for_conflicts(Gamep g, SDL_Keysym code)
   if (sdlk_eq(game_key_unused12_get(g), code)) {
     con("%%fg=orange$Conflicting keyboard mapping, disabling key for unused12" UI_RESET_FMT);
     game_key_unused12_set(g, none);
-  }
-  if (sdlk_eq(game_key_unused13_get(g), code)) {
-    con("%%fg=orange$Conflicting keyboard mapping, disabling key for unused13" UI_RESET_FMT);
-    game_key_unused13_set(g, none);
   }
 }
 
@@ -401,13 +401,13 @@ static void wid_cfg_key_unused12_set(Gamep g, SDL_Keysym code)
   wid_cfg_help_select(g);
 }
 
-static void wid_cfg_key_unused13_set(Gamep g, SDL_Keysym code)
+static void wid_cfg_key_abort_set(Gamep g, SDL_Keysym code)
 {
   TRACE();
   local_g_config_changed = true;
-  game_key_unused13_set(g, none);
+  game_key_abort_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
-  game_key_unused13_set(g, code);
+  game_key_abort_set(g, code);
   wid_cfg_help_select(g);
 }
 
@@ -764,11 +764,11 @@ static void grab_key(const std::string &which)
   return true;
 }
 
-[[nodiscard]] static auto wid_cfg_key_unused13(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_cfg_key_abort(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
-  grab_key("key_unused13");
-  sdl.on_sdl_key_grab    = wid_cfg_key_unused13_set;
+  grab_key("key_abort");
+  sdl.on_sdl_key_grab    = wid_cfg_key_abort_set;
   local_g_config_changed = true;
   return true;
 }
@@ -1275,6 +1275,33 @@ void wid_cfg_help_select(Gamep g)
     wid_set_pos(w, tl, br);
     wid_set_text(w, ::to_string(game_key_throw_get(g)));
     wid_set_on_mouse_up(w, wid_cfg_key_throw);
+  }
+  ///////////////////////////////////////////////////////////////////////
+  // abort
+  ///////////////////////////////////////////////////////////////////////
+  y_at++;
+  {
+    TRACE();
+    auto *p = wid_cfg_help_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_square_button(g, p, "key_abort");
+
+    spoint const tl(1, y_at);
+    spoint const br(width / 2, y_at);
+    wid_set_shape_none(w);
+    wid_set_pos(w, tl, br);
+    wid_set_text_lhs(w);
+    wid_set_text(w, "Abort task e.g. throw item");
+  }
+  {
+    TRACE();
+    auto *p = wid_cfg_help_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_button(g, p, "value");
+
+    spoint const tl((width / 2) + rhs_button_left, y_at);
+    spoint const br((width / 2) + rhs_button_right, y_at);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, ::to_string(game_key_abort_get(g)));
+    wid_set_on_mouse_up(w, wid_cfg_key_abort);
   }
 
   ///////////////////////////////////////////////////////////////////////
@@ -1863,33 +1890,6 @@ void wid_cfg_help_select(Gamep g)
     wid_set_pos(w, tl, br);
     wid_set_text(w, ::to_string(game_key_unused12_get(g)));
     wid_set_on_mouse_up(w, wid_cfg_key_unused12);
-  }
-  ///////////////////////////////////////////////////////////////////////
-  // unused13
-  ///////////////////////////////////////////////////////////////////////
-  y_at++;
-  {
-    TRACE();
-    auto *p = wid_cfg_help_window->wid_text_area->wid_text_area;
-    auto *w = wid_new_square_button(g, p, "key_unused13");
-
-    spoint const tl(1, y_at);
-    spoint const br(width / 2, y_at);
-    wid_set_shape_none(w);
-    wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w);
-    wid_set_text(w, "key_unused13");
-  }
-  {
-    TRACE();
-    auto *p = wid_cfg_help_window->wid_text_area->wid_text_area;
-    auto *w = wid_new_button(g, p, "value");
-
-    spoint const tl((width / 2) + rhs_button_left, y_at);
-    spoint const br((width / 2) + rhs_button_right, y_at);
-    wid_set_pos(w, tl, br);
-    wid_set_text(w, ::to_string(game_key_unused13_get(g)));
-    wid_set_on_mouse_up(w, wid_cfg_key_unused13);
   }
 
   wid_update(g, wid_cfg_help_window->wid_text_area->wid_text_area);

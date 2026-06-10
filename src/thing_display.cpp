@@ -150,9 +150,7 @@ void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, const bpoint &p, 
       tl.y -= jump_height;
       br.y -= jump_height;
     }
-  }
 
-  if (t_maybe_null != nullptr) {
     if (thing_is_thrown(t_maybe_null)) {
       auto throw_height = static_cast< int >((sin(std::numbers::pi_v< float > * t_maybe_null->thing_dt)) * static_cast< float >(dh));
       throw_height *= THING_THROW_HEIGHT_ANIM_TILES;

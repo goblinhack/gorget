@@ -21,6 +21,13 @@ static auto tp_cursor_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l, con
   //
   Tilep tile = tp_tiles_get(tp, THING_ANIM_CURSOR_NOPATH, 0);
 
+  //
+  // Targetting?
+  //
+  if (game_state(g) == STATE_THROW_ITEM) {
+    return tp_tiles_get(tp, THING_ANIM_CURSOR_TARGET, 0);
+  }
+
   auto *player = thing_player(g);
   if (player == nullptr) [[unlikely]] {
     return tile;
@@ -85,6 +92,8 @@ static auto tp_cursor_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l, con
   tp_tiles_push_back(tp, THING_ANIM_CURSOR_WARNING, tile);
   tile = tile_find_mand("cursor_at.hazard");
   tp_tiles_push_back(tp, THING_ANIM_CURSOR_HAZARD, tile);
+  tile = tile_find_mand("cursor_at.target");
+  tp_tiles_push_back(tp, THING_ANIM_CURSOR_TARGET, tile);
 
   return true;
 }
