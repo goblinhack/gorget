@@ -30,51 +30,6 @@ static auto tp_staff_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
       UI_INFO4_FMT_STR "Info: staves are more powerful than staves, but have fewer charges and are wielded with a move penalty.\n";
 }
 
-[[nodiscard]] static auto tp_staff_fire_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp collector, ThingEvent &e) -> bool
-{
-  TRACE();
-
-  return true;
-}
-
-[[nodiscard]] static auto tp_staff_fire_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp dropper, ThingEvent &e) -> bool
-{
-  TRACE();
-
-  return true;
-}
-
-[[nodiscard]] static auto tp_staff_fire_on_carry_success(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp collector, ThingEvent &e) -> bool
-{
-  TRACE();
-
-  if (thing_is_player(collector)) {
-    thing_sound_play(g, v, l, collector, "item_collect");
-  }
-
-  return true;
-}
-
-[[nodiscard]] static auto tp_staff_fire_on_drop_success(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp dropper, ThingEvent &e) -> bool
-{
-  TRACE();
-
-  if (e.event_type == THING_EVENT_USER_INITIATED) {
-    if (thing_is_player(dropper)) {
-      thing_sound_play(g, v, l, dropper, "item_drop");
-    }
-  }
-
-  return true;
-}
-
-[[nodiscard]] static auto tp_staff_fire_on_wield_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user) -> bool
-{
-  TRACE();
-
-  return true;
-}
-
 [[nodiscard]] static auto tp_staff_fire_on_use_weapon_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user) -> Tpp
 {
   TRACE();
@@ -97,12 +52,7 @@ static auto tp_staff_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
   // begin sort marker1 {
   thing_description_set(tp, tp_staff_fire_description_get);
   thing_detail_set(tp, tp_staff_fire_detail_get);
-  thing_on_carry_request_set(tp, tp_staff_fire_on_carry_request);
-  thing_on_carry_success_set(tp, tp_staff_fire_on_carry_success);
-  thing_on_drop_request_set(tp, tp_staff_fire_on_drop_request);
-  thing_on_drop_success_set(tp, tp_staff_fire_on_drop_success);
   thing_on_use_weapon_request_set(tp, tp_staff_fire_on_use_weapon_request);
-  thing_on_wield_request_set(tp, tp_staff_fire_on_wield_request);
   tp_charge_count_set(tp, 500);
   tp_flag_set(tp, is_able_to_be_thrown);
   tp_flag_set(tp, is_able_to_fall_sound);

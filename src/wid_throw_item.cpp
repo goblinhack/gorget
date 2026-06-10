@@ -368,6 +368,12 @@ void wid_throw_item_show(Gamep g, Levelsp v, Levelp l, Thingp player, std::vecto
         line = "-";
       }
 
+      auto count = thing_inventory_get_item_count(g, v, l, item, player);
+      if (count > 1) {
+        line += " x";
+        line += std::to_string(count);
+      }
+
       line += " ";
 
       if (item != nullptr) {

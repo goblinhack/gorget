@@ -566,6 +566,9 @@ void thing_on_thrown_end(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp thrower
     return;
   }
   if (tp->on_thrown_end == nullptr) {
+    if (thing_is_player(thrower)) {
+      thing_sound_play(g, v, l, thrower, "item_drop");
+    }
     return;
   }
   tp->on_thrown_end(g, v, l, me, thrower);

@@ -203,7 +203,7 @@ void thing_on_carry_request_set(Tpp tp, thing_on_carry_request_t callback)
   tp->on_carry_request = callback;
 }
 
-[[nodiscard]] auto thing_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, ThingEvent &e) -> bool
+[[nodiscard]] auto thing_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user, ThingEvent &e) -> bool
 {
   TRACE();
   auto *tp = thing_tp(me);
@@ -217,11 +217,11 @@ void thing_on_carry_request_set(Tpp tp, thing_on_carry_request_t callback)
     //
     return true;
   }
-  if (! thing_is_player(owner) && ! thing_is_monst(owner)) {
-    thing_err(owner, "unexpected thing for %s", __FUNCTION__);
+  if (! thing_is_player(user) && ! thing_is_monst(user)) {
+    thing_err(user, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
-  return tp->on_carry_request(g, v, l, me, owner, e);
+  return tp->on_carry_request(g, v, l, me, user, e);
 }
 
 void thing_on_carry_success_set(Tpp tp, thing_on_carry_success_t callback)
@@ -234,7 +234,7 @@ void thing_on_carry_success_set(Tpp tp, thing_on_carry_success_t callback)
   tp->on_carry_success = callback;
 }
 
-[[nodiscard]] auto thing_on_carry_success(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, ThingEvent &e) -> bool
+[[nodiscard]] auto thing_on_carry_success(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user, ThingEvent &e) -> bool
 {
   TRACE();
   auto *tp = thing_tp(me);
@@ -246,13 +246,16 @@ void thing_on_carry_success_set(Tpp tp, thing_on_carry_success_t callback)
     //
     // Assume success
     //
+    if (thing_is_player(user)) {
+      thing_sound_play(g, v, l, user, "item_collect");
+    }
     return true;
   }
-  if (! thing_is_player(owner) && ! thing_is_monst(owner)) {
-    thing_err(owner, "unexpected thing for %s", __FUNCTION__);
+  if (! thing_is_player(user) && ! thing_is_monst(user)) {
+    thing_err(user, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
-  return tp->on_carry_success(g, v, l, me, owner, e);
+  return tp->on_carry_success(g, v, l, me, user, e);
 }
 
 [[nodiscard]] auto thing_carry(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, ThingEvent &e) -> bool

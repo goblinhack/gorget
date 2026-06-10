@@ -36,22 +36,6 @@ void thing_is_thrown_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp throw
     thing_on_thrown_begin(g, v, l, item, thrower);
   } else {
     thing_on_thrown_end(g, v, l, item, thrower);
-
-    //
-    // Remove association with thrower
-    //
-    auto owner = thing_owner(g, v, l, item);
-    if (owner) {
-      ThingEvent e {
-          .reason     = "user threw item",  //
-          .event_type = THING_EVENT_THROWN, //
-          .source     = owner,              //
-      };
-
-      (void) thing_drop(g, v, l, owner, item, e);
-    }
-
-    thing_owner_unset(g, v, l, item);
   }
 
   item->_is_thrown = val;

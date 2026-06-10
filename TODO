@@ -1,7 +1,9 @@
 bugs
 ----
-thing_clone
 throwing potions
+out of range on throw distance
+smashing potion sound
+thing_clone
 item thrown onto exit
 item thrown onto water
 item thrown onto chasm

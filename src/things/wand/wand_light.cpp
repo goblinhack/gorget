@@ -29,51 +29,6 @@ static auto tp_wand_light_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
       UI_INFO3_FMT_STR "Info: wands are less powerful than wands, but have more charges and be wielded without a move penalty.\n";
 }
 
-[[nodiscard]] static auto tp_wand_light_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp collector, ThingEvent &e) -> bool
-{
-  TRACE();
-
-  return true;
-}
-
-[[nodiscard]] static auto tp_wand_light_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp dropper, ThingEvent &e) -> bool
-{
-  TRACE();
-
-  return true;
-}
-
-[[nodiscard]] static auto tp_wand_light_on_carry_success(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp collector, ThingEvent &e) -> bool
-{
-  TRACE();
-
-  if (thing_is_player(collector)) {
-    thing_sound_play(g, v, l, collector, "item_collect");
-  }
-
-  return true;
-}
-
-[[nodiscard]] static auto tp_wand_light_on_drop_success(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp dropper, ThingEvent &e) -> bool
-{
-  TRACE();
-
-  if (e.event_type == THING_EVENT_USER_INITIATED) {
-    if (thing_is_player(dropper)) {
-      thing_sound_play(g, v, l, dropper, "item_drop");
-    }
-  }
-
-  return true;
-}
-
-[[nodiscard]] static auto tp_wand_light_on_wield_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user) -> bool
-{
-  TRACE();
-
-  return true;
-}
-
 [[nodiscard]] static auto tp_wand_light_on_use_weapon_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user) -> Tpp
 {
   TRACE();
@@ -96,12 +51,7 @@ static auto tp_wand_light_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
   // begin sort marker1 {
   thing_description_set(tp, tp_wand_light_description_get);
   thing_detail_set(tp, tp_wand_light_detail_get);
-  thing_on_carry_request_set(tp, tp_wand_light_on_carry_request);
-  thing_on_carry_success_set(tp, tp_wand_light_on_carry_success);
-  thing_on_drop_request_set(tp, tp_wand_light_on_drop_request);
-  thing_on_drop_success_set(tp, tp_wand_light_on_drop_success);
   thing_on_use_weapon_request_set(tp, tp_wand_light_on_use_weapon_request);
-  thing_on_wield_request_set(tp, tp_wand_light_on_wield_request);
   tp_charge_count_set(tp, 5000);
   tp_flag_set(tp, is_able_to_be_thrown);
   tp_flag_set(tp, is_able_to_fall_sound);

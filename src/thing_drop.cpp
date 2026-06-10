@@ -151,9 +151,6 @@ void thing_on_drop_request_set(Tpp tp, thing_on_drop_request_t callback)
     return false;
   }
   if (tp->on_drop_request == nullptr) {
-    //
-    // Assume success
-    //
     return true;
   }
   if (! thing_is_player(user) && ! thing_is_monst(user)) {
@@ -185,6 +182,14 @@ void thing_on_drop_success_set(Tpp tp, thing_on_drop_success_t callback)
     //
     // Assume success
     //
+    //
+    // Assume success
+    //
+    if (e.event_type == THING_EVENT_USER_INITIATED) {
+      if (thing_is_player(user)) {
+        thing_sound_play(g, v, l, user, "item_drop");
+      }
+    }
     return true;
   }
   if (! thing_is_player(user) && ! thing_is_monst(user)) {

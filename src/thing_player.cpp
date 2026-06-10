@@ -191,7 +191,7 @@ void thing_player_init(Gamep g)
           break;
         case PLAYER_STATE_ENUM_MAX : break;
       }
-
+      break;
     case STATE_COLLECT_MENU :      [[fallthrough]];
     case STATE_DEAD_MENU :         [[fallthrough]];
     case STATE_GENERATED :         [[fallthrough]];

@@ -26,44 +26,6 @@ static auto tp_potion_healing_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me
   return UI_INFO1_FMT_STR "Consume this potion to restore your health. Other problems in life may remain.";
 }
 
-[[nodiscard]] static auto tp_potion_healing_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp collector, ThingEvent &e) -> bool
-{
-  TRACE();
-
-  return true;
-}
-
-[[nodiscard]] static auto tp_potion_healing_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp dropper, ThingEvent &e) -> bool
-{
-  TRACE();
-
-  return true;
-}
-
-[[nodiscard]] static auto tp_potion_healing_on_carry_success(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp collector, ThingEvent &e) -> bool
-{
-  TRACE();
-
-  if (thing_is_player(collector)) {
-    thing_sound_play(g, v, l, collector, "item_collect");
-  }
-
-  return true;
-}
-
-[[nodiscard]] static auto tp_potion_healing_on_drop_success(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp dropper, ThingEvent &e) -> bool
-{
-  TRACE();
-
-  if (e.event_type == THING_EVENT_USER_INITIATED) {
-    if (thing_is_player(dropper)) {
-      thing_sound_play(g, v, l, dropper, "item_drop");
-    }
-  }
-
-  return true;
-}
-
 static void tp_potion_healing_on_thrown_end(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp thrower)
 {
   TRACE();
@@ -132,11 +94,7 @@ static void tp_potion_healing_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, 
   // begin sort marker1 {
   thing_description_set(tp, tp_potion_healing_description_get);
   thing_detail_set(tp, tp_potion_healing_detail_get);
-  thing_on_carry_request_set(tp, tp_potion_healing_on_carry_request);
-  thing_on_carry_success_set(tp, tp_potion_healing_on_carry_success);
   thing_on_death_set(tp, tp_potion_healing_on_death);
-  thing_on_drop_request_set(tp, tp_potion_healing_on_drop_request);
-  thing_on_drop_success_set(tp, tp_potion_healing_on_drop_success);
   thing_on_thrown_end_set(tp, tp_potion_healing_on_thrown_end);
   thing_on_use_set(tp, tp_potion_healing_on_use);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // fumble => intensify / keep burning / crit => stop burning
