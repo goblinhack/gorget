@@ -240,10 +240,8 @@ static Thingp g_item;
 
   (void) wid_item_menu_destroy();
 
-  //
-  // Just go back to playing
-  //
-  game_state_change(g, STATE_PLAYING, "close inventory");
+  g_thing_throw_id = item->id;
+  game_state_change(g, STATE_THROW_ITEM, "choose a target");
 
   return true;
 }
