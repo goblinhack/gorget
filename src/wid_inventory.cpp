@@ -41,7 +41,7 @@ static void wid_inventory_destroy(Gamep g)
   if (wid_inventory_window != nullptr) {
     wid_destroy(g, &wid_inventory_window);
 
-    game_state_change(g, STATE_PLAYING, "close inventory");
+    game_state_reset(g, "close inventory");
   }
 }
 

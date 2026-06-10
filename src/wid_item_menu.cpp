@@ -65,7 +65,7 @@ static Thingp g_item;
       //
       // If empty, just go back to playing
       //
-      game_state_change(g, STATE_PLAYING, "close inventory");
+      game_state_reset(g, "close inventory");
     } else {
       //
       // Re-open the inventory
@@ -151,7 +151,9 @@ static Thingp g_item;
   }
 
   (void) wid_item_menu_destroy();
-  (void) wid_item_menu_go_back(g);
+
+  game_state_reset(g, "dropped item");
+
   return true;
 }
 
@@ -201,7 +203,7 @@ static Thingp g_item;
   //
   // Just go back to playing
   //
-  game_state_change(g, STATE_PLAYING, "close inventory");
+  game_state_reset(g, "dropped item");
 
   return true;
 }

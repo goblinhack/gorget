@@ -224,7 +224,7 @@ void thing_inventory_dump(Gamep g, Levelsp v, Levelp l, Thingp owner)
   }
 
   FOR_ALL_INVENTORY_SLOTS(g, v, l, owner, slot, item)
-  { //
+  {
     if (item == nullptr) {
       THING_DBG(owner, "slot %d: -", _n_);
       continue;

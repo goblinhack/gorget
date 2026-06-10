@@ -49,8 +49,6 @@ static auto thing_carry_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp o
 
   (void) thing_pop(g, v, item);
 
-  thing_inventory_dump(g, v, l, owner);
-
   if (thing_is_player(owner)) {
     if (e.event_type != THING_EVENT_SPAWNED) {
       auto the_thing = thing_name_long_the(g, v, l, item);
@@ -60,6 +58,8 @@ static auto thing_carry_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp o
   }
 
   thing_owner_set(g, v, l, item, owner);
+
+  thing_inventory_dump(g, v, l, owner);
 
   return true;
 }
@@ -166,13 +166,6 @@ static auto thing_carry_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp o
       // Success
       //
       (void) thing_on_drop_success(g, v, l, item, owner, e);
-
-      //
-      // If counts remain, keep the item as carried
-      //
-      if (thing_inventory_get_item_count(g, v, l, item, owner) != 0) {
-        item->_is_carried = old_value;
-      }
     } else {
       //
       // Remove failed

@@ -54,20 +54,62 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp us
   //
   // Drop the thing where the player is
   //
-  if (thing_inventory_get_item_count(g, v, l, item, user) == -1) {
-    //
-    // But only if the last item
-    //
-    if (! thing_is_thrown(item)) {
-      if (! thing_warp_to(g, v, l, item, thing_at(user))) {
-        if (e.event_type == THING_EVENT_USER_INITIATED) {
-          auto the_thing = thing_name_long_the(g, v, l, item);
-          topcon("You fail to place %s.", the_thing.c_str());
+  THING_DBG(user, "drop: %s (place the item)", s.c_str());
+  TRACE_INDENT();
+
+  if (! thing_warp_to(g, v, l, item, thing_at(user))) {
+    if (e.event_type == THING_EVENT_USER_INITIATED) {
+      auto the_thing = thing_name_long_the(g, v, l, item);
+      topcon("You fail to place %s.", the_thing.c_str());
+    }
+    return false;
+  }
+
+  THING_DBG(user, "drop: %s (placed the item)", s.c_str());
+  TRACE_INDENT();
+
+  //
+  // Replace the thing with a copy if count exists
+  //
+  if (thing_inventory_get_item_count(g, v, l, item, user) != -1) {
+    THING_DBG(user, "drop: %s (item count remains, need a copy)", s.c_str());
+
+    FOR_ALL_INVENTORY_SLOTS(g, v, l, owner, slot, an_item)
+    {
+      if (! an_item) {
+        continue;
+      }
+
+      //
+      // Replace the thing dropped with a new thing
+      //
+      if (thing_tp(an_item) == thing_tp(item)) {
+        auto thing_copy = thing_spawn(g, v, l, thing_tp(item), user);
+
+        if (thing_copy) {
+          THING_DBG(thing_copy, "drop: %s (thing copy)", s.c_str());
+          TRACE_INDENT();
+
+          slot->item_id           = thing_copy->id;
+          thing_copy->_is_carried = true;
+
+          //
+          // Is carried, so pop off the map
+          //
+          (void) thing_pop(g, v, thing_copy);
+
+          //
+          // Set the same owner
+          //
+          thing_owner_set(g, v, l, thing_copy, user);
         }
-        return false;
+        break;
       }
     }
   }
+
+  THING_DBG(user, "drop: %s (drop completed)", s.c_str());
+  TRACE_INDENT();
 
   if (thing_is_player(user)) {
     if (e.event_type == THING_EVENT_USER_INITIATED) {
@@ -84,6 +126,8 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp us
   }
 
   thing_owner_unset(g, v, l, item);
+
+  thing_inventory_dump(g, v, l, user);
 
   return true;
 }

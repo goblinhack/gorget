@@ -47,6 +47,7 @@
                   /* is_moving                     */ "{}"
                   /* is_jumping                    */ "{}"
                   /* is_thrown                     */ "{}"
+                  /* is_carried                    */ "{}"
                   /* is_sleeping                   */ "{}"
                   /* is_falling                    */ "{}"
                   /* is_open                       */ "{}"
@@ -61,6 +62,7 @@
                   /* newline */ thing_is_moving(t) ? "/mv" : "",
                   /* newline */ thing_is_jumping(t) ? "/jp" : "",
                   /* newline */ thing_is_thrown(t) ? "/th" : "",
+                  /* newline */ thing_is_carried(t) ? "/cr" : "",
                   /* newline */ thing_is_dead(t) ? "/de" : "",
                   /* newline */ thing_is_sleeping(t) ? "/sl" : "",
                   /* newline */ (thing_is_falling(t) != 0) ? "/fl" : "",
