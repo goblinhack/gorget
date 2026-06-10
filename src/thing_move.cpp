@@ -432,7 +432,7 @@ void thing_set_dir_from_delta(Thingp me, const bpoint &p)
     //
     // Complete the current move
     //
-    thing_move_or_jump_finish(g, v, old_level, me);
+    thing_move_finish(g, v, old_level, me);
 
     //
     // Remove from the current level or position
@@ -499,7 +499,7 @@ void thing_set_dir_from_delta(Thingp me, const bpoint &p)
 // Move to the next tile is completed. Need to stop interpolating.
 // There could be more tiles to pop.
 //
-void thing_move_or_jump_finish(Gamep g, Levelsp v, Levelp l, Thingp me)
+void thing_move_finish(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 

@@ -1234,7 +1234,7 @@ void thing_merge(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp);
 void thing_mob_dump_minions(Gamep g, Levelsp v, Levelp l, Thingp mob);
 void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me);
 void thing_monst_tick(Gamep g, Levelsp v, Levelp l, Thingp me);
-void thing_move_or_jump_finish(Gamep g, Levelsp v, Levelp l, Thingp me);
+void thing_move_finish(Gamep g, Levelsp v, Levelp l, Thingp me);
 void thing_move_path_confirm(Gamep g, Levelsp v, Levelp l, Thingp me);
 void thing_move_path_reset(Gamep g, Levelsp v, Levelp l, Thingp me);
 void thing_moving_from_set(Thingp t, const bpoint &val);

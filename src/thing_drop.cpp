@@ -77,8 +77,10 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp us
     game_request_to_remake_ui_set(g);
   }
 
-  if (thing_is_tick_on_drop(item)) {
-    (void) level_tick_begin_requested(g, v, l, "player dropped an item");
+  if (e.event_type == THING_EVENT_USER_INITIATED) {
+    if (thing_is_tick_on_drop(item)) {
+      (void) level_tick_begin_requested(g, v, l, "player dropped an item");
+    }
   }
 
   thing_owner_unset(g, v, l, item);

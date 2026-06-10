@@ -309,7 +309,7 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
   //
   // Stop it moving
   //
-  thing_move_or_jump_finish(g, v, l, me);
+  thing_move_finish(g, v, l, me);
 
   //
   // Do adjacent tiles need updating due to the destruction of this tiled thing?

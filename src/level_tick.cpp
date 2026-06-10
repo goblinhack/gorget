@@ -349,7 +349,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool tick_is
   }
   const int player_speed = thing_speed(player);
 
-  if (compiler_unused) {
+  if (1 || compiler_unused) {
     if (level_is_player_level(g, v, l)) {
       LEVEL_DBG(g, v, l, "time_step %f v->last_time_step %f dt %f", v->time_step, v->last_time_step, dt);
     }
@@ -416,7 +416,11 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool tick_is
     }
 
     if (tick_is_about_to_end || (t->thing_dt >= 1.0)) {
-      thing_move_or_jump_finish(g, v, l, t);
+      if (1 || compiler_unused) {
+        THING_DBG(t, "call move finish as tick about to end");
+      }
+
+      thing_move_finish(g, v, l, t);
 
       //
       // Handle interactions for a thing at its new location
@@ -774,14 +778,12 @@ static auto level_tick_process_pending_request(Gamep g, Levelsp v) -> uint32_t
     LEVEL_DBG(g, v, iter, "Tick %u: requested by level %u", v->tick, iter->level_num);
 
     //
-    // If this is the first level requesting a tick, reset the fram counters and move the
+    // If this is the first level requesting a tick, reset the frame counters and move the
     // tick along
     //
     if ((v->level_tick_request_count++) == 0U) {
       v->tick++;
-      v->frame_begin    = v->frame;
-      v->time_step      = 0.0;
-      v->last_time_step = 0.0;
+      level_tick_reset_frame_counter(g);
     }
   }
 
@@ -809,6 +811,28 @@ static void level_tick_update_frame_counter(Levelsp v)
 }
 
 //
+// When we transition back to playing, we need to update for the time spent in
+// another state not updating the frame counter.
+//
+void level_tick_reset_frame_counter(Gamep g)
+{
+  auto *v = game_levels_get(g);
+
+  if (! v) {
+    return;
+  }
+
+  level_tick_update_frame_counter(v);
+
+  v->frame_begin    = v->frame;
+  v->time_step      = 0.0;
+  v->last_time_step = 0.0;
+
+  log("Reset frame counter, tick %u: tick-count %u time_step %f last_time_step %f frame %u frame_begin %u", v->tick, v->level_ticking_count,
+      v->time_step, v->last_time_step, v->frame, v->frame_begin);
+}
+
+//
 // How many ms have elapsed during processing the tick
 //
 static void level_tick_time_step(Gamep g, Levelsp v, Levelp current_level)
@@ -823,10 +847,11 @@ static void level_tick_time_step(Gamep g, Levelsp v, Levelp current_level)
   v->last_time_step = v->time_step;
   v->time_step      = (static_cast< float >(v->frame - v->frame_begin)) / static_cast< float >(duration_ms);
 
-  IF_DEBUG2
+  //  IF_DEBUG2
   { //
     if (level_is_player_level(g, v, current_level)) {
-      LEVEL_DBG(g, v, current_level, "Tick %u: tick-count %u %f", v->tick, v->level_ticking_count, v->time_step);
+      LEVEL_DBG(g, v, current_level, "Tick %u: tick-count %u time_step %f last_time_step %f frame %u frame_begin %u", v->tick,
+                v->level_ticking_count, v->time_step, v->last_time_step, v->frame, v->frame_begin);
     }
   }
 }

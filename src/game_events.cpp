@@ -244,15 +244,18 @@
   }
 
   if (level_is_level_select(g, v, l)) {
+    (void) sound_play(g, "error");
     return false;
   }
 
   auto *player = thing_player(g);
   if (player == nullptr) [[unlikely]] {
+    (void) sound_play(g, "error");
     return false;
   }
 
   if (thing_is_dead(player)) {
+    (void) sound_play(g, "error");
     return false;
   }
 
@@ -281,11 +284,13 @@
   }
 
   if (level_is_level_select(g, v, l)) {
+    (void) sound_play(g, "error");
     return false;
   }
 
   auto *player = thing_player(g);
   if (player == nullptr) [[unlikely]] {
+    (void) sound_play(g, "error");
     return false;
   }
 
@@ -310,15 +315,18 @@
   }
 
   if (level_is_level_select(g, v, l)) {
+    (void) sound_play(g, "error");
     return false;
   }
 
   auto *player = thing_player(g);
   if (player == nullptr) [[unlikely]] {
+    (void) sound_play(g, "error");
     return false;
   }
 
   if (thing_is_dead(player)) {
+    (void) sound_play(g, "error");
     return false;
   }
 
@@ -349,15 +357,18 @@
   }
 
   if (level_is_level_select(g, v, l)) {
+    (void) sound_play(g, "error");
     return false;
   }
 
   auto *player = thing_player(g);
   if (player == nullptr) [[unlikely]] {
+    (void) sound_play(g, "error");
     return false;
   }
 
   if (thing_is_dead(player)) {
+    (void) sound_play(g, "error");
     return false;
   }
 
@@ -388,11 +399,13 @@ static auto game_event_jump(Gamep g) -> bool
   }
 
   if (level_is_level_select(g, v, l)) {
+    (void) sound_play(g, "error");
     return false;
   }
 
   auto *player = thing_player(g);
   if (player == nullptr) [[unlikely]] {
+    (void) sound_play(g, "error");
     return false;
   }
 
@@ -442,6 +455,7 @@ static auto game_event_jump(Gamep g) -> bool
   }
 
   if (level_tick_is_in_progress(g, v, l) || level_tick_begin_is_requested(g, v, l)) {
+    (void) sound_play(g, "error");
     return false;
   }
 
@@ -468,19 +482,23 @@ static auto game_event_throw(Gamep g) -> bool
   }
 
   if (level_is_level_select(g, v, l)) {
+    (void) sound_play(g, "error");
     return false;
   }
 
   auto *player = thing_player(g);
   if (player == nullptr) [[unlikely]] {
+    (void) sound_play(g, "error");
     return false;
   }
 
   if (thing_is_dead(player)) {
+    (void) sound_play(g, "error");
     return false;
   }
 
   if (level_tick_is_in_progress(g, v, l) || level_tick_begin_is_requested(g, v, l)) {
+    (void) sound_play(g, "error");
     return false;
   }
 
@@ -520,19 +538,23 @@ static auto game_event_abort(Gamep g) -> bool
   }
 
   if (level_is_level_select(g, v, l)) {
+    (void) sound_play(g, "error");
     return false;
   }
 
   auto *player = thing_player(g);
   if (player == nullptr) [[unlikely]] {
+    (void) sound_play(g, "error");
     return false;
   }
 
   if (thing_is_dead(player)) {
+    (void) sound_play(g, "error");
     return false;
   }
 
   if (level_tick_is_in_progress(g, v, l) || level_tick_begin_is_requested(g, v, l)) {
+    (void) sound_play(g, "error");
     return false;
   }
 

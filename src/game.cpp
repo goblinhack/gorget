@@ -1118,8 +1118,14 @@ void Game::state_change(GameStateType new_state, const std::string &why)
       }
       break;
     case STATE_LEVEL_SELECT_MENU : [[fallthrough]];
-    case STATE_PLAYING :
+    case STATE_PLAYING :           [[fallthrough]];
     case STATE_THROW_ITEM :
+      //
+      // When we transition back to playing, we need to update for the time spent in
+      // another state not updating the frame counter.
+      //
+      level_tick_reset_frame_counter(g);
+
       switch (old_state) {
         case STATE_LOADED :
           (void) wid_leftbar_init(g);

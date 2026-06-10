@@ -748,6 +748,7 @@ enum {
 void fragment_alts_fini(Gamep g);
 void fragments_fini(Gamep g);
 void fragments_init(Gamep g);
+void level_tick_reset_frame_counter(Gamep g);
 void game_debug_info(Gamep g);
 void level_anim(Gamep g, Levelsp v, Levelp l);
 void level_assign_tiles(Gamep g, Levelsp v, Levelp l);
