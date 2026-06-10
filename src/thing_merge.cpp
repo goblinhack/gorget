@@ -41,7 +41,7 @@ void thing_merge(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp)
   (void) thing_value13_incr(g, v, l, t, tp_value13_get(tp));
   (void) thing_value14_incr(g, v, l, t, tp_value14_get(tp));
   (void) thing_value15_incr(g, v, l, t, tp_value15_get(tp));
-  (void) thing_value16_incr(g, v, l, t, tp_value16_get(tp));
+  (void) thing_distance_throw_incr(g, v, l, t, tp_distance_throw_get(tp));
   (void) thing_value2_incr(g, v, l, t, tp_value2_get(tp));
   (void) thing_value3_incr(g, v, l, t, tp_value3_get(tp));
   (void) thing_value4_incr(g, v, l, t, tp_value4_get(tp));

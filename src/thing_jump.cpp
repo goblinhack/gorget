@@ -112,7 +112,7 @@ static auto thing_jump_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thingp
   auto jump_path = draw_line(at, to);
 
   for (auto intermediate : std::ranges::reverse_view(jump_path)) {
-    auto *what = level_is_obs_to_jump_over(g, v, l, intermediate, me);
+    auto *what = level_is_obs_to_jumping_over(g, v, l, intermediate, me);
     if (what != nullptr) {
       return what;
     }
@@ -137,7 +137,7 @@ static auto thing_jump_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thingp
     return false;
   }
 
-  if (! thing_is_able_to_jump(me)) {
+  if (! thing_is_able_to_throw_items(me)) {
     return false;
   }
 

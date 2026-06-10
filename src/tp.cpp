@@ -1613,24 +1613,24 @@ void tp_value15_set(Tpp tp, int val)
   return tp->value15;
 }
 
-void tp_value16_set(Tpp tp, int val)
+void tp_distance_throw_set(Tpp tp, int val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
     tp_err(tp, "no thing template pointer");
     return;
   }
-  tp->value16 = val;
+  tp->distance_throw = val;
 }
 
-[[nodiscard]] auto tp_value16_get(Tpp tp) -> int
+[[nodiscard]] auto tp_distance_throw_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
     tp_err(tp, "no thing template pointer");
     return 0;
   }
-  return tp->value16;
+  return tp->distance_throw;
 }
 
 void tp_charge_count_set(Tpp tp, int val)

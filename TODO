@@ -1,7 +1,10 @@
 bugs
 ----
 throwing potions
-potion landing in water, soft landing
+item thrown onto exit
+item thrown onto water
+item thrown onto chasm
+item thrown onto lava
 potion exploding
 chests should explode sometimes
 steam and smoke should spread

@@ -259,11 +259,13 @@ static void tp_door_locked_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, Thi
   tp_flag_set(tp, is_obs_to_beam);
   tp_flag_set(tp, is_obs_to_cursor_path);
   tp_flag_set(tp, is_obs_to_falling_onto);
-  tp_flag_set(tp, is_obs_to_jump_over);
   tp_flag_set(tp, is_obs_to_jumping_onto);
+  tp_flag_set(tp, is_obs_to_jumping_over);
   tp_flag_set(tp, is_obs_to_movement);
   tp_flag_set(tp, is_obs_to_spawning);
   tp_flag_set(tp, is_obs_to_teleporting_onto);
+  tp_flag_set(tp, is_obs_to_throwing_onto);
+  tp_flag_set(tp, is_obs_to_throwing_over);
   tp_flag_set(tp, is_obs_to_vision);
   tp_flag_set(tp, is_openable);
   tp_flag_set(tp, is_physics_explosion);

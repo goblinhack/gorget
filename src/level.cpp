@@ -360,6 +360,7 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
       return false;
 
     case is_obs_to_jumping_onto :
+    case is_obs_to_throwing_onto :
       //
       // Allow players to land on chasms intentionally. Monsters don't want to.
       //
@@ -375,7 +376,8 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
     case is_obs_to_explosion :
     case is_obs_to_falling_onto :
     case is_obs_to_fire :
-    case is_obs_to_jump_over :
+    case is_obs_to_jumping_over :
+    case is_obs_to_throwing_over :
     case is_obs_to_teleporting_onto :
     case is_obs_to_movement :
     case is_obs_to_paths :

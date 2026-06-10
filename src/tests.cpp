@@ -59,7 +59,7 @@
   if (!test_load_monst_door_slam_attack()) { return false; }
   if (!test_load_monst_door_unlocked()) { return false; }
   if (!test_load_monst_fast()) { return false; }
-  if (!test_load_monst_jump_over_chasm()) { return false; }
+  if (!test_load_monst_jumping_over_chasm()) { return false; }
   if (!test_load_monst_maze()) { return false; }
   if (!test_load_monst_mob_leash()) { return false; }
   if (!test_load_monst_mobbing()) { return false; }

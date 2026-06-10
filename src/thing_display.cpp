@@ -152,6 +152,15 @@ void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, const bpoint &p, 
     }
   }
 
+  if (t_maybe_null != nullptr) {
+    if (thing_is_thrown(t_maybe_null)) {
+      auto throw_height = static_cast< int >((sin(std::numbers::pi_v< float > * t_maybe_null->thing_dt)) * static_cast< float >(dh));
+      throw_height *= THING_THROW_HEIGHT_ANIM_TILES;
+      tl.y -= throw_height;
+      br.y -= throw_height;
+    }
+  }
+
   //
   // Update the br coords if we changed the position
   //
@@ -250,6 +259,13 @@ static void thing_display_blit(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t_ma
       // Jumping things need to be seen over other things
       //
       if ((t_maybe_null != nullptr) && thing_is_jumping(t_maybe_null)) {
+        break;
+      }
+
+      //
+      // Thrown things need to be seen over other things
+      //
+      if ((t_maybe_null != nullptr) && thing_is_thrown(t_maybe_null)) {
         break;
       }
 

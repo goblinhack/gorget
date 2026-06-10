@@ -38,10 +38,10 @@
   return level_flag(g, v, l, is_able_to_fall, p, me);
 }
 
-[[nodiscard]] auto level_is_able_to_jump(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_able_to_throw_items(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_able_to_jump, p, me);
+  return level_flag(g, v, l, is_able_to_throw_items, p, me);
 }
 
 [[nodiscard]] auto level_is_able_to_move_diagonally(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
@@ -680,10 +680,10 @@
   return level_flag(g, v, l, is_obs_to_fire, p, me);
 }
 
-[[nodiscard]] auto level_is_obs_to_jump_over(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_obs_to_jumping_over(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_obs_to_jump_over, p, me);
+  return level_flag(g, v, l, is_obs_to_jumping_over, p, me);
 }
 
 [[nodiscard]] auto level_is_obs_to_jumping_onto(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
@@ -890,22 +890,22 @@
   return level_flag(g, v, l, is_unused10, p, me);
 }
 
-[[nodiscard]] auto level_is_unused11(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_able_to_be_thrown(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused11, p, me);
+  return level_flag(g, v, l, is_able_to_be_thrown, p, me);
 }
 
-[[nodiscard]] auto level_is_unused12(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_obs_to_throwing_over(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused12, p, me);
+  return level_flag(g, v, l, is_obs_to_throwing_over, p, me);
 }
 
-[[nodiscard]] auto level_is_unused13(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_obs_to_throwing_onto(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused13, p, me);
+  return level_flag(g, v, l, is_obs_to_throwing_onto, p, me);
 }
 
 [[nodiscard]] auto level_is_unused_98(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
@@ -956,10 +956,10 @@
   return level_flag(g, v, l, is_tick_on_use, p, me);
 }
 
-[[nodiscard]] auto level_is_able_to_throw_items(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_able_to_throw_items_items(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_able_to_throw_items, p, me);
+  return level_flag(g, v, l, is_able_to_throw_items_items, p, me);
 }
 
 [[nodiscard]] auto level_is_throwable(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp

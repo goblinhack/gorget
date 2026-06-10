@@ -360,6 +360,7 @@ static void tp_player_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d100");  // fumble => flames spread to you
   tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d4");
   tp_distance_jump_set(tp, 3);
+  tp_distance_throw_set(tp, 6);
   tp_distance_vision_set(tp, MAP_WIDTH / 2); // tiles
   tp_flag_set(tp, is_able_to_be_buffed);
   tp_flag_set(tp, is_able_to_collect_items);
@@ -369,11 +370,11 @@ static void tp_player_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_able_to_fire_weapons);
-  tp_flag_set(tp, is_able_to_jump);
   tp_flag_set(tp, is_able_to_lunge);
   tp_flag_set(tp, is_able_to_move_diagonally);
   tp_flag_set(tp, is_able_to_open_things);
   tp_flag_set(tp, is_able_to_shove);
+  tp_flag_set(tp, is_able_to_throw_items_items);
   tp_flag_set(tp, is_able_to_throw_items);
   tp_flag_set(tp, is_able_to_wield_items);
   tp_flag_set(tp, is_animated_can_hflip);

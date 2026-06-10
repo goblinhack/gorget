@@ -156,6 +156,19 @@ static inline auto thing_is_jumping(Thingp t) -> bool
   return t->_is_jumping;
 }
 
+static inline auto thing_is_thrown(Thingp t) -> bool
+{
+#ifdef DEBUG_BUILD
+  TRACE_DEBUG();
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+#endif
+
+  return t->_is_thrown;
+}
+
 static inline auto thing_is_moving(Thingp t) -> bool
 {
 #ifdef DEBUG_BUILD

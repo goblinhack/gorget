@@ -299,6 +299,14 @@ using Thing = struct Thing {
   //
   int8_t _distance_jump;
   //
+  // Throw distance in tiles.
+  //
+  int8_t _distance_throw;
+  //
+  // Some monsters like to hang back
+  //
+  int8_t _distance_avoid_target;
+  //
   // Decrements each frame. Increments if hit.
   //
   uint8_t _is_hit;
@@ -375,6 +383,10 @@ using Thing = struct Thing {
   //
   uint8_t _is_jumping : 1;
   //
+  // Being thrown
+  //
+  uint8_t _is_thrown : 1;
+  //
   // Idle etc...
   //
   ThingAnimType anim_type;
@@ -432,9 +444,7 @@ using Thing = struct Thing {
   int16_t _value13;
   int16_t _value14;
   int16_t _value15;
-  int16_t _value16;
   int16_t _charge_count;
-  int16_t _distance_avoid_target;
   int16_t _score_value;
   //
   // How many minions this mob can spawn
@@ -642,6 +652,11 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_distance_jump(Gamep g, Levelsp v, Levelp l, Thingp me) -> int;
 [[nodiscard]] auto thing_distance_minion_from_mob_max_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_distance_minion_from_mob_max(Gamep g, Levelsp v, Levelp l, Thingp t) -> int;
+[[nodiscard]] auto thing_distance_throw_decr(Gamep g, Levelsp v, Levelp l, Thingp me, int val = 1) -> int;
+[[nodiscard]] auto thing_distance_throw_incr(Gamep g, Levelsp v, Levelp l, Thingp me, int val = 1) -> int;
+[[nodiscard]] auto thing_distance_throw_max(Gamep g, Levelsp v, Levelp l, Thingp me) -> int;
+[[nodiscard]] auto thing_distance_throw_set(Gamep g, Levelsp v, Levelp l, Thingp me, int val) -> int;
+[[nodiscard]] auto thing_distance_throw(Gamep g, Levelsp v, Levelp l, Thingp me) -> int;
 [[nodiscard]] auto thing_distance_vision_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_distance_vision_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_distance_vision_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
@@ -671,6 +686,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_inventory_item_mergeable(Gamep g, Levelsp v, Levelp l, Thingp a, Thingp b) -> bool;
 [[nodiscard]] auto thing_inventory_remove(Gamep g, Levelsp v, Levelp l, Thingp drop_item, Thingp owner) -> bool;
 [[nodiscard]] auto thing_is_able_to_be_buffed(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_able_to_be_thrown(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_collect_items(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_collect_keys(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_crush_grass(Thingp t) -> bool;
@@ -678,12 +694,12 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_able_to_fall_sound(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_fall(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_fire_weapons(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_able_to_jump(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_lunge(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_move_diagonally(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_move_through_walls(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_open_things(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_shove(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_able_to_throw_items_items(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_throw_items(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_walk_through_walls(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_wield_items(Thingp t) -> bool;
@@ -834,13 +850,15 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_obs_to_explosion(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_falling_onto(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_fire(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_obs_to_jump_over(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_jumping_onto(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_jumping_out_of(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_obs_to_jumping_over(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_movement(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_paths(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_spawning(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_teleporting_onto(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_obs_to_throwing_onto(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_obs_to_throwing_over(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_when_dead(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_on_map(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_open_try_set(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener, bool val = true) -> bool;
@@ -885,9 +903,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused_99(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused1(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused10(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused11(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused12(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused13(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused2(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused3(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused4(Thingp t) -> bool;
@@ -1024,6 +1039,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_temperature_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_temperature_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_temperature(Thingp t) -> int;
+[[nodiscard]] auto thing_throw_to(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp what, bpoint to) -> bool;
 [[nodiscard]] auto thing_unwield(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent & /*e*/) -> bool;
 [[nodiscard]] auto thing_use(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, ThingEvent &e) -> bool;
 [[nodiscard]] auto thing_value1_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
@@ -1054,10 +1070,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_value15_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_value15_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_value15(Thingp t) -> int;
-[[nodiscard]] auto thing_value16_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
-[[nodiscard]] auto thing_value16_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
-[[nodiscard]] auto thing_value16_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
-[[nodiscard]] auto thing_value16(Thingp t) -> int;
 [[nodiscard]] auto thing_value2_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_value2_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_value2_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
@@ -1208,6 +1220,8 @@ void thing_is_spawned_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val = tru
 void thing_is_spawned_unset(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_is_teleporting_set(Gamep g, Levelsp v, Levelp l, Thingp me, bool val = true);
 void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me);
+void thing_is_thrown_set(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp thrower, bool val = true);
+void thing_is_thrown_unset(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp thrower);
 void thing_is_unlocked_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val = true);
 void thing_is_unlocked_unset(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_level_warp_to_entrance(Gamep g, Levelsp v, Levelp new_level, Thingp t);

@@ -103,6 +103,7 @@ static auto tp_wand_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> 
   thing_on_use_weapon_request_set(tp, tp_wand_fire_on_use_weapon_request);
   thing_on_wield_request_set(tp, tp_wand_fire_on_wield_request);
   tp_charge_count_set(tp, 5000);
+  tp_flag_set(tp, is_able_to_be_thrown);
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated);

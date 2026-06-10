@@ -139,7 +139,7 @@ public:
   int value13 {0};
   int value14 {0};
   int value15 {0};
-  int value16 {0};
+  int distance_throw {0};
   int charge_count {0};
   int distance_avoid_target {0};
   int stamina {0};
@@ -268,10 +268,11 @@ public:
   thing_on_attacking_t          on_attacking          = {};
   thing_on_moved_t              on_moved              = {};
   thing_on_teleported_t         on_teleported         = {};
-  thing_on_thrown_t             on_thrown             = {};
   thing_on_shoved_t             on_shoved             = {};
   thing_on_jump_end_t           on_jump_end           = {};
   thing_on_jump_begin_t         on_jump_begin         = {};
+  thing_on_thrown_end_t         on_thrown_end         = {};
+  thing_on_thrown_begin_t       on_thrown_begin       = {};
   thing_on_fall_begin_t         on_fall_begin         = {};
   thing_on_melt_t               on_melt               = {};
   thing_on_fall_end_t           on_fall_end           = {};

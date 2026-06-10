@@ -1360,7 +1360,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_unused10) != 0;
 }
 
-[[nodiscard]] auto thing_is_unused11(Thingp t) -> bool
+[[nodiscard]] auto thing_is_able_to_be_thrown(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -1368,10 +1368,10 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused11) != 0;
+  return tp_flag(thing_tp(t), is_able_to_be_thrown) != 0;
 }
 
-[[nodiscard]] auto thing_is_unused12(Thingp t) -> bool
+[[nodiscard]] auto thing_is_obs_to_throwing_over(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -1379,10 +1379,10 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused12) != 0;
+  return tp_flag(thing_tp(t), is_obs_to_throwing_over) != 0;
 }
 
-[[nodiscard]] auto thing_is_unused13(Thingp t) -> bool
+[[nodiscard]] auto thing_is_obs_to_throwing_onto(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -1390,7 +1390,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused13) != 0;
+  return tp_flag(thing_tp(t), is_obs_to_throwing_onto) != 0;
 }
 
 [[nodiscard]] auto thing_is_unused_98(Thingp t) -> bool
@@ -1470,7 +1470,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_tick_on_use) != 0;
 }
 
-[[nodiscard]] auto thing_is_able_to_throw_items(Thingp t) -> bool
+[[nodiscard]] auto thing_is_able_to_throw_items_items(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -1478,7 +1478,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_able_to_throw_items) != 0;
+  return tp_flag(thing_tp(t), is_able_to_throw_items_items) != 0;
 }
 
 [[nodiscard]] auto thing_is_throwable(Thingp t) -> bool
@@ -2459,7 +2459,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_obs_to_explosion) != 0;
 }
 
-[[nodiscard]] auto thing_is_obs_to_jump_over(Thingp t) -> bool
+[[nodiscard]] auto thing_is_obs_to_jumping_over(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2477,7 +2477,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     }
   }
 
-  return tp_flag(thing_tp(t), is_obs_to_jump_over) != 0;
+  return tp_flag(thing_tp(t), is_obs_to_jumping_over) != 0;
 }
 
 [[nodiscard]] auto thing_is_teleport_blocked(Thingp t) -> bool
@@ -2502,7 +2502,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_cursor_path_none) != 0;
 }
 
-[[nodiscard]] auto thing_is_able_to_jump(Thingp t) -> bool
+[[nodiscard]] auto thing_is_able_to_throw_items(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2510,7 +2510,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_able_to_jump) != 0;
+  return tp_flag(thing_tp(t), is_able_to_throw_items) != 0;
 }
 
 [[nodiscard]] auto thing_is_blit_obscures(Thingp t) -> bool
@@ -3643,52 +3643,6 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     return t->_value15 = 0;
   }
   return t->_value15 -= val;
-}
-[[nodiscard]] auto thing_value16(Thingp t) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  return t->_value16;
-}
-
-[[nodiscard]] auto thing_value16_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  return t->_value16 = val;
-}
-
-[[nodiscard]] auto thing_value16_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  return t->_value16 += val;
-}
-
-[[nodiscard]] auto thing_value16_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  if (static_cast< int >(t->_value16) - val <= 0) {
-    return t->_value16 = 0;
-  }
-  return t->_value16 -= val;
 }
 [[nodiscard]] auto thing_distance_avoid_target(Thingp t) -> int
 {

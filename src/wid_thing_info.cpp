@@ -453,12 +453,12 @@
     parent->log(g, immune_str, TEXT_FORMAT_LHS);
     printed_something = true;
   }
-  if (thing_is_able_to_jump(me)) {
+  if (thing_is_able_to_throw_items(me)) {
     auto immune_str = string_sprintf("Abilitiy:  %*s", width - 13, "Jumper");
     parent->log(g, immune_str, TEXT_FORMAT_LHS);
     printed_something = true;
   }
-  if (thing_is_able_to_throw_items(me)) {
+  if (thing_is_able_to_throw_items_items(me)) {
     auto immune_str = string_sprintf("Abilitiy:  %*s", width - 13, "Thrower");
     parent->log(g, immune_str, TEXT_FORMAT_LHS);
     printed_something = true;

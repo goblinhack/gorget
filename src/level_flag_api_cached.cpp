@@ -38,10 +38,10 @@
   return level_flag_cached(g, v, l, is_able_to_fall, p);
 }
 
-[[nodiscard]] auto level_is_able_to_jump_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_able_to_throw_items_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_able_to_jump, p);
+  return level_flag_cached(g, v, l, is_able_to_throw_items, p);
 }
 
 [[nodiscard]] auto level_is_able_to_move_diagonally_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
@@ -680,10 +680,10 @@
   return level_flag_cached(g, v, l, is_obs_to_fire, p);
 }
 
-[[nodiscard]] auto level_is_obs_to_jump_over_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_obs_to_jumping_over_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_obs_to_jump_over, p);
+  return level_flag_cached(g, v, l, is_obs_to_jumping_over, p);
 }
 
 [[nodiscard]] auto level_is_obs_to_jumping_onto_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
@@ -890,22 +890,22 @@
   return level_flag_cached(g, v, l, is_unused10, p);
 }
 
-[[nodiscard]] auto level_is_unused11_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_able_to_be_thrown_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused11, p);
+  return level_flag_cached(g, v, l, is_able_to_be_thrown, p);
 }
 
-[[nodiscard]] auto level_is_unused12_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_obs_to_throwing_over_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused12, p);
+  return level_flag_cached(g, v, l, is_obs_to_throwing_over, p);
 }
 
-[[nodiscard]] auto level_is_unused13_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_obs_to_throwing_onto_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused13, p);
+  return level_flag_cached(g, v, l, is_obs_to_throwing_onto, p);
 }
 
 [[nodiscard]] auto level_is_unused_98_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
@@ -956,10 +956,10 @@
   return level_flag_cached(g, v, l, is_tick_on_use, p);
 }
 
-[[nodiscard]] auto level_is_able_to_throw_items_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_able_to_throw_items_items_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_able_to_throw_items, p);
+  return level_flag_cached(g, v, l, is_able_to_throw_items_items, p);
 }
 
 [[nodiscard]] auto level_is_throwable_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

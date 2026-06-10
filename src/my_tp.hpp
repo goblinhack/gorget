@@ -17,20 +17,19 @@
 //
 #define THING_FLAG_ENUM(list_macro)                                                                                                             \
   CLANG_FORMAT_INDENT()                                                                     /* dummy line for clang indentation fixup */        \
-  list_macro(is_able_to_collect_items, "is_able_to_collect_items"),                         /* newline */                                       \
-      list_macro(is_able_to_be_buffed, "is_able_to_be_buffed"),                             /* newline */                                       \
+  list_macro(is_able_to_be_buffed, "is_able_to_be_buffed"),                                 /* newline */                                       \
       list_macro(is_able_to_collect_keys, "is_able_to_collect_keys"),                       /* newline */                                       \
       list_macro(is_able_to_crush_grass, "is_able_to_crush_grass"),                         /* newline */                                       \
       list_macro(is_able_to_fall_repeatedly, "is_able_to_fall_repeatedly"),                 /* newline */                                       \
       list_macro(is_able_to_fall_sound, "is_able_to_fall_sound"),                           /* newline */                                       \
       list_macro(is_able_to_fall, "is_able_to_fall"),                                       /* newline */                                       \
       list_macro(is_able_to_fire_weapons, "is_able_to_fire_weapons"),                       /* newline */                                       \
-      list_macro(is_able_to_jump, "is_able_to_jump"),                                       /* newline */                                       \
       list_macro(is_able_to_lunge, "is_able_to_lunge"),                                     /* newline */                                       \
       list_macro(is_able_to_move_diagonally, "is_able_to_move_diagonally"),                 /* newline */                                       \
       list_macro(is_able_to_move_through_walls, "is_able_to_move_through_walls"),           /* newline */                                       \
       list_macro(is_able_to_open_things, "is_able_to_open_things"),                         /* newline */                                       \
       list_macro(is_able_to_shove, "is_able_to_shove"),                                     /* newline */                                       \
+      list_macro(is_able_to_throw_items_items, "is_able_to_throw_items_items"),             /* newline */                                       \
       list_macro(is_able_to_throw_items, "is_able_to_throw_items"),                         /* newline */                                       \
       list_macro(is_able_to_walk_through_walls, "is_able_to_walk_through_walls"),           /* newline */                                       \
       list_macro(is_able_to_wield_items, "is_able_to_wield_items"),                         /* newline */                                       \
@@ -43,6 +42,7 @@
       list_macro(is_attackable_by_player, "is_attackable_by_player"),                       /* newline */                                       \
       list_macro(is_auto_wield, "is_auto_wield"),                                           /* newline */                                       \
       list_macro(is_barrel, "is_barrel"),                                                   /* newline */                                       \
+      list_macro(is_beam_weapon, "is_beam_weapon"),                                         /* newline */                                       \
       list_macro(is_biome_bogland, "is_biome_bogland"),                                     /* newline */                                       \
       list_macro(is_biome_dungeon, "is_biome_dungeon"),                                     /* newline */                                       \
       list_macro(is_biome_graveyard, "is_biome_graveyard"),                                 /* newline */                                       \
@@ -135,7 +135,6 @@
       list_macro(is_item, "is_item"),                                                       /* newline */                                       \
       list_macro(is_key, "is_key"),                                                         /* newline */                                       \
       list_macro(is_kobalos, "is_kobalos"),                                                 /* newline */                                       \
-      list_macro(is_beam_weapon, "is_beam_weapon"),                                         /* newline */                                       \
       list_macro(is_lava, "is_lava"),                                                       /* newline */                                       \
       list_macro(is_level_closed_icon, "is_level_closed_icon"),                             /* newline */                                       \
       list_macro(is_level_curr, "is_level_curr"),                                           /* newline */                                       \
@@ -159,18 +158,20 @@
       list_macro(is_monst1, "is_monst1"),                                                   /* newline */                                       \
       list_macro(is_monst2, "is_monst2"),                                                   /* newline */                                       \
       list_macro(is_needs_move_confirm, "is_needs_move_confirm"),                           /* newline */                                       \
+      list_macro(is_obs_to_beam, "is_obs_to_beam"),                                         /* newline */                                       \
       list_macro(is_obs_to_cursor_path, "is_obs_to_cursor_path"),                           /* newline */                                       \
       list_macro(is_obs_to_explosion, "is_obs_to_explosion"),                               /* newline */                                       \
       list_macro(is_obs_to_falling_onto, "is_obs_to_falling_onto"),                         /* newline */                                       \
       list_macro(is_obs_to_fire, "is_obs_to_fire"),                                         /* newline */                                       \
-      list_macro(is_obs_to_jump_over, "is_obs_to_jump_over"),                               /* newline */                                       \
       list_macro(is_obs_to_jumping_onto, "is_obs_to_jumping_onto"),                         /* newline */                                       \
       list_macro(is_obs_to_jumping_out_of, "is_obs_to_jumping_out_of"),                     /* newline */                                       \
-      list_macro(is_obs_to_beam, "is_obs_to_beam"),                                         /* newline */                                       \
+      list_macro(is_obs_to_jumping_over, "is_obs_to_jumping_over"),                         /* newline */                                       \
       list_macro(is_obs_to_movement, "is_obs_to_movement"),                                 /* newline */                                       \
       list_macro(is_obs_to_paths, "is_obs_to_paths"),                                       /* newline */                                       \
       list_macro(is_obs_to_spawning, "is_obs_to_spawning"),                                 /* newline */                                       \
       list_macro(is_obs_to_teleporting_onto, "is_obs_to_teleporting_onto"),                 /* newline */                                       \
+      list_macro(is_obs_to_throwing_onto, "is_obs_to_throwing_onto"),                       /* newline */                                       \
+      list_macro(is_obs_to_throwing_over, "is_obs_to_throwing_over"),                       /* newline */                                       \
       list_macro(is_obs_to_vision, "is_obs_to_vision"),                                     /* newline */                                       \
       list_macro(is_obs_when_dead, "is_obs_when_dead"),                                     /* newline */                                       \
       list_macro(is_openable, "is_openable"),                                               /* newline */                                       \
@@ -181,8 +182,6 @@
       list_macro(is_plant, "is_plant"),                                                     /* newline */                                       \
       list_macro(is_player, "is_player"),                                                   /* newline */                                       \
       list_macro(is_potion, "is_potion"),                                                   /* newline */                                       \
-      list_macro(is_unused_99, "is_unused_99"),                                             /* newline */                                       \
-      list_macro(is_unused_98, "is_unused_98"),                                             /* newline */                                       \
       list_macro(is_projectile, "is_projectile"),                                           /* newline */                                       \
       list_macro(is_reeds, "is_reeds"),                                                     /* newline */                                       \
       list_macro(is_removable_on_err, "is_removable_on_err"),                               /* newline */                                       \
@@ -209,11 +208,11 @@
       list_macro(is_trap, "is_trap"),                                                       /* newline */                                       \
       list_macro(is_treasure, "is_treasure"),                                               /* newline */                                       \
       list_macro(is_undead, "is_undead"),                                                   /* newline */                                       \
+      list_macro(is_unused_98, "is_unused_98"),                                             /* newline */                                       \
+      list_macro(is_unused_99, "is_unused_99"),                                             /* newline */                                       \
       list_macro(is_unused1, "is_unused1"),                                                 /* newline */                                       \
       list_macro(is_unused10, "is_unused10"),                                               /* newline */                                       \
-      list_macro(is_unused11, "is_unused11"),                                               /* newline */                                       \
-      list_macro(is_unused12, "is_unused12"),                                               /* newline */                                       \
-      list_macro(is_unused13, "is_unused13"),                                               /* newline */                                       \
+      list_macro(is_able_to_be_thrown, "is_able_to_be_thrown"),                             /* newline */                                       \
       list_macro(is_unused2, "is_unused2"),                                                 /* newline */                                       \
       list_macro(is_unused3, "is_unused3"),                                                 /* newline */                                       \
       list_macro(is_unused4, "is_unused4"),                                                 /* newline */                                       \
@@ -232,6 +231,7 @@
       list_macro(is_wand, "is_wand"),                                                       /* newline */                                       \
       list_macro(is_wood, "is_wood"),                                                       /* newline */                                       \
       list_macro(wieldable, "wieldable"),                                                   /* newline */                                       \
+      list_macro(is_able_to_collect_items, "is_able_to_collect_items"),                     /* newline */                                       \
       list_macro(is_water, "is_water"),                                                     /* newline */
 
 ENUM_DEF_H(THING_FLAG_ENUM, ThingFlagType)
@@ -505,6 +505,7 @@ class Tp;
 [[nodiscard]] auto tp_distance_avoid_target_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_distance_jump_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_distance_minion_from_mob_max_get(Tpp tp) -> int;
+[[nodiscard]] auto tp_distance_throw_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_distance_vision_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_find_mand(const std::string &val) -> Tpp;
 [[nodiscard]] auto tp_find_opt(const std::string &val) -> Tpp;
@@ -516,6 +517,7 @@ class Tp;
 [[nodiscard]] auto tp_id_get(Tpp tp) -> TpId;
 [[nodiscard]] auto tp_init() -> bool;
 [[nodiscard]] auto tp_is_able_to_be_buffed(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_able_to_be_thrown(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_collect_items(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_collect_keys(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_crush_grass(Tpp tp) -> bool;
@@ -523,12 +525,12 @@ class Tp;
 [[nodiscard]] auto tp_is_able_to_fall_sound(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_fall(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_fire_weapons(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_able_to_jump(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_lunge(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_move_diagonally(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_move_through_walls(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_open_things(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_shove(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_able_to_throw_items_items(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_throw_items(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_walk_through_walls(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_wield_items(Tpp tp) -> bool;
@@ -663,13 +665,15 @@ class Tp;
 [[nodiscard]] auto tp_is_obs_to_explosion(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_obs_to_falling_onto(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_obs_to_fire(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_obs_to_jump_over(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_obs_to_jumping_onto(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_obs_to_jumping_out_of(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_obs_to_jumping_over(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_obs_to_movement(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_obs_to_paths(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_obs_to_spawning(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_obs_to_teleporting_onto(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_obs_to_throwing_onto(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_obs_to_throwing_over(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_obs_to_vision(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_obs_when_dead(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_openable(Tpp tp) -> bool;
@@ -711,9 +715,6 @@ class Tp;
 [[nodiscard]] auto tp_is_unused_99(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused1(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused10(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused11(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused12(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused13(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused2(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused3(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused4(Tpp tp) -> bool;
@@ -772,7 +773,6 @@ class Tp;
 [[nodiscard]] auto tp_value13_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_value14_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_value15_get(Tpp tp) -> int;
-[[nodiscard]] auto tp_value16_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_value2_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_value3_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_value4_get(Tpp tp) -> int;
@@ -802,6 +802,7 @@ void               tp_die(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf,
 void               tp_distance_avoid_target_set(Tpp tp, int val);
 void               tp_distance_jump_set(Tpp tp, int val);
 void               tp_distance_minion_from_mob_max_set(Tpp tp, int val);
+void               tp_distance_throw_set(Tpp tp, int val);
 void               tp_distance_vision_set(Tpp tp, int val);
 void               tp_err_(Tpp tp, const char *fmt, va_list args); // compile error without
 void               tp_err(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
@@ -845,7 +846,6 @@ void               tp_value12_set(Tpp tp, int val);
 void               tp_value13_set(Tpp tp, int val);
 void               tp_value14_set(Tpp tp, int val);
 void               tp_value15_set(Tpp tp, int val);
-void               tp_value16_set(Tpp tp, int val);
 void               tp_value2_set(Tpp tp, int val);
 void               tp_value3_set(Tpp tp, int val);
 void               tp_value4_set(Tpp tp, int val);

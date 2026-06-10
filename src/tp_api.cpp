@@ -37,10 +37,10 @@
   return tp_flag(tp, is_able_to_fall) != 0;
 }
 
-[[nodiscard]] auto tp_is_able_to_jump(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_able_to_throw_items(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_able_to_jump) != 0;
+  return tp_flag(tp, is_able_to_throw_items) != 0;
 }
 
 [[nodiscard]] auto tp_is_able_to_move_diagonally(Tpp tp) -> bool
@@ -679,10 +679,10 @@
   return tp_flag(tp, is_obs_to_fire) != 0;
 }
 
-[[nodiscard]] auto tp_is_obs_to_jump_over(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_obs_to_jumping_over(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_obs_to_jump_over) != 0;
+  return tp_flag(tp, is_obs_to_jumping_over) != 0;
 }
 
 [[nodiscard]] auto tp_is_obs_to_jumping_onto(Tpp tp) -> bool
@@ -889,22 +889,22 @@
   return tp_flag(tp, is_unused10) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused11(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_able_to_be_thrown(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused11) != 0;
+  return tp_flag(tp, is_able_to_be_thrown) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused12(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_obs_to_throwing_over(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused12) != 0;
+  return tp_flag(tp, is_obs_to_throwing_over) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused13(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_obs_to_throwing_onto(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused13) != 0;
+  return tp_flag(tp, is_obs_to_throwing_onto) != 0;
 }
 
 [[nodiscard]] auto tp_is_unused_98(Tpp tp) -> bool
@@ -955,10 +955,10 @@
   return tp_flag(tp, is_tick_on_use) != 0;
 }
 
-[[nodiscard]] auto tp_is_able_to_throw_items(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_able_to_throw_items_items(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_able_to_throw_items) != 0;
+  return tp_flag(tp, is_able_to_throw_items_items) != 0;
 }
 
 [[nodiscard]] auto tp_is_throwable(Tpp tp) -> bool

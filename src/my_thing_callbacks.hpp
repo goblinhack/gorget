@@ -124,10 +124,6 @@ using thing_on_teleported_t = void (*)(Gamep, Levelsp, Levelp, Thingp me);
 void thing_on_teleported_set(Tpp tp, thing_on_teleported_t callback);
 void thing_on_teleported(Gamep g, Levelsp v, Levelp l, Thingp me);
 
-using thing_on_thrown_t = void (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp thrower);
-void thing_on_thrown_set(Tpp tp, thing_on_thrown_t callback);
-void thing_on_thrown(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp thrower);
-
 using thing_on_shoved_t = void (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp shover);
 void thing_on_shoved_set(Tpp tp, thing_on_shoved_t callback);
 void thing_on_shoved(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp shover);
@@ -139,6 +135,14 @@ void thing_on_jump_begin(Gamep g, Levelsp v, Levelp l, Thingp me);
 using thing_on_jump_end_t = void (*)(Gamep, Levelsp, Levelp, Thingp me);
 void thing_on_jump_end_set(Tpp tp, thing_on_jump_end_t callback);
 void thing_on_jump_end(Gamep g, Levelsp v, Levelp l, Thingp me);
+
+using thing_on_thrown_begin_t = void (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp thrower);
+void thing_on_thrown_begin_set(Tpp tp, thing_on_thrown_begin_t callback);
+void thing_on_thrown_begin(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp thrower);
+
+using thing_on_thrown_end_t = void (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp thrower);
+void thing_on_thrown_end_set(Tpp tp, thing_on_thrown_end_t callback);
+void thing_on_thrown_end(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp thrower);
 
 using thing_on_fall_begin_t = void (*)(Gamep, Levelsp, Levelp, Thingp me);
 void thing_on_fall_begin_set(Tpp tp, thing_on_fall_begin_t callback);

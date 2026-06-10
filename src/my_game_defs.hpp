@@ -88,7 +88,8 @@ enum {
   //
   // Jump animation height in tiles
   //
-  THING_JUMP_HEIGHT_ANIM_TILES = 1,
+  THING_JUMP_HEIGHT_ANIM_TILES  = 1,
+  THING_THROW_HEIGHT_ANIM_TILES = 1,
 
   //
   // The number of things we can show in the rightbar

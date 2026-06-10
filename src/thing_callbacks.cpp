@@ -523,6 +523,54 @@ void thing_on_jump_end(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp->on_jump_end(g, v, l, me);
 }
 
+void thing_on_thrown_begin_set(Tpp tp, thing_on_thrown_begin_t callback)
+{
+  TRACE();
+  if (tp == nullptr) [[unlikely]] {
+    ERR("no thing template pointer");
+    return;
+  }
+  tp->on_thrown_begin = callback;
+}
+
+void thing_on_thrown_begin(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp thrower)
+{
+  TRACE();
+  auto *tp = thing_tp(me);
+  if (tp == nullptr) [[unlikely]] {
+    ERR("no thing template pointer");
+    return;
+  }
+  if (tp->on_thrown_begin == nullptr) {
+    return;
+  }
+  tp->on_thrown_begin(g, v, l, me, thrower);
+}
+
+void thing_on_thrown_end_set(Tpp tp, thing_on_thrown_end_t callback)
+{
+  TRACE();
+  if (tp == nullptr) [[unlikely]] {
+    ERR("no thing template pointer");
+    return;
+  }
+  tp->on_thrown_end = callback;
+}
+
+void thing_on_thrown_end(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp thrower)
+{
+  TRACE();
+  auto *tp = thing_tp(me);
+  if (tp == nullptr) [[unlikely]] {
+    ERR("no thing template pointer");
+    return;
+  }
+  if (tp->on_thrown_end == nullptr) {
+    return;
+  }
+  tp->on_thrown_end(g, v, l, me, thrower);
+}
+
 void thing_on_shoved_set(Tpp tp, thing_on_shoved_t callback)
 {
   TRACE();

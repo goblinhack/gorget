@@ -96,6 +96,13 @@ static void level_tick_ok_to_end_check(Gamep g, Levelsp v, Levelp l)
       }
     }
 
+    if (thing_is_thrown(t)) {
+      l->tick_wait_on_things = true;
+      if (compiler_unused) { //
+        LEVEL_DBG(g, v, l, "waiting on thrown %s", to_string(g, v, l, t).c_str());
+      }
+    }
+
     //
     // Falling complete?
     //
@@ -359,7 +366,11 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool tick_is
     // speed 100  tick                tick
     // speed 50   tick
     //
-    if (! thing_is_moving(t) && ! thing_is_jumping(t) && ! thing_is_projectile(t) && ! thing_is_beam_weapon(t)) {
+    if (! thing_is_moving(t) &&     //
+        ! thing_is_jumping(t) &&    //
+        ! thing_is_thrown(t) &&     //
+        ! thing_is_projectile(t) && //
+        ! thing_is_beam_weapon(t)) {
       continue;
     }
 

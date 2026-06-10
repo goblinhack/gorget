@@ -226,7 +226,7 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp l, Levelp level_abov
                     break;
                   }
 
-                  if (thing_is_jumping(it)) {
+                  if (thing_is_jumping(it) || thing_is_thrown(it)) {
                     display_tile = true;
                     break;
                   }
