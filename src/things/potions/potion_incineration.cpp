@@ -96,12 +96,21 @@ static bool tp_potion_incin_on_use(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
       (void) thing_buff_add(g, v, l, user, tp_find_mand("buff_resistant_fire"));
       topcon("Flames engulf you, but you seem oddly calm");
     } else {
-      topcon("Flames engulf you as you drink the strangely tasty potion!");
+      topcon("Flames engulf you as you drink the potion!");
       thing_is_burning_set(g, v, l, user);
     }
-
-    (void) thing_spawn(g, v, l, tp_first(is_fire), thing_at(user));
   }
+
+  (void) thing_spawn(g, v, l, tp_first(is_fire), thing_at(user));
+
+  ThingEvent e {
+      .reason     = "drank a potion of incineration",
+      .event_type = THING_EVENT_FIRE_DAMAGE, //
+      .damage     = d20(),                   //
+      .source     = me,                      //
+  };
+
+  thing_damage(g, v, l, user, e);
 
   return true;
 }
