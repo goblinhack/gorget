@@ -11,6 +11,7 @@
 #include "my_thing_inlines.hpp"
 #include "my_tp.hpp"
 #include "my_types.hpp"
+#include "my_ui.hpp"
 
 //
 // Add an item to the things inventory
@@ -42,7 +43,7 @@ static auto thing_wield_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp w
 
     if (thing_is_player(wielder)) {
       auto the_thing = thing_name_long_the(g, v, l, item);
-      topcon("You fail to wield %s.", the_thing.c_str());
+      topcon(UI_IMPORTANT_FMT_STR "You fail to wield %s." UI_RESET_FMT, the_thing.c_str());
     }
     return false;
   }
@@ -97,7 +98,7 @@ static auto thing_unwield_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp
     if (thing_is_player(wielder)) {
       if (e.event_type == THING_EVENT_USER_INITIATED) {
         auto the_thing = thing_name_long_the(g, v, l, item);
-        topcon("You fail to unwield %s.", the_thing.c_str());
+        topcon(UI_IMPORTANT_FMT_STR "You fail to unwield %s." UI_RESET_FMT, the_thing.c_str());
       }
     }
     return false;

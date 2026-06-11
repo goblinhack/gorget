@@ -11,6 +11,7 @@
 #include "my_thing_inlines.hpp"
 #include "my_tp.hpp"
 #include "my_types.hpp"
+#include "my_ui.hpp"
 
 void thing_on_use_set(Tpp tp, thing_on_use_t callback)
 {
@@ -74,7 +75,7 @@ static auto thing_use_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp use
   if (! thing_on_use(g, v, l, item, user)) {
     if (e.event_type == THING_EVENT_USER_INITIATED) {
       auto the_thing = thing_name_long_the(g, v, l, item);
-      topcon("You failed to use %s.", the_thing.c_str());
+      topcon(UI_WARNING_FMT_STR "You failed to use %s." UI_RESET_FMT, the_thing.c_str());
     }
     return false;
   }

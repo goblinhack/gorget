@@ -15,6 +15,7 @@
 #include "my_thing_inlines.hpp"
 #include "my_tile.hpp"
 #include "my_types.hpp"
+#include "my_ui.hpp"
 
 #include <cmath>
 #include <ranges>
@@ -35,13 +36,54 @@ void thing_is_thrown_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp throw
   if (val) {
     thing_on_thrown_begin(g, v, l, item, thrower);
   } else {
+    THING_DBG(item, "pre thrown end");
+    TRACE_INDENT();
+
     thing_on_thrown_end(g, v, l, item, thrower);
 
+    THING_DBG(item, "post thrown end");
+    TRACE_INDENT();
+
     //
-    // Splash!
+    // Thrown effects
     //
-    if (level_is_water(g, v, l, thing_at(item))) {
+    auto The_thing = thing_name_long_The(g, v, l, item);
+
+    if (thing_is_player(thrower)) {
+      if (level_is_chasm(g, v, l, thing_at(item)) != nullptr) {
+        topcon("%s tumbles into the void.", The_thing.c_str());
+      }
+    }
+
+    if (level_is_foliage(g, v, l, thing_at(item)) != nullptr) {
+      if (thing_is_player(thrower)) {
+        topcon("%s lands with a rustle.", The_thing.c_str());
+      }
+    }
+
+    if (level_is_water(g, v, l, thing_at(item)) != nullptr) {
       thing_sound_play(g, v, l, item, "splash");
+
+      if (thing_is_player(thrower)) {
+        topcon("%s lands with a splash.", The_thing.c_str());
+      }
+    }
+
+    //
+    // Remove association with thrower
+    //
+    auto owner = thing_owner(g, v, l, item);
+    if (owner) {
+      ThingEvent e {
+          .reason     = "user threw item",  //
+          .event_type = THING_EVENT_THROWN, //
+          .source     = owner,              //
+      };
+
+      THING_DBG(item, "need to detach item from thrower");
+      TRACE_INDENT();
+
+      (void) thing_drop(g, v, l, owner, item, e);
     }
   }
 
@@ -56,7 +98,8 @@ void thing_is_thrown_unset(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp thr
     return;
   }
 
-  THING_DBG(item, "throw end");
+  THING_DBG(item, "is throw unset");
+  TRACE_INDENT();
 
   thing_is_thrown_set(g, v, l, item, thrower, false);
 }
@@ -141,14 +184,14 @@ static auto thing_throw_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thing
 
   if (! thing_is_able_to_throw_items(thrower)) {
     if (thing_is_player(thrower)) {
-      topcon("You are unable to throw items.");
+      topcon(UI_WARNING_FMT_STR "You are unable to throw items." UI_RESET_FMT);
     }
     return false;
   }
 
   if (! thing_is_able_to_be_thrown(item)) {
     auto the_thing = thing_name_long_the(g, v, l, item);
-    topcon("You cannot throw %s.", the_thing.c_str());
+    topcon(UI_WARNING_FMT_STR "You cannot throw %s." UI_RESET_FMT, the_thing.c_str());
     return false;
   }
 
@@ -171,7 +214,7 @@ static auto thing_throw_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thing
   auto how_far_i_can_throw = thing_distance_throw(g, v, l, thrower);
   if (how_far_i_can_throw == 0) {
     if (thing_is_player(thrower)) {
-      topcon("You are too tired to throw items.");
+      topcon(UI_IMPORTANT_FMT_STR "You are too tired to throw items." UI_RESET_FMT);
     }
     return false;
   }
@@ -191,7 +234,7 @@ static auto thing_throw_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thing
   if (obs != nullptr) {
     if (thing_is_player(thrower)) {
       auto the_thing = thing_name_long_the(g, v, l, obs);
-      topcon("You cannot throw items over %s.", the_thing.c_str());
+      topcon(UI_WARNING_FMT_STR "You cannot throw items over %s." UI_RESET_FMT, the_thing.c_str());
     }
     return false;
   }

@@ -164,13 +164,6 @@ static void thing_fall_end(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 
   //
-  // Splash!
-  //
-  if (level_is_water(g, v, l, thing_at(me))) {
-    thing_sound_play(g, v, l, me, "splash");
-  }
-
-  //
   // You cannot fall out of boss levels
   //
   switch (level_type(l->level_num + 1)) {
@@ -182,7 +175,7 @@ static void thing_fall_end(Gamep g, Levelsp v, Levelp l, Thingp me)
       // Choose a new landing spot for the thing
       //
       if (! thing_warp_to(g, v, next_level, me, thing_choose_landing_spot(g, v, next_level, me))) {
-        topcon("You fail to find the ground!");
+        topcon(UI_IMPORTANT_FMT_STR "You fail to find the ground!" UI_RESET_FMT);
       }
       break;
 
@@ -216,7 +209,7 @@ static void thing_fall_end(Gamep g, Levelsp v, Levelp l, Thingp me)
   };
 
   //
-  // "You tumble into the vuid"
+  // "You tumble into the void"
   //
   if (thing_is_player(me)) {
     player_fell(g, v, l, next_level, me);
@@ -252,6 +245,8 @@ static void thing_fall_end(Gamep g, Levelsp v, Levelp l, Thingp me)
     TRACE_INDENT();
     thing_is_falling_continues_set(g, v, l, me);
     thing_is_spawned_set(g, v, l, me);
+
+    topcon(UI_IMPORTANT_FMT_STR "You continue to fall!" UI_RESET_FMT);
   } else {
     //
     // "You take n damage from falling"
@@ -268,6 +263,21 @@ static void thing_fall_end(Gamep g, Levelsp v, Levelp l, Thingp me)
 
     if (thing_is_player(me)) {
       topcon(UI_GOOD_FMT_STR "You extinguish the flames as you fall!" UI_RESET_FMT);
+    }
+  }
+
+  //
+  // Splash!
+  //
+  if (level_is_deep_water(g, v, l, thing_at(me))) {
+    thing_sound_play(g, v, l, me, "splash");
+    if (thing_is_player(me)) {
+      topcon(UI_GOOD_FMT_STR "The deep water dampened your fall!" UI_RESET_FMT);
+    }
+  } else if (level_is_water(g, v, l, thing_at(me))) {
+    thing_sound_play(g, v, l, me, "splash");
+    if (thing_is_player(me)) {
+      topcon(UI_GOOD_FMT_STR "The water dampened your fall!" UI_RESET_FMT);
     }
   }
 }

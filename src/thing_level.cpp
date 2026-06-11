@@ -8,6 +8,8 @@
 #include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
 #include "my_types.hpp"
+#include "my_ui.hpp"
+
 #include <cinttypes>
 
 //
@@ -58,7 +60,7 @@ void thing_level_warp_to_entrance(Gamep g, Levelsp v, Levelp new_level, Thingp t
   // Now move to the correct location
   //
   if (! thing_warp_to(g, v, new_level, t, new_level->entrance)) {
-    topcon("You seem lost and unable to find the entrance!");
+    topcon(UI_IMPORTANT_FMT_STR "You seem lost and unable to find the entrance!" UI_RESET_FMT);
   }
 }
 
@@ -77,6 +79,6 @@ void thing_level_warp_to_exit(Gamep g, Levelsp v, Levelp new_level, Thingp t)
   // Now move to the correct location
   //
   if (! thing_warp_to(g, v, new_level, t, new_level->exit)) {
-    topcon("You seem lost and unable to find the exit!");
+    topcon(UI_IMPORTANT_FMT_STR "You seem lost and unable to find the exit!" UI_RESET_FMT);
   }
 }

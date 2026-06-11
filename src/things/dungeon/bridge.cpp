@@ -13,6 +13,7 @@
 #include "my_tp.hpp"
 #include "my_tps.hpp"
 #include "my_types.hpp"
+#include "my_ui.hpp"
 
 static auto tp_bridge_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
@@ -113,9 +114,9 @@ static void tp_bridge_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEve
       auto player_at = thing_at(player);
       if (thing_on_same_level_as_player(g, v, me)) {
         if (thing_at(me) == player_at) {
-          topcon("The bridge collapses under you!");
+          topcon(UI_IMPORTANT_FMT_STR "The bridge collapses under you!" UI_RESET_FMT);
         } else if (thing_vision_can_see_tile(g, v, l, player, player_at)) {
-          topcon("The bridge collapses!");
+          topcon(UI_WARNING_FMT_STR "The bridge collapses!" UI_RESET_FMT);
         } else {
           topcon("You hear a bridge collapse!");
         }

@@ -12,6 +12,7 @@
 #include "my_tp.hpp"
 #include "my_tps.hpp"
 #include "my_types.hpp"
+#include "my_ui.hpp"
 
 static Tilep door_locked_idle_damaged;
 static Tilep door_locked_open_damaged;
@@ -144,7 +145,7 @@ static auto tp_door_locked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l
       // Need a key
       //
       if (thing_is_player(opener)) {
-        topcon("You need a key!");
+        topcon(UI_WARNING_FMT_STR "You need a key!" UI_RESET_FMT);
       }
 
       return false;

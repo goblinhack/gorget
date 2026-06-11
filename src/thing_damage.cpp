@@ -187,18 +187,18 @@ static void thing_damage_by_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
           // The player is burning.
           //
           if (thing_is_burning(me)) {
-            topcon("Your burning body burns %s", the_thing_name_short.c_str());
+            topcon(UI_IMPORTANT_FMT_STR "Your burning body burns %s" UI_RESET_FMT, the_thing_name_short.c_str());
           } else {
-            topcon("Your burning body sets fire to %s", the_thing_name_short.c_str());
+            topcon(UI_IMPORTANT_FMT_STR "Your burning body sets fire to %s" UI_RESET_FMT, the_thing_name_short.c_str());
           }
         } else {
           //
           // The player is not burning.
           //
           if (thing_is_burning(me)) {
-            topcon("You burn %s", the_thing_name_short.c_str());
+            topcon(UI_IMPORTANT_FMT_STR "You burn %s" UI_RESET_FMT, the_thing_name_short.c_str());
           } else {
-            topcon("You set fire to %s", the_thing_name_short.c_str());
+            topcon(UI_IMPORTANT_FMT_STR "You set fire to %s" UI_RESET_FMT, the_thing_name_short.c_str());
           }
         }
         break;
@@ -315,7 +315,7 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
   if (thing_is_immune_to(g, v, l, me, e.event_type)) {
     THING_DBG(me, "%s: no damage as immune", to_string(g, v, l, e).c_str());
     if (thing_is_player(me)) {
-      topcon("You take no damage from the heat.");
+      topcon(UI_GOOD_FMT_STR "You take no damage from the heat." UI_RESET_FMT);
     }
     return;
   }
@@ -329,13 +329,13 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
 
     if (e.damage <= 0) {
       if (thing_is_player(me)) {
-        topcon("You take no damage from the heat.");
+        topcon(UI_GOOD_FMT_STR "You take no damage from the heat." UI_RESET_FMT);
       }
       return;
     }
 
     if (thing_is_player(me)) {
-      topcon("You take half damage from the heat.");
+      topcon(UI_GOOD_FMT_STR "You take half damage from the heat." UI_RESET_FMT);
     }
   }
 

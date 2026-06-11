@@ -15,6 +15,7 @@
 #include "my_thing_inlines.hpp"
 #include "my_tile.hpp"
 #include "my_types.hpp"
+#include "my_ui.hpp"
 
 #include <cmath>
 #include <ranges>
@@ -175,7 +176,7 @@ static auto thing_jump_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thingp
     if (thing_is_player(me)) {
       if (warn) {
         auto the_thing = thing_name_long_the(g, v, l, obs);
-        topcon("You cannot jump over %s.", the_thing.c_str());
+        topcon(UI_WARNING_FMT_STR "You cannot jump over %s." UI_RESET_FMT, the_thing.c_str());
       }
     }
     return false;

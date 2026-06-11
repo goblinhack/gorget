@@ -11,6 +11,7 @@
 #include "my_thing_inlines.hpp"
 #include "my_tp.hpp"
 #include "my_types.hpp"
+#include "my_ui.hpp"
 
 //
 // Add an item to the things inventory
@@ -42,7 +43,7 @@ static auto thing_carry_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp o
 
     if (thing_is_player(owner)) {
       auto the_thing = thing_name_long_the(g, v, l, item);
-      topcon("You fail to carry %s.", the_thing.c_str());
+      topcon(UI_WARNING_FMT_STR "You fail to carry %s." UI_RESET_FMT, the_thing.c_str());
     }
     return false;
   }

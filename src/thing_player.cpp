@@ -18,6 +18,7 @@
 #include "my_thing_inlines.hpp" // NOLINT
 #include "my_tp.hpp"
 #include "my_types.hpp"
+#include "my_ui.hpp"
 #include "my_wid_warning.hpp"
 #include "my_wids.hpp"
 
@@ -140,7 +141,7 @@ void thing_player_init(Gamep g)
           auto item = thing_find(g, v, g_thing_throw_id);
           if (item) {
             if (! thing_throw_to(g, v, l, player, item, v->cursor_at)) {
-              topcon("You failed to throw the item.");
+              topcon(UI_WARNING_FMT_STR "You failed to throw the item." UI_RESET_FMT);
               (void) sound_play(g, "error");
             }
           }
@@ -795,14 +796,14 @@ static auto player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy) -> b
   } else {
     item = thing_wielding(g, v, l, me);
     if (item == nullptr) {
-      topcon("You have nothing to wield.");
+      topcon(UI_IMPORTANT_FMT_STR "You have nothing to wield." UI_RESET_FMT);
       return false;
     }
 
     fire_what = thing_on_use_weapon_request(g, v, l, item, me);
     if (item == nullptr) {
       auto the_thing = thing_name_long_the(g, v, l, item);
-      topcon("You fail to fire %s.", the_thing.c_str());
+      topcon(UI_IMPORTANT_FMT_STR "You fail to fire %s." UI_RESET_FMT, the_thing.c_str());
       return false;
     }
   }
@@ -846,7 +847,7 @@ static auto player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy) -> b
 
   if (! thing_fire_at(g, v, l, me, item, fire_what, target)) {
     auto the_thing = thing_name_long_the(g, v, l, item);
-    topcon("You are unable to fire %s.", the_thing.c_str());
+    topcon(UI_IMPORTANT_FMT_STR "You are unable to fire %s." UI_RESET_FMT, the_thing.c_str());
   }
 
   return level_tick_begin_requested(g, v, l, "player fired");
@@ -1235,7 +1236,7 @@ void player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
   auto how_far_i_can_jump = thing_distance_jump(g, v, l, me);
   if (how_far_i_can_jump == 0) {
     if (thing_is_player(me)) {
-      topcon("You are too tired to jump.");
+      topcon(UI_WARNING_FMT_STR "You are too tired to jump." UI_RESET_FMT);
     }
     return false;
   }

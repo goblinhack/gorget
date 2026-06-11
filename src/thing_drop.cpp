@@ -11,6 +11,7 @@
 #include "my_thing_inlines.hpp"
 #include "my_tp.hpp"
 #include "my_types.hpp"
+#include "my_ui.hpp"
 
 //
 // Drop an item from the things inventory
@@ -45,7 +46,7 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp us
     if (thing_is_player(user)) {
       if (e.event_type == THING_EVENT_USER_INITIATED) {
         auto the_thing = thing_name_long_the(g, v, l, item);
-        topcon("You fail to drop %s.", the_thing.c_str());
+        topcon(UI_WARNING_FMT_STR "You fail to drop %s." UI_RESET_FMT, the_thing.c_str());
       }
     }
     return false;
@@ -54,19 +55,20 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp us
   //
   // Drop the thing where the player is
   //
-  THING_DBG(user, "drop: %s (place the item)", s.c_str());
-  TRACE_INDENT();
+  if (! thing_is_thrown(item)) {
+    THING_DBG(user, "drop: %s (need to place the item)", s.c_str());
+    TRACE_INDENT();
 
-  if (! thing_warp_to(g, v, l, item, thing_at(user))) {
-    if (e.event_type == THING_EVENT_USER_INITIATED) {
-      auto the_thing = thing_name_long_the(g, v, l, item);
-      topcon("You fail to place %s.", the_thing.c_str());
+    if (! thing_warp_to(g, v, l, item, thing_at(user))) {
+      if (e.event_type == THING_EVENT_USER_INITIATED) {
+        auto the_thing = thing_name_long_the(g, v, l, item);
+        topcon(UI_WARNING_FMT_STR "You fail to place %s." UI_RESET_FMT, the_thing.c_str());
+      }
+      return false;
     }
-    return false;
-  }
 
-  THING_DBG(user, "drop: %s (placed the item)", s.c_str());
-  TRACE_INDENT();
+    THING_DBG(user, "drop: %s (placed the item)", s.c_str());
+  }
 
   //
   // Replace the thing with a copy if count exists

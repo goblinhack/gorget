@@ -69,9 +69,6 @@ static void tp_potion_incinertaion_on_thrown_end(Gamep g, Levelsp v, Levelp l, T
   //
   if ((level_is_chasm(g, v, l, thing_at(me)) != nullptr) || // newline
       (level_is_water(g, v, l, thing_at(me)) != nullptr)) {
-    if (thing_is_player(thrower)) {
-      topcon("The potion lands gently.");
-    }
     return;
   }
 
@@ -82,11 +79,6 @@ static void tp_potion_incinertaion_on_thrown_end(Gamep g, Levelsp v, Levelp l, T
 
   THING_DBG(me, "dead due to being thrown");
   TRACE_INDENT();
-
-  if (thing_is_player(thrower)) {
-    topcon("The potion shatters.");
-  }
-  thing_sound_play(g, v, l, me, "glass_shatter");
 
   thing_dead(g, v, l, me, e);
 }
@@ -123,6 +115,11 @@ static void tp_potion_incineration_on_death(Gamep g, Levelsp v, Levelp l, Thingp
       (e.event_type == THING_EVENT_USED)) {
     return;
   }
+
+  if (e.source && thing_is_player(e.source)) {
+    topcon("The potion shatters.");
+  }
+  thing_sound_play(g, v, l, me, "glass_shatter");
 
   tp_potion_incineration_spawn_explosion(g, v, l, me);
 }

@@ -36,9 +36,6 @@ static void tp_potion_healing_on_thrown_end(Gamep g, Levelsp v, Levelp l, Thingp
   if ((level_is_chasm(g, v, l, thing_at(me)) != nullptr) || // newline
       (level_is_water(g, v, l, thing_at(me)) != nullptr) || // newline
       (level_is_foliage(g, v, l, thing_at(me)) != nullptr)) {
-    if (thing_is_player(thrower)) {
-      topcon("The potion lands gently.");
-    }
     return;
   }
 
@@ -49,11 +46,6 @@ static void tp_potion_healing_on_thrown_end(Gamep g, Levelsp v, Levelp l, Thingp
 
   THING_DBG(me, "dead due to being thrown");
   TRACE_INDENT();
-
-  if (thing_is_player(thrower)) {
-    topcon("The potion shatters.");
-  }
-  thing_sound_play(g, v, l, me, "glass_shatter");
 
   thing_dead(g, v, l, me, e);
 }
@@ -66,12 +58,12 @@ static bool tp_potion_healing_on_use(Gamep g, Levelsp v, Levelp l, Thingp me, Th
   auto new_health = thing_health_incr(g, v, l, user, thing_health_max(g, v, l, user) / 2);
   if (old_health == new_health) {
     if (thing_is_player(user)) {
-      topcon("That potion seemed to have no effect.");
+      topcon(UI_WARNING_FMT_STR "That potion seemed to have no effect." UI_RESET_FMT);
       thing_sound_play(g, v, l, user, "error");
     }
   } else {
     if (thing_is_player(user)) {
-      topcon("You feel your old evil self again.");
+      topcon(UI_GOOD_FMT_STR "You feel your old evil self again." UI_RESET_FMT);
       thing_sound_play(g, v, l, user, "bonus");
     }
   }
@@ -88,6 +80,11 @@ static void tp_potion_healing_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, 
       (e.event_type == THING_EVENT_USED)) {
     return;
   }
+
+  if (e.source && thing_is_player(e.source)) {
+    topcon("The potion shatters.");
+  }
+  thing_sound_play(g, v, l, me, "glass_shatter");
 
   (void) thing_spawn(g, v, l, tp_first(is_water), thing_at(me));
 }
@@ -134,7 +131,7 @@ static void tp_potion_healing_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, 
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_treasure);
   tp_flag_set(tp, is_usable);
-  tp_health_set(tp, "1d4");
+  tp_health_set(tp, "1d6");
   tp_is_immune_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_light_color_set(tp, "white");
   tp_name_a_or_an_set(tp, "a potion of healing");
