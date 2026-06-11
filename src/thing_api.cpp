@@ -1349,7 +1349,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_unused9) != 0;
 }
 
-[[nodiscard]] auto thing_is_unused10(Thingp t) -> bool
+[[nodiscard]] auto thing_is_obs_to_hearing(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -1357,7 +1357,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused10) != 0;
+  return tp_flag(thing_tp(t), is_obs_to_hearing) != 0;
 }
 
 [[nodiscard]] auto thing_is_able_to_be_thrown(Thingp t) -> bool
@@ -3598,7 +3598,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
   return t->_value14 -= val;
 }
-[[nodiscard]] auto thing_value15(Thingp t) -> int
+[[nodiscard]] auto thing_distance_hearing(Thingp t) -> int
 {
   TRACE_DEBUG();
 
@@ -3606,10 +3606,10 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return 0;
   }
-  return t->_value15;
+  return t->_distance_hearing;
 }
 
-[[nodiscard]] auto thing_value15_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_distance_hearing_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3617,10 +3617,10 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return 0;
   }
-  return t->_value15 = val;
+  return t->_distance_hearing = val;
 }
 
-[[nodiscard]] auto thing_value15_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_distance_hearing_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3628,10 +3628,10 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return 0;
   }
-  return t->_value15 += val;
+  return t->_distance_hearing += val;
 }
 
-[[nodiscard]] auto thing_value15_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_distance_hearing_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -3639,10 +3639,10 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return 0;
   }
-  if (static_cast< int >(t->_value15) - val <= 0) {
-    return t->_value15 = 0;
+  if (static_cast< int >(t->_distance_hearing) - val <= 0) {
+    return t->_distance_hearing = 0;
   }
-  return t->_value15 -= val;
+  return t->_distance_hearing -= val;
 }
 [[nodiscard]] auto thing_distance_avoid_target(Thingp t) -> int
 {

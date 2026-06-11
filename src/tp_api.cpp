@@ -883,10 +883,10 @@
   return tp_flag(tp, is_unused1) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused10(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_obs_to_hearing(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused10) != 0;
+  return tp_flag(tp, is_obs_to_hearing) != 0;
 }
 
 [[nodiscard]] auto tp_is_able_to_be_thrown(Tpp tp) -> bool

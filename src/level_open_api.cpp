@@ -884,10 +884,10 @@
   return level_open(g, v, l, is_unused1, p);
 }
 
-[[nodiscard]] auto level_open_is_unused10(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_open_is_obs_to_hearing(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_open(g, v, l, is_unused10, p);
+  return level_open(g, v, l, is_obs_to_hearing, p);
 }
 
 [[nodiscard]] auto level_open_is_able_to_be_thrown(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp

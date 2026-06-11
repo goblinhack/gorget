@@ -138,7 +138,7 @@ public:
   int value12 {0};
   int value13 {0};
   int value14 {0};
-  int value15 {0};
+  int distance_hearing {0};
   int distance_throw {0};
   int charge_count {0};
   int distance_avoid_target {0};

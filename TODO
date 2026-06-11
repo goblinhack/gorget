@@ -1,5 +1,6 @@
 bugs
 ----
+sound map
 throwing potions
 item thrown onto exit
 item thrown onto water
@@ -10,6 +11,7 @@ chests should explode sometimes
 steam and smoke should spread
 incineration over water spawns steam
 enchants
+could kill you in x hits
 
 potion, healing
 potion, resiliance (stamina)

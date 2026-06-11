@@ -885,10 +885,10 @@
   return level_count(g, v, l, is_unused1, p);
 }
 
-[[nodiscard]] auto level_count_is_unused10(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_obs_to_hearing(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused10, p);
+  return level_count(g, v, l, is_obs_to_hearing, p);
 }
 
 [[nodiscard]] auto level_count_is_able_to_be_thrown(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t

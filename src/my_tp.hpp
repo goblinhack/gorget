@@ -211,7 +211,7 @@
       list_macro(is_unused_98, "is_unused_98"),                                             /* newline */                                       \
       list_macro(is_unused_99, "is_unused_99"),                                             /* newline */                                       \
       list_macro(is_unused1, "is_unused1"),                                                 /* newline */                                       \
-      list_macro(is_unused10, "is_unused10"),                                               /* newline */                                       \
+      list_macro(is_obs_to_hearing, "is_obs_to_hearing"),                                   /* newline */                                       \
       list_macro(is_able_to_be_thrown, "is_able_to_be_thrown"),                             /* newline */                                       \
       list_macro(is_unused2, "is_unused2"),                                                 /* newline */                                       \
       list_macro(is_unused3, "is_unused3"),                                                 /* newline */                                       \
@@ -505,6 +505,7 @@ class Tp;
 [[nodiscard]] auto tp_damage_string(Tpp tp, ThingEventType val) -> std::string;
 [[nodiscard]] auto tp_damage(Tpp tp, ThingEventType val) -> int;
 [[nodiscard]] auto tp_distance_avoid_target_get(Tpp tp) -> int;
+[[nodiscard]] auto tp_distance_hearing_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_distance_jump_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_distance_minion_from_mob_max_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_distance_throw_get(Tpp tp) -> int;
@@ -667,6 +668,7 @@ class Tp;
 [[nodiscard]] auto tp_is_obs_to_explosion(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_obs_to_falling_onto(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_obs_to_fire(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_obs_to_hearing(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_obs_to_jumping_onto(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_obs_to_jumping_out_of(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_obs_to_jumping_over(Tpp tp) -> bool;
@@ -716,7 +718,6 @@ class Tp;
 [[nodiscard]] auto tp_is_unused_98(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused_99(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused1(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused10(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused2(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused3(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused4(Tpp tp) -> bool;
@@ -774,7 +775,6 @@ class Tp;
 [[nodiscard]] auto tp_value12_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_value13_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_value14_get(Tpp tp) -> int;
-[[nodiscard]] auto tp_value15_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_value2_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_value3_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_value4_get(Tpp tp) -> int;
@@ -802,6 +802,7 @@ void               tp_dbg_(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf
 void               tp_die_(Tpp tp, const char *fmt, va_list args); // compile error without
 void               tp_die(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void               tp_distance_avoid_target_set(Tpp tp, int val);
+void               tp_distance_hearing_set(Tpp tp, int val);
 void               tp_distance_jump_set(Tpp tp, int val);
 void               tp_distance_minion_from_mob_max_set(Tpp tp, int val);
 void               tp_distance_throw_set(Tpp tp, int val);
@@ -847,7 +848,6 @@ void               tp_value11_set(Tpp tp, int val);
 void               tp_value12_set(Tpp tp, int val);
 void               tp_value13_set(Tpp tp, int val);
 void               tp_value14_set(Tpp tp, int val);
-void               tp_value15_set(Tpp tp, int val);
 void               tp_value2_set(Tpp tp, int val);
 void               tp_value3_set(Tpp tp, int val);
 void               tp_value4_set(Tpp tp, int val);

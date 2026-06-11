@@ -1593,24 +1593,24 @@ void tp_value14_set(Tpp tp, int val)
   return tp->value14;
 }
 
-void tp_value15_set(Tpp tp, int val)
+void tp_distance_hearing_set(Tpp tp, int val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
     tp_err(tp, "no thing template pointer");
     return;
   }
-  tp->value15 = val;
+  tp->distance_hearing = val;
 }
 
-[[nodiscard]] auto tp_value15_get(Tpp tp) -> int
+[[nodiscard]] auto tp_distance_hearing_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
     tp_err(tp, "no thing template pointer");
     return 0;
   }
-  return tp->value15;
+  return tp->distance_hearing;
 }
 
 void tp_distance_throw_set(Tpp tp, int val)
