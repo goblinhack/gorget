@@ -1078,6 +1078,7 @@ void tile_blit_apply_submerge_pct(Gamep g, spoint &tl, spoint &br, Tilep tile, f
   // Now shift the tile down so it looks as if it is on the waterline
   // Move if down by the amount removed
   //
-  tl.y += pix_removed;
-  br.y += pix_removed;
+  auto submerged_depth = int(ceilf(((float) pix_removed / 2) / (float) one_pix_height) * one_pix_height);
+  tl.y += submerged_depth;
+  br.y += submerged_depth;
 }
