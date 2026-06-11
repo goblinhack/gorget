@@ -21,20 +21,26 @@ static auto tp_cursor_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l, con
   //
   Tilep tile = tp_tiles_get(tp, THING_ANIM_CURSOR_NOPATH, 0);
 
-  //
-  // Targetting?
-  //
-  if (game_state(g) == STATE_THROW_ITEM) {
-    return tp_tiles_get(tp, THING_ANIM_CURSOR_TARGET, 0);
-  }
-
   auto *player = thing_player(g);
   if (player == nullptr) [[unlikely]] {
     return tile;
   }
 
+  //
+  // Not seen this tile?
+  //
   if (! level_has_seen(g, v, l, p)) {
     return tile;
+  }
+
+  //
+  // Targetting?
+  //
+  if (game_state(g) == STATE_THROW_ITEM) {
+    if (distance(p, thing_at(player)) > thing_distance_throw(g, v, l, player)) {
+      return tp_tiles_get(tp, THING_ANIM_CURSOR_TARGET_OUT_OF_RANGE, 0);
+    }
+    return tp_tiles_get(tp, THING_ANIM_CURSOR_TARGET, 0);
   }
 
   //
@@ -94,6 +100,8 @@ static auto tp_cursor_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l, con
   tp_tiles_push_back(tp, THING_ANIM_CURSOR_HAZARD, tile);
   tile = tile_find_mand("cursor_at.target");
   tp_tiles_push_back(tp, THING_ANIM_CURSOR_TARGET, tile);
+  tile = tile_find_mand("cursor_at.target_out_of_range");
+  tp_tiles_push_back(tp, THING_ANIM_CURSOR_TARGET_OUT_OF_RANGE, tile);
 
   return true;
 }

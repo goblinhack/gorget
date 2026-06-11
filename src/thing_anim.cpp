@@ -129,6 +129,7 @@ void thing_anim_init(Gamep g, Levelsp v, Levelp l, Thingp t, ThingAnimType anim_
         case THING_ANIM_CURSOR_NOPATH :
         case THING_ANIM_CURSOR_HAZARD :
         case THING_ANIM_CURSOR_TARGET :
+        case THING_ANIM_CURSOR_TARGET_OUT_OF_RANGE :
         case THING_ANIM_CURSOR_WARNING :
         case THING_ANIM_OPEN :
         case THING_ANIM_DEAD :
