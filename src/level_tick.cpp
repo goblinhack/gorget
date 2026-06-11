@@ -313,8 +313,29 @@ static void level_tick_check_running_time(Gamep g, Levelsp v, Levelp l)
     //
     level_tick_body(g, v, l, 0, true /* tick_is_about_to_end */);
 
-    if (! l->tick_end_requested) {
-      if (level_is_player_level(g, v, l)) {
+    if (level_is_player_level(g, v, l)) {
+      //
+      // Current player level
+      //
+    } else {
+      //
+      // Lower level potentially
+      //
+      // If a potion is thrown into a chasm and it lands on the lower level, then the
+      // lower level might have already deduced it was done with ticking. This means
+      // the resultant explosion will not have collisions. Hence we need to wait for
+      // the main level to finish ticking and spawning explosions on the lower level
+      // before the lower level can complete!
+      //
+      Levelp player_level = thing_player_level(g);
+      if (player_level) {
+        if (level_tick_is_in_progress(g, v, player_level)) {
+          LEVEL_DBG(g, v, l, "Tick %u: delay end, waiting for player level", v->tick);
+          return;
+        }
+      }
+
+      if (! l->tick_end_requested) {
         LEVEL_DBG(g, v, l, "Tick %u: end requested", v->tick);
       }
     }
@@ -349,7 +370,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool tick_is
   }
   const int player_speed = thing_speed(player);
 
-  if (1 || compiler_unused) {
+  if (compiler_unused) {
     if (level_is_player_level(g, v, l)) {
       LEVEL_DBG(g, v, l, "time_step %f v->last_time_step %f dt %f", v->time_step, v->last_time_step, dt);
     }
@@ -393,7 +414,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool tick_is
 
     auto thing_dt_change = t->thing_dt - old_thing_dt;
 
-    if (1 || compiler_unused) {
+    if (compiler_unused) {
       THING_DBG(t, "level dt %f old_thing_dt %f thing_dt %f thing_dt_change %f speed %d v %d",
                 dt,              //
                 old_thing_dt,    //
@@ -416,7 +437,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool tick_is
     }
 
     if (tick_is_about_to_end || (t->thing_dt >= 1.0)) {
-      if (1 || compiler_unused) {
+      if (compiler_unused) {
         THING_DBG(t, "call move finish as tick about to end");
       }
 
@@ -627,9 +648,7 @@ static void level_tick_end(Gamep g, Levelsp v, Levelp l)
 {
   TRACE();
 
-  if (level_is_player_level(g, v, l)) {
-    LEVEL_DBG(g, v, l, "Tick %u: ending", v->tick);
-  }
+  LEVEL_DBG(g, v, l, "Tick %u: ending", v->tick);
 
   l->tick_end_requested = false;
   l->tick_in_progress   = false;
@@ -662,9 +681,7 @@ static void level_tick_end(Gamep g, Levelsp v, Levelp l)
     player_reached_entrance_do(g, v, l);
   }
 
-  if (level_is_player_level(g, v, l)) {
-    LEVEL_DBG(g, v, l, "Tick %u: end", v->tick);
-  }
+  LEVEL_DBG(g, v, l, "Tick %u: end", v->tick);
 }
 
 [[nodiscard]] auto level_tick_is_in_progress(Gamep g, Levelsp v, Levelp l) -> bool
@@ -847,7 +864,11 @@ static void level_tick_time_step(Gamep g, Levelsp v, Levelp current_level)
   v->last_time_step = v->time_step;
   v->time_step      = (static_cast< float >(v->frame - v->frame_begin)) / static_cast< float >(duration_ms);
 
-  //  IF_DEBUG2
+  if (v->time_step >= 1.0) {
+    v->time_step = 1.0;
+  }
+
+  IF_DEBUG2
   { //
     if (level_is_player_level(g, v, current_level)) {
       LEVEL_DBG(g, v, current_level, "Tick %u: tick-count %u time_step %f last_time_step %f frame %u frame_begin %u", v->tick,

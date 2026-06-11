@@ -456,7 +456,7 @@ static auto game_event_jump(Gamep g) -> bool
 
   if (level_tick_is_in_progress(g, v, l) || level_tick_begin_is_requested(g, v, l)) {
     (void) sound_play(g, "error");
-    return false;
+    return true;
   }
 
   //
@@ -499,7 +499,7 @@ static auto game_event_throw(Gamep g) -> bool
 
   if (level_tick_is_in_progress(g, v, l) || level_tick_begin_is_requested(g, v, l)) {
     (void) sound_play(g, "error");
-    return false;
+    return true;
   }
 
   std::vector< Thingp > items;
@@ -555,7 +555,7 @@ static auto game_event_abort(Gamep g) -> bool
 
   if (level_tick_is_in_progress(g, v, l) || level_tick_begin_is_requested(g, v, l)) {
     (void) sound_play(g, "error");
-    return false;
+    return true;
   }
 
   game_state_reset(g, "aborted task");

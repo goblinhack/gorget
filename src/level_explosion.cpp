@@ -27,20 +27,26 @@ void level_tick_explosion(Gamep g, Levelsp v, Levelp l)
       continue;
     }
 
+    LEVEL_DBG(g, v, l, "handle explosion at (%d,%d)", p.x, p.y);
+    TRACE_INDENT();
+
     FOR_ALL_THINGS_AT(g, v, l, t, p)
     {
       //
       // Skip dead monsters that take damage from explosion and leave a corpse?
       //
       if (thing_is_dead(t)) {
+        THING_DBG(t, "over explosion, but dead");
         continue;
       }
 
       if (! thing_is_physics_explosion(t)) {
+        THING_DBG(t, "over explosion, skip for explosion");
         continue;
       }
 
       THING_DBG(t, "over explosion");
+      TRACE_INDENT();
 
       thing_explosion_handle(g, v, l, t);
     }

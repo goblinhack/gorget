@@ -169,7 +169,8 @@ void thing_anim_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, int ti
 
   if (g_opt_tests) {
     if (thing_is_level_curr(t)) {
-      THING_DBG(t, "anim %s index %d [%s]", tile_name(tile).c_str(), t->anim_index, ThingAnimType_to_string(t->anim_type).c_str());
+      THING_DBG(t, "anim %s index %d [%s] anim_ms_remaining %u", tile_name(tile).c_str(), t->anim_index,
+                ThingAnimType_to_string(t->anim_type).c_str(), t->anim_ms_remaining);
     }
   }
 

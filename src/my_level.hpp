@@ -748,7 +748,6 @@ enum {
 void fragment_alts_fini(Gamep g);
 void fragments_fini(Gamep g);
 void fragments_init(Gamep g);
-void level_tick_reset_frame_counter(Gamep g);
 void game_debug_info(Gamep g);
 void level_anim(Gamep g, Levelsp v, Levelp l);
 void level_assign_tiles(Gamep g, Levelsp v, Levelp l);
@@ -811,6 +810,7 @@ void level_tick_begin_temperature(Gamep g, Levelsp v, Levelp l);
 void level_tick_chasm(Gamep g, Levelsp v, Levelp l);
 void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l);
 void level_tick_explosion(Gamep g, Levelsp v, Levelp l);
+void level_tick_reset_frame_counter(Gamep g);
 void level_tick_teleport(Gamep g, Levelsp v, Levelp l);
 void level_tick_water(Gamep g, Levelsp v, Levelp l);
 void level_update_flags(Gamep g, Levelsp v, Levelp l);

@@ -13,21 +13,21 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
-static auto tp_potion_incineration_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
+static auto tp_potion_incin_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
   return "potion, incineration";
 }
 
-static auto tp_potion_incineration_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
+static auto tp_potion_incin_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
   return UI_INFO1_FMT_STR "Consume this potion to set yourself on fire! Or give it to someone else...";
 }
 
-static void tp_potion_incineration_spawn_explosion(Gamep g, Levelsp v, Levelp l, Thingp me)
+static void tp_potion_incin_spawn_explosion(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
@@ -60,7 +60,7 @@ static void tp_potion_incineration_spawn_explosion(Gamep g, Levelsp v, Levelp l,
   }
 }
 
-static void tp_potion_incinertaion_on_thrown_end(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp thrower)
+static void tp_potion_incin_on_thrown_end(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp thrower)
 {
   TRACE();
 
@@ -83,7 +83,7 @@ static void tp_potion_incinertaion_on_thrown_end(Gamep g, Levelsp v, Levelp l, T
   thing_dead(g, v, l, me, e);
 }
 
-static bool tp_potion_incineration_on_use(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user)
+static bool tp_potion_incin_on_use(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user)
 {
   TRACE();
 
@@ -106,7 +106,7 @@ static bool tp_potion_incineration_on_use(Gamep g, Levelsp v, Levelp l, Thingp m
   return true;
 }
 
-static void tp_potion_incineration_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
+static void tp_potion_incin_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
 {
   TRACE();
 
@@ -121,22 +121,22 @@ static void tp_potion_incineration_on_death(Gamep g, Levelsp v, Levelp l, Thingp
   }
   thing_sound_play(g, v, l, me, "glass_shatter");
 
-  tp_potion_incineration_spawn_explosion(g, v, l, me);
+  tp_potion_incin_spawn_explosion(g, v, l, me);
 }
 
-[[nodiscard]] auto tp_load_potion_incineration() -> bool
+[[nodiscard]] auto tp_load_potion_incin() -> bool
 {
   TRACE();
 
-  auto *tp   = tp_load("potion_incineration"); // keep as string for scripts
+  auto *tp   = tp_load("potion_incin"); // keep as string for scripts
   auto  name = tp_name(tp);
 
   // begin sort marker1 {
-  thing_description_set(tp, tp_potion_incineration_description_get);
-  thing_detail_set(tp, tp_potion_incineration_detail_get);
-  thing_on_death_set(tp, tp_potion_incineration_on_death);
-  thing_on_thrown_end_set(tp, tp_potion_incinertaion_on_thrown_end);
-  thing_on_use_set(tp, tp_potion_incineration_on_use);
+  thing_description_set(tp, tp_potion_incin_description_get);
+  thing_detail_set(tp, tp_potion_incin_detail_get);
+  thing_on_death_set(tp, tp_potion_incin_on_death);
+  thing_on_thrown_end_set(tp, tp_potion_incin_on_thrown_end);
+  thing_on_use_set(tp, tp_potion_incin_on_use);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1"); // fumble => intensify / keep burning / crit => stop burning
   tp_flag_set(tp, is_able_to_be_thrown);
   tp_flag_set(tp, is_able_to_fall_sound);

@@ -133,7 +133,7 @@ static std::initializer_list< std::string > tps = {
     "player",
     "potion_endurance",
     "potion_healing",
-    "potion_incineration",
+    "potion_incin",
     "projectile_fire",
     "projectile_light",
     "reeds",

@@ -63,7 +63,7 @@
   if (!tp_load_player()) { return false; }
   if (!tp_load_potion_endurance()) { return false; }
   if (!tp_load_potion_healing()) { return false; }
-  if (!tp_load_potion_incineration()) { return false; }
+  if (!tp_load_potion_incin()) { return false; }
   if (!tp_load_projectile_fire()) { return false; }
   if (!tp_load_projectile_light()) { return false; }
   if (!tp_load_reeds()) { return false; }

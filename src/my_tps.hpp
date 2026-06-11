@@ -61,7 +61,7 @@ auto tp_load_pillar() -> bool;
 auto tp_load_player() -> bool;
 auto tp_load_potion_endurance() -> bool;
 auto tp_load_potion_healing() -> bool;
-auto tp_load_potion_incineration() -> bool;
+auto tp_load_potion_incin() -> bool;
 auto tp_load_projectile_fire() -> bool;
 auto tp_load_projectile_light() -> bool;
 auto tp_load_reeds() -> bool;
