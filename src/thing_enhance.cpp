@@ -10,7 +10,7 @@
 //
 // Given an existing thing, enhance it with the tp. This way we can apply buffs repeatedly.
 //
-void thing_merge(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp)
+void thing_enhance(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp)
 {
   TRACE();
 

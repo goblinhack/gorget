@@ -64,7 +64,7 @@
   }
 
   // *******************************************************************
-  // * consider thing_merge if changing code here
+  // * consider thing_enhance if changing code here
   // *******************************************************************
   (void) thing_health_max_set(g, v, l, t, thing_health_set(g, v, l, t, tp_health_max_get(tp)));
   (void) thing_stamina_max_set(g, v, l, t, thing_stamina_set(g, v, l, t, tp_stamina_max_get(tp)));
@@ -98,7 +98,7 @@
   (void) thing_value8_set(g, v, l, t, tp_value8_get(tp));
   (void) thing_value9_set(g, v, l, t, tp_value9_get(tp));
   // *******************************************************************
-  // * consider thing_merge if changing code here
+  // * consider thing_enhance if changing code here
   // *******************************************************************
 
   //

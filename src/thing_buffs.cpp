@@ -134,7 +134,7 @@ static void thing_dump_buffs(Gamep g, Levelsp v, Levelp l, Thingp me)
     //
     // Merge a new tp buff into an existing thing buff
     //
-    thing_merge(g, v, l, existing_buff, what);
+    thing_enhance(g, v, l, existing_buff, what);
     return existing_buff;
   }
 
