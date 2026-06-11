@@ -660,6 +660,13 @@ static auto game_event_abort(Gamep g) -> bool
     return true;
   }
 
+  if (sdlk_eq(*key, game_key_abort_get(g))) {
+    DBG("pressed abort key");
+    TRACE_INDENT();
+    game_event_abort(g);
+    return true;
+  }
+
   if (game_state(g) != STATE_PLAYING) {
     return false;
   }
@@ -708,13 +715,6 @@ static auto game_event_abort(Gamep g) -> bool
     DBG("pressed throw key");
     TRACE_INDENT();
     game_event_throw(g);
-    return true;
-  }
-
-  if (sdlk_eq(*key, game_key_abort_get(g))) {
-    DBG("pressed abort key");
-    TRACE_INDENT();
-    game_event_abort(g);
     return true;
   }
 
