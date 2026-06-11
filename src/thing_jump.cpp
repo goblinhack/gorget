@@ -37,6 +37,13 @@ void thing_is_jumping_set(Gamep g, Levelsp v, Levelp l, Thingp me, bool val)
     thing_on_jump_begin(g, v, l, me);
   } else {
     thing_on_jump_end(g, v, l, me);
+
+    //
+    // Splash!
+    //
+    if (level_is_water(g, v, l, thing_at(me))) {
+      thing_sound_play(g, v, l, me, "splash");
+    }
   }
 }
 

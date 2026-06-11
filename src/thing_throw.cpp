@@ -36,6 +36,13 @@ void thing_is_thrown_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp throw
     thing_on_thrown_begin(g, v, l, item, thrower);
   } else {
     thing_on_thrown_end(g, v, l, item, thrower);
+
+    //
+    // Splash!
+    //
+    if (level_is_water(g, v, l, thing_at(item))) {
+      thing_sound_play(g, v, l, item, "splash");
+    }
   }
 
   item->_is_thrown = val;
@@ -141,7 +148,7 @@ static auto thing_throw_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thing
 
   if (! thing_is_able_to_be_thrown(item)) {
     auto the_thing = thing_name_long_the(g, v, l, item);
-    topcon("You cannot throw the %s.", the_thing.c_str());
+    topcon("You cannot throw %s.", the_thing.c_str());
     return false;
   }
 
@@ -239,7 +246,7 @@ static auto thing_throw_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thing
 
   if (thing_is_player(thrower)) {
     auto the_thing = thing_name_long_the(g, v, l, item);
-    topcon("You throw the %s.", the_thing.c_str());
+    topcon("You throw %s.", the_thing.c_str());
     (void) level_tick_begin_requested(g, v, l, "throw item");
   }
 

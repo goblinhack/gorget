@@ -36,6 +36,9 @@ static void tp_potion_endurance_on_thrown_end(Gamep g, Levelsp v, Levelp l, Thin
   if ((level_is_chasm(g, v, l, thing_at(me)) != nullptr) || // newline
       (level_is_water(g, v, l, thing_at(me)) != nullptr) || // newline
       (level_is_foliage(g, v, l, thing_at(me)) != nullptr)) {
+    if (thing_is_player(thrower)) {
+      topcon("The potion lands gently.");
+    }
     return;
   }
 
@@ -46,6 +49,11 @@ static void tp_potion_endurance_on_thrown_end(Gamep g, Levelsp v, Levelp l, Thin
 
   THING_DBG(me, "dead due to being thrown");
   TRACE_INDENT();
+
+  if (thing_is_player(thrower)) {
+    topcon("The potion shatters.");
+  }
+  thing_sound_play(g, v, l, me, "glass_shatter");
 
   thing_dead(g, v, l, me, e);
 }

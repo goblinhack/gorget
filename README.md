@@ -26,3 +26,4 @@ Sound effects
 - Nethervoid ambience [found here](https://freesound.org/people/Sonicfreak/)
 - Graveyard ambience [found here](https://freesound.org/people/phoenixsoftware/)
 - Underhell ambience [found here](https://freesound.org/people/looplicator/)
+- Shatter sound [found here](https://freesound.org/people/ccen18/sounds/686849/)

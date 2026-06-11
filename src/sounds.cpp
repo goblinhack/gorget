@@ -14,6 +14,7 @@ void sounds_load(Gamep g)
   (void) sound_load(0.2F, "data/sounds/interface/mouse_click.ogg", "click");
   (void) sound_load(0.5F, "data/sounds/interface/error.ogg", "error");
   (void) sound_load(1.0F, "data/sounds/impacts/player_oof.ogg", "player_oof");
+  (void) sound_load(1.0F, "data/sounds/impacts/glass_shatter.ogg", "glass_shatter");
   (void) sound_load(1.0F, "data/sounds/impacts/player_hit.ogg", "player_hit");
   (void) sound_load(1.0F, "data/sounds/impacts/player_ouch.ogg", "player_ouch");
   (void) sound_load(1.0F, "data/sounds/impacts/monst_death.ogg", "monst_death");

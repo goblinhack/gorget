@@ -75,10 +75,6 @@ static void tp_player_on_jump_end(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
-  if (level_is_water(g, v, l, thing_at(me)) != nullptr) {
-    thing_sound_play(g, v, l, me, "splash");
-  }
-
   if (thing_is_falling(me) != 0) {
     return;
   }
@@ -87,6 +83,8 @@ static void tp_player_on_jump_end(Gamep g, Levelsp v, Levelp l, Thingp me)
     //
     // We already have a splash noise
     //
+    auto at = thing_at(me);
+    game_popup_text_add(g, at.x, at.y, std::string("Splash!"));
   } else {
     thing_sound_play(g, v, l, me, "player_oof");
 
