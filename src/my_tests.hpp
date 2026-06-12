@@ -103,6 +103,8 @@ auto test_load_teleport_shove_barrel() -> bool;
 auto test_load_teleport_shove_brazier() -> bool;
 auto test_load_teleport_shove_mob() -> bool;
 auto test_load_teleport() -> bool;
+auto test_load_throw_items() -> bool;
+auto test_load_throw_potion_healing() -> bool;
 auto test_load_trampled_grass() -> bool;
 auto test_load_wall() -> bool;
 auto test_load_weapon_discharge() -> bool;

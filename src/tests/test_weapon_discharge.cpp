@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static auto test_wand_discharge(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_weapon_discharge(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -131,7 +131,7 @@ exit:
   Testp test = test_load("weapon_discharge");
 
   // begin sort marker1 {
-  test_callback_set(test, test_wand_discharge);
+  test_callback_set(test, test_weapon_discharge);
   // end sort marker1 }
 
   return true;

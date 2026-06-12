@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static auto test_wand_over_water(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_projectile_over_water(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -89,7 +89,7 @@ exit:
   Testp test = test_load("projectile_over_water");
 
   // begin sort marker1 {
-  test_callback_set(test, test_wand_over_water);
+  test_callback_set(test, test_projectile_over_water);
   // end sort marker1 }
 
   return true;

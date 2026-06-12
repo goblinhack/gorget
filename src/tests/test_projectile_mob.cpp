@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static auto test_wand_mob(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_projectile_mob(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -92,7 +92,7 @@ exit:
   Testp test = test_load("projectile_mob");
 
   // begin sort marker1 {
-  test_callback_set(test, test_wand_mob);
+  test_callback_set(test, test_projectile_mob);
   // end sort marker1 }
 
   return true;

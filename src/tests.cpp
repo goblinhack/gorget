@@ -105,6 +105,8 @@
   if (!test_load_teleport_shove_brazier()) { return false; }
   if (!test_load_teleport_shove_mob()) { return false; }
   if (!test_load_teleport()) { return false; }
+  if (!test_load_throw_items()) { return false; }
+  if (!test_load_throw_potion_healing()) { return false; }
   if (!test_load_trampled_grass()) { return false; }
   if (!test_load_wall()) { return false; }
   if (!test_load_weapon_discharge()) { return false; }

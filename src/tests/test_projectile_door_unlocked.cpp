@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static auto test_wand_door_unlocked(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_projectile_door_unlocked(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -94,7 +94,7 @@ exit:
   Testp test = test_load("projectile_door_unlocked");
 
   // begin sort marker1 {
-  test_callback_set(test, test_wand_door_unlocked);
+  test_callback_set(test, test_projectile_door_unlocked);
   // end sort marker1 }
 
   return true;
