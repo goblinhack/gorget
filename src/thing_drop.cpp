@@ -78,7 +78,7 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp us
 
     FOR_ALL_INVENTORY_SLOTS(g, v, l, owner, slot, an_item)
     {
-      if (! an_item) {
+      if (an_item == nullptr) {
         continue;
       }
 
@@ -86,9 +86,9 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp us
       // Replace the thing dropped with a new thing
       //
       if (thing_tp(an_item) == thing_tp(item)) {
-        auto thing_copy = thing_spawn(g, v, l, thing_tp(item), user);
+        auto *thing_copy = thing_spawn(g, v, l, thing_tp(item), user);
 
-        if (thing_copy) {
+        if (thing_copy != nullptr) {
           THING_DBG(thing_copy, "drop: %s (thing copy)", s.c_str());
           TRACE_INDENT();
 

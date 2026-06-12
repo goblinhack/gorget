@@ -1081,7 +1081,8 @@ void tile_blit_apply_submerge_pct(Gamep g, spoint &tl, spoint &br, Tilep tile, f
   // Additionally (the pix_removed / 2), put submerged tiles more centralized as it
   // looks better when in a single tile
   //
-  auto submerged_depth = int(ceilf(((float) pix_removed / 2) / (float) one_pix_height) * one_pix_height);
+  auto submerged_depth
+      = static_cast< int >(ceilf((static_cast< float >(pix_removed) / 2) / static_cast< float >(one_pix_height)) * one_pix_height);
   tl.y += submerged_depth;
   br.y += submerged_depth;
 }

@@ -14,6 +14,7 @@
 #include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp"
 #include "my_tile.hpp"
+#include "my_tp.hpp"
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
@@ -72,8 +73,8 @@ void thing_is_thrown_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp throw
     //
     // Remove association with thrower
     //
-    auto owner = thing_owner(g, v, l, item);
-    if (owner) {
+    auto *owner = thing_owner(g, v, l, item);
+    if (owner != nullptr) {
       ThingEvent e {
           .reason     = "user threw item",  //
           .event_type = THING_EVENT_THROWN, //
@@ -107,7 +108,7 @@ void thing_is_thrown_unset(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp thr
 //
 // If throwing too far, truncate the throw
 //
-static void thing_throw_truncate(Gamep g, Levelsp v, Levelp l, Thingp thrower, Thingp item, bpoint &to, int how_far_i_can_throw)
+static void thing_throw_truncate(Thingp thrower, bpoint &to, int how_far_i_can_throw)
 {
   //
   // Add some random delta for fun and some for diagonals
@@ -169,12 +170,12 @@ static auto thing_throw_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thing
 //
 [[nodiscard]] auto thing_throw_to(Gamep g, Levelsp v, Levelp l, Thingp thrower, Thingp item, bpoint to) -> bool
 {
-  if (! thrower) {
+  if (thrower == nullptr) {
     ERR("no thing pointer");
     return false;
   }
 
-  if (! item) {
+  if (item == nullptr) {
     ERR("no thing pointer to throw");
     return false;
   }
@@ -219,7 +220,7 @@ static auto thing_throw_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thing
     return false;
   }
 
-  thing_throw_truncate(g, v, l, thrower, item, to, how_far_i_can_throw);
+  thing_throw_truncate(thrower, to, how_far_i_can_throw);
 
   auto how_far_i_want_to_throw = static_cast< int >(floor(distance(at, to)));
 
@@ -258,7 +259,7 @@ static auto thing_throw_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thing
     // Try again, but with a shorter distance.
     //
     if (how_far_i_want_to_throw > 1) {
-      thing_throw_truncate(g, v, l, thrower, item, to, how_far_i_want_to_throw - 1);
+      thing_throw_truncate(thrower, to, how_far_i_want_to_throw - 1);
       THING_DBG(thrower, "try truncated throw to (%d,%d)", to.x, to.y);
 
       return thing_throw_to(g, v, l, thrower, item, to);

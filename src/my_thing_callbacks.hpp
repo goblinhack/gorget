@@ -54,7 +54,7 @@ void thing_on_level_populated(Gamep g, Levelsp v, Levelp l, Thingp me);
 
 using thing_on_carry_request_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp owner, ThingEvent &);
 void               thing_on_carry_request_set(Tpp tp, thing_on_carry_request_t callback);
-[[nodiscard]] auto thing_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, ThingEvent & /*e*/) -> bool;
+[[nodiscard]] auto thing_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user, ThingEvent & /*e*/) -> bool;
 
 using thing_on_drop_request_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp dropper, ThingEvent &);
 void               thing_on_drop_request_set(Tpp tp, thing_on_drop_request_t callback);
@@ -62,7 +62,7 @@ void               thing_on_drop_request_set(Tpp tp, thing_on_drop_request_t cal
 
 using thing_on_carry_success_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp owner, ThingEvent &);
 void               thing_on_carry_success_set(Tpp tp, thing_on_carry_success_t callback);
-[[nodiscard]] auto thing_on_carry_success(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, ThingEvent & /*e*/) -> bool;
+[[nodiscard]] auto thing_on_carry_success(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user, ThingEvent & /*e*/) -> bool;
 
 using thing_on_drop_success_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp dropper, ThingEvent &);
 void               thing_on_drop_success_set(Tpp tp, thing_on_drop_success_t callback);

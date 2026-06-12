@@ -17,6 +17,7 @@
 #include "my_types.hpp"
 #include "my_wids.hpp"
 #include <algorithm>
+#include <cmath>
 #include <cstdint>
 #include <vector>
 
@@ -328,7 +329,7 @@ static void level_tick_check_running_time(Gamep g, Levelsp v, Levelp l)
       // before the lower level can complete!
       //
       Levelp player_level = thing_player_level(g);
-      if (player_level) {
+      if (player_level != nullptr) {
         if (level_tick_is_in_progress(g, v, player_level)) {
           LEVEL_DBG(g, v, l, "Tick %u: delay end, waiting for player level", v->tick);
           return;
@@ -398,7 +399,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool tick_is
 
     float t_speed = thing_speed(t);
     if (t_speed == 0) {
-      t_speed = (float) player_speed;
+      t_speed = static_cast< float >(player_speed);
     }
 
     auto old_thing_dt = t->thing_dt;
@@ -417,12 +418,12 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool tick_is
 
     if (compiler_unused) {
       THING_DBG(t, "level dt %f old_thing_dt %f thing_dt %f thing_dt_change %f speed %d v %d",
-                dt,              //
-                old_thing_dt,    //
-                t->thing_dt,     //
-                thing_dt_change, //
-                (int) t_speed,   //
-                player_speed     //
+                dt,                          //
+                old_thing_dt,                //
+                t->thing_dt,                 //
+                thing_dt_change,             //
+                static_cast< int >(t_speed), //
+                player_speed                 //
       );
     }
 
@@ -836,7 +837,7 @@ void level_tick_reset_frame_counter(Gamep g)
 {
   auto *v = game_levels_get(g);
 
-  if (! v) {
+  if (v == nullptr) {
     return;
   }
 
@@ -865,9 +866,7 @@ static void level_tick_time_step(Gamep g, Levelsp v, Levelp current_level)
   v->last_time_step = v->time_step;
   v->time_step      = (static_cast< float >(v->frame - v->frame_begin)) / static_cast< float >(duration_ms);
 
-  if (v->time_step >= 1.0) {
-    v->time_step = 1.0;
-  }
+  v->time_step = std::min< double >(v->time_step, 1.0);
 
   IF_DEBUG2
   { //

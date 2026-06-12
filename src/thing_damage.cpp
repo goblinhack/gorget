@@ -269,9 +269,7 @@ static void thing_damage_cap_for_this_tick(Gamep g, Levelsp v, Levelp l, Thingp 
   if (d_total > max_damage_per_tick) {
     auto old_d = e.damage;
     e.damage -= d_total - max_damage_per_tick;
-    if (e.damage < 0) {
-      e.damage = 0;
-    }
+    e.damage = std::max(e.damage, 0);
     THING_DBG(me, "%s: limit per tick damage %d -> %d", to_string(g, v, l, e).c_str(), old_d, e.damage);
   }
 }

@@ -21,7 +21,6 @@
 #include "my_wids.hpp"
 #include <SDL_keyboard.h>
 #include <SDL_keycode.h>
-#include <algorithm>
 #include <cstdint>
 #include <cstring>
 #include <string>

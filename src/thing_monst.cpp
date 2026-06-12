@@ -61,6 +61,11 @@ static auto thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thing
     return false;
   }
 
+  if (dist < thing_distance_avoid_target(me)) {
+    THING_DBG(me, "choose target: player is too close (player %f) (vision %d)", dist, v_dist);
+    return false;
+  }
+
   THING_DBG(me, "astar thing_monst_choose_target_player");
   auto p = astar_solve(g, v, l, me, monst_at, target);
   if (p.empty()) {
@@ -435,7 +440,7 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me)
   TRACE_INDENT();
 
   auto *player = thing_player(g);
-  if (! player) {
+  if (player == nullptr) {
     return;
   }
 

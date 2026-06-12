@@ -137,9 +137,9 @@ void thing_player_init(Gamep g)
     case STATE_THROW_ITEM :
       {
         auto *player = thing_player(g);
-        if (player) {
-          auto item = thing_find(g, v, g_thing_throw_id);
-          if (item) {
+        if (player != nullptr) {
+          auto *item = thing_find(g, v, g_thing_throw_id);
+          if (item != nullptr) {
             if (! thing_throw_to(g, v, l, player, item, v->cursor_at)) {
               topcon(UI_WARNING_FMT_STR "You failed to throw the item." UI_RESET_FMT);
               (void) sound_play(g, "error");

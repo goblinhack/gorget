@@ -269,12 +269,12 @@ static void thing_fall_end(Gamep g, Levelsp v, Levelp l, Thingp me)
   //
   // Splash!
   //
-  if (level_is_deep_water(g, v, l, thing_at(me))) {
+  if (level_is_deep_water(g, v, l, thing_at(me)) != nullptr) {
     thing_sound_play(g, v, l, me, "splash");
     if (thing_is_player(me)) {
       topcon(UI_GOOD_FMT_STR "The deep water dampened your fall!" UI_RESET_FMT);
     }
-  } else if (level_is_water(g, v, l, thing_at(me))) {
+  } else if (level_is_water(g, v, l, thing_at(me)) != nullptr) {
     thing_sound_play(g, v, l, me, "splash");
     if (thing_is_player(me)) {
       topcon(UI_GOOD_FMT_STR "The water dampened your fall!" UI_RESET_FMT);
