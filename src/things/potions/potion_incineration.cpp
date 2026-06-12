@@ -50,12 +50,12 @@ static void tp_potion_incin_spawn_explosion(Gamep g, Levelsp v, Levelp l, Thingp
   if (player != nullptr) {
     if (thing_on_same_level_as_player(g, v, me)) {
       if (thing_vision_can_see_tile(g, v, l, player, at)) {
-        topcon("The potion explodes!");
+        topcon("The potion of incineration explodes!");
       } else {
-        topcon("You hear a distant explosion!");
+        topcon("You hear a distant potion like explosion!");
       }
     } else {
-      topcon("You hear a very muffled explosion!");
+      topcon("You hear a very muffled potion like explosion!");
     }
   }
 }

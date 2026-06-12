@@ -109,6 +109,9 @@
   if (!test_load_teleport()) { return false; }
   if (!test_load_throw_items()) { return false; }
   if (!test_load_throw_potion_healing()) { return false; }
+  if (!test_load_throw_potion_incin_chain_explosion()) { return false; }
+  if (!test_load_throw_potion_incin_into_water()) { return false; }
+  if (!test_load_throw_potion_incin()) { return false; }
   if (!test_load_trampled_grass()) { return false; }
   if (!test_load_wall()) { return false; }
   if (!test_load_weapon_discharge()) { return false; }

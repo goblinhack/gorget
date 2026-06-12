@@ -35,6 +35,26 @@ void levels_test(Gamep g)
   {
     Overrides overrides;
 
+    overrides[ '$' ] = [](char /*c*/, bpoint /*p*/) -> Tpp { return tp_find_mand("potion_incin"); };
+
+    level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "chain_reaction", __FUNCTION__, __LINE__, overrides, 0,
+                    /* line */ (const char *) "xxxxxxxxxxx",
+                    /* line */ (const char *) "x$$$$$$$$$x",
+                    /* line */ (const char *) "x$........x",
+                    /* line */ (const char *) "x$........x",
+                    /* line */ (const char *) "x$........x",
+                    /* line */ (const char *) "x$.@$$$$$$x",
+                    /* line */ (const char *) "x$.......$x",
+                    /* line */ (const char *) "x$.......$x",
+                    /* line */ (const char *) "x$.......$x",
+                    /* line */ (const char *) "x$$$$$$$$$x",
+                    /* line */ (const char *) "xxxxxxxxxxx",
+                    /* end */ nullptr);
+  }
+
+  {
+    Overrides overrides;
+
     overrides[ 'c' ] = [](char /*c*/, bpoint /*p*/) -> Tpp { return tp_find_mand("chest"); };
 
     level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "treasure", __FUNCTION__, __LINE__, overrides, 0,
