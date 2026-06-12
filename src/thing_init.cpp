@@ -66,29 +66,26 @@
   // *******************************************************************
   // * consider thing_enhance if changing code here
   // *******************************************************************
-  (void) thing_health_max_set(g, v, l, t, thing_health_set(g, v, l, t, tp_health_max_get(tp)));
-  (void) thing_stamina_max_set(g, v, l, t, thing_stamina_set(g, v, l, t, tp_stamina_max_get(tp)));
-  (void) thing_distance_jump_set(g, v, l, t, tp_distance_jump_get(tp));
-  (void) thing_distance_minion_from_mob_max_set(g, v, l, t, tp_distance_minion_from_mob_max_get(tp));
-  (void) thing_distance_vision_set(g, v, l, t, tp_distance_vision_get(tp));
-  (void) thing_minion_max_set(g, v, l, t, tp_minion_max_get(tp));
-  (void) thing_priority_set(g, v, l, t, tp_priority_get(tp));
-  (void) thing_missile_count_max_set(g, v, l, t, tp_missile_count_max_get(tp));
-  (void) thing_score_value_set(g, v, l, t, tp_score_value_get(tp));
-  (void) thing_speed_set(g, v, l, t, tp_speed_get(tp));
-  (void) thing_temperature_set(g, v, l, t, tp_temperature_initial_get(tp));
-  (void) thing_variant_set(g, v, l, t, tp_variant_get(tp));
-  (void) thing_weight_set(g, v, l, t, tp_weight_get(tp));
+  (void) thing_attack_count_per_tick_set(g, v, l, t, tp_attack_count_max_per_tick_get(tp));
   (void) thing_charge_count_set(g, v, l, t, tp_charge_count_get(tp));
   (void) thing_distance_avoid_target_set(g, v, l, t, tp_distance_avoid_target_get(tp));
+  (void) thing_distance_hearing_set(g, v, l, t, tp_distance_hearing_get(tp));
+  (void) thing_distance_jump_set(g, v, l, t, tp_distance_jump_get(tp));
+  (void) thing_distance_minion_from_mob_max_set(g, v, l, t, tp_distance_minion_from_mob_max_get(tp));
+  (void) thing_distance_throw_set(g, v, l, t, tp_distance_throw_get(tp));
+  (void) thing_distance_vision_set(g, v, l, t, tp_distance_vision_get(tp));
+  (void) thing_health_max_set(g, v, l, t, thing_health_set(g, v, l, t, tp_health_max_get(tp)));
+  (void) thing_minion_max_set(g, v, l, t, tp_minion_max_get(tp));
+  (void) thing_missile_count_max_set(g, v, l, t, tp_missile_count_max_get(tp));
+  (void) thing_priority_set(g, v, l, t, tp_priority_get(tp));
+  (void) thing_score_value_set(g, v, l, t, tp_score_value_get(tp));
+  (void) thing_speed_set(g, v, l, t, tp_speed_get(tp));
+  (void) thing_stamina_max_set(g, v, l, t, thing_stamina_set(g, v, l, t, tp_stamina_max_get(tp)));
+  (void) thing_temperature_set(g, v, l, t, tp_temperature_initial_get(tp));
   (void) thing_value1_set(g, v, l, t, tp_value1_get(tp));
   (void) thing_value10_set(g, v, l, t, tp_value10_get(tp));
   (void) thing_value11_set(g, v, l, t, tp_value11_get(tp));
   (void) thing_value12_set(g, v, l, t, tp_value12_get(tp));
-  (void) thing_value13_set(g, v, l, t, tp_value13_get(tp));
-  (void) thing_value14_set(g, v, l, t, tp_value14_get(tp));
-  (void) thing_distance_hearing_set(g, v, l, t, tp_distance_hearing_get(tp));
-  (void) thing_distance_throw_set(g, v, l, t, tp_distance_throw_get(tp));
   (void) thing_value2_set(g, v, l, t, tp_value2_get(tp));
   (void) thing_value3_set(g, v, l, t, tp_value3_get(tp));
   (void) thing_value4_set(g, v, l, t, tp_value4_get(tp));
@@ -97,6 +94,8 @@
   (void) thing_value7_set(g, v, l, t, tp_value7_get(tp));
   (void) thing_value8_set(g, v, l, t, tp_value8_get(tp));
   (void) thing_value9_set(g, v, l, t, tp_value9_get(tp));
+  (void) thing_variant_set(g, v, l, t, tp_variant_get(tp));
+  (void) thing_weight_set(g, v, l, t, tp_weight_get(tp));
   // *******************************************************************
   // * consider thing_enhance if changing code here
   // *******************************************************************

@@ -124,6 +124,11 @@ public:
   //
   int distance_minion_from_mob_max {0};
 
+  //
+  // Limit the number of attacks
+  //
+  int attack_max_per_tick {0};
+
   int value1 {0};
   int value2 {0};
   int value3 {0};
@@ -136,8 +141,6 @@ public:
   int value10 {0};
   int value11 {0};
   int value12 {0};
-  int value13 {0};
-  int value14 {0};
   int distance_hearing {0};
   int distance_throw {0};
   int charge_count {0};

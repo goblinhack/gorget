@@ -483,6 +483,12 @@
     parent->log(g, immune_str, TEXT_FORMAT_LHS);
     printed_something = true;
   }
+  if (thing_attack_count_per_tick(me) > 1) {
+    auto s          = string_sprintf("Multi-attack[%u]", thing_attack_count_per_tick(me));
+    auto immune_str = string_sprintf("Abilitiy:  %*s", width - 13, s.c_str());
+    parent->log(g, immune_str, TEXT_FORMAT_LHS);
+    printed_something = true;
+  }
 
   return printed_something;
 }

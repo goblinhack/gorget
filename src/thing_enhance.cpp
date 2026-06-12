@@ -22,26 +22,23 @@ void thing_enhance(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp)
     return;
   }
 
-  (void) thing_health_max_incr(g, v, l, t, thing_health_incr(g, v, l, t, tp_health_max_get(tp)));
-  (void) thing_stamina_max_incr(g, v, l, t, thing_stamina_incr(g, v, l, t, tp_stamina_max_get(tp)));
-  (void) thing_distance_jump_incr(g, v, l, t, tp_distance_jump_get(tp));
-  (void) thing_distance_vision_incr(g, v, l, t, tp_distance_vision_get(tp));
-  (void) thing_minion_max_incr(g, v, l, t, tp_minion_max_get(tp));
-  (void) thing_missile_count_max_incr(g, v, l, t, tp_missile_count_max_get(tp));
-  (void) thing_score_value_incr(g, v, l, t, tp_score_value_get(tp));
-  (void) thing_speed_incr(g, v, l, t, tp_speed_get(tp));
-  (void) thing_temperature_incr(g, v, l, t, tp_temperature_initial_get(tp));
   (void) thing_charge_count_incr(g, v, l, t, tp_charge_count_get(tp));
   (void) thing_distance_avoid_target_incr(g, v, l, t, tp_distance_avoid_target_get(tp));
+  (void) thing_distance_hearing_incr(g, v, l, t, tp_distance_hearing_get(tp));
+  (void) thing_distance_jump_incr(g, v, l, t, tp_distance_jump_get(tp));
+  (void) thing_distance_throw_incr(g, v, l, t, tp_distance_throw_get(tp));
+  (void) thing_distance_vision_incr(g, v, l, t, tp_distance_vision_get(tp));
+  (void) thing_health_max_incr(g, v, l, t, thing_health_incr(g, v, l, t, tp_health_max_get(tp)));
   (void) thing_lifespan_initial_set(g, v, l, t, thing_lifespan_incr(g, v, l, t, tp_lifespan_get(tp)));
+  (void) thing_minion_max_incr(g, v, l, t, tp_minion_max_get(tp));
+  (void) thing_missile_count_max_incr(g, v, l, t, tp_missile_count_max_get(tp));
+  (void) thing_speed_incr(g, v, l, t, tp_speed_get(tp));
+  (void) thing_stamina_max_incr(g, v, l, t, thing_stamina_incr(g, v, l, t, tp_stamina_max_get(tp)));
+  (void) thing_temperature_incr(g, v, l, t, tp_temperature_initial_get(tp));
   (void) thing_value1_incr(g, v, l, t, tp_value1_get(tp));
   (void) thing_value10_incr(g, v, l, t, tp_value10_get(tp));
   (void) thing_value11_incr(g, v, l, t, tp_value11_get(tp));
   (void) thing_value12_incr(g, v, l, t, tp_value12_get(tp));
-  (void) thing_value13_incr(g, v, l, t, tp_value13_get(tp));
-  (void) thing_value14_incr(g, v, l, t, tp_value14_get(tp));
-  (void) thing_distance_hearing_incr(g, v, l, t, tp_distance_hearing_get(tp));
-  (void) thing_distance_throw_incr(g, v, l, t, tp_distance_throw_get(tp));
   (void) thing_value2_incr(g, v, l, t, tp_value2_get(tp));
   (void) thing_value3_incr(g, v, l, t, tp_value3_get(tp));
   (void) thing_value4_incr(g, v, l, t, tp_value4_get(tp));

@@ -359,6 +359,7 @@ static void tp_player_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
   thing_on_tick_begin_set(tp, tp_player_tick_begin);
   thing_on_tick_end_set(tp, tp_player_tick_end);
   thing_on_tick_idle_set(tp, tp_player_tick_idle);
+  tp_attack_count_max_per_tick_set(tp, 1);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6"); // fumble => intensify / keep burning / crit => stop burning
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d100");  // fumble => flames spread to you
   tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d4");

@@ -303,9 +303,13 @@ using Thing = struct Thing {
   //
   int8_t _distance_throw;
   //
-  // Some monsters like to hang back
+  // Some monsters like to hang back.
   //
   int8_t _distance_avoid_target;
+  //
+  // Limit the number of attacks in a single tick.
+  //
+  uint8_t _attack_count_per_tick;
   //
   // Decrements each frame. Increments if hit.
   //
@@ -441,8 +445,6 @@ using Thing = struct Thing {
   int16_t _value10;
   int16_t _value11;
   int16_t _value12;
-  int16_t _value13;
-  int16_t _value14;
   int16_t _distance_hearing;
   int16_t _charge_count;
   int16_t _score_value;
@@ -613,6 +615,10 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_and_tp_get_at(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot, Tpp *out) -> Thingp;
 [[nodiscard]] auto thing_at(Thingp t) -> bpoint;
 [[nodiscard]] auto thing_attack_at(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &attack_at, ThingEvent *e = nullptr) -> bool;
+[[nodiscard]] auto thing_attack_count_per_tick_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
+[[nodiscard]] auto thing_attack_count_per_tick_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
+[[nodiscard]] auto thing_attack_count_per_tick_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
+[[nodiscard]] auto thing_attack_count_per_tick(Thingp t) -> int;
 [[nodiscard]] auto thing_beam_weapon_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, bpoint target) -> bool;
 [[nodiscard]] auto thing_beam_weapon_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, fpoint target) -> bool;
 [[nodiscard]] auto thing_buff_add(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what) -> Thingp;
@@ -1062,14 +1068,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_value12_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_value12_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_value12(Thingp t) -> int;
-[[nodiscard]] auto thing_value13_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
-[[nodiscard]] auto thing_value13_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
-[[nodiscard]] auto thing_value13_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
-[[nodiscard]] auto thing_value13(Thingp t) -> int;
-[[nodiscard]] auto thing_value14_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
-[[nodiscard]] auto thing_value14_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
-[[nodiscard]] auto thing_value14_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
-[[nodiscard]] auto thing_value14(Thingp t) -> int;
 [[nodiscard]] auto thing_value2_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_value2_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_value2_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;

@@ -80,6 +80,7 @@ static bool tp_mantisman_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, T
   thing_detail_set(tp, tp_mantisman_detail_get);
   thing_on_attacking_set(tp, tp_mantisman_on_attacking);
   thing_on_death_set(tp, tp_mantisman_on_death);
+  tp_attack_count_max_per_tick_set(tp, 1);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6"); // fumble => intensify / keep burning / crit => stop burning
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // fumble => flames spread to you
   tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d3");

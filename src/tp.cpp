@@ -1553,44 +1553,24 @@ void tp_value12_set(Tpp tp, int val)
   return tp->value12;
 }
 
-void tp_value13_set(Tpp tp, int val)
+void tp_attack_count_max_per_tick_set(Tpp tp, int val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
     tp_err(tp, "no thing template pointer");
     return;
   }
-  tp->value13 = val;
+  tp->attack_max_per_tick = val;
 }
 
-[[nodiscard]] auto tp_value13_get(Tpp tp) -> int
+[[nodiscard]] auto tp_attack_count_max_per_tick_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
     tp_err(tp, "no thing template pointer");
     return 0;
   }
-  return tp->value13;
-}
-
-void tp_value14_set(Tpp tp, int val)
-{
-  TRACE();
-  if (tp == nullptr) [[unlikely]] {
-    tp_err(tp, "no thing template pointer");
-    return;
-  }
-  tp->value14 = val;
-}
-
-[[nodiscard]] auto tp_value14_get(Tpp tp) -> int
-{
-  TRACE();
-  if (tp == nullptr) [[unlikely]] {
-    tp_err(tp, "no thing template pointer");
-    return 0;
-  }
-  return tp->value14;
+  return tp->attack_max_per_tick;
 }
 
 void tp_distance_hearing_set(Tpp tp, int val)

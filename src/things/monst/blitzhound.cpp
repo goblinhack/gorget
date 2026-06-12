@@ -85,6 +85,7 @@ static bool tp_blitzhound_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, 
   thing_detail_set(tp, tp_blitzhound_detail_get);
   thing_on_attacking_set(tp, tp_blitzhound_on_attacking);
   thing_on_death_set(tp, tp_blitzhound_on_death);
+  tp_attack_count_max_per_tick_set(tp, 2);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6"); // fumble => intensify / keep burning / crit => stop burning
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // fumble => flames spread to you
   tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d4");

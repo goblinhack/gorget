@@ -20,11 +20,11 @@
 //
 // We're trying to attack at this tile. What do we hit first?
 //
-static auto thing_attack(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, ThingEvent *e_in = nullptr) -> bool
+static auto thing_attack(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp it, ThingEvent *e_in = nullptr) -> bool
 {
   TRACE();
 
-  auto *source     = me;
+  auto *source     = attacker;
   auto  event_type = THING_EVENT_MELEE_DAMAGE;
   auto  damage     = tp_damage(thing_tp(source), event_type);
 
@@ -40,9 +40,22 @@ static auto thing_attack(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, Thi
   }
 
   //
+  // Check not too many attacks
+  //
+  if (thing_is_monst(attacker) || thing_is_player(attacker)) {
+    //
+    // NOTE: door slam attack and anything else I've not thought of, bypasses this
+    //
+    if (thing_attack_count_per_tick_incr(g, v, l, attacker) > tp_attack_count_max_per_tick_get(thing_tp(attacker))) {
+      THING_DBG(attacker, "exceeded attack count, ignore");
+      return false;
+    }
+  }
+
+  //
   // Thing callback
   //
-  if (! thing_on_attacking(g, v, l, me, it, e)) {
+  if (! thing_on_attacking(g, v, l, attacker, it, e)) {
     return false;
   }
 
@@ -56,24 +69,24 @@ static auto thing_attack(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, Thi
 //
 // We're trying to attack at this tile. What do we hit first?
 //
-[[nodiscard]] auto thing_attack_at(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &attack_at, ThingEvent *e) -> bool
+[[nodiscard]] auto thing_attack_at(Gamep g, Levelsp v, Levelp l, Thingp attacker, const bpoint &attack_at, ThingEvent *e) -> bool
 {
-  THING_DBG(me, "%s", __FUNCTION__);
+  THING_DBG(attacker, "%s", __FUNCTION__);
   TRACE_INDENT();
 
   //
   // Only allow attacks on immediately adjacent tiles. Unless you can fire weapons.
   //
-  if (thing_is_able_to_fire_weapons(me)) {
+  if (thing_is_able_to_fire_weapons(attacker)) {
     //
     // Firing tiles do not need to be adjacent
     //
   } else {
-    if (thing_at(me) == attack_at) {
+    if (thing_at(attacker) == attack_at) {
       //
       // Allow door slam attack on same tile
       //
-    } else if (! adjacent(thing_at(me), attack_at)) {
+    } else if (! adjacent(thing_at(attacker), attack_at)) {
       //
       // Adjacent tile attack
       //
@@ -85,15 +98,15 @@ static auto thing_attack(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, Thi
 
   FOR_ALL_THINGS_AT_UNSAFE(g, v, l, o, attack_at)
   {
-    if (o == me) {
+    if (o == attacker) {
       continue;
     }
 
-    if (thing_is_monst(me) || ((e != nullptr) && (e->source != nullptr) && thing_is_monst(e->source))) {
+    if (thing_is_monst(attacker) || ((e != nullptr) && (e->source != nullptr) && thing_is_monst(e->source))) {
       if (thing_is_attackable_by_monst(o)) {
         cands.push_back(o);
       }
-    } else if (thing_is_player(me) || ((e != nullptr) && (e->source != nullptr) && thing_is_player(e->source))) {
+    } else if (thing_is_player(attacker) || ((e != nullptr) && (e->source != nullptr) && thing_is_player(e->source))) {
       if (thing_is_attackable_by_player(o)) {
         cands.push_back(o);
       }
@@ -125,9 +138,78 @@ static auto thing_attack(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, Thi
       }
     }
 
-    if (thing_attack(g, v, l, me, cand, e)) {
+    if (thing_attack(g, v, l, attacker, cand, e)) {
       return true;
     }
   }
   return false;
+}
+
+[[nodiscard]] auto thing_attack_count_per_tick(Thingp t) -> int
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return 0;
+  }
+  return t->_attack_count_per_tick;
+}
+
+[[nodiscard]] auto thing_attack_count_per_tick_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return 0;
+  }
+  return t->_attack_count_per_tick = val;
+}
+
+[[nodiscard]] auto thing_attack_count_per_tick_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return 0;
+  }
+  return t->_attack_count_per_tick += val;
+}
+
+[[nodiscard]] auto thing_attack_count_per_tick_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return 0;
+  }
+  if (static_cast< int >(t->_attack_count_per_tick) - val <= 0) {
+    return t->_attack_count_per_tick = 0;
+  }
+  return t->_attack_count_per_tick -= val;
+}
+
+[[nodiscard]] auto thing_is_attackable_by_player(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_attackable_by_player) != 0;
+}
+
+[[nodiscard]] auto thing_is_attackable_by_monst(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_attackable_by_monst) != 0;
 }

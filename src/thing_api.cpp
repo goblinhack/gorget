@@ -1822,28 +1822,6 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_blit_when_obscured_outline) != 0;
 }
 
-[[nodiscard]] auto thing_is_attackable_by_player(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_attackable_by_player) != 0;
-}
-
-[[nodiscard]] auto thing_is_attackable_by_monst(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_attackable_by_monst) != 0;
-}
-
 [[nodiscard]] auto thing_is_effect(Thingp t) -> bool
 {
   TRACE_DEBUG();
@@ -3505,98 +3483,6 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     return t->_value12 = 0;
   }
   return t->_value12 -= val;
-}
-[[nodiscard]] auto thing_value13(Thingp t) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  return t->_value13;
-}
-
-[[nodiscard]] auto thing_value13_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  return t->_value13 = val;
-}
-
-[[nodiscard]] auto thing_value13_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  return t->_value13 += val;
-}
-
-[[nodiscard]] auto thing_value13_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  if (static_cast< int >(t->_value13) - val <= 0) {
-    return t->_value13 = 0;
-  }
-  return t->_value13 -= val;
-}
-[[nodiscard]] auto thing_value14(Thingp t) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  return t->_value14;
-}
-
-[[nodiscard]] auto thing_value14_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  return t->_value14 = val;
-}
-
-[[nodiscard]] auto thing_value14_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  return t->_value14 += val;
-}
-
-[[nodiscard]] auto thing_value14_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  if (static_cast< int >(t->_value14) - val <= 0) {
-    return t->_value14 = 0;
-  }
-  return t->_value14 -= val;
 }
 [[nodiscard]] auto thing_distance_hearing(Thingp t) -> int
 {
