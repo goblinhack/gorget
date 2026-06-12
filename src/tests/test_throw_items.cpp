@@ -37,12 +37,10 @@
         "x.........................x"
         "xxxxxxxxxxxxxxxxxxxxxxxxxxx";
 
-  Overrides overrides;
-  overrides[ 'G' ] = [](char c, bpoint p) -> Tpp { return tp_find_mand("kobalos_mob"); };
-  Levelp  l        = nullptr;
-  Levelsp v        = game_test_init(g, &l, level_num, w, h, start.c_str(), overrides);
-  bool    result   = true;
-  Thingp  item     = nullptr;
+  Levelp  l      = nullptr;
+  Levelsp v      = game_test_init(g, &l, level_num, w, h, start.c_str());
+  bool    result = true;
+  Thingp  item   = nullptr;
   bpoint  throw_to;
   int     threw_count = 0;
 

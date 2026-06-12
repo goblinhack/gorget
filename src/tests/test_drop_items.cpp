@@ -8,7 +8,7 @@
 #include "../my_test.hpp"
 #include "../my_thing_inlines.hpp"
 
-[[nodiscard]] static auto test_throw_potion_healing(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_drop_items(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -32,29 +32,32 @@
       = "xxxxxxxxxxxxxxxxxxxxxxxxxxx"
         "x.........................x"
         "x.........................x"
-        "x@~~~~~$..................x"
+        "x$$$$$$$$$$$$$$$@.........x"
         "x.........................x"
         "x.........................x"
         "xxxxxxxxxxxxxxxxxxxxxxxxxxx";
 
-  Levelp  l      = nullptr;
-  Levelsp v      = game_test_init(g, &l, level_num, w, h, start.c_str());
-  bool    result = true;
-  Thingp  item   = nullptr;
-  bpoint  throw_to;
-  int     threw_count = 0;
+  Levelp  l          = nullptr;
+  Levelsp v          = game_test_init(g, &l, level_num, w, h, start.c_str());
+  bool    result     = true;
+  Thingp  item       = nullptr;
+  int     drop_count = 0;
+  bool    up         = false;
+  bool    down       = false;
+  bool    left       = false;
+  bool    right      = false;
 
   static std::initializer_list< std::string > items = {
-      "potion_healing", //
-      "potion_healing", //
-      "potion_healing", //
-      "potion_healing", //
-      "potion_healing", //
-      "potion_healing", //
-      "potion_healing", //
-      "potion_healing", //
-      "potion_healing", //
-      "potion_healing", //
+      "staff_fire",     //
+      "staff_fire",     //
+      "staff_light",    //
+      "wand_fire",      //
+      "wand_light",     //
+      "staff_fire",     //
+      "staff_fire",     //
+      "staff_light",    //
+      "wand_fire",      //
+      "wand_light",     //
       "potion_healing", //
       "potion_healing", //
       "potion_healing", //
@@ -88,29 +91,43 @@
   }
 
   //
-  // Throw all items
+  // Drop all items
   //
-  throw_to = thing_at(player);
-
   for (;;) {
     bool got_item = false;
 
     FOR_ALL_INVENTORY_ITEMS(g, v, l, player, an_item)
     {
       got_item = true;
-      throw_to.x++;
-      TEST_ASSERT(t, thing_throw_to(g, v, l, player, an_item, throw_to), "failed to throw");
+
+      ThingEvent e {
+          .reason     = "drop item",                //
+          .event_type = THING_EVENT_USER_INITIATED, //
+          .source     = player,                     //
+      };
+
+      TEST_ASSERT(t, thing_drop(g, v, l, player, an_item, e), "failed to drop");
 
       TRACE();
       level_dump(g, v, l, w, h);
       TEST_ASSERT(t, game_event_wait(g), "failed to wait");
+
+      TEST_LOG(t, "move right");
+      TRACE();
+      up = down = left = right = false;
+      right                    = true;
+
+      if (! (result = player_move_request(g, up, down, left, right, false /* fire */))) {
+        TEST_FAILED(t, "move fail");
+        goto exit;
+      }
 
       if (! game_wait_for_tick_to_finish(g, v, l)) {
         TEST_FAILED(t, "wait loop failed");
         goto exit;
       }
 
-      threw_count++;
+      drop_count++;
     }
 
     if (! got_item) {
@@ -118,7 +135,7 @@
     }
   }
 
-  TEST_ASSERT(t, threw_count == (int) items.size(), "did not throw expected item amount");
+  TEST_ASSERT(t, drop_count == (int) items.size(), "did not drop expected item amount");
 
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
@@ -127,7 +144,7 @@
     goto exit;
   }
 
-  TEST_ASSERT(t, game_tick_get(g, v) == 15, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 30, "final tick counter value");
 
   level_dump(g, v, l, w, h);
   TEST_PASSED(t);
@@ -138,14 +155,14 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_throw_potion_healing() -> bool // NOLINT
+[[nodiscard]] auto test_load_drop_items() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("throw_potion_healing");
+  Testp test = test_load("drop_items");
 
   // begin sort marker1 {
-  test_callback_set(test, test_throw_potion_healing);
+  test_callback_set(test, test_drop_items);
   // end sort marker1 }
 
   return true;

@@ -39,6 +39,8 @@
   if (!test_load_brazier_shove_ok()) { return false; }
   if (!test_load_bridge_on_fire_over_lava()) { return false; }
   if (!test_load_bridge_on_fire()) { return false; }
+  if (!test_load_drop_items()) { return false; }
+  if (!test_load_drop_then_recollect_items()) { return false; }
   if (!test_load_fire_on_water()) { return false; }
   if (!test_load_fire_over_chasm()) { return false; }
   if (!test_load_foliage_on_fire()) { return false; }

@@ -37,6 +37,8 @@ auto test_load_brazier_shove_into_mob() -> bool;
 auto test_load_brazier_shove_ok() -> bool;
 auto test_load_bridge_on_fire_over_lava() -> bool;
 auto test_load_bridge_on_fire() -> bool;
+auto test_load_drop_items() -> bool;
+auto test_load_drop_then_recollect_items() -> bool;
 auto test_load_fire_on_water() -> bool;
 auto test_load_fire_over_chasm() -> bool;
 auto test_load_foliage_on_fire() -> bool;
