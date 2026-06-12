@@ -53,6 +53,18 @@ static auto thing_attack(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp i
   }
 
   //
+  // Keep track of who attacked us
+  //
+  if (thing_is_monst(attacker)) {
+    if (thing_is_player(it)) {
+      auto *p = thing_player_struct(g);
+      if (p != nullptr) {
+        p->attacked_by[ tp_id_get(thing_tp(attacker)) ]++;
+      }
+    }
+  }
+
+  //
   // Thing callback
   //
   if (! thing_on_attacking(g, v, l, attacker, it, e)) {

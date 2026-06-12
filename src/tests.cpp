@@ -58,6 +58,7 @@
   if (!test_load_monst_door_locked()) { return false; }
   if (!test_load_monst_door_slam_attack()) { return false; }
   if (!test_load_monst_door_unlocked()) { return false; }
+  if (!test_load_monst_fast_attack_multi()) { return false; }
   if (!test_load_monst_fast()) { return false; }
   if (!test_load_monst_jumping_over_chasm()) { return false; }
   if (!test_load_monst_maze()) { return false; }
@@ -67,6 +68,7 @@
   if (!test_load_monst_pass_through_walls()) { return false; }
   if (!test_load_monst_secret_door()) { return false; }
   if (!test_load_monst_short_jump_around_chasm()) { return false; }
+  if (!test_load_monst_slow_attack_single()) { return false; }
   if (!test_load_monst_slow()) { return false; }
   if (!test_load_monst_vision_direction()) { return false; }
   if (!test_load_move_ok()) { return false; }

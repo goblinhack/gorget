@@ -245,7 +245,14 @@ using ThingPlayer = struct ThingPlayer {
   // Player score
   //
   uint32_t score;
+  //
+  // Defeated monster count
+  //
   uint32_t defeated[ TP_ID_MAX ];
+  //
+  // Attacked by monster count
+  //
+  uint32_t attacked_by[ TP_ID_MAX ];
   //
   // What we're carrying
   //
