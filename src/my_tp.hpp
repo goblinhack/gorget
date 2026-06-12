@@ -240,18 +240,19 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlagType)
 // Things all at the same z layer that can be drawn at the same x,y
 //
 #define MAP_Z_DEPTH_ENUM(list_macro)                                                                                                            \
-  CLANG_FORMAT_INDENT()                                    /* dummy line for clang indentation fixup */                                         \
-  list_macro(MAP_Z_DEPTH_FLOOR, "floor"),                  /* newline */                                                                        \
-      list_macro(MAP_Z_DEPTH_LIQUID, "e.g. water"),        /* newline */                                                                        \
-      list_macro(MAP_Z_DEPTH_LIQUID2, "e.g. deep water"),  /* newline */                                                                        \
-      list_macro(MAP_Z_DEPTH_GRASS, "grass"),              /* newline */                                                                        \
-      list_macro(MAP_Z_DEPTH_OBJ, "monsts"),               /* newline */                                                                        \
-      list_macro(MAP_Z_DEPTH_WALL, "wall"),                /* newline */                                                                        \
-      list_macro(MAP_Z_DEPTH_PLAYER, "monsts"),            /* newline */                                                                        \
-      list_macro(MAP_Z_DEPTH_FOLIAGE, "obscuring plants"), /* newline */                                                                        \
-      list_macro(MAP_Z_DEPTH_EFFECT, "effect"),            /* newline */                                                                        \
-      list_macro(MAP_Z_DEPTH_WEAPON, "projectile"),        /* newline */                                                                        \
-      list_macro(MAP_Z_DEPTH_GAS, "fire, smoke"),          /* newline */
+  CLANG_FORMAT_INDENT()                                      /* dummy line for clang indentation fixup */                                       \
+  list_macro(MAP_Z_DEPTH_FLOOR, "floor"),                    /* newline */                                                                      \
+      list_macro(MAP_Z_DEPTH_LIQUID, "e.g. water"),          /* newline */                                                                      \
+      list_macro(MAP_Z_DEPTH_LIQUID2, "e.g. deep water"),    /* newline */                                                                      \
+      list_macro(MAP_Z_DEPTH_BG_OBJ, "e.g. exit, entrance"), /* newline */                                                                      \
+      list_macro(MAP_Z_DEPTH_GRASS, "grass"),                /* newline */                                                                      \
+      list_macro(MAP_Z_DEPTH_OBJ, "monsts"),                 /* newline */                                                                      \
+      list_macro(MAP_Z_DEPTH_WALL, "wall"),                  /* newline */                                                                      \
+      list_macro(MAP_Z_DEPTH_PLAYER, "monsts"),              /* newline */                                                                      \
+      list_macro(MAP_Z_DEPTH_FOLIAGE, "obscuring plants"),   /* newline */                                                                      \
+      list_macro(MAP_Z_DEPTH_EFFECT, "effect"),              /* newline */                                                                      \
+      list_macro(MAP_Z_DEPTH_WEAPON, "projectile"),          /* newline */                                                                      \
+      list_macro(MAP_Z_DEPTH_GAS, "fire, smoke"),            /* newline */
 
 ENUM_DEF_H(MAP_Z_DEPTH_ENUM, MapZDepthType)
 

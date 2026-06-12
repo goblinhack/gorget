@@ -56,7 +56,7 @@ static auto tp_entrance_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> s
   tp_name_pluralize_set(tp, "entrances");
   tp_name_short_set(tp, "entrance");
   tp_weight_set(tp, WEIGHT_VHEAVY); // grams
-  tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
+  tp_z_depth_set(tp, MAP_Z_DEPTH_BG_OBJ);
   // end sort marker1 }
 
   for (auto frame = 0; frame < 2; frame++) {

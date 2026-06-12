@@ -543,11 +543,6 @@ void thing_update_pos(Gamep g, Levelsp v, Levelp l, Thingp me)
   thing_pix_at_set(g, v, l, me, pix_at);
 
   //
-  // Update submerged status
-  //
-  thing_submerged_update(g, v, l, me);
-
-  //
   // Update hidden status
   //
   if ((thing_is_blit_when_obscured_faded(me) || thing_is_blit_when_obscured_outline(me))

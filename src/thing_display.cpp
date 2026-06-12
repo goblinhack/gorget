@@ -609,6 +609,11 @@ void thing_display(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp
       return;
     }
 
+    //
+    // Update submerged status
+    //
+    thing_submerged_update(g, v, l, t_maybe_null);
+
     int submerged_pct = 0;
     if ((submerged_pct = thing_submerged_pct(t_maybe_null)) != 0) {
       //
