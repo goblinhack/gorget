@@ -2595,6 +2595,16 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
+
+  //
+  // Allow dead floating monsters to fall
+  //
+  if (thing_is_monst(t)) {
+    if (thing_is_dead(t)) {
+      return true;
+    }
+  }
+
   return tp_flag(thing_tp(t), is_able_to_fall) != 0;
 }
 
