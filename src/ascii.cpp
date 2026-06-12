@@ -20,6 +20,7 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
+#include <OpenGL/gl.h>
 #include <algorithm>
 #include <array>
 #include <cstdarg>

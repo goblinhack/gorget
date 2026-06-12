@@ -1,13 +1,10 @@
 bugs
 ----
-argusuls do not avoid
-sound map
-throwing potions
 item thrown onto exit
-item thrown onto water
 item thrown onto chasm
 item thrown onto lava
-potion exploding
+argusuls do not avoid
+sound map for rustling in bushes
 chests should explode sometimes
 steam and smoke should spread
 incineration over water spawns steam
