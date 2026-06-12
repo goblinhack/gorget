@@ -490,6 +490,25 @@
     printed_something = true;
   }
 
+  {
+    auto *player = thing_player(g);
+    if (player != nullptr) {
+      const int player_speed = thing_speed(player);
+
+      if (thing_speed(me) > player_speed) {
+        auto s          = string_sprintf("Faster, speed[%u]", thing_speed(me));
+        auto immune_str = string_sprintf("Abilitiy:  %*s", width - 13, s.c_str());
+        parent->log(g, immune_str, TEXT_FORMAT_LHS);
+        printed_something = true;
+      } else if (thing_speed(me) < player_speed) {
+        auto s          = string_sprintf("Slower, speed[%u]", thing_speed(me));
+        auto immune_str = string_sprintf("Abilitiy:  %*s", width - 13, s.c_str());
+        parent->log(g, immune_str, TEXT_FORMAT_LHS);
+        printed_something = true;
+      }
+    }
+  }
+
   return printed_something;
 }
 

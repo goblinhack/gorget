@@ -389,6 +389,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool tick_is
     //
     if (! thing_is_moving(t) &&     //
         ! thing_is_jumping(t) &&    //
+        ! thing_is_monst(t) &&      // for multi attack and fast monsters
         ! thing_is_thrown(t) &&     //
         ! thing_is_projectile(t) && //
         ! thing_is_beam_weapon(t)) {
@@ -454,7 +455,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool tick_is
       // See if this monster can move again this tick
       //
       if (! tick_is_about_to_end && (v->time_step < 1.0)) {
-        thing_monst_tick(g, v, l, t);
+        thing_monst_event_loop(g, v, l, t);
       }
     }
   }

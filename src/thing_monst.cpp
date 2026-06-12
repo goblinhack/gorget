@@ -426,11 +426,27 @@ static auto thing_monst_choose_something_we_can_see(Gamep g, Levelsp v, Levelp l
 }
 
 //
-// Called per tick
+// Called multiple times per tick potentially. If the monster has enough
+// move_remaining then it can move or attack again.
 //
 void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
-  TRACE();
+  THING_DBG(me, "monst event loop, move_rem %d", thing_move_remaining(me));
+  TRACE_INDENT();
+
+  auto *player = thing_player(g);
+  if (! player) {
+    return;
+  }
+
+  const int player_speed = thing_speed(player);
+  if (thing_move_remaining(me) < player_speed) {
+    THING_DBG(me, "no more moves this tick, move_rem %d", thing_move_remaining(me));
+    return;
+  }
+
+  (void) thing_move_remaining_decr(g, v, l, me, player_speed);
+  THING_DBG(me, "move_rem %d", thing_move_remaining(me));
 
   if (compiler_unused) {
     thing_can_see_dump(g, v, l, me);
@@ -623,13 +639,10 @@ void monst_state_change(Gamep g, Levelsp v, Levelp l, Thingp me, MonstState new_
       break;
     case MONST_STATE_ENUM_MAX : break;
   }
-
-  (void) thing_move_remaining_set(g, v, l, me, 0);
 }
 
 //
-// Called at the beginning of each tick and whenever the move_remaining
-// count exceeds the players speed and there is still some level tick to go.
+// Called at the beginning of each tick
 //
 void thing_monst_tick(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
@@ -647,26 +660,13 @@ void thing_monst_tick(Gamep g, Levelsp v, Levelp l, Thingp me)
     return;
   }
 
-  auto *player = thing_player(g);
-  if (player == nullptr) [[unlikely]] {
-    return;
-  }
-
-  const int player_speed = thing_speed(player);
-
-  if (compiler_unused) {
-    THING_DBG(me, "move_rem %d dt %f", thing_move_remaining(me), (float) me->thing_dt);
-  }
-
   //
-  // Give the thing more ability to move
+  // Give the thing ability to move. This will be decremented each thing_monst_event_loop
   //
-  auto m = thing_move_remaining_incr(g, v, l, me, thing_speed(me));
-  if (m >= player_speed) {
-    (void) thing_move_remaining_decr(g, v, l, me, player_speed);
+  (void) thing_move_remaining_incr(g, v, l, me, thing_speed(me));
 
-    THING_DBG(me, "additional move possible, move_rem %d", thing_move_remaining(me));
+  THING_DBG(me, "monst tick, move_rem %d dt %f", thing_move_remaining(me), (float) me->thing_dt);
+  TRACE_INDENT();
 
-    thing_monst_event_loop(g, v, l, me);
-  }
+  thing_monst_event_loop(g, v, l, me);
 }

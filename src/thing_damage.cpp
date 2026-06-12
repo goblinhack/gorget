@@ -56,7 +56,15 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
         topcon(UI_WARNING_FMT_STR "You are crushed by %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
       case THING_EVENT_MELEE_DAMAGE : //
-        topcon(UI_WARNING_FMT_STR "You are hit by %s." UI_RESET_FMT, by_the_thing.c_str());
+        if (thing_attack_count_per_tick(it) > 1) {
+          //
+          // This is an assumption that only the player is being attacked.
+          // We don't have a count per creature. This will be ok most of the time.
+          //
+          topcon(UI_WARNING_FMT_STR "You are hit again by %s." UI_RESET_FMT, by_the_thing.c_str());
+        } else {
+          topcon(UI_WARNING_FMT_STR "You are hit by %s." UI_RESET_FMT, by_the_thing.c_str());
+        }
         break;
       case THING_EVENT_WATER_DAMAGE : //
         topcon(UI_WARNING_FMT_STR "You suffer water damage from %s." UI_RESET_FMT, by_the_thing.c_str());
