@@ -2587,27 +2587,6 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_obs_to_teleporting_onto) != 0;
 }
 
-[[nodiscard]] auto thing_is_able_to_fall(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-
-  //
-  // Allow dead floating monsters to fall
-  //
-  if (thing_is_monst(t)) {
-    if (thing_is_dead(t)) {
-      return true;
-    }
-  }
-
-  return tp_flag(thing_tp(t), is_able_to_fall) != 0;
-}
-
 [[nodiscard]] auto thing_is_physics_water(Thingp t) -> bool
 {
   TRACE_DEBUG();

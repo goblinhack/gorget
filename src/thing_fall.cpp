@@ -175,7 +175,9 @@ static void thing_fall_end(Gamep g, Levelsp v, Levelp l, Thingp me)
       // Choose a new landing spot for the thing
       //
       if (! thing_warp_to(g, v, next_level, me, thing_choose_landing_spot(g, v, next_level, me))) {
-        topcon(UI_IMPORTANT_FMT_STR "You fail to find the ground!" UI_RESET_FMT);
+        if (thing_is_player(me)) {
+          topcon(UI_IMPORTANT_FMT_STR "You fail to find the ground!" UI_RESET_FMT);
+        }
       }
       break;
 
@@ -246,7 +248,9 @@ static void thing_fall_end(Gamep g, Levelsp v, Levelp l, Thingp me)
     thing_is_falling_continues_set(g, v, l, me);
     thing_is_spawned_set(g, v, l, me);
 
-    topcon(UI_IMPORTANT_FMT_STR "You continue to fall!" UI_RESET_FMT);
+    if (thing_is_player(me)) {
+      topcon(UI_IMPORTANT_FMT_STR "You continue to fall!" UI_RESET_FMT);
+    }
   } else {
     //
     // "You take n damage from falling"
@@ -384,4 +388,38 @@ void thing_fall(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 
   thing_is_falling_set(g, v, l, me, true);
+
+  //
+  // Watching some poor thing fall?
+  //
+  if (thing_is_monst(me)) {
+    auto *player = thing_player(g);
+    if (player != nullptr) {
+      if (thing_vision_can_see_tile(g, v, l, player, thing_at(me))) {
+        auto The_thing = thing_name_long_The(g, v, l, me);
+        topcon("%s tumbles into the chasm.", The_thing.c_str());
+      }
+    }
+  }
+}
+
+[[nodiscard]] auto thing_is_able_to_fall(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+
+  //
+  // Allow dead floating monsters to fall
+  //
+  if (thing_is_monst(t)) {
+    if (thing_is_dead(t)) {
+      return true;
+    }
+  }
+
+  return tp_flag(thing_tp(t), is_able_to_fall) != 0;
 }

@@ -17,7 +17,8 @@
 //
 #define THING_FLAG_ENUM(list_macro)                                                                                                             \
   CLANG_FORMAT_INDENT()                                                                     /* dummy line for clang indentation fixup */        \
-  list_macro(is_able_to_be_buffed, "is_able_to_be_buffed"),                                 /* newline */                                       \
+  list_macro(is_able_to_be_thrown, "is_able_to_be_thrown"),                                 /* newline */                                       \
+      list_macro(is_able_to_collect_items, "is_able_to_collect_items"),                     /* newline */                                       \
       list_macro(is_able_to_collect_keys, "is_able_to_collect_keys"),                       /* newline */                                       \
       list_macro(is_able_to_crush_grass, "is_able_to_crush_grass"),                         /* newline */                                       \
       list_macro(is_able_to_fall_repeatedly, "is_able_to_fall_repeatedly"),                 /* newline */                                       \
@@ -163,6 +164,7 @@
       list_macro(is_obs_to_explosion, "is_obs_to_explosion"),                               /* newline */                                       \
       list_macro(is_obs_to_falling_onto, "is_obs_to_falling_onto"),                         /* newline */                                       \
       list_macro(is_obs_to_fire, "is_obs_to_fire"),                                         /* newline */                                       \
+      list_macro(is_obs_to_hearing, "is_obs_to_hearing"),                                   /* newline */                                       \
       list_macro(is_obs_to_jumping_onto, "is_obs_to_jumping_onto"),                         /* newline */                                       \
       list_macro(is_obs_to_jumping_out_of, "is_obs_to_jumping_out_of"),                     /* newline */                                       \
       list_macro(is_obs_to_jumping_over, "is_obs_to_jumping_over"),                         /* newline */                                       \
@@ -211,8 +213,6 @@
       list_macro(is_unused_98, "is_unused_98"),                                             /* newline */                                       \
       list_macro(is_unused_99, "is_unused_99"),                                             /* newline */                                       \
       list_macro(is_unused1, "is_unused1"),                                                 /* newline */                                       \
-      list_macro(is_obs_to_hearing, "is_obs_to_hearing"),                                   /* newline */                                       \
-      list_macro(is_able_to_be_thrown, "is_able_to_be_thrown"),                             /* newline */                                       \
       list_macro(is_unused2, "is_unused2"),                                                 /* newline */                                       \
       list_macro(is_unused3, "is_unused3"),                                                 /* newline */                                       \
       list_macro(is_unused4, "is_unused4"),                                                 /* newline */                                       \
@@ -231,7 +231,7 @@
       list_macro(is_wand, "is_wand"),                                                       /* newline */                                       \
       list_macro(is_wood, "is_wood"),                                                       /* newline */                                       \
       list_macro(wieldable, "wieldable"),                                                   /* newline */                                       \
-      list_macro(is_able_to_collect_items, "is_able_to_collect_items"),                     /* newline */                                       \
+      list_macro(is_able_to_be_buffed, "is_able_to_be_buffed"),                             /* newline */                                       \
       list_macro(is_water, "is_water"),                                                     /* newline */
 
 ENUM_DEF_H(THING_FLAG_ENUM, ThingFlagType)
