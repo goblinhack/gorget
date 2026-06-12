@@ -107,9 +107,11 @@
   if (!test_load_teleport_shove_brazier()) { return false; }
   if (!test_load_teleport_shove_mob()) { return false; }
   if (!test_load_teleport()) { return false; }
+  if (!test_load_throw_item_chasm()) { return false; }
   if (!test_load_throw_items()) { return false; }
   if (!test_load_throw_potion_healing()) { return false; }
   if (!test_load_throw_potion_incin_chain_explosion()) { return false; }
+  if (!test_load_throw_potion_incin_chasm()) { return false; }
   if (!test_load_throw_potion_incin_into_water()) { return false; }
   if (!test_load_throw_potion_incin()) { return false; }
   if (!test_load_trampled_grass()) { return false; }

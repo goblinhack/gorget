@@ -69,9 +69,9 @@
   }
 
   for (auto tp : items) {
-    auto weapon_tp = tp_find_mand(tp);
-    if (weapon_tp) {
-      item = thing_spawn(g, v, l, weapon_tp, thing_at(player));
+    auto item_tp = tp_find_mand(tp);
+    if (item_tp) {
+      item = thing_spawn(g, v, l, item_tp, thing_at(player));
       if (item) {
         ThingEvent e {
             .reason     = "spawned",           //

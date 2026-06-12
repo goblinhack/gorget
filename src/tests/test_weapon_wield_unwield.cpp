@@ -37,13 +37,13 @@
         "xxxxxxxxxxxxxxxxxxxxxxxxxxx";
 
   Overrides  overrides;
-  Levelp     l         = nullptr;
-  Levelsp    v         = game_test_init(g, &l, level_num, w, h, start.c_str());
-  bool       result    = true;
-  Thingp     weapon    = nullptr;
-  Thingp     wielding  = nullptr;
-  Tpp        weapon_tp = nullptr;
-  ThingEvent e         = {};
+  Levelp     l        = nullptr;
+  Levelsp    v        = game_test_init(g, &l, level_num, w, h, start.c_str());
+  bool       result   = true;
+  Thingp     weapon   = nullptr;
+  Thingp     wielding = nullptr;
+  Tpp        item_tp  = nullptr;
+  ThingEvent e        = {};
 
   auto *player = thing_player(g);
   if (player == nullptr) [[unlikely]] {
@@ -51,13 +51,13 @@
     goto exit;
   }
 
-  weapon_tp = tp_find_mand("wand_fire");
-  if (! weapon_tp) {
+  item_tp = tp_find_mand("wand_fire");
+  if (! item_tp) {
     TEST_FAILED(t, "no weapon found");
     goto exit;
   }
 
-  weapon = thing_spawn(g, v, l, weapon_tp, thing_at(player));
+  weapon = thing_spawn(g, v, l, item_tp, thing_at(player));
   if (! weapon) {
     TEST_FAILED(t, "no weapon spawned");
     goto exit;
