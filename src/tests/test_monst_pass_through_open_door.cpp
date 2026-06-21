@@ -127,7 +127,7 @@
   //
   level_dump(g, v, l, w, h);
   for (auto tries = 0; tries < 10; tries++) {
-    TEST_PROGRESS(t);
+    TEST_LOOP_PROGRESS(t, g, v, l, tries, w, h);
 
     TEST_LOG(t, "move left back out of room");
     TRACE();

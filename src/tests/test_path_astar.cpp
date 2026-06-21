@@ -150,6 +150,7 @@
   }
 
   for (auto tries = 0; tries < TEST_ITERATIONS; tries++) {
+    TEST_LOOP_PROGRESS(t, g, v, l, tries, w, h);
     (void) astar_solve(g, v, l, player, thing_at(player), thing_at(exit_thing));
   }
 

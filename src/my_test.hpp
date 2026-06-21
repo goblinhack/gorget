@@ -42,6 +42,14 @@ void tests_run(Gamep g);
 
 #define TEST_PASSED(test) log("test %s: passed at %s:%u", test_name(test), __FUNCTION__, __LINE__);
 
+#define TEST_PROGRESS(test) log("test %s: %s:%u: progress", test_name(test), __FUNCTION__, __LINE__);
+
+#define TEST_LOOP_PROGRESS(test, g, v, l, tries, w, h)                                                                                          \
+  TEST_LOG(test, "try: %d", tries);                                                                                                             \
+  level_dump(g, v, l, w, h);                                                                                                                    \
+  TEST_PROGRESS(test);                                                                                                                          \
+  TRACE();
+
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wvariadic-macros"
 
@@ -69,8 +77,6 @@ void tests_run(Gamep g);
 #endif
 
 #pragma GCC diagnostic pop
-
-#define TEST_PROGRESS(test) log("test %s: %s:%u: progress", test_name(test), __FUNCTION__, __LINE__);
 
 void test_init();
 void test_fini();

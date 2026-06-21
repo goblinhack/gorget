@@ -202,10 +202,7 @@
   TEST_PROGRESS(t);
 
   for (auto tries = 0; tries < 10; tries++) {
-    TEST_LOG(t, "try: %d", tries);
-    TRACE();
-
-    level_dump(g, v, l, w, h);
+    TEST_LOOP_PROGRESS(t, g, v, l, tries, w, h);
 
     TEST_ASSERT(t, thing_open(g, v, l, door, player), "door open failed");
     if (! game_wait_for_tick_to_finish(g, v, l)) {

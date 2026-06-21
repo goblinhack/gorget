@@ -153,6 +153,7 @@
   }
 
   for (auto tries = 0; tries < TEST_ITERATIONS; tries++) {
+    TEST_LOOP_PROGRESS(t, g, v, l, tries, w, h);
     thing_dmap(g, v, l, player);
     auto *dmap = thing_get_dmap(g, v, l, player);
     (void) dmap_solve(g, v, l, player, dmap, thing_at(exit_thing));

@@ -81,7 +81,7 @@
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   for (auto tries = 0; tries < 20; tries++) {
-    TEST_LOG(t, "try: %d", tries);
+    TEST_LOOP_PROGRESS(t, g, v, l, tries, w, h);
 
     if (! thing_wield(g, v, l, player, weapon, e)) {
       TEST_FAILED(t, "failed to wield");

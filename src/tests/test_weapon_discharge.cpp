@@ -89,9 +89,8 @@
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   for (auto tries = 0; tries < 20; tries++) {
-    TEST_LOG(t, "try: %d", tries);
+    TEST_LOOP_PROGRESS(t, g, v, l, tries, w, h);
     (void) player_fire(g, v, l, 1, 0);
-    TRACE();
     TEST_ASSERT(t, game_event_wait(g), "failed to wait");
     if (! game_wait_for_tick_to_finish(g, v, l)) {
       TEST_FAILED(t, "wait loop failed");
