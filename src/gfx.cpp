@@ -744,7 +744,7 @@ static void gfx_ui_init_worlds()
 static void gfx_ui_init_main_bg()
 {
   const char *tiles[] = {"main_bg"};
-  tile_load_arr("data/gfx/ui/main_bg.tga", "main_bg", 192, 128, ARRAY_SIZE(tiles), tiles);
+  tile_load_arr("data/gfx/ui/main_bg.tga", "main_bg", 786, 384, ARRAY_SIZE(tiles), tiles);
 }
 
 static void gfx_ui_init_main_fg()
