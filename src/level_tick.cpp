@@ -865,7 +865,7 @@ static void level_tick_time_step(Gamep g, Levelsp v, Levelp current_level)
 
   v->last_time_step = v->time_step;
   v->time_step      = (static_cast< float >(v->frame - v->frame_begin)) / static_cast< float >(duration_ms);
-  v->time_step      = std::min< float >(v->time_step, 1.0f);
+  v->time_step      = std::min< float >(v->time_step, 1.0F);
 
   IF_DEBUG2
   { //
