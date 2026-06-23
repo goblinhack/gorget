@@ -54,7 +54,7 @@ using ThingIdPacked = union {
 /* shell printf "#define THING_BUFF_MAX " */
 /* shell find . -name "*.cpp" | xargs grep "tp_flag_set(tp, is_buff);" | wc -l */
 #define THING_BUFF_MAX 2
-  /* end shell marker1 */
+/* end shell marker1 */
 
 //
 // Enough for one beam_weapon weapon or many projectiles.
