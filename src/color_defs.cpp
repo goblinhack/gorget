@@ -128,7 +128,7 @@ void color_init()
   color_set("gray70", &GRAY70, 179, 179, 179, 255);
   color_set("gray80", &GRAY80, 204, 204, 204, 255);
   color_set("gray90", &GRAY90, 229, 229, 229, 255);
-  color_set("green", &GREEN, 0, 255, 0, 255);
+  color_set("green", &GREEN, 0, 150, 100, 255);
   color_set("green1", &GREEN1, 0, 255, 0, 255);
   color_set("green2", &GREEN2, 0, 238, 0, 255);
   color_set("green3", &GREEN3, 0, 205, 0, 255);
@@ -156,7 +156,7 @@ void color_init()
   color_set("purple2", &PURPLE2, 145, 44, 238, 255);
   color_set("purple3", &PURPLE3, 125, 38, 205, 255);
   color_set("purple4", &PURPLE4, 85, 26, 139, 255);
-  color_set("red", &RED, 255, 0, 0, 255);
+  color_set("red", &RED, 204, 42, 96, 255);
   color_set("red1", &RED1, 255, 0, 0, 255);
   color_set("red2", &RED2, 238, 0, 0, 255);
   color_set("red3", &RED3, 205, 0, 0, 255);
