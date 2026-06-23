@@ -138,7 +138,7 @@ static void wid_statistics_show_defeated(Gamep g, Levelp l, Thingp player)
     auto s = std::format("{:<3}", player_struct->defeated[ i ]);
 
     s += " %%tp=";
-    s += tp_name_short(defeated_tp);
+    s += tp_name(defeated_tp);
     s += "$";
     s += " ";
     s += std::format("{:<20}", tp_name_short(defeated_tp));
@@ -190,7 +190,7 @@ static void wid_statistics_show_items(Gamep g, Levelsp v, Levelp l)
     auto s = std::format("{:<3}", slot->count);
 
     s += " %%tp=";
-    s += tp_name_short(item_tp);
+    s += tp_name(item_tp);
     s += "$";
     s += " ";
     s += std::format("{:<20}", tp_name_short(item_tp));

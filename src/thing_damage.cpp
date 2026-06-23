@@ -195,18 +195,18 @@ static void thing_damage_by_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
           // The player is burning.
           //
           if (thing_is_burning(me)) {
-            topcon(UI_IMPORTANT_FMT_STR "Your burning body burns %s" UI_RESET_FMT, the_thing_name_short.c_str());
+            topcon(UI_IMPORTANT_FMT_STR "Your burning body burns %s." UI_RESET_FMT, the_thing_name_short.c_str());
           } else {
-            topcon(UI_IMPORTANT_FMT_STR "Your burning body sets fire to %s" UI_RESET_FMT, the_thing_name_short.c_str());
+            topcon(UI_IMPORTANT_FMT_STR "Your burning body sets fire to %s." UI_RESET_FMT, the_thing_name_short.c_str());
           }
         } else {
           //
           // The player is not burning.
           //
           if (thing_is_burning(me)) {
-            topcon(UI_IMPORTANT_FMT_STR "You burn %s" UI_RESET_FMT, the_thing_name_short.c_str());
+            topcon(UI_IMPORTANT_FMT_STR "You burn %s." UI_RESET_FMT, the_thing_name_short.c_str());
           } else {
-            topcon(UI_IMPORTANT_FMT_STR "You set fire to %s" UI_RESET_FMT, the_thing_name_short.c_str());
+            topcon(UI_IMPORTANT_FMT_STR "You set fire to %s." UI_RESET_FMT, the_thing_name_short.c_str());
           }
         }
         break;
