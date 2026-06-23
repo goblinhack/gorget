@@ -88,7 +88,7 @@ void wid_credits_select(Gamep g)
     wid_credits_destroy(g);
   }
 
-  int const menu_height = 24;
+  int const menu_height = 25;
   int const menu_width  = UI_WID_POPUP_WIDTH_NORMAL * 2;
   spoint    outer_tl((TERM_WIDTH / 2) - (menu_width / 2), (TERM_HEIGHT / 2) - (menu_height / 2));
   spoint    outer_br((TERM_WIDTH / 2) + (menu_width / 2), (TERM_HEIGHT / 2) + (menu_height / 2));
@@ -107,6 +107,7 @@ void wid_credits_select(Gamep g)
   wid_credits_window->log(g, UI_HIGHLIGHT_FMT_STR "Graphics");
   wid_credits_window->log(g, "Urizen 1 bit tileset");
   wid_credits_window->log(g, "goblinhack@gmail.com");
+  wid_credits_window->log(g, "C.E.McGill");
   wid_credits_window->log_empty_line(g);
   wid_credits_window->log_empty_line(g);
   wid_credits_window->log(g, UI_HIGHLIGHT_FMT_STR "Intro and death Music");

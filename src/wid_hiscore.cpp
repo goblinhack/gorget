@@ -96,7 +96,7 @@ void wid_hiscores_show(Gamep g)
   wid_hiscore_destroy(g);
 
   int const menu_height = 26;
-  int const menu_width  = 100;
+  int const menu_width  = 120;
 
   const auto *name           = "Name";
   int const   name_field_len = UI_MAX_PLAYER_NAME_LEN + 1;
@@ -108,7 +108,7 @@ void wid_hiscores_show(Gamep g)
   int const   completed_field_len = 9;
 
   const auto *reason           = "Reason of Unfair Demise";
-  int const   reason_field_len = 28;
+  int const   reason_field_len = 52;
 
   spoint const outer_tl((TERM_WIDTH / 2) - (menu_width / 2), (TERM_HEIGHT / 2) - (menu_height / 2));
   spoint const outer_br((TERM_WIDTH / 2) + (menu_width / 2), (TERM_HEIGHT / 2) + (menu_height / 2));
