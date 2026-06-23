@@ -255,7 +255,7 @@ static void gfx_ui_init_2()
       "ui.2,0,15",  "ui.2,1,15",  "ui.2,2,15",  "ui.2,3,15",  "ui.2,4,15",  "ui.2,5,15",  "ui.2,6,15",  "ui.2,7,15",  "ui.2,8,15",  "ui.2,9,15",
       "ui.2,10,15", "ui.2,11,15", "ui.2,12,15", "ui.2,13,15", "ui.2,14,15", "ui.2,15,15",
   };
-  tile_load_arr("data/gfx/ui/ui_box2.tga", "ui_box2", UI_TILE_WIDTH, UI_TILE_HEIGHT, ARRAY_SIZE(tiles), tiles);
+  tile_load_arr_sprites("data/gfx/ui/ui_box2.tga", "ui_box2", UI_TILE_WIDTH, UI_TILE_HEIGHT, ARRAY_SIZE(tiles), tiles);
 }
 
 static void gfx_ui_init_3()

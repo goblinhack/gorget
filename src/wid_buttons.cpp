@@ -19,7 +19,7 @@ void wid_gray_out_button(Gamep g, Widp w)
   TRACE();
 
   wid_set_mode(w, WID_MODE_OVER);
-  wid_set_style(w, UI_WID_STYLE_SOLID_WHITE);
+  wid_set_style(w, UI_WID_STYLE_OVER);
   wid_set_color(w, WID_COLOR_BG, GRAY50);
   wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
   wid_set_mode(w, WID_MODE_NORMAL);
@@ -34,7 +34,7 @@ void wid_gray_out_button(Gamep g, Widp w)
   auto *w = wid_new_square_button(g, parent, name);
   wid_set_text(w, "BACK");
   wid_set_mode(w, WID_MODE_OVER);
-  wid_set_style(w, UI_WID_STYLE_SOLID_WHITE);
+  wid_set_style(w, UI_WID_STYLE_OVER);
   wid_set_color(w, WID_COLOR_BG, RED);
   wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
   wid_set_mode(w, WID_MODE_NORMAL);
@@ -48,7 +48,7 @@ void wid_gray_out_button(Gamep g, Widp w)
   auto *w = wid_new_square_button(g, parent, name);
   wid_set_text(w, "CLOSE");
   wid_set_mode(w, WID_MODE_OVER);
-  wid_set_style(w, UI_WID_STYLE_SOLID_WHITE);
+  wid_set_style(w, UI_WID_STYLE_OVER);
   wid_set_color(w, WID_COLOR_BG, RED);
   wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
   wid_set_mode(w, WID_MODE_NORMAL);
@@ -95,7 +95,7 @@ static void wid_button_pulse(Gamep g, Widp w)
   auto *w = wid_new_square_button(g, parent, name);
   wid_set_text(w, "CONTINUE");
   wid_set_mode(w, WID_MODE_OVER);
-  wid_set_style(w, UI_WID_STYLE_SOLID_WHITE);
+  wid_set_style(w, UI_WID_STYLE_OVER);
   wid_set_color(w, WID_COLOR_BG, GREEN);
   wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
   wid_set_mode(w, WID_MODE_NORMAL);
@@ -111,7 +111,7 @@ static void wid_button_pulse(Gamep g, Widp w)
 
   auto *w = wid_new_square_button(g, parent, name);
   wid_set_mode(w, WID_MODE_OVER);
-  wid_set_style(w, UI_WID_STYLE_SOLID_WHITE);
+  wid_set_style(w, UI_WID_STYLE_OVER);
   wid_set_color(w, WID_COLOR_BG, GREEN);
   wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
   wid_set_mode(w, WID_MODE_NORMAL);
@@ -124,7 +124,7 @@ static void wid_button_pulse(Gamep g, Widp w)
 
   auto *w = wid_new_square_button(g, parent, name);
   wid_set_mode(w, WID_MODE_OVER);
-  wid_set_style(w, UI_WID_STYLE_SOLID_WHITE);
+  wid_set_style(w, UI_WID_STYLE_OVER);
   wid_set_color(w, WID_COLOR_BG, GREEN);
   wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
   wid_set_mode(w, WID_MODE_NORMAL);
@@ -139,7 +139,7 @@ static void wid_button_pulse(Gamep g, Widp w)
 
   auto *w = wid_new_square_button(g, parent, name);
   wid_set_mode(w, WID_MODE_OVER);
-  wid_set_style(w, UI_WID_STYLE_SOLID_WHITE);
+  wid_set_style(w, UI_WID_STYLE_OVER);
   wid_set_color(w, WID_COLOR_BG, GREEN);
   wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
   wid_set_mode(w, WID_MODE_NORMAL);

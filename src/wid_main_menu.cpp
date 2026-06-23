@@ -489,7 +489,7 @@ void wid_main_menu_select(Gamep g)
   {
     TRACE();
     auto *p = wid_main_menu_window->wid_text_area->wid_text_area;
-    auto *w = wid_new_cancel_button(g, p, "Quit Game");
+    auto *w = wid_new_menu_button(g, p, "Quit Game");
 
     spoint const tl(0, y_at);
     spoint const br(button_width, y_at + button_height);

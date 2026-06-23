@@ -595,6 +595,10 @@ static auto game_event_abort(Gamep g) -> bool
     DIE_CLEAN("Quick quit from level select");
   }
 
+  if (game_state(g) != STATE_PLAYING) {
+    return false;
+  }
+
   wid_quit_select(g);
 
   return true;
