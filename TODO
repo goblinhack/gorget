@@ -1,13 +1,16 @@
 bugs
 ----
-item thrown onto lava
+
+todo
+----
 sound map for rustling in bushes
+sound foliage
 chests should explode sometimes
 steam and smoke should spread
 incineration over water spawns steam
 enchants
 could kill you in x hits
-
+staff of fire in water damage when fully submerged
 potion, healing
 potion, resiliance (stamina)
 potion, inviolate (health and removes poison)
@@ -21,24 +24,15 @@ potion, telepath (see enemies)
 potion, fire immunity (fireball)
 potion, light immunity (light beam)
 potion trading station
-fire immunity from potion buff
 explore bonus for freshly explored tiles
 present icon multiplites for bonus
-sound foliage
-
-thrown
-------
-potion, paralysis (gas)
-potion, creeping death
-potion, descent
-potion, incineration
-potion, darkness
-potion, confusion
-potion, caustic gas
-
-todo
-----
-staff of fire in water damage when fully submerged
+thrown potion, paralysis (gas)
+thrown potion, creeping death
+thrown potion, descent
+thrown potion, incineration
+thrown potion, darkness
+thrown potion, confusion
+thrown potion, caustic gas
 
 sacrifice altar
 ---------------
