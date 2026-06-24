@@ -33,9 +33,9 @@ static void tp_potion_endurance_on_thrown_end(Gamep g, Levelsp v, Levelp l, Thin
   //
   // Soft landing?
   //
-  if ((level_is_chasm(g, v, l, thing_at(me)) != nullptr) || // newline
-      (level_is_water(g, v, l, thing_at(me)) != nullptr) || // newline
-      (level_is_foliage(g, v, l, thing_at(me)) != nullptr)) {
+  if ((level_is_chasm_bool(g, v, l, thing_at(me))) || // newline
+      (level_is_water_bool(g, v, l, thing_at(me))) || // newline
+      (level_is_foliage_bool(g, v, l, thing_at(me)))) {
     return;
   }
 

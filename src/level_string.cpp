@@ -40,13 +40,13 @@
       char         c = CHARMAP_EMPTY;
       bpoint const p(x, y);
 
-      if (level_is_dirt(g, v, l, p) != nullptr) {
+      if (level_is_dirt_bool(g, v, l, p)) {
         c = CHARMAP_DIRT;
       }
-      if (level_is_floor(g, v, l, p) != nullptr) {
+      if (level_is_floor_bool(g, v, l, p)) {
         c = CHARMAP_FLOOR;
       }
-      if (level_is_corridor(g, v, l, p) != nullptr) {
+      if (level_is_corridor_bool(g, v, l, p)) {
         c = CHARMAP_CORRIDOR;
       }
       if (level_alive_is_foliage(g, v, l, p) != nullptr) {
@@ -58,22 +58,22 @@
       if (level_alive_is_grass(g, v, l, p) != nullptr) {
         c = CHARMAP_GRASS;
       }
-      if (level_is_vault(g, v, l, p) != nullptr) {
+      if (level_is_vault_bool(g, v, l, p)) {
         c = CHARMAP_VAULT;
       }
-      if (level_is_wall(g, v, l, p) != nullptr) {
+      if (level_is_wall_bool(g, v, l, p)) {
         c = CHARMAP_WALL;
       }
-      if (level_is_barrel(g, v, l, p) != nullptr) {
+      if (level_is_barrel_bool(g, v, l, p)) {
         c = CHARMAP_BARREL;
       }
-      if (level_is_brazier(g, v, l, p) != nullptr) {
+      if (level_is_brazier_bool(g, v, l, p)) {
         c = CHARMAP_BRAZIER;
       }
-      if (level_is_bridge(g, v, l, p) != nullptr) {
+      if (level_is_bridge_bool(g, v, l, p)) {
         c = CHARMAP_BRIDGE;
       }
-      if (level_is_chasm(g, v, l, p) != nullptr) {
+      if (level_is_chasm_bool(g, v, l, p)) {
         c = CHARMAP_CHASM;
       }
       if (level_is_door_unlocked(g, v, l, p) != nullptr) {
@@ -97,13 +97,13 @@
           c = CHARMAP_DOOR_SECRET;
         }
       }
-      if (level_is_key(g, v, l, p) != nullptr) {
+      if (level_is_key_bool(g, v, l, p)) {
         c = CHARMAP_KEY;
       }
-      if (level_is_lava(g, v, l, p) != nullptr) {
+      if (level_is_lava_bool(g, v, l, p)) {
         c = CHARMAP_LAVA;
       }
-      if (level_is_water(g, v, l, p) != nullptr) {
+      if (level_is_water_bool(g, v, l, p)) {
         c = CHARMAP_WATER;
       }
       if (level_is_deep_water(g, v, l, p) != nullptr) {
@@ -121,49 +121,49 @@
       if (level_is_monst2(g, v, l, p) != nullptr) {
         c = CHARMAP_MONST2;
       }
-      if (level_is_minion(g, v, l, p) != nullptr) {
+      if (level_is_minion_bool(g, v, l, p)) {
         c = CHARMAP_MONST1;
       }
-      if (level_is_pillar(g, v, l, p) != nullptr) {
+      if (level_is_pillar_bool(g, v, l, p)) {
         c = CHARMAP_PILLAR;
       }
-      if (level_is_teleport(g, v, l, p) != nullptr) {
+      if (level_is_teleport_bool(g, v, l, p)) {
         c = CHARMAP_TELEPORT;
       }
-      if (level_is_trap(g, v, l, p) != nullptr) {
+      if (level_is_trap_bool(g, v, l, p)) {
         c = CHARMAP_TRAP;
       }
-      if (level_is_treasure(g, v, l, p) != nullptr) {
+      if (level_is_treasure_bool(g, v, l, p)) {
         c = CHARMAP_TREASURE;
       }
-      if (level_is_entrance(g, v, l, p) != nullptr) {
+      if (level_is_entrance_bool(g, v, l, p)) {
         c = CHARMAP_ENTRANCE;
       }
-      if (level_is_exit(g, v, l, p) != nullptr) {
+      if (level_is_exit_bool(g, v, l, p)) {
         c = CHARMAP_EXIT;
       }
-      if (level_is_fire(g, v, l, p) != nullptr) {
+      if (level_is_fire_bool(g, v, l, p)) {
         c = CHARMAP_FIRE;
       }
-      if (level_is_player(g, v, l, p) != nullptr) {
+      if (level_is_player_bool(g, v, l, p)) {
         c = CHARMAP_ENTRANCE;
       }
-      if (level_is_steam(g, v, l, p) != nullptr) {
+      if (level_is_steam_bool(g, v, l, p)) {
         c = CHARMAP_STEAM;
       }
-      if (level_is_smoke(g, v, l, p) != nullptr) {
+      if (level_is_smoke_bool(g, v, l, p)) {
         c = CHARMAP_SMOKE;
       }
-      if (level_is_projectile(g, v, l, p) != nullptr) {
+      if (level_is_projectile_bool(g, v, l, p)) {
         c = CHARMAP_WEAPON;
       }
       if (level_is_beam_weapon(g, v, l, p) != nullptr) {
         c = CHARMAP_WEAPON;
       }
-      if (level_is_border(g, v, l, p) != nullptr) {
+      if (level_is_border_bool(g, v, l, p)) {
         c = CHARMAP_BORDER;
       }
-      if (level_is_rock(g, v, l, p) != nullptr) {
+      if (level_is_rock_bool(g, v, l, p)) {
         c = CHARMAP_ROCK;
       }
 

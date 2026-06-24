@@ -42,7 +42,7 @@ static void tp_kobalos_mob_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
     return;
   }
 
-  if (level_is_monst(g, v, l, thing_at(me)) == nullptr) {
+  if (! level_is_monst_bool(g, v, l, thing_at(me))) {
     (void) thing_mob_spawn_a_minion(g, v, l, me, tp_first(is_kobalos));
   }
 }

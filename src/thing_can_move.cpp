@@ -352,7 +352,7 @@
   //
   // Needs to be something we can shove
   //
-  if (level_is_shovable(g, v, l, to) == nullptr) {
+  if (! level_is_shovable_bool(g, v, l, to)) {
     return false;
   }
 

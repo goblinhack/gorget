@@ -94,7 +94,7 @@ static auto thing_fall_damage(Gamep g, Levelsp v, Levelp l, Thingp me) -> int
   //
   // Landing in lava is bad
   //
-  if (level_is_lava(g, v, l, thing_at(me)) != nullptr) {
+  if (level_is_lava_bool(g, v, l, thing_at(me))) {
     if (! thing_is_immune_to(g, v, l, me, THING_EVENT_FIRE_DAMAGE)) {
       fall_dmg *= 4;
     }
@@ -103,7 +103,7 @@ static auto thing_fall_damage(Gamep g, Levelsp v, Levelp l, Thingp me) -> int
   //
   // Water dampens the fall
   //
-  if (level_is_water(g, v, l, thing_at(me)) != nullptr) {
+  if (level_is_water_bool(g, v, l, thing_at(me))) {
     if (thing_is_immune_to(g, v, l, me, THING_EVENT_WATER_DAMAGE)) {
       fall_dmg /= 2;
     }
@@ -278,7 +278,7 @@ static void thing_fall_end(Gamep g, Levelsp v, Levelp l, Thingp me)
     if (thing_is_player(me)) {
       topcon(UI_GOOD_FMT_STR "The deep water dampened your fall!" UI_RESET_FMT);
     }
-  } else if (level_is_water(g, v, l, thing_at(me)) != nullptr) {
+  } else if (level_is_water_bool(g, v, l, thing_at(me))) {
     thing_sound_play(g, v, l, me, "splash");
     if (thing_is_player(me)) {
       topcon(UI_GOOD_FMT_STR "The water dampened your fall!" UI_RESET_FMT);

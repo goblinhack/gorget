@@ -375,7 +375,7 @@ static auto thing_monst_choose_something_we_can_see(Gamep g, Levelsp v, Levelp l
       //
       // Jump over chasm?
       //
-      if (level_is_chasm(g, v, l, nexthop) != nullptr) {
+      if (level_is_chasm_bool(g, v, l, nexthop)) {
         return thing_jump_to(g, v, l, me, target);
       }
 

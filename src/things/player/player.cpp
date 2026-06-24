@@ -41,13 +41,13 @@ static void tp_player_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
   //
   // If we fell into another chasm, don't make an oof sound
   //
-  if (level_is_chasm(g, v, l, thing_at(me)) != nullptr) {
+  if (level_is_chasm_bool(g, v, l, thing_at(me))) {
     return;
   }
 
-  if (level_is_water(g, v, l, thing_at(me)) != nullptr) {
+  if (level_is_water_bool(g, v, l, thing_at(me))) {
     thing_sound_play(g, v, l, me, "splash");
-  } else if (level_is_foliage(g, v, l, thing_at(me)) != nullptr) {
+  } else if (level_is_foliage_bool(g, v, l, thing_at(me))) {
     thing_sound_play(g, v, l, me, "footstep_foliage");
   } else {
     thing_sound_play(g, v, l, me, "footstep");
@@ -81,7 +81,7 @@ static void tp_player_on_jump_end(Gamep g, Levelsp v, Levelp l, Thingp me)
     return;
   }
 
-  if (level_is_water(g, v, l, thing_at(me)) != nullptr) {
+  if (level_is_water_bool(g, v, l, thing_at(me))) {
     //
     // We already have a splash noise
     //
@@ -110,11 +110,11 @@ static void tp_player_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp me)
   //
   // If we fell into another chasm, don't make an oof sound
   //
-  if (level_is_chasm(g, v, l, thing_at(me)) != nullptr) {
+  if (level_is_chasm_bool(g, v, l, thing_at(me))) {
     return;
   }
 
-  if (level_is_water(g, v, l, thing_at(me)) != nullptr) {
+  if (level_is_water_bool(g, v, l, thing_at(me))) {
     thing_sound_play(g, v, l, me, "splash");
   } else {
     thing_sound_play(g, v, l, me, "player_oof");

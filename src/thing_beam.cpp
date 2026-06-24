@@ -90,7 +90,7 @@ auto thing_beam_weapon_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what
     //
     // Special handling for teleporting of a beam_weapon weapon
     //
-    if (level_is_teleport(g, v, l, thing_at(beam_weapon)) != nullptr) {
+    if (level_is_teleport_bool(g, v, l, thing_at(beam_weapon))) {
       if (thing_teleport_handle(g, v, l, beam_weapon)) {
         beam_at = thing_real_at(beam_weapon);
       }

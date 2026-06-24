@@ -330,7 +330,7 @@
     return false;
   }
 
-  if (level_is_exit(g, v, l, thing_at(player)) == nullptr) {
+  if (! level_is_exit_bool(g, v, l, thing_at(player))) {
     topcon(UI_WARNING_FMT_STR "There is no level exit here to descend." UI_RESET_FMT);
     (void) sound_play(g, "error");
     return false;
@@ -372,7 +372,7 @@
     return false;
   }
 
-  if (level_is_entrance(g, v, l, thing_at(player)) == nullptr) {
+  if (! level_is_entrance_bool(g, v, l, thing_at(player))) {
     topcon(UI_WARNING_FMT_STR "There is no level entrance here to ascend." UI_RESET_FMT);
     (void) sound_play(g, "error");
     return false;

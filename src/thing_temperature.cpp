@@ -38,7 +38,7 @@ void thing_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thing
       //
       // You don't continue to burn with steam
       //
-    } else if (level_is_fire(g, v, l, thing_at(t)) == nullptr) {
+    } else if (! level_is_fire_bool(g, v, l, thing_at(t))) {
       //
       // No fire here. Set it on fire.
       //
@@ -85,7 +85,7 @@ static void thing_temperature_damage_apply(Gamep g, Levelsp v, Levelp l, Thingp 
     damage *= 2;
   }
 
-  if (level_is_lava(g, v, l, thing_at(t)) != nullptr) {
+  if (level_is_lava_bool(g, v, l, thing_at(t))) {
     damage *= 2;
   }
 
@@ -98,9 +98,9 @@ static void thing_temperature_damage_apply(Gamep g, Levelsp v, Levelp l, Thingp 
 
   if (thing_is_steam(source)) {
     e.reason = "by steam";
-  } else if (level_is_lava(g, v, l, thing_at(t)) != nullptr) {
+  } else if (level_is_lava_bool(g, v, l, thing_at(t))) {
     e.reason = "by lava";
-  } else if (level_is_fire(g, v, l, thing_at(t)) != nullptr) {
+  } else if (level_is_fire_bool(g, v, l, thing_at(t))) {
     e.reason = "by fire";
   } else {
     e.reason = "by heat damage";

@@ -171,7 +171,7 @@
   //
   // Add some more spice to the message
   //
-  if (level_is_lava(g, v, l, thing_at(t)) != nullptr) {
+  if (level_is_lava_bool(g, v, l, thing_at(t))) {
     if ((source == nullptr) || ! thing_is_lava(source)) {
       s += " in lava";
     }
@@ -179,7 +179,7 @@
     if ((source == nullptr) || ! thing_is_water(source)) {
       s += " in the depths";
     }
-  } else if (level_is_water(g, v, l, thing_at(t)) != nullptr) {
+  } else if (level_is_water_bool(g, v, l, thing_at(t))) {
     if ((source == nullptr) || ! thing_is_water(source)) {
       s += " in a puddle";
     }

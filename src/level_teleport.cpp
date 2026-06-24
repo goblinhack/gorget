@@ -26,7 +26,7 @@ void level_tick_teleport(Gamep g, Levelsp v, Levelp l)
   FOR_ALL_MAP_POINTS(g, v, l, x, y)
   {
     bpoint p(x, y);
-    if (level_is_teleport(g, v, l, p) != nullptr) {
+    if (level_is_teleport_bool(g, v, l, p)) {
       FOR_ALL_THINGS_AT(g, v, l, t, p)
       {
         if (! thing_is_able_to_fall(t)) {

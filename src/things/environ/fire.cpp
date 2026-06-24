@@ -54,14 +54,14 @@ static void tp_fire_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
     //
     // Fire is here already, don't spawn more
     //
-    if (level_is_fire(g, v, l, p) != nullptr) {
+    if (level_is_fire_bool(g, v, l, p)) {
       continue;
     }
 
     //
     // Give the fire a pause
     //
-    if (level_is_smoke(g, v, l, p) != nullptr) {
+    if (level_is_smoke_bool(g, v, l, p)) {
       continue;
     }
 
@@ -129,14 +129,14 @@ static void tp_fire_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent
   // Allow things to continue to burn if we still have some burnable material
   //
   if (level_alive_is_combustible(g, v, l, thing_at(me)) != nullptr) {
-    if (level_is_fire(g, v, l, thing_at(me)) == nullptr) {
+    if (! level_is_fire_bool(g, v, l, thing_at(me))) {
       THING_DBG(me, "spawn fire to continue to burn");
       (void) thing_spawn(g, v, l, tp_first(is_fire), me);
     }
   }
 
-  if (level_is_smoke(g, v, l, thing_at(me)) == nullptr) {
-    if (level_is_combustible(g, v, l, thing_at(me)) != nullptr) {
+  if (! level_is_smoke_bool(g, v, l, thing_at(me))) {
+    if (level_is_combustible_bool(g, v, l, thing_at(me))) {
       THING_DBG(me, "spawn smoke over dying fire");
       (void) thing_spawn(g, v, l, tp_first(is_smoke), me);
     }
@@ -168,7 +168,7 @@ static void tp_fire_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
     return;
   }
 
-  if (level_is_smoke(g, v, l, thing_at(me)) == nullptr) {
+  if (! level_is_smoke_bool(g, v, l, thing_at(me))) {
     THING_DBG(me, "spawn smoke over falling fire");
     (void) thing_spawn(g, v, l, tp_random(g, v, l, is_smoke), me);
   }

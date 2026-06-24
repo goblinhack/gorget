@@ -55,28 +55,28 @@ static void level_minimap_levels_update(Gamep g, Levelsp v, Levelp l, const bool
           }
         }
 
-        if (level_is_dirt(g, v, l, p) != nullptr) {
+        if (level_is_dirt_bool(g, v, l, p)) {
           c = GRAY10;
         }
-        if (level_is_floor(g, v, l, p) != nullptr) {
+        if (level_is_floor_bool(g, v, l, p)) {
           c = GRAY30;
         }
-        if (level_is_corridor(g, v, l, p) != nullptr) {
+        if (level_is_corridor_bool(g, v, l, p)) {
           c = GRAY30;
         }
-        if (level_is_wall(g, v, l, p) != nullptr) {
+        if (level_is_wall_bool(g, v, l, p)) {
           c = GRAY50;
         }
-        if (level_is_rock(g, v, l, p) != nullptr) {
+        if (level_is_rock_bool(g, v, l, p)) {
           c = BROWN4;
         }
-        if (level_is_bridge(g, v, l, p) != nullptr) {
+        if (level_is_bridge_bool(g, v, l, p)) {
           c = BROWN;
         }
-        if (level_is_chasm(g, v, l, p) != nullptr) {
+        if (level_is_chasm_bool(g, v, l, p)) {
           c = BLACK;
         }
-        if (level_is_water(g, v, l, p) != nullptr) {
+        if (level_is_water_bool(g, v, l, p)) {
           c = BLUE;
         }
         if (level_is_deep_water(g, v, l, p) != nullptr) {
@@ -96,23 +96,23 @@ static void level_minimap_levels_update(Gamep g, Levelsp v, Levelp l, const bool
             c = GRAY40;
           }
         }
-        if (level_is_lava(g, v, l, p) != nullptr) {
+        if (level_is_lava_bool(g, v, l, p)) {
           c = ORANGE;
         }
-        if (level_is_teleport(g, v, l, p) != nullptr) {
+        if (level_is_teleport_bool(g, v, l, p)) {
           // ignore
           c = RED;
         }
-        if (level_is_entrance(g, v, l, p) != nullptr) {
+        if (level_is_entrance_bool(g, v, l, p)) {
           c = PINK;
         }
-        if (level_is_exit(g, v, l, p) != nullptr) {
+        if (level_is_exit_bool(g, v, l, p)) {
           c = YELLOW;
         }
-        if (level_is_fire(g, v, l, p) != nullptr) {
+        if (level_is_fire_bool(g, v, l, p)) {
           c = ORANGE2;
         }
-        if (level_is_player(g, v, l, p) != nullptr) {
+        if (level_is_player_bool(g, v, l, p)) {
           c = CYAN;
         }
 

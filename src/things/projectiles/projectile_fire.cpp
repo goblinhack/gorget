@@ -33,8 +33,8 @@ static void tp_projectile_fire_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
   //
   // The projectile_fire doesn't heat water up quick enough, so add this cheap effect
   //
-  if (level_is_water(g, v, l, thing_at(me)) != nullptr) {
-    if (level_is_steam(g, v, l, thing_at(me)) == nullptr) {
+  if (level_is_water_bool(g, v, l, thing_at(me))) {
+    if (! level_is_steam_bool(g, v, l, thing_at(me))) {
       if (d100() < 50) {
         (void) thing_spawn(g, v, l, tp_first(is_steam), thing_at(me));
       }

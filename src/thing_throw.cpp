@@ -51,18 +51,18 @@ void thing_is_thrown_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp throw
     auto The_thing = thing_name_long_The(g, v, l, item);
 
     if (thing_is_player(thrower)) {
-      if (level_is_chasm(g, v, l, thing_at(item)) != nullptr) {
+      if (level_is_chasm_bool(g, v, l, thing_at(item))) {
         topcon("%s tumbles into the void.", The_thing.c_str());
       }
     }
 
-    if (level_is_foliage(g, v, l, thing_at(item)) != nullptr) {
+    if (level_is_foliage_bool(g, v, l, thing_at(item))) {
       if (thing_is_player(thrower)) {
         topcon("%s lands with a rustle.", The_thing.c_str());
       }
     }
 
-    if (level_is_water(g, v, l, thing_at(item)) != nullptr) {
+    if (level_is_water_bool(g, v, l, thing_at(item))) {
       thing_sound_play(g, v, l, item, "splash");
 
       if (thing_is_player(thrower)) {

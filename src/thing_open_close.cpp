@@ -195,7 +195,7 @@ void thing_is_unlocked_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // Needs to be something we can shove
   //
-  if (level_is_openable(g, v, l, to) == nullptr) {
+  if (! level_is_openable_bool(g, v, l, to)) {
     return false;
   }
 

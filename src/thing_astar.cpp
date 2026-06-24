@@ -307,7 +307,7 @@ void Astar::init()
     }
 
     if (! thing_is_floating(me)) {
-      if (level_is_chasm(g, v, l, to) != nullptr) {
+      if (level_is_chasm_bool(g, v, l, to)) {
         cost += 150;
       }
     }

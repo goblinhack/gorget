@@ -25,14 +25,14 @@ void thing_continue_to_burn_check(Gamep g, Levelsp v, Levelp l, Thingp me)
   //
   // Over water?
   //
-  if (level_is_water(g, v, l, thing_at(me)) != nullptr) {
+  if (level_is_water_bool(g, v, l, thing_at(me))) {
     thing_is_burning_unset(g, v, l, me);
 
     if (thing_is_player(me)) {
       topcon(UI_GOOD_FMT_STR "You extinguish the flames in the cool water!" UI_RESET_FMT);
     }
 
-    if (level_is_steam(g, v, l, thing_at(me)) == nullptr) {
+    if (! level_is_steam_bool(g, v, l, thing_at(me))) {
       (void) thing_spawn(g, v, l, tp_first(is_steam), me);
     }
     return;
@@ -92,13 +92,13 @@ void thing_continue_to_burn_check(Gamep g, Levelsp v, Levelp l, Thingp me)
       .damage     = d4(),                    //
   };
 
-  if (level_is_fire(g, v, l, thing_at(me)) == nullptr) {
+  if (! level_is_fire_bool(g, v, l, thing_at(me))) {
     if (thing_is_burning(me)) {
       thing_damage(g, v, l, me, e);
     }
   }
 
-  if (level_is_smoke(g, v, l, thing_at(me)) == nullptr) {
+  if (! level_is_smoke_bool(g, v, l, thing_at(me))) {
     THING_DBG(me, "spawn smoke");
     (void) thing_spawn(g, v, l, tp_first(is_smoke), me);
   }

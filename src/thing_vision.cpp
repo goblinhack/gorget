@@ -137,7 +137,7 @@ void thing_can_see_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
         continue;
       }
 
-      if (level_is_wall(g, v, l, p) != nullptr) {
+      if (level_is_wall_bool(g, v, l, p)) {
         debug += "#";
         continue;
       }
@@ -180,7 +180,7 @@ void thing_has_seen_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
         continue;
       }
 
-      if (level_is_wall(g, v, l, p) != nullptr) {
+      if (level_is_wall_bool(g, v, l, p)) {
         debug += "#";
         continue;
       }

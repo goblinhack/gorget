@@ -36,7 +36,7 @@ static void tp_brazier_on_shoved(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp
     // Only if recently dead
     //
     if (v->tick - me->tick_dead < 5) {
-      if (level_is_smoke(g, v, l, thing_at(me)) == nullptr) {
+      if (! level_is_smoke_bool(g, v, l, thing_at(me))) {
         (void) thing_spawn(g, v, l, tp_first(is_smoke), me);
       }
     }
@@ -55,15 +55,15 @@ static void tp_brazier_on_shoved(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp
       //
       // If we can't, then spawn over the brazier
       //
-      if (level_is_fire(g, v, l, thing_at(me)) == nullptr) {
+      if (! level_is_fire_bool(g, v, l, thing_at(me))) {
         (void) thing_spawn(g, v, l, tp_first(is_fire), me);
       }
     } else {
-      if (level_is_fire(g, v, l, fire_at) == nullptr) {
+      if (! level_is_fire_bool(g, v, l, fire_at)) {
         (void) thing_spawn(g, v, l, tp_first(is_fire), fire_at);
       }
 
-      if (level_is_smoke(g, v, l, thing_at(me)) == nullptr) {
+      if (! level_is_smoke_bool(g, v, l, thing_at(me))) {
         (void) thing_spawn(g, v, l, tp_first(is_smoke), me);
       }
     }
@@ -71,7 +71,7 @@ static void tp_brazier_on_shoved(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp
     //
     // Spawn over the brazier
     //
-    if (level_is_fire(g, v, l, thing_at(me)) == nullptr) {
+    if (! level_is_fire_bool(g, v, l, thing_at(me))) {
       (void) thing_spawn(g, v, l, tp_first(is_fire), me);
     }
   }
@@ -85,12 +85,12 @@ static void tp_brazier_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEv
   // Allow things to continue to burn if we still have some burnable material
   //
   if (e.event_type != THING_EVENT_SHOVED) {
-    if (level_is_fire(g, v, l, thing_at(me)) == nullptr) {
+    if (! level_is_fire_bool(g, v, l, thing_at(me))) {
       (void) thing_spawn(g, v, l, tp_first(is_fire), me);
     }
   }
 
-  if (level_is_smoke(g, v, l, thing_at(me)) == nullptr) {
+  if (! level_is_smoke_bool(g, v, l, thing_at(me))) {
     (void) thing_spawn(g, v, l, tp_first(is_smoke), me);
   }
 

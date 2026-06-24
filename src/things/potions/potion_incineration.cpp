@@ -40,7 +40,7 @@ static void tp_potion_incin_spawn_explosion(Gamep g, Levelsp v, Levelp l, Thingp
   for (auto delta : points) {
     auto p = at + delta;
     if (level_is_obs_to_explosion(g, v, l, p) == nullptr) {
-      if (level_is_explosion(g, v, l, p) == nullptr) {
+      if (! level_is_explosion_bool(g, v, l, p)) {
         (void) thing_spawn(g, v, l, tp_first(is_explosion), p);
       }
     }
@@ -67,8 +67,8 @@ static void tp_potion_incin_on_thrown_end(Gamep g, Levelsp v, Levelp l, Thingp m
   //
   // Soft landing?
   //
-  if ((level_is_chasm(g, v, l, thing_at(me)) != nullptr) || // newline
-      (level_is_water(g, v, l, thing_at(me)) != nullptr)) {
+  if ((level_is_chasm_bool(g, v, l, thing_at(me))) || // newline
+      (level_is_water_bool(g, v, l, thing_at(me)))) {
     return;
   }
 

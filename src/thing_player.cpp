@@ -563,7 +563,7 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
   //
   if (level_is_needs_move_confirm(g, v, l, to) != nullptr) {
     if (! thing_is_ethereal(me) && ! thing_is_floating(me) && ! thing_is_flying(me)) {
-      if (level_is_chasm(g, v, l, to) != nullptr) {
+      if (level_is_chasm_bool(g, v, l, to)) {
         if (level_is_boss_level(g, v, l)) {
           return true;
         }
@@ -593,8 +593,8 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
       //
       // If not already in lava, warn about moving into it
       //
-      if (level_is_lava(g, v, l, thing_at(me)) == nullptr) {
-        if (level_is_lava(g, v, l, to) != nullptr) {
+      if (! level_is_lava_bool(g, v, l, thing_at(me))) {
+        if (level_is_lava_bool(g, v, l, to)) {
           if (! thing_is_immune_to(g, v, l, me, THING_EVENT_FIRE_DAMAGE)) {
             std::string const msg = "Do you really want to leap into lava?";
             player_state_change(g, v, l, PLAYER_STATE_MOVE_CONFIRM_REQUESTED);
