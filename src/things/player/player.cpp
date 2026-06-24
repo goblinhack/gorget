@@ -47,6 +47,8 @@ static void tp_player_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
 
   if (level_is_water(g, v, l, thing_at(me)) != nullptr) {
     thing_sound_play(g, v, l, me, "splash");
+  } else if (level_is_foliage(g, v, l, thing_at(me)) != nullptr) {
+    thing_sound_play(g, v, l, me, "footstep_foliage");
   } else {
     thing_sound_play(g, v, l, me, "footstep");
   }
