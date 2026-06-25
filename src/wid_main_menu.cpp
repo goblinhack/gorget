@@ -225,9 +225,10 @@ static void game_display_title_bg(Gamep g)
   float       w = game_window_pix_width_get(g);
   float const h = game_window_pix_height_get(g);
 
-  auto       *tile = tile_find_mand("main_bg");
-  float const tw   = tile_width(tile);
-  float const th   = tile_height(tile);
+  auto *tile = tile_find_mand("main_bg");
+
+  float const tw = tile_width(tile);
+  float const th = tile_height(tile);
 
   w = (h * tw) / th;
 
@@ -254,9 +255,14 @@ static void game_display_title_fg(Gamep g)
   float       w = game_window_pix_width_get(g);
   float const h = game_window_pix_height_get(g);
 
-  auto       *tile = tile_find_mand("main_fg");
-  float const tw   = tile_width(tile);
-  float const th   = tile_height(tile);
+  auto *tile = tile_find_mand("main_fg");
+
+  if (! wid_is_visible(wid_main_menu_window->wid_popup_container)) {
+    tile = tile_find_mand("main_alt_fg");
+  }
+
+  float const tw = tile_width(tile);
+  float const th = tile_height(tile);
 
   w = (h * tw) / th;
 

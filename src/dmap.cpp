@@ -3,6 +3,7 @@
 //
 
 #include "my_bpoint.hpp"
+#include "my_callstack.hpp"
 #include "my_dmap.hpp"
 #include "my_game_defs.hpp"
 #include "my_main.hpp" // NOLINT
@@ -178,6 +179,8 @@ void dmap_print(const Dmap *D)
 //
 void dmap_process(Dmap *D, bpoint tl, bpoint br)
 {
+  TRACE_DEBUG();
+
   uint8_t  x       = 0;
   uint8_t  y       = 0;
   uint8_t  a       = 0;
@@ -286,8 +289,11 @@ void dmap_process(Dmap *D, bpoint tl, bpoint br)
         lowest = std::min(i, lowest);
 
         if (*e - lowest >= 2) {
-          *e      = lowest + 1;
-          changed = 1U;
+          auto old_e = *e;
+          *e         = lowest + 1;
+          if (*e != old_e) {
+            changed = 1U;
+          }
         }
       }
     }
@@ -317,6 +323,8 @@ void dmap_process(Dmap *D, bpoint tl, bpoint br)
 //
 void dmap_process_reverse(Dmap *D, bpoint tl, bpoint br)
 {
+  TRACE_DEBUG();
+
   uint8_t  x       = 0;
   uint8_t  y       = 0;
   uint8_t  a       = 0;
@@ -450,8 +458,11 @@ void dmap_process_reverse(Dmap *D, bpoint tl, bpoint br)
         highest = std::max(i, highest);
 
         if (*e - highest >= 2) {
-          *e      = highest - 1;
-          changed = 1U;
+          auto old_e = *e;
+          *e         = highest - 1;
+          if (*e != old_e) {
+            changed = 1U;
+          }
         }
       }
     }

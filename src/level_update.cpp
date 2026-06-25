@@ -92,7 +92,6 @@ void level_update_visibility(Gamep g, Levelsp v, Levelp l)
   }
 
   if (update_per_pixel_visibility) {
-    // topcon("P");
     //
     // We only care about pixel moves.
     //
@@ -125,6 +124,11 @@ void level_update_visibility(Gamep g, Levelsp v, Levelp l)
     // Per tick check what the player can see.
     //
     level_has_seen_update(g, v, l);
+
+    //
+    // What can monsters hear?
+    //
+    level_hearing_gen(g, v, l);
 
     //
     // What can monsters see?

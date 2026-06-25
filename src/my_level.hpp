@@ -383,11 +383,11 @@ using Levels = struct Levels {
   uint32_t level_tick_in_progress_count;
   uint32_t level_tick_request_count;
   //
-  // How many levels are ticking
+  // How many levels are ticking.
   //
   uint32_t level_ticking_count;
   //
-  // Current level being played
+  // Current level being played.
   //
   LevelNum level_num;
   //
@@ -395,11 +395,15 @@ using Levels = struct Levels {
   //
   Level level[ LEVEL_MAX ];
   //
-  // Level lighting
+  // Level lighting.
   //
   LightMap light_map;
   //
-  // Which levels are where
+  // Active level noise of the player.
+  //
+  Dmap dmap_noise;
+  //
+  // Which levels are where.
   //
   LevelSelect level_select;
   //
@@ -410,17 +414,17 @@ using Levels = struct Levels {
   Thingp thing_body_debug[ THING_ID_MAX ];
 #endif
   //
-  // Space for monster memory
+  // Space for monster memory.
   //
   ThingExt thing_ext[ THING_EXT_MAX ];
   int      thing_ext_count;
   //
-  // For lighting memory
+  // For lighting memory.
   //
   ThingLight thing_light[ THING_LIGHT_MAX ];
   int        thing_light_count;
   //
-  // Space for player memory
+  // Space for player memory.
   //
   ThingPlayer thing_player;
   //
@@ -747,6 +751,7 @@ enum {
 // begin sort marker2 {
 void fragment_alts_fini(Gamep g);
 void fragments_fini(Gamep g);
+void level_hearing_gen(Gamep g, Levelsp v, Levelp l);
 void fragments_init(Gamep g);
 void game_debug_info(Gamep g);
 void level_anim(Gamep g, Levelsp v, Levelp l);

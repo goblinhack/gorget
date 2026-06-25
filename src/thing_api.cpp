@@ -40,9 +40,14 @@ void thing_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, const bpoint &val)
 
   auto valf = make_fpoint(val);
 
-  if (thing_is_player(t)) {
-    if (t->_at != valf) {
-      l->request_to_update_per_tile_visibility = true;
+  //
+  // Not sure we need this, it ends up doing updates twice per tick as we do one at the tick end anyway
+  //
+  if (compiler_unused) {
+    if (thing_is_player(t)) {
+      if (t->_at != valf) {
+        l->request_to_update_per_tile_visibility = true;
+      }
     }
   }
 
@@ -68,9 +73,14 @@ void thing_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, const fpoint &val)
     CROAK("no thing pointer");
   }
 
-  if (thing_is_player(t)) {
-    if (t->_at != val) {
-      l->request_to_update_per_tile_visibility = true;
+  //
+  // Not sure we need this, it ends up doing updates twice per tick as we do one at the tick end anyway
+  //
+  if (compiler_unused) {
+    if (thing_is_player(t)) {
+      if (t->_at != val) {
+        l->request_to_update_per_tile_visibility = true;
+      }
     }
   }
 
