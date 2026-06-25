@@ -423,3 +423,138 @@ void thing_fall(Gamep g, Levelsp v, Levelp l, Thingp me)
 
   return tp_flag(thing_tp(t), is_able_to_fall) != 0;
 }
+
+[[nodiscard]] auto thing_is_able_to_fall_repeatedly(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_able_to_fall_repeatedly) != 0;
+}
+
+[[nodiscard]] auto thing_is_obs_to_falling_onto(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+
+  //
+  // Unless open
+  //
+  if (thing_is_openable(t)) {
+    if (thing_is_open(t)) {
+      return false;
+    }
+  }
+
+  return tp_flag(thing_tp(t), is_obs_to_falling_onto) != 0;
+}
+
+void thing_is_falling_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return;
+  }
+
+  //
+  // Once falling, it is treated as a counter
+  //
+  if (val) {
+    //
+    // Start falling if not doing do
+    //
+    if (static_cast< bool >(t->_fall_ms)) {
+      return;
+    }
+  } else {
+    //
+    // Stop falling
+    //
+    if (! static_cast< bool >(t->_fall_ms)) {
+      return;
+    }
+  }
+  t->_fall_ms = static_cast< uint16_t >(val);
+
+  if (val) {
+    thing_on_fall_begin(g, v, l, t);
+  } else {
+    thing_on_fall_end(g, v, l, t);
+  }
+}
+
+[[nodiscard]] auto thing_is_falling_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return 0;
+  }
+
+  if (t->_fall_ms + val > THING_FALL_ANIM_MS) {
+    return t->_fall_ms = THING_FALL_ANIM_MS;
+  }
+
+  return t->_fall_ms += val;
+}
+
+[[nodiscard]] auto thing_is_falling_continues(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+
+  return t->_is_falling_continues;
+}
+
+void thing_is_falling_continues_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return;
+  }
+
+  if (t->_is_falling_continues == static_cast< int >(val)) {
+    return;
+  }
+  t->_is_falling_continues = val;
+
+  if (val) {
+    THING_DBG(t, "is falling continues set");
+  }
+
+  level_request_to_cleanup_things_set(g, v, l);
+}
+
+void thing_is_falling_continues_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_DEBUG();
+
+  thing_is_falling_continues_set(g, v, l, t, false);
+}
+
+[[nodiscard]] auto thing_is_able_to_fall_sound(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_able_to_fall_sound) != 0;
+}

@@ -34,6 +34,11 @@ void thing_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
   (void) thing_damage_this_tick_set(g, v, l, t, 0);
 
   //
+  // Reset noise counts
+  //
+  (void) thing_noise_this_tick_decr(g, v, l, t, 1);
+
+  //
   // Reset attack counts.
   //
   (void) thing_attack_count_per_tick_set(g, v, l, t, 0);

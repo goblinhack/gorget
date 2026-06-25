@@ -331,3 +331,56 @@ static auto thing_jump_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thingp
   }
   return me->_distance_jump -= val;
 }
+
+[[nodiscard]] auto thing_is_obs_to_jumping_out_of(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_obs_to_jumping_out_of) != 0;
+}
+
+[[nodiscard]] auto thing_is_obs_to_jumping_over(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+
+  //
+  // Unless open
+  //
+  if (thing_is_openable(t)) {
+    if (thing_is_open(t)) {
+      return false;
+    }
+  }
+
+  return tp_flag(thing_tp(t), is_obs_to_jumping_over) != 0;
+}
+
+[[nodiscard]] auto thing_is_obs_to_jumping_onto(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+
+  //
+  // Unless open
+  //
+  if (thing_is_openable(t)) {
+    if (thing_is_open(t)) {
+      return false;
+    }
+  }
+
+  return tp_flag(thing_tp(t), is_obs_to_jumping_onto) != 0;
+}

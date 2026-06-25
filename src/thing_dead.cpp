@@ -443,3 +443,139 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
     (void) thing_score_incr(g, v, l, killer, bonus);
   }
 }
+
+void thing_is_dead_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return;
+  }
+
+  if (t->_is_dead == static_cast< int >(val)) {
+    return;
+  }
+  t->_is_dead = val;
+
+  if (val) {
+    THING_DBG(t, "is dead set");
+  }
+}
+
+void thing_is_dead_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_DEBUG();
+
+  thing_is_dead_set(g, v, l, t, false);
+}
+
+[[nodiscard]] auto thing_is_dead_when_discharged(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_dead_when_discharged) != 0;
+}
+
+[[nodiscard]] auto thing_is_hit_when_dead(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_hit_when_dead) != 0;
+}
+
+[[nodiscard]] auto thing_is_obs_when_dead(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_obs_when_dead) != 0;
+}
+
+[[nodiscard]] auto thing_is_dead_on_collision(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_dead_on_collision) != 0;
+}
+
+[[nodiscard]] auto thing_is_undead(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_undead) != 0;
+}
+
+[[nodiscard]] auto thing_is_wait_on_dead_anim(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_wait_on_dead_anim) != 0;
+}
+
+[[nodiscard]] auto thing_is_mob_kill_minions_on_death(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_mob_kill_minions_on_death) != 0;
+}
+
+[[nodiscard]] auto thing_is_extinguished_on_death(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_extinguished_on_death) != 0;
+}
+
+[[nodiscard]] auto thing_is_broken_on_death(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_broken_on_death) != 0;
+}
+
+[[nodiscard]] auto thing_is_described_when_killed(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_described_when_killed) != 0;
+}

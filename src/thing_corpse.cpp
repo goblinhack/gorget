@@ -58,3 +58,51 @@
 
   return true;
 }
+
+[[nodiscard]] auto thing_is_corpse(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return t->_is_corpse;
+}
+
+void thing_is_corpse_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return;
+  }
+
+  if (t->_is_corpse == static_cast< int >(val)) {
+    return;
+  }
+  t->_is_corpse = val;
+
+  if (val) {
+    THING_DBG(t, "is corpse set");
+  }
+}
+
+void thing_is_corpse_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_DEBUG();
+
+  thing_is_corpse_set(g, v, l, t, false);
+}
+
+[[nodiscard]] auto thing_is_corpse_on_death(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_corpse_on_death) != 0;
+}

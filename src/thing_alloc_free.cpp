@@ -395,3 +395,65 @@ void thing_free(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 #endif
 }
+
+[[nodiscard]] auto thing_is_removable_when_dead_on_err(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_removable_when_dead_on_err) != 0;
+}
+
+[[nodiscard]] auto thing_is_removable_on_err(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_removable_on_err) != 0;
+}
+
+[[nodiscard]] auto thing_is_scheduled_for_cleanup(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+
+  return t->_is_scheduled_for_cleanup;
+}
+
+void thing_is_scheduled_for_cleanup_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return;
+  }
+
+  if (t->_is_scheduled_for_cleanup == static_cast< int >(val)) {
+    return;
+  }
+  t->_is_scheduled_for_cleanup = val;
+
+  if (val) {
+    THING_DBG(t, "is scheduled for cleanup set");
+  }
+
+  level_request_to_cleanup_things_set(g, v, l);
+}
+
+void thing_is_scheduled_for_cleanup_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_DEBUG();
+
+  thing_is_scheduled_for_cleanup_set(g, v, l, t, false);
+}

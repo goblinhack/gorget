@@ -103,3 +103,48 @@ void thing_continue_to_burn_check(Gamep g, Levelsp v, Levelp l, Thingp me)
     (void) thing_spawn(g, v, l, tp_first(is_smoke), me);
   }
 }
+
+[[nodiscard]] auto thing_is_burning(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return t->_is_burning;
+}
+
+void thing_is_burning_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return;
+  }
+
+  if (t->_is_burning == static_cast< int >(val)) {
+    return;
+  }
+  t->_is_burning = val;
+
+  if (val) {
+    THING_DBG(t, "is burning set, %u degrees", thing_temperature(t));
+  } else {
+    //
+    // Reset the temperature
+    //
+    auto *tp = thing_tp(t);
+    (void) thing_temperature_set(g, v, l, t, tp_temperature_initial_get(tp));
+
+    THING_DBG(t, "is no longer burning, %u degrees", thing_temperature(t));
+  }
+}
+
+void thing_is_burning_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_DEBUG();
+
+  thing_is_burning_set(g, v, l, t, false);
+}

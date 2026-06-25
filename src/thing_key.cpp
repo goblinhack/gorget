@@ -43,3 +43,58 @@
 
   return true;
 }
+
+[[nodiscard]] auto thing_keys_carried(Thingp t) -> int
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return 0;
+  }
+  return t->_keys_carried;
+}
+
+[[nodiscard]] auto thing_keys_carried_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return 0;
+  }
+
+  if (val > std::numeric_limits< decltype(t->_keys_carried) >::max()) {
+    thing_err(t, "value overflow: %d", val);
+    return 0;
+  }
+
+  return t->_keys_carried = val;
+}
+
+[[nodiscard]] auto thing_keys_carried_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return 0;
+  }
+  return t->_keys_carried += val;
+}
+
+[[nodiscard]] auto thing_keys_carried_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return 0;
+  }
+
+  if (static_cast< int >(t->_keys_carried) - val <= 0) {
+    return t->_keys_carried = 0;
+  }
+
+  return t->_keys_carried -= val;
+}

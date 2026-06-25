@@ -239,3 +239,36 @@ void thing_mob_dump_minions(Gamep g, Levelsp v, Levelp l, Thingp mob)
     THING_DBG(mob, "slot %d: %s", _n_, s.c_str());
   }
 }
+
+[[nodiscard]] auto thing_is_mob(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_mob) != 0;
+}
+
+[[nodiscard]] auto thing_is_mob1(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_mob1) != 0;
+}
+
+[[nodiscard]] auto thing_is_mob2(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_mob2) != 0;
+}

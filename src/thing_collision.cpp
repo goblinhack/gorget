@@ -845,3 +845,77 @@ void tp_collision_init(Tpp tp)
     }
   }
 }
+
+[[nodiscard]] auto thing_is_collision_hit_first_on_tile(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_collision_hit_first_on_tile) != 0;
+}
+
+[[nodiscard]] auto thing_is_collision_hit_all_on_tile(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_collision_hit_all_on_tile) != 0;
+}
+
+[[nodiscard]] auto thing_is_collision_detection_enabled(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_collision_detection_enabled) != 0;
+}
+
+[[nodiscard]] auto thing_is_collision_circle_large(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_collision_circle_large) != 0;
+}
+
+[[nodiscard]] auto thing_is_collision_circle_small(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_collision_circle_small) != 0;
+}
+
+[[nodiscard]] auto thing_collision_radius(Thingp t) -> float
+{
+  TRACE_DEBUG();
+
+  return thing_is_collision_circle_small(t) ? THING_COLLISION_CIRCLE_SMALL_RADIUS : THING_COLLISION_CIRCLE_LARGE_RADIUS;
+}
+
+[[nodiscard]] auto thing_is_collision_square(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_collision_square) != 0;
+}
+

@@ -552,3 +552,125 @@ void thing_update_pos(Gamep g, Levelsp v, Levelp l, Thingp me)
     thing_is_hidden_set(g, v, l, me, false);
   }
 }
+
+[[nodiscard]] auto thing_move_remaining(Thingp t) -> int
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return 0;
+  }
+  return t->_move_remaining;
+}
+
+[[nodiscard]] auto thing_move_remaining_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return 0;
+  }
+  return t->_move_remaining = val;
+}
+
+[[nodiscard]] auto thing_move_remaining_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return 0;
+  }
+  return t->_move_remaining += val;
+}
+
+[[nodiscard]] auto thing_move_remaining_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return 0;
+  }
+  if (t->_move_remaining - val <= 0) {
+    return t->_move_remaining = 0;
+  }
+  return t->_move_remaining -= val;
+}
+
+[[nodiscard]] auto thing_moving_from(Thingp t) -> bpoint
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    CROAK("no thing pointer");
+  }
+  return t->_moving_from;
+}
+
+void thing_moving_from_set(Thingp t, const bpoint &val)
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    CROAK("no thing pointer");
+  }
+  t->_moving_from = val;
+}
+
+[[nodiscard]] auto thing_is_obs_to_movement(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+
+  //
+  // Unless open
+  //
+  if (thing_is_openable(t)) {
+    if (thing_is_open(t)) {
+      return false;
+    }
+  }
+
+  return tp_flag(thing_tp(t), is_obs_to_movement) != 0;
+}
+
+[[nodiscard]] auto thing_is_able_to_move_through_walls(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_able_to_move_through_walls) != 0;
+}
+
+[[nodiscard]] auto thing_is_able_to_move_diagonally(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_able_to_move_diagonally) != 0;
+}
+
+[[nodiscard]] auto thing_is_needs_move_confirm(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_needs_move_confirm) != 0;
+}
+

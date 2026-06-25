@@ -195,3 +195,36 @@ static void thing_shoved_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
 
   return ret;
 }
+
+[[nodiscard]] auto thing_is_dead_on_shoving(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_dead_on_shoving) != 0;
+}
+
+[[nodiscard]] auto thing_is_able_to_shove(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_able_to_shove) != 0;
+}
+
+[[nodiscard]] auto thing_is_shovable(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_shovable) != 0;
+}

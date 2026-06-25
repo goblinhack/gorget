@@ -44,6 +44,10 @@ static auto thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thing
   auto target = thing_at(player);
   if (! thing_vision_can_see_tile(g, v, l, me, target)) {
     THING_DBG(me, "choose target: cannot see player");
+    if (! thing_vision_can_hear_tile(g, v, l, me, target)) {
+      thing_topcon(me, "choose target: cannot see and cannot hear");
+      return false;
+    }
     return false;
   }
   THING_DBG(me, "choose target: can see player");
@@ -82,7 +86,7 @@ static auto thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thing
   }
 
   if (thing_move_path_apply(g, v, l, me, p)) {
-    thing_target_set(g, v, l, me, target);
+    thing_monst_target_set(g, v, l, me, target);
     THING_DBG(me, "choose target: found path to player");
     return true;
   }
@@ -209,7 +213,7 @@ static auto thing_monst_choose_something_we_can_see(Gamep g, Levelsp v, Levelp l
       THING_DBG(me, "best %d,%d score %d", target.x, target.y, score);
     }
 
-    thing_target_set(g, v, l, me, target);
+    thing_monst_target_set(g, v, l, me, target);
     best_lowest_score = score;
     found_path        = true;
     break;
@@ -278,7 +282,7 @@ static auto thing_monst_choose_something_we_can_see(Gamep g, Levelsp v, Levelp l
 {
   TRACE();
 
-  auto target = thing_target(me);
+  auto target = thing_monst_target(me);
   THING_DBG(me, "move to next, target (%d,%d)", target.x, target.y);
   TRACE_INDENT();
 
@@ -496,7 +500,7 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me)
   //
   // Post thinking state check
   //
-  auto old_target = thing_target(me);
+  auto old_target = thing_monst_target(me);
   switch (monst_state(g, v, l, me)) {
     case MONST_STATE_INIT : //
       break;
@@ -544,7 +548,7 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me)
           break;
         }
 
-        auto new_target = thing_target(me);
+        auto new_target = thing_monst_target(me);
         if (old_target == new_target) {
           //
           // If it is the same target, do not try to fail to move to the same tile again.
@@ -674,4 +678,59 @@ void thing_monst_tick(Gamep g, Levelsp v, Levelp l, Thingp me)
   TRACE_INDENT();
 
   thing_monst_event_loop(g, v, l, me);
+}
+
+[[nodiscard]] auto thing_is_monst(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_monst) != 0;
+}
+
+[[nodiscard]] auto thing_is_monst1(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_monst1) != 0;
+}
+
+[[nodiscard]] auto thing_is_monst2(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_monst2) != 0;
+}
+
+[[nodiscard]] auto thing_monst_target(Thingp t) -> bpoint
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    CROAK("no thing pointer");
+  }
+
+  return t->_monst_target;
+}
+
+void thing_monst_target_set(Gamep g, Levelsp v, Levelp l, Thingp t, const bpoint &val)
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    CROAK("no thing pointer");
+  }
+
+  t->_monst_target = val;
 }

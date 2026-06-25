@@ -330,6 +330,10 @@ using Thing = struct Thing {
   //
   uint8_t _is_hot;
   //
+  // How much noise the thing (player) is generating. Only really used for the player for the noise dmap.
+  //
+  int8_t _noise_this_tick;
+  //
   // Used so often, we cache it
   //
   uint8_t _is_player : 1;
@@ -599,7 +603,7 @@ using Thing = struct Thing {
   //
   // What we're chasing currently. Might be the player or some random tile.
   //
-  bpoint _target;
+  bpoint _monst_target;
 };
 
 // begin sort marker1 {
@@ -653,6 +657,10 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_damage_this_tick_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_damage_this_tick_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_damage_this_tick(Thingp t) -> int;
+[[nodiscard]] auto thing_noise_this_tick_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
+[[nodiscard]] auto thing_noise_this_tick_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
+[[nodiscard]] auto thing_noise_this_tick_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
+[[nodiscard]] auto thing_noise_this_tick(Thingp t) -> int;
 [[nodiscard]] auto thing_debug(Gamep g, Levelsp v, Levelp l, Thingp t, uint32_t iter_index) -> bool;
 [[nodiscard]] auto thing_distance_avoid_target_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_distance_avoid_target_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
@@ -1050,7 +1058,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_submerged_pct_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_submerged_pct_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_submerged_pct_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
-[[nodiscard]] auto thing_target(Thingp t) -> bpoint;
+[[nodiscard]] auto thing_monst_target(Thingp t) -> bpoint;
 [[nodiscard]] auto thing_teleport_handle(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
 [[nodiscard]] auto thing_temperature_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_temperature_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
@@ -1111,6 +1119,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_variant(Thingp t) -> int;
 [[nodiscard]] auto thing_vision_blocker(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it) -> bool;
 [[nodiscard]] auto thing_vision_can_see_tile(Gamep g, Levelsp v, Levelp l, Thingp t, bpoint p) -> bool;
+[[nodiscard]] auto thing_vision_can_hear_tile(Gamep g, Levelsp v, Levelp l, Thingp t, bpoint p) -> bool;
 [[nodiscard]] auto thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp me, bpoint to) -> bool;
 [[nodiscard]] auto thing_weight_set(Gamep g, Levelsp v, Levelp l, Thingp t, uint32_t val) -> int;
 [[nodiscard]] auto thing_weight(Thingp t) -> int;
@@ -1257,7 +1266,7 @@ void thing_set_dir_from_delta(Thingp me, int dx, int dy);
 void thing_sound_play(Gamep g, Levelsp v, Levelp l, Thingp t, const std::string &alias);
 void thing_stats_dump(Gamep g, Levelsp v);
 void thing_submerged_update(Gamep g, Levelsp v, Levelp l, Thingp t);
-void thing_target_set(Gamep g, Levelsp v, Levelp l, Thingp t, const bpoint &val);
+void thing_monst_target_set(Gamep g, Levelsp v, Levelp l, Thingp t, const bpoint &val);
 void thing_temperature_damage_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thingp t, int n);
 void thing_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thingp t, int n);
 void thing_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t);

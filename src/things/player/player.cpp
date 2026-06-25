@@ -47,10 +47,13 @@ static void tp_player_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
 
   if (level_is_water_bool(g, v, l, thing_at(me))) {
     thing_sound_play(g, v, l, me, "splash");
+    (void) thing_noise_this_tick_incr(g, v, l, me, 20);
   } else if (level_is_foliage_bool(g, v, l, thing_at(me))) {
     thing_sound_play(g, v, l, me, "footstep_foliage");
+    (void) thing_noise_this_tick_incr(g, v, l, me, 10);
   } else {
     thing_sound_play(g, v, l, me, "footstep");
+    (void) thing_noise_this_tick_incr(g, v, l, me, 5);
   }
 
   auto at                   = thing_at(me);

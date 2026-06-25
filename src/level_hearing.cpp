@@ -31,11 +31,7 @@ void level_hearing_gen(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
-  auto dmap = &v->dmap_noise;
-
-  memset(dmap, DMAP_IS_WALL, sizeof(*dmap));
-
-  int8_t noise_level = 3;
+  auto noise_level = thing_noise_this_tick(player);
 
   auto   end = thing_at(player);
   bpoint dmap_start(end.x - noise_level, end.y - noise_level);
@@ -46,12 +42,13 @@ void level_hearing_gen(Gamep g, Levelsp v, Levelp l)
   dmap_end.x   = std::min((int8_t) (MAP_WIDTH - 1), dmap_end.x);
   dmap_end.y   = std::min((int8_t) (MAP_HEIGHT - 1), dmap_end.y);
 
+  auto dmap = &v->dmap_noise;
+  memset(dmap, DMAP_IS_WALL, sizeof(*dmap));
+
   for (auto x = dmap_start.x; x < dmap_end.x; x++) {
     for (auto y = dmap_start.y; y < dmap_end.y; y++) {
       bpoint p(x, y);
-      if (level_is_obs_to_hearing(g, v, l, p)) {
-        dmap->val[ x ][ y ] = DMAP_IS_WALL;
-      } else {
+      if (! level_is_obs_to_hearing(g, v, l, p)) {
         dmap->val[ x ][ y ] = DMAP_IS_PASSABLE;
       }
     }
@@ -65,7 +62,7 @@ void level_hearing_gen(Gamep g, Levelsp v, Levelp l)
 
   dmap_process_reverse(dmap, dmap_start, dmap_end);
 
-  if (compiler_unused) {
+  if (1 || compiler_unused) {
     dmap_print(dmap, end, dmap_start, dmap_end);
   }
 }

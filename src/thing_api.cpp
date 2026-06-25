@@ -156,26 +156,6 @@ void thing_pix_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, short x, short y)
   t->_curr_pix_at = val;
 }
 
-[[nodiscard]] auto thing_moving_from(Thingp t) -> bpoint
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    CROAK("no thing pointer");
-  }
-  return t->_moving_from;
-}
-
-void thing_moving_from_set(Thingp t, const bpoint &val)
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    CROAK("no thing pointer");
-  }
-  t->_moving_from = val;
-}
-
 [[nodiscard]] auto thing_weight(Thingp t) -> int
 {
   TRACE_DEBUG();
@@ -202,419 +182,6 @@ void thing_moving_from_set(Thingp t, const bpoint &val)
   }
 
   return t->_weight = val;
-}
-
-void thing_is_falling_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return;
-  }
-
-  //
-  // Once falling, it is treated as a counter
-  //
-  if (val) {
-    //
-    // Start falling if not doing do
-    //
-    if (static_cast< bool >(t->_fall_ms)) {
-      return;
-    }
-  } else {
-    //
-    // Stop falling
-    //
-    if (! static_cast< bool >(t->_fall_ms)) {
-      return;
-    }
-  }
-  t->_fall_ms = static_cast< uint16_t >(val);
-
-  if (val) {
-    thing_on_fall_begin(g, v, l, t);
-  } else {
-    thing_on_fall_end(g, v, l, t);
-  }
-}
-
-[[nodiscard]] auto thing_is_falling_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-
-  if (t->_fall_ms + val > THING_FALL_ANIM_MS) {
-    return t->_fall_ms = THING_FALL_ANIM_MS;
-  }
-
-  return t->_fall_ms += val;
-}
-
-[[nodiscard]] auto thing_is_falling_continues(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-
-  return t->_is_falling_continues;
-}
-
-void thing_is_falling_continues_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return;
-  }
-
-  if (t->_is_falling_continues == static_cast< int >(val)) {
-    return;
-  }
-  t->_is_falling_continues = val;
-
-  if (val) {
-    THING_DBG(t, "is falling continues set");
-  }
-
-  level_request_to_cleanup_things_set(g, v, l);
-}
-
-void thing_is_falling_continues_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
-{
-  TRACE_DEBUG();
-
-  thing_is_falling_continues_set(g, v, l, t, false);
-}
-
-[[nodiscard]] auto thing_temperature(Thingp t) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  return t->_temperature;
-}
-
-[[nodiscard]] auto thing_temperature_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-
-  if (val > std::numeric_limits< decltype(t->_temperature) >::max()) {
-    thing_err(t, "value overflow: %d", val);
-    return 0;
-  }
-
-  if (! thing_is_physics_temperature(t)) {
-    return 0;
-  }
-
-  //
-  // Don't keep on heating up forever!
-  //
-  auto *tp    = thing_tp(t);
-  auto  limit = std::max(tp_temperature_burns_at_get(tp), tp_temperature_melts_at_get(tp));
-  if ((limit != 0) && (val > limit)) {
-    val = limit;
-  }
-
-  IF_DEBUG2
-  { //
-    THING_DBG(t, "temperature set to %u degrees", val);
-  }
-
-  return t->_temperature = val;
-}
-
-[[nodiscard]] auto thing_temperature_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  return thing_temperature_set(g, v, l, t, t->_temperature + val);
-}
-
-[[nodiscard]] auto thing_temperature_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  return thing_temperature_set(g, v, l, t, t->_temperature - val);
-}
-
-[[nodiscard]] auto thing_damage_this_tick(Thingp t) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  return t->_damage_this_tick;
-}
-
-[[nodiscard]] auto thing_damage_this_tick_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-
-  if (val > std::numeric_limits< decltype(t->_damage_this_tick) >::max()) {
-    thing_err(t, "value overflow: %d", val);
-    return 0;
-  }
-
-  return t->_damage_this_tick = val;
-}
-
-[[nodiscard]] auto thing_damage_this_tick_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  return t->_damage_this_tick += val;
-}
-
-[[nodiscard]] auto thing_damage_this_tick_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  return t->_damage_this_tick -= val;
-}
-
-[[nodiscard]] auto thing_keys_carried(Thingp t) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  return t->_keys_carried;
-}
-
-[[nodiscard]] auto thing_keys_carried_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-
-  if (val > std::numeric_limits< decltype(t->_keys_carried) >::max()) {
-    thing_err(t, "value overflow: %d", val);
-    return 0;
-  }
-
-  return t->_keys_carried = val;
-}
-
-[[nodiscard]] auto thing_keys_carried_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  return t->_keys_carried += val;
-}
-
-[[nodiscard]] auto thing_keys_carried_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-
-  if (static_cast< int >(t->_keys_carried) - val <= 0) {
-    return t->_keys_carried = 0;
-  }
-
-  return t->_keys_carried -= val;
-}
-
-void thing_is_dead_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return;
-  }
-
-  if (t->_is_dead == static_cast< int >(val)) {
-    return;
-  }
-  t->_is_dead = val;
-
-  if (val) {
-    THING_DBG(t, "is dead set");
-  }
-}
-
-void thing_is_dead_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
-{
-  TRACE_DEBUG();
-
-  thing_is_dead_set(g, v, l, t, false);
-}
-
-[[nodiscard]] auto thing_is_burning(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return t->_is_burning;
-}
-
-void thing_is_burning_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return;
-  }
-
-  if (t->_is_burning == static_cast< int >(val)) {
-    return;
-  }
-  t->_is_burning = val;
-
-  if (val) {
-    THING_DBG(t, "is burning set, %u degrees", thing_temperature(t));
-  } else {
-    //
-    // Reset the temperature
-    //
-    auto *tp = thing_tp(t);
-    (void) thing_temperature_set(g, v, l, t, tp_temperature_initial_get(tp));
-
-    THING_DBG(t, "is no longer burning, %u degrees", thing_temperature(t));
-  }
-}
-
-void thing_is_burning_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
-{
-  TRACE_DEBUG();
-
-  thing_is_burning_set(g, v, l, t, false);
-}
-
-[[nodiscard]] auto thing_is_corpse(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return t->_is_corpse;
-}
-
-void thing_is_corpse_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return;
-  }
-
-  if (t->_is_corpse == static_cast< int >(val)) {
-    return;
-  }
-  t->_is_corpse = val;
-
-  if (val) {
-    THING_DBG(t, "is corpse set");
-  }
-}
-
-void thing_is_corpse_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
-{
-  TRACE_DEBUG();
-
-  thing_is_corpse_set(g, v, l, t, false);
-}
-
-[[nodiscard]] auto thing_is_scheduled_for_cleanup(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-
-  return t->_is_scheduled_for_cleanup;
-}
-
-void thing_is_scheduled_for_cleanup_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return;
-  }
-
-  if (t->_is_scheduled_for_cleanup == static_cast< int >(val)) {
-    return;
-  }
-  t->_is_scheduled_for_cleanup = val;
-
-  if (val) {
-    THING_DBG(t, "is scheduled for cleanup set");
-  }
-
-  level_request_to_cleanup_things_set(g, v, l);
-}
-
-void thing_is_scheduled_for_cleanup_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
-{
-  TRACE_DEBUG();
-
-  thing_is_scheduled_for_cleanup_set(g, v, l, t, false);
 }
 
 [[nodiscard]] auto thing_is_on_map(Thingp t) -> bool
@@ -787,17 +354,6 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     return false;
   }
   return tp_flag(thing_tp(t), is_corridor) != 0;
-}
-
-[[nodiscard]] auto thing_is_collision_square(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_collision_square) != 0;
 }
 
 [[nodiscard]] auto thing_is_obs_to_cursor_path(Thingp t) -> bool
@@ -1063,104 +619,6 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_level_closed_icon) != 0;
 }
 
-[[nodiscard]] auto thing_is_minion(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_minion) != 0;
-}
-
-[[nodiscard]] auto thing_is_mob(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_mob) != 0;
-}
-
-[[nodiscard]] auto thing_is_mob1(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_mob1) != 0;
-}
-
-[[nodiscard]] auto thing_is_mob2(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_mob2) != 0;
-}
-
-[[nodiscard]] auto thing_is_monst(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_monst) != 0;
-}
-
-[[nodiscard]] auto thing_is_monst1(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_monst1) != 0;
-}
-
-[[nodiscard]] auto thing_is_monst2(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_monst2) != 0;
-}
-
-[[nodiscard]] auto thing_is_obs_to_movement(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-
-  //
-  // Unless open
-  //
-  if (thing_is_openable(t)) {
-    if (thing_is_open(t)) {
-      return false;
-    }
-  }
-
-  return tp_flag(thing_tp(t), is_obs_to_movement) != 0;
-}
-
 [[nodiscard]] auto thing_is_pillar(Thingp t) -> bool
 {
   TRACE_DEBUG();
@@ -1203,17 +661,6 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     return false;
   }
   return tp_flag(thing_tp(t), is_slime) != 0;
-}
-
-[[nodiscard]] auto thing_is_teleport(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_teleport) != 0;
 }
 
 [[nodiscard]] auto thing_is_tickable(Thingp t) -> bool
@@ -1502,17 +949,6 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_throwable) != 0;
 }
 
-[[nodiscard]] auto thing_is_described_when_killed(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_described_when_killed) != 0;
-}
-
 [[nodiscard]] auto thing_is_chest(Thingp t) -> bool
 {
   TRACE_DEBUG();
@@ -1544,17 +980,6 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     return false;
   }
   return tp_flag(thing_tp(t), is_auto_wield) != 0;
-}
-
-[[nodiscard]] auto thing_is_dead_when_discharged(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_dead_when_discharged) != 0;
 }
 
 [[nodiscard]] auto thing_is_able_to_fire_weapons(Thingp t) -> bool
@@ -1777,39 +1202,6 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_blit_hit_outline_w_black_inside) != 0;
 }
 
-[[nodiscard]] auto thing_is_able_to_fall_sound(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_able_to_fall_sound) != 0;
-}
-
-[[nodiscard]] auto thing_is_collision_hit_first_on_tile(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_collision_hit_first_on_tile) != 0;
-}
-
-[[nodiscard]] auto thing_is_collision_hit_all_on_tile(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_collision_hit_all_on_tile) != 0;
-}
-
 [[nodiscard]] auto thing_is_blit_hit_outline_w_invis_inside(Thingp t) -> bool
 {
   TRACE_DEBUG();
@@ -1863,17 +1255,6 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     return false;
   }
   return tp_flag(thing_tp(t), is_effect_blood) != 0;
-}
-
-[[nodiscard]] auto thing_is_hit_when_dead(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_hit_when_dead) != 0;
 }
 
 [[nodiscard]] auto thing_is_blitzhound(Thingp t) -> bool
@@ -1931,72 +1312,6 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_obs_to_paths) != 0;
 }
 
-[[nodiscard]] auto thing_is_removable_when_dead_on_err(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_removable_when_dead_on_err) != 0;
-}
-
-[[nodiscard]] auto thing_is_removable_on_err(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_removable_on_err) != 0;
-}
-
-[[nodiscard]] auto thing_is_obs_when_dead(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_obs_when_dead) != 0;
-}
-
-[[nodiscard]] auto thing_is_able_to_fall_repeatedly(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_able_to_fall_repeatedly) != 0;
-}
-
-[[nodiscard]] auto thing_is_able_to_move_through_walls(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_able_to_move_through_walls) != 0;
-}
-
-[[nodiscard]] auto thing_is_able_to_move_diagonally(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_able_to_move_diagonally) != 0;
-}
-
 [[nodiscard]] auto thing_is_blit_on_ground(Thingp t) -> bool
 {
   TRACE_DEBUG();
@@ -2052,17 +1367,6 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_obs_to_spawning) != 0;
 }
 
-[[nodiscard]] auto thing_is_mob_kill_minions_on_death(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_mob_kill_minions_on_death) != 0;
-}
-
 [[nodiscard]] auto thing_is_border(Thingp t) -> bool
 {
   TRACE_DEBUG();
@@ -2072,17 +1376,6 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     return false;
   }
   return tp_flag(thing_tp(t), is_border) != 0;
-}
-
-[[nodiscard]] auto thing_is_collision_detection_enabled(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_collision_detection_enabled) != 0;
 }
 
 [[nodiscard]] auto thing_is_gold(Thingp t) -> bool
@@ -2184,28 +1477,6 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_blit_per_pixel_lighting) != 0;
 }
 
-[[nodiscard]] auto thing_is_dead_on_collision(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_dead_on_collision) != 0;
-}
-
-[[nodiscard]] auto thing_is_obs_to_jumping_out_of(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_obs_to_jumping_out_of) != 0;
-}
-
 [[nodiscard]] auto thing_is_cursor_path_warning(Thingp t) -> bool
 {
   TRACE_DEBUG();
@@ -2215,28 +1486,6 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     return false;
   }
   return tp_flag(thing_tp(t), is_cursor_path_warning) != 0;
-}
-
-[[nodiscard]] auto thing_is_collision_circle_large(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_collision_circle_large) != 0;
-}
-
-[[nodiscard]] auto thing_is_collision_circle_small(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_collision_circle_small) != 0;
 }
 
 [[nodiscard]] auto thing_is_unused_99(Thingp t) -> bool
@@ -2393,17 +1642,6 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_tick_end_delay) != 0;
 }
 
-[[nodiscard]] auto thing_is_damage_capped(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_damage_capped) != 0;
-}
-
 [[nodiscard]] auto thing_is_physics_explosion(Thingp t) -> bool
 {
   TRACE_DEBUG();
@@ -2445,38 +1683,6 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 
   return tp_flag(thing_tp(t), is_obs_to_explosion) != 0;
-}
-
-[[nodiscard]] auto thing_is_obs_to_jumping_over(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-
-  //
-  // Unless open
-  //
-  if (thing_is_openable(t)) {
-    if (thing_is_open(t)) {
-      return false;
-    }
-  }
-
-  return tp_flag(thing_tp(t), is_obs_to_jumping_over) != 0;
-}
-
-[[nodiscard]] auto thing_is_teleport_blocked(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_teleport_blocked) != 0;
 }
 
 [[nodiscard]] auto thing_is_cursor_path_none(Thingp t) -> bool
@@ -2521,80 +1727,6 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     return false;
   }
   return tp_flag(thing_tp(t), is_flying) != 0;
-}
-
-[[nodiscard]] auto thing_is_needs_move_confirm(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_needs_move_confirm) != 0;
-}
-
-[[nodiscard]] auto thing_is_obs_to_falling_onto(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-
-  //
-  // Unless open
-  //
-  if (thing_is_openable(t)) {
-    if (thing_is_open(t)) {
-      return false;
-    }
-  }
-
-  return tp_flag(thing_tp(t), is_obs_to_falling_onto) != 0;
-}
-
-[[nodiscard]] auto thing_is_obs_to_jumping_onto(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-
-  //
-  // Unless open
-  //
-  if (thing_is_openable(t)) {
-    if (thing_is_open(t)) {
-      return false;
-    }
-  }
-
-  return tp_flag(thing_tp(t), is_obs_to_jumping_onto) != 0;
-}
-
-[[nodiscard]] auto thing_is_obs_to_teleporting_onto(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-
-  //
-  // Unless open
-  //
-  if (thing_is_openable(t)) {
-    if (thing_is_open(t)) {
-      return false;
-    }
-  }
-
-  return tp_flag(thing_tp(t), is_obs_to_teleporting_onto) != 0;
 }
 
 [[nodiscard]] auto thing_is_physics_water(Thingp t) -> bool
@@ -2684,61 +1816,6 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_gaseous) != 0;
 }
 
-[[nodiscard]] auto thing_is_extinguished_on_death(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_extinguished_on_death) != 0;
-}
-
-[[nodiscard]] auto thing_is_broken_on_death(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_broken_on_death) != 0;
-}
-
-[[nodiscard]] auto thing_is_undead(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_undead) != 0;
-}
-
-[[nodiscard]] auto thing_is_wait_on_dead_anim(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_wait_on_dead_anim) != 0;
-}
-
-[[nodiscard]] auto thing_is_corpse_on_death(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_corpse_on_death) != 0;
-}
-
 [[nodiscard]] auto thing_is_blit_if_has_seen(Thingp t) -> bool
 {
   TRACE_DEBUG();
@@ -2792,39 +1869,6 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     return false;
   }
   return tp_flag(thing_tp(t), is_burnable) != 0;
-}
-
-[[nodiscard]] auto thing_is_dead_on_shoving(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_dead_on_shoving) != 0;
-}
-
-[[nodiscard]] auto thing_is_able_to_shove(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_able_to_shove) != 0;
-}
-
-[[nodiscard]] auto thing_is_shovable(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_shovable) != 0;
 }
 
 [[nodiscard]] auto thing_is_loggable(Thingp t) -> bool
@@ -3576,86 +2620,6 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_distance_avoid_target -= val;
 }
 
-[[nodiscard]] auto thing_minion_max(Gamep g, Levelsp v, Levelp l, Thingp t) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  return t->_minion_max;
-}
-
-[[nodiscard]] auto thing_minion_max_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-
-  if (val > THING_MINION_MAX) {
-    thing_croak(t, "trying to set minion max too high");
-    val = THING_MINION_MAX;
-  }
-
-  return t->_minion_max = val;
-}
-
-[[nodiscard]] auto thing_minion_max_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-
-  if (t->_minion_max + val >= THING_MINION_MAX) {
-    return t->_minion_max = THING_MINION_MAX;
-  }
-
-  return t->_minion_max += val;
-}
-
-[[nodiscard]] auto thing_minion_max_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  if (static_cast< int >(t->_minion_max) - val <= 0) {
-    return t->_minion_max = 0;
-  }
-  return t->_minion_max -= val;
-}
-
-[[nodiscard]] auto thing_distance_minion_from_mob_max(Gamep g, Levelsp v, Levelp l, Thingp t) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  return t->_distance_minion_from_mob_max;
-}
-
-[[nodiscard]] auto thing_distance_minion_from_mob_max_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  return t->_distance_minion_from_mob_max = val;
-}
-
 [[nodiscard]] auto thing_variant(Thingp t) -> int
 {
   TRACE_DEBUG();
@@ -3701,221 +2665,4 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     return THING_PRIORITY_LOWEST;
   }
   return t->_priority = val;
-}
-
-[[nodiscard]] auto thing_lifespan(Thingp t) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  return t->_lifespan;
-}
-
-[[nodiscard]] auto thing_lifespan_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  return t->_lifespan = val;
-}
-
-[[nodiscard]] auto thing_lifespan_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  return t->_lifespan += val;
-}
-
-[[nodiscard]] auto thing_lifespan_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  if (static_cast< int >(t->_lifespan) - val <= 0) {
-    return t->_lifespan = 0;
-  }
-  return t->_lifespan -= val;
-}
-
-[[nodiscard]] auto thing_lifespan_initial(Thingp t) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  return t->_lifespan_initial;
-}
-
-[[nodiscard]] auto thing_lifespan_initial_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  return t->_lifespan_initial = val;
-}
-
-[[nodiscard]] auto thing_lifespan_initial_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  return t->_lifespan_initial += val;
-}
-
-[[nodiscard]] auto thing_lifespan_initial_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  if (static_cast< int >(t->_lifespan_initial) - val <= 0) {
-    return t->_lifespan_initial = 0;
-  }
-  return t->_lifespan_initial -= val;
-}
-
-[[nodiscard]] auto thing_age(Thingp t) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  return t->_age;
-}
-
-[[nodiscard]] auto thing_age_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  return t->_age = val;
-}
-
-[[nodiscard]] auto thing_age_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  return t->_age += val;
-}
-
-[[nodiscard]] auto thing_age_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  if (t->_age - val <= 0) {
-    return t->_age = 0;
-  }
-  return t->_age -= val;
-}
-
-[[nodiscard]] auto thing_move_remaining(Thingp t) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  return t->_move_remaining;
-}
-
-[[nodiscard]] auto thing_move_remaining_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  return t->_move_remaining = val;
-}
-
-[[nodiscard]] auto thing_move_remaining_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  return t->_move_remaining += val;
-}
-
-[[nodiscard]] auto thing_move_remaining_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  if (t->_move_remaining - val <= 0) {
-    return t->_move_remaining = 0;
-  }
-  return t->_move_remaining -= val;
-}
-
-[[nodiscard]] auto thing_collision_radius(Thingp t) -> float
-{
-  TRACE_DEBUG();
-
-  return thing_is_collision_circle_small(t) ? THING_COLLISION_CIRCLE_SMALL_RADIUS : THING_COLLISION_CIRCLE_LARGE_RADIUS;
-}
-
-[[nodiscard]] auto thing_target(Thingp t) -> bpoint
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    CROAK("no thing pointer");
-  }
-
-  return t->_target;
-}
-
-void thing_target_set(Gamep g, Levelsp v, Levelp l, Thingp t, const bpoint &val)
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    CROAK("no thing pointer");
-  }
-
-  t->_target = val;
 }

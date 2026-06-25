@@ -194,10 +194,10 @@ void dmap_process(Dmap *D, bpoint tl, bpoint br)
   uint8_t  i       = 0;
   uint8_t  lowest  = 0;
   uint8_t  changed = 0;
-  uint8_t  minx    = 0;
-  uint8_t  miny    = 0;
-  uint8_t  maxx    = 0;
-  uint8_t  maxy    = 0;
+  int8_t   minx    = 0;
+  int8_t   miny    = 0;
+  int8_t   maxx    = 0;
+  int8_t   maxy    = 0;
   auto     orig    = *D;
 
   if (tl.x < br.x) {
@@ -234,6 +234,11 @@ void dmap_process(Dmap *D, bpoint tl, bpoint br)
   miny++;
   maxx--;
   maxy--;
+
+  minx = std::max(minx, (int8_t) 0);
+  miny = std::max(miny, (int8_t) 0);
+  maxx = std::min(maxx, (int8_t) (MAP_WIDTH - 1));
+  maxy = std::min(maxy, (int8_t) (MAP_HEIGHT - 1));
 
   do {
     changed = 0U;
@@ -338,10 +343,10 @@ void dmap_process_reverse(Dmap *D, bpoint tl, bpoint br)
   uint8_t  i       = 0;
   uint8_t  highest = 0;
   uint8_t  changed = 0;
-  uint8_t  minx    = 0;
-  uint8_t  miny    = 0;
-  uint8_t  maxx    = 0;
-  uint8_t  maxy    = 0;
+  int8_t   minx    = 0;
+  int8_t   miny    = 0;
+  int8_t   maxx    = 0;
+  int8_t   maxy    = 0;
   auto     orig    = *D;
 
   if (tl.x < br.x) {
@@ -378,6 +383,11 @@ void dmap_process_reverse(Dmap *D, bpoint tl, bpoint br)
   miny++;
   maxx--;
   maxy--;
+
+  minx = std::max(minx, (int8_t) 0);
+  miny = std::max(miny, (int8_t) 0);
+  maxx = std::min(maxx, (int8_t) (MAP_WIDTH - 1));
+  maxy = std::min(maxy, (int8_t) (MAP_HEIGHT - 1));
 
   do {
     changed = 0U;

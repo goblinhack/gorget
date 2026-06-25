@@ -505,3 +505,69 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
 
   THING_DBG(me, "post damage");
 }
+
+[[nodiscard]] auto thing_damage_this_tick(Thingp t) -> int
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return 0;
+  }
+  return t->_damage_this_tick;
+}
+
+[[nodiscard]] auto thing_damage_this_tick_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return 0;
+  }
+
+  if (val > std::numeric_limits< decltype(t->_damage_this_tick) >::max()) {
+    thing_err(t, "value overflow: %d", val);
+    return 0;
+  }
+
+  return t->_damage_this_tick = val;
+}
+
+[[nodiscard]] auto thing_damage_this_tick_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return 0;
+  }
+  return t->_damage_this_tick += val;
+}
+
+[[nodiscard]] auto thing_damage_this_tick_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return 0;
+  }
+
+  if (static_cast< int >(t->_damage_this_tick) - val <= 0) {
+    return t->_damage_this_tick = 0;
+  }
+
+  return t->_damage_this_tick -= val;
+}
+
+[[nodiscard]] auto thing_is_damage_capped(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_damage_capped) != 0;
+}

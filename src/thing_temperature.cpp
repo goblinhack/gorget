@@ -196,3 +196,71 @@ void tp_temperature_init(Tpp tp)
     }
   }
 }
+
+[[nodiscard]] auto thing_temperature(Thingp t) -> int
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return 0;
+  }
+  return t->_temperature;
+}
+
+[[nodiscard]] auto thing_temperature_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return 0;
+  }
+
+  if (val > std::numeric_limits< decltype(t->_temperature) >::max()) {
+    thing_err(t, "value overflow: %d", val);
+    return 0;
+  }
+
+  if (! thing_is_physics_temperature(t)) {
+    return 0;
+  }
+
+  //
+  // Don't keep on heating up forever!
+  //
+  auto *tp    = thing_tp(t);
+  auto  limit = std::max(tp_temperature_burns_at_get(tp), tp_temperature_melts_at_get(tp));
+  if ((limit != 0) && (val > limit)) {
+    val = limit;
+  }
+
+  IF_DEBUG2
+  { //
+    THING_DBG(t, "temperature set to %u degrees", val);
+  }
+
+  return t->_temperature = val;
+}
+
+[[nodiscard]] auto thing_temperature_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return 0;
+  }
+  return thing_temperature_set(g, v, l, t, t->_temperature + val);
+}
+
+[[nodiscard]] auto thing_temperature_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return 0;
+  }
+  return thing_temperature_set(g, v, l, t, t->_temperature - val);
+}

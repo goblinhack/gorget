@@ -239,3 +239,46 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
 
   return true;
 }
+
+[[nodiscard]] auto thing_is_teleport(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_teleport) != 0;
+}
+
+[[nodiscard]] auto thing_is_teleport_blocked(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_teleport_blocked) != 0;
+}
+
+[[nodiscard]] auto thing_is_obs_to_teleporting_onto(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+
+  //
+  // Unless open
+  //
+  if (thing_is_openable(t)) {
+    if (thing_is_open(t)) {
+      return false;
+    }
+  }
+
+  return tp_flag(thing_tp(t), is_obs_to_teleporting_onto) != 0;
+}
