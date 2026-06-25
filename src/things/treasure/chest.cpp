@@ -46,6 +46,10 @@ static auto tp_chest_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std:
 
   thing_sound_play(g, v, l, me, "chest_open");
 
+  if (thing_is_player(opener)) {
+    (void) thing_noise_this_tick_incr(g, v, l, me, THING_NOISE_CHEST_OPEN);
+  }
+
   std::vector< Thingp > items;
 
   auto nitems = 2;

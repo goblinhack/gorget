@@ -47,13 +47,13 @@ static void tp_player_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
 
   if (level_is_water_bool(g, v, l, thing_at(me))) {
     thing_sound_play(g, v, l, me, "splash");
-    (void) thing_noise_this_tick_incr(g, v, l, me, 20);
+    (void) thing_noise_this_tick_incr(g, v, l, me, THING_NOISE_SPLASH);
   } else if (level_is_foliage_bool(g, v, l, thing_at(me))) {
     thing_sound_play(g, v, l, me, "footstep_foliage");
-    (void) thing_noise_this_tick_incr(g, v, l, me, 10);
+    (void) thing_noise_this_tick_incr(g, v, l, me, THING_NOISE_FOLIAGE);
   } else {
     thing_sound_play(g, v, l, me, "footstep");
-    (void) thing_noise_this_tick_incr(g, v, l, me, 5);
+    (void) thing_noise_this_tick_incr(g, v, l, me, THING_NOISE_FOOTSTEP);
   }
 
   auto at                   = thing_at(me);
@@ -73,6 +73,8 @@ static bool tp_player_on_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEv
 
   thing_sound_play(g, v, l, me, "player_hit");
 
+  (void) thing_noise_this_tick_incr(g, v, l, me, THING_NOISE_PLAYER_HIT);
+
   return true; // allow the damage to be applied
 }
 
@@ -90,9 +92,10 @@ static void tp_player_on_jump_end(Gamep g, Levelsp v, Levelp l, Thingp me)
     //
     auto at = thing_at(me);
     game_popup_text_add(g, at.x, at.y, std::string("Splash!"));
+    (void) thing_noise_this_tick_incr(g, v, l, me, THING_NOISE_SPLASH);
   } else {
     thing_sound_play(g, v, l, me, "player_oof");
-
+    (void) thing_noise_this_tick_incr(g, v, l, me, THING_NOISE_PLAYER_JUMP);
     auto at = thing_at(me);
     game_popup_text_add(g, at.x, at.y, std::string("Oof!"));
   }
@@ -119,8 +122,10 @@ static void tp_player_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp me)
 
   if (level_is_water_bool(g, v, l, thing_at(me))) {
     thing_sound_play(g, v, l, me, "splash");
+    (void) thing_noise_this_tick_incr(g, v, l, me, THING_NOISE_SPLASH);
   } else {
     thing_sound_play(g, v, l, me, "player_oof");
+    (void) thing_noise_this_tick_incr(g, v, l, me, THING_NOISE_PLAYER_FALL);
   }
 }
 

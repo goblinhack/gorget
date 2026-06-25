@@ -86,6 +86,10 @@ static void tp_potion_healing_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, 
   }
   thing_sound_play(g, v, l, me, "glass_shatter");
 
+  if (e.source && thing_is_player(e.source)) {
+    (void) thing_noise_this_tick_incr(g, v, l, me, THING_NOISE_SHATTER);
+  }
+
   (void) thing_spawn(g, v, l, tp_first(is_water), thing_at(me));
 }
 

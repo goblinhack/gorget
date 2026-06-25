@@ -3,7 +3,7 @@ bugs
 
 todo
 ----
-can hear
+can hear test
 steam and smoke should spread
 chests should explode sometimes
 enchants
@@ -129,7 +129,6 @@ spells
   - shrines that reduce spell points
 gameplay
   - brazier kick over sound
-  - rustle noise in bushes / bushes quiver when monster is behind?
   - items hiding in bushes 
   - shoot from behind double damage
   - hard coded to fire fireball

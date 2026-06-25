@@ -86,6 +86,26 @@ enum {
   THING_CORPSES_PER_TILE = 3,
 
   //
+  // The number of tiles noise can spread at most
+  //
+  THING_DISTANCE_NOICE_TILE_MAX = 10,
+
+  //
+  // Various sounds
+  //
+  THING_NOISE_SHATTER     = 20,
+  THING_NOISE_DOOR_SLAM   = 10,
+  THING_NOISE_PLAYER_FALL = 10,
+  THING_NOISE_PLAYER_HIT  = 10,
+  THING_NOISE_DOOR_SECRET = 10,
+  THING_NOISE_SPLASH      = 5,
+  THING_NOISE_PLAYER_JUMP = 5,
+  THING_NOISE_CHEST_OPEN  = 4,
+  THING_NOISE_FOLIAGE     = 4,
+  THING_NOISE_DOOR_OPEN   = 3,
+  THING_NOISE_FOOTSTEP    = 2,
+
+  //
   // Jump animation height in tiles
   //
   THING_JUMP_HEIGHT_ANIM_TILES  = 1,

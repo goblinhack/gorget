@@ -25,7 +25,6 @@
 
   auto noise_level = v->dmap_noise.val[ p.x ][ p.y ];
 
-  topcon("noise %d", noise_level);
   if (noise_level == DMAP_IS_WALL) {
     return false;
   }
@@ -40,7 +39,6 @@
   }
 
   auto actual_noise = DMAP_IS_GOAL_REVERSE - noise_level;
-  topcon("actual_noise %d limit %d", actual_noise, thing_distance_hearing(t));
   if (actual_noise > thing_distance_hearing(t)) {
     return false;
   }

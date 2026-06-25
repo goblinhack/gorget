@@ -31,7 +31,13 @@ void level_hearing_gen(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
+  auto dmap = &v->dmap_noise;
+  memset(dmap, DMAP_IS_WALL, sizeof(*dmap));
+
   auto noise_level = thing_noise_this_tick(player);
+  if (! noise_level) {
+    return;
+  }
 
   auto   end = thing_at(player);
   bpoint dmap_start(end.x - noise_level, end.y - noise_level);
@@ -41,9 +47,6 @@ void level_hearing_gen(Gamep g, Levelsp v, Levelp l)
   dmap_start.y = std::max((int8_t) 0, dmap_start.y);
   dmap_end.x   = std::min((int8_t) (MAP_WIDTH - 1), dmap_end.x);
   dmap_end.y   = std::min((int8_t) (MAP_HEIGHT - 1), dmap_end.y);
-
-  auto dmap = &v->dmap_noise;
-  memset(dmap, DMAP_IS_WALL, sizeof(*dmap));
 
   for (auto x = dmap_start.x; x < dmap_end.x; x++) {
     for (auto y = dmap_start.y; y < dmap_end.y; y++) {
