@@ -17,6 +17,7 @@
 #include "my_ui.hpp"
 
 #include <algorithm>
+#include <limits>
 #include <string>
 
 //

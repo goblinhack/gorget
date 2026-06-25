@@ -673,4 +673,3 @@ void thing_moving_from_set(Thingp t, const bpoint &val)
   }
   return tp_flag(thing_tp(t), is_needs_move_confirm) != 0;
 }
-

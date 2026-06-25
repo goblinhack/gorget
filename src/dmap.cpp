@@ -21,13 +21,14 @@
 
 void dmap_print(const Dmap *D, bpoint at, bpoint tl, bpoint br)
 {
-  int x = 0;
-  int y = 0;
+  int8_t x = {};
+  int8_t y = {};
 
-  int minx = 0;
-  int miny = 0;
-  int maxx = 0;
-  int maxy = 0;
+  int8_t minx = {};
+  int8_t miny = {};
+  int8_t maxx = {};
+  int8_t maxy = {};
+
   if (tl.x < br.x) {
     minx = tl.x;
     maxx = br.x;
@@ -43,14 +44,10 @@ void dmap_print(const Dmap *D, bpoint at, bpoint tl, bpoint br)
     maxy = tl.y;
   }
 
-  minx = std::max(minx, 0);
-  miny = std::max(miny, 0);
-  if (maxx >= MAP_WIDTH) {
-    maxx = MAP_WIDTH - 1;
-  }
-  if (maxy >= MAP_HEIGHT) {
-    maxy = MAP_HEIGHT - 1;
-  }
+  minx = std::max(minx, static_cast< int8_t >(0));
+  miny = std::max(miny, static_cast< int8_t >(0));
+  maxx = std::min(maxx, static_cast< int8_t >(MAP_WIDTH - 1));
+  maxy = std::min(maxy, static_cast< int8_t >(MAP_HEIGHT - 1));
 
   bool all_walls = false;
 
@@ -128,14 +125,14 @@ void dmap_print(const Dmap *D, bpoint at, bpoint tl, bpoint br)
 
 void dmap_print(const Dmap *D)
 {
-  int x = 0;
-  int y = 0;
+  int8_t x = {};
+  int8_t y = {};
 
   log("DMAP:");
 
-  for (y = 0; y < MAP_HEIGHT; y++) {
+  for (y = {}; y < MAP_HEIGHT; y++) {
     std::string debug;
-    for (x = 0; x < MAP_WIDTH; x++) {
+    for (x = {}; x < MAP_WIDTH; x++) {
       uint8_t e = D->val[ x ][ y ];
       if (e == DMAP_IS_WALL) {
         debug += ("##");
@@ -181,23 +178,23 @@ void dmap_process(Dmap *D, bpoint tl, bpoint br)
 {
   TRACE_DEBUG();
 
-  uint8_t  x       = 0;
-  uint8_t  y       = 0;
-  uint8_t  a       = 0;
-  uint8_t  b       = 0;
-  uint8_t  c       = 0;
-  uint8_t  d       = 0;
+  uint8_t  x       = {};
+  uint8_t  y       = {};
+  uint8_t  a       = {};
+  uint8_t  b       = {};
+  uint8_t  c       = {};
+  uint8_t  d       = {};
   uint8_t *e       = nullptr;
-  uint8_t  f       = 0;
-  uint8_t  g       = 0;
-  uint8_t  h       = 0;
-  uint8_t  i       = 0;
-  uint8_t  lowest  = 0;
-  uint8_t  changed = 0;
-  int8_t   minx    = 0;
-  int8_t   miny    = 0;
-  int8_t   maxx    = 0;
-  int8_t   maxy    = 0;
+  uint8_t  f       = {};
+  uint8_t  g       = {};
+  uint8_t  h       = {};
+  uint8_t  i       = {};
+  uint8_t  lowest  = {};
+  bool     changed = {};
+  int8_t   minx    = {};
+  int8_t   miny    = {};
+  int8_t   maxx    = {};
+  int8_t   maxy    = {};
   auto     orig    = *D;
 
   if (tl.x < br.x) {
@@ -218,11 +215,11 @@ void dmap_process(Dmap *D, bpoint tl, bpoint br)
   //
   // Need a wall around the dmap or the search will sort of trickle off the map
   //
-  for (y = miny; y <= maxy; y++) {
+  for (y = miny; std::cmp_less_equal(y, maxy); y++) {
     D->val[ minx ][ y ] = DMAP_IS_WALL;
     D->val[ maxx ][ y ] = DMAP_IS_WALL;
   }
-  for (x = minx; x <= maxx; x++) {
+  for (x = minx; std::cmp_less_equal(x, maxx); x++) {
     D->val[ x ][ miny ] = DMAP_IS_WALL;
     D->val[ x ][ maxy ] = DMAP_IS_WALL;
   }
@@ -235,16 +232,16 @@ void dmap_process(Dmap *D, bpoint tl, bpoint br)
   maxx--;
   maxy--;
 
-  minx = std::max(minx, (int8_t) 0);
-  miny = std::max(miny, (int8_t) 0);
-  maxx = std::min(maxx, (int8_t) (MAP_WIDTH - 1));
-  maxy = std::min(maxy, (int8_t) (MAP_HEIGHT - 1));
+  minx = std::max(minx, static_cast< int8_t >(0));
+  miny = std::max(miny, static_cast< int8_t >(0));
+  maxx = std::min(maxx, static_cast< int8_t >(MAP_WIDTH - 1));
+  maxy = std::min(maxy, static_cast< int8_t >(MAP_HEIGHT - 1));
 
   do {
-    changed = 0U;
+    changed = false;
 
-    for (y = miny; y <= maxy; y++) {
-      for (x = minx; x <= maxx; x++) {
+    for (y = miny; std::cmp_less_equal(y, maxy); y++) {
+      for (x = minx; std::cmp_less_equal(x, maxx); x++) {
         if (orig.val[ x ][ y ] == DMAP_IS_WALL) {
           continue;
         }
@@ -297,12 +294,12 @@ void dmap_process(Dmap *D, bpoint tl, bpoint br)
           auto old_e = *e;
           *e         = lowest + 1;
           if (*e != old_e) {
-            changed = 1U;
+            changed = true;
           }
         }
       }
     }
-  } while (static_cast< bool >(changed));
+  } while (changed);
 }
 
 //
@@ -330,23 +327,23 @@ void dmap_process_reverse(Dmap *D, bpoint tl, bpoint br)
 {
   TRACE_DEBUG();
 
-  uint8_t  x       = 0;
-  uint8_t  y       = 0;
-  uint8_t  a       = 0;
-  uint8_t  b       = 0;
-  uint8_t  c       = 0;
-  uint8_t  d       = 0;
+  uint8_t  x       = {};
+  uint8_t  y       = {};
+  uint8_t  a       = {};
+  uint8_t  b       = {};
+  uint8_t  c       = {};
+  uint8_t  d       = {};
   uint8_t *e       = nullptr;
-  uint8_t  f       = 0;
-  uint8_t  g       = 0;
-  uint8_t  h       = 0;
-  uint8_t  i       = 0;
-  uint8_t  highest = 0;
-  uint8_t  changed = 0;
-  int8_t   minx    = 0;
-  int8_t   miny    = 0;
-  int8_t   maxx    = 0;
-  int8_t   maxy    = 0;
+  uint8_t  f       = {};
+  uint8_t  g       = {};
+  uint8_t  h       = {};
+  uint8_t  i       = {};
+  uint8_t  highest = {};
+  bool     changed = {};
+  int8_t   minx    = {};
+  int8_t   miny    = {};
+  int8_t   maxx    = {};
+  int8_t   maxy    = {};
   auto     orig    = *D;
 
   if (tl.x < br.x) {
@@ -367,11 +364,11 @@ void dmap_process_reverse(Dmap *D, bpoint tl, bpoint br)
   //
   // Need a wall around the dmap or the search will sort of trickle off the map
   //
-  for (y = miny; y <= maxy; y++) {
+  for (y = miny; std::cmp_less_equal(y, maxy); y++) {
     D->val[ minx ][ y ] = DMAP_IS_WALL;
     D->val[ maxx ][ y ] = DMAP_IS_WALL;
   }
-  for (x = minx; x <= maxx; x++) {
+  for (x = minx; std::cmp_less_equal(x, maxx); x++) {
     D->val[ x ][ miny ] = DMAP_IS_WALL;
     D->val[ x ][ maxy ] = DMAP_IS_WALL;
   }
@@ -384,16 +381,16 @@ void dmap_process_reverse(Dmap *D, bpoint tl, bpoint br)
   maxx--;
   maxy--;
 
-  minx = std::max(minx, (int8_t) 0);
-  miny = std::max(miny, (int8_t) 0);
-  maxx = std::min(maxx, (int8_t) (MAP_WIDTH - 1));
-  maxy = std::min(maxy, (int8_t) (MAP_HEIGHT - 1));
+  minx = std::max(minx, static_cast< int8_t >(0));
+  miny = std::max(miny, static_cast< int8_t >(0));
+  maxx = std::min(maxx, static_cast< int8_t >(MAP_WIDTH - 1));
+  maxy = std::min(maxy, static_cast< int8_t >(MAP_HEIGHT - 1));
 
   do {
-    changed = 0U;
+    changed = false;
 
-    for (y = miny; y <= maxy; y++) {
-      for (x = minx; x <= maxx; x++) {
+    for (y = miny; std::cmp_less_equal(y, maxy); y++) {
+      for (x = minx; std::cmp_less_equal(x, maxx); x++) {
         if (orig.val[ x ][ y ] == DMAP_IS_WALL) {
           continue;
         }
@@ -430,28 +427,28 @@ void dmap_process_reverse(Dmap *D, bpoint tl, bpoint br)
         }
 
         if (a >= DMAP_IS_PASSABLE) {
-          a = 0;
+          a = {};
         }
         if (b >= DMAP_IS_PASSABLE) {
-          b = 0;
+          b = {};
         }
         if (c >= DMAP_IS_PASSABLE) {
-          c = 0;
+          c = {};
         }
         if (d >= DMAP_IS_PASSABLE) {
-          d = 0;
+          d = {};
         }
         if (f >= DMAP_IS_PASSABLE) {
-          f = 0;
+          f = {};
         }
         if (g >= DMAP_IS_PASSABLE) {
-          g = 0;
+          g = {};
         }
         if (h >= DMAP_IS_PASSABLE) {
-          h = 0;
+          h = {};
         }
         if (i >= DMAP_IS_PASSABLE) {
-          i = 0;
+          i = {};
         }
 
         if (a > b) {
@@ -471,12 +468,12 @@ void dmap_process_reverse(Dmap *D, bpoint tl, bpoint br)
           auto old_e = *e;
           *e         = highest - 1;
           if (*e != old_e) {
-            changed = 1U;
+            changed = true;
           }
         }
       }
     }
-  } while (static_cast< bool >(changed));
+  } while (changed);
 }
 
 static auto dmap_solve_(const Dmap *D, const bpoint start, const std::vector< bpoint > &all_deltas, bool allow_diagonals)
@@ -549,7 +546,7 @@ static auto dmap_solve_(const Dmap *D, const bpoint start, const std::vector< bp
         }
       }
 
-      int const c = D->val[ tx ][ ty ];
+      uint8_t const c = D->val[ tx ][ ty ];
       if (std::cmp_less_equal(c, lowest)) {
         got    = true;
         best   = t;

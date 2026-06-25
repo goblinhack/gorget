@@ -5,22 +5,21 @@
 #include "my_bpoint.hpp"
 #include "my_callstack.hpp"
 #include "my_dmap.hpp"
-#include "my_game.hpp"
 #include "my_game_defs.hpp"
 #include "my_level.hpp"
-#include "my_level_inlines.hpp"
-#include "my_line.hpp"
 #include "my_main.hpp"
 #include "my_thing.hpp"
-#include "my_tp.hpp"
 #include "my_types.hpp"
+#include <algorithm>
+#include <cstdint>
+#include <cstring>
 
 void level_hearing_gen(Gamep g, Levelsp v, Levelp l)
 {
   TRACE();
 
   auto *player = thing_player(g);
-  if (! player) {
+  if (player == nullptr) {
     return;
   }
 
@@ -31,11 +30,11 @@ void level_hearing_gen(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
-  auto dmap = &v->dmap_noise;
+  auto *dmap = &v->dmap_noise;
   memset(dmap, DMAP_IS_WALL, sizeof(*dmap));
 
   auto noise_level = thing_noise_this_tick(player);
-  if (! noise_level) {
+  if (noise_level == 0) {
     return;
   }
 
@@ -43,15 +42,15 @@ void level_hearing_gen(Gamep g, Levelsp v, Levelp l)
   bpoint dmap_start(end.x - noise_level, end.y - noise_level);
   bpoint dmap_end(end.x + noise_level, end.y + noise_level);
 
-  dmap_start.x = std::max((int8_t) 0, dmap_start.x);
-  dmap_start.y = std::max((int8_t) 0, dmap_start.y);
-  dmap_end.x   = std::min((int8_t) (MAP_WIDTH - 1), dmap_end.x);
-  dmap_end.y   = std::min((int8_t) (MAP_HEIGHT - 1), dmap_end.y);
+  dmap_start.x = std::max(static_cast< int8_t >(0), dmap_start.x);
+  dmap_start.y = std::max(static_cast< int8_t >(0), dmap_start.y);
+  dmap_end.x   = std::min(static_cast< int8_t >(MAP_WIDTH - 1), dmap_end.x);
+  dmap_end.y   = std::min(static_cast< int8_t >(MAP_HEIGHT - 1), dmap_end.y);
 
   for (auto x = dmap_start.x; x < dmap_end.x; x++) {
     for (auto y = dmap_start.y; y < dmap_end.y; y++) {
-      bpoint p(x, y);
-      if (! level_is_obs_to_hearing(g, v, l, p)) {
+      bpoint const p(x, y);
+      if (! level_is_obs_to_hearing_bool(g, v, l, p)) {
         dmap->val[ x ][ y ] = DMAP_IS_PASSABLE;
       }
     }

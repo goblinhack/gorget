@@ -657,10 +657,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_damage_this_tick_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_damage_this_tick_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_damage_this_tick(Thingp t) -> int;
-[[nodiscard]] auto thing_noise_this_tick_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
-[[nodiscard]] auto thing_noise_this_tick_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
-[[nodiscard]] auto thing_noise_this_tick_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
-[[nodiscard]] auto thing_noise_this_tick(Thingp t) -> int;
 [[nodiscard]] auto thing_debug(Gamep g, Levelsp v, Levelp l, Thingp t, uint32_t iter_index) -> bool;
 [[nodiscard]] auto thing_distance_avoid_target_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_distance_avoid_target_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
@@ -987,6 +983,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_mob_kill_all_minions(Gamep g, Levelsp v, Levelp l, Thingp mob, ThingEvent &e) -> bool;
 [[nodiscard]] auto thing_mob_minion_count_get(Gamep g, Levelsp v, Levelp l, Thingp mob) -> int;
 [[nodiscard]] auto thing_mob_spawn_a_minion(Gamep g, Levelsp v, Levelp l, Thingp mob, Tpp tp_minion) -> Thingp;
+[[nodiscard]] auto thing_monst_target(Thingp t) -> bpoint;
 [[nodiscard]] auto thing_move_path_apply(Gamep g, Levelsp v, Levelp l, Thingp me, const std::vector< bpoint > &move_path) -> bool;
 [[nodiscard]] auto thing_move_path_confirmed(Gamep g, Levelsp v, Levelp l, Thingp me, const std::vector< bpoint > &move_path) -> bool;
 [[nodiscard]] auto thing_move_path_pop(Gamep g, Levelsp v, Levelp l, Thingp me, bool &move_confirmed, bpoint &out) -> bool;
@@ -1011,6 +1008,10 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_name_pluralize(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string;
 [[nodiscard]] auto thing_name_short_the(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags flags = 0) -> std::string;
 [[nodiscard]] auto thing_name_short(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags flags = 0) -> std::string;
+[[nodiscard]] auto thing_noise_this_tick_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
+[[nodiscard]] auto thing_noise_this_tick_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
+[[nodiscard]] auto thing_noise_this_tick_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
+[[nodiscard]] auto thing_noise_this_tick(Thingp t) -> int;
 [[nodiscard]] auto thing_old_at(Thingp t) -> bpoint;
 [[nodiscard]] auto thing_on_same_level_as_player(Gamep g, Levelsp v, Thingp t) -> bool;
 [[nodiscard]] auto thing_open(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp opener) -> bool;
@@ -1058,7 +1059,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_submerged_pct_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_submerged_pct_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_submerged_pct_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
-[[nodiscard]] auto thing_monst_target(Thingp t) -> bpoint;
 [[nodiscard]] auto thing_teleport_handle(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
 [[nodiscard]] auto thing_temperature_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_temperature_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
@@ -1118,8 +1118,8 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_variant_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_variant(Thingp t) -> int;
 [[nodiscard]] auto thing_vision_blocker(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it) -> bool;
-[[nodiscard]] auto thing_vision_can_see_tile(Gamep g, Levelsp v, Levelp l, Thingp t, bpoint p) -> bool;
 [[nodiscard]] auto thing_vision_can_hear_tile(Gamep g, Levelsp v, Levelp l, Thingp t, bpoint p) -> bool;
+[[nodiscard]] auto thing_vision_can_see_tile(Gamep g, Levelsp v, Levelp l, Thingp t, bpoint p) -> bool;
 [[nodiscard]] auto thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp me, bpoint to) -> bool;
 [[nodiscard]] auto thing_weight_set(Gamep g, Levelsp v, Levelp l, Thingp t, uint32_t val) -> int;
 [[nodiscard]] auto thing_weight(Thingp t) -> int;
@@ -1247,6 +1247,7 @@ void thing_lunge_time_step(Gamep g, Levelsp v, Levelp l, Thingp me, int time_ste
 void thing_melt(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_mob_dump_minions(Gamep g, Levelsp v, Levelp l, Thingp mob);
 void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me);
+void thing_monst_target_set(Gamep g, Levelsp v, Levelp l, Thingp t, const bpoint &val);
 void thing_monst_tick(Gamep g, Levelsp v, Levelp l, Thingp me);
 void thing_move_finish(Gamep g, Levelsp v, Levelp l, Thingp me);
 void thing_move_path_confirm(Gamep g, Levelsp v, Levelp l, Thingp me);
@@ -1266,7 +1267,6 @@ void thing_set_dir_from_delta(Thingp me, int dx, int dy);
 void thing_sound_play(Gamep g, Levelsp v, Levelp l, Thingp t, const std::string &alias);
 void thing_stats_dump(Gamep g, Levelsp v);
 void thing_submerged_update(Gamep g, Levelsp v, Levelp l, Thingp t);
-void thing_monst_target_set(Gamep g, Levelsp v, Levelp l, Thingp t, const bpoint &val);
 void thing_temperature_damage_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thingp t, int n);
 void thing_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thingp t, int n);
 void thing_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t);

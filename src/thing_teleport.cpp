@@ -13,6 +13,7 @@
 #include "my_thing.hpp"
 #include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp" // NOLINT
+#include "my_tp.hpp"
 #include "my_types.hpp"
 #include <initializer_list>
 #include <vector>

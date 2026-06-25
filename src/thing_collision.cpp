@@ -5,6 +5,7 @@
 #include "my_bpoint.hpp"
 #include "my_callstack.hpp"
 #include "my_fpoint.hpp"
+#include "my_game_defs.hpp"
 #include "my_level.hpp"
 #include "my_level_inlines.hpp" // NOLINT
 #include "my_main.hpp"          // NOLINT
@@ -918,4 +919,3 @@ void tp_collision_init(Tpp tp)
   }
   return tp_flag(thing_tp(t), is_collision_square) != 0;
 }
-

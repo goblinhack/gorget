@@ -2,22 +2,12 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_bpoint.hpp"
 #include "my_callstack.hpp"
-#include "my_color_defs.hpp"
-#include "my_game_defs.hpp"
-#include "my_game_popups.hpp"
+#include "my_dmap.hpp"
 #include "my_level.hpp"
-#include "my_main.hpp"
-#include "my_string.hpp"
 #include "my_thing.hpp"
-#include "my_thing_callbacks.hpp"
-#include "my_thing_inlines.hpp"
-#include "my_tp.hpp"
 #include "my_types.hpp"
-#include "my_ui.hpp"
-
-#include <algorithm>
-#include <string>
 
 [[nodiscard]] auto thing_vision_can_hear_tile(Gamep g, Levelsp v, Levelp l, Thingp t, bpoint p) -> bool
 {
@@ -39,9 +29,5 @@
   }
 
   auto actual_noise = DMAP_IS_GOAL_REVERSE - noise_level;
-  if (actual_noise > thing_distance_hearing(t)) {
-    return false;
-  }
-
-  return true;
+  return actual_noise <= thing_distance_hearing(t);
 }

@@ -751,7 +751,6 @@ enum {
 // begin sort marker2 {
 void fragment_alts_fini(Gamep g);
 void fragments_fini(Gamep g);
-void level_hearing_gen(Gamep g, Levelsp v, Levelp l);
 void fragments_init(Gamep g);
 void game_debug_info(Gamep g);
 void level_anim(Gamep g, Levelsp v, Levelp l);
@@ -783,6 +782,7 @@ void level_gen_stats_dump(Gamep g);
 void level_gen_test(Gamep g);
 void level_group_things(Gamep g, Levelsp v, Levelp l, Thingp t);
 void level_has_seen_update(Gamep g, Levelsp v, Levelp l);
+void level_hearing_gen(Gamep g, Levelsp v, Levelp l);
 void level_init(Gamep g, Levelsp v, Levelp l, LevelNum n);
 void level_is_completed_by_player_exiting(Gamep g, Levelsp v, Levelp l);
 void level_is_completed_by_player_falling(Gamep g, Levelsp v, Levelp l);
