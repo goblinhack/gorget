@@ -69,7 +69,7 @@ static void tp_ghost_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEven
   thing_on_death_set(tp, tp_ghost_on_death);
   tp_attack_count_max_per_tick_set(tp, 1);
   tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d1");
-  tp_distance_hearing_set(tp, 6);
+  tp_hearing_threshold_set(tp, 6);
   tp_distance_minion_from_mob_max_set(tp, 6);
   tp_distance_vision_set(tp, 12);
   tp_flag_set(tp, is_able_to_lunge);

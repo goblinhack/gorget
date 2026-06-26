@@ -334,6 +334,19 @@ using Thing = struct Thing {
   //
   int8_t _noise_this_tick;
   //
+  // Consider monster (a) threshold 3 and monster (b) threshold 7
+  //
+  // This is when each monster can detect a sound:
+  //
+  // source of sound
+  //       |
+  //       v
+  //       @  0  1  2  3  4  5  6  7  8  9
+  //                   a  a  a  a  a  a  a
+  //                               b  b  b
+  //
+  int8_t _hearing_threshold;
+  //
   // Used so often, we cache it
   //
   uint8_t _is_player : 1;
@@ -456,7 +469,6 @@ using Thing = struct Thing {
   int16_t _value10;
   int16_t _value11;
   int16_t _value12;
-  int16_t _distance_hearing;
   int16_t _charge_count;
   int16_t _score_value;
   //
@@ -662,10 +674,10 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_distance_avoid_target_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_distance_avoid_target_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_distance_avoid_target(Thingp t) -> int;
-[[nodiscard]] auto thing_distance_hearing_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
-[[nodiscard]] auto thing_distance_hearing_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
-[[nodiscard]] auto thing_distance_hearing_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
-[[nodiscard]] auto thing_distance_hearing(Thingp t) -> int;
+[[nodiscard]] auto thing_hearing_threshold_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
+[[nodiscard]] auto thing_hearing_threshold_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
+[[nodiscard]] auto thing_hearing_threshold_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
+[[nodiscard]] auto thing_hearing_threshold(Thingp t) -> int;
 [[nodiscard]] auto thing_distance_jump_decr(Gamep g, Levelsp v, Levelp l, Thingp me, int val = 1) -> int;
 [[nodiscard]] auto thing_distance_jump_incr(Gamep g, Levelsp v, Levelp l, Thingp me, int val = 1) -> int;
 [[nodiscard]] auto thing_distance_jump_max(Gamep g, Levelsp v, Levelp l, Thingp me) -> int;

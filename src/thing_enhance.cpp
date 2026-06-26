@@ -24,7 +24,7 @@ void thing_enhance(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp)
 
   (void) thing_charge_count_incr(g, v, l, t, tp_charge_count_get(tp));
   (void) thing_distance_avoid_target_incr(g, v, l, t, tp_distance_avoid_target_get(tp));
-  (void) thing_distance_hearing_incr(g, v, l, t, tp_distance_hearing_get(tp));
+  (void) thing_hearing_threshold_incr(g, v, l, t, tp_hearing_threshold_get(tp));
   (void) thing_distance_jump_incr(g, v, l, t, tp_distance_jump_get(tp));
   (void) thing_distance_throw_incr(g, v, l, t, tp_distance_throw_get(tp));
   (void) thing_distance_vision_incr(g, v, l, t, tp_distance_vision_get(tp));

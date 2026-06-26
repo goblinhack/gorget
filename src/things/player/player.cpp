@@ -373,7 +373,7 @@ static void tp_player_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6"); // fumble => intensify / keep burning / crit => stop burning
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d100");  // fumble => flames spread to you
   tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d4");
-  tp_distance_hearing_set(tp, 10);
+  tp_hearing_threshold_set(tp, 10);
   tp_distance_jump_set(tp, 3);
   tp_distance_throw_set(tp, 6);
   tp_distance_vision_set(tp, MAP_WIDTH / 2); // tiles

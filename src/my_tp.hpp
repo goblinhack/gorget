@@ -507,7 +507,7 @@ class Tp;
 [[nodiscard]] auto tp_damage_string(Tpp tp, ThingEventType val) -> std::string;
 [[nodiscard]] auto tp_damage(Tpp tp, ThingEventType val) -> int;
 [[nodiscard]] auto tp_distance_avoid_target_get(Tpp tp) -> int;
-[[nodiscard]] auto tp_distance_hearing_get(Tpp tp) -> int;
+[[nodiscard]] auto tp_hearing_threshold_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_distance_jump_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_distance_minion_from_mob_max_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_distance_throw_get(Tpp tp) -> int;
@@ -803,7 +803,7 @@ void tp_dbg_(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void tp_die_(Tpp tp, const char *fmt, va_list args); // compile error without
 void tp_die(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void tp_distance_avoid_target_set(Tpp tp, int val);
-void tp_distance_hearing_set(Tpp tp, int val);
+void tp_hearing_threshold_set(Tpp tp, int val);
 void tp_distance_jump_set(Tpp tp, int val);
 void tp_distance_minion_from_mob_max_set(Tpp tp, int val);
 void tp_distance_throw_set(Tpp tp, int val);

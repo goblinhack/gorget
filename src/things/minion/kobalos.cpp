@@ -79,7 +79,7 @@ static bool tp_kobalos_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thi
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6"); // fumble => intensify / keep burning / crit => stop burning
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // fumble => flames spread to you
   tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d2");
-  tp_distance_hearing_set(tp, 6);
+  tp_hearing_threshold_set(tp, 6);
   tp_distance_minion_from_mob_max_set(tp, 20);
   tp_distance_vision_set(tp, 10);
   tp_flag_set(tp, is_able_to_crush_grass);

@@ -33,8 +33,8 @@
   if (compiler_unused) {
     log("noise_level %d", noise_level);
     log("actual_noise %d", actual_noise);
-    log("thing_distance_hearing %d", thing_distance_hearing(t));
+    log("thing_hearing_threshold %d", thing_hearing_threshold(t));
   }
 
-  return actual_noise >= thing_distance_hearing(t);
+  return actual_noise >= thing_hearing_threshold(t);
 }

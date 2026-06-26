@@ -69,7 +69,7 @@
   (void) thing_attack_count_per_tick_set(g, v, l, t, tp_attack_count_max_per_tick_get(tp));
   (void) thing_charge_count_set(g, v, l, t, tp_charge_count_get(tp));
   (void) thing_distance_avoid_target_set(g, v, l, t, tp_distance_avoid_target_get(tp));
-  (void) thing_distance_hearing_set(g, v, l, t, tp_distance_hearing_get(tp));
+  (void) thing_hearing_threshold_set(g, v, l, t, tp_hearing_threshold_get(tp));
   (void) thing_distance_jump_set(g, v, l, t, tp_distance_jump_get(tp));
   (void) thing_distance_minion_from_mob_max_set(g, v, l, t, tp_distance_minion_from_mob_max_get(tp));
   (void) thing_distance_throw_set(g, v, l, t, tp_distance_throw_get(tp));

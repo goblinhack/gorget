@@ -2524,7 +2524,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
   return t->_value12 -= val;
 }
-[[nodiscard]] auto thing_distance_hearing(Thingp t) -> int
+[[nodiscard]] auto thing_hearing_threshold(Thingp t) -> int
 {
   TRACE_DEBUG();
 
@@ -2532,10 +2532,10 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return 0;
   }
-  return t->_distance_hearing;
+  return t->_hearing_threshold;
 }
 
-[[nodiscard]] auto thing_distance_hearing_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_hearing_threshold_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -2543,10 +2543,10 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return 0;
   }
-  return t->_distance_hearing = val;
+  return t->_hearing_threshold = val;
 }
 
-[[nodiscard]] auto thing_distance_hearing_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_hearing_threshold_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -2554,10 +2554,10 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return 0;
   }
-  return t->_distance_hearing += val;
+  return t->_hearing_threshold += val;
 }
 
-[[nodiscard]] auto thing_distance_hearing_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_hearing_threshold_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -2565,10 +2565,10 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return 0;
   }
-  if (static_cast< int >(t->_distance_hearing) - val <= 0) {
-    return t->_distance_hearing = 0;
+  if (static_cast< int >(t->_hearing_threshold) - val <= 0) {
+    return t->_hearing_threshold = 0;
   }
-  return t->_distance_hearing -= val;
+  return t->_hearing_threshold -= val;
 }
 [[nodiscard]] auto thing_distance_avoid_target(Thingp t) -> int
 {
