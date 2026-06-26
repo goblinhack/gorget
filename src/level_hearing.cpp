@@ -59,12 +59,18 @@ void level_hearing_gen(Gamep g, Levelsp v, Levelp l)
   dmap->val[ end.x ][ end.y ] = DMAP_IS_GOAL_REVERSE - noise_level;
 
   if (compiler_unused) {
+    log("noise_level %d", noise_level);
+    log("dmap_start  %d,%d", dmap_start.x, dmap_start.y);
+    log("dmap_end    %d,%d", dmap_end.x, dmap_end.y);
+  }
+
+  if (compiler_unused) {
     dmap_print(dmap, end, dmap_start, dmap_end);
   }
 
   dmap_process_reverse(dmap, dmap_start, dmap_end);
 
-  if (1 || compiler_unused) {
+  if (compiler_unused) {
     dmap_print(dmap, end, dmap_start, dmap_end);
   }
 }

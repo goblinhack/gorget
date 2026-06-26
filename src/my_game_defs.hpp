@@ -88,12 +88,12 @@ enum {
   //
   // The number of tiles noise can spread at most
   //
-  THING_DISTANCE_NOICE_TILE_MAX = 10,
+  THING_NOISE_MAX = 20,
 
   //
   // Various sounds
   //
-  THING_NOISE_SHATTER     = 20,
+  THING_NOISE_SHATTER     = 10,
   THING_NOISE_DOOR_SLAM   = 10,
   THING_NOISE_PLAYER_FALL = 10,
   THING_NOISE_PLAYER_HIT  = 10,

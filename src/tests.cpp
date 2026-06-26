@@ -86,6 +86,7 @@
   if (!test_load_player_hiding_in_bush()) { return false; }
   if (!test_load_player_in_steam()) { return false; }
   if (!test_load_player_lava()) { return false; }
+  if (!test_load_player_moving_in_bushes()) { return false; }
   if (!test_load_player_on_fire_move_into_water()) { return false; }
   if (!test_load_player_on_fire()) { return false; }
   if (!test_load_projectile_barrel_explosion()) { return false; }

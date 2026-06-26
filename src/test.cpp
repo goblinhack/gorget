@@ -103,6 +103,7 @@ static std::initializer_list< std::string > tests = {
     "player_hiding_in_bush",
     "player_in_steam",
     "player_lava",
+    "player_moving_in_bushes",
     "player_on_fire_move_into_water",
     "player_on_fire",
     "player_open_door_locked_fail",

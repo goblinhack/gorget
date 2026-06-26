@@ -46,8 +46,8 @@
     ERR("no thing pointer");
     return 0;
   }
-  if (t->_noise_this_tick + val > THING_DISTANCE_NOICE_TILE_MAX) {
-    t->_noise_this_tick = THING_DISTANCE_NOICE_TILE_MAX;
+  if (t->_noise_this_tick + val > THING_NOISE_MAX) {
+    return t->_noise_this_tick = THING_NOISE_MAX;
   }
   return t->_noise_this_tick += val;
 }

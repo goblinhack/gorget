@@ -44,7 +44,7 @@ static auto thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thing
   auto target = thing_at(player);
   if (! thing_vision_can_see_tile(g, v, l, me, target)) {
     THING_DBG(me, "choose target: cannot see player");
-    if (thing_vision_can_hear_tile(g, v, l, me, target)) {
+    if (thing_vision_can_hear_tile(g, v, l, me, thing_at(me))) {
       THING_DBG(me, "choose target: can hear player");
     } else {
       THING_DBG(me, "choose target: cannot hear player");

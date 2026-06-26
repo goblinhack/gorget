@@ -84,6 +84,7 @@ auto test_load_player_hiding_behind_bush() -> bool;
 auto test_load_player_hiding_in_bush() -> bool;
 auto test_load_player_in_steam() -> bool;
 auto test_load_player_lava() -> bool;
+auto test_load_player_moving_in_bushes() -> bool;
 auto test_load_player_on_fire_move_into_water() -> bool;
 auto test_load_player_on_fire() -> bool;
 auto test_load_projectile_barrel_explosion() -> bool;

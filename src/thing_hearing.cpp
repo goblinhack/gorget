@@ -29,5 +29,12 @@
   }
 
   auto actual_noise = DMAP_IS_GOAL_REVERSE - noise_level;
-  return actual_noise <= thing_distance_hearing(t);
+
+  if (compiler_unused) {
+    log("noise_level %d", noise_level);
+    log("actual_noise %d", actual_noise);
+    log("thing_distance_hearing %d", thing_distance_hearing(t));
+  }
+
+  return actual_noise >= thing_distance_hearing(t);
 }
