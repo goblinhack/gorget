@@ -6,8 +6,10 @@
 #include "my_callstack.hpp"
 #include "my_dmap.hpp"
 #include "my_level.hpp"
+#include "my_main.hpp"
 #include "my_thing.hpp"
 #include "my_types.hpp"
+#include <cmath>
 
 [[nodiscard]] auto thing_vision_can_hear_tile(Gamep g, Levelsp v, Levelp l, Thingp t, bpoint p) -> bool
 {

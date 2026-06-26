@@ -86,7 +86,6 @@ static void tp_glorp_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEven
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // fumble => intensify / keep burning / crit => stop burning
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // fumble => flames spread to you
   tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "2d6");
-  tp_hearing_threshold_set(tp, 8);
   tp_distance_jump_set(tp, 3);
   tp_distance_vision_set(tp, 10);
   tp_flag_set(tp, is_able_to_crush_grass);
@@ -124,6 +123,7 @@ static void tp_glorp_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEven
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_vision_360_degrees);
   tp_health_set(tp, "1d10+4");
+  tp_hearing_threshold_set(tp, 8);
   tp_is_immune_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_light_color_set(tp, "green");
   tp_monst_group_add(tp, MONST_GROUP2);

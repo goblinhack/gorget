@@ -11,6 +11,7 @@
 #include "my_thing.hpp"
 #include "my_types.hpp"
 #include <algorithm>
+#include <cmath>
 #include <cstdint>
 #include <cstring>
 

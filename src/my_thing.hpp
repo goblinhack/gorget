@@ -674,10 +674,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_distance_avoid_target_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_distance_avoid_target_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_distance_avoid_target(Thingp t) -> int;
-[[nodiscard]] auto thing_hearing_threshold_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
-[[nodiscard]] auto thing_hearing_threshold_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
-[[nodiscard]] auto thing_hearing_threshold_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
-[[nodiscard]] auto thing_hearing_threshold(Thingp t) -> int;
 [[nodiscard]] auto thing_distance_jump_decr(Gamep g, Levelsp v, Levelp l, Thingp me, int val = 1) -> int;
 [[nodiscard]] auto thing_distance_jump_incr(Gamep g, Levelsp v, Levelp l, Thingp me, int val = 1) -> int;
 [[nodiscard]] auto thing_distance_jump_max(Gamep g, Levelsp v, Levelp l, Thingp me) -> int;
@@ -711,6 +707,10 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_health_max(Gamep g, Levelsp v, Levelp l, Thingp t) -> int;
 [[nodiscard]] auto thing_health_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_health(Gamep g, Levelsp v, Levelp l, Thingp t) -> int;
+[[nodiscard]] auto thing_hearing_threshold_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
+[[nodiscard]] auto thing_hearing_threshold_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
+[[nodiscard]] auto thing_hearing_threshold_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
+[[nodiscard]] auto thing_hearing_threshold(Thingp t) -> int;
 [[nodiscard]] auto thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const bpoint &at) -> Thingp;
 [[nodiscard]] auto thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &real_at) -> Thingp;
 [[nodiscard]] auto thing_inventory_add(Gamep g, Levelsp v, Levelp l, Thingp new_item, Thingp owner) -> bool;
