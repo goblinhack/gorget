@@ -136,7 +136,7 @@
   return t->_health_max -= val;
 }
 
-[[nodiscard]] auto thing_is_health_visible(Thingp t) -> bool
+[[nodiscard]] auto thing_is_shown_health(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -144,5 +144,5 @@
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_health_visible) != 0;
+  return tp_flag(thing_tp(t), is_shown_health) != 0;
 }

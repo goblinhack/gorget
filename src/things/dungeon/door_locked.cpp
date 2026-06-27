@@ -172,7 +172,7 @@ static auto tp_door_locked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l
   thing_sound_play(g, v, l, me, "door_open");
 
   if (thing_is_player(opener)) {
-    (void) thing_noise_this_tick_incr(g, v, l, me, THING_NOISE_DOOR_OPEN);
+    (void) thing_noise_incr(g, v, l, me, THING_NOISE_DOOR_OPEN);
   }
 
   return true;
@@ -186,7 +186,7 @@ static auto tp_door_locked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l
   thing_sound_play(g, v, l, me, "door_open");
 
   if (thing_is_player(opener)) {
-    (void) thing_noise_this_tick_incr(g, v, l, me, THING_NOISE_DOOR_OPEN);
+    (void) thing_noise_incr(g, v, l, me, THING_NOISE_DOOR_OPEN);
   }
 
   //
@@ -210,7 +210,7 @@ static auto tp_door_locked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l
         // Door slam noise
         //
         if (thing_is_player(opener)) {
-          (void) thing_noise_this_tick_incr(g, v, l, me, THING_NOISE_DOOR_SLAM);
+          (void) thing_noise_incr(g, v, l, me, THING_NOISE_DOOR_SLAM);
         }
 
         topcon("You slam the door!");

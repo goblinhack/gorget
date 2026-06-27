@@ -80,7 +80,6 @@ static void tp_ghost_mob_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_flag_set(tp, is_cursor_path_hazard);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_dmap);
-  tp_flag_set(tp, is_health_visible);
   tp_flag_set(tp, is_light_source, 3);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_mob_kill_minions_on_death);
@@ -93,6 +92,7 @@ static void tp_ghost_mob_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_physics_water);
   tp_flag_set(tp, is_shovable);
+  tp_flag_set(tp, is_shown_health);
   tp_flag_set(tp, is_stone);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_tickable);

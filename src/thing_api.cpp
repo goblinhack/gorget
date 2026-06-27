@@ -781,7 +781,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_unused7) != 0;
 }
 
-[[nodiscard]] auto thing_is_unused8(Thingp t) -> bool
+[[nodiscard]] auto thing_is_noisey(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -789,10 +789,10 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused8) != 0;
+  return tp_flag(thing_tp(t), is_noisey) != 0;
 }
 
-[[nodiscard]] auto thing_is_unused9(Thingp t) -> bool
+[[nodiscard]] auto thing_is_shown_noise(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -800,7 +800,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused9) != 0;
+  return tp_flag(thing_tp(t), is_shown_noise) != 0;
 }
 
 [[nodiscard]] auto thing_is_obs_to_hearing(Thingp t) -> bool

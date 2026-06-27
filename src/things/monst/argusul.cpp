@@ -123,7 +123,6 @@ static void tp_argusul_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_flesh);
   tp_flag_set(tp, is_floating);
-  tp_flag_set(tp, is_health_visible);
   tp_flag_set(tp, is_hit_when_dead);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_monst);
@@ -134,6 +133,7 @@ static void tp_argusul_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_removable_when_dead_on_err);
+  tp_flag_set(tp, is_shown_health);
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_vision_360_degrees);
   tp_health_set(tp, "3d4");

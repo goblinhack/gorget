@@ -459,10 +459,10 @@
   return level_count(g, v, l, is_grass, p);
 }
 
-[[nodiscard]] auto level_count_is_health_visible(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_shown_health(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_health_visible, p);
+  return level_count(g, v, l, is_shown_health, p);
 }
 
 [[nodiscard]] auto level_count_is_indestructible(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
@@ -1065,10 +1065,10 @@
   return level_count(g, v, l, is_beam_weapon, p);
 }
 
-[[nodiscard]] auto level_count_is_stamina_visible(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_shown_stamina(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_stamina_visible, p);
+  return level_count(g, v, l, is_shown_stamina, p);
 }
 
 [[nodiscard]] auto level_count_is_reeds(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
@@ -1269,16 +1269,16 @@
   return level_count(g, v, l, is_unused7, p);
 }
 
-[[nodiscard]] auto level_count_is_unused8(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_noisey(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused8, p);
+  return level_count(g, v, l, is_noisey, p);
 }
 
-[[nodiscard]] auto level_count_is_unused9(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_shown_noise(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused9, p);
+  return level_count(g, v, l, is_shown_noise, p);
 }
 
 [[nodiscard]] auto level_count_is_wait_on_dead_anim(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t

@@ -40,7 +40,7 @@ static auto tp_door_secret_description_get(Gamep g, Levelsp v, Levelp l, Thingp 
   thing_sound_play(g, v, l, me, "door_open_secret");
 
   if (thing_is_player(opener)) {
-    (void) thing_noise_this_tick_incr(g, v, l, me, THING_NOISE_DOOR_SECRET);
+    (void) thing_noise_incr(g, v, l, me, THING_NOISE_DOOR_SECRET);
   }
 
   THING_DBG(me, "dead due to opening");

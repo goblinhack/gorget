@@ -458,10 +458,10 @@
   return level_flag(g, v, l, is_grass, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_health_visible_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_shown_health_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_health_visible, p, me) != nullptr;
+  return level_flag(g, v, l, is_shown_health, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_indestructible_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
@@ -1064,10 +1064,10 @@
   return level_flag(g, v, l, is_beam_weapon, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_stamina_visible_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_shown_stamina_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_stamina_visible, p, me) != nullptr;
+  return level_flag(g, v, l, is_shown_stamina, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_reeds_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
@@ -1268,16 +1268,16 @@
   return level_flag(g, v, l, is_unused7, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_unused8_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_noisey_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused8, p, me) != nullptr;
+  return level_flag(g, v, l, is_noisey, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_unused9_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_shown_noise_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused9, p, me) != nullptr;
+  return level_flag(g, v, l, is_shown_noise, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_wait_on_dead_anim_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool

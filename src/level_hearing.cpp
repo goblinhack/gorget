@@ -34,14 +34,14 @@ void level_hearing_gen(Gamep g, Levelsp v, Levelp l)
   auto *dmap = &v->dmap_noise;
   memset(dmap, DMAP_IS_WALL, sizeof(*dmap));
 
-  auto noise_level = thing_noise_this_tick(player);
-  if (noise_level == 0) {
+  auto stealth = thing_noise(g, v, l, player);
+  if (stealth == 0) {
     return;
   }
 
   auto   end = thing_at(player);
-  bpoint dmap_start(end.x - noise_level, end.y - noise_level);
-  bpoint dmap_end(end.x + noise_level, end.y + noise_level);
+  bpoint dmap_start(end.x - stealth, end.y - stealth);
+  bpoint dmap_end(end.x + stealth, end.y + stealth);
 
   dmap_start.x = std::max(static_cast< int8_t >(0), dmap_start.x);
   dmap_start.y = std::max(static_cast< int8_t >(0), dmap_start.y);
@@ -57,10 +57,10 @@ void level_hearing_gen(Gamep g, Levelsp v, Levelp l)
     }
   }
 
-  dmap->val[ end.x ][ end.y ] = DMAP_IS_GOAL_REVERSE - noise_level;
+  dmap->val[ end.x ][ end.y ] = DMAP_IS_GOAL_REVERSE - stealth;
 
   if (compiler_unused) {
-    log("noise_level %d", noise_level);
+    log("stealth %d", stealth);
     log("dmap_start  %d,%d", dmap_start.x, dmap_start.y);
     log("dmap_end    %d,%d", dmap_end.x, dmap_end.y);
   }

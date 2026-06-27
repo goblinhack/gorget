@@ -457,10 +457,10 @@
   return tp_flag(tp, is_grass) != 0;
 }
 
-[[nodiscard]] auto tp_is_health_visible(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_shown_health(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_health_visible) != 0;
+  return tp_flag(tp, is_shown_health) != 0;
 }
 
 [[nodiscard]] auto tp_is_indestructible(Tpp tp) -> bool
@@ -1063,10 +1063,10 @@
   return tp_flag(tp, is_beam_weapon) != 0;
 }
 
-[[nodiscard]] auto tp_is_stamina_visible(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_shown_stamina(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_stamina_visible) != 0;
+  return tp_flag(tp, is_shown_stamina) != 0;
 }
 
 [[nodiscard]] auto tp_is_reeds(Tpp tp) -> bool
@@ -1267,16 +1267,16 @@
   return tp_flag(tp, is_unused7) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused8(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_noisey(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused8) != 0;
+  return tp_flag(tp, is_noisey) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused9(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_shown_noise(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused9) != 0;
+  return tp_flag(tp, is_shown_noise) != 0;
 }
 
 [[nodiscard]] auto tp_is_wait_on_dead_anim(Tpp tp) -> bool

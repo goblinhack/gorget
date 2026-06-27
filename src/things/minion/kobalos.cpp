@@ -99,7 +99,6 @@ static bool tp_kobalos_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thi
   tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_flesh);
-  tp_flag_set(tp, is_health_visible);
   tp_flag_set(tp, is_kobalos);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_minion);
@@ -111,6 +110,7 @@ static bool tp_kobalos_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thi
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_removable_when_dead_on_err);
+  tp_flag_set(tp, is_shown_health);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_vision_180_degrees);

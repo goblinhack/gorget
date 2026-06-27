@@ -105,7 +105,6 @@ static bool tp_mantisman_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, T
   tp_flag_set(tp, is_collision_circle_large);
   tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_described_cursor);
-  tp_flag_set(tp, is_health_visible);
   tp_flag_set(tp, is_hit_when_dead);
   tp_flag_set(tp, is_insectoid);
   tp_flag_set(tp, is_loggable);
@@ -118,6 +117,7 @@ static bool tp_mantisman_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, T
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_removable_when_dead_on_err);
+  tp_flag_set(tp, is_shown_health);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_vision_180_degrees);

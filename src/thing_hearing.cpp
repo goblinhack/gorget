@@ -15,25 +15,25 @@
 {
   TRACE();
 
-  auto noise_level = v->dmap_noise.val[ p.x ][ p.y ];
+  auto stealth = v->dmap_noise.val[ p.x ][ p.y ];
 
-  if (noise_level == DMAP_IS_WALL) {
+  if (stealth == DMAP_IS_WALL) {
     return false;
   }
-  if (noise_level == DMAP_IS_PASSABLE) {
+  if (stealth == DMAP_IS_PASSABLE) {
     return false;
   }
-  if (noise_level == DMAP_IS_GOAL_REVERSE) {
+  if (stealth == DMAP_IS_GOAL_REVERSE) {
     return false;
   }
-  if (noise_level == DMAP_IS_GOAL) {
+  if (stealth == DMAP_IS_GOAL) {
     return false;
   }
 
-  auto actual_noise = DMAP_IS_GOAL_REVERSE - noise_level;
+  auto actual_noise = DMAP_IS_GOAL_REVERSE - stealth;
 
   if (compiler_unused) {
-    log("noise_level %d", noise_level);
+    log("stealth %d", stealth);
     log("actual_noise %d", actual_noise);
     log("thing_hearing_threshold %d", thing_hearing_threshold(t));
   }

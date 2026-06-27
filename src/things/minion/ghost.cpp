@@ -92,13 +92,13 @@ static void tp_ghost_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEven
   tp_flag_set(tp, is_ethereal);
   tp_flag_set(tp, is_floating);
   tp_flag_set(tp, is_ghost);
-  tp_flag_set(tp, is_health_visible);
   tp_flag_set(tp, is_levitating);
   tp_flag_set(tp, is_light_source, 1);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_minion);
   tp_flag_set(tp, is_monst);
   tp_flag_set(tp, is_removable_when_dead_on_err);
+  tp_flag_set(tp, is_shown_health);
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_undead);
   tp_flag_set(tp, is_vision_180_degrees);

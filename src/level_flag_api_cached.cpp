@@ -458,10 +458,10 @@
   return level_flag_cached(g, v, l, is_grass, p);
 }
 
-[[nodiscard]] auto level_is_health_visible_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_shown_health_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_health_visible, p);
+  return level_flag_cached(g, v, l, is_shown_health, p);
 }
 
 [[nodiscard]] auto level_is_indestructible_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
@@ -1064,10 +1064,10 @@
   return level_flag_cached(g, v, l, is_beam_weapon, p);
 }
 
-[[nodiscard]] auto level_is_stamina_visible_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_shown_stamina_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_stamina_visible, p);
+  return level_flag_cached(g, v, l, is_shown_stamina, p);
 }
 
 [[nodiscard]] auto level_is_reeds_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
@@ -1268,16 +1268,16 @@
   return level_flag_cached(g, v, l, is_unused7, p);
 }
 
-[[nodiscard]] auto level_is_unused8_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_noisey_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused8, p);
+  return level_flag_cached(g, v, l, is_noisey, p);
 }
 
-[[nodiscard]] auto level_is_unused9_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_shown_noise_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused9, p);
+  return level_flag_cached(g, v, l, is_shown_noise, p);
 }
 
 [[nodiscard]] auto level_is_wait_on_dead_anim_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

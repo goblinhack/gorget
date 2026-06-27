@@ -10,7 +10,7 @@
 
 #include <limits>
 
-[[nodiscard]] auto thing_noise_this_tick(Thingp t) -> int
+[[nodiscard]] auto thing_noise(Gamep g, Levelsp v, Levelp l, Thingp t) -> int
 {
   TRACE_DEBUG();
 
@@ -18,10 +18,10 @@
     ERR("no thing pointer");
     return 0;
   }
-  return t->_noise_this_tick;
+  return t->_noise;
 }
 
-[[nodiscard]] auto thing_noise_this_tick_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_noise_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -30,29 +30,20 @@
     return 0;
   }
 
-  if (val > std::numeric_limits< decltype(t->_noise_this_tick) >::max()) {
+  if (val > THING_NOISE_MAX) {
     thing_err(t, "value overflow: %d", val);
     return 0;
   }
 
-  return t->_noise_this_tick = val;
-}
-
-[[nodiscard]] auto thing_noise_this_tick_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
+  if (val < 0) {
+    thing_err(t, "value underflow: %d", val);
     return 0;
   }
-  if (t->_noise_this_tick + val > THING_NOISE_MAX) {
-    return t->_noise_this_tick = THING_NOISE_MAX;
-  }
-  return t->_noise_this_tick += val;
+
+  return t->_noise = val;
 }
 
-[[nodiscard]] auto thing_noise_this_tick_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_noise_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -61,9 +52,25 @@
     return 0;
   }
 
-  if (static_cast< int >(t->_noise_this_tick) - val <= 0) {
-    return t->_noise_this_tick = 0;
+  if (t->_noise + val > THING_NOISE_MAX) {
+    return t->_noise = THING_NOISE_MAX;
   }
 
-  return t->_noise_this_tick -= val;
+  return thing_noise_set(g, v, l, t, t->_noise + val);
+}
+
+[[nodiscard]] auto thing_noise_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return 0;
+  }
+
+  if (static_cast< int >(t->_noise) - val <= 0) {
+    return t->_noise = 0;
+  }
+
+  return thing_noise_set(g, v, l, t, t->_noise - val);
 }

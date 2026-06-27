@@ -458,10 +458,10 @@
   return level_flag(g, v, l, is_grass, p, me);
 }
 
-[[nodiscard]] auto level_is_health_visible(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_shown_health(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_health_visible, p, me);
+  return level_flag(g, v, l, is_shown_health, p, me);
 }
 
 [[nodiscard]] auto level_is_indestructible(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
@@ -1064,10 +1064,10 @@
   return level_flag(g, v, l, is_beam_weapon, p, me);
 }
 
-[[nodiscard]] auto level_is_stamina_visible(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_shown_stamina(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_stamina_visible, p, me);
+  return level_flag(g, v, l, is_shown_stamina, p, me);
 }
 
 [[nodiscard]] auto level_is_reeds(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
@@ -1268,16 +1268,16 @@
   return level_flag(g, v, l, is_unused7, p, me);
 }
 
-[[nodiscard]] auto level_is_unused8(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_noisey(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused8, p, me);
+  return level_flag(g, v, l, is_noisey, p, me);
 }
 
-[[nodiscard]] auto level_is_unused9(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_shown_noise(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused9, p, me);
+  return level_flag(g, v, l, is_shown_noise, p, me);
 }
 
 [[nodiscard]] auto level_is_wait_on_dead_anim(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp

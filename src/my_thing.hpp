@@ -332,7 +332,7 @@ using Thing = struct Thing {
   //
   // How much noise the thing (player) is generating. Only really used for the player for the noise dmap.
   //
-  int8_t _noise_this_tick;
+  int8_t _noise;
   //
   // Consider monster (a) threshold 3 and monster (b) threshold 7
   //
@@ -843,7 +843,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_gold(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_grass(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_grouped_thing(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_health_visible(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_hit_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_is_hit_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_is_hit_when_dead(Thingp t) -> bool;
@@ -910,11 +909,14 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_rock(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_scheduled_for_cleanup(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_shovable(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_shown_health(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_shown_stamina(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_shown_noise(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_sleeping(Thingp me) -> bool;
 [[nodiscard]] auto thing_is_slime(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_smoke(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_staff(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_stamina_visible(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_noisey(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_steam(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_stone(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_submergible(Thingp t) -> bool;
@@ -942,8 +944,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused5(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused6(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused7(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused8(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused9(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_usable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_vault(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_vision_180_degrees(Thingp t) -> bool;
@@ -1020,10 +1020,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_name_pluralize(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string;
 [[nodiscard]] auto thing_name_short_the(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags flags = 0) -> std::string;
 [[nodiscard]] auto thing_name_short(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags flags = 0) -> std::string;
-[[nodiscard]] auto thing_noise_this_tick_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
-[[nodiscard]] auto thing_noise_this_tick_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
-[[nodiscard]] auto thing_noise_this_tick_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
-[[nodiscard]] auto thing_noise_this_tick(Thingp t) -> int;
 [[nodiscard]] auto thing_old_at(Thingp t) -> bpoint;
 [[nodiscard]] auto thing_on_same_level_as_player(Gamep g, Levelsp v, Thingp t) -> bool;
 [[nodiscard]] auto thing_open(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp opener) -> bool;
@@ -1068,6 +1064,10 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_stamina_max(Gamep g, Levelsp v, Levelp l, Thingp t) -> int;
 [[nodiscard]] auto thing_stamina_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_stamina(Gamep g, Levelsp v, Levelp l, Thingp t) -> int;
+[[nodiscard]] auto thing_noise_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
+[[nodiscard]] auto thing_noise_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
+[[nodiscard]] auto thing_noise_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
+[[nodiscard]] auto thing_noise(Gamep g, Levelsp v, Levelp l, Thingp t) -> int;
 [[nodiscard]] auto thing_submerged_pct_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_submerged_pct_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_submerged_pct_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;

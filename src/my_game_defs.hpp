@@ -103,7 +103,10 @@ enum {
   THING_NOISE_CHEST_OPEN  = 4,
   THING_NOISE_FOLIAGE     = 4,
   THING_NOISE_DOOR_OPEN   = 3,
-  THING_NOISE_FOOTSTEP    = 2,
+  THING_NOISE_STAFF       = 4,
+  THING_NOISE_WAND        = 3,
+  THING_NOISE_GRASS       = 2,
+  THING_NOISE_FOOTSTEP    = 1,
 
   //
   // Jump animation height in tiles

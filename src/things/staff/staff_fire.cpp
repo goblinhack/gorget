@@ -39,6 +39,10 @@ static auto tp_staff_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
     what = tp_find_mand("beam_of_fire");
   }
 
+  if (thing_is_player(user)) {
+    (void) thing_noise_incr(g, v, l, user, THING_NOISE_STAFF);
+  }
+
   return what;
 }
 

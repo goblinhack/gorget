@@ -38,6 +38,10 @@ static auto tp_wand_light_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
     what = tp_find_mand("projectile_light");
   }
 
+  if (thing_is_player(user)) {
+    (void) thing_noise_incr(g, v, l, user, THING_NOISE_WAND);
+  }
+
   return what;
 }
 

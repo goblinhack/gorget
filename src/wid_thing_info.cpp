@@ -150,7 +150,7 @@
 {
   TRACE();
 
-  if (! tp_is_health_visible(tp)) {
+  if (! tp_is_shown_health(tp)) {
     return false;
   }
 
@@ -212,7 +212,7 @@
     return false;
   }
 
-  if (! tp_is_stamina_visible(tp)) {
+  if (! tp_is_shown_stamina(tp)) {
     return false;
   }
 
@@ -234,10 +234,10 @@
   // "Stamina        a/b"
   //
   auto stamina_max = thing_stamina_max(g, v, l, me);
-  auto h           = thing_stamina(g, v, l, me);
-  h                = std::max(h, 0);
+  auto stamina     = thing_stamina(g, v, l, me);
+  stamina          = std::max(stamina, 0);
 
-  std::string const stamina_str = std::to_string(h) + "/" + std::to_string(stamina_max);
+  std::string const stamina_str = std::to_string(stamina) + "/" + std::to_string(stamina_max);
   my_strlcpy(line_bar + width - stamina_str.size() - 3, stamina_str.c_str(), width - stamina_str.size());
   line_bar[ strlen(line_bar) ] = ' ';
 
@@ -247,11 +247,69 @@
   //
   auto *w = parent->log(g, std::string(line_bar));
   if (w != nullptr) {
-    int stamina_how_much = static_cast< int >((static_cast< float >(thing_stamina(g, v, l, me)) / static_cast< float >(stamina_max))
-                                              * (static_cast< float > UI_STAT_BAR_STEPS - 1));
-    stamina_how_much     = std::min(stamina_how_much, UI_STAT_BAR_STEPS - 1);
-    stamina_how_much     = std::max(stamina_how_much, 0);
-    auto icon            = "stat_bar." + std::to_string(stamina_how_much + 1);
+    int stamina_how_much
+        = static_cast< int >((static_cast< float >(stamina) / static_cast< float >(stamina_max)) * (static_cast< float > UI_STAT_BAR_STEPS - 1));
+    stamina_how_much = std::min(stamina_how_much, UI_STAT_BAR_STEPS - 1);
+    stamina_how_much = std::max(stamina_how_much, 0);
+    auto icon        = "stat_bar." + std::to_string(stamina_how_much + 1);
+
+    wid_set_shape_square(w);
+    wid_set_style(w, UI_WID_STYLE_SPARSE_NONE);
+    wid_set_color(w, WID_COLOR_TEXT_FG, UI_HIGHLIGHT_COLOR);
+    wid_set_tilename(TILE_LAYER_BOX_BG, w, icon);
+    wid_set_text_lhs(w, 1u);
+  }
+
+  return true;
+}
+
+//
+// Stealth bar
+//
+[[nodiscard]] auto wid_thing_info_noise_bar(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp tp, WidPopup *parent, int width) -> bool
+{
+  TRACE();
+
+  if (thing_is_dead(me)) {
+    return false;
+  }
+
+  if (! tp_is_shown_noise(tp)) {
+    return false;
+  }
+
+  char line_bar[ MAXSHORTSTR ];
+
+  //
+  // "Stealth           "
+  //
+  memset(line_bar, 0, sizeof(line_bar));
+  memset(line_bar, ' ', sizeof(line_bar) - 1);
+
+  my_strlcpy(line_bar + 1, "Stealth", sizeof("Stealth "));
+
+  //
+  // "Stealth        a/b"
+  //
+  auto stealth_max = THING_NOISE_MAX;
+  auto stealth     = THING_NOISE_MAX - thing_noise(g, v, l, me);
+  stealth          = std::max(stealth, 0);
+
+  std::string const stealth_str = std::to_string(stealth) + "/" + std::to_string(stealth_max);
+  my_strlcpy(line_bar + width - stealth_str.size() - 3, stealth_str.c_str(), width - stealth_str.size());
+  line_bar[ strlen(line_bar) ] = ' ';
+
+  //
+  // "Stealth        a/b"
+  // "xxxxxxxxxxxxxxxxxx"
+  //
+  auto *w = parent->log(g, std::string(line_bar));
+  if (w != nullptr) {
+    int stealth_how_much
+        = static_cast< int >((static_cast< float >(stealth) / static_cast< float >(stealth_max)) * (static_cast< float > UI_STAT_BAR_STEPS - 1));
+    stealth_how_much = std::min(stealth_how_much, UI_STAT_BAR_STEPS - 1);
+    stealth_how_much = std::max(stealth_how_much, 0);
+    auto icon        = "stat_bar." + std::to_string(stealth_how_much + 1);
 
     wid_set_shape_square(w);
     wid_set_style(w, UI_WID_STYLE_SPARSE_NONE);
@@ -748,6 +806,10 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, i
   }
 
   if (wid_thing_info_stamina_bar(g, v, l, me, tp, parent, width)) {
+    parent->log_empty_line(g);
+  }
+
+  if (wid_thing_info_noise_bar(g, v, l, me, tp, parent, width)) {
     parent->log_empty_line(g);
   }
 
