@@ -1263,16 +1263,16 @@
   return level_count(g, v, l, is_obs_to_paths, p);
 }
 
-[[nodiscard]] auto level_count_is_unused7(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_stealthy(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused7, p);
+  return level_count(g, v, l, is_stealthy, p);
 }
 
-[[nodiscard]] auto level_count_is_noisey(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_unused9(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_noisey, p);
+  return level_count(g, v, l, is_unused9, p);
 }
 
 [[nodiscard]] auto level_count_is_shown_noise(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t

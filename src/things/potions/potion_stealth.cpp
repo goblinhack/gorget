@@ -12,21 +12,28 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
-static auto tp_potion_endurance_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
+static auto tp_potion_stealth_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
-  return "potion, endurance";
+  return "potion, stealth";
 }
 
-static auto tp_potion_endurance_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
+static auto tp_potion_stealth_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
-  return UI_INFO1_FMT_STR "Consume this potion to restore your stamina to its previous, pathetic, level.";
+  return //
+      UI_INFO1_FMT_STR
+      "Consume this potion and you can creep silently through the noisiest of bushes," //
+      "or cross water as quietly as a morning breeze.\n"                               //
+      UI_INFO2_FMT_STR
+      "Note: weapon fire and other forms of attack are included in this no noise guarantee, " //
+      "even though this makes no sense. I mean, do you get naked for a potion of invisibiliy? "
+      "Maybe you do, I don't judge...\n";
 }
 
-static void tp_potion_endurance_on_thrown_end(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp thrower)
+static void tp_potion_stealth_on_thrown_end(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp thrower)
 {
   TRACE();
 
@@ -50,28 +57,21 @@ static void tp_potion_endurance_on_thrown_end(Gamep g, Levelsp v, Levelp l, Thin
   thing_dead(g, v, l, me, e);
 }
 
-static bool tp_potion_endurance_on_use(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user)
+static bool tp_potion_stealth_on_use(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user)
 {
   TRACE();
 
-  auto old_stamina = thing_stamina(g, v, l, user);
-  auto new_stamina = thing_stamina_incr(g, v, l, user, thing_stamina_max(g, v, l, user) / 2);
-  if (old_stamina == new_stamina) {
-    if (thing_is_player(user)) {
-      topcon(UI_WARNING_FMT_STR "That potion seemed to have no effect." UI_RESET_FMT);
-      thing_sound_play(g, v, l, user, "error");
-    }
-  } else {
-    if (thing_is_player(user)) {
-      topcon(UI_GOOD_FMT_STR "You feel invigorated." UI_RESET_FMT);
-      thing_sound_play(g, v, l, user, "bonus");
-    }
+  if (thing_is_player(user)) {
+    topcon(UI_GOOD_FMT_STR "You feel sneaky." UI_RESET_FMT);
+    thing_sound_play(g, v, l, user, "bonus");
   }
+
+  (void) thing_buff_add(g, v, l, user, tp_find_mand("buff_stealth"));
 
   return true;
 }
 
-static void tp_potion_endurance_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
+static void tp_potion_stealth_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
 {
   TRACE();
 
@@ -82,30 +82,29 @@ static void tp_potion_endurance_on_death(Gamep g, Levelsp v, Levelp l, Thingp me
   }
 
   if (e.source && thing_is_player(e.source)) {
-    topcon("The potion shatters.");
+    topcon("The potion shatters silently.");
   }
-  thing_sound_play(g, v, l, me, "glass_shatter");
 
-  if (e.source && thing_is_player(e.source)) {
-    (void) thing_noise_incr(g, v, l, me, THING_NOISE_SHATTER);
-  }
+  //
+  // No noise from this potion. It's silent...
+  //
 
   (void) thing_spawn(g, v, l, tp_first(is_water), thing_at(me));
 }
 
-[[nodiscard]] auto tp_load_potion_endurance() -> bool
+[[nodiscard]] auto tp_load_potion_stealth() -> bool
 {
   TRACE();
 
-  auto *tp   = tp_load("potion_endurance"); // keep as string for scripts
+  auto *tp   = tp_load("potion_stealth"); // keep as string for scripts
   auto  name = tp_name(tp);
 
   // begin sort marker1 {
-  thing_description_set(tp, tp_potion_endurance_description_get);
-  thing_detail_set(tp, tp_potion_endurance_detail_get);
-  thing_on_death_set(tp, tp_potion_endurance_on_death);
-  thing_on_thrown_end_set(tp, tp_potion_endurance_on_thrown_end);
-  thing_on_use_set(tp, tp_potion_endurance_on_use);
+  thing_description_set(tp, tp_potion_stealth_description_get);
+  thing_detail_set(tp, tp_potion_stealth_detail_get);
+  thing_on_death_set(tp, tp_potion_stealth_on_death);
+  thing_on_thrown_end_set(tp, tp_potion_stealth_on_thrown_end);
+  thing_on_use_set(tp, tp_potion_stealth_on_use);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // fumble => intensify / keep burning / crit => stop burning
   tp_flag_set(tp, is_able_to_be_thrown);
   tp_flag_set(tp, is_able_to_fall_sound);
@@ -128,6 +127,7 @@ static void tp_potion_endurance_on_death(Gamep g, Levelsp v, Levelp l, Thingp me
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
+  tp_flag_set(tp, is_stealthy);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_throwable);
   tp_flag_set(tp, is_tick_on_drop);
@@ -138,11 +138,11 @@ static void tp_potion_endurance_on_death(Gamep g, Levelsp v, Levelp l, Thingp me
   tp_health_set(tp, "1d6");
   tp_is_immune_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_light_color_set(tp, "white");
-  tp_name_a_or_an_set(tp, "a potion of endurance");
-  tp_name_apostrophize_set(tp, "potion of endurance's");
-  tp_name_long_set(tp, "potion of endurance");
-  tp_name_pluralize_set(tp, "potions of endurance");
-  tp_name_short_set(tp, "potion, endurance");
+  tp_name_a_or_an_set(tp, "a potion of stealth");
+  tp_name_apostrophize_set(tp, "potion of stealth's");
+  tp_name_long_set(tp, "potion of stealth");
+  tp_name_pluralize_set(tp, "potions of stealth");
+  tp_name_short_set(tp, "potion, stealth");
   tp_priority_set(tp, THING_PRIORITY_OBJECT);
   tp_rarity_set(tp, THING_RARITY_COMMON);
   tp_temperature_burns_at_set(tp, 30);  // celsius

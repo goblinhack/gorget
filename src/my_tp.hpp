@@ -218,9 +218,9 @@
       list_macro(is_unused4, "is_unused4"),                                                 /* newline */                                       \
       list_macro(is_unused5, "is_unused5"),                                                 /* newline */                                       \
       list_macro(is_unused6, "is_unused6"),                                                 /* newline */                                       \
-      list_macro(is_unused7, "is_unused7"),                                                 /* newline */                                       \
-      list_macro(is_noisey, "is_noisey"),                                               /* newline */                                       \
-      list_macro(is_shown_noise, "is_shown_noise"),                                     /* newline */                                       \
+      list_macro(is_stealthy, "is_stealthy"),                                               /* newline */                                       \
+      list_macro(is_unused9, "is_unused9"),                                                 /* newline */                                       \
+      list_macro(is_shown_noise, "is_shown_noise"),                                         /* newline */                                       \
       list_macro(is_usable, "is_usable"),                                                   /* newline */                                       \
       list_macro(is_vault, "is_vault"),                                                     /* newline */                                       \
       list_macro(is_vision_180_degrees, "is_vision_180_degrees"),                           /* newline */                                       \
@@ -697,12 +697,12 @@ class Tp;
 [[nodiscard]] auto tp_is_rock(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_shovable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_shown_health(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_shown_stamina(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_shown_noise(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_shown_stamina(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_slime(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_smoke(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_staff(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_noisey(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_stealthy(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_steam(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_stone(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_submergible(Tpp tp) -> bool;
@@ -727,7 +727,7 @@ class Tp;
 [[nodiscard]] auto tp_is_unused4(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused5(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused6(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused7(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused9(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_usable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_vault(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_vision_180_degrees(Tpp tp) -> bool;

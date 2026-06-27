@@ -6,6 +6,7 @@
 #include "my_game_defs.hpp"
 #include "my_main.hpp"
 #include "my_thing.hpp"
+#include "my_thing_inlines.hpp"
 #include "my_types.hpp"
 
 #include <limits>
@@ -18,6 +19,11 @@
     ERR("no thing pointer");
     return 0;
   }
+
+  if (thing_is_stealthy(g, v, l, t)) {
+    return 0;
+  }
+
   return t->_noise;
 }
 

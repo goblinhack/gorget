@@ -24,7 +24,7 @@ static auto tp_potion_incin_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) 
 {
   TRACE();
 
-  return UI_INFO1_FMT_STR "Consume this potion to set yourself on fire! Or give it to someone else...";
+  return UI_INFO1_FMT_STR "Consume this potion to set yourself on fire! Or perhaps pass it to someone or something else...";
 }
 
 static void tp_potion_incin_spawn_explosion(Gamep g, Levelsp v, Levelp l, Thingp me)

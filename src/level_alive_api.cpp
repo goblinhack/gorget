@@ -1262,16 +1262,16 @@
   return level_alive(g, v, l, is_obs_to_paths, p);
 }
 
-[[nodiscard]] auto level_alive_is_unused7(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_alive_is_stealthy(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_alive(g, v, l, is_unused7, p);
+  return level_alive(g, v, l, is_stealthy, p);
 }
 
-[[nodiscard]] auto level_alive_is_noisey(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_alive_is_unused9(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_alive(g, v, l, is_noisey, p);
+  return level_alive(g, v, l, is_unused9, p);
 }
 
 [[nodiscard]] auto level_alive_is_shown_noise(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp

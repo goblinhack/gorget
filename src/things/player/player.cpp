@@ -419,8 +419,8 @@ static void tp_player_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_player);
   tp_flag_set(tp, is_shown_health);
-  tp_flag_set(tp, is_shown_stamina);
   tp_flag_set(tp, is_shown_noise);
+  tp_flag_set(tp, is_shown_stamina);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_tickable);
   tp_health_set(tp, "100");

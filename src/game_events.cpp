@@ -577,6 +577,30 @@ static auto game_event_abort(Gamep g) -> bool
     return false;
   }
 
+  switch (game_state(g)) {
+    case STATE_THROW_ITEM :        [[fallthrough]];
+    case STATE_PLAYING :           break;
+    case STATE_COLLECT_MENU :      [[fallthrough]];
+    case STATE_DEAD_MENU :         [[fallthrough]];
+    case STATE_GENERATED :         [[fallthrough]];
+    case STATE_GENERATING :        [[fallthrough]];
+    case STATE_INIT :              [[fallthrough]];
+    case STATE_INVENTORY_MENU :    [[fallthrough]];
+    case STATE_ITEM_MENU :         [[fallthrough]];
+    case STATE_KEYBOARD_MENU :     [[fallthrough]];
+    case STATE_LEVEL_SELECT_MENU : [[fallthrough]];
+    case STATE_LOAD_MENU :         [[fallthrough]];
+    case STATE_LOADED :            [[fallthrough]];
+    case STATE_MAIN_MENU :         [[fallthrough]];
+    case STATE_MOVE_WARNING_MENU : [[fallthrough]];
+    case STATE_QUIT_MENU :         [[fallthrough]];
+    case STATE_QUITTING :          [[fallthrough]];
+    case STATE_SAVE_MENU :         [[fallthrough]];
+    case STATE_THE_END_MENU :      [[fallthrough]];
+    case STATE_THROW_MENU :        [[fallthrough]];
+    case GAME_STATE_ENUM_MAX :     DBG("ignore, not playing"); return false;
+  }
+
   wid_cfg_help_select(g);
 
   return true;

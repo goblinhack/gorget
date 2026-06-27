@@ -1262,16 +1262,16 @@
   return level_flag_cached(g, v, l, is_obs_to_paths, p);
 }
 
-[[nodiscard]] auto level_is_unused7_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_stealthy_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused7, p);
+  return level_flag_cached(g, v, l, is_stealthy, p);
 }
 
-[[nodiscard]] auto level_is_noisey_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_unused9_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_noisey, p);
+  return level_flag_cached(g, v, l, is_unused9, p);
 }
 
 [[nodiscard]] auto level_is_shown_noise_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
