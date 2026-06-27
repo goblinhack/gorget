@@ -26,6 +26,7 @@
   if (!tp_load_buff_immune_fire()) { return false; }
   if (!tp_load_buff_resistant_fire()) { return false; }
   if (!tp_load_buff_stealth()) { return false; }
+  if (!tp_load_buff_tireless()) { return false; }
   if (!tp_load_chasm()) { return false; }
   if (!tp_load_chest()) { return false; }
   if (!tp_load_corridor()) { return false; }
@@ -62,10 +63,10 @@
   if (!tp_load_mantisman()) { return false; }
   if (!tp_load_pillar()) { return false; }
   if (!tp_load_player()) { return false; }
-  if (!tp_load_potion_endurance()) { return false; }
   if (!tp_load_potion_healing()) { return false; }
   if (!tp_load_potion_incin()) { return false; }
   if (!tp_load_potion_stealth()) { return false; }
+  if (!tp_load_potion_tireless()) { return false; }
   if (!tp_load_projectile_fire()) { return false; }
   if (!tp_load_projectile_light()) { return false; }
   if (!tp_load_reeds()) { return false; }

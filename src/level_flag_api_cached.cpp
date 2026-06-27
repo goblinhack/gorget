@@ -1268,10 +1268,10 @@
   return level_flag_cached(g, v, l, is_stealthy, p);
 }
 
-[[nodiscard]] auto level_is_unused9_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_tireless_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused9, p);
+  return level_flag_cached(g, v, l, is_tireless, p);
 }
 
 [[nodiscard]] auto level_is_shown_noise_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

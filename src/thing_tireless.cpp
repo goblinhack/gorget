@@ -9,7 +9,7 @@
 #include "my_tp.hpp"
 #include "my_types.hpp"
 
-[[nodiscard]] auto thing_is_stealthy(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
+[[nodiscard]] auto thing_is_tireless(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
 {
   TRACE_DEBUG();
 
@@ -20,10 +20,10 @@
 
   FOR_ALL_BUFFS(g, v, l, me, buff)
   {
-    if (thing_is_stealthy(g, v, l, buff)) {
+    if (thing_is_tireless(g, v, l, buff)) {
       return true;
     }
   }
 
-  return tp_flag(thing_tp(me), is_stealthy) != 0;
+  return tp_flag(thing_tp(me), is_tireless) != 0;
 }

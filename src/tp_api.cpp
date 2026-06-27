@@ -1267,10 +1267,10 @@
   return tp_flag(tp, is_stealthy) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused9(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_tireless(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused9) != 0;
+  return tp_flag(tp, is_tireless) != 0;
 }
 
 [[nodiscard]] auto tp_is_shown_noise(Tpp tp) -> bool

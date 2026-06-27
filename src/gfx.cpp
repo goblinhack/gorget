@@ -2347,8 +2347,8 @@ static void gfx_init_tiles()
       // ##############################################################################
       "potion_healing.0",
       "potion_healing.1",
-      "potion_endurance.0",
-      "potion_endurance.1",
+      "potion_tireless.0",
+      "potion_tireless.1",
       "potion_incin.0",
       "potion_incin.1",
       "potion_stealth.0",

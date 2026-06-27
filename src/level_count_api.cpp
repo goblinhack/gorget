@@ -1269,10 +1269,10 @@
   return level_count(g, v, l, is_stealthy, p);
 }
 
-[[nodiscard]] auto level_count_is_unused9(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_tireless(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused9, p);
+  return level_count(g, v, l, is_tireless, p);
 }
 
 [[nodiscard]] auto level_count_is_shown_noise(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t

@@ -4,6 +4,7 @@
 
 #include "my_callstack.hpp"
 #include "my_game.hpp"
+#include "my_game_defs.hpp"
 #include "my_level.hpp"
 #include "my_level_inlines.hpp" // NOLINT
 #include "my_main.hpp"
@@ -266,7 +267,7 @@
 //
 // Stealth bar
 //
-[[nodiscard]] auto wid_thing_info_noise_bar(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp tp, WidPopup *parent, int width) -> bool
+[[nodiscard]] static auto wid_thing_info_noise_bar(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp tp, WidPopup *parent, int width) -> bool
 {
   TRACE();
 

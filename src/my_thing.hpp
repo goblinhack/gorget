@@ -53,7 +53,7 @@ using ThingIdPacked = union {
 /* begin shell marker1 */
 /* shell printf "#define THING_BUFF_MAX " */
 /* shell find . -name "*.cpp" | xargs grep "tp_flag_set(tp, is_buff);" | wc -l */
-#define THING_BUFF_MAX 3
+#define THING_BUFF_MAX 4
 /* end shell marker1 */
 
 //
@@ -931,6 +931,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_tick_on_wield(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_tickable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_tiled(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_tireless(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
 [[nodiscard]] auto thing_is_trap(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_treasure(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_undead(Thingp t) -> bool;
@@ -943,7 +944,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused4(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused5(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused6(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused9(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_usable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_vault(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_vision_180_degrees(Thingp t) -> bool;

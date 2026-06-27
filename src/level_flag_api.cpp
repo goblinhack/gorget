@@ -1268,10 +1268,10 @@
   return level_flag(g, v, l, is_stealthy, p, me);
 }
 
-[[nodiscard]] auto level_is_unused9(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_tireless(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused9, p, me);
+  return level_flag(g, v, l, is_tireless, p, me);
 }
 
 [[nodiscard]] auto level_is_shown_noise(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp

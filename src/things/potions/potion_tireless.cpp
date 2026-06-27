@@ -12,21 +12,21 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
-static auto tp_potion_endurance_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
+static auto tp_potion_tireless_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
-  return "potion, endurance";
+  return "potion, tireless";
 }
 
-static auto tp_potion_endurance_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
+static auto tp_potion_tireless_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
-  return UI_INFO1_FMT_STR "Consume this potion to restore your stamina to its previous, pathetic, level.";
+  return UI_INFO1_FMT_STR "Get rid of that sluggish feeling when your stamina runs low and bound once more with tireless energy!";
 }
 
-static void tp_potion_endurance_on_thrown_end(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp thrower)
+static void tp_potion_tireless_on_thrown_end(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp thrower)
 {
   TRACE();
 
@@ -50,7 +50,7 @@ static void tp_potion_endurance_on_thrown_end(Gamep g, Levelsp v, Levelp l, Thin
   thing_dead(g, v, l, me, e);
 }
 
-static bool tp_potion_endurance_on_use(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user)
+static bool tp_potion_tireless_on_use(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user)
 {
   TRACE();
 
@@ -68,10 +68,12 @@ static bool tp_potion_endurance_on_use(Gamep g, Levelsp v, Levelp l, Thingp me, 
     }
   }
 
+  (void) thing_buff_add(g, v, l, user, tp_find_mand("buff_tireless"));
+
   return true;
 }
 
-static void tp_potion_endurance_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
+static void tp_potion_tireless_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
 {
   TRACE();
 
@@ -93,19 +95,19 @@ static void tp_potion_endurance_on_death(Gamep g, Levelsp v, Levelp l, Thingp me
   (void) thing_spawn(g, v, l, tp_first(is_water), thing_at(me));
 }
 
-[[nodiscard]] auto tp_load_potion_endurance() -> bool
+[[nodiscard]] auto tp_load_potion_tireless() -> bool
 {
   TRACE();
 
-  auto *tp   = tp_load("potion_endurance"); // keep as string for scripts
+  auto *tp   = tp_load("potion_tireless"); // keep as string for scripts
   auto  name = tp_name(tp);
 
   // begin sort marker1 {
-  thing_description_set(tp, tp_potion_endurance_description_get);
-  thing_detail_set(tp, tp_potion_endurance_detail_get);
-  thing_on_death_set(tp, tp_potion_endurance_on_death);
-  thing_on_thrown_end_set(tp, tp_potion_endurance_on_thrown_end);
-  thing_on_use_set(tp, tp_potion_endurance_on_use);
+  thing_description_set(tp, tp_potion_tireless_description_get);
+  thing_detail_set(tp, tp_potion_tireless_detail_get);
+  thing_on_death_set(tp, tp_potion_tireless_on_death);
+  thing_on_thrown_end_set(tp, tp_potion_tireless_on_thrown_end);
+  thing_on_use_set(tp, tp_potion_tireless_on_use);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // fumble => intensify / keep burning / crit => stop burning
   tp_flag_set(tp, is_able_to_be_thrown);
   tp_flag_set(tp, is_able_to_fall_sound);
@@ -138,11 +140,11 @@ static void tp_potion_endurance_on_death(Gamep g, Levelsp v, Levelp l, Thingp me
   tp_health_set(tp, "1d6");
   tp_is_immune_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_light_color_set(tp, "white");
-  tp_name_a_or_an_set(tp, "a potion of endurance");
-  tp_name_apostrophize_set(tp, "potion of endurance's");
-  tp_name_long_set(tp, "potion of endurance");
-  tp_name_pluralize_set(tp, "potions of endurance");
-  tp_name_short_set(tp, "potion, endurance");
+  tp_name_a_or_an_set(tp, "a potion of tireless");
+  tp_name_apostrophize_set(tp, "potion of tireless's");
+  tp_name_long_set(tp, "potion of tireless");
+  tp_name_pluralize_set(tp, "potions of tireless");
+  tp_name_short_set(tp, "potion, tireless");
   tp_priority_set(tp, THING_PRIORITY_OBJECT);
   tp_rarity_set(tp, THING_RARITY_COMMON);
   tp_temperature_burns_at_set(tp, 30);  // celsius

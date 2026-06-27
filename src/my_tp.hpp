@@ -219,7 +219,7 @@
       list_macro(is_unused5, "is_unused5"),                                                 /* newline */                                       \
       list_macro(is_unused6, "is_unused6"),                                                 /* newline */                                       \
       list_macro(is_stealthy, "is_stealthy"),                                               /* newline */                                       \
-      list_macro(is_unused9, "is_unused9"),                                                 /* newline */                                       \
+      list_macro(is_tireless, "is_tireless"),                                               /* newline */                                       \
       list_macro(is_shown_noise, "is_shown_noise"),                                         /* newline */                                       \
       list_macro(is_usable, "is_usable"),                                                   /* newline */                                       \
       list_macro(is_vault, "is_vault"),                                                     /* newline */                                       \
@@ -716,6 +716,7 @@ class Tp;
 [[nodiscard]] auto tp_is_tick_on_wield(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_tickable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_tiled(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_tireless(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_trap(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_treasure(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_undead(Tpp tp) -> bool;
@@ -727,7 +728,6 @@ class Tp;
 [[nodiscard]] auto tp_is_unused4(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused5(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused6(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused9(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_usable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_vault(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_vision_180_degrees(Tpp tp) -> bool;

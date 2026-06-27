@@ -3,14 +3,13 @@ bugs
 
 todo
 ----
-potion silence, show noise level
+test potion silence, show noise level
 steam and smoke should spread
 chests should explode sometimes
 enchants
 could kill you in x hits
 staff of fire in water damage when fully submerged
-potion, healing
-potion, resiliance (stamina)
+
 potion, inviolate (health and removes poison)
 potion, levitate
 potion, feathertail (jump)
@@ -19,7 +18,7 @@ potion, etherealness (wall throu walls)
 potion, imperceptable (invisible)
 potion, haste
 potion, telepath (see enemies)
-potion, fire immunity (fireball)
+potion, fire immunity (stoneskin)
 potion, light immunity (light beam)
 potion trading station
 explore bonus for freshly explored tiles
