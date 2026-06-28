@@ -11,6 +11,7 @@
 #include "my_tp.hpp"
 #include "my_types.hpp"
 #include "my_ui.hpp"
+#include <initializer_list>
 
 //
 // Add an item to the things inventory
@@ -301,11 +302,11 @@ void thing_on_carry_success_set(Tpp tp, thing_on_carry_success_t callback)
 
   bool ok = true;
 
-  for (auto tp : items) {
-    auto item_tp = tp_find_mand(tp);
-    if (item_tp) {
-      auto item = thing_spawn(g, v, l, item_tp, thing_at(me));
-      if (item) {
+  for (const auto &tp : items) {
+    auto *item_tp = tp_find_mand(tp);
+    if (item_tp != nullptr) {
+      auto *item = thing_spawn(g, v, l, item_tp, thing_at(me));
+      if (item != nullptr) {
         ThingEvent e {
             .reason     = "spawned",           //
             .event_type = THING_EVENT_SPAWNED, //
