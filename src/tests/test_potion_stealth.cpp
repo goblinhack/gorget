@@ -1,5 +1,5 @@
 //
-// Copyright goblinhack@gmail.com
+// Copyright goblinhack@gmail
 //
 
 #include "../my_game.hpp"

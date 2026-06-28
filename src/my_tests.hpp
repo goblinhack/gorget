@@ -88,6 +88,7 @@ auto test_load_player_moving_in_foliage() -> bool;
 auto test_load_player_on_fire_move_into_water() -> bool;
 auto test_load_player_on_fire() -> bool;
 auto test_load_potion_stealth() -> bool;
+auto test_load_potion_tireless() -> bool;
 auto test_load_projectile_barrel_explosion() -> bool;
 auto test_load_projectile_border_turns_to_lava() -> bool;
 auto test_load_projectile_door_locked() -> bool;

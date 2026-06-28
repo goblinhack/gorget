@@ -90,6 +90,7 @@
   if (!test_load_player_on_fire_move_into_water()) { return false; }
   if (!test_load_player_on_fire()) { return false; }
   if (!test_load_potion_stealth()) { return false; }
+  if (!test_load_potion_tireless()) { return false; }
   if (!test_load_projectile_barrel_explosion()) { return false; }
   if (!test_load_projectile_border_turns_to_lava()) { return false; }
   if (!test_load_projectile_door_locked()) { return false; }
