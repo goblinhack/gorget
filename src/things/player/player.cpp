@@ -55,7 +55,13 @@ static void tp_player_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
     (void) thing_noise_incr(g, v, l, me, THING_NOISE_GRASS);
   } else {
     thing_sound_play(g, v, l, me, "footstep");
-    (void) thing_noise_incr(g, v, l, me, THING_NOISE_FOOTSTEP);
+
+    //
+    // Noisy bridge?
+    //
+    if (level_is_bridge_bool(g, v, l, thing_at(me))) {
+      (void) thing_noise_incr(g, v, l, me, THING_NOISE_FOOTSTEP);
+    }
   }
 
   auto at                   = thing_at(me);
