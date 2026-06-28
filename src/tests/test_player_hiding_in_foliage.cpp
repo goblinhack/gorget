@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static auto test_player_hiding_behind_bush(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_player_hiding_in_foliage(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -21,43 +21,43 @@
   //
   std::string const start
       = "XXXXXXX"
-        "X@`...X"
-        "X``...X"
-        "X.....X"
-        "X.....X"
-        "X....mX"
+        "X@~~~mX"
+        "X~~~~~X"
+        "X~~~~~X"
+        "X~~~~~X"
+        "X~~~~~X"
         "XXXXXXX";
   std::string const expect1
       = "XXXXXXX"
-        "X@`...X"
-        "X``...X"
-        "X.....X"
-        "X.....X"
-        "Xm....X"
+        "X@~~~.X"
+        "X~~m~~X"
+        "X~~~~~X"
+        "X~~~~~X"
+        "X~~~~~X"
         "XXXXXXX";
   std::string const expect2
       = "XXXXXXX"
-        "X@`...X"
-        "Xm`...X"
-        "X.....X"
-        "X.....X"
-        "X.....X"
+        "X@~~~.X"
+        "X~~~~~X"
+        "X~~~~~X"
+        "X~~~~~X"
+        "X~~~m~X"
         "XXXXXXX";
   std::string const expect3
       = "XXXXXXX"
-        "X@`...X"
-        "Xm`...X"
-        "X.....X"
-        "X.....X"
-        "X.....X"
+        "X@~~~.X"
+        "X~~~~~X"
+        "X~~~~~X"
+        "Xm~~~~X"
+        "X~~~~~X"
         "XXXXXXX";
   std::string const expect4
       = "XXXXXXX"
-        "X@`...X"
-        "Xm`...X"
-        "X.....X"
-        "X.....X"
-        "X.....X"
+        "X@~~~.X"
+        "X~~~~~X"
+        "X~~~~~X"
+        "X~~m~~X"
+        "X~~~~~X"
         "XXXXXXX";
 
   //
@@ -73,10 +73,24 @@
   //
   bool result = false;
 
+  //
+  // Spawn water under the player
+  //
+  auto *player = thing_player(g);
+
+  if (thing_spawn(g, v, l, tp_random(g, v, l, is_water), thing_at(player)) == nullptr) {
+    TEST_FAILED(t, "failed to spawn thing");
+    goto exit;
+  }
+
+  if (thing_spawn(g, v, l, tp_random(g, v, l, is_foliage), thing_at(player)) == nullptr) {
+    TEST_FAILED(t, "failed to spawn thing");
+    goto exit;
+  }
+
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   for (auto tries = 0; tries < 5; tries++) {
-    TEST_LOOP_PROGRESS(t, g, v, l, tries, w, h);
     TEST_ASSERT(t, game_event_wait(g), "failed to wait");
     if (! game_wait_for_tick_to_finish(g, v, l)) {
       TEST_FAILED(t, "wait loop failed");
@@ -185,14 +199,14 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_player_hiding_behind_bush() -> bool // NOLINT
+[[nodiscard]] auto test_load_player_hiding_in_foliage() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("player_hiding_behind_bush");
+  Testp test = test_load("player_hiding_in_foliage");
 
   // begin sort marker1 {
-  test_callback_set(test, test_player_hiding_behind_bush);
+  test_callback_set(test, test_player_hiding_in_foliage);
   // end sort marker1 }
 
   return true;

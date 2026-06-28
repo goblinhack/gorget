@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static auto test_player_moving_in_bushes(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_player_moving_in_foliage(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -246,14 +246,14 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_player_moving_in_bushes() -> bool // NOLINT
+[[nodiscard]] auto test_load_player_moving_in_foliage() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("player_moving_in_bushes");
+  Testp test = test_load("player_moving_in_foliage");
 
   // begin sort marker1 {
-  test_callback_set(test, test_player_moving_in_bushes);
+  test_callback_set(test, test_player_moving_in_foliage);
   // end sort marker1 }
 
   return true;
