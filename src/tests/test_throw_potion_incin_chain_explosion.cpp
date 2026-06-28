@@ -46,7 +46,6 @@
   overrides[ '$' ] = [](char c, bpoint p) -> Tpp { return tp_find_mand("potion_incin"); };
   Levelsp v        = game_test_init(g, &l, level_num, w, h, start.c_str(), overrides);
   bool    result   = true;
-  Thingp  item     = nullptr;
   bpoint  throw_to;
   int     threw_count = 0;
 
@@ -60,23 +59,9 @@
     goto exit;
   }
 
-  for (auto tp : items) {
-    auto item_tp = tp_find_mand(tp);
-    if (item_tp) {
-      item = thing_spawn(g, v, l, item_tp, thing_at(player));
-      if (item) {
-        ThingEvent e {
-            .reason     = "spawned",           //
-            .event_type = THING_EVENT_SPAWNED, //
-            .source     = player,              //
-        };
-
-        if (! thing_carry(g, v, l, player, item, e)) {
-          TEST_FAILED(t, "no item carried");
-          goto exit;
-        }
-      }
-    }
+  if (! thing_carry(g, v, l, player, items)) {
+    TEST_FAILED(t, "no item carried");
+    goto exit;
   }
 
   //

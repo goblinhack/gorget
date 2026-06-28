@@ -37,12 +37,11 @@
         "x.........................x"
         "xxxxxxxxxxxxxxxxxxxxxxxxxxx";
 
-  Levelp  l      = nullptr;
-  Levelsp v      = game_test_init(g, &l, level_num, w, h, start.c_str());
-  bool    result = true;
-  Thingp  item   = nullptr;
+  Levelp  l = nullptr;
+  Levelsp v = game_test_init(g, &l, level_num, w, h, start.c_str());
   bpoint  throw_to;
   int     threw_count = 0;
+  bool    result      = true;
 
   static std::initializer_list< std::string > items = {
       "staff_fire",  //
@@ -68,23 +67,9 @@
     goto exit;
   }
 
-  for (auto tp : items) {
-    auto item_tp = tp_find_mand(tp);
-    if (item_tp) {
-      item = thing_spawn(g, v, l, item_tp, thing_at(player));
-      if (item) {
-        ThingEvent e {
-            .reason     = "spawned",           //
-            .event_type = THING_EVENT_SPAWNED, //
-            .source     = player,              //
-        };
-
-        if (! thing_carry(g, v, l, player, item, e)) {
-          TEST_FAILED(t, "no item carried");
-          goto exit;
-        }
-      }
-    }
+  if (! thing_carry(g, v, l, player, items)) {
+    TEST_FAILED(t, "no item carried");
+    goto exit;
   }
 
   //

@@ -70,23 +70,9 @@
     goto exit;
   }
 
-  for (auto tp : items) {
-    auto item_tp = tp_find_mand(tp);
-    if (item_tp) {
-      auto item = thing_spawn(g, v, l1, item_tp, thing_at(player));
-      if (item) {
-        ThingEvent e {
-            .reason     = "spawned",           //
-            .event_type = THING_EVENT_SPAWNED, //
-            .source     = player,              //
-        };
-
-        if (! thing_carry(g, v, l1, player, item, e)) {
-          TEST_FAILED(t, "no item carried");
-          goto exit;
-        }
-      }
-    }
+  if (! thing_carry(g, v, l1, player, items)) {
+    TEST_FAILED(t, "no item carried");
+    goto exit;
   }
 
   //

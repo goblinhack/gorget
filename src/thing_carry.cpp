@@ -289,3 +289,35 @@ void thing_on_carry_success_set(Tpp tp, thing_on_carry_success_t callback)
 
   return true;
 }
+
+[[nodiscard]] auto thing_carry(Gamep g, Levelsp v, Levelp l, Thingp me, const std::initializer_list< std::string > &items) -> bool
+{
+  TRACE();
+
+  if (me == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+
+  bool ok = true;
+
+  for (auto tp : items) {
+    auto item_tp = tp_find_mand(tp);
+    if (item_tp) {
+      auto item = thing_spawn(g, v, l, item_tp, thing_at(me));
+      if (item) {
+        ThingEvent e {
+            .reason     = "spawned",           //
+            .event_type = THING_EVENT_SPAWNED, //
+            .source     = me,                  //
+        };
+
+        if (! thing_carry(g, v, l, me, item, e)) {
+          ok = false;
+        }
+      }
+    }
+  }
+
+  return ok;
+}
