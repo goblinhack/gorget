@@ -79,7 +79,7 @@ void thing_hot_time_step(Gamep g, Levelsp v, Levelp l, Thingp me, int /*time_ste
   uint8_t     a     = 0;
 
   if (n == mid) {
-    i = 0;
+    i = 255;
   } else if (n > mid) {
     i = (n - mid) / mid;
     i *= 100;

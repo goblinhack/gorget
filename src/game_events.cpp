@@ -695,71 +695,92 @@ static auto game_event_abort(Gamep g) -> bool
     return true;
   }
 
-  if (game_state(g) != STATE_PLAYING) {
-    return false;
-  }
+  switch (game_state(g)) {
+    case STATE_THROW_ITEM : [[fallthrough]];
+    case STATE_PLAYING :
+      if (sdlk_eq(*key, game_key_zoom_get(g))) {
+        DBG("Zoom alt");
+        game_map_zoom_toggle(g);
+        (void) sound_play(g, "keypress");
+        return false; // To avoid click noise
+      }
 
-  if (sdlk_eq(*key, game_key_zoom_get(g))) {
-    DBG("Zoom alt");
-    game_map_zoom_toggle(g);
-    (void) sound_play(g, "keypress");
-    return false; // To avoid click noise
-  }
+      if (sdlk_eq(*key, game_key_wait_get(g))) {
+        DBG("pressed wait key");
+        (void) game_event_wait(g);
+        return false; // To avoid click noise
+      }
 
-  if (sdlk_eq(*key, game_key_wait_get(g))) {
-    DBG("pressed wait key");
-    (void) game_event_wait(g);
-    return false; // To avoid click noise
-  }
+      if (sdlk_eq(*key, game_key_inventory_get(g))) {
+        DBG("pressed inventory key");
+        (void) game_event_inventory(g);
+        return false; // To avoid click noise
+      }
 
-  if (sdlk_eq(*key, game_key_inventory_get(g))) {
-    DBG("pressed inventory key");
-    (void) game_event_inventory(g);
-    return false; // To avoid click noise
-  }
+      if (sdlk_eq(*key, game_key_ascend_get(g))) {
+        DBG("pressed ascend key");
+        (void) sound_play(g, "keypress");
+        (void) game_event_ascend(g);
+        return false; // To avoid click noise
+      }
 
-  if (sdlk_eq(*key, game_key_ascend_get(g))) {
-    DBG("pressed ascend key");
-    (void) sound_play(g, "keypress");
-    (void) game_event_ascend(g);
-    return false; // To avoid click noise
-  }
+      if (sdlk_eq(*key, game_key_descend_get(g))) {
+        DBG("pressed descend key");
+        (void) sound_play(g, "keypress");
+        (void) game_event_descend(g);
+        return false; // To avoid click noise
+      }
 
-  if (sdlk_eq(*key, game_key_descend_get(g))) {
-    DBG("pressed descend key");
-    (void) sound_play(g, "keypress");
-    (void) game_event_descend(g);
-    return false; // To avoid click noise
-  }
+      if (sdlk_eq(*key, game_key_jump_get(g))) {
+        DBG("pressed jump key");
+        TRACE_INDENT();
+        game_event_jump(g);
+        return true;
+      }
 
-  if (sdlk_eq(*key, game_key_jump_get(g))) {
-    DBG("pressed jump key");
-    TRACE_INDENT();
-    game_event_jump(g);
-    return true;
-  }
+      if (sdlk_eq(*key, game_key_throw_get(g))) {
+        DBG("pressed throw key");
+        TRACE_INDENT();
+        game_event_throw(g);
+        return true;
+      }
 
-  if (sdlk_eq(*key, game_key_throw_get(g))) {
-    DBG("pressed throw key");
-    TRACE_INDENT();
-    game_event_throw(g);
-    return true;
-  }
+      if (sdlk_eq(*key, game_key_fire_get(g))) {
+        return false;
+      }
+      if (sdlk_eq(*key, game_key_move_up_get(g))) {
+        return false;
+      }
+      if (sdlk_eq(*key, game_key_move_down_get(g))) {
+        return false;
+      }
+      if (sdlk_eq(*key, game_key_move_left_get(g))) {
+        return false;
+      }
+      if (sdlk_eq(*key, game_key_move_right_get(g))) {
+        return false;
+      }
 
-  if (sdlk_eq(*key, game_key_fire_get(g))) {
-    return false;
-  }
-  if (sdlk_eq(*key, game_key_move_up_get(g))) {
-    return false;
-  }
-  if (sdlk_eq(*key, game_key_move_down_get(g))) {
-    return false;
-  }
-  if (sdlk_eq(*key, game_key_move_left_get(g))) {
-    return false;
-  }
-  if (sdlk_eq(*key, game_key_move_right_get(g))) {
-    return false;
+      break;
+    case STATE_COLLECT_MENU :      [[fallthrough]];
+    case STATE_DEAD_MENU :         [[fallthrough]];
+    case STATE_GENERATED :         [[fallthrough]];
+    case STATE_GENERATING :        [[fallthrough]];
+    case STATE_INIT :              [[fallthrough]];
+    case STATE_INVENTORY_MENU :    [[fallthrough]];
+    case STATE_ITEM_MENU :         [[fallthrough]];
+    case STATE_KEYBOARD_MENU :     [[fallthrough]];
+    case STATE_LEVEL_SELECT_MENU : [[fallthrough]];
+    case STATE_LOAD_MENU :         [[fallthrough]];
+    case STATE_LOADED :            [[fallthrough]];
+    case STATE_MAIN_MENU :         [[fallthrough]];
+    case STATE_MOVE_WARNING_MENU : [[fallthrough]];
+    case STATE_QUIT_MENU :         [[fallthrough]];
+    case STATE_QUITTING :          [[fallthrough]];
+    case STATE_SAVE_MENU :         [[fallthrough]];
+    case STATE_THE_END_MENU :      [[fallthrough]];
+    case STATE_THROW_MENU :        [[fallthrough]];
+    case GAME_STATE_ENUM_MAX :     DBG("game mouse down, ignore, not playing"); return false;
   }
 
   switch (key->mod) {

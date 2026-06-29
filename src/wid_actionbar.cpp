@@ -616,7 +616,7 @@ static auto wid_actionbar_create_window(Gamep g) -> bool
   bool       opt_wait      = true;
   bool       opt_inventory = true;
   bool const opt_quit      = true;
-  bool const opt_zoom      = true;
+  bool       opt_zoom      = true;
   bool       opt_help      = true;
   bool       opt_load      = false;
   bool       opt_save      = false;
@@ -630,6 +630,7 @@ static auto wid_actionbar_create_window(Gamep g) -> bool
   }
 
   if (level_is_level_select(g, v, l)) {
+    opt_zoom      = false;
     opt_wait      = false;
     opt_inventory = false;
     opt_help      = false;

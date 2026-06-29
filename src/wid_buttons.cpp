@@ -67,7 +67,7 @@ static void wid_button_pulse(Gamep g, Widp w)
   uint8_t a = 0;
 
   if (n == mid) {
-    a = 255;
+    i = 255;
   } else if (n > mid) {
     i = (n - mid) / mid;
     i *= 100;
@@ -85,6 +85,7 @@ static void wid_button_pulse(Gamep g, Widp w)
 
   color c = wid_get_color(w, WID_COLOR_BG);
   c.a     = a;
+  fprintf(stderr, "ZZZ NEIL %s %s %d mid %f pulse %d n %f i %f a %d\n", __FILE__, __FUNCTION__, __LINE__, mid, pulse, n, i, a);
   wid_set_color(w, WID_COLOR_BG, c);
 }
 
