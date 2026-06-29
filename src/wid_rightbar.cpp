@@ -84,9 +84,8 @@ static void wid_rightbar_create_minimap_level(Gamep g)
 
   if (level_is_level_select(g, v, l)) {
     //
-    // If in level select mode, we show different contents
+    // If in level select mode, a different wid is used
     //
-    level_select_rightbar_show_contents(g, v, l, wid_rightbar);
   } else {
     //
     // Normal level contents

@@ -20,6 +20,7 @@
 #include "my_ui.hpp"
 #include "my_wid_popup.hpp"
 #include "my_wid_text_box.hpp"
+#include "my_wids.hpp"
 
 #include <cmath>
 #include <cstdint>
@@ -732,124 +733,6 @@ void level_select_destroy(Gamep g, Levelsp v, Levelp l)
 }
 
 //
-// Show a sorted list of vales
-//
-static void level_select_show_sorted_values(Gamep g, WidPopup *parent, std::map< std::string, int > &map_in, const std::string &map_name)
-{
-  TRACE();
-
-  if (map_in.empty()) {
-    return;
-  }
-
-  {
-    auto s1 = std::format(" {}:", map_name);
-    parent->log(g, UI_INFO_FMT_STR + std::string(s1) + UI_RESET_FMT, TEXT_FORMAT_LHS);
-  }
-
-  while (static_cast< uint32_t >(! map_in.empty()) != 0U) {
-    std::string highest;
-    for (const auto &m : map_in) {
-      auto name = m.first;
-      auto val  = m.second;
-      if (highest.empty()) {
-        highest = name;
-      } else if (val > map_in[ highest ]) {
-        highest = name;
-      }
-    }
-
-    {
-      TRACE();
-      auto             *tp   = tp_find_mand(highest);
-      std::string const name = tp_name_short(tp);
-
-      auto s2 = std::format("  {} x %tp={}$ {}", map_in[ highest ], highest, name);
-      parent->log(g, s2, TEXT_FORMAT_LHS);
-    }
-
-    map_in.erase(highest);
-  }
-}
-
-//
-// If in level select mode, update what we're hovering over
-//
-void level_select_rightbar_show_contents(Gamep g, Levelsp v, Levelp l, WidPopup *parent)
-{
-  TRACE();
-
-  if (! level_is_level_select(g, v, l)) {
-    return;
-  }
-
-  Levelp level_over = level_select_get_level_at_tile_coords(g, v, v->cursor_at);
-  if (level_over == nullptr) {
-    return;
-  }
-
-  parent->log_empty_line(g);
-
-  Levelp player_level = thing_player_level(g);
-
-  std::map< std::string, int > mobs;
-  std::map< std::string, int > monsts;
-  std::map< std::string, int > treasure;
-
-  FOR_ALL_THINGS_ON_LEVEL(g, v, level_over, t)
-  {
-    auto name = tp_name(thing_tp(t));
-
-    if (thing_is_mob(t)) {
-      mobs[ name ]++;
-    }
-
-    if (thing_is_monst(t)) {
-      monsts[ name ]++;
-    }
-
-    if (thing_is_treasure(t)) {
-      treasure[ name ]++;
-    }
-  }
-
-  auto tmp = std::format("Level {}", level_over->level_num + 1);
-  parent->log(g, UI_INFO_FMT_STR + std::string(tmp) + UI_RESET_FMT);
-  parent->log_empty_line(g);
-
-  if (level_over->player_can_enter_this_level_next) {
-    if (player_level->player_completed_level_via_exit) {
-      parent->log(g, " You can enter here", TEXT_FORMAT_LHS);
-    } else if (player_level->player_fell_out_of_level) {
-      parent->log(g, " You can climb back here", TEXT_FORMAT_LHS);
-    } else {
-      parent->log(g, " You can go back here", TEXT_FORMAT_LHS);
-    }
-  } else if (level_over != player_level) {
-    parent->log(g, " You cannot enter here", TEXT_FORMAT_LHS);
-  } else {
-    parent->log(g, " You can re-enter here", TEXT_FORMAT_LHS);
-  }
-
-  if (level_over->player_completed_level_via_exit) {
-    parent->log(g, " You completed this level", TEXT_FORMAT_LHS);
-  } else if (level_over->player_fell_out_of_level) {
-    parent->log(g, " You fell out of this level", TEXT_FORMAT_LHS);
-  }
-
-  {
-    parent->log_empty_line(g);
-    parent->log(g, " Contents:", TEXT_FORMAT_LHS);
-  }
-
-  level_select_show_sorted_values(g, parent, mobs, "Mobs");
-  level_select_show_sorted_values(g, parent, monsts, "Monsters");
-  level_select_show_sorted_values(g, parent, treasure, "Loot");
-
-  level_minimaps_update(g, v, level_over);
-}
-
-//
 // If in level select mode, update what we're hovering over
 //
 void level_select_mouse_motion(Gamep g, Levelsp v, Levelp l)
@@ -864,6 +747,8 @@ void level_select_mouse_motion(Gamep g, Levelsp v, Levelp l)
   if (level_over == nullptr) {
     return;
   }
+
+  wid_level_select(g, v, level_over);
 
   game_request_to_remake_ui_set(g);
 }
@@ -917,6 +802,10 @@ static bool level_select_next(Gamep g, Levelsp v, Levelp l, Levelp level_over)
     (void) sound_play(g, "error");
     return false;
   }
+
+  level_update(g, v, new_level);
+
+  wid_level_select_destroy();
 
   //
   // Move the player also

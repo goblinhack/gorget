@@ -34,7 +34,7 @@ void wid_game_over_select(Gamep g);
 void wid_gray_out_button(Gamep g, Widp w);
 void wid_hiscores_show(Gamep g);
 void wid_intro_select(Gamep g);
-void wid_level_select(Gamep g);
+void wid_level_select(Gamep g, Levelsp v, Levelp l);
 void wid_inventory_mouse_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely);
 void wid_inventory_mouse_over_end(Gamep g, Widp w);
 void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player);

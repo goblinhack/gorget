@@ -116,30 +116,6 @@
     return false;
   }
 
-  switch (game_state(g)) {
-    case STATE_THROW_ITEM :        [[fallthrough]];
-    case STATE_PLAYING :           break;
-    case STATE_COLLECT_MENU :      [[fallthrough]];
-    case STATE_DEAD_MENU :         [[fallthrough]];
-    case STATE_GENERATED :         [[fallthrough]];
-    case STATE_GENERATING :        [[fallthrough]];
-    case STATE_INIT :              [[fallthrough]];
-    case STATE_INVENTORY_MENU :    [[fallthrough]];
-    case STATE_ITEM_MENU :         [[fallthrough]];
-    case STATE_KEYBOARD_MENU :     [[fallthrough]];
-    case STATE_LEVEL_SELECT_MENU : [[fallthrough]];
-    case STATE_LOAD_MENU :         [[fallthrough]];
-    case STATE_LOADED :            [[fallthrough]];
-    case STATE_MAIN_MENU :         [[fallthrough]];
-    case STATE_MOVE_WARNING_MENU : [[fallthrough]];
-    case STATE_QUIT_MENU :         [[fallthrough]];
-    case STATE_QUITTING :          [[fallthrough]];
-    case STATE_SAVE_MENU :         [[fallthrough]];
-    case STATE_THE_END_MENU :      [[fallthrough]];
-    case STATE_THROW_MENU :        [[fallthrough]];
-    case GAME_STATE_ENUM_MAX :     DBG("game motion, ignore, not playing"); return false;
-  }
-
   auto *v = game_levels_get(g);
   if (v == nullptr) {
     return false;
@@ -153,19 +129,48 @@
     return false;
   }
 
-  //
-  // Update the cursor path
-  //
-  game_request_to_update_cursor_set(g);
+  switch (game_state(g)) {
+    case STATE_THROW_ITEM : [[fallthrough]];
+    case STATE_PLAYING :
+      //
+      // Update the cursor path
+      //
+      game_request_to_update_cursor_set(g);
 
-  //
-  // Over the map?
-  //
-  if (! level_cursor_is_valid(g, v)) {
-    return false;
+      //
+      // Over the map?
+      //
+      if (! level_cursor_is_valid(g, v)) {
+        return false;
+      }
+
+      level_scroll_delta(g, v, l, spoint(wheelx, -wheely));
+      break;
+    case STATE_LEVEL_SELECT_MENU :
+      //
+      // To allow previews of levels
+      //
+      level_select_mouse_motion(g, v, l);
+      break;
+    case STATE_COLLECT_MENU :      [[fallthrough]];
+    case STATE_DEAD_MENU :         [[fallthrough]];
+    case STATE_GENERATED :         [[fallthrough]];
+    case STATE_GENERATING :        [[fallthrough]];
+    case STATE_INIT :              [[fallthrough]];
+    case STATE_INVENTORY_MENU :    [[fallthrough]];
+    case STATE_ITEM_MENU :         [[fallthrough]];
+    case STATE_KEYBOARD_MENU :     [[fallthrough]];
+    case STATE_LOAD_MENU :         [[fallthrough]];
+    case STATE_LOADED :            [[fallthrough]];
+    case STATE_MAIN_MENU :         [[fallthrough]];
+    case STATE_MOVE_WARNING_MENU : [[fallthrough]];
+    case STATE_QUIT_MENU :         [[fallthrough]];
+    case STATE_QUITTING :          [[fallthrough]];
+    case STATE_SAVE_MENU :         [[fallthrough]];
+    case STATE_THE_END_MENU :      [[fallthrough]];
+    case STATE_THROW_MENU :        [[fallthrough]];
+    case GAME_STATE_ENUM_MAX :     DBG("game motion, ignore, not playing"); return false;
   }
-
-  level_scroll_delta(g, v, l, spoint(wheelx, -wheely));
 
   return true;
 }

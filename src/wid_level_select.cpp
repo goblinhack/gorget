@@ -13,6 +13,7 @@
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
 #include "my_spoint.hpp"
+#include "my_thing_inlines.hpp"
 #include "my_tile.hpp"
 #include "my_types.hpp"
 #include "my_ui.hpp"
@@ -22,7 +23,12 @@
 #include "my_wids.hpp"
 
 #include <SDL_keyboard.h>
+#include <cmath>
 #include <cstdint>
+#include <cstring>
+#include <format>
+#include <map>
+#include <string>
 
 static WidPopup *wid_level_select_window;
 
@@ -32,7 +38,7 @@ void wid_level_select_destroy()
     return;
   }
 
-  con("Level select menu: destroy");
+  log("Level select menu: destroy");
   TRACE();
 
   delete wid_level_select_window;
@@ -65,7 +71,7 @@ void wid_level_select_destroy()
 
 [[nodiscard]] static auto wid_level_select_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  con("Level select menu: start");
+  log("Level select menu: mouse up");
   TRACE();
 
   if (level_select_mouse_down(g)) {
@@ -75,11 +81,12 @@ void wid_level_select_destroy()
   return true;
 }
 
-void wid_level_select(Gamep g)
+void wid_level_select(Gamep g, Levelsp v, Levelp l)
 {
-  con("Level select menu: select");
+  log("Level select menu: select");
   TRACE();
 
+  level_con(g, v, l, "chose");
   if (wid_level_select_window != nullptr) {
     wid_level_select_destroy();
   }
@@ -97,8 +104,7 @@ void wid_level_select(Gamep g)
   wid_level_select_window->log_empty_line(g);
   wid_level_select_window->log(g, UI_GREEN_FMT_STR "Hello again, mortal.");
   wid_level_select_window->log_empty_line(g);
-  wid_level_select_window->log_empty_line(g);
-  wid_level_select_window->log(g, UI_INFO1_FMT_STR "Ready to enter the next level?", TEXT_FORMAT_LHS);
+  wid_level_select_window->log(g, UI_INFO1_FMT_STR " Ready to enter the next level?", TEXT_FORMAT_LHS);
   wid_level_select_window->log_empty_line(g);
 
   {
@@ -111,6 +117,10 @@ void wid_level_select(Gamep g)
 
     wid_set_on_mouse_up(w, wid_level_select_mouse_up);
     wid_set_pos(w, button_tl, button_br);
+  }
+
+  if (l) {
+    wid_level_show_contents(g, v, l, wid_level_select_window);
   }
 
   wid_update(g, wid_level_select_window->wid_text_area->wid_text_area);

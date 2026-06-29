@@ -150,6 +150,8 @@ static void tp_player_level_enter(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
+  thing_vision_reset(g, v, l, me);
+
   //
   // Ambience loops
   //

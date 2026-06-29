@@ -241,7 +241,7 @@ void level_is_completed_by_player_falling(Gamep g, Levelsp v, Levelp l)
   if (level_is_level_select(g, v, new_level)) {
     botcon_newline();
     game_state_change(g, STATE_LEVEL_SELECT_MENU, "level change");
-    wid_level_select(g);
+    wid_level_select(g, v, new_level);
   } else if (new_level->player_completed_level_via_exit) {
     topcon_newline();
     topcon("You re-enter level %u of dungeon %s.", new_level->level_num + 1, game_seed_name_get(g));

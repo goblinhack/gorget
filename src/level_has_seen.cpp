@@ -55,7 +55,10 @@ void level_has_seen_update(Gamep g, Levelsp v, Levelp l)
       if (static_cast< uint32_t >(age_map_get(&ext->has_seen, x, y)) != 0U) {
         l->player_has_seen_tile_cache[ x ][ y ] = 1U;
       } else {
-        l->player_has_seen_tile_cache[ x ][ y ] = 0U;
+        //
+        // Not sure about this, as age map will wrap. And do we want to forget about tiles we've seen?
+        //
+        // l->player_has_seen_tile_cache[ x ][ y ] = 0U;
       }
     }
   }

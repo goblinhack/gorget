@@ -141,3 +141,17 @@ void level_update_visibility(Gamep g, Levelsp v, Levelp l)
     level_minimaps_update(g, v, l);
   }
 }
+
+//
+// Called when changing level to reset all cached flags
+//
+void level_update(Gamep g, Levelsp v, Levelp l)
+{
+  TRACE();
+
+  l->request_to_update_per_tile_visibility  = true;
+  l->request_to_update_per_pixel_visibility = true;
+  level_update_visibility(g, v, l);
+  level_update_flags(g, v, l);
+}
+
