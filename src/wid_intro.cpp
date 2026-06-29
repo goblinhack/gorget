@@ -123,10 +123,10 @@ void wid_intro_select(Gamep g)
     wid_intro_destroy();
   }
 
-  int const    menu_height = TERM_HEIGHT - 20;
-  int const    menu_width  = UI_WID_POPUP_WIDTH_NORMAL * 2;
-  spoint const outer_tl(TERM_WIDTH - menu_width - 30, 10);
-  spoint const outer_br(TERM_WIDTH - 30, menu_height + 10);
+  int const    menu_height = TERM_HEIGHT - 30;
+  int const    menu_width  = UI_WID_POPUP_WIDTH_NORMAL + 8;
+  spoint const outer_tl(TERM_WIDTH - menu_width - 14, 14);
+  spoint const outer_br(TERM_WIDTH - 14, menu_height + 14);
   wid_intro_window = new WidPopup(g, "intro", outer_tl, outer_br, nullptr, "", false, false);
 
   wid_set_on_key_down(wid_intro_window->wid_popup_container, wid_intro_key_down);
@@ -149,8 +149,7 @@ void wid_intro_select(Gamep g)
   wid_intro_window->log(g, UI_INFO3_FMT_STR "Along the way you can collect spell books to increase your casting capacity.", TEXT_FORMAT_LHS);
   wid_intro_window->log_empty_line(g);
 
-  wid_intro_window->log(g, UI_INFO4_FMT_STR "However, the fastest way to increase your casting power is to accept sacrifies along the way...",
-                        TEXT_FORMAT_LHS);
+  wid_intro_window->log(g, UI_INFO4_FMT_STR "However, the best way to increase your casting power is to make sacrifies...", TEXT_FORMAT_LHS);
   wid_intro_window->log_empty_line(g);
 
   if (compiler_unused) {
@@ -189,8 +188,8 @@ void wid_intro_select(Gamep g)
     auto *p = wid_intro_window->wid_text_area->wid_text_area;
     auto *w = wid_new_continue_button(g, p, "continue");
 
-    spoint const tl((menu_width / 2) - 5, menu_height - 6);
-    spoint const br((menu_width / 2) + 4, menu_height - 4);
+    spoint const tl((menu_width / 2) - 5, menu_height - 5);
+    spoint const br((menu_width / 2) + 4, menu_height - 3);
 
     wid_set_on_mouse_up(w, wid_intro_mouse_up);
     wid_set_pos(w, tl, br);

@@ -612,31 +612,34 @@ static auto wid_actionbar_create_window(Gamep g) -> bool
   auto box_style           = UI_WID_STYLE_HORIZ_DARK;
   auto box_highlight_style = UI_WID_STYLE_HORIZ_LIGHT;
 
-  int        option_width  = 13;
-  bool       opt_wait      = true;
-  bool       opt_inventory = true;
-  bool const opt_quit      = true;
-  bool       opt_zoom      = true;
-  bool       opt_help      = true;
-  bool       opt_load      = false;
-  bool       opt_save      = false;
-  bool       opt_descend   = level_is_exit(g, v, l, thing_at(player)) != nullptr;
-  bool       opt_ascend    = level_is_entrance(g, v, l, thing_at(player)) != nullptr;
-  bool       opt_fire      = true;
+  int  option_width  = 13;
+  bool opt_wait      = true;
+  bool opt_inventory = true;
+  bool opt_quit      = true;
+  bool opt_zoom      = true;
+  bool opt_help      = true;
+  bool opt_load      = false;
+  bool opt_save      = false;
+  bool opt_descend   = level_is_exit(g, v, l, thing_at(player)) != nullptr;
+  bool opt_ascend    = level_is_entrance(g, v, l, thing_at(player)) != nullptr;
+  bool opt_fire      = true;
 
   if (g_opt_debug1 || level_is_level_select(g, v, l)) {
-    opt_save = true;
-    opt_load = true;
+    if (v->tick) {
+      opt_save = true;
+      opt_load = true;
+    }
   }
 
   if (level_is_level_select(g, v, l)) {
-    opt_zoom      = false;
-    opt_wait      = false;
-    opt_inventory = false;
-    opt_help      = false;
     opt_ascend    = false;
     opt_descend   = false;
     opt_fire      = false;
+    opt_help      = false;
+    opt_inventory = false;
+    opt_quit      = false;
+    opt_wait      = false;
+    opt_zoom      = false;
   }
 
   //
