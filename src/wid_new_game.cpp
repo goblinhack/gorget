@@ -5,7 +5,8 @@
 #include "config.hpp"
 #include "my_callstack.hpp"
 #include "my_game.hpp"
-#include "my_gl.hpp"   // NOLINT
+#include "my_gl.hpp" // NOLINT
+#include "my_level.hpp"
 #include "my_main.hpp" // NOLINT
 #include "my_types.hpp"
 #include "my_wids.hpp"
@@ -20,4 +21,11 @@ void wid_new_game(Gamep g)
   game_map_zoom_in(g);
   game_start_playing(g);
   game_state_change(g, STATE_PLAYING, "new game");
+
+  auto *v = game_levels_get(g);
+  if (v == nullptr) {
+    return;
+  }
+
+  (void) level_change(g, v, LEVEL_SELECT_ID);
 }

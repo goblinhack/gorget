@@ -33,16 +33,18 @@
 //
 // Show a sorted list of vales
 //
-static void level_select_show_sorted_values(Gamep g, WidPopup *parent, std::map< std::string, int > &map_in, const std::string &map_name)
+static int level_select_show_sorted_values(Gamep g, WidPopup *parent, std::map< std::string, int > &map_in, const std::string &map_name)
 {
   TRACE();
 
+  int count = 0;
+
   if (map_in.empty()) {
-    return;
+    return count;
   }
 
   {
-    auto s1 = std::format(" {}:", map_name);
+    auto s1 = std::format("{}:", map_name);
     parent->log(g, UI_INFO_FMT_STR + std::string(s1) + UI_RESET_FMT, TEXT_FORMAT_LHS);
   }
 
@@ -65,10 +67,12 @@ static void level_select_show_sorted_values(Gamep g, WidPopup *parent, std::map<
 
       auto s2 = std::format("  {} x %tp={}$ {}", map_in[ highest ], highest, name);
       parent->log(g, s2, TEXT_FORMAT_LHS);
+      count++;
     }
 
     map_in.erase(highest);
   }
+  return count;
 }
 
 //
@@ -87,9 +91,15 @@ void wid_level_show_contents(Gamep g, Levelsp v, Levelp l, WidPopup *parent)
       return;
     }
 
-    l = level_select_get_next_level(g, v, l);
-    if (! l) {
-      return;
+    if (v->tick) {
+      l = level_select_get_next_level(g, v, l);
+      if (! l) {
+        return;
+      }
+    } else {
+      //
+      //  Stick with the first level
+      //
     }
   }
 
@@ -123,45 +133,49 @@ void wid_level_show_contents(Gamep g, Levelsp v, Levelp l, WidPopup *parent)
   parent->log(g, UI_INFO_FMT_STR + std::string(tmp) + UI_RESET_FMT);
   parent->log_empty_line(g);
 
-  if (l->player_can_enter_this_level_next) {
-    if (player_level->player_completed_level_via_exit) {
-      //
-      // Obvious
-      //
-      if (compiler_unused) {
-        parent->log(g, " You can enter this level.", TEXT_FORMAT_LHS);
+  if (v->tick) {
+    if (l->player_can_enter_this_level_next) {
+      if (player_level->player_completed_level_via_exit) {
+        //
+        // Obvious
+        //
+        if (compiler_unused) {
+          parent->log(g, "You can enter this level.", TEXT_FORMAT_LHS);
+          parent->log_empty_line(g);
+        }
+      } else if (player_level->player_fell_out_of_level) {
+        parent->log(g, "You can climb back here.", TEXT_FORMAT_LHS);
+        parent->log_empty_line(g);
+      } else {
+        parent->log(g, "You can go back to here.", TEXT_FORMAT_LHS);
         parent->log_empty_line(g);
       }
-    } else if (player_level->player_fell_out_of_level) {
-      parent->log(g, " You can climb back here.", TEXT_FORMAT_LHS);
+    } else if (l != player_level) {
+      parent->log(g, "You cannot enter here yet.", TEXT_FORMAT_LHS);
       parent->log_empty_line(g);
     } else {
-      parent->log(g, " You can go back to here.", TEXT_FORMAT_LHS);
+      parent->log(g, "You can re-enter this level.", TEXT_FORMAT_LHS);
       parent->log_empty_line(g);
     }
-  } else if (l != player_level) {
-    parent->log(g, " You cannot enter here yet.", TEXT_FORMAT_LHS);
-    parent->log_empty_line(g);
-  } else {
-    parent->log(g, " You can re-enter this level.", TEXT_FORMAT_LHS);
-    parent->log_empty_line(g);
+
+    if (l->player_completed_level_via_exit) {
+      parent->log(g, "You completed this level.", TEXT_FORMAT_LHS);
+      parent->log_empty_line(g);
+    } else if (l->player_fell_out_of_level) {
+      parent->log(g, "You fell out of this level.", TEXT_FORMAT_LHS);
+      parent->log_empty_line(g);
+    }
   }
 
-  if (l->player_completed_level_via_exit) {
-    parent->log(g, " You completed this level.", TEXT_FORMAT_LHS);
+  parent->log(g, "Level contents:", TEXT_FORMAT_LHS);
+
+  int count = 0;
+  count += level_select_show_sorted_values(g, parent, mobs, "Mobs");
+  count += level_select_show_sorted_values(g, parent, monsts, "Monsters");
+  count += level_select_show_sorted_values(g, parent, treasure, "Loot");
+
+  if (! count) {
     parent->log_empty_line(g);
-  } else if (l->player_fell_out_of_level) {
-    parent->log(g, " You fell out of this level.", TEXT_FORMAT_LHS);
-    parent->log_empty_line(g);
+    parent->log(g, UI_INFO_FMT_STR "This level appears empty...", TEXT_FORMAT_LHS);
   }
-
-  {
-    parent->log(g, " Contents:", TEXT_FORMAT_LHS);
-  }
-
-  level_select_show_sorted_values(g, parent, mobs, "Mobs");
-  level_select_show_sorted_values(g, parent, monsts, "Monsters");
-  level_select_show_sorted_values(g, parent, treasure, "Loot");
-
-  level_minimaps_update(g, v, l);
 }

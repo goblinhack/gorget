@@ -244,23 +244,27 @@ void level_is_completed_by_player_falling(Gamep g, Levelsp v, Levelp l)
     wid_level_select(g, v, new_level);
   } else if (new_level->player_completed_level_via_exit) {
     topcon_newline();
-    topcon("You re-enter level %u of dungeon %s.", new_level->level_num + 1, game_seed_name_get(g));
+    topcon("You re-enter level %u of dungeon '%s'.", new_level->level_num + 1, game_seed_name_get(g));
     game_state_change(g, STATE_PLAYING, "re-enter level");
   } else if (new_level->player_fell_out_of_level) {
     topcon_newline();
-    topcon("You stumble back into level %u of dungeon %s.", new_level->level_num + 1, game_seed_name_get(g));
+    topcon("You stumble back into level %u of dungeon '%s'.", new_level->level_num + 1, game_seed_name_get(g));
     game_state_change(g, STATE_PLAYING, "old-level");
   } else if (level_num > 0) {
     topcon_newline();
-    topcon("You enter level %u of dungeon %s.", new_level->level_num + 1, game_seed_name_get(g));
+    topcon("You enter level %u of dungeon '%s'.", new_level->level_num + 1, game_seed_name_get(g));
     game_state_change(g, STATE_PLAYING, "new level");
     if (level_is_boss_level(g, v, new_level)) {
       topcon_newline();
       topcon(UI_IMPORTANT_FMT_STR "Prepare thyself sinner!" UI_RESET_FMT);
     }
+  } else if (v->tick) {
+    topcon_newline();
+    topcon("You re-enter the dungeon '%s'.", game_seed_name_get(g));
+    game_state_change(g, STATE_PLAYING, "new level");
   } else {
     topcon_newline();
-    topcon("You re-enter the dungeon %s.", game_seed_name_get(g));
+    topcon("You enter the first level of dungeon '%s'.", game_seed_name_get(g));
     game_state_change(g, STATE_PLAYING, "new level");
   }
 
