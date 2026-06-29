@@ -12,6 +12,7 @@
 #include "my_level_inlines.hpp"
 #include "my_main.hpp"
 #include "my_random.hpp"
+#include "my_sound.hpp"
 #include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
 #include "my_tp.hpp"
@@ -141,6 +142,20 @@ static auto level_select_get_level_from_grid_coords(Levelsp v, bpoint p) -> Leve
 
   if (l->level_num_next_set) {
     return game_level_get(g, v, l->level_num_next);
+  }
+
+  return nullptr;
+}
+
+//
+// Attempt to find the next level for play
+//
+[[nodiscard]] auto level_select_get_next_level(Gamep g, Levelsp v, Levelp l) -> Levelp
+{
+  TRACE();
+
+  if (l->level_num_next_set) {
+    return game_level_get(g, v, l->level_num + 1);
   }
 
   return nullptr;
@@ -856,18 +871,11 @@ void level_select_mouse_motion(Gamep g, Levelsp v, Levelp l)
 //
 // If in level select mode, enter the chosen level
 //
-void level_select_mouse_down(Gamep g, Levelsp v, Levelp l)
+static bool level_select_next(Gamep g, Levelsp v, Levelp l, Levelp level_over)
 {
   TRACE();
-
-  if (! level_is_level_select(g, v, l)) {
-    return;
-  }
-
-  Levelp level_over = level_select_get_level_at_tile_coords(g, v, v->cursor_at);
-  if (level_over == nullptr) {
-    return;
-  }
+  level_con(g, v, l, "over");
+  level_con(g, v, level_over, "over");
 
   auto  *player       = thing_player(g);
   Levelp player_level = thing_player_level(g);
@@ -881,7 +889,8 @@ void level_select_mouse_down(Gamep g, Levelsp v, Levelp l)
 
   if (level_is_level_locked_icon(g, v, l, at) != nullptr) {
     topcon("You cannot enter this level yet. Choose an open door.");
-    return;
+    (void) sound_play(g, "error");
+    return false;
   }
   if (level_is_level_final_icon(g, v, l, at) != nullptr) {
     // ok to choose
@@ -891,7 +900,8 @@ void level_select_mouse_down(Gamep g, Levelsp v, Levelp l)
   }
   if (level_is_level_closed_icon(g, v, l, at) != nullptr) {
     topcon("This level is closed to you. Choose an open door.");
-    return;
+    (void) sound_play(g, "error");
+    return false;
   }
   if (level_is_level_next_icon(g, v, l, at) != nullptr) {
     // ok to choose
@@ -903,7 +913,9 @@ void level_select_mouse_down(Gamep g, Levelsp v, Levelp l)
   if ((level_over == player_level) || level_over->player_can_enter_this_level_next) {
     new_level = level_change(g, v, level_over->level_num);
   } else {
-    topcon("You cannot enter this level yet. Choose an open door.");
+    topcon("You cannot enter level %u yet. Choose an open door.", level_over->level_num + 1);
+    (void) sound_play(g, "error");
+    return false;
   }
 
   //
@@ -924,6 +936,57 @@ void level_select_mouse_down(Gamep g, Levelsp v, Levelp l)
     //
     game_request_to_remake_ui_set(g);
   }
+
+  return true;
+}
+
+//
+// If in level select mode, enter the chosen level
+//
+bool level_select_mouse_down(Gamep g)
+{
+  TRACE();
+
+  auto *v = game_levels_get(g);
+  if (v == nullptr) {
+    (void) sound_play(g, "error");
+    return false;
+  }
+
+  Levelp l = thing_player_level(g);
+  if (! l) {
+    (void) sound_play(g, "error");
+    return false;
+  }
+
+  auto level_over = level_select_get_next_level(g, v, l);
+  if (level_over == nullptr) {
+    (void) sound_play(g, "error");
+    return false;
+  }
+
+  return level_select_next(g, v, l, level_over);
+}
+
+//
+// If in level select mode, enter the chosen level
+//
+bool level_select_mouse_down(Gamep g, Levelsp v, Levelp l)
+{
+  TRACE();
+
+  if (! level_is_level_select(g, v, l)) {
+    (void) sound_play(g, "error");
+    return false;
+  }
+
+  Levelp level_over = level_select_get_level_at_tile_coords(g, v, v->cursor_at);
+  if (level_over == nullptr) {
+    (void) sound_play(g, "error");
+    return false;
+  }
+
+  return level_select_next(g, v, l, level_over);
 }
 
 void level_select_test(Gamep g)

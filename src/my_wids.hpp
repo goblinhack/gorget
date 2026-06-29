@@ -34,6 +34,7 @@ void wid_game_over_select(Gamep g);
 void wid_gray_out_button(Gamep g, Widp w);
 void wid_hiscores_show(Gamep g);
 void wid_intro_select(Gamep g);
+void wid_level_select(Gamep g);
 void wid_inventory_mouse_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely);
 void wid_inventory_mouse_over_end(Gamep g, Widp w);
 void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player);
@@ -63,6 +64,7 @@ void wid_seed_select(Gamep g);
 void wid_statistics_show(Gamep g, Levelsp v, Levelp l, Thingp player);
 void wid_topcon_fini(Gamep g);
 void wid_topcon_flush(Gamep g);
+void wid_level_select_destroy();
 void wid_topcon_log(const std::string &s);
 
 [[nodiscard]] auto wid_actionbar_init(Gamep g) -> bool;

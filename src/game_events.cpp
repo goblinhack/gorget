@@ -70,7 +70,7 @@
   // If in level select mode, enter the new level
   //
   if (level_is_level_select(g, v, l)) {
-    level_select_mouse_down(g, v, l);
+    (void) level_select_mouse_down(g, v, l);
     return true;
   }
 

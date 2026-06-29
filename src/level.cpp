@@ -18,6 +18,7 @@
 #include "my_tp_class.hpp"
 #include "my_types.hpp"
 #include "my_ui.hpp"
+#include "my_wids.hpp"
 
 #include <algorithm>
 #include <cmath>
@@ -243,6 +244,7 @@ void level_is_completed_by_player_falling(Gamep g, Levelsp v, Levelp l)
     topcon("Choose your next level.");
     topcon("Mouse over levels for monster/treasure info.");
     game_state_change(g, STATE_LEVEL_SELECT_MENU, "level change");
+    wid_level_select(g);
   } else if (new_level->player_completed_level_via_exit) {
     topcon_newline();
     topcon("You re-enter level %u of dungeon %s.", new_level->level_num + 1, game_seed_name_get(g));

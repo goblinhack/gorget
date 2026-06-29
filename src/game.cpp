@@ -1049,7 +1049,7 @@ void Game::state_change(GameStateType new_state, const std::string &why)
       game_request_reached_entrance_unset(g);
       game_request_reached_exit_unset(g);
       break;
-    case STATE_LEVEL_SELECT_MENU : [[fallthrough]];
+    case STATE_LEVEL_SELECT_MENU : wid_rightbar_fini(g); [[fallthrough]];
     case STATE_PLAYING :
       wid_load_destroy(g);
       wid_main_menu_destroy(g);
@@ -1222,13 +1222,18 @@ void Game::handle_game_request_to_remake_ui()
   auto *v = game_levels_get(g);
 
   switch (state) {
-    case STATE_DEAD_MENU :         [[fallthrough]];
-    case STATE_THE_END_MENU :      [[fallthrough]];
-    case STATE_PLAYING :           [[fallthrough]];
-    case STATE_LEVEL_SELECT_MENU : [[fallthrough]];
-    case STATE_COLLECT_MENU :      [[fallthrough]];
-    case STATE_THROW_ITEM :        [[fallthrough]];
-    case STATE_THROW_MENU :        [[fallthrough]];
+    case STATE_LEVEL_SELECT_MENU :
+      if (v != nullptr) {
+        (void) wid_leftbar_init(g);
+        (void) wid_actionbar_init(g);
+      }
+      break;
+    case STATE_DEAD_MENU :    [[fallthrough]];
+    case STATE_THE_END_MENU : [[fallthrough]];
+    case STATE_PLAYING :      [[fallthrough]];
+    case STATE_COLLECT_MENU : [[fallthrough]];
+    case STATE_THROW_ITEM :   [[fallthrough]];
+    case STATE_THROW_MENU :   [[fallthrough]];
     case STATE_INVENTORY_MENU :
       if (v != nullptr) {
         (void) wid_leftbar_init(g);

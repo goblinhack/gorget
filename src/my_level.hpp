@@ -730,6 +730,7 @@ enum {
 [[nodiscard]] auto level_select_get_level_at_tile_coords(Gamep g, Levelsp v, bpoint p) -> Levelp;
 [[nodiscard]] auto level_select_get_level(Gamep, Levelsp, Levelp l, const bpoint &) -> Levelp;
 [[nodiscard]] auto level_select_get_next_level_down(Gamep g, Levelsp v, Levelp l) -> Levelp;
+[[nodiscard]] auto level_select_get_next_level(Gamep g, Levelsp v, Levelp l) -> Levelp;
 [[nodiscard]] auto level_select_get(Gamep g, Levelsp v, bpoint p) -> LevelSelectCell *;
 [[nodiscard]] auto level_select_is_oob(bpoint p) -> bool;
 [[nodiscard]] auto level_select_is_oob(int x, int y) -> bool;
@@ -805,7 +806,6 @@ void level_scroll_warp_to_focus(Gamep g, Levelsp v, Levelp l);
 void level_select_assign_levels_to_grid(Gamep g, Levelsp v);
 void level_select_destroy(Gamep g, Levelsp v, Levelp l);
 void level_select_grid_of_empty_levels(Gamep g);
-void level_select_mouse_down(Gamep g, Levelsp v, Levelp l);
 void level_select_mouse_motion(Gamep g, Levelsp v, Levelp l);
 void level_select_rightbar_show_contents(Gamep g, Levelsp v, Levelp l, WidPopup *parent);
 void level_select_test(Gamep g);
@@ -884,6 +884,8 @@ void level_fov(const FovContext & /*ctx*/);
 
 // begin sort marker3 {
 [[nodiscard]] auto level_is_able_to_be_buffed(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
+[[nodiscard]] bool level_select_mouse_down(Gamep g, Levelsp v, Levelp l);
+[[nodiscard]] bool level_select_mouse_down(Gamep g);
 [[nodiscard]] auto level_is_able_to_be_thrown(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
 [[nodiscard]] auto level_is_able_to_collect_items(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
 [[nodiscard]] auto level_is_able_to_collect_keys(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
