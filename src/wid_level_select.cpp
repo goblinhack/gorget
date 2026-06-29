@@ -94,6 +94,7 @@ void wid_level_select(Gamep g)
 
   wid_set_on_key_down(wid_level_select_window->wid_popup_container, wid_level_select_key_down);
 
+  wid_level_select_window->log_empty_line(g);
   wid_level_select_window->log(g, UI_GREEN_FMT_STR "Hello again, mortal.");
   wid_level_select_window->log_empty_line(g);
   wid_level_select_window->log_empty_line(g);

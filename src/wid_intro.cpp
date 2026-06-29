@@ -132,44 +132,54 @@ void wid_intro_select(Gamep g)
   wid_set_on_key_down(wid_intro_window->wid_popup_container, wid_intro_key_down);
 
   const auto *name = game_player_name_get(g);
+  wid_intro_window->log_empty_line(g);
   wid_intro_window->log(g, UI_GREEN_FMT_STR + std::string("Greetings, foolish ") + name + ".");
   wid_intro_window->log_empty_line(g);
-  wid_intro_window->log_empty_line(g);
-  wid_intro_window->log(g,
-                        UI_INFO1_FMT_STR
-                        "You were a once powerful dark wizard, cast out of the underhell realms by the slightly darker wizard, Lord Batcat III.",
-                        TEXT_FORMAT_LHS);
+  wid_intro_window->log(
+      g,
+      UI_INFO1_FMT_STR
+      "You were once a powerful, dark wizard who was cast out of the underhell realms by the slightly darker wizard, Lord Batcat III.",
+      TEXT_FORMAT_LHS);
   wid_intro_window->log_empty_line(g);
 
   wid_intro_window->log(g, UI_INFO2_FMT_STR "Your quest is to reclaim your vantablack throne by fighting through twenty five levels of doom.",
                         TEXT_FORMAT_LHS);
   wid_intro_window->log_empty_line(g);
 
-  wid_intro_window->log(g,
-                        UI_INFO3_FMT_STR
-                        "Along the way you will need to make sacrifices... Fortunately, the dungeons are full of wizards captured by Lord "
-                        "Batcat.",
+  wid_intro_window->log(g, UI_INFO3_FMT_STR "Along the way you can collect spell books to increase your casting capacity.", TEXT_FORMAT_LHS);
+  wid_intro_window->log_empty_line(g);
+
+  wid_intro_window->log(g, UI_INFO4_FMT_STR "However, the fastest way to increase your casting power is to accept sacrifies along the way...",
                         TEXT_FORMAT_LHS);
   wid_intro_window->log_empty_line(g);
 
-  wid_intro_window->log(
-      g, UI_INFO4_FMT_STR "You will need to decide if such wizards are worthy of sacrifice to the very very dark gods you worship.",
-      TEXT_FORMAT_LHS);
-  wid_intro_window->log_empty_line(g);
+  if (compiler_unused) {
+    wid_intro_window->log(g,
+                          UI_INFO3_FMT_STR
+                          "Along the way you will need to make sacrifices... Fortunately, the dungeons are full of wizards captured by Lord "
+                          "Batcat.",
+                          TEXT_FORMAT_LHS);
+    wid_intro_window->log_empty_line(g);
 
-  wid_intro_window->log(g, UI_INFO1_FMT_STR "If you decide to sacrifice:");
-  wid_intro_window->log_empty_line(g);
-  wid_intro_window->log(g, UI_GREEN_FMT_STR "- points mean prizes! Wizard souls can be converted to spell points", TEXT_FORMAT_LHS);
-  wid_intro_window->log_empty_line(g);
-  wid_intro_window->log(g, UI_RED_FMT_STR "- wizard might not be evil enough and incur the wrath of your god!", TEXT_FORMAT_LHS);
-  wid_intro_window->log_empty_line(g);
+    wid_intro_window->log(
+        g, UI_INFO4_FMT_STR "You will need to decide if such wizards are worthy of sacrifice to the very very dark gods you worship.",
+        TEXT_FORMAT_LHS);
+    wid_intro_window->log_empty_line(g);
 
-  wid_intro_window->log(g, UI_INFO1_FMT_STR "If you decide to spare:");
-  wid_intro_window->log_empty_line(g);
-  wid_intro_window->log(g, UI_GREEN_FMT_STR "- the wizard might reward you...", TEXT_FORMAT_LHS);
-  wid_intro_window->log_empty_line(g);
-  wid_intro_window->log(g, UI_RED_FMT_STR "- the reward could be the magical equivalent of garbage!", TEXT_FORMAT_LHS);
-  wid_intro_window->log_empty_line(g);
+    wid_intro_window->log(g, UI_INFO1_FMT_STR "If you decide to sacrifice:");
+    wid_intro_window->log_empty_line(g);
+    wid_intro_window->log(g, UI_GREEN_FMT_STR "- points mean prizes! Wizard souls can be converted to spell points", TEXT_FORMAT_LHS);
+    wid_intro_window->log_empty_line(g);
+    wid_intro_window->log(g, UI_RED_FMT_STR "- wizard might not be evil enough and incur the wrath of your god!", TEXT_FORMAT_LHS);
+    wid_intro_window->log_empty_line(g);
+
+    wid_intro_window->log(g, UI_INFO1_FMT_STR "If you decide to spare:");
+    wid_intro_window->log_empty_line(g);
+    wid_intro_window->log(g, UI_GREEN_FMT_STR "- the wizard might reward you...", TEXT_FORMAT_LHS);
+    wid_intro_window->log_empty_line(g);
+    wid_intro_window->log(g, UI_RED_FMT_STR "- the reward could be the magical equivalent of garbage!", TEXT_FORMAT_LHS);
+    wid_intro_window->log_empty_line(g);
+  }
 
   wid_intro_window->log(g, UI_INFO1_FMT_STR "Enough talk... Begin your quest to defeat Lord Batcat!");
   wid_intro_window->log_empty_line(g);

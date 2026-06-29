@@ -240,9 +240,6 @@ void level_is_completed_by_player_falling(Gamep g, Levelsp v, Levelp l)
 
   if (level_is_level_select(g, v, new_level)) {
     botcon_newline();
-    topcon_newline();
-    topcon("Choose your next level.");
-    topcon("Mouse over levels for monster/treasure info.");
     game_state_change(g, STATE_LEVEL_SELECT_MENU, "level change");
     wid_level_select(g);
   } else if (new_level->player_completed_level_via_exit) {
