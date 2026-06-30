@@ -497,7 +497,7 @@ ENUM_DEF_H(MONST_GROUP_ENUM, ThingMonstGroup)
 //
 // Some kind of event that befalls a thing. Usually an attack
 //
-using TpDamage = struct TpDamage {
+using TpSpecialAttack = struct TpSpecialAttack {
   //
   // Unique name
   //
@@ -835,8 +835,8 @@ void tp_charge_count_set(Tpp tp, int val);
 void tp_con_(Tpp tp, const char *fmt, va_list args); // compile error without
 void tp_con(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void tp_damage_set(Tpp tp, ThingEventType e, const std::string &val);
-void tp_damage_type_add(Tpp tp, TpDamage val);
-bool tp_damage_type_get_random(Tpp tp, TpDamage &out);
+void tp_special_attack_add(Tpp tp, TpSpecialAttack val);
+bool tp_special_attack_get_random(Tpp tp, TpSpecialAttack &out);
 void tp_dbg_(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void tp_die_(Tpp tp, const char *fmt, va_list args); // compile error without
 void tp_die(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);

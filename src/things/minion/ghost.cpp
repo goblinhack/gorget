@@ -42,8 +42,14 @@ static bool tp_ghost_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thing
 {
   TRACE();
 
-  (void) thing_spawn(g, v, l, tp_first(is_effect_attack), it);
+  TpSpecialAttack d;
 
+  if (thing_special_attack_get_random(g, v, l, me, it, d)) {
+    e.damage_type = d;
+    e.damage      = d.dice.roll();
+  }
+
+  (void) thing_spawn(g, v, l, tp_first(is_effect_attack), it);
   thing_sound_play(g, v, l, me, "hiss");
 
   return true;
@@ -118,6 +124,15 @@ static void tp_ghost_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEven
   tp_weight_set(tp, WEIGHT_FEATHER);   // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   // end sort marker1 }
+
+  tp_special_attack_add(tp,
+                     TpSpecialAttack {
+                         .type          = "2",         //
+                         .name          = "icy touch", //
+                         .roll          = "1d4",       //
+                         .d100          = 10,
+                         .when_adjacent = true,
+                     });
 
   auto delay = 1000;
 

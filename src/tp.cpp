@@ -1104,7 +1104,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup val)
   }
 }
 
-void tp_damage_type_add(Tpp tp, TpDamage val)
+void tp_special_attack_add(Tpp tp, TpSpecialAttack val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1122,7 +1122,7 @@ void tp_damage_type_add(Tpp tp, TpDamage val)
   tp->damage_type[ val.type ] = val;
 }
 
-bool tp_damage_type_get_random(Tpp tp, TpDamage &out)
+bool tp_special_attack_get_random(Tpp tp, TpSpecialAttack &out)
 {
   TRACE();
 

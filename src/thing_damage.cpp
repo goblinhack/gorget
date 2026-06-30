@@ -23,73 +23,6 @@
 #include <limits>
 #include <string>
 
-bool thing_damage_type_get_random(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, TpDamage &out)
-{
-  TRACE();
-
-  if (me == nullptr) [[unlikely]] {
-    ERR("no thing pointer");
-    return false;
-  }
-
-  auto tp = thing_tp(me);
-
-  if (tp->damage_type.empty()) {
-    return false;
-  }
-
-  auto dice_roll = d100();
-
-  std::vector< TpDamage > filtered;
-
-  //
-  // Check for things mathing the dice roll first.
-  //
-  for (auto d : tp->damage_type) {
-    auto val = d.second;
-
-    if (val.when_adjacent) {
-      auto target = thing_at(it);
-      if (! adjacent(thing_at(me), target)) {
-        continue;
-      }
-    }
-
-    if (val.when_distant) {
-      auto target = thing_at(it);
-      if (distance(thing_at(me), target) <= 1) {
-        continue;
-      }
-    }
-
-    filtered.push_back(val);
-  }
-
-  //
-  // Check for things mathing the dice roll first.
-  //
-  for (auto d : filtered) {
-    if (! d.d100) {
-      continue;
-    }
-
-    if (dice_roll < d.d100) {
-      out = d;
-      return true;
-    }
-  }
-
-  //
-  // Fallback to any valid attack
-  //
-  for (auto d : filtered) {
-    out = d;
-    return true;
-  }
-
-  return false;
-}
-
 //
 // The player has been attacked
 //
@@ -131,6 +64,8 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
       case THING_EVENT_MELEE_DAMAGE :
         if (damage_name == "") {
           damage_name = "hit";
+        } else {
+          damage_name = "hit(" + damage_name + ")";
         }
 
         if (thing_attack_count_per_tick(it) > 1) {

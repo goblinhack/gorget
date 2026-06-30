@@ -61,19 +61,17 @@ static bool tp_argusul_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thi
 {
   TRACE();
 
-  TpDamage d;
+  TpSpecialAttack d;
 
-  if (! thing_damage_type_get_random(g, v, l, me, it, d)) {
-    return true; // allow default melee attack
-  }
+  if (thing_special_attack_get_random(g, v, l, me, it, d)) {
+    e.damage_type = d;
 
-  e.damage_type = d;
-
-  if (d.what != "") {
-    auto target    = thing_at(it);
-    auto fire_what = tp_find_mand(d.what);
-    (void) thing_beam_weapon_fire_at(g, v, l, me, fire_what, target);
-    return false; // prevent melee attack
+    if (d.what != "") {
+      auto target    = thing_at(it);
+      auto fire_what = tp_find_mand(d.what);
+      (void) thing_beam_weapon_fire_at(g, v, l, me, fire_what, target);
+      return false; // prevent melee attack
+    }
   }
 
   (void) thing_spawn(g, v, l, tp_first(is_effect_attack), it);
@@ -160,16 +158,17 @@ static void tp_argusul_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   // end sort marker1 }
 
-  tp_damage_type_add(tp,
-                     TpDamage {
-                         .type          = "1",       //
-                         .name          = "slashed", //
-                         .roll          = "1d4",     //
+  tp_special_attack_add(tp,
+                     TpSpecialAttack {
+                         .type          = "1",     //
+                         .name          = "gored", //
+                         .roll          = "1d6",   //
+                         .d100          = 10,
                          .when_adjacent = true,
                      });
 
-  tp_damage_type_add(tp,
-                     TpDamage {
+  tp_special_attack_add(tp,
+                     TpSpecialAttack {
                          .type         = "2",             //
                          .name         = "eye beam",      //
                          .what         = "beam_of_light", //
