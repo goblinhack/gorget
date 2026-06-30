@@ -159,22 +159,22 @@ static void tp_argusul_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
   // end sort marker1 }
 
   tp_special_attack_add(tp,
-                     TpSpecialAttack {
-                         .type          = "1",     //
-                         .name          = "gored", //
-                         .roll          = "1d6",   //
-                         .d100          = 10,
-                         .when_adjacent = true,
-                     });
+                        TpSpecialAttack {
+                            .type          = "1",    //
+                            .name          = "gore", //
+                            .roll          = "1d6",  //
+                            .d100          = 10,
+                            .when_adjacent = true,
+                        });
 
   tp_special_attack_add(tp,
-                     TpSpecialAttack {
-                         .type         = "2",             //
-                         .name         = "eye beam",      //
-                         .what         = "beam_of_light", //
-                         .d100         = 10,
-                         .when_distant = true,
-                     });
+                        TpSpecialAttack {
+                            .type         = "2",             //
+                            .name         = "central eye",   //
+                            .what         = "beam_of_light", //
+                            .d100         = 10,
+                            .when_distant = true,
+                        });
 
   auto delay = 1000;
 

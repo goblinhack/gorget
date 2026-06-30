@@ -68,7 +68,7 @@
 //
 // Add damage types
 //
-[[nodiscard]] auto wid_tp_info_damage(Gamep g, Levelsp v, Levelp l, Tpp me, WidPopup *parent, int width) -> bool
+[[nodiscard]] auto wid_tp_info_damage(Gamep g, Levelsp v, Levelp l, Tpp me, WidPopup *parent, int width, bool title_allowed) -> bool
 {
   TRACE();
 
@@ -126,11 +126,67 @@
       continue;
     }
 
-    auto space = (width - 2) / 2;
+    if (title_allowed) {
+      if (! printed_something) {
+        parent->log(g, UI_INFO_FMT_STR "Attacks:", TEXT_FORMAT_LHS);
+      }
+    }
+
+    auto space = (width - 4) / 2;
     auto line  = string_sprintf("%-*s%*s",                                              //
                                 space, capitalize(ThingEventType_to_string(e)).c_str(), //
                                 space, damage_str.c_str());
+    parent->log(g, line, TEXT_FORMAT_RHS);
+    printed_something = true;
+  }
+
+  return printed_something;
+}
+
+//
+// Add special attacks
+//
+[[nodiscard]] auto wid_tp_info_special_attacks(Gamep g, Levelsp v, Levelp l, Tpp me, WidPopup *parent, int width) -> bool
+{
+  TRACE();
+
+  bool printed_something = false;
+
+  if (! me->damage_type.empty()) {
+    parent->log(g, UI_INFO_FMT_STR "Special attacks:", TEXT_FORMAT_LHS);
+  }
+
+  //
+  // Check for things mathing the dice roll first.
+  //
+  for (auto d : me->damage_type) {
+    auto val = d.second;
+
+    auto damage_str = val.roll;
+
+    auto space = (width - 4) / 2;
+    auto line  = string_sprintf("- %-*s%*s",                         //
+                                space, capitalize(val.name).c_str(), //
+                                space, damage_str.c_str());
     parent->log(g, line, TEXT_FORMAT_LHS);
+
+    //
+    // If there is a weapon, get that damage
+    //
+    if (! val.what.empty()) {
+      auto weapon = tp_find_mand(val.what);
+      if (weapon) {
+        FOR_ALL_THING_EVENT(e)
+        {
+          auto s = tp_damage_string(weapon, e);
+          if (! s.empty()) {
+            damage_str = s;
+            (void) wid_tp_info_damage(g, v, l, weapon, parent, width - 2, false);
+          }
+        }
+      }
+    }
+
     printed_something = true;
   }
 
@@ -195,6 +251,10 @@
 
     if (! show_string) {
       continue;
+    }
+
+    if (! printed_something) {
+      parent->log(g, UI_INFO_FMT_STR "Immunities (no damage):", TEXT_FORMAT_LHS);
     }
 
     auto immune_str = string_sprintf("Immunity:  %*s", width - 13, capitalize(ThingEventType_to_string(e)).c_str());
@@ -265,6 +325,10 @@
       continue;
     }
 
+    if (! printed_something) {
+      parent->log(g, UI_INFO_FMT_STR "Resistances (half damage):", TEXT_FORMAT_LHS);
+    }
+
     auto resist_str = string_sprintf("Resists:   %*s", width - 13, capitalize(ThingEventType_to_string(e)).c_str());
     parent->log(g, resist_str, TEXT_FORMAT_LHS);
     printed_something = true;
@@ -297,7 +361,11 @@ void wid_tp_info(Gamep g, Levelsp v, Levelp l, Tpp me, WidPopup *parent, int wid
     parent->log_empty_line(g);
   }
 
-  if (wid_tp_info_damage(g, v, l, me, parent, width)) {
+  if (wid_tp_info_damage(g, v, l, me, parent, width, true /* title allowed */)) {
+    parent->log_empty_line(g);
+  }
+
+  if (wid_tp_info_special_attacks(g, v, l, me, parent, width)) {
     parent->log_empty_line(g);
   }
 

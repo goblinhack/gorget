@@ -510,7 +510,7 @@ using TpSpecialAttack = struct TpSpecialAttack {
   // How much damage
   //
   std::string roll;
-  Dice        dice;
+  Dice        dice {};
   //
   // If it fires a weapon, which one
   //

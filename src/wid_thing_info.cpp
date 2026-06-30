@@ -382,6 +382,10 @@
       continue;
     }
 
+    if (! printed_something) {
+      parent->log(g, UI_INFO_FMT_STR "Immunities (no damage):", TEXT_FORMAT_LHS);
+    }
+
     auto immune_str = string_sprintf("Immunity:  %*s", width - 13, capitalize(ThingEventType_to_string(e)).c_str());
     parent->log(g, immune_str, TEXT_FORMAT_LHS);
     printed_something = true;
@@ -448,6 +452,10 @@
 
     if (! show_string) {
       continue;
+    }
+
+    if (! printed_something) {
+      parent->log(g, UI_INFO_FMT_STR "Resistances (half damage):", TEXT_FORMAT_LHS);
     }
 
     auto resist_str = string_sprintf("Resists:   %*s", width - 13, capitalize(ThingEventType_to_string(e)).c_str());
@@ -819,7 +827,11 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, i
   }
 
   if (thing_is_monst(me)) {
-    if (wid_tp_info_damage(g, v, l, tp, parent, width)) {
+    if (wid_tp_info_damage(g, v, l, tp, parent, width, true /* title allowed */)) {
+      parent->log_empty_line(g);
+    }
+
+    if (wid_tp_info_special_attacks(g, v, l, tp, parent, width)) {
       parent->log_empty_line(g);
     }
 

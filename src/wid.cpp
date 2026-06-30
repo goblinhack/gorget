@@ -5288,10 +5288,10 @@ static void wid_display(Gamep g, Widp w, uint8_t disable_scissor, uint8_t *updat
         x -= (w->cursor - (text.length() / 2)) * c_width;
       } else if (wid_get_text_lhs(w)) {
         x = otlx;
-      } else if (wid_get_text_centerx(w)) {
-        x = ((owidth - width) / 2) + otlx;
       } else if (wid_get_text_rhs(w)) {
         x = obrx - width + 1;
+      } else if (wid_get_text_centerx(w)) {
+        x = ((owidth - width) / 2) + otlx;
       } else {
         x = ((owidth - width) / 2) + otlx;
       }
