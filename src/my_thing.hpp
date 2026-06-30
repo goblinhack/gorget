@@ -118,6 +118,10 @@ using ThingEvent = struct ThingEvent {
   // Whodunnit?
   //
   Thingp source = nullptr;
+  //
+  // Optional, might be set when the thing chooses an attack
+  //
+  TpDamage damage_type;
 };
 
 //
@@ -668,6 +672,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_crush(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp crusher) -> bool;
 [[nodiscard]] auto thing_damage_this_tick_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_damage_this_tick_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
+[[nodiscard]] bool thing_damage_type_get_random(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, TpDamage &out);
 [[nodiscard]] auto thing_damage_this_tick_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_damage_this_tick(Thingp t) -> int;
 [[nodiscard]] auto thing_debug(Gamep g, Levelsp v, Levelp l, Thingp t, uint32_t iter_index) -> bool;

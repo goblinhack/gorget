@@ -11,6 +11,7 @@
 #include "my_thing_callbacks.hpp"
 #include "my_tp.hpp"
 
+#include <map>
 #include <string>
 #include <vector>
 
@@ -47,7 +48,7 @@ public:
   //
   // All damage types for this thing
   //
-  std::unordered_map< std::string, TpDamage > damage_type;
+  std::map< std::string, TpDamage > damage_type;
 
   //
   // Immunity to various damage types

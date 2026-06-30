@@ -1104,7 +1104,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup val)
   }
 }
 
-void tp_damage_type_add(Tpp tp, TpDamage &val)
+void tp_damage_type_add(Tpp tp, TpDamage val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1117,7 +1117,35 @@ void tp_damage_type_add(Tpp tp, TpDamage &val)
     return;
   }
 
+  val.dice = Dice(val.roll);
+
   tp->damage_type[ val.type ] = val;
+}
+
+bool tp_damage_type_get_random(Tpp tp, TpDamage &out)
+{
+  TRACE();
+
+  if (tp == nullptr) [[unlikely]] {
+    tp_err(tp, "no thing template pointer");
+    return false;
+  }
+
+  if (tp->damage_type.empty()) {
+    return false;
+  }
+
+  for (auto d : tp->damage_type) {
+    auto val = d.second;
+    if (val.d100) {
+      if (d100() < val.d100) {
+        out = val;
+        return true;
+      }
+    }
+  }
+
+  return false;
 }
 
 void tp_is_immune_to_add(Tpp tp, ThingEventType val)

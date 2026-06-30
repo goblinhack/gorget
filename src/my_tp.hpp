@@ -509,7 +509,24 @@ using TpDamage = struct TpDamage {
   //
   // How much damage
   //
-  Dice dice;
+  std::string roll;
+  Dice        dice;
+  //
+  // If it fires a weapon, which one
+  //
+  std::string what;
+  //
+  // The likelihood of this attack
+  //
+  uint8_t d100 {};
+  //
+  // Some attacks are limited in distance
+  //
+  bool when_adjacent {};
+  //
+  // Some attacks are done only at distant
+  //
+  bool when_distant {};
 };
 
 class Tp;
@@ -818,7 +835,8 @@ void tp_charge_count_set(Tpp tp, int val);
 void tp_con_(Tpp tp, const char *fmt, va_list args); // compile error without
 void tp_con(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void tp_damage_set(Tpp tp, ThingEventType e, const std::string &val);
-void tp_damage_type_add(Tpp tp, TpDamage &val);
+void tp_damage_type_add(Tpp tp, TpDamage val);
+bool tp_damage_type_get_random(Tpp tp, TpDamage &out);
 void tp_dbg_(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void tp_die_(Tpp tp, const char *fmt, va_list args); // compile error without
 void tp_die(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);

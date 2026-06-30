@@ -68,6 +68,18 @@ static auto thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thing
 
   if (dist < thing_distance_avoid_target(me)) {
     THING_DBG(me, "choose target: player is too close (player %f) (vision %d)", dist, v_dist);
+
+    //
+    // Can we attack here?
+    //
+    if (dist <= 1) {
+      if (level_is_attackable_by_monst(g, v, l, target) != nullptr) {
+        if (thing_attack_at(g, v, l, me, target)) {
+          THING_DBG(me, "close attack");
+        }
+      }
+    }
+
     return false;
   }
 
@@ -417,6 +429,8 @@ static auto thing_monst_choose_something_we_can_see(Gamep g, Levelsp v, Levelp l
   }
 
   if (thing_is_minion(me)) {
+    THING_DBG(me, "choose target: one near mob?");
+    TRACE_INDENT();
     if (thing_minion_choose_target_near_mob(g, v, l, me)) {
       THING_DBG(me, "choose target: minion found target near mob");
       monst_state_change(g, v, l, me, MONST_STATE_WANDER);
@@ -424,7 +438,9 @@ static auto thing_monst_choose_something_we_can_see(Gamep g, Levelsp v, Levelp l
     }
   }
 
+  THING_DBG(me, "choose target: one we can see?");
   if (thing_monst_choose_something_we_can_see(g, v, l, me)) {
+    TRACE_INDENT();
     THING_DBG(me, "choose target: monst found a target it can see");
     monst_state_change(g, v, l, me, MONST_STATE_WANDER);
     return true;

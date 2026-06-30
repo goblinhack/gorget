@@ -103,10 +103,10 @@ void levels_test(Gamep g)
                     /* line */ (const char *) "X...C....X",
                     /* line */ (const char *) "X...C....X",
                     /* line */ (const char *) "X...C....X",
-                    /* line */ (const char *) "X@..C....X",
+                    /* line */ (const char *) "X@m.C....X",
                     /* line */ (const char *) "X...C....X",
                     /* line */ (const char *) "X...C....X",
-                    /* line */ (const char *) "X...C...mX",
+                    /* line */ (const char *) "X...C....X",
                     /* line */ (const char *) "XXXXXXXXXX",
                     /* end */ nullptr);
   }

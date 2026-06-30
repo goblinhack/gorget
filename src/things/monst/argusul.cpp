@@ -29,16 +29,16 @@ static auto tp_argusul_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> st
 {
   TRACE();
 
-  return                                                                                          //
-      UI_INFO1_FMT_STR                                                                            //
-      "Argusuls are floating many-eyed monsters that are impossible to sneak up on.\n"            //
-      UI_INFO2_FMT_STR                                                                            //
-      "Intelligent, fearful to behold, and resistant to fire, it would be "                       //
-      "wise to travel in the opposite direction of an Argusul.\n"                                 //
-      UI_INFO3_FMT_STR                                                                            //
-      "Beware their central eye that is capable of firing a beam_weapon weapon weapon. At you.\n" //
-      UI_INFO4_FMT_STR                                                                            //
-      "It is rumoured that a greater Argusul lurks in the dungeon somewhere...\n";                //
+  return                                                                               //
+      UI_INFO1_FMT_STR                                                                 //
+      "Argusuls are floating many-eyed monsters that are impossible to sneak up on.\n" //
+      UI_INFO2_FMT_STR                                                                 //
+      "Intelligent, fearful to behold, and resistant to fire, it would be "            //
+      "wise to travel in the opposite direction of an Argusul.\n"                      //
+      UI_INFO3_FMT_STR                                                                 //
+      "Beware their dazzling central eyestalk attack.\n"                               //
+      UI_INFO4_FMT_STR                                                                 //
+      "It is rumoured that a greater Argusul lurks in the dungeon somewhere...\n";     //
 }
 
 static auto tp_argusul_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at, Thingp me) -> ThingEnvironType
@@ -61,17 +61,22 @@ static bool tp_argusul_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thi
 {
   TRACE();
 
-  auto target = thing_at(it);
-  if (! adjacent(thing_at(me), target)) {
-    auto fire_what = tp_find_mand("beam_of_light");
-    if (d100() < 50) {
-      (void) thing_beam_weapon_fire_at(g, v, l, me, fire_what, target);
-    }
+  TpDamage d;
+
+  if (! thing_damage_type_get_random(g, v, l, me, it, d)) {
+    return true; // allow default melee attack
+  }
+
+  e.damage_type = d;
+
+  if (d.what != "") {
+    auto target    = thing_at(it);
+    auto fire_what = tp_find_mand(d.what);
+    (void) thing_beam_weapon_fire_at(g, v, l, me, fire_what, target);
     return false; // prevent melee attack
   }
 
   (void) thing_spawn(g, v, l, tp_first(is_effect_attack), it);
-
   thing_sound_play(g, v, l, me, "hiss");
 
   return true;
@@ -154,6 +159,23 @@ static void tp_argusul_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_weight_set(tp, WEIGHT_HUMAN);       // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   // end sort marker1 }
+
+  tp_damage_type_add(tp,
+                     TpDamage {
+                         .type          = "1",       //
+                         .name          = "slashed", //
+                         .roll          = "1d4",     //
+                         .when_adjacent = true,
+                     });
+
+  tp_damage_type_add(tp,
+                     TpDamage {
+                         .type         = "2",             //
+                         .name         = "eye beam",      //
+                         .what         = "beam_of_light", //
+                         .d100         = 10,
+                         .when_distant = true,
+                     });
 
   auto delay = 1000;
 
