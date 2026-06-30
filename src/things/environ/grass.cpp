@@ -53,7 +53,7 @@ static auto tp_grass_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
   tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_tickable);
   tp_health_set(tp, "1");
-  tp_is_immune_add(tp, THING_EVENT_WATER_DAMAGE);
+  tp_is_immune_to_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_name_a_or_an_set(tp, "grass");
   tp_name_apostrophize_set(tp, "grasses'");
   tp_name_long_set(tp, "grass");

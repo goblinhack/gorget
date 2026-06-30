@@ -154,4 +154,3 @@ void level_update(Gamep g, Levelsp v, Levelp l)
   level_update_visibility(g, v, l);
   level_update_flags(g, v, l);
 }
-

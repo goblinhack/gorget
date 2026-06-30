@@ -50,9 +50,9 @@ static auto tp_pillar_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_teleport_blocked);
   tp_health_set(tp, "1d500");
-  tp_is_immune_add(tp, THING_EVENT_FIRE_DAMAGE);
-  tp_is_immune_add(tp, THING_EVENT_MELEE_DAMAGE);
-  tp_is_immune_add(tp, THING_EVENT_WATER_DAMAGE);
+  tp_is_immune_to_add(tp, THING_EVENT_FIRE_DAMAGE);
+  tp_is_immune_to_add(tp, THING_EVENT_MELEE_DAMAGE);
+  tp_is_immune_to_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_name_a_or_an_set(tp, "a pillar");
   tp_name_apostrophize_set(tp, "pillars'");
   tp_name_long_set(tp, "stone pillar");

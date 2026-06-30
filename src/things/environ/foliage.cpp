@@ -62,7 +62,7 @@ static auto tp_foliage_z_depth_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> M
   tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_tickable);
   tp_health_set(tp, "1d5");
-  tp_is_immune_add(tp, THING_EVENT_WATER_DAMAGE);
+  tp_is_immune_to_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_name_a_or_an_set(tp, "foliage");
   tp_name_apostrophize_set(tp, "foliages'");
   tp_name_long_set(tp, "foliage");

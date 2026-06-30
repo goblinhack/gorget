@@ -6,6 +6,7 @@
 #define MY_THING_TEMPLATE_HPP
 
 #include "my_color.hpp"
+#include "my_dice_class.hpp"
 #include "my_enum.hpp"
 #include "my_types.hpp"
 
@@ -493,6 +494,24 @@ ENUM_DEF_H(THING_DIR_ENUM, ThingDirType)
 
 ENUM_DEF_H(MONST_GROUP_ENUM, ThingMonstGroup)
 
+//
+// Some kind of event that befalls a thing. Usually an attack
+//
+using TpDamage = struct TpDamage {
+  //
+  // Unique name
+  //
+  std::string type;
+  //
+  // User readable name
+  //
+  std::string name;
+  //
+  // How much damage
+  //
+  Dice dice;
+};
+
 class Tp;
 
 // begin sort marker1 {
@@ -799,6 +818,7 @@ void tp_charge_count_set(Tpp tp, int val);
 void tp_con_(Tpp tp, const char *fmt, va_list args); // compile error without
 void tp_con(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void tp_damage_set(Tpp tp, ThingEventType e, const std::string &val);
+void tp_damage_type_add(Tpp tp, TpDamage &val);
 void tp_dbg_(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void tp_die_(Tpp tp, const char *fmt, va_list args); // compile error without
 void tp_die(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
@@ -814,8 +834,8 @@ void tp_flag_set(Tpp tp, ThingFlagType f, int val = 1);
 void tp_get_id(const char *, int *id);
 void tp_health_set(Tpp tp, const std::string &val);
 void tp_hearing_threshold_set(Tpp tp, int val);
-void tp_is_immune_add(Tpp tp, ThingEventType val);
-void tp_is_resistant_add(Tpp tp, ThingEventType val);
+void tp_is_immune_to_add(Tpp tp, ThingEventType val);
+void tp_is_resistant_to_add(Tpp tp, ThingEventType val);
 void tp_lifespan_set(Tpp tp, const std::string &val);
 void tp_light_color_apply(Tpp tp);
 void tp_light_color_set(Tpp tp, const std::string &val);

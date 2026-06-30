@@ -49,7 +49,7 @@ static auto tp_entrance_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> s
   tp_flag_set(tp, is_stone);
   tp_flag_set(tp, is_submergible);
   tp_flag_set(tp, is_teleport_blocked);
-  tp_is_immune_add(tp, THING_EVENT_WATER_DAMAGE);
+  tp_is_immune_to_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_name_a_or_an_set(tp, "an entrance");
   tp_name_apostrophize_set(tp, "entrances'");
   tp_name_long_set(tp, "entrance");

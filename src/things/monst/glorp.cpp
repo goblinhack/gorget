@@ -124,7 +124,7 @@ static void tp_glorp_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEven
   tp_flag_set(tp, is_vision_360_degrees);
   tp_health_set(tp, "1d10+4");
   tp_hearing_threshold_set(tp, 8);
-  tp_is_immune_add(tp, THING_EVENT_WATER_DAMAGE);
+  tp_is_immune_to_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_light_color_set(tp, "green");
   tp_monst_group_add(tp, MONST_GROUP2);
   tp_name_a_or_an_set(tp, "a glorp");

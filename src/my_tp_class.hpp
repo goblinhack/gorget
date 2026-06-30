@@ -45,6 +45,11 @@ public:
   bool is_monst_group[ MONST_GROUP_ENUM_MAX ] {};
 
   //
+  // All damage types for this thing
+  //
+  std::unordered_map< std::string, TpDamage > damage_type;
+
+  //
   // Immunity to various damage types
   //
   bool is_immune[ THING_EVENT_ENUM_MAX ] {};

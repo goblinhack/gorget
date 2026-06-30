@@ -227,7 +227,7 @@ static void tp_door_unlocked_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, T
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_wood);
   tp_health_set(tp, "200");
-  tp_is_immune_add(tp, THING_EVENT_WATER_DAMAGE);
+  tp_is_immune_to_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_name_a_or_an_set(tp, "an unlocked door");
   tp_name_apostrophize_set(tp, "unlocked doors'");
   tp_name_long_set(tp, "unlocked door");

@@ -1104,7 +1104,23 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup val)
   }
 }
 
-void tp_is_immune_add(Tpp tp, ThingEventType val)
+void tp_damage_type_add(Tpp tp, TpDamage &val)
+{
+  TRACE();
+  if (tp == nullptr) [[unlikely]] {
+    tp_err(tp, "no thing template pointer");
+    return;
+  }
+
+  if (tp->damage_type.find(val.type) != tp->damage_type.end()) {
+    tp_err(tp, "damage type %s already set", val.type.c_str());
+    return;
+  }
+
+  tp->damage_type[ val.type ] = val;
+}
+
+void tp_is_immune_to_add(Tpp tp, ThingEventType val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -1140,7 +1156,7 @@ void tp_is_immune_add(Tpp tp, ThingEventType val)
   return tp->is_immune[ val ];
 }
 
-void tp_is_resistant_add(Tpp tp, ThingEventType val)
+void tp_is_resistant_to_add(Tpp tp, ThingEventType val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {

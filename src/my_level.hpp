@@ -807,7 +807,6 @@ void level_select_assign_levels_to_grid(Gamep g, Levelsp v);
 void level_select_destroy(Gamep g, Levelsp v, Levelp l);
 void level_select_grid_of_empty_levels(Gamep g);
 void level_select_mouse_motion(Gamep g, Levelsp v, Levelp l);
-void wid_level_show_contents(Gamep g, Levelsp v, Levelp l, WidPopup *parent);
 void level_select_test(Gamep g);
 void level_select_update_grid_tiles(Gamep g, Levelsp v);
 void level_thing_pair_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp a, Thingp b);
@@ -859,6 +858,7 @@ void rooms_small(Gamep g);
 void rooms_tall(Gamep g);
 void rooms_test(Gamep g);
 void thing_lunge_modify_position(Gamep g, Levelsp v, Levelp l, Thingp me, spoint &tl, spoint &br);
+void wid_level_show_contents(Gamep g, Levelsp v, Levelp l, WidPopup *parent);
 // end sort marker2 }
 
 struct FovContext;
@@ -885,8 +885,6 @@ void level_fov(const FovContext & /*ctx*/);
 
 // begin sort marker3 {
 [[nodiscard]] auto level_is_able_to_be_buffed(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
-[[nodiscard]] bool level_select_mouse_down(Gamep g, Levelsp v, Levelp l);
-[[nodiscard]] bool level_select_mouse_down(Gamep g);
 [[nodiscard]] auto level_is_able_to_be_thrown(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
 [[nodiscard]] auto level_is_able_to_collect_items(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
 [[nodiscard]] auto level_is_able_to_collect_keys(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
@@ -1104,6 +1102,8 @@ void level_fov(const FovContext & /*ctx*/);
 [[nodiscard]] auto level_tick_begin_is_requested(Gamep g, Levelsp v, Levelp l) -> bool;
 [[nodiscard]] auto level_tick_begin_requested(Gamep g, Levelsp v, Levelp l, const char *why) -> bool;
 [[nodiscard]] auto level_wieldable(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
+[[nodiscard]] bool level_select_mouse_down(Gamep g, Levelsp v, Levelp l);
+[[nodiscard]] bool level_select_mouse_down(Gamep g);
 // end sort marker3 }
 
 // begin sort marker4 {

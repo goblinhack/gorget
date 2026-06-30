@@ -176,7 +176,7 @@ static void tp_potion_incin_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, Th
   tp_flag_set(tp, is_treasure);
   tp_flag_set(tp, is_usable);
   tp_health_set(tp, "1d4");
-  tp_is_immune_add(tp, THING_EVENT_WATER_DAMAGE);
+  tp_is_immune_to_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_light_color_set(tp, "red");
   tp_name_a_or_an_set(tp, "a potion of incineration");
   tp_name_apostrophize_set(tp, "potion of incineration's");
