@@ -20,12 +20,13 @@ void wid_new_game(Gamep g)
   game_create_levels(g);
   game_map_zoom_in(g);
   game_start_playing(g);
+
   game_state_change(g, STATE_PLAYING, "new game");
 
-  auto *v = game_levels_get(g);
-  if (v == nullptr) {
-    return;
+  if (! g_opt_quick_start) {
+    auto *v = game_levels_get(g);
+    if (v) {
+      (void) level_change(g, v, LEVEL_SELECT_ID);
+    }
   }
-
-  (void) level_change(g, v, LEVEL_SELECT_ID);
 }
