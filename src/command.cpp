@@ -251,8 +251,8 @@ static auto command_matches(Gamep g, const char *input, char *output, uint8_t sh
         completes_to[ 0 ] = '\0';
 
         for (t = 0; t < longest_match; t++) {
-          my_strlcat(completes_to, command->tokens.args[ t ], SIZEOF(completes_to));
-          my_strlcat(completes_to, " ", SIZEOF(completes_to));
+          (void) my_strlcat(completes_to, command->tokens.args[ t ], SIZEOF(completes_to));
+          (void) my_strlcat(completes_to, " ", SIZEOF(completes_to));
         }
 
         if (output != nullptr) {
@@ -305,14 +305,13 @@ static auto command_matches(Gamep g, const char *input, char *output, uint8_t sh
 
           for (t = 0; t < longest_match; t++) {
             if (strisregexp(command->tokens.args[ t ]) != 0) {
-              my_strlcat(cand_expand_to, input_tokens.args[ t ], SIZEOF(cand_expand_to));
-              my_strlcat(cand_expand_to, " ", SIZEOF(cand_expand_to));
+              (void) my_strlcat(cand_expand_to, input_tokens.args[ t ], SIZEOF(cand_expand_to));
+              (void) my_strlcat(cand_expand_to, " ", SIZEOF(cand_expand_to));
               continue;
             }
 
-            my_strlcat(cand_expand_to, command->tokens.args[ t ], SIZEOF(cand_expand_to));
-
-            my_strlcat(cand_expand_to, " ", SIZEOF(cand_expand_to));
+            (void) my_strlcat(cand_expand_to, command->tokens.args[ t ], SIZEOF(cand_expand_to));
+            (void) my_strlcat(cand_expand_to, " ", SIZEOF(cand_expand_to));
           }
 
           if (expands_to[ 0 ] != '\0') {

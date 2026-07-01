@@ -136,7 +136,7 @@ auto strsub_(const char *in, const char *look_for, const char *replace_with, con
   }
 
   *buf = '\0';
-  my_strlcpy(buf, in, at - in + 1);
+  (void) my_strlcpy(buf, in, at - in + 1);
   strcat(buf, replace_with);
   strcat(buf, at + oldlen);
 

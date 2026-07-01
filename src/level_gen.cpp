@@ -5209,7 +5209,7 @@ static void level_gen_extend_bridges(Gamep g, class LevelGen *lg)
   //
   if (fixed_level != nullptr) {
     level->is_fixed_level = true;
-    my_strlcpy(level->info.name, fixed_level->alias.c_str(), sizeof(level->info.name));
+    (void) my_strlcpy(level->info.name, fixed_level->alias.c_str(), sizeof(level->info.name));
   }
 
   //

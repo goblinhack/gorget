@@ -294,10 +294,6 @@ void ascii_set(int depth, int x, int y, const Tilep tile, float tx, float ty, fl
   cell->dy[ depth ]   = dy;
 }
 
-#if 0
-static void ascii_set(int depth, int x, int y, const char *tilename) { ascii_set(depth, x, y, tile_find(tilename)); }
-#endif
-
 void ascii_set(int depth, int x, int y, const char ch) { ascii_set(depth, x, y, font_ui->font_get_tile(ch), ch); }
 
 void ascii_putf_internal2(int x, int y, color fg, color bg, const std::string &text)
@@ -306,9 +302,10 @@ void ascii_putf_internal2(int x, int y, color fg, color bg, const std::string &t
   int   bg_set    = 0;
   auto  text_iter = text.begin();
 
-  // printf("ascii_putf_internal2 [%s]/%ld scissors x %d y %d scissors %d %d %d %d %d\n", text.c_str(), text.size(),
-  // x, y,
-  //        scissors_tl.x, scissors_tl.y, scissors_br.x, scissors_br.y, scissors_enabled);
+  if (compiler_unused) {
+    printf("ascii_putf_internal2 [%s]/%ld scissors x %d y %d scissors %d %d %d %d %d\n", text.c_str(), text.size(), x, y, scissors_tl.x,
+           scissors_tl.y, scissors_br.x, scissors_br.y, scissors_enabled);
+  }
 
   //
   // Check for out of bounds. Cannot check for x here as a message could start off screen and end on screen.
@@ -393,7 +390,13 @@ void ascii_putf_internal2(int x, int y, color fg, color bg, const std::string &t
             got_pct = false;
             continue;
           }
-          continue;
+          if (*(text_iter + 1) == '%') {
+            //
+            // Actual % sign
+            //
+          } else {
+            continue;
+          }
         }
       }
     }
@@ -567,6 +570,13 @@ void ascii_putf_internal2(int x, int y, color fg, color bg, const std::string &t
               got_pct = false;
               continue;
             }
+            if (*(text_iter + 1) == '%') {
+              //
+              // Actual % sign
+              //
+            } else {
+              continue;
+            }
           } else {
             break;
           }
@@ -635,6 +645,13 @@ void ascii_putf_internal2(int x, int y, color fg, color bg, const std::string &t
         int  slen = 0;
         (void) string2tile(tmp, &slen);
         text_iter += slen;
+        continue;
+      }
+      if (*(text_iter + 1) == '%') {
+        //
+        // Actual % sign
+        //
+      } else {
         continue;
       }
     }
@@ -765,13 +782,6 @@ void ascii_draw_line(int depth, int x0, int y0, int x1, int y1, char what, color
 {
   ascii_draw_line(depth, x0, y0, x1, y1, font_ui->font_get_tile(what), col);
 }
-
-#if 0
-static void ascii_draw_line(int depth, int x0, int y0, int x1, int y1, const char *tilename, color col)
-{
-  ascii_draw_line(depth, x0, y0, x1, y1, tile_find(tilename), col);
-}
-#endif
 
 //
 // Display one z layer of the ascii.

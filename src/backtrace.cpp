@@ -65,7 +65,7 @@ static std::recursive_mutex backtrace_mutex;
   // strnstr() is BSD, so use a small local buffer and strstr().
   const int N = 5; // == strlen("____Z")
   char      prefix[ N + 1 ];
-  my_strlcpy(prefix, s, N);
+  (void) my_strlcpy(prefix, s, N);
   prefix[ N ] = '\0';
   return strstr(prefix, "_Z") != nullptr;
 }

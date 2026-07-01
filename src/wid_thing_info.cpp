@@ -164,9 +164,9 @@
   memset(line_bar, ' ', sizeof(line_bar) - 1);
 
   if (thing_is_dead(me)) {
-    my_strlcpy(line_bar + 1, "Dead", sizeof("Dead "));
+    (void) my_strlcpy(line_bar + 1, "Dead", sizeof("Dead "));
   } else {
-    my_strlcpy(line_bar + 1, "Health", sizeof("Health "));
+    (void) my_strlcpy(line_bar + 1, "Health", sizeof("Health "));
   }
 
   //
@@ -177,7 +177,7 @@
   h               = std::max(h, 0);
 
   std::string const health_str = std::to_string(h) + "/" + std::to_string(health_max);
-  my_strlcpy(line_bar + width - health_str.size() - 3, health_str.c_str(), width - health_str.size());
+  (void) my_strlcpy(line_bar + width - health_str.size() - 3, health_str.c_str(), width - health_str.size());
   line_bar[ strlen(line_bar) ] = ' ';
 
   //
@@ -226,9 +226,9 @@
   memset(line_bar, ' ', sizeof(line_bar) - 1);
 
   if (thing_distance_jump(g, v, l, me) != thing_distance_jump_max(g, v, l, me)) {
-    my_strlcpy(line_bar + 1, "Jumping impacted", sizeof("Jumping impacted "));
+    (void) my_strlcpy(line_bar + 1, "Jumping impacted", sizeof("Jumping impacted "));
   } else {
-    my_strlcpy(line_bar + 1, "Stamina", sizeof("Stamina "));
+    (void) my_strlcpy(line_bar + 1, "Stamina", sizeof("Stamina "));
   }
 
   //
@@ -239,7 +239,7 @@
   stamina          = std::max(stamina, 0);
 
   std::string const stamina_str = std::to_string(stamina) + "/" + std::to_string(stamina_max);
-  my_strlcpy(line_bar + width - stamina_str.size() - 3, stamina_str.c_str(), width - stamina_str.size());
+  (void) my_strlcpy(line_bar + width - stamina_str.size() - 3, stamina_str.c_str(), width - stamina_str.size());
   line_bar[ strlen(line_bar) ] = ' ';
 
   //
@@ -286,8 +286,7 @@
   //
   memset(line_bar, 0, sizeof(line_bar));
   memset(line_bar, ' ', sizeof(line_bar) - 1);
-
-  my_strlcpy(line_bar + 1, "Stealth", sizeof("Stealth "));
+  (void) my_strlcpy(line_bar + 1, "Stealth", sizeof("Stealth "));
 
   //
   // "Stealth        a/b"
@@ -297,7 +296,7 @@
   stealth          = std::max(stealth, 0);
 
   std::string const stealth_str = std::to_string(stealth) + "/" + std::to_string(stealth_max);
-  my_strlcpy(line_bar + width - stealth_str.size() - 3, stealth_str.c_str(), width - stealth_str.size());
+  (void) my_strlcpy(line_bar + width - stealth_str.size() - 3, stealth_str.c_str(), width - stealth_str.size());
   line_bar[ strlen(line_bar) ] = ' ';
 
   //
@@ -329,7 +328,7 @@
 {
   TRACE();
 
-  bool printed_something = false;
+  std::string out;
 
   FOR_ALL_THING_EVENT(e)
   {
@@ -382,16 +381,17 @@
       continue;
     }
 
-    if (! printed_something) {
-      parent->log(g, UI_INFO_FMT_STR "Immunities (no damage):", TEXT_FORMAT_LHS);
-    }
-
-    auto immune_str = string_sprintf("Immunity:  %*s", width - 13, capitalize(ThingEventType_to_string(e)).c_str());
-    parent->log(g, immune_str, TEXT_FORMAT_LHS);
-    printed_something = true;
+    out = string_append_with_comma(out, capitalize(ThingEventType_to_string(e)));
   }
 
-  return printed_something;
+  if (out.empty()) {
+    return false;
+  }
+
+  parent->log(g, UI_INFO_FMT_STR "Immunity:", TEXT_FORMAT_LHS);
+  parent->log(g, "- " + out, TEXT_FORMAT_LHS);
+
+  return true;
 }
 
 //
@@ -401,7 +401,7 @@
 {
   TRACE();
 
-  bool printed_something = false;
+  std::string out;
 
   FOR_ALL_THING_EVENT(e)
   {
@@ -454,16 +454,17 @@
       continue;
     }
 
-    if (! printed_something) {
-      parent->log(g, UI_INFO_FMT_STR "Resistances (half damage):", TEXT_FORMAT_LHS);
-    }
-
-    auto resist_str = string_sprintf("Resists:   %*s", width - 13, capitalize(ThingEventType_to_string(e)).c_str());
-    parent->log(g, resist_str, TEXT_FORMAT_LHS);
-    printed_something = true;
+    out = string_append_with_comma(out, capitalize(ThingEventType_to_string(e)));
   }
 
-  return printed_something;
+  if (out.empty()) {
+    return false;
+  }
+
+  parent->log(g, UI_INFO_FMT_STR "Resistances (half damage):", TEXT_FORMAT_LHS);
+  parent->log(g, "- " + out, TEXT_FORMAT_LHS);
+
+  return true;
 }
 
 //
@@ -473,110 +474,82 @@
 {
   TRACE();
 
-  bool printed_something = false;
+  std::string out;
 
   if (thing_is_ethereal(me)) {
-    auto immune_str = string_sprintf("Abilitiy:  %*s", width - 13, "Ethereal");
-    parent->log(g, immune_str, TEXT_FORMAT_LHS);
-    printed_something = true;
+    out = string_append_with_comma(out, "Ethereal");
   } else {
     //
     // Non ethereal
     //
     if (thing_is_able_to_walk_through_walls(me)) {
-      auto immune_str = string_sprintf("Abilitiy:  %*s", width - 13, "Wall walker");
-      parent->log(g, immune_str, TEXT_FORMAT_LHS);
-      printed_something = true;
+      out = string_append_with_comma(out, "Wall-walker");
     }
     if (thing_is_floating(me)) {
-      auto immune_str = string_sprintf("Abilitiy:  %*s", width - 13, "Floating");
-      parent->log(g, immune_str, TEXT_FORMAT_LHS);
-      printed_something = true;
+      out = string_append_with_comma(out, "Floating");
     }
     if (thing_is_flying(me)) {
-      auto immune_str = string_sprintf("Abilitiy:  %*s", width - 13, "Flying");
-      parent->log(g, immune_str, TEXT_FORMAT_LHS);
-      printed_something = true;
+      out = string_append_with_comma(out, "Flying");
     }
   }
 
   if (thing_is_gaseous(me)) {
-    auto immune_str = string_sprintf("Abilitiy:  %*s", width - 13, "Gaseous");
-    parent->log(g, immune_str, TEXT_FORMAT_LHS);
-    printed_something = true;
+    out = string_append_with_comma(out, "Gaseous");
   }
   if (thing_is_slime(me)) {
-    auto immune_str = string_sprintf("Abilitiy:  %*s", width - 13, "Slimey");
-    parent->log(g, immune_str, TEXT_FORMAT_LHS);
-    printed_something = true;
+    out = string_append_with_comma(out, "Slimey");
   }
   if (thing_is_able_to_collect_items(me)) {
-    auto immune_str = string_sprintf("Abilitiy:  %*s", width - 13, "Collector");
-    parent->log(g, immune_str, TEXT_FORMAT_LHS);
-    printed_something = true;
+    out = string_append_with_comma(out, "Collector");
   }
   if (thing_is_able_to_be_buffed(me)) {
-    auto immune_str = string_sprintf("Abilitiy:  %*s", width - 13, "Buffable");
-    parent->log(g, immune_str, TEXT_FORMAT_LHS);
-    printed_something = true;
+    out = string_append_with_comma(out, "Buffable");
   }
   if (thing_is_able_to_throw_items(me)) {
-    auto immune_str = string_sprintf("Abilitiy:  %*s", width - 13, "Jumper");
-    parent->log(g, immune_str, TEXT_FORMAT_LHS);
-    printed_something = true;
+    out = string_append_with_comma(out, "Jumper");
   }
   if (thing_is_able_to_throw_items_items(me)) {
-    auto immune_str = string_sprintf("Abilitiy:  %*s", width - 13, "Thrower");
-    parent->log(g, immune_str, TEXT_FORMAT_LHS);
-    printed_something = true;
+    out = string_append_with_comma(out, "Thrower");
   }
   if (thing_is_able_to_wield_items(me)) {
-    auto immune_str = string_sprintf("Abilitiy:  %*s", width - 13, "Wielder");
-    parent->log(g, immune_str, TEXT_FORMAT_LHS);
-    printed_something = true;
+    out = string_append_with_comma(out, "Wielder");
   }
   if (thing_is_burning(me)) {
-    auto immune_str = string_sprintf("Abilitiy:  %*s", width - 13, "Burnable");
-    parent->log(g, immune_str, TEXT_FORMAT_LHS);
-    printed_something = true;
+    out = string_append_with_comma(out, "Burnable");
   }
   if (thing_is_flammable(me)) {
-    auto immune_str = string_sprintf("Abilitiy:  %*s", width - 13, "Flammable");
-    parent->log(g, immune_str, TEXT_FORMAT_LHS);
-    printed_something = true;
+    out = string_append_with_comma(out, "Flammable");
   }
   if (thing_is_combustible(me)) {
-    auto immune_str = string_sprintf("Abilitiy:  %*s", width - 13, "Combustible");
-    parent->log(g, immune_str, TEXT_FORMAT_LHS);
-    printed_something = true;
+    out = string_append_with_comma(out, "Combustible");
   }
   if (thing_attack_count_per_tick(me) > 1) {
-    auto s          = string_sprintf("Multi-attack[%u]", thing_attack_count_per_tick(me));
-    auto immune_str = string_sprintf("Abilitiy:  %*s", width - 13, s.c_str());
-    parent->log(g, immune_str, TEXT_FORMAT_LHS);
-    printed_something = true;
+    out = string_sprintf_append_with_comma(out, "Multi-attack(%u)", thing_attack_count_per_tick(me));
   }
 
   {
     auto *player = thing_player(g);
     if (player != nullptr) {
-      const int player_speed = thing_speed(player);
+      const float player_speed = thing_speed(player);
+
+      auto pct = (int) ((thing_speed(me) / player_speed) * 100.0);
 
       if (thing_speed(me) > player_speed) {
-        auto s          = string_sprintf("Faster, speed[%u]", thing_speed(me));
-        auto immune_str = string_sprintf("Abilitiy:  %*s", width - 13, s.c_str());
-        parent->log(g, immune_str, TEXT_FORMAT_LHS);
-        printed_something = true;
+        out = string_sprintf_append_with_comma(out, "Faster(%u%%%%%%)", pct);
       } else if (thing_speed(me) < player_speed) {
-        auto s          = string_sprintf("Slower, speed[%u]", thing_speed(me));
-        auto immune_str = string_sprintf("Abilitiy:  %*s", width - 13, s.c_str());
-        parent->log(g, immune_str, TEXT_FORMAT_LHS);
-        printed_something = true;
+        out = string_sprintf_append_with_comma(out, "Slower(%u%%%%%%)", pct);
       }
     }
   }
 
-  return printed_something;
+  if (out.empty()) {
+    return false;
+  }
+
+  parent->log(g, UI_INFO_FMT_STR "Abilities:", TEXT_FORMAT_LHS);
+  parent->log(g, "- " + out, TEXT_FORMAT_LHS);
+
+  return true;
 }
 
 static void wid_thing_info_item_mouse_over_begin(Gamep g, Widp w, int /*relx*/, int /*rely*/, int /*wheelx*/, int /*wheely*/)
@@ -748,7 +721,7 @@ static void wid_thing_info_item_mouse_over_end(Gamep g, Widp w)
     auto h            = thing_lifespan(buff);
     h                 = std::max(h, 0);
 
-    my_strlcpy(line_bar, line.c_str(), line.size() + 1);
+    (void) my_strlcpy(line_bar, line.c_str(), line.size() + 1);
     auto *w = parent->log(g, std::string(line_bar));
     if (w != nullptr) {
       int lifespan_how_much = static_cast< int >((static_cast< float >(thing_lifespan(buff)) / static_cast< float >(lifespan_max))

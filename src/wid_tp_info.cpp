@@ -133,10 +133,18 @@
     }
 
     auto space = (width - 4) / 2;
-    auto line  = string_sprintf("%-*s%*s",                                              //
-                                space, capitalize(ThingEventType_to_string(e)).c_str(), //
-                                space, damage_str.c_str());
-    parent->log(g, line, TEXT_FORMAT_RHS);
+
+    if (title_allowed) {
+      auto line = string_sprintf("- %-*s%*s",                                            //
+                                 space, capitalize(ThingEventType_to_string(e)).c_str(), //
+                                 space, damage_str.c_str());
+      parent->log(g, line, TEXT_FORMAT_RHS);
+    } else {
+      auto line = string_sprintf("%-*s%*s",                                              //
+                                 space, capitalize(ThingEventType_to_string(e)).c_str(), //
+                                 space, damage_str.c_str());
+      parent->log(g, line, TEXT_FORMAT_RHS);
+    }
     printed_something = true;
   }
 
@@ -200,7 +208,7 @@
 {
   TRACE();
 
-  bool printed_something = false;
+  std::string out;
 
   FOR_ALL_THING_EVENT(e)
   {
@@ -253,16 +261,17 @@
       continue;
     }
 
-    if (! printed_something) {
-      parent->log(g, UI_INFO_FMT_STR "Immunities (no damage):", TEXT_FORMAT_LHS);
-    }
-
-    auto immune_str = string_sprintf("Immunity:  %*s", width - 13, capitalize(ThingEventType_to_string(e)).c_str());
-    parent->log(g, immune_str, TEXT_FORMAT_LHS);
-    printed_something = true;
+    out = string_append_with_comma(out, capitalize(ThingEventType_to_string(e)));
   }
 
-  return printed_something;
+  if (out.empty()) {
+    return false;
+  }
+
+  parent->log(g, UI_INFO_FMT_STR "Immunity:", TEXT_FORMAT_LHS);
+  parent->log(g, "- " + out, TEXT_FORMAT_LHS);
+
+  return true;
 }
 
 //
@@ -272,7 +281,7 @@
 {
   TRACE();
 
-  bool printed_something = false;
+  std::string out;
 
   FOR_ALL_THING_EVENT(e)
   {
@@ -325,16 +334,17 @@
       continue;
     }
 
-    if (! printed_something) {
-      parent->log(g, UI_INFO_FMT_STR "Resistances (half damage):", TEXT_FORMAT_LHS);
-    }
-
-    auto resist_str = string_sprintf("Resists:   %*s", width - 13, capitalize(ThingEventType_to_string(e)).c_str());
-    parent->log(g, resist_str, TEXT_FORMAT_LHS);
-    printed_something = true;
+    out = string_append_with_comma(out, capitalize(ThingEventType_to_string(e)));
   }
 
-  return printed_something;
+  if (out.empty()) {
+    return false;
+  }
+
+  parent->log(g, UI_INFO_FMT_STR "Resistances (half damage):", TEXT_FORMAT_LHS);
+  parent->log(g, "- " + out, TEXT_FORMAT_LHS);
+
+  return true;
 }
 
 //
