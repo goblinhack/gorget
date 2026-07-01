@@ -75,7 +75,7 @@ static auto thing_use_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp use
   if (! thing_on_use(g, v, l, item, user)) {
     if (e.event_type == THING_EVENT_USER_INITIATED) {
       auto the_thing = thing_name_long_the(g, v, l, item);
-      topcon(UI_WARNING_FMT_STR "You failed to use %s." UI_RESET_FMT, the_thing.c_str());
+      topcon(UI_WARN_FMT_STR "You failed to use %s." UI_RESET_FMT, the_thing.c_str());
     }
     return false;
   }

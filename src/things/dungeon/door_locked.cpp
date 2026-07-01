@@ -84,7 +84,7 @@ static auto tp_door_locked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l
     auto door_at = thing_at(me);
     if (level_is_attackable_by_player(g, v, l, door_at)) {
       auto event_type = THING_EVENT_MELEE_DAMAGE;
-      auto damage     = tp_damage(thing_tp(me), event_type);
+      auto damage     = thing_damage(g, v, l, me, event_type);
 
       ThingEvent e {
           .reason     = "door slam", //
@@ -145,7 +145,7 @@ static auto tp_door_locked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l
       // Need a key
       //
       if (thing_is_player(opener)) {
-        topcon(UI_WARNING_FMT_STR "You need a key!" UI_RESET_FMT);
+        topcon(UI_WARN_FMT_STR "You need a key!" UI_RESET_FMT);
       }
 
       return false;
@@ -196,7 +196,7 @@ static auto tp_door_locked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l
     auto door_at = thing_at(me);
     if (level_is_attackable_by_player(g, v, l, door_at)) {
       auto event_type = THING_EVENT_MELEE_DAMAGE;
-      auto damage     = tp_damage(thing_tp(me), event_type);
+      auto damage     = thing_damage(g, v, l, me, event_type);
 
       ThingEvent e {
           .reason     = "door slam", //

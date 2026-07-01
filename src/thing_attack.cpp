@@ -26,7 +26,7 @@ static auto thing_attack(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp i
 
   auto *source     = attacker;
   auto  event_type = THING_EVENT_MELEE_DAMAGE;
-  auto  damage     = tp_damage(thing_tp(source), event_type);
+  auto  damage     = thing_damage(g, v, l, source, event_type);
 
   ThingEvent e {
       .reason     = "melee",    //

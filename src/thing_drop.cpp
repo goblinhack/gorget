@@ -46,7 +46,7 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp us
     if (thing_is_player(user)) {
       if (e.event_type == THING_EVENT_USER_INITIATED) {
         auto the_thing = thing_name_long_the(g, v, l, item);
-        topcon(UI_WARNING_FMT_STR "You fail to drop %s." UI_RESET_FMT, the_thing.c_str());
+        topcon(UI_WARN_FMT_STR "You fail to drop %s." UI_RESET_FMT, the_thing.c_str());
       }
     }
     return false;
@@ -62,7 +62,7 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp us
     if (! thing_warp_to(g, v, l, item, thing_at(user))) {
       if (e.event_type == THING_EVENT_USER_INITIATED) {
         auto the_thing = thing_name_long_the(g, v, l, item);
-        topcon(UI_WARNING_FMT_STR "You fail to place %s." UI_RESET_FMT, the_thing.c_str());
+        topcon(UI_WARN_FMT_STR "You fail to place %s." UI_RESET_FMT, the_thing.c_str());
       }
       return false;
     }

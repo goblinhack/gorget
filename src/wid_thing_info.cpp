@@ -16,6 +16,7 @@
 #include "my_thing_inlines.hpp" // NOLINT
 #include "my_tile.hpp"
 #include "my_tp.hpp"
+#include "my_tp_class.hpp"
 #include "my_types.hpp"
 #include "my_ui.hpp"
 #include "my_wid.hpp"
@@ -476,6 +477,8 @@
 
   std::string out;
 
+  auto tp = thing_tp(me);
+
   if (thing_is_ethereal(me)) {
     out = string_append_with_comma(out, "Ethereal");
   } else {
@@ -523,8 +526,8 @@
   if (thing_is_combustible(me)) {
     out = string_append_with_comma(out, "Combustible");
   }
-  if (thing_attack_count_per_tick(me) > 1) {
-    out = string_sprintf_append_with_comma(out, "Multi-attack(%u)", thing_attack_count_per_tick(me));
+  if (tp_attack_count_max_per_tick_get(tp) > 1) {
+    out = string_sprintf_append_with_comma(out, "Multi-attack(%u)", tp_attack_count_max_per_tick_get(tp));
   }
 
   {
@@ -548,6 +551,77 @@
 
   parent->log(g, UI_INFO_FMT_STR "Abilities:", TEXT_FORMAT_LHS);
   parent->log(g, "- " + out, TEXT_FORMAT_LHS);
+
+  return true;
+}
+
+//
+// Add danger level
+//
+[[nodiscard]] static auto wid_thing_info_danger(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, int width) -> bool
+{
+  TRACE();
+
+  auto *player = thing_player(g);
+  if (! player) {
+    return false;
+  }
+
+  //
+  // Check for things mathing the dice roll first.
+  //
+  auto max_damage = thing_damage_max(g, v, l, me);
+  if (! max_damage) {
+    return false;
+  }
+
+  auto monst_defeat_count = thing_health(g, v, l, player) / max_damage;
+
+  //
+  // Oh dear. You my friend are toast.
+  //
+  if (monst_defeat_count == 0) {
+    monst_defeat_count = 1;
+  }
+
+  parent->log(g, UI_INFO_FMT_STR "Danger level:", TEXT_FORMAT_LHS);
+
+  if (monst_defeat_count == 1) {
+    parent->log(g, UI_IMPORTANT_FMT_STR "- Could defeat you in " + std::to_string(monst_defeat_count) + " hit!", TEXT_FORMAT_LHS);
+  } else if (monst_defeat_count <= 2) {
+    parent->log(g, UI_IMPORTANT_FMT_STR "- Could defeat you in " + std::to_string(monst_defeat_count) + " hits", TEXT_FORMAT_LHS);
+  } else if (monst_defeat_count <= 5) {
+    parent->log(g, UI_WARN_FMT_STR "- Could defeat you in " + std::to_string(monst_defeat_count) + " hits", TEXT_FORMAT_LHS);
+  } else if (monst_defeat_count <= 10) {
+    parent->log(g, "- Could defeat you in " + std::to_string(monst_defeat_count) + " hits", TEXT_FORMAT_LHS);
+  } else {
+    parent->log(g, "- Could defeat you eventually.", TEXT_FORMAT_LHS);
+  }
+
+  auto player_max_dmg = thing_damage_max(g, v, l, player);
+  if (player_max_dmg != 0) {
+    auto player_defeat_count = thing_health(g, v, l, me) / player_max_dmg;
+
+    //
+    // Oh dear. The monst is toast.
+    //
+    if (player_defeat_count == 0) {
+      player_defeat_count = 1;
+    }
+
+    if (player_defeat_count == 1) {
+      parent->log(g, "- You could beat it in " + std::to_string(player_defeat_count) + " hit.", TEXT_FORMAT_LHS);
+      parent->log(g, "- More likely, " + std::to_string(player_defeat_count * 2) + " hits", TEXT_FORMAT_LHS);
+    } else if (player_defeat_count <= 2) {
+      parent->log(g, "- You could beat it in " + std::to_string(player_defeat_count) + " hits.", TEXT_FORMAT_LHS);
+      parent->log(g, "- More likely, " + std::to_string(player_defeat_count * 2) + " hits.", TEXT_FORMAT_LHS);
+    } else if (player_defeat_count <= 10) {
+      parent->log(g, "- You could beat it in " + std::to_string(player_defeat_count) + " hits.", TEXT_FORMAT_LHS);
+      parent->log(g, "- More likely, " + std::to_string(player_defeat_count * 2) + " hits.", TEXT_FORMAT_LHS);
+    } else {
+      parent->log(g, "- Will take many hits to beat.");
+    }
+  }
 
   return true;
 }
@@ -799,7 +873,7 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, i
     parent->log_empty_line(g);
   }
 
-  if (thing_is_monst(me)) {
+  if (thing_is_monst(me) && ! thing_is_dead(me)) {
     if (wid_tp_info_damage(g, v, l, tp, parent, width, true /* title allowed */)) {
       parent->log_empty_line(g);
     }
@@ -817,6 +891,10 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, i
     }
 
     if (wid_thing_info_abilities(g, me, parent, width)) {
+      parent->log_empty_line(g);
+    }
+
+    if (wid_thing_info_danger(g, v, l, me, parent, width)) {
       parent->log_empty_line(g);
     }
   }

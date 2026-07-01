@@ -51,7 +51,7 @@ static void tp_barrel_spawn_explosion(Gamep g, Levelsp v, Levelp l, Thingp me)
       if (thing_vision_can_see_tile(g, v, l, player, at)) {
         topcon(UI_IMPORTANT_FMT_STR "The barrel explodes!" UI_RESET_FMT);
       } else {
-        topcon(UI_WARNING_FMT_STR "You hear a distant explosion!" UI_RESET_FMT);
+        topcon(UI_WARN_FMT_STR "You hear a distant explosion!" UI_RESET_FMT);
       }
     } else {
       topcon("You hear a very muffled explosion!");

@@ -134,7 +134,7 @@ static Thingp g_item;
   }
 
   if (level_is_level_select(g, v, l)) {
-    topcon(UI_WARNING_FMT_STR "You can't drop things here!" UI_RESET_FMT);
+    topcon(UI_WARN_FMT_STR "You can't drop things here!" UI_RESET_FMT);
     (void) sound_play(g, "error");
     return false;
   }
@@ -182,7 +182,7 @@ static Thingp g_item;
   }
 
   if (level_is_level_select(g, v, l)) {
-    topcon(UI_WARNING_FMT_STR "You can't use things here!" UI_RESET_FMT);
+    topcon(UI_WARN_FMT_STR "You can't use things here!" UI_RESET_FMT);
     (void) sound_play(g, "error");
     return false;
   }
@@ -233,7 +233,7 @@ static Thingp g_item;
   }
 
   if (level_is_level_select(g, v, l)) {
-    topcon(UI_WARNING_FMT_STR "You can't throw things here!" UI_RESET_FMT);
+    topcon(UI_WARN_FMT_STR "You can't throw things here!" UI_RESET_FMT);
     (void) sound_play(g, "error");
     return false;
   }

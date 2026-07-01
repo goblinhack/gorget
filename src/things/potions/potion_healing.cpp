@@ -58,7 +58,7 @@ static bool tp_potion_healing_on_use(Gamep g, Levelsp v, Levelp l, Thingp me, Th
   auto new_health = thing_health_incr(g, v, l, user, thing_health_max(g, v, l, user) / 2);
   if (old_health == new_health) {
     if (thing_is_player(user)) {
-      topcon(UI_WARNING_FMT_STR "That potion seemed to have no effect." UI_RESET_FMT);
+      topcon(UI_WARN_FMT_STR "That potion seemed to have no effect." UI_RESET_FMT);
       thing_sound_play(g, v, l, user, "error");
     }
   } else {

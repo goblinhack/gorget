@@ -33,7 +33,7 @@ static void wid_rightbar_create_minimap_level(Gamep g)
     auto        *w = wid_new_square_button(g, wid_rightbar->wid_popup_container, "level map text");
     spoint const minimap_tl(1, TERM_HEIGHT - minimap_size);
     spoint const minimap_br(minimap_size + 2, TERM_HEIGHT - minimap_size);
-    wid_set_text(w, "Level:");
+    wid_set_text(w, "Minimap:");
     wid_set_text_lhs(w);
     wid_set_text_top(w);
     wid_set_style(w, UI_WID_STYLE_SPARSE_NONE);
@@ -51,7 +51,6 @@ static void wid_rightbar_create_minimap_level(Gamep g)
     wid_set_tilename(TILE_LAYER_BOX_FG, w, "FBO_MINIMAP_LEVEL");
     wid_set_text_lhs(w);
     wid_set_text_top(w);
-    wid_set_style(w, UI_WID_STYLE_SPARSE_NONE);
     wid_set_pos(w, minimap_tl, minimap_br);
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_color(w, WID_COLOR_BG, WHITE);

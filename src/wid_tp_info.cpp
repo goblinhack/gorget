@@ -76,7 +76,7 @@
 
   FOR_ALL_THING_EVENT(e)
   {
-    auto damage_str = tp_damage_string(me, e);
+    auto damage_str = tp_damage_dice_roll_string(me, e);
     if (damage_str.empty()) {
       continue;
     }
@@ -186,7 +186,7 @@
       if (weapon != nullptr) {
         FOR_ALL_THING_EVENT(e)
         {
-          auto s = tp_damage_string(weapon, e);
+          auto s = tp_damage_dice_roll_string(weapon, e);
           if (! s.empty()) {
             damage_str = s;
             (void) wid_tp_info_damage(g, v, l, weapon, parent, width - 2, false);

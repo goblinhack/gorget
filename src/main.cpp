@@ -507,10 +507,10 @@ static void parse_args(int argc, char *argv[])
   }
 
   if (! g_opt_tests) {
-    con("Press " UI_WARNING_FMT_STR "<tab>" UI_RESET_FMT " to complete commands.");
-    con("Press " UI_WARNING_FMT_STR "?" UI_RESET_FMT "     to show command options.");
+    con("Press " UI_WARN_FMT_STR "<tab>" UI_RESET_FMT " to complete commands.");
+    con("Press " UI_WARN_FMT_STR "?" UI_RESET_FMT "     to show command options.");
     auto key = ::to_string(game_key_console_get(g));
-    con("Press " UI_WARNING_FMT_STR "<%s>" UI_RESET_FMT "   to hide this console", key.c_str());
+    con("Press " UI_WARN_FMT_STR "<%s>" UI_RESET_FMT "   to hide this console", key.c_str());
   }
 
   //

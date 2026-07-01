@@ -141,7 +141,7 @@ void thing_player_init(Gamep g)
           auto *item = thing_find(g, v, g_thing_throw_id);
           if (item != nullptr) {
             if (! thing_throw_to(g, v, l, player, item, v->cursor_at)) {
-              topcon(UI_WARNING_FMT_STR "You failed to throw the item." UI_RESET_FMT);
+              topcon(UI_WARN_FMT_STR "You failed to throw the item." UI_RESET_FMT);
               (void) sound_play(g, "error");
             }
           }
@@ -1236,7 +1236,7 @@ void player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
   auto how_far_i_can_jump = thing_distance_jump(g, v, l, me);
   if (how_far_i_can_jump == 0) {
     if (thing_is_player(me)) {
-      topcon(UI_WARNING_FMT_STR "You are too tired to jump." UI_RESET_FMT);
+      topcon(UI_WARN_FMT_STR "You are too tired to jump." UI_RESET_FMT);
     }
     return false;
   }

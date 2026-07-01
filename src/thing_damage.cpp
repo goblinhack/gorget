@@ -20,6 +20,59 @@
 #include <limits>
 #include <string>
 
+[[nodiscard]] auto thing_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEventType val) -> int
+{
+  TRACE();
+
+  if (! me) {
+    ERR("no thing pointer");
+    return 0;
+  }
+
+  return tp_damage(thing_tp(me), val);
+}
+
+[[nodiscard]] auto thing_damage_max(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEventType val) -> int
+{
+  TRACE();
+
+  if (! me) {
+    ERR("no thing pointer");
+    return 0;
+  }
+
+  return tp_damage_max(thing_tp(me), val);
+}
+
+//
+// What is the most damage this thing can do
+//
+[[nodiscard]] int thing_damage_max(Gamep g, Levelsp v, Levelp l, Thingp me)
+{
+  TRACE();
+
+  int  max_damage {};
+  auto tp = thing_tp(me);
+
+  for (const auto &d : tp->damage_type) {
+    auto val   = d.second;
+    max_damage = std::max(max_damage, val.dice.max_roll());
+  }
+
+  FOR_ALL_THING_EVENT(e)
+  {
+    auto damage = thing_damage_max(g, v, l, me, e);
+    max_damage  = std::max(max_damage, damage);
+  }
+
+  auto attack_count = tp_attack_count_max_per_tick_get(thing_tp(me));
+  if (attack_count) {
+    max_damage *= attack_count;
+  }
+
+  return max_damage;
+}
+
 //
 // The player has been attacked
 //
@@ -50,13 +103,13 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
 
     switch (e.event_type) {
       case THING_EVENT_THROWN : //
-        topcon(UI_WARNING_FMT_STR "You are thrown by %s!" UI_RESET_FMT, by_the_thing.c_str());
+        topcon(UI_WARN_FMT_STR "You are thrown by %s!" UI_RESET_FMT, by_the_thing.c_str());
         break;
       case THING_EVENT_SHOVED : //
-        topcon(UI_WARNING_FMT_STR "You are shoved by %s." UI_RESET_FMT, by_the_thing.c_str());
+        topcon(UI_WARN_FMT_STR "You are shoved by %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
       case THING_EVENT_CRUSH : //
-        topcon(UI_WARNING_FMT_STR "You are crushed by %s." UI_RESET_FMT, by_the_thing.c_str());
+        topcon(UI_WARN_FMT_STR "You are crushed by %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
       case THING_EVENT_MELEE_DAMAGE :
         if (damage_name.empty()) {
@@ -70,31 +123,31 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
           // This is an assumption that only the player is being attacked.
           // We don't have a count per creature. This will be ok most of the time.
           //
-          topcon(UI_WARNING_FMT_STR "You are %s again by %s." UI_RESET_FMT, damage_name.c_str(), by_the_thing.c_str());
+          topcon(UI_WARN_FMT_STR "You are %s again by %s." UI_RESET_FMT, damage_name.c_str(), by_the_thing.c_str());
         } else {
-          topcon(UI_WARNING_FMT_STR "You are %s by %s." UI_RESET_FMT, damage_name.c_str(), by_the_thing.c_str());
+          topcon(UI_WARN_FMT_STR "You are %s by %s." UI_RESET_FMT, damage_name.c_str(), by_the_thing.c_str());
         }
         break;
       case THING_EVENT_WATER_DAMAGE : //
-        topcon(UI_WARNING_FMT_STR "You suffer water damage from %s." UI_RESET_FMT, by_the_thing.c_str());
+        topcon(UI_WARN_FMT_STR "You suffer water damage from %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
       case THING_EVENT_EXPLOSION_DAMAGE : //
-        topcon(UI_WARNING_FMT_STR "You suffer concussive damage from %s." UI_RESET_FMT, by_the_thing.c_str());
+        topcon(UI_WARN_FMT_STR "You suffer concussive damage from %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
       case THING_EVENT_LIGHT_DAMAGE : //
-        topcon(UI_WARNING_FMT_STR "You suffer dazzling damage from %s." UI_RESET_FMT, by_the_thing.c_str());
+        topcon(UI_WARN_FMT_STR "You suffer dazzling damage from %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
       case THING_EVENT_FIRE_DAMAGE :
         if (thing_is_lava(it)) {
-          topcon(UI_WARNING_FMT_STR "You are burning in lava!" UI_RESET_FMT);
+          topcon(UI_WARN_FMT_STR "You are burning in lava!" UI_RESET_FMT);
         } else if (thing_is_fire(it)) {
-          topcon(UI_WARNING_FMT_STR "You are standing in flames!" UI_RESET_FMT);
+          topcon(UI_WARN_FMT_STR "You are standing in flames!" UI_RESET_FMT);
         } else if (thing_is_water(it)) {
-          topcon(UI_WARNING_FMT_STR "You are boiling %s." UI_RESET_FMT, by_the_thing.c_str());
+          topcon(UI_WARN_FMT_STR "You are boiling %s." UI_RESET_FMT, by_the_thing.c_str());
         } else if (thing_is_steam(it)) {
-          topcon(UI_WARNING_FMT_STR "You scalded by %s." UI_RESET_FMT, by_the_thing.c_str());
+          topcon(UI_WARN_FMT_STR "You scalded by %s." UI_RESET_FMT, by_the_thing.c_str());
         } else {
-          topcon(UI_WARNING_FMT_STR "You are burnt by %s." UI_RESET_FMT, by_the_thing.c_str());
+          topcon(UI_WARN_FMT_STR "You are burnt by %s." UI_RESET_FMT, by_the_thing.c_str());
         }
         break;
       case THING_EVENT_NONE :             [[fallthrough]];
@@ -115,31 +168,31 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
   } else {
     switch (e.event_type) {
       case THING_EVENT_THROWN : //
-        topcon(UI_WARNING_FMT_STR "You took %d damage from being thrown!" UI_RESET_FMT, e.damage);
+        topcon(UI_WARN_FMT_STR "You took %d damage from being thrown!" UI_RESET_FMT, e.damage);
         break;
       case THING_EVENT_FALL : //
-        topcon(UI_WARNING_FMT_STR "You took %d damage from falling." UI_RESET_FMT, e.damage);
+        topcon(UI_WARN_FMT_STR "You took %d damage from falling." UI_RESET_FMT, e.damage);
         break;
       case THING_EVENT_SHOVED : //
-        topcon(UI_WARNING_FMT_STR "You are shoved." UI_RESET_FMT);
+        topcon(UI_WARN_FMT_STR "You are shoved." UI_RESET_FMT);
         break;
       case THING_EVENT_CRUSH : //
-        topcon(UI_WARNING_FMT_STR "You are crushed." UI_RESET_FMT);
+        topcon(UI_WARN_FMT_STR "You are crushed." UI_RESET_FMT);
         break;
       case THING_EVENT_MELEE_DAMAGE : //
-        topcon(UI_WARNING_FMT_STR "You are hit." UI_RESET_FMT);
+        topcon(UI_WARN_FMT_STR "You are hit." UI_RESET_FMT);
         break;
       case THING_EVENT_WATER_DAMAGE : //
-        topcon(UI_WARNING_FMT_STR "You suffer water damage." UI_RESET_FMT);
+        topcon(UI_WARN_FMT_STR "You suffer water damage." UI_RESET_FMT);
         break;
       case THING_EVENT_EXPLOSION_DAMAGE : //
-        topcon(UI_WARNING_FMT_STR "You suffer explosion damage." UI_RESET_FMT);
+        topcon(UI_WARN_FMT_STR "You suffer explosion damage." UI_RESET_FMT);
         break;
       case THING_EVENT_LIGHT_DAMAGE : //
-        topcon(UI_WARNING_FMT_STR "You suffer dazzling damage." UI_RESET_FMT);
+        topcon(UI_WARN_FMT_STR "You suffer dazzling damage." UI_RESET_FMT);
         break;
       case THING_EVENT_FIRE_DAMAGE : //
-        topcon(UI_WARNING_FMT_STR "You are burning." UI_RESET_FMT);
+        topcon(UI_WARN_FMT_STR "You are burning." UI_RESET_FMT);
         break;
       case THING_EVENT_NONE :             //
       case THING_EVENT_OPEN :             //

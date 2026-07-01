@@ -185,14 +185,14 @@ static auto thing_throw_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thing
 
   if (! thing_is_able_to_throw_items(thrower)) {
     if (thing_is_player(thrower)) {
-      topcon(UI_WARNING_FMT_STR "You are unable to throw items." UI_RESET_FMT);
+      topcon(UI_WARN_FMT_STR "You are unable to throw items." UI_RESET_FMT);
     }
     return false;
   }
 
   if (! thing_is_able_to_be_thrown(item)) {
     auto the_thing = thing_name_long_the(g, v, l, item);
-    topcon(UI_WARNING_FMT_STR "You cannot throw %s." UI_RESET_FMT, the_thing.c_str());
+    topcon(UI_WARN_FMT_STR "You cannot throw %s." UI_RESET_FMT, the_thing.c_str());
     return false;
   }
 
@@ -235,7 +235,7 @@ static auto thing_throw_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thing
   if (obs != nullptr) {
     if (thing_is_player(thrower)) {
       auto the_thing = thing_name_long_the(g, v, l, obs);
-      topcon(UI_WARNING_FMT_STR "You cannot throw items over %s." UI_RESET_FMT, the_thing.c_str());
+      topcon(UI_WARN_FMT_STR "You cannot throw items over %s." UI_RESET_FMT, the_thing.c_str());
     }
     return false;
   }

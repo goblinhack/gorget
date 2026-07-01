@@ -53,7 +53,7 @@ enum { UI_TYPE_PIXELART = 0, UI_TYPES_MAX = 1 };
 #define UI_RED_FMT_STR       "%%fg=red$"
 #define UI_RESET_FMT         "%%fg=reset$"
 #define UI_SHORTCUT_FMT_STR  "%%fg=orange$"
-#define UI_WARNING_FMT_STR   "%%fg=yellow$"
+#define UI_WARN_FMT_STR   "%%fg=yellow$"
 #define UI_WHITE_FMT_STR     "%%fg=white$"
 #define UI_YELLOW_FMT_STR    "%%fg=yellow$"
 

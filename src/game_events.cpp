@@ -208,7 +208,7 @@
       //
       // No saves
       //
-      topcon(UI_WARNING_FMT_STR "You can only save games when you exit the level." UI_RESET_FMT);
+      topcon(UI_WARN_FMT_STR "You can only save games when you exit the level." UI_RESET_FMT);
       (void) sound_play(g, "error");
       return true;
     }
@@ -336,7 +336,7 @@
   }
 
   if (! level_is_exit_bool(g, v, l, thing_at(player))) {
-    topcon(UI_WARNING_FMT_STR "There is no level exit here to descend." UI_RESET_FMT);
+    topcon(UI_WARN_FMT_STR "There is no level exit here to descend." UI_RESET_FMT);
     (void) sound_play(g, "error");
     return false;
   }
@@ -378,7 +378,7 @@
   }
 
   if (! level_is_entrance_bool(g, v, l, thing_at(player))) {
-    topcon(UI_WARNING_FMT_STR "There is no level entrance here to ascend." UI_RESET_FMT);
+    topcon(UI_WARN_FMT_STR "There is no level entrance here to ascend." UI_RESET_FMT);
     (void) sound_play(g, "error");
     return false;
   }
@@ -517,7 +517,7 @@ static auto game_event_throw(Gamep g) -> bool
   }
 
   if (items.empty()) {
-    topcon(UI_WARNING_FMT_STR "You have nothing that can be thrown." UI_RESET_FMT);
+    topcon(UI_WARN_FMT_STR "You have nothing that can be thrown." UI_RESET_FMT);
     (void) sound_play(g, "error");
     return true;
   }

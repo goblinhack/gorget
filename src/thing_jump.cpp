@@ -177,7 +177,7 @@ static auto thing_jump_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thingp
     if (thing_is_player(me)) {
       if (warn) {
         auto the_thing = thing_name_long_the(g, v, l, obs);
-        topcon(UI_WARNING_FMT_STR "You cannot jump over %s." UI_RESET_FMT, the_thing.c_str());
+        topcon(UI_WARN_FMT_STR "You cannot jump over %s." UI_RESET_FMT, the_thing.c_str());
       }
     }
     return false;

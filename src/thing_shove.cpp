@@ -27,7 +27,7 @@ static void thing_shoved_player(Gamep g, Levelsp v, Levelp l, ThingEvent &e)
   if (it != nullptr) {
     auto by_the_thing = thing_name_long_the(g, v, l, it);
 
-    topcon(UI_WARNING_FMT_STR "You are shoved by %s." UI_RESET_FMT, by_the_thing.c_str());
+    topcon(UI_WARN_FMT_STR "You are shoved by %s." UI_RESET_FMT, by_the_thing.c_str());
   }
 }
 
