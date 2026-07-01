@@ -258,7 +258,7 @@ void level_is_completed_by_player_falling(Gamep g, Levelsp v, Levelp l)
       topcon_newline();
       topcon(UI_IMPORTANT_FMT_STR "Prepare thyself sinner!" UI_RESET_FMT);
     }
-  } else if (v->tick != 0u) {
+  } else if (v->tick != 0U) {
     topcon_newline();
     topcon("You re-enter the dungeon '%s'.", game_seed_name_get(g));
     game_state_change(g, STATE_PLAYING, "new level");

@@ -1156,7 +1156,7 @@ auto tp_special_attack_get_random(Tpp tp, TpSpecialAttack &out) -> bool
 
   for (const auto &d : tp->damage_type) {
     auto val = d.second;
-    if (val.d100 != 0u) {
+    if (val.d100 != 0U) {
       if (d100() < val.d100) {
         out = val;
         return true;

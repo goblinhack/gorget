@@ -16,7 +16,6 @@
 #include "my_thing_inlines.hpp" // NOLINT
 #include "my_tile.hpp"
 #include "my_tp.hpp"
-#include "my_tp_class.hpp"
 #include "my_types.hpp"
 #include "my_ui.hpp"
 #include "my_wid.hpp"
@@ -325,7 +324,7 @@
 //
 // Add immunities
 //
-[[nodiscard]] auto wid_thing_info_immunity(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, int width) -> bool
+[[nodiscard]] auto wid_thing_info_immunity(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, int /*width*/) -> bool
 {
   TRACE();
 
@@ -398,7 +397,7 @@
 //
 // Add resistances
 //
-[[nodiscard]] auto wid_thing_info_resistance(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, int width) -> bool
+[[nodiscard]] auto wid_thing_info_resistance(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, int /*width*/) -> bool
 {
   TRACE();
 
@@ -471,13 +470,13 @@
 //
 // Add abilities
 //
-[[nodiscard]] static auto wid_thing_info_abilities(Gamep g, Thingp me, WidPopup *parent, int width) -> bool
+[[nodiscard]] static auto wid_thing_info_abilities(Gamep g, Thingp me, WidPopup *parent) -> bool
 {
   TRACE();
 
   std::string out;
 
-  auto tp = thing_tp(me);
+  auto *tp = thing_tp(me);
 
   if (thing_is_ethereal(me)) {
     out = string_append_with_comma(out, "Ethereal");
@@ -535,7 +534,7 @@
     if (player != nullptr) {
       const float player_speed = thing_speed(player);
 
-      auto pct = (int) ((thing_speed(me) / player_speed) * 100.0);
+      auto pct = static_cast< int >((thing_speed(me) / player_speed) * 100.0);
 
       if (thing_speed(me) > player_speed) {
         out = string_sprintf_append_with_comma(out, "Faster(%u%%%%%%)", pct);
@@ -558,12 +557,12 @@
 //
 // Add danger level
 //
-[[nodiscard]] static auto wid_thing_info_danger(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, int width) -> bool
+[[nodiscard]] static auto wid_thing_info_danger(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent) -> bool
 {
   TRACE();
 
   auto *player = thing_player(g);
-  if (! player) {
+  if (player == nullptr) {
     return false;
   }
 
@@ -571,7 +570,7 @@
   // Check for things mathing the dice roll first.
   //
   auto max_damage = thing_damage_max(g, v, l, me);
-  if (! max_damage) {
+  if (max_damage == 0) {
     return false;
   }
 
@@ -890,11 +889,11 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, i
       parent->log_empty_line(g);
     }
 
-    if (wid_thing_info_abilities(g, me, parent, width)) {
+    if (wid_thing_info_abilities(g, me, parent)) {
       parent->log_empty_line(g);
     }
 
-    if (wid_thing_info_danger(g, v, l, me, parent, width)) {
+    if (wid_thing_info_danger(g, v, l, me, parent)) {
       parent->log_empty_line(g);
     }
   }

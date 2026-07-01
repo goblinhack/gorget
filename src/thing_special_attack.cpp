@@ -61,7 +61,7 @@ auto thing_special_attack_get_random(Gamep g, Levelsp v, Levelp l, Thingp me, Th
   // Check for things mathing the dice roll first.
   //
   for (const auto &d : filtered) {
-    if (d.d100 == 0u) {
+    if (d.d100 == 0U) {
       continue;
     }
 
@@ -75,7 +75,7 @@ auto thing_special_attack_get_random(Gamep g, Levelsp v, Levelp l, Thingp me, Th
   // Fallback to any valid default attack
   //
   for (const auto &d : filtered) {
-    if (d.d100 != 0u) {
+    if (d.d100 != 0U) {
       continue;
     }
 

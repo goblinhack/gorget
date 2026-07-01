@@ -90,7 +90,7 @@ int asprintf(char *strp[], const char *fmt, ...)
   return ret;
 }
 
-[[nodiscard]] std::string string_append_with_comma(const std::string &in, const std::string &add)
+[[nodiscard]] auto string_append_with_comma(const std::string &in, const std::string &add) -> std::string
 {
   if (add.empty()) {
     return in;
@@ -98,9 +98,8 @@ int asprintf(char *strp[], const char *fmt, ...)
 
   if (in.empty()) {
     return add;
-  } else {
-    return in + ", " + add;
   }
+  return in + ", " + add;
 }
 
 [[nodiscard]] auto string_sprintf_append_with_comma(const std::string &in, const char *format, va_list args) -> std::string
@@ -111,7 +110,7 @@ int asprintf(char *strp[], const char *fmt, ...)
     throw std::bad_alloc();
   }
 
-  std::string ret = buf;
+  std::string const ret = buf;
   free(buf);
 
   return string_append_with_comma(in, ret);
@@ -128,7 +127,7 @@ int asprintf(char *strp[], const char *fmt, ...)
     throw std::bad_alloc();
   }
 
-  std::string ret = buf;
+  std::string const ret = buf;
   free(buf);
 
   va_end(args);

@@ -24,7 +24,7 @@
 {
   TRACE();
 
-  if (! me) {
+  if (me == nullptr) {
     ERR("no thing pointer");
     return 0;
   }
@@ -36,7 +36,7 @@
 {
   TRACE();
 
-  if (! me) {
+  if (me == nullptr) {
     ERR("no thing pointer");
     return 0;
   }
@@ -47,12 +47,12 @@
 //
 // What is the most damage this thing can do
 //
-[[nodiscard]] int thing_damage_max(Gamep g, Levelsp v, Levelp l, Thingp me)
+[[nodiscard]] auto thing_damage_max(Gamep g, Levelsp v, Levelp l, Thingp me) -> int
 {
   TRACE();
 
-  int  max_damage {};
-  auto tp = thing_tp(me);
+  int   max_damage {};
+  auto *tp = thing_tp(me);
 
   for (const auto &d : tp->damage_type) {
     auto val   = d.second;
@@ -66,7 +66,7 @@
   }
 
   auto attack_count = tp_attack_count_max_per_tick_get(thing_tp(me));
-  if (attack_count) {
+  if (attack_count != 0) {
     max_damage *= attack_count;
   }
 

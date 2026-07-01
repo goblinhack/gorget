@@ -26,6 +26,7 @@
 #include <cstdint>
 #include <cstdio>
 #include <cstdlib>
+#include <print>
 #include <string>
 
 struct Ascii {
@@ -303,8 +304,8 @@ void ascii_putf_internal2(int x, int y, color fg, color bg, const std::string &t
   auto  text_iter = text.begin();
 
   if (compiler_unused) {
-    printf("ascii_putf_internal2 [%s]/%d scissors x %d y %d scissors %d %d %d %d %d\n", text.c_str(), (int) text.size(), x, y, scissors_tl.x,
-           scissors_tl.y, scissors_br.x, scissors_br.y, scissors_enabled);
+    std::println("ascii_putf_internal2 [{}]/{} scissors x {} y {} scissors {} {} {} {} {:d}", text, static_cast< int >(text.size()), x, y,
+                 scissors_tl.x, scissors_tl.y, scissors_br.x, scissors_br.y, static_cast< int >(scissors_enabled));
   }
 
   //

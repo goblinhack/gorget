@@ -625,7 +625,7 @@ static auto wid_actionbar_create_window(Gamep g) -> bool
   bool opt_fire      = true;
 
   if (g_opt_debug1 || level_is_level_select(g, v, l)) {
-    if (v->tick != 0u) {
+    if (v->tick != 0U) {
       opt_save = true;
       opt_load = true;
     }

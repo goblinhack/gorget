@@ -80,7 +80,7 @@ void wid_level_show_contents(Gamep g, Levelsp v, Levelp l, WidPopup *parent)
       return;
     }
 
-    if (v->tick != 0u) {
+    if (v->tick != 0U) {
       l = level_select_get_next_level(g, v, l);
       if (l == nullptr) {
         return;
@@ -122,7 +122,7 @@ void wid_level_show_contents(Gamep g, Levelsp v, Levelp l, WidPopup *parent)
   parent->log(g, UI_INFO_FMT_STR + std::string(tmp) + UI_RESET_FMT);
   parent->log_empty_line(g);
 
-  if (v->tick != 0u) {
+  if (v->tick != 0U) {
     if (l->player_can_enter_this_level_next) {
       if (player_level->player_completed_level_via_exit) {
         //

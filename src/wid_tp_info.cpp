@@ -204,7 +204,7 @@
 //
 // Add immunities
 //
-[[nodiscard]] static auto wid_tp_info_immunity(Gamep g, Tpp me, WidPopup *parent, int width) -> bool
+[[nodiscard]] static auto wid_tp_info_immunity(Gamep g, Tpp me, WidPopup *parent) -> bool
 {
   TRACE();
 
@@ -277,7 +277,7 @@
 //
 // Add resistances
 //
-[[nodiscard]] static auto wid_tp_info_resistance(Gamep g, Tpp me, WidPopup *parent, int width) -> bool
+[[nodiscard]] static auto wid_tp_info_resistance(Gamep g, Tpp me, WidPopup *parent) -> bool
 {
   TRACE();
 
@@ -379,11 +379,11 @@ void wid_tp_info(Gamep g, Levelsp v, Levelp l, Tpp me, WidPopup *parent, int wid
     parent->log_empty_line(g);
   }
 
-  if (wid_tp_info_immunity(g, me, parent, width)) {
+  if (wid_tp_info_immunity(g, me, parent)) {
     parent->log_empty_line(g);
   }
 
-  if (wid_tp_info_resistance(g, me, parent, width)) {
+  if (wid_tp_info_resistance(g, me, parent)) {
     parent->log_empty_line(g);
   }
 }

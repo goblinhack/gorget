@@ -150,7 +150,7 @@ static auto level_select_get_level_from_grid_coords(Levelsp v, bpoint p) -> Leve
 {
   TRACE();
 
-  if (v->tick == 0u) {
+  if (v->tick == 0U) {
     auto *player = thing_player(g);
     if (player != nullptr) {
       return thing_player_level(g);
@@ -817,7 +817,7 @@ static auto level_select_next(Gamep g, Levelsp v, Levelp l, Levelp level_over) -
       thing_level_warp_to_exit(g, v, new_level, player);
     } else if (new_level->player_fell_out_of_level) {
       thing_level_warp_to_exit(g, v, new_level, player);
-    } else if (v->tick != 0u) {
+    } else if (v->tick != 0U) {
       thing_level_warp_to_entrance(g, v, new_level, player);
     }
     level_scroll_warp_to_focus(g, v, l);
