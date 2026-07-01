@@ -5,7 +5,9 @@
 #include "config.hpp"
 #include "my_callstack.hpp"
 #include "my_game.hpp"
+#include "my_game_defs.hpp"
 #include "my_gl.hpp" // NOLINT
+#include "my_globals.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp" // NOLINT
 #include "my_types.hpp"
@@ -25,7 +27,7 @@ void wid_new_game(Gamep g)
 
   if (! g_opt_quick_start) {
     auto *v = game_levels_get(g);
-    if (v) {
+    if (v != nullptr) {
       (void) level_change(g, v, LEVEL_SELECT_ID);
     }
   }

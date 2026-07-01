@@ -159,7 +159,7 @@
   //
   // Check for things mathing the dice roll first.
   //
-  for (auto d : me->damage_type) {
+  for (const auto &d : me->damage_type) {
     auto val = d.second;
 
     auto damage_str = val.roll;
@@ -174,8 +174,8 @@
     // If there is a weapon, get that damage
     //
     if (! val.what.empty()) {
-      auto weapon = tp_find_mand(val.what);
-      if (weapon) {
+      auto *weapon = tp_find_mand(val.what);
+      if (weapon != nullptr) {
         FOR_ALL_THING_EVENT(e)
         {
           auto s = tp_damage_string(weapon, e);

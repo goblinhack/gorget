@@ -2,28 +2,20 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_bpoint.hpp"
 #include "my_callstack.hpp"
-#include "my_color_defs.hpp"
-#include "my_dice_class.hpp"
 #include "my_dice_rolls.hpp"
-#include "my_game_defs.hpp"
-#include "my_game_popups.hpp"
-#include "my_level.hpp"
 #include "my_main.hpp"
-#include "my_string.hpp"
 #include "my_thing.hpp"
-#include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp"
 #include "my_tp.hpp"
 #include "my_tp_class.hpp"
 #include "my_types.hpp"
-#include "my_ui.hpp"
 
-#include <algorithm>
-#include <limits>
-#include <string>
+#include <utility>
+#include <vector>
 
-bool thing_special_attack_get_random(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, TpSpecialAttack &out)
+auto thing_special_attack_get_random(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, TpSpecialAttack &out) -> bool
 {
   TRACE();
 
@@ -32,7 +24,7 @@ bool thing_special_attack_get_random(Gamep g, Levelsp v, Levelp l, Thingp me, Th
     return false;
   }
 
-  auto tp = thing_tp(me);
+  auto *tp = thing_tp(me);
 
   if (tp->damage_type.empty()) {
     return false;
@@ -45,7 +37,7 @@ bool thing_special_attack_get_random(Gamep g, Levelsp v, Levelp l, Thingp me, Th
   //
   // Check for things mathing the dice roll first.
   //
-  for (auto d : tp->damage_type) {
+  for (const auto &d : tp->damage_type) {
     auto val = d.second;
 
     if (val.when_adjacent) {
@@ -68,12 +60,12 @@ bool thing_special_attack_get_random(Gamep g, Levelsp v, Levelp l, Thingp me, Th
   //
   // Check for things mathing the dice roll first.
   //
-  for (auto d : filtered) {
-    if (! d.d100) {
+  for (const auto &d : filtered) {
+    if (d.d100 == 0u) {
       continue;
     }
 
-    if (dice_roll < d.d100) {
+    if (std::cmp_less(dice_roll, d.d100)) {
       out = d;
       return true;
     }
@@ -82,8 +74,8 @@ bool thing_special_attack_get_random(Gamep g, Levelsp v, Levelp l, Thingp me, Th
   //
   // Fallback to any valid default attack
   //
-  for (auto d : filtered) {
-    if (d.d100) {
+  for (const auto &d : filtered) {
+    if (d.d100 != 0u) {
       continue;
     }
 

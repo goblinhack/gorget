@@ -2,28 +2,17 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include "my_ascii.hpp"
 #include "my_callstack.hpp"
-#include "my_color.hpp"
-#include "my_color_defs.hpp"
-#include "my_game.hpp"
-#include "my_gl.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp" // NOLINT
-#include "my_sdl_proto.hpp"
-#include "my_sound.hpp"
-#include "my_spoint.hpp"
+#include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
-#include "my_tile.hpp"
+#include "my_tp.hpp"
 #include "my_types.hpp"
 #include "my_ui.hpp"
-#include "my_wid.hpp"
 #include "my_wid_popup.hpp"
 #include "my_wid_text_box.hpp"
-#include "my_wids.hpp"
 
-#include <SDL_keyboard.h>
-#include <cmath>
 #include <cstdint>
 #include <cstring>
 #include <format>
@@ -33,7 +22,7 @@
 //
 // Show a sorted list of vales
 //
-static int level_select_show_sorted_values(Gamep g, WidPopup *parent, std::map< std::string, int > &map_in, const std::string &map_name)
+static auto level_select_show_sorted_values(Gamep g, WidPopup *parent, std::map< std::string, int > &map_in, const std::string &map_name) -> int
 {
   TRACE();
 
@@ -87,13 +76,13 @@ void wid_level_show_contents(Gamep g, Levelsp v, Levelp l, WidPopup *parent)
   //
   if (level_is_level_select(g, v, l)) {
     l = thing_player_level(g);
-    if (! l) {
+    if (l == nullptr) {
       return;
     }
 
-    if (v->tick) {
+    if (v->tick != 0u) {
       l = level_select_get_next_level(g, v, l);
-      if (! l) {
+      if (l == nullptr) {
         return;
       }
     } else {
@@ -133,7 +122,7 @@ void wid_level_show_contents(Gamep g, Levelsp v, Levelp l, WidPopup *parent)
   parent->log(g, UI_INFO_FMT_STR + std::string(tmp) + UI_RESET_FMT);
   parent->log_empty_line(g);
 
-  if (v->tick) {
+  if (v->tick != 0u) {
     if (l->player_can_enter_this_level_next) {
       if (player_level->player_completed_level_via_exit) {
         //
@@ -174,7 +163,7 @@ void wid_level_show_contents(Gamep g, Levelsp v, Levelp l, WidPopup *parent)
   count += level_select_show_sorted_values(g, parent, monsts, "Monsters");
   count += level_select_show_sorted_values(g, parent, treasure, "Loot");
 
-  if (! count) {
+  if (count == 0) {
     parent->log_empty_line(g);
     parent->log(g, UI_INFO_FMT_STR "This level appears empty...", TEXT_FORMAT_LHS);
   }

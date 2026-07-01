@@ -17,16 +17,11 @@
 #include "my_thing_inlines.hpp"
 #include "my_tp.hpp"
 #include "my_types.hpp"
-#include "my_ui.hpp"
-#include "my_wid_popup.hpp"
-#include "my_wid_text_box.hpp"
 #include "my_wids.hpp"
 
 #include <cmath>
 #include <cstdint>
 #include <cstring>
-#include <format>
-#include <map>
 #include <string>
 
 [[nodiscard]] auto level_select_is_oob(bpoint p) -> bool
@@ -155,9 +150,9 @@ static auto level_select_get_level_from_grid_coords(Levelsp v, bpoint p) -> Leve
 {
   TRACE();
 
-  if (! v->tick) {
+  if (v->tick == 0u) {
     auto *player = thing_player(g);
-    if (player) {
+    if (player != nullptr) {
       return thing_player_level(g);
     }
   }
@@ -763,7 +758,7 @@ void level_select_mouse_motion(Gamep g, Levelsp v, Levelp l)
 //
 // If in level select mode, enter the chosen level
 //
-static bool level_select_next(Gamep g, Levelsp v, Levelp l, Levelp level_over)
+static auto level_select_next(Gamep g, Levelsp v, Levelp l, Levelp level_over) -> bool
 {
   TRACE();
   level_con(g, v, l, "over");
@@ -822,7 +817,7 @@ static bool level_select_next(Gamep g, Levelsp v, Levelp l, Levelp level_over)
       thing_level_warp_to_exit(g, v, new_level, player);
     } else if (new_level->player_fell_out_of_level) {
       thing_level_warp_to_exit(g, v, new_level, player);
-    } else if (v->tick) {
+    } else if (v->tick != 0u) {
       thing_level_warp_to_entrance(g, v, new_level, player);
     }
     level_scroll_warp_to_focus(g, v, l);
@@ -839,7 +834,7 @@ static bool level_select_next(Gamep g, Levelsp v, Levelp l, Levelp level_over)
 //
 // If in level select mode, enter the chosen level
 //
-bool level_select_mouse_down(Gamep g)
+auto level_select_mouse_down(Gamep g) -> bool
 {
   TRACE();
 
@@ -850,12 +845,12 @@ bool level_select_mouse_down(Gamep g)
   }
 
   Levelp l = thing_player_level(g);
-  if (! l) {
+  if (l == nullptr) {
     (void) sound_play(g, "error");
     return false;
   }
 
-  auto level_over = level_select_get_next_level(g, v, l);
+  auto *level_over = level_select_get_next_level(g, v, l);
   if (level_over == nullptr) {
     (void) sound_play(g, "error");
     return false;
@@ -867,7 +862,7 @@ bool level_select_mouse_down(Gamep g)
 //
 // If in level select mode, enter the chosen level
 //
-bool level_select_mouse_down(Gamep g, Levelsp v, Levelp l)
+auto level_select_mouse_down(Gamep g, Levelsp v, Levelp l) -> bool
 {
   TRACE();
 

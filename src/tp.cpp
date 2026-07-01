@@ -1112,7 +1112,7 @@ void tp_special_attack_add(Tpp tp, TpSpecialAttack val)
     return;
   }
 
-  if (tp->damage_type.find(val.type) != tp->damage_type.end()) {
+  if (tp->damage_type.contains(val.type)) {
     tp_err(tp, "damage type %s already set", val.type.c_str());
     return;
   }
@@ -1122,7 +1122,7 @@ void tp_special_attack_add(Tpp tp, TpSpecialAttack val)
   tp->damage_type[ val.type ] = val;
 }
 
-bool tp_special_attack_get_random(Tpp tp, TpSpecialAttack &out)
+auto tp_special_attack_get_random(Tpp tp, TpSpecialAttack &out) -> bool
 {
   TRACE();
 
@@ -1135,9 +1135,9 @@ bool tp_special_attack_get_random(Tpp tp, TpSpecialAttack &out)
     return false;
   }
 
-  for (auto d : tp->damage_type) {
+  for (const auto &d : tp->damage_type) {
     auto val = d.second;
-    if (val.d100) {
+    if (val.d100 != 0u) {
       if (d100() < val.d100) {
         out = val;
         return true;

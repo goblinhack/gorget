@@ -4,17 +4,13 @@
 
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
-#include "my_color.hpp"
-#include "my_color_defs.hpp"
 #include "my_game.hpp"
-#include "my_gl.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp" // NOLINT
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
 #include "my_spoint.hpp"
-#include "my_thing_inlines.hpp"
-#include "my_tile.hpp"
+#include "my_thing.hpp"
 #include "my_types.hpp"
 #include "my_ui.hpp"
 #include "my_wid.hpp"
@@ -26,8 +22,6 @@
 #include <cmath>
 #include <cstdint>
 #include <cstring>
-#include <format>
-#include <map>
 #include <string>
 
 static WidPopup *wid_level_select_window;
@@ -101,7 +95,7 @@ void wid_level_select(Gamep g, Levelsp v, Levelp l)
 
   wid_set_on_key_down(wid_level_select_window->wid_popup_container, wid_level_select_key_down);
 
-  if (v->tick) {
+  if (v->tick != 0u) {
     wid_level_select_window->log_empty_line(g);
     wid_level_select_window->log(g, UI_GREEN_FMT_STR "Hello again, mortal.");
   } else {
@@ -127,7 +121,7 @@ void wid_level_select(Gamep g, Levelsp v, Levelp l)
     wid_set_pos(w, button_tl, button_br);
   }
 
-  if (l) {
+  if (l != nullptr) {
     wid_level_show_contents(g, v, l, wid_level_select_window);
   }
 

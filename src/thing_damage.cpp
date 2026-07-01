@@ -4,8 +4,6 @@
 
 #include "my_callstack.hpp"
 #include "my_color_defs.hpp"
-#include "my_dice_class.hpp"
-#include "my_dice_rolls.hpp"
 #include "my_game_defs.hpp"
 #include "my_game_popups.hpp"
 #include "my_level.hpp"
@@ -15,7 +13,6 @@
 #include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp"
 #include "my_tp.hpp"
-#include "my_tp_class.hpp"
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
@@ -62,7 +59,7 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
         topcon(UI_WARNING_FMT_STR "You are crushed by %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
       case THING_EVENT_MELEE_DAMAGE :
-        if (damage_name == "") {
+        if (damage_name.empty()) {
           damage_name = "hit";
         } else {
           damage_name = "hit(" + damage_name + ")";

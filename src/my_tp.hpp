@@ -501,20 +501,20 @@ using TpSpecialAttack = struct TpSpecialAttack {
   //
   // Unique name
   //
-  std::string type {};
+  std::string type;
   //
   // User readable name
   //
-  std::string name {};
+  std::string name;
   //
   // How much damage
   //
-  std::string roll {};
-  Dice        dice {};
+  std::string roll;
+  Dice        dice;
   //
   // If it fires a weapon, which one
   //
-  std::string what {};
+  std::string what;
   //
   // The likelihood of this attack
   //
@@ -829,14 +829,13 @@ class Tp;
 // end sort marker1 }
 
 // begin sort marker2 {
+auto tp_special_attack_get_random(Tpp tp, TpSpecialAttack &out) -> bool;
 void tp_attack_count_max_per_tick_set(Tpp tp, int val);
 void tp_chance_set(Tpp tp, ThingChanceType e, const std::string &val);
 void tp_charge_count_set(Tpp tp, int val);
 void tp_con_(Tpp tp, const char *fmt, va_list args); // compile error without
 void tp_con(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void tp_damage_set(Tpp tp, ThingEventType e, const std::string &val);
-void tp_special_attack_add(Tpp tp, TpSpecialAttack val);
-bool tp_special_attack_get_random(Tpp tp, TpSpecialAttack &out);
 void tp_dbg_(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void tp_die_(Tpp tp, const char *fmt, va_list args); // compile error without
 void tp_die(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
@@ -871,6 +870,7 @@ void tp_name_short_set(Tpp tp, const std::string &val);
 void tp_priority_set(Tpp tp, ThingPriorityType val);
 void tp_rarity_set(Tpp tp, ThingRarityType val);
 void tp_score_value_set(Tpp tp, int val);
+void tp_special_attack_add(Tpp tp, TpSpecialAttack val);
 void tp_speed_set(Tpp tp, int val);
 void tp_stamina_set(Tpp tp, const std::string &val);
 void tp_temperature_burns_at_set(Tpp tp, int val);

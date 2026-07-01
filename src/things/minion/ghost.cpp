@@ -126,13 +126,13 @@ static void tp_ghost_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEven
   // end sort marker1 }
 
   tp_special_attack_add(tp,
-                     TpSpecialAttack {
-                         .type          = "2",         //
-                         .name          = "icy touch", //
-                         .roll          = "1d4",       //
-                         .d100          = 10,
-                         .when_adjacent = true,
-                     });
+                        TpSpecialAttack {
+                            .type          = "2",         //
+                            .name          = "icy touch", //
+                            .roll          = "1d4",       //
+                            .d100          = 10,
+                            .when_adjacent = true,
+                        });
 
   auto delay = 1000;
 
