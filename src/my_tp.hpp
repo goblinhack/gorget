@@ -501,20 +501,20 @@ using TpSpecialAttack = struct TpSpecialAttack {
   //
   // Unique name
   //
-  std::string type;
+  std::string type = {}; // NOLINT
   //
   // User readable name
   //
-  std::string name;
+  std::string name = {}; // NOLINT
   //
   // How much damage
   //
-  std::string roll;
-  Dice        dice;
+  std::string roll = {}; // NOLINT
+  Dice        dice = {}; // NOLINT
   //
   // If it fires a weapon, which one
   //
-  std::string what;
+  std::string what = {}; // NOLINT
   //
   // The likelihood of this attack
   //
