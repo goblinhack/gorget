@@ -38,9 +38,11 @@ static auto thing_attack(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp i
   if (e_in != nullptr) {
     e = *e_in;
   }
-  THING_DBG(attacker, "max attack count (%d vs %d)", //
-            thing_attack_count_per_tick(attacker),   //
-            tp_attack_count_max_per_tick_get(thing_tp(attacker)));
+
+  //
+  // Even if the attack fails, make the monster point at the target
+  //
+  thing_set_dir_from_target(attacker, thing_at(it));
 
   //
   // Check not too many attacks

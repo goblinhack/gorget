@@ -74,6 +74,10 @@ static bool tp_argusul_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thi
     }
   }
 
+  if (! adjacent(thing_at(me), thing_at(it))) {
+    return false; // prevent melee attack
+  }
+
   (void) thing_spawn(g, v, l, tp_first(is_effect_attack), it);
   thing_sound_play(g, v, l, me, "hiss");
 
@@ -160,18 +164,18 @@ static void tp_argusul_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
 
   tp_special_attack_add(tp,
                         TpSpecialAttack {
-                            .type          = "1",    //
-                            .name          = "gore", //
-                            .roll          = "1d6",  //
-                            .d100          = 10,
+                            .type          = "1",           //
+                            .name          = "gore attack", //
+                            .roll          = "1d6",         //
+                            .d100          = 100,
                             .when_adjacent = true,
                         });
 
   tp_special_attack_add(tp,
                         TpSpecialAttack {
-                            .type         = "2",             //
-                            .name         = "central eye",   //
-                            .what         = "beam_of_light", //
+                            .type         = "2",                 //
+                            .name         = "central eye blast", //
+                            .what         = "beam_of_light",     //
                             .d100         = 10,
                             .when_distant = true,
                         });

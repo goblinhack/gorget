@@ -76,6 +76,7 @@ static auto thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thing
       if (level_is_attackable_by_monst(g, v, l, target) != nullptr) {
         if (thing_attack_at(g, v, l, me, target)) {
           THING_DBG(me, "close attack");
+          monst_state_change(g, v, l, me, MONST_STATE_NORMAL);
         }
       }
     }

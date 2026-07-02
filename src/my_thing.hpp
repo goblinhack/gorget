@@ -1285,6 +1285,7 @@ void thing_player_init(Gamep g);
 void thing_prev_pix_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, const spoint &val);
 void thing_projectile_move(Gamep g, Levelsp v, Levelp l, Thingp me, float dt);
 void thing_set_dir_from_delta(Thingp me, const bpoint &p);
+void thing_set_dir_from_target(Thingp me, const bpoint &p);
 void thing_set_dir_from_delta(Thingp me, int dx, int dy);
 void thing_sound_play(Gamep g, Levelsp v, Levelp l, Thingp t, const std::string &alias);
 void thing_stats_dump(Gamep g, Levelsp v);
