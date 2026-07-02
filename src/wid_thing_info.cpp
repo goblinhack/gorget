@@ -577,8 +577,8 @@
 {
   TRACE();
 
-  auto weapon = thing_wielding(g, v, l, me);
-  if (! weapon) {
+  auto *weapon = thing_wielding(g, v, l, me);
+  if (weapon == nullptr) {
     return false;
   }
 

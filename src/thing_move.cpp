@@ -16,8 +16,6 @@
 #include "my_tp.hpp"
 #include "my_types.hpp"
 
-#include <cmath>
-
 //
 // Handles manual and mouse follow moves
 //

@@ -43,7 +43,7 @@
   return std::max(damage, tp->damage[ val ].max_roll());
 }
 
-[[nodiscard]] auto tp_damage_max(Tpp tp) -> int
+[[nodiscard]] static auto tp_damage_max(Tpp tp) -> int
 {
   TRACE();
 
@@ -100,15 +100,15 @@
     auto val  = d.second;
     auto what = val.what;
     if (! what.empty()) {
-      auto what_tp = tp_find_mand(what);
-      if (what_tp) {
+      auto *what_tp = tp_find_mand(what);
+      if (what_tp != nullptr) {
         max_damage = std::max(max_damage, tp_damage_max(what_tp));
       }
     }
   }
 
-  auto weapon = thing_wielding(g, v, l, me);
-  if (weapon) {
+  auto *weapon = thing_wielding(g, v, l, me);
+  if (weapon != nullptr) {
     max_damage = std::max(max_damage, thing_damage_max(g, v, l, weapon));
   }
 

@@ -40,7 +40,7 @@ auto thing_special_attack_get_random(Gamep g, Levelsp v, Levelp l, Thingp me, Th
   for (const auto &d : tp->special_attacks) {
     auto val = d.second;
 
-    if (it_maybe_null) {
+    if (it_maybe_null != nullptr) {
       if (val.when_adjacent) {
         auto target = thing_at(it_maybe_null);
         if (! adjacent(thing_at(me), target)) {

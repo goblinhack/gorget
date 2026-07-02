@@ -90,6 +90,7 @@ static auto tp_staff_light_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -
   tp_flag_set(tp, is_wood);
   tp_flag_set(tp, wieldable);
   tp_health_set(tp, "1d4");
+  tp_is_immune_to_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_light_color_set(tp, "red");
   tp_name_a_or_an_set(tp, "a staff of light");
   tp_name_apostrophize_set(tp, "staff of light's");
@@ -98,7 +99,6 @@ static auto tp_staff_light_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -
   tp_name_short_set(tp, "staff of light");
   tp_priority_set(tp, THING_PRIORITY_OBJECT);
   tp_rarity_set(tp, THING_RARITY_UNCOMMON);
-  tp_is_immune_to_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_temperature_burns_at_set(tp, 30);  // celsius
   tp_temperature_damage_at_set(tp, 30); // celsius
   tp_temperature_initial_set(tp, 20);   // celsius
