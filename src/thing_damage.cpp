@@ -272,31 +272,32 @@ static void thing_damage_by_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
   }
 
   if ((the_player != nullptr) && thing_is_loggable(me)) {
-    auto The_thing_name_long  = capitalize_first(thing_name_long_the(g, v, l, me));
+    auto the_thing_name_long  = thing_name_long_the(g, v, l, me);
+    auto The_thing_name_long  = capitalize_first(the_thing_name_long);
     auto the_thing_name_short = thing_name_short_the(g, v, l, me);
     auto by_player            = thing_name_long(g, v, l, the_player);
 
     switch (e.event_type) {
       case THING_EVENT_THROWN : //
-        topcon("%s is thrown by %s.", The_thing_name_long.c_str(), by_player.c_str());
+        topcon("You throw %s.", the_thing_name_long.c_str());
         break;
       case THING_EVENT_SHOVED : //
-        topcon("%s is shoved by %s.", The_thing_name_long.c_str(), by_player.c_str());
+        topcon("You shove %s.", the_thing_name_long.c_str());
         break;
       case THING_EVENT_CRUSH : //
         topcon("%s is crushed by %s.", The_thing_name_long.c_str(), by_player.c_str());
         break;
       case THING_EVENT_MELEE_DAMAGE : //
-        topcon("%s is hit by %s.", The_thing_name_long.c_str(), by_player.c_str());
+        topcon("You hit %s.", the_thing_name_long.c_str());
         break;
       case THING_EVENT_WATER_DAMAGE : //
         topcon("%s suffers water damage from %s.", The_thing_name_long.c_str(), by_player.c_str());
         break;
       case THING_EVENT_EXPLOSION_DAMAGE : //
-        topcon("%s suffers blast damage from %s.", The_thing_name_long.c_str(), by_player.c_str());
+        topcon("You blast %s.", the_thing_name_long.c_str());
         break;
       case THING_EVENT_LIGHT_DAMAGE : //
-        topcon("%s suffers dazzling damage from %s.", The_thing_name_long.c_str(), by_player.c_str());
+        topcon("You dazzle %s.", the_thing_name_long.c_str());
         break;
       case THING_EVENT_FIRE_DAMAGE : //
         if (thing_is_burning(the_player)) {
