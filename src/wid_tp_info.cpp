@@ -154,20 +154,22 @@
 //
 // Add special attacks
 //
-[[nodiscard]] auto wid_tp_info_special_attacks(Gamep g, Levelsp v, Levelp l, Tpp me, WidPopup *parent, int width) -> bool
+[[nodiscard]] auto wid_tp_info_special_attacks(Gamep g, Levelsp v, Levelp l, Tpp me, WidPopup *parent, int width, bool title_allowed) -> bool
 {
   TRACE();
 
   bool printed_something = false;
 
-  if (! me->damage_type.empty()) {
-    parent->log(g, UI_INFO_FMT_STR "Special attacks:", TEXT_FORMAT_LHS);
+  if (title_allowed) {
+    if (! me->special_attacks.empty()) {
+      parent->log(g, UI_INFO_FMT_STR "Special attacks:", TEXT_FORMAT_LHS);
+    }
   }
 
   //
   // Check for things mathing the dice roll first.
   //
-  for (const auto &d : me->damage_type) {
+  for (const auto &d : me->special_attacks) {
     auto val = d.second;
 
     auto damage_str = val.roll;
@@ -375,7 +377,7 @@ void wid_tp_info(Gamep g, Levelsp v, Levelp l, Tpp me, WidPopup *parent, int wid
     parent->log_empty_line(g);
   }
 
-  if (wid_tp_info_special_attacks(g, v, l, me, parent, width)) {
+  if (wid_tp_info_special_attacks(g, v, l, me, parent, width, true /* title allowed */)) {
     parent->log_empty_line(g);
   }
 

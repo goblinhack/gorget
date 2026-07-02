@@ -20,6 +20,45 @@
 #include <limits>
 #include <string>
 
+[[nodiscard]] auto tp_damage_max(Tpp tp, ThingEventType val) -> int
+{
+  TRACE();
+  if (tp == nullptr) [[unlikely]] {
+    tp_err(tp, "no thing template pointer");
+    return 0;
+  }
+
+  if (val >= THING_EVENT_ENUM_MAX) {
+    tp_err(tp, "bad value in tp for %s, %d", __FUNCTION__, val);
+    return 0;
+  }
+
+  int damage = 0;
+
+  for (const auto &d : tp->special_attacks) {
+    auto spec = d.second;
+    damage    = std::max(damage, spec.dice.max_roll());
+  }
+
+  return std::max(damage, tp->damage[ val ].max_roll());
+}
+
+[[nodiscard]] auto tp_damage_max(Tpp tp) -> int
+{
+  TRACE();
+
+  if (tp == nullptr) [[unlikely]] {
+    tp_err(tp, "no thing template pointer");
+    return 0;
+  }
+
+  int damage = 0;
+
+  FOR_ALL_THING_EVENT(e) { damage = std::max(damage, tp_damage_max(tp, e)); }
+
+  return damage;
+}
+
 [[nodiscard]] auto thing_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEventType val) -> int
 {
   TRACE();
@@ -51,18 +90,26 @@
 {
   TRACE();
 
-  int   max_damage {};
+  int max_damage {};
+
   auto *tp = thing_tp(me);
 
-  for (const auto &d : tp->damage_type) {
-    auto val   = d.second;
-    max_damage = std::max(max_damage, val.dice.max_roll());
+  max_damage = std::max(max_damage, tp_damage_max(tp));
+
+  for (const auto &d : tp->special_attacks) {
+    auto val  = d.second;
+    auto what = val.what;
+    if (! what.empty()) {
+      auto what_tp = tp_find_mand(what);
+      if (what_tp) {
+        max_damage = std::max(max_damage, tp_damage_max(what_tp));
+      }
+    }
   }
 
-  FOR_ALL_THING_EVENT(e)
-  {
-    auto damage = thing_damage_max(g, v, l, me, e);
-    max_damage  = std::max(max_damage, damage);
+  auto weapon = thing_wielding(g, v, l, me);
+  if (weapon) {
+    max_damage = std::max(max_damage, thing_damage_max(g, v, l, weapon));
   }
 
   auto attack_count = tp_attack_count_max_per_tick_get(thing_tp(me));

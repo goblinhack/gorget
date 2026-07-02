@@ -34,9 +34,13 @@ static auto tp_staff_light_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -
 {
   TRACE();
 
-  static Tpp what;
-  if (! what) {
-    what = tp_find_mand("beam_of_light");
+  Tpp             what {};
+  TpSpecialAttack d;
+
+  if (thing_special_attack_get_random(g, v, l, me, nullptr, d)) {
+    if (! d.what.empty()) {
+      what = tp_find_mand(d.what);
+    }
   }
 
   if (thing_is_player(user)) {
@@ -94,6 +98,7 @@ static auto tp_staff_light_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -
   tp_name_short_set(tp, "staff of light");
   tp_priority_set(tp, THING_PRIORITY_OBJECT);
   tp_rarity_set(tp, THING_RARITY_UNCOMMON);
+  tp_is_immune_to_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_temperature_burns_at_set(tp, 30);  // celsius
   tp_temperature_damage_at_set(tp, 30); // celsius
   tp_temperature_initial_set(tp, 20);   // celsius
@@ -101,6 +106,12 @@ static auto tp_staff_light_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   // end sort marker1 }
 
+  tp_special_attack_add(tp,
+                        TpSpecialAttack {
+                            .type = "1",             //
+                            .name = "beam weapon",   //
+                            .what = "beam_of_light", //
+                        });
   auto delay = 20;
 
   for (auto frame = 0; frame < 2; frame++) {

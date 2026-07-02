@@ -502,28 +502,44 @@
     out = string_append_with_comma(out, "Slimey");
   }
   if (thing_is_able_to_collect_items(me)) {
-    out = string_append_with_comma(out, "Collector");
+    if (! thing_is_player(me)) {
+      out = string_append_with_comma(out, "Collector");
+    }
   }
   if (thing_is_able_to_be_buffed(me)) {
-    out = string_append_with_comma(out, "Buffable");
+    if (! thing_is_player(me)) {
+      out = string_append_with_comma(out, "Buffable");
+    }
   }
   if (thing_is_able_to_throw_items(me)) {
-    out = string_append_with_comma(out, "Jumper");
+    if (! thing_is_player(me)) {
+      out = string_append_with_comma(out, "Jumper");
+    }
   }
   if (thing_is_able_to_throw_items_items(me)) {
-    out = string_append_with_comma(out, "Thrower");
+    if (! thing_is_player(me)) {
+      out = string_append_with_comma(out, "Thrower");
+    }
   }
   if (thing_is_able_to_wield_items(me)) {
-    out = string_append_with_comma(out, "Wielder");
+    if (! thing_is_player(me)) {
+      out = string_append_with_comma(out, "Wielder");
+    }
   }
   if (thing_is_burning(me)) {
-    out = string_append_with_comma(out, "Burnable");
+    if (! thing_is_player(me)) {
+      out = string_append_with_comma(out, "Burnable");
+    }
   }
   if (thing_is_flammable(me)) {
-    out = string_append_with_comma(out, "Flammable");
+    if (! thing_is_player(me)) {
+      out = string_append_with_comma(out, "Flammable");
+    }
   }
   if (thing_is_combustible(me)) {
-    out = string_append_with_comma(out, "Combustible");
+    if (! thing_is_player(me)) {
+      out = string_append_with_comma(out, "Combustible");
+    }
   }
   if (tp_attack_count_max_per_tick_get(tp) > 1) {
     out = string_sprintf_append_with_comma(out, "Multi-attack(%u)", tp_attack_count_max_per_tick_get(tp));
@@ -550,6 +566,27 @@
 
   parent->log(g, UI_INFO_FMT_STR "Abilities:", TEXT_FORMAT_LHS);
   parent->log(g, "- " + out, TEXT_FORMAT_LHS);
+
+  return true;
+}
+
+//
+// Add wielded weapon
+//
+[[nodiscard]] static auto wid_thing_info_wielded(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, int width) -> bool
+{
+  TRACE();
+
+  auto weapon = thing_wielding(g, v, l, me);
+  if (! weapon) {
+    return false;
+  }
+
+  auto out = string_sprintf("Wielded(%s)", thing_name_short(g, v, l, weapon).c_str());
+  parent->log(g, UI_INFO_FMT_STR + out, TEXT_FORMAT_LHS);
+
+  (void) wid_tp_info_damage(g, v, l, thing_tp(weapon), parent, width, false /* title allowed */);
+  (void) wid_tp_info_special_attacks(g, v, l, thing_tp(weapon), parent, width, false /* title allowed */);
 
   return true;
 }
@@ -709,7 +746,7 @@ static void wid_thing_info_item_mouse_over_end(Gamep g, Widp w)
 
     if (first) {
       first = false;
-      (void) parent->log(g, "Carrying:", TEXT_FORMAT_LHS);
+      (void) parent->log(g, UI_INFO_FMT_STR "Carrying:", TEXT_FORMAT_LHS);
     }
 
     printed_something = true;
@@ -872,12 +909,36 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, i
     parent->log_empty_line(g);
   }
 
-  if (thing_is_monst(me) && ! thing_is_dead(me)) {
+  if (wid_thing_info_wielded(g, v, l, me, parent, width)) {
+    parent->log_empty_line(g);
+  }
+
+  if (thing_is_player(me)) {
     if (wid_tp_info_damage(g, v, l, tp, parent, width, true /* title allowed */)) {
       parent->log_empty_line(g);
     }
 
-    if (wid_tp_info_special_attacks(g, v, l, tp, parent, width)) {
+    if (wid_tp_info_special_attacks(g, v, l, tp, parent, width, true /* title allowed */)) {
+      parent->log_empty_line(g);
+    }
+
+    if (wid_thing_info_immunity(g, v, l, me, parent, width)) {
+      parent->log_empty_line(g);
+    }
+
+    if (wid_thing_info_resistance(g, v, l, me, parent, width)) {
+      parent->log_empty_line(g);
+    }
+
+    if (wid_thing_info_abilities(g, me, parent)) {
+      parent->log_empty_line(g);
+    }
+  } else if (! thing_is_dead(me)) {
+    if (wid_tp_info_damage(g, v, l, tp, parent, width, true /* title allowed */)) {
+      parent->log_empty_line(g);
+    }
+
+    if (wid_tp_info_special_attacks(g, v, l, tp, parent, width, true /* title allowed */)) {
       parent->log_empty_line(g);
     }
 

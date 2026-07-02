@@ -48,7 +48,7 @@ public:
   //
   // All damage types for this thing
   //
-  std::map< std::string, TpSpecialAttack > damage_type;
+  std::map< std::string, TpSpecialAttack > special_attacks;
 
   //
   // Immunity to various damage types

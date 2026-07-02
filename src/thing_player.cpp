@@ -815,7 +815,7 @@ static auto player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy) -> b
   }
 
   if (fire_what == nullptr) {
-    ERR("nothing to fire");
+    thing_err(item, "nothing to fire");
     return false;
   }
 

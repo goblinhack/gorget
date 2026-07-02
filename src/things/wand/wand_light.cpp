@@ -33,9 +33,13 @@ static auto tp_wand_light_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
 {
   TRACE();
 
-  static Tpp what;
-  if (! what) {
-    what = tp_find_mand("projectile_light");
+  Tpp             what {};
+  TpSpecialAttack d;
+
+  if (thing_special_attack_get_random(g, v, l, me, nullptr, d)) {
+    if (! d.what.empty()) {
+      what = tp_find_mand(d.what);
+    }
   }
 
   if (thing_is_player(user)) {
@@ -87,7 +91,7 @@ static auto tp_wand_light_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
   tp_flag_set(tp, is_wood);
   tp_flag_set(tp, wieldable);
   tp_health_set(tp, "1d4");
-  tp_is_immune_to_add(tp, THING_EVENT_FIRE_DAMAGE);
+  tp_is_immune_to_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_light_color_set(tp, "red");
   tp_name_a_or_an_set(tp, "a wand of light");
   tp_name_apostrophize_set(tp, "wand of light's");
@@ -103,6 +107,12 @@ static auto tp_wand_light_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   // end sort marker1 }
 
+  tp_special_attack_add(tp,
+                        TpSpecialAttack {
+                            .type = "1",                //
+                            .name = "projectile blast", //
+                            .what = "projectile_light", //
+                        });
   auto delay = 20;
 
   for (auto frame = 0; frame < 2; frame++) {

@@ -626,25 +626,6 @@ void tp_damage_set(Tpp tp, ThingEventType ev, const std::string &val)
 }
 
 //
-// Max damage
-//
-[[nodiscard]] auto tp_damage_max(Tpp tp, ThingEventType val) -> int
-{
-  TRACE();
-  if (tp == nullptr) [[unlikely]] {
-    tp_err(tp, "no thing template pointer");
-    return 0;
-  }
-
-  if (val >= THING_EVENT_ENUM_MAX) {
-    tp_err(tp, "bad value in tp for %s, %d", __FUNCTION__, val);
-    return 0;
-  }
-
-  return tp->damage[ val ].max_roll();
-}
-
-//
 // Get the damage roll string
 //
 [[nodiscard]] auto tp_damage_dice_roll_string(Tpp tp, ThingEventType val) -> std::string
@@ -1131,14 +1112,14 @@ void tp_special_attack_add(Tpp tp, TpSpecialAttack val)
     return;
   }
 
-  if (tp->damage_type.contains(val.type)) {
+  if (tp->special_attacks.contains(val.type)) {
     tp_err(tp, "damage type %s already set", val.type.c_str());
     return;
   }
 
   val.dice = Dice(val.roll);
 
-  tp->damage_type[ val.type ] = val;
+  tp->special_attacks[ val.type ] = val;
 }
 
 auto tp_special_attack_get_random(Tpp tp, TpSpecialAttack &out) -> bool
@@ -1150,11 +1131,11 @@ auto tp_special_attack_get_random(Tpp tp, TpSpecialAttack &out) -> bool
     return false;
   }
 
-  if (tp->damage_type.empty()) {
+  if (tp->special_attacks.empty()) {
     return false;
   }
 
-  for (const auto &d : tp->damage_type) {
+  for (const auto &d : tp->special_attacks) {
     auto val = d.second;
     if (val.d100 != 0U) {
       if (d100() < val.d100) {

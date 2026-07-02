@@ -34,9 +34,13 @@ static auto tp_staff_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
 {
   TRACE();
 
-  static Tpp what;
-  if (! what) {
-    what = tp_find_mand("beam_of_fire");
+  Tpp             what {};
+  TpSpecialAttack d;
+
+  if (thing_special_attack_get_random(g, v, l, me, nullptr, d)) {
+    if (! d.what.empty()) {
+      what = tp_find_mand(d.what);
+    }
   }
 
   if (thing_is_player(user)) {
@@ -102,6 +106,12 @@ static auto tp_staff_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   // end sort marker1 }
 
+  tp_special_attack_add(tp,
+                        TpSpecialAttack {
+                            .type = "1",            //
+                            .name = "beam weapon",  //
+                            .what = "beam_of_fire", //
+                        });
   auto delay = 20;
 
   for (auto frame = 0; frame < 2; frame++) {

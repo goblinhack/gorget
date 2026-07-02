@@ -15,7 +15,7 @@
 #include <utility>
 #include <vector>
 
-auto thing_special_attack_get_random(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, TpSpecialAttack &out) -> bool
+auto thing_special_attack_get_random(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it_maybe_null, TpSpecialAttack &out) -> bool
 {
   TRACE();
 
@@ -26,7 +26,7 @@ auto thing_special_attack_get_random(Gamep g, Levelsp v, Levelp l, Thingp me, Th
 
   auto *tp = thing_tp(me);
 
-  if (tp->damage_type.empty()) {
+  if (tp->special_attacks.empty()) {
     return false;
   }
 
@@ -35,22 +35,24 @@ auto thing_special_attack_get_random(Gamep g, Levelsp v, Levelp l, Thingp me, Th
   std::vector< TpSpecialAttack > filtered;
 
   //
-  // Check for things mathing the dice roll first.
+  // Check for things matching the dice roll first.
   //
-  for (const auto &d : tp->damage_type) {
+  for (const auto &d : tp->special_attacks) {
     auto val = d.second;
 
-    if (val.when_adjacent) {
-      auto target = thing_at(it);
-      if (! adjacent(thing_at(me), target)) {
-        continue;
+    if (it_maybe_null) {
+      if (val.when_adjacent) {
+        auto target = thing_at(it_maybe_null);
+        if (! adjacent(thing_at(me), target)) {
+          continue;
+        }
       }
-    }
 
-    if (val.when_distant) {
-      auto target = thing_at(it);
-      if (distance(thing_at(me), target) <= 1) {
-        continue;
+      if (val.when_distant) {
+        auto target = thing_at(it_maybe_null);
+        if (distance(thing_at(me), target) <= 1) {
+          continue;
+        }
       }
     }
 
