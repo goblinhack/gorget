@@ -38,6 +38,9 @@ static auto thing_attack(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp i
   if (e_in != nullptr) {
     e = *e_in;
   }
+  THING_DBG(attacker, "max attack count (%d vs %d)", //
+            thing_attack_count_per_tick(attacker),   //
+            tp_attack_count_max_per_tick_get(thing_tp(attacker)));
 
   //
   // Check not too many attacks
@@ -46,8 +49,11 @@ static auto thing_attack(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp i
     //
     // NOTE: door slam attack and anything else I've not thought of, bypasses this
     //
+    THING_DBG(attacker, "attack");
     if (thing_attack_count_per_tick_incr(g, v, l, attacker) > tp_attack_count_max_per_tick_get(thing_tp(attacker))) {
-      THING_DBG(attacker, "exceeded attack count, ignore");
+      THING_DBG(attacker, "exceeded max attack count (%d vs %d), ignore", //
+                thing_attack_count_per_tick(attacker),                    //
+                tp_attack_count_max_per_tick_get(thing_tp(attacker)));
       return false;
     }
   }

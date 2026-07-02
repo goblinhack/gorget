@@ -620,9 +620,9 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
 [[nodiscard]] static auto player_move_try(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to, bool move_confirmed, bool need_path) -> bool
 {
   if (move_confirmed) {
-    THING_DBG(me, "move try (confirmed move)");
+    THING_DBG(me, "player move try (confirmed move)");
   } else {
-    THING_DBG(me, "move try");
+    THING_DBG(me, "player move try");
   }
   TRACE_INDENT();
 
@@ -645,7 +645,7 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
     //
     // Fake a mouse path for movement
     //
-    THING_DBG(me, "move try: can move to");
+    THING_DBG(me, "player move try: can move to");
 
     if (need_path) {
       std::vector< bpoint > move_path;
@@ -661,11 +661,14 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
     return true;
   }
 
+  THING_DBG(me, "player move to attempt failed");
+  TRACE_INDENT();
+
   if (thing_can_move_to_attempt_by_shoving(g, v, l, me, to)) {
     //
     // Can we shove it out of the way to move?
     //
-    THING_DBG(me, "move try: can move to by shoving");
+    THING_DBG(me, "player move try: can move to by shoving");
 
     if (need_path) {
       std::vector< bpoint > move_path;
@@ -698,7 +701,7 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
     //
     // Can we open it allow movement?
     //
-    THING_DBG(me, "move try: can move to by opening");
+    THING_DBG(me, "player move try: can move to by opening");
 
     if (thing_move_to(g, v, l, me, to)) {
       (void) level_tick_begin_requested(g, v, l, "player opened a door to move");
@@ -719,6 +722,15 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
     }
   } else {
     (void) level_tick_begin_requested(g, v, l, "player bumped into obstacle");
+  }
+
+  THING_DBG(me, "player move to attempt failed");
+  TRACE_INDENT();
+
+  THING_DBG(me, "player melee attack attempt");
+  TRACE_INDENT();
+  if (thing_attack_at(g, v, l, me, to)) {
+    THING_DBG(me, "player melee attack success");
   }
 
   //
@@ -789,6 +801,17 @@ static auto player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy) -> b
 
   player_move_requests_reset(g, v);
 
+  if (target != bpoint(0, 0)) {
+    //
+    // Use the given target
+    //
+  } else if (v->cursor_visible) {
+    target = v->cursor_at;
+  } else {
+    fpoint const delta = thing_get_direction(g, v, l, me);
+    target             = make_bpoint(thing_real_at(me) + delta);
+  }
+
   if (fire_what != nullptr) {
     //
     // Tests usuall
@@ -832,17 +855,6 @@ static auto player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy) -> b
   if (level_is_deep_water(g, v, l, thing_at(me)) != nullptr) {
     topcon("The deep water is preventing you from firing a volley!");
     return false;
-  }
-
-  if (target != bpoint(0, 0)) {
-    //
-    // Use the given target
-    //
-  } else if (v->cursor_visible) {
-    target = v->cursor_at;
-  } else {
-    fpoint const delta = thing_get_direction(g, v, l, me);
-    target             = make_bpoint(thing_real_at(me) + delta);
   }
 
   if (! thing_fire_at(g, v, l, me, item, fire_what, target)) {
