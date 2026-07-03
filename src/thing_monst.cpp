@@ -68,26 +68,32 @@ static auto thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thing
 
   if (dist < thing_distance_avoid_target(me)) {
     THING_DBG(me, "choose target: player is too close (player %f) (vision %d)", dist, v_dist);
+    TRACE_INDENT();
 
     //
     // Can we attack here?
     //
     if (dist <= 1) {
       if (level_is_attackable_by_monst(g, v, l, target) != nullptr) {
+        THING_DBG(me, "choose target: close enough to attack");
+        TRACE_INDENT();
+
         if (thing_attack_at(g, v, l, me, target)) {
-          THING_DBG(me, "close attack");
+          THING_DBG(me, "choose target: close attack");
           monst_state_change(g, v, l, me, MONST_STATE_NORMAL);
+          return false;
         }
       }
     }
 
-    return false;
+    THING_DBG(me, "choose target: opposite direction (%d,%d)", target.x, target.y);
+    target = monst_at + (monst_at - target);
   }
 
   THING_DBG(me, "astar thing_monst_choose_target_player");
   auto p = astar_solve(g, v, l, me, monst_at, target);
   if (p.empty()) {
-    THING_DBG(me, "choose target: no path to player at (%d,%d)", target.x, target.y);
+    THING_DBG(me, "choose target: no path to target at (%d,%d)", target.x, target.y);
     return false;
   }
 
@@ -101,11 +107,11 @@ static auto thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thing
 
   if (thing_move_path_apply(g, v, l, me, p)) {
     thing_monst_target_set(g, v, l, me, target);
-    THING_DBG(me, "choose target: found path to player");
+    THING_DBG(me, "choose target: found path to target");
     return true;
   }
 
-  THING_DBG(me, "choose target: failed to apply path to player");
+  THING_DBG(me, "choose target: failed to apply path to target");
   return false;
 }
 

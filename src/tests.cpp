@@ -52,8 +52,10 @@
   if (!test_load_mob()) { return false; }
   if (!test_load_monst_avoids_chasm()) { return false; }
   if (!test_load_monst_avoids_lava()) { return false; }
+  if (!test_load_monst_avoids_player()) { return false; }
   if (!test_load_monst_avoids_water_usually()) { return false; }
   if (!test_load_monst_avoids_water()) { return false; }
+  if (!test_load_monst_blasts_player()) { return false; }
   if (!test_load_monst_crosses_chasm()) { return false; }
   if (!test_load_monst_crosses_lava()) { return false; }
   if (!test_load_monst_crosses_water()) { return false; }

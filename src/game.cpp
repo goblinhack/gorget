@@ -570,6 +570,8 @@ void Game::cleanup()
   if (g_opt_tests) {
     error_clear(this);
   }
+
+  wid_console_clear(this);
 }
 void game_cleanup(Gamep g)
 {

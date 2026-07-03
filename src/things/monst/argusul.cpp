@@ -176,7 +176,7 @@ static void tp_argusul_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
                             .type         = "2",                 //
                             .name         = "central eye blast", //
                             .what         = "beam_of_light",     //
-                            .d100         = 10,
+                            .d100         = 20,
                             .when_distant = true,
                         });
 

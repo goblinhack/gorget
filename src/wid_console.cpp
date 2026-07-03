@@ -138,10 +138,6 @@ static void wid_console_log_(Gamep g, const std::string &s)
 //
 void wid_console_log(const std::string &s)
 {
-  if ((wid_console_inited == 0) || g_dying || g_quitting || (g_thread_id != MAIN_THREAD)) {
-    return;
-  }
-
   TRACE();
 
   extern Gamep game;
@@ -269,11 +265,29 @@ static void wid_console_wid_create(Gamep g)
   wid_update(g, wid_console_window);
 }
 
+[[nodiscard]] auto wid_console_find_text(Gamep g, const std::string &in) -> bool
+{
+  TRACE();
+
+  for (auto out : wid_console_serialize()) {
+    if (out.find(in) != std::string::npos) {
+      return true;
+    }
+  }
+  return false;
+}
+
 [[nodiscard]] auto wid_console_serialize() -> std::vector< std::string >
 {
   TRACE();
+
   std::vector< std::string > r;
-  auto                      *tmp = wid_get_head(wid_console_input_line);
+
+  for (auto i : wid_console_lines) {
+    r.push_back(i.second);
+  }
+
+  auto *tmp = wid_get_head(wid_console_input_line);
   while (tmp != nullptr) {
     auto s = wid_get_text(tmp);
     if (! s.empty()) {
@@ -283,6 +297,18 @@ static void wid_console_wid_create(Gamep g)
   }
   std::ranges::reverse(r);
   return r;
+}
+
+void wid_console_clear(Gamep g)
+{
+  TRACE();
+
+  std::vector< std::string > r;
+  auto                      *tmp = wid_get_head(wid_console_input_line);
+  while (tmp != nullptr) {
+    wid_set_text(tmp, "");
+    tmp = wid_get_next(tmp);
+  }
 }
 
 void wid_console_deserialize(const std::vector< std::string > &r)
