@@ -174,6 +174,8 @@
     }
   }
 
+  TEST_ASSERT(t, monst, "did not find monst");
+
   p = thing_player_struct(g);
   if (p != nullptr) {
     auto attacked_count = p->attacked_by[ tp_id_get(thing_tp(monst)) ];

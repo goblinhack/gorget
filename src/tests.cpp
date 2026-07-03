@@ -75,7 +75,6 @@
   if (!test_load_monst_slow_attack_single()) { return false; }
   if (!test_load_monst_slow()) { return false; }
   if (!test_load_monst_vision_direction()) { return false; }
-  if (!test_load_move_ok()) { return false; }
   if (!test_load_no_change()) { return false; }
   if (!test_load_path_astar()) { return false; }
   if (!test_load_path_dmap_reverse()) { return false; }
@@ -88,6 +87,8 @@
   if (!test_load_player_hiding_in_foliage()) { return false; }
   if (!test_load_player_in_steam()) { return false; }
   if (!test_load_player_lava()) { return false; }
+  if (!test_load_player_melee()) { return false; }
+  if (!test_load_player_move_ok()) { return false; }
   if (!test_load_player_moving_in_foliage()) { return false; }
   if (!test_load_player_on_fire_move_into_water()) { return false; }
   if (!test_load_player_on_fire()) { return false; }

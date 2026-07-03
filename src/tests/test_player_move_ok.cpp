@@ -194,11 +194,11 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_move_ok() -> bool // NOLINT
+[[nodiscard]] auto test_load_player_move_ok() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("move_ok");
+  Testp test = test_load("player_move_ok");
 
   // begin sort marker1 {
   test_callback_set(test, test_player_move_ok);
