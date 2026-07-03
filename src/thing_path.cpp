@@ -28,7 +28,7 @@ void thing_path_shorten(Gamep g, Levelsp v, Levelp l, Thingp t, std::vector< bpo
 {
   bool const debug = false;
 
-  auto at = thing_at(t);
+  auto at = thing_at(g, v, l, t);
   if (debug) {
     std::println("start (player {},{})", at.x, at.y);
     for (auto p : path) {
@@ -251,7 +251,7 @@ void thing_path_shorten(Gamep g, Levelsp v, Levelp l, Thingp t, std::vector< bpo
     return cost;
   }
 
-  auto prev = thing_at(me);
+  auto prev = thing_at(g, v, l, me);
 
   for (auto p : path) {
     //

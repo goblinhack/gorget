@@ -89,7 +89,7 @@ void level_tick_begin_temperature(Gamep g, Levelsp v, Levelp l)
       // No need to handle return to temperature
       //
       if (Tn != Ta) {
-        THING_DBG(t, "temperature return Ta %f To %f -> %d degrees", Ta, To, Tn);
+        THING_DBG(g, v, l, t, "temperature return Ta %f To %f -> %d degrees", Ta, To, Tn);
         (void) thing_temperature_set(g, v, l, t, Tn);
       }
     }
@@ -120,7 +120,7 @@ void level_tick_begin_temperature(Gamep g, Levelsp v, Levelp l)
 // dT = q / (c * m)
 // Tfinal = Tinitial + (Q / (m * c))
 //
-static void thing_heat_exchange(Levelsp v, Thingp a, Thingp b, int &finalT)
+static void thing_heat_exchange(Gamep g, Levelsp v, Levelp l, Thingp a, Thingp b, int &finalT)
 {
   TRACE();
 
@@ -193,10 +193,10 @@ static void thing_heat_exchange(Levelsp v, Thingp a, Thingp b, int &finalT)
   finalT               = static_cast< int >(ceilf((Ta) + final_dT));
 
   if (compiler_unused) {
-    THING_DBG(a, "b");
-    THING_DBG(b, "b");
+    THING_DBG(g, v, l, a, "a");
+    THING_DBG(g, v, l, b, "b");
   }
-  THING_DBG(a, "Ta %f Tb %f dT %f K %f m %f c %f Q %f final dT %f => %d", Ta, Tb, dT, K, m, c, Q, final_dT, finalT);
+  THING_DBG(g, v, l, a, "Ta %f Tb %f dT %f K %f m %f c %f Q %f final dT %f => %d", Ta, Tb, dT, K, m, c, Q, final_dT, finalT);
 }
 
 void level_thing_pair_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp a, Thingp b)
@@ -214,31 +214,31 @@ void level_thing_pair_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp a,
   int const Tb = thing_temperature(b);
 
   if (compiler_unused) {
-    THING_DBG(a, "a Ta %d", Ta);
-    THING_DBG(b, "b Tb %d", Tb);
+    THING_DBG(g, v, l, a, "a Ta %d", Ta);
+    THING_DBG(g, v, l, b, "b Tb %d", Tb);
   }
 
   //
   // The new temperatures
   //
   int Na = 0;
-  thing_heat_exchange(v, a, b, Na);
+  thing_heat_exchange(g, v, l, a, b, Na);
 
   int Nb = 0;
-  thing_heat_exchange(v, b, a, Nb);
+  thing_heat_exchange(g, v, l, b, a, Nb);
 
   //
   // First step is to mark things as burning and change temperatures
   //
   if (Ta != Na) {
     a->tick_temperature_last_change = v->tick;
-    THING_DBG(a, "temperature change (a) %d -> %d degrees", Ta, Na);
+    THING_DBG(g, v, l, a, "temperature change (a) %d -> %d degrees", Ta, Na);
     thing_temperature_handle(g, v, l, b, a, Na);
   }
 
   if (Tb != Nb) {
     b->tick_temperature_last_change = v->tick;
-    THING_DBG(b, "temperature change (b) %d -> %d degrees", Tb, Nb);
+    THING_DBG(g, v, l, b, "temperature change (b) %d -> %d degrees", Tb, Nb);
     thing_temperature_handle(g, v, l, a, b, Nb);
   }
 
@@ -328,8 +328,8 @@ void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
         auto *a = a_pair.first;
         auto *b = a_pair.second;
 
-        THING_DBG(a, "A before prio %d", a->_priority + b->_priority);
-        THING_DBG(b, "B before");
+        THING_DBG(g, v, l, a, "A before prio %d", a->_priority + b->_priority);
+        THING_DBG(g, v, l, b, "B before");
       }
     }
 
@@ -349,8 +349,8 @@ void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
         auto *a = a_pair.first;
         auto *b = a_pair.second;
 
-        THING_DBG(a, "A after prio %d", a->_priority + b->_priority);
-        THING_DBG(b, "B after");
+        THING_DBG(g, v, l, a, "A after prio %d", a->_priority + b->_priority);
+        THING_DBG(g, v, l, b, "B after");
       }
     }
 

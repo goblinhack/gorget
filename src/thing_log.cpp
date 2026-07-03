@@ -17,7 +17,7 @@
 #include <cstdio>
 #include <cstring>
 
-static void thing_log_(Thingp t, const char *fmt, va_list args)
+static void thing_log_(Gamep g, Levelsp v, Levelp l, Thingp t, const char *fmt, va_list args)
 {
   TRACE();
 
@@ -27,7 +27,7 @@ static void thing_log_(Thingp t, const char *fmt, va_list args)
   buf[ 0 ] = '\0';
   get_timestamp(buf, MAXLONGSTR);
   len = static_cast< int >(strlen(buf));
-  snprintf(buf + len, MAXLONGSTR - len, "[%-50s]: %*s", to_string(nullptr, nullptr, nullptr, t).c_str(), g_callframes_indent, "");
+  snprintf(buf + len, MAXLONGSTR - len, "[%-50s]: %*s", to_string(g, v, l, t).c_str(), g_callframes_indent, "");
   len = static_cast< int >(strlen(buf));
 
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
@@ -35,7 +35,7 @@ static void thing_log_(Thingp t, const char *fmt, va_list args)
   putf(MY_STDOUT, buf);
 }
 
-void thing_log(Thingp t, const char *fmt, ...)
+void thing_log(Gamep g, Levelsp v, Levelp l, Thingp t, const char *fmt, ...)
 {
   TRACE();
 
@@ -48,11 +48,11 @@ void thing_log(Thingp t, const char *fmt, ...)
 
   va_list args = {};
   va_start(args, fmt);
-  thing_log_(t, fmt, args);
+  thing_log_(g, v, l, t, fmt, args);
   va_end(args);
 }
 
-void thing_dbg(Thingp t, const char *fmt, ...)
+void thing_dbg(Gamep g, Levelsp v, Levelp l, Thingp t, const char *fmt, ...)
 {
   TRACE();
 
@@ -60,11 +60,11 @@ void thing_dbg(Thingp t, const char *fmt, ...)
 
   va_list args = {};
   va_start(args, fmt);
-  thing_log_(t, fmt, args);
+  thing_log_(g, v, l, t, fmt, args);
   va_end(args);
 }
 
-static void thing_warn_(Thingp t, const char *fmt, va_list args)
+static void thing_warn_(Gamep g, Levelsp v, Levelp l, Thingp t, const char *fmt, va_list args)
 {
   TRACE();
 
@@ -74,7 +74,7 @@ static void thing_warn_(Thingp t, const char *fmt, va_list args)
   buf[ 0 ] = '\0';
   get_timestamp(buf, MAXLONGSTR);
   len = static_cast< int >(strlen(buf));
-  snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_string(nullptr, nullptr, nullptr, t).c_str());
+  snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_string(g, v, l, t).c_str());
   len = static_cast< int >(strlen(buf));
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
@@ -82,18 +82,18 @@ static void thing_warn_(Thingp t, const char *fmt, va_list args)
   wid_console_log(buf);
 }
 
-void thing_warn(Thingp t, const char *fmt, ...)
+void thing_warn(Gamep g, Levelsp v, Levelp l, Thingp t, const char *fmt, ...)
 {
   TRACE();
 
   va_list args = {};
 
   va_start(args, fmt);
-  thing_warn_(t, fmt, args);
+  thing_warn_(g, v, l, t, fmt, args);
   va_end(args);
 }
 
-static void thing_con_(Thingp t, const char *fmt, va_list args)
+static void thing_con_(Gamep g, Levelsp v, Levelp l, Thingp t, const char *fmt, va_list args)
 {
   TRACE();
 
@@ -103,7 +103,7 @@ static void thing_con_(Thingp t, const char *fmt, va_list args)
   buf[ 0 ] = '\0';
   get_timestamp(buf, MAXLONGSTR);
   len = static_cast< int >(strlen(buf));
-  snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_string(nullptr, nullptr, nullptr, t).c_str());
+  snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_string(g, v, l, t).c_str());
   len = static_cast< int >(strlen(buf));
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
   putf(MY_STDOUT, buf);
@@ -116,63 +116,63 @@ static void thing_con_(Thingp t, const char *fmt, va_list args)
   wid_console_log(buf);
 }
 
-void thing_con(Thingp t, const char *fmt, ...)
+void thing_con(Gamep g, Levelsp v, Levelp l, Thingp t, const char *fmt, ...)
 {
   TRACE();
 
   va_list args = {};
   va_start(args, fmt);
-  thing_con_(t, fmt, args);
+  thing_con_(g, v, l, t, fmt, args);
   va_end(args);
 }
 
-static void thing_err_(Thingp t, const char *fmt, va_list args)
+static void thing_err_(Gamep g, Levelsp v, Levelp l, Thingp t, const char *fmt, va_list args)
 {
   char buf[ MAXLONGSTR ];
   int  len = 0;
 
   buf[ 0 ] = '\0';
-  snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_string(nullptr, nullptr, nullptr, t).c_str());
+  snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_string(g, v, l, t).c_str());
   len = static_cast< int >(strlen(buf));
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
   ERR("%s", buf);
 }
 
-void thing_err(Thingp t, const char *fmt, ...)
+void thing_err(Gamep g, Levelsp v, Levelp l, Thingp t, const char *fmt, ...)
 {
   TRACE();
 
   va_list args = {};
   va_start(args, fmt);
-  thing_err_(t, fmt, args);
+  thing_err_(g, v, l, t, fmt, args);
   va_end(args);
 }
 
-static void thing_croak_(Thingp t, const char *fmt, va_list args)
+static void thing_croak_(Gamep g, Levelsp v, Levelp l, Thingp t, const char *fmt, va_list args)
 {
   char buf[ MAXLONGSTR ];
   int  len = 0;
 
   buf[ 0 ] = '\0';
-  snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_string(nullptr, nullptr, nullptr, t).c_str());
+  snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_string(g, v, l, t).c_str());
   len = static_cast< int >(strlen(buf));
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
   CROAK("%s", buf);
 }
 
-void thing_croak(Thingp t, const char *fmt, ...)
+void thing_croak(Gamep g, Levelsp v, Levelp l, Thingp t, const char *fmt, ...)
 {
   TRACE();
 
   va_list args = {};
   va_start(args, fmt);
-  thing_croak_(t, fmt, args);
+  thing_croak_(g, v, l, t, fmt, args);
   va_end(args);
 }
 
-static void thing_topcon_(Thingp t, const char *fmt, va_list args)
+static void thing_topcon_(Gamep g, Levelsp v, Levelp l, Thingp t, const char *fmt, va_list args)
 {
   TRACE();
 
@@ -182,7 +182,7 @@ static void thing_topcon_(Thingp t, const char *fmt, va_list args)
   buf[ 0 ] = '\0';
   get_timestamp(buf, MAXLONGSTR);
   len = static_cast< int >(strlen(buf));
-  snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_string(nullptr, nullptr, nullptr, t).c_str());
+  snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_string(g, v, l, t).c_str());
   len = static_cast< int >(strlen(buf));
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
@@ -197,18 +197,18 @@ static void thing_topcon_(Thingp t, const char *fmt, va_list args)
   wid_console_log(buf);
 }
 
-void thing_topcon(Thingp t, const char *fmt, ...)
+void thing_topcon(Gamep g, Levelsp v, Levelp l, Thingp t, const char *fmt, ...)
 {
   TRACE();
 
   va_list args = {};
 
   va_start(args, fmt);
-  thing_topcon_(t, fmt, args);
+  thing_topcon_(g, v, l, t, fmt, args);
   va_end(args);
 }
 
-static void thing_botcon_(Thingp t, const char *fmt, va_list args)
+static void thing_botcon_(Gamep g, Levelsp v, Levelp l, Thingp t, const char *fmt, va_list args)
 {
   TRACE();
 
@@ -218,20 +218,20 @@ static void thing_botcon_(Thingp t, const char *fmt, va_list args)
   buf[ 0 ] = '\0';
   get_timestamp(buf, MAXLONGSTR);
   len = static_cast< int >(strlen(buf));
-  snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_string(nullptr, nullptr, nullptr, t).c_str());
+  snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_string(g, v, l, t).c_str());
   len = static_cast< int >(strlen(buf));
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
   wid_botcon_log(buf);
 }
 
-void thing_botcon(Thingp t, const char *fmt, ...)
+void thing_botcon(Gamep g, Levelsp v, Levelp l, Thingp t, const char *fmt, ...)
 {
   TRACE();
 
   va_list args = {};
 
   va_start(args, fmt);
-  thing_botcon_(t, fmt, args);
+  thing_botcon_(g, v, l, t, fmt, args);
   va_end(args);
 }

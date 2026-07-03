@@ -67,7 +67,7 @@
   //
   // Throw all items
   //
-  throw_to = thing_at(player);
+  throw_to = thing_at(g, v, l, player);
 
   for (;;) {
     bool got_item = false;

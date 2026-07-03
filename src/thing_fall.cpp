@@ -46,7 +46,7 @@ static auto thing_choose_landing_spot(Gamep g, Levelsp v, Levelp l, Thingp me) -
 {
   TRACE();
 
-  auto at   = thing_at(me);
+  auto at   = thing_at(g, v, l, me);
   int  dist = 1;
 
   for (;;) {
@@ -96,7 +96,7 @@ static auto thing_fall_damage(Gamep g, Levelsp v, Levelp l, Thingp me) -> int
   //
   // Landing in lava is bad
   //
-  if (level_is_lava_bool(g, v, l, thing_at(me))) {
+  if (level_is_lava_bool(g, v, l, thing_at(g, v, l, me))) {
     if (! thing_is_immune_to(g, v, l, me, THING_EVENT_FIRE_DAMAGE)) {
       fall_dmg *= 4;
     }
@@ -105,7 +105,7 @@ static auto thing_fall_damage(Gamep g, Levelsp v, Levelp l, Thingp me) -> int
   //
   // Water dampens the fall
   //
-  if (level_is_water_bool(g, v, l, thing_at(me))) {
+  if (level_is_water_bool(g, v, l, thing_at(g, v, l, me))) {
     if (thing_is_immune_to(g, v, l, me, THING_EVENT_WATER_DAMAGE)) {
       fall_dmg /= 2;
     }
@@ -114,7 +114,7 @@ static auto thing_fall_damage(Gamep g, Levelsp v, Levelp l, Thingp me) -> int
   //
   // Deep water dampens it further
   //
-  if (level_is_deep_water(g, v, l, thing_at(me)) != nullptr) {
+  if (level_is_deep_water(g, v, l, thing_at(g, v, l, me)) != nullptr) {
     if (thing_is_immune_to(g, v, l, me, THING_EVENT_WATER_DAMAGE)) {
       fall_dmg /= 2;
     }
@@ -138,15 +138,15 @@ static auto thing_fall_damage(Gamep g, Levelsp v, Levelp l, Thingp me) -> int
 //
 static void thing_fall_end(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
-  THING_DBG(me, "fall end");
+  THING_DBG(g, v, l, me, "fall end");
   TRACE_INDENT();
 
   auto *next_level = level_select_get_next_level_down(g, v, l);
   if (next_level == nullptr) {
     if (g_opt_tests) {
-      THING_DBG(me, "no level to fall onto");
+      THING_DBG(g, v, l, me, "no level to fall onto");
     } else {
-      thing_err(me, "no level to fall onto");
+      thing_err(g, v, l, me, "no level to fall onto");
     }
     return;
   }
@@ -158,7 +158,7 @@ static void thing_fall_end(Gamep g, Levelsp v, Levelp l, Thingp me)
         .damage     = thing_fall_damage(g, v, l, me), //
     };
 
-    THING_DBG(me, "dead due to falling into nothing");
+    THING_DBG(g, v, l, me, "dead due to falling into nothing");
     TRACE_INDENT();
 
     thing_dead(g, v, l, me, e);
@@ -223,10 +223,10 @@ static void thing_fall_end(Gamep g, Levelsp v, Levelp l, Thingp me)
   if (t_level != nullptr) {
     l = t_level;
   } else {
-    thing_err(me, "fell into nothing");
+    thing_err(g, v, l, me, "fell into nothing");
   }
 
-  if (level_is_chasm(g, v, t_level, thing_at(me)) != nullptr) {
+  if (level_is_chasm(g, v, t_level, thing_at(g, v, l, me)) != nullptr) {
     //
     // If we keep on falling through chasms again and again though,
     // we need to break the potential fall loop.
@@ -235,7 +235,7 @@ static void thing_fall_end(Gamep g, Levelsp v, Levelp l, Thingp me)
       if (! thing_is_able_to_fall_repeatedly(me)) {
         e.reason = "repeated falling";
 
-        THING_DBG(me, "dead due to repeated falling");
+        THING_DBG(g, v, l, me, "dead due to repeated falling");
         TRACE_INDENT();
 
         thing_dead(g, v, l, me, e);
@@ -245,7 +245,7 @@ static void thing_fall_end(Gamep g, Levelsp v, Levelp l, Thingp me)
     //
     // Keep falling with no damage if over a chasm.
     //
-    THING_DBG(me, "over a chasm again; keep falling");
+    THING_DBG(g, v, l, me, "over a chasm again; keep falling");
     TRACE_INDENT();
     thing_is_falling_continues_set(g, v, l, me);
     thing_is_spawned_set(g, v, l, me);
@@ -275,12 +275,12 @@ static void thing_fall_end(Gamep g, Levelsp v, Levelp l, Thingp me)
   //
   // Splash!
   //
-  if (level_is_deep_water(g, v, l, thing_at(me)) != nullptr) {
+  if (level_is_deep_water(g, v, l, thing_at(g, v, l, me)) != nullptr) {
     thing_sound_play(g, v, l, me, "splash");
     if (thing_is_player(me)) {
       topcon(UI_GOOD_FMT_STR "The deep water dampened your fall!" UI_RESET_FMT);
     }
-  } else if (level_is_water_bool(g, v, l, thing_at(me))) {
+  } else if (level_is_water_bool(g, v, l, thing_at(g, v, l, me))) {
     thing_sound_play(g, v, l, me, "splash");
     if (thing_is_player(me)) {
       topcon(UI_GOOD_FMT_STR "The water dampened your fall!" UI_RESET_FMT);
@@ -298,7 +298,7 @@ void thing_fall_time_step(Gamep g, Levelsp v, Levelp l, Thingp me, int time_step
   (void) thing_is_falling_incr(g, v, l, me, time_step);
 
   if (compiler_unused) {
-    THING_DBG(me, "fall incr %u", thing_is_falling(me));
+    THING_DBG(g, v, l, me, "fall incr %u", thing_is_falling(me));
   }
 }
 
@@ -310,7 +310,7 @@ void thing_fall_end_check(Gamep g, Levelsp v, Levelp l, Thingp me)
   TRACE();
 
   if (compiler_unused) {
-    THING_DBG(me, "fall %u", thing_is_falling(me));
+    THING_DBG(g, v, l, me, "fall %u", thing_is_falling(me));
     TRACE_INDENT();
   }
 
@@ -327,7 +327,7 @@ void thing_fall_end_check(Gamep g, Levelsp v, Levelp l, Thingp me)
     auto *player = thing_player(g);
     if (player != nullptr) {
       if (me != player) {
-        if (! thing_vision_can_see_tile(g, v, l, player, thing_at(me))) {
+        if (! thing_vision_can_see_tile(g, v, l, player, thing_at(g, v, l, me))) {
           fall_finished = true;
         }
       }
@@ -342,14 +342,14 @@ void thing_fall_end_check(Gamep g, Levelsp v, Levelp l, Thingp me)
 
     auto *t_level = game_level_get(g, v, me->level_num);
     if (t_level == nullptr) {
-      thing_err(me, "fell into nothing");
+      thing_err(g, v, l, me, "fell into nothing");
     }
 
     thing_is_falling_set(g, v, t_level, me, false);
 
     if (thing_is_player(me)) {
-      if (level_is_chasm(g, v, t_level, thing_at(me)) != nullptr) {
-        THING_DBG(me, "fell again");
+      if (level_is_chasm(g, v, t_level, thing_at(g, v, l, me)) != nullptr) {
+        THING_DBG(g, v, t_level, me, "fell again");
         TRACE_INDENT();
         (void) level_tick_begin_requested(g, v, t_level, "player fell again");
       }
@@ -357,8 +357,8 @@ void thing_fall_end_check(Gamep g, Levelsp v, Levelp l, Thingp me)
       //
       // This seems rather cruel, but...
       //
-      if (level_is_lava(g, v, t_level, thing_at(me)) != nullptr) {
-        THING_DBG(me, "fell into lava");
+      if (level_is_lava(g, v, t_level, thing_at(g, v, l, me)) != nullptr) {
+        THING_DBG(g, v, t_level, me, "fell into lava");
         TRACE_INDENT();
         (void) level_tick_begin_requested(g, v, t_level, "player fell into lava");
       }
@@ -397,7 +397,7 @@ void thing_fall(Gamep g, Levelsp v, Levelp l, Thingp me)
   if (thing_is_monst(me)) {
     auto *player = thing_player(g);
     if (player != nullptr) {
-      if (thing_vision_can_see_tile(g, v, l, player, thing_at(me))) {
+      if (thing_vision_can_see_tile(g, v, l, player, thing_at(g, v, l, me))) {
         auto The_thing = thing_name_long_The(g, v, l, me);
         topcon("%s tumbles into the chasm.", The_thing.c_str());
       }
@@ -537,7 +537,7 @@ void thing_is_falling_continues_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool
   t->_is_falling_continues = val;
 
   if (val) {
-    THING_DBG(t, "is falling continues set");
+    THING_DBG(g, v, l, t, "is falling continues set");
   }
 
   level_request_to_cleanup_things_set(g, v, l);

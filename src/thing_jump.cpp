@@ -43,7 +43,7 @@ void thing_is_jumping_set(Gamep g, Levelsp v, Levelp l, Thingp me, bool val)
     //
     // Splash!
     //
-    if (level_is_water_bool(g, v, l, thing_at(me))) {
+    if (level_is_water_bool(g, v, l, thing_at(g, v, l, me))) {
       thing_sound_play(g, v, l, me, "splash");
     }
   }
@@ -57,7 +57,7 @@ void thing_is_jumping_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
     return;
   }
 
-  THING_DBG(me, "jump end");
+  THING_DBG(g, v, l, me, "jump end");
 
   thing_is_jumping_set(g, v, l, me, false);
 }
@@ -70,7 +70,7 @@ static void thing_jump_truncate(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint 
   //
   // Add some random delta for fun and some for diagonals
   //
-  auto curr_at = thing_at(me);
+  auto curr_at = thing_at(g, v, l, me);
   //
   // Need to allow diagonal jumps of n tiles
   //
@@ -83,8 +83,8 @@ static void thing_jump_truncate(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint 
   // v
   const auto how_far_i_want_to_jump = std::floor(distance(curr_at, to));
 
-  THING_DBG(me, "curr_at (%d,%d), jump to (%d,%d)", curr_at.x, curr_at.y, to.x, to.y);
-  THING_DBG(me, "how_far_i_want_to_jump %f, how_far_i_can_jump %d", how_far_i_want_to_jump, how_far_i_can_jump);
+  THING_DBG(g, v, l, me, "curr_at (%d,%d), jump to (%d,%d)", curr_at.x, curr_at.y, to.x, to.y);
+  THING_DBG(g, v, l, me, "how_far_i_want_to_jump %f, how_far_i_can_jump %d", how_far_i_want_to_jump, how_far_i_can_jump);
   TRACE_INDENT();
 
   //
@@ -101,7 +101,7 @@ static void thing_jump_truncate(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint 
     //
     // Yep. Trying to jump too far.
     //
-    THING_DBG(me, "trying to jump too far");
+    THING_DBG(g, v, l, me, "trying to jump too far");
     fpoint u = make_fpoint(to) - make_fpoint(curr_at);
     u.unit();
     u *= how_far_i_can_jump;
@@ -117,7 +117,7 @@ static void thing_jump_truncate(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint 
 //
 static auto thing_jump_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> Thingp
 {
-  auto at        = thing_at(me);
+  auto at        = thing_at(g, v, l, me);
   auto jump_path = draw_line(at, to);
 
   for (auto intermediate : std::ranges::reverse_view(jump_path)) {
@@ -134,14 +134,14 @@ static auto thing_jump_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thingp
 //
 [[nodiscard]] auto thing_jump_to(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to, bool warn) -> bool
 {
-  THING_DBG(me, "jump to (%d,%d)", to.x, to.y);
+  THING_DBG(g, v, l, me, "jump to (%d,%d)", to.x, to.y);
   TRACE_INDENT();
 
   if (is_oob_or_border(to)) [[unlikely]] {
     return false;
   }
 
-  auto at = thing_at(me);
+  auto at = thing_at(g, v, l, me);
   if (to == at) {
     return false;
   }
@@ -165,7 +165,7 @@ static auto thing_jump_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thingp
 
   auto how_far_i_want_to_jump = static_cast< int >(floor(distance(at, to)));
 
-  THING_DBG(me, "jump to (%d,%d) (final, how_far_i_can_jump:%d how_far_i_want_to_jump %d)", to.x, to.y, how_far_i_can_jump,
+  THING_DBG(g, v, l, me, "jump to (%d,%d) (final, how_far_i_can_jump:%d how_far_i_want_to_jump %d)", to.x, to.y, how_far_i_can_jump,
             how_far_i_want_to_jump);
   TRACE_INDENT();
 
@@ -191,7 +191,7 @@ static auto thing_jump_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thingp
   if (thing_is_monst(me)) {
     if (! thing_can_move_to_ai(g, v, l, me, to)) {
       blocked = true;
-      THING_DBG(me, "ai blocked jump");
+      THING_DBG(g, v, l, me, "ai blocked jump");
     }
   }
 
@@ -206,7 +206,7 @@ static auto thing_jump_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thingp
       }
     }
 
-    THING_DBG(me, "something in the way of jumping onto");
+    THING_DBG(g, v, l, me, "something in the way of jumping onto");
   }
 
   if (blocked) {
@@ -215,7 +215,7 @@ static auto thing_jump_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thingp
     //
     if (how_far_i_want_to_jump > 1) {
       thing_jump_truncate(g, v, l, me, to, how_far_i_want_to_jump - 1);
-      THING_DBG(me, "try truncated jump to (%d,%d)", to.x, to.y);
+      THING_DBG(g, v, l, me, "try truncated jump to (%d,%d)", to.x, to.y);
 
       return thing_jump_to(g, v, l, me, to, warn);
     }
@@ -241,7 +241,7 @@ static auto thing_jump_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thingp
   //
   auto dx = to.x - at.x;
   auto dy = to.y - at.y;
-  thing_set_dir_from_delta(me, dx, dy);
+  thing_set_dir_from_delta(g, v, l, me, dx, dy);
 
   //
   // Halve stamina for successfiul jumps
@@ -249,7 +249,7 @@ static auto thing_jump_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thingp
   auto stamina = static_cast< int >(static_cast< float >(thing_stamina(g, v, l, me)) * 0.8);
   (void) thing_stamina_set(g, v, l, me, stamina);
 
-  THING_DBG(me, "jump begin delta %d,%d", dx, dy);
+  THING_DBG(g, v, l, me, "jump begin delta %d,%d", dx, dy);
 
   return true;
 }

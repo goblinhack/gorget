@@ -176,7 +176,7 @@
   // Find the door
   //
   TEST_LOG(t, "find the door");
-  p    = thing_at(player) + bpoint(1, 0);
+  p    = thing_at(g, v, l, player) + bpoint(1, 0);
   door = nullptr;
 
   FOR_ALL_THINGS_AT(g, v, l, it, p)
@@ -186,7 +186,7 @@
     }
   }
 
-  p     = thing_at(player) + bpoint(1, 0);
+  p     = thing_at(g, v, l, player) + bpoint(1, 0);
   monst = nullptr;
 
   FOR_ALL_THINGS_AT(g, v, l, it, p)

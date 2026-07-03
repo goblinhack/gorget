@@ -377,7 +377,7 @@ void thing_free(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 
   if (compiler_unused) {
-    THING_DBG(t, "free");
+    THING_DBG(g, v, l, t, "free");
   }
 
   if (v->is_generating_levels) {
@@ -446,7 +446,7 @@ void thing_is_scheduled_for_cleanup_set(Gamep g, Levelsp v, Levelp l, Thingp t, 
   t->_is_scheduled_for_cleanup = val;
 
   if (val) {
-    THING_DBG(t, "is scheduled for cleanup set");
+    THING_DBG(g, v, l, t, "is scheduled for cleanup set");
   }
 
   level_request_to_cleanup_things_set(g, v, l);

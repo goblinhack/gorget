@@ -34,12 +34,12 @@
   }
 
   if (val > THING_NOISE_MAX) {
-    thing_err(t, "value overflow: %d", val);
+    thing_err(g, v, l, t, "value overflow: %d", val);
     return 0;
   }
 
   if (val < 0) {
-    thing_err(t, "value underflow: %d", val);
+    thing_err(g, v, l, t, "value underflow: %d", val);
     return 0;
   }
 

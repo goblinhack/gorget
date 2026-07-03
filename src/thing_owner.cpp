@@ -49,7 +49,7 @@ void thing_owner_set(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner)
   }
 
   if (owner == nullptr) {
-    thing_err(me, "no owner");
+    thing_err(g, v, l, me, "no owner");
     return;
   }
 

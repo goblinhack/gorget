@@ -38,7 +38,7 @@ void thing_on_use_set(Tpp tp, thing_on_use_t callback)
     return false;
   }
   if (! thing_is_player(user) && ! thing_is_monst(user)) {
-    thing_err(user, "unexpected thing for %s", __FUNCTION__);
+    thing_err(g, v, l, user, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
   return tp->on_use(g, v, l, me, user);
@@ -52,23 +52,23 @@ static auto thing_use_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp use
   TRACE();
 
   if (! thing_is_item(item)) {
-    thing_err(user, "unexpected non item thing, %s", __FUNCTION__);
+    thing_err(g, v, l, user, "unexpected non item thing, %s", __FUNCTION__);
     return false;
   }
 
   if (! thing_is_carried(item)) {
-    thing_err(user, "unexpected uncarried thing, %s", __FUNCTION__);
+    thing_err(g, v, l, user, "unexpected uncarried thing, %s", __FUNCTION__);
     return false;
   }
 
   if (! thing_is_player(user) && ! thing_is_monst(user)) {
-    thing_err(user, "unexpected thing, %s", __FUNCTION__);
+    thing_err(g, v, l, user, "unexpected thing, %s", __FUNCTION__);
     return false;
   }
 
   {
     auto s = to_string(g, v, l, item);
-    THING_DBG(user, "use: %s", s.c_str());
+    THING_DBG(g, v, l, user, "use: %s", s.c_str());
   }
   TRACE_INDENT();
 
@@ -82,7 +82,7 @@ static auto thing_use_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp use
 
   {
     auto s = to_string(g, v, l, item);
-    THING_DBG(user, "used: %s", s.c_str());
+    THING_DBG(g, v, l, user, "used: %s", s.c_str());
   }
   TRACE_INDENT();
 
@@ -125,7 +125,7 @@ static auto thing_use_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp use
   }
 
   if (item == nullptr) {
-    thing_err(me, "no item to use");
+    thing_err(g, v, l, me, "no item to use");
     return false;
   }
 

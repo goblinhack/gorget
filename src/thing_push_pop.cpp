@@ -21,7 +21,7 @@
 {
   TRACE();
 
-  auto at = thing_at(t);
+  auto at = thing_at_no_owner(g, v, l, t);
   if (is_oob(at)) [[unlikely]] {
     return false;
   }
@@ -79,7 +79,7 @@
         l->thing_id[ at.x ][ at.y ][ slot ] = t->id;
 
         if (compiler_unused) {
-          THING_DBG(t, "pushed to %u,%u slot %u", at.x, at.y, slot);
+          THING_DBG(g, v, l, t, "pushed to %u,%u slot %u", at.x, at.y, slot);
         }
 
         return true;
@@ -98,7 +98,7 @@
         auto *it = thing_find(g, v, o_id);
         if ((it != nullptr) && thing_is_removable_on_err(it)) {
           if (thing_pop(g, v, it)) {
-            THING_DBG(t, "removed from the map due to lack of slots");
+            THING_DBG(g, v, l, t, "removed from the map due to lack of slots");
             removed_one = true;
             break;
           }
@@ -120,7 +120,7 @@
         auto *it = thing_find(g, v, o_id);
         if ((it != nullptr) && thing_is_dead(it) && thing_is_removable_when_dead_on_err(it)) {
           if (thing_pop(g, v, it)) {
-            THING_DBG(t, "removed from the map due to lack of slots");
+            THING_DBG(g, v, l, t, "removed from the map due to lack of slots");
             removed_one = true;
             break;
           }
@@ -145,7 +145,7 @@
 {
   TRACE();
 
-  auto at = thing_at(t);
+  auto at = thing_at_no_owner(g, v, l, t);
   if (is_oob(at)) [[unlikely]] {
     return false;
   }
@@ -246,7 +246,7 @@
     }
   }
 
-  thing_err(t, "out of thing slots");
+  thing_err(g, v, l, t, "out of thing slots");
 
   //
   // Dump the contents of slots if we were unable to push
@@ -255,7 +255,7 @@
     auto dump_id = l->thing_id[ at.x ][ at.y ][ slot ];
     if (dump_id != 0U) {
       auto *it = thing_find(g, v, dump_id);
-      thing_con(it, "DUMP: is using slot %u", slot);
+      thing_con(g, v, l, it, "DUMP: is using slot %u", slot);
     }
   }
 
@@ -284,7 +284,7 @@
   bpoint const at = t->last_pushed_at;
 
   if (compiler_unused) {
-    THING_DBG(t, "is on the map, last pushed %u,%u", at.x, at.y);
+    THING_DBG(g, v, l, t, "is on the map, last pushed %u,%u", at.x, at.y);
   }
 
   if (is_oob(at)) [[unlikely]] {
@@ -296,7 +296,7 @@
     if (o_id == t->id) {
       l->thing_id[ at.x ][ at.y ][ slot ] = 0;
       if (compiler_unused) {
-        THING_DBG(t, "popped from slot %u", slot);
+        THING_DBG(g, v, l, t, "popped from slot %u", slot);
       }
       thing_is_on_map_unset(g, v, l, t);
       return true;
@@ -310,10 +310,10 @@
     auto dump_id = l->thing_id[ at.x ][ at.y ][ slot ];
     if (dump_id != 0U) {
       auto *it = thing_find(g, v, dump_id);
-      thing_con(it, "DUMP: is using slot %u", slot);
+      thing_con(g, v, l, it, "DUMP: is using slot %u", slot);
     }
   }
 
-  thing_err(t, "could not pop thing that is on the map");
+  thing_err(g, v, l, t, "could not pop thing that is on the map");
   return false;
 }

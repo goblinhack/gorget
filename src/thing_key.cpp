@@ -26,7 +26,7 @@
   }
 
   if (! thing_is_player(owner) && ! thing_is_monst(owner)) {
-    thing_err(owner, "unexpected thing for %s", __FUNCTION__);
+    thing_err(g, v, l, owner, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
 
@@ -36,7 +36,7 @@
       .source     = owner                //
   };
 
-  THING_DBG(it, "dead due to carrying");
+  THING_DBG(g, v, l, it, "dead due to carrying");
   TRACE_INDENT();
 
   thing_dead(g, v, l, it, e);
@@ -67,7 +67,7 @@
   }
 
   if (val > std::numeric_limits< decltype(t->_keys_carried) >::max()) {
-    thing_err(t, "value overflow: %d", val);
+    thing_err(g, v, l, t, "value overflow: %d", val);
     return 0;
   }
 

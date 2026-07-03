@@ -209,8 +209,8 @@ static void thing_display_outlined_blit(Gamep g, Tpp tp, spoint tl, spoint br, T
 //
 // Show an outline if obscured? e.g. foliage and the player hiding in it
 //
-[[nodiscard]] static auto thing_display_hidden(Thingp t_maybe_null, spoint tl, spoint br, Tilep tile, float x1, float x2, float y1, float y2,
-                                               color fg) -> bool
+[[nodiscard]] static auto thing_display_hidden(Gamep g, Levelsp v, Levelp l, Thingp t_maybe_null, spoint tl, spoint br, Tilep tile, float x1,
+                                               float x2, float y1, float y2, color fg) -> bool
 {
   TRACE_DEBUG();
 
@@ -232,8 +232,8 @@ static void thing_display_outlined_blit(Gamep g, Tpp tp, spoint tl, spoint br, T
     color c = WHITE;
     c.a     = h;
     tile_blit_outline_w_invis_inside(tile, x1, x2, y1, y2, tl, br, c);
-  } else {
-    thing_err(t_maybe_null, "need to set obscured type");
+  } else if (t_maybe_null) {
+    thing_err(g, v, l, t_maybe_null, "need to set obscured type");
   }
 
   return true;
@@ -249,7 +249,7 @@ static void thing_display_blit(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t_ma
       //
       // Hidden things need to be shown on top of walls or foliage
       //
-      if (thing_display_hidden(t_maybe_null, tl, br, tile, x1, x2, y1, y2, fg)) {
+      if (thing_display_hidden(g, v, l, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fg)) {
         return;
       }
 

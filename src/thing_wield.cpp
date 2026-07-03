@@ -29,16 +29,16 @@ static auto thing_wield_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp w
   }
 
   if (! thing_is_player(wielder) && ! thing_is_monst(wielder)) {
-    thing_err(wielder, "unexpected thing for %s", __FUNCTION__);
+    thing_err(g, v, l, wielder, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
 
   auto s = to_string(g, v, l, item);
-  THING_DBG(wielder, "wield: %s", s.c_str());
+  THING_DBG(g, v, l, wielder, "wield: %s", s.c_str());
   TRACE_INDENT();
 
   if (! thing_is_wielded_try_set(g, v, l, item, wielder)) {
-    THING_DBG(wielder, "wield: %s (failed)", s.c_str());
+    THING_DBG(g, v, l, wielder, "wield: %s (failed)", s.c_str());
     TRACE_INDENT();
 
     if (thing_is_player(wielder)) {
@@ -83,16 +83,16 @@ static auto thing_unwield_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp
   }
 
   if (! thing_is_player(wielder) && ! thing_is_monst(wielder)) {
-    thing_err(wielder, "unexpected thing for %s", __FUNCTION__);
+    thing_err(g, v, l, wielder, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
 
   auto s = to_string(g, v, l, item);
-  THING_DBG(wielder, "unwield: %s", s.c_str());
+  THING_DBG(g, v, l, wielder, "unwield: %s", s.c_str());
   TRACE_INDENT();
 
   if (! thing_is_wielded_try_unset(g, v, l, item, wielder)) {
-    THING_DBG(wielder, "unwield: %s (failed)", s.c_str());
+    THING_DBG(g, v, l, wielder, "unwield: %s (failed)", s.c_str());
     TRACE_INDENT();
 
     if (thing_is_player(wielder)) {
@@ -138,7 +138,7 @@ static auto thing_unwield_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp
   TRACE_DEBUG();
 
   if (! thing_is_player(wielder) && ! thing_is_monst(wielder)) {
-    thing_err(wielder, "unexpected thing for %s", __FUNCTION__);
+    thing_err(g, v, l, wielder, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
 
@@ -149,7 +149,7 @@ static auto thing_unwield_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp
 
   if (item->_is_wielded == static_cast< int >(val)) {
     auto s = to_string(g, v, l, item);
-    THING_DBG(wielder, "wield-try: %s (failed, already wielded)", s.c_str());
+    THING_DBG(g, v, l, wielder, "wield-try: %s (failed, already wielded)", s.c_str());
     return true;
   }
   auto old_value    = item->_is_wielded;
@@ -169,7 +169,7 @@ static auto thing_unwield_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp
       item->_is_wielded = old_value;
 
       auto s = to_string(g, v, l, item);
-      THING_DBG(wielder, "wield-try: %s (failed, wield request)", s.c_str());
+      THING_DBG(g, v, l, wielder, "wield-try: %s (failed, wield request)", s.c_str());
       return false;
     }
   } else {
@@ -183,7 +183,7 @@ static auto thing_unwield_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp
       item->_is_wielded = old_value;
 
       auto s = to_string(g, v, l, item);
-      THING_DBG(wielder, "unwield-try: %s (failed, unwield request)", s.c_str());
+      THING_DBG(g, v, l, wielder, "unwield-try: %s (failed, unwield request)", s.c_str());
       return false;
     }
   }
@@ -223,7 +223,7 @@ void thing_on_wield_request_set(Tpp tp, thing_on_wield_request_t callback)
     return true;
   }
   if (! thing_is_player(wielder) && ! thing_is_monst(wielder)) {
-    thing_err(wielder, "unexpected thing for %s", __FUNCTION__);
+    thing_err(g, v, l, wielder, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
   return tp->on_wield_request(g, v, l, me, wielder);
@@ -254,7 +254,7 @@ void thing_on_unwield_request_set(Tpp tp, thing_on_unwield_request_t callback)
     return true;
   }
   if (! thing_is_player(unwieldper) && ! thing_is_monst(unwieldper)) {
-    thing_err(unwieldper, "unexpected thing for %s", __FUNCTION__);
+    thing_err(g, v, l, unwieldper, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
   return tp->on_unwield_request(g, v, l, me, unwieldper);
@@ -288,7 +288,7 @@ void thing_on_unwield_request_set(Tpp tp, thing_on_unwield_request_t callback)
   auto *item = thing_wielding(g, v, l, me);
   if (item != nullptr) {
     if (! thing_unwield_item(g, v, l, item, me, e)) {
-      thing_err(me, "failed to unwield");
+      thing_err(g, v, l, me, "failed to unwield");
     }
 
     me->wielding_id = 0;
@@ -309,7 +309,7 @@ void thing_on_unwield_request_set(Tpp tp, thing_on_unwield_request_t callback)
   }
 
   if (item == nullptr) {
-    thing_err(me, "no item to wield");
+    thing_err(g, v, l, me, "no item to wield");
     return false;
   }
 

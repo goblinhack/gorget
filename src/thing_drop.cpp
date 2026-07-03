@@ -21,26 +21,26 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp us
   TRACE();
 
   if (! thing_is_item(item)) {
-    thing_err(user, "unexpected non thing, %s", __FUNCTION__);
+    thing_err(g, v, l, user, "unexpected non thing, %s", __FUNCTION__);
     return false;
   }
 
   if (! thing_is_carried(item)) {
-    thing_err(user, "unexpected uncarried thing, %s", __FUNCTION__);
+    thing_err(g, v, l, user, "unexpected uncarried thing, %s", __FUNCTION__);
     return false;
   }
 
   if (! thing_is_player(user) && ! thing_is_monst(user)) {
-    thing_err(user, "unexpected thing, %s", __FUNCTION__);
+    thing_err(g, v, l, user, "unexpected thing, %s", __FUNCTION__);
     return false;
   }
 
   auto s = to_string(g, v, l, item);
-  THING_DBG(user, "drop: %s", s.c_str());
+  THING_DBG(g, v, l, user, "drop: %s", s.c_str());
   TRACE_INDENT();
 
   if (! thing_is_carried_unset(g, v, l, item, user, e)) {
-    THING_DBG(user, "drop: %s (failed)", s.c_str());
+    THING_DBG(g, v, l, user, "drop: %s (failed)", s.c_str());
     TRACE_INDENT();
 
     if (thing_is_player(user)) {
@@ -56,10 +56,10 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp us
   // Drop the thing where the player is
   //
   if (! thing_is_thrown(item)) {
-    THING_DBG(user, "drop: %s (need to place the item)", s.c_str());
+    THING_DBG(g, v, l, user, "drop: %s (need to place the item)", s.c_str());
     TRACE_INDENT();
 
-    if (! thing_warp_to(g, v, l, item, thing_at(user))) {
+    if (! thing_warp_to(g, v, l, item, thing_at(g, v, l, user))) {
       if (e.event_type == THING_EVENT_USER_INITIATED) {
         auto the_thing = thing_name_long_the(g, v, l, item);
         topcon(UI_WARN_FMT_STR "You fail to place %s." UI_RESET_FMT, the_thing.c_str());
@@ -67,14 +67,14 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp us
       return false;
     }
 
-    THING_DBG(user, "drop: %s (placed the item)", s.c_str());
+    THING_DBG(g, v, l, user, "drop: %s (placed the item)", s.c_str());
   }
 
   //
   // Replace the thing with a copy if count exists
   //
   if (thing_inventory_get_item_count(g, v, l, item, user) != -1) {
-    THING_DBG(user, "drop: %s (item count remains, need a copy)", s.c_str());
+    THING_DBG(g, v, l, user, "drop: %s (item count remains, need a copy)", s.c_str());
 
     FOR_ALL_INVENTORY_SLOTS(g, v, l, owner, slot, an_item)
     {
@@ -89,7 +89,7 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp us
         auto *thing_copy = thing_spawn(g, v, l, thing_tp(item), user);
 
         if (thing_copy != nullptr) {
-          THING_DBG(thing_copy, "drop: %s (thing copy)", s.c_str());
+          THING_DBG(g, v, l, thing_copy, "drop: %s (thing copy)", s.c_str());
           TRACE_INDENT();
 
           slot->item_id           = thing_copy->id;
@@ -110,7 +110,7 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp us
     }
   }
 
-  THING_DBG(user, "drop: %s (drop completed)", s.c_str());
+  THING_DBG(g, v, l, user, "drop: %s (drop completed)", s.c_str());
   TRACE_INDENT();
 
   if (thing_is_player(user)) {
@@ -156,7 +156,7 @@ void thing_on_drop_request_set(Tpp tp, thing_on_drop_request_t callback)
     return true;
   }
   if (! thing_is_player(user) && ! thing_is_monst(user)) {
-    thing_err(user, "unexpected thing for %s", __FUNCTION__);
+    thing_err(g, v, l, user, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
   return tp->on_drop_request(g, v, l, me, user, e);
@@ -195,7 +195,7 @@ void thing_on_drop_success_set(Tpp tp, thing_on_drop_success_t callback)
     return true;
   }
   if (! thing_is_player(user) && ! thing_is_monst(user)) {
-    thing_err(user, "unexpected thing for %s", __FUNCTION__);
+    thing_err(g, v, l, user, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
   return tp->on_drop_success(g, v, l, me, user, e);
@@ -211,7 +211,7 @@ void thing_on_drop_success_set(Tpp tp, thing_on_drop_success_t callback)
   }
 
   if (item == nullptr) {
-    thing_err(me, "no item to drop");
+    thing_err(g, v, l, me, "no item to drop");
     return false;
   }
 

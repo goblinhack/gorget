@@ -335,7 +335,7 @@
     return false;
   }
 
-  if (! level_is_exit_bool(g, v, l, thing_at(player))) {
+  if (! level_is_exit_bool(g, v, l, thing_at(g, v, l, player))) {
     topcon(UI_WARN_FMT_STR "There is no level exit here to descend." UI_RESET_FMT);
     (void) sound_play(g, "error");
     return false;
@@ -377,7 +377,7 @@
     return false;
   }
 
-  if (! level_is_entrance_bool(g, v, l, thing_at(player))) {
+  if (! level_is_entrance_bool(g, v, l, thing_at(g, v, l, player))) {
     topcon(UI_WARN_FMT_STR "There is no level entrance here to ascend." UI_RESET_FMT);
     (void) sound_play(g, "error");
     return false;
@@ -419,9 +419,9 @@ static auto game_event_jump(Gamep g) -> bool
   }
 
   auto to = v->cursor_at;
-  auto at = thing_at(player);
+  auto at = thing_at(g, v, l, player);
 
-  THING_DBG(player, "jump attempt to (%d,%d)", to.x, to.y);
+  THING_DBG(g, v, l, player, "jump attempt to (%d,%d)", to.x, to.y);
 
   if (level_is_cursor_path_hazard(g, v, l, to) != nullptr) {
     //
@@ -429,7 +429,7 @@ static auto game_event_jump(Gamep g) -> bool
     // code which will walk up to the edge of the chasm and then jump, and
     // can offer a confirm box.
     //
-    THING_DBG(player, "trying to jump into hazard");
+    THING_DBG(g, v, l, player, "trying to jump into hazard");
     level_cursor_copy_mouse_path_to_player(g, v, l);
 
     //

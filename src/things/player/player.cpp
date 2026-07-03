@@ -41,17 +41,20 @@ static void tp_player_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
   //
   // If we fell into another chasm, don't make an oof sound
   //
-  if (level_is_chasm_bool(g, v, l, thing_at(me))) {
+  if (level_is_chasm_bool(g, v, l, thing_at(g, v, l, me))) {
     return;
   }
 
-  if (level_is_water_bool(g, v, l, thing_at(me))) {
+  if (level_is_deep_water_bool(g, v, l, thing_at(g, v, l, me))) {
+    //    FOR_ALL_INVENTORY_ITEMS(g, v, l, me, item) { thing_water_handle(g, v, l, item); }
+    thing_sound_play(g, v, l, me, "splash");
+  } else if (level_is_water_bool(g, v, l, thing_at(g, v, l, me))) {
     thing_sound_play(g, v, l, me, "splash");
     (void) thing_noise_incr(g, v, l, me, THING_NOISE_SPLASH);
-  } else if (level_is_foliage_bool(g, v, l, thing_at(me))) {
+  } else if (level_is_foliage_bool(g, v, l, thing_at(g, v, l, me))) {
     thing_sound_play(g, v, l, me, "footstep_foliage");
     (void) thing_noise_incr(g, v, l, me, THING_NOISE_FOLIAGE);
-  } else if (level_is_foliage_bool(g, v, l, thing_at(me))) {
+  } else if (level_is_foliage_bool(g, v, l, thing_at(g, v, l, me))) {
     (void) thing_noise_incr(g, v, l, me, THING_NOISE_GRASS);
   } else {
     thing_sound_play(g, v, l, me, "footstep");
@@ -59,12 +62,12 @@ static void tp_player_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
     //
     // Noisy bridge?
     //
-    if (level_is_bridge_bool(g, v, l, thing_at(me))) {
+    if (level_is_bridge_bool(g, v, l, thing_at(g, v, l, me))) {
       (void) thing_noise_incr(g, v, l, me, THING_NOISE_FOOTSTEP);
     }
   }
 
-  auto at                   = thing_at(me);
+  auto at                   = thing_at(g, v, l, me);
   v->cursor[ at.x ][ at.y ] = CURSOR_NONE;
 }
 
@@ -94,17 +97,17 @@ static void tp_player_on_jump_end(Gamep g, Levelsp v, Levelp l, Thingp me)
     return;
   }
 
-  if (level_is_water_bool(g, v, l, thing_at(me))) {
+  if (level_is_water_bool(g, v, l, thing_at(g, v, l, me))) {
     //
     // We already have a splash noise
     //
-    auto at = thing_at(me);
+    auto at = thing_at(g, v, l, me);
     game_popup_text_add(g, at.x, at.y, std::string("Splash!"));
     (void) thing_noise_incr(g, v, l, me, THING_NOISE_SPLASH);
   } else {
     thing_sound_play(g, v, l, me, "player_oof");
     (void) thing_noise_incr(g, v, l, me, THING_NOISE_PLAYER_JUMP);
-    auto at = thing_at(me);
+    auto at = thing_at(g, v, l, me);
     game_popup_text_add(g, at.x, at.y, std::string("Oof!"));
   }
 }
@@ -113,7 +116,7 @@ static void tp_player_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
-  auto at = thing_at(me);
+  auto at = thing_at(g, v, l, me);
   game_popup_text_add(g, at.x, at.y, std::string("Aargh!"));
 }
 
@@ -124,11 +127,11 @@ static void tp_player_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp me)
   //
   // If we fell into another chasm, don't make an oof sound
   //
-  if (level_is_chasm_bool(g, v, l, thing_at(me))) {
+  if (level_is_chasm_bool(g, v, l, thing_at(g, v, l, me))) {
     return;
   }
 
-  if (level_is_water_bool(g, v, l, thing_at(me))) {
+  if (level_is_water_bool(g, v, l, thing_at(g, v, l, me))) {
     thing_sound_play(g, v, l, me, "splash");
     (void) thing_noise_incr(g, v, l, me, THING_NOISE_SPLASH);
   } else {
@@ -165,103 +168,103 @@ static void tp_player_level_enter(Gamep g, Levelsp v, Levelp l, Thingp me)
 
   switch (l->level_num + 1) {
     case 1 :
-      (void) sound_play(g, "dungeon_ambience", scale, loops);
+      (void) sound_play(g, v, l, "dungeon_ambience", scale, loops);
       (void) music_play(g, "dungeon.1");
       break;
     case 2 :
-      (void) sound_play(g, "dungeon_ambience", scale, loops);
+      (void) sound_play(g, v, l, "dungeon_ambience", scale, loops);
       (void) music_play(g, "dungeon.2");
       break;
     case 3 :
-      (void) sound_play(g, "dungeon_ambience", scale, loops);
+      (void) sound_play(g, v, l, "dungeon_ambience", scale, loops);
       (void) music_play(g, "dungeon.3");
       break;
     case 4 :
-      (void) sound_play(g, "dungeon_ambience", scale, loops);
+      (void) sound_play(g, v, l, "dungeon_ambience", scale, loops);
       (void) music_play(g, "dungeon.4");
       break;
     case 5 :
-      (void) sound_play(g, "dungeon_ambience", scale, loops);
+      (void) sound_play(g, v, l, "dungeon_ambience", scale, loops);
       (void) music_play(g, "dungeon.boss");
       break;
     case 6 :
-      (void) sound_play(g, "bogland_ambience", scale, loops);
+      (void) sound_play(g, v, l, "bogland_ambience", scale, loops);
       (void) music_play(g, "bogland.1");
       break;
     case 7 :
-      (void) sound_play(g, "bogland_ambience", scale, loops);
+      (void) sound_play(g, v, l, "bogland_ambience", scale, loops);
       (void) music_play(g, "bogland.2");
       break;
     case 8 :
-      (void) sound_play(g, "bogland_ambience", scale, loops);
+      (void) sound_play(g, v, l, "bogland_ambience", scale, loops);
       (void) music_play(g, "bogland.3");
       break;
     case 9 :
-      (void) sound_play(g, "bogland_ambience", scale, loops);
+      (void) sound_play(g, v, l, "bogland_ambience", scale, loops);
       (void) music_play(g, "bogland.4");
       break;
     case 10 :
-      (void) sound_play(g, "bogland_ambience", scale, loops);
+      (void) sound_play(g, v, l, "bogland_ambience", scale, loops);
       (void) music_play(g, "bogland.boss");
       break;
     case 11 :
-      (void) sound_play(g, "nethervoid_ambience", scale, loops);
+      (void) sound_play(g, v, l, "nethervoid_ambience", scale, loops);
       (void) music_play(g, "nethervoid.1");
       break;
     case 12 :
-      (void) sound_play(g, "nethervoid_ambience", scale, loops);
+      (void) sound_play(g, v, l, "nethervoid_ambience", scale, loops);
       (void) music_play(g, "nethervoid.2");
       break;
     case 13 :
-      (void) sound_play(g, "nethervoid_ambience", scale, loops);
+      (void) sound_play(g, v, l, "nethervoid_ambience", scale, loops);
       (void) music_play(g, "nethervoid.3");
       break;
     case 14 :
-      (void) sound_play(g, "nethervoid_ambience", scale, loops);
+      (void) sound_play(g, v, l, "nethervoid_ambience", scale, loops);
       (void) music_play(g, "nethervoid.4");
       break;
     case 15 :
-      (void) sound_play(g, "nethervoid_ambience", scale, loops);
+      (void) sound_play(g, v, l, "nethervoid_ambience", scale, loops);
       (void) music_play(g, "nethervoid.boss");
       break;
     case 16 :
-      (void) sound_play(g, "graveyard_ambience", scale, loops);
+      (void) sound_play(g, v, l, "graveyard_ambience", scale, loops);
       (void) music_play(g, "graveyard.1");
       break;
     case 17 :
-      (void) sound_play(g, "graveyard_ambience", scale, loops);
+      (void) sound_play(g, v, l, "graveyard_ambience", scale, loops);
       (void) music_play(g, "graveyard.2");
       break;
     case 18 :
-      (void) sound_play(g, "graveyard_ambience", scale, loops);
+      (void) sound_play(g, v, l, "graveyard_ambience", scale, loops);
       (void) music_play(g, "graveyard.3");
       break;
     case 19 :
-      (void) sound_play(g, "graveyard_ambience", scale, loops);
+      (void) sound_play(g, v, l, "graveyard_ambience", scale, loops);
       (void) music_play(g, "graveyard.4");
       break;
     case 20 :
-      (void) sound_play(g, "graveyard_ambience", scale, loops);
+      (void) sound_play(g, v, l, "graveyard_ambience", scale, loops);
       (void) music_play(g, "graveyard.boss");
       break;
     case 21 :
-      (void) sound_play(g, "underhell_ambience", scale, loops);
+      (void) sound_play(g, v, l, "underhell_ambience", scale, loops);
       (void) music_play(g, "underhell.1");
       break;
     case 22 :
-      (void) sound_play(g, "underhell_ambience", scale, loops);
+      (void) sound_play(g, v, l, "underhell_ambience", scale, loops);
       (void) music_play(g, "underhell.2");
       break;
     case 23 :
-      (void) sound_play(g, "underhell_ambience", scale, loops);
+      (void) sound_play(g, v, l, "underhell_ambience", scale, loops);
       (void) music_play(g, "underhell.3");
       break;
     case 24 :
-      (void) sound_play(g, "underhell_ambience", scale, loops);
+      (void) sound_play(g, v, l, "underhell_ambience", scale, loops);
       (void) music_play(g, "underhell.4");
       break;
     case 25 :
-      (void) sound_play(g, "underhell_ambience", scale, loops);
+      (void) sound_play(g, v, l, "underhell_ambience", scale, loops);
       (void) music_play(g, "underhell.boss");
       break;
   }
@@ -275,7 +278,7 @@ static void tp_player_on_teleported(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
-  auto at = thing_at(me);
+  auto at = thing_at(g, v, l, me);
   game_popup_text_add(g, at.x, at.y, std::string("Urgh"));
 }
 
@@ -325,24 +328,24 @@ static void tp_player_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
   };
 
   if (! thing_carry(g, v, l, me, items)) {
-    thing_err(me, "failed to carry");
+    thing_err(g, v, l, me, "failed to carry");
   }
 
   if (compiler_unused) {
     if (! thing_buff_add(g, v, l, me, tp_find_mand("buff_resistant_fire"))) {
-      thing_err(me, "failed to add buff");
+      thing_err(g, v, l, me, "failed to add buff");
     }
     if (! thing_buff_add(g, v, l, me, tp_find_mand("buff_resistant_fire"))) {
-      thing_err(me, "failed to add buff");
+      thing_err(g, v, l, me, "failed to add buff");
     }
     if (! thing_buff_add(g, v, l, me, tp_find_mand("buff_resistant_fire"))) {
-      thing_err(me, "failed to add buff");
+      thing_err(g, v, l, me, "failed to add buff");
     }
     if (! thing_buff_add(g, v, l, me, tp_find_mand("buff_immune_fire"))) {
-      thing_err(me, "failed to add buff");
+      thing_err(g, v, l, me, "failed to add buff");
     }
     if (! thing_buff_add(g, v, l, me, tp_find_mand("buff_immune_fire"))) {
-      thing_err(me, "failed to add buff");
+      thing_err(g, v, l, me, "failed to add buff");
     }
   }
 }

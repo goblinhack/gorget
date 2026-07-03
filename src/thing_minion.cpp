@@ -50,7 +50,7 @@
 
   auto *mob_ext = thing_ext_struct(g, mob);
   if (mob_ext == nullptr) {
-    thing_err(me, "mob has no ext memory");
+    thing_err(g, v, l, me, "mob has no ext memory");
     return nullptr;
   }
 
@@ -69,7 +69,7 @@
   }
 
   if (! thing_is_minion(me)) {
-    thing_err(me, "non minion trying to detach itself");
+    thing_err(g, v, l, me, "non minion trying to detach itself");
     return false;
   }
 
@@ -78,7 +78,7 @@
     return false; // can be normal if detached
   }
 
-  THING_DBG(me, "detach me from mob");
+  THING_DBG(g, v, l, me, "detach me from mob");
   TRACE_INDENT();
 
   return thing_mob_detach_minion(g, v, l, mob, me);
@@ -108,7 +108,7 @@
     return false;
   }
 
-  if (target == thing_at(me)) {
+  if (target == thing_at(g, v, l, me)) {
     return false;
   }
 
@@ -128,30 +128,30 @@
 //
 [[nodiscard]] auto thing_minion_choose_target_near_mob(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
 {
-  THING_DBG(me, "choose target: near mob");
+  THING_DBG(g, v, l, me, "choose target: near mob");
   TRACE_INDENT();
 
   auto *mob = thing_minion_mob_get(g, v, l, me);
   if (mob == nullptr) {
-    THING_DBG(me, "choose target: no mob");
+    THING_DBG(g, v, l, me, "choose target: no mob");
     return false; // can be normal if detached
   }
 
   auto *dmap = thing_minion_get_mob_dmap(g, v, l, me);
   if (dmap == nullptr) {
-    THING_DBG(me, "choose target: no mob dmap");
+    THING_DBG(g, v, l, me, "choose target: no mob dmap");
     return false;
   }
 
-  auto minion_at = thing_at(me);
-  auto mob_at    = thing_at(mob);
+  auto minion_at = thing_at(g, v, l, me);
+  auto mob_at    = thing_at(g, v, l, mob);
 
   //
   // How far to look for a target?
   //
   auto radius = thing_distance_minion_from_mob_max(g, v, l, me);
   if (radius == 0) {
-    thing_err(me, "unexpected value for radius");
+    thing_err(g, v, l, me, "unexpected value for radius");
     return false;
   }
 
@@ -166,7 +166,7 @@
       continue;
     }
 
-    THING_DBG(me, "astar thing_minion_choose_target_near_mob");
+    THING_DBG(g, v, l, me, "astar thing_minion_choose_target_near_mob");
     auto p = astar_solve(g, v, l, me, minion_at, target);
     if (p.empty()) {
       continue;
@@ -174,7 +174,7 @@
 
     if (thing_move_path_apply(g, v, l, me, p)) {
       thing_monst_target_set(g, v, l, me, target);
-      THING_DBG(me, "choose target: wander around mob");
+      THING_DBG(g, v, l, me, "choose target: wander around mob");
       return true;
     }
   }
@@ -208,7 +208,7 @@
     return true;
   }
 
-  if (distance(thing_at(mob), to) > thing_distance_minion_from_mob_max(g, v, l, me)) {
+  if (distance(thing_at(g, v, l, mob), to) > thing_distance_minion_from_mob_max(g, v, l, me)) {
     return false;
   }
 
@@ -247,7 +247,7 @@
   }
 
   if (val > THING_MINION_MAX) {
-    thing_croak(t, "trying to set minion max too high");
+    thing_croak(g, v, l, t, "trying to set minion max too high");
     val = THING_MINION_MAX;
   }
 

@@ -16,10 +16,10 @@
 
 [[nodiscard]] auto thing_projectile_launch_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const fpoint target) -> bool
 {
-  THING_DBG(me, "fire projectile");
+  THING_DBG(g, v, l, me, "fire projectile");
   TRACE_INDENT();
 
-  auto delta = target - make_fpoint(thing_at(me));
+  auto delta = target - make_fpoint(thing_at(g, v, l, me));
 
   if ((delta.x == 0) && (delta.y == 0)) {
     delta.x = 1;
@@ -30,7 +30,7 @@
   float c     = 0;
   SINCOSF(angle, &s, &c);
 
-  fpoint projectile_at = thing_real_at(me);
+  fpoint projectile_at = thing_real_at(g, v, l, me);
 
   //
   // Need a small fraction to account for comparisons of very similar floats where
@@ -51,15 +51,15 @@
   // Set my direction based on where I fire
   //
   bpoint const dir    = make_bpoint(projectile_at);
-  bpoint const source = thing_at(me);
-  thing_set_dir_from_delta(me, dir.x - source.x, dir.y - source.y);
+  bpoint const source = thing_at(g, v, l, me);
+  thing_set_dir_from_delta(g, v, l, me, dir.x - source.x, dir.y - source.y);
 
   thing_is_moving_set(g, v, l, projectile);
 
-  auto real_at = thing_real_at(projectile);
+  auto real_at = thing_real_at(g, v, l, projectile);
 
   if (compiler_unused) {
-    THING_DBG(projectile, "%f,%f", real_at.x, real_at.y);
+    THING_DBG(g, v, l, projectile, "%f,%f", real_at.x, real_at.y);
   }
 
   return true;
@@ -74,9 +74,9 @@ void thing_projectile_move(Gamep g, Levelsp v, Levelp l, Thingp me, float dt)
 {
   TRACE();
 
-  THING_DBG(me, "move");
+  THING_DBG(g, v, l, me, "move");
 
-  fpoint const old_at = thing_real_at(me);
+  fpoint const old_at = thing_real_at(g, v, l, me);
   auto         at     = old_at;
 
   auto *player = thing_player(g);
@@ -90,7 +90,7 @@ void thing_projectile_move(Gamep g, Levelsp v, Levelp l, Thingp me, float dt)
   at.y += delta.y;
 
   if (is_oob(at)) [[unlikely]] {
-    THING_DBG(me, "is oob");
+    THING_DBG(g, v, l, me, "is oob");
     TRACE_INDENT();
 
     ThingEvent e {
@@ -98,7 +98,7 @@ void thing_projectile_move(Gamep g, Levelsp v, Levelp l, Thingp me, float dt)
         .event_type = THING_EVENT_LIFESPAN_EXPIRED, //
     };
 
-    THING_DBG(me, "dead due to oob");
+    THING_DBG(g, v, l, me, "dead due to oob");
     TRACE_INDENT();
 
     thing_dead(g, v, l, me, e);
@@ -113,7 +113,7 @@ void thing_projectile_move(Gamep g, Levelsp v, Levelp l, Thingp me, float dt)
     thing_at_set(g, v, l, me, at);
     thing_update_pos(g, v, l, me);
     if (! thing_push(g, v, l, me)) {
-      THING_DBG(me, "could not push, oob?");
+      THING_DBG(g, v, l, me, "could not push, oob?");
       TRACE_INDENT();
 
       ThingEvent e {
@@ -121,7 +121,7 @@ void thing_projectile_move(Gamep g, Levelsp v, Levelp l, Thingp me, float dt)
           .event_type = THING_EVENT_LIFESPAN_EXPIRED, //
       };
 
-      THING_DBG(me, "dead due to oob on push");
+      THING_DBG(g, v, l, me, "dead due to oob on push");
       TRACE_INDENT();
 
       thing_dead(g, v, l, me, e);
@@ -135,5 +135,5 @@ void thing_projectile_move(Gamep g, Levelsp v, Levelp l, Thingp me, float dt)
   thing_on_moved(g, v, l, me);
 
   thing_collision_handle_interpolated(g, v, l, me, old_at);
-  THING_DBG(me, "post move of delta %f,%f dt %f", delta.x, delta.y, (float) me->thing_dt);
+  THING_DBG(g, v, l, me, "post move of delta %f,%f dt %f", delta.x, delta.y, (float) me->thing_dt);
 }

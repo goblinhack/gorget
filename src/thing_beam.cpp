@@ -18,9 +18,9 @@
 //
 // Can't shoot too far
 //
-static auto thing_beam_weapon_truncate(Thingp me, fpoint &to) -> float
+static auto thing_beam_weapon_truncate(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint &to) -> float
 {
-  auto        curr_at                 = thing_real_at(me);
+  auto        curr_at                 = thing_real_at(g, v, l, me);
   float const how_far_i_want_to_shoot = distance(curr_at, to);
   float const how_far_i_can_shoot     = THING_BEAM_WEAPON_TILES_MAX;
 
@@ -40,16 +40,16 @@ static auto thing_beam_weapon_truncate(Thingp me, fpoint &to) -> float
 
 auto thing_beam_weapon_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const fpoint target) -> bool
 {
-  THING_DBG(me, "beam_weapon weapon weapon");
+  THING_DBG(g, v, l, me, "beam_weapon weapon weapon");
   TRACE_INDENT();
 
   //
   // Can't shoot too far
   //
   auto to       = target;
-  auto distance = thing_beam_weapon_truncate(me, to);
+  auto distance = thing_beam_weapon_truncate(g, v, l, me, to);
 
-  auto delta = to - make_fpoint(thing_at(me));
+  auto delta = to - make_fpoint(thing_at(g, v, l, me));
 
   if ((delta.x == 0) && (delta.y == 0)) {
     delta.x = 1;
@@ -60,7 +60,7 @@ auto thing_beam_weapon_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what
   float c     = 0;
   SINCOSF(angle, &s, &c);
 
-  fpoint beam_at = thing_real_at(me);
+  fpoint beam_at = thing_real_at(g, v, l, me);
 
   //
   // Need a small fraction to account for comparisons of very similar floats where
@@ -77,7 +77,7 @@ auto thing_beam_weapon_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what
   const float avoid_gaps_in_tiles  = 0.94F;
   for (auto step = 0; step < beam_target_distance; step++) {
     if (compiler_unused) {
-      thing_topcon(me, "%f,%f step %d", beam_at.x, beam_at.y, step);
+      thing_topcon(g, v, l, me, "%f,%f step %d", beam_at.x, beam_at.y, step);
     }
 
     auto *beam_weapon = thing_spawn_missile(g, v, l, me, what, beam_at);
@@ -90,14 +90,14 @@ auto thing_beam_weapon_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what
     //
     // Special handling for teleporting of a beam_weapon weapon
     //
-    if (level_is_teleport_bool(g, v, l, thing_at(beam_weapon))) {
+    if (level_is_teleport_bool(g, v, l, thing_at(g, v, l, beam_weapon))) {
       if (thing_teleport_handle(g, v, l, beam_weapon)) {
-        beam_at = thing_real_at(beam_weapon);
+        beam_at = thing_real_at(g, v, l, beam_weapon);
       }
     }
 
     bool last = (step == beam_target_distance - 1);
-    if (level_is_obs_to_beam(g, v, l, thing_at(beam_weapon)) != nullptr) {
+    if (level_is_obs_to_beam(g, v, l, thing_at(g, v, l, beam_weapon)) != nullptr) {
       last = true;
     }
 
@@ -118,8 +118,8 @@ auto thing_beam_weapon_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what
   // Set my direction based on where I fire
   //
   bpoint const dir    = make_bpoint(beam_at);
-  bpoint const source = thing_at(me);
-  thing_set_dir_from_delta(me, dir.x - source.x, dir.y - source.y);
+  bpoint const source = thing_at(g, v, l, me);
+  thing_set_dir_from_delta(g, v, l, me, dir.x - source.x, dir.y - source.y);
 
   return true;
 }

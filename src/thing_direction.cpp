@@ -196,7 +196,7 @@ static void thing_dir_set_br(Thingp me)
 //
 // Set tile direction from delta
 //
-void thing_set_dir_from_delta(Thingp me, int dx, int dy)
+void thing_set_dir_from_delta(Gamep g, Levelsp v, Levelp l, Thingp me, int dx, int dy)
 {
   TRACE();
 
@@ -245,17 +245,17 @@ void thing_set_dir_from_delta(Thingp me, int dx, int dy)
   }
 }
 
-void thing_set_dir_from_delta(Thingp me, const bpoint &p)
+void thing_set_dir_from_delta(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &p)
 {
   TRACE();
-  thing_set_dir_from_delta(me, p.x, p.y);
+  thing_set_dir_from_delta(g, v, l, me, p.x, p.y);
 }
 
-void thing_set_dir_from_target(Thingp me, const bpoint &p)
+void thing_set_dir_from_target(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &p)
 {
   TRACE();
-  auto at = thing_at(me);
-  thing_set_dir_from_delta(me, p.x - at.x, p.y - at.y);
+  auto at = thing_at(g, v, l, me);
+  thing_set_dir_from_delta(g, v, l, me, p.x - at.x, p.y - at.y);
 }
 
 //

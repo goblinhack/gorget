@@ -23,7 +23,7 @@ static void thing_dump_buffs(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 
   if (! thing_is_able_to_be_buffed(me)) {
-    thing_err(me, "non owner trying to detach buff");
+    thing_err(g, v, l, me, "non owner trying to detach buff");
     return;
   }
 
@@ -35,12 +35,12 @@ static void thing_dump_buffs(Gamep g, Levelsp v, Levelp l, Thingp me)
   FOR_ALL_BUFF_SLOTS(g, v, l, me, slot, a_buff)
   {
     if (a_buff == nullptr) {
-      THING_DBG(me, "slot %d: -", _n_);
+      THING_DBG(g, v, l, me, "slot %d: -", _n_);
       continue;
     }
 
     auto s = to_string(g, v, l, a_buff);
-    THING_DBG(me, "slot %d: %s", _n_, s.c_str());
+    THING_DBG(g, v, l, me, "slot %d: %s", _n_, s.c_str());
   }
 }
 
@@ -111,18 +111,18 @@ static void thing_dump_buffs(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 
   if (! thing_is_able_to_be_buffed(me)) {
-    thing_err(me, "thing trying to spawn buffs when it cannot");
+    thing_err(g, v, l, me, "thing trying to spawn buffs when it cannot");
     return nullptr;
   }
 
   if (what == nullptr) {
-    thing_err(me, "no buff to spawn");
+    thing_err(g, v, l, me, "no buff to spawn");
     return nullptr;
   }
 
   auto *ext_struct = thing_ext_struct(g, me);
   if (ext_struct == nullptr) {
-    thing_err(me, "missing ext struct");
+    thing_err(g, v, l, me, "missing ext struct");
     return nullptr;
   }
 
@@ -142,7 +142,7 @@ static void thing_dump_buffs(Gamep g, Levelsp v, Levelp l, Thingp me)
   // Too many buffs
   //
   if (thing_buff_count_get(g, me) >= THING_BUFF_MAX) {
-    THING_DBG(me, "trying to apply too many buffs");
+    THING_DBG(g, v, l, me, "trying to apply too many buffs");
     thing_dump_buffs(g, v, l, me);
 
     if (thing_is_player(me)) {
@@ -164,7 +164,7 @@ static void thing_dump_buffs(Gamep g, Levelsp v, Levelp l, Thingp me)
     //
     // Create the buff. Should be no chance to fail now.
     //
-    auto *new_buff = thing_spawn(g, v, l, what, thing_at(me));
+    auto *new_buff = thing_spawn(g, v, l, what, thing_at(g, v, l, me));
     if (new_buff == nullptr) {
       return nullptr;
     }
@@ -174,8 +174,8 @@ static void thing_dump_buffs(Gamep g, Levelsp v, Levelp l, Thingp me)
     new_buff->buff_owner_id = me->id;
     ext_struct->buffs.count++;
 
-    THING_DBG(me, "added buff %s", to_string(g, v, l, new_buff).c_str());
-    THING_DBG(new_buff, "new born buff");
+    THING_DBG(g, v, l, me, "added buff %s", to_string(g, v, l, new_buff).c_str());
+    THING_DBG(g, v, l, new_buff, "new born buff");
 
     return new_buff;
   }
@@ -183,7 +183,7 @@ static void thing_dump_buffs(Gamep g, Levelsp v, Levelp l, Thingp me)
   //
   // Out of slots; but we checked above
   //
-  thing_err(me, "unexpectedly out of buff slots");
+  thing_err(g, v, l, me, "unexpectedly out of buff slots");
 
   return nullptr;
 }
@@ -216,7 +216,7 @@ static void thing_dump_buffs(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 
   if (! thing_is_able_to_be_buffed(me)) {
-    thing_err(me, "non owner trying to detach buffs");
+    thing_err(g, v, l, me, "non owner trying to detach buffs");
     return false;
   }
 
@@ -240,12 +240,12 @@ static void thing_dump_buffs(Gamep g, Levelsp v, Levelp l, Thingp me)
     }
 
     if (! static_cast< bool >(buff->buff_owner_id)) {
-      thing_err(me, "found detached buff: %s", to_string(g, v, l, buff).c_str());
+      thing_err(g, v, l, me, "found detached buff: %s", to_string(g, v, l, buff).c_str());
       return false;
     }
 
     if (ext_struct->buffs.count <= 0) {
-      thing_err(me, "has unexpected buff count when detaching: %s", to_string(g, v, l, buff).c_str());
+      thing_err(g, v, l, me, "has unexpected buff count when detaching: %s", to_string(g, v, l, buff).c_str());
       return false;
     }
 
@@ -254,18 +254,18 @@ static void thing_dump_buffs(Gamep g, Levelsp v, Levelp l, Thingp me)
     buff->buff_owner_id = 0;
 
     if (e.event_type != THING_EVENT_NONE) {
-      THING_DBG(me, "kill buff %s", to_string(g, v, l, buff).c_str());
+      THING_DBG(g, v, l, me, "kill buff %s", to_string(g, v, l, buff).c_str());
       TRACE_INDENT();
       thing_dead(g, v, l, buff, e);
       got_one = true;
     } else {
-      THING_DBG(me, "detach buff %s", to_string(g, v, l, buff).c_str());
+      THING_DBG(g, v, l, me, "detach buff %s", to_string(g, v, l, buff).c_str());
       got_one = true;
     }
   }
 
   if (! got_one) {
-    THING_DBG(me, "could not detach");
+    THING_DBG(g, v, l, me, "could not detach");
   }
 
   return got_one;
@@ -305,7 +305,7 @@ static auto thing_buff_detach_from_owner(Gamep g, Levelsp v, Levelp l, Thingp me
   }
 
   if (! thing_is_buff(me)) {
-    thing_err(me, "non buff trying to detach itself");
+    thing_err(g, v, l, me, "non buff trying to detach itself");
     return false;
   }
 
@@ -314,7 +314,7 @@ static auto thing_buff_detach_from_owner(Gamep g, Levelsp v, Levelp l, Thingp me
     return false; // can be normal if detached
   }
 
-  THING_DBG(me, "detach me from owner");
+  THING_DBG(g, v, l, me, "detach me from owner");
   TRACE_INDENT();
 
   return thing_buff_detach_from_owner(g, v, l, buff_owner, me);

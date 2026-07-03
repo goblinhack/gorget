@@ -41,7 +41,7 @@ void level_tick_water(Gamep g, Levelsp v, Levelp l)
         continue;
       }
 
-      THING_DBG(t, "over water");
+      THING_DBG(g, v, l, t, "over water");
 
       thing_water_handle(g, v, l, t);
     }

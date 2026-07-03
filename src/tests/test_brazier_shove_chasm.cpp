@@ -155,7 +155,7 @@
   // Check the brazier is dead
   //
   TEST_LOG(t, "check brazier is dead");
-  p        = thing_at(player) + bpoint(0, -1);
+  p        = thing_at(g, v, l2, player) + bpoint(0, -1);
   found_it = false;
 
   TEST_PROGRESS(t);

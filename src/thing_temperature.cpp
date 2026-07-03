@@ -33,14 +33,14 @@ void thing_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thing
   //
   n = std::min(Tmax * 2, n);
 
-  THING_DBG(t, "temperature handle: %d degrees (Tmax %d)", n, Tmax * 2);
+  THING_DBG(g, v, l, t, "temperature handle: %d degrees (Tmax %d)", n, Tmax * 2);
 
   if ((Tb != 0) && (n >= Tb)) {
     if (thing_is_steam(source) || thing_is_water(source)) {
       //
       // You don't continue to burn with steam
       //
-    } else if (! level_is_fire_bool(g, v, l, thing_at(t))) {
+    } else if (! level_is_fire_bool(g, v, l, thing_at(g, v, l, t))) {
       //
       // No fire here. Set it on fire.
       //
@@ -48,7 +48,7 @@ void thing_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thing
         //
         // But only if combustible.
         //
-        THING_DBG(t, "set on fire");
+        THING_DBG(g, v, l, t, "set on fire");
         (void) thing_spawn(g, v, l, tp_random(g, v, l, is_fire), t);
         thing_is_burning_set(g, v, l, t);
       }
@@ -64,7 +64,7 @@ void thing_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thing
   // If not meltt already, melt it if over the threshold temperature.
   //
   if ((Tm != 0) && (n >= Tm)) {
-    THING_DBG(t, "melt");
+    THING_DBG(g, v, l, t, "melt");
     thing_melt(g, v, l, t);
   }
 
@@ -87,7 +87,7 @@ static void thing_temperature_damage_apply(Gamep g, Levelsp v, Levelp l, Thingp 
     damage *= 2;
   }
 
-  if (level_is_lava_bool(g, v, l, thing_at(t))) {
+  if (level_is_lava_bool(g, v, l, thing_at(g, v, l, t))) {
     damage *= 2;
   }
 
@@ -100,9 +100,9 @@ static void thing_temperature_damage_apply(Gamep g, Levelsp v, Levelp l, Thingp 
 
   if (thing_is_steam(source)) {
     e.reason = "by steam";
-  } else if (level_is_lava_bool(g, v, l, thing_at(t))) {
+  } else if (level_is_lava_bool(g, v, l, thing_at(g, v, l, t))) {
     e.reason = "by lava";
-  } else if (level_is_fire_bool(g, v, l, thing_at(t))) {
+  } else if (level_is_fire_bool(g, v, l, thing_at(g, v, l, t))) {
     e.reason = "by fire";
   } else {
     e.reason = "by heat damage";
@@ -220,7 +220,7 @@ void tp_temperature_init(Tpp tp)
   }
 
   if (val > std::numeric_limits< decltype(t->_temperature) >::max()) {
-    thing_err(t, "value overflow: %d", val);
+    thing_err(g, v, l, t, "value overflow: %d", val);
     return 0;
   }
 
@@ -239,7 +239,7 @@ void tp_temperature_init(Tpp tp)
 
   IF_DEBUG2
   { //
-    THING_DBG(t, "temperature set to %u degrees", val);
+    THING_DBG(g, v, l, t, "temperature set to %u degrees", val);
   }
 
   return t->_temperature = val;

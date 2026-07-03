@@ -42,15 +42,15 @@ auto thing_special_attack_get_random(Gamep g, Levelsp v, Levelp l, Thingp me, Th
 
     if (it_maybe_null != nullptr) {
       if (val.when_adjacent) {
-        auto target = thing_at(it_maybe_null);
-        if (! adjacent(thing_at(me), target)) {
+        auto target = thing_at(g, v, l, it_maybe_null);
+        if (! adjacent(thing_at(g, v, l, me), target)) {
           continue;
         }
       }
 
       if (val.when_distant) {
-        auto target = thing_at(it_maybe_null);
-        if (distance(thing_at(me), target) <= 1) {
+        auto target = thing_at(g, v, l, it_maybe_null);
+        if (distance(thing_at(g, v, l, me), target) <= 1) {
           continue;
         }
       }

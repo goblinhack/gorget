@@ -121,7 +121,7 @@
   }
 
   if (compiler_unused) {
-    THING_DBG(t, "init");
+    THING_DBG(g, v, l, t, "init");
   }
 
   return t;

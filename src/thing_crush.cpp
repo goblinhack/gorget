@@ -39,7 +39,7 @@
       .source     = crusher            //
   };
 
-  THING_DBG(me, "dead due to crushing");
+  THING_DBG(g, v, l, me, "dead due to crushing");
   TRACE_INDENT();
 
   thing_dead(g, v, l, me, e);

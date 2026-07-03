@@ -33,7 +33,7 @@ void level_tick_teleport(Gamep g, Levelsp v, Levelp l)
           continue;
         }
 
-        THING_DBG(t, "over teleport");
+        THING_DBG(g, v, l, t, "over teleport");
 
         (void) thing_teleport_handle(g, v, l, t);
       }

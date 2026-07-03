@@ -67,14 +67,14 @@ static bool tp_argusul_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thi
     e.damage_type = d;
 
     if (d.what != "") {
-      auto target    = thing_at(it);
+      auto target    = thing_at(g, v, l, it);
       auto fire_what = tp_find_mand(d.what);
       (void) thing_beam_weapon_fire_at(g, v, l, me, fire_what, target);
       return false; // prevent melee attack
     }
   }
 
-  if (! adjacent(thing_at(me), thing_at(it))) {
+  if (! adjacent(thing_at(g, v, l, me), thing_at(g, v, l, it))) {
     return false; // prevent melee attack
   }
 

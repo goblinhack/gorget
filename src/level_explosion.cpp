@@ -36,16 +36,16 @@ void level_tick_explosion(Gamep g, Levelsp v, Levelp l)
       // Skip dead monsters that take damage from explosion and leave a corpse?
       //
       if (thing_is_dead(t)) {
-        THING_DBG(t, "over explosion, but dead");
+        THING_DBG(g, v, l, t, "over explosion, but dead");
         continue;
       }
 
       if (! thing_is_physics_explosion(t)) {
-        THING_DBG(t, "over explosion, skip for explosion");
+        THING_DBG(g, v, l, t, "over explosion, skip for explosion");
         continue;
       }
 
-      THING_DBG(t, "over explosion");
+      THING_DBG(g, v, l, t, "over explosion");
       TRACE_INDENT();
 
       thing_explosion_handle(g, v, l, t);

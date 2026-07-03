@@ -89,7 +89,7 @@
   TEST_PROGRESS(t);
   {
     TRACE();
-    p        = thing_at(player) + bpoint(1, 0);
+    p        = thing_at(g, v, l, player) + bpoint(1, 0);
     found_it = false;
     FOR_ALL_THINGS_AT(g, v, l, it, p)
     {
@@ -148,7 +148,7 @@
   {
     TRACE();
     TEST_LOG(t, "check mob is dead when shoved into lava");
-    p        = thing_at(player) + bpoint(1, 0);
+    p        = thing_at(g, v, l, player) + bpoint(1, 0);
     found_it = false;
 
     FOR_ALL_THINGS_AT(g, v, l, it, p)

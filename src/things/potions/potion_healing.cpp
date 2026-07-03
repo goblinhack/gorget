@@ -33,9 +33,9 @@ static void tp_potion_healing_on_thrown_end(Gamep g, Levelsp v, Levelp l, Thingp
   //
   // Soft landing?
   //
-  if ((level_is_chasm_bool(g, v, l, thing_at(me))) || // newline
-      (level_is_water_bool(g, v, l, thing_at(me))) || // newline
-      (level_is_foliage_bool(g, v, l, thing_at(me)))) {
+  if ((level_is_chasm_bool(g, v, l, thing_at(g, v, l, me))) || // newline
+      (level_is_water_bool(g, v, l, thing_at(g, v, l, me))) || // newline
+      (level_is_foliage_bool(g, v, l, thing_at(g, v, l, me)))) {
     return;
   }
 
@@ -44,7 +44,7 @@ static void tp_potion_healing_on_thrown_end(Gamep g, Levelsp v, Levelp l, Thingp
       .event_type = THING_EVENT_THROWN, //
   };
 
-  THING_DBG(me, "dead due to being thrown");
+  THING_DBG(g, v, l, me, "dead due to being thrown");
   TRACE_INDENT();
 
   thing_dead(g, v, l, me, e);
@@ -91,7 +91,7 @@ static void tp_potion_healing_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, 
     (void) thing_noise_incr(g, v, l, me, THING_NOISE_SHATTER);
   }
 
-  (void) thing_spawn(g, v, l, tp_first(is_water), thing_at(me));
+  (void) thing_spawn(g, v, l, tp_first(is_water), thing_at(g, v, l, me));
 }
 
 [[nodiscard]] auto tp_load_potion_healing() -> bool

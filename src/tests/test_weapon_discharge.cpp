@@ -58,7 +58,7 @@
     goto exit;
   }
 
-  weapon = thing_spawn(g, v, l, item_tp, thing_at(player));
+  weapon = thing_spawn(g, v, l, item_tp, thing_at(g, v, l, player));
   if (! weapon) {
     TEST_FAILED(t, "no weapon spawned");
     goto exit;
@@ -100,7 +100,7 @@
 
   wielding = thing_wielding(g, v, l, player);
   if (wielding) {
-    thing_log(wielding, "wielding this");
+    thing_log(g, v, l, wielding, "wielding this");
     TEST_FAILED(t, "unexpectedly wielding a weapon still");
     goto exit;
   }

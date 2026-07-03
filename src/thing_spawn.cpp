@@ -57,12 +57,12 @@ void thing_is_spawned_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 
   if (! thing_push(g, v, l, t)) {
-    thing_err(t, "failed to push");
+    thing_err(g, v, l, t, "failed to push");
     return nullptr;
   }
 
   {
-    THING_DBG(t, "spawned");
+    THING_DBG(g, v, l, t, "spawned");
   }
 
   //
@@ -93,12 +93,12 @@ void thing_is_spawned_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
 
   auto dir = thing_get_direction_grid(g, v, l, spawner);
 
-  auto *spawned = thing_spawn(g, v, l, tp, thing_at(spawner));
+  auto *spawned = thing_spawn(g, v, l, tp, thing_at(g, v, l, spawner));
   if (spawned == nullptr) {
     return nullptr;
   }
 
-  thing_set_dir_from_delta(spawned, dir.x, dir.y);
+  thing_set_dir_from_delta(g, v, l, spawned, dir.x, dir.y);
 
   return spawned;
 }

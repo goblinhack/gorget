@@ -60,7 +60,7 @@ static auto tp_chest_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std:
 
   nitems = std::min(nitems, THING_INVENTORY_MAX);
 
-  thing_log(me, "spawn items");
+  thing_log(g, v, l, me, "spawn items");
   TRACE_INDENT();
 
   for (auto i = 0; i < nitems; i++) {
@@ -70,7 +70,7 @@ static auto tp_chest_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std:
       continue;
     }
 
-    auto item = thing_spawn(g, v, l, tp, thing_at(me));
+    auto item = thing_spawn(g, v, l, tp, thing_at(g, v, l, me));
     if (item) {
       //
       // Needed to stop auto collect
@@ -78,7 +78,7 @@ static auto tp_chest_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std:
       (void) thing_collision_handle_done_already(v, item, opener);
 
       items.push_back(item);
-      thing_log(item, "spawned for chest");
+      thing_log(g, v, l, item, "spawned for chest");
     }
   }
 

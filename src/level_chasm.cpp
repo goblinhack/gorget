@@ -38,7 +38,7 @@ void level_tick_chasm(Gamep g, Levelsp v, Levelp l)
         continue;
       }
 
-      THING_DBG(t, "over chasm");
+      THING_DBG(g, v, l, t, "over chasm");
 
       thing_chasm_handle(g, v, l, t);
     }

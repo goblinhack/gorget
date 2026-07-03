@@ -33,7 +33,7 @@
   }
 
   if (val > std::numeric_limits< decltype(t->_health) >::max()) {
-    thing_err(t, "value overflow: %d", val);
+    thing_err(g, v, l, t, "value overflow: %d", val);
     return 0;
   }
 
@@ -99,7 +99,7 @@
   }
 
   if (val > std::numeric_limits< decltype(t->_health_max) >::max()) {
-    thing_err(t, "value overflow: %d", val);
+    thing_err(g, v, l, t, "value overflow: %d", val);
     return 0;
   }
 

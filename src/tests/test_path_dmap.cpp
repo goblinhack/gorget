@@ -147,7 +147,7 @@
     thing_dmap(g, v, l, player);
     auto *dmap = thing_get_dmap(g, v, l, player);
 
-    for (auto p : dmap_solve(g, v, l, player, dmap, thing_at(exit_thing))) {
+    for (auto p : dmap_solve(g, v, l, player, dmap, thing_at(g, v, l, exit_thing))) {
       TEST_ASSERT(t, thing_spawn(g, v, l, tp_first(is_corridor), p) != nullptr, "failed to spawn thing");
     }
   }
@@ -156,7 +156,7 @@
     TEST_LOOP_PROGRESS(t, g, v, l, tries, w, h);
     thing_dmap(g, v, l, player);
     auto *dmap = thing_get_dmap(g, v, l, player);
-    (void) dmap_solve(g, v, l, player, dmap, thing_at(exit_thing));
+    (void) dmap_solve(g, v, l, player, dmap, thing_at(g, v, l, exit_thing));
   }
 
   if (! (result = level_match_contents(g, v, l, t, w, h, expect.c_str()))) {

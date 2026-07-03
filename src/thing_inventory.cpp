@@ -18,7 +18,7 @@
   TRACE();
 
   if (! thing_is_player(owner) && ! thing_is_monst(owner)) {
-    thing_err(owner, "unexpected thing for %s", __FUNCTION__);
+    thing_err(g, v, l, owner, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
 
@@ -52,11 +52,11 @@
 //
 [[nodiscard]] auto thing_inventory_add(Gamep g, Levelsp v, Levelp l, Thingp new_item, Thingp owner) -> bool
 {
-  THING_DBG(new_item, "inventory add");
+  THING_DBG(g, v, l, new_item, "inventory add");
   TRACE();
 
   if (! thing_is_player(owner) && ! thing_is_monst(owner)) {
-    thing_err(owner, "unexpected thing for %s", __FUNCTION__);
+    thing_err(g, v, l, owner, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
 
@@ -90,7 +90,7 @@
         .source     = owner                       //
     };
 
-    THING_DBG(new_item, "dead due to merging");
+    THING_DBG(g, v, l, new_item, "dead due to merging");
     TRACE_INDENT();
 
     thing_dead(g, v, l, new_item, e);
@@ -124,11 +124,11 @@
 //
 [[nodiscard]] auto thing_inventory_remove(Gamep g, Levelsp v, Levelp l, Thingp drop_item, Thingp owner) -> bool
 {
-  THING_DBG(drop_item, "inventory remove");
+  THING_DBG(g, v, l, drop_item, "inventory remove");
   TRACE();
 
   if (! thing_is_player(owner) && ! thing_is_monst(owner)) {
-    thing_err(owner, "unexpected thing for %s", __FUNCTION__);
+    thing_err(g, v, l, owner, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
 
@@ -154,13 +154,13 @@
       continue;
     }
 
-    THING_DBG(item, "slot %d: count %d", _n_, slot->count);
+    THING_DBG(g, v, l, item, "slot %d: count %d", _n_, slot->count);
     TRACE_INDENT();
 
     slot->count--;
 
     if (slot->count > 0) {
-      THING_DBG(item, "item count remains");
+      THING_DBG(g, v, l, item, "item count remains");
       return true;
     }
 
@@ -214,7 +214,7 @@ void thing_inventory_dump(Gamep g, Levelsp v, Levelp l, Thingp owner)
   TRACE();
 
   if (! thing_is_player(owner) && ! thing_is_monst(owner)) {
-    thing_err(owner, "unexpected thing for %s", __FUNCTION__);
+    thing_err(g, v, l, owner, "unexpected thing for %s", __FUNCTION__);
     return;
   }
 
@@ -226,15 +226,15 @@ void thing_inventory_dump(Gamep g, Levelsp v, Levelp l, Thingp owner)
   FOR_ALL_INVENTORY_SLOTS(g, v, l, owner, slot, item)
   {
     if (item == nullptr) {
-      THING_DBG(owner, "slot %d: -", _n_);
+      THING_DBG(g, v, l, owner, "slot %d: -", _n_);
       continue;
     }
 
     auto s = to_string(g, v, l, item);
     if (slot->count != 0) {
-      THING_DBG(owner, "slot %d: %s, count %d", _n_, s.c_str(), slot->count);
+      THING_DBG(g, v, l, owner, "slot %d: %s, count %d", _n_, s.c_str(), slot->count);
     } else {
-      THING_DBG(owner, "slot %d: %s", _n_, s.c_str());
+      THING_DBG(g, v, l, owner, "slot %d: %s", _n_, s.c_str());
     }
   }
 }

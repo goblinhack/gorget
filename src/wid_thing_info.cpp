@@ -981,7 +981,7 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, i
     //
     // Dump the contents at this tile
     //
-    auto at = thing_at(me);
+    auto at = thing_at(g, v, l, me);
     FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, at)
     {
       auto s = std::format("- {}", thing_name_short(g, v, l, it));

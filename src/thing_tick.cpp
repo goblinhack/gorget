@@ -61,7 +61,7 @@ void thing_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
           .event_type = THING_EVENT_LIFESPAN_EXPIRED, //
       };
 
-      THING_DBG(t, "dead due to out of life");
+      THING_DBG(g, v, l, t, "dead due to out of life");
       TRACE_INDENT();
 
       thing_dead(g, v, l, t, e);

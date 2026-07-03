@@ -364,7 +364,7 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
   ctx.v                        = v;
   ctx.l                        = l;
   ctx.me                       = player;
-  ctx.pov                      = thing_at(player);
+  ctx.pov                      = thing_at(g, v, l, player);
   ctx.light_color              = tp_light_color(tp);
   ctx.light_strength_in_pixels = thing_is_light_source(player) * TILE_WIDTH;
   ctx.thing_at_in_pixels       = thing_pix_at(player);

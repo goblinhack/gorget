@@ -52,5 +52,5 @@ void level_group_things(Gamep g, Levelsp v, Levelp l, Thingp t)
     return;
   }
 
-  level_group_things_do(g, v, l, t, thing_tp(t), thing_at(t));
+  level_group_things_do(g, v, l, t, thing_tp(t), thing_at(g, v, l, t));
 }

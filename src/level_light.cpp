@@ -174,7 +174,7 @@ static void level_light_calculate_all_things(Gamep g, Levelsp v, Levelp l)
     ctx.v                        = v;
     ctx.l                        = l;
     ctx.me                       = t;
-    ctx.pov                      = thing_at(t);
+    ctx.pov                      = thing_at(g, v, l, t);
     ctx.light_color              = tp_light_color(thing_tp(t));
     ctx.light_walls              = true;
     ctx.light_strength_in_pixels = thing_is_light_source(t) * TILE_WIDTH;

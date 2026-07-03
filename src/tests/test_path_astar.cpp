@@ -144,14 +144,14 @@
   }
 
   {
-    for (auto p : astar_solve(g, v, l, player, thing_at(player), thing_at(exit_thing))) {
+    for (auto p : astar_solve(g, v, l, player, thing_at(g, v, l, player), thing_at(g, v, l, exit_thing))) {
       TEST_ASSERT(t, thing_spawn(g, v, l, tp_first(is_corridor), p) != nullptr, "failed to spawn thing");
     }
   }
 
   for (auto tries = 0; tries < TEST_ITERATIONS; tries++) {
     TEST_LOOP_PROGRESS(t, g, v, l, tries, w, h);
-    (void) astar_solve(g, v, l, player, thing_at(player), thing_at(exit_thing));
+    (void) astar_solve(g, v, l, player, thing_at(g, v, l, player), thing_at(g, v, l, exit_thing));
   }
 
   if (! (result = level_match_contents(g, v, l, t, w, h, expect.c_str()))) {

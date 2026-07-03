@@ -29,12 +29,16 @@
     return "<no tp>";
   }
 
+  if (thing_level(g, v, t) != l) {
+    ERR("thing level mismatch");
+  }
+
   auto name = tp_name(tp);
   if ((g != nullptr) && thing_is_player(t)) {
     name = game_player_name_get(g);
   }
 
-  auto at = thing_at(t);
+  auto at = thing_at(g, v, l, t);
 
   return /* keep ( */ (
       std::format("{:08x}"
@@ -42,6 +46,7 @@
                   /* tick                          */ " t{:3}"
                   /* thing_health                  */ " h{:<3}"
                   /* at                            */ " @{:2},{:2}"
+                  /* name                          */ "{}"
                   /* name                          */ " {}"
                   /* is_dead                       */ "{}"
                   /* is_moving                     */ "{}"
@@ -58,6 +63,7 @@
                   /* newline */ t->tick,
                   /* newline */ thing_health(g, v, l, t),
                   /* newline */ at.x, at.y,
+                  /* newline */ t->_is_on_map ? "" : "(nomap)",
                   /* newline */ name,
                   /* newline */ thing_is_moving(t) ? "/mov" : "",
                   /* newline */ thing_is_jumping(t) ? "/jmp" : "",
@@ -171,15 +177,15 @@
   //
   // Add some more spice to the message
   //
-  if (level_is_lava_bool(g, v, l, thing_at(t))) {
+  if (level_is_lava_bool(g, v, l, thing_at(g, v, l, t))) {
     if ((source == nullptr) || ! thing_is_lava(source)) {
       s += " in lava";
     }
-  } else if (level_is_deep_water(g, v, l, thing_at(t)) != nullptr) {
+  } else if (level_is_deep_water(g, v, l, thing_at(g, v, l, t)) != nullptr) {
     if ((source == nullptr) || ! thing_is_water(source)) {
       s += " in the depths";
     }
-  } else if (level_is_water_bool(g, v, l, thing_at(t))) {
+  } else if (level_is_water_bool(g, v, l, thing_at(g, v, l, t))) {
     if ((source == nullptr) || ! thing_is_water(source)) {
       s += " in a puddle";
     }

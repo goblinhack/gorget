@@ -417,7 +417,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool tick_is
     auto thing_dt_change = t->thing_dt - old_thing_dt;
 
     if (compiler_unused) {
-      THING_DBG(t, "level dt %f old_thing_dt %f thing_dt %f thing_dt_change %f speed %d v %d",
+      THING_DBG(g, v, l, t, "level dt %f old_thing_dt %f thing_dt %f thing_dt_change %f speed %d v %d",
                 dt,                          //
                 old_thing_dt,                //
                 t->thing_dt,                 //
@@ -440,7 +440,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool tick_is
 
     if (tick_is_about_to_end || (t->thing_dt >= 1.0)) {
       if (compiler_unused) {
-        THING_DBG(t, "call move finish as tick about to end");
+        THING_DBG(g, v, l, t, "call move finish as tick about to end");
       }
 
       thing_move_finish(g, v, l, t);
@@ -491,7 +491,7 @@ static void level_tick_begin(Gamep g, Levelsp v, Levelp l)
   bpoint player_at;
   auto  *player = thing_player(g);
   if (player != nullptr) {
-    player_at = thing_at(player);
+    player_at = thing_at(g, v, l, player);
   }
 
   FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
@@ -501,7 +501,7 @@ static void level_tick_begin(Gamep g, Levelsp v, Levelp l)
 
       if (! thing_is_dead(t)) {
         if (thing_is_monst(t)) {
-          if ((player != nullptr) && (distance(player_at, thing_at(t)) > MAP_WIDTH / 2)) {
+          if ((player != nullptr) && (distance(player_at, thing_at(g, v, l, t)) > MAP_WIDTH / 2)) {
             if (d100() > TICK_FAR_OFF_MONST_CHANCE) {
               continue;
             }
@@ -850,8 +850,10 @@ void level_tick_reset_frame_counter(Gamep g)
   v->time_step      = 0.0;
   v->last_time_step = 0.0;
 
-  log("Reset frame counter, tick %u: tick-count %u time_step %f last_time_step %f frame %u frame_begin %u", v->tick, v->level_ticking_count,
-      v->time_step, v->last_time_step, v->frame, v->frame_begin);
+  if (compiler_unused) {
+    log("Reset frame counter, tick %u: tick-count %u time_step %f last_time_step %f frame %u frame_begin %u", v->tick, v->level_ticking_count,
+        v->time_step, v->last_time_step, v->frame, v->frame_begin);
+  }
 }
 
 //

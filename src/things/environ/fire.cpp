@@ -41,7 +41,7 @@ static void tp_fire_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
   // Spawn adjacent fire
   //
   for (auto delta : points) {
-    auto at = thing_at(me);
+    auto at = thing_at(g, v, l, me);
     auto p  = at + delta;
 
     //
@@ -106,7 +106,7 @@ static void tp_fire_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
     FOR_ALL_THINGS_AT(g, v, l, it, p)
     {
       if (tp_chance_fail(thing_tp(it), THING_CHANCE_START_BURNING)) {
-        THING_DBG(it, "can spawn fire here");
+        THING_DBG(g, v, l, it, "can spawn fire here");
         something_to_burn_here = true;
       }
     }
@@ -115,7 +115,7 @@ static void tp_fire_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
       continue;
     }
 
-    THING_DBG(me, "spawn spreading fire");
+    THING_DBG(g, v, l, me, "spawn spreading fire");
 
     (void) thing_spawn(g, v, l, tp_first(is_fire), p);
   }
@@ -128,16 +128,16 @@ static void tp_fire_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent
   //
   // Allow things to continue to burn if we still have some burnable material
   //
-  if (level_alive_is_combustible(g, v, l, thing_at(me)) != nullptr) {
-    if (! level_is_fire_bool(g, v, l, thing_at(me))) {
-      THING_DBG(me, "spawn fire to continue to burn");
+  if (level_alive_is_combustible(g, v, l, thing_at(g, v, l, me)) != nullptr) {
+    if (! level_is_fire_bool(g, v, l, thing_at(g, v, l, me))) {
+      THING_DBG(g, v, l, me, "spawn fire to continue to burn");
       (void) thing_spawn(g, v, l, tp_first(is_fire), me);
     }
   }
 
-  if (! level_is_smoke_bool(g, v, l, thing_at(me))) {
-    if (level_is_combustible_bool(g, v, l, thing_at(me))) {
-      THING_DBG(me, "spawn smoke over dying fire");
+  if (! level_is_smoke_bool(g, v, l, thing_at(g, v, l, me))) {
+    if (level_is_combustible_bool(g, v, l, thing_at(g, v, l, me))) {
+      THING_DBG(g, v, l, me, "spawn smoke over dying fire");
       (void) thing_spawn(g, v, l, tp_first(is_smoke), me);
     }
   }
@@ -154,22 +154,22 @@ static void tp_fire_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
   // die, else they follow them down and they stay on fire.
   //
   auto *player = thing_player(g);
-  auto  at     = thing_at(me);
-  if ((player != nullptr) && (at == thing_at(player))) {
+  auto  at     = thing_at(g, v, l, me);
+  if ((player != nullptr) && (at == thing_at(g, v, l, player))) {
     ThingEvent e {
         .reason     = "by falling",     //
         .event_type = THING_EVENT_FALL, //
     };
 
-    THING_DBG(me, "dead due to falling");
+    THING_DBG(g, v, l, me, "dead due to falling");
     TRACE_INDENT();
 
     thing_dead(g, v, l, me, e);
     return;
   }
 
-  if (! level_is_smoke_bool(g, v, l, thing_at(me))) {
-    THING_DBG(me, "spawn smoke over falling fire");
+  if (! level_is_smoke_bool(g, v, l, thing_at(g, v, l, me))) {
+    THING_DBG(g, v, l, me, "spawn smoke over falling fire");
     (void) thing_spawn(g, v, l, tp_random(g, v, l, is_smoke), me);
   }
 }

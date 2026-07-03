@@ -33,7 +33,7 @@
   //
   auto corpse_count = 0;
 
-  FOR_ALL_THINGS_AT_UNSAFE(g, v, l, o, thing_at(t))
+  FOR_ALL_THINGS_AT_UNSAFE(g, v, l, o, thing_at(g, v, l, t))
   {
     if (o == t) {
       continue;
@@ -87,7 +87,7 @@ void thing_is_corpse_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
   t->_is_corpse = val;
 
   if (val) {
-    THING_DBG(t, "is corpse set");
+    THING_DBG(g, v, l, t, "is corpse set");
   }
 }
 

@@ -23,19 +23,19 @@ void thing_group_join(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp group)
 
   if (t != group) {
     if (group->group_id == 0U) {
-      thing_err(t, "asked to join an empty group");
+      thing_err(g, v, l, t, "asked to join an empty group");
     }
   }
 
   t->group_id = group->id;
-  THING_DBG(t, "join group %d", group->id);
+  THING_DBG(g, v, l, t, "join group %d", group->id);
 }
 
 void thing_group_member_leave(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE();
 
-  THING_DBG(t, "group member leave (group %u)", t->group_id);
+  THING_DBG(g, v, l, t, "group member leave (group %u)", t->group_id);
   t->group_id = 0;
 }
 
@@ -55,7 +55,7 @@ void thing_group_leave(Gamep g, Levelsp v, Levelp l, Thingp t)
 
   if (t->id == group_id) {
     t->group_id = 0;
-    THING_DBG(t, "group leader leave (group %u)", group_id);
+    THING_DBG(g, v, l, t, "group leader leave (group %u)", group_id);
     TRACE_INDENT();
 
     FOR_ALL_GROUP_THINGS_ON_LEVEL_UNSAFE(g, v, l, o, group_id)

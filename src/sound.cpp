@@ -175,13 +175,14 @@ static auto find_one(const std::string &name_alias) -> Sound *
   return true;
 }
 
-[[nodiscard]] static auto sound_play_internal(Game *g, const std::string &name_alias, class Sound *m, float scale, int loops, Thingp me) -> bool
+[[nodiscard]] static auto sound_play_internal(Gamep g, Levelsp v, Levelp l, const std::string &name_alias, class Sound *m, float scale,
+                                              int loops, Thingp me) -> bool
 {
   TRACE();
 
   if (m->chunk == nullptr) {
     if (me != nullptr) {
-      thing_err(me, "cannot find sound chunk %s", m->name_alias.c_str());
+      thing_err(g, v, l, me, "cannot find sound chunk %s", m->name_alias.c_str());
     } else {
       ERR("cannot find sound chunk %s", m->name_alias.c_str());
     }
@@ -215,7 +216,8 @@ static auto find_one(const std::string &name_alias) -> Sound *
   auto chan = Mix_PlayChannel(-1, m->chunk, loops);
   if (chan == -1) {
     if (me != nullptr) {
-      THING_DBG(me, "Failed to play sound %s volume %d channel %d: %s", name_alias.c_str(), static_cast< int >(volume), chan, Mix_GetError());
+      THING_DBG(g, v, l, me, "Failed to play sound %s volume %d channel %d: %s", name_alias.c_str(), static_cast< int >(volume), chan,
+                Mix_GetError());
     } else {
       DBG("Failed to play sound %s volume %d channel %d: %s", name_alias.c_str(), static_cast< int >(volume), chan, Mix_GetError());
     }
@@ -228,7 +230,7 @@ static auto find_one(const std::string &name_alias) -> Sound *
   already_playing[ chan ] = p;
 
   if (me != nullptr) {
-    THING_DBG(me, "play sound %s volume %d channel %d", name_alias.c_str(), static_cast< int >(volume), chan);
+    THING_DBG(g, v, l, me, "play sound %s volume %d channel %d", name_alias.c_str(), static_cast< int >(volume), chan);
   } else {
     DBG("play sound %s volume %d channel %d", name_alias.c_str(), static_cast< int >(volume), chan);
   }
@@ -236,7 +238,7 @@ static auto find_one(const std::string &name_alias) -> Sound *
   return false;
 }
 
-[[nodiscard]] auto sound_play(Gamep g, const std::string &name_alias, float scale, int loops, Thingp me) -> bool
+[[nodiscard]] auto sound_play(Gamep g, Levelsp v, Levelp l, const std::string &name_alias, float scale, int loops, Thingp me) -> bool
 {
   TRACE();
 
@@ -248,7 +250,7 @@ static auto find_one(const std::string &name_alias) -> Sound *
   if (sound == nullptr) {
     if (! g_opt_tests && ! g_opt_do_level_gen && ! g_opt_do_level_select_gen && ! g_opt_do_room_gen) {
       if (me != nullptr) {
-        thing_err(me, "cannot find sound %s", name_alias.c_str());
+        thing_err(g, v, l, me, "cannot find sound %s", name_alias.c_str());
       } else {
         ERR("cannot find sound %s", name_alias.c_str());
       }
@@ -260,5 +262,28 @@ static auto find_one(const std::string &name_alias) -> Sound *
     return true;
   }
 
-  return sound_play_internal(g, name_alias, sound, scale, loops, me);
+  return sound_play_internal(g, v, l, name_alias, sound, scale, loops, me);
+}
+
+[[nodiscard]] auto sound_play(Gamep g, const std::string &name_alias, float scale, int loops) -> bool
+{
+  TRACE();
+
+  if (scale <= 0) {
+    return false;
+  }
+
+  auto *sound = find_one(name_alias);
+  if (sound == nullptr) {
+    if (! g_opt_tests && ! g_opt_do_level_gen && ! g_opt_do_level_select_gen && ! g_opt_do_room_gen) {
+      ERR("cannot find sound %s", name_alias.c_str());
+    }
+    return false;
+  }
+
+  if (g_opt_tests || g_opt_do_level_gen || g_opt_do_level_select_gen || g_opt_do_room_gen) {
+    return true;
+  }
+
+  return sound_play_internal(g, nullptr, nullptr, name_alias, sound, scale, loops, nullptr);
 }

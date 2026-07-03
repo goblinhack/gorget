@@ -140,7 +140,7 @@
   {
     TRACE();
     TEST_LOG(t, "check player is dead when in lava");
-    p            = thing_at(player);
+    p            = thing_at(g, v, l2, player);
     found_corpse = false;
 
     FOR_ALL_THINGS_AT(g, v, l2, it, p)

@@ -12,12 +12,17 @@ void thing_water_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE();
 
-  auto   at     = thing_at(t);
+  auto   at     = thing_at(g, v, l, t);
   Thingp source = nullptr;
   if (level_is_deep_water(g, v, l, at) != nullptr) {
     source = level_is_deep_water(g, v, l, at);
   } else {
     source = level_is_water(g, v, l, at);
+  }
+
+  if (! source) {
+    thing_err(g, v, l, t, "no source of water found to handle");
+    return;
   }
 
   auto event_type = THING_EVENT_WATER_DAMAGE;

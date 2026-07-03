@@ -14,7 +14,9 @@ using soundp = class Sound *;
 
 [[nodiscard]] auto sound_init() -> bool;
 [[nodiscard]] auto sound_load(float volume, const std::string &name, const std::string &alias, int concurrent_max = 1) -> bool;
-[[nodiscard]] auto sound_play(Gamep g, const std::string &alias, float scale = 1.0, int loops = 0, Thingp me = nullptr) -> bool;
+[[nodiscard]] auto sound_play(Gamep g, Levelsp v, Levelp l, const std::string &alias, float scale = 1.0, int loops = 0, Thingp me = nullptr)
+    -> bool;
+[[nodiscard]] auto sound_play(Gamep g, const std::string &alias, float scale = 1.0, int loops = 0) -> bool;
 
 void sound_fini();
 void sounds_load(Gamep g);

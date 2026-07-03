@@ -133,7 +133,7 @@ void thing_lunge_time_step(Gamep g, Levelsp v, Levelp l, Thingp me, int time_ste
   (void) thing_is_lunging_incr(me, time_step);
 
   if (compiler_unused) {
-    THING_DBG(me, "lunge incr %u", thing_is_lunging(me));
+    THING_DBG(g, v, l, me, "lunge incr %u", thing_is_lunging(me));
   }
 
   thing_lunge_end_check(g, v, l, me);
@@ -164,17 +164,17 @@ void thing_lunge_time_step(Gamep g, Levelsp v, Levelp l, Thingp me, int time_ste
   }
 
   if (compiler_unused) {
-    THING_DBG(me, "lunge to (%d,%d)", to.x, to.y);
+    THING_DBG(g, v, l, me, "lunge to (%d,%d)", to.x, to.y);
   }
 
   //
   // Set the direction from lunge
   //
-  auto at    = thing_at(me);
+  auto at    = thing_at(g, v, l, me);
   auto delta = unit(to - at);
   auto dest  = at + delta;
 
-  thing_set_dir_from_delta(me, delta);
+  thing_set_dir_from_delta(g, v, l, me, delta);
   thing_is_lunging_set(g, v, l, me, true);
 
   me->lunging_to = dest;
@@ -191,7 +191,7 @@ void thing_lunge_end_check(Gamep g, Levelsp v, Levelp l, Thingp me)
 
   if (thing_is_lunging(me) >= THING_LUNGE_ANIM_MS) {
     if (compiler_unused) {
-      THING_DBG(me, "lunge to (%d,%d) done", me->lunging_to.x, me->lunging_to.y);
+      THING_DBG(g, v, l, me, "lunge to (%d,%d) done", me->lunging_to.x, me->lunging_to.y);
     }
 
     thing_is_lunging_set(g, v, l, me, false);
@@ -206,7 +206,7 @@ void thing_lunge_modify_position(Gamep g, Levelsp v, Levelp l, Thingp me, spoint
     return;
   }
 
-  auto dir = me->lunging_to - thing_at(me);
+  auto dir = me->lunging_to - thing_at(g, v, l, me);
 
   auto pct  = static_cast< float >(me->_lunge_ms) / static_cast< float >(THING_LUNGE_ANIM_MS);
   auto idxs = ARRAY_SIZE(lunge_amount);
@@ -224,7 +224,7 @@ void thing_lunge_modify_position(Gamep g, Levelsp v, Levelp l, Thingp me, spoint
   auto off_y = static_cast< float >(dir.y) * w * amount;
 
   if (compiler_unused) {
-    THING_DBG(me, "lunge to (%d,%d) idx %d off %f,%f am %f w %f", me->lunging_to.x, me->lunging_to.y, idx, off_x, off_y, amount, w);
+    THING_DBG(g, v, l, me, "lunge to (%d,%d) idx %d off %f,%f am %f w %f", me->lunging_to.x, me->lunging_to.y, idx, off_x, off_y, amount, w);
   }
 
   tl.x += static_cast< short >(off_x);

@@ -142,7 +142,7 @@ void thing_player_init(Gamep g)
           if (item != nullptr) {
             if (! thing_throw_to(g, v, l, player, item, v->cursor_at)) {
               topcon(UI_WARN_FMT_STR "You failed to throw the item." UI_RESET_FMT);
-              (void) sound_play(g, "error");
+              (void) sound_play(g, v, l, "error");
             }
           }
         }
@@ -388,7 +388,7 @@ void player_state_change(Gamep g, Levelsp v, Levelp l, PlayerStateType new_state
   //
   // Why oh why change state
   //
-  THING_DBG(me, "player state change: %s -> %s", player_state_to_string(old_state).c_str(), player_state_to_string(new_state).c_str());
+  THING_DBG(g, v, l, me, "player state change: %s -> %s", player_state_to_string(old_state).c_str(), player_state_to_string(new_state).c_str());
   TRACE_INDENT();
 
   switch (new_state) {
@@ -470,9 +470,9 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
   }
 
   if (val) {
-    THING_DBG(me, "callback: got 'Yes' warning confirmation");
+    THING_DBG(g, v, l, me, "callback: got 'Yes' warning confirmation");
   } else {
-    THING_DBG(me, "callback: got 'No' warning confirmation");
+    THING_DBG(g, v, l, me, "callback: got 'No' warning confirmation");
   }
   TRACE_INDENT();
 
@@ -502,12 +502,12 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
       // Wait for confirmation.
       //
       if (val) {
-        THING_DBG(me, "player confirmed move, path size %d", thing_move_path_size(g, v, l, me));
+        THING_DBG(g, v, l, me, "player confirmed move, path size %d", thing_move_path_size(g, v, l, me));
         TRACE_INDENT();
         thing_move_path_confirm(g, v, l, me);
         player_state_change(g, v, l, PLAYER_STATE_FOLLOWING_PATH);
       } else {
-        THING_DBG(me, "player declined move");
+        THING_DBG(g, v, l, me, "player declined move");
         TRACE_INDENT();
         player_state_change(g, v, l, PLAYER_STATE_NORMAL);
       }
@@ -536,10 +536,10 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
     return false;
   }
 
-  THING_DBG(me, "player move: move path size %d", thing_move_path_size(g, v, l, me));
+  THING_DBG(g, v, l, me, "player move: move path size %d", thing_move_path_size(g, v, l, me));
   TRACE_INDENT();
 
-  if (! adjacent(thing_at(me), to)) {
+  if (! adjacent(thing_at(g, v, l, me), to)) {
     return false;
   }
 
@@ -547,14 +547,14 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
     player_state_change(g, v, l, PLAYER_STATE_NORMAL);
 
     if (level_is_cursor_path_hazard(g, v, l, to) != nullptr) {
-      THING_DBG(me, "player move: cursor path is a hazard and have no move path");
+      THING_DBG(g, v, l, me, "player move: cursor path is a hazard and have no move path");
       TRACE_INDENT();
 
       std::vector< bpoint > move_path;
       move_path.push_back(to);
       level_cursor_copy_path_to_player(g, v, l, move_path);
       player_state_change(g, v, l, PLAYER_STATE_FOLLOWING_PATH);
-      THING_DBG(me, "player move: move path size %d", thing_move_path_size(g, v, l, me));
+      THING_DBG(g, v, l, me, "player move: move path size %d", thing_move_path_size(g, v, l, me));
     }
   }
 
@@ -593,7 +593,7 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
       //
       // If not already in lava, warn about moving into it
       //
-      if (! level_is_lava_bool(g, v, l, thing_at(me))) {
+      if (! level_is_lava_bool(g, v, l, thing_at(g, v, l, me))) {
         if (level_is_lava_bool(g, v, l, to)) {
           if (! thing_is_immune_to(g, v, l, me, THING_EVENT_FIRE_DAMAGE)) {
             std::string const msg = "Do you really want to leap into lava?";
@@ -620,9 +620,9 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
 [[nodiscard]] static auto player_move_try(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to, bool move_confirmed, bool need_path) -> bool
 {
   if (move_confirmed) {
-    THING_DBG(me, "player move try (confirmed move)");
+    THING_DBG(g, v, l, me, "player move try (confirmed move)");
   } else {
-    THING_DBG(me, "player move try");
+    THING_DBG(g, v, l, me, "player move try");
   }
   TRACE_INDENT();
 
@@ -645,7 +645,7 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
     //
     // Fake a mouse path for movement
     //
-    THING_DBG(me, "player move try: can move to");
+    THING_DBG(g, v, l, me, "player move try: can move to");
 
     if (need_path) {
       std::vector< bpoint > move_path;
@@ -661,14 +661,14 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
     return true;
   }
 
-  THING_DBG(me, "player move to attempt failed");
+  THING_DBG(g, v, l, me, "player move to attempt failed");
   TRACE_INDENT();
 
   if (thing_can_move_to_attempt_by_shoving(g, v, l, me, to)) {
     //
     // Can we shove it out of the way to move?
     //
-    THING_DBG(me, "player move try: can move to by shoving");
+    THING_DBG(g, v, l, me, "player move try: can move to by shoving");
 
     if (need_path) {
       std::vector< bpoint > move_path;
@@ -701,7 +701,7 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
     //
     // Can we open it allow movement?
     //
-    THING_DBG(me, "player move try: can move to by opening");
+    THING_DBG(g, v, l, me, "player move try: can move to by opening");
 
     if (thing_move_to(g, v, l, me, to)) {
       (void) level_tick_begin_requested(g, v, l, "player opened a door to move");
@@ -713,7 +713,7 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
     //
     // Can we jump diagonally?
     //
-    THING_DBG(me, "diagonal move blocked; try to jump");
+    THING_DBG(g, v, l, me, "diagonal move blocked; try to jump");
 
     if (thing_jump_to(g, v, l, me, to, false)) {
       (void) level_tick_begin_requested(g, v, l, "player jumped");
@@ -724,13 +724,13 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
     (void) level_tick_begin_requested(g, v, l, "player bumped into obstacle");
   }
 
-  THING_DBG(me, "player move to attempt failed");
+  THING_DBG(g, v, l, me, "player move to attempt failed");
   TRACE_INDENT();
 
-  THING_DBG(me, "player melee attack attempt");
+  THING_DBG(g, v, l, me, "player melee attack attempt");
   TRACE_INDENT();
   if (thing_attack_at(g, v, l, me, to)) {
-    THING_DBG(me, "player melee attack success");
+    THING_DBG(g, v, l, me, "player melee attack success");
   }
 
   //
@@ -767,7 +767,7 @@ static auto player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy) -> b
     return false;
   }
 
-  auto         at = thing_at(me);
+  auto         at = thing_at(g, v, l, me);
   bpoint const to(at.x + dx, at.y + dy);
 
   const bool need_path      = true;
@@ -809,7 +809,7 @@ static auto player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy) -> b
     target = v->cursor_at;
   } else {
     fpoint const delta = thing_get_direction(g, v, l, me);
-    target             = make_bpoint(thing_real_at(me) + delta);
+    target             = make_bpoint(thing_real_at(g, v, l, me) + delta);
   }
 
   if (fire_what != nullptr) {
@@ -838,7 +838,7 @@ static auto player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy) -> b
   }
 
   if (fire_what == nullptr) {
-    thing_err(item, "nothing to fire");
+    thing_err(g, v, l, item, "nothing to fire");
     return false;
   }
 
@@ -847,12 +847,12 @@ static auto player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy) -> b
     return false;
   }
 
-  thing_set_dir_from_delta(me, dx, dy);
+  thing_set_dir_from_delta(g, v, l, me, dx, dy);
 
   //
   // No firing in deep water
   //
-  if (level_is_deep_water(g, v, l, thing_at(me)) != nullptr) {
+  if (level_is_deep_water(g, v, l, thing_at(g, v, l, me)) != nullptr) {
     topcon("The deep water is preventing you from firing a volley!");
     return false;
   }
@@ -1030,7 +1030,7 @@ static void player_leave_current_level_and_change_to_level_num(Gamep g, Levelsp 
 //
 // Force move a me to a specific level
 //
-void player_warp_to_specific_level(Gamep g, Levelsp v, LevelNum level_num)
+void player_warp_to_specific_level(Gamep g, Levelsp v, Levelp l, LevelNum level_num)
 {
   TRACE();
 
@@ -1044,7 +1044,7 @@ void player_warp_to_specific_level(Gamep g, Levelsp v, LevelNum level_num)
 
   auto *new_level = level_change(g, v, level_num);
   if (new_level == nullptr) {
-    thing_err(me, "failed to move me to level %u", level_num);
+    thing_err(g, v, l, me, "failed to move me to level %u", level_num);
     return;
   }
 
@@ -1078,7 +1078,7 @@ void player_reached_exit_do(Gamep g, Levelsp v, Levelp l)
       };
 
       (void) thing_score_incr(g, v, l, player, 10000);
-      THING_DBG(player, "reached the final exit");
+      THING_DBG(g, v, l, player, "reached the final exit");
       thing_dead(g, v, l, player, e);
     }
 
@@ -1155,7 +1155,7 @@ void player_fell(Gamep g, Levelsp v, Levelp l, Levelp next_level, Thingp /*me*/)
 //
 void player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
-  THING_DBG(me, "%s", __FUNCTION__);
+  THING_DBG(g, v, l, me, "%s", __FUNCTION__);
   TRACE_INDENT();
 
   auto *ext_struct = thing_ext_struct(g, me);
@@ -1163,7 +1163,7 @@ void player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
     return;
   }
 
-  auto at = thing_at(me);
+  auto at = thing_at(g, v, l, me);
 
   FOR_ALL_THINGS_AT(g, v, l, it, at)
   {
@@ -1234,7 +1234,7 @@ void player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
 [[nodiscard]] auto player_jump(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool
 {
   TRACE();
-  THING_DBG(me, "player jump");
+  THING_DBG(g, v, l, me, "player jump");
 
   auto *player_struct = thing_player_struct(g);
   if (player_struct == nullptr) {
@@ -1253,7 +1253,7 @@ void player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
     return false;
   }
 
-  auto at        = thing_at(me);
+  auto at        = thing_at(g, v, l, me);
   auto jump_path = draw_line(at, to, how_far_i_can_jump + 1);
   bool warn      = true;
 
@@ -1278,7 +1278,7 @@ void player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
   // If already moving, do not pop the next path tile
   //
   if (thing_is_moving(me)) {
-    THING_DBG(me, "player move to next: already moving, delay");
+    THING_DBG(g, v, l, me, "player move to next: already moving, delay");
     return false;
   }
 
@@ -1319,7 +1319,7 @@ void player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
     case PLAYER_STATE_ENUM_MAX : break;
   }
 
-  THING_DBG(me, "player move to next");
+  THING_DBG(g, v, l, me, "player move to next");
   TRACE_INDENT();
 
   //
@@ -1328,14 +1328,14 @@ void player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
   bpoint move_next      = {};
   bool   move_confirmed = {};
 
-  THING_DBG(me, "player pop next move");
+  THING_DBG(g, v, l, me, "player pop next move");
   TRACE_INDENT();
 
   if (! thing_move_path_pop(g, v, l, me, move_confirmed, move_next)) {
     //
     // If could not pop, then no path is left
     //
-    THING_DBG(me, "player pop next move; no path left");
+    THING_DBG(g, v, l, me, "player pop next move; no path left");
     TRACE_INDENT();
 
     player_state_change(g, v, l, PLAYER_STATE_NORMAL);
@@ -1344,15 +1344,15 @@ void player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
 
   bpoint move_destination = {};
   if (thing_move_path_target(g, v, l, me, move_destination)) {
-    THING_DBG(me, "player has a path to target");
+    THING_DBG(g, v, l, me, "player has a path to target");
     TRACE_INDENT();
 
     if (level_is_cursor_path_hazard(g, v, l, move_next) != nullptr) {
-      THING_DBG(me, "player has a path to target, but it is a hazard");
+      THING_DBG(g, v, l, me, "player has a path to target, but it is a hazard");
       TRACE_INDENT();
 
       if (thing_jump_to(g, v, l, me, move_destination)) {
-        THING_DBG(me, "player has a path to target, but can jump to it");
+        THING_DBG(g, v, l, me, "player has a path to target, but can jump to it");
         TRACE_INDENT();
 
         //

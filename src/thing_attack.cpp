@@ -42,7 +42,7 @@ static auto thing_attack(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp i
   //
   // Even if the attack fails, make the monster point at the target
   //
-  thing_set_dir_from_target(attacker, thing_at(it));
+  thing_set_dir_from_target(g, v, l, attacker, thing_at(g, v, l, it));
 
   //
   // Check not too many attacks
@@ -51,10 +51,10 @@ static auto thing_attack(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp i
     //
     // NOTE: door slam attack and anything else I've not thought of, bypasses this
     //
-    THING_DBG(attacker, "attack");
+    THING_DBG(g, v, l, attacker, "attack");
     if (thing_attack_count_per_tick_incr(g, v, l, attacker) > tp_attack_count_max_per_tick_get(thing_tp(attacker))) {
-      THING_DBG(attacker, "exceeded max attack count (%d vs %d), ignore", //
-                thing_attack_count_per_tick(attacker),                    //
+      THING_DBG(g, v, l, attacker, "exceeded max attack count (%d vs %d), ignore", //
+                thing_attack_count_per_tick(attacker),                             //
                 tp_attack_count_max_per_tick_get(thing_tp(attacker)));
       return false;
     }
@@ -91,7 +91,7 @@ static auto thing_attack(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp i
 //
 [[nodiscard]] auto thing_attack_at(Gamep g, Levelsp v, Levelp l, Thingp attacker, const bpoint &attack_at, ThingEvent *e) -> bool
 {
-  THING_DBG(attacker, "%s", __FUNCTION__);
+  THING_DBG(g, v, l, attacker, "%s", __FUNCTION__);
   TRACE_INDENT();
 
   //
@@ -102,11 +102,11 @@ static auto thing_attack(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp i
     // Firing tiles do not need to be adjacent
     //
   } else {
-    if (thing_at(attacker) == attack_at) {
+    if (thing_at(g, v, l, attacker) == attack_at) {
       //
       // Allow door slam attack on same tile
       //
-    } else if (! adjacent(thing_at(attacker), attack_at)) {
+    } else if (! adjacent(thing_at(g, v, l, attacker), attack_at)) {
       //
       // Adjacent tile attack
       //
@@ -146,7 +146,7 @@ static auto thing_attack(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp i
 
   if (compiler_unused) {
     for (auto *cand : cands) {
-      THING_DBG(cand, "prio %u", thing_priority(cand));
+      THING_DBG(g, v, l, cand, "prio %u", thing_priority(cand));
     }
   }
 

@@ -192,7 +192,7 @@ static auto level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Th
       //
       // Common code for pass 1 and 2
       //
-      if (level_is_cursor_path_hazard(g, v, l, thing_at(player)) != nullptr) {
+      if (level_is_cursor_path_hazard(g, v, l, thing_at(g, v, l, player)) != nullptr) {
         //
         // If standing on a hazard, then plot a course that allows travel over hazards.
         // Any path except through walls.
@@ -415,7 +415,7 @@ static auto level_cursor_path_draw_line(Gamep g, Levelsp v, Levelp l, const bpoi
   {
     auto idx = 0;
     for (const auto &pc : paths) {
-      thing_log(player, "path[%d]: cost:%d len:%d", idx++, pc.cost, static_cast< int >(pc.path.size()));
+      thing_log(g, v, l, player, "path[%d]: cost:%d len:%d", idx++, pc.cost, static_cast< int >(pc.path.size()));
     }
   }
 
@@ -532,7 +532,7 @@ void level_cursor_copy_path_to_player(Gamep g, Levelsp v, Levelp l, std::vector<
   //
   IF_DEBUG2
   { //
-    THING_DBG(player, "apply cursor path size: %d", static_cast< int >(move_path.size()));
+    THING_DBG(g, v, l, player, "apply cursor path size: %d", static_cast< int >(move_path.size()));
   }
 
   if (thing_move_path_apply(g, v, l, player, move_path)) {
@@ -579,18 +579,18 @@ static void level_cursor_path_create(Gamep g, Levelsp v, Levelp l)
   //
   // Draw the path
   //
-  cursor_path = level_cursor_path_draw_line(g, v, l, thing_at(player), v->cursor_at);
+  cursor_path = level_cursor_path_draw_line(g, v, l, thing_at(g, v, l, player), v->cursor_at);
 
   IF_DEBUG2
   { //
-    THING_DBG(player, "cursor path size: %d", static_cast< int >(cursor_path.size()));
+    THING_DBG(g, v, l, player, "cursor path size: %d", static_cast< int >(cursor_path.size()));
   }
 
   for (auto p : cursor_path) {
     v->cursor[ p.x ][ p.y ] = CURSOR_PATH;
     IF_DEBUG2
     { //
-      THING_DBG(player, " - cursor path: (%d,%d)", p.x, p.y);
+      THING_DBG(g, v, l, player, " - cursor path: (%d,%d)", p.x, p.y);
     }
   }
   v->cursor[ v->cursor_at.x ][ v->cursor_at.y ] = CURSOR_AT;

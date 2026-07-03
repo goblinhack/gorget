@@ -23,7 +23,7 @@
     return false;
   }
 
-  auto at = thing_at(me);
+  auto at = thing_at(g, v, l, me);
   if (to == at) {
     return false;
   }
@@ -50,7 +50,7 @@
       // b#.
       // #a.
       // ...
-      THING_DBG(me, "check diagonal move to (%d,%d); blocked (a)", to.x, to.y);
+      THING_DBG(g, v, l, me, "check diagonal move to (%d,%d); blocked (a)", to.x, to.y);
       return true;
     }
   }
@@ -64,7 +64,7 @@
       // ...
       // #a.
       // b#.
-      THING_DBG(me, "check diagonal move to (%d,%d); blocked (b)", to.x, to.y);
+      THING_DBG(g, v, l, me, "check diagonal move to (%d,%d); blocked (b)", to.x, to.y);
       return true;
     }
   }
@@ -78,7 +78,7 @@
       // .#b
       // .a#
       // ...
-      THING_DBG(me, "check diagonal move to (%d,%d); blocked (c)", to.x, to.y);
+      THING_DBG(g, v, l, me, "check diagonal move to (%d,%d); blocked (c)", to.x, to.y);
       return true;
     }
   }
@@ -92,12 +92,12 @@
       // ...
       // .a#
       // .#b
-      THING_DBG(me, "check diagonal move to (%d,%d); blocked (d)", to.x, to.y);
+      THING_DBG(g, v, l, me, "check diagonal move to (%d,%d); blocked (d)", to.x, to.y);
       return true;
     }
   }
 
-  THING_DBG(me, "check diagonal move to (%d,%d); ok", to.x, to.y);
+  THING_DBG(g, v, l, me, "check diagonal move to (%d,%d); ok", to.x, to.y);
   return false;
 }
 
@@ -113,21 +113,21 @@
     return false;
   }
 
-  auto at = thing_at(me);
+  auto at = thing_at(g, v, l, me);
   if (to == at) {
     return true;
   }
 
-  THING_DBG(me, "can move to: (%d,%d) ?", to.x, to.y);
+  THING_DBG(g, v, l, me, "can move to: (%d,%d) ?", to.x, to.y);
 
   if (! adjacent(at, to)) {
-    THING_DBG(me, "can move to: (%d,%d); not adjacent", to.x, to.y);
+    THING_DBG(g, v, l, me, "can move to: (%d,%d); not adjacent", to.x, to.y);
     return false;
   }
 
   auto dx = to.x - at.x;
   auto dy = to.y - at.y;
-  thing_set_dir_from_delta(me, dx, dy);
+  thing_set_dir_from_delta(g, v, l, me, dx, dy);
 
   //
   // Don't allow shortcuts through diagonal walls
@@ -335,14 +335,14 @@
     return false;
   }
 
-  auto at = thing_at(me);
+  auto at = thing_at(g, v, l, me);
   if (to == at) {
     return true;
   }
 
   auto dx = to.x - at.x;
   auto dy = to.y - at.y;
-  thing_set_dir_from_delta(me, dx, dy);
+  thing_set_dir_from_delta(g, v, l, me, dx, dy);
 
   if (! thing_is_able_to_shove(me)) {
     (void) thing_lunge(g, v, l, me, to);

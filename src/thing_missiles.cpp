@@ -58,18 +58,18 @@
   }
 
   if (! thing_is_able_to_fire_weapons(me)) {
-    thing_err(me, "thing trying to spawn missiles when it cannot");
+    thing_err(g, v, l, me, "thing trying to spawn missiles when it cannot");
     return nullptr;
   }
 
   if (what == nullptr) {
-    thing_err(me, "no missile to spawn");
+    thing_err(g, v, l, me, "no missile to spawn");
     return nullptr;
   }
 
   auto *ext_struct = thing_ext_struct(g, me);
   if (ext_struct == nullptr) {
-    thing_err(me, "missing ext struct");
+    thing_err(g, v, l, me, "missing ext struct");
     return nullptr;
   }
 
@@ -77,7 +77,7 @@
   // Too many missiles
   //
   if (thing_missile_fired_by_count_get(g, v, l, me) >= thing_missile_count_max(g, v, l, me)) {
-    THING_DBG(me, "trying to fire too many missiles");
+    THING_DBG(g, v, l, me, "trying to fire too many missiles");
     thing_dump_missiles(g, v, l, me);
 
     if (thing_is_player(me)) {
@@ -109,8 +109,8 @@
     new_missile->fired_by_id = me->id;
     ext_struct->missiles.count++;
 
-    THING_DBG(me, "spawned missile %s", to_string(g, v, l, new_missile).c_str());
-    THING_DBG(new_missile, "new born missile");
+    THING_DBG(g, v, l, me, "spawned missile %s", to_string(g, v, l, new_missile).c_str());
+    THING_DBG(g, v, l, new_missile, "new born missile");
 
     return new_missile;
   }
@@ -118,7 +118,7 @@
   //
   // Out of slots; but we checked above
   //
-  thing_err(me, "unexpectedly out of missile slots");
+  thing_err(g, v, l, me, "unexpectedly out of missile slots");
 
   return nullptr;
 }
@@ -172,7 +172,7 @@
   }
 
   if (! thing_is_able_to_fire_weapons(me)) {
-    thing_err(me, "non owner trying to detach missiles");
+    thing_err(g, v, l, me, "non owner trying to detach missiles");
     return false;
   }
 
@@ -196,12 +196,12 @@
     }
 
     if (! static_cast< bool >(missile->fired_by_id)) {
-      thing_err(me, "found detached missile: %s", to_string(g, v, l, missile).c_str());
+      thing_err(g, v, l, me, "found detached missile: %s", to_string(g, v, l, missile).c_str());
       return false;
     }
 
     if (ext_struct->missiles.count <= 0) {
-      thing_err(me, "has unexpected missile count when detaching: %s", to_string(g, v, l, missile).c_str());
+      thing_err(g, v, l, me, "has unexpected missile count when detaching: %s", to_string(g, v, l, missile).c_str());
       return false;
     }
 
@@ -210,18 +210,18 @@
     missile->fired_by_id = 0;
 
     if (e.event_type != THING_EVENT_NONE) {
-      THING_DBG(me, "kill missile %s", to_string(g, v, l, missile).c_str());
+      THING_DBG(g, v, l, me, "kill missile %s", to_string(g, v, l, missile).c_str());
       TRACE_INDENT();
       thing_dead(g, v, l, missile, e);
       got_one = true;
     } else {
-      THING_DBG(me, "detach missile %s", to_string(g, v, l, missile).c_str());
+      THING_DBG(g, v, l, me, "detach missile %s", to_string(g, v, l, missile).c_str());
       got_one = true;
     }
   }
 
   if (! got_one) {
-    THING_DBG(me, "could not detach");
+    THING_DBG(g, v, l, me, "could not detach");
   }
 
   return got_one;
@@ -261,7 +261,7 @@ static auto thing_missile_detach_from_firer(Gamep g, Levelsp v, Levelp l, Thingp
   }
 
   if (! thing_is_projectile(me) && ! thing_is_beam_weapon(me)) {
-    thing_err(me, "non missile thing trying to detach itself");
+    thing_err(g, v, l, me, "non missile thing trying to detach itself");
     return false;
   }
 
@@ -270,7 +270,7 @@ static auto thing_missile_detach_from_firer(Gamep g, Levelsp v, Levelp l, Thingp
     return false; // can be normal if detached
   }
 
-  THING_DBG(me, "detach me from firer");
+  THING_DBG(g, v, l, me, "detach me from firer");
   TRACE_INDENT();
 
   return thing_missile_detach_from_firer(g, v, l, fired_by, me);
@@ -288,7 +288,7 @@ void thing_dump_missiles(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 
   if (! thing_is_able_to_fire_weapons(me)) {
-    thing_err(me, "non owner trying to detach missile");
+    thing_err(g, v, l, me, "non owner trying to detach missile");
     return;
   }
 
@@ -300,12 +300,12 @@ void thing_dump_missiles(Gamep g, Levelsp v, Levelp l, Thingp me)
   FOR_ALL_MISSILE_SLOTS(g, v, l, me, slot, existing_missile)
   {
     if (existing_missile == nullptr) {
-      THING_DBG(me, "slot %d: -", _n_);
+      THING_DBG(g, v, l, me, "slot %d: -", _n_);
       continue;
     }
 
     auto s = to_string(g, v, l, existing_missile);
-    THING_DBG(me, "slot %d: %s", _n_, s.c_str());
+    THING_DBG(g, v, l, me, "slot %d: %s", _n_, s.c_str());
   }
 }
 
@@ -330,7 +330,7 @@ void thing_dump_missiles(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 
   if (val > THING_MISSILE_MAX) {
-    thing_err(t, "trying to set missile max too high");
+    thing_err(g, v, l, t, "trying to set missile max too high");
     val = THING_MISSILE_MAX;
   }
 

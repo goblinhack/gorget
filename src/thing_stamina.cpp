@@ -38,7 +38,7 @@
   }
 
   if (val > std::numeric_limits< decltype(me->_stamina) >::max()) {
-    thing_err(me, "value overflow: %d", val);
+    thing_err(g, v, l, me, "value overflow: %d", val);
     return 0;
   }
 
@@ -104,7 +104,7 @@
   }
 
   if (val > std::numeric_limits< decltype(me->_stamina_max) >::max()) {
-    thing_err(me, "value overflow: %d", val);
+    thing_err(g, v, l, me, "value overflow: %d", val);
     return 0;
   }
 

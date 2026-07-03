@@ -63,7 +63,7 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
 
   FOR_ALL_THINGS_ON_LEVEL(g, v, l, me)
   {
-    if (thing_at(me) == in) {
+    if (thing_at(g, v, l, me) == in) {
       continue;
     }
 
@@ -82,7 +82,7 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
     //
     // Sets reference
     //
-    out = thing_at(other);
+    out = thing_at(g, v, l, other);
     return true;
   }
 
@@ -97,7 +97,7 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
   TRACE();
 
   auto   outf  = make_fpoint(out);
-  fpoint delta = thing_real_at(me) - make_fpoint(thing_old_at(me));
+  fpoint delta = thing_real_at(g, v, l, me) - make_fpoint(thing_old_at(me));
   fpoint tof   = outf + delta;
   bpoint to    = make_bpoint(tof);
 
@@ -110,7 +110,7 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
     tof   = outf + delta;
     to    = make_bpoint(tof);
     out   = to;
-    THING_DBG(me, "teleport projectile, delta %f,%f bpoint %d,%d", delta.x, delta.y, to.x, to.y);
+    THING_DBG(g, v, l, me, "teleport projectile, delta %f,%f bpoint %d,%d", delta.x, delta.y, to.x, to.y);
     return true;
   }
 
@@ -148,7 +148,7 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
   to  = make_bpoint(tof);
 
   if (compiler_unused) {
-    THING_DBG(me, "delta %f,%f bpoint %d,%d out %d,%d", delta.x, delta.y, to.x, to.y, out.x, out.y);
+    THING_DBG(g, v, l, me, "delta %f,%f bpoint %d,%d out %d,%d", delta.x, delta.y, to.x, to.y, out.x, out.y);
   }
 
   if (level_is_obs_to_teleporting_onto(g, v, l, to) != nullptr) {
@@ -174,34 +174,34 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
 //
 [[nodiscard]] auto thing_teleport_handle(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
 {
-  THING_DBG(me, "teleport, try");
+  THING_DBG(g, v, l, me, "teleport, try");
   TRACE_INDENT();
 
   if (me->tick_teleport != 0U) {
     if (me->tick_teleport == v->tick) {
-      THING_DBG(me, "teleport, no; too frequent");
+      THING_DBG(g, v, l, me, "teleport, no; too frequent");
       return false;
     }
   }
 
   if (thing_is_teleporting(me)) {
-    THING_DBG(me, "teleport, no; already teleporting");
+    THING_DBG(g, v, l, me, "teleport, no; already teleporting");
     return false;
   }
 
   if (thing_is_teleport_blocked(me)) {
-    THING_DBG(me, "teleport, no; blocked");
+    THING_DBG(g, v, l, me, "teleport, no; blocked");
     return false;
   }
 
   bpoint to;
-  if (! teleport_find_other(g, v, l, thing_at(me), to)) {
-    THING_DBG(me, "teleport, no; none found");
+  if (! teleport_find_other(g, v, l, thing_at(g, v, l, me), to)) {
+    THING_DBG(g, v, l, me, "teleport, no; none found");
     return false;
   }
 
   if (is_oob_or_border(to)) [[unlikely]] {
-    THING_DBG(me, "teleport, no; oob");
+    THING_DBG(g, v, l, me, "teleport, no; oob");
     return false;
   }
 
@@ -209,19 +209,19 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
   // Where do we spawn?
   //
   if (! teleport_find_landing_spot(g, v, l, me, to)) {
-    THING_DBG(me, "failed to find landing spot next to chosen teleport");
+    THING_DBG(g, v, l, me, "failed to find landing spot next to chosen teleport");
   }
 
-  if (to == thing_at(me)) {
-    THING_DBG(me, "teleport, no; same location");
+  if (to == thing_at(g, v, l, me)) {
+    THING_DBG(g, v, l, me, "teleport, no; same location");
     return false;
   }
 
-  THING_DBG(me, "pre teleport, warp to (%d,%d)", to.x, to.y);
+  THING_DBG(g, v, l, me, "pre teleport, warp to (%d,%d)", to.x, to.y);
   TRACE_INDENT();
 
   if (! thing_warp_to(g, v, l, me, to)) {
-    THING_DBG(me, "pre teleport, warp to (%d,%d) failed", to.x, to.y);
+    THING_DBG(g, v, l, me, "pre teleport, warp to (%d,%d) failed", to.x, to.y);
     return false;
   }
 
@@ -231,7 +231,7 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
 
   thing_is_teleporting_set(g, v, l, me, false);
 
-  THING_DBG(me, "post teleport");
+  THING_DBG(g, v, l, me, "post teleport");
   TRACE_INDENT();
 
   thing_sound_play(g, v, l, me, "teleport");

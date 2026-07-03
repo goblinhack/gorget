@@ -31,7 +31,7 @@
   }
 
   if (std::cmp_greater(val, std::numeric_limits< decltype(t->_speed) >::max())) {
-    thing_err(t, "value overflow: %d", val);
+    thing_err(g, v, l, t, "value overflow: %d", val);
     return 0;
   }
 

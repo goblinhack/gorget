@@ -12,7 +12,7 @@ void thing_fini(Gamep g, Levelsp v, Levelp l, Thingp t)
   TRACE();
 
   if (compiler_unused) {
-    THING_DBG(t, "fini");
+    THING_DBG(g, v, l, t, "fini");
   }
 
   if (thing_is_mob(t)) {

@@ -27,7 +27,7 @@
     return false;
   }
 
-  auto at = thing_at(me);
+  auto at = thing_at(g, v, l, me);
   if (to == at) {
     return false;
   }
@@ -44,7 +44,7 @@
   (void) thing_push(g, v, l, me);
 
   thing_is_moving_set(g, v, l, me);
-  THING_DBG(me, "is moving to set");
+  THING_DBG(g, v, l, me, "is moving to set");
 
   return true;
 }
@@ -60,16 +60,16 @@
     return false;
   }
 
-  auto at = thing_at(me);
+  auto at = thing_at(g, v, l, me);
   if (to == at) {
     return false;
   }
 
   auto ret = thing_shove_handle(g, v, l, me, to);
   if (ret) {
-    THING_DBG(me, "shoved");
+    THING_DBG(g, v, l, me, "shoved");
   } else {
-    THING_DBG(me, "failed to shove");
+    THING_DBG(g, v, l, me, "failed to shove");
   }
 
   return ret;
@@ -105,7 +105,7 @@
   //
   // Check if already present at the destination.
   //
-  auto at = thing_at(me);
+  auto at = thing_at(g, v, thing_level(g, v, me), me);
   if ((new_level == old_level) && (to == at)) {
     //
     // No need to pop. If might be an inventory item though, so make sure and push
@@ -181,7 +181,7 @@
 
   new_level->is_tick_requested = true;
 
-  THING_DBG(me, "moved to new location");
+  THING_DBG(g, v, new_level, me, "moved to new location");
 
   return true;
 }
@@ -208,7 +208,7 @@ void thing_move_finish(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
   me->thing_dt = 0.0;
 
-  auto at = thing_at(me);
+  auto at = thing_at(g, v, l, me);
   thing_moving_from_set(me, at);
 
   thing_is_lunging_set(g, v, l, me, false);
@@ -227,7 +227,7 @@ void thing_update_pos(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
-  auto   real_at = thing_real_at(me);
+  auto   real_at = thing_real_at(g, v, l, me);
   spoint pix_at;
   pix_at.x = static_cast< int >(real_at.x * static_cast< float >(TILE_WIDTH));
   pix_at.y = static_cast< int >(real_at.y * static_cast< float >(TILE_HEIGHT));
@@ -237,7 +237,7 @@ void thing_update_pos(Gamep g, Levelsp v, Levelp l, Thingp me)
   // Update hidden status
   //
   if ((thing_is_blit_when_obscured_faded(me) || thing_is_blit_when_obscured_outline(me))
-      && level_alive_is_blit_obscures(g, v, l, thing_at(me)) != nullptr) {
+      && level_alive_is_blit_obscures(g, v, l, thing_at(g, v, l, me)) != nullptr) {
     thing_is_hidden_set(g, v, l, me, true);
   } else {
     thing_is_hidden_set(g, v, l, me, false);

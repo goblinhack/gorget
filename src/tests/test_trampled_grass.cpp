@@ -89,7 +89,7 @@
     // Check the grass is dead
     //
     TEST_LOG(t, "check grass is dead");
-    auto p        = thing_at(player);
+    auto p        = thing_at(g, v, l, player);
     bool found_it = false;
 
     FOR_ALL_THINGS_AT(g, v, l, it, p)

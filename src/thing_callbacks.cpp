@@ -289,7 +289,7 @@ void thing_on_open_request_set(Tpp tp, thing_on_open_request_t callback)
 
 [[nodiscard]] auto thing_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp opener) -> bool
 {
-  THING_DBG(me, "%s", __FUNCTION__);
+  THING_DBG(g, v, l, me, "%s", __FUNCTION__);
   TRACE_INDENT();
 
   auto *tp = thing_tp(me);
@@ -304,14 +304,14 @@ void thing_on_open_request_set(Tpp tp, thing_on_open_request_t callback)
     return true;
   }
   if (! thing_is_player(opener) && ! thing_is_monst(opener)) {
-    thing_err(opener, "unexpected thing for %s", __FUNCTION__);
+    thing_err(g, v, l, opener, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
   auto ret = tp->on_open_request(g, v, l, me, opener);
   if (ret) {
-    THING_DBG(me, "opens");
+    THING_DBG(g, v, l, me, "opens");
   } else {
-    THING_DBG(me, "fails to open");
+    THING_DBG(g, v, l, me, "fails to open");
   }
   return ret;
 }
@@ -328,7 +328,7 @@ void thing_on_close_request_set(Tpp tp, thing_on_close_request_t callback)
 
 [[nodiscard]] auto thing_on_close_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp closer) -> bool
 {
-  THING_DBG(me, "%s", __FUNCTION__);
+  THING_DBG(g, v, l, me, "%s", __FUNCTION__);
   TRACE_INDENT();
 
   auto *tp = thing_tp(me);
@@ -343,14 +343,14 @@ void thing_on_close_request_set(Tpp tp, thing_on_close_request_t callback)
     return true;
   }
   if (! thing_is_player(closer) && ! thing_is_monst(closer)) {
-    thing_err(closer, "unexpected thing for %s", __FUNCTION__);
+    thing_err(g, v, l, closer, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
   auto ret = tp->on_close_request(g, v, l, me, closer);
   if (ret) {
-    THING_DBG(me, "closes");
+    THING_DBG(g, v, l, me, "closes");
   } else {
-    THING_DBG(me, "fails to close");
+    THING_DBG(g, v, l, me, "fails to close");
   }
   return ret;
 }
@@ -596,7 +596,7 @@ void thing_on_shoved(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp shover)
     return;
   }
   if (! thing_is_player(shover) && ! thing_is_monst(shover)) {
-    thing_err(shover, "unexpected thing for %s", __FUNCTION__);
+    thing_err(g, v, l, shover, "unexpected thing for %s", __FUNCTION__);
     return;
   }
   tp->on_shoved(g, v, l, me, shover);

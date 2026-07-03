@@ -108,7 +108,7 @@
 
   TEST_LOG(t, "jump");
 
-  if (! (result = player_jump(g, v, l, player, thing_at(player) + bpoint(2, 0)))) {
+  if (! (result = player_jump(g, v, l, player, thing_at(g, v, l, player) + bpoint(2, 0)))) {
     TEST_FAILED(t, "move fail");
     goto exit;
   }

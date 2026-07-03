@@ -114,7 +114,7 @@ void thing_can_see_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
     return;
   }
 
-  THING_DBG(t, "can see:");
+  THING_DBG(g, v, l, t, "can see:");
   TRACE_INDENT();
 
   for (auto y = 0; y < MAP_HEIGHT; y++) {
@@ -132,7 +132,7 @@ void thing_can_see_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
         continue;
       }
 
-      if (p == thing_at(t)) {
+      if (p == thing_at(g, v, l, t)) {
         debug += "m";
         continue;
       }
@@ -155,9 +155,9 @@ void thing_can_see_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
       debug += ".";
     }
 
-    THING_DBG(t, "can see: %s", debug.c_str());
+    THING_DBG(g, v, l, t, "can see: %s", debug.c_str());
   }
-  THING_DBG(t, "-");
+  THING_DBG(g, v, l, t, "-");
 }
 
 void thing_has_seen_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
@@ -167,7 +167,7 @@ void thing_has_seen_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
     return;
   }
 
-  THING_DBG(t, "has seen:");
+  THING_DBG(g, v, l, t, "has seen:");
   TRACE_INDENT();
 
   for (auto y = 0; y < MAP_HEIGHT; y++) {
@@ -175,7 +175,7 @@ void thing_has_seen_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
     for (auto x = 0; x < MAP_WIDTH; x++) {
       bpoint const p(x, y);
 
-      if (p == thing_at(t)) {
+      if (p == thing_at(g, v, l, t)) {
         debug += "@";
         continue;
       }
@@ -193,7 +193,7 @@ void thing_has_seen_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
       debug += ".";
     }
 
-    THING_DBG(t, "has seen: %s", debug.c_str());
+    THING_DBG(g, v, l, t, "has seen: %s", debug.c_str());
   }
 }
 
@@ -227,7 +227,7 @@ void thing_vision_calculate(Gamep g, Levelsp v, Levelp l, Thingp me)
   ctx.v                  = v;
   ctx.l                  = l;
   ctx.me                 = me;
-  ctx.pov                = thing_at(me);
+  ctx.pov                = thing_at(g, v, l, me);
   ctx.thing_at_in_pixels = thing_pix_at(me);
   ctx.max_radius         = max_radius;
   ctx.can_see_tile       = &ext->can_see;
@@ -243,7 +243,7 @@ void thing_vision_calculate(Gamep g, Levelsp v, Levelp l, Thingp me)
   IF_DEBUG
   {
     if (compiler_unused) {
-      THING_DBG(me, "dir %s", ThingDirType_to_string(me->dir).c_str());
+      THING_DBG(g, v, l, me, "dir %s", ThingDirType_to_string(me->dir).c_str());
       thing_can_see_dump(g, v, l, me);
     }
   }

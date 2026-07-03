@@ -37,12 +37,12 @@ void thing_is_thrown_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp throw
   if (val) {
     thing_on_thrown_begin(g, v, l, item, thrower);
   } else {
-    THING_DBG(item, "pre thrown end");
+    THING_DBG(g, v, l, item, "pre thrown end");
     TRACE_INDENT();
 
     thing_on_thrown_end(g, v, l, item, thrower);
 
-    THING_DBG(item, "post thrown end");
+    THING_DBG(g, v, l, item, "post thrown end");
     TRACE_INDENT();
 
     //
@@ -50,19 +50,20 @@ void thing_is_thrown_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp throw
     //
     auto The_thing = thing_name_long_The(g, v, l, item);
 
+    auto item_at = thing_at(g, v, l, item);
     if (thing_is_player(thrower)) {
-      if (level_is_chasm_bool(g, v, l, thing_at(item))) {
+      if (level_is_chasm_bool(g, v, l, item_at)) {
         topcon("%s tumbles into the void.", The_thing.c_str());
       }
     }
 
-    if (level_is_foliage_bool(g, v, l, thing_at(item))) {
+    if (level_is_foliage_bool(g, v, l, item_at)) {
       if (thing_is_player(thrower)) {
         topcon("%s lands with a rustle.", The_thing.c_str());
       }
     }
 
-    if (level_is_water_bool(g, v, l, thing_at(item))) {
+    if (level_is_water_bool(g, v, l, item_at)) {
       thing_sound_play(g, v, l, item, "splash");
 
       if (thing_is_player(thrower)) {
@@ -81,7 +82,7 @@ void thing_is_thrown_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp throw
           .source     = owner,              //
       };
 
-      THING_DBG(item, "need to detach item from thrower");
+      THING_DBG(g, v, l, item, "need to detach item from thrower");
       TRACE_INDENT();
 
       (void) thing_drop(g, v, l, owner, item, e);
@@ -99,7 +100,7 @@ void thing_is_thrown_unset(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp thr
     return;
   }
 
-  THING_DBG(item, "is throw unset");
+  THING_DBG(g, v, l, item, "is throw unset");
   TRACE_INDENT();
 
   thing_is_thrown_set(g, v, l, item, thrower, false);
@@ -108,12 +109,12 @@ void thing_is_thrown_unset(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp thr
 //
 // If throwing too far, truncate the throw
 //
-static void thing_throw_truncate(Thingp thrower, bpoint &to, int how_far_i_can_throw)
+static void thing_throw_truncate(Gamep g, Levelsp v, Levelp l, Thingp thrower, bpoint &to, int how_far_i_can_throw)
 {
   //
   // Add some random delta for fun and some for diagonals
   //
-  auto curr_at = thing_at(thrower);
+  auto curr_at = thing_at(g, v, l, thrower);
   //
   // Need to allow diagonal throws of n tiles
   //
@@ -126,8 +127,8 @@ static void thing_throw_truncate(Thingp thrower, bpoint &to, int how_far_i_can_t
   // v
   const auto how_far_i_want_to_throw = std::floor(distance(curr_at, to));
 
-  THING_DBG(thrower, "curr_at (%d,%d), throw to (%d,%d)", curr_at.x, curr_at.y, to.x, to.y);
-  THING_DBG(thrower, "how_far_i_want_to_throw %f, how_far_i_can_throw %d", how_far_i_want_to_throw, how_far_i_can_throw);
+  THING_DBG(g, v, l, thrower, "curr_at (%d,%d), throw to (%d,%d)", curr_at.x, curr_at.y, to.x, to.y);
+  THING_DBG(g, v, l, thrower, "how_far_i_want_to_throw %f, how_far_i_can_throw %d", how_far_i_want_to_throw, how_far_i_can_throw);
   TRACE_INDENT();
 
   //
@@ -137,7 +138,7 @@ static void thing_throw_truncate(Thingp thrower, bpoint &to, int how_far_i_can_t
     //
     // Yep. Trying to throw too far.
     //
-    THING_DBG(thrower, "trying to throw too far");
+    THING_DBG(g, v, l, thrower, "trying to throw too far");
     fpoint u = make_fpoint(to) - make_fpoint(curr_at);
     u.unit();
     u *= how_far_i_can_throw;
@@ -153,7 +154,7 @@ static void thing_throw_truncate(Thingp thrower, bpoint &to, int how_far_i_can_t
 //
 static auto thing_throw_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thingp thrower, bpoint to) -> Thingp
 {
-  auto at         = thing_at(thrower);
+  auto at         = thing_at(g, v, l, thrower);
   auto throw_path = draw_line(at, to);
 
   for (auto intermediate : std::ranges::reverse_view(throw_path)) {
@@ -180,7 +181,7 @@ static auto thing_throw_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thing
     return false;
   }
 
-  THING_DBG(thrower, "throw %s to (%d,%d)", thing_name_short(g, v, l, item).c_str(), to.x, to.y);
+  THING_DBG(g, v, l, thrower, "throw %s to (%d,%d)", thing_name_short(g, v, l, item).c_str(), to.x, to.y);
   TRACE_INDENT();
 
   if (! thing_is_able_to_throw_items(thrower)) {
@@ -200,7 +201,7 @@ static auto thing_throw_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thing
     return false;
   }
 
-  auto at = thing_at(thrower);
+  auto at = thing_at(g, v, l, thrower);
   if (to == at) {
     return false;
   }
@@ -220,11 +221,11 @@ static auto thing_throw_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thing
     return false;
   }
 
-  thing_throw_truncate(thrower, to, how_far_i_can_throw);
+  thing_throw_truncate(g, v, l, thrower, to, how_far_i_can_throw);
 
   auto how_far_i_want_to_throw = static_cast< int >(floor(distance(at, to)));
 
-  THING_DBG(thrower, "throw to (%d,%d) (final, how_far_i_can_throw:%d how_far_i_want_to_throw %d)", to.x, to.y, how_far_i_can_throw,
+  THING_DBG(g, v, l, thrower, "throw to (%d,%d) (final, how_far_i_can_throw:%d how_far_i_want_to_throw %d)", to.x, to.y, how_far_i_can_throw,
             how_far_i_want_to_throw);
   TRACE_INDENT();
 
@@ -251,7 +252,7 @@ static auto thing_throw_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thing
       topcon("There is something in the way of throwing there.");
     }
 
-    THING_DBG(thrower, "something in the way of throwing onto");
+    THING_DBG(g, v, l, thrower, "something in the way of throwing onto");
   }
 
   if (blocked) {
@@ -259,8 +260,8 @@ static auto thing_throw_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thing
     // Try again, but with a shorter distance.
     //
     if (how_far_i_want_to_throw > 1) {
-      thing_throw_truncate(thrower, to, how_far_i_want_to_throw - 1);
-      THING_DBG(thrower, "try truncated throw to (%d,%d)", to.x, to.y);
+      thing_throw_truncate(g, v, l, thrower, to, how_far_i_want_to_throw - 1);
+      THING_DBG(g, v, l, thrower, "try truncated throw to (%d,%d)", to.x, to.y);
 
       return thing_throw_to(g, v, l, thrower, item, to);
     }
@@ -268,7 +269,7 @@ static auto thing_throw_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thing
     return false;
   }
 
-  (void) thing_warp_to(g, v, l, item, thing_at(thrower));
+  (void) thing_warp_to(g, v, l, item, thing_at(g, v, l, thrower));
 
   spoint pix_at;
   pix_at.x = at.x * TILE_WIDTH;
@@ -286,7 +287,7 @@ static auto thing_throw_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thing
   //
   auto dx = to.x - at.x;
   auto dy = to.y - at.y;
-  thing_set_dir_from_delta(item, dx, dy);
+  thing_set_dir_from_delta(g, v, l, item, dx, dy);
 
   if (thing_is_player(thrower)) {
     auto the_thing = thing_name_long_the(g, v, l, item);
@@ -294,7 +295,7 @@ static auto thing_throw_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thing
     (void) level_tick_begin_requested(g, v, l, "throw item");
   }
 
-  THING_DBG(item, "throw begin delta %d,%d", dx, dy);
+  THING_DBG(g, v, l, item, "throw begin delta %d,%d", dx, dy);
 
   return true;
 }

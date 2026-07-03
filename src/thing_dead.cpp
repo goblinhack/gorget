@@ -249,11 +249,11 @@ static auto thing_get_killer(Gamep g, Levelsp v, Levelp l, ThingEvent &e) -> Thi
 //
 void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
 {
-  THING_DBG(me, "is dead");
+  THING_DBG(g, v, l, me, "is dead");
   TRACE_INDENT();
 
   if (thing_is_dead(me)) {
-    THING_DBG(me, "is already dead");
+    THING_DBG(g, v, l, me, "is already dead");
     return;
   }
 
@@ -271,7 +271,7 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
   // Log the reason of demise?
   //
   if (thing_is_loggable(me)) {
-    THING_DBG(me, "%s: dead", to_string(g, v, l, e).c_str());
+    THING_DBG(g, v, l, me, "%s: dead", to_string(g, v, l, e).c_str());
   }
 
   auto *killer = thing_get_killer(g, v, l, e);
@@ -315,7 +315,7 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
   // Do adjacent tiles need updating due to the destruction of this tiled thing?
   //
   if (thing_is_dmap(me) || thing_is_tiled(me)) {
-    level_update_paths_set(g, v, l, thing_at(me));
+    level_update_paths_set(g, v, l, thing_at(g, v, l, me));
   }
 
   me->tick_dead = v->tick;
@@ -417,7 +417,7 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
     auto *owner = thing_owner(g, v, l, me);
     if (owner != nullptr) {
       if (! thing_drop(g, v, l, owner, me, e)) {
-        thing_err(me, "item is carried but could not drop");
+        thing_err(g, v, l, me, "item is carried but could not drop");
       }
     }
   }
@@ -459,7 +459,7 @@ void thing_is_dead_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
   t->_is_dead = val;
 
   if (val) {
-    THING_DBG(t, "is dead set");
+    THING_DBG(g, v, l, t, "is dead set");
   }
 }
 

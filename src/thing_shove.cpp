@@ -80,9 +80,9 @@ static void thing_shoved_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
       thing_shoved_by_player(g, v, l, t, e);
     }
 
-    THING_DBG(shover, "shove success of %s", to_string(g, v, l, t).c_str());
+    THING_DBG(g, v, l, shover, "shove success of %s", to_string(g, v, l, t).c_str());
   } else {
-    THING_DBG(shover, "shove fail of %s", to_string(g, v, l, t).c_str());
+    THING_DBG(g, v, l, shover, "shove fail of %s", to_string(g, v, l, t).c_str());
   }
 
   return shoved;
@@ -110,7 +110,7 @@ static void thing_shoved_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
   if (thing_is_dead_on_shoving(t)) {
     thing_on_shoved(g, v, l, t, shover);
 
-    THING_DBG(t, "dead due to shoving");
+    THING_DBG(g, v, l, t, "dead due to shoving");
     TRACE_INDENT();
 
     thing_dead(g, v, l, t, e);
@@ -127,7 +127,7 @@ static void thing_shoved_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
     //
     // Direction is needed to be set for teleporting effectively.
     //
-    thing_set_dir_from_delta(t, direction.x, direction.y);
+    thing_set_dir_from_delta(g, v, l, t, direction.x, direction.y);
 
     //
     // Callback for shoving
@@ -156,7 +156,7 @@ static void thing_shoved_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
   TRACE();
 
   bool         ret       = false;
-  auto         direction = at - thing_at(shover);
+  auto         direction = at - thing_at(g, v, l, shover);
   bpoint const to        = at + direction;
 
   if (thing_is_ethereal(shover)) {

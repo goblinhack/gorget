@@ -47,30 +47,30 @@
   }
 
   if (! thing_is_mob(mob)) {
-    thing_err(mob, "non mob trying to spawn minions");
+    thing_err(g, v, l, mob, "non mob trying to spawn minions");
     return nullptr;
   }
 
   if (tp_minion == nullptr) {
-    thing_err(mob, "no minion to spawn");
+    thing_err(g, v, l, mob, "no minion to spawn");
     return nullptr;
   }
 
   //
   // Can't spawn over certain things
   //
-  if (level_is_obs_to_spawning(g, v, l, thing_at(mob)) != nullptr) {
+  if (level_is_obs_to_spawning(g, v, l, thing_at(g, v, l, mob)) != nullptr) {
     return nullptr;
   }
 
   if (! tp_is_minion(tp_minion)) {
-    thing_err(mob, "mob trying to spawn non minion %s", tp_name(tp_minion).c_str());
+    thing_err(g, v, l, mob, "mob trying to spawn non minion %s", tp_name(tp_minion).c_str());
     return nullptr;
   }
 
   auto *ext_struct = thing_ext_struct(g, mob);
   if (ext_struct == nullptr) {
-    thing_err(mob, "mob is missing ext struct");
+    thing_err(g, v, l, mob, "mob is missing ext struct");
     return nullptr;
   }
 
@@ -93,7 +93,7 @@
     //
     // Create the minion. Should be no chance to fail now.
     //
-    auto *new_minion = thing_spawn(g, v, l, tp_minion, thing_at(mob));
+    auto *new_minion = thing_spawn(g, v, l, tp_minion, thing_at(g, v, l, mob));
     if (new_minion == nullptr) {
       return nullptr;
     }
@@ -103,8 +103,8 @@
     new_minion->mob_id = mob->id;
     ext_struct->minions.count++;
 
-    THING_DBG(mob, "spawned minion %s", to_string(g, v, l, new_minion).c_str());
-    THING_DBG(new_minion, "new born minion");
+    THING_DBG(g, v, l, mob, "spawned minion %s", to_string(g, v, l, new_minion).c_str());
+    THING_DBG(g, v, l, new_minion, "new born minion");
 
     return new_minion;
   }
@@ -112,7 +112,7 @@
   //
   // Out of slots; but we checked above
   //
-  thing_err(mob, "unexpectedly out of minion slots");
+  thing_err(g, v, l, mob, "unexpectedly out of minion slots");
 
   return nullptr;
 }
@@ -129,7 +129,7 @@
   }
 
   if (! thing_is_mob(mob)) {
-    thing_err(mob, "non mob trying to detach minions");
+    thing_err(g, v, l, mob, "non mob trying to detach minions");
     return false;
   }
 
@@ -151,12 +151,12 @@
     }
 
     if (! static_cast< bool >(minion->mob_id)) {
-      thing_err(mob, "mob found detached minion: %s", to_string(g, v, l, minion).c_str());
+      thing_err(g, v, l, mob, "mob found detached minion: %s", to_string(g, v, l, minion).c_str());
       return false;
     }
 
     if (ext_struct->minions.count <= 0) {
-      thing_err(mob, "mob has unexpected minion count when detaching: %s", to_string(g, v, l, minion).c_str());
+      thing_err(g, v, l, mob, "mob has unexpected minion count when detaching: %s", to_string(g, v, l, minion).c_str());
       return false;
     }
 
@@ -165,11 +165,11 @@
     minion->mob_id = 0;
 
     if (e.event_type != THING_EVENT_NONE) {
-      THING_DBG(mob, "kill minion %s", to_string(g, v, l, minion).c_str());
+      THING_DBG(g, v, l, mob, "kill minion %s", to_string(g, v, l, minion).c_str());
       TRACE_INDENT();
       thing_dead(g, v, l, minion, e);
     } else {
-      THING_DBG(mob, "detach minion %s", to_string(g, v, l, minion).c_str());
+      THING_DBG(g, v, l, mob, "detach minion %s", to_string(g, v, l, minion).c_str());
     }
   }
 
@@ -220,7 +220,7 @@ void thing_mob_dump_minions(Gamep g, Levelsp v, Levelp l, Thingp mob)
   }
 
   if (! thing_is_mob(mob)) {
-    thing_err(mob, "non mob trying to detach minion");
+    thing_err(g, v, l, mob, "non mob trying to detach minion");
     return;
   }
 
@@ -232,12 +232,12 @@ void thing_mob_dump_minions(Gamep g, Levelsp v, Levelp l, Thingp mob)
   FOR_ALL_MINION_SLOTS(g, v, l, mob, slot, existing_minion)
   {
     if (existing_minion == nullptr) {
-      THING_DBG(mob, "slot %d: -", _n_);
+      THING_DBG(g, v, l, mob, "slot %d: -", _n_);
       continue;
     }
 
     auto s = to_string(g, v, l, existing_minion);
-    THING_DBG(mob, "slot %d: %s", _n_, s.c_str());
+    THING_DBG(g, v, l, mob, "slot %d: %s", _n_, s.c_str());
   }
 }
 

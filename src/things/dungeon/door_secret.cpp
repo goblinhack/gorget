@@ -43,7 +43,7 @@ static auto tp_door_secret_description_get(Gamep g, Levelsp v, Levelp l, Thingp 
     (void) thing_noise_incr(g, v, l, me, THING_NOISE_DOOR_SECRET);
   }
 
-  THING_DBG(me, "dead due to opening");
+  THING_DBG(g, v, l, me, "dead due to opening");
   TRACE_INDENT();
 
   thing_dead(g, v, l, me, e);

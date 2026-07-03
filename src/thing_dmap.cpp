@@ -21,7 +21,7 @@
 
   auto *ext = thing_ext_struct(g, me);
   if (ext == nullptr) [[unlikely]] {
-    thing_err(me, "mob has no ext memory");
+    thing_err(g, v, l, me, "mob has no ext memory");
     return nullptr;
   }
 
@@ -62,7 +62,7 @@ void thing_dmap(Gamep g, Levelsp v, Levelp l, Thingp me, bool reverse)
     }
   }
 
-  auto target = thing_at(me);
+  auto target = thing_at(g, v, l, me);
   if (reverse) {
     ext->dmap.val[ target.x ][ target.y ] = DMAP_IS_GOAL_REVERSE;
   } else {
@@ -83,7 +83,7 @@ void thing_dmap(Gamep g, Levelsp v, Levelp l, Thingp me, bool reverse)
   }
 
   if (compiler_unused) {
-    THING_DBG(me, "thing dmap");
+    THING_DBG(g, v, l, me, "thing dmap");
     dmap_print(&ext->dmap, target, dmap_start, dmap_end);
   }
 }

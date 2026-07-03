@@ -65,7 +65,7 @@ static auto tp_door_locked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l
 //
 [[nodiscard]] static auto tp_door_locked_mouse_down(Gamep g, Levelsp v, Levelp l, Thingp me, int x, int y, int button) -> bool
 {
-  THING_DBG(me, "%s", __FUNCTION__);
+  THING_DBG(g, v, l, me, "%s", __FUNCTION__);
   TRACE_INDENT();
 
   auto *player = thing_player(g);
@@ -77,11 +77,11 @@ static auto tp_door_locked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l
     return false;
   }
 
-  if (distance(thing_at(me), thing_at(player)) <= 1) {
+  if (distance(thing_at(g, v, l, me), thing_at(g, v, l, player)) <= 1) {
     //
     // Door slam attack
     //
-    auto door_at = thing_at(me);
+    auto door_at = thing_at(g, v, l, me);
     if (level_is_attackable_by_player(g, v, l, door_at)) {
       auto event_type = THING_EVENT_MELEE_DAMAGE;
       auto damage     = thing_damage(g, v, l, me, event_type);
@@ -112,7 +112,7 @@ static auto tp_door_locked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l
 
 [[nodiscard]] static auto tp_door_locked_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp opener) -> bool
 {
-  THING_DBG(me, "%s", __FUNCTION__);
+  THING_DBG(g, v, l, me, "%s", __FUNCTION__);
   TRACE_INDENT();
 
   if (thing_health(g, v, l, me) < thing_health_max(g, v, l, me)) {
@@ -180,7 +180,7 @@ static auto tp_door_locked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l
 
 [[nodiscard]] static auto tp_door_locked_on_close_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp opener) -> bool
 {
-  THING_DBG(me, "%s", __FUNCTION__);
+  THING_DBG(g, v, l, me, "%s", __FUNCTION__);
   TRACE_INDENT();
 
   thing_sound_play(g, v, l, me, "door_open");
@@ -193,7 +193,7 @@ static auto tp_door_locked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l
   // Door slam attack
   //
   if (thing_is_player(opener)) {
-    auto door_at = thing_at(me);
+    auto door_at = thing_at(g, v, l, me);
     if (level_is_attackable_by_player(g, v, l, door_at)) {
       auto event_type = THING_EVENT_MELEE_DAMAGE;
       auto damage     = thing_damage(g, v, l, me, event_type);
@@ -232,7 +232,7 @@ static void tp_door_locked_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, Thi
 
   auto *player = thing_player(g);
   if (player != nullptr) {
-    auto at = thing_at(player);
+    auto at = thing_at(g, v, l, player);
     if (thing_on_same_level_as_player(g, v, me)) {
       if (thing_vision_can_see_tile(g, v, l, player, at)) {
         topcon("The locked door breaks!");

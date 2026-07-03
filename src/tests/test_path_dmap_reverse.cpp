@@ -140,7 +140,7 @@
   thing_dmap(g, v, l, player, true /* reverse */);
   auto *dmap = thing_get_dmap(g, v, l, player);
 
-  for (auto p : dmap_solve(g, v, l, player, dmap, thing_at(player))) {
+  for (auto p : dmap_solve(g, v, l, player, dmap, thing_at(g, v, l, player))) {
     TEST_ASSERT(t, thing_spawn(g, v, l, tp_first(is_corridor), p) != nullptr, "failed to spawn thing");
   }
 

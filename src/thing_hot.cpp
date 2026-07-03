@@ -61,7 +61,7 @@ void thing_hot_time_step(Gamep g, Levelsp v, Levelp l, Thingp me, int /*time_ste
   auto threshold = ((upper_limit - lower_limit) / 2) + lower_limit;
 
   if (compiler_unused) {
-    THING_DBG(me, "lower_limit %d upper_limit %d threshold %d temp %d", lower_limit, upper_limit, threshold, T);
+    THING_DBG(g, v, l, me, "lower_limit %d upper_limit %d threshold %d temp %d", lower_limit, upper_limit, threshold, T);
   }
 
   if (T < threshold) {

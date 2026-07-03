@@ -18,7 +18,7 @@
 //
 [[nodiscard]] auto thing_is_open_try_set(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener, bool val) -> bool
 {
-  THING_DBG(t, "%s", __FUNCTION__);
+  THING_DBG(g, v, l, t, "%s", __FUNCTION__);
   TRACE_INDENT();
 
   if (t == nullptr) {
@@ -42,7 +42,7 @@
       //
       // Open failed
       //
-      THING_DBG(t, "open failed");
+      THING_DBG(g, v, l, t, "open failed");
       t->_is_open = false;
       return false;
     }
@@ -50,7 +50,7 @@
     //
     // Reset animation
     //
-    THING_DBG(t, "open success");
+    THING_DBG(g, v, l, t, "open success");
     thing_anim_init(g, v, l, t, THING_ANIM_OPEN);
   } else {
     //
@@ -60,7 +60,7 @@
       //
       // Close failed
       //
-      THING_DBG(t, "close failed");
+      THING_DBG(g, v, l, t, "close failed");
       t->_is_open = true;
       return false;
     }
@@ -68,7 +68,7 @@
     //
     // Reset animation
     //
-    THING_DBG(t, "close success");
+    THING_DBG(g, v, l, t, "close success");
     thing_anim_init(g, v, l, t, THING_ANIM_IDLE);
   }
 
@@ -116,11 +116,11 @@ void thing_is_unlocked_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
 //
 [[nodiscard]] auto thing_open(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp opener) -> bool
 {
-  THING_DBG(me, "%s", __FUNCTION__);
+  THING_DBG(g, v, l, me, "%s", __FUNCTION__);
   TRACE_INDENT();
 
   if (! thing_is_player(opener) && ! thing_is_monst(opener)) {
-    thing_err(opener, "unexpected thing for %s", __FUNCTION__);
+    thing_err(g, v, l, opener, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
 
@@ -132,7 +132,7 @@ void thing_is_unlocked_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   if (success) {
     if (thing_is_player(opener)) {
       (void) level_tick_begin_requested(g, v, l, "player opened something");
-      THING_DBG(opener, "opened %s", to_string(g, v, l, me).c_str());
+      THING_DBG(g, v, l, opener, "opened %s", to_string(g, v, l, me).c_str());
     }
   }
 
@@ -144,11 +144,11 @@ void thing_is_unlocked_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
 //
 [[nodiscard]] auto thing_close(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp closer) -> bool
 {
-  THING_DBG(me, "%s", __FUNCTION__);
+  THING_DBG(g, v, l, me, "%s", __FUNCTION__);
   TRACE_INDENT();
 
   if (! thing_is_player(closer) && ! thing_is_monst(closer)) {
-    thing_err(closer, "unexpected thing for %s", __FUNCTION__);
+    thing_err(g, v, l, closer, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
 
@@ -160,7 +160,7 @@ void thing_is_unlocked_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   if (success) {
     if (thing_is_player(closer)) {
       (void) level_tick_begin_requested(g, v, l, "player closed something");
-      THING_DBG(closer, "closed %s", to_string(g, v, l, me).c_str());
+      THING_DBG(g, v, l, closer, "closed %s", to_string(g, v, l, me).c_str());
     }
   }
 
@@ -178,14 +178,14 @@ void thing_is_unlocked_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     return false;
   }
 
-  if (to == thing_at(me)) {
+  if (to == thing_at(g, v, l, me)) {
     return true;
   }
 
-  auto at = thing_at(me);
+  auto at = thing_at(g, v, l, me);
   auto dx = to.x - at.x;
   auto dy = to.y - at.y;
-  thing_set_dir_from_delta(me, dx, dy);
+  thing_set_dir_from_delta(g, v, l, me, dx, dy);
 
   if (! thing_is_able_to_open_things(me)) {
     (void) thing_lunge(g, v, l, me, to);

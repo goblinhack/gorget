@@ -167,7 +167,7 @@
   //
   // Check the monster attacked enough
   //
-  FOR_ALL_THINGS_AT(g, v, l, it, thing_at(player) + bpoint(1, 0))
+  FOR_ALL_THINGS_AT(g, v, l, it, thing_at(g, v, l, player) + bpoint(1, 0))
   {
     if (thing_is_monst(it)) {
       monst = it;

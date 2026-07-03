@@ -25,14 +25,14 @@ void thing_continue_to_burn_check(Gamep g, Levelsp v, Levelp l, Thingp me)
   //
   // Over water?
   //
-  if (level_is_water_bool(g, v, l, thing_at(me))) {
+  if (level_is_water_bool(g, v, l, thing_at(g, v, l, me))) {
     thing_is_burning_unset(g, v, l, me);
 
     if (thing_is_player(me)) {
       topcon(UI_GOOD_FMT_STR "You extinguish the flames in the cool water!" UI_RESET_FMT);
     }
 
-    if (! level_is_steam_bool(g, v, l, thing_at(me))) {
+    if (! level_is_steam_bool(g, v, l, thing_at(g, v, l, me))) {
       (void) thing_spawn(g, v, l, tp_first(is_steam), me);
     }
     return;
@@ -61,8 +61,8 @@ void thing_continue_to_burn_check(Gamep g, Levelsp v, Levelp l, Thingp me)
     // Spawn more flames?
     //
     if (thing_is_flying(me) || thing_is_combustible(me)) {
-      if (level_count_is_fire(g, v, l, thing_at(me)) < 2) {
-        THING_DBG(me, "spawn additional flames");
+      if (level_count_is_fire(g, v, l, thing_at(g, v, l, me)) < 2) {
+        THING_DBG(g, v, l, me, "spawn additional flames");
         TRACE_INDENT();
         (void) thing_spawn(g, v, l, tp_first(is_fire), me);
 
@@ -79,9 +79,9 @@ void thing_continue_to_burn_check(Gamep g, Levelsp v, Levelp l, Thingp me)
     //
     // Don't let the fire age out.
     //
-    auto *f = level_is_fire(g, v, l, thing_at(me));
+    auto *f = level_is_fire(g, v, l, thing_at(g, v, l, me));
     if (f != nullptr) {
-      THING_DBG(me, "keep the fire burning");
+      THING_DBG(g, v, l, me, "keep the fire burning");
       (void) thing_lifespan_incr(g, v, l, f, 2);
     }
   }
@@ -92,14 +92,14 @@ void thing_continue_to_burn_check(Gamep g, Levelsp v, Levelp l, Thingp me)
       .damage     = d4(),                    //
   };
 
-  if (! level_is_fire_bool(g, v, l, thing_at(me))) {
+  if (! level_is_fire_bool(g, v, l, thing_at(g, v, l, me))) {
     if (thing_is_burning(me)) {
       thing_damage(g, v, l, me, e);
     }
   }
 
-  if (! level_is_smoke_bool(g, v, l, thing_at(me))) {
-    THING_DBG(me, "spawn smoke");
+  if (! level_is_smoke_bool(g, v, l, thing_at(g, v, l, me))) {
+    THING_DBG(g, v, l, me, "spawn smoke");
     (void) thing_spawn(g, v, l, tp_first(is_smoke), me);
   }
 }
@@ -130,7 +130,7 @@ void thing_is_burning_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
   t->_is_burning = val;
 
   if (val) {
-    THING_DBG(t, "is burning set, %u degrees", thing_temperature(t));
+    THING_DBG(g, v, l, t, "is burning set, %u degrees", thing_temperature(t));
   } else {
     //
     // Reset the temperature
@@ -138,7 +138,7 @@ void thing_is_burning_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
     auto *tp = thing_tp(t);
     (void) thing_temperature_set(g, v, l, t, tp_temperature_initial_get(tp));
 
-    THING_DBG(t, "is no longer burning, %u degrees", thing_temperature(t));
+    THING_DBG(g, v, l, t, "is no longer burning, %u degrees", thing_temperature(t));
   }
 }
 

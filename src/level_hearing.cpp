@@ -39,7 +39,7 @@ void level_hearing_gen(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
-  auto   end = thing_at(player);
+  auto   end = thing_at(g, v, l, player);
   bpoint dmap_start(end.x - stealth, end.y - stealth);
   bpoint dmap_end(end.x + stealth, end.y + stealth);
 

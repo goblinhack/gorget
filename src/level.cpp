@@ -288,7 +288,7 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
     FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
     {
       //
-      THING_DBG(t, "dump");
+      THING_DBG(g, v, l, t, "dump");
     }
   }
 
@@ -308,7 +308,7 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
   FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
   {
     //
-    thing_err(t, "thing still on level after destroying it");
+    thing_err(g, v, l, t, "thing still on level after destroying it");
   }
 
   //
@@ -495,7 +495,7 @@ void level_update_flags(Gamep g, Levelsp v, Levelp l)
   FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
   {
     auto *tp = thing_tp(t);
-    auto  at = thing_at(t);
+    auto  at = thing_at(g, v, l, t);
 
     for (auto f = 0; f < THING_FLAG_ENUM_MAX; f++) {
       l->flag[ at.x ][ at.y ][ f ] |= tp->flag[ f ];
@@ -548,7 +548,7 @@ void level_update_flags(Gamep g, Levelsp v, Levelp l)
     return nullptr;
   }
 
-  return level_flag(g, v, l, f, thing_at(me), me);
+  return level_flag(g, v, l, f, thing_at(g, v, l, me), me);
 }
 
 //
@@ -599,7 +599,7 @@ void level_update_flags(Gamep g, Levelsp v, Levelp l)
     return nullptr;
   }
 
-  return level_alive(g, v, l, f, thing_at(me), me);
+  return level_alive(g, v, l, f, thing_at(g, v, l, me), me);
 }
 
 //
@@ -650,7 +650,7 @@ void level_update_flags(Gamep g, Levelsp v, Levelp l)
     return nullptr;
   }
 
-  return level_open(g, v, l, f, thing_at(me), me);
+  return level_open(g, v, l, f, thing_at(g, v, l, me), me);
 }
 
 //
@@ -700,7 +700,7 @@ void level_update_flags(Gamep g, Levelsp v, Levelp l)
 {
   TRACE();
 
-  return level_count(g, v, l, f, thing_at(t));
+  return level_count(g, v, l, f, thing_at(g, v, l, t));
 }
 
 [[nodiscard]] auto level_is_same_obj_type_at(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp) -> bool

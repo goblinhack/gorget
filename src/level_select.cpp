@@ -89,7 +89,7 @@
         (tp == tp_is_level_closed_icon) || // newline
         (tp == tp_is_level_open_icon) ||   // newline
         (tp == tp_is_level_next_icon)) {
-      auto at             = thing_at(t);
+      auto at             = thing_at(g, v, level_select, t);
       auto level_num_over = v->level_select.tile_to_level[ at.x ][ at.y ];
       level_over          = game_level_get(g, v, level_num_over);
       break;
