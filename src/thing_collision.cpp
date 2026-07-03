@@ -475,7 +475,7 @@ void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
   return false;
 }
 
-[[nodiscard]] static auto thing_collision_check_squares(Gamep g, Levelsp v, Levelp l, fpoint A_at, fpoint B_at) -> bool
+[[nodiscard]] static auto thing_collision_check_squares(fpoint A_at, fpoint B_at) -> bool
 {
   fpoint const A0(A_at.x - 0, A_at.y - 0);
   fpoint const A1(A_at.x + 1, A_at.y - 0);
@@ -539,7 +539,7 @@ void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
 [[nodiscard]] static auto thing_collision_check_square_square(Gamep g, Levelsp v, Levelp l, fpoint me_at, fpoint o_at) -> bool
 {
   TRACE();
-  return thing_collision_check_squares(g, v, l, me_at, o_at);
+  return thing_collision_check_squares(me_at, o_at);
 }
 
 //

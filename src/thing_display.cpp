@@ -232,7 +232,7 @@ static void thing_display_outlined_blit(Gamep g, Tpp tp, spoint tl, spoint br, T
     color c = WHITE;
     c.a     = h;
     tile_blit_outline_w_invis_inside(tile, x1, x2, y1, y2, tl, br, c);
-  } else if (t_maybe_null) {
+  } else if (t_maybe_null != nullptr) {
     thing_err(g, v, l, t_maybe_null, "need to set obscured type");
   }
 

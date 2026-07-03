@@ -2,19 +2,14 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include <cstdint>
-#include <limits>
-
 #include "my_bpoint.hpp"
 #include "my_callstack.hpp"
 #include "my_fpoint.hpp"
-#include "my_globals.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_spoint.hpp"
 #include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
-#include "my_tp.hpp"
 #include "my_types.hpp"
 
 [[nodiscard]] auto thing_at(Gamep g, Levelsp v, Levelp l, Thingp me) -> bpoint
@@ -28,7 +23,7 @@
   if (! thing_is_thrown(me)) {
     if (thing_is_carried(me)) {
       auto *owner = thing_owner(g, v, l, me);
-      if (owner) {
+      if (owner != nullptr) {
         return thing_at(g, v, l, owner);
       }
     }

@@ -269,7 +269,7 @@ static void wid_console_wid_create(Gamep g)
 {
   TRACE();
 
-  for (auto out : wid_console_serialize()) {
+  for (const auto &out : wid_console_serialize()) {
     if (out.find(in) != std::string::npos) {
       return true;
     }
@@ -283,7 +283,7 @@ static void wid_console_wid_create(Gamep g)
 
   std::vector< std::string > r;
 
-  for (auto i : wid_console_lines) {
+  for (const auto &i : wid_console_lines) {
     r.push_back(i.second);
   }
 
@@ -303,8 +303,8 @@ void wid_console_clear(Gamep g)
 {
   TRACE();
 
-  std::vector< std::string > r;
-  auto                      *tmp = wid_get_head(wid_console_input_line);
+  std::vector< std::string > const r;
+  auto                            *tmp = wid_get_head(wid_console_input_line);
   while (tmp != nullptr) {
     wid_set_text(tmp, "");
     tmp = wid_get_next(tmp);

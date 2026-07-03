@@ -20,7 +20,7 @@ void thing_water_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
     source = level_is_water(g, v, l, at);
   }
 
-  if (! source) {
+  if (source == nullptr) {
     thing_err(g, v, l, t, "no source of water found to handle");
     return;
   }
