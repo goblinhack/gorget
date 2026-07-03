@@ -25,6 +25,8 @@ static auto thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thing
 {
   TRACE();
 
+  bool avoiding {};
+
   auto *player = thing_player(g);
   if (player == nullptr) [[unlikely]] {
     return false;
@@ -87,7 +89,8 @@ static auto thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thing
     }
 
     THING_DBG(me, "choose target: opposite direction (%d,%d)", target.x, target.y);
-    target = monst_at + (monst_at - target);
+    target   = monst_at + (monst_at - target);
+    avoiding = true;
   }
 
   THING_DBG(me, "astar thing_monst_choose_target_player");
@@ -100,9 +103,11 @@ static auto thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thing
   //
   // Some monsters don't like to get too close
   //
-  auto d = thing_distance_avoid_target(me);
-  while (d-- > 0) {
-    p.pop_back();
+  if (! avoiding) {
+    auto d = thing_distance_avoid_target(me);
+    while (! p.empty() && (d-- > 0)) {
+      p.pop_back();
+    }
   }
 
   if (thing_move_path_apply(g, v, l, me, p)) {
