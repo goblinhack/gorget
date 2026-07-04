@@ -260,21 +260,21 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
 //
 // The player has attacked
 //
-static void thing_damage_by_player(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
+static void thing_damage_by_player(Gamep g, Levelsp v, Levelp l, Thingp it, ThingEvent &e)
 {
   TRACE();
   auto *the_player = e.source;
 
-  if (thing_is_monst(me)) {
+  if (thing_is_monst(it)) {
     std::string const msg = "-" + std::to_string(e.damage);
-    auto              at  = thing_at(g, v, l, me);
+    auto              at  = thing_at(g, v, l, it);
     game_popup_text_add(g, at.x, at.y, msg, WHITE);
   }
 
-  if ((the_player != nullptr) && thing_is_loggable(me)) {
-    auto the_thing_name_long  = thing_name_long_the(g, v, l, me);
+  if ((the_player != nullptr) && thing_is_loggable(it)) {
+    auto the_thing_name_long  = thing_name_long_the(g, v, l, it);
     auto The_thing_name_long  = capitalize_first(the_thing_name_long);
-    auto the_thing_name_short = thing_name_short_the(g, v, l, me);
+    auto the_thing_name_short = thing_name_short_the(g, v, l, it);
     auto by_player            = thing_name_long(g, v, l, the_player);
 
     switch (e.event_type) {
@@ -304,7 +304,7 @@ static void thing_damage_by_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
           //
           // The player is burning.
           //
-          if (thing_is_burning(me)) {
+          if (thing_is_burning(it)) {
             topcon(UI_IMPORTANT_FMT_STR "Your burning body burns %s." UI_RESET_FMT, the_thing_name_short.c_str());
           } else {
             topcon(UI_IMPORTANT_FMT_STR "Your burning body sets fire to %s." UI_RESET_FMT, the_thing_name_short.c_str());
@@ -313,7 +313,7 @@ static void thing_damage_by_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
           //
           // The player is not burning.
           //
-          if (thing_is_burning(me)) {
+          if (thing_is_burning(it)) {
             topcon(UI_IMPORTANT_FMT_STR "You burn %s." UI_RESET_FMT, the_thing_name_short.c_str());
           } else {
             topcon(UI_IMPORTANT_FMT_STR "You set fire to %s." UI_RESET_FMT, the_thing_name_short.c_str());

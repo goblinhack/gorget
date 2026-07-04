@@ -548,6 +548,10 @@ using Thing = struct Thing {
   //
   uint32_t tick_dropped;
   //
+  // Ensure only one event per tick
+  //
+  uint32_t tick_water;
+  //
   // Unique ID with some entropy built in
   //
   ThingId id;

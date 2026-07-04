@@ -20,6 +20,7 @@ void level_tick_water(Gamep g, Levelsp v, Levelp l)
   int x = 0;
   int y = 0;
 
+  level_log(g, v, l, "tick water");
   FOR_ALL_MAP_POINTS(g, v, l, x, y)
   {
     bpoint p(x, y);
@@ -40,8 +41,6 @@ void level_tick_water(Gamep g, Levelsp v, Levelp l)
       if (thing_is_dead(t)) {
         continue;
       }
-
-      THING_DBG(g, v, l, t, "over water");
 
       thing_water_handle(g, v, l, t);
     }

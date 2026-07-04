@@ -32,7 +32,7 @@
       = "xxxxxxxxxxxxxxxxxxxxxxxxxxx"
         "x.........................x"
         "x.........................x"
-        "x.WWWWWW:::$$$$$@.........x"
+        "x.W$WWW:$::$$$$$@.........x"
         "x.........................x"
         "x.........................x"
         "xxxxxxxxxxxxxxxxxxxxxxxxxxx";

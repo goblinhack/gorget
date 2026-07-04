@@ -12,6 +12,13 @@ void thing_water_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE();
 
+  if (t->tick_water == v->tick) {
+    return;
+  }
+  t->tick_water = v->tick;
+
+  THING_DBG(g, v, l, t, "over water");
+
   auto   at     = thing_at(g, v, l, t);
   Thingp source = nullptr;
   if (level_is_deep_water(g, v, l, at) != nullptr) {
