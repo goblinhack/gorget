@@ -536,7 +536,7 @@ void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
   return thing_collision_check_circle_square(g, v, l, me, me_at, o, o_at);
 }
 
-[[nodiscard]] static auto thing_collision_check_square_square(Gamep g, Levelsp v, Levelp l, fpoint me_at, fpoint o_at) -> bool
+[[nodiscard]] static auto thing_collision_check_square_square(fpoint me_at, fpoint o_at) -> bool
 {
   TRACE();
   return thing_collision_check_squares(me_at, o_at);
@@ -739,7 +739,7 @@ static void thing_collision_handle_interpolated_delta(Gamep g, Levelsp v, Levelp
           THING_DBG(g, v, l, o, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
         }
       } else if (thing_is_collision_square(o)) {
-        collision = thing_collision_check_square_square(g, v, l, o_at, interp_at_f);
+        collision = thing_collision_check_square_square(o_at, interp_at_f);
         if (compiler_unused) {
           THING_DBG(g, v, l, o, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
         }

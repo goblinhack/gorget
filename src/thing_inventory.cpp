@@ -24,7 +24,7 @@
 
   FOR_ALL_INVENTORY_ITEMS(g, v, l, owner, item)
   {
-    if (item) {}
+    if (item != nullptr) {}
     return false;
   }
 
@@ -226,7 +226,7 @@
 
   FOR_ALL_INVENTORY_ITEMS(g, v, l, owner, an_item)
   {
-    if (an_item) {
+    if (an_item != nullptr) {
       count++;
     }
   }
