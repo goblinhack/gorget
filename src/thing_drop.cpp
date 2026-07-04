@@ -105,7 +105,6 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp us
           //
           thing_owner_set(g, v, l, thing_copy, user);
         }
-        break;
       }
     }
   }
@@ -130,6 +129,8 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp us
   thing_owner_unset(g, v, l, item);
 
   thing_inventory_dump(g, v, l, user);
+
+  item->tick_dropped = v->tick;
 
   return true;
 }
@@ -181,9 +182,6 @@ void thing_on_drop_success_set(Tpp tp, thing_on_drop_success_t callback)
     return false;
   }
   if (tp->on_drop_success == nullptr) {
-    //
-    // Assume success
-    //
     //
     // Assume success
     //

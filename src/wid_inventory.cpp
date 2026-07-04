@@ -223,6 +223,8 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
     return;
   }
 
+  thing_inventory_dump(g, v, l, player);
+
   const int inventory_width  = UI_INVENTORY_WIDTH;
   const int inventory_height = UI_INVENTORY_HEIGHT;
 

@@ -50,6 +50,7 @@
                   /* name                          */ " {}"
                   /* is_dead                       */ "{}"
                   /* is_moving                     */ "{}"
+                  /* is_wielded                    */ "{}"
                   /* is_jumping                    */ "{}"
                   /* is_thrown                     */ "{}"
                   /* is_carried                    */ "{}"
@@ -66,6 +67,7 @@
                   /* newline */ t->_is_on_map ? "" : "(nomap)",
                   /* newline */ name,
                   /* newline */ thing_is_moving(t) ? "/mov" : "",
+                  /* newline */ thing_is_wielded(t) ? "/wield" : "",
                   /* newline */ thing_is_jumping(t) ? "/jmp" : "",
                   /* newline */ thing_is_thrown(t) ? "/thr" : "",
                   /* newline */ thing_is_carried(t) ? "/car" : "",

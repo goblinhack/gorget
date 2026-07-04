@@ -36,7 +36,8 @@ static auto tp_player_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std
 
 static void tp_player_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
-  TRACE();
+  THING_DBG(g, v, l, me, "player moved");
+  TRACE_INDENT();
 
   //
   // If we fell into another chasm, don't make an oof sound
@@ -46,8 +47,36 @@ static void tp_player_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 
   if (level_is_deep_water_bool(g, v, l, thing_at(g, v, l, me))) {
-    //    FOR_ALL_INVENTORY_ITEMS(g, v, l, me, item) { thing_water_handle(g, v, l, item); }
-    thing_sound_play(g, v, l, me, "splash");
+    //
+    // Allow some items to drift away
+    //
+    THING_DBG(g, v, l, me, "in deep water, check to see if things float away");
+    TRACE_INDENT();
+
+    thing_inventory_dump(g, v, l, me);
+
+    FOR_ALL_INVENTORY_ITEMS(g, v, l, me, item)
+    {
+      if (thing_is_wielded(item)) {
+        continue;
+      }
+
+      ThingEvent e {
+          .reason     = "drifted away",     //
+          .event_type = THING_EVENT_THROWN, //
+          .source     = me,                 //
+      };
+
+      THING_DBG(g, v, l, item, "item drifted away, drop");
+
+      if (thing_drop(g, v, l, me, item, e)) {
+        THING_DBG(g, v, l, item, "item drifted away, completed drop");
+        TRACE_INDENT();
+
+        topcon(UI_WARN_FMT_STR "You feel lighter..." UI_RESET_FMT);
+        break;
+      }
+    }
   } else if (level_is_water_bool(g, v, l, thing_at(g, v, l, me))) {
     thing_sound_play(g, v, l, me, "splash");
     (void) thing_noise_incr(g, v, l, me, THING_NOISE_SPLASH);

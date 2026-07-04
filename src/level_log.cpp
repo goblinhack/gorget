@@ -30,7 +30,7 @@ static void level_log_(Gamep g, Levelsp v, Levelp l, const char *fmt, va_list ar
   IF_DEBUG
   {
     len = static_cast< int >(strlen(buf));
-    snprintf(buf + len, MAXLONGSTR - len, "[%-50s]: %s: ", "", to_string(g, v, l).c_str());
+    snprintf(buf + len, MAXLONGSTR - len, "[%-60s]: %s: ", "", to_string(g, v, l).c_str());
   }
   else
   {

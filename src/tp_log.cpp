@@ -32,7 +32,7 @@ void tp_log_(Tpp tp, const char *fmt, va_list args)
 
   IF_DEBUG
   {
-    snprintf(buf + len, MAXLONGSTR - len, "[%-50s]: %*s", tp_name(tp).c_str(), g_callframes_indent, "");
+    snprintf(buf + len, MAXLONGSTR - len, "[%-60s]: %*s", tp_name(tp).c_str(), g_callframes_indent, "");
     len = static_cast< int >(strlen(buf));
   }
 

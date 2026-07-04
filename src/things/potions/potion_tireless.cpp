@@ -149,8 +149,9 @@ static void tp_potion_tireless_on_death(Gamep g, Levelsp v, Levelp l, Thingp me,
   tp_rarity_set(tp, THING_RARITY_COMMON);
   tp_temperature_burns_at_set(tp, 30);  // celsius
   tp_temperature_damage_at_set(tp, 30); // celsius
-  tp_temperature_initial_set(tp, 20);   // celsius
-  tp_weight_set(tp, WEIGHT_LIGHT);      // grams
+  tp_flag_set(tp, is_physics_water);
+  tp_temperature_initial_set(tp, 20); // celsius
+  tp_weight_set(tp, WEIGHT_LIGHT);    // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   // end sort marker1 }
 

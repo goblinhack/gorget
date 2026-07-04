@@ -22,7 +22,11 @@
     return false;
   }
 
-  FOR_ALL_INVENTORY_ITEMS(g, v, l, owner, item) { return false; }
+  FOR_ALL_INVENTORY_ITEMS(g, v, l, owner, item)
+  {
+    if (item) {}
+    return false;
+  }
 
   return true;
 }
@@ -150,7 +154,7 @@
       continue;
     }
 
-    if (thing_tp(drop_item) != thing_tp(item)) {
+    if (drop_item != item) {
       continue;
     }
 

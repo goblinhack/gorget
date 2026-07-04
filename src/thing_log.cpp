@@ -27,7 +27,7 @@ static void thing_log_(Gamep g, Levelsp v, Levelp l, Thingp t, const char *fmt, 
   buf[ 0 ] = '\0';
   get_timestamp(buf, MAXLONGSTR);
   len = static_cast< int >(strlen(buf));
-  snprintf(buf + len, MAXLONGSTR - len, "[%-50s]: %*s", to_string(g, v, l, t).c_str(), g_callframes_indent, "");
+  snprintf(buf + len, MAXLONGSTR - len, "[%-60s]: %*s", to_string(g, v, l, t).c_str(), g_callframes_indent, "");
   len = static_cast< int >(strlen(buf));
 
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
