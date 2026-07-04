@@ -211,6 +211,30 @@
 }
 
 //
+// Get a single items slot count
+//
+[[nodiscard]] auto thing_inventory_get_item_count(Gamep g, Levelsp v, Levelp l, Thingp owner) -> int
+{
+  TRACE();
+
+  int count = 0;
+
+  auto *ext_struct = thing_ext_struct(g, owner);
+  if (ext_struct == nullptr) {
+    return 0;
+  }
+
+  FOR_ALL_INVENTORY_ITEMS(g, v, l, owner, an_item)
+  {
+    if (an_item) {
+      count++;
+    }
+  }
+
+  return count;
+}
+
+//
 // Drop an item to the inventory
 //
 void thing_inventory_dump(Gamep g, Levelsp v, Levelp l, Thingp owner)

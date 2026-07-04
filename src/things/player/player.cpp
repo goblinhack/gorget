@@ -3,6 +3,7 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_dice_rolls.hpp"
 #include "my_game_popups.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
@@ -59,6 +60,21 @@ static void tp_player_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
     {
       if (thing_is_wielded(item)) {
         continue;
+      }
+
+      if (g_opt_tests) {
+        //
+        // Always drop
+        //
+      } else if (d100() > 1) {
+        //
+        // No drop
+        //
+        continue;
+      } else {
+        //
+        // Random drop
+        //
       }
 
       ThingEvent e {

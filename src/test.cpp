@@ -61,6 +61,7 @@ static std::initializer_list< std::string > tests = {
     "fire_on_water",
     "fire_over_chasm",
     "foliage_on_fire",
+    "items_drift_away",
     "jump_ok",
     "jump_truncated",
     "large_fire_water",
