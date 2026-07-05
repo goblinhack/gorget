@@ -1063,11 +1063,6 @@ void Game::state_change(GameStateType new_state, const std::string &why)
       // the cursor is missing. We need to recreate it.
       //
       game_request_to_update_cursor_set(g);
-
-      //
-      // Play as normal now
-      //
-      g_opt_level_select_menu = false;
       break;
     case STATE_THROW_ITEM :
       //
@@ -1076,14 +1071,7 @@ void Game::state_change(GameStateType new_state, const std::string &why)
       //
       game_request_to_update_cursor_set(g);
       break;
-    case STATE_DEAD_MENU :
-      wid_actionbar_fini(g);
-
-      //
-      // So we can quit the level and play normally
-      //
-      g_opt_level_select_menu = false;
-      break;
+    case STATE_DEAD_MENU :         wid_actionbar_fini(g); break;
     case STATE_MOVE_WARNING_MENU : [[fallthrough]];
     case STATE_KEYBOARD_MENU :     [[fallthrough]];
     case STATE_LOAD_MENU :         [[fallthrough]];
