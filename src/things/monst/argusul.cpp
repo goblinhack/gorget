@@ -182,7 +182,7 @@ static void tp_argusul_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
 
   auto delay = 1000;
 
-  for (auto frame = 0; frame < 2; frame++) {
+  for (auto frame = 0; frame < 8; frame++) {
     auto *tile = tile_find_mand(name + std::string(".idle.") + std::to_string(frame));
     tile_size_set(tile, OUTLINE_TILE_WIDTH, OUTLINE_TILE_HEIGHT);
     tile_delay_ms_set(tile, delay);
