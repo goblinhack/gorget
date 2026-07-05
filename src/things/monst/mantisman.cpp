@@ -97,7 +97,6 @@ static bool tp_mantisman_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, T
   tp_flag_set(tp, is_attackable_by_player);
   tp_flag_set(tp, is_biome_bogland);
   tp_flag_set(tp, is_biome_dungeon);
-  tp_flag_set(tp, is_biome_underhell);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_hit_outline_w_invis_inside);
   tp_flag_set(tp, is_blit_shown_in_chasms);

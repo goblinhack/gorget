@@ -117,6 +117,7 @@ static void tp_flameskull_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_attackable_by_player);
   tp_flag_set(tp, is_biome_dungeon);
+  tp_flag_set(tp, is_biome_underhell);
   tp_flag_set(tp, is_biome_graveyard);
   tp_flag_set(tp, is_biome_nethervoid);
   tp_flag_set(tp, is_blit_centered);
@@ -158,7 +159,7 @@ static void tp_flameskull_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_temperature_damage_at_set(tp, 200); // celsius
   tp_temperature_initial_set(tp, 20);    // celsius
   tp_weight_set(tp, WEIGHT_HUMAN);       // grams
-  tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
+  tp_z_depth_set(tp, MAP_Z_DEPTH_FLOATING_MONST);
   // end sort marker1 }
 
   tp_special_attack_add(tp,
