@@ -133,7 +133,7 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
   auto              at  = thing_at(g, v, l, me);
   game_popup_text_add(g, at.x, at.y, msg, RED);
 
-  auto damage_name = e.damage_type.name;
+  auto damage_name = e.special_attack.name;
 
   if (it != nullptr) {
     std::string by_the_thing;

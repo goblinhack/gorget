@@ -503,6 +503,10 @@ using TpSpecialAttack = struct TpSpecialAttack {
   //
   std::string type = {}; // NOLINT
   //
+  // Melee etc...
+  //
+  ThingEventType event_type = {THING_EVENT_MELEE_DAMAGE};
+  //
   // User readable name
   //
   std::string name = {}; // NOLINT

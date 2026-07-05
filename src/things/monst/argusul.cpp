@@ -64,7 +64,8 @@ static bool tp_argusul_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thi
   TpSpecialAttack d;
 
   if (thing_special_attack_get_random(g, v, l, me, it, d)) {
-    e.damage_type = d;
+    e.special_attack = d;
+    e.event_type  = d.event_type;
 
     if (d.what != "") {
       auto target    = thing_at(g, v, l, it);
@@ -164,9 +165,10 @@ static void tp_argusul_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
 
   tp_special_attack_add(tp,
                         TpSpecialAttack {
-                            .type          = "1",           //
-                            .name          = "gore attack", //
-                            .roll          = "1d6",         //
+                            .type          = "1",                      //
+                            .event_type    = THING_EVENT_MELEE_DAMAGE, //
+                            .name          = "gore attack",            //
+                            .roll          = "1d6",                    //
                             .d100          = 100,
                             .when_adjacent = true,
                         });

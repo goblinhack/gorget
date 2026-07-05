@@ -45,8 +45,9 @@ static bool tp_ghost_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thing
   TpSpecialAttack d;
 
   if (thing_special_attack_get_random(g, v, l, me, it, d)) {
-    e.damage_type = d;
-    e.damage      = d.dice.roll();
+    e.special_attack = d;
+    e.damage         = d.dice.roll();
+    e.event_type     = d.event_type;
   }
 
   (void) thing_spawn(g, v, l, tp_first(is_effect_attack), it);
@@ -127,9 +128,10 @@ static void tp_ghost_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEven
 
   tp_special_attack_add(tp,
                         TpSpecialAttack {
-                            .type          = "2",         //
-                            .name          = "icy touch", //
-                            .roll          = "1d4",       //
+                            .type          = "2",                      //
+                            .event_type    = THING_EVENT_MELEE_DAMAGE, //
+                            .name          = "icy touch",              //
+                            .roll          = "1d4",                    //
                             .d100          = 10,
                             .when_adjacent = true,
                         });

@@ -121,7 +121,7 @@ using ThingEvent = struct ThingEvent {
   //
   // Optional, might be set when the thing chooses an attack
   //
-  TpSpecialAttack damage_type = {};
+  TpSpecialAttack special_attack = {};
 };
 
 //
