@@ -80,7 +80,6 @@ void wid_level_select(Gamep g, Levelsp v, Levelp l)
   log("Level select menu: select");
   TRACE();
 
-  level_con(g, v, l, "chose");
   if (wid_level_select_window != nullptr) {
     wid_level_select_destroy();
   }

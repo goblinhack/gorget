@@ -97,7 +97,14 @@ static void level_display_cursor(Gamep g, Levelsp v, Levelp l, FboEnum fbo)
 {
   TRACE_DEBUG();
 
-  if (! level_is_player_level(g, v, l)) {
+  if (level_is_level_select(g, v, l)) {
+    //
+    // ok
+    //
+  } else if (! level_is_player_level(g, v, l)) {
+    //
+    // Don't show the cursor on the lower level
+    //
     return;
   }
 
@@ -301,6 +308,7 @@ static void level_display_fbo(Gamep g, Levelsp v, Levelp l, Levelp level_below, 
       if (wid_over == nullptr) {
         switch (game_state(g)) {
           case STATE_THROW_ITEM :        [[fallthrough]];
+          case STATE_LEVEL_SELECT_MENU : [[fallthrough]];
           case STATE_PLAYING :           level_display_cursor(g, v, l, fbo); break;
           case STATE_COLLECT_MENU :      [[fallthrough]];
           case STATE_DEAD_MENU :         [[fallthrough]];
@@ -310,7 +318,6 @@ static void level_display_fbo(Gamep g, Levelsp v, Levelp l, Levelp level_below, 
           case STATE_INVENTORY_MENU :    [[fallthrough]];
           case STATE_ITEM_MENU :         [[fallthrough]];
           case STATE_KEYBOARD_MENU :     [[fallthrough]];
-          case STATE_LEVEL_SELECT_MENU : [[fallthrough]];
           case STATE_LOAD_MENU :         [[fallthrough]];
           case STATE_LOADED :            [[fallthrough]];
           case STATE_MAIN_MENU :         [[fallthrough]];

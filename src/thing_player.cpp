@@ -292,13 +292,13 @@ void thing_player_event_loop(Gamep g, Levelsp v, Levelp l)
       }
       break;
     case STATE_THE_END_MENU :
+    case STATE_LEVEL_SELECT_MENU :
     case STATE_DEAD_MENU :
       //
       // If the cursor moved, update what we see
       //
       thing_player_cursor_loop(g, v, l);
       break;
-    case STATE_LEVEL_SELECT_MENU : [[fallthrough]];
     case STATE_INIT :              [[fallthrough]];
     case STATE_MAIN_MENU :         [[fallthrough]];
     case STATE_QUITTING :          [[fallthrough]];

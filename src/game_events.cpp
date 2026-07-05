@@ -148,6 +148,11 @@
       break;
     case STATE_LEVEL_SELECT_MENU :
       //
+      // Update the cursor path
+      //
+      game_request_to_update_cursor_set(g);
+
+      //
       // To allow previews of levels
       //
       level_select_mouse_motion(g, v, l);
@@ -617,8 +622,10 @@ static auto game_event_abort(Gamep g) -> bool
   TRACE_INDENT();
 
   switch (game_state(g)) {
+    case STATE_PLAYING :           [[fallthrough]];
+    case STATE_LEVEL_SELECT_MENU : [[fallthrough]];
+    case STATE_MAIN_MENU :         break;
     case STATE_THROW_ITEM :        [[fallthrough]];
-    case STATE_PLAYING :           break;
     case STATE_COLLECT_MENU :      [[fallthrough]];
     case STATE_DEAD_MENU :         [[fallthrough]];
     case STATE_GENERATED :         [[fallthrough]];
@@ -627,10 +634,8 @@ static auto game_event_abort(Gamep g) -> bool
     case STATE_INVENTORY_MENU :    [[fallthrough]];
     case STATE_ITEM_MENU :         [[fallthrough]];
     case STATE_KEYBOARD_MENU :     [[fallthrough]];
-    case STATE_LEVEL_SELECT_MENU : [[fallthrough]];
     case STATE_LOAD_MENU :         [[fallthrough]];
     case STATE_LOADED :            [[fallthrough]];
-    case STATE_MAIN_MENU :         [[fallthrough]];
     case STATE_MOVE_WARNING_MENU : [[fallthrough]];
     case STATE_QUIT_MENU :         [[fallthrough]];
     case STATE_QUITTING :          [[fallthrough]];

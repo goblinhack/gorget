@@ -29,8 +29,10 @@
     return "<no tp>";
   }
 
-  if (thing_level(g, v, t) != l) {
-    ERR("thing level mismatch");
+  if (! level_is_level_select(g, v, l)) {
+    if (thing_level(g, v, t) != l) {
+      ERR("thing level mismatch");
+    }
   }
 
   auto name = tp_name(tp);
