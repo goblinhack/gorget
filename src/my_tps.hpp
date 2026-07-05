@@ -42,6 +42,7 @@ auto tp_load_entrance() -> bool;
 auto tp_load_exit() -> bool;
 auto tp_load_explosion() -> bool;
 auto tp_load_fire() -> bool;
+auto tp_load_flameskull() -> bool;
 auto tp_load_floor() -> bool;
 auto tp_load_foliage() -> bool;
 auto tp_load_ghost_mob() -> bool;

@@ -115,6 +115,7 @@ static std::initializer_list< std::string > tps = {
     "exit",
     "explosion",
     "fire",
+    "flameskull",
     "foliage",
     "ghost_mob",
     "ghost",

@@ -1142,10 +1142,10 @@
   return level_flag(g, v, l, is_blit_hit_outline_w_black_inside, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_unused5_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_flameskull_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused5, p, me) != nullptr;
+  return level_flag(g, v, l, is_flameskull, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_able_to_fall_sound_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool

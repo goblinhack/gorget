@@ -752,7 +752,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_able_to_shove(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_throw_items_items(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_throw_items(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_able_to_walk_through_walls(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_able_to_see_through_walls(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_wield_items(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_always_hot(Thingp me) -> bool;
 [[nodiscard]] auto thing_is_animated_can_hflip(Thingp t) -> bool;
@@ -851,6 +851,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_falling_continues(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_falling_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_is_fire(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_flameskull(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_flammable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_flat(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_flesh(Thingp t) -> bool;
@@ -961,7 +962,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused2(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused3(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused4(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused5(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_usable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_vault(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_vision_180_degrees(Thingp t) -> bool;

@@ -28,7 +28,7 @@
     return false;
   }
 
-  if (thing_is_able_to_walk_through_walls(me)) {
+  if (thing_is_able_to_move_through_walls(me)) {
     return false;
   }
 

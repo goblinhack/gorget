@@ -484,8 +484,11 @@
     //
     // Non ethereal
     //
-    if (thing_is_able_to_walk_through_walls(me)) {
+    if (thing_is_able_to_move_through_walls(me)) {
       out = string_append_with_comma(out, "Wall-walker");
+    }
+    if (thing_is_able_to_see_through_walls(me)) {
+      out = string_append_with_comma(out, "Xray-vision");
     }
     if (thing_is_floating(me)) {
       out = string_append_with_comma(out, "Floating");

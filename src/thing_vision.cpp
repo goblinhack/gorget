@@ -28,7 +28,7 @@
   //
   // Some monsters can see through walls
   //
-  if (thing_is_able_to_walk_through_walls(me)) {
+  if (thing_is_able_to_see_through_walls(me)) {
     if (thing_is_wall(it)) {
       return false;
     }

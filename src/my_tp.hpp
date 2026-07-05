@@ -217,7 +217,7 @@
       list_macro(is_unused2, "is_unused2"),                                                 /* newline */                                       \
       list_macro(is_unused3, "is_unused3"),                                                 /* newline */                                       \
       list_macro(is_unused4, "is_unused4"),                                                 /* newline */                                       \
-      list_macro(is_unused5, "is_unused5"),                                                 /* newline */                                       \
+      list_macro(is_flameskull, "is_flameskull"),                                           /* newline */                                       \
       list_macro(is_effect_ripple, "is_effect_ripple"),                                     /* newline */                                       \
       list_macro(is_stealthy, "is_stealthy"),                                               /* newline */                                       \
       list_macro(is_tireless, "is_tireless"),                                               /* newline */                                       \
@@ -657,6 +657,7 @@ class Tp;
 [[nodiscard]] auto tp_is_explosion(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_extinguished_on_death(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_fire(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_flameskull(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_flammable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_flat(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_flesh(Tpp tp) -> bool;
@@ -764,7 +765,6 @@ class Tp;
 [[nodiscard]] auto tp_is_unused2(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused3(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused4(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused5(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_usable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_vault(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_vision_180_degrees(Tpp tp) -> bool;

@@ -1143,10 +1143,10 @@
   return level_count(g, v, l, is_blit_hit_outline_w_black_inside, p);
 }
 
-[[nodiscard]] auto level_count_is_unused5(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_flameskull(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused5, p);
+  return level_count(g, v, l, is_flameskull, p);
 }
 
 [[nodiscard]] auto level_count_is_able_to_fall_sound(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
