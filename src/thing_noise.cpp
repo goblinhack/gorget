@@ -43,7 +43,9 @@
     return 0;
   }
 
-  return t->_noise = val;
+  t->_noise = val;
+
+  return thing_noise(g, v, l, t);
 }
 
 [[nodiscard]] auto thing_noise_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int

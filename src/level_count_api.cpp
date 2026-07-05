@@ -1209,10 +1209,10 @@
   return level_count(g, v, l, is_effect_blood, p);
 }
 
-[[nodiscard]] auto level_count_is_unused6(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_effect_ripple(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused6, p);
+  return level_count(g, v, l, is_effect_ripple, p);
 }
 
 [[nodiscard]] auto level_count_is_hit_when_dead(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t

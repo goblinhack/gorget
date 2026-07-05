@@ -1208,10 +1208,10 @@
   return level_flag(g, v, l, is_effect_blood, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_unused6_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_effect_ripple_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused6, p, me) != nullptr;
+  return level_flag(g, v, l, is_effect_ripple, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_hit_when_dead_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool

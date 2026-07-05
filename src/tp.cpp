@@ -110,6 +110,7 @@ static std::initializer_list< std::string > tps = {
     "door_unlocked",
     "effect_attack",
     "effect_blood",
+    "effect_ripple",
     "entrance",
     "exit",
     "explosion",

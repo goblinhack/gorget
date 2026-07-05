@@ -1208,10 +1208,10 @@
   return level_flag(g, v, l, is_effect_blood, p, me);
 }
 
-[[nodiscard]] auto level_is_unused6(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_effect_ripple(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused6, p, me);
+  return level_flag(g, v, l, is_effect_ripple, p, me);
 }
 
 [[nodiscard]] auto level_is_hit_when_dead(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp

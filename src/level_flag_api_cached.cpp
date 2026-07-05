@@ -1208,10 +1208,10 @@
   return level_flag_cached(g, v, l, is_effect_blood, p);
 }
 
-[[nodiscard]] auto level_is_unused6_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_effect_ripple_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused6, p);
+  return level_flag_cached(g, v, l, is_effect_ripple, p);
 }
 
 [[nodiscard]] auto level_is_hit_when_dead_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

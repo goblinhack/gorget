@@ -1207,10 +1207,10 @@
   return tp_flag(tp, is_effect_blood) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused6(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_effect_ripple(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused6) != 0;
+  return tp_flag(tp, is_effect_ripple) != 0;
 }
 
 [[nodiscard]] auto tp_is_hit_when_dead(Tpp tp) -> bool

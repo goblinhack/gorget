@@ -1208,10 +1208,10 @@
   return level_open(g, v, l, is_effect_blood, p);
 }
 
-[[nodiscard]] auto level_open_is_unused6(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_open_is_effect_ripple(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_open(g, v, l, is_unused6, p);
+  return level_open(g, v, l, is_effect_ripple, p);
 }
 
 [[nodiscard]] auto level_open_is_hit_when_dead(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp

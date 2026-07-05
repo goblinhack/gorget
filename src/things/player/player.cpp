@@ -94,8 +94,27 @@ static void tp_player_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
       }
     }
   } else if (level_is_water_bool(g, v, l, thing_at(g, v, l, me))) {
-    thing_sound_play(g, v, l, me, "splash");
-    (void) thing_noise_incr(g, v, l, me, THING_NOISE_SPLASH);
+    //
+    // Ripple where we used to be
+    //
+    if (d100() < 50) {
+      if (thing_noise_incr(g, v, l, me, THING_NOISE_SPLASH)) {
+        auto at = thing_old_at(me);
+
+        if (! level_is_water_bool(g, v, l, at)) {
+          at = thing_at(g, v, l, me);
+        }
+
+        if (d100() < 50) {
+          game_popup_text_add(g, at.x, at.y, std::string("Splosh!"));
+        } else {
+          game_popup_text_add(g, at.x, at.y, std::string("Splash!"));
+        }
+
+        (void) thing_spawn(g, v, l, tp_first(is_effect_ripple), at);
+        thing_sound_play(g, v, l, me, "splash");
+      }
+    }
   } else if (level_is_foliage_bool(g, v, l, thing_at(g, v, l, me))) {
     thing_sound_play(g, v, l, me, "footstep_foliage");
     (void) thing_noise_incr(g, v, l, me, THING_NOISE_FOLIAGE);
@@ -146,9 +165,11 @@ static void tp_player_on_jump_end(Gamep g, Levelsp v, Levelp l, Thingp me)
     //
     // We already have a splash noise
     //
-    auto at = thing_at(g, v, l, me);
-    game_popup_text_add(g, at.x, at.y, std::string("Splash!"));
-    (void) thing_noise_incr(g, v, l, me, THING_NOISE_SPLASH);
+    if (thing_noise_incr(g, v, l, me, THING_NOISE_SPLASH)) {
+      auto at = thing_at(g, v, l, me);
+      game_popup_text_add(g, at.x, at.y, std::string("Splash!"));
+      (void) thing_spawn(g, v, l, tp_first(is_effect_ripple), me);
+    }
   } else {
     thing_sound_play(g, v, l, me, "player_oof");
     (void) thing_noise_incr(g, v, l, me, THING_NOISE_PLAYER_JUMP);
@@ -177,8 +198,12 @@ static void tp_player_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 
   if (level_is_water_bool(g, v, l, thing_at(g, v, l, me))) {
-    thing_sound_play(g, v, l, me, "splash");
-    (void) thing_noise_incr(g, v, l, me, THING_NOISE_SPLASH);
+    if (thing_noise_incr(g, v, l, me, THING_NOISE_SPLASH)) {
+      auto at = thing_at(g, v, l, me);
+      game_popup_text_add(g, at.x, at.y, std::string("Splash!"));
+      (void) thing_spawn(g, v, l, tp_first(is_effect_ripple), me);
+      thing_sound_play(g, v, l, me, "splash");
+    }
   } else {
     thing_sound_play(g, v, l, me, "player_oof");
     (void) thing_noise_incr(g, v, l, me, THING_NOISE_PLAYER_FALL);
