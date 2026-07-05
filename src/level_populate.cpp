@@ -860,7 +860,7 @@ static auto level_populate_fixup_biome_underhell(class LevelPopulate &lp, Tpp tp
       }
 
       if (! g_opt_tests) {
-        if (compiler_unused) {
+        if (1 || compiler_unused) {
           if (tp == lp.tp_player) {
             {
               if (thing_spawn(g, v, l, tp_random(g, v, l, is_exit), lp.at + bpoint(1, 0)) == nullptr) {

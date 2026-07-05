@@ -63,9 +63,9 @@
 }
 
 //
-// If in level select mode, enter the chosen level
+// What level thing is at the cursor
 //
-[[nodiscard]] auto level_select_get_level_at_tile_coords(Gamep g, Levelsp v, bpoint /*p*/) -> Levelp
+[[nodiscard]] auto level_select_get_level_at_tile_coords(Gamep g, Levelsp v, bpoint p) -> Levelp
 {
   TRACE();
 
@@ -79,7 +79,7 @@
   auto *tp_is_level_open_icon   = tp_first(is_level_open_icon);
   auto *tp_is_level_next_icon   = tp_first(is_level_next_icon);
 
-  FOR_ALL_THINGS_AT(g, v, level_select, t, v->cursor_at)
+  FOR_ALL_THINGS_AT(g, v, level_select, t, p)
   {
     auto *tp = thing_tp(t);
 
@@ -97,6 +97,20 @@
   }
 
   return level_over;
+}
+
+//
+// What thing is at the cursor
+//
+[[nodiscard]] auto level_select_get_thing_at_tile_coords(Gamep g, Levelsp v, bpoint p) -> Thingp
+{
+  TRACE();
+
+  auto *level_select = game_level_get(g, v, LEVEL_SELECT_ID);
+
+  FOR_ALL_THINGS_AT(g, v, level_select, t, p) { return t; }
+
+  return nullptr;
 }
 
 //
@@ -745,9 +759,16 @@ void level_select_mouse_motion(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
+  FOR_ALL_THINGS_ON_LEVEL(g, v, l, t) { (void) thing_anim_init(g, v, l, t, THING_ANIM_IDLE); }
+
   Levelp level_over = level_select_get_level_at_tile_coords(g, v, v->cursor_at);
   if (level_over == nullptr) {
     return;
+  }
+
+  auto t = level_select_get_thing_at_tile_coords(g, v, v->cursor_at);
+  if (t) {
+    (void) thing_anim_init(g, v, l, t, THING_ANIM_MOUSE_OVER);
   }
 
   wid_level_select(g, v, level_over);

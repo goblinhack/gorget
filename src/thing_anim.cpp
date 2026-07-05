@@ -29,6 +29,13 @@ void thing_anim_init(Gamep g, Levelsp v, Levelp l, Thingp t, ThingAnimType anim_
     THING_DBG(g, v, l, t, "thing_anim_init: anim class %s/%d", ThingAnimType_to_string(anim_type).c_str(), anim_type);
   }
 
+  //
+  // Don't reset the anim if no change
+  //
+  if (t->anim_type == anim_type) {
+    return;
+  }
+
   t->anim_index        = 0;
   t->anim_ms_remaining = 0;
   t->anim_type         = anim_type;
@@ -100,6 +107,7 @@ void thing_anim_init(Gamep g, Levelsp v, Levelp l, Thingp t, ThingAnimType anim_
         case THING_ANIM_JOIN_X4_90 :
         case THING_ANIM_JOIN_X4 :
         case THING_ANIM_IDLE :
+        case THING_ANIM_MOUSE_OVER :
           if (tp_is_animated_sync_first(tp)) {
             //
             // Same first tile e.g. level select tiles, we want to flash in sync and not out of order

@@ -19,6 +19,7 @@
   tp_flag_set(tp, is_animated_sync_first);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
+  tp_flag_set(tp, is_blit_outlined);
   tp_flag_set(tp, is_level_curr);
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   // end sort marker1 }
@@ -28,6 +29,13 @@
     auto      *tile  = tile_find_mand(name + std::string(".") + std::to_string(frame));
     tile_delay_ms_set(tile, delay);
     tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
+  }
+
+  for (auto frame = 0; frame < 2; frame++) {
+    const auto delay = 500; /* ms */
+    auto      *tile  = tile_find_mand(name + std::string(".over.") + std::to_string(frame));
+    tile_delay_ms_set(tile, delay);
+    tp_tiles_push_back(tp, THING_ANIM_MOUSE_OVER, tile);
   }
 
   return true;
