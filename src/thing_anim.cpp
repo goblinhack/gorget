@@ -32,9 +32,10 @@ void thing_anim_init(Gamep g, Levelsp v, Levelp l, Thingp t, ThingAnimType anim_
   //
   // Don't reset the anim if no change
   //
-  if (t->anim_type == anim_type) {
-    return;
-  }
+  if (0)
+    if (t->anim_type == anim_type) {
+      return;
+    }
 
   t->anim_index        = 0;
   t->anim_ms_remaining = 0;
