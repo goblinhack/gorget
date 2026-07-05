@@ -29,14 +29,6 @@ void thing_anim_init(Gamep g, Levelsp v, Levelp l, Thingp t, ThingAnimType anim_
     THING_DBG(g, v, l, t, "thing_anim_init: anim class %s/%d", ThingAnimType_to_string(anim_type).c_str(), anim_type);
   }
 
-  //
-  // Don't reset the anim if no change
-  //
-  if (0)
-    if (t->anim_type == anim_type) {
-      return;
-    }
-
   t->anim_index        = 0;
   t->anim_ms_remaining = 0;
   t->anim_type         = anim_type;

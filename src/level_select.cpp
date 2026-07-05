@@ -759,7 +759,12 @@ void level_select_mouse_motion(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
-  FOR_ALL_THINGS_ON_LEVEL(g, v, l, t) { (void) thing_anim_init(g, v, l, t, THING_ANIM_IDLE); }
+  FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
+  {
+    if (t->anim_type != THING_ANIM_IDLE) {
+      (void) thing_anim_init(g, v, l, t, THING_ANIM_IDLE);
+    }
+  }
 
   Levelp level_over = level_select_get_level_at_tile_coords(g, v, v->cursor_at);
   if (level_over == nullptr) {
@@ -768,7 +773,9 @@ void level_select_mouse_motion(Gamep g, Levelsp v, Levelp l)
 
   auto t = level_select_get_thing_at_tile_coords(g, v, v->cursor_at);
   if (t) {
-    (void) thing_anim_init(g, v, l, t, THING_ANIM_MOUSE_OVER);
+    if (t->anim_type != THING_ANIM_MOUSE_OVER) {
+      (void) thing_anim_init(g, v, l, t, THING_ANIM_MOUSE_OVER);
+    }
   }
 
   wid_level_select(g, v, level_over);
