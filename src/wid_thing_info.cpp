@@ -665,6 +665,80 @@
   return true;
 }
 
+//
+// Add warnings if invulnerable
+//
+[[nodiscard]] static auto wid_thing_info_invulnerable(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent) -> bool
+{
+  TRACE();
+
+  auto *player = thing_player(g);
+  if (player == nullptr) {
+    return false;
+  }
+
+  auto damage_types = thing_damage_types(g, v, l, player);
+  bool got_one      = false;
+
+  FOR_ALL_THING_EVENT(e)
+  {
+    if (! thing_is_immune_to(g, v, l, me, e)) {
+      for (auto d : damage_types) {
+        if (d == THING_EVENT_MELEE_DAMAGE) {
+          continue;
+        }
+        if (d == e) {
+          got_one = true;
+        }
+      }
+    }
+  }
+
+  if (! got_one) {
+    parent->log(g, UI_IMPORTANT_FMT_STR "- May be invulnerable to attack", TEXT_FORMAT_LHS);
+    return true;
+  }
+
+  return false;
+}
+
+//
+// Add warnings if invulnerable
+//
+[[nodiscard]] static auto wid_thing_info_resistant(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent) -> bool
+{
+  TRACE();
+
+  auto *player = thing_player(g);
+  if (player == nullptr) {
+    return false;
+  }
+
+  auto damage_types = thing_damage_types(g, v, l, player);
+  bool got_one      = false;
+
+  FOR_ALL_THING_EVENT(e)
+  {
+    if (! thing_is_resistant_to(g, v, l, me, e)) {
+      for (auto d : damage_types) {
+        if (d == THING_EVENT_MELEE_DAMAGE) {
+          continue;
+        }
+        if (d == e) {
+          got_one = true;
+        }
+      }
+    }
+  }
+
+  if (! got_one) {
+    parent->log(g, UI_WARN_FMT_STR "- May be resistant to attack", TEXT_FORMAT_LHS);
+    return true;
+  }
+
+  return false;
+}
+
 static void wid_thing_info_item_mouse_over_begin(Gamep g, Widp w, int /*relx*/, int /*rely*/, int /*wheelx*/, int /*wheely*/)
 {
   TRACE();
@@ -958,6 +1032,9 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, i
     }
 
     if (wid_thing_info_danger(g, v, l, me, parent)) {
+      if (! wid_thing_info_invulnerable(g, v, l, me, parent)) {
+        (void) wid_thing_info_resistant(g, v, l, me, parent);
+      }
       parent->log_empty_line(g);
     }
   }

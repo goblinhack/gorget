@@ -44,7 +44,6 @@
   if (!tp_load_exit()) { return false; }
   if (!tp_load_explosion()) { return false; }
   if (!tp_load_fire()) { return false; }
-  if (!tp_load_flameskull()) { return false; }
   if (!tp_load_floor()) { return false; }
   if (!tp_load_foliage()) { return false; }
   if (!tp_load_ghost_mob()) { return false; }
@@ -73,6 +72,7 @@
   if (!tp_load_projectile_light()) { return false; }
   if (!tp_load_reeds()) { return false; }
   if (!tp_load_rock()) { return false; }
+  if (!tp_load_skullferno()) { return false; }
   if (!tp_load_smoke()) { return false; }
   if (!tp_load_staff_fire()) { return false; }
   if (!tp_load_staff_light()) { return false; }

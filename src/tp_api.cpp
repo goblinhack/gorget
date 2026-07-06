@@ -1141,10 +1141,10 @@
   return tp_flag(tp, is_blit_hit_outline_w_black_inside) != 0;
 }
 
-[[nodiscard]] auto tp_is_flameskull(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_skullferno(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_flameskull) != 0;
+  return tp_flag(tp, is_skullferno) != 0;
 }
 
 [[nodiscard]] auto tp_is_able_to_fall_sound(Tpp tp) -> bool

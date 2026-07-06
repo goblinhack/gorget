@@ -1142,10 +1142,10 @@
   return level_flag(g, v, l, is_blit_hit_outline_w_black_inside, p, me);
 }
 
-[[nodiscard]] auto level_is_flameskull(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_skullferno(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_flameskull, p, me);
+  return level_flag(g, v, l, is_skullferno, p, me);
 }
 
 [[nodiscard]] auto level_is_able_to_fall_sound(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp

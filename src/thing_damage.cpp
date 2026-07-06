@@ -17,8 +17,13 @@
 #include "my_ui.hpp"
 
 #include <algorithm>
+#include <cassert>
+#include <iostream>
 #include <limits>
+#include <list>
+#include <print>
 #include <string>
+#include <vector>
 
 [[nodiscard]] auto tp_damage_max(Tpp tp, ThingEventType val) -> int
 {
@@ -118,6 +123,67 @@
   }
 
   return max_damage;
+}
+
+[[nodiscard]] auto tp_damage_types(Tpp tp) -> std::vector< ThingEventType >
+{
+  TRACE();
+
+  std::vector< ThingEventType > out;
+
+  if (tp == nullptr) [[unlikely]] {
+    tp_err(tp, "no thing template pointer");
+    return out;
+  }
+
+  FOR_ALL_THING_EVENT(e)
+  {
+    if (tp_damage_max(tp, e)) {
+      out.push_back(e);
+    }
+  }
+
+  return out;
+}
+
+//
+// What damage types can be done?
+//
+[[nodiscard]] auto thing_damage_types(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::vector< ThingEventType >
+{
+  TRACE();
+
+  std::vector< ThingEventType > out;
+
+  auto *tp = thing_tp(me);
+
+  {
+    auto tmp = tp_damage_types(tp);
+    out.insert(out.end(), tmp.begin(), tmp.end());
+  }
+
+  for (const auto &d : tp->special_attacks) {
+    auto val = d.second;
+
+    out.push_back(val.event_type);
+
+    auto what = val.what;
+    if (! what.empty()) {
+      auto *what_tp = tp_find_mand(what);
+      if (what_tp != nullptr) {
+        auto tmp = tp_damage_types(what_tp);
+        out.insert(out.end(), tmp.begin(), tmp.end());
+      }
+    }
+  }
+
+  auto *weapon = thing_wielding(g, v, l, me);
+  if (weapon != nullptr) {
+    auto tmp = thing_damage_types(g, v, l, weapon);
+    out.insert(out.end(), tmp.begin(), tmp.end());
+  }
+
+  return out;
 }
 
 //
