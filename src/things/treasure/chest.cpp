@@ -89,6 +89,45 @@ static auto tp_chest_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std:
   return true;
 }
 
+static bool tp_chest_on_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
+{
+  TRACE();
+
+  if (d100() < 10) {
+    return true;
+  }
+
+  const std::initializer_list< bpoint > points = {
+      bpoint(-1, -1), bpoint(1, -1), bpoint(0, -1), bpoint(-1, 0), bpoint(1, 0), bpoint(0, 0), bpoint(-1, 1), bpoint(1, 1), bpoint(0, 1),
+  };
+
+  auto at = thing_at(g, v, l, me);
+
+  for (auto delta : points) {
+    auto p = at + delta;
+    if (level_is_obs_to_explosion(g, v, l, p) == nullptr) {
+      if (! level_is_explosion_bool(g, v, l, p)) {
+        (void) thing_spawn(g, v, l, tp_first(is_explosion), p);
+      }
+    }
+  }
+
+  auto *player = thing_player(g);
+  if (player != nullptr) {
+    if (thing_on_same_level_as_player(g, v, me)) {
+      if (thing_vision_can_see_tile(g, v, l, player, at)) {
+        topcon("The treasure chest explodes! Must have had something volatile inside!");
+      } else {
+        topcon("You hear a distant treasure chest explode!");
+      }
+    } else {
+      topcon("You hear a very muffled treasure chest like explosion!");
+    }
+  }
+
+  return true; // allow the damage to be applied
+}
+
 [[nodiscard]] auto tp_load_chest() -> bool
 {
   TRACE();
@@ -100,6 +139,7 @@ static auto tp_chest_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std:
   thing_description_set(tp, tp_chest_description_get);
   thing_detail_set(tp, tp_chest_detail_get);
   thing_on_open_request_set(tp, tp_chest_on_open_request);
+  thing_on_damage_set(tp, tp_chest_on_damage);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // fumble => intensify / keep burning / crit => stop burning
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
