@@ -10,7 +10,6 @@
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
 #include "my_spoint.hpp"
-#include "my_thing.hpp"
 #include "my_types.hpp"
 #include "my_ui.hpp"
 #include "my_wid.hpp"

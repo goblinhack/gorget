@@ -18,10 +18,7 @@
 
 #include <algorithm>
 #include <cassert>
-#include <iostream>
 #include <limits>
-#include <list>
-#include <print>
 #include <string>
 #include <vector>
 
@@ -138,7 +135,7 @@
 
   FOR_ALL_THING_EVENT(e)
   {
-    if (tp_damage_max(tp, e)) {
+    if (tp_damage_max(tp, e) != 0) {
       out.push_back(e);
     }
   }

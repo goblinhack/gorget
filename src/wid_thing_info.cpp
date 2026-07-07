@@ -397,7 +397,7 @@
 //
 // Add stats
 //
-[[nodiscard]] auto wid_thing_info_player_stats(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, int /*width*/) -> bool
+[[nodiscard]] static auto wid_thing_info_player_stats(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, int /*width*/) -> bool
 {
   TRACE();
 
@@ -504,7 +504,7 @@
 //
 // Add stats
 //
-[[nodiscard]] auto wid_thing_info_monst_stats(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, int /*width*/) -> bool
+[[nodiscard]] static auto wid_thing_info_monst_stats(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, int /*width*/) -> bool
 {
   TRACE();
 

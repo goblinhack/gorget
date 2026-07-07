@@ -6,10 +6,12 @@
 #include "my_main.hpp"
 #include "my_sprintf.hpp"
 #include "my_thing.hpp"
-#include "my_thing_inlines.hpp"
 #include "my_tp.hpp"
 #include "my_types.hpp"
 #include "my_ui.hpp"
+#include <algorithm>
+#include <cstdint>
+#include <string>
 
 [[nodiscard]] auto thing_stat_set(Gamep g, Levelsp v, Levelp l, Thingp me, ThingStatType stat, uint8_t val) -> uint8_t
 {
@@ -34,11 +36,11 @@
 
   auto val = thing_stat(g, v, l, me, stat);
 
-  if (val <= (int) THING_STAT_MIN) {
+  if (val <= THING_STAT_MIN) {
     return -9;
   }
 
-  if (val >= (int) THING_STAT_MAX) {
+  if (val >= THING_STAT_MAX) {
     return 9;
   }
 
@@ -72,11 +74,11 @@
 
   auto val = thing_stat(g, v, l, me, stat);
 
-  if (val <= (int) THING_STAT_MIN) {
+  if (val <= THING_STAT_MIN) {
     return "-9";
   }
 
-  if (val >= (int) THING_STAT_MAX) {
+  if (val >= THING_STAT_MAX) {
     return "+9";
   }
 
@@ -160,7 +162,7 @@
 
   FOR_ALL_BUFFS(g, v, l, me, buff)
   {
-    int modifier = thing_stat(g, v, l, buff, stat) - THING_STAT_DEFAULT;
+    int const modifier = thing_stat(g, v, l, buff, stat) - THING_STAT_DEFAULT;
 
     if (modifier < 0) {
       out = std::max(0, out - modifier);
