@@ -244,6 +244,11 @@ public:
   Dice chance[ THING_EVENT_ENUM_MAX ];
 
   //
+  // Stat types, in dice
+  //
+  Dice stat[ THING_STAT_ENUM_MAX ];
+
+  //
   // For braziers and more
   //
   color light_color = {WHITE};

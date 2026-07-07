@@ -400,6 +400,30 @@ ENUM_DEF_H(THING_EVENT_ENUM, ThingEventType)
        (_iter_) = static_cast< ThingEventType >(static_cast< int >(_iter_) + 1))
 
 //
+// Thing stat enum
+//
+#define THING_STAT_ENUM(list_macro)                                                                                                             \
+  CLANG_FORMAT_INDENT()                           /* dummy line for clang indentation fixup */                                                  \
+  list_macro(THING_STAT_ATT, "attack"),           /* newline */                                                                                 \
+      list_macro(THING_STAT_DEF, "defence"),      /* newline */                                                                                 \
+      list_macro(THING_STAT_STR, "strength"),     /* newline */                                                                                 \
+      list_macro(THING_STAT_CON, "constitution"), /* newline */                                                                                 \
+      list_macro(THING_STAT_THV, "thievery"),     /* newline */                                                                                 \
+      list_macro(THING_STAT_DEX, "dexterity"),    /* newline */                                                                                 \
+      list_macro(THING_STAT_PSI, "psi"),          /* newline */                                                                                 \
+      list_macro(THING_STAT_INT, "intelligence"), /* newline */                                                                                 \
+      list_macro(THING_STAT_LCK, "luck"),         /* newline */
+
+ENUM_DEF_H(THING_STAT_ENUM, ThingStatType)
+
+#define THING_STAT_ENUM_FIRST ((ThingStatType) 0)
+
+#define FOR_ALL_THING_STAT(_iter_)                                                                                                              \
+  for (ThingStatType _iter_ = THING_STAT_ENUM_FIRST; /* newline */                                                                              \
+       (_iter_) < THING_STAT_ENUM_MAX;               /* newline */                                                                              \
+       (_iter_) = static_cast< ThingStatType >(static_cast< int >(_iter_) + 1))
+
+//
 // Thing environ enum
 //
 #define THING_ENVIRON_ENUM(list_macro)                                                                                                          \
@@ -543,6 +567,7 @@ class Tp;
 [[nodiscard]] auto tp_chance_fail(Tpp tp, ThingChanceType val) -> bool;
 [[nodiscard]] auto tp_chance_success(Tpp tp, ThingChanceType val) -> bool;
 [[nodiscard]] auto tp_chance(Tpp tp, ThingChanceType val) -> int;
+[[nodiscard]] auto tp_stat(Tpp tp, ThingStatType val) -> int;
 [[nodiscard]] auto tp_charge_count_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_collision_radius(Tpp t) -> float;
 [[nodiscard]] auto tp_damage_dice_roll_string(Tpp tp, ThingEventType val) -> std::string;
@@ -839,6 +864,7 @@ class Tp;
 auto tp_special_attack_get_random(Tpp tp, TpSpecialAttack &out) -> bool;
 void tp_attack_count_max_per_tick_set(Tpp tp, int val);
 void tp_chance_set(Tpp tp, ThingChanceType e, const std::string &val);
+void tp_stat_set(Tpp tp, ThingStatType e, const std::string &val);
 void tp_charge_count_set(Tpp tp, int val);
 void tp_con_(Tpp tp, const char *fmt, va_list args); // compile error without
 void tp_con(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);

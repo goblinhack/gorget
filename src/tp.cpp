@@ -706,6 +706,45 @@ void tp_chance_set(Tpp tp, ThingChanceType ev, const std::string &val)
   return tp->chance[ val ].roll();
 }
 
+void tp_stat_set(Tpp tp, ThingStatType ev, const std::string &val)
+{
+  TRACE();
+  if (tp == nullptr) [[unlikely]] {
+    tp_err(tp, "no thing template pointer");
+    return;
+  }
+
+  if (ev >= THING_STAT_ENUM_MAX) {
+    tp_err(tp, "bad value in tp for %s, %d", __FUNCTION__, ev);
+    return;
+  }
+
+  tp->stat[ ev ] = Dice(std::string(val));
+}
+
+//
+// Roll for stat
+//
+[[nodiscard]] auto tp_stat(Tpp tp, ThingStatType val) -> int
+{
+  TRACE();
+  if (tp == nullptr) [[unlikely]] {
+    tp_err(tp, "no thing template pointer");
+    return 0;
+  }
+
+  if (val >= THING_STAT_ENUM_MAX) {
+    tp_err(tp, "bad value in tp for %s, %d", __FUNCTION__, val);
+    return 0;
+  }
+
+  if (tp->stat[ val ].initialized) {
+    return 10;
+  }
+
+  return tp->stat[ val ].roll();
+}
+
 //
 // Roll for chance of success
 //
