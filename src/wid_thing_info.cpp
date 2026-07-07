@@ -395,6 +395,149 @@
 }
 
 //
+// Add stats
+//
+[[nodiscard]] auto wid_thing_info_player_stats(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, int /*width*/) -> bool
+{
+  TRACE();
+
+  auto *text = parent->wid_text_area;
+  auto *b    = parent->wid_text_area->wid_text_area;
+
+  {
+    auto         out = thing_stat_string(g, v, l, me, THING_STAT_ATT);
+    auto        *w   = wid_new_square_button(g, b, "Att");
+    spoint const tl(1, text->line_count);
+    spoint const br(10, text->line_count + 2);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, out);
+  }
+
+  {
+    auto         out = thing_stat_string(g, v, l, me, THING_STAT_DEF);
+    auto        *w   = wid_new_square_button(g, b, "Def");
+    spoint const tl(11, text->line_count);
+    spoint const br(20, text->line_count + 2);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, out);
+  }
+
+  {
+    auto         out = thing_stat_string(g, v, l, me, THING_STAT_CON);
+    auto        *w   = wid_new_square_button(g, b, "Con");
+    spoint const tl(21, text->line_count);
+    spoint const br(30, text->line_count + 2);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, out);
+  }
+
+  parent->log_empty_line(g);
+  parent->log_empty_line(g);
+  parent->log_empty_line(g);
+
+  {
+    auto         out = thing_stat_string(g, v, l, me, THING_STAT_STR);
+    auto        *w   = wid_new_square_button(g, b, "Str");
+    spoint const tl(1, text->line_count);
+    spoint const br(10, text->line_count + 2);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, out);
+  }
+
+  {
+    auto         out = thing_stat_string(g, v, l, me, THING_STAT_INT);
+    auto        *w   = wid_new_square_button(g, b, "Int");
+    spoint const tl(11, text->line_count);
+    spoint const br(20, text->line_count + 2);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, out);
+  }
+
+  {
+    auto         out = thing_stat_string(g, v, l, me, THING_STAT_DEX);
+    auto        *w   = wid_new_square_button(g, b, "Dex");
+    spoint const tl(21, text->line_count);
+    spoint const br(30, text->line_count + 2);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, out);
+  }
+
+  parent->log_empty_line(g);
+  parent->log_empty_line(g);
+  parent->log_empty_line(g);
+
+  {
+    auto         out = thing_stat_string(g, v, l, me, THING_STAT_THV);
+    auto        *w   = wid_new_square_button(g, b, "Thv");
+    spoint const tl(1, text->line_count);
+    spoint const br(10, text->line_count + 2);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, out);
+  }
+
+  {
+    auto         out = thing_stat_string(g, v, l, me, THING_STAT_LUK);
+    auto        *w   = wid_new_square_button(g, b, "Luk");
+    spoint const tl(11, text->line_count);
+    spoint const br(20, text->line_count + 2);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, out);
+  }
+
+  {
+    auto         out = thing_stat_string(g, v, l, me, THING_STAT_PSI);
+    auto        *w   = wid_new_square_button(g, b, "Psi");
+    spoint const tl(21, text->line_count);
+    spoint const br(30, text->line_count + 2);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, out);
+  }
+
+  parent->log_empty_line(g);
+  parent->log_empty_line(g);
+  parent->log_empty_line(g);
+  parent->log_empty_line(g);
+
+  return true;
+}
+
+//
+// Add stats
+//
+[[nodiscard]] auto wid_thing_info_monst_stats(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, int /*width*/) -> bool
+{
+  TRACE();
+
+  auto *text = parent->wid_text_area;
+  auto *b    = parent->wid_text_area->wid_text_area;
+
+  {
+    auto         out = thing_stat_string(g, v, l, me, THING_STAT_ATT);
+    auto        *w   = wid_new_square_button(g, b, "Att");
+    spoint const tl(6, text->line_count);
+    spoint const br(15, text->line_count + 2);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, out);
+  }
+
+  {
+    auto         out = thing_stat_string(g, v, l, me, THING_STAT_DEF);
+    auto        *w   = wid_new_square_button(g, b, "Def");
+    spoint const tl(16, text->line_count);
+    spoint const br(25, text->line_count + 2);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, out);
+  }
+
+  parent->log_empty_line(g);
+  parent->log_empty_line(g);
+  parent->log_empty_line(g);
+  parent->log_empty_line(g);
+
+  return true;
+}
+
+//
 // Add resistances
 //
 [[nodiscard]] auto wid_thing_info_resistance(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, int /*width*/) -> bool
@@ -986,11 +1129,12 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, i
     parent->log_empty_line(g);
   }
 
-  if (wid_thing_info_wielded(g, v, l, me, parent, width)) {
-    parent->log_empty_line(g);
-  }
-
   if (thing_is_player(me)) {
+    if (wid_thing_info_player_stats(g, v, l, me, parent, width)) {}
+
+    if (wid_thing_info_wielded(g, v, l, me, parent, width)) {
+      parent->log_empty_line(g);
+    }
     if (wid_tp_info_damage(g, v, l, tp, parent, width, true /* title allowed */)) {
       parent->log_empty_line(g);
     }
@@ -1011,6 +1155,13 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, i
       parent->log_empty_line(g);
     }
   } else if (! thing_is_dead(me)) {
+
+    if (wid_thing_info_monst_stats(g, v, l, me, parent, width)) {}
+
+    if (wid_thing_info_wielded(g, v, l, me, parent, width)) {
+      parent->log_empty_line(g);
+    }
+
     if (wid_tp_info_damage(g, v, l, tp, parent, width, true /* title allowed */)) {
       parent->log_empty_line(g);
     }

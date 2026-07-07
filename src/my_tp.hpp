@@ -412,13 +412,15 @@ ENUM_DEF_H(THING_EVENT_ENUM, ThingEventType)
       list_macro(THING_STAT_DEX, "dexterity"),    /* newline */                                                                                 \
       list_macro(THING_STAT_PSI, "psi"),          /* newline */                                                                                 \
       list_macro(THING_STAT_INT, "intelligence"), /* newline */                                                                                 \
-      list_macro(THING_STAT_LCK, "luck"),         /* newline */
+      list_macro(THING_STAT_LUK, "luck"),         /* newline */
 
 ENUM_DEF_H(THING_STAT_ENUM, ThingStatType)
 
 #define THING_STAT_ENUM_FIRST ((ThingStatType) 0)
 
 #define THING_STAT_DEFAULT 10
+#define THING_STAT_MAX     20
+#define THING_STAT_MIN     0
 
 #define FOR_ALL_THING_STAT(_iter_)                                                                                                              \
   for (ThingStatType _iter_ = THING_STAT_ENUM_FIRST; /* newline */                                                                              \

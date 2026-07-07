@@ -728,6 +728,7 @@ void tp_stat_set(Tpp tp, ThingStatType stat, const std::string &val)
 [[nodiscard]] auto tp_stat(Tpp tp, ThingStatType val) -> int
 {
   TRACE();
+
   if (tp == nullptr) [[unlikely]] {
     tp_err(tp, "no thing template pointer");
     return 0;
@@ -738,7 +739,7 @@ void tp_stat_set(Tpp tp, ThingStatType stat, const std::string &val)
     return 0;
   }
 
-  if (tp->stat[ val ].initialized) {
+  if (! tp->stat[ val ].initialized) {
     return THING_STAT_DEFAULT;
   }
 
