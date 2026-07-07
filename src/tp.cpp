@@ -592,7 +592,7 @@ static auto tp_random(Gamep g, Levelsp v, Levelp l, TpVec &m) -> Tpp
   return tp_flag_vec[ f ][ 0 ];
 }
 
-void tp_damage_set(Tpp tp, ThingEventType ev, const std::string &val)
+void tp_damage_set(Tpp tp, ThingEventType stat, const std::string &val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -600,12 +600,12 @@ void tp_damage_set(Tpp tp, ThingEventType ev, const std::string &val)
     return;
   }
 
-  if (ev >= THING_EVENT_ENUM_MAX) {
-    tp_err(tp, "bad value in tp for %s, %d", __FUNCTION__, ev);
+  if (stat >= THING_EVENT_ENUM_MAX) {
+    tp_err(tp, "bad value in tp for %s, %d", __FUNCTION__, stat);
     return;
   }
 
-  tp->damage[ ev ] = Dice(std::string(val));
+  tp->damage[ stat ] = Dice(std::string(val));
 }
 
 //
@@ -706,7 +706,7 @@ void tp_chance_set(Tpp tp, ThingChanceType ev, const std::string &val)
   return tp->chance[ val ].roll();
 }
 
-void tp_stat_set(Tpp tp, ThingStatType ev, const std::string &val)
+void tp_stat_set(Tpp tp, ThingStatType stat, const std::string &val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
@@ -714,12 +714,12 @@ void tp_stat_set(Tpp tp, ThingStatType ev, const std::string &val)
     return;
   }
 
-  if (ev >= THING_STAT_ENUM_MAX) {
-    tp_err(tp, "bad value in tp for %s, %d", __FUNCTION__, ev);
+  if (stat >= THING_STAT_ENUM_MAX) {
+    tp_err(tp, "bad value in tp for %s, %d", __FUNCTION__, stat);
     return;
   }
 
-  tp->stat[ ev ] = Dice(std::string(val));
+  tp->stat[ stat ] = Dice(std::string(val));
 }
 
 //
@@ -739,7 +739,7 @@ void tp_stat_set(Tpp tp, ThingStatType ev, const std::string &val)
   }
 
   if (tp->stat[ val ].initialized) {
-    return 10;
+    return THING_STAT_DEFAULT;
   }
 
   return tp->stat[ val ].roll();

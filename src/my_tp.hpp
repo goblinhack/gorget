@@ -418,6 +418,8 @@ ENUM_DEF_H(THING_STAT_ENUM, ThingStatType)
 
 #define THING_STAT_ENUM_FIRST ((ThingStatType) 0)
 
+#define THING_STAT_DEFAULT 10
+
 #define FOR_ALL_THING_STAT(_iter_)                                                                                                              \
   for (ThingStatType _iter_ = THING_STAT_ENUM_FIRST; /* newline */                                                                              \
        (_iter_) < THING_STAT_ENUM_MAX;               /* newline */                                                                              \

@@ -66,6 +66,7 @@
   // *******************************************************************
   // * consider thing_enhance if changing code here
   // *******************************************************************
+  FOR_ALL_THING_STAT(stat) { (void) thing_stat_set(g, v, l, t, stat, tp_stat(tp, stat)); }
   (void) thing_charge_count_set(g, v, l, t, tp_charge_count_get(tp));
   (void) thing_distance_avoid_target_set(g, v, l, t, tp_distance_avoid_target_get(tp));
   (void) thing_hearing_threshold_set(g, v, l, t, tp_hearing_threshold_get(tp));
