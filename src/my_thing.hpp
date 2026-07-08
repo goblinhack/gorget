@@ -170,6 +170,27 @@ using ThingMissiles = struct ThingMissiles {
 };
 
 //
+// Inventory items
+//
+using ThingSlot = struct ThingSlot {
+  ThingId item_id;
+  //
+  // How many of this identical item are there?
+  //
+  int8_t count;
+};
+
+//
+// Per thing inventory memory
+//
+using ThingInventory = struct ThingInventory {
+  //
+  // This is the max any player or monster can carry
+  //
+  ThingSlot slots[ THING_INVENTORY_MAX ];
+};
+
+//
 // Per thing extended memory
 //
 using ThingExt = struct ThingExt {
@@ -200,6 +221,10 @@ using ThingExt = struct ThingExt {
   //
   FovMap can_see;
   //
+  // What we're carrying
+  //
+  ThingInventory inventory;
+  //
   // Holds the path as we or the monster walk it
   //
   struct {
@@ -221,27 +246,6 @@ using ThingLight = struct ThingLight {
 };
 
 //
-// Inventory items
-//
-using ThingSlot = struct ThingSlot {
-  ThingId item_id;
-  //
-  // How many of this identical item are there?
-  //
-  int8_t count;
-};
-
-//
-// Per thing inventory memory
-//
-using ThingInventory = struct ThingInventory {
-  //
-  // This is the max any player or monster can carry
-  //
-  ThingSlot slots[ THING_INVENTORY_MAX ];
-};
-
-//
 // Player specific memory
 //
 using ThingPlayer = struct ThingPlayer {
@@ -257,10 +261,6 @@ using ThingPlayer = struct ThingPlayer {
   // Attacked by monster count
   //
   uint32_t attacked_by[ TP_ID_MAX ];
-  //
-  // What we're carrying
-  //
-  ThingInventory inventory;
   //
   // For hiscores
   //
@@ -870,6 +870,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_hit_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_is_hit_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_is_hit_when_dead(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_horseshoe(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_hot_check(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
 [[nodiscard]] auto thing_is_immune_to(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEventType val) -> bool;
 [[nodiscard]] auto thing_is_indestructible(Thingp t) -> bool;
@@ -889,6 +890,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_level_select_bg(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_levitating(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_loggable(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_lucky(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_mantisman(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_meltable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_metal(Thingp t) -> bool;
@@ -962,11 +964,9 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_undead(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unlocked(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused_98(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused_99(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused1(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused2(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused3(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused4(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_usable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_vault(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_vision_180_degrees(Thingp t) -> bool;
@@ -1393,14 +1393,14 @@ void thing_display(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp
 //
 #define FOR_ALL_INVENTORY_SLOTS(_g_, _v_, _l_, _owner_, _slot_, _item_)                                                                         \
   if ((_g_) && (_v_) && (_l_))                                                                                                                  \
-    for (auto _ext_ = thing_player_struct(_g_); _ext_; _ext_ = nullptr)                                                                         \
+    for (auto _ext_ = thing_ext_struct(_g_, _owner_); _ext_; _ext_ = nullptr)                                                                   \
       for (auto _n_ = 0; _n_ < THING_INVENTORY_MAX; _n_++)                                                                                      \
         for (AUTO(_slot_) = &_ext_->inventory.slots[ _n_ ]; _slot_; (_slot_) = nullptr)                                                         \
           for (AUTO(_item_) = thing_find_optional(g, v, (_slot_)->item_id), loop2 = (Thingp) 1; loop2 == (Thingp) 1; loop2 = (Thingp) 0)
 
 #define FOR_ALL_INVENTORY_ITEMS(_g_, _v_, _l_, _owner_, _item_)                                                                                 \
   if ((_g_) && (_v_) && (_l_))                                                                                                                  \
-    if (AUTO(_ext_) = thing_player_struct(_g_))                                                                                                 \
+    if (AUTO(_ext_) = thing_ext_struct(_g_, _owner_))                                                                                           \
       for (auto _n_ = 0; _n_ < THING_INVENTORY_MAX; _n_++)                                                                                      \
         if (AUTO(_slot_) = &_ext_->inventory.slots[ _n_ ])                                                                                      \
           if (AUTO(_item_) = thing_find_optional(g, v, _slot_->item_id))

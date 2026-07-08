@@ -392,10 +392,10 @@
   return level_flag_cached(g, v, l, is_fire, p);
 }
 
-[[nodiscard]] auto level_is_unused_99_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_lucky_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused_99, p);
+  return level_flag_cached(g, v, l, is_lucky, p);
 }
 
 [[nodiscard]] auto level_is_flesh_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
@@ -1076,10 +1076,10 @@
   return level_flag_cached(g, v, l, is_reeds, p);
 }
 
-[[nodiscard]] auto level_is_unused4_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_horseshoe_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused4, p);
+  return level_flag_cached(g, v, l, is_horseshoe, p);
 }
 
 [[nodiscard]] auto level_is_vault_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

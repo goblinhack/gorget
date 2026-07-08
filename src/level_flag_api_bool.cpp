@@ -392,10 +392,10 @@
   return level_flag(g, v, l, is_fire, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_unused_99_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_lucky_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused_99, p, me) != nullptr;
+  return level_flag(g, v, l, is_lucky, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_flesh_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
@@ -1076,10 +1076,10 @@
   return level_flag(g, v, l, is_reeds, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_unused4_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_horseshoe_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused4, p, me) != nullptr;
+  return level_flag(g, v, l, is_horseshoe, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_vault_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool

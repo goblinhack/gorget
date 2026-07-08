@@ -393,10 +393,10 @@
   return level_count(g, v, l, is_fire, p);
 }
 
-[[nodiscard]] auto level_count_is_unused_99(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_lucky(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused_99, p);
+  return level_count(g, v, l, is_lucky, p);
 }
 
 [[nodiscard]] auto level_count_is_flesh(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
@@ -1077,10 +1077,10 @@
   return level_count(g, v, l, is_reeds, p);
 }
 
-[[nodiscard]] auto level_count_is_unused4(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_horseshoe(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused4, p);
+  return level_count(g, v, l, is_horseshoe, p);
 }
 
 [[nodiscard]] auto level_count_is_vault(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t

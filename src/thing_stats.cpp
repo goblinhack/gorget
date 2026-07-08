@@ -209,5 +209,16 @@
     }
   }
 
+  FOR_ALL_INVENTORY_ITEMS(g, v, l, me, item)
+  {
+    int const modifier = thing_stat(g, v, l, item, stat) - THING_STAT_DEFAULT;
+
+    if (modifier < 0) {
+      out = std::max(0, out - modifier);
+    } else {
+      out += modifier;
+    }
+  }
+
   return out;
 }

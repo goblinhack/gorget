@@ -164,7 +164,7 @@ static void wid_statistics_show_defeated(Gamep g, Levelp l, Thingp player)
   wid_statistics_popup->log_empty_line(g);
 }
 
-static void wid_statistics_show_items(Gamep g, Levelsp v, Levelp l)
+static void wid_statistics_show_items(Gamep g, Levelsp v, Levelp l, Thingp player)
 {
   TRACE();
 
@@ -273,7 +273,8 @@ void wid_statistics_show(Gamep g, Levelsp v, Levelp l, Thingp player)
   }
 
   wid_statistics_show_defeated(g, l, player);
-  wid_statistics_show_items(g, v, l);
+
+  wid_statistics_show_items(g, v, l, player);
 
   {
     TRACE();

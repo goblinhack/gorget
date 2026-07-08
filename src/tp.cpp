@@ -120,6 +120,7 @@ static std::initializer_list< std::string > tps = {
     "ghost",
     "glorp",
     "grass",
+    "horseshoe",
     "key",
     "kobalos_mob",
     "kobalos",

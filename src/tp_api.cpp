@@ -391,10 +391,10 @@
   return tp_flag(tp, is_fire) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused_99(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_lucky(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused_99) != 0;
+  return tp_flag(tp, is_lucky) != 0;
 }
 
 [[nodiscard]] auto tp_is_flesh(Tpp tp) -> bool
@@ -1075,10 +1075,10 @@
   return tp_flag(tp, is_reeds) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused4(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_horseshoe(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused4) != 0;
+  return tp_flag(tp, is_horseshoe) != 0;
 }
 
 [[nodiscard]] auto tp_is_vault(Tpp tp) -> bool

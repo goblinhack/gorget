@@ -50,6 +50,7 @@
   if (!tp_load_ghost()) { return false; }
   if (!tp_load_glorp()) { return false; }
   if (!tp_load_grass()) { return false; }
+  if (!tp_load_horseshoe()) { return false; }
   if (!tp_load_key()) { return false; }
   if (!tp_load_kobalos_mob()) { return false; }
   if (!tp_load_kobalos()) { return false; }

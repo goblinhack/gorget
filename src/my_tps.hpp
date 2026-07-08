@@ -48,6 +48,7 @@ auto tp_load_ghost_mob() -> bool;
 auto tp_load_ghost() -> bool;
 auto tp_load_glorp() -> bool;
 auto tp_load_grass() -> bool;
+auto tp_load_horseshoe() -> bool;
 auto tp_load_key() -> bool;
 auto tp_load_kobalos_mob() -> bool;
 auto tp_load_kobalos() -> bool;

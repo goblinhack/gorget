@@ -2070,8 +2070,8 @@ static void gfx_init_tiles()
       "level_final.1",
       "chest.closed.0",
       "chest.open.0",
-      "",
-      "",
+      "horseshoe.0",
+      "clover.0",
       // ##############################################################################
       "level_locked.over.0",
       "level_locked.over.1",

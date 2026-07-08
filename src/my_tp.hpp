@@ -212,11 +212,11 @@
       list_macro(is_treasure, "is_treasure"),                                               /* newline */                                       \
       list_macro(is_undead, "is_undead"),                                                   /* newline */                                       \
       list_macro(is_unused_98, "is_unused_98"),                                             /* newline */                                       \
-      list_macro(is_unused_99, "is_unused_99"),                                             /* newline */                                       \
+      list_macro(is_lucky, "is_lucky"),                                                     /* newline */                                       \
       list_macro(is_unused1, "is_unused1"),                                                 /* newline */                                       \
       list_macro(is_unused2, "is_unused2"),                                                 /* newline */                                       \
       list_macro(is_unused3, "is_unused3"),                                                 /* newline */                                       \
-      list_macro(is_unused4, "is_unused4"),                                                 /* newline */                                       \
+      list_macro(is_horseshoe, "is_horseshoe"),                                             /* newline */                                       \
       list_macro(is_skullferno, "is_skullferno"),                                           /* newline */                                       \
       list_macro(is_effect_ripple, "is_effect_ripple"),                                     /* newline */                                       \
       list_macro(is_stealthy, "is_stealthy"),                                               /* newline */                                       \
@@ -704,6 +704,7 @@ class Tp;
 [[nodiscard]] auto tp_is_grass(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_grouped_thing(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_hit_when_dead(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_horseshoe(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_immune_to(Tpp tp, ThingEventType val) -> bool;
 [[nodiscard]] auto tp_is_indestructible(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_insectoid(Tpp tp) -> bool;
@@ -723,6 +724,7 @@ class Tp;
 [[nodiscard]] auto tp_is_levitating(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_light_source(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_loggable(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_lucky(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_mantisman(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_meltable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_metal(Tpp tp) -> bool;
@@ -793,11 +795,9 @@ class Tp;
 [[nodiscard]] auto tp_is_treasure(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_undead(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused_98(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused_99(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused1(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused2(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused3(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused4(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_usable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_vault(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_vision_180_degrees(Tpp tp) -> bool;

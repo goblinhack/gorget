@@ -76,7 +76,7 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp us
   if (thing_inventory_get_item_count(g, v, l, item, user) != -1) {
     THING_DBG(g, v, l, user, "drop: %s (item count remains, need a copy)", s.c_str());
 
-    FOR_ALL_INVENTORY_SLOTS(g, v, l, owner, slot, an_item)
+    FOR_ALL_INVENTORY_SLOTS(g, v, l, user, slot, an_item)
     {
       if (an_item == nullptr) {
         continue;

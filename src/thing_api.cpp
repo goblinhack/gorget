@@ -597,7 +597,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_unused3) != 0;
 }
 
-[[nodiscard]] auto thing_is_unused4(Thingp t) -> bool
+[[nodiscard]] auto thing_is_horseshoe(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -605,7 +605,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused4) != 0;
+  return tp_flag(thing_tp(t), is_horseshoe) != 0;
 }
 
 [[nodiscard]] auto thing_is_skullferno(Thingp t) -> bool
@@ -1323,7 +1323,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_cursor_path_warning) != 0;
 }
 
-[[nodiscard]] auto thing_is_unused_99(Thingp t) -> bool
+[[nodiscard]] auto thing_is_lucky(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -1331,7 +1331,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused_99) != 0;
+  return tp_flag(thing_tp(t), is_lucky) != 0;
 }
 
 [[nodiscard]] auto thing_is_projectile(Thingp t) -> bool
