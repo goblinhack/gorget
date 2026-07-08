@@ -43,7 +43,7 @@ static auto tp_staff_light_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -
     }
   }
 
-  if (thing_is_player(user)) {
+  if (user && thing_is_player(user)) {
     (void) thing_noise_incr(g, v, l, user, THING_NOISE_STAFF);
   }
 
