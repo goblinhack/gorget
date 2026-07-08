@@ -408,11 +408,10 @@ ENUM_DEF_H(THING_EVENT_ENUM, ThingEventType)
       list_macro(THING_STAT_DEF, "defence"),      /* newline */                                                                                 \
       list_macro(THING_STAT_STR, "strength"),     /* newline */                                                                                 \
       list_macro(THING_STAT_CON, "constitution"), /* newline */                                                                                 \
-      list_macro(THING_STAT_THV, "thievery"),     /* newline */                                                                                 \
+      list_macro(THING_STAT_INT, "thievery"),     /* newline */                                                                                 \
       list_macro(THING_STAT_DEX, "dexterity"),    /* newline */                                                                                 \
       list_macro(THING_STAT_PSI, "psi"),          /* newline */                                                                                 \
-      list_macro(THING_STAT_INT, "intelligence"), /* newline */                                                                                 \
-      list_macro(THING_STAT_LUK, "luck"),         /* newline */
+      list_macro(THING_STAT_LCK, "luck"),         /* newline */
 
 ENUM_DEF_H(THING_STAT_ENUM, ThingStatType)
 

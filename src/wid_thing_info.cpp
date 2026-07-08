@@ -407,8 +407,8 @@
   {
     auto         out = thing_stat_string(g, v, l, me, THING_STAT_ATT);
     auto        *w   = wid_new_square_button(g, b, "Att");
-    spoint const tl(1, text->line_count);
-    spoint const br(10, text->line_count + 2);
+    spoint const tl(6, text->line_count);
+    spoint const br(15, text->line_count + 2);
     wid_set_pos(w, tl, br);
     wid_set_text(w, out);
   }
@@ -416,17 +416,8 @@
   {
     auto         out = thing_stat_string(g, v, l, me, THING_STAT_DEF);
     auto        *w   = wid_new_square_button(g, b, "Def");
-    spoint const tl(11, text->line_count);
-    spoint const br(20, text->line_count + 2);
-    wid_set_pos(w, tl, br);
-    wid_set_text(w, out);
-  }
-
-  {
-    auto         out = thing_stat_string(g, v, l, me, THING_STAT_CON);
-    auto        *w   = wid_new_square_button(g, b, "Con");
-    spoint const tl(21, text->line_count);
-    spoint const br(30, text->line_count + 2);
+    spoint const tl(16, text->line_count);
+    spoint const br(25, text->line_count + 2);
     wid_set_pos(w, tl, br);
     wid_set_text(w, out);
   }
@@ -445,8 +436,8 @@
   }
 
   {
-    auto         out = thing_stat_string(g, v, l, me, THING_STAT_INT);
-    auto        *w   = wid_new_square_button(g, b, "Int");
+    auto         out = thing_stat_string(g, v, l, me, THING_STAT_CON);
+    auto        *w   = wid_new_square_button(g, b, "Con");
     spoint const tl(11, text->line_count);
     spoint const br(20, text->line_count + 2);
     wid_set_pos(w, tl, br);
@@ -467,8 +458,8 @@
   parent->log_empty_line(g);
 
   {
-    auto         out = thing_stat_string(g, v, l, me, THING_STAT_THV);
-    auto        *w   = wid_new_square_button(g, b, "Thv");
+    auto         out = thing_stat_string(g, v, l, me, THING_STAT_INT);
+    auto        *w   = wid_new_square_button(g, b, "Int");
     spoint const tl(1, text->line_count);
     spoint const br(10, text->line_count + 2);
     wid_set_pos(w, tl, br);
@@ -476,8 +467,8 @@
   }
 
   {
-    auto         out = thing_stat_string(g, v, l, me, THING_STAT_LUK);
-    auto        *w   = wid_new_square_button(g, b, "Luk");
+    auto         out = thing_stat_string(g, v, l, me, THING_STAT_LCK);
+    auto        *w   = wid_new_square_button(g, b, "Lck");
     spoint const tl(11, text->line_count);
     spoint const br(20, text->line_count + 2);
     wid_set_pos(w, tl, br);

@@ -121,15 +121,14 @@
   std::string stat_name;
 
   switch (stat) {
-    case THING_STAT_ATT : stat_name = "Att"; break;
-    case THING_STAT_DEF : stat_name = "Def"; break;
+    case THING_STAT_ATT : stat_name = "Att"; return string_sprintf(UI_INFO_FMT_STR "%s" UI_RESET_FMT " %2d", stat_name.c_str(), val);
+    case THING_STAT_DEF : stat_name = "Def"; return string_sprintf(UI_INFO_FMT_STR "%s" UI_RESET_FMT " %2d", stat_name.c_str(), val);
     case THING_STAT_STR : stat_name = "Str"; break;
     case THING_STAT_CON : stat_name = "Con"; break;
-    case THING_STAT_THV : stat_name = "Thv"; break;
+    case THING_STAT_INT : stat_name = "Int"; break;
     case THING_STAT_DEX : stat_name = "Dex"; break;
     case THING_STAT_PSI : stat_name = "Psi"; break;
-    case THING_STAT_INT : stat_name = "Int"; break;
-    case THING_STAT_LUK : stat_name = "Luk"; break;
+    case THING_STAT_LCK : stat_name = "Lck"; break;
     default :             stat_name = "n/a"; break;
   }
 
