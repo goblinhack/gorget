@@ -6,9 +6,11 @@
 #include "my_main.hpp"
 #include "my_sprintf.hpp"
 #include "my_thing.hpp"
+#include "my_thing_inlines.hpp"
 #include "my_tp.hpp"
 #include "my_types.hpp"
 #include "my_ui.hpp"
+
 #include <algorithm>
 #include <cstdint>
 #include <string>
