@@ -667,7 +667,7 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
   parent->log_empty_line(g);
 
   {
-    auto         out = thing_stat_string(g, v, l, me, THING_STAT_STR);
+    auto         out = thing_stat_mod_string(g, v, l, me, THING_STAT_STR);
     auto        *w   = wid_new_square_button(g, b, "Str");
     spoint const tl(1, text->line_count);
     spoint const br(10, text->line_count + 2);
@@ -678,7 +678,7 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
   }
 
   {
-    auto         out = thing_stat_string(g, v, l, me, THING_STAT_CON);
+    auto         out = thing_stat_mod_string(g, v, l, me, THING_STAT_CON);
     auto        *w   = wid_new_square_button(g, b, "Con");
     spoint const tl(11, text->line_count);
     spoint const br(20, text->line_count + 2);
@@ -689,7 +689,7 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
   }
 
   {
-    auto         out = thing_stat_string(g, v, l, me, THING_STAT_DEX);
+    auto         out = thing_stat_mod_string(g, v, l, me, THING_STAT_DEX);
     auto        *w   = wid_new_square_button(g, b, "Dex");
     spoint const tl(21, text->line_count);
     spoint const br(30, text->line_count + 2);
@@ -704,7 +704,7 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
   parent->log_empty_line(g);
 
   {
-    auto         out = thing_stat_string(g, v, l, me, THING_STAT_LCK);
+    auto         out = thing_stat_mod_string(g, v, l, me, THING_STAT_LCK);
     auto        *w   = wid_new_square_button(g, b, "Lck");
     spoint const tl(6, text->line_count);
     spoint const br(15, text->line_count + 2);
@@ -715,7 +715,7 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
   }
 
   {
-    auto         out = thing_stat_string(g, v, l, me, THING_STAT_PSI);
+    auto         out = thing_stat_mod_string(g, v, l, me, THING_STAT_PSI);
     auto        *w   = wid_new_square_button(g, b, "Psi");
     spoint const tl(16, text->line_count);
     spoint const br(25, text->line_count + 2);

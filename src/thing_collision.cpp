@@ -185,7 +185,7 @@ static void thing_collision_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thi
   //
   // Auto carry items? As long as not dropped during this tick
   //
-  if (obstacle->tick_dropped < v->tick - 1) {
+  {
     ThingEvent e {
         .reason     = "auto collected",    //
         .event_type = THING_EVENT_CARRIED, //

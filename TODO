@@ -9,6 +9,7 @@ potion, dislocation  (teleport)
 potion, imperceptable (invisible)
 potion, feathertail (jump)
 potion, etherealness (wall throu walls)
+potion, protection, no crits and restore health to 20% on death
 potion, haste
 potion, inviolate (health and removes poison)
 potion, telepath (see enemies)

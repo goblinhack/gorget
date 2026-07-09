@@ -273,6 +273,15 @@ void thing_on_carry_success_set(Tpp tp, thing_on_carry_success_t callback)
     return false;
   }
 
+  //
+  // Avoid rapid drop/collect loops
+  //
+  if (item->tick_dropped) {
+    if (item->tick_dropped >= v->tick - 1) {
+      return false;
+    }
+  }
+
   if (! thing_carry_item(g, v, l, item, me, e)) {
     return false;
   }
