@@ -652,7 +652,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_obs_to_hearing) != 0;
 }
 
-[[nodiscard]] auto thing_is_able_to_be_thrown(Thingp t) -> bool
+[[nodiscard]] auto thing_is_throwable(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -660,7 +660,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_able_to_be_thrown) != 0;
+  return tp_flag(thing_tp(t), is_throwable) != 0;
 }
 
 [[nodiscard]] auto thing_is_obs_to_throwing_over(Thingp t) -> bool
@@ -771,17 +771,6 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     return false;
   }
   return tp_flag(thing_tp(t), is_able_to_throw_items_items) != 0;
-}
-
-[[nodiscard]] auto thing_is_throwable(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_throwable) != 0;
 }
 
 [[nodiscard]] auto thing_is_chest(Thingp t) -> bool

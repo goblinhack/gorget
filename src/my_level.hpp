@@ -885,7 +885,6 @@ void level_fov(const FovContext & /*ctx*/);
 
 // begin sort marker3 {
 [[nodiscard]] auto level_is_able_to_be_buffed(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
-[[nodiscard]] auto level_is_able_to_be_thrown(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
 [[nodiscard]] auto level_is_able_to_collect_items(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
 [[nodiscard]] auto level_is_able_to_collect_keys(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
 [[nodiscard]] auto level_is_able_to_crush_grass(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
@@ -1108,7 +1107,6 @@ void level_fov(const FovContext & /*ctx*/);
 
 // begin sort marker4 {
 [[nodiscard]] auto level_is_able_to_be_buffed_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
-[[nodiscard]] auto level_is_able_to_be_thrown_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
 [[nodiscard]] auto level_is_able_to_collect_items_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
 [[nodiscard]] auto level_is_able_to_collect_keys_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
 [[nodiscard]] auto level_is_able_to_crush_grass_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
@@ -1327,7 +1325,6 @@ void level_fov(const FovContext & /*ctx*/);
 
 // begin sort marker5 {
 [[nodiscard]] auto level_alive_is_able_to_be_buffed(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
-[[nodiscard]] auto level_alive_is_able_to_be_thrown(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_able_to_collect_items(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_able_to_collect_keys(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_able_to_crush_grass(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
@@ -1546,7 +1543,6 @@ void level_fov(const FovContext & /*ctx*/);
 
 // begin sort marker6 {
 [[nodiscard]] auto level_count_is_able_to_be_buffed(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
-[[nodiscard]] auto level_count_is_able_to_be_thrown(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_able_to_collect_items(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_able_to_collect_keys(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_able_to_crush_grass(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
@@ -1772,7 +1768,6 @@ void level_fov(const FovContext & /*ctx*/);
 [[nodiscard]] auto fragment_width(Fragmentp f) -> int;
 [[nodiscard]] auto level_has_seen(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
 [[nodiscard]] auto level_open_is_able_to_be_buffed(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
-[[nodiscard]] auto level_open_is_able_to_be_thrown(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_able_to_collect_items(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_able_to_collect_keys(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_able_to_crush_grass(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
@@ -1991,7 +1986,6 @@ void level_fov(const FovContext & /*ctx*/);
 
 // begin sort marker8 {
 [[nodiscard]] auto level_is_able_to_be_buffed_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> bool;
-[[nodiscard]] auto level_is_able_to_be_thrown_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> bool;
 [[nodiscard]] auto level_is_able_to_collect_items_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> bool;
 [[nodiscard]] auto level_is_able_to_collect_keys_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> bool;
 [[nodiscard]] auto level_is_able_to_crush_grass_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> bool;

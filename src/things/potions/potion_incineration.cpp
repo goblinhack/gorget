@@ -147,7 +147,6 @@ static void tp_potion_incin_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, Th
   thing_on_thrown_end_set(tp, tp_potion_incin_on_thrown_end);
   thing_on_use_set(tp, tp_potion_incin_on_use);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1"); // fumble => intensify / keep burning / crit => stop burning
-  tp_flag_set(tp, is_able_to_be_thrown);
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated);

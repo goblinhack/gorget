@@ -191,7 +191,7 @@ static auto thing_throw_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thing
     return false;
   }
 
-  if (! thing_is_able_to_be_thrown(item)) {
+  if (! thing_is_throwable(item)) {
     auto the_thing = thing_name_long_the(g, v, l, item);
     topcon(UI_WARN_FMT_STR "You cannot throw %s." UI_RESET_FMT, the_thing.c_str());
     return false;

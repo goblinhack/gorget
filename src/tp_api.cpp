@@ -889,10 +889,10 @@
   return tp_flag(tp, is_obs_to_hearing) != 0;
 }
 
-[[nodiscard]] auto tp_is_able_to_be_thrown(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_throwable(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_able_to_be_thrown) != 0;
+  return tp_flag(tp, is_throwable) != 0;
 }
 
 [[nodiscard]] auto tp_is_obs_to_throwing_over(Tpp tp) -> bool
@@ -959,12 +959,6 @@
 {
   TRACE_DEBUG();
   return tp_flag(tp, is_able_to_throw_items_items) != 0;
-}
-
-[[nodiscard]] auto tp_is_throwable(Tpp tp) -> bool
-{
-  TRACE_DEBUG();
-  return tp_flag(tp, is_throwable) != 0;
 }
 
 [[nodiscard]] auto tp_is_described_when_killed(Tpp tp) -> bool

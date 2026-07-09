@@ -890,10 +890,10 @@
   return level_flag(g, v, l, is_obs_to_hearing, p, me);
 }
 
-[[nodiscard]] auto level_is_able_to_be_thrown(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_throwable(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_able_to_be_thrown, p, me);
+  return level_flag(g, v, l, is_throwable, p, me);
 }
 
 [[nodiscard]] auto level_is_obs_to_throwing_over(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
@@ -960,12 +960,6 @@
 {
   TRACE_DEBUG();
   return level_flag(g, v, l, is_able_to_throw_items_items, p, me);
-}
-
-[[nodiscard]] auto level_is_throwable(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
-{
-  TRACE_DEBUG();
-  return level_flag(g, v, l, is_throwable, p, me);
 }
 
 [[nodiscard]] auto level_is_described_when_killed(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp

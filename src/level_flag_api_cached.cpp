@@ -890,10 +890,10 @@
   return level_flag_cached(g, v, l, is_obs_to_hearing, p);
 }
 
-[[nodiscard]] auto level_is_able_to_be_thrown_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_throwable_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_able_to_be_thrown, p);
+  return level_flag_cached(g, v, l, is_throwable, p);
 }
 
 [[nodiscard]] auto level_is_obs_to_throwing_over_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
@@ -960,12 +960,6 @@
 {
   TRACE_DEBUG();
   return level_flag_cached(g, v, l, is_able_to_throw_items_items, p);
-}
-
-[[nodiscard]] auto level_is_throwable_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
-{
-  TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_throwable, p);
 }
 
 [[nodiscard]] auto level_is_described_when_killed_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

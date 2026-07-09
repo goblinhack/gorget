@@ -62,7 +62,6 @@ static auto tp_staff_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
   thing_detail_set(tp, tp_staff_fire_detail_get);
   thing_on_use_weapon_request_set(tp, tp_staff_fire_on_use_weapon_request);
   tp_charge_count_set(tp, 500);
-  tp_flag_set(tp, is_able_to_be_thrown);
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated);
@@ -85,6 +84,7 @@ static auto tp_staff_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
   tp_flag_set(tp, is_physics_water);
   tp_flag_set(tp, is_staff);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
+  tp_flag_set(tp, is_throwable);
   tp_flag_set(tp, is_tick_on_drop);
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_treasure);

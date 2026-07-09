@@ -891,10 +891,10 @@
   return level_count(g, v, l, is_obs_to_hearing, p);
 }
 
-[[nodiscard]] auto level_count_is_able_to_be_thrown(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_throwable(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_able_to_be_thrown, p);
+  return level_count(g, v, l, is_throwable, p);
 }
 
 [[nodiscard]] auto level_count_is_obs_to_throwing_over(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
@@ -961,12 +961,6 @@
 {
   TRACE_DEBUG();
   return level_count(g, v, l, is_able_to_throw_items_items, p);
-}
-
-[[nodiscard]] auto level_count_is_throwable(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
-{
-  TRACE_DEBUG();
-  return level_count(g, v, l, is_throwable, p);
 }
 
 [[nodiscard]] auto level_count_is_described_when_killed(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t

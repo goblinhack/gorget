@@ -516,7 +516,7 @@ static auto game_event_throw(Gamep g) -> bool
 
   FOR_ALL_INVENTORY_ITEMS(g, v, l, player, item)
   {
-    if (thing_is_able_to_be_thrown(item)) {
+    if (thing_is_throwable(item)) {
       items.push_back(item);
     }
   }
