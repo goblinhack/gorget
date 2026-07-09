@@ -136,6 +136,7 @@ static std::initializer_list< std::string > tests = {
     "teleport_shove_brazier",
     "teleport_shove_mob",
     "teleport",
+    "throw_item_at_monst",
     "throw_item_chasm",
     "throw_items",
     "throw_potion_healing_into_lava",

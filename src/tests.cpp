@@ -115,6 +115,7 @@
   if (!test_load_teleport_shove_brazier()) { return false; }
   if (!test_load_teleport_shove_mob()) { return false; }
   if (!test_load_teleport()) { return false; }
+  if (!test_load_throw_item_at_monst()) { return false; }
   if (!test_load_throw_item_chasm()) { return false; }
   if (!test_load_throw_items()) { return false; }
   if (!test_load_throw_potion_healing_into_lava()) { return false; }
