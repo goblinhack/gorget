@@ -133,6 +133,9 @@
     case THING_EVENT_CRUSH : //
       s += "crushed";
       break;
+    case THING_EVENT_THROWN_DAMAGE : //
+      s += "pelted to bits";
+      break;
     case THING_EVENT_MELEE_DAMAGE : //
       s += "hacked to bits";
       break;

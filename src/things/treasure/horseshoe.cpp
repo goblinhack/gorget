@@ -38,7 +38,7 @@ static auto tp_horseshoe_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> 
   // begin sort marker1 {
   thing_description_set(tp, tp_horseshoe_description_get);
   thing_detail_set(tp, tp_horseshoe_detail_get);
-  tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d8");
+  tp_damage_set(tp, THING_EVENT_THROWN_DAMAGE, "1d8+4");
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated);

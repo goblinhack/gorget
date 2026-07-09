@@ -71,19 +71,37 @@ void thing_is_thrown_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp throw
       }
     }
 
+    auto *owner = thing_owner(g, v, l, item);
+
+    //
+    // Allow things to be hit at the landing site
+    //
+    {
+      auto event_type = THING_EVENT_THROWN_DAMAGE;
+      auto damage     = thing_damage(g, v, l, item, event_type);
+
+      ThingEvent e {
+          .reason     = "user threw item", //
+          .event_type = event_type,        //
+          .damage     = damage,            //
+          .source     = owner,             //
+      };
+
+      (void) thing_attack_at(g, v, l, item, item_at, &e);
+    }
+
     //
     // Remove association with thrower
     //
-    auto *owner = thing_owner(g, v, l, item);
     if (owner != nullptr) {
+      THING_DBG(g, v, l, item, "need to detach item from thrower");
+      TRACE_INDENT();
+
       ThingEvent e {
           .reason     = "user threw item",  //
           .event_type = THING_EVENT_THROWN, //
           .source     = owner,              //
       };
-
-      THING_DBG(g, v, l, item, "need to detach item from thrower");
-      TRACE_INDENT();
 
       (void) thing_drop(g, v, l, owner, item, e);
     }

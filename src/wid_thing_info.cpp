@@ -341,24 +341,13 @@ static WidPopup *wid_over_stats;
     bool show_string = false;
 
     switch (e) {
-      case THING_EVENT_SHOVED : //
-        show_string = false;
-        break;
-      case THING_EVENT_CRUSH : //
-        show_string = false;
-        break;
-      case THING_EVENT_LIGHT_DAMAGE : //
-        show_string = true;
-        break;
-      case THING_EVENT_MELEE_DAMAGE : //
-        show_string = true;
-        break;
-      case THING_EVENT_EXPLOSION_DAMAGE : //
-        show_string = true;
-        break;
-      case THING_EVENT_FIRE_DAMAGE : //
-        show_string = true;
-        break;
+      case THING_EVENT_SHOVED :           [[fallthrough]];
+      case THING_EVENT_CRUSH :            [[fallthrough]];
+      case THING_EVENT_LIGHT_DAMAGE :     [[fallthrough]];
+      case THING_EVENT_THROWN_DAMAGE :    [[fallthrough]];
+      case THING_EVENT_MELEE_DAMAGE :     [[fallthrough]];
+      case THING_EVENT_EXPLOSION_DAMAGE : [[fallthrough]];
+      case THING_EVENT_FIRE_DAMAGE :      [[fallthrough]];
       case THING_EVENT_WATER_DAMAGE : //
         show_string = true;
         break;
@@ -898,24 +887,13 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
     bool show_string = false;
 
     switch (e) {
-      case THING_EVENT_SHOVED : //
-        show_string = false;
-        break;
-      case THING_EVENT_CRUSH : //
-        show_string = false;
-        break;
-      case THING_EVENT_LIGHT_DAMAGE : //
-        show_string = true;
-        break;
-      case THING_EVENT_MELEE_DAMAGE : //
-        show_string = true;
-        break;
-      case THING_EVENT_EXPLOSION_DAMAGE : //
-        show_string = true;
-        break;
-      case THING_EVENT_FIRE_DAMAGE : //
-        show_string = true;
-        break;
+      case THING_EVENT_SHOVED :           [[fallthrough]];
+      case THING_EVENT_CRUSH :            [[fallthrough]];
+      case THING_EVENT_LIGHT_DAMAGE :     [[fallthrough]];
+      case THING_EVENT_MELEE_DAMAGE :     [[fallthrough]];
+      case THING_EVENT_THROWN_DAMAGE :    [[fallthrough]];
+      case THING_EVENT_EXPLOSION_DAMAGE : [[fallthrough]];
+      case THING_EVENT_FIRE_DAMAGE :      [[fallthrough]];
       case THING_EVENT_WATER_DAMAGE : //
         show_string = true;
         break;
@@ -1123,9 +1101,9 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
     parent->log(g, "- Could defeat you eventually.", TEXT_FORMAT_LHS);
   }
 
-  auto player_max_dmg = thing_damage_max(g, v, l, player);
-  if (player_max_dmg != 0) {
-    auto player_defeat_count = thing_health(g, v, l, me) / player_max_dmg;
+  auto player_max_damage = thing_damage_max(g, v, l, player);
+  if (player_max_damage != 0) {
+    auto player_defeat_count = thing_health(g, v, l, me) / player_max_damage;
 
     //
     // Oh dear. The monst is toast.

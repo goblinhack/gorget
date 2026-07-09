@@ -109,6 +109,7 @@ static void tp_potion_tireless_on_death(Gamep g, Levelsp v, Levelp l, Thingp me,
   thing_on_thrown_end_set(tp, tp_potion_tireless_on_thrown_end);
   thing_on_use_set(tp, tp_potion_tireless_on_use);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // fumble => intensify / keep burning / crit => stop burning
+  tp_damage_set(tp, THING_EVENT_THROWN_DAMAGE, "1d4");
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated);

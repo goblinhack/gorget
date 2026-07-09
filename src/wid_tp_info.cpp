@@ -84,24 +84,13 @@
     bool show_string = false;
 
     switch (e) {
-      case THING_EVENT_SHOVED : //
-        show_string = false;
-        break;
-      case THING_EVENT_CRUSH : //
-        show_string = false;
-        break;
-      case THING_EVENT_LIGHT_DAMAGE : //
-        show_string = true;
-        break;
-      case THING_EVENT_MELEE_DAMAGE : //
-        show_string = true;
-        break;
-      case THING_EVENT_EXPLOSION_DAMAGE : //
-        show_string = true;
-        break;
-      case THING_EVENT_FIRE_DAMAGE : //
-        show_string = true;
-        break;
+      case THING_EVENT_SHOVED :           [[fallthrough]];
+      case THING_EVENT_CRUSH :            [[fallthrough]];
+      case THING_EVENT_LIGHT_DAMAGE :     [[fallthrough]];
+      case THING_EVENT_THROWN_DAMAGE :    [[fallthrough]];
+      case THING_EVENT_MELEE_DAMAGE :     [[fallthrough]];
+      case THING_EVENT_EXPLOSION_DAMAGE : [[fallthrough]];
+      case THING_EVENT_FIRE_DAMAGE :      [[fallthrough]];
       case THING_EVENT_WATER_DAMAGE : //
         show_string = true;
         break;
@@ -221,24 +210,13 @@
     bool show_string = false;
 
     switch (e) {
-      case THING_EVENT_SHOVED : //
-        show_string = false;
-        break;
-      case THING_EVENT_CRUSH : //
-        show_string = false;
-        break;
-      case THING_EVENT_LIGHT_DAMAGE : //
-        show_string = true;
-        break;
-      case THING_EVENT_MELEE_DAMAGE : //
-        show_string = true;
-        break;
-      case THING_EVENT_EXPLOSION_DAMAGE : //
-        show_string = true;
-        break;
-      case THING_EVENT_FIRE_DAMAGE : //
-        show_string = true;
-        break;
+      case THING_EVENT_SHOVED :           [[fallthrough]];
+      case THING_EVENT_CRUSH :            [[fallthrough]];
+      case THING_EVENT_LIGHT_DAMAGE :     [[fallthrough]];
+      case THING_EVENT_THROWN_DAMAGE :    [[fallthrough]];
+      case THING_EVENT_MELEE_DAMAGE :     [[fallthrough]];
+      case THING_EVENT_EXPLOSION_DAMAGE : [[fallthrough]];
+      case THING_EVENT_FIRE_DAMAGE :      [[fallthrough]];
       case THING_EVENT_WATER_DAMAGE : //
         show_string = true;
         break;
@@ -294,24 +272,13 @@
     bool show_string = false;
 
     switch (e) {
-      case THING_EVENT_SHOVED : //
-        show_string = false;
-        break;
-      case THING_EVENT_CRUSH : //
-        show_string = false;
-        break;
-      case THING_EVENT_LIGHT_DAMAGE : //
-        show_string = true;
-        break;
-      case THING_EVENT_MELEE_DAMAGE : //
-        show_string = true;
-        break;
-      case THING_EVENT_EXPLOSION_DAMAGE : //
-        show_string = true;
-        break;
-      case THING_EVENT_FIRE_DAMAGE : //
-        show_string = true;
-        break;
+      case THING_EVENT_SHOVED :           [[fallthrough]];
+      case THING_EVENT_CRUSH :            [[fallthrough]];
+      case THING_EVENT_LIGHT_DAMAGE :     [[fallthrough]];
+      case THING_EVENT_MELEE_DAMAGE :     [[fallthrough]];
+      case THING_EVENT_THROWN_DAMAGE :    [[fallthrough]];
+      case THING_EVENT_EXPLOSION_DAMAGE : [[fallthrough]];
+      case THING_EVENT_FIRE_DAMAGE :      [[fallthrough]];
       case THING_EVENT_WATER_DAMAGE : //
         show_string = true;
         break;

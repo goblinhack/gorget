@@ -79,18 +79,18 @@ static auto thing_fall_damage(Gamep g, Levelsp v, Levelp l, Thingp me) -> int
 {
   TRACE();
 
-  int fall_dmg = 0;
+  int fall_damage = 0;
 
   if (thing_is_player(me)) {
-    fall_dmg = PCG_RANDOM_RANGE(6, 30);
+    fall_damage = PCG_RANDOM_RANGE(6, 30);
   } else if (thing_is_mob(me) || thing_is_monst(me)) {
-    fall_dmg = PCG_RANDOM_RANGE(6, thing_health(g, v, l, me) / 2);
+    fall_damage = PCG_RANDOM_RANGE(6, thing_health(g, v, l, me) / 2);
   } else {
-    fall_dmg = d4();
+    fall_damage = d4();
   }
 
   if (thing_is_falling_continues(me)) {
-    fall_dmg *= 2;
+    fall_damage *= 2;
   }
 
   //
@@ -98,7 +98,7 @@ static auto thing_fall_damage(Gamep g, Levelsp v, Levelp l, Thingp me) -> int
   //
   if (level_is_lava_bool(g, v, l, thing_at(g, v, l, me))) {
     if (! thing_is_immune_to(g, v, l, me, THING_EVENT_FIRE_DAMAGE)) {
-      fall_dmg *= 4;
+      fall_damage *= 4;
     }
   }
 
@@ -107,7 +107,7 @@ static auto thing_fall_damage(Gamep g, Levelsp v, Levelp l, Thingp me) -> int
   //
   if (level_is_water_bool(g, v, l, thing_at(g, v, l, me))) {
     if (thing_is_immune_to(g, v, l, me, THING_EVENT_WATER_DAMAGE)) {
-      fall_dmg /= 2;
+      fall_damage /= 2;
     }
   }
 
@@ -116,7 +116,7 @@ static auto thing_fall_damage(Gamep g, Levelsp v, Levelp l, Thingp me) -> int
   //
   if (level_is_deep_water(g, v, l, thing_at(g, v, l, me)) != nullptr) {
     if (thing_is_immune_to(g, v, l, me, THING_EVENT_WATER_DAMAGE)) {
-      fall_dmg /= 2;
+      fall_damage /= 2;
     }
   }
 
@@ -125,12 +125,12 @@ static auto thing_fall_damage(Gamep g, Levelsp v, Levelp l, Thingp me) -> int
   //
   auto w = thing_weight(me);
   if (w <= WEIGHT_FEATHER) {
-    fall_dmg = 0;
+    fall_damage = 0;
   } else if (w >= WEIGHT_HEAVY) {
-    fall_dmg *= 2;
+    fall_damage *= 2;
   }
 
-  return fall_dmg;
+  return fall_damage;
 }
 
 //
