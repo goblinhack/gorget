@@ -69,10 +69,10 @@
   return level_count(g, v, l, is_able_to_shove, p);
 }
 
-[[nodiscard]] auto level_count_is_able_to_walk_through_walls(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_able_to_see_through_walls(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_able_to_walk_through_walls, p);
+  return level_count(g, v, l, is_able_to_see_through_walls, p);
 }
 
 [[nodiscard]] auto level_count_is_animated_can_hflip(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t

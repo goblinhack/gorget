@@ -68,10 +68,10 @@
   return level_flag_cached(g, v, l, is_able_to_shove, p);
 }
 
-[[nodiscard]] auto level_is_able_to_walk_through_walls_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_able_to_see_through_walls_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_able_to_walk_through_walls, p);
+  return level_flag_cached(g, v, l, is_able_to_see_through_walls, p);
 }
 
 [[nodiscard]] auto level_is_animated_can_hflip_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

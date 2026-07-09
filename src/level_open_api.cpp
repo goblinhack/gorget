@@ -68,10 +68,10 @@
   return level_open(g, v, l, is_able_to_shove, p);
 }
 
-[[nodiscard]] auto level_open_is_able_to_walk_through_walls(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_open_is_able_to_see_through_walls(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_open(g, v, l, is_able_to_walk_through_walls, p);
+  return level_open(g, v, l, is_able_to_see_through_walls, p);
 }
 
 [[nodiscard]] auto level_open_is_animated_can_hflip(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp

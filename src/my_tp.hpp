@@ -33,7 +33,7 @@
       list_macro(is_able_to_shove, "is_able_to_shove"),                                     /* newline */                                       \
       list_macro(is_able_to_throw_items_items, "is_able_to_throw_items_items"),             /* newline */                                       \
       list_macro(is_able_to_throw_items, "is_able_to_throw_items"),                         /* newline */                                       \
-      list_macro(is_able_to_walk_through_walls, "is_able_to_walk_through_walls"),           /* newline */                                       \
+      list_macro(is_able_to_see_through_walls, "is_able_to_see_through_walls"),             /* newline */                                       \
       list_macro(is_able_to_wield_items, "is_able_to_wield_items"),                         /* newline */                                       \
       list_macro(is_animated_can_hflip, "is_animated_can_hflip"),                           /* newline */                                       \
       list_macro(is_animated_no_dir, "is_animated_no_dir"),                                 /* newline */                                       \
@@ -602,10 +602,10 @@ class Tp;
 [[nodiscard]] auto tp_is_able_to_move_diagonally(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_move_through_walls(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_open_things(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_able_to_see_through_walls(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_shove(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_throw_items_items(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_throw_items(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_able_to_walk_through_walls(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_wield_items(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_animated_can_hflip(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_animated_no_dir(Tpp tp) -> bool;

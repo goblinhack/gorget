@@ -67,10 +67,10 @@
   return tp_flag(tp, is_able_to_shove) != 0;
 }
 
-[[nodiscard]] auto tp_is_able_to_walk_through_walls(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_able_to_see_through_walls(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_able_to_walk_through_walls) != 0;
+  return tp_flag(tp, is_able_to_see_through_walls) != 0;
 }
 
 [[nodiscard]] auto tp_is_animated_can_hflip(Tpp tp) -> bool
