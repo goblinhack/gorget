@@ -81,6 +81,7 @@ auto test_load_path_dmap() -> bool;
 auto test_load_player_fall_chasm_into_lava() -> bool;
 auto test_load_player_fall_chasm_twice_into_lava() -> bool;
 auto test_load_player_fall_chasm_twice() -> bool;
+auto test_load_player_fall_chasm_via_trap() -> bool;
 auto test_load_player_fall_while_on_fire() -> bool;
 auto test_load_player_hiding_behind_foliage() -> bool;
 auto test_load_player_hiding_in_foliage() -> bool;

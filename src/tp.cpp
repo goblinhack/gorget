@@ -148,7 +148,7 @@ static std::initializer_list< std::string > tps = {
     "staff_light",
     "steam",
     "teleport",
-    "trap",
+    "trap_chasm",
     "wand_fire",
     "wand_light",
     "water",

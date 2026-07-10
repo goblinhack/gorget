@@ -100,6 +100,7 @@ static std::initializer_list< std::string > tests = {
     "player_fall_chasm_into_lava",
     "player_fall_chasm_twice_into_lava",
     "player_fall_chasm_twice",
+    "player_fall_chasm_via_trap",
     "player_fall_while_on_fire",
     "player_hiding_behind_foliage",
     "player_hiding_in_foliage",

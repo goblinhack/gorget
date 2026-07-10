@@ -12,7 +12,7 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
-static auto tp_trap_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
+static auto tp_trap_chasm_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
@@ -23,7 +23,7 @@ static auto tp_trap_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> 
   return "odd looking floor tile";
 }
 
-static auto tp_trap_activated(Gamep g, Levelsp v, Levelp l, Thingp trap, Thingp user) -> bool
+static auto tp_trap_chasm_activated(Gamep g, Levelsp v, Levelp l, Thingp trap, Thingp user) -> bool
 {
   TRACE();
 
@@ -44,6 +44,16 @@ static auto tp_trap_activated(Gamep g, Levelsp v, Levelp l, Thingp trap, Thingp 
     }
   }
 
+  ThingEvent e {
+      .reason     = "by activating",  //
+      .event_type = THING_EVENT_OPEN, //
+  };
+
+  THING_DBG(g, v, l, trap, "dead due to activation");
+  TRACE_INDENT();
+
+  thing_dead(g, v, l, trap, e);
+
   return true;
 }
 
@@ -51,12 +61,12 @@ static auto tp_trap_activated(Gamep g, Levelsp v, Levelp l, Thingp trap, Thingp 
 {
   TRACE();
 
-  auto *tp   = tp_load("trap"); // keep as string for scripts
+  auto *tp   = tp_load("trap_chasm"); // keep as string for scripts
   auto  name = tp_name(tp);
 
   // begin sort marker1 {
-  thing_description_set(tp, tp_trap_description_get);
-  thing_on_activated_set(tp, tp_trap_activated);
+  thing_description_set(tp, tp_trap_chasm_description_get);
+  thing_on_activated_set(tp, tp_trap_chasm_activated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_per_pixel_lighting);
   tp_flag_set(tp, is_blit_shown_in_chasms);
@@ -77,7 +87,7 @@ static auto tp_trap_activated(Gamep g, Levelsp v, Levelp l, Thingp trap, Thingp 
   // end sort marker1 }
 
   for (auto frame = 0; frame < 1; frame++) {
-    auto *tile = tile_find_mand(name + std::string(".") + std::to_string(frame));
+    auto *tile = tile_find_mand(std::string("trap.") + std::to_string(frame));
     tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
     tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
   }

@@ -83,6 +83,7 @@
   if (!test_load_player_fall_chasm_into_lava()) { return false; }
   if (!test_load_player_fall_chasm_twice_into_lava()) { return false; }
   if (!test_load_player_fall_chasm_twice()) { return false; }
+  if (!test_load_player_fall_chasm_via_trap()) { return false; }
   if (!test_load_player_fall_while_on_fire()) { return false; }
   if (!test_load_player_hiding_behind_foliage()) { return false; }
   if (!test_load_player_hiding_in_foliage()) { return false; }
