@@ -908,10 +908,10 @@
   return level_open(g, v, l, is_obs_to_throwing_onto, p);
 }
 
-[[nodiscard]] auto level_open_is_unused_98(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_open_is_physics_trap(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_open(g, v, l, is_unused_98, p);
+  return level_open(g, v, l, is_physics_trap, p);
 }
 
 [[nodiscard]] auto level_open_is_tick_on_unwield(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp

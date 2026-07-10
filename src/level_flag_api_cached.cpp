@@ -908,10 +908,10 @@
   return level_flag_cached(g, v, l, is_obs_to_throwing_onto, p);
 }
 
-[[nodiscard]] auto level_is_unused_98_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_physics_trap_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused_98, p);
+  return level_flag_cached(g, v, l, is_physics_trap, p);
 }
 
 [[nodiscard]] auto level_is_tick_on_unwield_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

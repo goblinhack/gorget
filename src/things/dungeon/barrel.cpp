@@ -127,6 +127,7 @@ static void tp_barrel_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_flag_set(tp, is_obs_to_vision);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
+  tp_flag_set(tp, is_physics_trap);
   tp_flag_set(tp, is_shovable);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_tickable);

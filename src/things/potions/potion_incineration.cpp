@@ -169,6 +169,7 @@ static void tp_potion_incin_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, Th
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
+  tp_flag_set(tp, is_physics_trap);
   tp_flag_set(tp, is_physics_water);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_throwable);

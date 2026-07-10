@@ -10,6 +10,7 @@
 #include "my_tp.hpp"
 #include "my_tps.hpp"
 #include "my_types.hpp"
+#include "my_ui.hpp"
 
 static auto tp_trap_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
@@ -22,6 +23,30 @@ static auto tp_trap_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> 
   return "odd looking floor tile";
 }
 
+static auto tp_trap_activated(Gamep g, Levelsp v, Levelp l, Thingp trap, Thingp user) -> bool
+{
+  TRACE();
+
+  if (! level_is_chasm_bool(g, v, l, thing_at(g, v, l, trap))) {
+    if (thing_spawn(g, v, l, tp_first(is_chasm), trap)) {
+      auto player_at = thing_at(g, v, l, user);
+      if (thing_on_same_level_as_player(g, v, trap)) {
+        if (thing_at(g, v, l, trap) == player_at) {
+          topcon(UI_IMPORTANT_FMT_STR "The ground opens up beneath you!" UI_RESET_FMT);
+        } else if (thing_vision_can_see_tile(g, v, l, user, player_at)) {
+          topcon(UI_WARN_FMT_STR "The ground collapses!" UI_RESET_FMT);
+        } else {
+          topcon("You hear the ground collapse!");
+        }
+      } else {
+        topcon("You hear a very distant landslide!");
+      }
+    }
+  }
+
+  return true;
+}
+
 [[nodiscard]] auto tp_load_trap() -> bool
 {
   TRACE();
@@ -31,6 +56,7 @@ static auto tp_trap_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> 
 
   // begin sort marker1 {
   thing_description_set(tp, tp_trap_description_get);
+  thing_on_activated_set(tp, tp_trap_activated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_per_pixel_lighting);
   tp_flag_set(tp, is_blit_shown_in_chasms);

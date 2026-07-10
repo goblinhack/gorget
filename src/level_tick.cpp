@@ -211,6 +211,11 @@ static void level_tick(Gamep g, Levelsp v, Levelp l, bool tick_begin_requested)
     // Handle things interacting with water.
     //
     level_tick_water(g, v, l);
+
+    //
+    // And traps as they are stepped onto
+    //
+    level_tick_trap(g, v, l);
   }
 
   //

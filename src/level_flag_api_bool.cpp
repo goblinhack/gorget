@@ -908,10 +908,10 @@
   return level_flag(g, v, l, is_obs_to_throwing_onto, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_unused_98_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_physics_trap_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused_98, p, me) != nullptr;
+  return level_flag(g, v, l, is_physics_trap, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_tick_on_unwield_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool

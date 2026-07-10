@@ -907,10 +907,10 @@
   return tp_flag(tp, is_obs_to_throwing_onto) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused_98(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_physics_trap(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused_98) != 0;
+  return tp_flag(tp, is_physics_trap) != 0;
 }
 
 [[nodiscard]] auto tp_is_tick_on_unwield(Tpp tp) -> bool

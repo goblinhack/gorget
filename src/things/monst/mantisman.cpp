@@ -115,6 +115,7 @@ static bool tp_mantisman_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, T
   tp_flag_set(tp, is_obs_to_teleporting_onto);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
+  tp_flag_set(tp, is_physics_trap);
   tp_flag_set(tp, is_removable_when_dead_on_err);
   tp_flag_set(tp, is_shown_health);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water

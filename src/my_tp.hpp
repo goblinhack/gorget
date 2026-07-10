@@ -218,7 +218,7 @@
       list_macro(is_trap, "is_trap"),                                                       /* newline */                                       \
       list_macro(is_treasure, "is_treasure"),                                               /* newline */                                       \
       list_macro(is_undead, "is_undead"),                                                   /* newline */                                       \
-      list_macro(is_unused_98, "is_unused_98"),                                             /* newline */                                       \
+      list_macro(is_physics_trap, "is_physics_trap"),                                       /* newline */                                       \
       list_macro(is_unused1, "is_unused1"),                                                 /* newline */                                       \
       list_macro(is_unused2, "is_unused2"),                                                 /* newline */                                       \
       list_macro(is_unused3, "is_unused3"),                                                 /* newline */                                       \
@@ -756,6 +756,7 @@ class Tp;
 [[nodiscard]] auto tp_is_openable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_physics_explosion(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_physics_temperature(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_physics_trap(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_physics_water(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_pillar(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_plant(Tpp tp) -> bool;
@@ -793,7 +794,6 @@ class Tp;
 [[nodiscard]] auto tp_is_trap(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_treasure(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_undead(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused_98(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused1(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused2(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused3(Tpp tp) -> bool;

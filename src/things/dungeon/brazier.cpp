@@ -146,6 +146,7 @@ static void tp_brazier_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEv
   tp_flag_set(tp, is_obs_to_teleporting_onto);
   tp_flag_set(tp, is_obs_when_dead);
   tp_flag_set(tp, is_physics_explosion);
+  tp_flag_set(tp, is_physics_trap);
   tp_flag_set(tp, is_physics_water);
   tp_flag_set(tp, is_shovable);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water

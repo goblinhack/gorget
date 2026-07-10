@@ -11,9 +11,9 @@
 #include "my_types.hpp"
 
 //
-// Handle things interacting with water
+// Handle things interacting with trap
 //
-void level_tick_water(Gamep g, Levelsp v, Levelp l)
+void level_tick_trap(Gamep g, Levelsp v, Levelp l)
 {
   TRACE();
 
@@ -24,24 +24,24 @@ void level_tick_water(Gamep g, Levelsp v, Levelp l)
   {
     bpoint p(x, y);
 
-    if (! level_is_water_bool(g, v, l, p)) {
+    if (! level_is_trap_bool(g, v, l, p)) {
       continue;
     }
 
     FOR_ALL_THINGS_AT(g, v, l, t, p)
     {
-      if (! thing_is_physics_water(t)) {
+      if (! thing_is_physics_trap(t)) {
         continue;
       }
 
       //
-      // Skip dead monsters that take damage from water and leave a corpse?
+      // Skip dead monsters that take damage from trap and leave a corpse?
       //
       if (thing_is_dead(t)) {
         continue;
       }
 
-      thing_water_handle(g, v, l, t);
+      thing_trap_handle(g, v, l, t);
     }
   }
 }

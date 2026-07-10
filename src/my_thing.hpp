@@ -556,6 +556,10 @@ using Thing = struct Thing {
   //
   uint32_t tick_water;
   //
+  // Ensure only one event per tick
+  //
+  uint32_t tick_trap;
+  //
   // Unique ID with some entropy built in
   //
   ThingId id;
@@ -923,6 +927,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_open_try_unset(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp closer) -> bool;
 [[nodiscard]] auto thing_is_openable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_physics_explosion(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_physics_trap(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_physics_water(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_pillar(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_plant(Thingp t) -> bool;
@@ -962,7 +967,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_treasure(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_undead(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unlocked(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused_98(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused1(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused2(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused3(Thingp t) -> bool;
@@ -1316,6 +1320,7 @@ void thing_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_tick_end(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_tick_idle(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_topcon(Gamep g, Levelsp v, Levelp l, Thingp t, const char *fmt, ...) CHECK_FORMAT_STR(printf, 5, 6);
+void thing_trap_handle(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_update_pos(Gamep g, Levelsp v, Levelp l, Thingp me);
 void thing_vision_calculate(Gamep g, Levelsp v, Levelp l, Thingp me);
 void thing_vision_reset(Gamep g, Levelsp v, Levelp l, Thingp t);

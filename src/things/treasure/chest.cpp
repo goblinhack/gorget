@@ -156,6 +156,7 @@ static bool tp_chest_on_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEve
   tp_flag_set(tp, is_openable);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
+  tp_flag_set(tp, is_physics_trap);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_tick_on_drop);
   tp_flag_set(tp, is_tickable);

@@ -475,6 +475,30 @@ void thing_on_teleported(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp->on_teleported(g, v, l, me);
 }
 
+void thing_on_activated_set(Tpp tp, thing_on_activated_t callback)
+{
+  TRACE();
+  if (tp == nullptr) [[unlikely]] {
+    ERR("no thing template pointer");
+    return;
+  }
+  tp->on_activated = callback;
+}
+
+bool thing_on_activated(Gamep g, Levelsp v, Levelp l, Thingp trap, Thingp user)
+{
+  TRACE();
+  auto *tp = thing_tp(trap);
+  if (tp == nullptr) [[unlikely]] {
+    ERR("no thing template pointer");
+    return false;
+  }
+  if (tp->on_activated == nullptr) {
+    return false;
+  }
+  return tp->on_activated(g, v, l, trap, user);
+}
+
 void thing_on_jump_begin_set(Tpp tp, thing_on_jump_begin_t callback)
 {
   TRACE();

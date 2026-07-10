@@ -81,6 +81,7 @@ static auto tp_staff_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
+  tp_flag_set(tp, is_physics_trap);
   tp_flag_set(tp, is_physics_water);
   tp_flag_set(tp, is_staff);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
