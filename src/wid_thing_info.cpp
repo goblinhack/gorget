@@ -772,7 +772,7 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
 
   FOR_ALL_THING_STAT(stat)
   {
-    if (thing_stat_mod(g, v, l, me, stat)) {
+    if (thing_stat_mod(g, v, l, me, stat) != 0) {
       any_set = true;
     }
   }

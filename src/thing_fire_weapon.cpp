@@ -36,7 +36,7 @@ void thing_on_use_weapon_request_set(Tpp tp, thing_on_use_weapon_request_t callb
     return nullptr;
   }
 
-  if (user) {
+  if (user != nullptr) {
     if (! thing_is_player(user) && ! thing_is_monst(user)) {
       thing_err(g, v, l, user, "unexpected thing for %s", __FUNCTION__);
       return nullptr;

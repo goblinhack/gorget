@@ -6,7 +6,7 @@
 #include "my_main.hpp"
 #include "my_sprintf.hpp"
 #include "my_thing.hpp"
-#include "my_thing_inlines.hpp"
+#include "my_thing_inlines.hpp" // NOLINT
 #include "my_tp.hpp"
 #include "my_types.hpp"
 #include "my_ui.hpp"
@@ -15,7 +15,7 @@
 #include <cstdint>
 #include <string>
 
-[[nodiscard]] auto thing_stat_name(ThingStatType stat) -> const std::string
+[[nodiscard]] static auto thing_stat_name(ThingStatType stat) -> const std::string
 {
   switch (stat) {
     case THING_STAT_ATT : return "Att";
@@ -129,10 +129,10 @@
 {
   TRACE_DEBUG();
 
-  auto        mod       = thing_stat_mod(g, v, l, me, stat);
-  auto        mod_str   = thing_stat_mod_value_string(g, v, l, me, stat);
-  std::string stat_name = thing_stat_name(stat);
-  std::string stat_str;
+  auto              mod       = thing_stat_mod(g, v, l, me, stat);
+  auto              mod_str   = thing_stat_mod_value_string(g, v, l, me, stat);
+  std::string const stat_name = thing_stat_name(stat);
+  std::string       stat_str;
 
   if (mod < -5) {
     stat_str = string_sprintf(UI_INFO_FMT_STR "%s" UI_IMPORTANT_FMT_STR " %-2s", stat_name.c_str(), mod_str.c_str());
@@ -151,11 +151,11 @@
 {
   TRACE_DEBUG();
 
-  auto        val       = thing_stat(g, v, l, me, stat);
-  auto        mod       = thing_stat_mod(g, v, l, me, stat);
-  auto        mod_str   = thing_stat_mod_value_string(g, v, l, me, stat);
-  std::string stat_name = thing_stat_name(stat);
-  std::string stat_str;
+  auto              val       = thing_stat(g, v, l, me, stat);
+  auto              mod       = thing_stat_mod(g, v, l, me, stat);
+  auto              mod_str   = thing_stat_mod_value_string(g, v, l, me, stat);
+  std::string const stat_name = thing_stat_name(stat);
+  std::string       stat_str;
 
   switch (stat) {
     case THING_STAT_ATT : return string_sprintf(UI_INFO_FMT_STR "%s" UI_RESET_FMT " %2d", stat_name.c_str(), val);
