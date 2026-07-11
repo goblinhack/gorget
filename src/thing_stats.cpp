@@ -3,6 +3,7 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_dice_rolls.hpp"
 #include "my_main.hpp"
 #include "my_sprintf.hpp"
 #include "my_thing.hpp"
@@ -51,38 +52,38 @@
 {
   TRACE_DEBUG();
 
-  auto val = thing_stat(g, v, l, me, stat);
+  return stat_to_bonus(thing_stat(g, v, l, me, stat));
+}
 
-  if (val <= THING_STAT_MIN) {
-    return -9;
-  }
+//                               mod
+// roll -9 -8 -7 -6 -5 -4 -3 -2 -1 +0 +1 +2 +3 +4 +5 +6 +7 +8 +9
+//     +--------------------------------------------------------
+//  1  | 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+//  2  | 1  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+//  3  | 1  1  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+//  4  | 1  1  1  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+//  5  | 1  1  1  1  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+//  6  | 1  1  1  1  1  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+//  7  | 1  1  1  1  1  1  0  0  0  0  0  0  0  0  0  0  0  0  0
+//  8  | 1  1  1  1  1  1  1  0  0  0  0  0  0  0  0  0  0  0  0
+//  9  | 1  1  1  1  1  1  1  1  0  0  0  0  0  0  0  0  0  0  0
+//  10 | 1  1  1  1  1  1  1  1  1  0  0  0  0  0  0  0  0  0  0
+//  11 | 1  1  1  1  1  1  1  1  1  1  0  0  0  0  0  0  0  0  0
+//  12 | 1  1  1  1  1  1  1  1  1  1  1  0  0  0  0  0  0  0  0
+//  13 | 1  1  1  1  1  1  1  1  1  1  1  1  0  0  0  0  0  0  0
+//  14 | 1  1  1  1  1  1  1  1  1  1  1  1  1  0  0  0  0  0  0
+//  15 | 1  1  1  1  1  1  1  1  1  1  1  1  1  1  0  0  0  0  0
+//  16 | 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  0  0  0  0
+//  17 | 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  0  0  0
+//  18 | 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  0  0
+//  19 | 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  0
+//  20 | 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
+//
+[[nodiscard]] auto thing_stat_success(Gamep g, Levelsp v, Levelp l, Thingp me, ThingStatType stat) -> int
+{
+  TRACE_DEBUG();
 
-  if (val >= THING_STAT_MAX) {
-    return 9;
-  }
-
-  switch (val) {
-    case 1 :  return -9;
-    case 2 :  return -8;
-    case 3 :  return -7;
-    case 4 :  return -6;
-    case 5 :  return -5;
-    case 6 :  return -4;
-    case 7 :  return -3;
-    case 8 :  return -2;
-    case 9 :  return -1;
-    case 10 : return +0;
-    case 11 : return +1;
-    case 12 : return +2;
-    case 13 : return +3;
-    case 14 : return +4;
-    case 15 : return +5;
-    case 16 : return +6;
-    case 17 : return +7;
-    case 18 : return +8;
-    case 19 : return +9;
-    default : return +9;
-  }
+  return d20() > 10 + thing_stat_mod(g, v, l, me, stat);
 }
 
 [[nodiscard]] static auto thing_stat_mod_value_string(Gamep g, Levelsp v, Levelp l, Thingp me, ThingStatType stat) -> std::string

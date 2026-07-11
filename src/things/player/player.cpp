@@ -393,7 +393,11 @@ static void tp_player_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
       "potion_incin",   //
       "potion_incin",   //
       "potion_healing", //
-      "potion_healing", //
+      "horseshoe",      //
+      "horseshoe",      //
+      "horseshoe",      //
+      "horseshoe",      //
+      "horseshoe",      //
 #endif
   };
 

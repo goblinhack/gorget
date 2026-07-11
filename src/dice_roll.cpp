@@ -6,94 +6,40 @@
 #include "my_main.hpp"
 #include "my_random.hpp"
 #include "my_string.hpp"
+
 #include <string>
 
-// Roll -30 -> bonus -20
-// Roll -29 -> bonus -19
-// Roll -28 -> bonus -19
-// Roll -27 -> bonus -18
-// Roll -26 -> bonus -18
-// Roll -25 -> bonus -17
-// Roll -24 -> bonus -17
-// Roll -23 -> bonus -16
-// Roll -22 -> bonus -16
-// Roll -21 -> bonus -15
-// Roll -20 -> bonus -15
-// Roll -19 -> bonus -14
-// Roll -18 -> bonus -14
-// Roll -17 -> bonus -13
-// Roll -16 -> bonus -13
-// Roll -15 -> bonus -12
-// Roll -14 -> bonus -12
-// Roll -13 -> bonus -11
-// Roll -12 -> bonus -11
-// Roll -11 -> bonus -10
-// Roll -10 -> bonus -10
-// Roll -9 ->  bonus -9
-// Roll -8 ->  bonus -9
-// Roll -7 ->  bonus -8
-// Roll -6 ->  bonus -8
-// Roll -5 ->  bonus -7
-// Roll -4 ->  bonus -7
-// Roll -3 ->  bonus -6
-// Roll -2 ->  bonus -6
-// Roll -1 ->  bonus -5
-// Roll 0 ->   bonus -5
-// Roll 1 ->   bonus -4
-// Roll 2 ->   bonus -4
-// Roll 3 ->   bonus -3
-// Roll 4 ->   bonus -3
-// Roll 5 ->   bonus -2
-// Roll 6 ->   bonus -2
-// Roll 7 ->   bonus -1
-// Roll 8 ->   bonus -1
-// Roll 9 ->   bonus +0
-// Roll 10 ->  bonus +0
-// Roll 11 ->  bonus +0
-// Roll 12 ->  bonus +1
-// Roll 13 ->  bonus +1
-// Roll 14 ->  bonus +2
-// Roll 15 ->  bonus +2
-// Roll 16 ->  bonus +3
-// Roll 17 ->  bonus +3
-// Roll 18 ->  bonus +4
-// Roll 19 ->  bonus +4
-// Roll 20 ->  bonus +5
-// Roll 21 ->  bonus +5
-// Roll 22 ->  bonus +6
-// Roll 23 ->  bonus +6
-// Roll 24 ->  bonus +7
-// Roll 25 ->  bonus +7
-// Roll 26 ->  bonus +8
-// Roll 27 ->  bonus +8
-// Roll 28 ->  bonus +9
-// Roll 29 ->  bonus +9
-// Roll 30 ->  bonus +10
 [[nodiscard]] auto stat_to_bonus(int stat) -> int
 {
-  int const bonus = (stat - 10) / 2;
-  if (bonus < -20) {
-    return -20;
+  if (stat < 0) {
+    return -9;
   }
-  if (bonus > 20) {
-    return 20;
+  if (stat > 20) {
+    return 9;
   }
 
-#if 0
-  //
-  // Generate all rolls to see the bonus
-  //
-  static int first = true;
-  if (first) {
-    first = false;
-    for (auto i = -30; i <= 30; i++) {
-      printf("Roll %d -> bonus %d\n", i, stat_to_bonus(i));
-    }
-    CROAK("See above rolls");
+  switch (stat) {
+    case 1 :  return -9;
+    case 2 :  return -8;
+    case 3 :  return -7;
+    case 4 :  return -6;
+    case 5 :  return -5;
+    case 6 :  return -4;
+    case 7 :  return -3;
+    case 8 :  return -2;
+    case 9 :  return -1;
+    case 10 : return +0;
+    case 11 : return +1;
+    case 12 : return +2;
+    case 13 : return +3;
+    case 14 : return +4;
+    case 15 : return +5;
+    case 16 : return +6;
+    case 17 : return +7;
+    case 18 : return +8;
+    case 19 : return +9;
+    default : return +9;
   }
-#endif
-
-  return bonus;
 }
 
 [[nodiscard]] auto bonus_to_string(int stat) -> std::string
