@@ -80,10 +80,10 @@
   if (!test_load_path_astar()) { return false; }
   if (!test_load_path_dmap_reverse()) { return false; }
   if (!test_load_path_dmap()) { return false; }
+  if (!test_load_player_did_not_trigger()) { return false; }
   if (!test_load_player_fall_chasm_into_lava()) { return false; }
   if (!test_load_player_fall_chasm_twice_into_lava()) { return false; }
   if (!test_load_player_fall_chasm_twice()) { return false; }
-  if (!test_load_player_fall_chasm_via_trap()) { return false; }
   if (!test_load_player_fall_while_on_fire()) { return false; }
   if (!test_load_player_hiding_behind_foliage()) { return false; }
   if (!test_load_player_hiding_in_foliage()) { return false; }
@@ -94,6 +94,7 @@
   if (!test_load_player_moving_in_foliage()) { return false; }
   if (!test_load_player_on_fire_move_into_water()) { return false; }
   if (!test_load_player_on_fire()) { return false; }
+  if (!test_load_player_triggered()) { return false; }
   if (!test_load_potion_healing()) { return false; }
   if (!test_load_potion_stealth()) { return false; }
   if (!test_load_potion_tireless()) { return false; }

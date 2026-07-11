@@ -9,7 +9,7 @@
 #include "../my_test.hpp"
 #include "../my_thing_inlines.hpp"
 
-[[nodiscard]] static auto test_player_fall_chasm_into_lava(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_player_triggered(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -24,42 +24,44 @@
   std::string const level1 // first level
       = "......."
         "......."
-        "...C..."
-        "..@C..."
-        "...C..."
+        "......."
+        "..@tt.."
+        "......."
         "......."
         ".......";
   std::string const expect1 // first level
       = "......."
         "......."
-        "...C..."
-        "...C..."
-        "...C..."
+        "......."
+        "...tC.."
+        "......."
         "......."
         ".......";
   std::string const level2 // second level
       = "xxxxxxx"
         "xxxxxxx"
-        "xxLLLxx"
-        "xxLLLxx"
-        "xxLLLxx"
+        "xx...xx"
+        "xx...xx"
+        "xx...xx"
         "xxxxxxx"
         "xxxxxxx";
   std::string const expect2 // second level
       = "xxxxxxx"
         "xxxxxxx"
-        "xxLLLxx"
-        "xx@LLxx"
-        "xxLLLxx"
+        "xx...xx"
+        "xx..@xx"
+        "xx...xx"
         "xxxxxxx"
         "xxxxxxx";
 
   //
   // Create the level and start playing
   //
-  Levelp  l1 = nullptr;
-  Levelp  l2 = nullptr;
-  Levelsp v  = game_test_init(g, &l1, level_num, w, h, level1.c_str());
+  Levelp    l1 = nullptr;
+  Levelp    l2 = nullptr;
+  Overrides overrides;
+  overrides[ 't' ] = [](char c, bpoint p) -> Tpp { return tp_find_mand("trap_chasm"); };
+  Levelsp v        = game_test_init(g, &l1, level_num, w, h, level1.c_str(), overrides);
   game_test_init_level(g, v, &l2, level_num + 1, w, h, level2.c_str());
 
   //
@@ -71,9 +73,7 @@
   bool left   = false;
   bool right  = false;
 
-  bool   found_corpse = false;
-  Thingp player       = nullptr;
-  bpoint p;
+  Thingp player = nullptr;
 
   //
   // Find the player
@@ -86,6 +86,24 @@
       TEST_FAILED(t, "no player");
       goto exit;
     }
+  }
+
+  //
+  // Move right
+  //
+  TEST_PROGRESS(t);
+  {
+    TEST_LOG(t, "move right");
+    TRACE();
+    up = down = left = right = false;
+    right                    = true;
+
+    if (! (result = player_move_request(g, up, down, left, right, false /* fire */))) {
+      TEST_FAILED(t, "move failed");
+      goto exit;
+    }
+
+    TEST_ASSERT(t, game_wait_for_tick_to_finish(g, v, l1), "failed to wait for tick to finish");
   }
 
   //
@@ -124,38 +142,14 @@
   }
 
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 3; tries++) {
+  for (auto tries = 0; tries < 4; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE();
     TEST_ASSERT(t, game_event_wait(g), "failed to wait");
     TEST_ASSERT(t, game_wait_for_tick_to_finish(g, v, l2), "failed to wait for tick to finish");
   }
 
-  TEST_ASSERT(t, game_tick_get(g, v) == 5, "final tick counter value");
-
-  //
-  // Check player is dead when shoved into lava. It should be popped off the level.
-  //
-  TEST_PROGRESS(t);
-  {
-    TRACE();
-    TEST_LOG(t, "check player is dead when in lava");
-    p            = thing_at(g, v, l2, player);
-    found_corpse = false;
-
-    FOR_ALL_THINGS_AT(g, v, l2, it, p)
-    {
-      if (thing_is_player(it) && thing_is_corpse(it)) {
-        found_corpse = true;
-        break;
-      }
-    }
-
-    if (! found_corpse) {
-      TEST_FAILED(t, "did not find player as a corpse");
-      goto exit;
-    }
-  }
+  TEST_ASSERT(t, game_tick_get(g, v) == 6, "final tick counter value");
 
   TEST_PASSED(t);
 exit:
@@ -165,14 +159,14 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_player_fall_chasm_into_lava() -> bool // NOLINT
+[[nodiscard]] auto test_load_player_triggered() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("player_fall_chasm_into_lava");
+  Testp test = test_load("player_triggered");
 
   // begin sort marker1 {
-  test_callback_set(test, test_player_fall_chasm_into_lava);
+  test_callback_set(test, test_player_triggered);
   // end sort marker1 }
 
   return true;

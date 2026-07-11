@@ -603,8 +603,9 @@ static void wid_thing_info_stats_lck_mouse_over_begin(Gamep g, Widp w, int /*rel
   wid_over_stats->log_empty_line(g);
   wid_over_stats->log(g, UI_INFO1_FMT_STR "Luck can impact your existance in many quiet ways.\n", TEXT_FORMAT_LHS);
   wid_over_stats->log(g, UI_INFO2_FMT_STR "Will that treasure chest explode when you hit it?\n", TEXT_FORMAT_LHS);
-  wid_over_stats->log(g, UI_INFO3_FMT_STR "Will you land in lave or on solid ground when jumping into a chasm?\n", TEXT_FORMAT_LHS);
-  wid_over_stats->log(g, UI_INFO4_FMT_STR "Look for horseshoes or clover to increase your luck.\n", TEXT_FORMAT_LHS);
+  wid_over_stats->log(g, UI_INFO4_FMT_STR "Will that loose floor tile reveal a hidden chasm?\n", TEXT_FORMAT_LHS);
+  wid_over_stats->log(g, UI_INFO4_FMT_STR "Will you land in lava when jumping into a chasm?\n", TEXT_FORMAT_LHS);
+  wid_over_stats->log(g, UI_INFO5_FMT_STR "Look for horseshoes or clover to increase your luck.\n", TEXT_FORMAT_LHS);
   wid_over_stats->log_empty_line(g);
   wid_over_stats->compress(g);
 
@@ -693,7 +694,7 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
   parent->log_empty_line(g);
 
   {
-    auto         out = thing_stat_mod_string(g, v, l, me, THING_STAT_LCK);
+    auto         out = thing_stat_mod_string(g, v, l, me, THING_STAT_LUCK);
     auto        *w   = wid_new_square_button(g, b, "Lck");
     spoint const tl(6, text->line_count);
     spoint const br(15, text->line_count + 2);
@@ -844,7 +845,7 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
   }
 
   {
-    auto         out = thing_stat_mod_string(g, v, l, me, THING_STAT_LCK);
+    auto         out = thing_stat_mod_string(g, v, l, me, THING_STAT_LUCK);
     auto        *w   = wid_new_square_button(g, b, "Lck");
     spoint const tl(11, text->line_count);
     spoint const br(20, text->line_count + 2);

@@ -649,6 +649,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto player_mouse_down(Gamep, Levelsp, Levelp, int x, int y, uint32_t button) -> bool;
 [[nodiscard]] auto player_move_request(Gamep g, bool up, bool down, bool left, bool right, bool fire) -> bool;
 [[nodiscard]] auto player_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
+[[nodiscard]] auto stat_to_mod(int stat) -> int;
 [[nodiscard]] auto thing_age_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_age_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_age_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
@@ -1099,6 +1100,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_stat_mod(Gamep g, Levelsp v, Levelp l, Thingp me, ThingStatType stat) -> int;
 [[nodiscard]] auto thing_stat_set(Gamep g, Levelsp v, Levelp l, Thingp me, ThingStatType stat, uint8_t val) -> uint8_t;
 [[nodiscard]] auto thing_stat_string(Gamep g, Levelsp v, Levelp l, Thingp me, ThingStatType stat) -> std::string;
+[[nodiscard]] auto thing_stat_success(Gamep g, Levelsp v, Levelp l, Thingp me, ThingStatType stat) -> int;
 [[nodiscard]] auto thing_stat(Gamep g, Levelsp v, Levelp l, Thingp me, ThingStatType stat) -> int;
 [[nodiscard]] auto thing_submerged_pct_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_submerged_pct_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;

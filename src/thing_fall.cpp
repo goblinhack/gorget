@@ -40,36 +40,76 @@
 
 //
 // Try to find a spot close to where we landed that is ok to exist in.
+// Try to avoid landing in lava if luck allows.
+//
+static auto thing_choose_landing_spot(Gamep g, Levelsp v, Levelp l, Thingp me, bool &saved) -> bpoint
+{
+  TRACE();
+
+  auto at = thing_at(g, v, l, me);
+
+  for (auto dist = 0; dist < MAP_WIDTH; dist++) {
+    for (auto dx = -dist; dx <= dist; dx++) {
+      for (auto dy = -dist; dy <= dist; dy++) {
+
+        bpoint where;
+
+        where.x = at.x + dx;
+        where.y = at.y + dy;
+
+        if (is_oob(where)) {
+          continue;
+        }
+
+        if (thing_ok_landing_spot(g, v, l, where)) {
+          //
+          // If lucky, no landing on lava
+          //
+          if (thing_is_player(me) && level_is_lava(g, v, l, where)) {
+            if (thing_stat_success(g, v, l, me, THING_STAT_LUCK)) {
+              //
+              // Continue to look
+              //
+              saved = true;
+              continue;
+            } else {
+              return where;
+            }
+          } else {
+            return where;
+          }
+        }
+      }
+    }
+  }
+
+  saved = false;
+
+  return at;
+}
+
+//
+// Try to find a spot close to where we landed that is ok to exist in.
 // i.e. no landing inside walls.
 //
 static auto thing_choose_landing_spot(Gamep g, Levelsp v, Levelp l, Thingp me) -> bpoint
 {
   TRACE();
 
-  auto at   = thing_at(g, v, l, me);
-  int  dist = 1;
+  bool saved {};
+  auto where = thing_choose_landing_spot(g, v, l, me, saved);
 
-  for (;;) {
-    if (thing_ok_landing_spot(g, v, l, at)) {
-      return at;
-    }
-
-    for (auto dx = -dist; dx <= dist; dx++) {
-      for (auto dy = -dist; dy <= dist; dy++) {
-        bpoint q;
-        q.x = at.x + dx;
-        q.y = at.y + dy;
-
-        if (thing_ok_landing_spot(g, v, l, q)) {
-          return q;
-        }
+  if (thing_is_player(me)) {
+    if (saved) {
+      if (level_is_lava(g, v, l, where)) {
+        topcon(UI_IMPORTANT_FMT_STR "You manage to avoid the lava as you fall. And then somehow, still slip into it!" UI_RESET_FMT);
+      } else {
+        topcon(UI_IMPORTANT_FMT_STR "You manage to avoid the lava as you fall!" UI_RESET_FMT);
       }
     }
-
-    dist++;
   }
 
-  return at;
+  return where;
 }
 
 //

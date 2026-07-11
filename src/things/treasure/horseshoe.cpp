@@ -51,6 +51,7 @@ static auto tp_horseshoe_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> 
   tp_flag_set(tp, is_droppable);
   tp_flag_set(tp, is_horseshoe);
   tp_flag_set(tp, is_inventory_item);
+  tp_flag_set(tp, is_item_mergeable);
   tp_flag_set(tp, is_item);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_lucky);
@@ -60,7 +61,6 @@ static auto tp_horseshoe_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> 
   tp_flag_set(tp, is_throwable);
   tp_flag_set(tp, is_tick_on_drop);
   tp_flag_set(tp, is_treasure);
-  tp_flag_set(tp, is_item_mergeable);
   tp_is_immune_to_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_name_a_or_an_set(tp, "a horseshoe");
   tp_name_apostrophize_set(tp, "horseshoes'");
@@ -69,7 +69,7 @@ static auto tp_horseshoe_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> 
   tp_name_short_set(tp, "horseshoe");
   tp_priority_set(tp, THING_PRIORITY_OBJECT);
   tp_rarity_set(tp, THING_RARITY_COMMON);
-  tp_stat_set(tp, THING_STAT_LCK, "12");
+  tp_stat_set(tp, THING_STAT_LUCK, "12");
   tp_weight_set(tp, WEIGHT_MEDIUM); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   // end sort marker1 }

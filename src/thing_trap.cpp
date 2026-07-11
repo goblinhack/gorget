@@ -30,21 +30,28 @@ void thing_trap_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
     return;
   }
 
-  if (thing_is_player(me)) {
-    topcon(UI_IMPORTANT_FMT_STR "You hear a click..." UI_RESET_FMT);
-  }
+  thing_sound_play(g, v, l, me, "click");
 
-  if (thing_on_activated(g, v, l, trap, me)) {
-    //
-    // Trap sprung
-    //
-    thing_sound_play(g, v, l, me, "click");
-  } else {
+  if (thing_stat_success(g, v, l, me, THING_STAT_LUCK)) {
     //
     // Lucky
     //
     if (thing_is_player(me)) {
-      topcon(UI_IMPORTANT_FMT_STR "But nothing happens." UI_RESET_FMT);
+      topcon(UI_IMPORTANT_FMT_STR "You feel a loose floor tile." UI_RESET_FMT);
+    }
+  } else if (thing_on_activated(g, v, l, trap, me)) {
+    //
+    // The trap springs
+    //
+    if (thing_is_player(me)) {
+      topcon(UI_IMPORTANT_FMT_STR "You hear a click..." UI_RESET_FMT);
+    }
+  } else {
+    //
+    // The trap fails
+    //
+    if (thing_is_player(me)) {
+      topcon(UI_IMPORTANT_FMT_STR "You hear a click, but nothing happens..." UI_RESET_FMT);
     }
   }
 }

@@ -9,50 +9,50 @@
 #include "../my_test.hpp"
 #include "../my_thing_inlines.hpp"
 
-[[nodiscard]] static auto test_player_fall_chasm_via_trap(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_player_did_not_trigger(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
 
   LevelNum const level_num = 0;
-  auto           w         = 7;
+  auto           w         = 17;
   auto           h         = 7;
 
   //
   // How the dungeon starts out, and how we expect it to change
   //
   std::string const level1 // first level
-      = "......."
-        "......."
-        "......."
-        "..@t..."
-        "......."
-        "......."
-        ".......";
+      = "................."
+        "................."
+        "................."
+        "@$$$$$tttttt....."
+        "................."
+        "................."
+        ".................";
   std::string const expect1 // first level
-      = "......."
-        "......."
-        "......."
-        "...C..."
-        "......."
-        "......."
-        ".......";
+      = "................."
+        "................."
+        "................."
+        "......tttttt@...."
+        "................."
+        "................."
+        ".................";
   std::string const level2 // second level
-      = "xxxxxxx"
-        "xxxxxxx"
-        "xx...xx"
-        "xx...xx"
-        "xx...xx"
-        "xxxxxxx"
-        "xxxxxxx";
+      = "................."
+        "................."
+        "................."
+        "................."
+        "................."
+        "................."
+        ".................";
   std::string const expect2 // second level
-      = "xxxxxxx"
-        "xxxxxxx"
-        "xx...xx"
-        "xx.@.xx"
-        "xx...xx"
-        "xxxxxxx"
-        "xxxxxxx";
+      = "................."
+        "................."
+        "................."
+        "................."
+        "................."
+        "................."
+        ".................";
 
   //
   // Create the level and start playing
@@ -61,6 +61,7 @@
   Levelp    l2 = nullptr;
   Overrides overrides;
   overrides[ 't' ] = [](char c, bpoint p) -> Tpp { return tp_find_mand("trap_chasm"); };
+  overrides[ '$' ] = [](char c, bpoint p) -> Tpp { return tp_find_mand("horseshoe"); };
   Levelsp v        = game_test_init(g, &l1, level_num, w, h, level1.c_str(), overrides);
   game_test_init_level(g, v, &l2, level_num + 1, w, h, level2.c_str());
 
@@ -91,8 +92,7 @@
   //
   // Move right
   //
-  TEST_PROGRESS(t);
-  {
+  for (auto tries = 0; tries < 12; tries++) {
     TEST_LOG(t, "move right");
     TRACE();
     up = down = left = right = false;
@@ -107,7 +107,7 @@
   }
 
   //
-  // Player should have fallen now
+  // Player should not have fallen due to all that luck
   //
   TEST_PROGRESS(t);
   if (! (result = level_match_contents(g, v, l1, t, w, h, expect1.c_str()))) {
@@ -124,14 +124,14 @@
   }
 
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 3; tries++) {
+  for (auto tries = 0; tries < 4; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE();
     TEST_ASSERT(t, game_event_wait(g), "failed to wait");
     TEST_ASSERT(t, game_wait_for_tick_to_finish(g, v, l2), "failed to wait for tick to finish");
   }
 
-  TEST_ASSERT(t, game_tick_get(g, v) == 4, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 16, "final tick counter value");
 
   TEST_PASSED(t);
 exit:
@@ -141,14 +141,14 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_player_fall_chasm_via_trap() -> bool // NOLINT
+[[nodiscard]] auto test_load_player_did_not_trigger() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("player_fall_chasm_via_trap");
+  Testp test = test_load("player_did_not_trigger");
 
   // begin sort marker1 {
-  test_callback_set(test, test_player_fall_chasm_via_trap);
+  test_callback_set(test, test_player_did_not_trigger);
   // end sort marker1 }
 
   return true;
