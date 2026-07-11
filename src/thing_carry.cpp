@@ -276,7 +276,7 @@ void thing_on_carry_success_set(Tpp tp, thing_on_carry_success_t callback)
   //
   // Avoid rapid drop/collect loops
   //
-  if (item->tick_dropped != 0u) {
+  if (item->tick_dropped != 0U) {
     if (item->tick_dropped >= v->tick - 1) {
       return false;
     }

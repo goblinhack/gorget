@@ -3,7 +3,6 @@
 //
 
 #include "my_dice_class.hpp"
-#include "my_main.hpp"
 #include "my_random.hpp"
 #include "my_string.hpp"
 

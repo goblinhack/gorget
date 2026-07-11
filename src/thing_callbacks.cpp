@@ -485,7 +485,7 @@ void thing_on_activated_set(Tpp tp, thing_on_activated_t callback)
   tp->on_activated = callback;
 }
 
-bool thing_on_activated(Gamep g, Levelsp v, Levelp l, Thingp trap, Thingp user)
+auto thing_on_activated(Gamep g, Levelsp v, Levelp l, Thingp trap, Thingp user) -> bool
 {
   TRACE();
   auto *tp = thing_tp(trap);

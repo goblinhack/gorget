@@ -122,7 +122,7 @@ void thing_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me);
 
 using thing_on_activated_t = bool (*)(Gamep, Levelsp, Levelp, Thingp trap, Thingp sucker);
 void thing_on_activated_set(Tpp tp, thing_on_activated_t callback);
-bool thing_on_activated(Gamep g, Levelsp v, Levelp l, Thingp trap, Thingp sucker);
+auto thing_on_activated(Gamep g, Levelsp v, Levelp l, Thingp trap, Thingp user) -> bool;
 
 using thing_on_teleported_t = void (*)(Gamep, Levelsp, Levelp, Thingp me);
 void thing_on_teleported_set(Tpp tp, thing_on_teleported_t callback);

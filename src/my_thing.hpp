@@ -649,7 +649,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto player_mouse_down(Gamep, Levelsp, Levelp, int x, int y, uint32_t button) -> bool;
 [[nodiscard]] auto player_move_request(Gamep g, bool up, bool down, bool left, bool right, bool fire) -> bool;
 [[nodiscard]] auto player_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
-[[nodiscard]] auto stat_to_mod(int stat) -> int;
+[[nodiscard]] auto stat_to_mod(int val) -> int;
 [[nodiscard]] auto thing_age_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_age_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_age_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
@@ -1322,7 +1322,7 @@ void thing_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_tick_end(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_tick_idle(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_topcon(Gamep g, Levelsp v, Levelp l, Thingp t, const char *fmt, ...) CHECK_FORMAT_STR(printf, 5, 6);
-void thing_trap_handle(Gamep g, Levelsp v, Levelp l, Thingp t);
+void thing_trap_handle(Gamep g, Levelsp v, Levelp l, Thingp me);
 void thing_update_pos(Gamep g, Levelsp v, Levelp l, Thingp me);
 void thing_vision_calculate(Gamep g, Levelsp v, Levelp l, Thingp me);
 void thing_vision_reset(Gamep g, Levelsp v, Levelp l, Thingp t);

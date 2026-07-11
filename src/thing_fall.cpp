@@ -65,16 +65,16 @@ static auto thing_choose_landing_spot(Gamep g, Levelsp v, Levelp l, Thingp me, b
           //
           // If lucky, no landing on lava
           //
-          if (thing_is_player(me) && level_is_lava(g, v, l, where)) {
-            if (thing_stat_success(g, v, l, me, THING_STAT_LUCK)) {
+          if (thing_is_player(me) && (level_is_lava(g, v, l, where) != nullptr)) {
+            if (thing_stat_success(g, v, l, me, THING_STAT_LUCK) != 0) {
               //
               // Continue to look
               //
               saved = true;
               continue;
-            } else {
-              return where;
             }
+            return where;
+
           } else {
             return where;
           }
@@ -101,7 +101,7 @@ static auto thing_choose_landing_spot(Gamep g, Levelsp v, Levelp l, Thingp me) -
 
   if (thing_is_player(me)) {
     if (saved) {
-      if (level_is_lava(g, v, l, where)) {
+      if (level_is_lava(g, v, l, where) != nullptr) {
         topcon(UI_IMPORTANT_FMT_STR "You manage to avoid the lava as you fall. And then somehow, still slip into it!" UI_RESET_FMT);
       } else {
         topcon(UI_IMPORTANT_FMT_STR "You manage to avoid the lava as you fall!" UI_RESET_FMT);

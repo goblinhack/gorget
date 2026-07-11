@@ -51,7 +51,7 @@
   }
 }
 
-[[nodiscard]] auto stat_to_mod_string(int val) -> const std::string
+[[nodiscard]] static auto stat_to_mod_string(int val) -> const std::string
 {
   if (val <= THING_STAT_MIN) {
     return "-9";
@@ -251,7 +251,7 @@
 {
   TRACE_DEBUG();
 
-  int result[ 20 ][ 20 ] = {
+  int const result[ 20 ][ 20 ] = {
       //       10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10  stat
       //       -9 -8 -7 -6 -5 -4 -3 -2 -1 +0 +1 +2 +3 +4 +5 +6 +7 +8 +9 +10 mod
       //        1  2  3  4  5  6  7  8  9 10 11 12 12 14 15 16 17 18 19 20  total
