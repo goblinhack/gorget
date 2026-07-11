@@ -623,8 +623,8 @@ static auto game_event_abort(Gamep g) -> bool
 
   switch (game_state(g)) {
     case STATE_PLAYING :           [[fallthrough]];
-    case STATE_LEVEL_SELECT_MENU : [[fallthrough]];
     case STATE_MAIN_MENU :         break;
+    case STATE_LEVEL_SELECT_MENU : [[fallthrough]];
     case STATE_THROW_ITEM :        [[fallthrough]];
     case STATE_COLLECT_MENU :      [[fallthrough]];
     case STATE_DEAD_MENU :         [[fallthrough]];
