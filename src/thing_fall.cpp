@@ -74,10 +74,8 @@ static auto thing_choose_landing_spot(Gamep g, Levelsp v, Levelp l, Thingp me, b
               continue;
             }
             return where;
-
-          } else {
-            return where;
           }
+          return where;
         }
       }
     }
