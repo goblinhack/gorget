@@ -58,11 +58,6 @@ enum { UI_TYPE_PIXELART = 0, UI_TYPES_MAX = 1 };
 #define UI_YELLOW_FMT_STR    "%%fg=yellow$"
 
 //
-// Character sizes for boxes in the UI
-//
-enum { UI_TILE_HEIGHT = 8, UI_TILE_WIDTH = 8 };
-
-//
 // Character sizes for text in the UI
 //
 enum { UI_FONT_HEIGHT = 8, UI_FONT_WIDTH = 6 };

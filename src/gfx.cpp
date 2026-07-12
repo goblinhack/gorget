@@ -189,7 +189,7 @@ static void gfx_ui_init_0()
       "ui.0,0,15",  "ui.0,1,15",  "ui.0,2,15",  "ui.0,3,15",  "ui.0,4,15",  "ui.0,5,15",  "ui.0,6,15",  "ui.0,7,15",  "ui.0,8,15",  "ui.0,9,15",
       "ui.0,10,15", "ui.0,11,15", "ui.0,12,15", "ui.0,13,15", "ui.0,14,15", "ui.0,15,15",
   };
-  tile_load_arr("data/gfx/ui/ui_box0.tga", "ui_box0", 8, 8, ARRAY_SIZE(tiles), tiles);
+  tile_load_arr("data/gfx/ui/ui_box0.tga", "ui_box0", UI_FONT_WIDTH, UI_FONT_HEIGHT, ARRAY_SIZE(tiles), tiles);
 }
 
 static void gfx_ui_init_1()
@@ -222,7 +222,7 @@ static void gfx_ui_init_1()
       "ui.1,0,15",  "ui.1,1,15",  "ui.1,2,15",  "ui.1,3,15",  "ui.1,4,15",  "ui.1,5,15",  "ui.1,6,15",  "ui.1,7,15",  "ui.1,8,15",  "ui.1,9,15",
       "ui.1,10,15", "ui.1,11,15", "ui.1,12,15", "ui.1,13,15", "ui.1,14,15", "ui.1,15,15",
   };
-  tile_load_arr("data/gfx/ui/ui_box1.tga", "ui_box", UI_TILE_WIDTH, UI_TILE_HEIGHT, ARRAY_SIZE(tiles), tiles);
+  tile_load_arr("data/gfx/ui/ui_box1.tga", "ui_box", UI_FONT_WIDTH, UI_FONT_HEIGHT, ARRAY_SIZE(tiles), tiles);
 }
 
 static void gfx_ui_init_2()
@@ -255,7 +255,7 @@ static void gfx_ui_init_2()
       "ui.2,0,15",  "ui.2,1,15",  "ui.2,2,15",  "ui.2,3,15",  "ui.2,4,15",  "ui.2,5,15",  "ui.2,6,15",  "ui.2,7,15",  "ui.2,8,15",  "ui.2,9,15",
       "ui.2,10,15", "ui.2,11,15", "ui.2,12,15", "ui.2,13,15", "ui.2,14,15", "ui.2,15,15",
   };
-  tile_load_arr_sprites("data/gfx/ui/ui_box2.tga", "ui_box2", UI_TILE_WIDTH, UI_TILE_HEIGHT, ARRAY_SIZE(tiles), tiles);
+  tile_load_arr_sprites("data/gfx/ui/ui_box2.tga", "ui_box2", UI_FONT_WIDTH, UI_FONT_HEIGHT, ARRAY_SIZE(tiles), tiles);
 }
 
 static void gfx_ui_init_3()
@@ -288,7 +288,7 @@ static void gfx_ui_init_3()
       "ui.3,0,15",  "ui.3,1,15",  "ui.3,2,15",  "ui.3,3,15",  "ui.3,4,15",  "ui.3,5,15",  "ui.3,6,15",  "ui.3,7,15",  "ui.3,8,15",  "ui.3,9,15",
       "ui.3,10,15", "ui.3,11,15", "ui.3,12,15", "ui.3,13,15", "ui.3,14,15", "ui.3,15,15",
   };
-  tile_load_arr("data/gfx/ui/ui_box3.tga", "ui_box3", UI_TILE_WIDTH, UI_TILE_HEIGHT, ARRAY_SIZE(tiles), tiles);
+  tile_load_arr("data/gfx/ui/ui_box3.tga", "ui_box3", UI_FONT_WIDTH, UI_FONT_HEIGHT, ARRAY_SIZE(tiles), tiles);
 }
 
 static void gfx_ui_init_4()
@@ -321,7 +321,7 @@ static void gfx_ui_init_4()
       "ui.4,0,15",  "ui.4,1,15",  "ui.4,2,15",  "ui.4,3,15",  "ui.4,4,15",  "ui.4,5,15",  "ui.4,6,15",  "ui.4,7,15",  "ui.4,8,15",  "ui.4,9,15",
       "ui.4,10,15", "ui.4,11,15", "ui.4,12,15", "ui.4,13,15", "ui.4,14,15", "ui.4,15,15",
   };
-  tile_load_arr("data/gfx/ui/ui_box4.tga", "ui_box4", UI_TILE_WIDTH, UI_TILE_HEIGHT, ARRAY_SIZE(tiles), tiles);
+  tile_load_arr("data/gfx/ui/ui_box4.tga", "ui_box4", UI_FONT_WIDTH, UI_FONT_HEIGHT, ARRAY_SIZE(tiles), tiles);
 }
 
 static void gfx_ui_init_5()
@@ -354,7 +354,7 @@ static void gfx_ui_init_5()
       "ui.5,0,15",  "ui.5,1,15",  "ui.5,2,15",  "ui.5,3,15",  "ui.5,4,15",  "ui.5,5,15",  "ui.5,6,15",  "ui.5,7,15",  "ui.5,8,15",  "ui.5,9,15",
       "ui.5,10,15", "ui.5,11,15", "ui.5,12,15", "ui.5,13,15", "ui.5,14,15", "ui.5,15,15",
   };
-  tile_load_arr("data/gfx/ui/ui_box5.tga", "ui_box5", 8, 8, ARRAY_SIZE(tiles), tiles);
+  tile_load_arr("data/gfx/ui/ui_box5.tga", "ui_box5", UI_FONT_WIDTH, UI_FONT_HEIGHT, ARRAY_SIZE(tiles), tiles);
 }
 
 static void gfx_ui_init_6()
@@ -387,7 +387,7 @@ static void gfx_ui_init_6()
       "ui.6,0,15",  "ui.6,1,15",  "ui.6,2,15",  "ui.6,3,15",  "ui.6,4,15",  "ui.6,5,15",  "ui.6,6,15",  "ui.6,7,15",  "ui.6,8,15",  "ui.6,9,15",
       "ui.6,10,15", "ui.6,11,15", "ui.6,12,15", "ui.6,13,15", "ui.6,14,15", "ui.6,15,15",
   };
-  tile_load_arr("data/gfx/ui/ui_box6.tga", "ui_box6", UI_TILE_WIDTH, UI_TILE_HEIGHT, ARRAY_SIZE(tiles), tiles);
+  tile_load_arr("data/gfx/ui/ui_box6.tga", "ui_box6", UI_FONT_WIDTH, UI_FONT_HEIGHT, ARRAY_SIZE(tiles), tiles);
 }
 
 static void gfx_ui_init_7()
@@ -420,7 +420,7 @@ static void gfx_ui_init_7()
       "ui.7,0,15",  "ui.7,1,15",  "ui.7,2,15",  "ui.7,3,15",  "ui.7,4,15",  "ui.7,5,15",  "ui.7,6,15",  "ui.7,7,15",  "ui.7,8,15",  "ui.7,9,15",
       "ui.7,10,15", "ui.7,11,15", "ui.7,12,15", "ui.7,13,15", "ui.7,14,15", "ui.7,15,15",
   };
-  tile_load_arr("data/gfx/ui/ui_box7.tga", "ui_box7", UI_TILE_WIDTH, UI_TILE_HEIGHT, ARRAY_SIZE(tiles), tiles);
+  tile_load_arr("data/gfx/ui/ui_box7.tga", "ui_box7", UI_FONT_WIDTH, UI_FONT_HEIGHT, ARRAY_SIZE(tiles), tiles);
 }
 
 static void gfx_ui_init_8()
@@ -453,7 +453,7 @@ static void gfx_ui_init_8()
       "ui.8,0,15",  "ui.8,1,15",  "ui.8,2,15",  "ui.8,3,15",  "ui.8,4,15",  "ui.8,5,15",  "ui.8,6,15",  "ui.8,7,15",  "ui.8,8,15",  "ui.8,9,15",
       "ui.8,10,15", "ui.8,11,15", "ui.8,12,15", "ui.8,13,15", "ui.8,14,15", "ui.8,15,15",
   };
-  tile_load_arr("data/gfx/ui/ui_vert1.tga", "ui_box8", 8, 8, ARRAY_SIZE(tiles), tiles);
+  tile_load_arr("data/gfx/ui/ui_vert1.tga", "ui_box8", UI_FONT_WIDTH, UI_FONT_HEIGHT, ARRAY_SIZE(tiles), tiles);
 }
 
 static void gfx_ui_init_9()
@@ -486,7 +486,7 @@ static void gfx_ui_init_9()
       "ui.9,0,15",  "ui.9,1,15",  "ui.9,2,15",  "ui.9,3,15",  "ui.9,4,15",  "ui.9,5,15",  "ui.9,6,15",  "ui.9,7,15",  "ui.9,8,15",  "ui.9,9,15",
       "ui.9,10,15", "ui.9,11,15", "ui.9,12,15", "ui.9,13,15", "ui.9,14,15", "ui.9,15,15",
   };
-  tile_load_arr("data/gfx/ui/ui_vert2.tga", "ui_box9", 8, 8, ARRAY_SIZE(tiles), tiles);
+  tile_load_arr("data/gfx/ui/ui_vert2.tga", "ui_box9", UI_FONT_WIDTH, UI_FONT_HEIGHT, ARRAY_SIZE(tiles), tiles);
 }
 
 static void gfx_ui_init_10()
@@ -522,7 +522,7 @@ static void gfx_ui_init_10()
       "ui.10,3,15",  "ui.10,4,15",  "ui.10,5,15",  "ui.10,6,15",  "ui.10,7,15",  "ui.10,8,15",  "ui.10,9,15",  "ui.10,10,15", "ui.10,11,15",
       "ui.10,12,15", "ui.10,13,15", "ui.10,14,15", "ui.10,15,15",
   };
-  tile_load_arr("data/gfx/ui/ui_horiz1.tga", "ui_box10", 8, 8, ARRAY_SIZE(tiles), tiles);
+  tile_load_arr("data/gfx/ui/ui_horiz1.tga", "ui_box10", UI_FONT_WIDTH, UI_FONT_HEIGHT, ARRAY_SIZE(tiles), tiles);
 }
 
 static void gfx_ui_init_11()
@@ -558,7 +558,7 @@ static void gfx_ui_init_11()
       "ui.11,3,15",  "ui.11,4,15",  "ui.11,5,15",  "ui.11,6,15",  "ui.11,7,15",  "ui.11,8,15",  "ui.11,9,15",  "ui.11,10,15", "ui.11,11,15",
       "ui.11,12,15", "ui.11,13,15", "ui.11,14,15", "ui.11,15,15",
   };
-  tile_load_arr("data/gfx/ui/ui_horiz2.tga", "ui_box11", 8, 8, ARRAY_SIZE(tiles), tiles);
+  tile_load_arr("data/gfx/ui/ui_horiz2.tga", "ui_box11", UI_FONT_WIDTH, UI_FONT_HEIGHT, ARRAY_SIZE(tiles), tiles);
 }
 
 static void gfx_ui_init_12()
@@ -594,7 +594,7 @@ static void gfx_ui_init_12()
       "ui.12,3,15",  "ui.12,4,15",  "ui.12,5,15",  "ui.12,6,15",  "ui.12,7,15",  "ui.12,8,15",  "ui.12,9,15",  "ui.12,10,15", "ui.12,11,15",
       "ui.12,12,15", "ui.12,13,15", "ui.12,14,15", "ui.12,15,15",
   };
-  tile_load_arr("data/gfx/ui/ui_vert_scroll1.tga", "ui_box12", 8, 8, ARRAY_SIZE(tiles), tiles);
+  tile_load_arr("data/gfx/ui/ui_vert_scroll1.tga", "ui_box12", UI_FONT_WIDTH, UI_FONT_HEIGHT, ARRAY_SIZE(tiles), tiles);
 }
 
 static void gfx_ui_init_13()
@@ -630,7 +630,7 @@ static void gfx_ui_init_13()
       "ui.13,3,15",  "ui.13,4,15",  "ui.13,5,15",  "ui.13,6,15",  "ui.13,7,15",  "ui.13,8,15",  "ui.13,9,15",  "ui.13,10,15", "ui.13,11,15",
       "ui.13,12,15", "ui.13,13,15", "ui.13,14,15", "ui.13,15,15",
   };
-  tile_load_arr("data/gfx/ui/ui_vert_scroll2.tga", "ui_box13", 8, 8, ARRAY_SIZE(tiles), tiles);
+  tile_load_arr("data/gfx/ui/ui_vert_scroll2.tga", "ui_box13", UI_FONT_WIDTH, UI_FONT_HEIGHT, ARRAY_SIZE(tiles), tiles);
 }
 
 static void gfx_ui_init_14()
@@ -666,7 +666,7 @@ static void gfx_ui_init_14()
       "ui.14,3,15",  "ui.14,4,15",  "ui.14,5,15",  "ui.14,6,15",  "ui.14,7,15",  "ui.14,8,15",  "ui.14,9,15",  "ui.14,10,15", "ui.14,11,15",
       "ui.14,12,15", "ui.14,13,15", "ui.14,14,15", "ui.14,15,15",
   };
-  tile_load_arr("data/gfx/ui/ui_horiz_scroll1.tga", "ui_box14", 8, 8, ARRAY_SIZE(tiles), tiles);
+  tile_load_arr("data/gfx/ui/ui_horiz_scroll1.tga", "ui_box14", UI_FONT_WIDTH, UI_FONT_HEIGHT, ARRAY_SIZE(tiles), tiles);
 }
 
 static void gfx_ui_init_15()
@@ -702,7 +702,7 @@ static void gfx_ui_init_15()
       "ui.15,3,15",  "ui.15,4,15",  "ui.15,5,15",  "ui.15,6,15",  "ui.15,7,15",  "ui.15,8,15",  "ui.15,9,15",  "ui.15,10,15", "ui.15,11,15",
       "ui.15,12,15", "ui.15,13,15", "ui.15,14,15", "ui.15,15,15",
   };
-  tile_load_arr("data/gfx/ui/ui_horiz_scroll2.tga", "ui_box15", 8, 8, ARRAY_SIZE(tiles), tiles);
+  tile_load_arr("data/gfx/ui/ui_horiz_scroll2.tga", "ui_box15", UI_FONT_WIDTH, UI_FONT_HEIGHT, ARRAY_SIZE(tiles), tiles);
 }
 
 static void gfx_ui_init_progress_bar()

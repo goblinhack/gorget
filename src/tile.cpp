@@ -875,17 +875,12 @@ void tile_blit(const Tilep &tile, const spoint tl, const spoint br, const color 
 {
   TRACE_DEBUG();
 
-  float x1 = 0;
-  float x2 = 0;
-  float y1 = 0;
-  float y2 = 0;
-
-  x1 = tile->x1;
-  x2 = tile->x2;
-  y1 = tile->y1;
-  y2 = tile->y2;
-
+  auto x1      = tile->x1;
+  auto x2      = tile->x2;
+  auto y1      = tile->y1;
+  auto y2      = tile->y2;
   auto binding = tile->gl_binding();
+
   blit(binding, x1, y2, x2, y1, tl.x, br.y, br.x, tl.y, c);
 }
 
@@ -917,10 +912,10 @@ void tile_blit(const Tilep &tile, spoint tl, spoint br, const color &color_tl, c
 {
   TRACE_DEBUG();
 
-  float const x1 = tile->x1;
-  float const x2 = tile->x2;
-  float const y1 = tile->y1;
-  float const y2 = tile->y2;
+  auto x1 = tile->x1;
+  auto x2 = tile->x2;
+  auto y1 = tile->y1;
+  auto y2 = tile->y2;
 
   blit(tile->gl_binding(), x1, y2, x2, y1, tl.x, br.y, br.x, tl.y, color_tl, color_tr, color_bl, color_br);
 }
@@ -930,17 +925,13 @@ void tile_blit_section(const Tilep &tile, const fpoint &tile_tl, const fpoint &t
 {
   TRACE_DEBUG();
 
-  float       x1 = 0;
-  float       x2 = 0;
-  float       y1 = 0;
-  float       y2 = 0;
-  float const tw = tile->x2 - tile->x1;
-  float const th = tile->y2 - tile->y1;
+  auto const tw = tile->x2 - tile->x1;
+  auto const th = tile->y2 - tile->y1;
 
-  x1 = tile->x1 + (tile_tl.x * tw);
-  x2 = tile->x1 + (tile_br.x * tw);
-  y1 = tile->y1 + (tile_tl.y * th);
-  y2 = tile->y1 + (tile_br.y * th);
+  auto x1 = tile->x1 + (tile_tl.x * tw);
+  auto x2 = tile->x1 + (tile_br.x * tw);
+  auto y1 = tile->y1 + (tile_tl.y * th);
+  auto y2 = tile->y1 + (tile_br.y * th);
 
   blit(tile->gl_binding(), x1, y2, x2, y1, tl.x, br.y, br.x, tl.y, color_tl, color_tr, color_bl, color_br);
 }
