@@ -47,6 +47,7 @@ void wid_load_destroy(Gamep g);
 void wid_options_menu_destroy(Gamep g);
 void wid_load_select(Gamep g);
 void wid_main_menu_destroy(Gamep g);
+void wid_main_menu_hide(Gamep g);
 void wid_main_menu_select(Gamep g);
 void wid_more_select(Gamep g);
 void wid_new_game(Gamep g);

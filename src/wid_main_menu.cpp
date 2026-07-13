@@ -43,7 +43,7 @@ void wid_main_menu_destroy(Gamep g)
   wid_main_menu_window = nullptr;
 }
 
-static void wid_main_menu_hide(Gamep g)
+void wid_main_menu_hide(Gamep g)
 {
   con("Main menu: hide");
   TRACE_INDENT();

@@ -173,6 +173,8 @@ void wid_options_menu_select(Gamep g)
   con("Options menu: select");
   TRACE_INDENT();
 
+  wid_main_menu_hide(g);
+
   if (wid_options_menu_window != nullptr) {
     wid_options_menu_destroy(g);
   }
