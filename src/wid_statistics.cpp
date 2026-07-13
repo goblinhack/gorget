@@ -282,7 +282,7 @@ void wid_statistics_show(Gamep g, Levelsp v, Levelp l, Thingp player)
 
     spoint const tl((defeated_width / 2) - 3, defeated_height - 4);
     spoint const br((defeated_width / 2) + 3, defeated_height - 2);
-    wid_set_on_mouse_up(w, wid_statistics_close);
+    wid_set_on_mouse_down(w, wid_statistics_close);
     wid_set_pos(w, tl, br);
   }
 

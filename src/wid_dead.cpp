@@ -105,7 +105,7 @@ static void wid_dead_close(Gamep g)
   return false;
 }
 
-[[nodiscard]] static auto wid_dead_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_dead_mouse_down(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
   wid_dead_close(g);
@@ -302,7 +302,7 @@ void wid_dead_select(Gamep g, const std::string &reason)
     spoint const br2(width - 11, h - 5);
 
     wid_set_pos(w, tl2, br2);
-    wid_set_on_mouse_up(w, wid_dead_mouse_up);
+    wid_set_on_mouse_down(w, wid_dead_mouse_down);
   }
 
   wid_update(g, wid_dead_window->wid_text_area->wid_text_area);

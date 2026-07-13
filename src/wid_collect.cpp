@@ -144,7 +144,7 @@ static void wid_collect_mouse_over_end(Gamep g, Widp w)
   return true;
 }
 
-[[nodiscard]] static auto wid_collect_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_collect_mouse_down(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
 
@@ -257,7 +257,7 @@ static void wid_collect_mouse_over_end(Gamep g, Widp w)
 
                 w = wid_icon[ c - 'b' ];
                 if (w != nullptr) {
-                  (void) wid_collect_mouse_up(g, w, -1, -1, 0);
+                  (void) wid_collect_mouse_down(g, w, -1, -1, 0);
                 }
 
                 w = wid_item[ c - 'b' ];
@@ -382,7 +382,7 @@ void wid_collect_show(Gamep g, Levelsp v, Levelp l, Thingp player, std::vector< 
       wid_set_style(w, button_style);
       wid_set_pos(w, tl, br);
       wid_set_text(w, s);
-      wid_set_on_mouse_up(w, wid_collect_all);
+      wid_set_on_mouse_down(w, wid_collect_all);
     }
 
     //
@@ -397,7 +397,7 @@ void wid_collect_show(Gamep g, Levelsp v, Levelp l, Thingp player, std::vector< 
       wid_set_text_lhs(w, 1u);
       wid_set_pos(w, tl, br);
       wid_set_text(w, "collect all items");
-      wid_set_on_mouse_up(w, wid_collect_all);
+      wid_set_on_mouse_down(w, wid_collect_all);
     }
 
     y_at += button_step;
@@ -424,7 +424,7 @@ void wid_collect_show(Gamep g, Levelsp v, Levelp l, Thingp player, std::vector< 
 
         if (item != nullptr) {
           wid_set_thing_context(g, v, w, item);
-          wid_set_on_mouse_up(w, wid_collect_mouse_up);
+          wid_set_on_mouse_down(w, wid_collect_mouse_down);
         }
 
         wid_set_on_mouse_over_begin(w, wid_collect_mouse_over_begin);
@@ -457,7 +457,7 @@ void wid_collect_show(Gamep g, Levelsp v, Levelp l, Thingp player, std::vector< 
 
       if (item != nullptr) {
         wid_set_thing_context(g, v, w, item);
-        wid_set_on_mouse_up(w, wid_collect_mouse_up);
+        wid_set_on_mouse_down(w, wid_collect_mouse_down);
       }
 
       wid_set_on_mouse_over_begin(w, wid_collect_mouse_over_begin);
@@ -504,7 +504,7 @@ void wid_collect_show(Gamep g, Levelsp v, Levelp l, Thingp player, std::vector< 
 
         if (item != nullptr) {
           wid_set_thing_context(g, v, w, item);
-          wid_set_on_mouse_up(w, wid_collect_mouse_up);
+          wid_set_on_mouse_down(w, wid_collect_mouse_down);
         }
 
         wid_set_on_mouse_over_begin(w, wid_collect_mouse_over_begin);
@@ -524,7 +524,7 @@ void wid_collect_show(Gamep g, Levelsp v, Levelp l, Thingp player, std::vector< 
 
     spoint const tl((collect_width / 2) - 4, collect_height - 4);
     spoint const br((collect_width / 2) + 3, collect_height - 2);
-    wid_set_on_mouse_up(w, wid_collect_back);
+    wid_set_on_mouse_down(w, wid_collect_back);
     wid_set_pos(w, tl, br);
   }
 

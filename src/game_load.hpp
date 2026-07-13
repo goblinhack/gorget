@@ -1331,7 +1331,7 @@ static auto wid_load_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> 
   return true;
 }
 
-static auto wid_load_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+static auto wid_load_mouse_down(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   log("load selected slot");
   TRACE_INDENT();
@@ -1390,7 +1390,7 @@ void Game::load_select()
     spoint const br((menu_width / 2) + 3, menu_height - 2);
 
     wid_set_style(w, UI_WID_STYLE_NORMAL);
-    wid_set_on_mouse_up(w, wid_load_cancel);
+    wid_set_on_mouse_down(w, wid_load_cancel);
 
     wid_set_pos(w, tl, br);
   }
@@ -1433,9 +1433,9 @@ void Game::load_select()
         s += tmp.save_meta;
       }
       if (slot == UI_MAX_SAVE_SLOTS - 1) {
-        wid_set_on_mouse_up(w, wid_load_saved_snapshot);
+        wid_set_on_mouse_down(w, wid_load_saved_snapshot);
       } else {
-        wid_set_on_mouse_up(w, wid_load_mouse_up);
+        wid_set_on_mouse_down(w, wid_load_mouse_down);
       }
       slot_valid[ slot ] = true;
     }

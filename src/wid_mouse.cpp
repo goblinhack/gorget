@@ -957,14 +957,14 @@ void wid_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx, int
 
 void wid_mouse_down(Gamep g, uint32_t button, int x, int y)
 {
-  log("widget mouse down");
+  con("widget mouse down");
   TRACE();
 
   Widp w {};
 
   pixel_to_ascii(g, &x, &y);
   if (ascii_ok(x, y) == 0) {
-    log("widget mouse down, ignore, no pixel");
+    con("widget mouse down, ignore, no pixel");
     return;
   }
   ascii_mouse_x = x;
@@ -972,7 +972,7 @@ void wid_mouse_down(Gamep g, uint32_t button, int x, int y)
 
   w = wid_mouse_down_handler(g, x, y);
   if (w == nullptr) [[unlikely]] {
-    log("widget mouse down, ignore, no handler");
+    con("widget mouse down, ignore, no handler");
     return;
   }
 
@@ -991,7 +991,7 @@ void wid_mouse_down(Gamep g, uint32_t button, int x, int y)
     //
     if (wid_get_moveable(w)) {
       wid_mouse_motion_begin(g, w, x, y);
-      log("widget mouse down, mouse move");
+      con("widget mouse down, mouse move");
       return;
     }
 
@@ -999,7 +999,7 @@ void wid_mouse_down(Gamep g, uint32_t button, int x, int y)
       game_last_mouse_down_set(g, time_ms());
     }
 
-    log("widget mouse down, processed, raise on mouse");
+    con("widget mouse down, processed, raise on mouse");
     return;
   }
 
@@ -1007,7 +1007,7 @@ void wid_mouse_down(Gamep g, uint32_t button, int x, int y)
     wid_set_mode(w, WID_MODE_ACTIVE);
     wid_raise(g, w);
     wid_mouse_motion_begin(g, w, x, y);
-    log("widget mouse down, make wid active");
+    con("widget mouse down, make wid active");
     return;
   }
 
@@ -1022,6 +1022,7 @@ void wid_mouse_down(Gamep g, uint32_t button, int x, int y)
 
 void wid_mouse_held(Gamep g, uint32_t button, int x, int y)
 {
+  con("widget mouse held");
   TRACE();
 
   Widp w {};
@@ -1068,6 +1069,7 @@ void wid_mouse_held(Gamep g, uint32_t button, int x, int y)
 
 void wid_mouse_up(Gamep g, uint32_t button, int x, int y)
 {
+  con("widget mouse up");
   TRACE();
 
   Widp w {};
@@ -1087,8 +1089,6 @@ void wid_mouse_up(Gamep g, uint32_t button, int x, int y)
   }
 
   if (((w->on_mouse_up != nullptr) && (w->on_mouse_up)(g, w, x, y, button)) || wid_get_moveable(w)) {
-    (void) sound_play(g, "click");
-
     wid_set_mode(w, WID_MODE_ACTIVE);
     wid_raise(g, w);
     return;

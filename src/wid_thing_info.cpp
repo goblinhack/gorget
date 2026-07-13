@@ -1241,7 +1241,7 @@ static void wid_thing_info_item_mouse_over_end(Gamep g, Widp w)
   (void) wid_rightbar_init(g);
 }
 
-[[nodiscard]] static auto wid_thing_info_item_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_thing_info_item_mouse_down(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
 
@@ -1321,7 +1321,7 @@ static void wid_thing_info_item_mouse_over_end(Gamep g, Widp w)
     Widp w = parent->log(g, line, TEXT_FORMAT_LHS);
 
     wid_set_thing_context(g, v, w, item);
-    wid_set_on_mouse_up(w, wid_thing_info_item_mouse_up);
+    wid_set_on_mouse_down(w, wid_thing_info_item_mouse_down);
     wid_set_on_mouse_over_begin(w, wid_thing_info_item_mouse_over_begin);
     wid_set_on_mouse_over_end(w, wid_thing_info_item_mouse_over_end);
   }

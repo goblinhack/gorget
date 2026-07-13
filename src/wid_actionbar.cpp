@@ -745,7 +745,7 @@ static auto wid_actionbar_create_window(Gamep g) -> bool
     auto tl      = spoint(x_at, 0);
     auto br      = spoint(x_at + option_width - 1, 0);
     wid_set_pos(w, tl, br);
-    wid_set_on_mouse_up(w, wid_actionbar_fire);
+    wid_set_on_mouse_down(w, wid_actionbar_fire);
     wid_set_on_mouse_held(w, wid_actionbar_repeat_fire);
     wid_set_on_mouse_over_begin(w, wid_actionbar_fire_over_begin);
     wid_set_on_mouse_over_end(w, wid_actionbar_fire_over_end);
@@ -763,7 +763,7 @@ static auto wid_actionbar_create_window(Gamep g) -> bool
     option_width = (::to_string(game_key_descend_get(g)) + " Descend").size();
     auto br      = spoint(x_at + option_width - 1, 0);
     wid_set_pos(w, tl, br);
-    wid_set_on_mouse_up(w, wid_actionbar_descend);
+    wid_set_on_mouse_down(w, wid_actionbar_descend);
     wid_set_on_mouse_over_begin(w, wid_actionbar_descend_over_begin);
     wid_set_on_mouse_over_end(w, wid_actionbar_descend_over_end);
     wid_set_text(w, UI_SHORTCUT_FMT_STR "" + ::to_string(game_key_descend_get(g)) + UI_HIGHLIGHT_FMT_STR "" + " Descend");
@@ -780,7 +780,7 @@ static auto wid_actionbar_create_window(Gamep g) -> bool
     option_width = (::to_string(game_key_ascend_get(g)) + " Ascend").size();
     auto br      = spoint(x_at + option_width - 1, 0);
     wid_set_pos(w, tl, br);
-    wid_set_on_mouse_up(w, wid_actionbar_ascend);
+    wid_set_on_mouse_down(w, wid_actionbar_ascend);
     wid_set_on_mouse_over_begin(w, wid_actionbar_ascend_over_begin);
     wid_set_on_mouse_over_end(w, wid_actionbar_ascend_over_end);
     wid_set_text(w, UI_SHORTCUT_FMT_STR "" + ::to_string(game_key_ascend_get(g)) + UI_HIGHLIGHT_FMT_STR "" + " Ascend");
@@ -797,7 +797,7 @@ static auto wid_actionbar_create_window(Gamep g) -> bool
     option_width = (::to_string(game_key_wait_get(g)) + " Wait").size();
     auto br      = spoint(x_at + option_width - 1, 0);
     wid_set_pos(w, tl, br);
-    wid_set_on_mouse_up(w, wid_actionbar_wait);
+    wid_set_on_mouse_down(w, wid_actionbar_wait);
     wid_set_on_mouse_held(w, wid_actionbar_repeat_wait);
     wid_set_on_mouse_over_begin(w, wid_actionbar_wait_over_begin);
     wid_set_on_mouse_over_end(w, wid_actionbar_wait_over_end);
@@ -815,7 +815,7 @@ static auto wid_actionbar_create_window(Gamep g) -> bool
     option_width = (::to_string(game_key_inventory_get(g)) + " Inv").size();
     auto br      = spoint(x_at + option_width - 1, 0);
     wid_set_pos(w, tl, br);
-    wid_set_on_mouse_up(w, wid_actionbar_inventory);
+    wid_set_on_mouse_down(w, wid_actionbar_inventory);
     wid_set_on_mouse_over_begin(w, wid_actionbar_inventory_over_begin);
     wid_set_on_mouse_over_end(w, wid_actionbar_inventory_over_end);
     wid_set_text(w, UI_SHORTCUT_FMT_STR "" + ::to_string(game_key_inventory_get(g)) + UI_HIGHLIGHT_FMT_STR "" + " Inv");
@@ -832,7 +832,7 @@ static auto wid_actionbar_create_window(Gamep g) -> bool
     option_width = (::to_string(game_key_load_get(g)) + " Load").size();
     auto br      = spoint(x_at + option_width - 1, 0);
     wid_set_pos(w, tl, br);
-    wid_set_on_mouse_up(w, wid_actionbar_load);
+    wid_set_on_mouse_down(w, wid_actionbar_load);
     wid_set_on_mouse_over_begin(w, wid_actionbar_load_over_begin);
     wid_set_on_mouse_over_end(w, wid_actionbar_load_over_end);
     wid_set_text(w, UI_SHORTCUT_FMT_STR "" + ::to_string(game_key_load_get(g)) + UI_HIGHLIGHT_FMT_STR "" + " Load");
@@ -849,7 +849,7 @@ static auto wid_actionbar_create_window(Gamep g) -> bool
     option_width = (::to_string(game_key_save_get(g)) + " Save").size();
     auto br      = spoint(x_at + option_width - 1, 0);
     wid_set_pos(w, tl, br);
-    wid_set_on_mouse_up(w, wid_actionbar_save);
+    wid_set_on_mouse_down(w, wid_actionbar_save);
     wid_set_on_mouse_over_begin(w, wid_actionbar_save_over_begin);
     wid_set_on_mouse_over_end(w, wid_actionbar_save_over_end);
     wid_set_text(w, UI_SHORTCUT_FMT_STR "" + ::to_string(game_key_save_get(g)) + UI_HIGHLIGHT_FMT_STR "" + " Save");
@@ -866,7 +866,7 @@ static auto wid_actionbar_create_window(Gamep g) -> bool
     option_width = (::to_string(game_key_zoom_get(g)) + " Zoom").size();
     auto br      = spoint(x_at + option_width - 1, 0);
     wid_set_pos(w, tl, br);
-    wid_set_on_mouse_up(w, wid_actionbar_zoom);
+    wid_set_on_mouse_down(w, wid_actionbar_zoom);
     wid_set_on_mouse_over_begin(w, wid_actionbar_zoom_over_begin);
     wid_set_on_mouse_over_end(w, wid_actionbar_zoom_over_end);
     wid_set_text(w, UI_SHORTCUT_FMT_STR "" + ::to_string(game_key_zoom_get(g)) + UI_HIGHLIGHT_FMT_STR "" + " Zoom");
@@ -883,7 +883,7 @@ static auto wid_actionbar_create_window(Gamep g) -> bool
     option_width = (::to_string(game_key_help_get(g)) + " Help").size();
     auto br      = spoint(x_at + option_width - 1, 0);
     wid_set_pos(w, tl, br);
-    wid_set_on_mouse_up(w, wid_actionbar_help);
+    wid_set_on_mouse_down(w, wid_actionbar_help);
     wid_set_on_mouse_over_begin(w, wid_actionbar_help_over_begin);
     wid_set_on_mouse_over_end(w, wid_actionbar_help_over_end);
     wid_set_text(w, UI_SHORTCUT_FMT_STR "" + ::to_string(game_key_help_get(g)) + UI_HIGHLIGHT_FMT_STR "" + " Help");
@@ -900,7 +900,7 @@ static auto wid_actionbar_create_window(Gamep g) -> bool
     option_width = (::to_string(game_key_quit_get(g)) + " Quit").size();
     auto br      = spoint(x_at + option_width - 1, 0);
     wid_set_pos(w, tl, br);
-    wid_set_on_mouse_up(w, wid_actionbar_quit);
+    wid_set_on_mouse_down(w, wid_actionbar_quit);
     wid_set_on_mouse_over_begin(w, wid_actionbar_quit_over_begin);
     wid_set_on_mouse_over_end(w, wid_actionbar_quit_over_end);
     wid_set_text(w, UI_SHORTCUT_FMT_STR "" + ::to_string(game_key_quit_get(g)) + UI_HIGHLIGHT_FMT_STR "" + " Quit");

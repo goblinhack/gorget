@@ -211,7 +211,7 @@ void wid_cfg_sound_select(Gamep g)
 
     spoint const tl(1, y_at);
     spoint const br(6, y_at + 2);
-    wid_set_on_mouse_up(w, wid_cfg_sound_back);
+    wid_set_on_mouse_down(w, wid_cfg_sound_back);
     wid_set_pos(w, tl, br);
   }
   {
@@ -221,7 +221,7 @@ void wid_cfg_sound_select(Gamep g)
 
     spoint const tl(width - 15, y_at);
     spoint const br(width - 10, y_at + 2);
-    wid_set_on_mouse_up(w, wid_cfg_sound_save);
+    wid_set_on_mouse_down(w, wid_cfg_sound_save);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "S" UI_RESET_FMT "ave");
   }
@@ -232,7 +232,7 @@ void wid_cfg_sound_select(Gamep g)
 
     spoint const tl(width - 8, y_at);
     spoint const br(width - 1, y_at + 2);
-    wid_set_on_mouse_up(w, wid_cfg_sound_cancel);
+    wid_set_on_mouse_down(w, wid_cfg_sound_cancel);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "C" UI_RESET_FMT "ancel");
   }
@@ -263,7 +263,7 @@ void wid_cfg_sound_select(Gamep g)
   {
     TRACE();
     auto *p = wid_cfg_sound_window->wid_text_area->wid_text_area;
-    auto *w = wid_new_menu_button(g, p, "Effects value +");
+    auto *w = wid_new_bright_button(g, p, "Effects value +");
 
     spoint const tl((width / 2) + 9, y_at);
     spoint const br((width / 2) + 11, y_at + 2);
@@ -275,7 +275,7 @@ void wid_cfg_sound_select(Gamep g)
   {
     TRACE();
     auto *p = wid_cfg_sound_window->wid_text_area->wid_text_area;
-    auto *w = wid_new_menu_button(g, p, "Effects value -");
+    auto *w = wid_new_bright_button(g, p, "Effects value -");
 
     spoint const tl((width / 2) + 12, y_at);
     spoint const br((width / 2) + 14, y_at + 2);
@@ -311,7 +311,7 @@ void wid_cfg_sound_select(Gamep g)
   {
     TRACE();
     auto *p = wid_cfg_sound_window->wid_text_area->wid_text_area;
-    auto *w = wid_new_menu_button(g, p, "Music value +");
+    auto *w = wid_new_bright_button(g, p, "Music value +");
 
     spoint const tl((width / 2) + 9, y_at);
     spoint const br((width / 2) + 11, y_at + 2);
@@ -323,7 +323,7 @@ void wid_cfg_sound_select(Gamep g)
   {
     TRACE();
     auto *p = wid_cfg_sound_window->wid_text_area->wid_text_area;
-    auto *w = wid_new_menu_button(g, p, "Music value -");
+    auto *w = wid_new_bright_button(g, p, "Music value -");
 
     spoint const tl((width / 2) + 12, y_at);
     spoint const br((width / 2) + 14, y_at + 2);

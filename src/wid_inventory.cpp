@@ -93,7 +93,7 @@ void wid_inventory_mouse_over_end(Gamep g, Widp w)
   }
 }
 
-[[nodiscard]] auto wid_inventory_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] auto wid_inventory_mouse_down(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
 
@@ -170,7 +170,7 @@ void wid_inventory_mouse_over_end(Gamep g, Widp w)
 
                 w = wid_icon[ c - 'a' ];
                 if (w != nullptr) {
-                  (void) wid_inventory_mouse_up(g, w, -1, -1, 0);
+                  (void) wid_inventory_mouse_down(g, w, -1, -1, 0);
                 }
 
                 w = wid_item[ c - 'a' ];
@@ -291,7 +291,7 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
 
         if (item != nullptr) {
           wid_set_thing_context(g, v, w, item);
-          wid_set_on_mouse_up(w, wid_inventory_mouse_up);
+          wid_set_on_mouse_down(w, wid_inventory_mouse_down);
         }
 
         wid_set_on_mouse_over_begin(w, wid_inventory_mouse_over_begin);
@@ -324,7 +324,7 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
 
       if (item != nullptr) {
         wid_set_thing_context(g, v, w, item);
-        wid_set_on_mouse_up(w, wid_inventory_mouse_up);
+        wid_set_on_mouse_down(w, wid_inventory_mouse_down);
       }
 
       wid_set_on_mouse_over_begin(w, wid_inventory_mouse_over_begin);
@@ -376,7 +376,7 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
 
         if (item != nullptr) {
           wid_set_thing_context(g, v, w, item);
-          wid_set_on_mouse_up(w, wid_inventory_mouse_up);
+          wid_set_on_mouse_down(w, wid_inventory_mouse_down);
         }
 
         wid_set_on_mouse_over_begin(w, wid_inventory_mouse_over_begin);
@@ -395,7 +395,7 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
 
     spoint const tl((inventory_width / 2) - 4, inventory_height - 4);
     spoint const br((inventory_width / 2) + 3, inventory_height - 2);
-    wid_set_on_mouse_up(w, wid_inventory_back);
+    wid_set_on_mouse_down(w, wid_inventory_back);
     wid_set_pos(w, tl, br);
   }
 

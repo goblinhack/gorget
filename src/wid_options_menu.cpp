@@ -205,7 +205,7 @@ void wid_options_menu_select(Gamep g)
 
     spoint const tl(0, y_at);
     spoint const br(button_width, y_at + box_height);
-    wid_set_on_mouse_up(w, wid_options_menu_seed);
+    wid_set_on_mouse_down(w, wid_options_menu_seed);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "C" UI_FMT_STR "hange seed");
   }
@@ -217,7 +217,7 @@ void wid_options_menu_select(Gamep g)
 
     spoint const tl(0, y_at);
     spoint const br(button_width, y_at + box_height);
-    wid_set_on_mouse_up(w, wid_options_menu_player_name);
+    wid_set_on_mouse_down(w, wid_options_menu_player_name);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "P" UI_FMT_STR "layer name");
   }
@@ -229,7 +229,7 @@ void wid_options_menu_select(Gamep g)
 
     spoint const tl(0, y_at);
     spoint const br(button_width, y_at + box_height);
-    wid_set_on_mouse_up(w, wid_options_menu_display);
+    wid_set_on_mouse_down(w, wid_options_menu_display);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "D" UI_RESET_FMT "isplay");
   }
@@ -241,7 +241,7 @@ void wid_options_menu_select(Gamep g)
 
     spoint const tl(0, y_at);
     spoint const br(button_width, y_at + box_height);
-    wid_set_on_mouse_up(w, wid_options_menu_mouse);
+    wid_set_on_mouse_down(w, wid_options_menu_mouse);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "M" UI_RESET_FMT "ouse");
   }
@@ -253,7 +253,7 @@ void wid_options_menu_select(Gamep g)
 
     spoint const tl(0, y_at);
     spoint const br(button_width, y_at + box_height);
-    wid_set_on_mouse_up(w, wid_options_menu_sound);
+    wid_set_on_mouse_down(w, wid_options_menu_sound);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "S" UI_RESET_FMT "ound");
   }
@@ -265,7 +265,7 @@ void wid_options_menu_select(Gamep g)
 
     spoint const tl(0, y_at);
     spoint const br(button_width, y_at + box_height);
-    wid_set_on_mouse_up(w, wid_options_menu_keyboard);
+    wid_set_on_mouse_down(w, wid_options_menu_keyboard);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "K" UI_RESET_FMT "eyboard");
   }
@@ -277,7 +277,7 @@ void wid_options_menu_select(Gamep g)
 
     spoint const tl(0, y_at);
     spoint const br(button_width, y_at + box_height);
-    wid_set_on_mouse_up(w, wid_options_menu_back);
+    wid_set_on_mouse_down(w, wid_options_menu_back);
     wid_set_pos(w, tl, br);
   }
 

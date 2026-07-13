@@ -787,7 +787,7 @@ static auto wid_save_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> 
   return true;
 }
 
-static auto wid_save_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+static auto wid_save_mouse_down(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
 
@@ -830,7 +830,7 @@ auto Game::save_select() -> bool
     spoint const tl((menu_width / 2) - 4, menu_height - 4);
     spoint const br((menu_width / 2) + 3, menu_height - 2);
 
-    wid_set_on_mouse_up(w, wid_save_cancel);
+    wid_set_on_mouse_down(w, wid_save_cancel);
     wid_set_pos(w, tl, br);
   }
 
@@ -873,7 +873,7 @@ auto Game::save_select() -> bool
       // Cannot save over
       //
     } else {
-      wid_set_on_mouse_up(w, wid_save_mouse_up);
+      wid_set_on_mouse_down(w, wid_save_mouse_down);
       wid_set_int_context(w, slot);
     }
 

@@ -503,13 +503,9 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item, bool from_inventory)
 
   auto box_height  = 2;
   auto box_step    = 3;
-  auto menu_height = 2;
+  auto menu_height = 0;
 
-  if (thing_is_droppable(item)) {
-    menu_height += box_step;
-  }
-
-  if (thing_is_throwable(item)) {
+  if (thing_is_usable(item)) {
     menu_height += box_step;
   }
 
@@ -517,7 +513,15 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item, bool from_inventory)
     menu_height += box_step;
   }
 
-  if (thing_is_usable(item)) {
+  if (thing_wieldable(item)) {
+    menu_height += box_step;
+  }
+
+  if (thing_is_throwable(item)) {
+    menu_height += box_step;
+  }
+
+  if (thing_is_droppable(item)) {
     menu_height += box_step;
   }
 
@@ -528,7 +532,11 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item, bool from_inventory)
 
   int const    menu_width = UI_WID_POPUP_WIDTH_NORMAL;
   spoint const outer_tl((TERM_WIDTH / 2) - (menu_width / 2), (TERM_HEIGHT / 2) - (menu_height / 2));
-  spoint const outer_br((TERM_WIDTH / 2) + (menu_width / 2), (TERM_HEIGHT / 2) + (menu_height / 2) - 1);
+  spoint       outer_br;
+
+  outer_br.x = outer_tl.x + menu_width + 1;
+  outer_br.y = outer_tl.y + menu_height + 1;
+
   wid_item_menu_window = new WidPopup(g, "Item menu", outer_tl, outer_br, nullptr, "", false, false);
 
   auto button_width = outer_br.x - outer_tl.x - 2;
@@ -553,7 +561,7 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item, bool from_inventory)
       wid_gray_out_button(g, w);
     }
 
-    wid_set_on_mouse_up(w, wid_item_menu_use);
+    wid_set_on_mouse_down(w, wid_item_menu_use);
     wid_set_pos(w, tl, br);
     if (thing_is_potion(item)) {
       wid_set_text(w, UI_HIGHLIGHT_FMT_STR "U" UI_FMT_STR "se (drink)");
@@ -570,7 +578,7 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item, bool from_inventory)
 
     spoint const tl(0, y_at);
     spoint const br(button_width, y_at + box_height);
-    wid_set_on_mouse_up(w, wid_item_menu_equip);
+    wid_set_on_mouse_down(w, wid_item_menu_equip);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "E" UI_FMT_STR "quip");
     y_at += box_step;
@@ -584,7 +592,7 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item, bool from_inventory)
 
       spoint const tl(0, y_at);
       spoint const br(button_width, y_at + box_height);
-      wid_set_on_mouse_up(w, wid_item_menu_unwield);
+      wid_set_on_mouse_down(w, wid_item_menu_unwield);
       wid_set_pos(w, tl, br);
       wid_set_text(w, "Unwield (" UI_HIGHLIGHT_FMT_STR "W" UI_FMT_STR ")");
       y_at += box_step;
@@ -595,7 +603,7 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item, bool from_inventory)
 
       spoint const tl(0, y_at);
       spoint const br(button_width, y_at + box_height);
-      wid_set_on_mouse_up(w, wid_item_menu_wield);
+      wid_set_on_mouse_down(w, wid_item_menu_wield);
       wid_set_pos(w, tl, br);
       wid_set_text(w, UI_HIGHLIGHT_FMT_STR "W" UI_FMT_STR "ield");
       y_at += box_step;
@@ -614,7 +622,7 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item, bool from_inventory)
       wid_gray_out_button(g, w);
     }
 
-    wid_set_on_mouse_up(w, wid_item_menu_throw);
+    wid_set_on_mouse_down(w, wid_item_menu_throw);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "T" UI_FMT_STR "hrow");
     y_at += box_step;
@@ -632,7 +640,7 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item, bool from_inventory)
       wid_gray_out_button(g, w);
     }
 
-    wid_set_on_mouse_up(w, wid_item_menu_drop);
+    wid_set_on_mouse_down(w, wid_item_menu_drop);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "D" UI_FMT_STR "rop");
     y_at += box_step;
@@ -645,7 +653,7 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item, bool from_inventory)
 
     spoint const tl(0, y_at);
     spoint const br(button_width, y_at + box_height);
-    wid_set_on_mouse_up(w, wid_item_menu_back);
+    wid_set_on_mouse_down(w, wid_item_menu_back);
     wid_set_pos(w, tl, br);
   } else {
     TRACE();
@@ -654,7 +662,7 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item, bool from_inventory)
 
     spoint const tl(0, y_at);
     spoint const br(button_width, y_at + box_height);
-    wid_set_on_mouse_up(w, wid_item_menu_close);
+    wid_set_on_mouse_down(w, wid_item_menu_close);
     wid_set_pos(w, tl, br);
   }
 

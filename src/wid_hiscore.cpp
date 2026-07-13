@@ -81,7 +81,7 @@ static void wid_hiscore_destroy(Gamep g)
   return false;
 }
 
-[[nodiscard]] static auto wid_hiscore_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_hiscore_mouse_down(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
   wid_hiscore_destroy(g);
@@ -193,7 +193,7 @@ void wid_hiscores_show(Gamep g)
     spoint const tl((menu_width / 2) - 4, menu_height - 4);
     spoint const br((menu_width / 2) + 3, menu_height - 2);
 
-    wid_set_on_mouse_up(w, wid_hiscore_mouse_up);
+    wid_set_on_mouse_down(w, wid_hiscore_mouse_down);
     wid_set_pos(w, tl, br);
   }
 

@@ -62,7 +62,7 @@ void wid_level_select_destroy()
   return false;
 }
 
-[[nodiscard]] static auto wid_level_select_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_level_select_mouse_down(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   log("Level select menu: mouse up");
   TRACE();
@@ -117,7 +117,7 @@ void wid_level_select(Gamep g, Levelsp v, Levelp l)
     spoint const button_tl((menu_width / 2) - 5, menu_height - 6);
     spoint const button_br((menu_width / 2) + 4, menu_height - 4);
 
-    wid_set_on_mouse_up(w, wid_level_select_mouse_up);
+    wid_set_on_mouse_down(w, wid_level_select_mouse_down);
     wid_set_pos(w, button_tl, button_br);
   }
 

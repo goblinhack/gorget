@@ -98,7 +98,7 @@ void wid_main_menu_hide(Gamep g)
     wid_intro_select(g);
   }
 
-  return false; // suppress mouse click
+  return true;
 }
 
 [[nodiscard]] static auto game_menu_weekly_seed(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
@@ -413,7 +413,7 @@ void wid_main_menu_select(Gamep g)
 
     spoint const tl(0, y_at);
     spoint const br(button_width, y_at + button_height);
-    wid_set_on_mouse_up(w, game_menu_new_game);
+    wid_set_on_mouse_down(w, game_menu_new_game);
     wid_set_pos(w, tl, br);
     if (game_seed_source_get(g) == SEED_SOURCE_RANDOM) {
       std::string const s = std::string(UI_HIGHLIGHT_FMT_STR) + std::string("N") + std::string(UI_RESET_FMT) + std::string("ew game")
@@ -433,7 +433,7 @@ void wid_main_menu_select(Gamep g)
 
     spoint const tl(0, y_at);
     spoint const br(button_width, y_at + button_height);
-    wid_set_on_mouse_up(w, game_menu_weekly_seed);
+    wid_set_on_mouse_down(w, game_menu_weekly_seed);
     wid_set_pos(w, tl, br);
     std::string const s = std::string(UI_HIGHLIGHT_FMT_STR) + std::string("W") + std::string(UI_RESET_FMT) + std::string("eekly seed:")
                         + std::string(UI_RESET_FMT) + std::string(" ") + g_opt_seed_name_weekly;
@@ -448,7 +448,7 @@ void wid_main_menu_select(Gamep g)
 
       spoint const tl(0, y_at);
       spoint const br(button_width, y_at + button_height);
-      wid_set_on_mouse_up(w, game_menu_previous_seed);
+      wid_set_on_mouse_down(w, game_menu_previous_seed);
       wid_set_pos(w, tl, br);
       std::string const s = std::string(UI_HIGHLIGHT_FMT_STR) + std::string("P") + std::string(UI_RESET_FMT) + std::string("revious seed:")
                           + std::string(UI_RESET_FMT) + std::string(" ") + g_opt_seed_name_previous;
@@ -463,7 +463,7 @@ void wid_main_menu_select(Gamep g)
 
     spoint const tl(0, y_at);
     spoint const br(button_width, y_at + button_height);
-    wid_set_on_mouse_up(w, wid_main_menu_load);
+    wid_set_on_mouse_down(w, wid_main_menu_load);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "L" UI_FMT_STR "oad game");
   }
@@ -475,7 +475,7 @@ void wid_main_menu_select(Gamep g)
 
     spoint const tl(0, y_at);
     spoint const br(button_width, y_at + button_height);
-    wid_set_on_mouse_up(w, wid_main_menu_cfg);
+    wid_set_on_mouse_down(w, wid_main_menu_cfg);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "O" UI_FMT_STR "ptions");
   }
@@ -487,7 +487,7 @@ void wid_main_menu_select(Gamep g)
 
     spoint const tl(0, y_at);
     spoint const br(button_width, y_at + button_height);
-    wid_set_on_mouse_up(w, wid_main_menu_more);
+    wid_set_on_mouse_down(w, wid_main_menu_more);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "M" UI_FMT_STR "ore");
   }
@@ -499,7 +499,7 @@ void wid_main_menu_select(Gamep g)
 
     spoint const tl(0, y_at);
     spoint const br(button_width, y_at + button_height);
-    wid_set_on_mouse_up(w, wid_main_menu_quit);
+    wid_set_on_mouse_down(w, wid_main_menu_quit);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "Q" UI_FMT_STR "uit Game");
   }

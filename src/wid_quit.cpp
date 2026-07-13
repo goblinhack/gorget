@@ -161,7 +161,7 @@ void wid_quit_select(Gamep g)
 
     spoint const tl(0, y_at);
     spoint const br((width / 2) - 2, y_at + 2);
-    wid_set_on_mouse_up(w, wid_quit_yes);
+    wid_set_on_mouse_down(w, wid_quit_yes);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "Y" UI_RESET_FMT "es");
   }
@@ -173,7 +173,7 @@ void wid_quit_select(Gamep g)
 
     spoint const tl(width / 2, y_at);
     spoint const br(width - 2, y_at + 2);
-    wid_set_on_mouse_up(w, wid_quit_no);
+    wid_set_on_mouse_down(w, wid_quit_no);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "N" UI_RESET_FMT "o");
   }

@@ -72,7 +72,7 @@ static void wid_credits_destroy(Gamep g)
   return false;
 }
 
-[[nodiscard]] static auto wid_credits_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_credits_mouse_down(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
   wid_credits_destroy(g);
@@ -126,7 +126,7 @@ void wid_credits_select(Gamep g)
     spoint const tl((menu_width / 2) - 4, menu_height - 4);
     spoint const br((menu_width / 2) + 3, menu_height - 2);
 
-    wid_set_on_mouse_up(w, wid_credits_mouse_up);
+    wid_set_on_mouse_down(w, wid_credits_mouse_down);
     wid_set_pos(w, tl, br);
   }
 

@@ -143,7 +143,7 @@ void wid_more_select(Gamep g)
 
     spoint const tl(0, y_at);
     spoint const br(button_width, y_at + box_height);
-    wid_set_on_mouse_up(w, wid_more_credits);
+    wid_set_on_mouse_down(w, wid_more_credits);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "C" UI_FMT_STR "redits");
   }
@@ -155,7 +155,7 @@ void wid_more_select(Gamep g)
 
     spoint const tl(0, y_at);
     spoint const br(button_width, y_at + box_height);
-    wid_set_on_mouse_up(w, wid_more_hiscores);
+    wid_set_on_mouse_down(w, wid_more_hiscores);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "H" UI_FMT_STR "iscores");
   }
@@ -167,7 +167,7 @@ void wid_more_select(Gamep g)
 
     spoint const tl(0, y_at);
     spoint const br(button_width, y_at + box_height);
-    wid_set_on_mouse_up(w, wid_more_back);
+    wid_set_on_mouse_down(w, wid_more_back);
     wid_set_pos(w, tl, br);
   }
 

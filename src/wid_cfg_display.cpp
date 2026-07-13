@@ -476,7 +476,7 @@ void wid_cfg_display_select(Gamep g, bool menu_was_created_due_to_game_restartin
 
     spoint const tl(1, y_at);
     spoint const br(6, y_at + 2);
-    wid_set_on_mouse_up(w, wid_cfg_display_back);
+    wid_set_on_mouse_down(w, wid_cfg_display_back);
     wid_set_pos(w, tl, br);
   }
 
@@ -487,7 +487,7 @@ void wid_cfg_display_select(Gamep g, bool menu_was_created_due_to_game_restartin
 
     spoint const tl(10, y_at);
     spoint const br(16, y_at + 2);
-    wid_set_on_mouse_up(w, wid_cfg_display_resolution_apply);
+    wid_set_on_mouse_down(w, wid_cfg_display_resolution_apply);
     wid_set_pos(w, tl, br);
     wid_set_text(w, "Apply");
   }
@@ -531,23 +531,23 @@ void wid_cfg_display_select(Gamep g, bool menu_was_created_due_to_game_restartin
     {
       TRACE();
       auto *p = wid_cfg_display_window->wid_text_area->wid_text_area;
-      auto *w = wid_new_menu_button(g, p, "Resolution value +");
+      auto *w = wid_new_bright_button(g, p, "Resolution value +");
 
       spoint const tl((width / 2) + 12, y_at);
       spoint const br((width / 2) + 14, y_at + 2);
       wid_set_pos(w, tl, br);
-      wid_set_on_mouse_up(w, wid_cfg_display_resolution_incr);
+      wid_set_on_mouse_down(w, wid_cfg_display_resolution_incr);
       wid_set_text(w, "+");
     }
     {
       TRACE();
       auto *p = wid_cfg_display_window->wid_text_area->wid_text_area;
-      auto *w = wid_new_menu_button(g, p, "Resolution value -");
+      auto *w = wid_new_bright_button(g, p, "Resolution value -");
 
       spoint const tl((width / 2) + 16, y_at);
       spoint const br((width / 2) + 18, y_at + 2);
       wid_set_pos(w, tl, br);
-      wid_set_on_mouse_up(w, wid_cfg_display_resolution_decr);
+      wid_set_on_mouse_down(w, wid_cfg_display_resolution_decr);
       wid_set_text(w, "-");
     }
   }
@@ -636,12 +636,12 @@ void wid_cfg_display_select(Gamep g, bool menu_was_created_due_to_game_restartin
   {
     TRACE();
     auto *p = wid_cfg_display_window->wid_text_area->wid_text_area;
-    auto *w = wid_new_menu_button(g, p, "Fullscreen value");
+    auto *w = wid_new_bright_button(g, p, "Fullscreen value");
 
     spoint const tl(23, y_at);
     spoint const br(37, y_at + 2);
     wid_set_pos(w, tl, br);
-    wid_set_on_mouse_up(w, wid_cfg_display_fullscreen_desktop_toggle);
+    wid_set_on_mouse_down(w, wid_cfg_display_fullscreen_desktop_toggle);
 
     if (game_gfx_fullscreen_desktop_get(g)) {
       wid_set_text(w, "True");
@@ -685,12 +685,12 @@ void wid_cfg_display_select(Gamep g, bool menu_was_created_due_to_game_restartin
   {
     TRACE();
     auto *p = wid_cfg_display_window->wid_text_area->wid_text_area;
-    auto *w = wid_new_menu_button(g, p, "Fullscreen value");
+    auto *w = wid_new_bright_button(g, p, "Fullscreen value");
 
     spoint const tl(23, y_at);
     spoint const br(37, y_at + 2);
     wid_set_pos(w, tl, br);
-    wid_set_on_mouse_up(w, wid_cfg_display_fullscreen_toggle);
+    wid_set_on_mouse_down(w, wid_cfg_display_fullscreen_toggle);
 
     if (game_gfx_fullscreen_get(g)) {
       wid_set_text(w, "True");
@@ -718,12 +718,12 @@ void wid_cfg_display_select(Gamep g, bool menu_was_created_due_to_game_restartin
   {
     TRACE();
     auto *p = wid_cfg_display_window->wid_text_area->wid_text_area;
-    auto *w = wid_new_menu_button(g, p, "Borderless");
+    auto *w = wid_new_bright_button(g, p, "Borderless");
 
     spoint const tl(23, y_at);
     spoint const br(37, y_at + 2);
     wid_set_pos(w, tl, br);
-    wid_set_on_mouse_up(w, wid_cfg_display_borderless_toggle);
+    wid_set_on_mouse_down(w, wid_cfg_display_borderless_toggle);
 
     if (game_gfx_borderless_get(g)) {
       wid_set_text(w, "True");
@@ -751,12 +751,12 @@ void wid_cfg_display_select(Gamep g, bool menu_was_created_due_to_game_restartin
   {
     TRACE();
     auto *p = wid_cfg_display_window->wid_text_area->wid_text_area;
-    auto *w = wid_new_menu_button(g, p, "Vertical sync value");
+    auto *w = wid_new_bright_button(g, p, "Vertical sync value");
 
     spoint const tl(23, y_at);
     spoint const br(37, y_at + 2);
     wid_set_pos(w, tl, br);
-    wid_set_on_mouse_up(w, wid_cfg_display_vsync_enable_toggle);
+    wid_set_on_mouse_down(w, wid_cfg_display_vsync_enable_toggle);
 
     if (game_gfx_vsync_enable_get(g)) {
       wid_set_text(w, "True");
@@ -784,12 +784,12 @@ void wid_cfg_display_select(Gamep g, bool menu_was_created_due_to_game_restartin
   {
     TRACE();
     auto *p = wid_cfg_display_window->wid_text_area->wid_text_area;
-    auto *w = wid_new_menu_button(g, p, "FPS counter value");
+    auto *w = wid_new_bright_button(g, p, "FPS counter value");
 
     spoint const tl(23, y_at);
     spoint const br(37, y_at + 2);
     wid_set_pos(w, tl, br);
-    wid_set_on_mouse_up(w, wid_cfg_other_fps_counter_toggle);
+    wid_set_on_mouse_down(w, wid_cfg_other_fps_counter_toggle);
 
     if (game_fps_counter_get(g)) {
       wid_set_text(w, "True");

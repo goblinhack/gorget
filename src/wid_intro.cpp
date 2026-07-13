@@ -67,7 +67,7 @@ static void wid_intro_destroy()
   return false;
 }
 
-[[nodiscard]] static auto wid_intro_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_intro_mouse_down(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   con("Intro menu: start");
   TRACE();
@@ -191,7 +191,7 @@ void wid_intro_select(Gamep g)
     spoint const tl((menu_width / 2) - 5, menu_height - 5);
     spoint const br((menu_width / 2) + 4, menu_height - 3);
 
-    wid_set_on_mouse_up(w, wid_intro_mouse_up);
+    wid_set_on_mouse_down(w, wid_intro_mouse_down);
     wid_set_pos(w, tl, br);
   }
 
