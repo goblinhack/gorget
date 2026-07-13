@@ -342,6 +342,10 @@ static void wid_main_menu_tick(Gamep g, Widp w)
 
 void wid_main_menu_select(Gamep g)
 {
+  if (g_quitting) {
+    return;
+  }
+
   con("Main menu: select");
   TRACE_INDENT();
 
