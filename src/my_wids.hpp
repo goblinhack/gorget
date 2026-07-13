@@ -82,6 +82,7 @@ void wid_topcon_log(const std::string &s);
 [[nodiscard]] auto wid_new_close_button(Gamep g, Widp parent, const std::string &name) -> Widp;
 [[nodiscard]] auto wid_new_continue_button(Gamep g, Widp parent, const std::string &name) -> Widp;
 [[nodiscard]] auto wid_new_green_button(Gamep g, Widp parent, const std::string &name) -> Widp;
+[[nodiscard]] auto wid_new_bar_button(Gamep g, Widp parent, const std::string &name) -> Widp;
 [[nodiscard]] auto wid_new_menu_button(Gamep g, Widp parent, const std::string &name) -> Widp;
 [[nodiscard]] auto wid_new_bright_button(Gamep g, Widp parent, const std::string &name) -> Widp;
 [[nodiscard]] auto wid_console_find_text(Gamep g, const std::string &in) -> bool;

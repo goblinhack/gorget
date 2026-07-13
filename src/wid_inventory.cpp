@@ -52,8 +52,7 @@ void wid_inventory_mouse_over_begin(Gamep g, Widp w, int /*relx*/, int /*rely*/,
   for (auto &n : wid_item) {
     if (n != nullptr) {
       if (n != wid_over) {
-        wid_set_style(n, UI_WID_STYLE_SOLID_WHITE);
-        wid_set_color(n, WID_COLOR_BG, GRAY20);
+        wid_set_color(n, WID_COLOR_BG, GRAY10);
       }
     }
   }
@@ -161,8 +160,7 @@ void wid_inventory_mouse_over_end(Gamep g, Widp w)
                 for (auto &n : wid_item) {
                   w = n;
                   if (w != nullptr) {
-                    wid_set_style(w, UI_WID_STYLE_SOLID_WHITE);
-                    wid_set_color(w, WID_COLOR_BG, GRAY20);
+                    wid_set_color(w, WID_COLOR_BG, GRAY10);
                   }
                 }
 
@@ -175,7 +173,6 @@ void wid_inventory_mouse_over_end(Gamep g, Widp w)
 
                 w = wid_item[ c - 'a' ];
                 if (w != nullptr) {
-                  wid_set_style(w, UI_WID_STYLE_SOLID_WHITE);
                   wid_set_color(w, WID_COLOR_BG, GREEN);
                   wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
                 }
@@ -247,7 +244,7 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
 
     wid_inventory_window = wid_new_window(g, "widget inventory");
     wid_set_pos(wid_inventory_window, tl, br);
-    wid_set_style(wid_inventory_window, UI_WID_STYLE_NORMAL);
+    wid_set_style(wid_inventory_window, UI_WID_STYLE_BUTTON_OUTLINE);
     wid_set_on_key_down(wid_inventory_window, wid_inventory_key_down);
     wid_set_text(wid_inventory_window, "Inventory");
     wid_set_text_top(wid_inventory_window, 1u);
@@ -261,7 +258,7 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
     spoint const br(inventory_width, y_at);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_FMT_STR "Mouse select an item or press key a-z");
-    wid_set_style(w, UI_WID_STYLE_NORMAL);
+    wid_set_style(w, UI_WID_STYLE_BUTTON_OUTLINE);
     wid_set_shape_none(w);
     wid_set_text_centerx(w, 1u);
     y_at += 2;
@@ -366,7 +363,7 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
 
       {
         TRACE();
-        auto *w = wid_new_button(g, wid_inventory_window, "Item");
+        auto *w = wid_new_bar_button(g, wid_inventory_window, "Item");
 
         spoint const tl(6, y_at);
         spoint const br(button_width, y_at + button_height);

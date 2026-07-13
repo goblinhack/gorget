@@ -740,7 +740,7 @@ auto wid_keyboard(Gamep g, const std::string &text, const std::string &title, wi
     spoint const br((TERM_WIDTH / 2) + right_half, (TERM_HEIGHT / 2) + bot_half);
 
     wid_set_pos(window, tl, br);
-    wid_set_style(window, UI_WID_STYLE_NORMAL);
+    wid_set_style(window, UI_WID_STYLE_BUTTON_OUTLINE);
     wid_set_on_key_down(window, wid_keyboard_parent_key_down);
     wid_set_on_joy_button(window, wid_keyboard_parent_joy_button);
     wid_set_on_destroy(window, wid_keyboard_destroy);
@@ -778,7 +778,7 @@ auto wid_keyboard(Gamep g, const std::string &text, const std::string &title, wi
     wid_set_show_cursor(w);
     wid_set_on_key_down(w, wid_keyboard_text_input_key_event);
     wid_set_void_context(w, ctx);
-    wid_set_style(w, UI_WID_STYLE_RED);
+    wid_set_style(w, UI_WID_STYLE_BUTTON_RED);
 
     if (static_cast< bool >(max_len)) {
       wid_set_text_max_len(w, max_len);

@@ -78,7 +78,7 @@ void wid_notice(const std::string &s)
     wid_set_on_mouse_down(w, wid_notice_ok);
     wid_set_pos(w, tl1, br1);
     wid_set_text(w, s);
-    wid_set_style(w, UI_WID_STYLE_GREEN);
+    wid_set_style(w, UI_WID_STYLE_BUTTON_GREEN);
   }
 
   y_at = 3;
@@ -89,7 +89,7 @@ void wid_notice(const std::string &s)
 
     spoint const tl2((width / 2) - 4, y_at);
     spoint const br2((width / 2) + 4, y_at + 2);
-    wid_set_style(w, UI_WID_STYLE_GREEN);
+    wid_set_style(w, UI_WID_STYLE_BUTTON_GREEN);
     wid_set_on_mouse_down(w, wid_notice_ok);
     wid_set_pos(w, tl2, br2);
     wid_set_text(w, "Ok!");

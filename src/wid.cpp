@@ -1595,7 +1595,7 @@ void wid_set_tilename(int depth, Widp w, const std::string &name)
     return cfg->style;
   }
 
-  return UI_WID_STYLE_NORMAL;
+  return UI_WID_STYLE_BUTTON_OUTLINE;
 }
 
 void wid_set_style(Widp w, int style)
@@ -2077,7 +2077,7 @@ static auto wid_new(Widp parent) -> Widp
   wid_set_mode(w, WID_MODE_NORMAL);
 
   w->visible = 1U;
-  wid_set_style(w, UI_WID_STYLE_NORMAL);
+  wid_set_style(w, UI_WID_STYLE_BUTTON_OUTLINE);
   wid_dbg(w, "new");
 
   return w;
@@ -2096,7 +2096,7 @@ static auto wid_new() -> Widp
   wid_tree_global_unsorted_insert(w);
 
   w->visible = 1U;
-  wid_set_style(w, UI_WID_STYLE_NORMAL);
+  wid_set_style(w, UI_WID_STYLE_BUTTON_OUTLINE);
   wid_dbg(w, "new");
 
   return w;
@@ -2498,7 +2498,7 @@ static auto wid_new_scroll_trough(Widp parent) -> Widp
   wid_set_color(w, WID_COLOR_BG, WHITE);
   wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
 
-  wid_set_style(w, UI_WID_STYLE_NORMAL);
+  wid_set_style(w, UI_WID_STYLE_BUTTON_OUTLINE);
   wid_dbg(w, "new");
 
   return w;
@@ -2568,7 +2568,7 @@ static auto wid_new_scroll_bar(Gamep g, Widp parent, const std::string &name, Wi
   wid_set_color(w, WID_COLOR_BG, WHITE);
   wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
 
-  wid_set_style(w, UI_WID_STYLE_NORMAL);
+  wid_set_style(w, UI_WID_STYLE_BUTTON_OUTLINE);
   wid_dbg(w, "new");
 
   return w;

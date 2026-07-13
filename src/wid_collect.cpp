@@ -57,7 +57,7 @@ static void wid_collect_mouse_over_begin(Gamep g, Widp w, int /*relx*/, int /*re
   for (auto &n : wid_item) {
     if (n != nullptr) {
       if (n != wid_over) {
-        wid_set_style(n, UI_WID_STYLE_SOLID_WHITE);
+        wid_set_style(n, UI_WID_STYLE_BUTTON_ROUNDED_SOLID);
         wid_set_color(n, WID_COLOR_BG, GRAY20);
       }
     }
@@ -212,7 +212,7 @@ static void wid_collect_mouse_over_end(Gamep g, Widp w)
                 for (auto &n : wid_item) {
                   w = n;
                   if (w != nullptr) {
-                    wid_set_style(w, UI_WID_STYLE_SOLID_WHITE);
+                    wid_set_style(w, UI_WID_STYLE_BUTTON_ROUNDED_SOLID);
                     wid_set_color(w, WID_COLOR_BG, GRAY20);
                   }
                 }
@@ -248,7 +248,7 @@ static void wid_collect_mouse_over_end(Gamep g, Widp w)
                 for (auto &n : wid_item) {
                   w = n;
                   if (w != nullptr) {
-                    wid_set_style(w, UI_WID_STYLE_SOLID_WHITE);
+                    wid_set_style(w, UI_WID_STYLE_BUTTON_ROUNDED_SOLID);
                     wid_set_color(w, WID_COLOR_BG, GRAY20);
                   }
                 }
@@ -262,7 +262,7 @@ static void wid_collect_mouse_over_end(Gamep g, Widp w)
 
                 w = wid_item[ c - 'b' ];
                 if (w != nullptr) {
-                  wid_set_style(w, UI_WID_STYLE_SOLID_WHITE);
+                  wid_set_style(w, UI_WID_STYLE_BUTTON_ROUNDED_SOLID);
                   wid_set_color(w, WID_COLOR_BG, GREEN);
                   wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
                 }
@@ -334,7 +334,7 @@ void wid_collect_show(Gamep g, Levelsp v, Levelp l, Thingp player, std::vector< 
 
     wid_collect_window = wid_new_window(g, "widget collect");
     wid_set_pos(wid_collect_window, tl, br);
-    wid_set_style(wid_collect_window, UI_WID_STYLE_NORMAL);
+    wid_set_style(wid_collect_window, UI_WID_STYLE_BUTTON_OUTLINE);
     wid_set_on_key_down(wid_collect_window, wid_collect_key_down);
     wid_set_text(wid_collect_window, "Items");
     wid_set_text_top(wid_collect_window, 1u);
@@ -348,7 +348,7 @@ void wid_collect_show(Gamep g, Levelsp v, Levelp l, Thingp player, std::vector< 
     spoint const br(collect_width, y_at);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_FMT_STR "Mouse select an item or press key a-z");
-    wid_set_style(w, UI_WID_STYLE_NORMAL);
+    wid_set_style(w, UI_WID_STYLE_BUTTON_OUTLINE);
     wid_set_shape_none(w);
     wid_set_text_centerx(w, 1u);
     y_at += 2;

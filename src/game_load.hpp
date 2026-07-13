@@ -1389,7 +1389,7 @@ void Game::load_select()
     spoint const tl((menu_width / 2) - 4, menu_height - 4);
     spoint const br((menu_width / 2) + 3, menu_height - 2);
 
-    wid_set_style(w, UI_WID_STYLE_NORMAL);
+    wid_set_style(w, UI_WID_STYLE_BUTTON_OUTLINE);
     wid_set_on_mouse_down(w, wid_load_cancel);
 
     wid_set_pos(w, tl, br);
@@ -1409,7 +1409,7 @@ void Game::load_select()
     }
 
     auto        *p = wid_load->wid_text_area->wid_text_area;
-    auto        *w = wid_new_button(game, p, "load slot");
+    auto        *w = wid_new_bar_button(game, p, "load slot");
     spoint const tl(0, y_at);
     spoint const br(menu_width - 2, y_at);
 

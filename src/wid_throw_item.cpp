@@ -58,7 +58,7 @@ static void wid_throw_item_mouse_over_begin(Gamep g, Widp w, int /*relx*/, int /
   for (auto &n : wid_item) {
     if (n != nullptr) {
       if (n != wid_over) {
-        wid_set_style(n, UI_WID_STYLE_SOLID_WHITE);
+        wid_set_style(n, UI_WID_STYLE_BUTTON_ROUNDED_SOLID);
         wid_set_color(n, WID_COLOR_BG, GRAY20);
       }
     }
@@ -180,7 +180,7 @@ static void wid_throw_item_mouse_over_end(Gamep g, Widp w)
                 for (auto &n : wid_item) {
                   w = n;
                   if (w != nullptr) {
-                    wid_set_style(w, UI_WID_STYLE_SOLID_WHITE);
+                    wid_set_style(w, UI_WID_STYLE_BUTTON_ROUNDED_SOLID);
                     wid_set_color(w, WID_COLOR_BG, GRAY20);
                   }
                 }
@@ -194,7 +194,7 @@ static void wid_throw_item_mouse_over_end(Gamep g, Widp w)
 
                 w = wid_item[ c - 'a' ];
                 if (w != nullptr) {
-                  wid_set_style(w, UI_WID_STYLE_SOLID_WHITE);
+                  wid_set_style(w, UI_WID_STYLE_BUTTON_ROUNDED_SOLID);
                   wid_set_color(w, WID_COLOR_BG, GREEN);
                   wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
                 }
@@ -268,7 +268,7 @@ void wid_throw_item_show(Gamep g, Levelsp v, Levelp l, Thingp player, std::vecto
 
     wid_throw_item_window = wid_new_window(g, "widget throw");
     wid_set_pos(wid_throw_item_window, tl, br);
-    wid_set_style(wid_throw_item_window, UI_WID_STYLE_NORMAL);
+    wid_set_style(wid_throw_item_window, UI_WID_STYLE_BUTTON_OUTLINE);
     wid_set_on_key_down(wid_throw_item_window, wid_throw_item_key_down);
     wid_set_text(wid_throw_item_window, "Select an item to throw");
     wid_set_text_top(wid_throw_item_window, 1u);
@@ -282,7 +282,7 @@ void wid_throw_item_show(Gamep g, Levelsp v, Levelp l, Thingp player, std::vecto
     spoint const br(throw_width, y_at);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_FMT_STR "Mouse select an item or press key a-z");
-    wid_set_style(w, UI_WID_STYLE_NORMAL);
+    wid_set_style(w, UI_WID_STYLE_BUTTON_OUTLINE);
     wid_set_shape_none(w);
     wid_set_text_centerx(w, 1u);
     y_at += 2;

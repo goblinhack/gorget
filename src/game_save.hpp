@@ -849,7 +849,7 @@ auto Game::save_select() -> bool
     }
 
     auto        *p = wid_save->wid_text_area->wid_text_area;
-    auto        *w = wid_new_button(game, p, "save slot");
+    auto        *w = wid_new_bar_button(game, p, "save slot");
     spoint const tl(0, y_at);
     spoint const br(menu_width - 2, y_at);
 
