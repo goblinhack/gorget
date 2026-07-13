@@ -15,8 +15,8 @@ static auto tp_buff_stealth_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) 
 
   return                                                                                                       //
       UI_INFO1_FMT_STR "With this buff you can creep silently through the noisiest of bushes,"                 //
-      UI_INFO1_FMT_STR "or cross water as quietly as a morning breeze.\n"                                      //
-      UI_INFO2_FMT_STR "Note: weapon fire and other forms of attack are included in this no noise guarantee, " //
+      UI_INFO2_FMT_STR "or cross water as quietly as a morning breeze.\n"                                      //
+      UI_INFO3_FMT_STR "Note: weapon fire and other forms of attack are included in this no noise guarantee, " //
                        "even though this makes no sense. I mean, do you get naked for a potion of invisibiliy?\n";
 }
 

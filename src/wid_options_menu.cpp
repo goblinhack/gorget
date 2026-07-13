@@ -34,13 +34,13 @@ void wid_options_menu_destroy(Gamep g)
   wid_options_menu_window = nullptr;
 }
 
-[[nodiscard]] static auto wid_options_menu_gfx(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_options_menu_display(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  con("Options menu: gfx");
+  con("Options menu: display");
   TRACE_INDENT();
 
   wid_options_menu_destroy(g);
-  wid_cfg_gfx_select(g);
+  wid_cfg_display_select(g);
   return true;
 }
 
@@ -124,10 +124,10 @@ void wid_options_menu_destroy(Gamep g)
             TRACE();
             auto c = wid_event_to_char(key);
             switch (c) {
-              case 'g' :
-              case 'G' :
+              case 'd' :
+              case 'D' :
                 (void) sound_play(g, "keypress");
-                (void) wid_options_menu_gfx(g, nullptr, 0, 0, 0);
+                (void) wid_options_menu_display(g, nullptr, 0, 0, 0);
                 return true;
               case 'm' :
               case 'M' :
@@ -182,13 +182,10 @@ void wid_options_menu_select(Gamep g)
   auto box_height = 2;
   auto box_step   = 3;
 
-  int const menu_height = 26;
+  int const menu_height = 23;
   int const menu_width  = UI_WID_POPUP_WIDTH_NORMAL;
   spoint    outer_tl((TERM_WIDTH / 2) - (menu_width / 2), (TERM_HEIGHT / 2) - (menu_height / 2));
   spoint    outer_br((TERM_WIDTH / 2) + (menu_width / 2), (TERM_HEIGHT / 2) + (menu_height / 2));
-
-  outer_tl.y += 4; // avoids title
-  outer_br.y += 4;
 
   wid_options_menu_window = new WidPopup(g, "Options menu", outer_tl, outer_br, nullptr, "nothing", false, false);
 
@@ -228,13 +225,13 @@ void wid_options_menu_select(Gamep g)
   {
     TRACE();
     auto *p = wid_options_menu_window->wid_text_area->wid_text_area;
-    auto *w = wid_new_menu_button(g, p, "gfx");
+    auto *w = wid_new_menu_button(g, p, "display");
 
     spoint const tl(0, y_at);
     spoint const br(button_width, y_at + box_height);
-    wid_set_on_mouse_up(w, wid_options_menu_gfx);
+    wid_set_on_mouse_up(w, wid_options_menu_display);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, UI_HIGHLIGHT_FMT_STR "G" UI_RESET_FMT "raphics");
+    wid_set_text(w, UI_HIGHLIGHT_FMT_STR "D" UI_RESET_FMT "isplay");
   }
   y_at += box_step;
   {

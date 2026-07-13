@@ -133,9 +133,9 @@ static WidPopup *wid_over_stats;
       // newline
       UI_INFO2_FMT_STR " %06u "
       // newline
-      UI_INFO1_FMT_STR " Hiscore "
+      UI_INFO3_FMT_STR " Hiscore "
       // newline
-      UI_INFO2_FMT_STR " %06u",
+      UI_INFO4_FMT_STR " %06u",
       // newline
       score,
       // newline
@@ -603,7 +603,7 @@ static void wid_thing_info_stats_lck_mouse_over_begin(Gamep g, Widp w, int /*rel
   wid_over_stats->log_empty_line(g);
   wid_over_stats->log(g, UI_INFO1_FMT_STR "Luck can impact your existance in many quiet ways.\n", TEXT_FORMAT_LHS);
   wid_over_stats->log(g, UI_INFO2_FMT_STR "Will that treasure chest explode when you hit it?\n", TEXT_FORMAT_LHS);
-  wid_over_stats->log(g, UI_INFO4_FMT_STR "Will that loose floor tile reveal a hidden chasm?\n", TEXT_FORMAT_LHS);
+  wid_over_stats->log(g, UI_INFO3_FMT_STR "Will that loose floor tile reveal a hidden chasm?\n", TEXT_FORMAT_LHS);
   wid_over_stats->log(g, UI_INFO4_FMT_STR "Will you land in lava when jumping into a chasm?\n", TEXT_FORMAT_LHS);
   wid_over_stats->log(g, UI_INFO5_FMT_STR "Look for horseshoes or clover to increase your luck.\n", TEXT_FORMAT_LHS);
   wid_over_stats->log_empty_line(g);

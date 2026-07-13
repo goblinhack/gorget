@@ -679,7 +679,7 @@ static void parse_args(int argc, char *argv[])
     // Need this to get the background working
     //
     game_state_reset(g, "g_opt_restarted_in_gfx_menu");
-    wid_cfg_gfx_select(g, true /* menu_was_created_due_to_game_restarting */);
+    wid_cfg_display_select(g, true /* menu_was_created_due_to_game_restarting */);
   } else if (g_opt_quick_start) {
     con("Quick start");
     TRACE_INDENT();

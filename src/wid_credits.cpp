@@ -88,13 +88,10 @@ void wid_credits_select(Gamep g)
     wid_credits_destroy(g);
   }
 
-  int const menu_height = 25;
+  int const menu_height = 26;
   int const menu_width  = UI_WID_POPUP_WIDTH_NORMAL * 2;
   spoint    outer_tl((TERM_WIDTH / 2) - (menu_width / 2), (TERM_HEIGHT / 2) - (menu_height / 2));
   spoint    outer_br((TERM_WIDTH / 2) + (menu_width / 2), (TERM_HEIGHT / 2) + (menu_height / 2));
-
-  outer_tl.y += 4;
-  outer_br.y += 4;
 
   wid_credits_window = new WidPopup(g, "Credits", outer_tl, outer_br, nullptr, "", false, false);
 

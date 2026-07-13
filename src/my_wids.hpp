@@ -17,7 +17,7 @@ void wid_actionbar_fini(Gamep g);
 void wid_botcon_fini(Gamep g);
 void wid_botcon_flush(Gamep g);
 void wid_botcon_log(const std::string &s);
-void wid_cfg_gfx_select(Gamep g, bool menu_was_created_due_to_game_restarting = false);
+void wid_cfg_display_select(Gamep g, bool menu_was_created_due_to_game_restarting = false);
 void wid_cfg_help_select(Gamep g);
 void wid_cfg_mouse_select(Gamep g);
 void wid_cfg_sound_select(Gamep g);

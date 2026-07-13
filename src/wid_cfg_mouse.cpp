@@ -158,7 +158,7 @@ void wid_cfg_mouse_select(Gamep g)
     spoint const br(button_width, y_at + 2);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, "Configuration");
+    wid_set_text(w, "Mousey configuration");
   }
 
   y_at = 3;

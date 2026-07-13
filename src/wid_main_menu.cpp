@@ -358,7 +358,7 @@ void wid_main_menu_select(Gamep g)
   const auto button_height = 2;
   const auto button_step   = 3;
 
-  auto menu_height = 17;
+  auto menu_height = 15;
 
   if (! g_opt_seed_name_weekly.empty()) {
     menu_height += 3;
@@ -390,10 +390,10 @@ void wid_main_menu_select(Gamep g)
   auto y_at = 0;
 
   spoint outer_tl((TERM_WIDTH / 2) - (menu_width / 2), (TERM_HEIGHT / 2) - (menu_height / 2));
-  spoint outer_br((TERM_WIDTH / 2) + (menu_width / 2), (TERM_HEIGHT / 2) + (menu_height / 2));
+  spoint outer_br;
 
-  outer_tl.y += 2;
-  outer_br.y += 2;
+  outer_br.x = outer_tl.x + menu_width + 1;
+  outer_br.y = outer_tl.y + menu_height + 1;
 
   wid_main_menu_window = new WidPopup(g, "Main menu", outer_tl, outer_br, nullptr, "nothing", false, false);
 

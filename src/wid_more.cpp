@@ -120,7 +120,7 @@ void wid_more_select(Gamep g)
   auto box_height = 2;
   auto box_step   = 3;
 
-  int const    menu_height = 14;
+  int const    menu_height = 10;
   int const    menu_width  = UI_WID_POPUP_WIDTH_NORMAL;
   spoint const outer_tl((TERM_WIDTH / 2) - (menu_width / 2), (TERM_HEIGHT / 2) - (menu_height / 2));
   spoint const outer_br((TERM_WIDTH / 2) + (menu_width / 2), (TERM_HEIGHT / 2) + (menu_height / 2));
@@ -136,7 +136,6 @@ void wid_more_select(Gamep g)
 
   int y_at = 0;
 
-  y_at += box_step;
   {
     TRACE();
     auto *p = wid_more_window->wid_text_area->wid_text_area;

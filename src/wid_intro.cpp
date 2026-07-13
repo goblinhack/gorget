@@ -125,7 +125,7 @@ void wid_intro_select(Gamep g)
 
   int const    menu_height = TERM_HEIGHT - 30;
   int const    menu_width  = UI_WID_POPUP_WIDTH_NORMAL + 8;
-  spoint const outer_tl(TERM_WIDTH - menu_width - 14, 14);
+  spoint const outer_tl(TERM_WIDTH - menu_width - 18, 14);
   spoint const outer_br(TERM_WIDTH - 14, menu_height + 14);
   wid_intro_window = new WidPopup(g, "intro", outer_tl, outer_br, nullptr, "", false, false);
 
