@@ -118,6 +118,18 @@ static void wid_button_pulse(Gamep g, Widp w)
   return w;
 }
 
+[[nodiscard]] auto wid_new_bright_button(Gamep g, Widp parent, const std::string &name) -> Widp
+{
+  TRACE();
+
+  auto *w = wid_new_square_button(g, parent, name);
+  wid_set_mode(w, WID_MODE_OVER);
+  wid_set_style(w, UI_WID_STYLE_BRIGHT);
+  wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
+  wid_set_mode(w, WID_MODE_NORMAL);
+  return w;
+}
+
 [[nodiscard]] auto wid_new_button(Gamep g, Widp parent, const std::string &name) -> Widp
 {
   TRACE();
