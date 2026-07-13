@@ -157,7 +157,7 @@ void wid_quit_select(Gamep g)
   {
     TRACE();
     auto *p = wid_quit_window->wid_text_area->wid_text_area;
-    auto *w = wid_new_red_button(g, p, "Yes");
+    auto *w = wid_new_green_button(g, p, "Yes");
 
     spoint const tl(0, y_at);
     spoint const br((width / 2) - 2, y_at + 2);
@@ -169,7 +169,7 @@ void wid_quit_select(Gamep g)
   {
     TRACE();
     auto *p = wid_quit_window->wid_text_area->wid_text_area;
-    auto *w = wid_new_green_button(g, p, "No");
+    auto *w = wid_new_red_button(g, p, "No");
 
     spoint const tl(width / 2, y_at);
     spoint const br(width - 2, y_at + 2);
