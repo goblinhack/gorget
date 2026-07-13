@@ -1534,7 +1534,7 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, i
       parent->log_empty_line(g);
     }
 
-    auto *fire_what_tp = thing_on_use_weapon_request(g, v, l, me, thing_owner(g, v, l, me));
+    auto *fire_what_tp = thing_on_use_weapon_request(g, v, l, me, nullptr /* intentional to avoid use */);
     if (fire_what_tp != nullptr) {
       parent->log(g, UI_INFO_FMT_STR "Fires:", TEXT_FORMAT_LHS);
       wid_tp_info(g, v, l, fire_what_tp, parent, width);
