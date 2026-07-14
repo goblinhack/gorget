@@ -249,16 +249,44 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
         topcon(UI_WARN_FMT_STR "You suffer dazzling damage from %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
       case THING_EVENT_FIRE_DAMAGE :
-        if (thing_is_lava(it)) {
-          topcon(UI_WARN_FMT_STR "You are burning in lava!" UI_RESET_FMT);
-        } else if (thing_is_fire(it)) {
-          topcon(UI_WARN_FMT_STR "You are standing in flames!" UI_RESET_FMT);
-        } else if (thing_is_water(it)) {
-          topcon(UI_WARN_FMT_STR "You are boiling %s." UI_RESET_FMT, by_the_thing.c_str());
-        } else if (thing_is_steam(it)) {
-          topcon(UI_WARN_FMT_STR "You scalded by %s." UI_RESET_FMT, by_the_thing.c_str());
+        if (e.temperature_damage) {
+          if (e.nested_damage) {
+            if (thing_is_lava(it)) {
+              topcon(UI_WARN_FMT_STR "You suffer additional heat damage in lava!" UI_RESET_FMT);
+            } else if (thing_is_fire(it)) {
+              topcon(UI_WARN_FMT_STR "You suffer additional heat damage standing in the flames!" UI_RESET_FMT);
+            } else if (thing_is_water(it)) {
+              topcon(UI_WARN_FMT_STR "You suffer additional heat damage from the boiling water." UI_RESET_FMT);
+            } else if (thing_is_steam(it)) {
+              topcon(UI_WARN_FMT_STR "You suffer additional heat damage from the scalding steam." UI_RESET_FMT);
+            } else {
+              topcon(UI_WARN_FMT_STR "You suffer additional heat damage from %s." UI_RESET_FMT, by_the_thing.c_str());
+            }
+          } else {
+            if (thing_is_lava(it)) {
+              topcon(UI_WARN_FMT_STR "You suffer heat damage in lava!" UI_RESET_FMT);
+            } else if (thing_is_fire(it)) {
+              topcon(UI_WARN_FMT_STR "You suffer heat damage from standing in the flames!" UI_RESET_FMT);
+            } else if (thing_is_water(it)) {
+              topcon(UI_WARN_FMT_STR "You suffer heat damage from the boiling water." UI_RESET_FMT);
+            } else if (thing_is_steam(it)) {
+              topcon(UI_WARN_FMT_STR "You suffer heat damage from the scalding steam." UI_RESET_FMT);
+            } else {
+              topcon(UI_WARN_FMT_STR "You suffer heat damage from %s." UI_RESET_FMT, by_the_thing.c_str());
+            }
+          }
         } else {
-          topcon(UI_WARN_FMT_STR "You are burnt by %s." UI_RESET_FMT, by_the_thing.c_str());
+          if (thing_is_lava(it)) {
+            topcon(UI_WARN_FMT_STR "You are burning in lava!" UI_RESET_FMT);
+          } else if (thing_is_fire(it)) {
+            topcon(UI_WARN_FMT_STR "You are standing in flames!" UI_RESET_FMT);
+          } else if (thing_is_water(it)) {
+            topcon(UI_WARN_FMT_STR "You are boiling in water." UI_RESET_FMT);
+          } else if (thing_is_steam(it)) {
+            topcon(UI_WARN_FMT_STR "You scalded by the steam." UI_RESET_FMT);
+          } else {
+            topcon(UI_WARN_FMT_STR "You are burnt by %s." UI_RESET_FMT, by_the_thing.c_str());
+          }
         }
         break;
       case THING_EVENT_NONE :             [[fallthrough]];
@@ -657,7 +685,7 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
         if (e.source != nullptr) {
           if (! l->is_handling_temperature_changes) {
             l->is_handling_temperature_changes = true;
-            level_thing_pair_temperature_handle(g, v, l, me, e.source);
+            level_thing_pair_temperature_handle(g, v, l, me, e.source, e);
             l->is_handling_temperature_changes = false;
           }
         }

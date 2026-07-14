@@ -122,6 +122,14 @@ using ThingEvent = struct ThingEvent {
   // Optional, might be set when the thing chooses an attack
   //
   TpSpecialAttack special_attack = {};
+  //
+  // Additional attack information
+  //
+  bool temperature_damage {};
+  //
+  // For fire that causes heat damage
+  //
+  bool nested_damage {};
 };
 
 //
@@ -1316,7 +1324,7 @@ void thing_set_dir_from_target(Gamep g, Levelsp v, Levelp l, Thingp me, const bp
 void thing_sound_play(Gamep g, Levelsp v, Levelp l, Thingp t, const std::string &alias);
 void thing_stats_dump(Gamep g, Levelsp v);
 void thing_submerged_update(Gamep g, Levelsp v, Levelp l, Thingp t);
-void thing_temperature_damage_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thingp t, int n);
+void thing_temperature_damage_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thingp t, int n, ThingEvent = {});
 void thing_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thingp t, int n);
 void thing_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_tick_end(Gamep g, Levelsp v, Levelp l, Thingp t);

@@ -76,7 +76,7 @@ void thing_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thing
   (void) thing_temperature_set(g, v, l, t, n);
 }
 
-static void thing_temperature_damage_apply(Gamep g, Levelsp v, Levelp l, Thingp source, Thingp t, int n)
+static void thing_temperature_damage_apply(Gamep g, Levelsp v, Levelp l, Thingp source, Thingp t, int n, ThingEvent e)
 {
   TRACE();
 
@@ -96,12 +96,18 @@ static void thing_temperature_damage_apply(Gamep g, Levelsp v, Levelp l, Thingp 
     damage *= 2;
   }
 
-  ThingEvent e {
-      .reason     = {},                      //
-      .event_type = THING_EVENT_FIRE_DAMAGE, //
-      .damage     = damage,                  //
-      .source     = source,                  //
-  };
+  if (e.damage) {
+    e.nested_damage = true;
+  }
+
+  e.reason     = "temperature damage";
+  e.event_type = THING_EVENT_FIRE_DAMAGE;
+  e.damage     = damage;
+  if (source) {
+    e.source = source;
+  }
+
+  e.temperature_damage = true;
 
   if (thing_is_steam(source)) {
     e.reason = "by steam";
@@ -119,7 +125,7 @@ static void thing_temperature_damage_apply(Gamep g, Levelsp v, Levelp l, Thingp 
 //
 // Next step is to apply burning damage
 //
-void thing_temperature_damage_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thingp t, int n)
+void thing_temperature_damage_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thingp t, int n, ThingEvent e)
 {
   TRACE();
 
@@ -130,7 +136,7 @@ void thing_temperature_damage_handle(Gamep g, Levelsp v, Levelp l, Thingp source
   //
   auto T = tp_temperature_damage_at_get(tp);
   if ((T != 0) && (n > T)) {
-    thing_temperature_damage_apply(g, v, l, source, t, n);
+    thing_temperature_damage_apply(g, v, l, source, t, n, e);
     if (thing_is_dead(t)) {
       return;
     }
