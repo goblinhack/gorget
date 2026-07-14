@@ -58,7 +58,8 @@ static void tp_skullferno_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
 
 static bool tp_skullferno_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, ThingEvent &e)
 {
-  TRACE();
+  THING_DBG(g, v, l, me, "on attack");
+  TRACE_INDENT();
 
   TpSpecialAttack d;
 
@@ -69,7 +70,11 @@ static bool tp_skullferno_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, 
     if (d.what != "") {
       auto target    = thing_at(g, v, l, it);
       auto fire_what = tp_find_mand(d.what);
-      (void) thing_beam_weapon_fire_at(g, v, l, me, fire_what, target);
+
+      THING_DBG(g, v, l, me, "fire beam weapon");
+      TRACE_INDENT();
+
+      (void) thing_projectile_launch_at(g, v, l, me, fire_what, target);
       return false; // prevent melee attack
     }
   }

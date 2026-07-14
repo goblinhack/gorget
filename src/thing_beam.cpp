@@ -40,7 +40,7 @@ static auto thing_beam_weapon_truncate(Gamep g, Levelsp v, Levelp l, Thingp me, 
 
 auto thing_beam_weapon_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const fpoint target) -> bool
 {
-  THING_DBG(g, v, l, me, "beam_weapon weapon weapon");
+  THING_DBG(g, v, l, me, "fire beam weapon");
   TRACE_INDENT();
 
   //
