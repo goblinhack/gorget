@@ -5,7 +5,7 @@
 #ifndef MY_BPOINT_HPP
 #define MY_BPOINT_HPP
 
-#include <my_math.hpp>
+#include "my_math.hpp"
 
 #include <math.h>
 

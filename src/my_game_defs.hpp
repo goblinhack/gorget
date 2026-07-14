@@ -164,8 +164,9 @@ enum {
 };
 
 enum {
-  WALL_VARIANTS  = 12, // newline
-  FLOOR_VARIANTS = 10  // newline
+  WALL_VARIANTS       = 14, // newline
+  WALL_TILED_VARIANTS = 12, // newline
+  FLOOR_VARIANTS      = 10  // newline
 };
 
 //

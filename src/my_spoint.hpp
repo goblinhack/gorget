@@ -5,7 +5,7 @@
 #ifndef MY_SPOINT_HPP
 #define MY_SPOINT_HPP
 
-#include <my_math.hpp>
+#include "my_math.hpp"
 
 #include <math.h>
 

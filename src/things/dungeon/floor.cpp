@@ -27,54 +27,11 @@
     tp_z_depth_set(tp, MAP_Z_DEPTH_FLOOR);
     // end sort marker1 }
 
-    auto *tile = tile_find_mand(name + ".1");
-    tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
-    tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
-    tile = tile_find_mand(name + ".2");
-    tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
-    tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
-    tile = tile_find_mand(name + ".3");
-    tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
-    tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
-    tile = tile_find_mand(name + ".4");
-    tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
-    tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
-    tile = tile_find_mand(name + ".5");
-    tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
-    tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
-    tile = tile_find_mand(name + ".6");
-    tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
-    tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
-    tile = tile_find_mand(name + ".7");
-    tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
-    tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
-    tile = tile_find_mand(name + ".8");
-    tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
-    tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
-    tile = tile_find_mand(name + ".9");
-    tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
-    tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
-    tile = tile_find_mand(name + ".10");
-    tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
-    tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
-    tile = tile_find_mand(name + ".11");
-    tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
-    tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
-    tile = tile_find_mand(name + ".12");
-    tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
-    tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
-    tile = tile_find_mand(name + ".13");
-    tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
-    tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
-    tile = tile_find_mand(name + ".14");
-    tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
-    tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
-    tile = tile_find_mand(name + ".15");
-    tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
-    tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
-    tile = tile_find_mand(name + ".16");
-    tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
-    tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
+    for (auto i = 1; i <= 16; i++) {
+      auto *tile = tile_find_mand(name + "." + std::to_string(i));
+      tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
+      tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
+    }
   }
 
   return true;
