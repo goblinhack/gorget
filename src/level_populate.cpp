@@ -710,7 +710,7 @@ static auto level_populate_fixup_biome_underhell(class LevelPopulate &lp, Tpp tp
   //
   // Same with vaults
   //
-  lp.tp_vault = tp_variant(is_vault, lp.wall_variant);
+  lp.tp_vault = tp_random(g, v, l, is_vault);
 
   lp.is_test_level         = g_opt_tests || l->is_fixed_level;
   lp.is_decoration_allowed = ! lp.is_test_level;
