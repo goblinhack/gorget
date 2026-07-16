@@ -333,7 +333,7 @@ void fragments_init(Gamep g)
                            /* alt  */ (const char *) "vvvvx",
                            /* alt  */ (const char *) "v$.v.",
                            /* alt  */ (const char *) "v..v.",
-                           /* alt  */ (const char *) "vvsv.",
+                           /* alt  */ (const char *) "vvDv.",
                            /* alt  */ (const char *) "x....", nullptr)) {
       CROAK("failed to add fragment alt");
     }
@@ -341,7 +341,7 @@ void fragments_init(Gamep g)
                            /* alt  */ (const char *) "vvvvx",
                            /* alt  */ (const char *) "v$mv.",
                            /* alt  */ (const char *) "v..v.",
-                           /* alt  */ (const char *) "vvsv.",
+                           /* alt  */ (const char *) "vvDv.",
                            /* alt  */ (const char *) "x....", nullptr)) {
       CROAK("failed to add fragment alt");
     }
@@ -349,7 +349,7 @@ void fragments_init(Gamep g)
                            /* alt  */ (const char *) "vvvvx",
                            /* alt  */ (const char *) "vm$v.",
                            /* alt  */ (const char *) "v$mv.",
-                           /* alt  */ (const char *) "vvsv.",
+                           /* alt  */ (const char *) "vvDv.",
                            /* alt  */ (const char *) "x....", nullptr)) {
       CROAK("failed to add fragment alt");
     }
@@ -357,7 +357,7 @@ void fragments_init(Gamep g)
                            /* alt  */ (const char *) "vvvvx",
                            /* alt  */ (const char *) "v$$v.",
                            /* alt  */ (const char *) "v$$v.",
-                           /* alt  */ (const char *) "vvsv.",
+                           /* alt  */ (const char *) "vvDv.",
                            /* alt  */ (const char *) "x....", nullptr)) {
       CROAK("failed to add fragment alt");
     }
@@ -373,7 +373,7 @@ void fragments_init(Gamep g)
                            /* alt  */ (const char *) "vvvvx",
                            /* alt  */ (const char *) "v$Cv.",
                            /* alt  */ (const char *) "vCCv.",
-                           /* alt  */ (const char *) "vvsv.",
+                           /* alt  */ (const char *) "vvDv.",
                            /* alt  */ (const char *) "x....", nullptr)) {
       CROAK("failed to add fragment alt");
     }
@@ -381,7 +381,7 @@ void fragments_init(Gamep g)
                            /* alt  */ (const char *) "vvvvx",
                            /* alt  */ (const char *) "vTCv.",
                            /* alt  */ (const char *) "vCCv.",
-                           /* alt  */ (const char *) "vvsv.",
+                           /* alt  */ (const char *) "vvDv.",
                            /* alt  */ (const char *) "x....", nullptr)) {
       CROAK("failed to add fragment alt");
     }
@@ -389,7 +389,7 @@ void fragments_init(Gamep g)
                            /* alt  */ (const char *) "vvvvx",
                            /* alt  */ (const char *) "vT.v.",
                            /* alt  */ (const char *) "v..v.",
-                           /* alt  */ (const char *) "vvsv.",
+                           /* alt  */ (const char *) "vvDv.",
                            /* alt  */ (const char *) "x....", nullptr)) {
       CROAK("failed to add fragment alt");
     }
@@ -405,7 +405,7 @@ void fragments_init(Gamep g)
                            /* alt  */ (const char *) "vvvvv",
                            /* alt  */ (const char *) "vB$Bv",
                            /* alt  */ (const char *) "v...v",
-                           /* alt  */ (const char *) "vvsvv",
+                           /* alt  */ (const char *) "vvDvv",
                            /* alt  */ (const char *) "x...x", nullptr)) {
       CROAK("failed to add fragment alt");
     }
@@ -469,7 +469,7 @@ void fragments_init(Gamep g)
                            /* alt  */ (const char *) "vvvv",
                            /* alt  */ (const char *) "vB$v",
                            /* alt  */ (const char *) "v..v",
-                           /* alt  */ (const char *) "vvsv",
+                           /* alt  */ (const char *) "vvDv",
                            /* alt  */ (const char *) "x..x", nullptr)) {
       CROAK("failed to add fragment alt");
     }
@@ -505,7 +505,7 @@ void fragments_init(Gamep g)
     }
     if (! fragment_alt_add(g, CHANCE_NORMAL, ROOM_FLAG_ALL, __FUNCTION__, __LINE__,
                            /* alt  */ (const char *) "vvvv",
-                           /* alt  */ (const char *) "v$$s",
+                           /* alt  */ (const char *) "v$$D",
                            /* alt  */ (const char *) "vvvv",
                            /* alt  */ (const char *) "x..x", nullptr)) {
       CROAK("failed to add fragment alt");
@@ -749,7 +749,7 @@ void fragments_init(Gamep g)
     }
     if (! fragment_alt_add(g, CHANCE_NORMAL, ROOM_FLAG_ALL, __FUNCTION__, __LINE__,
                            /* alt  */ (const char *) ".....",
-                           /* alt  */ (const char *) ".vsv.",
+                           /* alt  */ (const char *) ".vDv.",
                            /* alt  */ (const char *) ".vTv.",
                            /* alt  */ (const char *) ".vvv.",
                            /* alt  */ (const char *) ".....", nullptr)) {
@@ -766,7 +766,7 @@ void fragments_init(Gamep g)
     if (! fragment_alt_add(g, CHANCE_NORMAL, ROOM_FLAG_ALL, __FUNCTION__, __LINE__,
                            /* alt  */ (const char *) ".....",
                            /* alt  */ (const char *) ".vvv.",
-                           /* alt  */ (const char *) ".vCs.",
+                           /* alt  */ (const char *) ".vCD.",
                            /* alt  */ (const char *) ".vvv.",
                            /* alt  */ (const char *) ".....", nullptr)) {
       CROAK("failed to add fragment alt");
@@ -879,7 +879,7 @@ void fragments_init(Gamep g)
                            /* alt  */ (const char *) ".....",
                            /* alt  */ (const char *) ".vvv.",
                            /* alt  */ (const char *) ".vmv.",
-                           /* alt  */ (const char *) ".vsv.",
+                           /* alt  */ (const char *) ".vDv.",
                            /* alt  */ (const char *) ".....", nullptr)) {
       CROAK("failed to add fragment alt");
     }
@@ -887,7 +887,7 @@ void fragments_init(Gamep g)
                            /* alt  */ (const char *) ".....",
                            /* alt  */ (const char *) ".vvv.",
                            /* alt  */ (const char *) ".vMv.",
-                           /* alt  */ (const char *) ".vsv.",
+                           /* alt  */ (const char *) ".vDv.",
                            /* alt  */ (const char *) ".....", nullptr)) {
       CROAK("failed to add fragment alt");
     }
@@ -1445,7 +1445,7 @@ void fragments_init(Gamep g)
     }
     if (! fragment_alt_add(g, CHANCE_NORMAL, ~ROOM_FLAG_ENTRANCE, __FUNCTION__, __LINE__,
                            /* alt  */ (const char *) "B..gvvv",
-                           /* alt  */ (const char *) "....s.v",
+                           /* alt  */ (const char *) "....D.v",
                            /* alt  */ (const char *) "B...v$v",
                            /* alt  */ (const char *) "xxxDvvv",
                            /* alt  */ (const char *) "x.B.B.x",

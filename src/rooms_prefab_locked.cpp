@@ -56,7 +56,7 @@ void rooms_prefab_locked(Gamep g)
   room_add(g, CHANCE_NORMAL, ROOM_FLAG_CHECK_EXITS | ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "   vvvvvvv   ",
            /* line */ (const char *) "   v$$...v   ",
-           /* line */ (const char *) "   vvvvvsv   ",
+           /* line */ (const char *) "   vvvvv+v   ",
            /* line */ (const char *) "   vB...Bv   ",
            /* line */ (const char *) " vvv.....vvv ",
            /* line */ (const char *) " v.........v ",

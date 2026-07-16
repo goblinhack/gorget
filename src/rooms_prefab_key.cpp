@@ -19,7 +19,7 @@ void rooms_prefab_key(Gamep g)
            /* line */ (const char *) " .......... ",
            /* line */ (const char *) " ..M.......^",
            /* line */ (const char *) " ....````.. ",
-           /* line */ (const char *) " ....`vsvvv ",
+           /* line */ (const char *) " ....`v+vvv ",
            /* line */ (const char *) " ....`v...v ",
            /* line */ (const char *) "^.....vv..v ",
            /* line */ (const char *) " ......v.kv ",
@@ -33,7 +33,7 @@ void rooms_prefab_key(Gamep g)
            /* line */ (const char *) " .......... ",
            /* line */ (const char *) " ..vvvvvv..^",
            /* line */ (const char *) " ..v.```v`. ",
-           /* line */ (const char *) " ..v.`vsvsv ",
+           /* line */ (const char *) " ..v.`v+vsv ",
            /* line */ (const char *) " ..vk`vbb.v ",
            /* line */ (const char *) "^..vvvvvb.v ",
            /* line */ (const char *) " ......v..v ",
@@ -63,8 +63,8 @@ void rooms_prefab_key(Gamep g)
            /* line */ (const char *) " .vvM```vv. ",
            /* line */ (const char *) " .vv...`vv. ",
            /* line */ (const char *) " .vvk..`vv. ",
-           /* line */ (const char *) "^..CvvsvC.. ",
-           /* line */ (const char *) " ...vvsv... ",
+           /* line */ (const char *) "^..Cvv+vC.. ",
+           /* line */ (const char *) " ...vv+v... ",
            /* line */ (const char *) " .........C ",
            /* line */ (const char *) "      ^     ",
            /* end */ nullptr);
@@ -210,7 +210,7 @@ void rooms_prefab_key(Gamep g)
            /* line */ (const char *) "    vk..v   ",
            /* line */ (const char *) "    v.M.v   ",
            /* line */ (const char *) "    v...v   ",
-           /* line */ (const char *) "    vvsvv   ",
+           /* line */ (const char *) "    vv+vv   ",
            /* line */ (const char *) "    vB.Bv   ",
            /* line */ (const char *) "    v...v   ",
            /* line */ (const char *) "    v...v   ",
@@ -223,7 +223,7 @@ void rooms_prefab_key(Gamep g)
            /* line */ (const char *) "    vk..v   ",
            /* line */ (const char *) "    v.G.v   ",
            /* line */ (const char *) "    v...v   ",
-           /* line */ (const char *) "    vvsvv   ",
+           /* line */ (const char *) "    vv+vv   ",
            /* line */ (const char *) "      ^     ",
            /* end */ nullptr);
 
@@ -232,7 +232,7 @@ void rooms_prefab_key(Gamep g)
            /* line */ (const char *) "    vk..v   ",
            /* line */ (const char *) "    vCCCv   ",
            /* line */ (const char *) "    v...v   ",
-           /* line */ (const char *) "    vvsvv   ",
+           /* line */ (const char *) "    vv+vv   ",
            /* line */ (const char *) "      ^     ",
            /* end */ nullptr);
 
@@ -241,7 +241,7 @@ void rooms_prefab_key(Gamep g)
            /* line */ (const char *) "    vk.$v   ",
            /* line */ (const char *) "    v.M.v   ",
            /* line */ (const char *) "    v...v   ",
-           /* line */ (const char *) "    vvsvv   ",
+           /* line */ (const char *) "    vv+vv   ",
            /* line */ (const char *) "      ^     ",
            /* end */ nullptr);
   room_add(g, CHANCE_NORMAL, ROOM_FLAG_HAS_KEY, __FUNCTION__, __LINE__,
@@ -249,7 +249,7 @@ void rooms_prefab_key(Gamep g)
            /* line */ (const char *) "    vk..v   ",
            /* line */ (const char *) "    vLLLv   ",
            /* line */ (const char *) "    v...v   ",
-           /* line */ (const char *) "    vvsvv   ",
+           /* line */ (const char *) "    vv+vv   ",
            /* line */ (const char *) "      ^     ",
            /* end */ nullptr);
   room_add(g, CHANCE_NORMAL, ROOM_FLAG_HAS_KEY, __FUNCTION__, __LINE__,
@@ -258,7 +258,7 @@ void rooms_prefab_key(Gamep g)
            /* line */ (const char *) "    v.M.v   ",
            /* line */ (const char *) "    v...v   ",
            /* line */ (const char *) "    vCtCv   ",
-           /* line */ (const char *) "    vvsvv   ",
+           /* line */ (const char *) "    vv+vv   ",
            /* line */ (const char *) "      ^     ",
            /* end */ nullptr);
   room_add(g, CHANCE_NORMAL, ROOM_FLAG_HAS_KEY, __FUNCTION__, __LINE__,
@@ -266,7 +266,7 @@ void rooms_prefab_key(Gamep g)
            /* line */ (const char *) "    vk.$v   ",
            /* line */ (const char *) "    v...v   ",
            /* line */ (const char *) "    v...v   ",
-           /* line */ (const char *) "    vvsvv   ",
+           /* line */ (const char *) "    vv+vv   ",
            /* line */ (const char *) "      ^     ",
            /* end */ nullptr);
   room_add(g, CHANCE_NORMAL, ROOM_FLAG_HAS_KEY, __FUNCTION__, __LINE__,
@@ -274,7 +274,7 @@ void rooms_prefab_key(Gamep g)
            /* line */ (const char *) "    vk.Gv   ",
            /* line */ (const char *) "    v.v.v   ",
            /* line */ (const char *) "    v...v   ",
-           /* line */ (const char *) "    vvsvv   ",
+           /* line */ (const char *) "    vv+vv   ",
            /* line */ (const char *) "      ^     ",
            /* end */ nullptr);
   room_add(g, CHANCE_NORMAL, ROOM_FLAG_HAS_KEY, __FUNCTION__, __LINE__,
@@ -282,7 +282,7 @@ void rooms_prefab_key(Gamep g)
            /* line */ (const char *) "    vk.Bv   ",
            /* line */ (const char *) "    v...v   ",
            /* line */ (const char *) "    v...v   ",
-           /* line */ (const char *) "    vvsvv   ",
+           /* line */ (const char *) "    vv+vv   ",
            /* line */ (const char *) "      ^     ",
            /* end */ nullptr);
   room_add(g, CHANCE_NORMAL, ROOM_FLAG_HAS_KEY, __FUNCTION__, __LINE__,
@@ -290,7 +290,7 @@ void rooms_prefab_key(Gamep g)
            /* line */ (const char *) "    vk..v   ",
            /* line */ (const char *) "    v.|.v   ",
            /* line */ (const char *) "    v...v   ",
-           /* line */ (const char *) "    vvsvv   ",
+           /* line */ (const char *) "    vv+vv   ",
            /* line */ (const char *) "      ^     ",
            /* end */ nullptr);
 
@@ -301,7 +301,7 @@ void rooms_prefab_key(Gamep g)
            /* line */ (const char *) "    v...v   ",
            /* line */ (const char *) "    v...v   ",
            /* line */ (const char *) "    v...v   ",
-           /* line */ (const char *) "    vvsvv   ",
+           /* line */ (const char *) "    vv+vv   ",
            /* line */ (const char *) "      ^     ",
            /* end */ nullptr);
 
@@ -312,7 +312,7 @@ void rooms_prefab_key(Gamep g)
            /* line */ (const char *) "    v...v   ",
            /* line */ (const char *) "    v...v   ",
            /* line */ (const char *) "    v...v   ",
-           /* line */ (const char *) "    vvsvv   ",
+           /* line */ (const char *) "    vv+vv   ",
            /* line */ (const char *) "      ^     ",
            /* end */ nullptr);
 
@@ -321,7 +321,7 @@ void rooms_prefab_key(Gamep g)
            /* line */ (const char *) "    vk.Bv   ",
            /* line */ (const char *) "    v...v   ",
            /* line */ (const char *) "    vB.Bv   ",
-           /* line */ (const char *) "    vvsvv   ",
+           /* line */ (const char *) "    vv+vv   ",
            /* line */ (const char *) "      ^     ",
            /* end */ nullptr);
 
@@ -330,7 +330,7 @@ void rooms_prefab_key(Gamep g)
            /* line */ (const char *) "    vCCCv   ",
            /* line */ (const char *) "    vCkCv   ",
            /* line */ (const char *) "    vCCCv   ",
-           /* line */ (const char *) "    vvsvv   ",
+           /* line */ (const char *) "    vv+vv   ",
            /* line */ (const char *) "      ^     ",
            /* end */ nullptr);
 
@@ -339,7 +339,7 @@ void rooms_prefab_key(Gamep g)
            /* line */ (const char *) "    vLLLv   ",
            /* line */ (const char *) "    vLkLv   ",
            /* line */ (const char *) "    vLLLv   ",
-           /* line */ (const char *) "    vvsvv   ",
+           /* line */ (const char *) "    vv+vv   ",
            /* line */ (const char *) "      ^     ",
            /* end */ nullptr);
 
@@ -348,7 +348,7 @@ void rooms_prefab_key(Gamep g)
            /* line */ (const char *) "    vk.$v   ",
            /* line */ (const char *) "    v...v   ",
            /* line */ (const char *) "    v$.$v   ",
-           /* line */ (const char *) "    vvsvv   ",
+           /* line */ (const char *) "    vv+vv   ",
            /* line */ (const char *) "      ^     ",
            /* end */ nullptr);
 
@@ -357,11 +357,11 @@ void rooms_prefab_key(Gamep g)
            /* line */ (const char *) "    vk.Gv   ",
            /* line */ (const char *) "    v...v   ",
            /* line */ (const char *) "    v...v   ",
-           /* line */ (const char *) " vvvvvsvv   ",
+           /* line */ (const char *) " vvvvv+vv   ",
            /* line */ (const char *) " v$.s...v   ",
-           /* line */ (const char *) " vvvvvsvv   ",
+           /* line */ (const char *) " vvvvv+vv   ",
            /* line */ (const char *) "    v...v   ",
-           /* line */ (const char *) "    vvsvv   ",
+           /* line */ (const char *) "    vv+vv   ",
            /* line */ (const char *) "      ^     ",
            /* end */ nullptr);
 
@@ -370,7 +370,7 @@ void rooms_prefab_key(Gamep g)
            /* line */ (const char *) "v$..sk..v   ",
            /* line */ (const char *) "v...v.M.v   ",
            /* line */ (const char *) "vvvvv...v   ",
-           /* line */ (const char *) "    vvsvv   ",
+           /* line */ (const char *) "    vv+vv   ",
            /* line */ (const char *) "      ^     ",
            /* end */ nullptr);
 
@@ -379,7 +379,7 @@ void rooms_prefab_key(Gamep g)
            /* line */ (const char *) "v$.tsk..v   ",
            /* line */ (const char *) "v...v.M.v   ",
            /* line */ (const char *) "vvvvv...v   ",
-           /* line */ (const char *) "    vvsvv   ",
+           /* line */ (const char *) "    vv+vv   ",
            /* line */ (const char *) "      ^     ",
            /* end */ nullptr);
 
@@ -388,7 +388,7 @@ void rooms_prefab_key(Gamep g)
            /* line */ (const char *) "v$.Csk..v   ",
            /* line */ (const char *) "v..Cv.M.v   ",
            /* line */ (const char *) "vvvvv...v   ",
-           /* line */ (const char *) "    vvsvv   ",
+           /* line */ (const char *) "    vv+vv   ",
            /* line */ (const char *) "      ^     ",
            /* end */ nullptr);
 
@@ -396,10 +396,10 @@ void rooms_prefab_key(Gamep g)
            /* line */ (const char *) "vvvvvvvvv   ",
            /* line */ (const char *) "vk......v   ",
            /* line */ (const char *) "v``...G.v   ",
-           /* line */ (const char *) "vsvvv...v   ",
+           /* line */ (const char *) "v+vvv...v   ",
            /* line */ (const char *) "v...v...v   ",
            /* line */ (const char *) "v..$v...v   ",
-           /* line */ (const char *) "vvvvvvsvv   ",
+           /* line */ (const char *) "vvvvvv+vv   ",
            /* line */ (const char *) "      ^     ",
            /* end */ nullptr);
 
@@ -407,10 +407,10 @@ void rooms_prefab_key(Gamep g)
            /* line */ (const char *) "vvvvvvvvv   ",
            /* line */ (const char *) "vk.CC...v   ",
            /* line */ (const char *) "v``CC.G.v   ",
-           /* line */ (const char *) "vsvvv...v   ",
+           /* line */ (const char *) "v+vvv...v   ",
            /* line */ (const char *) "v...v...v   ",
            /* line */ (const char *) "v..$v...v   ",
-           /* line */ (const char *) "vvvvvvsvv   ",
+           /* line */ (const char *) "vvvvvv+vv   ",
            /* line */ (const char *) "      ^     ",
            /* end */ nullptr);
 
@@ -418,10 +418,10 @@ void rooms_prefab_key(Gamep g)
            /* line */ (const char *) "vvvvvvvvv   ",
            /* line */ (const char *) "vk.``...v   ",
            /* line */ (const char *) "v````.G.v   ",
-           /* line */ (const char *) "vsvvv...v   ",
+           /* line */ (const char *) "v+vvv...v   ",
            /* line */ (const char *) "v...v...v   ",
            /* line */ (const char *) "v..$v...v   ",
-           /* line */ (const char *) "vvvvvvsvv   ",
+           /* line */ (const char *) "vvvvvv+vv   ",
            /* line */ (const char *) "      ^     ",
            /* end */ nullptr);
 
@@ -429,10 +429,10 @@ void rooms_prefab_key(Gamep g)
            /* line */ (const char *) "vvvvvvvvv   ",
            /* line */ (const char *) "vk.LL...v   ",
            /* line */ (const char *) "v``.L.G.v   ",
-           /* line */ (const char *) "vsvvvL..v   ",
+           /* line */ (const char *) "v+vvvL..v   ",
            /* line */ (const char *) "v...vL..v   ",
            /* line */ (const char *) "v..$vL..v   ",
-           /* line */ (const char *) "vvvvvvsvv   ",
+           /* line */ (const char *) "vvvvvv+vv   ",
            /* line */ (const char *) "      ^     ",
            /* end */ nullptr);
 
@@ -440,10 +440,10 @@ void rooms_prefab_key(Gamep g)
            /* line */ (const char *) "vvvvvvvvv   ",
            /* line */ (const char *) "vk.CCC.Gv   ",
            /* line */ (const char *) "v``.CC..v   ",
-           /* line */ (const char *) "vsvvvC..v   ",
+           /* line */ (const char *) "v+vvvC..v   ",
            /* line */ (const char *) "v...vC..v   ",
            /* line */ (const char *) "v..$vC..v   ",
-           /* line */ (const char *) "vvvvvvsvv   ",
+           /* line */ (const char *) "vvvvvv+vv   ",
            /* line */ (const char *) "      ^     ",
            /* end */ nullptr);
 
@@ -886,7 +886,7 @@ void rooms_prefab_key(Gamep g)
            /* line */ (const char *) " CCvB..v.C..v",
            /* line */ (const char *) "^===...s.Ct.v",
            /* line */ (const char *) " CCvBvvv.C..v",
-           /* line */ (const char *) " CCv...vvvvsv",
+           /* line */ (const char *) " CCv...vvvv+v",
            /* line */ (const char *) " vvv.k.v....v",
            /* line */ (const char *) " v.....v....v",
            /* line */ (const char *) " v.G...v....v",
@@ -899,7 +899,7 @@ void rooms_prefab_key(Gamep g)
            /* line */ (const char *) " CCvB.B.....v",
            /* line */ (const char *) "^===......G.v",
            /* line */ (const char *) " CCvB.B.....v",
-           /* line */ (const char *) " CCvvvvvvvvsv",
+           /* line */ (const char *) " CCvvvvvvvv+v",
            /* line */ (const char *) " vvv..tC....v",
            /* line */ (const char *) " v.....CCC..v",
            /* line */ (const char *) " v.k..G.CCC.v",
@@ -968,7 +968,7 @@ void rooms_prefab_key(Gamep g)
            /* line */ (const char *) " CCv..vvvvv.v",
            /* line */ (const char *) " vvv..v.k.v.v",
            /* line */ (const char *) " v...`v...v.v",
-           /* line */ (const char *) " v...`vsvvv.v",
+           /* line */ (const char *) " v...`v+vvv.v",
            /* line */ (const char *) " v..`````...v",
            /* line */ (const char *) " vvvvvvvvvvvv",
            /* end */ nullptr);
@@ -1038,7 +1038,7 @@ void rooms_prefab_key(Gamep g)
            /* line */ (const char *) " CCvBCC.....v",
            /* line */ (const char *) "^======...G.v",
            /* line */ (const char *) " CCvBCC.....v",
-           /* line */ (const char *) " CCvvvvsvvvvv",
+           /* line */ (const char *) " CCvvvv+vvvvv",
            /* line */ (const char *) " vvv..v.v...v",
            /* line */ (const char *) " v....v.v...v",
            /* line */ (const char *) " v.k..v.v..$v",
