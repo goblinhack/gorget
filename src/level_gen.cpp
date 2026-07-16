@@ -2349,6 +2349,7 @@ static void level_gen_dump(class LevelGen *lg, const char *msg)
   } else {
     log("level: %u", lg->level_num + 1);
   }
+  log("--------------");
   TRACE();
 
   log("seed              : %u", lg->info.seed_num);
