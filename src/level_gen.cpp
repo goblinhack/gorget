@@ -3973,7 +3973,12 @@ static void level_gen_add_foliage_around_secret_doors(Gamep g, class LevelGen *l
         case CHARMAP_DOOR_SECRET :
           for (int dy = -2; dy <= 2; dy++) {
             for (int dx = -2; dx <= 2; dx++) {
-              auto d = lg->data[ x - dx ][ y - dy ].c;
+              auto X = x - dx;
+              auto Y = y - dy;
+              if (is_oob_or_border(X, Y)) {
+                continue;
+              }
+              auto d = lg->data[ X ][ Y ].c;
               if ((d == CHARMAP_EMPTY) || (d == CHARMAP_FLOOR)) {
                 if (d100() < LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_DOOR_SECRET) {
                   lg->data[ x - dx ][ y - dy ].c = CHARMAP_FOLIAGE;
@@ -3985,7 +3990,12 @@ static void level_gen_add_foliage_around_secret_doors(Gamep g, class LevelGen *l
         case CHARMAP_TRAP :
           for (int dy = -2; dy <= 2; dy++) {
             for (int dx = -2; dx <= 2; dx++) {
-              auto d = lg->data[ x - dx ][ y - dy ].c;
+              auto X = x - dx;
+              auto Y = y - dy;
+              if (is_oob_or_border(X, Y)) {
+                continue;
+              }
+              auto d = lg->data[ X ][ Y ].c;
               if ((d == CHARMAP_EMPTY) || (d == CHARMAP_FLOOR)) {
                 if (d100() < LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_TRAPS) {
                   lg->data[ x - dx ][ y - dy ].c = CHARMAP_FOLIAGE;
@@ -4025,7 +4035,12 @@ static void level_gen_add_foliage_around_secret_doors(Gamep g, class LevelGen *l
 
           for (int dy = -2; dy <= 2; dy++) {
             for (int dx = -2; dx <= 2; dx++) {
-              auto d = lg->data[ x - dx ][ y - dy ].c;
+              auto X = x - dx;
+              auto Y = y - dy;
+              if (is_oob_or_border(X, Y)) {
+                continue;
+              }
+              auto d = lg->data[ X ][ Y ].c;
               if ((d == CHARMAP_EMPTY) || (d == CHARMAP_FLOOR)) {
                 if (d100() < LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_DOOR_LOCKED) {
                   lg->data[ x - dx ][ y - dy ].c = CHARMAP_FOLIAGE;
@@ -4068,7 +4083,12 @@ static void level_gen_add_foliage_around_secret_doors(Gamep g, class LevelGen *l
         case CHARMAP_KEY :
           for (int dy = -2; dy <= 2; dy++) {
             for (int dx = -2; dx <= 2; dx++) {
-              auto d = lg->data[ x - dx ][ y - dy ].c;
+              auto X = x - dx;
+              auto Y = y - dy;
+              if (is_oob_or_border(X, Y)) {
+                continue;
+              }
+              auto d = lg->data[ X ][ Y ].c;
               if (d100() < LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_KEYS) {
                 if ((d == CHARMAP_EMPTY) || (d == CHARMAP_FLOOR)) {
                   lg->data[ x - dx ][ y - dy ].c = CHARMAP_FOLIAGE;
@@ -5394,16 +5414,25 @@ static auto level_gen_create_proc_gen_level(Gamep g, LevelNum level_num) -> clas
   // If not enough monsters, add some randomly
   //
   level_gen_add_missing_monsts_and_treasure(lg);
+  if (lg->debug) [[unlikely]] {
+    level_gen_dump(lg, "added missing monst and treasure");
+  }
 
   //
   // Secret doors need keys
   //
   level_gen_add_missing_keys(lg);
+  if (lg->debug) [[unlikely]] {
+    level_gen_dump(lg, "added missing keys");
+  }
 
   //
   // If not enough teleports
   //
   level_gen_add_missing_teleports(lg);
+  if (lg->debug) [[unlikely]] {
+    level_gen_dump(lg, "added missing teleports");
+  }
 
   //
   // Count the keys
@@ -5414,17 +5443,30 @@ static auto level_gen_create_proc_gen_level(Gamep g, LevelNum level_num) -> clas
   // If too many keys, remove some
   //
   level_gen_remove_additional_keys(lg);
+  if (lg->debug) [[unlikely]] {
+    level_gen_dump(lg, "remove additional keys");
+  }
 
   //
   // If too many monsters, remove some
   //
   level_gen_remove_additional_monsts(lg);
+  if (lg->debug) [[unlikely]] {
+    level_gen_dump(lg, "remove additional monsts");
+  }
+
   level_gen_remove_additional_mobs(lg);
+  if (lg->debug) [[unlikely]] {
+    level_gen_dump(lg, "remove additional mobs");
+  }
 
   //
   // Hide doors
   //
   level_gen_add_foliage_around_secret_doors(g, lg);
+  if (lg->debug) [[unlikely]] {
+    level_gen_dump(lg, "add foliage around secret doors");
+  }
 
   //
   // Show walkable areas
