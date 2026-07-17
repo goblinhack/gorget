@@ -1136,10 +1136,10 @@
   return level_flag_cached(g, v, l, is_blit_hit_outline_w_black_inside, p);
 }
 
-[[nodiscard]] auto level_is_unused9_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_able_to_engulf_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused9, p);
+  return level_flag_cached(g, v, l, is_able_to_engulf, p);
 }
 
 [[nodiscard]] auto level_is_able_to_fall_sound_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
@@ -1214,10 +1214,10 @@
   return level_flag_cached(g, v, l, is_hit_when_dead, p);
 }
 
-[[nodiscard]] auto level_is_unused6_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_able_to_be_engulfed_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused6, p);
+  return level_flag_cached(g, v, l, is_able_to_be_engulfed, p);
 }
 
 [[nodiscard]] auto level_is_potion_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

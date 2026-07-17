@@ -979,6 +979,11 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
       out = string_append_with_comma(out, "Buffable");
     }
   }
+  if (thing_is_able_to_engulf(me)) {
+    if (! thing_is_player(me)) {
+      out = string_append_with_comma(out, "Engulfer");
+    }
+  }
   if (thing_is_able_to_jump(me)) {
     if (! thing_is_player(me)) {
       out = string_append_with_comma(out, "Jumper");

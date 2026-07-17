@@ -1135,10 +1135,10 @@
   return tp_flag(tp, is_blit_hit_outline_w_black_inside) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused9(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_able_to_engulf(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused9) != 0;
+  return tp_flag(tp, is_able_to_engulf) != 0;
 }
 
 [[nodiscard]] auto tp_is_able_to_fall_sound(Tpp tp) -> bool
@@ -1213,10 +1213,10 @@
   return tp_flag(tp, is_hit_when_dead) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused6(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_able_to_be_engulfed(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused6) != 0;
+  return tp_flag(tp, is_able_to_be_engulfed) != 0;
 }
 
 [[nodiscard]] auto tp_is_potion(Tpp tp) -> bool

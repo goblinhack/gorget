@@ -1136,10 +1136,10 @@
   return level_open(g, v, l, is_blit_hit_outline_w_black_inside, p);
 }
 
-[[nodiscard]] auto level_open_is_unused9(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_open_is_able_to_engulf(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_open(g, v, l, is_unused9, p);
+  return level_open(g, v, l, is_able_to_engulf, p);
 }
 
 [[nodiscard]] auto level_open_is_able_to_fall_sound(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
@@ -1214,10 +1214,10 @@
   return level_open(g, v, l, is_hit_when_dead, p);
 }
 
-[[nodiscard]] auto level_open_is_unused6(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_open_is_able_to_be_engulfed(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_open(g, v, l, is_unused6, p);
+  return level_open(g, v, l, is_able_to_be_engulfed, p);
 }
 
 [[nodiscard]] auto level_open_is_potion(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp

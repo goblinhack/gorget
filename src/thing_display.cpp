@@ -71,9 +71,10 @@ void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, const bpoint &p, 
     // Cursor usually
     //
     tile = tp_tiles_get(tp_maybe_null, THING_ANIM_IDLE, 0);
-
-    if (tile_index != nullptr) {
-      *tile_index = tile_global_index(tile);
+    if (tile) {
+      if (tile_index != nullptr) {
+        *tile_index = tile_global_index(tile);
+      }
     }
   } else {
     static Tilep no_tile;

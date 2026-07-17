@@ -277,6 +277,45 @@ void thing_on_level_leave(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp->on_level_leave(g, v, l, me);
 }
 
+void thing_on_engulf_request_set(Tpp tp, thing_on_engulf_request_t callback)
+{
+  TRACE();
+  if (tp == nullptr) [[unlikely]] {
+    ERR("no thing template pointer");
+    return;
+  }
+  tp->on_engulf_request = callback;
+}
+
+[[nodiscard]] auto thing_on_engulf_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp engulfer) -> bool
+{
+  THING_DBG(g, v, l, me, "%s", __FUNCTION__);
+  TRACE_INDENT();
+
+  auto *tp = thing_tp(me);
+  if (tp == nullptr) [[unlikely]] {
+    ERR("no thing template pointer");
+    return false;
+  }
+  if (tp->on_engulf_request == nullptr) {
+    //
+    // Assume success
+    //
+    return true;
+  }
+  if (! thing_is_player(engulfer) && ! thing_is_monst(engulfer)) {
+    thing_err(g, v, l, engulfer, "unexpected thing for %s", __FUNCTION__);
+    return false;
+  }
+  auto ret = tp->on_engulf_request(g, v, l, me, engulfer);
+  if (ret) {
+    THING_DBG(g, v, l, me, "engulfs");
+  } else {
+    THING_DBG(g, v, l, me, "fails to engulf");
+  }
+  return ret;
+}
+
 void thing_on_open_request_set(Tpp tp, thing_on_open_request_t callback)
 {
   TRACE();

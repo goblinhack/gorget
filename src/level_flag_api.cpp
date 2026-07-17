@@ -1136,10 +1136,10 @@
   return level_flag(g, v, l, is_blit_hit_outline_w_black_inside, p, me);
 }
 
-[[nodiscard]] auto level_is_unused9(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_able_to_engulf(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused9, p, me);
+  return level_flag(g, v, l, is_able_to_engulf, p, me);
 }
 
 [[nodiscard]] auto level_is_able_to_fall_sound(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
@@ -1214,10 +1214,10 @@
   return level_flag(g, v, l, is_hit_when_dead, p, me);
 }
 
-[[nodiscard]] auto level_is_unused6(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_able_to_be_engulfed(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused6, p, me);
+  return level_flag(g, v, l, is_able_to_be_engulfed, p, me);
 }
 
 [[nodiscard]] auto level_is_potion(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp

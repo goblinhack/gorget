@@ -193,7 +193,7 @@ void thing_is_unlocked_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 
   //
-  // Needs to be something we can shove
+  // Needs to be something we can open
   //
   if (! level_is_openable_bool(g, v, l, to)) {
     return false;

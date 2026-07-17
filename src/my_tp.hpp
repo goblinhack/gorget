@@ -192,7 +192,7 @@
       list_macro(is_shown_health, "is_shown_health"),                                       /* newline */                                       \
       list_macro(is_shown_noise, "is_shown_noise"),                                         /* newline */                                       \
       list_macro(is_shown_stamina, "is_shown_stamina"),                                     /* newline */                                       \
-      list_macro(is_unused9, "is_unused9"),                                                 /* newline */                                       \
+      list_macro(is_able_to_engulf, "is_able_to_engulf"),                                   /* newline */                                       \
       list_macro(is_slime, "is_slime"),                                                     /* newline */                                       \
       list_macro(is_smoke, "is_smoke"),                                                     /* newline */                                       \
       list_macro(is_staff, "is_staff"),                                                     /* newline */                                       \
@@ -218,7 +218,7 @@
       list_macro(is_unused2, "is_unused2"),                                                 /* newline */                                       \
       list_macro(is_unused3, "is_unused3"),                                                 /* newline */                                       \
       list_macro(is_unused5, "is_unused5"),                                                 /* newline */                                       \
-      list_macro(is_unused6, "is_unused6"),                                                 /* newline */                                       \
+      list_macro(is_able_to_be_engulfed, "is_able_to_be_engulfed"),                         /* newline */                                       \
       list_macro(is_unused7, "is_unused7"),                                                 /* newline */                                       \
       list_macro(is_unused8, "is_unused8"),                                                 /* newline */                                       \
       list_macro(is_usable, "is_usable"),                                                   /* newline */                                       \
@@ -240,20 +240,21 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlagType)
 // Things all at the same z layer that can be drawn at the same x,y
 //
 #define MAP_Z_DEPTH_ENUM(list_macro)                                                                                                            \
-  CLANG_FORMAT_INDENT()                                         /* dummy line for clang indentation fixup */                                    \
-  list_macro(MAP_Z_DEPTH_FLOOR, "floor"),                       /* newline */                                                                   \
-      list_macro(MAP_Z_DEPTH_LIQUID, "e.g. water"),             /* newline */                                                                   \
-      list_macro(MAP_Z_DEPTH_LIQUID2, "e.g. deep water"),       /* newline */                                                                   \
-      list_macro(MAP_Z_DEPTH_BG_OBJ, "e.g. exit, entrance"),    /* newline */                                                                   \
-      list_macro(MAP_Z_DEPTH_GRASS, "grass"),                   /* newline */                                                                   \
-      list_macro(MAP_Z_DEPTH_OBJ, "monsts"),                    /* newline */                                                                   \
-      list_macro(MAP_Z_DEPTH_WALL, "wall"),                     /* newline */                                                                   \
-      list_macro(MAP_Z_DEPTH_FLOATING_MONST, "floating-monst"), /* newline */                                                                   \
-      list_macro(MAP_Z_DEPTH_PLAYER, "monsts"),                 /* newline */                                                                   \
-      list_macro(MAP_Z_DEPTH_FOLIAGE, "obscuring plants"),      /* newline */                                                                   \
-      list_macro(MAP_Z_DEPTH_EFFECT, "effect"),                 /* newline */                                                                   \
-      list_macro(MAP_Z_DEPTH_WEAPON, "projectile"),             /* newline */                                                                   \
-      list_macro(MAP_Z_DEPTH_GAS, "fire, smoke"),               /* newline */
+  CLANG_FORMAT_INDENT()                                           /* dummy line for clang indentation fixup */                                  \
+  list_macro(MAP_Z_DEPTH_FLOOR, "floor"),                         /* newline */                                                                 \
+      list_macro(MAP_Z_DEPTH_LIQUID, "e.g. water"),               /* newline */                                                                 \
+      list_macro(MAP_Z_DEPTH_LIQUID2, "e.g. deep water"),         /* newline */                                                                 \
+      list_macro(MAP_Z_DEPTH_BG_OBJ, "e.g. exit, entrance"),      /* newline */                                                                 \
+      list_macro(MAP_Z_DEPTH_GRASS, "grass"),                     /* newline */                                                                 \
+      list_macro(MAP_Z_DEPTH_OBJ, "monsts"),                      /* newline */                                                                 \
+      list_macro(MAP_Z_DEPTH_WALL, "wall"),                       /* newline */                                                                 \
+      list_macro(MAP_Z_DEPTH_FLOATING_MONST, "floating-monst"),   /* newline */                                                                 \
+      list_macro(MAP_Z_DEPTH_PLAYER, "monsts"),                   /* newline */                                                                 \
+      list_macro(MAP_Z_DEPTH_ENGULFING_MONST, "engulfing-monst"), /* newline */                                                                 \
+      list_macro(MAP_Z_DEPTH_FOLIAGE, "obscuring plants"),        /* newline */                                                                 \
+      list_macro(MAP_Z_DEPTH_EFFECT, "effect"),                   /* newline */                                                                 \
+      list_macro(MAP_Z_DEPTH_WEAPON, "projectile"),               /* newline */                                                                 \
+      list_macro(MAP_Z_DEPTH_GAS, "fire, smoke"),                 /* newline */
 
 ENUM_DEF_H(MAP_Z_DEPTH_ENUM, MapZDepthType)
 
@@ -592,9 +593,11 @@ class Tp;
 [[nodiscard]] auto tp_id_get(Tpp tp) -> TpId;
 [[nodiscard]] auto tp_init() -> bool;
 [[nodiscard]] auto tp_is_able_to_be_buffed(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_able_to_be_engulfed(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_collect_items(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_collect_keys(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_crush_grass(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_able_to_engulf(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_fall_repeatedly(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_fall_sound(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_fall(Tpp tp) -> bool;
@@ -793,10 +796,8 @@ class Tp;
 [[nodiscard]] auto tp_is_unused2(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused3(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused5(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused6(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused7(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused8(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused9(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_usable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_vault(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_vision_180_degrees(Tpp tp) -> bool;

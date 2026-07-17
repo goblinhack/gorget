@@ -285,6 +285,17 @@ static auto thing_monst_choose_something_we_can_see(Gamep g, Levelsp v, Levelp l
     }
   }
 
+  if (thing_can_move_to_attempt_by_engulfing(g, v, l, me, to)) {
+    //
+    // Can we open it allow movement?
+    //
+    THING_DBG(g, v, l, me, "move try: can move to by engulfing");
+
+    if (thing_move_to(g, v, l, me, to)) {
+      return true;
+    }
+  }
+
   //
   // Can it jump there?
   //

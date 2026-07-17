@@ -84,6 +84,10 @@ using thing_on_unwield_request_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, T
 void               thing_on_unwield_request_set(Tpp tp, thing_on_unwield_request_t callback);
 [[nodiscard]] auto thing_on_unwield_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp unwieldper) -> bool;
 
+using thing_on_engulf_request_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp engulfer);
+void               thing_on_engulf_request_set(Tpp tp, thing_on_engulf_request_t callback);
+[[nodiscard]] auto thing_on_engulf_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp engulfer) -> bool;
+
 using thing_on_open_request_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp opener);
 void               thing_on_open_request_set(Tpp tp, thing_on_open_request_t callback);
 [[nodiscard]] auto thing_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp opener) -> bool;
