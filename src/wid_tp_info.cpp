@@ -89,6 +89,7 @@
       case THING_EVENT_LIGHT_DAMAGE :     [[fallthrough]];
       case THING_EVENT_THROWN_DAMAGE :    [[fallthrough]];
       case THING_EVENT_MELEE_DAMAGE :     [[fallthrough]];
+      case THING_EVENT_ENGULF_DAMAGE :    [[fallthrough]];
       case THING_EVENT_EXPLOSION_DAMAGE : [[fallthrough]];
       case THING_EVENT_FIRE_DAMAGE :      [[fallthrough]];
       case THING_EVENT_WATER_DAMAGE : //
@@ -215,6 +216,7 @@
       case THING_EVENT_LIGHT_DAMAGE :     [[fallthrough]];
       case THING_EVENT_THROWN_DAMAGE :    [[fallthrough]];
       case THING_EVENT_MELEE_DAMAGE :     [[fallthrough]];
+      case THING_EVENT_ENGULF_DAMAGE :    [[fallthrough]];
       case THING_EVENT_EXPLOSION_DAMAGE : [[fallthrough]];
       case THING_EVENT_FIRE_DAMAGE :      [[fallthrough]];
       case THING_EVENT_WATER_DAMAGE : //
@@ -276,6 +278,7 @@
       case THING_EVENT_CRUSH :            [[fallthrough]];
       case THING_EVENT_LIGHT_DAMAGE :     [[fallthrough]];
       case THING_EVENT_MELEE_DAMAGE :     [[fallthrough]];
+      case THING_EVENT_ENGULF_DAMAGE :    [[fallthrough]];
       case THING_EVENT_THROWN_DAMAGE :    [[fallthrough]];
       case THING_EVENT_EXPLOSION_DAMAGE : [[fallthrough]];
       case THING_EVENT_FIRE_DAMAGE :      [[fallthrough]];

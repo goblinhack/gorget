@@ -28,6 +28,15 @@ static auto thing_attack(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp i
   auto  event_type = THING_EVENT_MELEE_DAMAGE;
   auto  damage     = thing_damage(g, v, l, source, event_type);
 
+  //
+  // Extra digestion damage
+  //
+  if (thing_is_engulfed(it)) {
+    if (thing_is_able_to_engulf(attacker)) {
+      event_type = THING_EVENT_ENGULF_DAMAGE;
+    }
+  }
+
   ThingEvent e {
       .reason     = "melee",    //
       .event_type = event_type, //

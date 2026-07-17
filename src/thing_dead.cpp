@@ -47,6 +47,9 @@ static void thing_killed_player(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEv
       case THING_EVENT_CRUSH : //
         topcon(UI_IMPORTANT_FMT_STR "You are crushed to death by %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
+      case THING_EVENT_ENGULF_DAMAGE : //
+        topcon(UI_IMPORTANT_FMT_STR "You are digested to death by %s." UI_RESET_FMT, by_the_thing.c_str());
+        break;
       case THING_EVENT_THROWN_DAMAGE : [[fallthrough]];
       case THING_EVENT_MELEE_DAMAGE : //
         topcon(UI_IMPORTANT_FMT_STR "You are killed by %s." UI_RESET_FMT, by_the_thing.c_str());
@@ -105,6 +108,9 @@ static void thing_killed_player(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEv
         break;
       case THING_EVENT_CRUSH : //
         topcon(UI_IMPORTANT_FMT_STR "You are crushed and die." UI_RESET_FMT);
+        break;
+      case THING_EVENT_ENGULF_DAMAGE : //
+        topcon(UI_IMPORTANT_FMT_STR "You are engulfed and die." UI_RESET_FMT);
         break;
       case THING_EVENT_THROWN_DAMAGE : [[fallthrough]];
       case THING_EVENT_MELEE_DAMAGE : //
@@ -185,6 +191,9 @@ static void thing_killed_by_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
       break;
     case THING_EVENT_CRUSH : //
       topcon("%s is crushed by %s.", the_thing.c_str(), by_player.c_str());
+      break;
+    case THING_EVENT_ENGULF_DAMAGE : //
+      topcon("%s is engulfed by %s.", the_thing.c_str(), by_player.c_str());
       break;
     case THING_EVENT_THROWN_DAMAGE : [[fallthrough]];
     case THING_EVENT_MELEE_DAMAGE : //

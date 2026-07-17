@@ -616,6 +616,11 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
+
+  if (thing_is_dead(t)) {
+    return false;
+  }
+
   return tp_flag(thing_tp(t), is_able_to_engulf) != 0;
 }
 
@@ -737,6 +742,11 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
+
+  if (thing_is_dead(t)) {
+    return false;
+  }
+
   return tp_flag(thing_tp(t), is_able_to_be_buffed) != 0;
 }
 
@@ -770,6 +780,11 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
+
+  if (thing_is_dead(t)) {
+    return false;
+  }
+
   return tp_flag(thing_tp(t), is_able_to_throw) != 0;
 }
 
@@ -814,6 +829,11 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
+
+  if (thing_is_dead(t)) {
+    return false;
+  }
+
   return tp_flag(thing_tp(t), is_able_to_fire_weapons) != 0;
 }
 
@@ -836,6 +856,11 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
+
+  if (thing_is_dead(t)) {
+    return false;
+  }
+
   return tp_flag(thing_tp(t), is_able_to_wield_items) != 0;
 }
 
@@ -1122,6 +1147,11 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
+
+  if (thing_is_dead(t)) {
+    return false;
+  }
+
   return tp_flag(thing_tp(t), is_able_to_lunge) != 0;
 }
 
@@ -1375,6 +1405,11 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
+
+  if (thing_is_dead(t)) {
+    return false;
+  }
+
   return tp_flag(thing_tp(t), is_able_to_open_things) != 0;
 }
 
@@ -1397,6 +1432,11 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
+
+  if (thing_is_dead(t)) {
+    return false;
+  }
+
   return tp_flag(thing_tp(t), is_able_to_crush_grass) != 0;
 }
 
@@ -1408,6 +1448,11 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
+
+  if (thing_is_dead(t)) {
+    return false;
+  }
+
   return tp_flag(thing_tp(t), is_able_to_collect_keys) != 0;
 }
 
@@ -1419,6 +1464,11 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
+
+  if (thing_is_dead(t)) {
+    return false;
+  }
+
   return tp_flag(thing_tp(t), is_able_to_collect_items) != 0;
 }
 
@@ -1528,6 +1578,11 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
+
+  if (thing_is_dead(t)) {
+    return false;
+  }
+
   return tp_flag(thing_tp(t), is_able_to_jump) != 0;
 }
 

@@ -641,6 +641,18 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
     }
   }
 
+  if (thing_is_engulfed(me)) {
+    if (thing_stat_success(g, v, l, me, THING_STAT_LUCK)) {
+      topcon(UI_IMPORTANT_FMT_STR "You are engulfed but break free!" UI_RESET_FMT);
+      (void) thing_is_engulfed_try_unset(g, v, l, me);
+    } else {
+      THING_DBG(g, v, l, me, "move to next: not possible, engulfed, lunge");
+      (void) thing_lunge(g, v, l, me, to);
+      topcon(UI_IMPORTANT_FMT_STR "You are engulfed and cannot move!" UI_RESET_FMT);
+      return false;
+    }
+  }
+
   if (thing_can_move_to_attempt(g, v, l, me, to)) {
     //
     // Fake a mouse path for movement

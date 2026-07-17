@@ -18,9 +18,6 @@
 //
 [[nodiscard]] auto thing_is_engulfed_try_set(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp engulfer, bool val = true) -> bool
 {
-  THING_DBG(g, v, l, t, "%s", __FUNCTION__);
-  TRACE_INDENT();
-
   if (t == nullptr) {
     ERR("no thing pointer");
     return false;
@@ -38,6 +35,11 @@
     //
     // Try to engulf
     //
+    THING_DBG(g, v, l, engulfer, "engulfer");
+    TRACE_INDENT();
+    THING_DBG(g, v, l, t, "to be engulfed");
+    TRACE_INDENT();
+
     if (! thing_on_engulf_request(g, v, l, t, engulfer)) {
       //
       // Engulf failed
@@ -63,11 +65,11 @@
   return true;
 }
 
-[[nodiscard]] auto thing_is_engulfed_try_unset(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp engulfer) -> bool
+[[nodiscard]] auto thing_is_engulfed_try_unset(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool
 {
   TRACE_DEBUG();
 
-  return thing_is_engulfed_try_set(g, v, l, t, engulfer, false);
+  return thing_is_engulfed_try_set(g, v, l, t, nullptr, false);
 }
 
 //
@@ -127,7 +129,7 @@
     return false;
   }
 
-  bool const success = thing_is_engulfed_try_unset(g, v, l, me, engulfer);
+  bool const success = thing_is_engulfed_try_unset(g, v, l, me);
   if (success) {
     if (thing_is_player(engulfer)) {
       (void) level_tick_begin_requested(g, v, l, "player closed something");

@@ -66,9 +66,9 @@ static auto thing_choose_landing_spot(Gamep g, Levelsp v, Levelp l, Thingp me, b
           // If lucky, no landing on lava
           //
           if (thing_is_player(me) && (level_is_lava(g, v, l, where) != nullptr)) {
-            if (thing_stat_success(g, v, l, me, THING_STAT_LUCK) != 0) {
+            if (thing_stat_success(g, v, l, me, THING_STAT_LUCK)) {
               //
-              // Continue to look
+              // Continue to look for a landing spot
               //
               saved = true;
               continue;
@@ -286,7 +286,7 @@ static void thing_fall_end(Gamep g, Levelsp v, Levelp l, Thingp me)
     THING_DBG(g, v, l, me, "over a chasm again; keep falling");
     TRACE_INDENT();
     thing_is_falling_continues_set(g, v, l, me);
-    thing_is_spawned_set(g, v, l, me);
+    thing_is_falling_set(g, v, l, me, true);
 
     if (thing_is_player(me)) {
       topcon(UI_IMPORTANT_FMT_STR "You continue to fall!" UI_RESET_FMT);
@@ -438,6 +438,20 @@ void thing_fall(Gamep g, Levelsp v, Levelp l, Thingp me)
       if (thing_vision_can_see_tile(g, v, l, player, thing_at(g, v, l, me))) {
         auto The_thing = thing_name_long_The(g, v, l, me);
         topcon("%s tumbles into the chasm.", The_thing.c_str());
+      }
+    }
+  }
+
+  //
+  // Drag the engulfed
+  //
+  if (thing_is_able_to_engulf(me)) {
+    FOR_ALL_THINGS_AT(g, v, l, it, thing_at(g, v, l, me))
+    {
+      if (thing_is_engulfed(it)) {
+        THING_DBG(g, v, l, it, "is engulfed and needs to follow the engulferd down");
+        (void) thing_is_engulfed_try_unset(g, v, l, it);
+        (void) thing_fall(g, v, l, it);
       }
     }
   }

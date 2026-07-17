@@ -46,6 +46,20 @@
   thing_is_moving_set(g, v, l, me);
   THING_DBG(g, v, l, me, "is moving to set");
 
+  if (thing_is_able_to_engulf(me)) {
+    FOR_ALL_THINGS_AT(g, v, l, it, at)
+    {
+      if (thing_is_engulfed(it)) {
+        THING_DBG(g, v, l, it, "is engulfed and needs to follow the engulfer");
+
+        if (! thing_move_to(g, v, l, it, to)) {
+          THING_DBG(g, v, l, it, "is engulfed but could not be moved");
+          (void) thing_is_engulfed_try_unset(g, v, l, it);
+        }
+      }
+    }
+  }
+
   return true;
 }
 
@@ -216,6 +230,9 @@ void thing_move_finish(Gamep g, Levelsp v, Levelp l, Thingp me)
   thing_is_moving_unset(g, v, l, me);
   thing_is_jumping_unset(g, v, l, me);
   thing_is_thrown_unset(g, v, l, me, thing_owner(g, v, l, me));
+  if (! level_is_able_to_engulf_bool(g, v, l, at)) {
+    (void) thing_is_engulfed_try_unset(g, v, l, me);
+  }
   thing_dmap(g, v, l, me);
   thing_update_pos(g, v, l, me);
 }

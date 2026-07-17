@@ -33,7 +33,7 @@ void thing_trap_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
 
   thing_sound_play(g, v, l, me, "click");
 
-  if (thing_stat_success(g, v, l, me, THING_STAT_LUCK) != 0) {
+  if (thing_stat_success(g, v, l, me, THING_STAT_LUCK)) {
     //
     // Lucky
     //

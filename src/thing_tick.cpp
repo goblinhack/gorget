@@ -9,70 +9,83 @@
 #include "my_thing_inlines.hpp"
 #include "my_tp.hpp"
 #include "my_types.hpp"
+#include "my_ui.hpp"
 
 //
 // Called at the beginning of each tick
 //
-void thing_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
+void thing_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
+
+  auto at = thing_at(g, v, l, me);
+
+  //
+  // Check if still engulfed
+  //
+  if (thing_is_engulfed(me)) {
+    if (! level_alive_is_able_to_engulf(g, v, l, at)) {
+      topcon(UI_IMPORTANT_FMT_STR "You seem to be free!" UI_RESET_FMT);
+      (void) thing_is_engulfed_try_unset(g, v, l, me);
+    }
+  }
 
   //
   // Update hidden and submerged status
   //
-  if (! thing_is_moving(t)) {
+  if (! thing_is_moving(me)) {
     //
     // Only if not moving, else the player appears to jump briefly forward
     // before being interpolated
     //
-    thing_update_pos(g, v, l, t);
+    thing_update_pos(g, v, l, me);
   }
 
   //
   // Reset damage counts.
   //
-  (void) thing_damage_this_tick_set(g, v, l, t, 0);
+  (void) thing_damage_this_tick_set(g, v, l, me, 0);
 
   //
   // Reset noise counts
   //
-  (void) thing_noise_decr(g, v, l, t, 1);
+  (void) thing_noise_decr(g, v, l, me, 1);
 
   //
   // Reset attack counts.
   //
-  (void) thing_attack_count_per_tick_set(g, v, l, t, 0);
+  (void) thing_attack_count_per_tick_set(g, v, l, me, 0);
 
   //
   // Per thing callback
   //
-  thing_on_tick_begin(g, v, l, t);
-  if (thing_is_dead(t)) {
+  thing_on_tick_begin(g, v, l, me);
+  if (thing_is_dead(me)) {
     return;
   }
 
   //
   // Lifespan tick
   //
-  if (thing_lifespan(t) != 0) {
-    if (thing_lifespan_decr(g, v, l, t) == 0) {
+  if (thing_lifespan(me) != 0) {
+    if (thing_lifespan_decr(g, v, l, me) == 0) {
       ThingEvent e {
           .reason     = "ran out of life",            //
           .event_type = THING_EVENT_LIFESPAN_EXPIRED, //
       };
 
-      THING_DBG(g, v, l, t, "dead due to out of life");
+      THING_DBG(g, v, l, me, "dead due to out of life");
       TRACE_INDENT();
 
-      thing_dead(g, v, l, t, e);
+      thing_dead(g, v, l, me, e);
       return;
     }
   }
 
-  (void) thing_age_incr(g, v, l, t);
+  (void) thing_age_incr(g, v, l, me);
 
-  thing_continue_to_burn_check(g, v, l, t);
-  if (thing_is_dead(t)) {
+  thing_continue_to_burn_check(g, v, l, me);
+  if (thing_is_dead(me)) {
     return;
   }
 }
@@ -80,33 +93,33 @@ void thing_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
 //
 // Called when the level is idle. i.e. multiple times per tick
 //
-void thing_tick_idle(Gamep g, Levelsp v, Levelp l, Thingp t)
+void thing_tick_idle(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
   //
   // Per thing callback
   //
-  thing_on_tick_idle(g, v, l, t);
+  thing_on_tick_idle(g, v, l, me);
 }
 
 //
 // Called at the end of each tick
 //
-void thing_tick_end(Gamep g, Levelsp v, Levelp l, Thingp t)
+void thing_tick_end(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
   //
   // Per thing callback
   //
-  thing_on_tick_end(g, v, l, t);
+  thing_on_tick_end(g, v, l, me);
 
   //
   // Mark the tick as completed
   //
-  if (t->tick == v->tick) {
+  if (me->tick == v->tick) {
     return;
   }
-  t->tick = v->tick;
+  me->tick = v->tick;
 }

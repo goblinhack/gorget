@@ -375,24 +375,25 @@ static void tp_player_tick_end(Gamep g, Levelsp v, Levelp l, Thingp me)
 static void tp_player_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
+  THING_DBG(g, v, l, me, "player spawned");
 
   if (g_opt_tests) {
     return;
   }
 
   static std::initializer_list< std::string > items = {
-#if 1
       "staff_fire",     //
+      "wand_fire",      //
+      "potion_healing", //
+      "potion_incin",   //
+#if 0
       "staff_fire",     //
       "staff_light",    //
-      "wand_fire",      //
       "wand_light",     //
       "potion_incin",   //
       "potion_incin",   //
       "potion_incin",   //
       "potion_incin",   //
-      "potion_incin",   //
-      "potion_healing", //
       "horseshoe",      //
       "horseshoe",      //
       "horseshoe",      //

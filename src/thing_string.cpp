@@ -55,6 +55,7 @@
                   /* is_wielded                    */ "{}"
                   /* is_jumping                    */ "{}"
                   /* is_thrown                     */ "{}"
+                  /* is_engulfed                   */ "{}"
                   /* is_carried                    */ "{}"
                   /* is_sleeping                   */ "{}"
                   /* is_falling                    */ "{}"
@@ -72,6 +73,7 @@
                   /* newline */ thing_is_wielded(t) ? "/wield" : "",
                   /* newline */ thing_is_jumping(t) ? "/jmp" : "",
                   /* newline */ thing_is_thrown(t) ? "/thr" : "",
+                  /* newline */ thing_is_engulfed(t) ? "/gul" : "",
                   /* newline */ thing_is_carried(t) ? "/car" : "",
                   /* newline */ thing_is_dead(t) ? "/ded" : "",
                   /* newline */ thing_is_sleeping(t) ? "/slp" : "",
@@ -134,7 +136,10 @@
       s += "crushed";
       break;
     case THING_EVENT_THROWN_DAMAGE : //
-      s += "pelted to bits";
+      s += "pelted";
+      break;
+    case THING_EVENT_ENGULF_DAMAGE : //
+      s += "digested";
       break;
     case THING_EVENT_MELEE_DAMAGE : //
       s += "hacked to bits";

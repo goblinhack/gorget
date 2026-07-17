@@ -151,6 +151,21 @@ static auto thing_jump_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thingp
   }
 
   //
+  // Give a chance of escape
+  //
+  if (thing_is_engulfed(me)) {
+    THING_DBG(g, v, l, me, "move to next: not possible, engulfed, lunge");
+    if (thing_stat_success(g, v, l, me, THING_STAT_LUCK)) {
+      topcon(UI_IMPORTANT_FMT_STR "You are engulfed but break free!" UI_RESET_FMT);
+      (void) thing_is_engulfed_try_unset(g, v, l, me);
+    } else {
+      (void) thing_lunge(g, v, l, me, to);
+      topcon(UI_IMPORTANT_FMT_STR "You are engulfed and cannot jump!" UI_RESET_FMT);
+      return false;
+    }
+  }
+
+  //
   // If jumping too far, truncate the jump
   //
   auto how_far_i_can_jump = thing_distance_jump(g, v, l, me);
@@ -250,6 +265,23 @@ static auto thing_jump_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thingp
   (void) thing_stamina_set(g, v, l, me, stamina);
 
   THING_DBG(g, v, l, me, "jump begin delta %d,%d", dx, dy);
+
+  //
+  // Drag the engulfed
+  //
+  if (thing_is_able_to_engulf(me)) {
+    FOR_ALL_THINGS_AT(g, v, l, it, at)
+    {
+      if (thing_is_engulfed(it)) {
+        THING_DBG(g, v, l, it, "is engulfed and needs to follow the engulfer");
+
+        if (! thing_jump_to(g, v, l, it, to)) {
+          THING_DBG(g, v, l, it, "is engulfed but could not be moved");
+          (void) thing_is_engulfed_try_unset(g, v, l, it);
+        }
+      }
+    }
+  }
 
   return true;
 }

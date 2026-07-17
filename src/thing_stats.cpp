@@ -247,7 +247,7 @@
   return out;
 }
 
-[[nodiscard]] auto thing_stat_success(Gamep g, Levelsp v, Levelp l, Thingp me, ThingStatType stat) -> int
+[[nodiscard]] auto thing_stat_success(Gamep g, Levelsp v, Levelp l, Thingp me, ThingStatType stat) -> bool
 {
   TRACE_DEBUG();
 
@@ -281,5 +281,5 @@
   auto roll       = d20();
   auto total_stat = thing_stat(g, v, l, me, stat);
 
-  return result[ roll - 1 ][ total_stat - 1 ];
+  return result[ roll - 1 ][ total_stat - 1 ] ? true : false;
 }

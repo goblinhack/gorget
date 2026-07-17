@@ -375,6 +375,15 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
         }
       }
 
+      //
+      // Allow engulfers to land on you
+      //
+      if (thing_is_able_to_be_engulfed(it)) {
+        if ((me != nullptr) && thing_is_able_to_engulf(me)) {
+          return true; // filter out i.e. ignore
+        }
+      }
+
       [[fallthrough]];
 
     case is_obs_to_cursor_path :

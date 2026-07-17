@@ -256,6 +256,12 @@ static auto thing_monst_choose_something_we_can_see(Gamep g, Levelsp v, Levelp l
 
   auto at = thing_at(g, v, l, me);
 
+  if (thing_is_engulfed(me)) {
+    THING_DBG(g, v, l, me, "move to next: not possible, engulfed, lunge");
+    (void) thing_lunge(g, v, l, me, to);
+    return false;
+  }
+
   if (thing_can_move_to_attempt(g, v, l, me, to)) {
     return true;
   }
