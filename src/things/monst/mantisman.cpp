@@ -107,7 +107,6 @@ static bool tp_mantisman_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, T
   tp_flag_set(tp, is_hit_when_dead);
   tp_flag_set(tp, is_insectoid);
   tp_flag_set(tp, is_loggable);
-  tp_flag_set(tp, is_mantisman);
   tp_flag_set(tp, is_monst);
   tp_flag_set(tp, is_obs_to_beam);
   tp_flag_set(tp, is_obs_to_jumping_onto);

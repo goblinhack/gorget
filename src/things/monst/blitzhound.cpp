@@ -104,7 +104,6 @@ static bool tp_blitzhound_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, 
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_hit_outline_w_invis_inside);
   tp_flag_set(tp, is_blit_shown_in_chasms);
-  tp_flag_set(tp, is_blitzhound);
   tp_flag_set(tp, is_burnable); // is capable of being burned by fire
   tp_flag_set(tp, is_collision_circle_large);
   tp_flag_set(tp, is_corpse_on_death);

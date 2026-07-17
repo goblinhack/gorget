@@ -584,10 +584,10 @@
   return level_alive(g, v, l, is_loggable, p);
 }
 
-[[nodiscard]] auto level_alive_is_mantisman(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_alive_is_unused7(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_alive(g, v, l, is_mantisman, p);
+  return level_alive(g, v, l, is_unused7, p);
 }
 
 [[nodiscard]] auto level_alive_is_meltable(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
@@ -1028,10 +1028,10 @@
   return level_alive(g, v, l, is_staff, p);
 }
 
-[[nodiscard]] auto level_alive_is_argusul(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_alive_is_unused8(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_alive(g, v, l, is_argusul, p);
+  return level_alive(g, v, l, is_unused8, p);
 }
 
 [[nodiscard]] auto level_alive_is_wait_on_anim(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
@@ -1070,10 +1070,10 @@
   return level_alive(g, v, l, is_reeds, p);
 }
 
-[[nodiscard]] auto level_alive_is_horseshoe(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_alive_is_unused5(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_alive(g, v, l, is_horseshoe, p);
+  return level_alive(g, v, l, is_unused5, p);
 }
 
 [[nodiscard]] auto level_alive_is_vault(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
@@ -1136,10 +1136,10 @@
   return level_alive(g, v, l, is_blit_hit_outline_w_black_inside, p);
 }
 
-[[nodiscard]] auto level_alive_is_skullferno(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_alive_is_unused9(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_alive(g, v, l, is_skullferno, p);
+  return level_alive(g, v, l, is_unused9, p);
 }
 
 [[nodiscard]] auto level_alive_is_able_to_fall_sound(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
@@ -1214,10 +1214,10 @@
   return level_alive(g, v, l, is_hit_when_dead, p);
 }
 
-[[nodiscard]] auto level_alive_is_blitzhound(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_alive_is_unused6(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_alive(g, v, l, is_blitzhound, p);
+  return level_alive(g, v, l, is_unused6, p);
 }
 
 [[nodiscard]] auto level_alive_is_potion(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp

@@ -49,7 +49,6 @@ static auto tp_horseshoe_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> 
   tp_flag_set(tp, is_collision_circle_large);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_droppable);
-  tp_flag_set(tp, is_horseshoe);
   tp_flag_set(tp, is_inventory_item);
   tp_flag_set(tp, is_item_mergeable);
   tp_flag_set(tp, is_item);

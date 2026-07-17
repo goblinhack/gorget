@@ -597,7 +597,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_unused3) != 0;
 }
 
-[[nodiscard]] auto thing_is_horseshoe(Thingp t) -> bool
+[[nodiscard]] auto thing_is_unused5(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -605,10 +605,10 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_horseshoe) != 0;
+  return tp_flag(thing_tp(t), is_unused5) != 0;
 }
 
-[[nodiscard]] auto thing_is_skullferno(Thingp t) -> bool
+[[nodiscard]] auto thing_is_unused9(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -616,7 +616,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_skullferno) != 0;
+  return tp_flag(thing_tp(t), is_unused9) != 0;
 }
 
 [[nodiscard]] auto thing_is_effect_ripple(Thingp t) -> bool
@@ -861,7 +861,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_staff) != 0;
 }
 
-[[nodiscard]] auto thing_is_argusul(Thingp t) -> bool
+[[nodiscard]] auto thing_is_unused8(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -869,7 +869,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_argusul) != 0;
+  return tp_flag(thing_tp(t), is_unused8) != 0;
 }
 
 [[nodiscard]] auto thing_is_wait_on_anim(Thingp t) -> bool
@@ -1081,7 +1081,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_effect_blood) != 0;
 }
 
-[[nodiscard]] auto thing_is_blitzhound(Thingp t) -> bool
+[[nodiscard]] auto thing_is_unused6(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -1089,7 +1089,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_blitzhound) != 0;
+  return tp_flag(thing_tp(t), is_unused6) != 0;
 }
 
 [[nodiscard]] auto thing_is_potion(Thingp t) -> bool
@@ -1158,7 +1158,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_insectoid) != 0;
 }
 
-[[nodiscard]] auto thing_is_mantisman(Thingp t) -> bool
+[[nodiscard]] auto thing_is_unused7(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -1166,7 +1166,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_mantisman) != 0;
+  return tp_flag(thing_tp(t), is_unused7) != 0;
 }
 
 [[nodiscard]] auto thing_is_dmap(Thingp t) -> bool

@@ -776,7 +776,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_animated_no_dir(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_animated_sync_first(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_animated(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_argusul(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_attackable_by_monst(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_attackable_by_player(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_auto_wield(Thingp t) -> bool;
@@ -802,7 +801,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_blit_square_outlined(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_blit_when_obscured_faded(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_blit_when_obscured_outline(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_blitzhound(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_border(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_brazier(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_bridge(Thingp t) -> bool;
@@ -882,7 +880,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_hit_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_is_hit_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_is_hit_when_dead(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_horseshoe(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_hot_check(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
 [[nodiscard]] auto thing_is_immune_to(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEventType val) -> bool;
 [[nodiscard]] auto thing_is_indestructible(Thingp t) -> bool;
@@ -903,7 +900,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_levitating(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_loggable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_lucky(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_mantisman(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_meltable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_metal(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_minion(Thingp t) -> bool;
@@ -951,7 +947,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_shown_health(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_shown_noise(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_shown_stamina(Thingp me) -> bool;
-[[nodiscard]] auto thing_is_skullferno(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_sleeping(Thingp me) -> bool;
 [[nodiscard]] auto thing_is_slime(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_smoke(Thingp t) -> bool;
@@ -979,6 +974,11 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused1(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused2(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused3(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_unused5(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_unused6(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_unused7(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_unused8(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_unused9(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_usable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_vault(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_vision_180_degrees(Thingp t) -> bool;

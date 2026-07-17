@@ -201,4 +201,3 @@ void wid_gray_out_button(Gamep g, Widp w)
   wid_set_style(w, UI_WID_STYLE_BUTTON_ROUNDED_SOLID);
   wid_set_color(w, WID_COLOR_BG, GRAY40);
 }
-

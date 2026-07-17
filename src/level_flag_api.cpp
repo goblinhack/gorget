@@ -584,10 +584,10 @@
   return level_flag(g, v, l, is_loggable, p, me);
 }
 
-[[nodiscard]] auto level_is_mantisman(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_unused7(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_mantisman, p, me);
+  return level_flag(g, v, l, is_unused7, p, me);
 }
 
 [[nodiscard]] auto level_is_meltable(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
@@ -1028,10 +1028,10 @@
   return level_flag(g, v, l, is_staff, p, me);
 }
 
-[[nodiscard]] auto level_is_argusul(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_unused8(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_argusul, p, me);
+  return level_flag(g, v, l, is_unused8, p, me);
 }
 
 [[nodiscard]] auto level_is_wait_on_anim(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
@@ -1070,10 +1070,10 @@
   return level_flag(g, v, l, is_reeds, p, me);
 }
 
-[[nodiscard]] auto level_is_horseshoe(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_unused5(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_horseshoe, p, me);
+  return level_flag(g, v, l, is_unused5, p, me);
 }
 
 [[nodiscard]] auto level_is_vault(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
@@ -1136,10 +1136,10 @@
   return level_flag(g, v, l, is_blit_hit_outline_w_black_inside, p, me);
 }
 
-[[nodiscard]] auto level_is_skullferno(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_unused9(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_skullferno, p, me);
+  return level_flag(g, v, l, is_unused9, p, me);
 }
 
 [[nodiscard]] auto level_is_able_to_fall_sound(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
@@ -1214,10 +1214,10 @@
   return level_flag(g, v, l, is_hit_when_dead, p, me);
 }
 
-[[nodiscard]] auto level_is_blitzhound(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_unused6(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_blitzhound, p, me);
+  return level_flag(g, v, l, is_unused6, p, me);
 }
 
 [[nodiscard]] auto level_is_potion(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp

@@ -583,10 +583,10 @@
   return tp_flag(tp, is_loggable) != 0;
 }
 
-[[nodiscard]] auto tp_is_mantisman(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_unused7(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_mantisman) != 0;
+  return tp_flag(tp, is_unused7) != 0;
 }
 
 [[nodiscard]] auto tp_is_meltable(Tpp tp) -> bool
@@ -1027,10 +1027,10 @@
   return tp_flag(tp, is_staff) != 0;
 }
 
-[[nodiscard]] auto tp_is_argusul(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_unused8(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_argusul) != 0;
+  return tp_flag(tp, is_unused8) != 0;
 }
 
 [[nodiscard]] auto tp_is_wait_on_anim(Tpp tp) -> bool
@@ -1069,10 +1069,10 @@
   return tp_flag(tp, is_reeds) != 0;
 }
 
-[[nodiscard]] auto tp_is_horseshoe(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_unused5(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_horseshoe) != 0;
+  return tp_flag(tp, is_unused5) != 0;
 }
 
 [[nodiscard]] auto tp_is_vault(Tpp tp) -> bool
@@ -1135,10 +1135,10 @@
   return tp_flag(tp, is_blit_hit_outline_w_black_inside) != 0;
 }
 
-[[nodiscard]] auto tp_is_skullferno(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_unused9(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_skullferno) != 0;
+  return tp_flag(tp, is_unused9) != 0;
 }
 
 [[nodiscard]] auto tp_is_able_to_fall_sound(Tpp tp) -> bool
@@ -1213,10 +1213,10 @@
   return tp_flag(tp, is_hit_when_dead) != 0;
 }
 
-[[nodiscard]] auto tp_is_blitzhound(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_unused6(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_blitzhound) != 0;
+  return tp_flag(tp, is_unused6) != 0;
 }
 
 [[nodiscard]] auto tp_is_potion(Tpp tp) -> bool

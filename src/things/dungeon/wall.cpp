@@ -60,9 +60,6 @@ static void tp_wall_melt(Gamep g, Levelsp v, Levelp l, Thingp me)
     tp_flag_set(tp, is_physics_temperature);
     tp_flag_set(tp, is_stone);
     tp_flag_set(tp, is_teleport_blocked);
-    if (variant <= WALL_TILED_VARIANTS) {
-      tp_flag_set(tp, is_tiled);
-    }
     tp_flag_set(tp, is_wall);
     tp_health_set(tp, "1d200+100");
     tp_is_immune_to_add(tp, THING_EVENT_MELEE_DAMAGE);
@@ -80,6 +77,10 @@ static void tp_wall_melt(Gamep g, Levelsp v, Levelp l, Thingp me)
     tp_weight_set(tp, WEIGHT_VVHEAVY); // grams
     tp_z_depth_set(tp, MAP_Z_DEPTH_WALL);
     // end sort marker1 }
+
+    if (variant <= WALL_TILED_VARIANTS) {
+      tp_flag_set(tp, is_tiled);
+    }
 
     if (variant <= WALL_TILED_VARIANTS) {
       auto *tile = tile_find_mand(name + ".IS_JOIN_BL");

@@ -584,10 +584,10 @@
   return level_flag_cached(g, v, l, is_loggable, p);
 }
 
-[[nodiscard]] auto level_is_mantisman_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_unused7_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_mantisman, p);
+  return level_flag_cached(g, v, l, is_unused7, p);
 }
 
 [[nodiscard]] auto level_is_meltable_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
@@ -1028,10 +1028,10 @@
   return level_flag_cached(g, v, l, is_staff, p);
 }
 
-[[nodiscard]] auto level_is_argusul_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_unused8_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_argusul, p);
+  return level_flag_cached(g, v, l, is_unused8, p);
 }
 
 [[nodiscard]] auto level_is_wait_on_anim_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
@@ -1070,10 +1070,10 @@
   return level_flag_cached(g, v, l, is_reeds, p);
 }
 
-[[nodiscard]] auto level_is_horseshoe_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_unused5_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_horseshoe, p);
+  return level_flag_cached(g, v, l, is_unused5, p);
 }
 
 [[nodiscard]] auto level_is_vault_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
@@ -1136,10 +1136,10 @@
   return level_flag_cached(g, v, l, is_blit_hit_outline_w_black_inside, p);
 }
 
-[[nodiscard]] auto level_is_skullferno_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_unused9_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_skullferno, p);
+  return level_flag_cached(g, v, l, is_unused9, p);
 }
 
 [[nodiscard]] auto level_is_able_to_fall_sound_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
@@ -1214,10 +1214,10 @@
   return level_flag_cached(g, v, l, is_hit_when_dead, p);
 }
 
-[[nodiscard]] auto level_is_blitzhound_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_unused6_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_blitzhound, p);
+  return level_flag_cached(g, v, l, is_unused6, p);
 }
 
 [[nodiscard]] auto level_is_potion_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
