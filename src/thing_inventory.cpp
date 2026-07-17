@@ -239,6 +239,8 @@
 //
 void thing_inventory_dump(Gamep g, Levelsp v, Levelp l, Thingp owner)
 {
+  IF_NODEBUG { return; }
+
   TRACE();
 
   if (! thing_is_player(owner) && ! thing_is_monst(owner)) {
