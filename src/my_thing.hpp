@@ -653,9 +653,6 @@ using Thing = struct Thing {
 // begin sort marker1 {
 [[nodiscard]] auto astar_solve(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint src, bpoint dst) -> std::vector< bpoint >;
 [[nodiscard]] auto level_vision_blocker_at(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &at) -> bool;
-[[nodiscard]] auto thing_engulf(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp engulfer) -> bool;
-[[nodiscard]] auto thing_is_engulfed_try_unset(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
-[[nodiscard]] auto thing_unengulf(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp engulfer) -> bool;
 [[nodiscard]] auto monst_state_to_string(MonstState state) -> std::string;
 [[nodiscard]] auto monst_state(Gamep g, Levelsp v, Levelp l, Thingp me) -> MonstState;
 [[nodiscard]] auto player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, const bpoint &to) -> bool;
@@ -734,6 +731,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_distance_vision_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_distance_vision(Gamep g, Levelsp v, Levelp l, Thingp t) -> int;
 [[nodiscard]] auto thing_drop(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, ThingEvent &e) -> bool;
+[[nodiscard]] auto thing_engulf(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp engulfer) -> bool;
 [[nodiscard]] auto thing_ext_struct(Gamep g, Thingp t) -> ThingExtp;
 [[nodiscard]] auto thing_find_non_inline(Gamep g, Levelsp v, ThingId id) -> Thingp;
 [[nodiscard]] auto thing_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, Tpp fire_what, const bpoint &target) -> bool;
@@ -867,6 +865,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_effect_blood(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_effect_ripple(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_effect(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_engulfed_try_unset(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
 [[nodiscard]] auto thing_is_entrance(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_equippable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_ethereal(Thingp t) -> bool;
@@ -1127,6 +1126,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_temperature_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_temperature(Thingp t) -> int;
 [[nodiscard]] auto thing_throw_to(Gamep g, Levelsp v, Levelp l, Thingp thrower, Thingp item, bpoint to) -> bool;
+[[nodiscard]] auto thing_unengulf(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp engulfer) -> bool;
 [[nodiscard]] auto thing_unwield(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent & /*e*/) -> bool;
 [[nodiscard]] auto thing_use(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, ThingEvent &e) -> bool;
 [[nodiscard]] auto thing_value1_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
@@ -1332,11 +1332,11 @@ void thing_set_dir_from_target(Gamep g, Levelsp v, Levelp l, Thingp me, const bp
 void thing_sound_play(Gamep g, Levelsp v, Levelp l, Thingp t, const std::string &alias);
 void thing_stats_dump(Gamep g, Levelsp v);
 void thing_submerged_update(Gamep g, Levelsp v, Levelp l, Thingp t);
-void thing_temperature_damage_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thingp t, int n, ThingEvent = {});
+void thing_temperature_damage_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thingp t, int n, ThingEvent /*e*/ = {});
 void thing_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thingp t, int n);
-void thing_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t);
-void thing_tick_end(Gamep g, Levelsp v, Levelp l, Thingp t);
-void thing_tick_idle(Gamep g, Levelsp v, Levelp l, Thingp t);
+void thing_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me);
+void thing_tick_end(Gamep g, Levelsp v, Levelp l, Thingp me);
+void thing_tick_idle(Gamep g, Levelsp v, Levelp l, Thingp me);
 void thing_topcon(Gamep g, Levelsp v, Levelp l, Thingp t, const char *fmt, ...) CHECK_FORMAT_STR(printf, 5, 6);
 void thing_trap_handle(Gamep g, Levelsp v, Levelp l, Thingp me);
 void thing_update_pos(Gamep g, Levelsp v, Levelp l, Thingp me);

@@ -5,6 +5,9 @@ engulfer fall
 engulfer do not break free if player did not move
 engulfer chase treasure
 engulfer chase treasure limit
+engulfer carrying info
+engulfer anim
+double chasm fall test
 
 todo
 ----

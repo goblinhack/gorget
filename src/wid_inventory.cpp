@@ -92,7 +92,7 @@ void wid_inventory_mouse_over_end(Gamep g, Widp w)
   }
 }
 
-[[nodiscard]] auto wid_inventory_mouse_down(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_inventory_mouse_down(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
 

@@ -3,7 +3,6 @@
 //
 
 #include <SDL_mouse.h>
-#include <cmath>
 #include <cstdint>
 #include <ranges>
 #include <vector>
@@ -11,6 +10,7 @@
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
 #include "my_game.hpp"
+#include "my_main.hpp"
 #include "my_sdl_event.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"

@@ -393,8 +393,8 @@ void wid_main_menu_select(Gamep g)
 
   auto y_at = 0;
 
-  spoint outer_tl((TERM_WIDTH / 2) - (menu_width / 2), (TERM_HEIGHT / 2) - (menu_height / 2));
-  spoint outer_br;
+  spoint const outer_tl((TERM_WIDTH / 2) - (menu_width / 2), (TERM_HEIGHT / 2) - (menu_height / 2));
+  spoint       outer_br;
 
   outer_br.x = outer_tl.x + menu_width + 1;
   outer_br.y = outer_tl.y + menu_height + 1;

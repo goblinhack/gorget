@@ -809,7 +809,7 @@ void level_select_grid_of_empty_levels(Gamep g);
 void level_select_mouse_motion(Gamep g, Levelsp v, Levelp l);
 void level_select_test(Gamep g);
 void level_select_update_grid_tiles(Gamep g, Levelsp v);
-void level_thing_pair_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp a, Thingp b, ThingEvent = {});
+void level_thing_pair_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp a, Thingp b, const ThingEvent & /*e*/ = {});
 void level_tick_begin_temperature(Gamep g, Levelsp v, Levelp l);
 void level_tick_chasm(Gamep g, Levelsp v, Levelp l);
 void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l);

@@ -182,10 +182,10 @@ void wid_options_menu_select(Gamep g)
   auto box_height = 2;
   auto box_step   = 3;
 
-  int const menu_height = 23;
-  int const menu_width  = UI_WID_POPUP_WIDTH_NORMAL;
-  spoint    outer_tl((TERM_WIDTH / 2) - (menu_width / 2), (TERM_HEIGHT / 2) - (menu_height / 2));
-  spoint    outer_br((TERM_WIDTH / 2) + (menu_width / 2), (TERM_HEIGHT / 2) + (menu_height / 2));
+  int const    menu_height = 23;
+  int const    menu_width  = UI_WID_POPUP_WIDTH_NORMAL;
+  spoint const outer_tl((TERM_WIDTH / 2) - (menu_width / 2), (TERM_HEIGHT / 2) - (menu_height / 2));
+  spoint const outer_br((TERM_WIDTH / 2) + (menu_width / 2), (TERM_HEIGHT / 2) + (menu_height / 2));
 
   wid_options_menu_window = new WidPopup(g, "Options menu", outer_tl, outer_br, nullptr, "nothing", false, false);
 

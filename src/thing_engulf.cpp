@@ -16,7 +16,7 @@
 //
 // Returns true/false on success/fail
 //
-[[nodiscard]] auto thing_is_engulfed_try_set(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp engulfer, bool val = true) -> bool
+[[nodiscard]] static auto thing_is_engulfed_try_set(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp engulfer, bool val = true) -> bool
 {
   if (t == nullptr) {
     ERR("no thing pointer");

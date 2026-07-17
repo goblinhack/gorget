@@ -199,7 +199,7 @@ static void thing_heat_exchange(Gamep g, Levelsp v, Levelp l, Thingp a, Thingp b
   THING_DBG(g, v, l, a, "Ta %f Tb %f dT %f K %f m %f c %f Q %f final dT %f => %d", Ta, Tb, dT, K, m, c, Q, final_dT, finalT);
 }
 
-void level_thing_pair_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp a, Thingp b, ThingEvent e)
+void level_thing_pair_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp a, Thingp b, const ThingEvent &e)
 {
   TRACE();
 

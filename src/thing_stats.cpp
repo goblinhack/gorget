@@ -281,5 +281,5 @@
   auto roll       = d20();
   auto total_stat = thing_stat(g, v, l, me, stat);
 
-  return result[ roll - 1 ][ total_stat - 1 ] ? true : false;
+  return result[ roll - 1 ][ total_stat - 1 ] != 0;
 }

@@ -12,6 +12,7 @@
 #include "my_types.hpp"
 #include <algorithm>
 #include <limits>
+#include <utility>
 
 //
 // First step is to mark things as burning and change temperatures
@@ -96,14 +97,14 @@ static void thing_temperature_damage_apply(Gamep g, Levelsp v, Levelp l, Thingp 
     damage *= 2;
   }
 
-  if (e.damage) {
+  if (e.damage != 0) {
     e.nested_damage = true;
   }
 
   e.reason     = "temperature damage";
   e.event_type = THING_EVENT_FIRE_DAMAGE;
   e.damage     = damage;
-  if (source) {
+  if (source != nullptr) {
     e.source = source;
   }
 
@@ -136,7 +137,7 @@ void thing_temperature_damage_handle(Gamep g, Levelsp v, Levelp l, Thingp source
   //
   auto T = tp_temperature_damage_at_get(tp);
   if ((T != 0) && (n > T)) {
-    thing_temperature_damage_apply(g, v, l, source, t, n, e);
+    thing_temperature_damage_apply(g, v, l, source, t, n, std::move(e));
     if (thing_is_dead(t)) {
       return;
     }
