@@ -38,10 +38,10 @@
   return level_flag(g, v, l, is_able_to_fall, p, me);
 }
 
-[[nodiscard]] auto level_is_able_to_throw_items(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_able_to_jump(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_able_to_throw_items, p, me);
+  return level_flag(g, v, l, is_able_to_jump, p, me);
 }
 
 [[nodiscard]] auto level_is_able_to_move_diagonally(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
@@ -956,10 +956,10 @@
   return level_flag(g, v, l, is_tick_on_use, p, me);
 }
 
-[[nodiscard]] auto level_is_able_to_throw_items_items(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_able_to_throw(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_able_to_throw_items_items, p, me);
+  return level_flag(g, v, l, is_able_to_throw, p, me);
 }
 
 [[nodiscard]] auto level_is_described_when_killed(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp

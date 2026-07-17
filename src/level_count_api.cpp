@@ -39,10 +39,10 @@
   return level_count(g, v, l, is_able_to_fall, p);
 }
 
-[[nodiscard]] auto level_count_is_able_to_throw_items(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_able_to_jump(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_able_to_throw_items, p);
+  return level_count(g, v, l, is_able_to_jump, p);
 }
 
 [[nodiscard]] auto level_count_is_able_to_move_diagonally(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
@@ -957,10 +957,10 @@
   return level_count(g, v, l, is_tick_on_use, p);
 }
 
-[[nodiscard]] auto level_count_is_able_to_throw_items_items(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_able_to_throw(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_able_to_throw_items_items, p);
+  return level_count(g, v, l, is_able_to_throw, p);
 }
 
 [[nodiscard]] auto level_count_is_described_when_killed(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t

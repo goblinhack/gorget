@@ -400,7 +400,7 @@ static auto thing_monst_choose_something_we_can_see(Gamep g, Levelsp v, Levelp l
   }
 
   if (! thing_is_floating(me)) {
-    if (thing_is_able_to_throw_items(me)) {
+    if (thing_is_able_to_jump(me)) {
       //
       // Jump over chasm?
       //

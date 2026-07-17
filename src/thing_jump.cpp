@@ -146,7 +146,7 @@ static auto thing_jump_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thingp
     return false;
   }
 
-  if (! thing_is_able_to_throw_items(me)) {
+  if (! thing_is_able_to_jump(me)) {
     return false;
   }
 

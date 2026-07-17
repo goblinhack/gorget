@@ -29,6 +29,7 @@
   if (!tp_load_buff_tireless()) { return false; }
   if (!tp_load_chasm()) { return false; }
   if (!tp_load_chest()) { return false; }
+  if (!tp_load_cleaner()) { return false; }
   if (!tp_load_clover()) { return false; }
   if (!tp_load_corridor()) { return false; }
   if (!tp_load_cursor_at()) { return false; }

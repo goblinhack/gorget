@@ -37,10 +37,10 @@
   return tp_flag(tp, is_able_to_fall) != 0;
 }
 
-[[nodiscard]] auto tp_is_able_to_throw_items(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_able_to_jump(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_able_to_throw_items) != 0;
+  return tp_flag(tp, is_able_to_jump) != 0;
 }
 
 [[nodiscard]] auto tp_is_able_to_move_diagonally(Tpp tp) -> bool
@@ -955,10 +955,10 @@
   return tp_flag(tp, is_tick_on_use) != 0;
 }
 
-[[nodiscard]] auto tp_is_able_to_throw_items_items(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_able_to_throw(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_able_to_throw_items_items) != 0;
+  return tp_flag(tp, is_able_to_throw) != 0;
 }
 
 [[nodiscard]] auto tp_is_described_when_killed(Tpp tp) -> bool

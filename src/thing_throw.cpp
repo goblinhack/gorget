@@ -202,7 +202,7 @@ static auto thing_throw_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thing
   THING_DBG(g, v, l, thrower, "throw %s to (%d,%d)", thing_name_short(g, v, l, item).c_str(), to.x, to.y);
   TRACE_INDENT();
 
-  if (! thing_is_able_to_throw_items(thrower)) {
+  if (! thing_is_able_to_throw(thrower)) {
     if (thing_is_player(thrower)) {
       topcon(UI_WARN_FMT_STR "You are unable to throw items." UI_RESET_FMT);
     }
@@ -224,7 +224,7 @@ static auto thing_throw_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thing
     return false;
   }
 
-  if (! thing_is_able_to_throw_items(thrower)) {
+  if (! thing_is_able_to_throw(thrower)) {
     return false;
   }
 

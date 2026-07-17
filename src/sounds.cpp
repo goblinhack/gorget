@@ -39,6 +39,7 @@ void sounds_load(Gamep g)
   (void) sound_load(0.5F, "data/sounds/ambience/graveyard_ambience.ogg", "graveyard_ambience");
   (void) sound_load(1.0F, "data/sounds/ambience/underhell_ambience.ogg", "underhell_ambience");
   (void) sound_load(1.0F, "data/sounds/creatures/hiss1.ogg", "hiss");
+  (void) sound_load(1.0F, "data/sounds/creatures/squelch.ogg", "squelch");
   (void) sound_load(1.0F, "data/sounds/creatures/hiss2.ogg", "hiss");
   (void) sound_load(1.0F, "data/sounds/creatures/hiss3.ogg", "hiss");
   (void) sound_load(1.0F, "data/sounds/creatures/hiss4.ogg", "hiss");

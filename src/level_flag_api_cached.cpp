@@ -38,10 +38,10 @@
   return level_flag_cached(g, v, l, is_able_to_fall, p);
 }
 
-[[nodiscard]] auto level_is_able_to_throw_items_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_able_to_jump_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_able_to_throw_items, p);
+  return level_flag_cached(g, v, l, is_able_to_jump, p);
 }
 
 [[nodiscard]] auto level_is_able_to_move_diagonally_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
@@ -956,10 +956,10 @@
   return level_flag_cached(g, v, l, is_tick_on_use, p);
 }
 
-[[nodiscard]] auto level_is_able_to_throw_items_items_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_able_to_throw_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_able_to_throw_items_items, p);
+  return level_flag_cached(g, v, l, is_able_to_throw, p);
 }
 
 [[nodiscard]] auto level_is_described_when_killed_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

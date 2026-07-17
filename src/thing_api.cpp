@@ -762,7 +762,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_tick_on_use) != 0;
 }
 
-[[nodiscard]] auto thing_is_able_to_throw_items_items(Thingp t) -> bool
+[[nodiscard]] auto thing_is_able_to_throw(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -770,7 +770,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_able_to_throw_items_items) != 0;
+  return tp_flag(thing_tp(t), is_able_to_throw) != 0;
 }
 
 [[nodiscard]] auto thing_is_chest(Thingp t) -> bool
@@ -1520,7 +1520,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_cursor_path_none) != 0;
 }
 
-[[nodiscard]] auto thing_is_able_to_throw_items(Thingp t) -> bool
+[[nodiscard]] auto thing_is_able_to_jump(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -1528,7 +1528,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_able_to_throw_items) != 0;
+  return tp_flag(thing_tp(t), is_able_to_jump) != 0;
 }
 
 [[nodiscard]] auto thing_is_blit_obscures(Thingp t) -> bool

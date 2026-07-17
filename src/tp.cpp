@@ -113,6 +113,7 @@ static std::initializer_list< std::string > tps = {
     "buff_tireless",
     "chasm",
     "chest",
+    "cleaner",
     "clover",
     "corridor",
     "cursor_at",

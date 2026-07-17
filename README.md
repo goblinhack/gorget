@@ -26,5 +26,8 @@ Sound effects
 - Nethervoid ambience [found here](https://freesound.org/people/Sonicfreak/)
 - Oof sound buy xtragmr [found here](https://freesound.org/people/xtrgamr/)
 - Shatter sound [found here](https://freesound.org/people/ccen18/)
+- Slime by Konstati [found here](https://freesound.org/people/konstati/)
+- Slime by wubitog [found here](https://freesound.org/people/wubitog/)
+- Slime by Zuzek06 [found here](https://freesound.org/people/Zuzek06/)
 - Underhell ambience [found here](https://freesound.org/people/looplicator/)
 - Water splash by launemax [found here](https://freesound.org/people/launemax/)
