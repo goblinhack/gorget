@@ -129,6 +129,7 @@
   TEST_PROGRESS(t);
 
   for (auto tries = 0; tries < 100; tries++) {
+    TEST_LOOP_PROGRESS(t, g, v, l, tries, w, h);
     level_dump(g, v, l, w, h);
     TEST_PROGRESS(t);
 

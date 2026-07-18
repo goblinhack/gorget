@@ -123,6 +123,7 @@
   if (compiler_unused) {
     TEST_PROGRESS(t);
     for (auto tries = 0; tries < 2; tries++) {
+      TEST_LOOP_PROGRESS(t, g, v, l1, tries, w, h);
       TEST_LOG(t, "try: %d", tries);
       TRACE();
       TEST_ASSERT(t, game_event_wait(g), "failed to wait");

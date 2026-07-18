@@ -78,7 +78,7 @@
   // Move into the deep water
   //
   for (auto tries = 0; tries < 15; tries++) {
-
+    TEST_LOOP_PROGRESS(t, g, v, l, tries, w, h);
     TEST_LOG(t, "move right");
     TRACE();
     up = down = left = right = false;

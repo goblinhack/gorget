@@ -126,6 +126,7 @@
 
   TEST_PROGRESS(t);
   for (auto tries = 0; tries < 4; tries++) {
+    TEST_LOOP_PROGRESS(t, g, v, l1, tries, w, h);
     TEST_LOG(t, "try: %d", tries);
     TRACE();
 

@@ -19,6 +19,39 @@
 #include <string>
 
 //
+// Already over the player?
+//
+static auto thing_monst_over_target_player(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
+{
+  TRACE();
+
+  auto *player = thing_player(g);
+  if (player == nullptr) [[unlikely]] {
+    return false;
+  }
+
+  if (compiler_unused) {
+    thing_can_see_dump(g, v, l, me);
+  }
+
+  auto *player_level = game_level_get(g, v, player->level_num);
+  auto *monst_level  = game_level_get(g, v, me->level_num);
+  if (player_level != monst_level) {
+    return false;
+  }
+
+  auto target   = thing_at(g, v, l, player);
+  auto monst_at = thing_at(g, v, l, me);
+  if (target == monst_at) {
+    THING_DBG(g, v, l, me, "choose target: over player");
+    thing_monst_target_set(g, v, l, me, target);
+    return true;
+  }
+
+  return false;
+}
+
+//
 // Can we chase the player?
 //
 static auto thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
@@ -448,6 +481,12 @@ static auto thing_monst_choose_something_we_can_see(Gamep g, Levelsp v, Levelp l
 
   if (thing_is_jumping(me)) {
     THING_DBG(g, v, l, me, "choose target: wait for jump to complete");
+    return true;
+  }
+
+  if (thing_monst_over_target_player(g, v, l, me)) {
+    THING_DBG(g, v, l, me, "choose target: over player");
+    monst_state_change(g, v, l, me, MONST_STATE_CHASING);
     return true;
   }
 
