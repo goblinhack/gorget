@@ -89,6 +89,10 @@
 
   Thingp player = nullptr;
 
+  static std::initializer_list< std::string > items = {
+      "potion_tireless", //
+  };
+
   //
   // Find the player
   //
@@ -100,6 +104,11 @@
       TEST_FAILED(t, "no player");
       goto exit;
     }
+  }
+
+  if (! thing_carry(g, v, l1, player, items)) {
+    TEST_FAILED(t, "no item carried");
+    goto exit;
   }
 
   //
