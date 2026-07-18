@@ -5,6 +5,7 @@ Work in progress.
 <img alt="Pixel art" src="data/pics/screenshot.2.png">
 <img alt="Pixel art" src="data/pics/screenshot.3.png">
 <img alt="Pixel art" src="data/pics/screenshot.4.png">
+<img alt="Pixel art" src="data/pics/screenshot.5.png">
 </p>
 
 Music
