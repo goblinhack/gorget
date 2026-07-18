@@ -81,6 +81,8 @@ auto test_load_path_dmap() -> bool;
 auto test_load_player_did_not_trigger() -> bool;
 auto test_load_player_engulfed_multiple() -> bool;
 auto test_load_player_engulfed_then_falls() -> bool;
+auto test_load_player_engulfed_then_jumps() -> bool;
+auto test_load_player_engulfed_then_teleports() -> bool;
 auto test_load_player_engulfed() -> bool;
 auto test_load_player_fall_chasm_into_lava() -> bool;
 auto test_load_player_fall_chasm_twice_into_lava() -> bool;

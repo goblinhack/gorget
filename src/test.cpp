@@ -100,6 +100,8 @@ static std::initializer_list< std::string > tests = {
     "player_did_not_trigger",
     "player_engulfed_multiple",
     "player_engulfed_then_falls",
+    "player_engulfed_then_jumps",
+    "player_engulfed_then_teleports",
     "player_engulfed",
     "player_fall_chasm_into_lava",
     "player_fall_chasm_twice_into_lava",

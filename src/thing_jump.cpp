@@ -275,7 +275,7 @@ static auto thing_jump_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thingp
       if (thing_is_engulfed(it)) {
         THING_DBG(g, v, l, it, "is engulfed and needs to follow the engulfer");
 
-        if (! thing_jump_to(g, v, l, it, to)) {
+        if (! thing_warp_to(g, v, l, it, to)) {
           THING_DBG(g, v, l, it, "is engulfed but could not be moved");
           (void) thing_is_engulfed_try_unset(g, v, l, it);
         }

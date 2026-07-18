@@ -83,6 +83,8 @@
   if (!test_load_player_did_not_trigger()) { return false; }
   if (!test_load_player_engulfed_multiple()) { return false; }
   if (!test_load_player_engulfed_then_falls()) { return false; }
+  if (!test_load_player_engulfed_then_jumps()) { return false; }
+  if (!test_load_player_engulfed_then_teleports()) { return false; }
   if (!test_load_player_engulfed()) { return false; }
   if (!test_load_player_fall_chasm_into_lava()) { return false; }
   if (!test_load_player_fall_chasm_twice_into_lava()) { return false; }
