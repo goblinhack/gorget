@@ -283,19 +283,21 @@ static auto thing_monst_choose_something_we_can_see(Gamep g, Levelsp v, Levelp l
 //
 // Return true on a successful move (or a popup asking more info)
 //
-[[nodiscard]] static auto thing_monst_move_try(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool
+[[nodiscard]] auto thing_monst_move_try(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool
 {
   THING_DBG(g, v, l, me, "move try");
+  TRACE_INDENT();
 
   auto at = thing_at(g, v, l, me);
 
   if (thing_is_engulfed(me)) {
-    THING_DBG(g, v, l, me, "move to next: not possible, engulfed, lunge");
+    THING_DBG(g, v, l, me, "move try: not possible, engulfed, lunge");
     (void) thing_lunge(g, v, l, me, to);
     return false;
   }
 
   if (thing_can_move_to_attempt(g, v, l, me, to)) {
+    THING_DBG(g, v, l, me, "move try: successfully moved");
     return true;
   }
 
@@ -347,6 +349,7 @@ static auto thing_monst_choose_something_we_can_see(Gamep g, Levelsp v, Levelp l
   //
   // Bumped into obstacle
   //
+  THING_DBG(g, v, l, me, "move try: failed");
   return false;
 }
 

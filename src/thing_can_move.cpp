@@ -136,14 +136,17 @@
   //
   if (thing_can_move_to_diagonal_is_blocked(g, v, l, me, to)) {
     (void) thing_lunge(g, v, l, me, to);
+    THING_DBG(g, v, l, me, "can move to: (%d,%d) no diagonal move blocked, lunge", to.x, to.y);
     return false;
   }
 
   if (! thing_can_move_to_possible(g, v, l, me, to)) {
     (void) thing_lunge(g, v, l, me, to);
+    THING_DBG(g, v, l, me, "can move to: (%d,%d) no, lunge", to.x, to.y);
     return false;
   }
 
+  THING_DBG(g, v, l, me, "can move to: (%d,%d) yes", to.x, to.y);
   return true;
 }
 
