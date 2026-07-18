@@ -247,7 +247,7 @@
   return out;
 }
 
-[[nodiscard]] auto thing_stat_success(Gamep g, Levelsp v, Levelp l, Thingp me, ThingStatType stat) -> bool
+[[nodiscard]] auto thing_stat_success(Gamep g, Levelsp v, Levelp l, Thingp me, ThingStatType stat, int modifier) -> bool
 {
   TRACE_DEBUG();
 
@@ -280,6 +280,16 @@
 
   auto roll       = d20();
   auto total_stat = thing_stat(g, v, l, me, stat);
+
+  total_stat += modifier;
+
+  if (total_stat <= 1) {
+    return false;
+  }
+  if (total_stat >= 20) {
+    return true;
+  }
+  //  topcon("tot %d roll %d mod %d", total_stat, roll, modifier);
 
   return result[ roll - 1 ][ total_stat - 1 ] != 0;
 }

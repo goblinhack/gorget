@@ -8,6 +8,7 @@ engulfer chase treasure limit
 engulfer carrying info
 engulfer anim
 double chasm fall test
+interacting engulfers
 
 todo
 ----
@@ -35,6 +36,7 @@ explore bonus for freshly explored tiles
 present icon with multiplites for bonus
 enchants
 wortweed
+spikes
 
 sacrifice altar
 ---------------

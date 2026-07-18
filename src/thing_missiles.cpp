@@ -13,7 +13,7 @@
 
 #include <cstring>
 
-[[nodiscard]] auto thing_missile_get_delta_from_dt(Gamep g, Thingp t, float dt) -> fpoint
+[[nodiscard]] auto thing_missile_get_delta_from_dt(Gamep g, Levelsp v, Levelp l, Thingp t, float dt) -> fpoint
 {
   TRACE();
 
@@ -27,8 +27,8 @@
     return fpoint(0, 0);
   }
 
-  const int   player_speed = thing_speed(player);
-  const float t_speed      = thing_speed(t);
+  const int   player_speed = thing_speed(g, v, l, player);
+  const float t_speed      = thing_speed(g, v, l, t);
   const auto  tile_speed   = (t_speed / static_cast< float >(player_speed));
 
   auto delta = fpoint(c * dt * tile_speed, s * dt * tile_speed);
@@ -43,7 +43,7 @@
 {
   TRACE();
 
-  return unit(thing_missile_get_delta_from_dt(g, t, 1.0));
+  return unit(thing_missile_get_delta_from_dt(g, v, l, t, 1.0));
 }
 
 //

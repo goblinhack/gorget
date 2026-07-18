@@ -494,7 +494,7 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me)
     return;
   }
 
-  const int player_speed = thing_speed(player);
+  const int player_speed = thing_speed(g, v, l, player);
   if (thing_move_remaining(me) < player_speed) {
     THING_DBG(g, v, l, me, "no more moves this tick, move_rem %d", thing_move_remaining(me));
     return;
@@ -721,7 +721,7 @@ void thing_monst_tick(Gamep g, Levelsp v, Levelp l, Thingp me)
   //
   // Give the thing ability to move. This will be decremented each thing_monst_event_loop
   //
-  (void) thing_move_remaining_incr(g, v, l, me, thing_speed(me));
+  (void) thing_move_remaining_incr(g, v, l, me, thing_speed(g, v, l, me));
 
   THING_DBG(g, v, l, me, "monst tick, move_rem %d dt %f", thing_move_remaining(me), (float) me->thing_dt);
   TRACE_INDENT();

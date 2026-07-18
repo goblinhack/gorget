@@ -14,6 +14,38 @@
 #include "my_types.hpp"
 
 //
+// Who is engulfing me?
+//
+[[nodiscard]] auto thing_engulfer(Gamep g, Levelsp v, Levelp l, Thingp me) -> Thingp
+{
+  TRACE();
+
+  if (me == nullptr) {
+    ERR("no thing pointer");
+    return 0;
+  }
+
+  if (! thing_is_engulfed(me)) {
+    return nullptr;
+  }
+
+  auto at = thing_at(g, v, l, me);
+
+  FOR_ALL_THINGS_AT(g, v, l, it, at)
+  {
+    if (it == me) {
+      continue;
+    }
+
+    if (thing_is_able_to_engulf(it)) {
+      return it;
+    }
+  }
+
+  return nullptr;
+}
+
+//
 // Returns true/false on success/fail
 //
 [[nodiscard]] static auto thing_is_engulfed_try_set(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp engulfer, bool val = true) -> bool
@@ -192,4 +224,31 @@
   }
 
   return true;
+}
+
+[[nodiscard]] auto thing_is_able_to_engulf(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+
+  if (thing_is_dead(t)) {
+    return false;
+  }
+
+  return tp_flag(thing_tp(t), is_able_to_engulf) != 0;
+}
+
+[[nodiscard]] auto thing_is_able_to_be_engulfed(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_able_to_be_engulfed) != 0;
 }

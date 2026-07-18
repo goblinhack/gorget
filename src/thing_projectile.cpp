@@ -85,7 +85,7 @@ void thing_projectile_move(Gamep g, Levelsp v, Levelp l, Thingp me, float dt)
     return;
   }
 
-  auto delta = thing_missile_get_delta_from_dt(g, me, dt);
+  auto delta = thing_missile_get_delta_from_dt(g, v, l, me, dt);
   at.x += delta.x;
   at.y += delta.y;
 

@@ -98,7 +98,7 @@ static bool tp_chest_on_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEve
   }
 
   if (e.source && thing_is_player(e.source)) {
-    if (thing_stat_success(g, v, l, me, THING_STAT_LUCK)) {
+    if (thing_stat_success(g, v, l, me, THING_STAT_LUCK, THING_STAT_MODIFIER_CHEST_EXPLODE)) {
       topcon("The treasure chest rattles violently!");
       return false;
     }

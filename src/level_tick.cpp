@@ -374,7 +374,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool tick_is
   if (player == nullptr) [[unlikely]] {
     return;
   }
-  const int player_speed = thing_speed(player);
+  const int player_speed = thing_speed(g, v, l, player);
 
   if (compiler_unused) {
     if (level_is_player_level(g, v, l)) {
@@ -402,7 +402,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool tick_is
       continue;
     }
 
-    float t_speed = thing_speed(t);
+    float t_speed = thing_speed(g, v, l, t);
     if (t_speed == 0) {
       t_speed = static_cast< float >(player_speed);
     }

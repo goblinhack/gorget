@@ -937,7 +937,7 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
 //
 // Add abilities
 //
-[[nodiscard]] static auto wid_thing_info_abilities(Gamep g, Thingp me, WidPopup *parent) -> bool
+[[nodiscard]] static auto wid_thing_info_abilities(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent) -> bool
 {
   TRACE();
 
@@ -1023,13 +1023,13 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
   {
     auto *player = thing_player(g);
     if (player != nullptr) {
-      const float player_speed = thing_speed(player);
+      const float player_speed = thing_speed(g, v, l, player);
 
-      auto pct = static_cast< int >((thing_speed(me) / player_speed) * 100.0);
+      auto pct = static_cast< int >((thing_speed(g, v, l, me) / player_speed) * 100.0);
 
-      if (thing_speed(me) > player_speed) {
+      if (thing_speed(g, v, l, me) > player_speed) {
         out = string_sprintf_append_with_comma(out, "Faster(%u%%%%%%)", pct);
-      } else if (thing_speed(me) < player_speed) {
+      } else if (thing_speed(g, v, l, me) < player_speed) {
         out = string_sprintf_append_with_comma(out, "Slower(%u%%%%%%)", pct);
       }
     }
@@ -1480,7 +1480,7 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, i
       parent->log_empty_line(g);
     }
 
-    if (wid_thing_info_abilities(g, me, parent)) {
+    if (wid_thing_info_abilities(g, v, l, me, parent)) {
       parent->log_empty_line(g);
     }
   } else if (thing_is_monst(me)) {
@@ -1507,7 +1507,7 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, i
         parent->log_empty_line(g);
       }
 
-      if (wid_thing_info_abilities(g, me, parent)) {
+      if (wid_thing_info_abilities(g, v, l, me, parent)) {
         parent->log_empty_line(g);
       }
 
@@ -1529,7 +1529,7 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, i
       parent->log_empty_line(g);
     }
 
-    if (wid_thing_info_abilities(g, me, parent)) {
+    if (wid_thing_info_abilities(g, v, l, me, parent)) {
       parent->log_empty_line(g);
     }
 

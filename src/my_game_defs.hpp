@@ -109,6 +109,15 @@ enum {
   THING_NOISE_FOOTSTEP    = 1,
 
   //
+  // Roll modifier
+  //
+  THING_STAT_MODIFIER               = 0,
+  THING_STAT_MODIFIER_FALL          = 0,
+  THING_STAT_MODIFIER_TRAP          = 0,
+  THING_STAT_MODIFIER_CHEST_EXPLODE = 0,
+  THING_STAT_MODIFIER_ENGULFED      = -5,
+
+  //
   // Jump animation height in tiles
   //
   THING_JUMP_HEIGHT_ANIM_TILES  = 1,

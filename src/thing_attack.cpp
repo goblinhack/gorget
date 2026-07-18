@@ -29,7 +29,7 @@ static auto thing_attack(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp i
   auto  damage     = thing_damage(g, v, l, source, event_type);
 
   //
-  // Extra digestion damage
+  // Digestion damage
   //
   if (thing_is_engulfed(it)) {
     if (thing_is_able_to_engulf(attacker)) {
