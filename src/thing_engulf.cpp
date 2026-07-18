@@ -198,6 +198,13 @@
   }
 
   //
+  // If there is an engulfer there already, don't pile on
+  //
+  if (level_is_able_to_engulf(g, v, l, to)) {
+    return false;
+  }
+
+  //
   // Needs to be something we can engulf
   //
   if (! level_is_able_to_be_engulfed_bool(g, v, l, to)) {

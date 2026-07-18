@@ -8,7 +8,7 @@
 #include "../my_test.hpp"
 #include "../my_thing_inlines.hpp"
 
-[[nodiscard]] static auto test_player_engulfed(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_player_engulfed_multiple(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -22,18 +22,18 @@
   //
   std::string const start
       = "XXXXXXX"
-        "X.....X"
-        "X.....X"
+        "X....mX"
+        "X....mX"
         "X@...mX"
-        "X.....X"
-        "X.....X"
+        "X....mX"
+        "X....mX"
         "XXXXXXX";
   std::string const expect1
       = "XXXXXXX"
         "X.....X"
-        "X.....X"
-        "X@....X"
-        "X.....X"
+        "XM....X"
+        "X@M...X"
+        "XMM...X"
         "X.....X"
         "XXXXXXX";
 
@@ -110,7 +110,7 @@
   //
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  TEST_ASSERT(t, game_tick_get(g, v) == 22, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 12, "final tick counter value");
 
   level_dump(g, v, l, w, h);
   TEST_PASSED(t);
@@ -121,14 +121,14 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_player_engulfed() -> bool // NOLINT
+[[nodiscard]] auto test_load_player_engulfed_multiple() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("player_engulfed");
+  Testp test = test_load("player_engulfed_multiple");
 
   // begin sort marker1 {
-  test_callback_set(test, test_player_engulfed);
+  test_callback_set(test, test_player_engulfed_multiple);
   // end sort marker1 }
 
   return true;
