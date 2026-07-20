@@ -20,7 +20,6 @@
 #include <utility>
 #include <vector>
 
-#define ENABLE_DEBUG_AI_ASTAR
 #ifdef ENABLE_DEBUG_AI_ASTAR
 static std::array< std::array< char, MAP_HEIGHT >, MAP_WIDTH > astar_debug;
 #endif

@@ -8,7 +8,7 @@
 #include "../my_test.hpp"
 #include "../my_thing_inlines.hpp"
 
-[[nodiscard]] static auto test_drop_items(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_drop_all_items(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -31,20 +31,15 @@
   std::string const expect1
       = "xxxxxxxxxxxxxxxxxxxxxxxxxxx"
         "x.........................x"
-        "x.........................x"
-        "x$$$$$$$$$$$$$$$@.........x"
+        "x$........................x"
+        "x@........................x"
         "x.........................x"
         "x.........................x"
         "xxxxxxxxxxxxxxxxxxxxxxxxxxx";
 
-  Levelp  l          = nullptr;
-  Levelsp v          = game_test_init(g, &l, level_num, w, h, start.c_str());
-  bool    result     = true;
-  int     drop_count = 0;
-  bool    up         = false;
-  bool    down       = false;
-  bool    left       = false;
-  bool    right      = false;
+  Levelp  l      = nullptr;
+  Levelsp v      = game_test_init(g, &l, level_num, w, h, start.c_str());
+  bool    result = true;
 
   static std::initializer_list< std::string > items = {
       "staff_fire",     //
@@ -76,51 +71,17 @@
   }
 
   //
-  // Drop all items
+  // Drop all items. Testing the internal api
   //
-  for (;;) {
-    bool got_item = false;
+  {
+    ThingEvent e {
+        .reason     = "drop item",                //
+        .event_type = THING_EVENT_USER_INITIATED, //
+        .source     = player,                     //
+    };
 
-    FOR_ALL_INVENTORY_ITEMS(g, v, l, player, an_item)
-    {
-      got_item = true;
-
-      ThingEvent e {
-          .reason     = "drop item",                //
-          .event_type = THING_EVENT_USER_INITIATED, //
-          .source     = player,                     //
-      };
-
-      TEST_ASSERT(t, thing_drop(g, v, l, player, an_item, e), "failed to drop");
-
-      TRACE();
-      level_dump(g, v, l, w, h);
-      TEST_ASSERT(t, game_event_wait(g), "failed to wait");
-
-      TEST_LOG(t, "move right");
-      TRACE();
-      up = down = left = right = false;
-      right                    = true;
-
-      if (! (result = player_move_request(g, up, down, left, right, false /* fire */))) {
-        TEST_FAILED(t, "move fail");
-        goto exit;
-      }
-
-      if (! game_wait_for_tick_to_finish(g, v, l)) {
-        TEST_FAILED(t, "wait loop failed");
-        goto exit;
-      }
-
-      drop_count++;
-    }
-
-    if (! got_item) {
-      break;
-    }
+    TEST_ASSERT(t, thing_drop_all(g, v, l, player, e), "failed to drop");
   }
-
-  TEST_ASSERT(t, drop_count == (int) items.size(), "did not drop expected item amount");
 
   TEST_ASSERT(t, thing_inventory_get_item_count(g, v, l, player) == 0, "expected no items");
 
@@ -131,7 +92,7 @@
     goto exit;
   }
 
-  TEST_ASSERT(t, game_tick_get(g, v) == 30, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 0, "final tick counter value");
 
   level_dump(g, v, l, w, h);
   TEST_PASSED(t);
@@ -142,14 +103,14 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_drop_items() -> bool // NOLINT
+[[nodiscard]] auto test_load_drop_all_items() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("drop_items");
+  Testp test = test_load("drop_all_items");
 
   // begin sort marker1 {
-  test_callback_set(test, test_drop_items);
+  test_callback_set(test, test_drop_all_items);
   // end sort marker1 }
 
   return true;

@@ -231,12 +231,14 @@ void thing_on_drop_success_set(Tpp tp, thing_on_drop_success_t callback)
     return false;
   }
 
-  bool ok {};
+  bool ok = true;
 
-  FOR_ALL_INVENTORY_ITEMS(g, v, l, me, an_item)
-  {
-    if (! thing_drop(g, v, l, me, an_item, e)) {
-      ok = false;
+  while (thing_inventory_get_item_count(g, v, l, me) > 0) {
+    FOR_ALL_INVENTORY_ITEMS(g, v, l, me, an_item)
+    {
+      if (! thing_drop(g, v, l, me, an_item, e)) {
+        ok = false;
+      }
     }
   }
 

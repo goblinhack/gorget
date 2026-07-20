@@ -39,6 +39,7 @@
   if (!test_load_brazier_shove_ok()) { return false; }
   if (!test_load_bridge_on_fire_over_lava()) { return false; }
   if (!test_load_bridge_on_fire()) { return false; }
+  if (!test_load_drop_all_items()) { return false; }
   if (!test_load_drop_items()) { return false; }
   if (!test_load_drop_then_recollect_items()) { return false; }
   if (!test_load_fire_on_water()) { return false; }
@@ -83,6 +84,7 @@
   if (!test_load_player_did_not_trigger()) { return false; }
   if (!test_load_player_engulfed_max_items()) { return false; }
   if (!test_load_player_engulfed_multiple()) { return false; }
+  if (!test_load_player_engulfed_same_items()) { return false; }
   if (!test_load_player_engulfed_then_falls()) { return false; }
   if (!test_load_player_engulfed_then_jumps()) { return false; }
   if (!test_load_player_engulfed_then_teleports()) { return false; }

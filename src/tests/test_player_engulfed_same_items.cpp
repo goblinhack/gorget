@@ -9,7 +9,7 @@
 #include "../my_test.hpp"
 #include "../my_thing_inlines.hpp"
 
-[[nodiscard]] static auto test_player_engulfed_max_items(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_player_engulfed_same_items(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -25,7 +25,7 @@
       = "XXXXXXXXXXXX"
         "X..........X"
         "X..........X"
-        "X@..123456mX"
+        "X@..$$$$$$mX"
         "X..........X"
         "X..........X"
         "XXXXXXXXXXXX";
@@ -42,12 +42,7 @@
   // Create the level and start playing
   //
   Overrides overrides;
-  overrides[ '1' ] = [](char c, bpoint p) -> Tpp { return tp_find_mand("potion_healing"); };
-  overrides[ '2' ] = [](char c, bpoint p) -> Tpp { return tp_find_mand("potion_incin"); };
-  overrides[ '3' ] = [](char c, bpoint p) -> Tpp { return tp_find_mand("potion_stealth"); };
-  overrides[ '4' ] = [](char c, bpoint p) -> Tpp { return tp_find_mand("potion_tireless"); };
-  overrides[ '5' ] = [](char c, bpoint p) -> Tpp { return tp_find_mand("horseshoe"); };
-  overrides[ '6' ] = [](char c, bpoint p) -> Tpp { return tp_find_mand("chest"); };
+  overrides[ '$' ] = [](char c, bpoint p) -> Tpp { return tp_find_mand("potion_healing"); };
   overrides[ 'm' ] = [](char c, bpoint p) -> Tpp { return tp_find_mand("cleaner"); };
   Levelp  l        = nullptr;
   Levelsp v        = game_test_init(g, &l, level_num, w, h, start.c_str(), overrides);
@@ -108,14 +103,14 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_player_engulfed_max_items() -> bool // NOLINT
+[[nodiscard]] auto test_load_player_engulfed_same_items() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("player_engulfed_max_items");
+  Testp test = test_load("player_engulfed_same_items");
 
   // begin sort marker1 {
-  test_callback_set(test, test_player_engulfed_max_items);
+  test_callback_set(test, test_player_engulfed_same_items);
   // end sort marker1 }
 
   return true;

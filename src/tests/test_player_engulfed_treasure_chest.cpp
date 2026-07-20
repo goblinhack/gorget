@@ -45,6 +45,14 @@
         "X..........X"
         "X..........X"
         "XXXXXXXXXXXX";
+  std::string const expect3
+      = "XXXXXXXXXXXX"
+        "X..........X"
+        "X..........X"
+        "X...@......X"
+        "X..........X"
+        "X..........X"
+        "XXXXXXXXXXXX";
 
   //
   // Create the level and start playing
@@ -61,6 +69,10 @@
   // The guts of the test
   //
   bool result = false;
+  bool up     = false;
+  bool down   = false;
+  bool left   = false;
+  bool right  = false;
 
   auto *player = thing_player(g);
   if (player == nullptr) [[unlikely]] {
@@ -152,11 +164,48 @@
   }
 
   //
+  // Move right
+  //
+  for (auto tries = 0; tries < 3; tries++) {
+    TEST_LOOP_PROGRESS(t, g, v, l, tries, w, h);
+
+    TEST_LOG(t, "move right");
+    TRACE();
+    up = down = left = right = false;
+    right                    = true;
+
+    if (! (result = player_move_request(g, up, down, left, right, false /* fire */))) {
+      TEST_FAILED(t, "move fail");
+      goto exit;
+    }
+
+    if (! game_wait_for_tick_to_finish(g, v, l)) {
+      TEST_FAILED(t, "wait loop failed");
+      goto exit;
+    }
+  }
+
+  //
+  // Check the level contents
+  //
+  level_dump(g, v, l, w, h);
+  TEST_PROGRESS(t);
+  {
+    TRACE();
+    if (! (result = level_match_contents(g, v, l, t, w, h, expect3.c_str()))) {
+      TEST_FAILED(t, "unexpected contents");
+      goto exit;
+    }
+  }
+
+  TEST_ASSERT(t, thing_inventory_get_item_count(g, v, l, player) == 2, "expected items");
+
+  //
   // Check the tick is as expected
   //
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  TEST_ASSERT(t, game_tick_get(g, v) == 22, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 26, "final tick counter value");
 
   level_dump(g, v, l, w, h);
   TEST_PASSED(t);

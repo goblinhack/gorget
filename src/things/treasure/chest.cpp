@@ -60,10 +60,14 @@ static auto tp_chest_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std:
 
   nitems = std::min(nitems, THING_INVENTORY_MAX);
 
-  thing_log(g, v, l, me, "spawn items");
+  THING_DBG(g, v, l, me, "spawn items");
   TRACE_INDENT();
 
   for (auto i = 0; i < nitems; i++) {
+    if (nitems > 100) {
+      break;
+    }
+
     auto tp = tp_random(g, v, l, is_treasure);
     if (tp_is_chest(tp)) {
       nitems++;

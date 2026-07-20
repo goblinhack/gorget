@@ -225,11 +225,13 @@
     return 0;
   }
 
-  FOR_ALL_INVENTORY_ITEMS(g, v, l, owner, an_item)
+  FOR_ALL_INVENTORY_SLOTS(g, v, l, owner, slot, item)
   {
-    if (an_item != nullptr) {
-      count++;
+    if (item == nullptr) {
+      continue;
     }
+
+    count += slot->count;
   }
 
   return count;
@@ -262,10 +264,6 @@ void thing_inventory_dump(Gamep g, Levelsp v, Levelp l, Thingp owner)
     }
 
     auto s = to_string(g, v, l, item);
-    if (slot->count != 0) {
-      THING_DBG(g, v, l, owner, "slot %d: %s, count %d", _n_, s.c_str(), slot->count);
-    } else {
-      THING_DBG(g, v, l, owner, "slot %d: %s", _n_, s.c_str());
-    }
+    THING_DBG(g, v, l, owner, "slot %d: %s, count %d", _n_, s.c_str(), slot->count);
   }
 }

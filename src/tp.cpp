@@ -575,8 +575,14 @@ static auto tp_random(Gamep g, Levelsp v, Levelp l, TpVec &m) -> Tpp
     return nullptr;
   }
 
-  if (g_opt_tests) {
-    return tp_first(f);
+  if (f == is_treasure) {
+    //
+    // keep for tests
+    //
+  } else {
+    if (g_opt_tests) {
+      return tp_first(f);
+    }
   }
 
   return tp_random(g, v, l, tp_flag_vec[ f ]);
