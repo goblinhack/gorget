@@ -92,10 +92,6 @@ using thing_on_open_request_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thin
 void               thing_on_open_request_set(Tpp tp, thing_on_open_request_t callback);
 [[nodiscard]] auto thing_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp opener) -> bool;
 
-using thing_on_open_request_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp opener);
-void               thing_on_open_request_set(Tpp tp, thing_on_open_request_t callback);
-[[nodiscard]] auto thing_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp opener) -> bool;
-
 using thing_on_close_request_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp closer);
 void               thing_on_close_request_set(Tpp tp, thing_on_close_request_t callback);
 [[nodiscard]] auto thing_on_close_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp closer) -> bool;
