@@ -54,7 +54,7 @@ void thing_on_level_populated(Gamep g, Levelsp v, Levelp l, Thingp me);
 
 using thing_on_engulf_request_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp engulfer);
 void               thing_on_engulf_request_set(Tpp tp, thing_on_engulf_request_t callback);
-[[nodiscard]] auto thing_on_engulf_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user) -> bool;
+[[nodiscard]] auto thing_on_engulf_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp engulfer) -> bool;
 
 using thing_on_carry_request_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp owner, ThingEvent &);
 void               thing_on_carry_request_set(Tpp tp, thing_on_carry_request_t callback);

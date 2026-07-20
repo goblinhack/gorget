@@ -12,6 +12,7 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 #include <initializer_list>
+#include <vector>
 
 //
 // Add an item to the things inventory
@@ -50,7 +51,7 @@ static auto thing_carry_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp c
   // Is there a limit to what can be collected? e.g. engulfers
   //
   auto max_items = thing_items_collected_max(collector);
-  if (max_items) {
+  if (max_items != 0) {
     if (thing_inventory_get_item_count(g, v, l, collector) >= thing_items_collected_max(collector)) {
       THING_DBG(g, v, l, collector, "no, too many items carried");
       return false;
