@@ -1005,7 +1005,7 @@ void wid_cfg_help_select(Gamep g)
   {
     TRACE();
     auto *p = wid_cfg_help_window->wid_text_area->wid_text_area;
-    auto *w = wid_new_button(g, p, "");
+    auto *w = wid_new_bar_button(g, p, "");
 
     spoint const tl(1, y_at);
     spoint const br(width - 3, y_at);
@@ -1089,7 +1089,7 @@ void wid_cfg_help_select(Gamep g)
   {
     TRACE();
     auto *p = wid_cfg_help_window->wid_text_area->wid_text_area;
-    auto *w = wid_new_button(g, p, "Move up");
+    auto *w = wid_new_square_button(g, p, "Move up");
 
     spoint const tl(1, y_at);
     spoint const br(width / 2, y_at);

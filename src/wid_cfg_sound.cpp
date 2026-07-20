@@ -253,7 +253,7 @@ void wid_cfg_sound_select(Gamep g)
   {
     TRACE();
     auto *p = wid_cfg_sound_window->wid_text_area->wid_text_area;
-    auto *w = wid_new_button(g, p, "Effects volume value");
+    auto *w = wid_new_bar_button(g, p, "Effects volume value");
 
     spoint const tl(width / 2, y_at);
     spoint const br((width / 2) + 8, y_at);
@@ -301,7 +301,7 @@ void wid_cfg_sound_select(Gamep g)
   {
     TRACE();
     auto *p = wid_cfg_sound_window->wid_text_area->wid_text_area;
-    auto *w = wid_new_button(g, p, "Music volume value");
+    auto *w = wid_new_bar_button(g, p, "Music volume value");
 
     spoint const tl(width / 2, y_at);
     spoint const br((width / 2) + 8, y_at);

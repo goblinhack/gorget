@@ -21,7 +21,7 @@
   auto *w = wid_new_square_button(g, parent, name);
   wid_set_mode(w, WID_MODE_OVER);
   wid_set_style(w, UI_WID_STYLE_BUTTON_SQUARE_SOLID);
-  wid_set_color(w, WID_COLOR_BG, GRAY40);
+  wid_set_color(w, WID_COLOR_BG, GREEN);
   wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
   wid_set_mode(w, WID_MODE_NORMAL);
   wid_set_style(w, UI_WID_STYLE_BUTTON_SQUARE_SOLID);
@@ -40,6 +40,9 @@
   wid_set_color(w, WID_COLOR_BG, RED);
   wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
   wid_set_mode(w, WID_MODE_NORMAL);
+  wid_set_style(w, UI_WID_STYLE_BUTTON_ROUNDED_SOLID_MOUSE_OVER);
+  wid_set_color(w, WID_COLOR_BG, RED4);
+  wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
   return w;
 }
 
@@ -54,6 +57,9 @@
   wid_set_color(w, WID_COLOR_BG, RED);
   wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
   wid_set_mode(w, WID_MODE_NORMAL);
+  wid_set_style(w, UI_WID_STYLE_BUTTON_ROUNDED_SOLID_MOUSE_OVER);
+  wid_set_color(w, WID_COLOR_BG, RED4);
+  wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
   return w;
 }
 
@@ -142,8 +148,9 @@ static void wid_button_pulse(Gamep g, Widp w)
   wid_set_color(w, WID_COLOR_BG, GREEN);
   wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
   wid_set_mode(w, WID_MODE_NORMAL);
-  wid_set_style(w, UI_WID_STYLE_BUTTON_ROUNDED_SOLID);
+  wid_set_style(w, UI_WID_STYLE_BUTTON_ROUNDED_SOLID_MOUSE_OVER);
   wid_set_color(w, WID_COLOR_BG, GRAY20);
+  wid_set_color(w, WID_COLOR_TEXT_FG, GRAY90);
   return w;
 }
 
@@ -157,7 +164,9 @@ static void wid_button_pulse(Gamep g, Widp w)
   wid_set_color(w, WID_COLOR_BG, GREEN);
   wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
   wid_set_mode(w, WID_MODE_NORMAL);
-  wid_set_style(w, UI_WID_STYLE_BUTTON_GREEN);
+  wid_set_style(w, UI_WID_STYLE_BUTTON_ROUNDED_SOLID_MOUSE_OVER);
+  wid_set_color(w, WID_COLOR_BG, GREEN4);
+  wid_set_color(w, WID_COLOR_TEXT_FG, GRAY90);
   return w;
 }
 
@@ -167,11 +176,13 @@ static void wid_button_pulse(Gamep g, Widp w)
 
   auto *w = wid_new_square_button(g, parent, name);
   wid_set_mode(w, WID_MODE_OVER);
-  wid_set_style(w, UI_WID_STYLE_BUTTON_ROUNDED_SOLID);
+  wid_set_style(w, UI_WID_STYLE_BUTTON_ROUNDED_SOLID_MOUSE_OVER);
   wid_set_color(w, WID_COLOR_BG, RED);
   wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
   wid_set_mode(w, WID_MODE_NORMAL);
-  wid_set_style(w, UI_WID_STYLE_BUTTON_RED);
+  wid_set_style(w, UI_WID_STYLE_BUTTON_ROUNDED_SOLID_MOUSE_OVER);
+  wid_set_color(w, WID_COLOR_BG, RED4);
+  wid_set_color(w, WID_COLOR_TEXT_FG, GRAY90);
   return w;
 }
 
