@@ -19,8 +19,8 @@
     return 0;
   }
 
-  auto engulfer = thing_engulfer(g, v, l, me);
-  if (engulfer) {
+  auto *engulfer = thing_engulfer(g, v, l, me);
+  if (engulfer != nullptr) {
     return thing_speed(g, v, l, engulfer);
   }
 

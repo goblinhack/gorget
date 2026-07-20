@@ -22,7 +22,7 @@
 
   if (me == nullptr) {
     ERR("no thing pointer");
-    return 0;
+    return nullptr;
   }
 
   if (! thing_is_engulfed(me)) {
@@ -107,21 +107,35 @@
 //
 // Engulf things
 //
-[[nodiscard]] auto thing_engulf(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp engulfer) -> bool
+[[nodiscard]] static auto thing_engulf(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp engulfer) -> bool
 {
-  THING_DBG(g, v, l, me, "%s", __FUNCTION__);
+  THING_DBG(g, v, l, engulfer, "wants to engulf");
   TRACE_INDENT();
+  THING_DBG(g, v, l, me, "me");
+
+  if (thing_is_engulfed(me)) {
+    THING_DBG(g, v, l, me, "already engulfed");
+    return false;
+  }
 
   if (! thing_is_player(engulfer) && ! thing_is_monst(engulfer)) {
     thing_err(g, v, l, engulfer, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
 
-  if (! thing_is_able_to_be_engulfed(me)) {
-    return false;
-  }
+  if (thing_is_collectable(me)) {
+    ThingEvent e {
+        .reason     = "auto collected",    //
+        .event_type = THING_EVENT_CARRIED, //
+        .source     = me,                  //
+    };
 
-  if (! thing_is_able_to_engulf(engulfer)) {
+    if (thing_carry(g, v, l, engulfer, me, e)) {
+      THING_DBG(g, v, l, me, "collect instead of engulfing");
+      return true;
+    }
+
+    THING_DBG(g, v, l, me, "could not collect");
     return false;
   }
 
@@ -193,44 +207,77 @@
   thing_set_dir_from_delta(g, v, l, me, dx, dy);
 
   if (! thing_is_able_to_engulf(me)) {
-    (void) thing_lunge(g, v, l, me, to);
     return false;
   }
+
+  THING_DBG(g, v, l, me, "try to engulf");
+  TRACE_INDENT();
 
   //
   // If there is an engulfer there already, don't pile on
   //
-  if (level_is_able_to_engulf(g, v, l, to)) {
+  if (level_is_able_to_engulf(g, v, l, to) != nullptr) {
+    THING_DBG(g, v, l, me, "try to engulf: engulfer exists there already");
     return false;
   }
 
   //
   // Needs to be something we can engulf
   //
-  if (! level_is_able_to_be_engulfed_bool(g, v, l, to)) {
+  if (level_is_treasure_bool(g, v, l, to) && thing_is_able_to_eat_treasure(me)) {
+    //
+    // Can be eaten
+    //
+    THING_DBG(g, v, l, me, "try to engulf: yes, can be eaten");
+  } else if (level_is_item_bool(g, v, l, to) && thing_is_able_to_eat_items(me)) {
+    //
+    // Can be eaten
+    //
+    THING_DBG(g, v, l, me, "try to engulf: yes, can be eaten");
+  } else if (level_is_able_to_be_engulfed_bool(g, v, l, to)) {
+    //
+    // Can be engulfed
+    //
+    THING_DBG(g, v, l, me, "try to engulf: yes, can be engulfed");
+  } else {
+    //
+    // Cannot engulf/eat
+    //
+    THING_DBG(g, v, l, me, "try to engulf: not possible");
     return false;
   }
 
   FOR_ALL_THINGS_AT(g, v, l, it, to)
   {
+    if (thing_is_treasure(it)) {
+      if (thing_is_able_to_eat_treasure(me)) {
+        if (thing_engulf(g, v, l, it, me)) {
+          return true;
+        }
+      }
+    }
+
+    if (thing_is_item(it)) {
+      if (thing_is_able_to_eat_items(me)) {
+        if (thing_engulf(g, v, l, it, me)) {
+          return true;
+        }
+      }
+    }
+
     //
     // A wall or pillar or somesuch?
     //
     if (thing_is_obs_to_movement(it)) {
-      //
-      // But make exceptions for things like doors
-      //
       if (thing_is_able_to_be_engulfed(it)) {
         if (thing_engulf(g, v, l, it, me)) {
           return true;
         }
       }
-
-      return false;
     }
   }
 
-  return true;
+  return false;
 }
 
 [[nodiscard]] auto thing_is_able_to_engulf(Thingp t) -> bool

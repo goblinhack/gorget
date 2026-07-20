@@ -508,7 +508,9 @@ static void level_tick_begin(Gamep g, Levelsp v, Levelp l)
         if (thing_is_monst(t)) {
           if ((player != nullptr) && (distance(player_at, thing_at(g, v, l, t)) > MAP_WIDTH / 2)) {
             if (d100() > TICK_FAR_OFF_MONST_CHANCE) {
-              continue;
+              if (! g_opt_tests) {
+                continue;
+              }
             }
           }
 

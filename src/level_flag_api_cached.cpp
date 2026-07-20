@@ -584,10 +584,10 @@
   return level_flag_cached(g, v, l, is_loggable, p);
 }
 
-[[nodiscard]] auto level_is_unused7_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_able_to_eat_items_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused7, p);
+  return level_flag_cached(g, v, l, is_able_to_eat_items, p);
 }
 
 [[nodiscard]] auto level_is_meltable_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
@@ -1028,10 +1028,10 @@
   return level_flag_cached(g, v, l, is_staff, p);
 }
 
-[[nodiscard]] auto level_is_unused8_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_able_to_eat_treasure_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused8, p);
+  return level_flag_cached(g, v, l, is_able_to_eat_treasure, p);
 }
 
 [[nodiscard]] auto level_is_wait_on_anim_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
@@ -1070,10 +1070,10 @@
   return level_flag_cached(g, v, l, is_reeds, p);
 }
 
-[[nodiscard]] auto level_is_unused5_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_able_to_drop_all_items_on_death_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused5, p);
+  return level_flag_cached(g, v, l, is_able_to_drop_all_items_on_death, p);
 }
 
 [[nodiscard]] auto level_is_vault_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

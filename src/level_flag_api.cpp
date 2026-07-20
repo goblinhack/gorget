@@ -584,10 +584,10 @@
   return level_flag(g, v, l, is_loggable, p, me);
 }
 
-[[nodiscard]] auto level_is_unused7(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_able_to_eat_items(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused7, p, me);
+  return level_flag(g, v, l, is_able_to_eat_items, p, me);
 }
 
 [[nodiscard]] auto level_is_meltable(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
@@ -1028,10 +1028,10 @@
   return level_flag(g, v, l, is_staff, p, me);
 }
 
-[[nodiscard]] auto level_is_unused8(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_able_to_eat_treasure(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused8, p, me);
+  return level_flag(g, v, l, is_able_to_eat_treasure, p, me);
 }
 
 [[nodiscard]] auto level_is_wait_on_anim(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
@@ -1070,10 +1070,10 @@
   return level_flag(g, v, l, is_reeds, p, me);
 }
 
-[[nodiscard]] auto level_is_unused5(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_able_to_drop_all_items_on_death(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused5, p, me);
+  return level_flag(g, v, l, is_able_to_drop_all_items_on_death, p, me);
 }
 
 [[nodiscard]] auto level_is_vault(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp

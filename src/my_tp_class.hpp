@@ -146,7 +146,7 @@ public:
   int value9 {0};
   int value10 {0};
   int value11 {0};
-  int value12 {0};
+  int items_collected_max {0};
   int hearing_threshold {0};
   int distance_throw {0};
   int charge_count {0};

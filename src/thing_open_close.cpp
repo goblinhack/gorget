@@ -188,7 +188,6 @@ void thing_is_unlocked_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   thing_set_dir_from_delta(g, v, l, me, dx, dy);
 
   if (! thing_is_able_to_open_things(me)) {
-    (void) thing_lunge(g, v, l, me, to);
     return false;
   }
 

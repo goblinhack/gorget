@@ -221,3 +221,24 @@ void thing_on_drop_success_set(Tpp tp, thing_on_drop_success_t callback)
 
   return thing_drop_item(g, v, l, item, me, e);
 }
+
+[[nodiscard]] auto thing_drop_all(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e) -> bool
+{
+  TRACE();
+
+  if (me == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+
+  bool ok {};
+
+  FOR_ALL_INVENTORY_ITEMS(g, v, l, me, an_item)
+  {
+    if (! thing_drop(g, v, l, me, an_item, e)) {
+      ok = false;
+    }
+  }
+
+  return ok;
+}

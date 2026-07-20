@@ -167,7 +167,7 @@
     THING_DBG(g, v, l, m, "dead due to spawning");
     TRACE_INDENT();
 
-    ThingEvent e;
+    ThingEvent e {};
     thing_dead(g, v, l, m, e);
   }
 

@@ -1,14 +1,8 @@
 bugs
 ----
-engulfer teleport
-engulfer fall
+player chest test
 engulfer do not break free if player did not move
-engulfer chase treasure
-engulfer chase treasure limit
-engulfer carrying info
 engulfer anim
-double chasm fall test
-interacting engulfers
 
 todo
 ----
@@ -20,7 +14,7 @@ potion, feathertail (jump)
 potion, etherealness (wall throu walls)
 potion, protection, no crits and restore health to 20% on death
 potion, haste
-potion, inviolate (health and removes poison)
+potion, inviolate (health and removes poison, protects from engulfing)
 potion, telepath (see enemies)
 potion, fire immunity (stoneskin)
 potion, light immunity (light beam)

@@ -26,10 +26,10 @@ static auto tp_cleaner_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> st
 {
   TRACE();
 
-  return                                                                                                            //
-      UI_INFO1_FMT_STR "Dungeon cleaners are mindless masses of jelly.\n"                                           //
-      UI_INFO2_FMT_STR "They move slowly and hoover up items to be digested slowly in their gloopy innards.\n"      //
-      UI_INFO3_FMT_STR "Although slow moving, they can suprise with a sudden jump. Best not be where they land..."; //
+  return                                                                                                                   //
+      UI_INFO1_FMT_STR "Dungeon cleaners are mindless masses of jelly that like to eat treasure. And you.\n"               //
+      UI_INFO2_FMT_STR "They move slowly and hoover up items to be digested slowly in their gloopy innards.\n"             //
+      UI_INFO3_FMT_STR "Although sluggish, they can suprise with a sudden engulfing jump. Best not be where they land..."; //
 }
 
 static auto tp_cleaner_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at, Thingp me) -> ThingEnvironType
@@ -46,6 +46,18 @@ static auto tp_cleaner_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &a
 
   if (level_is_water_cached(g, v, l, at)) {
     return THING_ENVIRON_HATES;
+  }
+
+  if (level_is_treasure_cached(g, v, l, at)) {
+    if (thing_inventory_get_item_count(g, v, l, me) < thing_items_collected_max(me)) {
+      return THING_ENVIRON_LIKES;
+    }
+  }
+
+  if (level_is_item_cached(g, v, l, at)) {
+    if (thing_inventory_get_item_count(g, v, l, me) < thing_items_collected_max(me)) {
+      return THING_ENVIRON_LIKES;
+    }
   }
 
   return THING_ENVIRON_NEUTRAL;
@@ -93,6 +105,9 @@ static void tp_cleaner_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEv
   tp_flag_set(tp, is_able_to_collect_items);
   tp_flag_set(tp, is_able_to_collect_keys);
   tp_flag_set(tp, is_able_to_crush_grass);
+  tp_flag_set(tp, is_able_to_drop_all_items_on_death);
+  tp_flag_set(tp, is_able_to_eat_items);
+  tp_flag_set(tp, is_able_to_eat_treasure);
   tp_flag_set(tp, is_able_to_engulf);
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
@@ -129,6 +144,7 @@ static void tp_cleaner_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEv
   tp_health_set(tp, "1d10+4");
   tp_hearing_threshold_set(tp, 8);
   tp_is_immune_to_add(tp, THING_EVENT_WATER_DAMAGE);
+  tp_items_collected_max_set(tp, 3);
   tp_light_color_set(tp, "pink");
   tp_monst_group_add(tp, MONST_GROUP2);
   tp_name_a_or_an_set(tp, "a dungeon cleaner");

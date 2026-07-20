@@ -83,7 +83,11 @@ static auto tp_chest_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std:
   }
 
   if (thing_is_player(opener)) {
-    wid_collect_show(g, v, l, opener, items);
+    if (g_opt_tests) {
+      (void) thing_carry(g, v, l, opener, items);
+    } else {
+      wid_collect_show(g, v, l, opener, items);
+    }
   }
 
   return true;
@@ -156,9 +160,11 @@ static bool tp_chest_on_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEve
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_burnable); // is capable of being burned by fire
   tp_flag_set(tp, is_chest);
+  tp_flag_set(tp, is_collectable); // for engulfers
   tp_flag_set(tp, is_collision_circle_large);
   tp_flag_set(tp, is_combustible); // will continue to burn once on fire
   tp_flag_set(tp, is_described_cursor);
+  tp_flag_set(tp, is_item); // for engulfers
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_openable);
   tp_flag_set(tp, is_physics_explosion);

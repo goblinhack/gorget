@@ -38,7 +38,7 @@ void thing_enhance(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp)
   (void) thing_value1_incr(g, v, l, t, tp_value1_get(tp));
   (void) thing_value10_incr(g, v, l, t, tp_value10_get(tp));
   (void) thing_value11_incr(g, v, l, t, tp_value11_get(tp));
-  (void) thing_value12_incr(g, v, l, t, tp_value12_get(tp));
+  (void) thing_items_collected_max_incr(g, v, l, t, tp_items_collected_max_get(tp));
   (void) thing_value2_incr(g, v, l, t, tp_value2_get(tp));
   (void) thing_value3_incr(g, v, l, t, tp_value3_get(tp));
   (void) thing_value4_incr(g, v, l, t, tp_value4_get(tp));

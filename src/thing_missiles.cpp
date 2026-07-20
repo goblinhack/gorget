@@ -271,6 +271,7 @@ static auto thing_missile_detach_from_firer(Gamep g, Levelsp v, Levelp l, Thingp
   }
 
   THING_DBG(g, v, l, me, "detach me from firer");
+  THING_DBG(g, v, l, fired_by, "fired by me");
   TRACE_INDENT();
 
   return thing_missile_detach_from_firer(g, v, l, fired_by, me);
@@ -288,7 +289,6 @@ void thing_dump_missiles(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 
   if (! thing_is_able_to_fire_weapons(me)) {
-    thing_err(g, v, l, me, "non owner trying to detach missile");
     return;
   }
 

@@ -217,10 +217,10 @@
       list_macro(is_unused1, "is_unused1"),                                                 /* newline */                                       \
       list_macro(is_unused2, "is_unused2"),                                                 /* newline */                                       \
       list_macro(is_unused3, "is_unused3"),                                                 /* newline */                                       \
-      list_macro(is_unused5, "is_unused5"),                                                 /* newline */                                       \
+      list_macro(is_able_to_drop_all_items_on_death, "is_able_to_drop_all_items_on_death"), /* newline */                                       \
       list_macro(is_able_to_be_engulfed, "is_able_to_be_engulfed"),                         /* newline */                                       \
-      list_macro(is_unused7, "is_unused7"),                                                 /* newline */                                       \
-      list_macro(is_unused8, "is_unused8"),                                                 /* newline */                                       \
+      list_macro(is_able_to_eat_items, "is_able_to_eat_items"),                             /* newline */                                       \
+      list_macro(is_able_to_eat_treasure, "is_able_to_eat_treasure"),                       /* newline */                                       \
       list_macro(is_usable, "is_usable"),                                                   /* newline */                                       \
       list_macro(is_vault, "is_vault"),                                                     /* newline */                                       \
       list_macro(is_vision_180_degrees, "is_vision_180_degrees"),                           /* newline */                                       \
@@ -598,6 +598,9 @@ class Tp;
 [[nodiscard]] auto tp_is_able_to_collect_items(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_collect_keys(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_crush_grass(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_able_to_drop_all_items_on_death(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_able_to_eat_items(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_able_to_eat_treasure(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_engulf(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_fall_repeatedly(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_fall_sound(Tpp tp) -> bool;
@@ -796,9 +799,6 @@ class Tp;
 [[nodiscard]] auto tp_is_unused1(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused2(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused3(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused5(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused7(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused8(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_usable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_vault(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_vision_180_degrees(Tpp tp) -> bool;
@@ -809,6 +809,7 @@ class Tp;
 [[nodiscard]] auto tp_is_wand(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_water(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_wood(Tpp tp) -> bool;
+[[nodiscard]] auto tp_items_collected_max_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_lifespan_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_lifespan_max_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_light_color(Tpp tp) -> color;
@@ -848,7 +849,6 @@ class Tp;
 [[nodiscard]] auto tp_value1_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_value10_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_value11_get(Tpp tp) -> int;
-[[nodiscard]] auto tp_value12_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_value2_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_value3_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_value4_get(Tpp tp) -> int;
@@ -889,6 +889,7 @@ void tp_health_set(Tpp tp, const std::string &val);
 void tp_hearing_threshold_set(Tpp tp, int val);
 void tp_is_immune_to_add(Tpp tp, ThingEventType val);
 void tp_is_resistant_to_add(Tpp tp, ThingEventType val);
+void tp_items_collected_max_set(Tpp tp, int val);
 void tp_lifespan_set(Tpp tp, const std::string &val);
 void tp_light_color_apply(Tpp tp);
 void tp_light_color_set(Tpp tp, const std::string &val);
@@ -921,7 +922,6 @@ void tp_tiles_push_back(Tpp tp, ThingAnimType val, Tilep tile_p);
 void tp_value1_set(Tpp tp, int val);
 void tp_value10_set(Tpp tp, int val);
 void tp_value11_set(Tpp tp, int val);
-void tp_value12_set(Tpp tp, int val);
 void tp_value2_set(Tpp tp, int val);
 void tp_value3_set(Tpp tp, int val);
 void tp_value4_set(Tpp tp, int val);

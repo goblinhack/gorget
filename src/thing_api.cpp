@@ -597,7 +597,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_unused3) != 0;
 }
 
-[[nodiscard]] auto thing_is_unused5(Thingp t) -> bool
+[[nodiscard]] auto thing_is_able_to_drop_all_items_on_death(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -605,7 +605,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused5) != 0;
+  return tp_flag(thing_tp(t), is_able_to_drop_all_items_on_death) != 0;
 }
 
 [[nodiscard]] auto thing_is_effect_ripple(Thingp t) -> bool
@@ -814,10 +814,6 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     return false;
   }
 
-  if (thing_is_dead(t)) {
-    return false;
-  }
-
   return tp_flag(thing_tp(t), is_able_to_fire_weapons) != 0;
 }
 
@@ -870,7 +866,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_staff) != 0;
 }
 
-[[nodiscard]] auto thing_is_unused8(Thingp t) -> bool
+[[nodiscard]] auto thing_is_able_to_eat_treasure(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -878,7 +874,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused8) != 0;
+  return tp_flag(thing_tp(t), is_able_to_eat_treasure) != 0;
 }
 
 [[nodiscard]] auto thing_is_wait_on_anim(Thingp t) -> bool
@@ -1161,7 +1157,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_insectoid) != 0;
 }
 
-[[nodiscard]] auto thing_is_unused7(Thingp t) -> bool
+[[nodiscard]] auto thing_is_able_to_eat_items(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -1169,7 +1165,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused7) != 0;
+  return tp_flag(thing_tp(t), is_able_to_eat_items) != 0;
 }
 
 [[nodiscard]] auto thing_is_dmap(Thingp t) -> bool
@@ -2333,7 +2329,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
   return t->_value11 -= val;
 }
-[[nodiscard]] auto thing_value12(Thingp t) -> int
+[[nodiscard]] auto thing_items_collected_max(Thingp t) -> int
 {
   TRACE_DEBUG();
 
@@ -2341,10 +2337,10 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return 0;
   }
-  return t->_value12;
+  return t->_items_collected_max;
 }
 
-[[nodiscard]] auto thing_value12_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_items_collected_max_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -2352,10 +2348,10 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return 0;
   }
-  return t->_value12 = val;
+  return t->_items_collected_max = val;
 }
 
-[[nodiscard]] auto thing_value12_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_items_collected_max_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -2363,10 +2359,10 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return 0;
   }
-  return t->_value12 += val;
+  return t->_items_collected_max += val;
 }
 
-[[nodiscard]] auto thing_value12_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_items_collected_max_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -2374,10 +2370,10 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return 0;
   }
-  if (static_cast< int >(t->_value12) - val <= 0) {
-    return t->_value12 = 0;
+  if (static_cast< int >(t->_items_collected_max) - val <= 0) {
+    return t->_items_collected_max = 0;
   }
-  return t->_value12 -= val;
+  return t->_items_collected_max -= val;
 }
 [[nodiscard]] auto thing_hearing_threshold(Thingp t) -> int
 {

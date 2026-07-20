@@ -16,32 +16,52 @@
 //
 // Add an item to the things inventory
 //
-static auto thing_carry_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp owner, ThingEvent &e) -> bool
+static auto thing_carry_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp collector, ThingEvent &e) -> bool
 {
   TRACE();
 
-  if (! thing_is_able_to_collect_items(owner)) {
+  if (! thing_is_able_to_collect_items(collector)) {
     return false;
+  }
+
+  //
+  // Need to stop the player collecting a chest, like an engulfer would do. We want the player to open the chest.
+  //
+  if (thing_is_player(collector)) {
+    if (thing_is_chest(item)) {
+      return false;
+    }
   }
 
   if (! thing_is_item(item)) {
     return false;
   }
 
-  if (! thing_is_player(owner) && ! thing_is_monst(owner)) {
-    thing_err(g, v, l, owner, "unexpected thing, %s", __FUNCTION__);
+  if (! thing_is_player(collector) && ! thing_is_monst(collector)) {
+    thing_err(g, v, l, collector, "unexpected thing, %s", __FUNCTION__);
     return false;
   }
 
   auto s = to_string(g, v, l, item);
-  THING_DBG(g, v, l, owner, "carry: %s", s.c_str());
+  THING_DBG(g, v, l, collector, "carry: %s", s.c_str());
   TRACE_INDENT();
 
-  if (! thing_is_carried_set(g, v, l, item, owner, e)) {
-    THING_DBG(g, v, l, owner, "carry: %s (failed)", s.c_str());
+  //
+  // Is there a limit to what can be collected? e.g. engulfers
+  //
+  auto max_items = thing_items_collected_max(collector);
+  if (max_items) {
+    if (thing_inventory_get_item_count(g, v, l, collector) >= thing_items_collected_max(collector)) {
+      THING_DBG(g, v, l, collector, "no, too many items carried");
+      return false;
+    }
+  }
+
+  if (! thing_is_carried_set(g, v, l, item, collector, e)) {
+    THING_DBG(g, v, l, collector, "carry: %s (failed)", s.c_str());
     TRACE_INDENT();
 
-    if (thing_is_player(owner)) {
+    if (thing_is_player(collector)) {
       auto the_thing = thing_name_long_the(g, v, l, item);
       topcon(UI_WARN_FMT_STR "You fail to carry %s." UI_RESET_FMT, the_thing.c_str());
     }
@@ -50,7 +70,7 @@ static auto thing_carry_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp o
 
   (void) thing_pop(g, v, item);
 
-  if (thing_is_player(owner)) {
+  if (thing_is_player(collector)) {
     if (e.event_type != THING_EVENT_SPAWNED) {
       auto the_thing = thing_name_long_the(g, v, l, item);
       topcon("You carry %s.", the_thing.c_str());
@@ -58,9 +78,9 @@ static auto thing_carry_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp o
     game_request_to_remake_ui_set(g);
   }
 
-  thing_owner_set(g, v, l, item, owner);
+  thing_owner_set(g, v, l, item, collector);
 
-  thing_inventory_dump(g, v, l, owner);
+  thing_inventory_dump(g, v, l, collector);
 
   return true;
 }
@@ -326,6 +346,33 @@ void thing_on_carry_success_set(Tpp tp, thing_on_carry_success_t callback)
           ok = false;
         }
       }
+    }
+  }
+
+  return ok;
+}
+
+[[nodiscard]] auto thing_carry(Gamep g, Levelsp v, Levelp l, Thingp me, const std::vector< Thingp > &items) -> bool
+{
+  TRACE();
+
+  if (me == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+
+  bool ok = true;
+
+  for (const auto &item : items) {
+
+    ThingEvent e {
+        .reason     = "collected",         //
+        .event_type = THING_EVENT_SPAWNED, //
+        .source     = me,                  //
+    };
+
+    if (! thing_carry(g, v, l, me, item, e)) {
+      ok = false;
     }
   }
 

@@ -1638,24 +1638,24 @@ void tp_value11_set(Tpp tp, int val)
   return tp->value11;
 }
 
-void tp_value12_set(Tpp tp, int val)
+void tp_items_collected_max_set(Tpp tp, int val)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
     tp_err(tp, "no thing template pointer");
     return;
   }
-  tp->value12 = val;
+  tp->items_collected_max = val;
 }
 
-[[nodiscard]] auto tp_value12_get(Tpp tp) -> int
+[[nodiscard]] auto tp_items_collected_max_get(Tpp tp) -> int
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
     tp_err(tp, "no thing template pointer");
     return 0;
   }
-  return tp->value12;
+  return tp->items_collected_max;
 }
 
 void tp_attack_count_max_per_tick_set(Tpp tp, int val)

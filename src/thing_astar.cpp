@@ -20,6 +20,7 @@
 #include <utility>
 #include <vector>
 
+#define ENABLE_DEBUG_AI_ASTAR
 #ifdef ENABLE_DEBUG_AI_ASTAR
 static std::array< std::array< char, MAP_HEIGHT >, MAP_WIDTH > astar_debug;
 #endif
@@ -112,11 +113,11 @@ public:
   std::array< std::array< bool, MAP_HEIGHT >, MAP_WIDTH > can_move_to_possible_cached     = {};
   std::array< std::array< bool, MAP_HEIGHT >, MAP_WIDTH > can_move_to_possible_cached_set = {};
 
-  std::array< std::array< uint8_t, MAP_HEIGHT >, MAP_WIDTH > can_move_to_cost_cached     = {};
-  std::array< std::array< uint8_t, MAP_HEIGHT >, MAP_WIDTH > can_move_to_cost_cached_set = {};
+  std::array< std::array< int16_t, MAP_HEIGHT >, MAP_WIDTH > can_move_to_cost_cached     = {};
+  std::array< std::array< int16_t, MAP_HEIGHT >, MAP_WIDTH > can_move_to_cost_cached_set = {};
 
   [[nodiscard]] auto        can_move_to_possible(const bpoint &to) -> bool;
-  [[nodiscard]] auto        can_move_to_cost(const bpoint &to) -> uint8_t;
+  [[nodiscard]] auto        can_move_to_cost(const bpoint &to) -> int16_t;
   [[nodiscard]] auto        heuristic(bpoint at) const -> Cost;
   [[nodiscard]] auto        node_init(bpoint next_hop, Nodecost cost) -> Node *;
   [[nodiscard]] auto        solve(bool allow_diagonal) -> std::vector< bpoint >;
@@ -288,7 +289,7 @@ void Astar::init()
   return can_move_to_possible_cached[ to.x ][ to.y ];
 }
 
-[[nodiscard]] auto Astar::can_move_to_cost(const bpoint &to) -> uint8_t
+[[nodiscard]] auto Astar::can_move_to_cost(const bpoint &to) -> int16_t
 {
   if (to == dst) {
     return 0;
@@ -296,7 +297,7 @@ void Astar::init()
 
   if (can_move_to_cost_cached_set[ to.x ][ to.y ] == 0U) {
     can_move_to_cost_cached_set[ to.x ][ to.y ] = 1U;
-    uint8_t cost                                = 0;
+    int16_t cost                                = 0;
 
     switch (thing_assess_tile(g, v, l, to, me)) {
       case THING_ENVIRON_HATES :    cost = 100; break;

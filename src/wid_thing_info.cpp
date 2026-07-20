@@ -1280,7 +1280,7 @@ static void wid_thing_info_item_mouse_over_end(Gamep g, Widp w)
 
   bool printed_something = false;
 
-  if (! thing_is_player(me)) {
+  if (! thing_is_able_to_collect_items(me)) {
     return printed_something;
   }
 

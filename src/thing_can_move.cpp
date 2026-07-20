@@ -348,7 +348,6 @@
   thing_set_dir_from_delta(g, v, l, me, dx, dy);
 
   if (! thing_is_able_to_shove(me)) {
-    (void) thing_lunge(g, v, l, me, to);
     return false;
   }
 

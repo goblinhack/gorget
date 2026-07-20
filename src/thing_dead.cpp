@@ -432,6 +432,13 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
         thing_err(g, v, l, me, "item is carried but could not drop");
       }
     }
+  } else {
+    //
+    // Drop all items
+    //
+    if (thing_is_able_to_drop_all_items_on_death(me)) {
+      (void) thing_drop_all(g, v, l, me, e);
+    }
   }
 
   //

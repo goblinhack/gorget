@@ -5,6 +5,7 @@
 #include "my_age_map_inlines.hpp"
 #include "my_bpoint.hpp"
 #include "my_callstack.hpp"
+#include "my_fov_map_inlines.hpp"
 #include "my_game.hpp"
 #include "my_game_defs.hpp"
 #include "my_level.hpp"
@@ -19,7 +20,7 @@
 #include <string>
 
 //
-// Already over the player?
+// Already over the player? Used for engulfers.
 //
 static auto thing_monst_over_target_player(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
 {
@@ -154,9 +155,80 @@ static auto thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thing
 }
 
 //
+// If not the player, is there something we like
+//
+static auto thing_monst_choose_best_target(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
+{
+  THING_DBG(g, v, l, me, "choose target: best");
+  TRACE_INDENT();
+
+  auto at = thing_at(g, v, l, me);
+
+  auto *ext = thing_ext_struct(g, me);
+  if (ext == nullptr) {
+    thing_err(g, v, l, me, "no ext pointer");
+    return false;
+  }
+
+  if (! thing_is_able_to_collect_items(me)) {
+    return false;
+  }
+
+  bpoint target;
+  float  best_score = 0;
+  float  score      = 0;
+
+  for (auto y = 0; y < MAP_HEIGHT; y++) {
+    for (auto x = 0; x < MAP_WIDTH; x++) {
+      bpoint const p(x, y);
+
+      if (static_cast< uint32_t >(fov_map_get(&ext->can_see, x, y)) != 0U) {
+        score = 2;
+      } else if (static_cast< uint32_t >(age_map_get(&ext->has_seen, x, y)) != 0U) {
+        score = 1;
+      } else {
+        continue;
+      }
+
+      bool skip {};
+      switch (thing_assess_tile(g, v, l, p, me)) {
+        case THING_ENVIRON_HATES :    skip = true; break;
+        case THING_ENVIRON_DISLIKES : skip = true; break;
+        case THING_ENVIRON_NEUTRAL :  skip = true; break;
+        case THING_ENVIRON_LIKES :    score *= 100; break;
+        case THING_ENVIRON_ENUM_MAX : break;
+      }
+
+      if (skip) {
+        continue;
+      }
+
+      score -= distance(at, p);
+
+      if (compiler_unused) {
+        THING_DBG(g, v, l, me, "consider target: (%d,%d) score %f", target.x, target.y, best_score);
+      }
+
+      if (score > best_score) {
+        best_score = score;
+        target     = p;
+      }
+    }
+  }
+
+  if (best_score > 0) {
+    thing_monst_target_set(g, v, l, me, target);
+    THING_DBG(g, v, l, me, "choose target: best (%d,%d) score %f", target.x, target.y, best_score);
+    return true;
+  }
+
+  return false;
+}
+
+//
 // Choose somewhere random that we can see
 //
-static auto thing_monst_choose_something_we_can_see(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
+static auto thing_monst_choose_something_we_can_wander_to(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
 {
   THING_DBG(g, v, l, me, "choose target: can see");
   TRACE_INDENT();
@@ -292,11 +364,15 @@ static auto thing_monst_choose_something_we_can_see(Gamep g, Levelsp v, Levelp l
 
   if (thing_is_engulfed(me)) {
     THING_DBG(g, v, l, me, "move try: not possible, engulfed, lunge");
+    TRACE_INDENT();
+
     (void) thing_lunge(g, v, l, me, to);
     return false;
   }
 
   if (thing_can_move_to_attempt(g, v, l, me, to)) {
+    TRACE_INDENT();
+
     THING_DBG(g, v, l, me, "move try: successfully moved");
     return true;
   }
@@ -306,6 +382,7 @@ static auto thing_monst_choose_something_we_can_see(Gamep g, Levelsp v, Levelp l
     // Can we shove it out of the way to move?
     //
     THING_DBG(g, v, l, me, "move try: can move to by shoving");
+    TRACE_INDENT();
 
     if (thing_shove_to(g, v, l, me, to)) {
       //
@@ -320,6 +397,7 @@ static auto thing_monst_choose_something_we_can_see(Gamep g, Levelsp v, Levelp l
     // Can we open it allow movement?
     //
     THING_DBG(g, v, l, me, "move try: can move to by opening");
+    TRACE_INDENT();
 
     if (thing_move_to(g, v, l, me, to)) {
       return true;
@@ -331,6 +409,7 @@ static auto thing_monst_choose_something_we_can_see(Gamep g, Levelsp v, Levelp l
     // Can we open it allow movement?
     //
     THING_DBG(g, v, l, me, "move try: can move to by engulfing");
+    TRACE_INDENT();
 
     if (thing_move_to(g, v, l, me, to)) {
       return true;
@@ -350,6 +429,7 @@ static auto thing_monst_choose_something_we_can_see(Gamep g, Levelsp v, Levelp l
   // Bumped into obstacle
   //
   THING_DBG(g, v, l, me, "move try: failed");
+  (void) thing_lunge(g, v, l, me, to);
   return false;
 }
 
@@ -499,6 +579,12 @@ static auto thing_monst_choose_something_we_can_see(Gamep g, Levelsp v, Levelp l
     return true;
   }
 
+  if (thing_monst_choose_best_target(g, v, l, me)) {
+    THING_DBG(g, v, l, me, "choose target: found best target");
+    monst_state_change(g, v, l, me, MONST_STATE_CHASING);
+    return true;
+  }
+
   if (thing_is_minion(me)) {
     THING_DBG(g, v, l, me, "choose target: one near mob?");
     TRACE_INDENT();
@@ -510,7 +596,7 @@ static auto thing_monst_choose_something_we_can_see(Gamep g, Levelsp v, Levelp l
   }
 
   THING_DBG(g, v, l, me, "choose target: one we can see?");
-  if (thing_monst_choose_something_we_can_see(g, v, l, me)) {
+  if (thing_monst_choose_something_we_can_wander_to(g, v, l, me)) {
     TRACE_INDENT();
     THING_DBG(g, v, l, me, "choose target: monst found a target it can see");
     monst_state_change(g, v, l, me, MONST_STATE_WANDER);
@@ -616,6 +702,19 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me)
           // We're probably lunging at the player right now. No need to try to move again.
           //
           THING_DBG(g, v, l, me, "end of move: adjacent to target");
+          TRACE_INDENT();
+
+          //
+          // Can we engulf or eat the target?
+          //
+          if (thing_can_move_to_attempt_by_engulfing(g, v, l, me, old_target)) {
+            THING_DBG(g, v, l, me, "move try: can engulf adjacent");
+            TRACE_INDENT();
+
+            if (thing_move_to(g, v, l, me, old_target)) {
+              break;
+            }
+          }
 
           //
           // Can we attack here?
@@ -747,6 +846,8 @@ void monst_state_change(Gamep g, Levelsp v, Levelp l, Thingp me, MonstState new_
 void thing_monst_tick(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
+
+  THING_DBG(g, v, l, me, "monst tick");
 
   if (thing_is_dead(me)) {
     return;

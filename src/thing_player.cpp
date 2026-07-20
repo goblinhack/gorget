@@ -733,6 +733,7 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
       (void) level_tick_begin_requested(g, v, l, "player could not pass diagonal obstacle");
     }
   } else {
+    (void) thing_lunge(g, v, l, me, to);
     (void) level_tick_begin_requested(g, v, l, "player bumped into obstacle");
   }
 

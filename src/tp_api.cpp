@@ -583,10 +583,10 @@
   return tp_flag(tp, is_loggable) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused7(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_able_to_eat_items(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused7) != 0;
+  return tp_flag(tp, is_able_to_eat_items) != 0;
 }
 
 [[nodiscard]] auto tp_is_meltable(Tpp tp) -> bool
@@ -1027,10 +1027,10 @@
   return tp_flag(tp, is_staff) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused8(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_able_to_eat_treasure(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused8) != 0;
+  return tp_flag(tp, is_able_to_eat_treasure) != 0;
 }
 
 [[nodiscard]] auto tp_is_wait_on_anim(Tpp tp) -> bool
@@ -1069,10 +1069,10 @@
   return tp_flag(tp, is_reeds) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused5(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_able_to_drop_all_items_on_death(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused5) != 0;
+  return tp_flag(tp, is_able_to_drop_all_items_on_death) != 0;
 }
 
 [[nodiscard]] auto tp_is_vault(Tpp tp) -> bool

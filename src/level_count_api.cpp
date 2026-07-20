@@ -585,10 +585,10 @@
   return level_count(g, v, l, is_loggable, p);
 }
 
-[[nodiscard]] auto level_count_is_unused7(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_able_to_eat_items(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused7, p);
+  return level_count(g, v, l, is_able_to_eat_items, p);
 }
 
 [[nodiscard]] auto level_count_is_meltable(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
@@ -1029,10 +1029,10 @@
   return level_count(g, v, l, is_staff, p);
 }
 
-[[nodiscard]] auto level_count_is_unused8(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_able_to_eat_treasure(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused8, p);
+  return level_count(g, v, l, is_able_to_eat_treasure, p);
 }
 
 [[nodiscard]] auto level_count_is_wait_on_anim(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
@@ -1071,10 +1071,10 @@
   return level_count(g, v, l, is_reeds, p);
 }
 
-[[nodiscard]] auto level_count_is_unused5(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_able_to_drop_all_items_on_death(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused5, p);
+  return level_count(g, v, l, is_able_to_drop_all_items_on_death, p);
 }
 
 [[nodiscard]] auto level_count_is_vault(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
