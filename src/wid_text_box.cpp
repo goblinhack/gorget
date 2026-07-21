@@ -57,7 +57,6 @@ WidTextBox::WidTextBox(Gamep g, spoint vtl, spoint vbr, Widp vparent, bool horiz
       wid_set_shape_none(wid_text_box_container);
     } else {
       wid_text_box_container = wid_new_window(g, "widget text box");
-      wid_set_style(wid_text_box_container, UI_WID_STYLE_BUTTON_GREEN);
     }
     wid_set_pos(wid_text_box_container, tl, br);
   }
@@ -69,7 +68,6 @@ WidTextBox::WidTextBox(Gamep g, spoint vtl, spoint vbr, Widp vparent, bool horiz
     wid_text_area = wid_new_square_button(g, wid_text_box_container, "widget text inner area");
     wid_set_pos(wid_text_area, inner_tl, inner_br);
     wid_set_shape_none(wid_text_area);
-    // wid_set_style( wid_text_area, UI_WID_STYLE_BUTTON_RED);
 
     w = inner_br.x - inner_tl.x;
     h = inner_br.y - inner_tl.y;

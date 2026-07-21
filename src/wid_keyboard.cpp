@@ -766,7 +766,7 @@ auto wid_keyboard(Gamep g, const std::string &text, const std::string &title, wi
    * Create the text input container
    */
   {
-    Widp w = wid_new_square_button(g, window, "widget keyboard input");
+    Widp w = wid_new_red_button(g, window, "widget keyboard input");
 
     ctx->input = w;
 
@@ -778,7 +778,6 @@ auto wid_keyboard(Gamep g, const std::string &text, const std::string &title, wi
     wid_set_show_cursor(w);
     wid_set_on_key_down(w, wid_keyboard_text_input_key_event);
     wid_set_void_context(w, ctx);
-    wid_set_style(w, UI_WID_STYLE_BUTTON_RED);
 
     if (static_cast< bool >(max_len)) {
       wid_set_text_max_len(w, max_len);

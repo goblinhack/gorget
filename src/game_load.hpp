@@ -1389,7 +1389,6 @@ void Game::load_select()
     spoint const tl((menu_width / 2) - 4, menu_height - 4);
     spoint const br((menu_width / 2) + 3, menu_height - 2);
 
-    wid_set_style(w, UI_WID_STYLE_BUTTON_OUTLINE);
     wid_set_on_mouse_down(w, wid_load_cancel);
 
     wid_set_pos(w, tl, br);

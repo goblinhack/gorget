@@ -66,30 +66,16 @@ void wid_notice(const std::string &s)
     wid_set_on_key_down(w, wid_notice_key_down);
   }
 
-  int y_at = 0;
+  wid_notice_window->log(g, s);
+
+  int y_at = 3;
   {
     TRACE();
     auto *p = wid_notice_window->wid_text_area->wid_text_area;
-    auto *w = wid_new_square_button(g, p, "notice");
-
-    spoint const tl1(0, y_at);
-    spoint const br1(width - 1, y_at + 1);
-    wid_set_shape_none(w);
-    wid_set_on_mouse_down(w, wid_notice_ok);
-    wid_set_pos(w, tl1, br1);
-    wid_set_text(w, s);
-    wid_set_style(w, UI_WID_STYLE_BUTTON_GREEN);
-  }
-
-  y_at = 3;
-  {
-    TRACE();
-    auto *p = wid_notice_window->wid_text_area->wid_text_area;
-    auto *w = wid_new_square_button(g, p, "ok");
+    auto *w = wid_new_back_button(g, p, "ok");
 
     spoint const tl2((width / 2) - 4, y_at);
     spoint const br2((width / 2) + 4, y_at + 2);
-    wid_set_style(w, UI_WID_STYLE_BUTTON_GREEN);
     wid_set_on_mouse_down(w, wid_notice_ok);
     wid_set_pos(w, tl2, br2);
     wid_set_text(w, "Ok!");

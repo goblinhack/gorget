@@ -939,7 +939,6 @@ void wid_cfg_help_select(Gamep g)
   auto         width = outer_br.x - outer_tl.x;
 
   wid_cfg_help_window = new WidPopup(g, "Keyboard select", outer_tl, outer_br, nullptr, "", false, true);
-
   {
     TRACE();
     Widp w = wid_cfg_help_window->wid_popup_container;
