@@ -486,6 +486,7 @@ static void tp_player_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_dmap);
   tp_flag_set(tp, is_flesh);
+  tp_flag_set(tp, is_light_flicker);
   tp_flag_set(tp, is_light_source, MAP_WIDTH / 2);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_obs_to_beam);

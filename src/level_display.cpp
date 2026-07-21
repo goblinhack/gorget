@@ -384,8 +384,10 @@ void level_display(Gamep g, Levelsp v, Levelp l)
   //
   // Light flicker
   //
-  if (OS_RANDOM_RANGE(0, 100) < 10) {
+  static uint32_t last_flicker {};
+  if (time_have_x_hundredths_passed_since(THING_LIGHT_FLICKER_ANIM_MS, last_flicker)) {
     level_light_calculate_all(g, v, l);
+    last_flicker = time_ms_cached();
   }
 }
 

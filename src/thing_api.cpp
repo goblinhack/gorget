@@ -586,7 +586,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_unused2) != 0;
 }
 
-[[nodiscard]] auto thing_is_unused3(Thingp t) -> bool
+[[nodiscard]] auto thing_is_light_flicker(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -594,7 +594,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused3) != 0;
+  return tp_flag(thing_tp(t), is_light_flicker) != 0;
 }
 
 [[nodiscard]] auto thing_is_able_to_drop_all_items_on_death(Thingp t) -> bool

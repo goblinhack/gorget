@@ -1003,10 +1003,10 @@
   return tp_flag(tp, wieldable) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused3(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_light_flicker(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused3) != 0;
+  return tp_flag(tp, is_light_flicker) != 0;
 }
 
 [[nodiscard]] auto tp_is_able_to_wield_items(Tpp tp) -> bool

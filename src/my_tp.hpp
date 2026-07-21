@@ -216,7 +216,7 @@
       list_macro(is_undead, "is_undead"),                                                   /* newline */                                       \
       list_macro(is_unused1, "is_unused1"),                                                 /* newline */                                       \
       list_macro(is_unused2, "is_unused2"),                                                 /* newline */                                       \
-      list_macro(is_unused3, "is_unused3"),                                                 /* newline */                                       \
+      list_macro(is_light_flicker, "is_light_flicker"),                                     /* newline */                                       \
       list_macro(is_able_to_drop_all_items_on_death, "is_able_to_drop_all_items_on_death"), /* newline */                                       \
       list_macro(is_able_to_be_engulfed, "is_able_to_be_engulfed"),                         /* newline */                                       \
       list_macro(is_able_to_eat_items, "is_able_to_eat_items"),                             /* newline */                                       \
@@ -725,6 +725,7 @@ class Tp;
 [[nodiscard]] auto tp_is_level_open_icon(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_level_select_bg(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_levitating(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_light_flicker(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_light_source(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_loggable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_lucky(Tpp tp) -> bool;
@@ -798,7 +799,6 @@ class Tp;
 [[nodiscard]] auto tp_is_undead(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused1(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused2(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused3(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_usable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_vault(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_vision_180_degrees(Tpp tp) -> bool;

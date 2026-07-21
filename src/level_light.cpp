@@ -180,29 +180,15 @@ static void level_light_calculate_all_things(Gamep g, Levelsp v, Levelp l)
     ctx.light_walls              = true;
     ctx.light_strength_in_pixels = thing_is_light_source(t) * TILE_WIDTH;
 
-    {
-      int step       = 1;
-      int color_step = 4;
-      //
-      // How deep the flicker is
-      //
-      for (;;) {
-        if (OS_RANDOM_RANGE(0, 100) < 80) {
-          ctx.light_strength_in_pixels -= step;
+    //
+    // Flicker the light strength?
+    //
+    if (thing_is_light_flicker(t)) [[unlikely]] {
+      auto depth      = OS_RANDOM_RANGE(0, 10);
+      int  pixel_step = 1 * depth;
 
-          if (ctx.light_color.g > color_step) {
-            ctx.light_color.g -= color_step;
-            ctx.light_color.b -= color_step;
-          }
-
-          if (ctx.light_strength_in_pixels < step) {
-            ctx.light_strength_in_pixels = step;
-            break;
-          }
-
-          continue;
-        }
-        break;
+      if (ctx.light_strength_in_pixels > pixel_step) {
+        ctx.light_strength_in_pixels -= pixel_step;
       }
     }
 

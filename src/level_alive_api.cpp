@@ -1004,10 +1004,10 @@
   return level_alive(g, v, l, wieldable, p);
 }
 
-[[nodiscard]] auto level_alive_is_unused3(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_alive_is_light_flicker(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_alive(g, v, l, is_unused3, p);
+  return level_alive(g, v, l, is_light_flicker, p);
 }
 
 [[nodiscard]] auto level_alive_is_able_to_wield_items(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp

@@ -367,32 +367,27 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
   ctx.me                       = player;
   ctx.pov                      = thing_at(g, v, l, player);
   ctx.light_color              = tp_light_color(tp);
-  ctx.light_strength_in_pixels = thing_is_light_source(player) * TILE_WIDTH;
   ctx.thing_at_in_pixels       = thing_pix_at(player);
+  ctx.light_strength_in_pixels = thing_is_light_source(player) * TILE_WIDTH;
 
-  {
-    int step       = (int) TILE_WIDTH / 2;
-    int color_step = 4;
-    //
-    // How deep the flicker is
-    //
-    for (;;) {
-      if (OS_RANDOM_RANGE(0, 100) < 80) {
-        ctx.light_strength_in_pixels -= step;
+  //
+  // Flicker the light strength and color?
+  //
+  if (thing_is_light_flicker(player)) [[unlikely]] {
+    auto depth      = OS_RANDOM_RANGE(0, 10);
+    int  pixel_step = 1 * depth;
+    int  color_step = 2 * depth;
 
-        if (ctx.light_color.g > color_step) {
-          ctx.light_color.g -= color_step;
-          ctx.light_color.b -= color_step;
-        }
+    if (ctx.light_color.g > color_step) {
+      ctx.light_color.g -= color_step;
+    }
 
-        if (ctx.light_strength_in_pixels < step) {
-          ctx.light_strength_in_pixels = step;
-          break;
-        }
+    if (ctx.light_color.b > color_step) {
+      ctx.light_color.b -= color_step;
+    }
 
-        continue;
-      }
-      break;
+    if (ctx.light_strength_in_pixels > pixel_step) {
+      ctx.light_strength_in_pixels -= pixel_step;
     }
   }
 

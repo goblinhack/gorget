@@ -134,6 +134,7 @@ static void tp_brazier_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEv
   tp_flag_set(tp, is_dead_on_shoving);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_extinguished_on_death);
+  tp_flag_set(tp, is_light_flicker);
   tp_flag_set(tp, is_light_source, 4);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_metal);

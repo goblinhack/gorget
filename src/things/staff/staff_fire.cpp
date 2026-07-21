@@ -77,6 +77,7 @@ static auto tp_staff_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
   tp_flag_set(tp, is_droppable);
   tp_flag_set(tp, is_inventory_item);
   tp_flag_set(tp, is_item);
+  tp_flag_set(tp, is_light_flicker);
   tp_flag_set(tp, is_light_source, 2);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_physics_explosion);

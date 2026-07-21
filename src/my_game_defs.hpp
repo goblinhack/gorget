@@ -61,6 +61,11 @@ enum {
   THING_FALL_ANIM_MS = 250,
 
   //
+  // How fast lights flicker. Does increase processing cost as the number gets smaller.
+  //
+  THING_LIGHT_FLICKER_ANIM_MS = 10,
+
+  //
   // If things are too hot, this is the animation pulse time
   //
   THING_IS_HOT_PULSE_ANIM_MS = 1500,

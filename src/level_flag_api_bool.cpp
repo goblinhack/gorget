@@ -1004,10 +1004,10 @@
   return level_flag(g, v, l, wieldable, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_unused3_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_light_flicker_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused3, p, me) != nullptr;
+  return level_flag(g, v, l, is_light_flicker, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_able_to_wield_items_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool

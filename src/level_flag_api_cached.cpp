@@ -1004,10 +1004,10 @@
   return level_flag_cached(g, v, l, wieldable, p);
 }
 
-[[nodiscard]] auto level_is_unused3_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_light_flicker_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused3, p);
+  return level_flag_cached(g, v, l, is_light_flicker, p);
 }
 
 [[nodiscard]] auto level_is_able_to_wield_items_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
