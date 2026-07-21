@@ -163,9 +163,14 @@ static void level_light_calculate_all_things(Gamep g, Levelsp v, Levelp l)
     auto *light = thing_light_struct(g, t);
 
     //
-    // + here needed for light edges for smoothly moving things
+    // If a monster is moving between two tiles, as the lighting is tile based,
+    // we will end up calculating the light at the new tile. However, the
+    // monster is moving pixel at a time from the old tile. This means some of
+    // the tiles at the limits of the lighting will end up out of range and black.
+    // This results in trailing dark squares. Fix this by adding some extra to
+    // the radius to account for the move interpolation.
     //
-    if (thing_is_projectile(t)) [[unlikely]] {
+    if (thing_is_moving(t)) [[unlikely]] {
       max_radius += 2;
     }
 
@@ -176,8 +181,12 @@ static void level_light_calculate_all_things(Gamep g, Levelsp v, Levelp l)
     ctx.l                        = l;
     ctx.me                       = t;
     ctx.pov                      = thing_at(g, v, l, t);
-    ctx.light_color              = tp_light_color(thing_tp(t));
+    ctx.thing_at_in_pixels       = thing_pix_at(t);
+    ctx.max_radius               = max_radius;
+    ctx.can_see_tile             = &light->is_lit;
+    ctx.has_seen_tile            = nullptr;
     ctx.light_walls              = true;
+    ctx.light_color              = tp_light_color(thing_tp(t));
     ctx.light_strength_in_pixels = thing_is_light_source(t) * TILE_WIDTH;
 
     //
@@ -192,11 +201,7 @@ static void level_light_calculate_all_things(Gamep g, Levelsp v, Levelp l)
       }
     }
 
-    ctx.thing_at_in_pixels = thing_pix_at(t);
-    ctx.can_see_callback   = level_light_per_pixel;
-    ctx.max_radius         = max_radius;
-    ctx.can_see_tile       = &light->is_lit;
-    ctx.has_seen_tile      = nullptr;
+    ctx.can_see_callback = level_light_per_pixel;
 
     level_fov(ctx);
   }

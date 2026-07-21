@@ -232,11 +232,7 @@ void thing_vision_calculate(Gamep g, Levelsp v, Levelp l, Thingp me)
   ctx.max_radius         = max_radius;
   ctx.can_see_tile       = &ext->can_see;
   ctx.has_seen_tile      = &ext->has_seen;
-
-  //
-  // If this is set, we will be able to see through foliage at the edge of vision
-  //
-  ctx.light_walls = false;
+  ctx.light_walls        = false; // If this is set, we will be able to see through foliage at the edge of vision
 
   level_fov(ctx);
 

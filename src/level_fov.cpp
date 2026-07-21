@@ -71,14 +71,6 @@ static void level_fov_do(const short       distance_from_origin, // Polar distan
   const short yy             = matrix_table[ octant ][ 3 ];
   const short radius_squared = ctx.max_radius * ctx.max_radius;
 
-  //
-  // If the player is used here then we need to avoid incrementing the age map
-  // Player age map is set to 1
-  //
-  if (thing_is_player(ctx.me)) {
-    CROAK("unexpected");
-  }
-
   if (view_slope_high < view_slope_low) {
     return; // View is invalid.
   }
@@ -197,12 +189,22 @@ void level_fov(const FovContext &ctx)
 {
   TRACE();
 
+  //
+  // If the player is used here then we need to avoid incrementing the age map
+  // Player age map is set to 1
+  //
+  if (thing_is_player(ctx.me)) {
+    CROAK("unexpected");
+  }
+
   if (ctx.can_see_tile != nullptr) {
     *ctx.can_see_tile = {};
   }
 
-  // recursive shadow casting
-  if (ctx.me != nullptr) {
+  //
+  // Limit the quadrants for vision calculations, not lighting
+  //
+  if ((ctx.light_strength_in_pixels == 0) && (ctx.me != nullptr)) {
     /* */
     /* \ 4|7 / */
     /* 5\ | /6 */
@@ -326,6 +328,13 @@ void level_fov(const FovContext &ctx)
       for (auto octant = 0; octant < 8; ++octant) {
         level_fov_do(octant, ctx);
       }
+    }
+  } else {
+    //
+    // Lighting only
+    //
+    for (auto octant = 0; octant < 8; ++octant) {
+      level_fov_do(octant, ctx);
     }
   }
 
