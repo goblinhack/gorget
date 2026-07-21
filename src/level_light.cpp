@@ -8,6 +8,7 @@
 #include "my_gl.hpp"
 #include "my_level.hpp"
 #include "my_math.hpp"
+#include "my_random.hpp"
 #include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
 #include "my_tile.hpp"
@@ -178,11 +179,20 @@ static void level_light_calculate_all_things(Gamep g, Levelsp v, Levelp l)
     ctx.light_color              = tp_light_color(thing_tp(t));
     ctx.light_walls              = true;
     ctx.light_strength_in_pixels = thing_is_light_source(t) * TILE_WIDTH;
-    ctx.thing_at_in_pixels       = thing_pix_at(t);
-    ctx.can_see_callback         = level_light_per_pixel;
-    ctx.max_radius               = max_radius;
-    ctx.can_see_tile             = &light->is_lit;
-    ctx.has_seen_tile            = nullptr;
+
+    if (0) {
+      if (OS_RANDOM_RANGE(0, 100) < 50) {
+        ctx.light_color.g = 0;
+        ctx.light_color.b = 0;
+      }
+      ctx.light_strength_in_pixels += OS_RANDOM_RANGE(0, 32);
+    }
+
+    ctx.thing_at_in_pixels = thing_pix_at(t);
+    ctx.can_see_callback   = level_light_per_pixel;
+    ctx.max_radius         = max_radius;
+    ctx.can_see_tile       = &light->is_lit;
+    ctx.has_seen_tile      = nullptr;
 
     level_fov(ctx);
   }
