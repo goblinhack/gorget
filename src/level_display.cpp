@@ -14,6 +14,7 @@
 #include "my_level.hpp"
 #include "my_level_inlines.hpp"
 #include "my_main.hpp"
+#include "my_random.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_spoint.hpp"
 #include "my_thing.hpp"
@@ -379,7 +380,11 @@ void level_display(Gamep g, Levelsp v, Levelp l)
   // Save the old pixel offset for restoring it after zoom toggling
   //
   v->pixel_map_at_for_zoom[ game_map_zoom_get(g) ] = v->pixel_map_at;
-  if (1) {
+
+  //
+  // Light flicker
+  //
+  if (OS_RANDOM_RANGE(0, 100) < 10) {
     level_light_calculate_all(g, v, l);
   }
 }

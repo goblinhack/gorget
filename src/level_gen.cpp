@@ -2113,6 +2113,7 @@ void level_fixed_add(Gamep g, int chance, LevelType level_type, const std::strin
         case CHARMAP_CORRIDOR :      break;
         case CHARMAP_DEEP_WATER :    break;
         case CHARMAP_DOOR_SECRET :   break;
+        case CHARMAP_DIRT :          break;
         case CHARMAP_DOOR_UNLOCKED : break;
         case CHARMAP_DOOR_LOCKED :   break;
         case CHARMAP_EMPTY :         break;

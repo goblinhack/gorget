@@ -359,8 +359,7 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
     }
   }
 
-  FovContext        ctx;
-  static FovContext prev_ctx;
+  FovContext ctx;
 
   ctx.g                        = g;
   ctx.v                        = v;
@@ -371,44 +370,31 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
   ctx.light_strength_in_pixels = thing_is_light_source(player) * TILE_WIDTH;
   ctx.thing_at_in_pixels       = thing_pix_at(player);
 
-  if (prev_ctx.g) {
+  {
+    int step       = (int) TILE_WIDTH / 2;
+    int color_step = 4;
     //
-    // How often the flicker changes
+    // How deep the flicker is
     //
-    if (OS_RANDOM_RANGE(0, 100) < 10) {
-      int step       = (int) TILE_WIDTH / 2;
-      int color_step = 4;
-      //
-      // How deep the flicker is
-      //
-      for (;;) {
-        if (OS_RANDOM_RANGE(0, 100) < 80) {
-          ctx.light_strength_in_pixels -= step;
+    for (;;) {
+      if (OS_RANDOM_RANGE(0, 100) < 80) {
+        ctx.light_strength_in_pixels -= step;
 
-          if (ctx.light_color.g > color_step) {
-            ctx.light_color.g -= color_step;
-            ctx.light_color.b -= color_step;
-          }
-
-          if (ctx.light_strength_in_pixels < step) {
-            ctx.light_strength_in_pixels = step;
-            break;
-          }
-
-          continue;
+        if (ctx.light_color.g > color_step) {
+          ctx.light_color.g -= color_step;
+          ctx.light_color.b -= color_step;
         }
-        break;
+
+        if (ctx.light_strength_in_pixels < step) {
+          ctx.light_strength_in_pixels = step;
+          break;
+        }
+
+        continue;
       }
-    } else {
-      //
-      // Keep the same flicker
-      //
-      ctx.light_strength_in_pixels = prev_ctx.light_strength_in_pixels;
-      ctx.light_color              = prev_ctx.light_color;
+      break;
     }
   }
-
-  prev_ctx = ctx;
 
   //
   // Center the light on the player
