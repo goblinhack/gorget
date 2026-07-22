@@ -105,11 +105,18 @@ static bool tp_chest_on_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEve
     return true;
   }
 
-  if (e.source && thing_is_player(e.source)) {
-    if (thing_stat_success(g, v, l, me, THING_STAT_LUCK, THING_STAT_MODIFIER_CHEST_EXPLODE)) {
-      topcon("The treasure chest rattles violently!");
-      return false;
+  if (thing_is_dead(me)) {
+    if (e.source && thing_is_player(e.source)) {
+      topcon("The broken treasure chest rattles!");
     }
+    return false;
+  }
+
+  if (thing_stat_success(g, v, l, me, THING_STAT_LUCK, THING_STAT_MODIFIER_CHEST_EXPLODE)) {
+    if (e.source && thing_is_player(e.source)) {
+      topcon("The treasure chest rattles violently!");
+    }
+    return false;
   }
 
   const std::initializer_list< bpoint > points = {
