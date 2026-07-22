@@ -164,7 +164,7 @@ static void tp_cleaner_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEv
 
   auto delay = 200;
 
-  for (auto frame = 0; frame < 3; frame++) {
+  for (auto frame = 0; frame < 4; frame++) {
     auto *tile = tile_find_mand(name + std::string(".idle.") + std::to_string(frame));
     tile_size_set(tile, OUTLINE_TILE_WIDTH, OUTLINE_TILE_HEIGHT);
     tile_delay_ms_set(tile, delay);
