@@ -301,7 +301,19 @@ static void gl_init_fbo_(FboEnum fbo, GLuint *render_buf_id, GLuint *fbo_id, GLu
     case FBO_SPRITE1 :
     default :
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+      GL_ERROR_CHECK();
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+      GL_ERROR_CHECK();
+      break;
+    case FBO_MAP_LAVA :
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+      GL_ERROR_CHECK();
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+      GL_ERROR_CHECK();
+      glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+      GL_ERROR_CHECK();
+      glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+      GL_ERROR_CHECK();
       break;
   }
 
@@ -555,6 +567,7 @@ void fbo_get_size(Gamep g, FboEnum fbo, int &w, int &h)
     case FBO_MAP_BG :
     case FBO_MAP_FG :
     case FBO_MAP_FG_OVERLAY :
+    case FBO_MAP_LAVA :
       w = game_map_fbo_width_get(g);
       h = game_map_fbo_height_get(g);
       break;

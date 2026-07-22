@@ -2,14 +2,18 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_callstack.hpp"
 #include "my_game_defs.hpp"
 #include "my_gfx.hpp"
+#include "my_main.hpp"
+#include "my_tex.hpp"
 #include "my_tile.hpp"
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
 static void gfx_init_font_ui()
 {
+  TRACE();
   const char *tiles[] = {
       //////////////////////////////////////////////////////////////////
       // sp     !       "       #       $       %       &       '
@@ -161,6 +165,7 @@ static void gfx_init_font_ui()
 
 static void gfx_ui_init_0()
 {
+  TRACE();
   const char *tiles[] = {
       "ui.0,0,0",   "ui.0,1,0",   "ui.0,2,0",   "ui.0,3,0",   "ui.0,4,0",   "ui.0,5,0",   "ui.0,6,0",   "ui.0,7,0",   "ui.0,8,0",   "ui.0,9,0",
       "ui.0,10,0",  "ui.0,11,0",  "ui.0,12,0",  "ui.0,13,0",  "ui.0,14,0",  "ui.0,15,0",  "ui.0,0,1",   "ui.0,1,1",   "ui.0,2,1",   "ui.0,3,1",
@@ -194,6 +199,7 @@ static void gfx_ui_init_0()
 
 static void gfx_ui_init_1()
 {
+  TRACE();
   const char *tiles[] = {
       "ui.1,0,0",   "ui.1,1,0",   "ui.1,2,0",   "ui.1,3,0",   "ui.1,4,0",   "ui.1,5,0",   "ui.1,6,0",   "ui.1,7,0",   "ui.1,8,0",   "ui.1,9,0",
       "ui.1,10,0",  "ui.1,11,0",  "ui.1,12,0",  "ui.1,13,0",  "ui.1,14,0",  "ui.1,15,0",  "ui.1,0,1",   "ui.1,1,1",   "ui.1,2,1",   "ui.1,3,1",
@@ -227,6 +233,7 @@ static void gfx_ui_init_1()
 
 static void gfx_ui_init_2()
 {
+  TRACE();
   const char *tiles[] = {
       "ui.2,0,0",   "ui.2,1,0",   "ui.2,2,0",   "ui.2,3,0",   "ui.2,4,0",   "ui.2,5,0",   "ui.2,6,0",   "ui.2,7,0",   "ui.2,8,0",   "ui.2,9,0",
       "ui.2,10,0",  "ui.2,11,0",  "ui.2,12,0",  "ui.2,13,0",  "ui.2,14,0",  "ui.2,15,0",  "ui.2,0,1",   "ui.2,1,1",   "ui.2,2,1",   "ui.2,3,1",
@@ -260,6 +267,7 @@ static void gfx_ui_init_2()
 
 static void gfx_ui_init_3()
 {
+  TRACE();
   const char *tiles[] = {
       "ui.3,0,0",   "ui.3,1,0",   "ui.3,2,0",   "ui.3,3,0",   "ui.3,4,0",   "ui.3,5,0",   "ui.3,6,0",   "ui.3,7,0",   "ui.3,8,0",   "ui.3,9,0",
       "ui.3,10,0",  "ui.3,11,0",  "ui.3,12,0",  "ui.3,13,0",  "ui.3,14,0",  "ui.3,15,0",  "ui.3,0,1",   "ui.3,1,1",   "ui.3,2,1",   "ui.3,3,1",
@@ -293,6 +301,7 @@ static void gfx_ui_init_3()
 
 static void gfx_ui_init_4()
 {
+  TRACE();
   const char *tiles[] = {
       "ui.4,0,0",   "ui.4,1,0",   "ui.4,2,0",   "ui.4,3,0",   "ui.4,4,0",   "ui.4,5,0",   "ui.4,6,0",   "ui.4,7,0",   "ui.4,8,0",   "ui.4,9,0",
       "ui.4,10,0",  "ui.4,11,0",  "ui.4,12,0",  "ui.4,13,0",  "ui.4,14,0",  "ui.4,15,0",  "ui.4,0,1",   "ui.4,1,1",   "ui.4,2,1",   "ui.4,3,1",
@@ -326,6 +335,7 @@ static void gfx_ui_init_4()
 
 static void gfx_ui_init_5()
 {
+  TRACE();
   const char *tiles[] = {
       "ui.5,0,0",   "ui.5,1,0",   "ui.5,2,0",   "ui.5,3,0",   "ui.5,4,0",   "ui.5,5,0",   "ui.5,6,0",   "ui.5,7,0",   "ui.5,8,0",   "ui.5,9,0",
       "ui.5,10,0",  "ui.5,11,0",  "ui.5,12,0",  "ui.5,13,0",  "ui.5,14,0",  "ui.5,15,0",  "ui.5,0,1",   "ui.5,1,1",   "ui.5,2,1",   "ui.5,3,1",
@@ -359,6 +369,7 @@ static void gfx_ui_init_5()
 
 static void gfx_ui_init_6()
 {
+  TRACE();
   const char *tiles[] = {
       "ui.6,0,0",   "ui.6,1,0",   "ui.6,2,0",   "ui.6,3,0",   "ui.6,4,0",   "ui.6,5,0",   "ui.6,6,0",   "ui.6,7,0",   "ui.6,8,0",   "ui.6,9,0",
       "ui.6,10,0",  "ui.6,11,0",  "ui.6,12,0",  "ui.6,13,0",  "ui.6,14,0",  "ui.6,15,0",  "ui.6,0,1",   "ui.6,1,1",   "ui.6,2,1",   "ui.6,3,1",
@@ -392,6 +403,7 @@ static void gfx_ui_init_6()
 
 static void gfx_ui_init_7()
 {
+  TRACE();
   const char *tiles[] = {
       "ui.7,0,0",   "ui.7,1,0",   "ui.7,2,0",   "ui.7,3,0",   "ui.7,4,0",   "ui.7,5,0",   "ui.7,6,0",   "ui.7,7,0",   "ui.7,8,0",   "ui.7,9,0",
       "ui.7,10,0",  "ui.7,11,0",  "ui.7,12,0",  "ui.7,13,0",  "ui.7,14,0",  "ui.7,15,0",  "ui.7,0,1",   "ui.7,1,1",   "ui.7,2,1",   "ui.7,3,1",
@@ -425,6 +437,7 @@ static void gfx_ui_init_7()
 
 static void gfx_ui_init_8()
 {
+  TRACE();
   const char *tiles[] = {
       "ui.8,0,0",   "ui.8,1,0",   "ui.8,2,0",   "ui.8,3,0",   "ui.8,4,0",   "ui.8,5,0",   "ui.8,6,0",   "ui.8,7,0",   "ui.8,8,0",   "ui.8,9,0",
       "ui.8,10,0",  "ui.8,11,0",  "ui.8,12,0",  "ui.8,13,0",  "ui.8,14,0",  "ui.8,15,0",  "ui.8,0,1",   "ui.8,1,1",   "ui.8,2,1",   "ui.8,3,1",
@@ -458,6 +471,7 @@ static void gfx_ui_init_8()
 
 static void gfx_ui_init_9()
 {
+  TRACE();
   const char *tiles[] = {
       "ui.9,0,0",   "ui.9,1,0",   "ui.9,2,0",   "ui.9,3,0",   "ui.9,4,0",   "ui.9,5,0",   "ui.9,6,0",   "ui.9,7,0",   "ui.9,8,0",   "ui.9,9,0",
       "ui.9,10,0",  "ui.9,11,0",  "ui.9,12,0",  "ui.9,13,0",  "ui.9,14,0",  "ui.9,15,0",  "ui.9,0,1",   "ui.9,1,1",   "ui.9,2,1",   "ui.9,3,1",
@@ -491,6 +505,7 @@ static void gfx_ui_init_9()
 
 static void gfx_ui_init_10()
 {
+  TRACE();
   const char *tiles[] = {
       "ui.10,0,0",   "ui.10,1,0",   "ui.10,2,0",   "ui.10,3,0",   "ui.10,4,0",   "ui.10,5,0",   "ui.10,6,0",   "ui.10,7,0",   "ui.10,8,0",
       "ui.10,9,0",   "ui.10,10,0",  "ui.10,11,0",  "ui.10,12,0",  "ui.10,13,0",  "ui.10,14,0",  "ui.10,15,0",  "ui.10,0,1",   "ui.10,1,1",
@@ -527,6 +542,7 @@ static void gfx_ui_init_10()
 
 static void gfx_ui_init_11()
 {
+  TRACE();
   const char *tiles[] = {
       "ui.11,0,0",   "ui.11,1,0",   "ui.11,2,0",   "ui.11,3,0",   "ui.11,4,0",   "ui.11,5,0",   "ui.11,6,0",   "ui.11,7,0",   "ui.11,8,0",
       "ui.11,9,0",   "ui.11,10,0",  "ui.11,11,0",  "ui.11,12,0",  "ui.11,13,0",  "ui.11,14,0",  "ui.11,15,0",  "ui.11,0,1",   "ui.11,1,1",
@@ -563,6 +579,7 @@ static void gfx_ui_init_11()
 
 static void gfx_ui_init_12()
 {
+  TRACE();
   const char *tiles[] = {
       "ui.12,0,0",   "ui.12,1,0",   "ui.12,2,0",   "ui.12,3,0",   "ui.12,4,0",   "ui.12,5,0",   "ui.12,6,0",   "ui.12,7,0",   "ui.12,8,0",
       "ui.12,9,0",   "ui.12,10,0",  "ui.12,11,0",  "ui.12,12,0",  "ui.12,13,0",  "ui.12,14,0",  "ui.12,15,0",  "ui.12,0,1",   "ui.12,1,1",
@@ -599,6 +616,7 @@ static void gfx_ui_init_12()
 
 static void gfx_ui_init_13()
 {
+  TRACE();
   const char *tiles[] = {
       "ui.13,0,0",   "ui.13,1,0",   "ui.13,2,0",   "ui.13,3,0",   "ui.13,4,0",   "ui.13,5,0",   "ui.13,6,0",   "ui.13,7,0",   "ui.13,8,0",
       "ui.13,9,0",   "ui.13,10,0",  "ui.13,11,0",  "ui.13,12,0",  "ui.13,13,0",  "ui.13,14,0",  "ui.13,15,0",  "ui.13,0,1",   "ui.13,1,1",
@@ -635,6 +653,7 @@ static void gfx_ui_init_13()
 
 static void gfx_ui_init_14()
 {
+  TRACE();
   const char *tiles[] = {
       "ui.14,0,0",   "ui.14,1,0",   "ui.14,2,0",   "ui.14,3,0",   "ui.14,4,0",   "ui.14,5,0",   "ui.14,6,0",   "ui.14,7,0",   "ui.14,8,0",
       "ui.14,9,0",   "ui.14,10,0",  "ui.14,11,0",  "ui.14,12,0",  "ui.14,13,0",  "ui.14,14,0",  "ui.14,15,0",  "ui.14,0,1",   "ui.14,1,1",
@@ -671,6 +690,7 @@ static void gfx_ui_init_14()
 
 static void gfx_ui_init_15()
 {
+  TRACE();
   const char *tiles[] = {
       "ui.15,0,0",   "ui.15,1,0",   "ui.15,2,0",   "ui.15,3,0",   "ui.15,4,0",   "ui.15,5,0",   "ui.15,6,0",   "ui.15,7,0",   "ui.15,8,0",
       "ui.15,9,0",   "ui.15,10,0",  "ui.15,11,0",  "ui.15,12,0",  "ui.15,13,0",  "ui.15,14,0",  "ui.15,15,0",  "ui.15,0,1",   "ui.15,1,1",
@@ -707,6 +727,7 @@ static void gfx_ui_init_15()
 
 static void gfx_ui_init_progress_bar()
 {
+  TRACE();
   const char *tiles[] = {
       "progress_bar.1",  "progress_bar.2",  "progress_bar.3",  "progress_bar.4",  "progress_bar.5",  "progress_bar.6",  "progress_bar.7",
       "progress_bar.8",  "progress_bar.9",  "progress_bar.10", "progress_bar.11", "progress_bar.12", "progress_bar.13", "progress_bar.14",
@@ -719,6 +740,7 @@ static void gfx_ui_init_progress_bar()
 
 static void gfx_ui_init_stat_bar()
 {
+  TRACE();
   const char *tiles[] = {
       "stat_bar.32", "stat_bar.31", "stat_bar.30", "stat_bar.29", "stat_bar.28", "stat_bar.27", "stat_bar.26", "stat_bar.25",
       "stat_bar.24", "stat_bar.23", "stat_bar.22", "stat_bar.21", "stat_bar.20", "stat_bar.19", "stat_bar.18", "stat_bar.17",
@@ -730,55 +752,81 @@ static void gfx_ui_init_stat_bar()
 
 static void gfx_ui_init_solid()
 {
+  TRACE();
   const char *tiles[] = {"solid"};
   tile_load_arr("data/gfx/ui/solid.tga", "solid", 8, 8, ARRAY_SIZE(tiles), tiles);
 }
 
 static void gfx_ui_init_worlds()
 {
+  TRACE();
   const char *tiles[] = {"is_level_select_bg"};
   tile_load_arr("data/gfx/ui/worlds.tga", "worlds", static_cast< int >(TILE_WIDTH) * static_cast< int >(MAP_WIDTH),
                 static_cast< int >(TILE_HEIGHT) * static_cast< int >(MAP_HEIGHT), ARRAY_SIZE(tiles), tiles);
 }
 
+static void gfx_ui_init_lava()
+{
+  TRACE();
+  const char *tiles[] = {"lava_bg"};
+  tile_load_arr("data/gfx/tiles_lava.tga", "lava", static_cast< int >(TILE_WIDTH) * static_cast< int >(MAP_WIDTH),
+                static_cast< int >(TILE_HEIGHT) * static_cast< int >(MAP_HEIGHT), ARRAY_SIZE(tiles), tiles);
+
+  if (! g_opt_tests) {
+    auto tex = tex_find("lava");
+    if (tex) {
+      glBindTexture(GL_TEXTURE_2D, tex_get_gl_binding(tex));
+      glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+      glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    }
+  }
+}
+
 static void gfx_ui_init_main_bg()
 {
+  TRACE();
   const char *tiles[] = {"main_bg"};
   tile_load_arr("data/gfx/ui/main_bg.tga", "main_bg", 786, 384, ARRAY_SIZE(tiles), tiles);
 }
 
 static void gfx_ui_init_main_fg()
 {
+  TRACE();
   const char *tiles[] = {"main_fg"};
   tile_load_arr("data/gfx/ui/main_fg.tga", "main_fg", 786, 384, ARRAY_SIZE(tiles), tiles);
 }
 
 static void gfx_ui_init_main_alt_fg()
 {
+  TRACE();
   const char *tiles[] = {"main_alt_fg"};
   tile_load_arr("data/gfx/ui/main_alt_fg.tga", "main_alt_fg", 256, 192, ARRAY_SIZE(tiles), tiles);
 }
 
 static void gfx_ui_init_intro_bg()
 {
+  TRACE();
   const char *tiles[] = {"intro"};
   tile_load_arr("data/gfx/ui/intro.tga", "intro", 512, 384, ARRAY_SIZE(tiles), tiles);
 }
 
 static void gfx_ui_init_game_over_bg()
 {
+  TRACE();
   const char *tiles[] = {"game_over_bg"};
   tile_load_arr("data/gfx/ui/game_over_bg.tga", "game_over_bg", 256, 192, ARRAY_SIZE(tiles), tiles);
 }
 
 static void gfx_ui_init_game_over_fg()
 {
+  TRACE();
   const char *tiles[] = {"game_over_fg"};
   tile_load_arr("data/gfx/ui/game_over_fg.tga", "game_over_fg", 256, 192, ARRAY_SIZE(tiles), tiles);
 }
 
 static void gfx_init_tiles_walls_and_floors()
 {
+  TRACE();
   const char *tiles[] = {
       // ##############################################################################
       "bridge.IS_JOIN_TL2",
@@ -3832,6 +3880,7 @@ static void gfx_init_tiles_walls_and_floors()
 
 static void gfx_init_tiles()
 {
+  TRACE();
   const char *tiles[] = {
       // ##############################################################################
       "",
@@ -4451,6 +4500,7 @@ static void gfx_init_tiles()
 
 static void gfx_init_tiles_beam_of_fire()
 {
+  TRACE();
   const char *tiles[] = {
       "beam_of_fire.0.0",   "beam_of_fire.0.1",   "beam_of_fire.0.2",   "beam_of_fire.0.3",   "beam_of_fire.0.4",
       "beam_of_fire.0.5",   "beam_of_fire.0.6",   "beam_of_fire.0.7",   "beam_of_fire.0.8",   "beam_of_fire.0.9",
@@ -4523,6 +4573,7 @@ static void gfx_init_tiles_beam_of_fire()
 
 static void gfx_init_tiles_beam_of_light()
 {
+  TRACE();
   const char *tiles[] = {
       "beam_of_light.0.0",   "beam_of_light.0.1",   "beam_of_light.0.2",   "beam_of_light.0.3",   "beam_of_light.0.4",
       "beam_of_light.0.5",   "beam_of_light.0.6",   "beam_of_light.0.7",   "beam_of_light.0.8",   "beam_of_light.0.9",
@@ -4595,6 +4646,7 @@ static void gfx_init_tiles_beam_of_light()
 
 void gfx_init()
 {
+  TRACE();
   gfx_init_font_ui();
 
   // ##############################################################################
@@ -4628,6 +4680,7 @@ void gfx_init()
   gfx_ui_init_game_over_bg();
   gfx_ui_init_game_over_fg();
   gfx_ui_init_intro_bg();
+  gfx_ui_init_lava();
   gfx_ui_init_main_alt_fg();
   gfx_ui_init_main_bg();
   gfx_ui_init_main_fg();
@@ -4638,4 +4691,4 @@ void gfx_init()
   // end sort marker1 }
 }
 
-void gfx_fini() {}
+void gfx_fini() { TRACE(); }

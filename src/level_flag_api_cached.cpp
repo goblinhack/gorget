@@ -944,10 +944,10 @@
   return level_flag_cached(g, v, l, is_tick_on_drop, p);
 }
 
-[[nodiscard]] auto level_is_unused2_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_lava_bg_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused2, p);
+  return level_flag_cached(g, v, l, is_lava_bg, p);
 }
 
 [[nodiscard]] auto level_is_tick_on_use_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

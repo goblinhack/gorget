@@ -945,10 +945,10 @@
   return level_count(g, v, l, is_tick_on_drop, p);
 }
 
-[[nodiscard]] auto level_count_is_unused2(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_lava_bg(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused2, p);
+  return level_count(g, v, l, is_lava_bg, p);
 }
 
 [[nodiscard]] auto level_count_is_tick_on_use(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t

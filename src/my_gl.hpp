@@ -224,6 +224,7 @@ extern PFNGLDEBUGMESSAGECALLBACKPROC    glDebugMessageCallback_EXT;
       list_macro(FBO_MAP_FG_MERGED, "FBO_MAP_FG_MERGED"),   /* newline */                                                                       \
       list_macro(FBO_MAP_FG_OVERLAY, "FBO_MAP_FG_OVERLAY"), /* newline */                                                                       \
       list_macro(FBO_MAP_LIGHT, "FBO_MAP_LIGHT"),           /* newline */                                                                       \
+      list_macro(FBO_MAP_LAVA, "FBO_MAP_LAVA"),             /* newline */                                                                       \
       list_macro(FBO_MINIMAP_LEVEL, "FBO_MINIMAP_LEVEL"),   /* newline */                                                                       \
       list_macro(FBO_WID, "FBO_WID"),                       /* newline */                                                                       \
       list_macro(FBO_SPRITE1, "FBO_SPRITE1"),               /* newline */                                                                       \

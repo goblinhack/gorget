@@ -944,10 +944,10 @@
   return level_flag(g, v, l, is_tick_on_drop, p, me);
 }
 
-[[nodiscard]] auto level_is_unused2(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_lava_bg(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused2, p, me);
+  return level_flag(g, v, l, is_lava_bg, p, me);
 }
 
 [[nodiscard]] auto level_is_tick_on_use(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp

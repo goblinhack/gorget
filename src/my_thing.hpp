@@ -903,6 +903,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_item(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_key(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_kobalos(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_lava_bg(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_lava(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_level_closed_icon(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_level_curr(Thingp t) -> bool;
@@ -987,7 +988,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_undead(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unlocked(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused1(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused2(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_usable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_vault(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_vision_180_degrees(Thingp t) -> bool;

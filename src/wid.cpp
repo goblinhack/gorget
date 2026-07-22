@@ -4657,27 +4657,28 @@ static auto wid_key_up_handler(Gamep g, int x, int y) -> Widp
 }
 
 #ifdef ENABLE_DEBUG_GFX_GL_BLEND
-static int vals[] = {
-    GL_ZERO,
-    GL_ONE,
-    GL_CONSTANT_ALPHA,
-    GL_CONSTANT_COLOR,
-    GL_DST_ALPHA,
-    GL_DST_COLOR,
-    GL_ONE_MINUS_CONSTANT_ALPHA,
-    GL_ONE_MINUS_CONSTANT_ALPHA,
-    GL_ONE_MINUS_CONSTANT_COLOR,
-    GL_ONE_MINUS_DST_ALPHA,
-    GL_ONE_MINUS_DST_ALPHA,
-    GL_ONE_MINUS_DST_COLOR,
-    GL_ONE_MINUS_SRC_ALPHA,
-    GL_ONE_MINUS_SRC_COLOR,
-    GL_SRC_ALPHA,
-    GL_SRC_ALPHA_SATURATE,
-    GL_SRC_COLOR,
+int vals[] = /* NOLINT */
+    {
+        GL_ZERO,
+        GL_ONE,
+        GL_CONSTANT_ALPHA,
+        GL_CONSTANT_COLOR,
+        GL_DST_ALPHA,
+        GL_DST_COLOR,
+        GL_ONE_MINUS_CONSTANT_ALPHA,
+        GL_ONE_MINUS_CONSTANT_ALPHA,
+        GL_ONE_MINUS_CONSTANT_COLOR,
+        GL_ONE_MINUS_DST_ALPHA,
+        GL_ONE_MINUS_DST_ALPHA,
+        GL_ONE_MINUS_DST_COLOR,
+        GL_ONE_MINUS_SRC_ALPHA,
+        GL_ONE_MINUS_SRC_COLOR,
+        GL_SRC_ALPHA,
+        GL_SRC_ALPHA_SATURATE,
+        GL_SRC_COLOR,
 };
 
-static std::string vals_str[] = {
+std::string vals_str[] = {
     "GL_ZERO",
     "GL_ONE",
     "GL_CONSTANT_ALPHA",
@@ -4697,8 +4698,8 @@ static std::string vals_str[] = {
     "GL_SRC_COLOR",
 };
 
-static int g_blend_a;
-static int g_blend_b;
+int g_blend_a; // NOLINT
+int g_blend_b; // NOLINT
 #endif
 
 #if 0

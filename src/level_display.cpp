@@ -17,6 +17,7 @@
 #include "my_random.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_spoint.hpp"
+#include "my_tex.hpp"
 #include "my_thing.hpp"
 #include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp"
@@ -169,6 +170,13 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp l, Levelp level_abov
         auto         display_tile = false;
 
         switch (fbo) {
+          case FBO_MAP_LAVA :
+            g_monochrome = false;
+            if (level_has_seen_cached(g, v, l, p)) {
+              display_tile = (z_depth == MAP_Z_DEPTH_LAVA) && level_is_lava_bool(g, v, l, p);
+            }
+            break;
+
           case FBO_MAP_BG :
             display_tile = false;
             g_monochrome = true;
@@ -273,6 +281,47 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp l, Levelp level_abov
       }
     }
   }
+
+  if (fbo == FBO_MAP_LAVA) {
+    auto         z_depth = MAP_Z_DEPTH_LAVA;
+    bpoint const p(0, 0);
+    auto         display_tile = false;
+
+    switch (fbo) {
+      case FBO_MAP_LAVA :
+        g_monochrome = false;
+        display_tile = level_is_lava_bg_bool(g, v, l, p);
+        break;
+
+      default : break;
+    }
+
+    if (display_tile) {
+      if (level_above != nullptr) {
+        if (level_is_chasm(g, v, level_above, p) != nullptr) {
+          //
+          // Only show this tile if the level above is a chasm
+          //
+        } else {
+          //
+          // Viewing through a chasm
+          //
+          display_tile = false;
+        }
+      }
+
+      if (display_tile) {
+        //
+        // Display all things at this location (for this z depth)
+        //
+        for (auto slot = 0; slot < MAP_SLOTS; slot++) {
+          level_display_slot(g, v, l, p, slot, z_depth, fbo);
+        }
+      }
+    }
+
+    g_monochrome = false;
+  }
 }
 
 //
@@ -375,6 +424,8 @@ void level_display(Gamep g, Levelsp v, Levelp l)
   // sdl_fbo_dump(g, FBO_MAP_FG, "FBO_MAP_FG");
   level_display_fbo(g, v, l, level_below, FBO_MAP_FG_OVERLAY);
   // sdl_fbo_dump(g, FBO_MAP_FG_OVERLAY, "FBO_MAP_FG_OVERLAY");
+  level_display_fbo(g, v, l, level_below, FBO_MAP_LAVA);
+  // sdl_fbo_dump(g, FBO_MAP_LAVA, "FBO_MAP_LAVA");
 
   //
   // Save the old pixel offset for restoring it after zoom toggling
@@ -536,6 +587,7 @@ void level_blit(Gamep g)
   blit_fbo_bind(FBO_MAP_FG_MERGED);
   {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    blit_fbo(g, FBO_MAP_LAVA, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
     blit_fbo(g, FBO_MAP_FG_OVERLAY, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
   }
   blit_fbo_unbind();

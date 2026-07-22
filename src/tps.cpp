@@ -88,6 +88,7 @@
   if (!tp_load_wand_fire()) { return false; }
   if (!tp_load_wand_light()) { return false; }
   if (!tp_load_water()) { return false; }
+if (!tp_load_lava_bg()) { return false; }
   /* end shell marker1 */
   // clang-format on
 

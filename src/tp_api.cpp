@@ -943,10 +943,10 @@
   return tp_flag(tp, is_tick_on_drop) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused2(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_lava_bg(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused2) != 0;
+  return tp_flag(tp, is_lava_bg) != 0;
 }
 
 [[nodiscard]] auto tp_is_tick_on_use(Tpp tp) -> bool

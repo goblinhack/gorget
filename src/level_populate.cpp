@@ -881,6 +881,15 @@ static auto level_populate_fixup_biome_underhell(class LevelPopulate &lp, Tpp tp
     }
   }
 
+  //
+  // This thing is used to display a tile that is blended with lava tiles to make a scroll effect.
+  //
+  if (! g_opt_tests) {
+    if (thing_spawn(g, v, l, tp_first(is_lava_bg), bpoint(0, 0)) == nullptr) {
+      return false;
+    }
+  }
+
   return level_populated(g, v, l);
 }
 

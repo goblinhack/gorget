@@ -575,7 +575,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_unused1) != 0;
 }
 
-[[nodiscard]] auto thing_is_unused2(Thingp t) -> bool
+[[nodiscard]] auto thing_is_lava_bg(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -583,7 +583,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused2) != 0;
+  return tp_flag(thing_tp(t), is_lava_bg) != 0;
 }
 
 [[nodiscard]] auto thing_is_light_flicker(Thingp t) -> bool

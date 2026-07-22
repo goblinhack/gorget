@@ -215,7 +215,7 @@
       list_macro(is_treasure, "is_treasure"),                                               /* newline */                                       \
       list_macro(is_undead, "is_undead"),                                                   /* newline */                                       \
       list_macro(is_unused1, "is_unused1"),                                                 /* newline */                                       \
-      list_macro(is_unused2, "is_unused2"),                                                 /* newline */                                       \
+      list_macro(is_lava_bg, "is_lava_bg"),                                                 /* newline */                                       \
       list_macro(is_light_flicker, "is_light_flicker"),                                     /* newline */                                       \
       list_macro(is_able_to_drop_all_items_on_death, "is_able_to_drop_all_items_on_death"), /* newline */                                       \
       list_macro(is_able_to_be_engulfed, "is_able_to_be_engulfed"),                         /* newline */                                       \
@@ -244,6 +244,7 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlagType)
   list_macro(MAP_Z_DEPTH_FLOOR, "floor"),                         /* newline */                                                                 \
       list_macro(MAP_Z_DEPTH_LIQUID, "e.g. water"),               /* newline */                                                                 \
       list_macro(MAP_Z_DEPTH_LIQUID2, "e.g. deep water"),         /* newline */                                                                 \
+      list_macro(MAP_Z_DEPTH_LAVA, "e.g. lava"),                  /* newline */                                                                 \
       list_macro(MAP_Z_DEPTH_BG_OBJ, "e.g. exit, entrance"),      /* newline */                                                                 \
       list_macro(MAP_Z_DEPTH_GRASS, "grass"),                     /* newline */                                                                 \
       list_macro(MAP_Z_DEPTH_OBJ, "monsts"),                      /* newline */                                                                 \
@@ -716,6 +717,7 @@ class Tp;
 [[nodiscard]] auto tp_is_item(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_key(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_kobalos(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_lava_bg(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_lava(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_level_closed_icon(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_level_curr(Tpp tp) -> bool;
@@ -798,7 +800,6 @@ class Tp;
 [[nodiscard]] auto tp_is_treasure(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_undead(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused1(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused2(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_usable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_vault(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_vision_180_degrees(Tpp tp) -> bool;

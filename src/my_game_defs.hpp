@@ -67,6 +67,11 @@ enum {
   THING_LIGHT_FLICKER_ANIM_MS = 10,
 
   //
+  // How fast lava moves
+  //
+  THING_LAVA_SCROLL_ANIM_MS = 100,
+
+  //
   // If things are too hot, this is the animation pulse time
   //
   THING_IS_HOT_PULSE_ANIM_MS = 1500,

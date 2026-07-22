@@ -13,6 +13,7 @@ FORMAT_DIRS=$(DIRS) \
 	    src/things/effect \
 	    src/things/environ \
 	    src/things/internal/cursor \
+	    src/things/internal/things \
 	    src/things/internal/levels \
 	    src/things/minion \
 	    src/things/mob \

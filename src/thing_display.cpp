@@ -15,6 +15,7 @@
 #include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp"
 #include "my_tile.hpp"
+#include "my_time.hpp"
 #include "my_tp.hpp"
 #include "my_types.hpp"
 
@@ -501,7 +502,14 @@ void thing_display(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp
     is_falling = thing_is_falling(t_maybe_null) > 0;
   }
 
-  if (DEBUG || is_level_select) {
+  if (t_maybe_null && thing_is_lava_bg(t_maybe_null)) {
+    //
+    // Lava effect is always shown
+    //
+    blit_flush();
+    blit_init();
+    glBlendFunc(GL_DST_ALPHA, GL_ONE_MINUS_DST_ALPHA);
+  } else if (DEBUG || is_level_select) {
     //
     // No hiding of objects
     //
@@ -571,7 +579,7 @@ void thing_display(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp
     //
     // Apply lighting to current tiles
     //
-    if (fbo == FBO_MAP_FG) {
+    if ((fbo == FBO_MAP_FG) || (fbo == FBO_MAP_LAVA)) {
       auto *pixel = &v->light_map.tile[ p.x ][ p.y ].pixels.pixel[ TILE_WIDTH / 2 ][ TILE_HEIGHT / 2 ];
       fg.r        = std::max(pixel->r, pixel->player_r);
       fg.g        = std::max(pixel->g, pixel->player_g);
@@ -651,5 +659,27 @@ void thing_display(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp
     }
   }
 
-  thing_display_it(g, v, l, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg, light_pixels);
+  if (t_maybe_null && thing_is_lava_bg(t_maybe_null)) {
+    //
+    // A bit of a hack. Make the lava scroll slowly.
+    //
+    static float    tex_y_offset;
+    static uint32_t last_flicker {};
+
+    if (time_have_x_hundredths_passed_since(THING_LAVA_SCROLL_ANIM_MS, last_flicker)) {
+      tex_y_offset += 1.0 / (float) ((int) MAP_HEIGHT * (int) TILE_HEIGHT);
+      last_flicker = time_ms_cached();
+    }
+
+    thing_display_it(g, v, l, tp, t_maybe_null, tl, br, tile, x1, x2, y1 + tex_y_offset, y2 + tex_y_offset, fbo, fg, light_pixels);
+    blit_flush();
+
+    //
+    // Reset so the other tiles are as per normal
+    //
+    blit_init();
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  } else {
+    thing_display_it(g, v, l, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg, light_pixels);
+  }
 }

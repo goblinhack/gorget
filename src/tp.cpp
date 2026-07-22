@@ -167,6 +167,7 @@ static std::initializer_list< std::string > tps = {
     "wand_fire",
     "wand_light",
     "water",
+    "lava_bg",
   /* end shell marker1 */
 };
 /* clang-format on */

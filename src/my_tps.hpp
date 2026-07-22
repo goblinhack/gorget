@@ -54,6 +54,7 @@ auto tp_load_horseshoe() -> bool;
 auto tp_load_key() -> bool;
 auto tp_load_kobalos_mob() -> bool;
 auto tp_load_kobalos() -> bool;
+auto tp_load_lava_bg() -> bool;
 auto tp_load_lava() -> bool;
 auto tp_load_level_closed() -> bool;
 auto tp_load_level_curr() -> bool;
