@@ -79,11 +79,6 @@
   if (thing_missile_fired_by_count_get(g, v, l, me) >= thing_missile_count_max(g, v, l, me)) {
     THING_DBG(g, v, l, me, "trying to fire too many missiles");
     thing_dump_missiles(g, v, l, me);
-
-    if (thing_is_player(me)) {
-      topcon("Trying to fire too many missiles!");
-    }
-
     return nullptr;
   }
 

@@ -59,7 +59,7 @@ using ThingIdPacked = union {
 //
 // Enough for one beam_weapon weapon or many projectiles.
 //
-#define THING_MISSILE_MAX THING_BEAM_WEAPON_TILES_MAX
+#define THING_MISSILE_MAX (THING_BEAM_WEAPON_TILES_MAX * 2)
 
 enum {
   TEXT_INCLUDE_OWNER = 1,
