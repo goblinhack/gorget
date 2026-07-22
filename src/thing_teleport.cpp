@@ -10,11 +10,13 @@
 #include "my_level.hpp"
 #include "my_level_inlines.hpp" // NOLINT
 #include "my_main.hpp"
+#include "my_random.hpp"
 #include "my_thing.hpp"
 #include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp" // NOLINT
 #include "my_tp.hpp"
 #include "my_types.hpp"
+#include <cstdint>
 #include <initializer_list>
 #include <vector>
 
@@ -279,9 +281,9 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
   // Find somewhere random to land
   //
   for (auto tries = 0; tries < 1000; tries++) {
-    uint8_t border = MAP_BORDER;
-    to.x           = PCG_RANDOM_RANGE(border, (uint8_t) MAP_WIDTH - border);
-    to.y           = PCG_RANDOM_RANGE(border, (uint8_t) MAP_HEIGHT - border);
+    uint8_t const border = MAP_BORDER;
+    to.x                 = PCG_RANDOM_RANGE(border, (uint8_t) MAP_WIDTH - border);
+    to.y                 = PCG_RANDOM_RANGE(border, (uint8_t) MAP_HEIGHT - border);
 
     if (is_oob_or_border(to)) [[unlikely]] {
       THING_DBG(g, v, l, me, "teleport, no; oob");
@@ -294,7 +296,7 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
     }
 
     if (tries < 100) {
-      if (! l->info.on_path_entrance_to_exit[ to.x ][ to.y ]) {
+      if (l->info.on_path_entrance_to_exit[ to.x ][ to.y ] == 0u) {
         THING_DBG(g, v, l, me, "teleport, no; not on safe path");
         continue;
       }
@@ -328,7 +330,7 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
           continue;
         }
 
-        if (! l->info.on_path_entrance_to_exit[ to.x ][ to.y ]) {
+        if (l->info.on_path_entrance_to_exit[ to.x ][ to.y ] == 0u) {
           THING_DBG(g, v, l, me, "teleport, no; not on safe path");
           continue;
         }

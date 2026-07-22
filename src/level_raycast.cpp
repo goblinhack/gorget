@@ -27,6 +27,7 @@
 #include <cmath>
 #include <cstdint>
 #include <cstring>
+#include <utility>
 #include <vector>
 
 using Ray = struct Ray {
@@ -374,15 +375,15 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
   // Flicker the light strength and color?
   //
   if (thing_is_light_flicker(player)) [[unlikely]] {
-    auto depth      = OS_RANDOM_RANGE(0, 10);
-    int  pixel_step = 1 * depth;
-    int  color_step = 2 * depth;
+    auto      depth      = OS_RANDOM_RANGE(0, 10);
+    int const pixel_step = 1 * depth;
+    int const color_step = 2 * depth;
 
-    if (ctx.light_color.g > color_step) {
+    if (std::cmp_greater(ctx.light_color.g, color_step)) {
       ctx.light_color.g -= color_step;
     }
 
-    if (ctx.light_color.b > color_step) {
+    if (std::cmp_greater(ctx.light_color.b, color_step)) {
       ctx.light_color.b -= color_step;
     }
 

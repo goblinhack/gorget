@@ -6,7 +6,6 @@
 #include "my_callstack.hpp"
 #include "my_spoint.hpp"
 #include "my_types.hpp"
-#include "my_ui.hpp"
 #include "my_wid.hpp"
 #include "my_wid_popup.hpp"
 #include "my_wids.hpp"
@@ -68,7 +67,7 @@ void wid_notice(const std::string &s)
 
   wid_notice_window->log(g, s);
 
-  int y_at = 3;
+  int const y_at = 3;
   {
     TRACE();
     auto *p = wid_notice_window->wid_text_area->wid_text_area;

@@ -138,6 +138,7 @@ static std::initializer_list< std::string > tps = {
     "key",
     "kobalos_mob",
     "kobalos",
+    "lava_bg",
     "lava",
     "level_closed",
     "level_curr",
@@ -167,7 +168,6 @@ static std::initializer_list< std::string > tps = {
     "wand_fire",
     "wand_light",
     "water",
-    "lava_bg",
   /* end shell marker1 */
 };
 /* clang-format on */

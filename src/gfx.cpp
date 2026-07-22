@@ -5,7 +5,7 @@
 #include "my_callstack.hpp"
 #include "my_game_defs.hpp"
 #include "my_gfx.hpp"
-#include "my_main.hpp"
+#include "my_globals.hpp"
 #include "my_tex.hpp"
 #include "my_tile.hpp"
 #include "my_types.hpp"
@@ -773,8 +773,8 @@ static void gfx_ui_init_lava()
                 static_cast< int >(TILE_HEIGHT) * static_cast< int >(MAP_HEIGHT), ARRAY_SIZE(tiles), tiles);
 
   if (! g_opt_tests) {
-    auto tex = tex_find("lava");
-    if (tex) {
+    auto *tex = tex_find("lava");
+    if (tex != nullptr) {
       glBindTexture(GL_TEXTURE_2D, tex_get_gl_binding(tex));
       glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
       glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);

@@ -193,8 +193,8 @@ static void level_light_calculate_all_things(Gamep g, Levelsp v, Levelp l)
     // Flicker the light strength?
     //
     if (thing_is_light_flicker(t)) [[unlikely]] {
-      auto depth      = OS_RANDOM_RANGE(0, 10);
-      int  pixel_step = 1 * depth;
+      auto      depth      = OS_RANDOM_RANGE(0, 10);
+      int const pixel_step = 1 * depth;
 
       if (ctx.light_strength_in_pixels > pixel_step) {
         ctx.light_strength_in_pixels -= pixel_step;

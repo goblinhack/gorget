@@ -502,7 +502,7 @@ void thing_display(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp
     is_falling = thing_is_falling(t_maybe_null) > 0;
   }
 
-  if (t_maybe_null && thing_is_lava_bg(t_maybe_null)) {
+  if ((t_maybe_null != nullptr) && thing_is_lava_bg(t_maybe_null)) {
     //
     // Lava effect is always shown
     //
@@ -659,7 +659,7 @@ void thing_display(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp
     }
   }
 
-  if (t_maybe_null && thing_is_lava_bg(t_maybe_null)) {
+  if ((t_maybe_null != nullptr) && thing_is_lava_bg(t_maybe_null)) {
     //
     // A bit of a hack. Make the lava scroll slowly.
     //
@@ -667,7 +667,7 @@ void thing_display(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp
     static uint32_t last_flicker {};
 
     if (time_have_x_hundredths_passed_since(THING_LAVA_SCROLL_ANIM_MS, last_flicker)) {
-      tex_y_offset += 1.0 / (float) ((int) MAP_HEIGHT * (int) TILE_HEIGHT);
+      tex_y_offset += 1.0 / static_cast< float >(static_cast< int >(MAP_HEIGHT) * static_cast< int >(TILE_HEIGHT));
       last_flicker = time_ms_cached();
     }
 
