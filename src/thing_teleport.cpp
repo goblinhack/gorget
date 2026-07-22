@@ -279,9 +279,9 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
   // Find somewhere random to land
   //
   for (auto tries = 0; tries < 1000; tries++) {
-    auto border = MAP_BORDER;
-    to.x        = PCG_RANDOM_RANGE(border, MAP_WIDTH - border);
-    to.y        = PCG_RANDOM_RANGE(border, MAP_HEIGHT - border);
+    uint8_t border = MAP_BORDER;
+    to.x           = PCG_RANDOM_RANGE(border, (uint8_t) MAP_WIDTH - border);
+    to.y           = PCG_RANDOM_RANGE(border, (uint8_t) MAP_HEIGHT - border);
 
     if (is_oob_or_border(to)) [[unlikely]] {
       THING_DBG(g, v, l, me, "teleport, no; oob");
@@ -313,8 +313,8 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
   // Try again, but look at all tiles
   //
   if (! got_one) {
-    for (int y = MAP_BORDER; y < MAP_HEIGHT - MAP_BORDER; y++) {
-      for (int x = MAP_BORDER; x < MAP_WIDTH - MAP_BORDER; x++) {
+    for (uint8_t y = MAP_BORDER; y < MAP_HEIGHT - MAP_BORDER; y++) {
+      for (uint8_t x = MAP_BORDER; x < MAP_WIDTH - MAP_BORDER; x++) {
         to.x = x;
         to.y = y;
 
@@ -352,8 +352,8 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
   // Ignore the entrance to exit path
   //
   if (! got_one) {
-    for (int y = MAP_BORDER; y < MAP_HEIGHT - MAP_BORDER; y++) {
-      for (int x = MAP_BORDER; x < MAP_WIDTH - MAP_BORDER; x++) {
+    for (uint8_t y = MAP_BORDER; y < MAP_HEIGHT - MAP_BORDER; y++) {
+      for (uint8_t x = MAP_BORDER; x < MAP_WIDTH - MAP_BORDER; x++) {
         to.x = x;
         to.y = y;
 
@@ -386,8 +386,8 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
   // Very last chance
   //
   if (! got_one) {
-    for (int y = MAP_BORDER; y < MAP_HEIGHT - MAP_BORDER; y++) {
-      for (int x = MAP_BORDER; x < MAP_WIDTH - MAP_BORDER; x++) {
+    for (uint8_t y = MAP_BORDER; y < MAP_HEIGHT - MAP_BORDER; y++) {
+      for (uint8_t x = MAP_BORDER; x < MAP_WIDTH - MAP_BORDER; x++) {
         to.x = x;
         to.y = y;
 
