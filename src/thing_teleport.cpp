@@ -273,6 +273,7 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
 
   bpoint to;
   bool   got_one {};
+  auto   at = thing_at(g, v, l, me);
 
   //
   // Find somewhere random to land
@@ -287,8 +288,8 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
       continue;
     }
 
-    if (to == thing_at(g, v, l, me)) {
-      THING_DBG(g, v, l, me, "teleport, no; same location");
+    if (distance(to, at) < MAP_WIDTH / 4) {
+      THING_DBG(g, v, l, me, "teleport, no; too close");
       continue;
     }
 
@@ -322,8 +323,8 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
           continue;
         }
 
-        if (to == thing_at(g, v, l, me)) {
-          THING_DBG(g, v, l, me, "teleport, no; same location");
+        if (distance(to, at) < MAP_WIDTH / 4) {
+          THING_DBG(g, v, l, me, "teleport, no; too close");
           continue;
         }
 
@@ -361,8 +362,8 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
           continue;
         }
 
-        if (to == thing_at(g, v, l, me)) {
-          THING_DBG(g, v, l, me, "teleport, no; same location");
+        if (distance(to, at) < MAP_WIDTH / 4) {
+          THING_DBG(g, v, l, me, "teleport, no; too close");
           continue;
         }
 
@@ -395,7 +396,7 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
           continue;
         }
 
-        if (to == thing_at(g, v, l, me)) {
+        if (to == at) {
           THING_DBG(g, v, l, me, "teleport, no; same location");
           continue;
         }

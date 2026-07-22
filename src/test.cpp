@@ -125,6 +125,7 @@ static std::initializer_list< std::string > tests = {
     "player_open_door_secret",
     "player_open_door_unlocked",
     "player_triggered",
+    "potion_dislocation",
     "potion_healing",
     "potion_stealth",
     "potion_tireless",

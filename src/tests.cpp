@@ -104,6 +104,7 @@
   if (!test_load_player_on_fire_move_into_water()) { return false; }
   if (!test_load_player_on_fire()) { return false; }
   if (!test_load_player_triggered()) { return false; }
+  if (!test_load_potion_dislocation()) { return false; }
   if (!test_load_potion_healing()) { return false; }
   if (!test_load_potion_stealth()) { return false; }
   if (!test_load_potion_tireless()) { return false; }
