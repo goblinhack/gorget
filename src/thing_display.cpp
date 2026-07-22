@@ -667,7 +667,7 @@ void thing_display(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp
     static uint32_t last_flicker {};
 
     if (time_have_x_hundredths_passed_since(THING_LAVA_SCROLL_ANIM_MS, last_flicker)) {
-      tex_y_offset += 1.0 / static_cast< float >(static_cast< int >(MAP_HEIGHT) * static_cast< int >(TILE_HEIGHT));
+      tex_y_offset += 1.0f / static_cast< float >(static_cast< int >(MAP_HEIGHT) * static_cast< int >(TILE_HEIGHT));
       last_flicker = time_ms_cached();
     }
 
