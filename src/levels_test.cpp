@@ -97,20 +97,20 @@ void levels_test(Gamep g)
     Overrides overrides;
 
     overrides[ 'm' ] = [](char /*c*/, bpoint /*p*/) -> Tpp { return tp_find_mand("cleaner"); };
-    overrides[ '$' ] = [](char /*c*/, bpoint /*p*/) -> Tpp { return tp_find_mand("chest"); };
+    overrides[ '$' ] = [](char /*c*/, bpoint /*p*/) -> Tpp { return tp_find_mand("potion_dislocation"); };
 
     level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "test1", __FUNCTION__, __LINE__, overrides, 0,
                     /* line */ (const char *) "XXXXXXXXXXXXXXXXXXXXXXXXXX",
-                    /* line */ (const char *) "X.B......................X",
-                    /* line */ (const char *) "X........................X",
-                    /* line */ (const char *) "X........................X",
-                    /* line */ (const char *) "X........m...............X",
-                    /* line */ (const char *) "X........................X",
-                    /* line */ (const char *) "X........................X",
-                    /* line */ (const char *) "X@.....................m.X",
-                    /* line */ (const char *) "X........................X",
-                    /* line */ (const char *) "X........................X",
-                    /* line */ (const char *) "X........................X",
+                    /* line */ (const char *) "X.B....LL................X",
+                    /* line */ (const char *) "X.....LL.................X",
+                    /* line */ (const char *) "X.....L..................X",
+                    /* line */ (const char *) "X....L...m...............X",
+                    /* line */ (const char *) "X....L...................X",
+                    /* line */ (const char *) "X....L.........L.........X",
+                    /* line */ (const char *) "X@....LL......LL.......m.X",
+                    /* line */ (const char *) "X..$....L...LLL..........X",
+                    /* line */ (const char *) "X........L.LL............X",
+                    /* line */ (const char *) "X.........LL.............X",
                     /* line */ (const char *) "X........................X",
                     /* line */ (const char *) "X........m...............X",
                     /* line */ (const char *) "X........................X",

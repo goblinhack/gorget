@@ -11,6 +11,7 @@
 enum {
   MAP_HEIGHT = 48,
   MAP_WIDTH  = 48,
+  MAP_BORDER = 1,
   MAP_SLOTS  = 14,
 
   //

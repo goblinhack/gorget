@@ -382,10 +382,11 @@ static void tp_player_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 
   static std::initializer_list< std::string > items = {
-      "staff_fire",     //
-      "wand_fire",      //
-      "potion_healing", //
-      "potion_incin",   //
+      "staff_fire",         //
+      "wand_fire",          //
+      "potion_healing",     //
+      "potion_dislocation", //
+      "potion_incin",       //
 #if 0
       "staff_fire",     //
       "staff_light",    //

@@ -67,6 +67,7 @@
   if (!tp_load_mantisman()) { return false; }
   if (!tp_load_pillar()) { return false; }
   if (!tp_load_player()) { return false; }
+  if (!tp_load_potion_dislocation()) { return false; }
   if (!tp_load_potion_healing()) { return false; }
   if (!tp_load_potion_incin()) { return false; }
   if (!tp_load_potion_stealth()) { return false; }

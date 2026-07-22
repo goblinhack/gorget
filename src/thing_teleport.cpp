@@ -131,9 +131,6 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
         fpoint(1, 0), fpoint(-1, 0), fpoint(0, 1), fpoint(0, -1), fpoint(-1, -1), fpoint(-1, 1), fpoint(1, -1), fpoint(1, 1),
     };
 
-    //
-    // Spawn adjacent fire
-    //
     for (auto d : deltas) {
       delta = d;
       tof   = outf + delta;
@@ -166,6 +163,35 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 
   out = to;
+  return true;
+}
+
+//
+// Handles player and monster teleports
+//
+[[nodiscard]] static auto thing_teleport_to(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint to) -> bool
+{
+  THING_DBG(g, v, l, me, "pre teleport, warp to (%d,%d)", to.x, to.y);
+  TRACE_INDENT();
+
+  if (! thing_warp_to(g, v, l, me, to)) {
+    THING_DBG(g, v, l, me, "pre teleport, warp to (%d,%d) failed", to.x, to.y);
+    return false;
+  }
+
+  thing_is_teleporting_set(g, v, l, me);
+
+  v->scroll_speed = MAP_SCROLL_TELEPORT_SPEED;
+
+  thing_is_teleporting_set(g, v, l, me, false);
+
+  THING_DBG(g, v, l, me, "post teleport");
+  TRACE_INDENT();
+
+  thing_sound_play(g, v, l, me, "teleport");
+
+  me->tick_teleport = v->tick;
+
   return true;
 }
 
@@ -217,28 +243,178 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
     return false;
   }
 
-  THING_DBG(g, v, l, me, "pre teleport, warp to (%d,%d)", to.x, to.y);
+  return thing_teleport_to(g, v, l, me, to);
+}
+
+//
+// Handles player and monster random teleports
+//
+[[nodiscard]] auto thing_teleport_random(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
+{
+  THING_DBG(g, v, l, me, "teleport, try");
   TRACE_INDENT();
 
-  if (! thing_warp_to(g, v, l, me, to)) {
-    THING_DBG(g, v, l, me, "pre teleport, warp to (%d,%d) failed", to.x, to.y);
+  if (me->tick_teleport != 0U) {
+    if (me->tick_teleport == v->tick) {
+      THING_DBG(g, v, l, me, "teleport, no; too frequent");
+      return false;
+    }
+  }
+
+  if (thing_is_teleporting(me)) {
+    THING_DBG(g, v, l, me, "teleport, no; already teleporting");
     return false;
   }
 
-  thing_is_teleporting_set(g, v, l, me);
+  if (thing_is_teleport_blocked(me)) {
+    THING_DBG(g, v, l, me, "teleport, no; blocked");
+    return false;
+  }
 
-  v->scroll_speed = MAP_SCROLL_TELEPORT_SPEED;
+  bpoint to;
+  bool   got_one {};
 
-  thing_is_teleporting_set(g, v, l, me, false);
+  //
+  // Find somewhere random to land
+  //
+  for (auto tries = 0; tries < 1000; tries++) {
+    auto border = MAP_BORDER;
+    to.x        = PCG_RANDOM_RANGE(border, MAP_WIDTH - border);
+    to.y        = PCG_RANDOM_RANGE(border, MAP_HEIGHT - border);
 
-  THING_DBG(g, v, l, me, "post teleport");
-  TRACE_INDENT();
+    if (is_oob_or_border(to)) [[unlikely]] {
+      THING_DBG(g, v, l, me, "teleport, no; oob");
+      continue;
+    }
 
-  thing_sound_play(g, v, l, me, "teleport");
+    if (to == thing_at(g, v, l, me)) {
+      THING_DBG(g, v, l, me, "teleport, no; same location");
+      continue;
+    }
 
-  me->tick_teleport = v->tick;
+    if (tries < 100) {
+      if (! l->info.on_path_entrance_to_exit[ to.x ][ to.y ]) {
+        THING_DBG(g, v, l, me, "teleport, no; not on safe path");
+        continue;
+      }
+    }
 
-  return true;
+    if (! teleport_find_landing_spot(g, v, l, me, to)) {
+      THING_DBG(g, v, l, me, "failed to find landing spot next to chosen teleport");
+      continue;
+    }
+
+    got_one = true;
+    break;
+  }
+
+  //
+  // Try again, but look at all tiles
+  //
+  if (! got_one) {
+    for (int y = MAP_BORDER; y < MAP_HEIGHT - MAP_BORDER; y++) {
+      for (int x = MAP_BORDER; x < MAP_WIDTH - MAP_BORDER; x++) {
+        to.x = x;
+        to.y = y;
+
+        if (is_oob_or_border(to)) [[unlikely]] {
+          THING_DBG(g, v, l, me, "teleport, no; oob");
+          continue;
+        }
+
+        if (to == thing_at(g, v, l, me)) {
+          THING_DBG(g, v, l, me, "teleport, no; same location");
+          continue;
+        }
+
+        if (! l->info.on_path_entrance_to_exit[ to.x ][ to.y ]) {
+          THING_DBG(g, v, l, me, "teleport, no; not on safe path");
+          continue;
+        }
+
+        if (! teleport_find_landing_spot(g, v, l, me, to)) {
+          THING_DBG(g, v, l, me, "failed to find landing spot next to chosen teleport");
+          continue;
+        }
+
+        got_one = true;
+        break;
+      }
+
+      if (got_one) {
+        break;
+      }
+    }
+  }
+
+  //
+  // Ignore the entrance to exit path
+  //
+  if (! got_one) {
+    for (int y = MAP_BORDER; y < MAP_HEIGHT - MAP_BORDER; y++) {
+      for (int x = MAP_BORDER; x < MAP_WIDTH - MAP_BORDER; x++) {
+        to.x = x;
+        to.y = y;
+
+        if (is_oob_or_border(to)) [[unlikely]] {
+          THING_DBG(g, v, l, me, "teleport, no; oob");
+          continue;
+        }
+
+        if (to == thing_at(g, v, l, me)) {
+          THING_DBG(g, v, l, me, "teleport, no; same location");
+          continue;
+        }
+
+        if (! teleport_find_landing_spot(g, v, l, me, to)) {
+          THING_DBG(g, v, l, me, "failed to find landing spot next to chosen teleport");
+          continue;
+        }
+
+        got_one = true;
+        break;
+      }
+
+      if (got_one) {
+        break;
+      }
+    }
+  }
+
+  //
+  // Very last chance
+  //
+  if (! got_one) {
+    for (int y = MAP_BORDER; y < MAP_HEIGHT - MAP_BORDER; y++) {
+      for (int x = MAP_BORDER; x < MAP_WIDTH - MAP_BORDER; x++) {
+        to.x = x;
+        to.y = y;
+
+        if (is_oob_or_border(to)) [[unlikely]] {
+          THING_DBG(g, v, l, me, "teleport, no; oob");
+          continue;
+        }
+
+        if (to == thing_at(g, v, l, me)) {
+          THING_DBG(g, v, l, me, "teleport, no; same location");
+          continue;
+        }
+
+        got_one = true;
+        break;
+      }
+
+      if (got_one) {
+        break;
+      }
+    }
+  }
+
+  if (! got_one) {
+    return false;
+  }
+
+  return thing_teleport_to(g, v, l, me, to);
 }
 
 [[nodiscard]] auto thing_is_teleport(Thingp t) -> bool
