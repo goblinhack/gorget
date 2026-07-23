@@ -53,8 +53,15 @@ static bool tp_ogrik_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thing
   TRACE();
 
   (void) thing_spawn(g, v, l, tp_first(is_effect_attack), it);
-
   thing_sound_play(g, v, l, me, "hiss");
+
+  TpSpecialAttack d;
+
+  if (thing_special_attack_get_random(g, v, l, me, it, d)) {
+    e.special_attack = d;
+    e.event_type     = d.event_type;
+    e.damage         = d.dice.roll();
+  }
 
   return true;
 }
@@ -71,7 +78,6 @@ static bool tp_ogrik_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thing
   thing_on_attacking_set(tp, tp_ogrik_on_attacking);
   thing_on_death_set(tp, tp_ogrik_on_death);
   tp_attack_count_max_per_tick_set(tp, 1);
-  tp_damage_set(tp, THING_EVENT_CRUSH_DAMAGE, "2d8");
   tp_distance_vision_set(tp, 12);
   tp_flag_set(tp, is_able_to_crush_grass);
   tp_flag_set(tp, is_able_to_fall_sound);
@@ -126,6 +132,16 @@ static bool tp_ogrik_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thing
   tp_weight_set(tp, WEIGHT_VVHEAVY);    // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   // end sort marker1 }
+
+  tp_special_attack_add(tp,
+                        TpSpecialAttack {
+                            .type          = "1",                      //
+                            .event_type    = THING_EVENT_CRUSH_DAMAGE, //
+                            .name          = "crush attack",           //
+                            .roll          = "2d8",                    //
+                            .d100          = 100,
+                            .when_adjacent = true,
+                        });
 
   auto delay = 200;
 
