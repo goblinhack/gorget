@@ -2942,12 +2942,13 @@ static void game_map_zoom_update(Gamep g)
   // Need to resize the map buffers and re-center
   //
   config_game_gfx_update(g);
+  gl_init_fbo(g, FBO_MAP_BG_LIQUIDS);
   gl_init_fbo(g, FBO_MAP_FG);
   gl_init_fbo(g, FBO_MAP_FG_OVERLAY);
-  gl_init_fbo(g, FBO_MAP_BG);
-  gl_init_fbo(g, FBO_MAP_LAVA);
-  gl_init_fbo(g, FBO_MAP_BG_MERGED);
-  gl_init_fbo(g, FBO_MAP_FG_MERGED);
+  gl_init_fbo(g, FBO_MAP_BG_PREVIOUSLY_SEEN_TILES);
+  gl_init_fbo(g, FBO_MAP_BG_LIQUIDS_OVERLAY);
+  gl_init_fbo(g, FBO_MAP_BG_PREVIOUSLY_SEEN_TILES_MERGED);
+  gl_init_fbo(g, FBO_MAP_BG_LIQUIDS_MERGED);
   gl_init_fbo(g, FBO_SPRITE1);
 
   //

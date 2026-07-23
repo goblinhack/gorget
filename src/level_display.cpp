@@ -127,8 +127,43 @@ static void level_display_slot(Gamep g, Levelsp v, Levelp l, const bpoint &p, in
     return;
   }
 
-  if (std::cmp_not_equal(static_cast< int >(thing_z_depth_get(g, v, l, t)), static_cast< int >(depth))) {
+  auto thing_depth = thing_z_depth_get(g, v, l, t);
+  if (thing_depth != depth) {
     return;
+  }
+
+  //
+  // Do not show the special overlay tile unless showing the overlay it belongs in
+  //
+  if (thing_is_lava_bg(t)) {
+    if (fbo != FBO_MAP_BG_LIQUIDS_OVERLAY) {
+      return;
+    }
+  }
+
+  switch (fbo) {
+    case FBO_MAP_BG_PREVIOUSLY_SEEN_TILES : break;
+
+    case FBO_MAP_BG_LIQUIDS :
+      if (depth > MAP_Z_DEPTH_LAVA) {
+        return;
+      }
+      break;
+
+    case FBO_MAP_BG_LIQUIDS_OVERLAY :
+      if (depth != MAP_Z_DEPTH_LAVA) {
+        return;
+      }
+      break;
+
+    case FBO_MAP_FG :
+      if (depth <= MAP_Z_DEPTH_LAVA) {
+        return;
+      }
+      break;
+
+    case FBO_MAP_FG_OVERLAY : break;
+    default :                 break;
   }
 
   spoint   tl;
@@ -169,14 +204,7 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp l, Levelp level_abov
         auto         display_tile = false;
 
         switch (fbo) {
-          case FBO_MAP_LAVA :
-            g_monochrome = false;
-            if (level_has_seen_cached(g, v, l, p)) {
-              display_tile = (z_depth == MAP_Z_DEPTH_LAVA) && level_is_lava_bool(g, v, l, p);
-            }
-            break;
-
-          case FBO_MAP_BG :
+          case FBO_MAP_BG_PREVIOUSLY_SEEN_TILES :
             display_tile = false;
             g_monochrome = true;
 
@@ -187,18 +215,31 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp l, Levelp level_abov
               display_tile = true;
             }
             break;
+
+          case FBO_MAP_BG_LIQUIDS :
+            display_tile = false;
+            g_monochrome = false;
+
+            if (thing_vision_can_see_tile(g, v, player_level, player, p)) {
+              //
+              // Can see currently
+              //
+              display_tile = true;
+            }
+            break;
+
+          case FBO_MAP_BG_LIQUIDS_OVERLAY :
+            g_monochrome = false;
+            if (level_has_seen_cached(g, v, l, p)) {
+              display_tile = level_is_lava_bool(g, v, l, p);
+            }
+            break;
+
           case FBO_MAP_FG :
             display_tile = false;
             g_monochrome = false;
 
-            if (g_opt_debug1) {
-              display_tile = true;
-            } else if (is_level_select) {
-              //
-              // No lighting in level selection
-              //
-              display_tile = true;
-            } else if (thing_vision_can_see_tile(g, v, player_level, player, p)) {
+            if (thing_vision_can_see_tile(g, v, player_level, player, p)) {
               //
               // Can see currently
               //
@@ -252,6 +293,15 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp l, Levelp level_abov
           default : break;
         }
 
+        if (g_opt_debug1) {
+          display_tile = true;
+        } else if (is_level_select) {
+          //
+          // No lighting in level selection
+          //
+          display_tile = true;
+        }
+
         if (display_tile) {
           if (level_above != nullptr) {
             if (level_is_chasm(g, v, level_above, p) != nullptr) {
@@ -281,45 +331,48 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp l, Levelp level_abov
     }
   }
 
-  if (fbo == FBO_MAP_LAVA) {
-    auto         z_depth = MAP_Z_DEPTH_LAVA;
-    bpoint const p(0, 0);
-    auto         display_tile = false;
+  IF_NODEBUG
+  {
+    if (fbo == FBO_MAP_BG_LIQUIDS_OVERLAY) {
+      auto         z_depth = MAP_Z_DEPTH_LAVA;
+      bpoint const p(0, 0);
+      auto         display_tile = false;
 
-    switch (fbo) {
-      case FBO_MAP_LAVA :
-        g_monochrome = false;
-        display_tile = level_is_lava_bg_bool(g, v, l, p);
-        break;
+      switch (fbo) {
+        case FBO_MAP_BG_LIQUIDS_OVERLAY :
+          g_monochrome = false;
+          display_tile = level_is_lava_bg_bool(g, v, l, p);
+          break;
 
-      default : break;
-    }
-
-    if (display_tile) {
-      if (level_above != nullptr) {
-        if (level_is_chasm(g, v, level_above, p) != nullptr) {
-          //
-          // Only show this tile if the level above is a chasm
-          //
-        } else {
-          //
-          // Viewing through a chasm
-          //
-          display_tile = false;
-        }
+        default : break;
       }
 
       if (display_tile) {
-        //
-        // Display all things at this location (for this z depth)
-        //
-        for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-          level_display_slot(g, v, l, p, slot, z_depth, fbo);
+        if (level_above != nullptr) {
+          if (level_is_chasm(g, v, level_above, p) != nullptr) {
+            //
+            // Only show this tile if the level above is a chasm
+            //
+          } else {
+            //
+            // Viewing through a chasm
+            //
+            display_tile = false;
+          }
+        }
+
+        if (display_tile) {
+          //
+          // Display all things at this location (for this z depth)
+          //
+          for (auto slot = 0; slot < MAP_SLOTS; slot++) {
+            level_display_slot(g, v, l, p, slot, z_depth, fbo);
+          }
         }
       }
-    }
 
-    g_monochrome = false;
+      g_monochrome = false;
+    }
   }
 }
 
@@ -417,14 +470,20 @@ void level_display(Gamep g, Levelsp v, Levelp l)
     level_anim(g, v, l);
   }
 
-  level_display_fbo(g, v, l, level_below, FBO_MAP_BG);
-  // sdl_fbo_dump(g, FBO_MAP_BG, "FBO_MAP_BG");
+  level_display_fbo(g, v, l, level_below, FBO_MAP_BG_PREVIOUSLY_SEEN_TILES);
+  // sdl_fbo_dump(g, FBO_MAP_BG_PREVIOUSLY_SEEN_TILES, "FBO_MAP_BG_PREVIOUSLY_SEEN_TILES");
+
+  level_display_fbo(g, v, l, level_below, FBO_MAP_BG_LIQUIDS);
+  // sdl_fbo_dump(g, FBO_MAP_BG_LIQUIDS, "FBO_MAP_BG_LIQUIDS");
+
+  level_display_fbo(g, v, l, level_below, FBO_MAP_BG_LIQUIDS_OVERLAY);
+  // sdl_fbo_dump(g, FBO_MAP_BG_LIQUIDS_OVERLAY, "FBO_MAP_BG_LIQUIDS_OVERLAY");
+
   level_display_fbo(g, v, l, level_below, FBO_MAP_FG);
   // sdl_fbo_dump(g, FBO_MAP_FG, "FBO_MAP_FG");
+
   level_display_fbo(g, v, l, level_below, FBO_MAP_FG_OVERLAY);
   // sdl_fbo_dump(g, FBO_MAP_FG_OVERLAY, "FBO_MAP_FG_OVERLAY");
-  level_display_fbo(g, v, l, level_below, FBO_MAP_LAVA);
-  // sdl_fbo_dump(g, FBO_MAP_LAVA, "FBO_MAP_LAVA");
 
   //
   // Save the old pixel offset for restoring it after zoom toggling
@@ -537,11 +596,14 @@ void level_blit(Gamep g)
     //
     // No lighting for level selection
     //
-    blit_fbo_bind(FBO_MAP_FG_MERGED);
+    blit_fbo_bind(FBO_MAP_BG_LIQUIDS_MERGED);
     {
       gl_clear();
       glBlendFunc(GL_ONE, GL_ZERO);
+      blit_fbo(g, FBO_MAP_BG_LIQUIDS, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
 
+      glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+      blit_fbo(g, FBO_MAP_BG_LIQUIDS_OVERLAY, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
       blit_fbo(g, FBO_MAP_FG, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
     }
     blit_fbo_unbind();
@@ -549,13 +611,11 @@ void level_blit(Gamep g)
     //
     // Blit the dark background tiles that have been seen previously
     //
-    blit_fbo_bind(FBO_MAP_BG_MERGED);
+    blit_fbo_bind(FBO_MAP_BG_PREVIOUSLY_SEEN_TILES_MERGED);
     {
       gl_clear();
       glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-      blit_fbo(g, FBO_MAP_BG, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
-
+      blit_fbo(g, FBO_MAP_BG_PREVIOUSLY_SEEN_TILES, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
       level_blit_light(g, v, l, BLACK);
     }
     blit_fbo_unbind();
@@ -563,7 +623,7 @@ void level_blit(Gamep g)
     //
     // Blit the light as a mask
     //
-    blit_fbo_bind(FBO_MAP_FG_MERGED);
+    blit_fbo_bind(FBO_MAP_BG_LIQUIDS_MERGED);
     {
       gl_clear();
       glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -574,7 +634,10 @@ void level_blit(Gamep g)
       // Mask out non lit areas of the foreground
       //
       glBlendFunc(GL_DST_ALPHA, GL_ZERO);
+      blit_fbo(g, FBO_MAP_BG_LIQUIDS, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
 
+      glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+      blit_fbo(g, FBO_MAP_BG_LIQUIDS_OVERLAY, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
       blit_fbo(g, FBO_MAP_FG, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
     }
     blit_fbo_unbind();
@@ -583,10 +646,9 @@ void level_blit(Gamep g)
   //
   // Blit things that are always shown once seen (and popups)
   //
-  blit_fbo_bind(FBO_MAP_FG_MERGED);
+  blit_fbo_bind(FBO_MAP_BG_LIQUIDS_MERGED);
   {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    blit_fbo(g, FBO_MAP_LAVA, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
     blit_fbo(g, FBO_MAP_FG_OVERLAY, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
   }
   blit_fbo_unbind();
@@ -598,8 +660,8 @@ void level_blit(Gamep g)
   {
     GLCOLOR(WHITE);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    blit_fbo(g, FBO_MAP_BG_MERGED);
-    blit_fbo(g, FBO_MAP_FG_MERGED);
+    blit_fbo(g, FBO_MAP_BG_PREVIOUSLY_SEEN_TILES_MERGED);
+    blit_fbo(g, FBO_MAP_BG_LIQUIDS_MERGED);
   }
   blit_fbo_unbind();
 

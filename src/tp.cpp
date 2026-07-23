@@ -148,6 +148,7 @@ static std::initializer_list< std::string > tps = {
     "level_open",
     "level_select_bg",
     "mantisman",
+    "ogrik",
     "pillar",
     "player",
     "potion_dislocation",

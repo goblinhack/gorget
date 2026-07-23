@@ -218,7 +218,7 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
       case THING_EVENT_SHOVED : //
         topcon(UI_WARN_FMT_STR "You are shoved by %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
-      case THING_EVENT_CRUSH : //
+      case THING_EVENT_CRUSH_DAMAGE : //
         topcon(UI_WARN_FMT_STR "You are crushed by %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
       case THING_EVENT_ENGULF_DAMAGE : //
@@ -318,7 +318,7 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
       case THING_EVENT_SHOVED : //
         topcon(UI_WARN_FMT_STR "You are shoved." UI_RESET_FMT);
         break;
-      case THING_EVENT_CRUSH : //
+      case THING_EVENT_CRUSH_DAMAGE : //
         topcon(UI_WARN_FMT_STR "You are crushed." UI_RESET_FMT);
         break;
       case THING_EVENT_ENGULF_DAMAGE : //
@@ -383,7 +383,7 @@ static void thing_damage_by_player(Gamep g, Levelsp v, Levelp l, Thingp it, Thin
       case THING_EVENT_SHOVED : //
         topcon("You shove %s.", the_thing_name_long.c_str());
         break;
-      case THING_EVENT_CRUSH : //
+      case THING_EVENT_CRUSH_DAMAGE : //
         topcon("%s is crushed by %s.", The_thing_name_long.c_str(), by_player.c_str());
         break;
       case THING_EVENT_THROWN_DAMAGE : //
@@ -612,7 +612,7 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
       case THING_EVENT_FALL :             [[fallthrough]];
       case THING_EVENT_THROWN :           [[fallthrough]];
       case THING_EVENT_SHOVED :           [[fallthrough]];
-      case THING_EVENT_CRUSH :            [[fallthrough]];
+      case THING_EVENT_CRUSH_DAMAGE :            [[fallthrough]];
       case THING_EVENT_THROWN_DAMAGE :    [[fallthrough]];
       case THING_EVENT_ENGULF_DAMAGE :    [[fallthrough]];
       case THING_EVENT_MELEE_DAMAGE :     break;
@@ -685,7 +685,7 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
       case THING_EVENT_FALL :             [[fallthrough]];
       case THING_EVENT_THROWN :           [[fallthrough]];
       case THING_EVENT_SHOVED :           [[fallthrough]];
-      case THING_EVENT_CRUSH :            [[fallthrough]];
+      case THING_EVENT_CRUSH_DAMAGE :            [[fallthrough]];
       case THING_EVENT_THROWN_DAMAGE :    [[fallthrough]];
       case THING_EVENT_ENGULF_DAMAGE :    [[fallthrough]];
       case THING_EVENT_MELEE_DAMAGE :     break;

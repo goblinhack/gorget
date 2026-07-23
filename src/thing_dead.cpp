@@ -44,7 +44,7 @@ static void thing_killed_player(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEv
       case THING_EVENT_SHOVED : //
         topcon(UI_IMPORTANT_FMT_STR "You are shoved by %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
-      case THING_EVENT_CRUSH : //
+      case THING_EVENT_CRUSH_DAMAGE : //
         topcon(UI_IMPORTANT_FMT_STR "You are crushed to death by %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
       case THING_EVENT_ENGULF_DAMAGE : //
@@ -106,7 +106,7 @@ static void thing_killed_player(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEv
       case THING_EVENT_SHOVED : //
         topcon(UI_IMPORTANT_FMT_STR "You are shoved and die." UI_RESET_FMT);
         break;
-      case THING_EVENT_CRUSH : //
+      case THING_EVENT_CRUSH_DAMAGE : //
         topcon(UI_IMPORTANT_FMT_STR "You are crushed and die." UI_RESET_FMT);
         break;
       case THING_EVENT_ENGULF_DAMAGE : //
@@ -189,7 +189,7 @@ static void thing_killed_by_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
     case THING_EVENT_SHOVED : //
       topcon("%s is knocked over by %s.", the_thing.c_str(), by_player.c_str());
       break;
-    case THING_EVENT_CRUSH : //
+    case THING_EVENT_CRUSH_DAMAGE : //
       topcon("%s is crushed by %s.", the_thing.c_str(), by_player.c_str());
       break;
     case THING_EVENT_ENGULF_DAMAGE : //

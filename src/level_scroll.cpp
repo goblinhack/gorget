@@ -61,7 +61,7 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
   //
   int w = 0;
   int h = 0;
-  fbo_get_size(g, FBO_MAP_FG, w, h);
+  fbo_get_size(g, FBO_MAP_BG_LIQUIDS, w, h);
 
   //
   // Where are we as a percentage on that map.

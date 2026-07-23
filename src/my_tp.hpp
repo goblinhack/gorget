@@ -242,9 +242,9 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlagType)
 #define MAP_Z_DEPTH_ENUM(list_macro)                                                                                                            \
   CLANG_FORMAT_INDENT()                                           /* dummy line for clang indentation fixup */                                  \
   list_macro(MAP_Z_DEPTH_FLOOR, "floor"),                         /* newline */                                                                 \
-      list_macro(MAP_Z_DEPTH_LIQUID, "e.g. water"),               /* newline */                                                                 \
-      list_macro(MAP_Z_DEPTH_LIQUID2, "e.g. deep water"),         /* newline */                                                                 \
-      list_macro(MAP_Z_DEPTH_LAVA, "e.g. lava"),                  /* newline */                                                                 \
+      list_macro(MAP_Z_DEPTH_LIQUID, "bridge, water"),            /* newline */                                                                 \
+      list_macro(MAP_Z_DEPTH_LIQUID2, "ripples, deep water"),     /* newline */                                                                 \
+      list_macro(MAP_Z_DEPTH_LAVA, "lava"),                       /* newline */                                                                 \
       list_macro(MAP_Z_DEPTH_BG_OBJ, "e.g. exit, entrance"),      /* newline */                                                                 \
       list_macro(MAP_Z_DEPTH_GRASS, "grass"),                     /* newline */                                                                 \
       list_macro(MAP_Z_DEPTH_OBJ, "monsts"),                      /* newline */                                                                 \
@@ -377,7 +377,7 @@ ENUM_DEF_H(THING_ANIM_ENUM, ThingAnimType)
       list_macro(THING_EVENT_ENGULF_DAMAGE, "engulf-damage"),       /* newline */                                                               \
       list_macro(THING_EVENT_THROWN_DAMAGE, "thrown-damage"),       /* newline */                                                               \
       list_macro(THING_EVENT_WATER_DAMAGE, "water-damage"),         /* newline */                                                               \
-      list_macro(THING_EVENT_CRUSH, "crush-damage"),                /* newline */                                                               \
+      list_macro(THING_EVENT_CRUSH_DAMAGE, "crush-damage"),         /* newline */                                                               \
       list_macro(THING_EVENT_FALL, "fall-damage"),                  /* newline */                                                               \
       list_macro(THING_EVENT_EXPLOSION_DAMAGE, "explosion-damage"), /* newline */                                                               \
       list_macro(THING_EVENT_USER_INITIATED, "user-initiated"),     /* newline */                                                               \

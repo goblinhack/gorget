@@ -35,7 +35,7 @@
   //
   ThingEvent e {
       .reason     = "by crushing",     //
-      .event_type = THING_EVENT_CRUSH, //
+      .event_type = THING_EVENT_CRUSH_DAMAGE, //
       .source     = crusher            //
   };
 

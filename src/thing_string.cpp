@@ -132,7 +132,7 @@
     case THING_EVENT_SHOVED : //
       s += "shoved and died";
       break;
-    case THING_EVENT_CRUSH : //
+    case THING_EVENT_CRUSH_DAMAGE : //
       s += "crushed";
       break;
     case THING_EVENT_THROWN_DAMAGE : //
