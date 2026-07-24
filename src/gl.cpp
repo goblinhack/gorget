@@ -288,12 +288,12 @@ static void gl_init_fbo_(FboEnum fbo, GLuint *render_buf_id, GLuint *fbo_id, GLu
 
   switch (fbo) {
     case FBO_MAP_BG_PREVIOUSLY_SEEN_TILES :
-    case FBO_MAP_BG_LIQUIDS :
+    case FBO_MAP_BG_FLOOR_WATER_LAVA :
     case FBO_MAP_FG :
     case FBO_MAP_FG_OVERLAY :
     case FBO_MAP_LIGHT :
     case FBO_MAP_BG_PREVIOUSLY_SEEN_TILES_MERGED :
-    case FBO_MAP_BG_LIQUIDS_MERGED :
+    case FBO_MAP_BG_FG_MERGED :
     case FBO_WID :
     case FBO_FINAL :
     case FBO_FLAMES :
@@ -306,7 +306,7 @@ static void gl_init_fbo_(FboEnum fbo, GLuint *render_buf_id, GLuint *fbo_id, GLu
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
       GL_ERROR_CHECK();
       break;
-    case FBO_MAP_BG_LIQUIDS_OVERLAY :
+    case FBO_MAP_LAVA_OVERLAY :
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
       GL_ERROR_CHECK();
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -566,10 +566,10 @@ void fbo_get_size(Gamep g, FboEnum fbo, int &w, int &h)
 
   switch (fbo) {
     case FBO_MAP_BG_PREVIOUSLY_SEEN_TILES :
-    case FBO_MAP_BG_LIQUIDS :
+    case FBO_MAP_BG_FLOOR_WATER_LAVA :
     case FBO_MAP_FG :
     case FBO_MAP_FG_OVERLAY :
-    case FBO_MAP_BG_LIQUIDS_OVERLAY :
+    case FBO_MAP_LAVA_OVERLAY :
       w = game_map_fbo_width_get(g);
       h = game_map_fbo_height_get(g);
       break;
@@ -578,7 +578,7 @@ void fbo_get_size(Gamep g, FboEnum fbo, int &w, int &h)
       h = static_cast< int >(MAP_HEIGHT) * static_cast< int >(TILE_HEIGHT);
       break;
     case FBO_MAP_BG_PREVIOUSLY_SEEN_TILES_MERGED :
-    case FBO_MAP_BG_LIQUIDS_MERGED :
+    case FBO_MAP_BG_FG_MERGED :
     case FBO_WID :
     case FBO_FINAL :
       w = game_window_pix_width_get(g);

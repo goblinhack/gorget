@@ -151,7 +151,7 @@ enum {
   //
   // Number of light rays the player casts
   //
-  LIGHT_MAX_RAYS_MAX = (360 * 4),
+  LIGHT_MAX_RAYS_MAX = (360 * 8),
 
   LEVEL_TEST_MAX  = 1000,
   LEVEL_ACROSS    = (MAP_WIDTH / LEVEL_SCALE),

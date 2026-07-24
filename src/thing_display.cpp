@@ -579,7 +579,7 @@ void thing_display(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp
     //
     // Apply lighting to current tiles
     //
-    if ((fbo == FBO_MAP_BG_LIQUIDS) || (fbo == FBO_MAP_BG_LIQUIDS_OVERLAY)) {
+    if ((fbo == FBO_MAP_BG_FLOOR_WATER_LAVA) || (fbo == FBO_MAP_LAVA_OVERLAY)) {
       auto *pixel = &v->light_map.tile[ p.x ][ p.y ].pixels.pixel[ TILE_WIDTH / 2 ][ TILE_HEIGHT / 2 ];
       fg.r        = std::max(pixel->r, pixel->player_r);
       fg.g        = std::max(pixel->g, pixel->player_g);
