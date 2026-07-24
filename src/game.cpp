@@ -2947,8 +2947,8 @@ static void game_map_zoom_update(Gamep g)
   gl_init_fbo(g, FBO_MAP_FG_OVERLAY);
   gl_init_fbo(g, FBO_MAP_BG_PREVIOUSLY_SEEN_TILES);
   gl_init_fbo(g, FBO_MAP_LAVA_OVERLAY);
-  gl_init_fbo(g, FBO_MAP_BG_PREVIOUSLY_SEEN_TILES_MERGED);
-  gl_init_fbo(g, FBO_MAP_BG_FG_MERGED);
+  gl_init_fbo(g, FBO_FULL_SCREEN_PREVIOUSLY_SEEN_TILES);
+  gl_init_fbo(g, FBO_FULL_SCREEN_VISIBLE_TILES);
   gl_init_fbo(g, FBO_SPRITE1);
 
   //

@@ -29,7 +29,7 @@ void sdl_display(Gamep g)
     return;
   }
 
-  blit_fbo_bind(FBO_FINAL);
+  blit_fbo_bind(FBO_FULL_SCREEN_FINAL);
   {
     gl_clear();
   }
@@ -40,18 +40,18 @@ void sdl_display(Gamep g)
   //
   level_blit(g);
 
-  blit_fbo_bind(FBO_FINAL);
+  blit_fbo_bind(FBO_FULL_SCREEN_FINAL);
   {
     //
     // Blit the widgets
     //
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    blit_fbo(g, FBO_WID);
+    blit_fbo(g, FBO_FULL_SCREEN_WID);
   }
   blit_fbo_unbind();
 
   glBlendFunc(GL_ONE, GL_ZERO);
-  blit_fbo(g, FBO_FINAL);
+  blit_fbo(g, FBO_FULL_SCREEN_FINAL);
 
   //
   // Screenshot?

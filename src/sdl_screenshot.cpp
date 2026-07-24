@@ -35,7 +35,7 @@ void sdl_screenshot_do(Gamep g)
   }
 
   GL_ERROR_CHECK();
-  FboEnum const fbo = FBO_FINAL;
+  FboEnum const fbo = FBO_FULL_SCREEN_FINAL;
   int           w   = 0;
   int           h   = 0;
   GL_ERROR_CHECK();

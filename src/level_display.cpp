@@ -91,7 +91,6 @@ static void level_blit_light(Gamep g, Levelsp v, Levelp l, color c)
     glDisable(GL_SCISSOR_TEST);
   }
 }
-
 static void level_display_cursor(Gamep g, Levelsp v, Levelp l, const bpoint &p, FboEnum fbo)
 {
   TRACE_DEBUG();
@@ -592,7 +591,7 @@ void level_blit(Gamep g)
     //
     // No lighting for level selection
     //
-    blit_fbo_bind(FBO_MAP_BG_FG_MERGED);
+    blit_fbo_bind(FBO_FULL_SCREEN_VISIBLE_TILES);
     {
       gl_clear();
 
@@ -622,7 +621,7 @@ void level_blit(Gamep g)
     //
     // Blit the dark background tiles that have been seen previously
     //
-    blit_fbo_bind(FBO_MAP_BG_PREVIOUSLY_SEEN_TILES_MERGED);
+    blit_fbo_bind(FBO_FULL_SCREEN_PREVIOUSLY_SEEN_TILES);
     {
       gl_clear();
 
@@ -642,7 +641,7 @@ void level_blit(Gamep g)
     //
     // Blit the light as a mask
     //
-    blit_fbo_bind(FBO_MAP_BG_FG_MERGED);
+    blit_fbo_bind(FBO_FULL_SCREEN_VISIBLE_TILES);
     {
       gl_clear();
 
@@ -675,7 +674,7 @@ void level_blit(Gamep g)
   //
   // Blit things that are always shown (regardless of debug mode) once seen (and popups)
   //
-  blit_fbo_bind(FBO_MAP_BG_FG_MERGED);
+  blit_fbo_bind(FBO_FULL_SCREEN_VISIBLE_TILES);
   {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     blit_fbo(g, FBO_MAP_FG_OVERLAY, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
@@ -685,16 +684,16 @@ void level_blit(Gamep g)
   //
   // Combine the FBOs into the final map
   //
-  blit_fbo_bind(FBO_FINAL);
+  blit_fbo_bind(FBO_FULL_SCREEN_FINAL);
   {
     GLCOLOR(WHITE);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    blit_fbo(g, FBO_MAP_BG_PREVIOUSLY_SEEN_TILES_MERGED);
-    blit_fbo(g, FBO_MAP_BG_FG_MERGED);
+    blit_fbo(g, FBO_FULL_SCREEN_PREVIOUSLY_SEEN_TILES);
+    blit_fbo(g, FBO_FULL_SCREEN_VISIBLE_TILES);
   }
   blit_fbo_unbind();
 
   if (compiler_unused) {
-    sdl_fbo_dump(g, FBO_FINAL, "FBO_FINAL");
+    sdl_fbo_dump(g, FBO_FULL_SCREEN_FINAL, "FBO_FULL_SCREEN_FINAL");
   }
 }

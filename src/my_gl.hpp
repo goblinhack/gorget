@@ -224,14 +224,14 @@ extern PFNGLDEBUGMESSAGECALLBACKPROC    glDebugMessageCallback_EXT;
       list_macro(FBO_MAP_FG, "FBO_MAP_FG"),                                                           /* newline */                             \
       list_macro(FBO_MAP_FG_OVERLAY, "FBO_MAP_FG_OVERLAY"),                                           /* newline */                             \
       list_macro(FBO_MAP_LIGHT, "FBO_MAP_LIGHT"),                                                     /* newline */                             \
-      list_macro(FBO_MAP_BG_PREVIOUSLY_SEEN_TILES_MERGED, "FBO_MAP_BG_PREVIOUSLY_SEEN_TILES_MERGED"), /* newline */                             \
-      list_macro(FBO_MAP_BG_FG_MERGED, "FBO_MAP_BG_FG_MERGED"),                                       /* newline */                             \
+      list_macro(FBO_FULL_SCREEN_PREVIOUSLY_SEEN_TILES, "FBO_FULL_SCREEN_PREVIOUSLY_SEEN_TILES"), /* newline */                             \
+      list_macro(FBO_FULL_SCREEN_VISIBLE_TILES, "FBO_FULL_SCREEN_VISIBLE_TILES"),                                       /* newline */                             \
       list_macro(FBO_MINIMAP_LEVEL, "FBO_MINIMAP_LEVEL"),                                             /* newline */                             \
-      list_macro(FBO_WID, "FBO_WID"),                                                                 /* newline */                             \
+      list_macro(FBO_FULL_SCREEN_WID, "FBO_FULL_SCREEN_WID"),                                                                 /* newline */                             \
       list_macro(FBO_SPRITE1, "FBO_SPRITE1"),                                                         /* newline */                             \
       list_macro(FBO_FLAMES, "FBO_FLAMES"),                                                           /* newline */                             \
       list_macro(FBO_SKULLS, "FBO_SKULLS"),                                                           /* newline */                             \
-      list_macro(FBO_FINAL, "FBO_FINAL"),                                                             /* newline */
+      list_macro(FBO_FULL_SCREEN_FINAL, "FBO_FULL_SCREEN_FINAL"),                                                             /* newline */
 
 ENUM_DEF_H(FBO_ENUM, FboEnum);
 

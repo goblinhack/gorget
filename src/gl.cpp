@@ -292,10 +292,10 @@ static void gl_init_fbo_(FboEnum fbo, GLuint *render_buf_id, GLuint *fbo_id, GLu
     case FBO_MAP_FG :
     case FBO_MAP_FG_OVERLAY :
     case FBO_MAP_LIGHT :
-    case FBO_MAP_BG_PREVIOUSLY_SEEN_TILES_MERGED :
-    case FBO_MAP_BG_FG_MERGED :
-    case FBO_WID :
-    case FBO_FINAL :
+    case FBO_FULL_SCREEN_PREVIOUSLY_SEEN_TILES :
+    case FBO_FULL_SCREEN_VISIBLE_TILES :
+    case FBO_FULL_SCREEN_WID :
+    case FBO_FULL_SCREEN_FINAL :
     case FBO_FLAMES :
     case FBO_SKULLS :
     case FBO_MINIMAP_LEVEL :
@@ -577,10 +577,10 @@ void fbo_get_size(Gamep g, FboEnum fbo, int &w, int &h)
       w = static_cast< int >(MAP_WIDTH) * static_cast< int >(TILE_WIDTH);
       h = static_cast< int >(MAP_HEIGHT) * static_cast< int >(TILE_HEIGHT);
       break;
-    case FBO_MAP_BG_PREVIOUSLY_SEEN_TILES_MERGED :
-    case FBO_MAP_BG_FG_MERGED :
-    case FBO_WID :
-    case FBO_FINAL :
+    case FBO_FULL_SCREEN_PREVIOUSLY_SEEN_TILES :
+    case FBO_FULL_SCREEN_VISIBLE_TILES :
+    case FBO_FULL_SCREEN_WID :
+    case FBO_FULL_SCREEN_FINAL :
       w = game_window_pix_width_get(g);
       h = game_window_pix_height_get(g);
       break;

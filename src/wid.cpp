@@ -5473,7 +5473,7 @@ void wid_display_all(Gamep g)
   wid_pre_tick_all(g);
 
   gl_enter_2d_mode(g, game_window_pix_width_get(g), game_window_pix_height_get(g));
-  blit_fbo_bind_locked(FBO_WID);
+  blit_fbo_bind_locked(FBO_FULL_SCREEN_WID);
   gl_clear();
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
