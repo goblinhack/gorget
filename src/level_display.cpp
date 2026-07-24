@@ -379,7 +379,7 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp l, Levelp level_abov
 //
 // Render the level to an FBO
 //
-static void level_display_fbo(Gamep g, Levelsp v, Levelp l, Levelp level_below, FboEnum fbo)
+static void level_display_fbo(Gamep g, Levelsp v, Levelp l, FboEnum fbo)
 {
   TRACE_DEBUG();
 
@@ -397,10 +397,6 @@ static void level_display_fbo(Gamep g, Levelsp v, Levelp l, Levelp level_below, 
     gl_clear();
 
     blit_init();
-
-    if (level_below != nullptr) {
-      level_display_fbo_do(g, v, level_below, l, fbo);
-    }
 
     level_display_fbo_do(g, v, l, nullptr, fbo);
 
@@ -456,7 +452,7 @@ void level_display(Gamep g, Levelsp v, Levelp l)
   //
   // Get the next level for falling into and displaying under chasms.
   //
-  auto *level_below = level_select_get_next_level_down(g, v, l);
+  // auto *level_below = level_select_get_next_level_down(g, v, l);
 
   //
   // Animate both levels
@@ -470,19 +466,19 @@ void level_display(Gamep g, Levelsp v, Levelp l)
     level_anim(g, v, l);
   }
 
-  level_display_fbo(g, v, l, level_below, FBO_MAP_BG_PREVIOUSLY_SEEN_TILES);
+  level_display_fbo(g, v, l, FBO_MAP_BG_PREVIOUSLY_SEEN_TILES);
   // sdl_fbo_dump(g, FBO_MAP_BG_PREVIOUSLY_SEEN_TILES, "FBO_MAP_BG_PREVIOUSLY_SEEN_TILES");
 
-  level_display_fbo(g, v, l, level_below, FBO_MAP_BG_FLOOR_WATER_LAVA);
+  level_display_fbo(g, v, l, FBO_MAP_BG_FLOOR_WATER_LAVA);
   // sdl_fbo_dump(g, FBO_MAP_BG_FLOOR_WATER_LAVA, "FBO_MAP_BG_FLOOR_WATER_LAVA");
 
-  level_display_fbo(g, v, l, level_below, FBO_MAP_LAVA_OVERLAY);
+  level_display_fbo(g, v, l, FBO_MAP_LAVA_OVERLAY);
   // sdl_fbo_dump(g, FBO_MAP_LAVA_OVERLAY, "FBO_MAP_LAVA_OVERLAY");
 
-  level_display_fbo(g, v, l, level_below, FBO_MAP_FG);
+  level_display_fbo(g, v, l, FBO_MAP_FG);
   // sdl_fbo_dump(g, FBO_MAP_FG, "FBO_MAP_FG");
 
-  level_display_fbo(g, v, l, level_below, FBO_MAP_FG_OVERLAY);
+  level_display_fbo(g, v, l, FBO_MAP_FG_OVERLAY);
   // sdl_fbo_dump(g, FBO_MAP_FG_OVERLAY, "FBO_MAP_FG_OVERLAY");
 
   //

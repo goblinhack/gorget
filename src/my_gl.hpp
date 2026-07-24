@@ -219,13 +219,13 @@ extern PFNGLDEBUGMESSAGECALLBACKPROC    glDebugMessageCallback_EXT;
 //
 #define FBO_ENUM(list_macro)                                                                                                                    \
   list_macro(FBO_MAP_BG_PREVIOUSLY_SEEN_TILES, "FBO_MAP_BG_PREVIOUSLY_SEEN_TILES"),                   /* newline */                             \
-      list_macro(FBO_MAP_BG_FLOOR_WATER_LAVA, "FBO_MAP_BG_FLOOR_WATER_LAVA"),                                           /* newline */                             \
-      list_macro(FBO_MAP_LAVA_OVERLAY, "FBO_MAP_LAVA_OVERLAY"),                           /* newline */                             \
+      list_macro(FBO_MAP_BG_FLOOR_WATER_LAVA, "FBO_MAP_BG_FLOOR_WATER_LAVA"),                         /* newline */                             \
+      list_macro(FBO_MAP_LAVA_OVERLAY, "FBO_MAP_LAVA_OVERLAY"),                                       /* newline */                             \
       list_macro(FBO_MAP_FG, "FBO_MAP_FG"),                                                           /* newline */                             \
       list_macro(FBO_MAP_FG_OVERLAY, "FBO_MAP_FG_OVERLAY"),                                           /* newline */                             \
       list_macro(FBO_MAP_LIGHT, "FBO_MAP_LIGHT"),                                                     /* newline */                             \
       list_macro(FBO_MAP_BG_PREVIOUSLY_SEEN_TILES_MERGED, "FBO_MAP_BG_PREVIOUSLY_SEEN_TILES_MERGED"), /* newline */                             \
-      list_macro(FBO_MAP_BG_FG_MERGED, "FBO_MAP_BG_FG_MERGED"),                             /* newline */                             \
+      list_macro(FBO_MAP_BG_FG_MERGED, "FBO_MAP_BG_FG_MERGED"),                                       /* newline */                             \
       list_macro(FBO_MINIMAP_LEVEL, "FBO_MINIMAP_LEVEL"),                                             /* newline */                             \
       list_macro(FBO_WID, "FBO_WID"),                                                                 /* newline */                             \
       list_macro(FBO_SPRITE1, "FBO_SPRITE1"),                                                         /* newline */                             \

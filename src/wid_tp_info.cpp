@@ -85,7 +85,7 @@
 
     switch (e) {
       case THING_EVENT_SHOVED :           [[fallthrough]];
-      case THING_EVENT_CRUSH_DAMAGE :            [[fallthrough]];
+      case THING_EVENT_CRUSH_DAMAGE :     [[fallthrough]];
       case THING_EVENT_LIGHT_DAMAGE :     [[fallthrough]];
       case THING_EVENT_THROWN_DAMAGE :    [[fallthrough]];
       case THING_EVENT_MELEE_DAMAGE :     [[fallthrough]];
@@ -212,7 +212,7 @@
 
     switch (e) {
       case THING_EVENT_SHOVED :           [[fallthrough]];
-      case THING_EVENT_CRUSH_DAMAGE :            [[fallthrough]];
+      case THING_EVENT_CRUSH_DAMAGE :     [[fallthrough]];
       case THING_EVENT_LIGHT_DAMAGE :     [[fallthrough]];
       case THING_EVENT_THROWN_DAMAGE :    [[fallthrough]];
       case THING_EVENT_MELEE_DAMAGE :     [[fallthrough]];
@@ -275,7 +275,7 @@
 
     switch (e) {
       case THING_EVENT_SHOVED :           [[fallthrough]];
-      case THING_EVENT_CRUSH_DAMAGE :            [[fallthrough]];
+      case THING_EVENT_CRUSH_DAMAGE :     [[fallthrough]];
       case THING_EVENT_LIGHT_DAMAGE :     [[fallthrough]];
       case THING_EVENT_MELEE_DAMAGE :     [[fallthrough]];
       case THING_EVENT_ENGULF_DAMAGE :    [[fallthrough]];

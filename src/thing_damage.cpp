@@ -612,7 +612,7 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
       case THING_EVENT_FALL :             [[fallthrough]];
       case THING_EVENT_THROWN :           [[fallthrough]];
       case THING_EVENT_SHOVED :           [[fallthrough]];
-      case THING_EVENT_CRUSH_DAMAGE :            [[fallthrough]];
+      case THING_EVENT_CRUSH_DAMAGE :     [[fallthrough]];
       case THING_EVENT_THROWN_DAMAGE :    [[fallthrough]];
       case THING_EVENT_ENGULF_DAMAGE :    [[fallthrough]];
       case THING_EVENT_MELEE_DAMAGE :     break;
@@ -685,7 +685,7 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
       case THING_EVENT_FALL :             [[fallthrough]];
       case THING_EVENT_THROWN :           [[fallthrough]];
       case THING_EVENT_SHOVED :           [[fallthrough]];
-      case THING_EVENT_CRUSH_DAMAGE :            [[fallthrough]];
+      case THING_EVENT_CRUSH_DAMAGE :     [[fallthrough]];
       case THING_EVENT_THROWN_DAMAGE :    [[fallthrough]];
       case THING_EVENT_ENGULF_DAMAGE :    [[fallthrough]];
       case THING_EVENT_MELEE_DAMAGE :     break;

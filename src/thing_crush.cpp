@@ -34,9 +34,9 @@
   // Crush me
   //
   ThingEvent e {
-      .reason     = "by crushing",     //
+      .reason     = "by crushing",            //
       .event_type = THING_EVENT_CRUSH_DAMAGE, //
-      .source     = crusher            //
+      .source     = crusher                   //
   };
 
   THING_DBG(g, v, l, me, "dead due to crushing");

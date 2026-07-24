@@ -98,7 +98,6 @@ static bool tp_ogrik_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thing
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_hit_when_dead);
   tp_flag_set(tp, is_loggable);
-  tp_flag_set(tp, is_stone);
   tp_flag_set(tp, is_monst);
   tp_flag_set(tp, is_obs_to_beam);
   tp_flag_set(tp, is_obs_to_jumping_onto);
@@ -109,14 +108,15 @@ static bool tp_ogrik_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thing
   tp_flag_set(tp, is_physics_trap);
   tp_flag_set(tp, is_removable_when_dead_on_err);
   tp_flag_set(tp, is_shown_health);
+  tp_flag_set(tp, is_stone);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_vision_360_degrees);
   tp_health_set(tp, "4d8");
   tp_hearing_threshold_set(tp, 2);
-  tp_is_immune_to_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_is_immune_to_add(tp, THING_EVENT_FIRE_DAMAGE);
   tp_is_immune_to_add(tp, THING_EVENT_LIGHT_DAMAGE);
+  tp_is_immune_to_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_monst_group_add(tp, MONST_GROUP2);
   tp_name_a_or_an_set(tp, "a ogrik");
   tp_name_apostrophize_set(tp, "ogriks'");
