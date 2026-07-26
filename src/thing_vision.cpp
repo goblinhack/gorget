@@ -61,7 +61,15 @@
     //
     // Things that are submerged should not block you, if you are less submerged
     //
-    return thing_submerged_pct(it) <= thing_submerged_pct(me);
+    auto sub_it = thing_submerged_pct(it);
+    auto sub_me = thing_submerged_pct(me);
+
+    if (sub_it && sub_me) {
+      if (sub_it >= sub_me) {
+        return false;
+      }
+    }
+    return true;
   }
 
   return false;
