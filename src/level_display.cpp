@@ -622,11 +622,16 @@ static void level_display_do(Gamep g, Levelsp v, Levelp level_above, Levelp l)
     blit_fbo_bind(FBO_FULL_SCREEN_LEVEL_CURR);
   }
 
-  glBlendFunc(GL_ONE, GL_ZERO);
-  blit_fbo(g, FBO_FULL_SCREEN_PREVIOUSLY_SEEN_TILES, WHITE);
+  if (level_is_level_select(g, v, l)) {
+    glBlendFunc(GL_ONE, GL_ZERO);
+    blit_fbo(g, FBO_FULL_SCREEN_VISIBLE_TILES, WHITE);
+  } else {
+    glBlendFunc(GL_ONE, GL_ZERO);
+    blit_fbo(g, FBO_FULL_SCREEN_PREVIOUSLY_SEEN_TILES, WHITE);
 
-  glBlendFunc(GL_ONE_MINUS_DST_ALPHA, GL_ONE);
-  blit_fbo(g, FBO_FULL_SCREEN_VISIBLE_TILES, WHITE);
+    glBlendFunc(GL_ONE_MINUS_DST_ALPHA, GL_ONE);
+    blit_fbo(g, FBO_FULL_SCREEN_VISIBLE_TILES, WHITE);
+  }
 
   blit_fbo_unbind();
 
@@ -655,19 +660,19 @@ void level_display(Gamep g, Levelsp v, Levelp l)
   //
   FOR_ALL_TICKING_LEVELS(g, v, iter) { level_anim(g, v, iter); }
 
-  //
-  // Animate the level selection too
-  //
   if (level_is_level_select(g, v, l)) {
+    //
+    // Animate the level selection too
+    //
     level_anim(g, v, l);
-  }
-
-  //
-  // Get the next level for falling into and displaying under chasms.
-  //
-  auto *level_below = level_select_get_next_level_down(g, v, l);
-  if (level_below != nullptr) {
-    level_display_do(g, v, l, level_below);
+  } else {
+    //
+    // Get the next level for falling into and displaying under chasms.
+    //
+    auto *level_below = level_select_get_next_level_down(g, v, l);
+    if (level_below != nullptr) {
+      level_display_do(g, v, l, level_below);
+    }
   }
 
   level_display_do(g, v, nullptr, l);
