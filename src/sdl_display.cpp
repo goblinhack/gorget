@@ -32,26 +32,22 @@ void sdl_display(Gamep g)
   blit_fbo_bind(FBO_FULL_SCREEN_FINAL);
   {
     gl_clear();
-  }
-  blit_fbo_unbind();
 
-  //
-  // Blit the game map to FBOs
-  //
-  level_blit(g);
+    //
+    // Blit the game map to FBOs
+    //
+    level_blit(g);
 
-  blit_fbo_bind(FBO_FULL_SCREEN_FINAL);
-  {
     //
     // Blit the widgets
     //
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    blit_fbo(g, FBO_FULL_SCREEN_WID);
+    blit_fbo(g, FBO_FULL_SCREEN_WID, WHITE);
   }
   blit_fbo_unbind();
 
   glBlendFunc(GL_ONE, GL_ZERO);
-  blit_fbo(g, FBO_FULL_SCREEN_FINAL);
+  blit_fbo(g, FBO_FULL_SCREEN_FINAL, WHITE);
 
   //
   // Screenshot?

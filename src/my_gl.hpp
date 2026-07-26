@@ -218,20 +218,22 @@ extern PFNGLDEBUGMESSAGECALLBACKPROC    glDebugMessageCallback_EXT;
 // Frame buffer objects
 //
 #define FBO_ENUM(list_macro)                                                                                                                    \
-  list_macro(FBO_MAP_BG_PREVIOUSLY_SEEN_TILES, "FBO_MAP_BG_PREVIOUSLY_SEEN_TILES"),                   /* newline */                             \
-      list_macro(FBO_MAP_BG_FLOOR_WATER_LAVA, "FBO_MAP_BG_FLOOR_WATER_LAVA"),                         /* newline */                             \
-      list_macro(FBO_MAP_LAVA_OVERLAY, "FBO_MAP_LAVA_OVERLAY"),                                       /* newline */                             \
-      list_macro(FBO_MAP_FG, "FBO_MAP_FG"),                                                           /* newline */                             \
-      list_macro(FBO_MAP_FG_OVERLAY, "FBO_MAP_FG_OVERLAY"),                                           /* newline */                             \
-      list_macro(FBO_MAP_LIGHT, "FBO_MAP_LIGHT"),                                                     /* newline */                             \
-      list_macro(FBO_FULL_SCREEN_PREVIOUSLY_SEEN_TILES, "FBO_FULL_SCREEN_PREVIOUSLY_SEEN_TILES"), /* newline */                             \
-      list_macro(FBO_FULL_SCREEN_VISIBLE_TILES, "FBO_FULL_SCREEN_VISIBLE_TILES"),                                       /* newline */                             \
-      list_macro(FBO_MINIMAP_LEVEL, "FBO_MINIMAP_LEVEL"),                                             /* newline */                             \
-      list_macro(FBO_FULL_SCREEN_WID, "FBO_FULL_SCREEN_WID"),                                                                 /* newline */                             \
-      list_macro(FBO_SPRITE1, "FBO_SPRITE1"),                                                         /* newline */                             \
-      list_macro(FBO_FLAMES, "FBO_FLAMES"),                                                           /* newline */                             \
-      list_macro(FBO_SKULLS, "FBO_SKULLS"),                                                           /* newline */                             \
-      list_macro(FBO_FULL_SCREEN_FINAL, "FBO_FULL_SCREEN_FINAL"),                                                             /* newline */
+  list_macro(FBO_MAP_BG_PREVIOUSLY_SEEN_TILES, "FBO_MAP_BG_PREVIOUSLY_SEEN_TILES"),               /* newline */                                 \
+      list_macro(FBO_MAP_BG_FLOOR_WATER_LAVA, "FBO_MAP_BG_FLOOR_WATER_LAVA"),                     /* newline */                                 \
+      list_macro(FBO_MAP_LAVA_OVERLAY, "FBO_MAP_LAVA_OVERLAY"),                                   /* newline */                                 \
+      list_macro(FBO_MAP_FG, "FBO_MAP_FG"),                                                       /* newline */                                 \
+      list_macro(FBO_MAP_FG_OVERLAY, "FBO_MAP_FG_OVERLAY"),                                       /* newline */                                 \
+      list_macro(FBO_MAP_LIGHT, "FBO_MAP_LIGHT"),                                                 /* newline */                                 \
+      list_macro(FBO_FULL_SCREEN_PREVIOUSLY_SEEN_TILES, "FBO_FULL_SCREEN_PREVIOUSLY_SEEN_TILES"), /* newline */                                 \
+      list_macro(FBO_FULL_SCREEN_VISIBLE_TILES, "FBO_FULL_SCREEN_VISIBLE_TILES"),                 /* newline */                                 \
+      list_macro(FBO_FULL_SCREEN_LEVEL_CURR, "FBO_FULL_SCREEN_LEVEL_CURR"),                       /* newline */                                 \
+      list_macro(FBO_FULL_SCREEN_LEVEL_BELOW, "FBO_FULL_SCREEN_LEVEL_BELOW"),                     /* newline */                                 \
+      list_macro(FBO_MINIMAP_LEVEL, "FBO_MINIMAP_LEVEL"),                                         /* newline */                                 \
+      list_macro(FBO_FULL_SCREEN_WID, "FBO_FULL_SCREEN_WID"),                                     /* newline */                                 \
+      list_macro(FBO_SPRITE1, "FBO_SPRITE1"),                                                     /* newline */                                 \
+      list_macro(FBO_FLAMES, "FBO_FLAMES"),                                                       /* newline */                                 \
+      list_macro(FBO_SKULLS, "FBO_SKULLS"),                                                       /* newline */                                 \
+      list_macro(FBO_FULL_SCREEN_FINAL, "FBO_FULL_SCREEN_FINAL"),                                 /* newline */
 
 ENUM_DEF_H(FBO_ENUM, FboEnum);
 
@@ -272,8 +274,8 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
           GLshort pixMaxY, const color &c, struct LightPixels * /*light_pixels*/, bool is_blit_flush_per_line);
 void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLshort pixMinX, GLshort pixMinY, GLshort pixMaxX,
           GLshort pixMaxY, struct LightPixels * /*light_pixels*/, bool is_blit_flush_per_line);
-void blit_fbo(Gamep g, FboEnum fbo);
-void blit_fbo(Gamep g, FboEnum fbo, int tl_x, int tl_y, int br_x, int br_y);
+void blit_fbo(Gamep g, FboEnum fbo, color c);
+void blit_fbo(Gamep g, FboEnum fbo, int tl_x, int tl_y, int br_x, int br_y, color c);
 void blit_fbo_push(FboEnum fbo);
 void blit_fbo_pop();
 void blit_fbo_bind(FboEnum fbo);

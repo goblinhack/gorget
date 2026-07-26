@@ -91,6 +91,7 @@ static void level_blit_light(Gamep g, Levelsp v, Levelp l, color c)
     glDisable(GL_SCISSOR_TEST);
   }
 }
+
 static void level_display_cursor(Gamep g, Levelsp v, Levelp l, const bpoint &p, FboEnum fbo)
 {
   TRACE_DEBUG();
@@ -240,7 +241,7 @@ static void level_display_slot(Gamep g, Levelsp v, Levelp l, const bpoint &p, in
 //
 // Render the level to an FBO
 //
-static void level_display_fbo_do(Gamep g, Levelsp v, Levelp l, Levelp level_above, FboEnum fbo)
+static void level_display_fbo_do(Gamep g, Levelsp v, Levelp level_above, Levelp l, FboEnum fbo)
 {
   TRACE_DEBUG();
 
@@ -367,6 +368,7 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp l, Levelp level_abov
         }
 
         if (display_tile) {
+#if 1
           if (level_above != nullptr) {
             if (level_is_chasm(g, v, level_above, p) != nullptr) {
               //
@@ -379,6 +381,7 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp l, Levelp level_abov
               display_tile = false;
             }
           }
+#endif
 
           if (display_tile) {
             //
@@ -412,26 +415,11 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp l, Levelp level_abov
       }
 
       if (display_tile) {
-        if (level_above != nullptr) {
-          if (level_is_chasm(g, v, level_above, p) != nullptr) {
-            //
-            // Only show this tile if the level above is a chasm
-            //
-          } else {
-            //
-            // Viewing through a chasm
-            //
-            display_tile = false;
-          }
-        }
-
-        if (display_tile) {
-          //
-          // Display all things at this location (for this z depth)
-          //
-          for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-            level_display_slot(g, v, l, p, slot, z_depth, fbo);
-          }
+        //
+        // Display all things at this location (for this z depth)
+        //
+        for (auto slot = 0; slot < MAP_SLOTS; slot++) {
+          level_display_slot(g, v, l, p, slot, z_depth, fbo);
         }
       }
 
@@ -443,7 +431,7 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp l, Levelp level_abov
 //
 // Render the level to an FBO
 //
-static void level_display_fbo(Gamep g, Levelsp v, Levelp l, FboEnum fbo)
+static void level_display_fbo(Gamep g, Levelsp v, Levelp level_above, Levelp l, FboEnum fbo)
 {
   TRACE_DEBUG();
 
@@ -461,9 +449,7 @@ static void level_display_fbo(Gamep g, Levelsp v, Levelp l, FboEnum fbo)
     gl_clear();
 
     blit_init();
-
-    level_display_fbo_do(g, v, l, nullptr, fbo);
-
+    level_display_fbo_do(g, v, level_above, l, fbo);
     blit_flush();
 
     if (fbo == FBO_MAP_FG_OVERLAY) {
@@ -471,7 +457,11 @@ static void level_display_fbo(Gamep g, Levelsp v, Levelp l, FboEnum fbo)
         switch (game_state(g)) {
           case STATE_THROW_ITEM :        [[fallthrough]];
           case STATE_LEVEL_SELECT_MENU : [[fallthrough]];
-          case STATE_PLAYING :           level_display_cursor(g, v, l, fbo); break;
+          case STATE_PLAYING :
+            blit_init();
+            level_display_cursor(g, v, l, fbo);
+            blit_flush();
+            break;
           case STATE_COLLECT_MENU :      [[fallthrough]];
           case STATE_DEAD_MENU :         [[fallthrough]];
           case STATE_GENERATED :         [[fallthrough]];
@@ -492,11 +482,162 @@ static void level_display_fbo(Gamep g, Levelsp v, Levelp l, FboEnum fbo)
           case GAME_STATE_ENUM_MAX :     break;
         }
       }
-      blit_flush();
       game_popups_display(g, v, l);
     }
   }
   blit_fbo_unbind();
+}
+
+static void level_display_do(Gamep g, Levelsp v, Levelp level_above, Levelp l)
+{
+  TRACE_DEBUG();
+
+  gl_enter_2d_mode(g, game_map_fbo_width_get(g), game_map_fbo_height_get(g));
+
+  if (! level_above) {
+    level_display_fbo(g, v, level_above, l, FBO_MAP_BG_PREVIOUSLY_SEEN_TILES);
+    // sdl_fbo_dump(g, FBO_MAP_BG_PREVIOUSLY_SEEN_TILES, "FBO_MAP_BG_PREVIOUSLY_SEEN_TILES");
+  }
+
+  level_display_fbo(g, v, level_above, l, FBO_MAP_BG_FLOOR_WATER_LAVA);
+  // sdl_fbo_dump(g, FBO_MAP_BG_FLOOR_WATER_LAVA, "FBO_MAP_BG_FLOOR_WATER_LAVA");
+
+  level_display_fbo(g, v, level_above, l, FBO_MAP_LAVA_OVERLAY);
+  // sdl_fbo_dump(g, FBO_MAP_LAVA_OVERLAY, "FBO_MAP_LAVA_OVERLAY");
+
+  level_display_fbo(g, v, level_above, l, FBO_MAP_FG);
+  // sdl_fbo_dump(g, FBO_MAP_FG, "FBO_MAP_FG");
+
+  if (! level_above) {
+    level_display_fbo(g, v, level_above, l, FBO_MAP_FG_OVERLAY);
+    // sdl_fbo_dump(g, FBO_MAP_FG_OVERLAY, "FBO_MAP_FG_OVERLAY");
+  }
+
+  //
+  // Get the pixel extents of the map on screen
+  //
+  int visible_map_tl_x = 0;
+  int visible_map_tl_y = 0;
+  int visible_map_br_x = 0;
+  int visible_map_br_y = 0;
+  game_visible_map_pix_get(g, &visible_map_tl_x, &visible_map_tl_y, &visible_map_br_x, &visible_map_br_y);
+
+  gl_enter_2d_mode(g, game_window_pix_width_get(g), game_window_pix_height_get(g));
+
+  if (DEBUG || level_is_level_select(g, v, l)) {
+    //
+    // No lighting for level selection
+    //
+    blit_fbo_bind(FBO_FULL_SCREEN_VISIBLE_TILES);
+    {
+      gl_clear();
+
+      //
+      // Blit the floor tiles, water, lava, ripples
+      //
+      glBlendFunc(GL_ONE, GL_ZERO);
+      blit_fbo(g, FBO_MAP_BG_FLOOR_WATER_LAVA, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y, WHITE);
+
+      //
+      // Blit the lava scrolling pattern
+      //
+      glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+      blit_fbo(g, FBO_MAP_LAVA_OVERLAY, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y, WHITE);
+
+      //
+      // Blit all other tiles, walls, objects
+      //
+      glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+      blit_fbo(g, FBO_MAP_FG, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y, WHITE);
+
+      //
+      // Note, no light masking
+      //
+    }
+    blit_fbo_unbind();
+  } else {
+    //
+    // Blit the dark background tiles that have been seen previously
+    //
+    blit_fbo_bind(FBO_FULL_SCREEN_PREVIOUSLY_SEEN_TILES);
+    {
+      gl_clear();
+
+      //
+      // Blit the floor tiles, water, lava, ripples
+      //
+      glBlendFunc(GL_ONE, GL_ZERO);
+      blit_fbo(g, FBO_MAP_BG_PREVIOUSLY_SEEN_TILES, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y, WHITE);
+
+      //
+      // Mask out non lit areas of the foreground
+      //
+      glBlendFunc(GL_ZERO, GL_ONE_MINUS_SRC_ALPHA);
+      level_blit_light(g, v, l, WHITE);
+    }
+    blit_fbo_unbind();
+
+    //
+    // Blit the light as a mask
+    //
+    blit_fbo_bind(FBO_FULL_SCREEN_VISIBLE_TILES);
+    {
+      gl_clear();
+
+      //
+      // Blit the floor tiles, water, lava, ripples
+      //
+      glBlendFunc(GL_ONE, GL_ZERO);
+      blit_fbo(g, FBO_MAP_BG_FLOOR_WATER_LAVA, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y, WHITE);
+
+      //
+      // Blit the lava scrolling pattern
+      //
+      glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+      blit_fbo(g, FBO_MAP_LAVA_OVERLAY, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y, WHITE);
+
+      //
+      // Blit all other tiles, walls, objects
+      //
+      glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+      blit_fbo(g, FBO_MAP_FG, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y, WHITE);
+
+      //
+      // Mask out non lit areas of the foreground
+      //
+      glBlendFunc(GL_DST_ALPHA, GL_ONE);
+      level_blit_light(g, v, l, COLOR_NONE);
+    }
+    blit_fbo_unbind();
+
+    //
+    // Blit things that are always shown (regardless of debug mode) once seen (and popups)
+    //
+    blit_fbo_bind(FBO_FULL_SCREEN_VISIBLE_TILES);
+    {
+      glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+      blit_fbo(g, FBO_MAP_FG_OVERLAY, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y, WHITE);
+    }
+    blit_fbo_unbind();
+  }
+
+  if (level_above) {
+    blit_fbo_bind(FBO_FULL_SCREEN_LEVEL_BELOW);
+  } else {
+    blit_fbo_bind(FBO_FULL_SCREEN_LEVEL_CURR);
+  }
+
+  glBlendFunc(GL_ONE, GL_ZERO);
+  blit_fbo(g, FBO_FULL_SCREEN_PREVIOUSLY_SEEN_TILES, WHITE);
+  glBlendFunc(GL_ONE_MINUS_DST_ALPHA, GL_ONE);
+  blit_fbo(g, FBO_FULL_SCREEN_VISIBLE_TILES, WHITE);
+
+  blit_fbo_unbind();
+
+  // sdl_fbo_dump(g, FBO_FULL_SCREEN_LEVEL_CURR, "FBO_FULL_SCREEN_LEVEL_CURR");
+  // sdl_fbo_dump(g, FBO_FULL_SCREEN_LEVEL_BELOW, "FBO_FULL_SCREEN_LEVEL_BELOW");
+  // sdl_fbo_dump(g, FBO_FULL_SCREEN_PREVIOUSLY_SEEN_TILES, "FBO_FULL_SCREEN_PREVIOUSLY_SEEN_TILES");
+  // sdl_fbo_dump(g, FBO_FULL_SCREEN_VISIBLE_TILES, "FBO_FULL_SCREEN_VISIBLE_TILES");
 }
 
 void level_display(Gamep g, Levelsp v, Levelp l)
@@ -514,11 +655,6 @@ void level_display(Gamep g, Levelsp v, Levelp l)
   level_scroll_to_focus(g, v, l);
 
   //
-  // Get the next level for falling into and displaying under chasms.
-  //
-  // auto *level_below = level_select_get_next_level_down(g, v, l);
-
-  //
   // Animate both levels
   //
   FOR_ALL_TICKING_LEVELS(g, v, iter) { level_anim(g, v, iter); }
@@ -530,20 +666,15 @@ void level_display(Gamep g, Levelsp v, Levelp l)
     level_anim(g, v, l);
   }
 
-  level_display_fbo(g, v, l, FBO_MAP_BG_PREVIOUSLY_SEEN_TILES);
-  // sdl_fbo_dump(g, FBO_MAP_BG_PREVIOUSLY_SEEN_TILES, "FBO_MAP_BG_PREVIOUSLY_SEEN_TILES");
+  //
+  // Get the next level for falling into and displaying under chasms.
+  //
+  auto *level_below = level_select_get_next_level_down(g, v, l);
+  if (level_below) {
+    level_display_do(g, v, l, level_below);
+  }
 
-  level_display_fbo(g, v, l, FBO_MAP_BG_FLOOR_WATER_LAVA);
-  // sdl_fbo_dump(g, FBO_MAP_BG_FLOOR_WATER_LAVA, "FBO_MAP_BG_FLOOR_WATER_LAVA");
-
-  level_display_fbo(g, v, l, FBO_MAP_LAVA_OVERLAY);
-  // sdl_fbo_dump(g, FBO_MAP_LAVA_OVERLAY, "FBO_MAP_LAVA_OVERLAY");
-
-  level_display_fbo(g, v, l, FBO_MAP_FG);
-  // sdl_fbo_dump(g, FBO_MAP_FG, "FBO_MAP_FG");
-
-  level_display_fbo(g, v, l, FBO_MAP_FG_OVERLAY);
-  // sdl_fbo_dump(g, FBO_MAP_FG_OVERLAY, "FBO_MAP_FG_OVERLAY");
+  level_display_do(g, v, nullptr, l);
 
   //
   // Save the old pixel offset for restoring it after zoom toggling
@@ -564,136 +695,13 @@ void level_blit(Gamep g)
 {
   TRACE_DEBUG();
 
-  if (g == nullptr) {
-    return;
-  }
-
-  auto *v = game_levels_get(g);
-  if (v == nullptr) {
-    return;
-  }
-
-  auto *l = game_level_get(g, v);
-  if (l == nullptr) {
-    return;
-  }
-
-  //
-  // Get the pixel extents of the map on screen
-  //
-  int visible_map_tl_x = 0;
-  int visible_map_tl_y = 0;
-  int visible_map_br_x = 0;
-  int visible_map_br_y = 0;
-  game_visible_map_pix_get(g, &visible_map_tl_x, &visible_map_tl_y, &visible_map_br_x, &visible_map_br_y);
-
-  if (DEBUG || level_is_level_select(g, v, l)) {
-    //
-    // No lighting for level selection
-    //
-    blit_fbo_bind(FBO_FULL_SCREEN_VISIBLE_TILES);
-    {
-      gl_clear();
-
-      //
-      // Blit the floor tiles, water, lava, ripples
-      //
-      glBlendFunc(GL_ONE, GL_ZERO);
-      blit_fbo(g, FBO_MAP_BG_FLOOR_WATER_LAVA, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
-
-      //
-      // Blit the lava scrolling pattern
-      //
-      glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-      blit_fbo(g, FBO_MAP_LAVA_OVERLAY, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
-
-      //
-      // Blit all other tiles, walls, objects
-      //
-      blit_fbo(g, FBO_MAP_FG, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
-
-      //
-      // Note, no light masking
-      //
-    }
-    blit_fbo_unbind();
-  } else {
-    //
-    // Blit the dark background tiles that have been seen previously
-    //
-    blit_fbo_bind(FBO_FULL_SCREEN_PREVIOUSLY_SEEN_TILES);
-    {
-      gl_clear();
-
-      //
-      // Blit walls only
-      //
-      glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-      blit_fbo(g, FBO_MAP_BG_PREVIOUSLY_SEEN_TILES, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
-
-      //
-      // Mask out non lit areas of the foreground
-      //
-      level_blit_light(g, v, l, BLACK);
-    }
-    blit_fbo_unbind();
-
-    //
-    // Blit the light as a mask
-    //
-    blit_fbo_bind(FBO_FULL_SCREEN_VISIBLE_TILES);
-    {
-      gl_clear();
-
-      //
-      // Blit the floor tiles, water, lava, ripples
-      //
-      glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-      blit_fbo(g, FBO_MAP_BG_FLOOR_WATER_LAVA, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
-
-      //
-      // Blit the lava scrolling pattern
-      //
-      glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-      blit_fbo(g, FBO_MAP_LAVA_OVERLAY, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
-
-      //
-      // Blit all other tiles, walls, objects
-      //
-      blit_fbo(g, FBO_MAP_FG, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
-
-      //
-      // Mask out non lit areas of the foreground
-      //
-      glBlendFunc(GL_DST_COLOR, GL_ZERO);
-      level_blit_light(g, v, l, WHITE);
-    }
-    blit_fbo_unbind();
-  }
-
-  //
-  // Blit things that are always shown (regardless of debug mode) once seen (and popups)
-  //
-  blit_fbo_bind(FBO_FULL_SCREEN_VISIBLE_TILES);
-  {
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    blit_fbo(g, FBO_MAP_FG_OVERLAY, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
-  }
-  blit_fbo_unbind();
-
   //
   // Combine the FBOs into the final map
   //
-  blit_fbo_bind(FBO_FULL_SCREEN_FINAL);
-  {
-    GLCOLOR(WHITE);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    blit_fbo(g, FBO_FULL_SCREEN_PREVIOUSLY_SEEN_TILES);
-    blit_fbo(g, FBO_FULL_SCREEN_VISIBLE_TILES);
-  }
-  blit_fbo_unbind();
+  glBlendFunc(GL_ONE, GL_ZERO);
+  blit_fbo(g, FBO_FULL_SCREEN_LEVEL_BELOW, GRAY50);
+  glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+  blit_fbo(g, FBO_FULL_SCREEN_LEVEL_CURR, WHITE);
 
-  if (compiler_unused) {
-    sdl_fbo_dump(g, FBO_FULL_SCREEN_FINAL, "FBO_FULL_SCREEN_FINAL");
-  }
+  //  sdl_fbo_dump(g, FBO_FULL_SCREEN_LEVEL_CURR, "FBO_FULL_SCREEN_LEVEL_CURR");
 }

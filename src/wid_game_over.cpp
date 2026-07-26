@@ -461,7 +461,7 @@ static void game_display_game_over(Gamep g)
   glBlendFunc(GL_ONE, GL_ONE);
 
   blit_init();
-  blit_fbo(g, FBO_FLAMES, tl.x, tl.y, br.x, br.y);
+  blit_fbo(g, FBO_FLAMES, tl.x, tl.y, br.x, br.y, WHITE);
   blit_flush();
 
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -471,7 +471,7 @@ static void game_display_game_over(Gamep g)
   blit_flush();
 
   blit_init();
-  blit_fbo(g, FBO_SKULLS, tl.x, tl.y, br.x, br.y);
+  blit_fbo(g, FBO_SKULLS, tl.x, tl.y, br.x, br.y, WHITE);
   blit_flush();
 }
 

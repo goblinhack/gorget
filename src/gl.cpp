@@ -294,6 +294,8 @@ static void gl_init_fbo_(FboEnum fbo, GLuint *render_buf_id, GLuint *fbo_id, GLu
     case FBO_MAP_LIGHT :
     case FBO_FULL_SCREEN_PREVIOUSLY_SEEN_TILES :
     case FBO_FULL_SCREEN_VISIBLE_TILES :
+    case FBO_FULL_SCREEN_LEVEL_CURR :
+    case FBO_FULL_SCREEN_LEVEL_BELOW :
     case FBO_FULL_SCREEN_WID :
     case FBO_FULL_SCREEN_FINAL :
     case FBO_FLAMES :
@@ -579,6 +581,8 @@ void fbo_get_size(Gamep g, FboEnum fbo, int &w, int &h)
       break;
     case FBO_FULL_SCREEN_PREVIOUSLY_SEEN_TILES :
     case FBO_FULL_SCREEN_VISIBLE_TILES :
+    case FBO_FULL_SCREEN_LEVEL_CURR :
+    case FBO_FULL_SCREEN_LEVEL_BELOW :
     case FBO_FULL_SCREEN_WID :
     case FBO_FULL_SCREEN_FINAL :
       w = game_window_pix_width_get(g);
@@ -605,7 +609,7 @@ void fbo_get_size(Gamep g, FboEnum fbo, int &w, int &h)
 
 void fbo_get_curr_size(Gamep g, int &w, int &h) { fbo_get_size(g, fbo_last, w, h); }
 
-void blit_fbo(Gamep g, FboEnum fbo)
+void blit_fbo(Gamep g, FboEnum fbo, color c)
 {
   TRACE_DEBUG();
 
@@ -613,16 +617,16 @@ void blit_fbo(Gamep g, FboEnum fbo)
   int tex_height = 0;
   fbo_get_size(g, fbo, tex_width, tex_height);
   blit_init();
-  blit(g_fbo_tex_id[ fbo ], 0.0, 1.0, 1.0, 0.0, 0, 0, tex_width, tex_height, WHITE);
+  blit(g_fbo_tex_id[ fbo ], 0.0, 1.0, 1.0, 0.0, 0, 0, tex_width, tex_height, c);
   blit_flush();
 }
 
-void blit_fbo(Gamep g, FboEnum fbo, int tl_x, int tl_y, int br_x, int br_y)
+void blit_fbo(Gamep g, FboEnum fbo, int tl_x, int tl_y, int br_x, int br_y, color c)
 {
   TRACE_DEBUG();
 
   blit_init();
-  blit(g_fbo_tex_id[ fbo ], 0.0, 1.0, 1.0, 0.0, tl_x, tl_y, br_x, br_y, WHITE);
+  blit(g_fbo_tex_id[ fbo ], 0.0, 1.0, 1.0, 0.0, tl_x, tl_y, br_x, br_y, c);
   blit_flush();
 }
 
