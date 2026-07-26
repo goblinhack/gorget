@@ -64,7 +64,7 @@
     auto sub_it = thing_submerged_pct(it);
     auto sub_me = thing_submerged_pct(me);
 
-    if (sub_it && sub_me) {
+    if ((sub_it != 0) && (sub_me != 0)) {
       if (sub_it >= sub_me) {
         return false;
       }

@@ -296,7 +296,7 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
     }
 
     if (tries < 100) {
-      if (l->info.on_path_entrance_to_exit[ to.x ][ to.y ] == 0u) {
+      if (l->info.on_path_entrance_to_exit[ to.x ][ to.y ] == 0U) {
         THING_DBG(g, v, l, me, "teleport, no; not on safe path");
         continue;
       }
@@ -330,7 +330,7 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
           continue;
         }
 
-        if (l->info.on_path_entrance_to_exit[ to.x ][ to.y ] == 0u) {
+        if (l->info.on_path_entrance_to_exit[ to.x ][ to.y ] == 0U) {
           THING_DBG(g, v, l, me, "teleport, no; not on safe path");
           continue;
         }

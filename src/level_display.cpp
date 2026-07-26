@@ -14,7 +14,6 @@
 #include "my_level.hpp"
 #include "my_level_inlines.hpp"
 #include "my_main.hpp"
-#include "my_sdl_proto.hpp"
 #include "my_spoint.hpp"
 #include "my_thing.hpp"
 #include "my_thing_callbacks.hpp"
@@ -25,7 +24,6 @@
 #include "my_wid.hpp"
 
 #include <cstdint>
-#include <utility>
 
 static void level_blit_light(Gamep g, Levelsp v, Levelp l, color c)
 {
@@ -296,7 +294,7 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp level_above, Levelp 
           case FBO_MAP_LAVA_OVERLAY :
             g_monochrome = false;
 
-            if (level_above) {
+            if (level_above != nullptr) {
               display_tile = level_is_lava_bool(g, v, l, p);
             } else {
               if (level_has_seen_cached(g, v, l, p)) {
@@ -497,7 +495,7 @@ static void level_display_do(Gamep g, Levelsp v, Levelp level_above, Levelp l)
 
   gl_enter_2d_mode(g, game_map_fbo_width_get(g), game_map_fbo_height_get(g));
 
-  if (! level_above) {
+  if (level_above == nullptr) {
     level_display_fbo(g, v, level_above, l, FBO_MAP_BG_PREVIOUSLY_SEEN_TILES);
     // sdl_fbo_dump(g, FBO_MAP_BG_PREVIOUSLY_SEEN_TILES, "FBO_MAP_BG_PREVIOUSLY_SEEN_TILES");
   }
@@ -511,7 +509,7 @@ static void level_display_do(Gamep g, Levelsp v, Levelp level_above, Levelp l)
   level_display_fbo(g, v, level_above, l, FBO_MAP_FG);
   // sdl_fbo_dump(g, FBO_MAP_FG, "FBO_MAP_FG");
 
-  if (! level_above) {
+  if (level_above == nullptr) {
     level_display_fbo(g, v, level_above, l, FBO_MAP_FG_OVERLAY);
     // sdl_fbo_dump(g, FBO_MAP_FG_OVERLAY, "FBO_MAP_FG_OVERLAY");
   }
@@ -618,7 +616,7 @@ static void level_display_do(Gamep g, Levelsp v, Levelp level_above, Levelp l)
     blit_fbo_unbind();
   }
 
-  if (level_above) {
+  if (level_above != nullptr) {
     blit_fbo_bind(FBO_FULL_SCREEN_LEVEL_BELOW);
   } else {
     blit_fbo_bind(FBO_FULL_SCREEN_LEVEL_CURR);
@@ -668,7 +666,7 @@ void level_display(Gamep g, Levelsp v, Levelp l)
   // Get the next level for falling into and displaying under chasms.
   //
   auto *level_below = level_select_get_next_level_down(g, v, l);
-  if (level_below) {
+  if (level_below != nullptr) {
     level_display_do(g, v, l, level_below);
   }
 
