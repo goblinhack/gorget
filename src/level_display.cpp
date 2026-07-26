@@ -295,8 +295,13 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp level_above, Levelp 
 
           case FBO_MAP_LAVA_OVERLAY :
             g_monochrome = false;
-            if (level_has_seen_cached(g, v, l, p)) {
+
+            if (level_above) {
               display_tile = level_is_lava_bool(g, v, l, p);
+            } else {
+              if (level_has_seen_cached(g, v, l, p)) {
+                display_tile = level_is_lava_bool(g, v, l, p);
+              }
             }
             break;
 
@@ -368,7 +373,6 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp level_above, Levelp 
         }
 
         if (display_tile) {
-#if 1
           if (level_above != nullptr) {
             if (level_is_chasm(g, v, level_above, p) != nullptr) {
               //
@@ -381,7 +385,6 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp level_above, Levelp 
               display_tile = false;
             }
           }
-#endif
 
           if (display_tile) {
             //
