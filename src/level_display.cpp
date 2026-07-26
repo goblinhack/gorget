@@ -533,8 +533,6 @@ static void level_display_do(Gamep g, Levelsp v, Levelp level_above, Levelp l)
     //
     blit_fbo_bind(FBO_FULL_SCREEN_VISIBLE_TILES);
     {
-      gl_clear();
-
       //
       // Blit the floor tiles, water, lava, ripples
       //
@@ -564,8 +562,6 @@ static void level_display_do(Gamep g, Levelsp v, Levelp level_above, Levelp l)
     //
     blit_fbo_bind(FBO_FULL_SCREEN_PREVIOUSLY_SEEN_TILES);
     {
-      gl_clear();
-
       //
       // Blit the floor tiles, water, lava, ripples
       //
@@ -585,8 +581,6 @@ static void level_display_do(Gamep g, Levelsp v, Levelp level_above, Levelp l)
     //
     blit_fbo_bind(FBO_FULL_SCREEN_VISIBLE_TILES);
     {
-      gl_clear();
-
       //
       // Blit the floor tiles, water, lava, ripples
       //
@@ -632,6 +626,7 @@ static void level_display_do(Gamep g, Levelsp v, Levelp level_above, Levelp l)
 
   glBlendFunc(GL_ONE, GL_ZERO);
   blit_fbo(g, FBO_FULL_SCREEN_PREVIOUSLY_SEEN_TILES, WHITE);
+
   glBlendFunc(GL_ONE_MINUS_DST_ALPHA, GL_ONE);
   blit_fbo(g, FBO_FULL_SCREEN_VISIBLE_TILES, WHITE);
 
@@ -698,13 +693,51 @@ void level_blit(Gamep g)
 {
   TRACE_DEBUG();
 
+  auto *v = game_levels_get(g);
+  if (v == nullptr) {
+    gl_clear();
+    return;
+  }
+
+  auto *l = thing_player_level(g);
+  if (l == nullptr) {
+    gl_clear();
+    return;
+  }
+
+  auto c = GRAY50;
+
+  switch (level_to_biome(g, v, l)) {
+    case BIOME_DUNGEON : break;
+    case BIOME_BOGLAND :
+      c   = GREEN;
+      c.b = 200;
+      break;
+    case BIOME_NETHERVOID :
+      c   = GRAY20;
+      c.b = 200;
+      break;
+    case BIOME_GRAVEYARD :
+      c   = GREEN;
+      c.b = 200;
+      break;
+    case BIOME_UNDERHELL :
+      c   = RED;
+      c.b = 200;
+      break;
+    case BIOME_NONE :     [[fallthrough]];
+    case BIOME_ENUM_MAX : break;
+  }
+
   //
   // Combine the FBOs into the final map
   //
   glBlendFunc(GL_ONE, GL_ZERO);
-  blit_fbo(g, FBO_FULL_SCREEN_LEVEL_BELOW, GRAY50);
+  blit_fbo(g, FBO_FULL_SCREEN_LEVEL_BELOW, c);
+
   glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
   blit_fbo(g, FBO_FULL_SCREEN_LEVEL_CURR, WHITE);
 
+  //  sdl_fbo_dump(g, FBO_FULL_SCREEN_LEVEL_BELOW, "FBO_FULL_SCREEN_LEVEL_BELOW");
   //  sdl_fbo_dump(g, FBO_FULL_SCREEN_LEVEL_CURR, "FBO_FULL_SCREEN_LEVEL_CURR");
 }

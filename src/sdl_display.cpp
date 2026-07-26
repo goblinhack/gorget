@@ -31,8 +31,6 @@ void sdl_display(Gamep g)
 
   blit_fbo_bind(FBO_FULL_SCREEN_FINAL);
   {
-    gl_clear();
-
     //
     // Blit the game map to FBOs
     //
