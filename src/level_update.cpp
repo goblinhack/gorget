@@ -112,14 +112,11 @@ void level_update_visibility(Gamep g, Levelsp v, Levelp l)
     update_per_tile_visibility = true;
   }
 
-  //
-  // Check what the player can see. This is used by raycasting.
-  //
-  level_has_seen_update(g, v, l);
-
   if (update_per_pixel_visibility) {
     //
     // We only care about pixel moves.
+    //
+    // This does per thing lighting and also raycasting for the player.
     //
     level_light_calculate_all(g, v, l);
   }
@@ -140,6 +137,12 @@ void level_update_visibility(Gamep g, Levelsp v, Levelp l)
     //
     level_minimaps_update(g, v, l);
   }
+
+  //
+  // Need to update this prior to displaying the tiles so the obscured tiles are shown correctly.
+  // If this is not done, then a tile can appear to flash, before being partially obscured.
+  //
+  level_has_seen_update(g, v, l);
 }
 
 //

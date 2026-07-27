@@ -33,7 +33,7 @@ void sdl_display(Gamep g)
   blit_fbo_bind(FBO_FULL_SCREEN_FINAL);
   {
     //
-    // Blit the game map to FBOs
+    // Blit the levels
     //
     level_blit(g);
 
@@ -45,7 +45,7 @@ void sdl_display(Gamep g)
   }
   blit_fbo_unbind();
 
-  glBlendFunc(GL_ONE, GL_ZERO);
+  glBlendFunc(GL_ONE, GL_ZERO); // No need to gl_clear
   blit_fbo(g, FBO_FULL_SCREEN_FINAL, WHITE);
 
   //

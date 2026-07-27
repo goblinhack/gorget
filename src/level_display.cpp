@@ -14,6 +14,7 @@
 #include "my_level.hpp"
 #include "my_level_inlines.hpp"
 #include "my_main.hpp"
+#include "my_sdl_proto.hpp" // NOLINT
 #include "my_spoint.hpp"
 #include "my_thing.hpp"
 #include "my_thing_callbacks.hpp"
@@ -430,7 +431,7 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp level_above, Levelp 
 }
 
 //
-// Render the level to an FBO
+// Render the level to a specific FBO. This will involve filtering based on the FBO.
 //
 static void level_display_fbo(Gamep g, Levelsp v, Levelp level_above, Levelp l, FboEnum fbo)
 {
@@ -453,6 +454,9 @@ static void level_display_fbo(Gamep g, Levelsp v, Levelp level_above, Levelp l, 
     level_display_fbo_do(g, v, level_above, l, fbo);
     blit_flush();
 
+    //
+    // Blit the cursor if needed
+    //
     if (fbo == FBO_MAP_FG_OVERLAY) {
       if (wid_over == nullptr) {
         switch (game_state(g)) {
@@ -483,13 +487,23 @@ static void level_display_fbo(Gamep g, Levelsp v, Levelp level_above, Levelp l, 
           case GAME_STATE_ENUM_MAX :     break;
         }
       }
+
+      //
+      // Popups (like damage to the player)
+      //
       game_popups_display(g, v, l);
     }
   }
   blit_fbo_unbind();
 }
 
-static void level_display_do(Gamep g, Levelsp v, Levelp level_above, Levelp l)
+//
+// Display the entire level into either
+//
+// FBO_FULL_SCREEN_LEVEL_CURR - the current player level
+// FBO_FULL_SCREEN_LEVEL_BELOW - the level below
+//
+static void level_display_fbos(Gamep g, Levelsp v, Levelp level_above, Levelp l)
 {
   TRACE_DEBUG();
 
@@ -582,7 +596,7 @@ static void level_display_do(Gamep g, Levelsp v, Levelp level_above, Levelp l)
       //
       // Blit the floor tiles, water, lava, ripples
       //
-      glBlendFunc(GL_ONE, GL_ZERO);
+      glBlendFunc(GL_ONE, GL_ZERO); // no need to gl_clear
       blit_fbo(g, FBO_MAP_BG_FLOOR_WATER_LAVA, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y, WHITE);
 
       //
@@ -604,41 +618,112 @@ static void level_display_do(Gamep g, Levelsp v, Levelp level_above, Levelp l)
       level_blit_light(g, v, l, COLOR_NONE);
     }
     blit_fbo_unbind();
+  }
 
+  //
+  // Blit things that are always shown (regardless of debug mode) once seen (and popups)
+  //
+  blit_fbo_bind(FBO_FULL_SCREEN_VISIBLE_TILES);
+  {
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    blit_fbo(g, FBO_MAP_FG_OVERLAY, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y, WHITE);
+  }
+  blit_fbo_unbind();
+
+  //
+  // Blit to the level below and then next time we enter here, the level above on top of that.
+  // There are holes in the level above (chasms) that allow you to see the level below through them.
+  //
+  if (level_above != nullptr) {
     //
-    // Blit things that are always shown (regardless of debug mode) once seen (and popups)
+    // This is the level below. We only need to show visibile tiles.
     //
-    blit_fbo_bind(FBO_FULL_SCREEN_VISIBLE_TILES);
-    {
-      glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-      blit_fbo(g, FBO_MAP_FG_OVERLAY, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y, WHITE);
+    blit_fbo_bind(FBO_FULL_SCREEN_LEVEL_BELOW);
+    glBlendFunc(GL_ONE, GL_ZERO); // no need to gl_clear
+    blit_fbo(g, FBO_FULL_SCREEN_VISIBLE_TILES, WHITE);
+    blit_fbo_unbind();
+  } else {
+    //
+    // This is the level above.
+    //
+    blit_fbo_bind(FBO_FULL_SCREEN_LEVEL_CURR);
+    glBlendFunc(GL_ONE, GL_ZERO); // no need to gl_clear
+
+    if (level_is_level_select(g, v, l)) {
+      //
+      // Level selection has no hidden tiles
+      //
+      blit_fbo(g, FBO_FULL_SCREEN_VISIBLE_TILES, WHITE);
+    } else {
+      //
+      // Show the previously seen tiles and then the current visible ones
+      //
+      blit_fbo(g, FBO_FULL_SCREEN_PREVIOUSLY_SEEN_TILES, WHITE);
+
+      //
+      // Overlay the visible tiles
+      //
+      glBlendFunc(GL_ONE_MINUS_DST_ALPHA, GL_ONE);
+      blit_fbo(g, FBO_FULL_SCREEN_VISIBLE_TILES, WHITE);
     }
     blit_fbo_unbind();
   }
-
-  if (level_above != nullptr) {
-    blit_fbo_bind(FBO_FULL_SCREEN_LEVEL_BELOW);
-  } else {
-    blit_fbo_bind(FBO_FULL_SCREEN_LEVEL_CURR);
-  }
-
-  if (level_is_level_select(g, v, l)) {
-    glBlendFunc(GL_ONE, GL_ZERO);
-    blit_fbo(g, FBO_FULL_SCREEN_VISIBLE_TILES, WHITE);
-  } else {
-    glBlendFunc(GL_ONE, GL_ZERO);
-    blit_fbo(g, FBO_FULL_SCREEN_PREVIOUSLY_SEEN_TILES, WHITE);
-
-    glBlendFunc(GL_ONE_MINUS_DST_ALPHA, GL_ONE);
-    blit_fbo(g, FBO_FULL_SCREEN_VISIBLE_TILES, WHITE);
-  }
-
-  blit_fbo_unbind();
 
   // sdl_fbo_dump(g, FBO_FULL_SCREEN_LEVEL_CURR, "FBO_FULL_SCREEN_LEVEL_CURR");
   // sdl_fbo_dump(g, FBO_FULL_SCREEN_LEVEL_BELOW, "FBO_FULL_SCREEN_LEVEL_BELOW");
   // sdl_fbo_dump(g, FBO_FULL_SCREEN_PREVIOUSLY_SEEN_TILES, "FBO_FULL_SCREEN_PREVIOUSLY_SEEN_TILES");
   // sdl_fbo_dump(g, FBO_FULL_SCREEN_VISIBLE_TILES, "FBO_FULL_SCREEN_VISIBLE_TILES");
+}
+
+//
+// Merge the level below and the one above into a single FBO we can blit each loop
+//
+static void level_display_merge(Gamep g, Levelsp v, Levelp l)
+{
+  TRACE_DEBUG();
+
+  //
+  // Give a tint to the level below
+  //
+  auto c = GRAY50;
+
+  switch (level_to_biome(g, v, l)) {
+    case BIOME_DUNGEON : break;
+    case BIOME_BOGLAND :
+      c   = GREEN;
+      c.b = 200;
+      break;
+    case BIOME_NETHERVOID :
+      c   = GRAY20;
+      c.b = 200;
+      break;
+    case BIOME_GRAVEYARD :
+      c   = GREEN;
+      c.b = 200;
+      break;
+    case BIOME_UNDERHELL :
+      c   = RED;
+      c.b = 200;
+      break;
+    case BIOME_NONE :     [[fallthrough]];
+    case BIOME_ENUM_MAX : break;
+  }
+
+  blit_fbo_bind(FBO_FULL_SCREEN_LEVEL_MERGED);
+  {
+    //
+    // Combine the FBOs into the final map
+    //
+    glBlendFunc(GL_ONE, GL_ZERO); // no need to gl_clear
+    blit_fbo(g, FBO_FULL_SCREEN_LEVEL_BELOW, c);
+
+    glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+    blit_fbo(g, FBO_FULL_SCREEN_LEVEL_CURR, WHITE);
+  }
+  blit_fbo_unbind();
+
+  //  sdl_fbo_dump(g, FBO_FULL_SCREEN_LEVEL_BELOW, "FBO_FULL_SCREEN_LEVEL_BELOW");
+  //  sdl_fbo_dump(g, FBO_FULL_SCREEN_LEVEL_CURR, "FBO_FULL_SCREEN_LEVEL_CURR");
 }
 
 void level_display(Gamep g, Levelsp v, Levelp l)
@@ -680,11 +765,13 @@ void level_display(Gamep g, Levelsp v, Levelp l)
     //
     auto *level_below = level_select_get_next_level_down(g, v, l);
     if (level_below != nullptr) {
-      level_display_do(g, v, l, level_below);
+      level_display_fbos(g, v, l, level_below);
     }
   }
 
-  level_display_do(g, v, nullptr, l);
+  level_display_fbos(g, v, nullptr, l);
+
+  level_display_merge(g, v, l);
 
   //
   // Save the old pixel offset for restoring it after zoom toggling
@@ -705,51 +792,9 @@ void level_blit(Gamep g)
 {
   TRACE_DEBUG();
 
-  auto *v = game_levels_get(g);
-  if (v == nullptr) {
-    gl_clear();
-    return;
-  }
-
-  auto *l = thing_player_level(g);
-  if (l == nullptr) {
-    gl_clear();
-    return;
-  }
-
-  auto c = GRAY50;
-
-  switch (level_to_biome(g, v, l)) {
-    case BIOME_DUNGEON : break;
-    case BIOME_BOGLAND :
-      c   = GREEN;
-      c.b = 200;
-      break;
-    case BIOME_NETHERVOID :
-      c   = GRAY20;
-      c.b = 200;
-      break;
-    case BIOME_GRAVEYARD :
-      c   = GREEN;
-      c.b = 200;
-      break;
-    case BIOME_UNDERHELL :
-      c   = RED;
-      c.b = 200;
-      break;
-    case BIOME_NONE :     [[fallthrough]];
-    case BIOME_ENUM_MAX : break;
-  }
-
   //
-  // Combine the FBOs into the final map
+  // Blit the merged lower and current level in one
   //
-  glBlendFunc(GL_ONE, GL_ZERO);
-  blit_fbo(g, FBO_FULL_SCREEN_LEVEL_BELOW, c);
-
-  glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
-  blit_fbo(g, FBO_FULL_SCREEN_LEVEL_CURR, WHITE);
-
-  //  sdl_fbo_dump(g, FBO_FULL_SCREEN_LEVEL_BELOW, "FBO_FULL_SCREEN_LEVEL_BELOW");
-  //  sdl_fbo_dump(g, FBO_FULL_SCREEN_LEVEL_CURR, "FBO_FULL_SCREEN_LEVEL_CURR");
+  glBlendFunc(GL_ONE, GL_ZERO); // no need to gl_clear
+  blit_fbo(g, FBO_FULL_SCREEN_LEVEL_MERGED, WHITE);
 }

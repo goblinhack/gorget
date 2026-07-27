@@ -228,6 +228,7 @@ extern PFNGLDEBUGMESSAGECALLBACKPROC    glDebugMessageCallback_EXT;
       list_macro(FBO_FULL_SCREEN_VISIBLE_TILES, "FBO_FULL_SCREEN_VISIBLE_TILES"),                 /* newline */                                 \
       list_macro(FBO_FULL_SCREEN_LEVEL_CURR, "FBO_FULL_SCREEN_LEVEL_CURR"),                       /* newline */                                 \
       list_macro(FBO_FULL_SCREEN_LEVEL_BELOW, "FBO_FULL_SCREEN_LEVEL_BELOW"),                     /* newline */                                 \
+      list_macro(FBO_FULL_SCREEN_LEVEL_MERGED, "FBO_FULL_SCREEN_LEVEL_MERGED"),                   /* newline */                                 \
       list_macro(FBO_MINIMAP_LEVEL, "FBO_MINIMAP_LEVEL"),                                         /* newline */                                 \
       list_macro(FBO_FULL_SCREEN_WID, "FBO_FULL_SCREEN_WID"),                                     /* newline */                                 \
       list_macro(FBO_SPRITE1, "FBO_SPRITE1"),                                                     /* newline */                                 \

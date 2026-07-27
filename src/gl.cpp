@@ -296,6 +296,7 @@ static void gl_init_fbo_(FboEnum fbo, GLuint *render_buf_id, GLuint *fbo_id, GLu
     case FBO_FULL_SCREEN_VISIBLE_TILES :
     case FBO_FULL_SCREEN_LEVEL_CURR :
     case FBO_FULL_SCREEN_LEVEL_BELOW :
+    case FBO_FULL_SCREEN_LEVEL_MERGED :
     case FBO_FULL_SCREEN_WID :
     case FBO_FULL_SCREEN_FINAL :
     case FBO_FLAMES :
@@ -583,6 +584,7 @@ void fbo_get_size(Gamep g, FboEnum fbo, int &w, int &h)
     case FBO_FULL_SCREEN_VISIBLE_TILES :
     case FBO_FULL_SCREEN_LEVEL_CURR :
     case FBO_FULL_SCREEN_LEVEL_BELOW :
+    case FBO_FULL_SCREEN_LEVEL_MERGED :
     case FBO_FULL_SCREEN_WID :
     case FBO_FULL_SCREEN_FINAL :
       w = game_window_pix_width_get(g);
