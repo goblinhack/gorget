@@ -91,13 +91,6 @@ void level_update_visibility(Gamep g, Levelsp v, Levelp l)
     update_per_pixel_visibility = true;
   }
 
-  if (update_per_pixel_visibility) {
-    //
-    // We only care about pixel moves.
-    //
-    level_light_calculate_all(g, v, l);
-  }
-
   //
   // Per pixel visibility changes
   //
@@ -119,12 +112,21 @@ void level_update_visibility(Gamep g, Levelsp v, Levelp l)
     update_per_tile_visibility = true;
   }
 
-  if (update_per_tile_visibility) {
+  if (update_per_pixel_visibility || update_per_tile_visibility) {
     //
-    // Per tick check what the player can see.
+    // Check what the player can see. This is used by raycasting.
     //
     level_has_seen_update(g, v, l);
+  }
 
+  if (update_per_pixel_visibility) {
+    //
+    // We only care about pixel moves.
+    //
+    level_light_calculate_all(g, v, l);
+  }
+
+  if (update_per_tile_visibility) {
     //
     // What can monsters hear?
     //
