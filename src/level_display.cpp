@@ -646,6 +646,15 @@ void level_display(Gamep g, Levelsp v, Levelp l)
   TRACE_DEBUG();
 
   //
+  // Do we need to update the frame buffer as rapidly as the event loop?
+  //
+  static uint32_t update {};
+  if (! time_have_x_hundredths_passed_since(1, update)) {
+    return;
+  }
+  update = time_ms();
+
+  //
   // Set later
   //
   v->cursor_visible = false;
