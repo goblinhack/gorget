@@ -600,7 +600,7 @@ auto Game::save(const std::string &file_to_save) -> bool
   //
   auto *ofile = fopen(file_to_save.c_str(), "wb");
   if (ofile == nullptr) {
-    ERR("failed to open %s for writing: %s", file_to_save.c_str(), strerror(errno));
+    ERR("failed to open '%s' for writing save file: %s", file_to_save.c_str(), strerror(errno));
     wid_progress_bar_destroy(this);
     return false;
   }
@@ -700,11 +700,23 @@ auto Game::save_config() -> bool
 
   auto          filename = saved_dir + "config";
   std::ofstream out(filename, std::ios::binary);
-  if (! out) {
-    ERR("failed to open %s for writing: %s", filename.c_str(), strerror(errno));
+
+  if (out) {
+    log("opened '%s' for writing", filename.c_str());
+    const Config &c = game->config;
+    out << bits(c);
+    return true;
+  }
+
+  auto          filename_fallback = "config";
+  std::ofstream out_fallback(filename_fallback, std::ios::binary);
+
+  if (! out_fallback) {
+    ERR("failed to open '%s' or '%s' for writing: %s", filename.c_str(), filename_fallback, strerror(errno));
     return false;
   }
-  log("opened [%s] for writing", filename.c_str());
+
+  log("opened fallback of '%s' for writing", filename_fallback);
   const Config &c = game->config;
   out << bits(c);
   return true;
