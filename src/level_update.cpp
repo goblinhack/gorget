@@ -112,12 +112,10 @@ void level_update_visibility(Gamep g, Levelsp v, Levelp l)
     update_per_tile_visibility = true;
   }
 
-  if (update_per_pixel_visibility || update_per_tile_visibility) {
-    //
-    // Check what the player can see. This is used by raycasting.
-    //
-    level_has_seen_update(g, v, l);
-  }
+  //
+  // Check what the player can see. This is used by raycasting.
+  //
+  level_has_seen_update(g, v, l);
 
   if (update_per_pixel_visibility) {
     //
