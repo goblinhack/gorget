@@ -94,6 +94,8 @@ static void tp_brazier_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEv
     (void) thing_spawn(g, v, l, tp_first(is_smoke), me);
   }
 
+  thing_sound_play(g, v, l, me, "brazier");
+
   auto *player = thing_player(g);
   if (player != nullptr) {
     THING_DBG(g, v, l, me, "brazier is dead");

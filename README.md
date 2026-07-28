@@ -32,3 +32,5 @@ Sound effects
 - Slime by Zuzek06 [found here](https://freesound.org/people/Zuzek06/)
 - Underhell ambience [found here](https://freesound.org/people/looplicator/)
 - Water splash by launemax [found here](https://freesound.org/people/launemax/)
+- Fire sounds based on work by VlatkoBlazek [found here](https://freesound.org/people/VlatkoBlazek/)
+- Rock grind sounds based on work by guterton [found here](https://freesound.org/people/guterton.wav/)

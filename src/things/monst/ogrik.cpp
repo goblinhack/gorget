@@ -53,7 +53,7 @@ static bool tp_ogrik_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thing
   TRACE();
 
   (void) thing_spawn(g, v, l, tp_first(is_effect_attack), it);
-  thing_sound_play(g, v, l, me, "hiss");
+  thing_sound_play(g, v, l, me, "rock");
 
   TpSpecialAttack d;
 
@@ -66,6 +66,13 @@ static bool tp_ogrik_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thing
   return true;
 }
 
+static void tp_ogrik_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
+{
+  TRACE();
+
+  thing_sound_play(g, v, l, me, "rock");
+}
+
 [[nodiscard]] auto tp_load_ogrik() -> bool
 {
   auto *tp   = tp_load("ogrik"); // keep as string for scripts
@@ -76,6 +83,7 @@ static bool tp_ogrik_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thing
   thing_description_set(tp, tp_ogrik_description_get);
   thing_detail_set(tp, tp_ogrik_detail_get);
   thing_on_attacking_set(tp, tp_ogrik_on_attacking);
+  thing_on_moved_set(tp, tp_ogrik_on_moved);
   thing_on_death_set(tp, tp_ogrik_on_death);
   tp_attack_count_max_per_tick_set(tp, 1);
   tp_distance_vision_set(tp, 12);
