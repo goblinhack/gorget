@@ -386,6 +386,7 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
 
       [[fallthrough]];
 
+    case is_cursor_path_hazard :
     case is_obs_to_cursor_path :
     case is_obs_to_explosion :
     case is_obs_to_falling_onto :
