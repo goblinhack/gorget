@@ -271,6 +271,13 @@
     return false;
   }
 
+  //
+  // Avoid duplicate wait messages
+  //
+  if (level_tick_is_in_progress(g, v, l) || level_tick_begin_is_requested(g, v, l)) {
+    return true;
+  }
+
   if (level_tick_begin_requested(g, v, l, "player waiting")) {
     topcon("You wait...");
 

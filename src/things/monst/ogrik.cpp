@@ -26,10 +26,11 @@ static auto tp_ogrik_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std:
 {
   TRACE();
 
-  return                                                                                                          //
-      UI_INFO1_FMT_STR "Ogrik are an iron based lifeform that outwardly resemble large rocks.\n"                  //
-      UI_INFO2_FMT_STR "Due to their ferrous nature, they nourish themselves with blood. Preferably yours.\n"     //
-      UI_INFO3_FMT_STR "Although slow, they can easily corner the unwary and are very hard to destroy. Avoid.\n"; //
+  return                                                                                                                       //
+      UI_INFO1_FMT_STR "Ogrik are iron based lifeforms that outwardly resemble large rocks and can be mistaken for statues.\n" //
+      UI_INFO2_FMT_STR "Due to their ferrous nature, they nourish themselves with blood that they drain upon close contact.\n" //
+      UI_INFO3_FMT_STR "Although slow moving, once close, they can attack rapidly and overwhelm the unwary.\n"                 //
+      UI_INFO4_FMT_STR "Naturally, due to their tough rock-like skin, Ogrik are impervious to most attacks.\n";                //
 }
 
 static auto tp_ogrik_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at, Thingp me) -> ThingEnvironType
@@ -85,7 +86,7 @@ static void tp_ogrik_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
   thing_on_attacking_set(tp, tp_ogrik_on_attacking);
   thing_on_moved_set(tp, tp_ogrik_on_moved);
   thing_on_death_set(tp, tp_ogrik_on_death);
-  tp_attack_count_max_per_tick_set(tp, 1);
+  tp_attack_count_max_per_tick_set(tp, 2);
   tp_distance_vision_set(tp, 12);
   tp_flag_set(tp, is_able_to_crush_grass);
   tp_flag_set(tp, is_able_to_fall_sound);

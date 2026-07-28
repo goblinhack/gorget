@@ -625,8 +625,28 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 
   const int player_speed = thing_speed(g, v, l, player);
-  if (thing_move_remaining(me) < player_speed) {
+  auto      rem          = thing_move_remaining(me);
+
+  //
+  // If we have run out of moves, stop
+  //
+  if (rem < player_speed) {
     THING_DBG(g, v, l, me, "no more moves this tick, move_rem %d", thing_move_remaining(me));
+
+    //
+    // But can we attack even if we cannot move?
+    //
+    if (rem > 0) {
+      if (tp_attack_count_max_per_tick_get(thing_tp(me)) > 1) {
+        auto target = thing_monst_target(me);
+        if (level_is_attackable_by_monst(g, v, l, target) != nullptr) {
+          if (thing_attack_at(g, v, l, me, target)) {
+            THING_DBG(g, v, l, me, "in between move: attack");
+            (void) thing_move_remaining_set(g, v, l, me, 0);
+          }
+        }
+      }
+    }
     return;
   }
 
