@@ -1,4 +1,6 @@
-Work in progress.
+Currently playable and seeking feedback (goblinhack _at_ gmail _dot_ com)
+
+No bosses yet, current status is adding content.
 
 <p align="center">
 <img alt="Pixel art" src="data/pics/screenshot.1.png">
@@ -10,7 +12,8 @@ Work in progress.
 
 Music
 -----
-- Main music by the amazing Markus Heichelbech (deceased senior technician): [found here](http://nosoapradio.us)
+- Main music by the amazing C.E.McGill and
+- Markus Heichelbech (deceased senior technician): [found here](http://nosoapradio.us)
 <!-- and https://drive.google.com/drive/folders/0B_fD62tSeGaVRlBaZWJwS29JSnM -->
 
 Sound effects
