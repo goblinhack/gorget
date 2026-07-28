@@ -374,6 +374,43 @@ static void thing_display_rotated(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t
 }
 
 //
+// Low health visual
+//
+static void thing_low_health(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t_maybe_null, spoint tl, spoint br, Tilep tile, float x1, float x2,
+                             float y1, float y2, FboEnum fbo, color fg, LightPixels *light_pixels = nullptr)
+{
+  TRACE();
+
+  auto        pulse = THING_IS_HIDDEN_PULSE_ANIM_MS; // ms
+  float const mid   = pulse / 2;
+  auto const  n     = static_cast< float >(time_ms_cached() % pulse);
+  float       i     = 0;
+  uint8_t     a     = 0;
+
+  if (n == mid) {
+    i = 255;
+  } else if (n > mid) {
+    i = (n - mid) / mid;
+    i *= 100;
+    i = 255 - i;
+  } else {
+    i = n / mid;
+    i *= 100;
+    i = 155 + i;
+  }
+
+  i = std::max< float >(i, 0);
+  i = std::min< float >(i, 255);
+
+  a = static_cast< uint8_t >(i);
+
+  color c = RED;
+  c.a     = a;
+
+  tile_blit_outline_w_invis_inside(tile, x1, x2, y1, y2, tl, br, c);
+}
+
+//
 // Handle all the various lighting modes to display a thing
 //
 static void thing_display_it(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t_maybe_null, spoint tl, spoint br, Tilep tile, float x1, float x2,
@@ -413,6 +450,23 @@ static void thing_display_it(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t_mayb
   thing_display_blit(g, v, l, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg, light_pixels, is_blit_flush_per_line);
 
   //
+  // Low health visual
+  //
+  if (! thing_is_dead(t_maybe_null)) {
+    if (thing_is_player(t_maybe_null)) {
+      //
+      // If low on health, orange outline
+      //
+      auto h_max = thing_health_max(g, v, l, t_maybe_null);
+      auto h     = thing_health(g, v, l, t_maybe_null);
+
+      if (h < h_max / 4) {
+        thing_low_health(g, v, l, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg, light_pixels);
+      }
+    }
+  }
+
+  //
   // Flash red outline if hit
   //
   if (thing_is_hit(t_maybe_null) != 0) {
@@ -439,22 +493,6 @@ static void thing_display_it(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t_mayb
     fg.a               = static_cast< uint8_t >(a);
     thing_display_blit(g, v, l, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg, nullptr, false);
     return;
-  }
-
-  if (compiler_unused) {
-    if (thing_is_monst(t_maybe_null) && ! thing_is_dead(t_maybe_null)) {
-      //
-      // If low on health, orange outline
-      //
-      auto h_max = thing_health_max(g, v, l, t_maybe_null);
-      auto h     = thing_health(g, v, l, t_maybe_null);
-
-      if (h < h_max) {
-        color const c = CYAN;
-        tile_blit_outline_w_invis_inside(tile, x1, x2, y1, y2, tl, br, c);
-        return;
-      }
-    }
   }
 
   if ((thing_is_hot(t_maybe_null) != 0) && ! thing_is_dead(t_maybe_null)) {
