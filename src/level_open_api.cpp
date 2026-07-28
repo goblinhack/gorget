@@ -884,6 +884,1200 @@
   return level_open(g, v, l, is_unused1, p);
 }
 
+[[nodiscard]] auto level_open_is_unused2(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused2, p);
+}
+
+[[nodiscard]] auto level_open_is_unused3(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused3, p);
+}
+
+[[nodiscard]] auto level_open_is_unused4(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused4, p);
+}
+
+[[nodiscard]] auto level_open_is_unused5(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused5, p);
+}
+
+[[nodiscard]] auto level_open_is_unused6(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused6, p);
+}
+
+[[nodiscard]] auto level_open_is_unused7(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused7, p);
+}
+
+[[nodiscard]] auto level_open_is_unused8(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused8, p);
+}
+
+[[nodiscard]] auto level_open_is_unused9(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused9, p);
+}
+
+[[nodiscard]] auto level_open_is_unused10(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused10, p);
+}
+
+[[nodiscard]] auto level_open_is_unused11(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused11, p);
+}
+
+[[nodiscard]] auto level_open_is_unused12(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused12, p);
+}
+
+[[nodiscard]] auto level_open_is_unused13(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused13, p);
+}
+
+[[nodiscard]] auto level_open_is_unused14(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused14, p);
+}
+
+[[nodiscard]] auto level_open_is_unused15(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused15, p);
+}
+
+[[nodiscard]] auto level_open_is_unused16(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused16, p);
+}
+
+[[nodiscard]] auto level_open_is_unused17(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused17, p);
+}
+
+[[nodiscard]] auto level_open_is_unused18(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused18, p);
+}
+
+[[nodiscard]] auto level_open_is_unused19(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused19, p);
+}
+
+[[nodiscard]] auto level_open_is_unused20(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused20, p);
+}
+
+[[nodiscard]] auto level_open_is_unused21(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused21, p);
+}
+
+[[nodiscard]] auto level_open_is_unused22(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused22, p);
+}
+
+[[nodiscard]] auto level_open_is_unused23(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused23, p);
+}
+
+[[nodiscard]] auto level_open_is_unused24(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused24, p);
+}
+
+[[nodiscard]] auto level_open_is_unused25(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused25, p);
+}
+
+[[nodiscard]] auto level_open_is_unused26(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused26, p);
+}
+
+[[nodiscard]] auto level_open_is_unused27(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused27, p);
+}
+
+[[nodiscard]] auto level_open_is_unused28(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused28, p);
+}
+
+[[nodiscard]] auto level_open_is_unused29(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused29, p);
+}
+
+[[nodiscard]] auto level_open_is_unused30(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused30, p);
+}
+
+[[nodiscard]] auto level_open_is_unused31(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused31, p);
+}
+
+[[nodiscard]] auto level_open_is_unused32(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused32, p);
+}
+
+[[nodiscard]] auto level_open_is_unused33(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused33, p);
+}
+
+[[nodiscard]] auto level_open_is_unused34(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused34, p);
+}
+
+[[nodiscard]] auto level_open_is_unused35(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused35, p);
+}
+
+[[nodiscard]] auto level_open_is_unused36(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused36, p);
+}
+
+[[nodiscard]] auto level_open_is_unused37(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused37, p);
+}
+
+[[nodiscard]] auto level_open_is_unused38(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused38, p);
+}
+
+[[nodiscard]] auto level_open_is_unused39(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused39, p);
+}
+
+[[nodiscard]] auto level_open_is_unused40(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused40, p);
+}
+
+[[nodiscard]] auto level_open_is_unused41(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused41, p);
+}
+
+[[nodiscard]] auto level_open_is_unused42(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused42, p);
+}
+
+[[nodiscard]] auto level_open_is_unused43(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused43, p);
+}
+
+[[nodiscard]] auto level_open_is_unused44(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused44, p);
+}
+
+[[nodiscard]] auto level_open_is_unused45(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused45, p);
+}
+
+[[nodiscard]] auto level_open_is_unused46(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused46, p);
+}
+
+[[nodiscard]] auto level_open_is_unused47(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused47, p);
+}
+
+[[nodiscard]] auto level_open_is_unused48(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused48, p);
+}
+
+[[nodiscard]] auto level_open_is_unused49(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused49, p);
+}
+
+[[nodiscard]] auto level_open_is_unused50(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused50, p);
+}
+
+[[nodiscard]] auto level_open_is_unused51(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused51, p);
+}
+
+[[nodiscard]] auto level_open_is_unused52(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused52, p);
+}
+
+[[nodiscard]] auto level_open_is_unused53(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused53, p);
+}
+
+[[nodiscard]] auto level_open_is_unused54(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused54, p);
+}
+
+[[nodiscard]] auto level_open_is_unused55(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused55, p);
+}
+
+[[nodiscard]] auto level_open_is_unused56(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused56, p);
+}
+
+[[nodiscard]] auto level_open_is_unused57(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused57, p);
+}
+
+[[nodiscard]] auto level_open_is_unused58(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused58, p);
+}
+
+[[nodiscard]] auto level_open_is_unused59(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused59, p);
+}
+
+[[nodiscard]] auto level_open_is_unused60(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused60, p);
+}
+
+[[nodiscard]] auto level_open_is_unused61(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused61, p);
+}
+
+[[nodiscard]] auto level_open_is_unused62(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused62, p);
+}
+
+[[nodiscard]] auto level_open_is_unused63(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused63, p);
+}
+
+[[nodiscard]] auto level_open_is_unused64(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused64, p);
+}
+
+[[nodiscard]] auto level_open_is_unused65(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused65, p);
+}
+
+[[nodiscard]] auto level_open_is_unused66(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused66, p);
+}
+
+[[nodiscard]] auto level_open_is_unused67(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused67, p);
+}
+
+[[nodiscard]] auto level_open_is_unused68(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused68, p);
+}
+
+[[nodiscard]] auto level_open_is_unused69(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused69, p);
+}
+
+[[nodiscard]] auto level_open_is_unused70(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused70, p);
+}
+
+[[nodiscard]] auto level_open_is_unused71(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused71, p);
+}
+
+[[nodiscard]] auto level_open_is_unused72(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused72, p);
+}
+
+[[nodiscard]] auto level_open_is_unused73(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused73, p);
+}
+
+[[nodiscard]] auto level_open_is_unused74(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused74, p);
+}
+
+[[nodiscard]] auto level_open_is_unused75(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused75, p);
+}
+
+[[nodiscard]] auto level_open_is_unused76(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused76, p);
+}
+
+[[nodiscard]] auto level_open_is_unused77(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused77, p);
+}
+
+[[nodiscard]] auto level_open_is_unused78(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused78, p);
+}
+
+[[nodiscard]] auto level_open_is_unused79(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused79, p);
+}
+
+[[nodiscard]] auto level_open_is_unused80(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused80, p);
+}
+
+[[nodiscard]] auto level_open_is_unused81(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused81, p);
+}
+
+[[nodiscard]] auto level_open_is_unused82(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused82, p);
+}
+
+[[nodiscard]] auto level_open_is_unused83(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused83, p);
+}
+
+[[nodiscard]] auto level_open_is_unused84(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused84, p);
+}
+
+[[nodiscard]] auto level_open_is_unused85(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused85, p);
+}
+
+[[nodiscard]] auto level_open_is_unused86(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused86, p);
+}
+
+[[nodiscard]] auto level_open_is_unused87(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused87, p);
+}
+
+[[nodiscard]] auto level_open_is_unused88(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused88, p);
+}
+
+[[nodiscard]] auto level_open_is_unused89(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused89, p);
+}
+
+[[nodiscard]] auto level_open_is_unused90(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused90, p);
+}
+
+[[nodiscard]] auto level_open_is_unused91(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused91, p);
+}
+
+[[nodiscard]] auto level_open_is_unused92(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused92, p);
+}
+
+[[nodiscard]] auto level_open_is_unused93(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused93, p);
+}
+
+[[nodiscard]] auto level_open_is_unused94(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused94, p);
+}
+
+[[nodiscard]] auto level_open_is_unused95(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused95, p);
+}
+
+[[nodiscard]] auto level_open_is_unused96(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused96, p);
+}
+
+[[nodiscard]] auto level_open_is_unused97(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused97, p);
+}
+
+[[nodiscard]] auto level_open_is_unused98(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused98, p);
+}
+
+[[nodiscard]] auto level_open_is_unused99(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused99, p);
+}
+
+[[nodiscard]] auto level_open_is_unused100(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused100, p);
+}
+
+[[nodiscard]] auto level_open_is_unused101(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused101, p);
+}
+
+[[nodiscard]] auto level_open_is_unused102(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused102, p);
+}
+
+[[nodiscard]] auto level_open_is_unused103(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused103, p);
+}
+
+[[nodiscard]] auto level_open_is_unused104(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused104, p);
+}
+
+[[nodiscard]] auto level_open_is_unused105(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused105, p);
+}
+
+[[nodiscard]] auto level_open_is_unused106(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused106, p);
+}
+
+[[nodiscard]] auto level_open_is_unused107(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused107, p);
+}
+
+[[nodiscard]] auto level_open_is_unused108(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused108, p);
+}
+
+[[nodiscard]] auto level_open_is_unused109(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused109, p);
+}
+
+[[nodiscard]] auto level_open_is_unused110(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused110, p);
+}
+
+[[nodiscard]] auto level_open_is_unused111(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused111, p);
+}
+
+[[nodiscard]] auto level_open_is_unused112(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused112, p);
+}
+
+[[nodiscard]] auto level_open_is_unused113(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused113, p);
+}
+
+[[nodiscard]] auto level_open_is_unused114(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused114, p);
+}
+
+[[nodiscard]] auto level_open_is_unused115(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused115, p);
+}
+
+[[nodiscard]] auto level_open_is_unused116(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused116, p);
+}
+
+[[nodiscard]] auto level_open_is_unused117(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused117, p);
+}
+
+[[nodiscard]] auto level_open_is_unused118(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused118, p);
+}
+
+[[nodiscard]] auto level_open_is_unused119(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused119, p);
+}
+
+[[nodiscard]] auto level_open_is_unused120(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused120, p);
+}
+
+[[nodiscard]] auto level_open_is_unused121(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused121, p);
+}
+
+[[nodiscard]] auto level_open_is_unused122(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused122, p);
+}
+
+[[nodiscard]] auto level_open_is_unused123(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused123, p);
+}
+
+[[nodiscard]] auto level_open_is_unused124(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused124, p);
+}
+
+[[nodiscard]] auto level_open_is_unused125(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused125, p);
+}
+
+[[nodiscard]] auto level_open_is_unused126(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused126, p);
+}
+
+[[nodiscard]] auto level_open_is_unused127(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused127, p);
+}
+
+[[nodiscard]] auto level_open_is_unused128(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused128, p);
+}
+
+[[nodiscard]] auto level_open_is_unused129(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused129, p);
+}
+
+[[nodiscard]] auto level_open_is_unused130(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused130, p);
+}
+
+[[nodiscard]] auto level_open_is_unused131(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused131, p);
+}
+
+[[nodiscard]] auto level_open_is_unused132(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused132, p);
+}
+
+[[nodiscard]] auto level_open_is_unused133(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused133, p);
+}
+
+[[nodiscard]] auto level_open_is_unused134(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused134, p);
+}
+
+[[nodiscard]] auto level_open_is_unused135(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused135, p);
+}
+
+[[nodiscard]] auto level_open_is_unused136(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused136, p);
+}
+
+[[nodiscard]] auto level_open_is_unused137(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused137, p);
+}
+
+[[nodiscard]] auto level_open_is_unused138(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused138, p);
+}
+
+[[nodiscard]] auto level_open_is_unused139(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused139, p);
+}
+
+[[nodiscard]] auto level_open_is_unused140(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused140, p);
+}
+
+[[nodiscard]] auto level_open_is_unused141(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused141, p);
+}
+
+[[nodiscard]] auto level_open_is_unused142(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused142, p);
+}
+
+[[nodiscard]] auto level_open_is_unused143(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused143, p);
+}
+
+[[nodiscard]] auto level_open_is_unused144(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused144, p);
+}
+
+[[nodiscard]] auto level_open_is_unused145(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused145, p);
+}
+
+[[nodiscard]] auto level_open_is_unused146(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused146, p);
+}
+
+[[nodiscard]] auto level_open_is_unused147(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused147, p);
+}
+
+[[nodiscard]] auto level_open_is_unused148(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused148, p);
+}
+
+[[nodiscard]] auto level_open_is_unused149(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused149, p);
+}
+
+[[nodiscard]] auto level_open_is_unused150(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused150, p);
+}
+
+[[nodiscard]] auto level_open_is_unused151(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused151, p);
+}
+
+[[nodiscard]] auto level_open_is_unused152(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused152, p);
+}
+
+[[nodiscard]] auto level_open_is_unused153(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused153, p);
+}
+
+[[nodiscard]] auto level_open_is_unused154(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused154, p);
+}
+
+[[nodiscard]] auto level_open_is_unused155(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused155, p);
+}
+
+[[nodiscard]] auto level_open_is_unused156(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused156, p);
+}
+
+[[nodiscard]] auto level_open_is_unused157(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused157, p);
+}
+
+[[nodiscard]] auto level_open_is_unused158(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused158, p);
+}
+
+[[nodiscard]] auto level_open_is_unused159(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused159, p);
+}
+
+[[nodiscard]] auto level_open_is_unused160(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused160, p);
+}
+
+[[nodiscard]] auto level_open_is_unused161(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused161, p);
+}
+
+[[nodiscard]] auto level_open_is_unused162(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused162, p);
+}
+
+[[nodiscard]] auto level_open_is_unused163(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused163, p);
+}
+
+[[nodiscard]] auto level_open_is_unused164(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused164, p);
+}
+
+[[nodiscard]] auto level_open_is_unused165(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused165, p);
+}
+
+[[nodiscard]] auto level_open_is_unused166(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused166, p);
+}
+
+[[nodiscard]] auto level_open_is_unused167(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused167, p);
+}
+
+[[nodiscard]] auto level_open_is_unused168(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused168, p);
+}
+
+[[nodiscard]] auto level_open_is_unused169(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused169, p);
+}
+
+[[nodiscard]] auto level_open_is_unused170(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused170, p);
+}
+
+[[nodiscard]] auto level_open_is_unused171(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused171, p);
+}
+
+[[nodiscard]] auto level_open_is_unused172(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused172, p);
+}
+
+[[nodiscard]] auto level_open_is_unused173(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused173, p);
+}
+
+[[nodiscard]] auto level_open_is_unused174(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused174, p);
+}
+
+[[nodiscard]] auto level_open_is_unused175(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused175, p);
+}
+
+[[nodiscard]] auto level_open_is_unused176(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused176, p);
+}
+
+[[nodiscard]] auto level_open_is_unused177(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused177, p);
+}
+
+[[nodiscard]] auto level_open_is_unused178(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused178, p);
+}
+
+[[nodiscard]] auto level_open_is_unused179(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused179, p);
+}
+
+[[nodiscard]] auto level_open_is_unused180(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused180, p);
+}
+
+[[nodiscard]] auto level_open_is_unused181(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused181, p);
+}
+
+[[nodiscard]] auto level_open_is_unused182(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused182, p);
+}
+
+[[nodiscard]] auto level_open_is_unused183(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused183, p);
+}
+
+[[nodiscard]] auto level_open_is_unused184(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused184, p);
+}
+
+[[nodiscard]] auto level_open_is_unused185(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused185, p);
+}
+
+[[nodiscard]] auto level_open_is_unused186(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused186, p);
+}
+
+[[nodiscard]] auto level_open_is_unused187(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused187, p);
+}
+
+[[nodiscard]] auto level_open_is_unused188(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused188, p);
+}
+
+[[nodiscard]] auto level_open_is_unused189(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused189, p);
+}
+
+[[nodiscard]] auto level_open_is_unused190(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused190, p);
+}
+
+[[nodiscard]] auto level_open_is_unused191(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused191, p);
+}
+
+[[nodiscard]] auto level_open_is_unused192(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused192, p);
+}
+
+[[nodiscard]] auto level_open_is_unused193(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused193, p);
+}
+
+[[nodiscard]] auto level_open_is_unused194(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused194, p);
+}
+
+[[nodiscard]] auto level_open_is_unused195(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused195, p);
+}
+
+[[nodiscard]] auto level_open_is_unused196(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused196, p);
+}
+
+[[nodiscard]] auto level_open_is_unused197(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused197, p);
+}
+
+[[nodiscard]] auto level_open_is_unused198(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused198, p);
+}
+
+[[nodiscard]] auto level_open_is_unused199(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused199, p);
+}
+
+[[nodiscard]] auto level_open_is_unused200(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+{
+  TRACE_DEBUG();
+  return level_open(g, v, l, is_unused200, p);
+}
+
 [[nodiscard]] auto level_open_is_obs_to_hearing(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();

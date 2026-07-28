@@ -18,13 +18,19 @@
 //
 #define THING_FLAG_ENUM(list_macro)                                                                                                             \
   CLANG_FORMAT_INDENT()                                                                     /* dummy line for clang indentation fixup */        \
-  list_macro(is_able_to_collect_items, "is_able_to_collect_items"),                         /* newline */                                       \
+  list_macro(is_able_to_be_buffed, "is_able_to_be_buffed"),                                 /* newline */                                       \
+      list_macro(is_able_to_be_engulfed, "is_able_to_be_engulfed"),                         /* newline */                                       \
       list_macro(is_able_to_collect_keys, "is_able_to_collect_keys"),                       /* newline */                                       \
       list_macro(is_able_to_crush_grass, "is_able_to_crush_grass"),                         /* newline */                                       \
+      list_macro(is_able_to_drop_all_items_on_death, "is_able_to_drop_all_items_on_death"), /* newline */                                       \
+      list_macro(is_able_to_eat_items, "is_able_to_eat_items"),                             /* newline */                                       \
+      list_macro(is_able_to_eat_treasure, "is_able_to_eat_treasure"),                       /* newline */                                       \
+      list_macro(is_able_to_engulf, "is_able_to_engulf"),                                   /* newline */                                       \
       list_macro(is_able_to_fall_repeatedly, "is_able_to_fall_repeatedly"),                 /* newline */                                       \
       list_macro(is_able_to_fall_sound, "is_able_to_fall_sound"),                           /* newline */                                       \
       list_macro(is_able_to_fall, "is_able_to_fall"),                                       /* newline */                                       \
       list_macro(is_able_to_fire_weapons, "is_able_to_fire_weapons"),                       /* newline */                                       \
+      list_macro(is_able_to_jump, "is_able_to_jump"),                                       /* newline */                                       \
       list_macro(is_able_to_lunge, "is_able_to_lunge"),                                     /* newline */                                       \
       list_macro(is_able_to_move_diagonally, "is_able_to_move_diagonally"),                 /* newline */                                       \
       list_macro(is_able_to_move_through_walls, "is_able_to_move_through_walls"),           /* newline */                                       \
@@ -32,7 +38,6 @@
       list_macro(is_able_to_see_through_walls, "is_able_to_see_through_walls"),             /* newline */                                       \
       list_macro(is_able_to_shove, "is_able_to_shove"),                                     /* newline */                                       \
       list_macro(is_able_to_throw, "is_able_to_throw"),                                     /* newline */                                       \
-      list_macro(is_able_to_jump, "is_able_to_jump"),                                       /* newline */                                       \
       list_macro(is_able_to_wield_items, "is_able_to_wield_items"),                         /* newline */                                       \
       list_macro(is_animated_can_hflip, "is_animated_can_hflip"),                           /* newline */                                       \
       list_macro(is_animated_no_dir, "is_animated_no_dir"),                                 /* newline */                                       \
@@ -134,6 +139,7 @@
       list_macro(is_item, "is_item"),                                                       /* newline */                                       \
       list_macro(is_key, "is_key"),                                                         /* newline */                                       \
       list_macro(is_kobalos, "is_kobalos"),                                                 /* newline */                                       \
+      list_macro(is_lava_bg, "is_lava_bg"),                                                 /* newline */                                       \
       list_macro(is_lava, "is_lava"),                                                       /* newline */                                       \
       list_macro(is_level_closed_icon, "is_level_closed_icon"),                             /* newline */                                       \
       list_macro(is_level_curr, "is_level_curr"),                                           /* newline */                                       \
@@ -143,6 +149,7 @@
       list_macro(is_level_open_icon, "is_level_open_icon"),                                 /* newline */                                       \
       list_macro(is_level_select_bg, "is_level_select_bg"),                                 /* newline */                                       \
       list_macro(is_levitating, "is_levitating"),                                           /* newline */                                       \
+      list_macro(is_light_flicker, "is_light_flicker"),                                     /* newline */                                       \
       list_macro(is_light_source, "is_light_source"),                                       /* newline */                                       \
       list_macro(is_loggable, "is_loggable"),                                               /* newline */                                       \
       list_macro(is_lucky, "is_lucky"),                                                     /* newline */                                       \
@@ -192,7 +199,6 @@
       list_macro(is_shown_health, "is_shown_health"),                                       /* newline */                                       \
       list_macro(is_shown_noise, "is_shown_noise"),                                         /* newline */                                       \
       list_macro(is_shown_stamina, "is_shown_stamina"),                                     /* newline */                                       \
-      list_macro(is_able_to_engulf, "is_able_to_engulf"),                                   /* newline */                                       \
       list_macro(is_slime, "is_slime"),                                                     /* newline */                                       \
       list_macro(is_smoke, "is_smoke"),                                                     /* newline */                                       \
       list_macro(is_staff, "is_staff"),                                                     /* newline */                                       \
@@ -215,12 +221,205 @@
       list_macro(is_treasure, "is_treasure"),                                               /* newline */                                       \
       list_macro(is_undead, "is_undead"),                                                   /* newline */                                       \
       list_macro(is_unused1, "is_unused1"),                                                 /* newline */                                       \
-      list_macro(is_lava_bg, "is_lava_bg"),                                                 /* newline */                                       \
-      list_macro(is_light_flicker, "is_light_flicker"),                                     /* newline */                                       \
-      list_macro(is_able_to_drop_all_items_on_death, "is_able_to_drop_all_items_on_death"), /* newline */                                       \
-      list_macro(is_able_to_be_engulfed, "is_able_to_be_engulfed"),                         /* newline */                                       \
-      list_macro(is_able_to_eat_items, "is_able_to_eat_items"),                             /* newline */                                       \
-      list_macro(is_able_to_eat_treasure, "is_able_to_eat_treasure"),                       /* newline */                                       \
+      list_macro(is_unused10, "is_unused10"),                                               /* newline */                                       \
+      list_macro(is_unused100, "is_unused100"),                                             /* newline */                                       \
+      list_macro(is_unused101, "is_unused101"),                                             /* newline */                                       \
+      list_macro(is_unused102, "is_unused102"),                                             /* newline */                                       \
+      list_macro(is_unused103, "is_unused103"),                                             /* newline */                                       \
+      list_macro(is_unused104, "is_unused104"),                                             /* newline */                                       \
+      list_macro(is_unused105, "is_unused105"),                                             /* newline */                                       \
+      list_macro(is_unused106, "is_unused106"),                                             /* newline */                                       \
+      list_macro(is_unused107, "is_unused107"),                                             /* newline */                                       \
+      list_macro(is_unused108, "is_unused108"),                                             /* newline */                                       \
+      list_macro(is_unused109, "is_unused109"),                                             /* newline */                                       \
+      list_macro(is_unused11, "is_unused11"),                                               /* newline */                                       \
+      list_macro(is_unused110, "is_unused110"),                                             /* newline */                                       \
+      list_macro(is_unused111, "is_unused111"),                                             /* newline */                                       \
+      list_macro(is_unused112, "is_unused112"),                                             /* newline */                                       \
+      list_macro(is_unused113, "is_unused113"),                                             /* newline */                                       \
+      list_macro(is_unused114, "is_unused114"),                                             /* newline */                                       \
+      list_macro(is_unused115, "is_unused115"),                                             /* newline */                                       \
+      list_macro(is_unused116, "is_unused116"),                                             /* newline */                                       \
+      list_macro(is_unused117, "is_unused117"),                                             /* newline */                                       \
+      list_macro(is_unused118, "is_unused118"),                                             /* newline */                                       \
+      list_macro(is_unused119, "is_unused119"),                                             /* newline */                                       \
+      list_macro(is_unused12, "is_unused12"),                                               /* newline */                                       \
+      list_macro(is_unused120, "is_unused120"),                                             /* newline */                                       \
+      list_macro(is_unused121, "is_unused121"),                                             /* newline */                                       \
+      list_macro(is_unused122, "is_unused122"),                                             /* newline */                                       \
+      list_macro(is_unused123, "is_unused123"),                                             /* newline */                                       \
+      list_macro(is_unused124, "is_unused124"),                                             /* newline */                                       \
+      list_macro(is_unused125, "is_unused125"),                                             /* newline */                                       \
+      list_macro(is_unused126, "is_unused126"),                                             /* newline */                                       \
+      list_macro(is_unused127, "is_unused127"),                                             /* newline */                                       \
+      list_macro(is_unused128, "is_unused128"),                                             /* newline */                                       \
+      list_macro(is_unused129, "is_unused129"),                                             /* newline */                                       \
+      list_macro(is_unused13, "is_unused13"),                                               /* newline */                                       \
+      list_macro(is_unused130, "is_unused130"),                                             /* newline */                                       \
+      list_macro(is_unused131, "is_unused131"),                                             /* newline */                                       \
+      list_macro(is_unused132, "is_unused132"),                                             /* newline */                                       \
+      list_macro(is_unused133, "is_unused133"),                                             /* newline */                                       \
+      list_macro(is_unused134, "is_unused134"),                                             /* newline */                                       \
+      list_macro(is_unused135, "is_unused135"),                                             /* newline */                                       \
+      list_macro(is_unused136, "is_unused136"),                                             /* newline */                                       \
+      list_macro(is_unused137, "is_unused137"),                                             /* newline */                                       \
+      list_macro(is_unused138, "is_unused138"),                                             /* newline */                                       \
+      list_macro(is_unused139, "is_unused139"),                                             /* newline */                                       \
+      list_macro(is_unused14, "is_unused14"),                                               /* newline */                                       \
+      list_macro(is_unused140, "is_unused140"),                                             /* newline */                                       \
+      list_macro(is_unused141, "is_unused141"),                                             /* newline */                                       \
+      list_macro(is_unused142, "is_unused142"),                                             /* newline */                                       \
+      list_macro(is_unused143, "is_unused143"),                                             /* newline */                                       \
+      list_macro(is_unused144, "is_unused144"),                                             /* newline */                                       \
+      list_macro(is_unused145, "is_unused145"),                                             /* newline */                                       \
+      list_macro(is_unused146, "is_unused146"),                                             /* newline */                                       \
+      list_macro(is_unused147, "is_unused147"),                                             /* newline */                                       \
+      list_macro(is_unused148, "is_unused148"),                                             /* newline */                                       \
+      list_macro(is_unused149, "is_unused149"),                                             /* newline */                                       \
+      list_macro(is_unused15, "is_unused15"),                                               /* newline */                                       \
+      list_macro(is_unused150, "is_unused150"),                                             /* newline */                                       \
+      list_macro(is_unused151, "is_unused151"),                                             /* newline */                                       \
+      list_macro(is_unused152, "is_unused152"),                                             /* newline */                                       \
+      list_macro(is_unused153, "is_unused153"),                                             /* newline */                                       \
+      list_macro(is_unused154, "is_unused154"),                                             /* newline */                                       \
+      list_macro(is_unused155, "is_unused155"),                                             /* newline */                                       \
+      list_macro(is_unused156, "is_unused156"),                                             /* newline */                                       \
+      list_macro(is_unused157, "is_unused157"),                                             /* newline */                                       \
+      list_macro(is_unused158, "is_unused158"),                                             /* newline */                                       \
+      list_macro(is_unused159, "is_unused159"),                                             /* newline */                                       \
+      list_macro(is_unused16, "is_unused16"),                                               /* newline */                                       \
+      list_macro(is_unused160, "is_unused160"),                                             /* newline */                                       \
+      list_macro(is_unused161, "is_unused161"),                                             /* newline */                                       \
+      list_macro(is_unused162, "is_unused162"),                                             /* newline */                                       \
+      list_macro(is_unused163, "is_unused163"),                                             /* newline */                                       \
+      list_macro(is_unused164, "is_unused164"),                                             /* newline */                                       \
+      list_macro(is_unused165, "is_unused165"),                                             /* newline */                                       \
+      list_macro(is_unused166, "is_unused166"),                                             /* newline */                                       \
+      list_macro(is_unused167, "is_unused167"),                                             /* newline */                                       \
+      list_macro(is_unused168, "is_unused168"),                                             /* newline */                                       \
+      list_macro(is_unused169, "is_unused169"),                                             /* newline */                                       \
+      list_macro(is_unused17, "is_unused17"),                                               /* newline */                                       \
+      list_macro(is_unused170, "is_unused170"),                                             /* newline */                                       \
+      list_macro(is_unused171, "is_unused171"),                                             /* newline */                                       \
+      list_macro(is_unused172, "is_unused172"),                                             /* newline */                                       \
+      list_macro(is_unused173, "is_unused173"),                                             /* newline */                                       \
+      list_macro(is_unused174, "is_unused174"),                                             /* newline */                                       \
+      list_macro(is_unused175, "is_unused175"),                                             /* newline */                                       \
+      list_macro(is_unused176, "is_unused176"),                                             /* newline */                                       \
+      list_macro(is_unused177, "is_unused177"),                                             /* newline */                                       \
+      list_macro(is_unused178, "is_unused178"),                                             /* newline */                                       \
+      list_macro(is_unused179, "is_unused179"),                                             /* newline */                                       \
+      list_macro(is_unused18, "is_unused18"),                                               /* newline */                                       \
+      list_macro(is_unused180, "is_unused180"),                                             /* newline */                                       \
+      list_macro(is_unused181, "is_unused181"),                                             /* newline */                                       \
+      list_macro(is_unused182, "is_unused182"),                                             /* newline */                                       \
+      list_macro(is_unused183, "is_unused183"),                                             /* newline */                                       \
+      list_macro(is_unused184, "is_unused184"),                                             /* newline */                                       \
+      list_macro(is_unused185, "is_unused185"),                                             /* newline */                                       \
+      list_macro(is_unused186, "is_unused186"),                                             /* newline */                                       \
+      list_macro(is_unused187, "is_unused187"),                                             /* newline */                                       \
+      list_macro(is_unused188, "is_unused188"),                                             /* newline */                                       \
+      list_macro(is_unused189, "is_unused189"),                                             /* newline */                                       \
+      list_macro(is_unused19, "is_unused19"),                                               /* newline */                                       \
+      list_macro(is_unused190, "is_unused190"),                                             /* newline */                                       \
+      list_macro(is_unused191, "is_unused191"),                                             /* newline */                                       \
+      list_macro(is_unused192, "is_unused192"),                                             /* newline */                                       \
+      list_macro(is_unused193, "is_unused193"),                                             /* newline */                                       \
+      list_macro(is_unused194, "is_unused194"),                                             /* newline */                                       \
+      list_macro(is_unused195, "is_unused195"),                                             /* newline */                                       \
+      list_macro(is_unused196, "is_unused196"),                                             /* newline */                                       \
+      list_macro(is_unused197, "is_unused197"),                                             /* newline */                                       \
+      list_macro(is_unused198, "is_unused198"),                                             /* newline */                                       \
+      list_macro(is_unused199, "is_unused199"),                                             /* newline */                                       \
+      list_macro(is_unused2, "is_unused2"),                                                 /* newline */                                       \
+      list_macro(is_unused20, "is_unused20"),                                               /* newline */                                       \
+      list_macro(is_unused200, "is_unused200"),                                             /* newline */                                       \
+      list_macro(is_unused21, "is_unused21"),                                               /* newline */                                       \
+      list_macro(is_unused22, "is_unused22"),                                               /* newline */                                       \
+      list_macro(is_unused23, "is_unused23"),                                               /* newline */                                       \
+      list_macro(is_unused24, "is_unused24"),                                               /* newline */                                       \
+      list_macro(is_unused25, "is_unused25"),                                               /* newline */                                       \
+      list_macro(is_unused26, "is_unused26"),                                               /* newline */                                       \
+      list_macro(is_unused27, "is_unused27"),                                               /* newline */                                       \
+      list_macro(is_unused28, "is_unused28"),                                               /* newline */                                       \
+      list_macro(is_unused29, "is_unused29"),                                               /* newline */                                       \
+      list_macro(is_unused3, "is_unused3"),                                                 /* newline */                                       \
+      list_macro(is_unused30, "is_unused30"),                                               /* newline */                                       \
+      list_macro(is_unused31, "is_unused31"),                                               /* newline */                                       \
+      list_macro(is_unused32, "is_unused32"),                                               /* newline */                                       \
+      list_macro(is_unused33, "is_unused33"),                                               /* newline */                                       \
+      list_macro(is_unused34, "is_unused34"),                                               /* newline */                                       \
+      list_macro(is_unused35, "is_unused35"),                                               /* newline */                                       \
+      list_macro(is_unused36, "is_unused36"),                                               /* newline */                                       \
+      list_macro(is_unused37, "is_unused37"),                                               /* newline */                                       \
+      list_macro(is_unused38, "is_unused38"),                                               /* newline */                                       \
+      list_macro(is_unused39, "is_unused39"),                                               /* newline */                                       \
+      list_macro(is_unused4, "is_unused4"),                                                 /* newline */                                       \
+      list_macro(is_unused40, "is_unused40"),                                               /* newline */                                       \
+      list_macro(is_unused41, "is_unused41"),                                               /* newline */                                       \
+      list_macro(is_unused42, "is_unused42"),                                               /* newline */                                       \
+      list_macro(is_unused43, "is_unused43"),                                               /* newline */                                       \
+      list_macro(is_unused44, "is_unused44"),                                               /* newline */                                       \
+      list_macro(is_unused45, "is_unused45"),                                               /* newline */                                       \
+      list_macro(is_unused46, "is_unused46"),                                               /* newline */                                       \
+      list_macro(is_unused47, "is_unused47"),                                               /* newline */                                       \
+      list_macro(is_unused48, "is_unused48"),                                               /* newline */                                       \
+      list_macro(is_unused49, "is_unused49"),                                               /* newline */                                       \
+      list_macro(is_unused5, "is_unused5"),                                                 /* newline */                                       \
+      list_macro(is_unused50, "is_unused50"),                                               /* newline */                                       \
+      list_macro(is_unused51, "is_unused51"),                                               /* newline */                                       \
+      list_macro(is_unused52, "is_unused52"),                                               /* newline */                                       \
+      list_macro(is_unused53, "is_unused53"),                                               /* newline */                                       \
+      list_macro(is_unused54, "is_unused54"),                                               /* newline */                                       \
+      list_macro(is_unused55, "is_unused55"),                                               /* newline */                                       \
+      list_macro(is_unused56, "is_unused56"),                                               /* newline */                                       \
+      list_macro(is_unused57, "is_unused57"),                                               /* newline */                                       \
+      list_macro(is_unused58, "is_unused58"),                                               /* newline */                                       \
+      list_macro(is_unused59, "is_unused59"),                                               /* newline */                                       \
+      list_macro(is_unused6, "is_unused6"),                                                 /* newline */                                       \
+      list_macro(is_unused60, "is_unused60"),                                               /* newline */                                       \
+      list_macro(is_unused61, "is_unused61"),                                               /* newline */                                       \
+      list_macro(is_unused62, "is_unused62"),                                               /* newline */                                       \
+      list_macro(is_unused63, "is_unused63"),                                               /* newline */                                       \
+      list_macro(is_unused64, "is_unused64"),                                               /* newline */                                       \
+      list_macro(is_unused65, "is_unused65"),                                               /* newline */                                       \
+      list_macro(is_unused66, "is_unused66"),                                               /* newline */                                       \
+      list_macro(is_unused67, "is_unused67"),                                               /* newline */                                       \
+      list_macro(is_unused68, "is_unused68"),                                               /* newline */                                       \
+      list_macro(is_unused69, "is_unused69"),                                               /* newline */                                       \
+      list_macro(is_unused7, "is_unused7"),                                                 /* newline */                                       \
+      list_macro(is_unused70, "is_unused70"),                                               /* newline */                                       \
+      list_macro(is_unused71, "is_unused71"),                                               /* newline */                                       \
+      list_macro(is_unused72, "is_unused72"),                                               /* newline */                                       \
+      list_macro(is_unused73, "is_unused73"),                                               /* newline */                                       \
+      list_macro(is_unused74, "is_unused74"),                                               /* newline */                                       \
+      list_macro(is_unused75, "is_unused75"),                                               /* newline */                                       \
+      list_macro(is_unused76, "is_unused76"),                                               /* newline */                                       \
+      list_macro(is_unused77, "is_unused77"),                                               /* newline */                                       \
+      list_macro(is_unused78, "is_unused78"),                                               /* newline */                                       \
+      list_macro(is_unused79, "is_unused79"),                                               /* newline */                                       \
+      list_macro(is_unused8, "is_unused8"),                                                 /* newline */                                       \
+      list_macro(is_unused80, "is_unused80"),                                               /* newline */                                       \
+      list_macro(is_unused81, "is_unused81"),                                               /* newline */                                       \
+      list_macro(is_unused82, "is_unused82"),                                               /* newline */                                       \
+      list_macro(is_unused83, "is_unused83"),                                               /* newline */                                       \
+      list_macro(is_unused84, "is_unused84"),                                               /* newline */                                       \
+      list_macro(is_unused85, "is_unused85"),                                               /* newline */                                       \
+      list_macro(is_unused86, "is_unused86"),                                               /* newline */                                       \
+      list_macro(is_unused87, "is_unused87"),                                               /* newline */                                       \
+      list_macro(is_unused88, "is_unused88"),                                               /* newline */                                       \
+      list_macro(is_unused89, "is_unused89"),                                               /* newline */                                       \
+      list_macro(is_unused9, "is_unused9"),                                                 /* newline */                                       \
+      list_macro(is_unused90, "is_unused90"),                                               /* newline */                                       \
+      list_macro(is_unused91, "is_unused91"),                                               /* newline */                                       \
+      list_macro(is_unused92, "is_unused92"),                                               /* newline */                                       \
+      list_macro(is_unused93, "is_unused93"),                                               /* newline */                                       \
+      list_macro(is_unused94, "is_unused94"),                                               /* newline */                                       \
+      list_macro(is_unused95, "is_unused95"),                                               /* newline */                                       \
+      list_macro(is_unused96, "is_unused96"),                                               /* newline */                                       \
+      list_macro(is_unused97, "is_unused97"),                                               /* newline */                                       \
+      list_macro(is_unused98, "is_unused98"),                                               /* newline */                                       \
+      list_macro(is_unused99, "is_unused99"),                                               /* newline */                                       \
       list_macro(is_usable, "is_usable"),                                                   /* newline */                                       \
       list_macro(is_vault, "is_vault"),                                                     /* newline */                                       \
       list_macro(is_vision_180_degrees, "is_vision_180_degrees"),                           /* newline */                                       \
@@ -231,7 +430,7 @@
       list_macro(is_wand, "is_wand"),                                                       /* newline */                                       \
       list_macro(is_wood, "is_wood"),                                                       /* newline */                                       \
       list_macro(wieldable, "wieldable"),                                                   /* newline */                                       \
-      list_macro(is_able_to_be_buffed, "is_able_to_be_buffed"),                             /* newline */                                       \
+      list_macro(is_able_to_collect_items, "is_able_to_collect_items"),                     /* newline */                                       \
       list_macro(is_water, "is_water"),                                                     /* newline */
 
 ENUM_DEF_H(THING_FLAG_ENUM, ThingFlagType)
@@ -800,6 +999,205 @@ class Tp;
 [[nodiscard]] auto tp_is_treasure(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_undead(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused1(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused2(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused3(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused4(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused5(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused6(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused7(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused8(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused9(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused10(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused11(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused12(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused13(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused14(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused15(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused16(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused17(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused18(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused19(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused20(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused21(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused22(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused23(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused24(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused25(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused26(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused27(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused28(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused29(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused30(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused31(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused32(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused33(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused34(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused35(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused36(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused37(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused38(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused39(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused40(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused41(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused42(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused43(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused44(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused45(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused46(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused47(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused48(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused49(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused50(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused51(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused52(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused53(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused54(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused55(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused56(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused57(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused58(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused59(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused60(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused61(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused62(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused63(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused64(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused65(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused66(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused67(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused68(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused69(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused70(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused71(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused72(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused73(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused74(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused75(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused76(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused77(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused78(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused79(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused80(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused81(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused82(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused83(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused84(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused85(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused86(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused87(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused88(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused89(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused90(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused91(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused92(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused93(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused94(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused95(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused96(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused97(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused98(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused99(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused100(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused101(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused102(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused103(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused104(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused105(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused106(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused107(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused108(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused109(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused110(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused111(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused112(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused113(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused114(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused115(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused116(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused117(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused118(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused119(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused120(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused121(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused122(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused123(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused124(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused125(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused126(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused127(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused128(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused129(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused130(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused131(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused132(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused133(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused134(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused135(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused136(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused137(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused138(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused139(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused140(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused141(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused142(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused143(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused144(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused145(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused146(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused147(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused148(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused149(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused150(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused151(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused152(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused153(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused154(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused155(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused156(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused157(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused158(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused159(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused160(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused161(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused162(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused163(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused164(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused165(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused166(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused167(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused168(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused169(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused170(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused171(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused172(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused173(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused174(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused175(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused176(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused177(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused178(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused179(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused180(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused181(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused182(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused183(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused184(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused185(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused186(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused187(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused188(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused189(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused190(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused191(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused192(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused193(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused194(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused195(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused196(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused197(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused198(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused199(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused200(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_usable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_vault(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_vision_180_degrees(Tpp tp) -> bool;

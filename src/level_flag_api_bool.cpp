@@ -884,6 +884,1200 @@
   return level_flag(g, v, l, is_unused1, p, me) != nullptr;
 }
 
+[[nodiscard]] auto level_is_unused2_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused2, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused3_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused3, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused4_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused4, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused5_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused5, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused6_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused6, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused7_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused7, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused8_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused8, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused9_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused9, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused10_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused10, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused11_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused11, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused12_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused12, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused13_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused13, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused14_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused14, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused15_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused15, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused16_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused16, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused17_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused17, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused18_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused18, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused19_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused19, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused20_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused20, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused21_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused21, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused22_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused22, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused23_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused23, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused24_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused24, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused25_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused25, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused26_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused26, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused27_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused27, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused28_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused28, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused29_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused29, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused30_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused30, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused31_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused31, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused32_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused32, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused33_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused33, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused34_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused34, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused35_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused35, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused36_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused36, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused37_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused37, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused38_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused38, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused39_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused39, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused40_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused40, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused41_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused41, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused42_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused42, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused43_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused43, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused44_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused44, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused45_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused45, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused46_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused46, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused47_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused47, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused48_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused48, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused49_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused49, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused50_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused50, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused51_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused51, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused52_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused52, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused53_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused53, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused54_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused54, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused55_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused55, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused56_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused56, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused57_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused57, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused58_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused58, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused59_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused59, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused60_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused60, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused61_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused61, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused62_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused62, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused63_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused63, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused64_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused64, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused65_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused65, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused66_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused66, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused67_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused67, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused68_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused68, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused69_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused69, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused70_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused70, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused71_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused71, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused72_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused72, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused73_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused73, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused74_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused74, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused75_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused75, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused76_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused76, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused77_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused77, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused78_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused78, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused79_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused79, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused80_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused80, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused81_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused81, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused82_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused82, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused83_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused83, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused84_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused84, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused85_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused85, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused86_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused86, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused87_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused87, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused88_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused88, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused89_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused89, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused90_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused90, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused91_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused91, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused92_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused92, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused93_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused93, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused94_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused94, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused95_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused95, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused96_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused96, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused97_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused97, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused98_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused98, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused99_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused99, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused100_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused100, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused101_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused101, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused102_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused102, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused103_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused103, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused104_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused104, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused105_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused105, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused106_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused106, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused107_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused107, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused108_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused108, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused109_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused109, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused110_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused110, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused111_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused111, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused112_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused112, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused113_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused113, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused114_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused114, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused115_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused115, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused116_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused116, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused117_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused117, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused118_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused118, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused119_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused119, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused120_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused120, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused121_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused121, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused122_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused122, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused123_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused123, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused124_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused124, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused125_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused125, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused126_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused126, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused127_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused127, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused128_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused128, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused129_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused129, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused130_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused130, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused131_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused131, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused132_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused132, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused133_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused133, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused134_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused134, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused135_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused135, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused136_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused136, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused137_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused137, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused138_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused138, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused139_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused139, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused140_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused140, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused141_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused141, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused142_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused142, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused143_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused143, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused144_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused144, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused145_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused145, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused146_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused146, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused147_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused147, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused148_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused148, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused149_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused149, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused150_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused150, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused151_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused151, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused152_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused152, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused153_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused153, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused154_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused154, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused155_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused155, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused156_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused156, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused157_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused157, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused158_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused158, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused159_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused159, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused160_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused160, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused161_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused161, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused162_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused162, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused163_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused163, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused164_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused164, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused165_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused165, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused166_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused166, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused167_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused167, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused168_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused168, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused169_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused169, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused170_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused170, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused171_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused171, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused172_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused172, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused173_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused173, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused174_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused174, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused175_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused175, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused176_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused176, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused177_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused177, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused178_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused178, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused179_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused179, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused180_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused180, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused181_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused181, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused182_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused182, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused183_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused183, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused184_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused184, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused185_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused185, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused186_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused186, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused187_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused187, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused188_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused188, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused189_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused189, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused190_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused190, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused191_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused191, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused192_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused192, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused193_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused193, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused194_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused194, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused195_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused195, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused196_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused196, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused197_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused197, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused198_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused198, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused199_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused199, p, me) != nullptr;
+}
+
+[[nodiscard]] auto level_is_unused200_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag(g, v, l, is_unused200, p, me) != nullptr;
+}
+
 [[nodiscard]] auto level_is_obs_to_hearing_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();

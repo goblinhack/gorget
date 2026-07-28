@@ -884,6 +884,1200 @@
   return level_flag_cached(g, v, l, is_unused1, p);
 }
 
+[[nodiscard]] auto level_is_unused2_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused2, p);
+}
+
+[[nodiscard]] auto level_is_unused3_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused3, p);
+}
+
+[[nodiscard]] auto level_is_unused4_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused4, p);
+}
+
+[[nodiscard]] auto level_is_unused5_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused5, p);
+}
+
+[[nodiscard]] auto level_is_unused6_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused6, p);
+}
+
+[[nodiscard]] auto level_is_unused7_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused7, p);
+}
+
+[[nodiscard]] auto level_is_unused8_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused8, p);
+}
+
+[[nodiscard]] auto level_is_unused9_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused9, p);
+}
+
+[[nodiscard]] auto level_is_unused10_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused10, p);
+}
+
+[[nodiscard]] auto level_is_unused11_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused11, p);
+}
+
+[[nodiscard]] auto level_is_unused12_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused12, p);
+}
+
+[[nodiscard]] auto level_is_unused13_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused13, p);
+}
+
+[[nodiscard]] auto level_is_unused14_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused14, p);
+}
+
+[[nodiscard]] auto level_is_unused15_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused15, p);
+}
+
+[[nodiscard]] auto level_is_unused16_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused16, p);
+}
+
+[[nodiscard]] auto level_is_unused17_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused17, p);
+}
+
+[[nodiscard]] auto level_is_unused18_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused18, p);
+}
+
+[[nodiscard]] auto level_is_unused19_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused19, p);
+}
+
+[[nodiscard]] auto level_is_unused20_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused20, p);
+}
+
+[[nodiscard]] auto level_is_unused21_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused21, p);
+}
+
+[[nodiscard]] auto level_is_unused22_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused22, p);
+}
+
+[[nodiscard]] auto level_is_unused23_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused23, p);
+}
+
+[[nodiscard]] auto level_is_unused24_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused24, p);
+}
+
+[[nodiscard]] auto level_is_unused25_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused25, p);
+}
+
+[[nodiscard]] auto level_is_unused26_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused26, p);
+}
+
+[[nodiscard]] auto level_is_unused27_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused27, p);
+}
+
+[[nodiscard]] auto level_is_unused28_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused28, p);
+}
+
+[[nodiscard]] auto level_is_unused29_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused29, p);
+}
+
+[[nodiscard]] auto level_is_unused30_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused30, p);
+}
+
+[[nodiscard]] auto level_is_unused31_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused31, p);
+}
+
+[[nodiscard]] auto level_is_unused32_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused32, p);
+}
+
+[[nodiscard]] auto level_is_unused33_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused33, p);
+}
+
+[[nodiscard]] auto level_is_unused34_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused34, p);
+}
+
+[[nodiscard]] auto level_is_unused35_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused35, p);
+}
+
+[[nodiscard]] auto level_is_unused36_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused36, p);
+}
+
+[[nodiscard]] auto level_is_unused37_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused37, p);
+}
+
+[[nodiscard]] auto level_is_unused38_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused38, p);
+}
+
+[[nodiscard]] auto level_is_unused39_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused39, p);
+}
+
+[[nodiscard]] auto level_is_unused40_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused40, p);
+}
+
+[[nodiscard]] auto level_is_unused41_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused41, p);
+}
+
+[[nodiscard]] auto level_is_unused42_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused42, p);
+}
+
+[[nodiscard]] auto level_is_unused43_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused43, p);
+}
+
+[[nodiscard]] auto level_is_unused44_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused44, p);
+}
+
+[[nodiscard]] auto level_is_unused45_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused45, p);
+}
+
+[[nodiscard]] auto level_is_unused46_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused46, p);
+}
+
+[[nodiscard]] auto level_is_unused47_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused47, p);
+}
+
+[[nodiscard]] auto level_is_unused48_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused48, p);
+}
+
+[[nodiscard]] auto level_is_unused49_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused49, p);
+}
+
+[[nodiscard]] auto level_is_unused50_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused50, p);
+}
+
+[[nodiscard]] auto level_is_unused51_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused51, p);
+}
+
+[[nodiscard]] auto level_is_unused52_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused52, p);
+}
+
+[[nodiscard]] auto level_is_unused53_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused53, p);
+}
+
+[[nodiscard]] auto level_is_unused54_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused54, p);
+}
+
+[[nodiscard]] auto level_is_unused55_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused55, p);
+}
+
+[[nodiscard]] auto level_is_unused56_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused56, p);
+}
+
+[[nodiscard]] auto level_is_unused57_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused57, p);
+}
+
+[[nodiscard]] auto level_is_unused58_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused58, p);
+}
+
+[[nodiscard]] auto level_is_unused59_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused59, p);
+}
+
+[[nodiscard]] auto level_is_unused60_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused60, p);
+}
+
+[[nodiscard]] auto level_is_unused61_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused61, p);
+}
+
+[[nodiscard]] auto level_is_unused62_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused62, p);
+}
+
+[[nodiscard]] auto level_is_unused63_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused63, p);
+}
+
+[[nodiscard]] auto level_is_unused64_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused64, p);
+}
+
+[[nodiscard]] auto level_is_unused65_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused65, p);
+}
+
+[[nodiscard]] auto level_is_unused66_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused66, p);
+}
+
+[[nodiscard]] auto level_is_unused67_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused67, p);
+}
+
+[[nodiscard]] auto level_is_unused68_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused68, p);
+}
+
+[[nodiscard]] auto level_is_unused69_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused69, p);
+}
+
+[[nodiscard]] auto level_is_unused70_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused70, p);
+}
+
+[[nodiscard]] auto level_is_unused71_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused71, p);
+}
+
+[[nodiscard]] auto level_is_unused72_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused72, p);
+}
+
+[[nodiscard]] auto level_is_unused73_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused73, p);
+}
+
+[[nodiscard]] auto level_is_unused74_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused74, p);
+}
+
+[[nodiscard]] auto level_is_unused75_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused75, p);
+}
+
+[[nodiscard]] auto level_is_unused76_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused76, p);
+}
+
+[[nodiscard]] auto level_is_unused77_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused77, p);
+}
+
+[[nodiscard]] auto level_is_unused78_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused78, p);
+}
+
+[[nodiscard]] auto level_is_unused79_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused79, p);
+}
+
+[[nodiscard]] auto level_is_unused80_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused80, p);
+}
+
+[[nodiscard]] auto level_is_unused81_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused81, p);
+}
+
+[[nodiscard]] auto level_is_unused82_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused82, p);
+}
+
+[[nodiscard]] auto level_is_unused83_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused83, p);
+}
+
+[[nodiscard]] auto level_is_unused84_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused84, p);
+}
+
+[[nodiscard]] auto level_is_unused85_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused85, p);
+}
+
+[[nodiscard]] auto level_is_unused86_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused86, p);
+}
+
+[[nodiscard]] auto level_is_unused87_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused87, p);
+}
+
+[[nodiscard]] auto level_is_unused88_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused88, p);
+}
+
+[[nodiscard]] auto level_is_unused89_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused89, p);
+}
+
+[[nodiscard]] auto level_is_unused90_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused90, p);
+}
+
+[[nodiscard]] auto level_is_unused91_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused91, p);
+}
+
+[[nodiscard]] auto level_is_unused92_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused92, p);
+}
+
+[[nodiscard]] auto level_is_unused93_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused93, p);
+}
+
+[[nodiscard]] auto level_is_unused94_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused94, p);
+}
+
+[[nodiscard]] auto level_is_unused95_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused95, p);
+}
+
+[[nodiscard]] auto level_is_unused96_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused96, p);
+}
+
+[[nodiscard]] auto level_is_unused97_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused97, p);
+}
+
+[[nodiscard]] auto level_is_unused98_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused98, p);
+}
+
+[[nodiscard]] auto level_is_unused99_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused99, p);
+}
+
+[[nodiscard]] auto level_is_unused100_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused100, p);
+}
+
+[[nodiscard]] auto level_is_unused101_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused101, p);
+}
+
+[[nodiscard]] auto level_is_unused102_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused102, p);
+}
+
+[[nodiscard]] auto level_is_unused103_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused103, p);
+}
+
+[[nodiscard]] auto level_is_unused104_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused104, p);
+}
+
+[[nodiscard]] auto level_is_unused105_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused105, p);
+}
+
+[[nodiscard]] auto level_is_unused106_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused106, p);
+}
+
+[[nodiscard]] auto level_is_unused107_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused107, p);
+}
+
+[[nodiscard]] auto level_is_unused108_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused108, p);
+}
+
+[[nodiscard]] auto level_is_unused109_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused109, p);
+}
+
+[[nodiscard]] auto level_is_unused110_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused110, p);
+}
+
+[[nodiscard]] auto level_is_unused111_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused111, p);
+}
+
+[[nodiscard]] auto level_is_unused112_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused112, p);
+}
+
+[[nodiscard]] auto level_is_unused113_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused113, p);
+}
+
+[[nodiscard]] auto level_is_unused114_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused114, p);
+}
+
+[[nodiscard]] auto level_is_unused115_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused115, p);
+}
+
+[[nodiscard]] auto level_is_unused116_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused116, p);
+}
+
+[[nodiscard]] auto level_is_unused117_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused117, p);
+}
+
+[[nodiscard]] auto level_is_unused118_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused118, p);
+}
+
+[[nodiscard]] auto level_is_unused119_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused119, p);
+}
+
+[[nodiscard]] auto level_is_unused120_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused120, p);
+}
+
+[[nodiscard]] auto level_is_unused121_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused121, p);
+}
+
+[[nodiscard]] auto level_is_unused122_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused122, p);
+}
+
+[[nodiscard]] auto level_is_unused123_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused123, p);
+}
+
+[[nodiscard]] auto level_is_unused124_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused124, p);
+}
+
+[[nodiscard]] auto level_is_unused125_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused125, p);
+}
+
+[[nodiscard]] auto level_is_unused126_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused126, p);
+}
+
+[[nodiscard]] auto level_is_unused127_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused127, p);
+}
+
+[[nodiscard]] auto level_is_unused128_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused128, p);
+}
+
+[[nodiscard]] auto level_is_unused129_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused129, p);
+}
+
+[[nodiscard]] auto level_is_unused130_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused130, p);
+}
+
+[[nodiscard]] auto level_is_unused131_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused131, p);
+}
+
+[[nodiscard]] auto level_is_unused132_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused132, p);
+}
+
+[[nodiscard]] auto level_is_unused133_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused133, p);
+}
+
+[[nodiscard]] auto level_is_unused134_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused134, p);
+}
+
+[[nodiscard]] auto level_is_unused135_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused135, p);
+}
+
+[[nodiscard]] auto level_is_unused136_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused136, p);
+}
+
+[[nodiscard]] auto level_is_unused137_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused137, p);
+}
+
+[[nodiscard]] auto level_is_unused138_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused138, p);
+}
+
+[[nodiscard]] auto level_is_unused139_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused139, p);
+}
+
+[[nodiscard]] auto level_is_unused140_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused140, p);
+}
+
+[[nodiscard]] auto level_is_unused141_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused141, p);
+}
+
+[[nodiscard]] auto level_is_unused142_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused142, p);
+}
+
+[[nodiscard]] auto level_is_unused143_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused143, p);
+}
+
+[[nodiscard]] auto level_is_unused144_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused144, p);
+}
+
+[[nodiscard]] auto level_is_unused145_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused145, p);
+}
+
+[[nodiscard]] auto level_is_unused146_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused146, p);
+}
+
+[[nodiscard]] auto level_is_unused147_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused147, p);
+}
+
+[[nodiscard]] auto level_is_unused148_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused148, p);
+}
+
+[[nodiscard]] auto level_is_unused149_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused149, p);
+}
+
+[[nodiscard]] auto level_is_unused150_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused150, p);
+}
+
+[[nodiscard]] auto level_is_unused151_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused151, p);
+}
+
+[[nodiscard]] auto level_is_unused152_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused152, p);
+}
+
+[[nodiscard]] auto level_is_unused153_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused153, p);
+}
+
+[[nodiscard]] auto level_is_unused154_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused154, p);
+}
+
+[[nodiscard]] auto level_is_unused155_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused155, p);
+}
+
+[[nodiscard]] auto level_is_unused156_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused156, p);
+}
+
+[[nodiscard]] auto level_is_unused157_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused157, p);
+}
+
+[[nodiscard]] auto level_is_unused158_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused158, p);
+}
+
+[[nodiscard]] auto level_is_unused159_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused159, p);
+}
+
+[[nodiscard]] auto level_is_unused160_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused160, p);
+}
+
+[[nodiscard]] auto level_is_unused161_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused161, p);
+}
+
+[[nodiscard]] auto level_is_unused162_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused162, p);
+}
+
+[[nodiscard]] auto level_is_unused163_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused163, p);
+}
+
+[[nodiscard]] auto level_is_unused164_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused164, p);
+}
+
+[[nodiscard]] auto level_is_unused165_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused165, p);
+}
+
+[[nodiscard]] auto level_is_unused166_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused166, p);
+}
+
+[[nodiscard]] auto level_is_unused167_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused167, p);
+}
+
+[[nodiscard]] auto level_is_unused168_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused168, p);
+}
+
+[[nodiscard]] auto level_is_unused169_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused169, p);
+}
+
+[[nodiscard]] auto level_is_unused170_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused170, p);
+}
+
+[[nodiscard]] auto level_is_unused171_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused171, p);
+}
+
+[[nodiscard]] auto level_is_unused172_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused172, p);
+}
+
+[[nodiscard]] auto level_is_unused173_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused173, p);
+}
+
+[[nodiscard]] auto level_is_unused174_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused174, p);
+}
+
+[[nodiscard]] auto level_is_unused175_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused175, p);
+}
+
+[[nodiscard]] auto level_is_unused176_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused176, p);
+}
+
+[[nodiscard]] auto level_is_unused177_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused177, p);
+}
+
+[[nodiscard]] auto level_is_unused178_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused178, p);
+}
+
+[[nodiscard]] auto level_is_unused179_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused179, p);
+}
+
+[[nodiscard]] auto level_is_unused180_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused180, p);
+}
+
+[[nodiscard]] auto level_is_unused181_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused181, p);
+}
+
+[[nodiscard]] auto level_is_unused182_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused182, p);
+}
+
+[[nodiscard]] auto level_is_unused183_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused183, p);
+}
+
+[[nodiscard]] auto level_is_unused184_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused184, p);
+}
+
+[[nodiscard]] auto level_is_unused185_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused185, p);
+}
+
+[[nodiscard]] auto level_is_unused186_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused186, p);
+}
+
+[[nodiscard]] auto level_is_unused187_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused187, p);
+}
+
+[[nodiscard]] auto level_is_unused188_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused188, p);
+}
+
+[[nodiscard]] auto level_is_unused189_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused189, p);
+}
+
+[[nodiscard]] auto level_is_unused190_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused190, p);
+}
+
+[[nodiscard]] auto level_is_unused191_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused191, p);
+}
+
+[[nodiscard]] auto level_is_unused192_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused192, p);
+}
+
+[[nodiscard]] auto level_is_unused193_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused193, p);
+}
+
+[[nodiscard]] auto level_is_unused194_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused194, p);
+}
+
+[[nodiscard]] auto level_is_unused195_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused195, p);
+}
+
+[[nodiscard]] auto level_is_unused196_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused196, p);
+}
+
+[[nodiscard]] auto level_is_unused197_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused197, p);
+}
+
+[[nodiscard]] auto level_is_unused198_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused198, p);
+}
+
+[[nodiscard]] auto level_is_unused199_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused199, p);
+}
+
+[[nodiscard]] auto level_is_unused200_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+{
+  TRACE_DEBUG();
+  return level_flag_cached(g, v, l, is_unused200, p);
+}
+
 [[nodiscard]] auto level_is_obs_to_hearing_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
