@@ -7,6 +7,7 @@
 #include "my_main.hpp"
 #include "my_thing.hpp"
 #include "my_thing_callbacks.hpp"
+#include "my_thing_inlines.hpp"
 #include "my_tile.hpp"
 #include "my_tp.hpp"
 #include "my_tps.hpp"
@@ -50,7 +51,7 @@ static auto tp_cursor_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l, con
   //
   // Non zero cursor path, change the cursor to a positive color
   //
-  auto *ext_struct = thing_ext_struct(g, player);
+  auto *ext_struct = thing_ext_struct(g, v, player);
   if (ext_struct == nullptr) {
     return tile;
   }

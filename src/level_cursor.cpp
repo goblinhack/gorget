@@ -12,6 +12,7 @@
 #include "my_line.hpp"
 #include "my_main.hpp"
 #include "my_thing.hpp"
+#include "my_thing_inlines.hpp"
 #include "my_tp.hpp"
 #include "my_types.hpp"
 
@@ -436,7 +437,7 @@ void level_cursor_path_reset(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
-  auto *ext_struct = thing_ext_struct(g, player);
+  auto *ext_struct = thing_ext_struct(g, v, player);
   if (ext_struct == nullptr) {
     //
     // If no player, clear the cursor
@@ -482,7 +483,7 @@ void level_cursor_copy_path_to_player(Gamep g, Levelsp v, Levelp l, std::vector<
     return;
   }
 
-  auto *ext_struct = thing_ext_struct(g, player);
+  auto *ext_struct = thing_ext_struct(g, v, player);
   if (ext_struct == nullptr) {
     //
     // If no player, clear the cursor

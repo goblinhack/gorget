@@ -79,7 +79,7 @@ void thing_vision_reset(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE();
 
-  auto *ext = thing_ext_struct(g, t);
+  auto *ext = thing_ext_struct(g, v, t);
   if (ext != nullptr) {
     ext->has_seen = {{{0}}};
     ext->can_see  = {{0}};
@@ -95,7 +95,7 @@ void thing_vision_reset(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE();
 
-  auto *ext = thing_ext_struct(g, t);
+  auto *ext = thing_ext_struct(g, v, t);
   if (ext == nullptr) [[unlikely]] {
     return false;
   }
@@ -117,7 +117,7 @@ void thing_vision_reset(Gamep g, Levelsp v, Levelp l, Thingp t)
 
 void thing_can_see_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  auto *ext = thing_ext_struct(g, t);
+  auto *ext = thing_ext_struct(g, v, t);
   if (ext == nullptr) [[unlikely]] {
     return;
   }
@@ -170,7 +170,7 @@ void thing_can_see_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
 
 void thing_has_seen_dump(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  auto *ext = thing_ext_struct(g, t);
+  auto *ext = thing_ext_struct(g, v, t);
   if (ext == nullptr) [[unlikely]] {
     return;
   }
@@ -214,7 +214,7 @@ void thing_vision_calculate(Gamep g, Levelsp v, Levelp l, Thingp me)
     return;
   }
 
-  auto *ext = thing_ext_struct(g, me);
+  auto *ext = thing_ext_struct(g, v, me);
   if (ext == nullptr) [[unlikely]] {
     return;
   }

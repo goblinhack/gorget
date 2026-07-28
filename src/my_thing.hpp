@@ -734,7 +734,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_drop_all(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e) -> bool;
 [[nodiscard]] auto thing_drop(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, ThingEvent &e) -> bool;
 [[nodiscard]] auto thing_engulfer(Gamep g, Levelsp v, Levelp l, Thingp me) -> Thingp;
-[[nodiscard]] auto thing_ext_struct(Gamep g, Thingp t) -> ThingExtp;
 [[nodiscard]] auto thing_find_non_inline(Gamep g, Levelsp v, ThingId id) -> Thingp;
 [[nodiscard]] auto thing_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, Tpp fire_what, const bpoint &target) -> bool;
 [[nodiscard]] auto thing_get_at_safe(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot) -> Thingp;
@@ -1368,14 +1367,14 @@ void thing_display(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp
 //
 #define FOR_ALL_MINION_SLOTS(_g_, _v_, _l_, _mob_, _slot_, _minion_)                                                                            \
   if ((_g_) && (_v_) && (_l_))                                                                                                                  \
-    if (AUTO(_ext_) = thing_ext_struct(_g_, _mob_))                                                                                             \
+    if (AUTO(_ext_) = thing_ext_struct(_g_, _v_, _mob_))                                                                                        \
       for (auto _n_ = 0; _n_ < THING_MINION_MAX; _n_++)                                                                                         \
         for (AUTO(_slot_) = &_ext_->minions.minion[ _n_ ]; _slot_; (_slot_) = nullptr)                                                          \
           for (AUTO(_minion_) = thing_find_optional(g, v, (_slot_)->minion_id), loop2 = (Thingp) 1; loop2 == (Thingp) 1; loop2 = (Thingp) 0)
 
 #define FOR_ALL_MINIONS(_g_, _v_, _l_, _mob_, _minion_)                                                                                         \
   if ((_g_) && (_v_) && (_l_))                                                                                                                  \
-    if (AUTO(_ext_) = thing_ext_struct(_g_, _mob_))                                                                                             \
+    if (AUTO(_ext_) = thing_ext_struct(_g_, _v_, _mob_))                                                                                        \
       for (auto _n_ = 0; _n_ < THING_MINION_MAX; _n_++)                                                                                         \
         if (AUTO(_slot_) = &_ext_->minions.minion[ _n_ ])                                                                                       \
           if (AUTO(_minion_) = thing_find_optional(g, v, _slot_->minion_id))
@@ -1385,14 +1384,14 @@ void thing_display(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp
 //
 #define FOR_ALL_MISSILE_SLOTS(_g_, _v_, _l_, _owner_, _slot_, _missile_)                                                                        \
   if ((_g_) && (_v_) && (_l_))                                                                                                                  \
-    if (AUTO(_ext_) = thing_ext_struct(_g_, _owner_))                                                                                           \
+    if (AUTO(_ext_) = thing_ext_struct(_g_, _v_, _owner_))                                                                                      \
       for (auto _n_ = 0; _n_ < THING_MISSILE_MAX; _n_++)                                                                                        \
         for (AUTO(_slot_) = &_ext_->missiles.missile[ _n_ ]; _slot_; (_slot_) = nullptr)                                                        \
           for (AUTO(_missile_) = thing_find_optional(g, v, (_slot_)->missile_id), loop2 = (Thingp) 1; loop2 == (Thingp) 1; loop2 = (Thingp) 0)
 
 #define FOR_ALL_MISSILES(_g_, _v_, _l_, _owner_, _missile_)                                                                                     \
   if ((_g_) && (_v_) && (_l_))                                                                                                                  \
-    if (AUTO(_ext_) = thing_ext_struct(_g_, _owner_))                                                                                           \
+    if (AUTO(_ext_) = thing_ext_struct(_g_, _v_, _owner_))                                                                                      \
       for (auto _n_ = 0; _n_ < THING_MISSILE_MAX; _n_++)                                                                                        \
         if (AUTO(_slot_) = &_ext_->missiles.missile[ _n_ ])                                                                                     \
           if (AUTO(_missile_) = thing_find_optional(g, v, _slot_->missile_id))
@@ -1402,14 +1401,14 @@ void thing_display(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp
 //
 #define FOR_ALL_BUFF_SLOTS(_g_, _v_, _l_, _owner_, _slot_, _buff_)                                                                              \
   if ((_g_) && (_v_) && (_l_))                                                                                                                  \
-    if (AUTO(_ext_) = thing_ext_struct(_g_, _owner_))                                                                                           \
+    if (AUTO(_ext_) = thing_ext_struct(_g_, _v_, _owner_))                                                                                      \
       for (auto _n_ = 0; _n_ < THING_BUFF_MAX; _n_++)                                                                                           \
         for (AUTO(_slot_) = &_ext_->buffs.buff[ _n_ ]; _slot_; (_slot_) = nullptr)                                                              \
           for (AUTO(_buff_) = thing_find_optional(g, v, (_slot_)->buff_id), loop2 = (Thingp) 1; loop2 == (Thingp) 1; loop2 = (Thingp) 0)
 
 #define FOR_ALL_BUFFS(_g_, _v_, _l_, _owner_, _buff_)                                                                                           \
   if ((_g_) && (_v_) && (_l_))                                                                                                                  \
-    if (AUTO(_ext_) = thing_ext_struct(_g_, _owner_))                                                                                           \
+    if (AUTO(_ext_) = thing_ext_struct(_g_, _v_, _owner_))                                                                                      \
       for (auto _n_ = 0; _n_ < THING_BUFF_MAX; _n_++)                                                                                           \
         if (AUTO(_slot_) = &_ext_->buffs.buff[ _n_ ])                                                                                           \
           if (AUTO(_buff_) = thing_find_optional(g, v, _slot_->buff_id))
@@ -1419,14 +1418,14 @@ void thing_display(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp
 //
 #define FOR_ALL_INVENTORY_SLOTS(_g_, _v_, _l_, _owner_, _slot_, _item_)                                                                         \
   if ((_g_) && (_v_) && (_l_))                                                                                                                  \
-    for (auto _ext_ = thing_ext_struct(_g_, _owner_); _ext_; _ext_ = nullptr)                                                                   \
+    for (auto _ext_ = thing_ext_struct(_g_, _v_, _owner_); _ext_; _ext_ = nullptr)                                                              \
       for (auto _n_ = 0; _n_ < THING_INVENTORY_MAX; _n_++)                                                                                      \
         for (AUTO(_slot_) = &_ext_->inventory.slots[ _n_ ]; _slot_; (_slot_) = nullptr)                                                         \
           for (AUTO(_item_) = thing_find_optional(g, v, (_slot_)->item_id), loop2 = (Thingp) 1; loop2 == (Thingp) 1; loop2 = (Thingp) 0)
 
 #define FOR_ALL_INVENTORY_ITEMS(_g_, _v_, _l_, _owner_, _item_)                                                                                 \
   if ((_g_) && (_v_) && (_l_))                                                                                                                  \
-    if (AUTO(_ext_) = thing_ext_struct(_g_, _owner_))                                                                                           \
+    if (AUTO(_ext_) = thing_ext_struct(_g_, _v_, _owner_))                                                                                      \
       for (auto _n_ = 0; _n_ < THING_INVENTORY_MAX; _n_++)                                                                                      \
         if (AUTO(_slot_) = &_ext_->inventory.slots[ _n_ ])                                                                                      \
           if (AUTO(_item_) = thing_find_optional(g, v, _slot_->item_id))

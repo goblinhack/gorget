@@ -415,4 +415,21 @@ static inline auto thing_submerged_pct(Thingp t) -> int
   return t->_submerged_pct;
 }
 
+[[nodiscard]] static inline auto thing_ext_struct(Gamep g, Levelsp v, Thingp t) -> ThingExtp
+{
+#ifdef DEBUG_BUILD
+  TRACE_DEBUG();
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return 0;
+  }
+#endif
+
+  auto ext_id = t->ext_id;
+  if (ext_id == 0U) [[unlikely]] {
+    return nullptr;
+  }
+
+  return &v->thing_ext[ ext_id ];
+}
 #endif // MY_THING_INLINES_HPP

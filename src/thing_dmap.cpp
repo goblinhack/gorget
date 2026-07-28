@@ -8,7 +8,9 @@
 #include "my_game_defs.hpp"
 #include "my_main.hpp"
 #include "my_thing.hpp"
+#include "my_thing_inlines.hpp"
 #include "my_types.hpp"
+
 #include <cstdint>
 #include <cstring>
 
@@ -19,7 +21,7 @@
 {
   TRACE();
 
-  auto *ext = thing_ext_struct(g, me);
+  auto *ext = thing_ext_struct(g, v, me);
   if (ext == nullptr) [[unlikely]] {
     thing_err(g, v, l, me, "mob has no ext memory");
     return nullptr;
@@ -45,7 +47,7 @@ void thing_dmap(Gamep g, Levelsp v, Levelp l, Thingp me, bool reverse)
   uint8_t const maxx = MAP_WIDTH - 1;
   uint8_t const maxy = MAP_HEIGHT - 1;
 
-  auto *ext = thing_ext_struct(g, me);
+  auto *ext = thing_ext_struct(g, v, me);
   if (ext == nullptr) [[unlikely]] {
     return;
   }

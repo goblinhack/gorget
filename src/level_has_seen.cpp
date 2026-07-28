@@ -9,7 +9,9 @@
 #include "my_level.hpp"
 #include "my_level_inlines.hpp"
 #include "my_thing.hpp"
+#include "my_thing_inlines.hpp"
 #include "my_types.hpp"
+
 #include <cstdint>
 
 [[nodiscard]] auto level_has_seen(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
@@ -21,7 +23,7 @@
     return false;
   }
 
-  auto *ext = thing_ext_struct(g, player);
+  auto *ext = thing_ext_struct(g, v, player);
   if (ext == nullptr) [[unlikely]] {
     return false;
   }
@@ -45,7 +47,7 @@ void level_has_seen_update(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
-  auto *ext = thing_ext_struct(g, player);
+  auto *ext = thing_ext_struct(g, v, player);
   if (ext == nullptr) [[unlikely]] {
     return;
   }

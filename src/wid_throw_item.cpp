@@ -241,7 +241,7 @@ void wid_throw_item_show(Gamep g, Levelsp v, Levelp l, Thingp player, std::vecto
     return;
   }
 
-  auto *ext_struct = thing_ext_struct(g, player);
+  auto *ext_struct = thing_ext_struct(g, v, player);
   if (ext_struct == nullptr) {
     return;
   }

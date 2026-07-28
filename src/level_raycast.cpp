@@ -320,7 +320,7 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
-  auto *ext = thing_ext_struct(g, player);
+  auto *ext = thing_ext_struct(g, v, player);
   if (ext == nullptr) [[unlikely]] {
     return;
   }

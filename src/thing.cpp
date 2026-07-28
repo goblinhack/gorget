@@ -154,29 +154,12 @@ void thing_stats_dump(Gamep g, Levelsp v)
   log("- Ext mem things      %u out of max %u", v->thing_ext_count, THING_EXT_MAX);
 }
 
-[[nodiscard]] auto thing_ext_struct(Gamep g, Thingp t) -> ThingExtp
-{
-  TRACE();
-
-  auto *v = game_levels_get(g);
-  if (v == nullptr) {
-    return nullptr;
-  }
-
-  auto ext_id = t->ext_id;
-  if (ext_id == 0U) {
-    return nullptr;
-  }
-
-  return &v->thing_ext[ ext_id ];
-}
-
 [[nodiscard]] auto thing_light_struct(Gamep g, Thingp t) -> ThingLightp
 {
-  TRACE();
+  TRACE_DEBUG();
 
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     return nullptr;
   }
 
@@ -190,10 +173,10 @@ void thing_stats_dump(Gamep g, Levelsp v)
 
 [[nodiscard]] auto thing_player_struct(Gamep g) -> ThingPlayerp
 {
-  TRACE();
+  TRACE_DEBUG();
 
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     return nullptr;
   }
 

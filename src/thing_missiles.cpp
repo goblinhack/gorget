@@ -67,7 +67,7 @@
     return nullptr;
   }
 
-  auto *ext_struct = thing_ext_struct(g, me);
+  auto *ext_struct = thing_ext_struct(g, v, me);
   if (ext_struct == nullptr) {
     thing_err(g, v, l, me, "missing ext struct");
     return nullptr;
@@ -147,7 +147,7 @@
     return 0;
   }
 
-  auto *ext_struct = thing_ext_struct(g, me);
+  auto *ext_struct = thing_ext_struct(g, v, me);
   if (ext_struct == nullptr) {
     return 0;
   }
@@ -171,7 +171,7 @@
     return false;
   }
 
-  auto *ext_struct = thing_ext_struct(g, me);
+  auto *ext_struct = thing_ext_struct(g, v, me);
   if (ext_struct == nullptr) {
     return false;
   }
@@ -287,7 +287,7 @@ void thing_dump_missiles(Gamep g, Levelsp v, Levelp l, Thingp me)
     return;
   }
 
-  auto *ext_struct = thing_ext_struct(g, me);
+  auto *ext_struct = thing_ext_struct(g, v, me);
   if (ext_struct == nullptr) {
     return;
   }

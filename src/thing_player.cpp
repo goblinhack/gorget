@@ -844,7 +844,7 @@ static auto player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy) -> b
     }
   }
 
-  auto *ext_struct = thing_ext_struct(g, me);
+  auto *ext_struct = thing_ext_struct(g, v, me);
   if (ext_struct == nullptr) {
     ERR("no ext struct found");
     return false;
@@ -1171,7 +1171,7 @@ void player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
   THING_DBG(g, v, l, me, "%s", __FUNCTION__);
   TRACE_INDENT();
 
-  auto *ext_struct = thing_ext_struct(g, me);
+  auto *ext_struct = thing_ext_struct(g, v, me);
   if (ext_struct == nullptr) {
     return;
   }

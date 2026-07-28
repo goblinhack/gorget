@@ -27,7 +27,7 @@
     return 0;
   }
 
-  auto *ext_struct = thing_ext_struct(g, mob);
+  auto *ext_struct = thing_ext_struct(g, v, mob);
   if (ext_struct == nullptr) {
     return 0;
   }
@@ -68,7 +68,7 @@
     return nullptr;
   }
 
-  auto *ext_struct = thing_ext_struct(g, mob);
+  auto *ext_struct = thing_ext_struct(g, v, mob);
   if (ext_struct == nullptr) {
     thing_err(g, v, l, mob, "mob is missing ext struct");
     return nullptr;
@@ -133,7 +133,7 @@
     return false;
   }
 
-  auto *ext_struct = thing_ext_struct(g, mob);
+  auto *ext_struct = thing_ext_struct(g, v, mob);
   if (ext_struct == nullptr) {
     return false;
   }
@@ -224,7 +224,7 @@ void thing_mob_dump_minions(Gamep g, Levelsp v, Levelp l, Thingp mob)
     return;
   }
 
-  auto *ext_struct = thing_ext_struct(g, mob);
+  auto *ext_struct = thing_ext_struct(g, v, mob);
   if (ext_struct == nullptr) {
     return;
   }

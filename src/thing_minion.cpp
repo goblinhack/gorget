@@ -48,7 +48,7 @@
     return nullptr; // can be normal if detached
   }
 
-  auto *mob_ext = thing_ext_struct(g, mob);
+  auto *mob_ext = thing_ext_struct(g, v, mob);
   if (mob_ext == nullptr) {
     thing_err(g, v, l, me, "mob has no ext memory");
     return nullptr;

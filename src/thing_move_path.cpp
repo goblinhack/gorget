@@ -6,7 +6,9 @@
 #include "my_callstack.hpp"
 #include "my_main.hpp"
 #include "my_thing.hpp"
+#include "my_thing_inlines.hpp"
 #include "my_types.hpp"
+
 #include <vector>
 
 //
@@ -16,7 +18,7 @@ void thing_move_path_reset(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
-  auto *ext_struct = thing_ext_struct(g, me);
+  auto *ext_struct = thing_ext_struct(g, v, me);
   if (ext_struct == nullptr) {
     return;
   }
@@ -32,7 +34,7 @@ void thing_move_path_confirm(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
-  auto *ext_struct = thing_ext_struct(g, me);
+  auto *ext_struct = thing_ext_struct(g, v, me);
   if (ext_struct == nullptr) {
     return;
   }
@@ -51,7 +53,7 @@ void thing_move_path_confirm(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
-  auto *ext_struct = thing_ext_struct(g, me);
+  auto *ext_struct = thing_ext_struct(g, v, me);
   if (ext_struct == nullptr) {
     return 0;
   }
@@ -77,7 +79,7 @@ void thing_move_path_confirm(Gamep g, Levelsp v, Levelp l, Thingp me)
 
   move_confirmed = false;
 
-  auto *ext_struct = thing_ext_struct(g, me);
+  auto *ext_struct = thing_ext_struct(g, v, me);
   if (ext_struct == nullptr) {
     return false;
   }
@@ -107,7 +109,7 @@ static auto thing_move_path_confirmed(Gamep g, Levelsp v, Levelp l, Thingp me, c
 {
   TRACE();
 
-  auto *ext_struct = thing_ext_struct(g, me);
+  auto *ext_struct = thing_ext_struct(g, v, me);
   if (ext_struct == nullptr) {
     thing_err(g, v, l, me, "no ext struct");
     return false;
@@ -165,7 +167,7 @@ static auto thing_move_path_confirmed(Gamep g, Levelsp v, Levelp l, Thingp me, c
 {
   TRACE();
 
-  auto *ext_struct = thing_ext_struct(g, me);
+  auto *ext_struct = thing_ext_struct(g, v, me);
   if (ext_struct == nullptr) {
     return false;
   }
