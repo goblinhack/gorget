@@ -49,6 +49,7 @@
 #include <utility>
 #include <vector>
 
+#include "c_plus_plus_serializer.hpp"
 #include "my_age_map.hpp"
 #include "my_age_map_inlines.hpp"
 #include "my_ascii.hpp"
@@ -78,6 +79,7 @@
 #include "my_fpoint.hpp"
 #include "my_game.hpp"
 #include "my_game_defs.hpp"
+#include "my_game_inlines.hpp"
 #include "my_game_popups.hpp"
 #include "my_gfx.hpp"
 #include "my_gl.hpp"
@@ -118,10 +120,12 @@
 #include "my_time.hpp"
 #include "my_token.hpp"
 #include "my_tp.hpp"
+#include "my_tp_class.hpp"
 #include "my_tps.hpp"
 #include "my_types.hpp"
 #include "my_ui.hpp"
 #include "my_wid.hpp"
+#include "my_wid_class.hpp"
 #include "my_wid_keyboard.hpp"
 #include "my_wid_popup.hpp"
 #include "my_wid_text_box.hpp"

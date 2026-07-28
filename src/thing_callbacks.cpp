@@ -71,20 +71,6 @@ void thing_z_depth_set(Tpp tp, thing_z_depth_get_t callback)
   tp->z_depth_get = callback;
 }
 
-[[nodiscard]] auto thing_z_depth_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> MapZDepthType
-{
-  TRACE();
-  auto *tp = thing_tp(me);
-  if (tp == nullptr) [[unlikely]] {
-    ERR("no thing template pointer");
-    return MAP_Z_DEPTH_FLOOR;
-  }
-  if (tp->z_depth_get == nullptr) {
-    return tp_z_depth_get(tp);
-  }
-  return tp->z_depth_get(g, v, l, me);
-}
-
 void thing_mouse_down_set(Tpp tp, thing_mouse_down_t callback)
 {
   TRACE();

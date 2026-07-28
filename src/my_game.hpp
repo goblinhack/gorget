@@ -146,8 +146,6 @@ void               game_sound_volume_set(Gamep g, int val);
 
 [[nodiscard]] auto game_levels_get(Gamep g) -> Levelsp;
 [[nodiscard]] auto game_levels_set(Gamep g, Levelsp val) -> Levelsp;
-[[nodiscard]] auto game_level_get(Gamep g, Levelsp v) -> Levelp;
-[[nodiscard]] auto game_level_get(Gamep g, Levelsp v, LevelNum n) -> Levelp;
 [[nodiscard]] auto game_level_populate(Gamep g, Levelsp v, LevelNum n) -> Levelp;
 
 [[nodiscard]] auto game_seed_name_get(Gamep g) -> const char *;

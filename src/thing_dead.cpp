@@ -4,6 +4,7 @@
 
 #include "my_callstack.hpp"
 #include "my_game.hpp"
+#include "my_game_inlines.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_string.hpp"
@@ -13,6 +14,7 @@
 #include "my_tp.hpp"
 #include "my_types.hpp"
 #include "my_ui.hpp"
+
 #include <string>
 
 //

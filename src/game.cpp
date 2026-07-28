@@ -2,20 +2,13 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include <SDL_keyboard.h>
-#include <SDL_keycode.h>
-#include <algorithm>
-#include <cmath>
-#include <cstdint>
-#include <cstdlib>
-#include <ctime>
-
 #include "cfg.hpp"
 #include "my_ascii.hpp"
 #include "my_bpoint.hpp"
 #include "my_callstack.hpp"
 #include "my_game.hpp"
 #include "my_game_defs.hpp"
+#include "my_game_inlines.hpp"
 #include "my_game_popups.hpp"
 #include "my_gl.hpp"
 #include "my_globals.hpp"
@@ -36,8 +29,15 @@
 #include "my_wid.hpp"
 #include "my_wids.hpp"
 
+#include <SDL_keyboard.h>
+#include <SDL_keycode.h>
 #include <SDL_mixer.h>
+#include <algorithm>
 #include <array>
+#include <cmath>
+#include <cstdint>
+#include <cstdlib>
+#include <ctime>
 #include <list>
 #include <string>
 
@@ -2177,7 +2177,7 @@ void game_sound_volume_set(Gamep g, int val)
 
 [[nodiscard]] auto game_levels_get(Gamep g) -> Levelsp
 {
-  TRACE_DEBUG();
+  TRACE();
 
   if (g == nullptr) [[unlikely]] {
     ERR("no game pointer");
@@ -2197,41 +2197,6 @@ void game_sound_volume_set(Gamep g, int val)
     return nullptr;
   }
   return g->levels = val;
-}
-
-[[nodiscard]] auto game_level_get(Gamep g, Levelsp v) -> Levelp
-{
-  TRACE_DEBUG();
-
-  if (g == nullptr) [[unlikely]] {
-    ERR("no game pointer");
-    return nullptr;
-  }
-  if (v == nullptr) [[unlikely]] {
-    ERR("no levels pointer");
-    return nullptr;
-  }
-  auto n = v->level_num;
-  return &v->level[ n ];
-}
-
-[[nodiscard]] auto game_level_get(Gamep g, Levelsp v, LevelNum n) -> Levelp
-{
-  TRACE_DEBUG();
-
-  if (g == nullptr) [[unlikely]] {
-    ERR("game_level_get: no game pointer");
-    return nullptr;
-  }
-  if (v == nullptr) [[unlikely]] {
-    ERR("game_level_get: no levels pointer");
-    return nullptr;
-  }
-  if (n >= LEVEL_MAX) {
-    ERR("game_level_get: Exceeded max level: %u", n);
-    return nullptr;
-  }
-  return &v->level[ n ];
 }
 
 [[nodiscard]] auto game_level_populate(Gamep g, Levelsp v, LevelNum n) -> Levelp

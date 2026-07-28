@@ -9,6 +9,7 @@
 #include "my_fov_map_inlines.hpp"
 #include "my_game.hpp"
 #include "my_game_defs.hpp"
+#include "my_game_inlines.hpp"
 #include "my_globals.hpp"
 #include "my_level.hpp"
 #include "my_level_inlines.hpp"
@@ -17,6 +18,7 @@
 #include "my_thing_inlines.hpp"
 #include "my_tp.hpp"
 #include "my_types.hpp"
+
 #include <cstdint>
 #include <string>
 
@@ -93,7 +95,7 @@ void thing_vision_reset(Gamep g, Levelsp v, Levelp l, Thingp t)
 
 [[nodiscard]] auto thing_vision_can_see_tile(Gamep g, Levelsp v, Levelp l, Thingp t, bpoint p) -> bool
 {
-  TRACE();
+  TRACE_DEBUG();
 
   auto *ext = thing_ext_struct(g, v, t);
   if (ext == nullptr) [[unlikely]] {

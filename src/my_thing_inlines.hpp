@@ -432,4 +432,23 @@ static inline auto thing_submerged_pct(Thingp t) -> int
 
   return &v->thing_ext[ ext_id ];
 }
+
+[[nodiscard]] static inline auto thing_z_depth_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> MapZDepthType
+{
+#ifdef DEBUG_BUILD
+  TRACE();
+#endif
+
+  auto *tp = thing_tp(me);
+#ifdef DEBUG_BUILD
+  if (tp == nullptr) [[unlikely]] {
+    ERR("no thing template pointer");
+    return MAP_Z_DEPTH_FLOOR;
+  }
+#endif
+  if (tp->z_depth_get == nullptr) {
+    return tp_z_depth_get(tp);
+  }
+  return tp->z_depth_get(g, v, l, me);
+}
 #endif // MY_THING_INLINES_HPP

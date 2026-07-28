@@ -5,6 +5,7 @@
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
 #include "my_game.hpp"
+#include "my_game_inlines.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_sdl_proto.hpp"

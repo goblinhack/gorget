@@ -2,6 +2,9 @@
 // Copyright goblinhack@gmail.com
 //
 
+#ifndef MY_WID_CLASS_HPP
+#define MY_WID_CLASS_HPP
+
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
 #include "my_command.hpp"
@@ -300,3 +303,5 @@ public:
 extern std::array< std::array< Widp, TERM_HEIGHT_MAX >, TERM_WIDTH_MAX > wid_on_screen_at;
 
 extern wid_key_map_location wid_top_level;
+
+#endif

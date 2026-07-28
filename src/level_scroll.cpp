@@ -5,6 +5,7 @@
 #include "my_callstack.hpp"
 #include "my_game.hpp"
 #include "my_game_defs.hpp"
+#include "my_game_inlines.hpp"
 #include "my_gl.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
@@ -14,6 +15,7 @@
 #include "my_thing_inlines.hpp"
 #include "my_time.hpp"
 #include "my_types.hpp"
+
 #include <algorithm>
 #include <cstdint>
 #include <utility>
