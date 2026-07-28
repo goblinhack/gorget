@@ -199,8 +199,8 @@ static void level_display_slot(Gamep g, Levelsp v, Levelp l, const bpoint &p, in
   //
   // Do not show the special overlay tile unless showing the overlay it belongs in
   //
-  if (thing_is_lava_bg(t)) {
-    if (fbo != FBO_MAP_LAVA_OVERLAY) {
+  if (fbo != FBO_MAP_LAVA_OVERLAY) {
+    if (thing_is_lava_bg(t)) {
       return;
     }
   }
@@ -296,10 +296,10 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp level_above, Levelp 
             g_monochrome = false;
 
             if (level_above != nullptr) {
-              display_tile = level_is_lava_bool(g, v, l, p);
+              display_tile = level_is_lava_cached(g, v, l, p);
             } else {
               if (level_has_seen_cached(g, v, l, p)) {
-                display_tile = level_is_lava_bool(g, v, l, p);
+                display_tile = level_is_lava_cached(g, v, l, p);
               }
             }
             break;
@@ -373,7 +373,7 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp level_above, Levelp 
 
         if (display_tile) {
           if (level_above != nullptr) {
-            if (level_is_chasm(g, v, level_above, p) != nullptr) {
+            if (level_is_chasm_cached(g, v, level_above, p) != nullptr) {
               //
               // Only show this tile if the level above is a chasm
               //
@@ -410,7 +410,7 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp level_above, Levelp 
       switch (fbo) {
         case FBO_MAP_LAVA_OVERLAY :
           g_monochrome = false;
-          display_tile = level_is_lava_bg_bool(g, v, l, p);
+          display_tile = level_is_lava_bg_cached(g, v, l, p);
           break;
 
         default : break;
@@ -509,6 +509,8 @@ static void level_display_fbos(Gamep g, Levelsp v, Levelp level_above, Levelp l)
 
   gl_enter_2d_mode(g, game_map_fbo_width_get(g), game_map_fbo_height_get(g));
 
+  auto is_level_select = level_is_level_select(g, v, l);
+
   if (level_above == nullptr) {
     level_display_fbo(g, v, level_above, l, FBO_MAP_BG_PREVIOUSLY_SEEN_TILES);
     // sdl_fbo_dump(g, FBO_MAP_BG_PREVIOUSLY_SEEN_TILES, "FBO_MAP_BG_PREVIOUSLY_SEEN_TILES");
@@ -539,7 +541,7 @@ static void level_display_fbos(Gamep g, Levelsp v, Levelp level_above, Levelp l)
 
   gl_enter_2d_mode(g, game_window_pix_width_get(g), game_window_pix_height_get(g));
 
-  if (DEBUG || level_is_level_select(g, v, l)) {
+  if (DEBUG || is_level_select) {
     //
     // No lighting for level selection
     //
@@ -649,7 +651,7 @@ static void level_display_fbos(Gamep g, Levelsp v, Levelp level_above, Levelp l)
     blit_fbo_bind(FBO_FULL_SCREEN_LEVEL_CURR);
     glBlendFunc(GL_ONE, GL_ZERO); // no need to gl_clear
 
-    if (level_is_level_select(g, v, l)) {
+    if (is_level_select) {
       //
       // Level selection has no hidden tiles
       //

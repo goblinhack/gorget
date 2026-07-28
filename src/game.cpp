@@ -2177,7 +2177,7 @@ void game_sound_volume_set(Gamep g, int val)
 
 [[nodiscard]] auto game_levels_get(Gamep g) -> Levelsp
 {
-  TRACE();
+  TRACE_DEBUG();
 
   if (g == nullptr) [[unlikely]] {
     ERR("no game pointer");
@@ -2201,7 +2201,7 @@ void game_sound_volume_set(Gamep g, int val)
 
 [[nodiscard]] auto game_level_get(Gamep g, Levelsp v) -> Levelp
 {
-  TRACE();
+  TRACE_DEBUG();
 
   if (g == nullptr) [[unlikely]] {
     ERR("no game pointer");
@@ -2217,7 +2217,7 @@ void game_sound_volume_set(Gamep g, int val)
 
 [[nodiscard]] auto game_level_get(Gamep g, Levelsp v, LevelNum n) -> Levelp
 {
-  TRACE();
+  TRACE_DEBUG();
 
   if (g == nullptr) [[unlikely]] {
     ERR("game_level_get: no game pointer");

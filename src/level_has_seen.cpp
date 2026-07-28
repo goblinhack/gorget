@@ -16,7 +16,7 @@
 
 [[nodiscard]] auto level_has_seen(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
-  TRACE();
+  TRACE_DEBUG();
 
   auto *player = thing_player(g);
   if (player == nullptr) [[unlikely]] {

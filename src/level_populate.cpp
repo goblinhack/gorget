@@ -43,6 +43,11 @@ static auto level_populated(Gamep g, Levelsp v, Levelp l)
 
   level_count_items(g, v, l);
 
+  //
+  // Update cached flags
+  //
+  level_update(g, v, l);
+
   return true;
 }
 

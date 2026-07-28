@@ -160,6 +160,10 @@ void level_minimaps_update(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
+  if (g_thread_id != MAIN_THREAD) {
+    return;
+  }
+
   TRACE();
 
   //

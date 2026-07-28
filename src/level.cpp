@@ -504,7 +504,7 @@ void level_update_flags(Gamep g, Levelsp v, Levelp l)
 
   memset(l->flag, 0, sizeof(l->flag));
 
-  FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
+  FOR_ALL_THINGS_ON_LEVEL_UNSAFE(g, v, l, t)
   {
     auto *tp = thing_tp(t);
     auto  at = thing_at(g, v, l, t);
