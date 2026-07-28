@@ -373,7 +373,7 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp level_above, Levelp 
 
         if (display_tile) {
           if (level_above != nullptr) {
-            if (level_is_chasm_cached(g, v, level_above, p) != nullptr) {
+            if (level_is_chasm_cached(g, v, level_above, p)) {
               //
               // Only show this tile if the level above is a chasm
               //
