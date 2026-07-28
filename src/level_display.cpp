@@ -85,6 +85,7 @@ static void level_blit_light(Gamep g, Levelsp v, Levelp l, color c)
     blit_init();
     blit(g_fbo_tex_id[ FBO_MAP_LIGHT ], 0, 1, 1, 0, tl1.x, tl1.y, br2.x, br2.y, c);
     blit_flush();
+
     // sdl_fbo_dump(g, FBO_MAP_LIGHT, "FBO_MAP_LIGHT");
 
     glDisable(GL_SCISSOR_TEST);
@@ -623,16 +624,6 @@ static void level_display_fbos(Gamep g, Levelsp v, Levelp level_above, Levelp l)
   }
 
   //
-  // Blit things that are always shown (regardless of debug mode) once seen (and popups)
-  //
-  blit_fbo_bind(FBO_FULL_SCREEN_VISIBLE_TILES);
-  {
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    blit_fbo(g, FBO_MAP_FG_OVERLAY, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y, WHITE);
-  }
-  blit_fbo_unbind();
-
-  //
   // Blit to the level below and then next time we enter here, the level above on top of that.
   // There are holes in the level above (chasms) that allow you to see the level below through them.
   //
@@ -641,32 +632,42 @@ static void level_display_fbos(Gamep g, Levelsp v, Levelp level_above, Levelp l)
     // This is the level below. We only need to show visibile tiles.
     //
     blit_fbo_bind(FBO_FULL_SCREEN_LEVEL_BELOW);
-    glBlendFunc(GL_ONE, GL_ZERO); // no need to gl_clear
-    blit_fbo(g, FBO_FULL_SCREEN_VISIBLE_TILES, WHITE);
+    {
+      glBlendFunc(GL_ONE, GL_ZERO); // no need to gl_clear
+      blit_fbo(g, FBO_FULL_SCREEN_VISIBLE_TILES, WHITE);
+    }
     blit_fbo_unbind();
   } else {
     //
     // This is the level above.
     //
     blit_fbo_bind(FBO_FULL_SCREEN_LEVEL_CURR);
-    glBlendFunc(GL_ONE, GL_ZERO); // no need to gl_clear
+    {
+      glBlendFunc(GL_ONE, GL_ZERO); // no need to gl_clear
 
-    if (is_level_select) {
-      //
-      // Level selection has no hidden tiles
-      //
-      blit_fbo(g, FBO_FULL_SCREEN_VISIBLE_TILES, WHITE);
-    } else {
-      //
-      // Show the previously seen tiles and then the current visible ones
-      //
-      blit_fbo(g, FBO_FULL_SCREEN_PREVIOUSLY_SEEN_TILES, WHITE);
+      if (is_level_select) {
+        //
+        // Level selection has no hidden tiles
+        //
+        blit_fbo(g, FBO_FULL_SCREEN_VISIBLE_TILES, WHITE);
+      } else {
+        //
+        // Show the previously seen tiles and then the current visible ones
+        //
+        blit_fbo(g, FBO_FULL_SCREEN_PREVIOUSLY_SEEN_TILES, WHITE);
+
+        //
+        // Overlay the visible tiles
+        //
+        glBlendFunc(GL_ONE_MINUS_DST_ALPHA, GL_ONE);
+        blit_fbo(g, FBO_FULL_SCREEN_VISIBLE_TILES, WHITE);
+      }
 
       //
-      // Overlay the visible tiles
+      // Blit things that are always shown (regardless of debug mode) once seen (and popups)
       //
-      glBlendFunc(GL_ONE_MINUS_DST_ALPHA, GL_ONE);
-      blit_fbo(g, FBO_FULL_SCREEN_VISIBLE_TILES, WHITE);
+      glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+      blit_fbo(g, FBO_MAP_FG_OVERLAY, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y, WHITE);
     }
     blit_fbo_unbind();
   }

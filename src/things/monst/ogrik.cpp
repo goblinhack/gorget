@@ -127,7 +127,7 @@ static void tp_ogrik_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_is_immune_to_add(tp, THING_EVENT_LIGHT_DAMAGE);
   tp_is_immune_to_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_monst_group_add(tp, MONST_GROUP2);
-  tp_name_a_or_an_set(tp, "a ogrik");
+  tp_name_a_or_an_set(tp, "an ogrik");
   tp_name_apostrophize_set(tp, "ogriks'");
   tp_name_long_set(tp, "ogrik");
   tp_name_pluralize_set(tp, "ogrik");
