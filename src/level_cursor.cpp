@@ -132,7 +132,7 @@ static auto level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Th
           for (auto x = minx; x < maxx; x++) {
             bpoint const p(x, y);
 
-            if (level_is_obs_to_cursor_path_cached(g, v, l, p)) {
+            if (level_is_obs_to_cursor_path(g, v, l, p)) {
               dmap.val[ x ][ y ] = DMAP_IS_WALL;
             } else {
               dmap.val[ x ][ y ] = DMAP_IS_PASSABLE;
@@ -148,7 +148,7 @@ static auto level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Th
           for (auto x = minx; x < maxx; x++) {
             bpoint const p(x, y);
 
-            if ((level_is_obs_to_cursor_path_cached(g, v, l, p)) || (level_is_cursor_path_hazard_cached(g, v, l, p))) {
+            if ((level_is_obs_to_cursor_path(g, v, l, p)) || (level_is_cursor_path_hazard(g, v, l, p))) {
               dmap.val[ x ][ y ] = DMAP_IS_WALL;
             } else {
               dmap.val[ x ][ y ] = DMAP_IS_PASSABLE;
@@ -169,13 +169,13 @@ static auto level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Th
           // Any tile will do as long as not consecutive hazard tiles.
           //
           if (prev_tile_was_hazard) {
-            if ((level_is_obs_to_cursor_path_cached(g, v, l, p)) || (level_is_cursor_path_hazard_cached(g, v, l, p))) {
+            if ((level_is_obs_to_cursor_path(g, v, l, p)) || (level_is_cursor_path_hazard(g, v, l, p))) {
               dmap.val[ x ][ y ] = DMAP_IS_WALL;
             } else {
               dmap.val[ x ][ y ] = DMAP_IS_PASSABLE;
             }
           } else {
-            if (level_is_obs_to_cursor_path_cached(g, v, l, p)) {
+            if (level_is_obs_to_cursor_path(g, v, l, p)) {
               dmap.val[ x ][ y ] = DMAP_IS_WALL;
             } else {
               dmap.val[ x ][ y ] = DMAP_IS_PASSABLE;
@@ -184,7 +184,7 @@ static auto level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Th
             //
             // If a hazard, then don't let the next tile be one too
             //
-            prev_tile_was_hazard = (level_is_cursor_path_hazard_cached(g, v, l, p));
+            prev_tile_was_hazard = (level_is_cursor_path_hazard(g, v, l, p));
           }
         }
       }
@@ -194,7 +194,7 @@ static auto level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Th
       //
       // Common code for pass 1 and 2
       //
-      if (level_is_cursor_path_hazard_cached(g, v, l, thing_at(g, v, l, player))) {
+      if (level_is_cursor_path_hazard(g, v, l, thing_at(g, v, l, player))) {
         //
         // If standing on a hazard, then plot a course that allows travel over hazards.
         // Any path except through walls.
@@ -203,14 +203,14 @@ static auto level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Th
           for (auto x = minx; x < maxx; x++) {
             bpoint const p(x, y);
 
-            if (level_is_obs_to_cursor_path_cached(g, v, l, p)) {
+            if (level_is_obs_to_cursor_path(g, v, l, p)) {
               dmap.val[ x ][ y ] = DMAP_IS_WALL;
             } else {
               dmap.val[ x ][ y ] = DMAP_IS_PASSABLE;
             }
           }
         }
-      } else if (level_is_cursor_path_hazard_cached(g, v, l, v->cursor_at)) {
+      } else if (level_is_cursor_path_hazard(g, v, l, v->cursor_at)) {
         //
         // Here the cursor is over a hazard. Plot a course that allows travel via other hazards.
         //
@@ -235,12 +235,12 @@ static auto level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Th
                 //
                 // But we still can't walk through walls to get to the hazard
                 //
-                if (level_is_obs_to_cursor_path_cached(g, v, l, p)) {
+                if (level_is_obs_to_cursor_path(g, v, l, p)) {
                   dmap.val[ x ][ y ] = DMAP_IS_WALL;
                   continue;
                 }
 
-                if (level_is_cursor_path_hazard_cached(g, v, l, p)) {
+                if (level_is_cursor_path_hazard(g, v, l, p)) {
                   if (level_flag(g, v, l, i, p, player) == nullptr) {
                     dmap.val[ x ][ y ] = DMAP_IS_WALL;
                     continue;
@@ -264,7 +264,7 @@ static auto level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Th
             for (auto x = minx; x < maxx; x++) {
               bpoint const p(x, y);
 
-              if ((level_is_obs_to_cursor_path_cached(g, v, l, p)) || (level_is_cursor_path_hazard_cached(g, v, l, p))) {
+              if ((level_is_obs_to_cursor_path(g, v, l, p)) || (level_is_cursor_path_hazard(g, v, l, p))) {
                 dmap.val[ x ][ y ] = DMAP_IS_WALL;
               } else {
                 dmap.val[ x ][ y ] = DMAP_IS_PASSABLE;
@@ -283,7 +283,7 @@ static auto level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Th
             //
             // Avoid hazards
             //
-            if ((level_is_obs_to_cursor_path_cached(g, v, l, p)) || (level_is_cursor_path_hazard_cached(g, v, l, p))) {
+            if ((level_is_obs_to_cursor_path(g, v, l, p)) || (level_is_cursor_path_hazard(g, v, l, p))) {
               dmap.val[ x ][ y ] = DMAP_IS_WALL;
             } else {
               dmap.val[ x ][ y ] = DMAP_IS_PASSABLE;
@@ -401,7 +401,7 @@ static auto level_cursor_path_draw_line(Gamep g, Levelsp v, Levelp l, const bpoi
   if (paths.empty()) {
     std::vector< bpoint > path;
     for (auto p : draw_line(start, end)) {
-      if ((level_is_obs_to_cursor_path_cached(g, v, l, p)) || (level_is_cursor_path_hazard_cached(g, v, l, p))) {
+      if ((level_is_obs_to_cursor_path(g, v, l, p)) || (level_is_cursor_path_hazard(g, v, l, p))) {
         break;
       }
       path.push_back(p);

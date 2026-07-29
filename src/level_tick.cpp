@@ -171,7 +171,7 @@ static void level_tick(Gamep g, Levelsp v, Levelp l, bool tick_begin_requested)
     //
     // Update minimaps and lighting
     //
-    level_update_visibility(g, v, l);
+    level_update(g, v, l);
   }
 
   if (l->tick_in_progress) {
@@ -288,7 +288,7 @@ static void level_tick(Gamep g, Levelsp v, Levelp l, bool tick_begin_requested)
     //
     // Update minimaps and lighting
     //
-    level_update_visibility(g, v, l);
+    level_update(g, v, l);
 
     l->tick_ended = true;
   }
