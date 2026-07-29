@@ -13,13 +13,14 @@
 #include "my_main.hpp"
 #include "my_thing.hpp"
 #include "my_tp_class.hpp"
+#include "my_tp_inlines.hpp"
 
-static inline auto tp_flag(Tpp tp, ThingFlagType f) -> int
+[[nodiscard]] static inline auto tp_flag(Tpp tp, ThingFlagType f) -> int
 {
 #ifdef DEBUG_BUILD
   TRACE_DEBUG(); // expensive
   if (tp == nullptr) [[unlikely]] {
-    tp_err(tp, "no thing template pointer");
+    ERR("no thing template pointer");
     return 0;
   }
 #endif
@@ -31,7 +32,7 @@ static inline auto tp_flag(Tpp tp, ThingFlagType f) -> int
 // this belongs in my_thing.hpp but as it is inlined, it needs to access
 // the levels structure
 //
-static inline auto thing_find(Gamep g, Levelsp v, ThingId id) -> Thingp
+[[nodiscard]] static inline auto thing_find(Gamep g, Levelsp v, ThingId id) -> Thingp
 {
 #ifdef DEBUG_BUILD
   TRACE_DEBUG(); // expensive
@@ -65,7 +66,7 @@ static inline auto thing_find(Gamep g, Levelsp v, ThingId id) -> Thingp
   return t;
 }
 
-static inline auto thing_tp(Thingp t) -> Tpp
+[[nodiscard]] static inline auto thing_tp(Thingp t) -> Tpp
 {
 #ifdef DEBUG_BUILD
   TRACE_DEBUG(); // expensive
@@ -78,7 +79,7 @@ static inline auto thing_tp(Thingp t) -> Tpp
   return tp_find(t->tp_id);
 }
 
-static inline auto thing_is_falling(Thingp t) -> int
+[[nodiscard]] static inline auto thing_is_falling(Thingp t) -> int
 {
 #ifdef DEBUG_BUILD
   TRACE_DEBUG();
@@ -91,7 +92,7 @@ static inline auto thing_is_falling(Thingp t) -> int
   return t->_fall_ms;
 }
 
-static inline auto thing_is_lunging(Thingp t) -> int
+[[nodiscard]] static inline auto thing_is_lunging(Thingp t) -> int
 {
 #ifdef DEBUG_BUILD
   TRACE_DEBUG();
@@ -104,7 +105,7 @@ static inline auto thing_is_lunging(Thingp t) -> int
   return t->_lunge_ms;
 }
 
-static inline auto thing_is_hit(Thingp t) -> int
+[[nodiscard]] static inline auto thing_is_hit(Thingp t) -> int
 {
 #ifdef DEBUG_BUILD
   TRACE_DEBUG();
@@ -117,7 +118,7 @@ static inline auto thing_is_hit(Thingp t) -> int
   return t->_is_hit;
 }
 
-static inline auto thing_is_hidden(Thingp t) -> int
+[[nodiscard]] static inline auto thing_is_hidden(Thingp t) -> int
 {
 #ifdef DEBUG_BUILD
   TRACE_DEBUG();
@@ -130,7 +131,7 @@ static inline auto thing_is_hidden(Thingp t) -> int
   return t->_is_hidden;
 }
 
-static inline auto thing_is_hot(Thingp t) -> int
+[[nodiscard]] static inline auto thing_is_hot(Thingp t) -> int
 {
 #ifdef DEBUG_BUILD
   TRACE_DEBUG();
@@ -143,7 +144,7 @@ static inline auto thing_is_hot(Thingp t) -> int
   return t->_is_hot;
 }
 
-static inline auto thing_is_jumping(Thingp t) -> bool
+[[nodiscard]] static inline auto thing_is_jumping(Thingp t) -> bool
 {
 #ifdef DEBUG_BUILD
   TRACE_DEBUG();
@@ -156,7 +157,7 @@ static inline auto thing_is_jumping(Thingp t) -> bool
   return t->_is_jumping;
 }
 
-static inline auto thing_is_thrown(Thingp t) -> bool
+[[nodiscard]] static inline auto thing_is_thrown(Thingp t) -> bool
 {
 #ifdef DEBUG_BUILD
   TRACE_DEBUG();
@@ -169,7 +170,7 @@ static inline auto thing_is_thrown(Thingp t) -> bool
   return t->_is_thrown;
 }
 
-static inline auto thing_is_moving(Thingp t) -> bool
+[[nodiscard]] static inline auto thing_is_moving(Thingp t) -> bool
 {
 #ifdef DEBUG_BUILD
   TRACE_DEBUG();
@@ -182,7 +183,7 @@ static inline auto thing_is_moving(Thingp t) -> bool
   return t->_is_moving;
 }
 
-static inline auto thing_is_spawned(Thingp t) -> bool
+[[nodiscard]] static inline auto thing_is_spawned(Thingp t) -> bool
 {
 #ifdef DEBUG_BUILD
   TRACE_DEBUG();
@@ -195,7 +196,7 @@ static inline auto thing_is_spawned(Thingp t) -> bool
   return t->_is_spawned;
 }
 
-static inline auto thing_is_dead(Thingp t) -> bool
+[[nodiscard]] static inline auto thing_is_dead(Thingp t) -> bool
 {
 #ifdef DEBUG_BUILD
   TRACE_DEBUG();
@@ -208,7 +209,7 @@ static inline auto thing_is_dead(Thingp t) -> bool
   return t->_is_dead;
 }
 
-static inline auto thing_is_physics_temperature(Thingp t) -> bool
+[[nodiscard]] static inline auto thing_is_physics_temperature(Thingp t) -> bool
 {
 #ifdef DEBUG_BUILD
   TRACE_DEBUG();
@@ -221,7 +222,46 @@ static inline auto thing_is_physics_temperature(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_physics_temperature) != 0;
 }
 
-static inline auto thing_is_player(const Thingp t) -> bool
+[[nodiscard]] static inline auto thing_is_fire(Thingp t) -> bool
+{
+#ifdef DEBUG_BUILD
+  TRACE_DEBUG();
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return 0;
+  }
+#endif
+
+  return tp_flag(thing_tp(t), is_fire) != 0;
+}
+
+[[nodiscard]] static inline auto thing_is_lava(Thingp t) -> bool
+{
+#ifdef DEBUG_BUILD
+  TRACE_DEBUG();
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return 0;
+  }
+#endif
+
+  return tp_flag(thing_tp(t), is_lava) != 0;
+}
+
+[[nodiscard]] static inline auto thing_is_explosion(Thingp t) -> bool
+{
+#ifdef DEBUG_BUILD
+  TRACE_DEBUG();
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return 0;
+  }
+#endif
+
+  return tp_flag(thing_tp(t), is_explosion) != 0;
+}
+
+[[nodiscard]] static inline auto thing_is_player(const Thingp t) -> bool
 {
 #ifdef DEBUG_BUILD
   TRACE_DEBUG();
@@ -234,7 +274,7 @@ static inline auto thing_is_player(const Thingp t) -> bool
   return t->_is_player;
 }
 
-static inline auto thing_is_water(Thingp t) -> bool
+[[nodiscard]] static inline auto thing_is_water(Thingp t) -> bool
 {
 #ifdef DEBUG_BUILD
   TRACE_DEBUG();
@@ -247,7 +287,7 @@ static inline auto thing_is_water(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_water) != 0;
 }
 
-static inline auto thing_is_foliage(Thingp t) -> bool
+[[nodiscard]] static inline auto thing_is_foliage(Thingp t) -> bool
 {
 #ifdef DEBUG_BUILD
   TRACE_DEBUG();
@@ -260,7 +300,7 @@ static inline auto thing_is_foliage(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_foliage) != 0;
 }
 
-static inline auto thing_is_reeds(Thingp t) -> bool
+[[nodiscard]] static inline auto thing_is_reeds(Thingp t) -> bool
 {
 #ifdef DEBUG_BUILD
   TRACE_DEBUG();
@@ -273,7 +313,7 @@ static inline auto thing_is_reeds(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_reeds) != 0;
 }
 
-static inline auto thing_is_wall(Thingp t) -> bool
+[[nodiscard]] static inline auto thing_is_wall(Thingp t) -> bool
 {
 #ifdef DEBUG_BUILD
   TRACE_DEBUG();
@@ -286,7 +326,7 @@ static inline auto thing_is_wall(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_wall) != 0;
 }
 
-static inline auto thing_is_floor(Thingp t) -> bool
+[[nodiscard]] static inline auto thing_is_floor(Thingp t) -> bool
 {
 #ifdef DEBUG_BUILD
   TRACE_DEBUG();
@@ -299,7 +339,7 @@ static inline auto thing_is_floor(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_floor) != 0;
 }
 
-static inline auto thing_is_obs_to_vision(Thingp t) -> bool
+[[nodiscard]] static inline auto thing_is_obs_to_vision(Thingp t) -> bool
 {
 #ifdef DEBUG_BUILD
   TRACE_DEBUG();
@@ -312,7 +352,7 @@ static inline auto thing_is_obs_to_vision(Thingp t) -> bool
   return tp_flag(thing_tp(t), is_obs_to_vision) != 0;
 }
 
-static inline auto thing_pix_at(Thingp t) -> spoint
+[[nodiscard]] static inline auto thing_pix_at(Thingp t) -> spoint
 {
 #ifdef DEBUG_BUILD
   TRACE_DEBUG();
@@ -324,7 +364,7 @@ static inline auto thing_pix_at(Thingp t) -> spoint
   return t->_curr_pix_at;
 }
 
-static inline auto thing_is_open(Thingp t) -> bool
+[[nodiscard]] static inline auto thing_is_open(Thingp t) -> bool
 {
 #ifdef DEBUG_BUILD
   TRACE_DEBUG();
@@ -337,7 +377,7 @@ static inline auto thing_is_open(Thingp t) -> bool
   return t->_is_open;
 }
 
-static inline auto thing_is_engulfed(Thingp t) -> bool
+[[nodiscard]] static inline auto thing_is_engulfed(Thingp t) -> bool
 {
 #ifdef DEBUG_BUILD
   TRACE_DEBUG();
@@ -350,7 +390,7 @@ static inline auto thing_is_engulfed(Thingp t) -> bool
   return t->_is_engulfed;
 }
 
-static inline auto thing_find_optional(Gamep g, Levelsp v, ThingId id) -> Thingp
+[[nodiscard]] static inline auto thing_find_optional(Gamep g, Levelsp v, ThingId id) -> Thingp
 {
 #ifdef DEBUG_BUILD
   TRACE_DEBUG(); // expensive
@@ -382,7 +422,7 @@ static inline auto thing_find_optional(Gamep g, Levelsp v, ThingId id) -> Thingp
   return nullptr;
 }
 
-static inline auto thing_is_light_source(Thingp t) -> int
+[[nodiscard]] static inline auto thing_is_light_source(Thingp t) -> int
 {
 #ifdef DEBUG_BUILD
   TRACE_DEBUG();
@@ -395,7 +435,7 @@ static inline auto thing_is_light_source(Thingp t) -> int
   return tp_flag(thing_tp(t), is_light_source);
 }
 
-static inline auto thing_submerged_pct(Thingp t) -> int
+[[nodiscard]] static inline auto thing_submerged_pct(Thingp t) -> int
 {
 #ifdef DEBUG_BUILD
   TRACE_DEBUG();

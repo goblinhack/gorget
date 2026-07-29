@@ -121,6 +121,7 @@
 #include "my_token.hpp"
 #include "my_tp.hpp"
 #include "my_tp_class.hpp"
+#include "my_tp_inlines.hpp"
 #include "my_tps.hpp"
 #include "my_types.hpp"
 #include "my_ui.hpp"

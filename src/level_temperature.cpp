@@ -10,6 +10,7 @@
 #include "my_thing.hpp"
 #include "my_thing_inlines.hpp" // NOLINT
 #include "my_tp.hpp"
+#include "my_tp_inlines.hpp"
 #include "my_types.hpp"
 
 #include <algorithm>

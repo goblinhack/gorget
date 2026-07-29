@@ -388,17 +388,6 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_key) != 0;
 }
 
-[[nodiscard]] auto thing_is_lava(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_lava) != 0;
-}
-
 [[nodiscard]] auto thing_is_usable(Thingp t) -> bool
 {
   TRACE_DEBUG();
@@ -3685,17 +3674,6 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_physics_explosion) != 0;
 }
 
-[[nodiscard]] auto thing_is_explosion(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_explosion) != 0;
-}
-
 [[nodiscard]] auto thing_is_obs_to_explosion(Thingp t) -> bool
 {
   TRACE_DEBUG();
@@ -3884,17 +3862,6 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     return false;
   }
   return tp_flag(thing_tp(t), is_steam) != 0;
-}
-
-[[nodiscard]] auto thing_is_fire(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_fire) != 0;
 }
 
 [[nodiscard]] auto thing_is_burnable(Thingp t) -> bool

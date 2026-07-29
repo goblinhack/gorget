@@ -9,13 +9,15 @@
 #include "my_thing_inlines.hpp"
 #include "my_time.hpp"
 #include "my_tp.hpp"
+#include "my_tp_inlines.hpp"
 #include "my_types.hpp"
 #include <algorithm>
 #include <cstdint>
 
 [[nodiscard]] auto thing_is_always_hot(Thingp me) -> bool
 {
-  TRACE();
+  TRACE_DEBUG();
+
   if (thing_is_fire(me)) {
     return true;
   }
@@ -33,9 +35,8 @@
 //
 void thing_hot_time_step(Gamep g, Levelsp v, Levelp l, Thingp me, int /*time_step*/)
 {
-  TRACE();
+  TRACE_DEBUG();
 
-  auto T = thing_temperature(me);
   if (! thing_is_physics_temperature(me)) {
     return;
   }
@@ -43,6 +44,8 @@ void thing_hot_time_step(Gamep g, Levelsp v, Levelp l, Thingp me, int /*time_ste
   if (thing_is_always_hot(me)) {
     return;
   }
+
+  auto T = thing_temperature(me);
 
   //
   // If halfway towards burning/melting, make it pulse

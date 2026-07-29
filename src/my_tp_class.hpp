@@ -299,4 +299,6 @@ public:
   ~Tp();
 };
 
+using TpVec = std::vector< class Tp * >;
+
 #endif

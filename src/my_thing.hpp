@@ -874,11 +874,9 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_equippable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_ethereal(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_exit(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_explosion(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_extinguished_on_death(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_falling_continues(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_falling_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
-[[nodiscard]] auto thing_is_fire(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_flammable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_flat(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_flesh(Thingp t) -> bool;
@@ -903,7 +901,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_key(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_kobalos(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_lava_bg(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_lava(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_level_closed_icon(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_level_curr(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_level_final_icon(Thingp t) -> bool;

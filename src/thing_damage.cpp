@@ -13,6 +13,7 @@
 #include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp"
 #include "my_tp.hpp"
+#include "my_tp_inlines.hpp"
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
@@ -26,7 +27,7 @@
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
-    tp_err(tp, "no thing template pointer");
+    ERR("no thing template pointer");
     return 0;
   }
 
@@ -50,7 +51,7 @@
   TRACE();
 
   if (tp == nullptr) [[unlikely]] {
-    tp_err(tp, "no thing template pointer");
+    ERR("no thing template pointer");
     return 0;
   }
 
@@ -129,7 +130,7 @@
   std::vector< ThingEventType > out;
 
   if (tp == nullptr) [[unlikely]] {
-    tp_err(tp, "no thing template pointer");
+    ERR("no thing template pointer");
     return out;
   }
 
