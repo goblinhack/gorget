@@ -132,6 +132,9 @@ static auto level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Th
           for (auto x = minx; x < maxx; x++) {
             bpoint const p(x, y);
 
+            //
+            // NOTE: cannot use cached flags as we need to check for open doors
+            //
             if (level_is_obs_to_cursor_path(g, v, l, p)) {
               dmap.val[ x ][ y ] = DMAP_IS_WALL;
             } else {
@@ -148,6 +151,9 @@ static auto level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Th
           for (auto x = minx; x < maxx; x++) {
             bpoint const p(x, y);
 
+            //
+            // NOTE: cannot use cached flags as we need to check for open doors
+            //
             if ((level_is_obs_to_cursor_path(g, v, l, p)) || (level_is_cursor_path_hazard(g, v, l, p))) {
               dmap.val[ x ][ y ] = DMAP_IS_WALL;
             } else {
@@ -169,12 +175,18 @@ static auto level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Th
           // Any tile will do as long as not consecutive hazard tiles.
           //
           if (prev_tile_was_hazard) {
+            //
+            // NOTE: cannot use cached flags as we need to check for open doors
+            //
             if ((level_is_obs_to_cursor_path(g, v, l, p)) || (level_is_cursor_path_hazard(g, v, l, p))) {
               dmap.val[ x ][ y ] = DMAP_IS_WALL;
             } else {
               dmap.val[ x ][ y ] = DMAP_IS_PASSABLE;
             }
           } else {
+            //
+            // NOTE: cannot use cached flags as we need to check for open doors
+            //
             if (level_is_obs_to_cursor_path(g, v, l, p)) {
               dmap.val[ x ][ y ] = DMAP_IS_WALL;
             } else {
@@ -184,7 +196,7 @@ static auto level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Th
             //
             // If a hazard, then don't let the next tile be one too
             //
-            prev_tile_was_hazard = (level_is_cursor_path_hazard(g, v, l, p));
+            prev_tile_was_hazard = level_is_cursor_path_hazard(g, v, l, p);
           }
         }
       }
@@ -240,6 +252,9 @@ static auto level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Th
                   continue;
                 }
 
+                //
+                // NOTE: cannot use cached flags as we need to check for open doors
+                //
                 if (level_is_cursor_path_hazard(g, v, l, p)) {
                   if (level_flag(g, v, l, i, p, player) == nullptr) {
                     dmap.val[ x ][ y ] = DMAP_IS_WALL;
@@ -264,6 +279,9 @@ static auto level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Th
             for (auto x = minx; x < maxx; x++) {
               bpoint const p(x, y);
 
+              //
+              // NOTE: cannot use cached flags as we need to check for open doors
+              //
               if ((level_is_obs_to_cursor_path(g, v, l, p)) || (level_is_cursor_path_hazard(g, v, l, p))) {
                 dmap.val[ x ][ y ] = DMAP_IS_WALL;
               } else {
