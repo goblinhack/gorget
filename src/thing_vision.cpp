@@ -7,7 +7,6 @@
 #include "my_callstack.hpp"
 #include "my_fov_map.hpp"
 #include "my_fov_map_inlines.hpp"
-#include "my_game.hpp"
 #include "my_game_defs.hpp"
 #include "my_game_inlines.hpp"
 #include "my_globals.hpp"

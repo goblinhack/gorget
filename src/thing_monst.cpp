@@ -6,7 +6,6 @@
 #include "my_bpoint.hpp"
 #include "my_callstack.hpp"
 #include "my_fov_map_inlines.hpp"
-#include "my_game.hpp"
 #include "my_game_defs.hpp"
 #include "my_game_inlines.hpp"
 #include "my_level.hpp"

@@ -17,7 +17,6 @@
 #include "my_sdl_proto.hpp" // NOLINT
 #include "my_spoint.hpp"
 #include "my_thing.hpp"
-#include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp"
 #include "my_time.hpp"
 #include "my_tp.hpp"

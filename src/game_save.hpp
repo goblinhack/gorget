@@ -708,8 +708,8 @@ auto Game::save_config() -> bool
     return true;
   }
 
-  auto          filename_fallback = "config";
-  std::ofstream out_fallback(filename_fallback, std::ios::binary);
+  const auto         *filename_fallback = "config";
+  std::ofstream const out_fallback(filename_fallback, std::ios::binary);
 
   if (! out_fallback) {
     ERR("failed to open '%s' or '%s' for writing: %s", filename.c_str(), filename_fallback, strerror(errno));

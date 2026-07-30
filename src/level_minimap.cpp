@@ -6,7 +6,6 @@
 #include "my_callstack.hpp"
 #include "my_color.hpp"
 #include "my_color_defs.hpp"
-#include "my_game.hpp"
 #include "my_game_defs.hpp"
 #include "my_game_inlines.hpp"
 #include "my_gl.hpp"

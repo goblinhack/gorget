@@ -3,7 +3,6 @@ bugs
 
 todo
 ----
-attack and defence
 potion, levitate
 potion, dislocation  (teleport)
 potion, imperceptable (invisible)
@@ -29,6 +28,18 @@ present icon with multiplites for bonus
 enchants
 wortweed
 spikes
+monsters
+  - eels
+  - drift spider
+  - spider with webs
+  - unihulk
+  - ravenbeast
+  - bearowl
+  - ogyr (celtic)
+  - door mimic
+  - thief that can steal items
+  - dropbear
+  - barbarian, thrud
 
 sacrifice altar
 ---------------
@@ -150,16 +161,6 @@ gameplay
   - Alternative turn based idea is that the dungeon will force a move
     after say 10 seconds. Gradually this will increase in speed until
     the monsters are moving almost real time.
-monsters
-  - ogri - like in Doctor Who, monoliths that move slowly and block the way
-  - unihulk
-  - ravenbeast
-  - bearowl
-  - ogyr (celtic)
-  - door mimic
-  - thief that can steal items
-  - dropbear
-  - barbarian, thrud
 allies
   - Allies vanish each level and the life force is returned to you
   - Life force can be applied to the summoning of allies each level.

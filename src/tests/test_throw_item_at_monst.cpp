@@ -115,7 +115,7 @@
   //
   // Can miss
   //
-  if (0) {
+  if (compiler_unused) {
     TEST_ASSERT(t, thing_is_dead(monst), "expecting dead monster");
   }
   TEST_ASSERT(t, game_tick_get(g, v) == 1, "final tick counter value");

@@ -376,8 +376,8 @@ static void thing_display_rotated(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t
 //
 // Low health visual
 //
-static void thing_low_health(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t_maybe_null, spoint tl, spoint br, Tilep tile, float x1, float x2,
-                             float y1, float y2, FboEnum fbo, color fg, LightPixels *light_pixels = nullptr)
+static void thing_low_health(spoint tl, spoint br, Tilep tile, float x1, float x2, float y1, float y2, color fg,
+                             LightPixels *light_pixels = nullptr)
 {
   TRACE();
 
@@ -461,7 +461,7 @@ static void thing_display_it(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t_mayb
       auto h     = thing_health(g, v, l, t_maybe_null);
 
       if (h < h_max / 4) {
-        thing_low_health(g, v, l, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg, light_pixels);
+        thing_low_health(tl, br, tile, x1, x2, y1, y2, fg, light_pixels);
       }
     }
   }

@@ -47,7 +47,7 @@ static void thing_dump_buffs(Gamep g, Levelsp v, Levelp l, Thingp me)
 //
 // How many projectils?
 //
-[[nodiscard]] static auto thing_buff_count_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> int
+[[nodiscard]] static auto thing_buff_count_get(Gamep g, Levelsp v, Thingp me) -> int
 {
   if (me == nullptr) {
     return 0;
@@ -141,7 +141,7 @@ static void thing_dump_buffs(Gamep g, Levelsp v, Levelp l, Thingp me)
   //
   // Too many buffs
   //
-  if (thing_buff_count_get(g, v, l, me) >= THING_BUFF_MAX) {
+  if (thing_buff_count_get(g, v, me) >= THING_BUFF_MAX) {
     THING_DBG(g, v, l, me, "trying to apply too many buffs");
     thing_dump_buffs(g, v, l, me);
 
