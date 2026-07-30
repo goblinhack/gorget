@@ -56,6 +56,16 @@ static bool tp_ghost_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thing
   return true;
 }
 
+static bool tp_ghost_on_missing(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, ThingEvent &e)
+{
+  TRACE();
+
+  (void) thing_spawn(g, v, l, tp_first(is_effect_attack), it);
+  thing_sound_play(g, v, l, me, "hiss");
+
+  return true;
+}
+
 static void tp_ghost_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
 {
   TRACE();
@@ -74,6 +84,7 @@ static void tp_ghost_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEven
   thing_detail_set(tp, tp_ghost_detail_get);
   thing_on_attacking_set(tp, tp_ghost_on_attacking);
   thing_on_death_set(tp, tp_ghost_on_death);
+  thing_on_missing_set(tp, tp_ghost_on_missing);
   tp_attack_count_max_per_tick_set(tp, 1);
   tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d1");
   tp_distance_minion_from_mob_max_set(tp, 6);
@@ -121,6 +132,8 @@ static void tp_ghost_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEven
   tp_priority_set(tp, THING_PRIORITY_MONST);
   tp_score_value_set(tp, 1);
   tp_speed_set(tp, 100);
+  tp_stat_set(tp, THING_STAT_ATT, "10");
+  tp_stat_set(tp, THING_STAT_DEF, "1");
   tp_temperature_initial_set(tp, -10); // celsius
   tp_weight_set(tp, WEIGHT_FEATHER);   // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_FLOATING_MONST);

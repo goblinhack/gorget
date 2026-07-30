@@ -247,49 +247,34 @@
   return out;
 }
 
-[[nodiscard]] auto thing_stat_success(Gamep g, Levelsp v, Levelp l, Thingp me, ThingStatType stat, int modifier) -> bool
+//
+// Does d20 + stat modifier reach or exceed the target roll
+//
+[[nodiscard]] auto thing_stat_success(Gamep g, Levelsp v, Levelp l, Thingp me, ThingStatType stat, int target_roll) -> bool
 {
   TRACE_DEBUG();
 
-  int const result[ 20 ][ 20 ] = {
-      //       10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10  stat
-      //       -9 -8 -7 -6 -5 -4 -3 -2 -1 +0 +1 +2 +3 +4 +5 +6 +7 +8 +9 +10 mod
-      //        1  2  3  4  5  6  7  8  9 10 11 12 12 14 15 16 17 18 19 20  total
-      // roll +----------------------------------------------------------------
-      /* 1  */ {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, //
-      /* 2  */ {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1}, //
-      /* 3  */ {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1}, //
-      /* 4  */ {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1}, //
-      /* 5  */ {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1}, //
-      /* 6  */ {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1}, //
-      /* 7  */ {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1}, //
-      /* 8  */ {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1}, //
-      /* 9  */ {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1}, //
-      /* 10 */ {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, //
-      /* 11 */ {0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, //
-      /* 12 */ {0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, //
-      /* 13 */ {0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, //
-      /* 14 */ {0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, //
-      /* 15 */ {0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, //
-      /* 16 */ {0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, //
-      /* 17 */ {0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, //
-      /* 18 */ {0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, //
-      /* 19 */ {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, //
-      /* 20 */ {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, //
-  };
+  auto roll = d20();
 
-  auto roll       = d20();
-  auto total_stat = thing_stat(g, v, l, me, stat);
-
-  total_stat += modifier;
-
-  if (total_stat <= 1) {
+  if (roll <= 1) {
     return false;
   }
-  if (total_stat >= 20) {
+  if (roll >= 20) {
     return true;
   }
-  //  topcon("tot %d roll %d mod %d", total_stat, roll, modifier);
 
-  return result[ roll - 1 ][ total_stat - 1 ] != 0;
+  //
+  // Override the level. This can happen during falling and the level we want to use is that of the thing.
+  //
+  l = thing_level(g, v, me);
+
+  auto mod = thing_stat_mod(g, v, l, me, stat);
+
+  if (roll + mod >= target_roll) {
+    THING_DBG(g, v, l, me, "roll: %s d20:%d +mod:%d vs:%d => pass", thing_stat_string(g, v, l, me, stat).c_str(), roll, roll + mod, target_roll);
+    return true;
+  }
+
+  THING_DBG(g, v, l, me, "roll: %s d20:%d +mod:%d vs:%d => fail", thing_stat_string(g, v, l, me, stat).c_str(), roll, roll + mod, target_roll);
+  return false;
 }

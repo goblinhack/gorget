@@ -67,6 +67,16 @@ static bool tp_ogrik_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thing
   return true;
 }
 
+static bool tp_ogrik_on_missing(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, ThingEvent &e)
+{
+  TRACE();
+
+  (void) thing_spawn(g, v, l, tp_first(is_effect_attack), it);
+  thing_sound_play(g, v, l, me, "rock");
+
+  return true;
+}
+
 static void tp_ogrik_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
@@ -84,8 +94,9 @@ static void tp_ogrik_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
   thing_description_set(tp, tp_ogrik_description_get);
   thing_detail_set(tp, tp_ogrik_detail_get);
   thing_on_attacking_set(tp, tp_ogrik_on_attacking);
-  thing_on_moved_set(tp, tp_ogrik_on_moved);
   thing_on_death_set(tp, tp_ogrik_on_death);
+  thing_on_missing_set(tp, tp_ogrik_on_missing);
+  thing_on_moved_set(tp, tp_ogrik_on_moved);
   tp_attack_count_max_per_tick_set(tp, 2);
   tp_distance_vision_set(tp, 12);
   tp_flag_set(tp, is_able_to_crush_grass);
@@ -135,6 +146,8 @@ static void tp_ogrik_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_priority_set(tp, THING_PRIORITY_MONST);
   tp_score_value_set(tp, 5);
   tp_speed_set(tp, 25);
+  tp_stat_set(tp, THING_STAT_ATT, "1d8+10");
+  tp_stat_set(tp, THING_STAT_DEF, "1d8+12");
   tp_temperature_damage_at_set(tp, 50); // celsius
   tp_temperature_initial_set(tp, 20);   // celsius
   tp_temperature_melts_at_set(tp, 250); // celsius

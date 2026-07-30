@@ -120,13 +120,13 @@ enum {
   THING_NOISE_FOOTSTEP    = 1,
 
   //
-  // Roll modifier
+  // Target rolls. Higher targets are harder to exceed.
   //
-  THING_STAT_MODIFIER               = 0,
-  THING_STAT_MODIFIER_FALL          = 0,
-  THING_STAT_MODIFIER_TRAP          = -1,
-  THING_STAT_MODIFIER_CHEST_EXPLODE = -2,
-  THING_STAT_MODIFIER_ENGULFED      = -5,
+  TARGET_ROLL               = 10,
+  TARGET_ROLL_TRAP          = 11,
+  TARGET_ROLL_FALL          = 12,
+  TARGET_ROLL_CHEST_EXPLODE = 12,
+  TARGET_ROLL_ENGULFED      = 15,
 
   //
   // Jump animation height in tiles

@@ -31,6 +31,9 @@
 
   if (! level_is_level_select(g, v, l)) {
     if (thing_level(g, v, t) != l) {
+      level_log(g, v, thing_level(g, v, t), "this is the things level");
+      level_log(g, v, l, "this is the debug level");
+      ERR("thing level mismatch");
       ERR("thing level mismatch");
     }
   }

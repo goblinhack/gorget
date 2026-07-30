@@ -5,6 +5,7 @@
 #include "my_bpoint.hpp"
 #include "my_callstack.hpp"
 #include "my_game_defs.hpp"
+#include "my_game_popups.hpp"
 #include "my_level.hpp"
 #include "my_level_inlines.hpp" // NOLINT
 #include "my_main.hpp"
@@ -13,9 +14,64 @@
 #include "my_thing_inlines.hpp"
 #include "my_tp.hpp"
 #include "my_types.hpp"
+#include "my_ui.hpp"
 
 #include <algorithm>
 #include <vector>
+
+//
+// The monster missed
+//
+static void thing_missed_player(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
+{
+  TRACE();
+
+  auto *it = e.source;
+
+  auto at = thing_at(g, v, l, me);
+  game_popup_text_add(g, at.x, at.y, "!", WHITE);
+
+  auto damage_name = e.special_attack.name;
+
+  if (it != nullptr) {
+    std::string by_the_thing;
+    auto       *fired_by = thing_missile_fired_by_get(g, v, l, it);
+    if (fired_by != nullptr) {
+      if (fired_by == me) {
+        by_the_thing = "your " + thing_name_long(g, v, l, it);
+      } else {
+        by_the_thing = thing_name_apostrophize_the(g, v, l, fired_by) + " " + thing_name_long(g, v, l, it);
+      }
+    } else {
+      by_the_thing = thing_name_long_the(g, v, l, it);
+    }
+
+    topcon(UI_WARN_FMT_STR "%s misses!" UI_RESET_FMT, capitalize_first(by_the_thing).c_str());
+  }
+}
+
+//
+// The player missed
+//
+static void player_missed_thing(Gamep g, Levelsp v, Levelp l, Thingp it, ThingEvent &e)
+{
+  TRACE();
+  auto *the_player = e.source;
+
+  if (thing_is_monst(it)) {
+    auto at = thing_at(g, v, l, it);
+    game_popup_text_add(g, at.x, at.y, "miss", WHITE);
+  }
+
+  if ((the_player != nullptr) && thing_is_loggable(it)) {
+    auto the_thing_name_long  = thing_name_long_the(g, v, l, it);
+    auto The_thing_name_long  = capitalize_first(the_thing_name_long);
+    auto the_thing_name_short = thing_name_short_the(g, v, l, it);
+    auto by_player            = thing_name_long(g, v, l, the_player);
+
+    topcon("You miss %s.", the_thing_name_long.c_str());
+  }
+}
 
 //
 // We're trying to attack at this tile. What do we hit first?
@@ -46,6 +102,11 @@ static auto thing_attack(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp i
 
   if (e_in != nullptr) {
     e = *e_in;
+    if (e.source) {
+      attacker = e.source;
+    } else {
+      e.source = attacker;
+    }
   }
 
   //
@@ -65,6 +126,31 @@ static auto thing_attack(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp i
       THING_DBG(g, v, l, attacker, "exceeded max attack count (%d vs %d), ignore", //
                 thing_attack_count_per_tick(attacker),                             //
                 tp_attack_count_max_per_tick_get(thing_tp(attacker)));
+      return false;
+    }
+  }
+
+  //
+  // Attack or miss
+  //
+  // The attack modifier, say +4 has to beat the defense, say 10
+  // We roll d20 and add 4 .
+  //
+  auto def    = thing_stat(g, v, l, it, THING_STAT_DEF);
+  auto is_hit = thing_stat_success(g, v, l, attacker, THING_STAT_ATT, def);
+
+  if (! is_hit) {
+    if (! thing_on_missing(g, v, l, attacker, it, e)) {
+      return false;
+    }
+
+    if (thing_is_monst(attacker)) {
+      // Misses you
+      thing_missed_player(g, v, l, it, e);
+      return false;
+    } else if (thing_is_player(attacker)) {
+      // You miss
+      player_missed_thing(g, v, l, it, e);
       return false;
     }
   }

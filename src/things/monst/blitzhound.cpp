@@ -74,6 +74,17 @@ static bool tp_blitzhound_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, 
   return true;
 }
 
+static bool tp_blitzhound_on_missing(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, ThingEvent &e)
+{
+  TRACE();
+
+  (void) thing_spawn(g, v, l, tp_first(is_effect_attack), it);
+
+  thing_sound_play(g, v, l, me, "hiss");
+
+  return true;
+}
+
 [[nodiscard]] auto tp_load_blitzhound() -> bool
 {
   auto *tp   = tp_load("blitzhound"); // keep as string for scripts
@@ -85,6 +96,7 @@ static bool tp_blitzhound_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, 
   thing_detail_set(tp, tp_blitzhound_detail_get);
   thing_on_attacking_set(tp, tp_blitzhound_on_attacking);
   thing_on_death_set(tp, tp_blitzhound_on_death);
+  thing_on_missing_set(tp, tp_blitzhound_on_missing);
   tp_attack_count_max_per_tick_set(tp, 2);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6"); // fumble => intensify / keep burning / crit => stop burning
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // fumble => flames spread to you
@@ -135,6 +147,8 @@ static bool tp_blitzhound_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, 
   tp_priority_set(tp, THING_PRIORITY_MONST);
   tp_score_value_set(tp, 4);
   tp_speed_set(tp, 200);
+  tp_stat_set(tp, THING_STAT_ATT, "1d8+10");
+  tp_stat_set(tp, THING_STAT_DEF, "12");
   tp_temperature_burns_at_set(tp, 50);  // celsius
   tp_temperature_damage_at_set(tp, 35); // celsius
   tp_temperature_initial_set(tp, 20);   // celsius

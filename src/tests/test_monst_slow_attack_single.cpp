@@ -149,7 +149,7 @@
 
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 25; tries++) {
+  for (auto tries = 0; tries < 50; tries++) {
     TEST_LOOP_PROGRESS(t, g, v, l, tries, w, h);
     TEST_ASSERT(t, game_event_wait(g), "failed to wait");
     if (! game_wait_for_tick_to_finish(g, v, l)) {
@@ -178,7 +178,9 @@
   if (p != nullptr) {
     auto attacked_count = p->attacked_by[ tp_id_get(thing_tp(monst)) ];
 
-    TEST_ASSERT(t, attacked_count == 12, "attacked by count not as expected");
+    log("attacked_count %d", attacked_count);
+
+    TEST_ASSERT(t, attacked_count == 16, "attacked by count not as expected");
   }
 
   //
@@ -186,7 +188,7 @@
   //
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  TEST_ASSERT(t, game_tick_get(g, v) == 30, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 42, "final tick counter value");
 
   level_dump(g, v, l, w, h);
   TEST_PASSED(t);

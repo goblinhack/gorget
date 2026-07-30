@@ -85,6 +85,16 @@ static bool tp_argusul_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thi
   return true;
 }
 
+static bool tp_argusul_on_missing(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, ThingEvent &e)
+{
+  TRACE();
+
+  (void) thing_spawn(g, v, l, tp_first(is_effect_attack), it);
+  thing_sound_play(g, v, l, me, "hiss");
+
+  return true;
+}
+
 static void tp_argusul_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
@@ -106,6 +116,7 @@ static void tp_argusul_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
   thing_detail_set(tp, tp_argusul_detail_get);
   thing_on_attacking_set(tp, tp_argusul_on_attacking);
   thing_on_death_set(tp, tp_argusul_on_death);
+  thing_on_missing_set(tp, tp_argusul_on_missing);
   thing_on_tick_begin_set(tp, tp_argusul_tick_begin);
   tp_attack_count_max_per_tick_set(tp, 1);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6"); // fumble => intensify / keep burning / crit => stop burning
@@ -157,6 +168,8 @@ static void tp_argusul_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_priority_set(tp, THING_PRIORITY_MONST);
   tp_score_value_set(tp, 5);
   tp_speed_set(tp, 50);
+  tp_stat_set(tp, THING_STAT_ATT, "1d4+14");
+  tp_stat_set(tp, THING_STAT_DEF, "6");
   tp_temperature_damage_at_set(tp, 200); // celsius
   tp_temperature_initial_set(tp, 20);    // celsius
   tp_weight_set(tp, WEIGHT_HUMAN);       // grams

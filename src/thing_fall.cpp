@@ -67,7 +67,7 @@ static auto thing_choose_landing_spot(Gamep g, Levelsp v, Levelp l, Thingp me, b
           // If lucky, no landing on lava
           //
           if (thing_is_player(me) && (level_is_lava(g, v, l, where) != nullptr)) {
-            if (thing_stat_success(g, v, l, me, THING_STAT_LUCK, THING_STAT_MODIFIER_FALL)) {
+            if (thing_stat_success(g, v, l, me, THING_STAT_LUCK, TARGET_ROLL_FALL)) {
               //
               // Continue to look for a landing spot
               //

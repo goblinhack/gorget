@@ -452,6 +452,30 @@ void thing_on_attacking_set(Tpp tp, thing_on_attacking_t callback)
   return tp->on_attacking(g, v, l, me, it, e);
 }
 
+void thing_on_missing_set(Tpp tp, thing_on_missing_t callback)
+{
+  TRACE();
+  if (tp == nullptr) [[unlikely]] {
+    ERR("no thing template pointer");
+    return;
+  }
+  tp->on_missing = callback;
+}
+
+[[nodiscard]] auto thing_on_missing(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, ThingEvent &e) -> bool
+{
+  TRACE();
+  auto *tp = thing_tp(me);
+  if (tp == nullptr) [[unlikely]] {
+    ERR("no thing template pointer");
+    return false;
+  }
+  if (tp->on_missing == nullptr) {
+    return true;
+  }
+  return tp->on_missing(g, v, l, me, it, e);
+}
+
 void thing_on_moved_set(Tpp tp, thing_on_moved_t callback)
 {
   TRACE();

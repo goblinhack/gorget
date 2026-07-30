@@ -74,6 +74,17 @@ static bool tp_cleaner_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thi
   return true;
 }
 
+static bool tp_cleaner_on_missing(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, ThingEvent &e)
+{
+  TRACE();
+
+  (void) thing_spawn(g, v, l, tp_first(is_effect_attack), it);
+
+  thing_sound_play(g, v, l, me, "squelch");
+
+  return true;
+}
+
 static void tp_cleaner_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
 {
   TRACE();
@@ -94,6 +105,7 @@ static void tp_cleaner_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEv
   thing_detail_set(tp, tp_cleaner_detail_get);
   thing_on_attacking_set(tp, tp_cleaner_on_attacking);
   thing_on_death_set(tp, tp_cleaner_on_death);
+  thing_on_missing_set(tp, tp_cleaner_on_missing);
   tp_attack_count_max_per_tick_set(tp, 1);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // fumble => intensify / keep burning / crit => stop burning
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // fumble => flames spread to you
@@ -156,6 +168,8 @@ static void tp_cleaner_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEv
   tp_priority_set(tp, THING_PRIORITY_MONST);
   tp_score_value_set(tp, 5);
   tp_speed_set(tp, 50);
+  tp_stat_set(tp, THING_STAT_ATT, "1d4+14");
+  tp_stat_set(tp, THING_STAT_DEF, "2");
   tp_temperature_burns_at_set(tp, 30);  // celsius
   tp_temperature_damage_at_set(tp, 30); // celsius
   tp_temperature_initial_set(tp, 20);   // celsius

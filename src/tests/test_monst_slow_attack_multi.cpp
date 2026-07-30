@@ -9,7 +9,7 @@
 #include "../my_test.hpp"
 #include "../my_thing_inlines.hpp"
 
-[[nodiscard]] static auto test_monst_fast_attack_multi(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_monst_slow_attack_multi(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -149,7 +149,7 @@
 
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 20; tries++) {
+  for (auto tries = 0; tries < 40; tries++) {
     TEST_LOOP_PROGRESS(t, g, v, l, tries, w, h);
     TEST_ASSERT(t, game_event_wait(g), "failed to wait");
     if (! game_wait_for_tick_to_finish(g, v, l)) {
@@ -180,7 +180,8 @@
   if (p != nullptr) {
     auto attacked_count = p->attacked_by[ tp_id_get(thing_tp(monst)) ];
 
-    TEST_ASSERT(t, attacked_count == 44, "attacked by count not as expected");
+    log("attacked_count %d", attacked_count);
+    TEST_ASSERT(t, attacked_count == 42, "attacked by count not as expected");
   }
 
   //
@@ -188,7 +189,7 @@
   //
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  TEST_ASSERT(t, game_tick_get(g, v) == 24, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 28, "final tick counter value");
 
   level_dump(g, v, l, w, h);
   TEST_PASSED(t);
@@ -199,14 +200,14 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_monst_fast_attack_multi() -> bool // NOLINT
+[[nodiscard]] auto test_load_monst_slow_attack_multi() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("monst_fast_attack_multi");
+  Testp test = test_load("monst_slow_attack_multi");
 
   // begin sort marker1 {
-  test_callback_set(test, test_monst_fast_attack_multi);
+  test_callback_set(test, test_monst_slow_attack_multi);
   // end sort marker1 }
 
   return true;

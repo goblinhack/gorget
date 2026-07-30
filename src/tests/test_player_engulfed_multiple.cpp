@@ -90,7 +90,7 @@
   //
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 20; tries++) {
+  for (auto tries = 0; tries < 50; tries++) {
     TEST_LOOP_PROGRESS(t, g, v, l, tries, w, h);
     TEST_ASSERT(t, game_event_wait(g), "failed to wait");
     if (! game_wait_for_tick_to_finish(g, v, l)) {
@@ -110,7 +110,7 @@
   //
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  TEST_ASSERT(t, game_tick_get(g, v) == 12, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 13, "final tick counter value");
 
   level_dump(g, v, l, w, h);
   TEST_PASSED(t);

@@ -643,7 +643,7 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
   }
 
   if (thing_is_engulfed(me)) {
-    if (thing_stat_success(g, v, l, me, THING_STAT_LUCK, THING_STAT_MODIFIER_ENGULFED)) {
+    if (thing_stat_success(g, v, l, me, THING_STAT_LUCK, TARGET_ROLL_ENGULFED)) {
       topcon(UI_IMPORTANT_FMT_STR "You are engulfed but break free!" UI_RESET_FMT);
       (void) thing_is_engulfed_try_unset(g, v, l, me);
     } else {

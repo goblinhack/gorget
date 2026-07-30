@@ -426,6 +426,32 @@ static void tp_player_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 }
 
+static bool tp_player_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, ThingEvent &e)
+{
+  TRACE();
+
+  if (e.event_type == THING_EVENT_MELEE_DAMAGE) {
+    (void) thing_spawn(g, v, l, tp_first(is_effect_attack), it);
+
+    thing_sound_play(g, v, l, me, "player_punch");
+  }
+
+  return true;
+}
+
+static bool tp_player_on_missing(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, ThingEvent &e)
+{
+  TRACE();
+
+  if (e.event_type == THING_EVENT_MELEE_DAMAGE) {
+    (void) thing_spawn(g, v, l, tp_first(is_effect_attack), it);
+
+    thing_sound_play(g, v, l, me, "player_punch");
+  }
+
+  return true;
+}
+
 [[nodiscard]] auto tp_load_player() -> bool
 {
   auto *tp   = tp_load("player"); // keep as string for scripts
@@ -434,6 +460,7 @@ static void tp_player_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
   // begin sort marker1 {
   thing_description_set(tp, tp_player_description_get);
   thing_detail_set(tp, tp_player_detail_get);
+  thing_on_attacking_set(tp, tp_player_on_attacking);
   thing_on_damage_set(tp, tp_player_on_damage);
   thing_on_fall_begin_set(tp, tp_player_on_fall_begin);
   thing_on_fall_end_set(tp, tp_player_on_fall_end);
@@ -441,6 +468,7 @@ static void tp_player_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
   thing_on_level_enter_set(tp, tp_player_level_enter);
   thing_on_level_leave_set(tp, tp_player_level_leave);
   thing_on_level_populated_set(tp, tp_player_level_populated);
+  thing_on_missing_set(tp, tp_player_on_missing);
   thing_on_moved_set(tp, tp_player_on_moved);
   thing_on_spawned_set(tp, tp_player_on_spawned);
   thing_on_teleported_set(tp, tp_player_on_teleported);
