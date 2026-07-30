@@ -79,17 +79,17 @@ static void level_minimap_levels_update(Gamep g, Levelsp v, Levelp l, const bool
         if (level_is_water_bool(g, v, l, p)) {
           c = BLUE;
         }
-        if (level_is_deep_water(g, v, l, p) != nullptr) {
+        if (level_is_deep_water_bool(g, v, l, p)) {
           c = BLUE4;
         }
-        if (level_is_door_locked(g, v, l, p) != nullptr) {
+        if (level_is_door_locked_bool(g, v, l, p)) {
           if (level_open_is_door_locked(g, v, l, p) != nullptr) {
             // ignore
           } else {
             c = BROWN;
           }
         }
-        if (level_is_door_secret(g, v, l, p) != nullptr) {
+        if (level_is_door_secret_bool(g, v, l, p)) {
           if (level_open_is_door_secret(g, v, l, p) != nullptr) {
             // ignore
           } else {
@@ -116,7 +116,7 @@ static void level_minimap_levels_update(Gamep g, Levelsp v, Levelp l, const bool
           c = CYAN;
         }
 
-        if (level_is_blit_shown_in_overlay(g, v, l, p) != nullptr) {
+        if (level_is_blit_shown_in_overlay_bool(g, v, l, p)) {
           //
           // Keep bright colors
           //

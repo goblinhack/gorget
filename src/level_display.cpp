@@ -327,7 +327,7 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp level_above, Levelp 
               //
               // Certain things, like exits, once seen, are always lit above the light
               //
-              if (level_is_blit_shown_in_overlay(g, v, l, p) != nullptr) {
+              if (level_is_blit_shown_in_overlay_bool(g, v, l, p)) {
                 //
                 // Always show
                 //

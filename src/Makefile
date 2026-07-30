@@ -138,6 +138,7 @@ tidy:
 	$(SCRIPT_DIR)/splat "int *\/\*x\*\/" "int x" "*" do
 	$(SCRIPT_DIR)/splat "int *\/\*y\*\/" "int y" "*" do
 	$(SCRIPT_DIR)/splat "uint32_t *\/\*button\*\/" "uint32_t button" "*" do
+	$(SCRIPT_DIR)/splat "level_is_\([a-z_]*\)(g, v, l, p) != nullptr" "level_is_\1_bool(g, v, l, p)" "*" do
 	@echo "Done"
 
 .PHONY: format tidy

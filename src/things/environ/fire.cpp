@@ -47,7 +47,7 @@ static void tp_fire_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
     //
     // Rock, for example?
     //
-    if (level_is_obs_to_fire(g, v, l, p) != nullptr) {
+    if (level_is_obs_to_fire_bool(g, v, l, p)) {
       continue;
     }
 

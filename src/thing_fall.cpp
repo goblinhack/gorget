@@ -31,7 +31,7 @@
     return false;
   }
 
-  if (level_is_obs_to_falling_onto(g, v, l, p) != nullptr) {
+  if (level_is_obs_to_falling_onto_bool(g, v, l, p)) {
     return false;
   }
 

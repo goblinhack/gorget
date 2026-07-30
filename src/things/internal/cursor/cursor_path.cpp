@@ -42,11 +42,11 @@ static auto tp_cursor_path_display_get_tile_info(Gamep g, Levelsp v, Levelp l, c
     return tp_tiles_get(tp, THING_ANIM_CURSOR_TARGET, 0);
   }
 
-  if (level_is_cursor_path_warning(g, v, l, p) != nullptr) {
+  if (level_is_cursor_path_warning_bool(g, v, l, p)) {
     return tp_tiles_get(tp, THING_ANIM_CURSOR_WARNING, 0);
   }
 
-  if (level_is_cursor_path_hazard(g, v, l, p) != nullptr) {
+  if (level_is_cursor_path_hazard_bool(g, v, l, p)) {
     return tp_tiles_get(tp, THING_ANIM_CURSOR_HAZARD, 0);
   }
 

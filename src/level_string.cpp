@@ -76,21 +76,21 @@
       if (level_is_chasm_bool(g, v, l, p)) {
         c = CHARMAP_CHASM;
       }
-      if (level_is_door_unlocked(g, v, l, p) != nullptr) {
+      if (level_is_door_unlocked_bool(g, v, l, p)) {
         if (level_open_is_door_unlocked(g, v, l, p) != nullptr) {
           c = CHARMAP_FLOOR;
         } else {
           c = CHARMAP_DOOR_UNLOCKED;
         }
       }
-      if (level_is_door_locked(g, v, l, p) != nullptr) {
+      if (level_is_door_locked_bool(g, v, l, p)) {
         if (level_open_is_door_locked(g, v, l, p) != nullptr) {
           c = CHARMAP_FLOOR;
         } else {
           c = CHARMAP_DOOR_LOCKED;
         }
       }
-      if (level_is_door_secret(g, v, l, p) != nullptr) {
+      if (level_is_door_secret_bool(g, v, l, p)) {
         if (level_open_is_door_secret(g, v, l, p) != nullptr) {
           c = CHARMAP_FLOOR;
         } else {
@@ -106,7 +106,7 @@
       if (level_is_water_bool(g, v, l, p)) {
         c = CHARMAP_WATER;
       }
-      if (level_is_deep_water(g, v, l, p) != nullptr) {
+      if (level_is_deep_water_bool(g, v, l, p)) {
         c = CHARMAP_DEEP_WATER;
       }
       if (level_is_mob1(g, v, l, p) != nullptr) {
@@ -157,7 +157,7 @@
       if (level_is_projectile_bool(g, v, l, p)) {
         c = CHARMAP_WEAPON;
       }
-      if (level_is_beam_weapon(g, v, l, p) != nullptr) {
+      if (level_is_beam_weapon_bool(g, v, l, p)) {
         c = CHARMAP_WEAPON;
       }
       if (level_is_border_bool(g, v, l, p)) {
