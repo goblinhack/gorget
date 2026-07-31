@@ -107,8 +107,8 @@ static void wid_button_pulse(Gamep g, Widp w)
   wid_set_color(w, WID_COLOR_BG, GREEN);
   wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
   wid_set_mode(w, WID_MODE_NORMAL);
-  wid_set_style(w, UI_WID_STYLE_BUTTON_ROUNDED_SOLID);
-  wid_set_color(w, WID_COLOR_BG, GREEN);
+  wid_set_style(w, UI_WID_STYLE_BUTTON_ROUNDED_SOLID_MOUSE_OVER);
+  wid_set_color(w, WID_COLOR_BG, GREEN4);
   wid_set_on_tick(w, wid_button_pulse);
   return w;
 }
@@ -123,6 +123,8 @@ static void wid_button_pulse(Gamep g, Widp w)
   wid_set_color(w, WID_COLOR_BG, GREEN);
   wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
   wid_set_mode(w, WID_MODE_NORMAL);
+  wid_set_style(w, UI_WID_STYLE_BUTTON_ROUNDED_SOLID);
+  wid_set_color(w, WID_COLOR_BG, GRAY30);
   return w;
 }
 
