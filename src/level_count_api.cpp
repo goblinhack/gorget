@@ -2073,10 +2073,10 @@
   return level_count(g, v, l, is_unused199, p);
 }
 
-[[nodiscard]] auto level_count_is_unused200(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_ring(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused200, p);
+  return level_count(g, v, l, is_ring, p);
 }
 
 [[nodiscard]] auto level_count_is_obs_to_hearing(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
@@ -2193,10 +2193,10 @@
   return level_count(g, v, l, is_able_to_fire_weapons, p);
 }
 
-[[nodiscard]] auto level_count_wieldable(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_wieldable(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, wieldable, p);
+  return level_count(g, v, l, is_wieldable, p);
 }
 
 [[nodiscard]] auto level_count_is_light_flicker(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t

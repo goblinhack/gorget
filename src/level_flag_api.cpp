@@ -2072,10 +2072,10 @@
   return level_flag(g, v, l, is_unused199, p, me);
 }
 
-[[nodiscard]] auto level_is_unused200(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_ring(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused200, p, me);
+  return level_flag(g, v, l, is_ring, p, me);
 }
 
 [[nodiscard]] auto level_is_obs_to_hearing(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
@@ -2192,10 +2192,10 @@
   return level_flag(g, v, l, is_able_to_fire_weapons, p, me);
 }
 
-[[nodiscard]] auto level_wieldable(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_wieldable(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, wieldable, p, me);
+  return level_flag(g, v, l, is_wieldable, p, me);
 }
 
 [[nodiscard]] auto level_is_light_flicker(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp

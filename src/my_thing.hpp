@@ -953,6 +953,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_removable_on_err(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_removable_when_dead_on_err(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_resistant_to(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEventType val) -> bool;
+[[nodiscard]] auto thing_is_ring(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_rock(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_scheduled_for_cleanup(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_shovable(Thingp t) -> bool;
@@ -1096,7 +1097,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused199(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused2(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused20(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused200(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused21(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused22(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused23(Thingp t) -> bool;
@@ -1190,6 +1190,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_wait_on_anim(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_wait_on_dead_anim(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_wand(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_wieldable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_wielded_try_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp wielder, bool val = true) -> bool;
 [[nodiscard]] auto thing_is_wielded_try_unset(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp wielder) -> bool;
 [[nodiscard]] auto thing_is_wielded(Thingp t) -> bool;
@@ -1385,7 +1386,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_weight_set(Gamep g, Levelsp v, Levelp l, Thingp t, uint32_t val) -> int;
 [[nodiscard]] auto thing_weight(Thingp t) -> int;
 [[nodiscard]] auto thing_wield(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, ThingEvent &e) -> bool;
-[[nodiscard]] auto thing_wieldable(Thingp t) -> bool;
 [[nodiscard]] auto thing_wielder(Gamep g, Levelsp v, Levelp l, Thingp t) -> Thingp;
 [[nodiscard]] auto thing_wielding(Gamep g, Levelsp v, Levelp l, Thingp me) -> Thingp;
 [[nodiscard]] auto to_death_reason_string(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e) -> std::string;

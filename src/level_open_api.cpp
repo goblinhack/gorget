@@ -2072,10 +2072,10 @@
   return level_open(g, v, l, is_unused199, p);
 }
 
-[[nodiscard]] auto level_open_is_unused200(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_open_is_ring(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_open(g, v, l, is_unused200, p);
+  return level_open(g, v, l, is_ring, p);
 }
 
 [[nodiscard]] auto level_open_is_obs_to_hearing(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
@@ -2192,10 +2192,10 @@
   return level_open(g, v, l, is_able_to_fire_weapons, p);
 }
 
-[[nodiscard]] auto level_open_wieldable(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_open_is_wieldable(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_open(g, v, l, wieldable, p);
+  return level_open(g, v, l, is_wieldable, p);
 }
 
 [[nodiscard]] auto level_open_is_light_flicker(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp

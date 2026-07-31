@@ -1061,6 +1061,7 @@ void level_fov(const FovContext & /*ctx*/);
 [[nodiscard]] auto level_is_reeds(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
 [[nodiscard]] auto level_is_removable_on_err(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
 [[nodiscard]] auto level_is_removable_when_dead_on_err(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
+[[nodiscard]] auto level_is_ring(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
 [[nodiscard]] auto level_is_rock(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
 [[nodiscard]] auto level_is_shovable(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
 [[nodiscard]] auto level_is_shown_health(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
@@ -1200,7 +1201,6 @@ void level_fov(const FovContext & /*ctx*/);
 [[nodiscard]] auto level_is_unused199(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
 [[nodiscard]] auto level_is_unused2(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
 [[nodiscard]] auto level_is_unused20(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
-[[nodiscard]] auto level_is_unused200(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
 [[nodiscard]] auto level_is_unused21(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
 [[nodiscard]] auto level_is_unused22(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
 [[nodiscard]] auto level_is_unused23(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
@@ -1296,12 +1296,12 @@ void level_fov(const FovContext & /*ctx*/);
 [[nodiscard]] auto level_is_wall(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
 [[nodiscard]] auto level_is_wand(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
 [[nodiscard]] auto level_is_water(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
+[[nodiscard]] auto level_is_wieldable(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
 [[nodiscard]] auto level_is_wood(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
 [[nodiscard]] auto level_select_mouse_down(Gamep g, Levelsp v, Levelp l) -> bool;
 [[nodiscard]] auto level_select_mouse_down(Gamep g) -> bool;
 [[nodiscard]] auto level_tick_begin_is_requested(Gamep g, Levelsp v, Levelp l) -> bool;
 [[nodiscard]] auto level_tick_begin_requested(Gamep g, Levelsp v, Levelp l, const char *why) -> bool;
-[[nodiscard]] auto level_wieldable(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
 // end sort marker3 }
 
 // begin sort marker4 {
@@ -1482,6 +1482,7 @@ void level_fov(const FovContext & /*ctx*/);
 [[nodiscard]] auto level_is_reeds_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
 [[nodiscard]] auto level_is_removable_on_err_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
 [[nodiscard]] auto level_is_removable_when_dead_on_err_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
+[[nodiscard]] auto level_is_ring_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
 [[nodiscard]] auto level_is_rock_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
 [[nodiscard]] auto level_is_shovable_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
 [[nodiscard]] auto level_is_shown_health_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
@@ -1621,7 +1622,6 @@ void level_fov(const FovContext & /*ctx*/);
 [[nodiscard]] auto level_is_unused199_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
 [[nodiscard]] auto level_is_unused2_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
 [[nodiscard]] auto level_is_unused20_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
-[[nodiscard]] auto level_is_unused200_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
 [[nodiscard]] auto level_is_unused21_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
 [[nodiscard]] auto level_is_unused22_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
 [[nodiscard]] auto level_is_unused23_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
@@ -1717,8 +1717,8 @@ void level_fov(const FovContext & /*ctx*/);
 [[nodiscard]] auto level_is_wall_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
 [[nodiscard]] auto level_is_wand_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
 [[nodiscard]] auto level_is_water_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
+[[nodiscard]] auto level_is_wieldable_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
 [[nodiscard]] auto level_is_wood_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
-[[nodiscard]] auto level_wieldable_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool;
 // end sort marker4 }
 
 // begin sort marker5 {
@@ -1899,6 +1899,7 @@ void level_fov(const FovContext & /*ctx*/);
 [[nodiscard]] auto level_alive_is_reeds(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_removable_on_err(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_removable_when_dead_on_err(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
+[[nodiscard]] auto level_alive_is_ring(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_rock(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_shovable(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_shown_health(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
@@ -2038,7 +2039,6 @@ void level_fov(const FovContext & /*ctx*/);
 [[nodiscard]] auto level_alive_is_unused199(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_unused2(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_unused20(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
-[[nodiscard]] auto level_alive_is_unused200(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_unused21(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_unused22(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_unused23(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
@@ -2134,8 +2134,8 @@ void level_fov(const FovContext & /*ctx*/);
 [[nodiscard]] auto level_alive_is_wall(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_wand(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_water(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
+[[nodiscard]] auto level_alive_is_wieldable(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_alive_is_wood(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
-[[nodiscard]] auto level_alive_wieldable(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 // end sort marker5 }
 
 // begin sort marker6 {
@@ -2316,6 +2316,7 @@ void level_fov(const FovContext & /*ctx*/);
 [[nodiscard]] auto level_count_is_reeds(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_removable_on_err(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_removable_when_dead_on_err(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
+[[nodiscard]] auto level_count_is_ring(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_rock(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_shovable(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_shown_health(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
@@ -2455,7 +2456,6 @@ void level_fov(const FovContext & /*ctx*/);
 [[nodiscard]] auto level_count_is_unused199(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_unused2(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_unused20(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
-[[nodiscard]] auto level_count_is_unused200(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_unused21(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_unused22(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_unused23(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
@@ -2551,8 +2551,8 @@ void level_fov(const FovContext & /*ctx*/);
 [[nodiscard]] auto level_count_is_wall(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_wand(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_water(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
+[[nodiscard]] auto level_count_is_wieldable(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
 [[nodiscard]] auto level_count_is_wood(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
-[[nodiscard]] auto level_count_wieldable(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t;
 // end sort marker6 }
 
 // begin sort marker7 {
@@ -2740,6 +2740,7 @@ void level_fov(const FovContext & /*ctx*/);
 [[nodiscard]] auto level_open_is_reeds(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_removable_on_err(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_removable_when_dead_on_err(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
+[[nodiscard]] auto level_open_is_ring(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_rock(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_shovable(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_shown_health(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
@@ -2879,7 +2880,6 @@ void level_fov(const FovContext & /*ctx*/);
 [[nodiscard]] auto level_open_is_unused199(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused2(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused20(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
-[[nodiscard]] auto level_open_is_unused200(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused21(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused22(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_unused23(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
@@ -2975,8 +2975,8 @@ void level_fov(const FovContext & /*ctx*/);
 [[nodiscard]] auto level_open_is_wall(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_wand(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_water(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
+[[nodiscard]] auto level_open_is_wieldable(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 [[nodiscard]] auto level_open_is_wood(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
-[[nodiscard]] auto level_open_wieldable(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp;
 // end sort marker7 }
 
 // begin sort marker8 {
@@ -3157,6 +3157,7 @@ void level_fov(const FovContext & /*ctx*/);
 [[nodiscard]] auto level_is_reeds_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> bool;
 [[nodiscard]] auto level_is_removable_on_err_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> bool;
 [[nodiscard]] auto level_is_removable_when_dead_on_err_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> bool;
+[[nodiscard]] auto level_is_ring_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> bool;
 [[nodiscard]] auto level_is_rock_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> bool;
 [[nodiscard]] auto level_is_shovable_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> bool;
 [[nodiscard]] auto level_is_shown_health_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> bool;
@@ -3296,7 +3297,6 @@ void level_fov(const FovContext & /*ctx*/);
 [[nodiscard]] auto level_is_unused199_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> bool;
 [[nodiscard]] auto level_is_unused2_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> bool;
 [[nodiscard]] auto level_is_unused20_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> bool;
-[[nodiscard]] auto level_is_unused200_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> bool;
 [[nodiscard]] auto level_is_unused21_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> bool;
 [[nodiscard]] auto level_is_unused22_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> bool;
 [[nodiscard]] auto level_is_unused23_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> bool;
@@ -3392,8 +3392,8 @@ void level_fov(const FovContext & /*ctx*/);
 [[nodiscard]] auto level_is_wall_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> bool;
 [[nodiscard]] auto level_is_wand_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> bool;
 [[nodiscard]] auto level_is_water_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> bool;
+[[nodiscard]] auto level_is_wieldable_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> bool;
 [[nodiscard]] auto level_is_wood_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> bool;
-[[nodiscard]] auto level_wieldable_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> bool;
 // end sort marker8 }
 
 #endif // MY_LEVEL_HPP

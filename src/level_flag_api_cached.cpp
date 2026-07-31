@@ -2072,10 +2072,10 @@
   return level_flag_cached(g, v, l, is_unused199, p);
 }
 
-[[nodiscard]] auto level_is_unused200_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_ring_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused200, p);
+  return level_flag_cached(g, v, l, is_ring, p);
 }
 
 [[nodiscard]] auto level_is_obs_to_hearing_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
@@ -2192,10 +2192,10 @@
   return level_flag_cached(g, v, l, is_able_to_fire_weapons, p);
 }
 
-[[nodiscard]] auto level_wieldable_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_wieldable_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, wieldable, p);
+  return level_flag_cached(g, v, l, is_wieldable, p);
 }
 
 [[nodiscard]] auto level_is_light_flicker_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

@@ -18,8 +18,8 @@
 //
 #define THING_FLAG_ENUM(list_macro)                                                                                                             \
   CLANG_FORMAT_INDENT()                                                                     /* dummy line for clang indentation fixup */        \
-  list_macro(is_able_to_be_buffed, "is_able_to_be_buffed"),                                 /* newline */                                       \
-      list_macro(is_able_to_be_engulfed, "is_able_to_be_engulfed"),                         /* newline */                                       \
+  list_macro(is_able_to_be_engulfed, "is_able_to_be_engulfed"),                             /* newline */                                       \
+      list_macro(is_able_to_collect_items, "is_able_to_collect_items"),                     /* newline */                                       \
       list_macro(is_able_to_collect_keys, "is_able_to_collect_keys"),                       /* newline */                                       \
       list_macro(is_able_to_crush_grass, "is_able_to_crush_grass"),                         /* newline */                                       \
       list_macro(is_able_to_drop_all_items_on_death, "is_able_to_drop_all_items_on_death"), /* newline */                                       \
@@ -333,7 +333,7 @@
       list_macro(is_unused199, "is_unused199"),                                             /* newline */                                       \
       list_macro(is_unused2, "is_unused2"),                                                 /* newline */                                       \
       list_macro(is_unused20, "is_unused20"),                                               /* newline */                                       \
-      list_macro(is_unused200, "is_unused200"),                                             /* newline */                                       \
+      list_macro(is_ring, "is_ring"),                                                       /* newline */                                       \
       list_macro(is_unused21, "is_unused21"),                                               /* newline */                                       \
       list_macro(is_unused22, "is_unused22"),                                               /* newline */                                       \
       list_macro(is_unused23, "is_unused23"),                                               /* newline */                                       \
@@ -428,9 +428,9 @@
       list_macro(is_wait_on_dead_anim, "is_wait_on_dead_anim"),                             /* newline */                                       \
       list_macro(is_wall, "is_wall"),                                                       /* newline */                                       \
       list_macro(is_wand, "is_wand"),                                                       /* newline */                                       \
+      list_macro(is_wieldable, "is_wieldable"),                                             /* newline */                                       \
       list_macro(is_wood, "is_wood"),                                                       /* newline */                                       \
-      list_macro(wieldable, "wieldable"),                                                   /* newline */                                       \
-      list_macro(is_able_to_collect_items, "is_able_to_collect_items"),                     /* newline */                                       \
+      list_macro(is_able_to_be_buffed, "is_able_to_be_buffed"),                             /* newline */                                       \
       list_macro(is_water, "is_water"),                                                     /* newline */
 
 ENUM_DEF_H(THING_FLAG_ENUM, ThingFlagType)
@@ -496,6 +496,18 @@ ENUM_DEF_H(LEVEL_TYPE_ENUM, LevelType)
       list_macro(BIOME_UNDERHELL, "Underhell"),   /* newline */
 
 ENUM_DEF_H(BIOME_ENUM, BiomeType)
+
+//
+// WieldType
+//
+#define WIELD_ENUM(list_macro)                                                                                                                  \
+  CLANG_FORMAT_INDENT()                   /* dummy line for clang indentation fixup */                                                          \
+  list_macro(WIELD_NONE, "NONE"),         /* newline */                                                                                         \
+      list_macro(WIELD_WEAPON, "weapon"), /* newline */                                                                                         \
+      list_macro(WIELD_RING1, "ring1"),   /* newline */                                                                                         \
+      list_macro(WIELD_RING2, "ring2"),   /* newline */
+
+ENUM_DEF_H(WIELD_ENUM, WieldType)
 
 //
 // Thing anim enum
@@ -971,6 +983,7 @@ class Tp;
 [[nodiscard]] auto tp_is_removable_on_err(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_removable_when_dead_on_err(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_resistant_to(Tpp tp, ThingEventType val) -> bool;
+[[nodiscard]] auto tp_is_ring(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_rock(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_shovable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_shown_health(Tpp tp) -> bool;
@@ -1110,7 +1123,6 @@ class Tp;
 [[nodiscard]] auto tp_is_unused199(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused2(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused20(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused200(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused21(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused22(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused23(Tpp tp) -> bool;
@@ -1206,6 +1218,7 @@ class Tp;
 [[nodiscard]] auto tp_is_wall(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_wand(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_water(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_wieldable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_wood(Tpp tp) -> bool;
 [[nodiscard]] auto tp_items_collected_max_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_lifespan_get(Tpp tp) -> int;
@@ -1255,7 +1268,6 @@ class Tp;
 [[nodiscard]] auto tp_variant_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_variant(ThingFlagType f, int /*variant*/) -> Tpp;
 [[nodiscard]] auto tp_weight_get(Tpp tp) -> uint32_t;
-[[nodiscard]] auto tp_wieldable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_z_depth_get(Tpp tp) -> MapZDepthType;
 // end sort marker1 }
 
