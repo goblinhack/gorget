@@ -85,7 +85,7 @@ void               thing_on_wield_request_set(Tpp tp, thing_on_wield_request_t c
 
 using thing_on_unwield_request_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp owner);
 void               thing_on_unwield_request_set(Tpp tp, thing_on_unwield_request_t callback);
-[[nodiscard]] auto thing_on_unwield_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner) -> bool;
+[[nodiscard]] auto thing_on_unwield_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp unwieldper) -> bool;
 
 using thing_on_open_request_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp opener);
 void               thing_on_open_request_set(Tpp tp, thing_on_open_request_t callback);

@@ -91,28 +91,6 @@ auto thing_unwield_item(Gamep g, Levelsp v, Levelp l, Thingp wielder, Thingp ite
   return true;
 }
 
-[[nodiscard]] auto thing_unwield_item(Gamep g, Levelsp v, Levelp l, Thingp wielder, WieldType w, ThingEvent &e) -> bool
-{
-  TRACE();
-
-  if (wielder == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-
-  auto *item = thing_wielding_get(g, v, l, wielder, w);
-  if (item == nullptr) {
-    return false;
-  }
-
-  if (! thing_unwield_item(g, v, l, wielder, item, e)) {
-    thing_err(g, v, l, wielder, "failed to unwield");
-    return false;
-  }
-
-  return true;
-}
-
 [[nodiscard]] auto thing_is_wielded(Thingp t) -> bool
 {
   TRACE_DEBUG();
@@ -201,7 +179,7 @@ auto thing_unwield_item(Gamep g, Levelsp v, Levelp l, Thingp wielder, Thingp ite
     return nullptr;
   }
 
-  if (! static_cast< bool >(wielder->wielding_id)) {
+  if (! static_cast< bool >(wielder->wielding_id[ w ])) {
     return nullptr;
   }
 
@@ -267,7 +245,7 @@ static auto thing_wield_item_do(Gamep g, Levelsp v, Levelp l, Thingp wielder, Th
   return true;
 }
 
-[[nodiscard]] auto thing_wield_item_slot(Gamep g, Levelsp v, Levelp l, Thingp wielder, Thingp item, WieldType w, ThingEvent &e) -> bool
+[[nodiscard]] static auto thing_wield_item_slot(Gamep g, Levelsp v, Levelp l, Thingp wielder, Thingp item, WieldType w, ThingEvent &e) -> bool
 {
   TRACE();
 
@@ -285,9 +263,9 @@ static auto thing_wield_item_do(Gamep g, Levelsp v, Levelp l, Thingp wielder, Th
   THING_DBG(g, v, l, wielder, "wield: %s (%s)", s.c_str(), WieldType_to_string(w).c_str());
   TRACE_INDENT();
 
-  if (wielder->wielding_id[ w ]) {
-    auto existing_item = thing_wielding_get(g, v, l, wielder, w);
-    if (! existing_item) {
+  if (wielder->wielding_id[ w ] != 0u) {
+    auto *existing_item = thing_wielding_get(g, v, l, wielder, w);
+    if (existing_item == nullptr) {
       thing_err(g, v, l, wielder, "wielding_id is set, but no item");
       return false;
     }
@@ -349,8 +327,8 @@ static auto thing_wield_item_do(Gamep g, Levelsp v, Levelp l, Thingp wielder, Th
   TRACE_INDENT();
 
   if (thing_is_weapon(item)) {
-    auto existing_item = thing_wielding_get(g, v, l, wielder, WIELD_TYPE_WEAPON);
-    if (existing_item) {
+    auto *existing_item = thing_wielding_get(g, v, l, wielder, WIELD_TYPE_WEAPON);
+    if (existing_item != nullptr) {
       //
       // Already wielded
       //
@@ -371,8 +349,8 @@ static auto thing_wield_item_do(Gamep g, Levelsp v, Levelp l, Thingp wielder, Th
   }
 
   if (thing_is_ring(item)) {
-    auto ring1 = thing_wielding_get(g, v, l, wielder, WIELD_TYPE_RING1);
-    auto ring2 = thing_wielding_get(g, v, l, wielder, WIELD_TYPE_RING2);
+    auto *ring1 = thing_wielding_get(g, v, l, wielder, WIELD_TYPE_RING1);
+    auto *ring2 = thing_wielding_get(g, v, l, wielder, WIELD_TYPE_RING2);
 
     //
     // Already wielded
@@ -382,8 +360,8 @@ static auto thing_wield_item_do(Gamep g, Levelsp v, Levelp l, Thingp wielder, Th
       return true;
     }
 
-    if (ring1) {
-      if (ring2) {
+    if (ring1 != nullptr) {
+      if (ring2 != nullptr) {
         auto s2 = to_string(g, v, l, ring2);
         THING_DBG(g, v, l, wielder, "unwield existing ring: %s", s2.c_str());
         TRACE_INDENT();
@@ -397,13 +375,11 @@ static auto thing_wield_item_do(Gamep g, Levelsp v, Levelp l, Thingp wielder, Th
       TRACE_INDENT();
 
       return thing_wield_item_slot(g, v, l, wielder, item, WIELD_TYPE_RING2, e);
-    } else {
-
-      THING_DBG(g, v, l, wielder, "wield as ring1: %s", s.c_str());
-      TRACE_INDENT();
-
-      return thing_wield_item_slot(g, v, l, wielder, item, WIELD_TYPE_RING1, e);
     }
+    THING_DBG(g, v, l, wielder, "wield as ring1: %s", s.c_str());
+    TRACE_INDENT();
+
+    return thing_wield_item_slot(g, v, l, wielder, item, WIELD_TYPE_RING1, e);
   }
 
   if (! thing_is_wielded(item)) {
@@ -430,16 +406,16 @@ static auto thing_wield_item_do(Gamep g, Levelsp v, Levelp l, Thingp wielder, Th
   TRACE_INDENT();
 
   if (thing_is_weapon(item)) {
-    if (! thing_wielding_get(g, v, l, wielder, WIELD_TYPE_WEAPON)) {
+    if (thing_wielding_get(g, v, l, wielder, WIELD_TYPE_WEAPON) == nullptr) {
       return thing_wield_item(g, v, l, wielder, item, e);
     }
   }
 
   if (thing_is_ring(item)) {
-    if (! thing_wielding_get(g, v, l, wielder, WIELD_TYPE_RING1)) {
+    if (thing_wielding_get(g, v, l, wielder, WIELD_TYPE_RING1) == nullptr) {
       return thing_wield_item_slot(g, v, l, wielder, item, WIELD_TYPE_RING1, e);
     }
-    if (! thing_wielding_get(g, v, l, wielder, WIELD_TYPE_RING2)) {
+    if (thing_wielding_get(g, v, l, wielder, WIELD_TYPE_RING2) == nullptr) {
       return thing_wield_item_slot(g, v, l, wielder, item, WIELD_TYPE_RING2, e);
     }
   }

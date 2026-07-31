@@ -150,7 +150,8 @@ static auto thing_attack(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp i
       // Misses you
       thing_missed_player(g, v, l, it, e);
       return false;
-    } else if (thing_is_player(attacker)) {
+    }
+    if (thing_is_player(attacker)) {
       // You miss
       player_missed_thing(g, v, l, it, e);
       return false;

@@ -652,10 +652,7 @@ using Thing = struct Thing {
 
 // begin sort marker1 {
 [[nodiscard]] auto astar_solve(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint src, bpoint dst) -> std::vector< bpoint >;
-[[nodiscard]] auto thing_auto_wield_try(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, ThingEvent &e) -> bool;
 [[nodiscard]] auto level_vision_blocker_at(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &at) -> bool;
-[[nodiscard]] auto thing_unwield_item(Gamep g, Levelsp v, Levelp l, Thingp wielder, Thingp item, ThingEvent &e) -> bool;
-[[nodiscard]] auto thing_unwield_slot(Gamep g, Levelsp v, Levelp l, Thingp me, WieldType w, ThingEvent &e) -> bool;
 [[nodiscard]] auto monst_state_to_string(MonstState state) -> std::string;
 [[nodiscard]] auto monst_state(Gamep g, Levelsp v, Levelp l, Thingp me) -> MonstState;
 [[nodiscard]] auto player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, const bpoint &to) -> bool;
@@ -679,6 +676,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_attack_count_per_tick_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_attack_count_per_tick_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_attack_count_per_tick(Thingp t) -> int;
+[[nodiscard]] auto thing_auto_wield_try(Gamep g, Levelsp v, Levelp l, Thingp wielder, Thingp item, ThingEvent &e) -> bool;
 [[nodiscard]] auto thing_beam_weapon_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, bpoint target) -> bool;
 [[nodiscard]] auto thing_beam_weapon_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, fpoint target) -> bool;
 [[nodiscard]] auto thing_buff_add(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what) -> Thingp;
@@ -1334,6 +1332,8 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_temperature(Thingp t) -> int;
 [[nodiscard]] auto thing_throw_to(Gamep g, Levelsp v, Levelp l, Thingp thrower, Thingp item, bpoint to) -> bool;
 [[nodiscard]] auto thing_unengulf(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp engulfer) -> bool;
+[[nodiscard]] auto thing_unwield_item(Gamep g, Levelsp v, Levelp l, Thingp wielder, Thingp item, ThingEvent &e) -> bool;
+[[nodiscard]] auto thing_unwield_slot(Gamep g, Levelsp v, Levelp l, Thingp me, WieldType w, ThingEvent &e) -> bool;
 [[nodiscard]] auto thing_use(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, ThingEvent &e) -> bool;
 [[nodiscard]] auto thing_value1_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_value1_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
@@ -1388,9 +1388,9 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_weight_set(Gamep g, Levelsp v, Levelp l, Thingp t, uint32_t val) -> int;
 [[nodiscard]] auto thing_weight(Thingp t) -> int;
 [[nodiscard]] auto thing_wield_item(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, ThingEvent &e, WieldType) -> bool;
-[[nodiscard]] auto thing_wield_item(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, ThingEvent &e) -> bool;
+[[nodiscard]] auto thing_wield_item(Gamep g, Levelsp v, Levelp l, Thingp wielder, Thingp item, ThingEvent &e) -> bool;
 [[nodiscard]] auto thing_wielder_of(Gamep g, Levelsp v, Levelp l, Thingp t) -> Thingp;
-[[nodiscard]] auto thing_wielding_get(Gamep g, Levelsp v, Levelp l, Thingp me, WieldType) -> Thingp;
+[[nodiscard]] auto thing_wielding_get(Gamep g, Levelsp v, Levelp l, Thingp wielder, WieldType /*w*/) -> Thingp;
 [[nodiscard]] auto to_death_reason_string(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e) -> std::string;
 [[nodiscard]] auto to_string(Gamep g, Levelsp v, Levelp l, ThingEvent &e) -> std::string;
 [[nodiscard]] auto to_string(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string;
