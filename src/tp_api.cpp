@@ -2191,10 +2191,10 @@
   return tp_flag(tp, is_able_to_fire_weapons) != 0;
 }
 
-[[nodiscard]] auto tp_is_wieldable(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_weapon(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_wieldable) != 0;
+  return tp_flag(tp, is_weapon) != 0;
 }
 
 [[nodiscard]] auto tp_is_light_flicker(Tpp tp) -> bool

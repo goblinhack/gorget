@@ -828,10 +828,13 @@ static auto player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy) -> b
 
   if (fire_what != nullptr) {
     //
-    // Tests usuall
+    // Tests usually hit here
     //
   } else {
-    item = thing_wielding(g, v, l, me);
+    //
+    // Else just get the weapon default
+    //
+    item = thing_wielding_get(g, v, l, me, WIELD_TYPE_WEAPON);
     if (item == nullptr) {
       topcon(UI_IMPORTANT_FMT_STR "You have nothing to wield." UI_RESET_FMT);
       return false;

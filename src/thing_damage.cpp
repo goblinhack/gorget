@@ -110,9 +110,12 @@
     }
   }
 
-  auto *weapon = thing_wielding(g, v, l, me);
-  if (weapon != nullptr) {
-    max_damage = std::max(max_damage, thing_damage_max(g, v, l, weapon));
+  FOR_ALL_WIELD_TYPES(w)
+  {
+    auto *weapon = thing_wielding_get(g, v, l, me, w);
+    if (weapon != nullptr) {
+      max_damage = std::max(max_damage, thing_damage_max(g, v, l, weapon));
+    }
   }
 
   auto attack_count = tp_attack_count_max_per_tick_get(thing_tp(me));
@@ -175,10 +178,13 @@
     }
   }
 
-  auto *weapon = thing_wielding(g, v, l, me);
-  if (weapon != nullptr) {
-    auto tmp = thing_damage_types(g, v, l, weapon);
-    out.insert(out.end(), tmp.begin(), tmp.end());
+  FOR_ALL_WIELD_TYPES(w)
+  {
+    auto *weapon = thing_wielding_get(g, v, l, me, w);
+    if (weapon != nullptr) {
+      auto tmp = thing_damage_types(g, v, l, weapon);
+      out.insert(out.end(), tmp.begin(), tmp.end());
+    }
   }
 
   return out;

@@ -73,7 +73,7 @@
     goto exit;
   }
 
-  if (! thing_wield(g, v, l, player, weapon, e)) {
+  if (! thing_wield_item(g, v, l, player, weapon, e)) {
     TEST_FAILED(t, "failed to wield");
     goto exit;
   }
@@ -98,7 +98,7 @@
     }
   }
 
-  wielding = thing_wielding(g, v, l, player);
+  wielding = thing_wielding_get(g, v, l, player, WIELD_TYPE_WEAPON);
   if (wielding) {
     thing_log(g, v, l, wielding, "wielding this");
     TEST_FAILED(t, "unexpectedly wielding a weapon still");

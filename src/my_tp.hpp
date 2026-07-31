@@ -428,7 +428,7 @@
       list_macro(is_wait_on_dead_anim, "is_wait_on_dead_anim"),                             /* newline */                                       \
       list_macro(is_wall, "is_wall"),                                                       /* newline */                                       \
       list_macro(is_wand, "is_wand"),                                                       /* newline */                                       \
-      list_macro(is_wieldable, "is_wieldable"),                                             /* newline */                                       \
+      list_macro(is_weapon, "is_weapon"),                                                   /* newline */                                       \
       list_macro(is_wood, "is_wood"),                                                       /* newline */                                       \
       list_macro(is_able_to_be_buffed, "is_able_to_be_buffed"),                             /* newline */                                       \
       list_macro(is_water, "is_water"),                                                     /* newline */
@@ -500,14 +500,21 @@ ENUM_DEF_H(BIOME_ENUM, BiomeType)
 //
 // WieldType
 //
-#define WIELD_ENUM(list_macro)                                                                                                                  \
-  CLANG_FORMAT_INDENT()                   /* dummy line for clang indentation fixup */                                                          \
-  list_macro(WIELD_NONE, "NONE"),         /* newline */                                                                                         \
-      list_macro(WIELD_WEAPON, "weapon"), /* newline */                                                                                         \
-      list_macro(WIELD_RING1, "ring1"),   /* newline */                                                                                         \
-      list_macro(WIELD_RING2, "ring2"),   /* newline */
+#define WIELD_TYPE_ENUM(list_macro)                                                                                                             \
+  CLANG_FORMAT_INDENT()                        /* dummy line for clang indentation fixup */                                                     \
+  list_macro(WIELD_TYPE_NONE, "NONE"),         /* newline */                                                                                    \
+      list_macro(WIELD_TYPE_WEAPON, "weapon"), /* newline */                                                                                    \
+      list_macro(WIELD_TYPE_RING1, "ring1"),   /* newline */                                                                                    \
+      list_macro(WIELD_TYPE_RING2, "ring2"),   /* newline */
 
-ENUM_DEF_H(WIELD_ENUM, WieldType)
+ENUM_DEF_H(WIELD_TYPE_ENUM, WieldType)
+
+#define WIELD_TYPE_ENUM_FIRST ((WieldType) 0)
+
+#define FOR_ALL_WIELD_TYPES(_iter_)                                                                                                             \
+  for (WieldType _iter_ = WIELD_TYPE_ENUM_FIRST; /* newline */                                                                                  \
+       (_iter_) < WIELD_TYPE_ENUM_MAX;           /* newline */                                                                                  \
+       (_iter_) = static_cast< WieldType >(static_cast< int >(_iter_) + 1))
 
 //
 // Thing anim enum
@@ -1218,7 +1225,7 @@ class Tp;
 [[nodiscard]] auto tp_is_wall(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_wand(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_water(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_wieldable(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_weapon(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_wood(Tpp tp) -> bool;
 [[nodiscard]] auto tp_items_collected_max_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_lifespan_get(Tpp tp) -> int;

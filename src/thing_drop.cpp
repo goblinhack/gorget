@@ -16,7 +16,7 @@
 //
 // Drop an item from the things inventory
 //
-static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp user, ThingEvent &e) -> bool
+static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp user, Thingp item, ThingEvent &e) -> bool
 {
   TRACE();
 
@@ -214,12 +214,12 @@ void thing_on_drop_success_set(Tpp tp, thing_on_drop_success_t callback)
   }
 
   if (thing_is_wielded(item)) {
-    if (! thing_unwield(g, v, l, me, e)) {
+    if (! thing_unwield_item(g, v, l, me, item, e)) {
       return false;
     }
   }
 
-  return thing_drop_item(g, v, l, item, me, e);
+  return thing_drop_item(g, v, l, me, item, e);
 }
 
 [[nodiscard]] auto thing_drop_all(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e) -> bool

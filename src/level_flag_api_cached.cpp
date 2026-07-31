@@ -2192,10 +2192,10 @@
   return level_flag_cached(g, v, l, is_able_to_fire_weapons, p);
 }
 
-[[nodiscard]] auto level_is_wieldable_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_weapon_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_wieldable, p);
+  return level_flag_cached(g, v, l, is_weapon, p);
 }
 
 [[nodiscard]] auto level_is_light_flicker_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

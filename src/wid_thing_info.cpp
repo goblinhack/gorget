@@ -1052,16 +1052,35 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
 {
   TRACE();
 
-  auto *weapon = thing_wielding(g, v, l, me);
-  if (weapon == nullptr) {
-    return false;
+  FOR_ALL_WIELD_TYPES(w)
+  {
+    auto *weapon = thing_wielding_get(g, v, l, me, w);
+    if (weapon == nullptr) {
+      return false;
+    }
+
+    switch (w) {
+      case WIELD_TYPE_WEAPON :
+        {
+          auto out = string_sprintf("Wielded(%s)", thing_name_short(g, v, l, weapon).c_str());
+          parent->log(g, UI_INFO_FMT_STR + out, TEXT_FORMAT_LHS);
+          break;
+        }
+      case WIELD_TYPE_RING1 : [[fallthrough]];
+      case WIELD_TYPE_RING2 :
+        {
+          auto out = string_sprintf("Worn(%s)", thing_name_short(g, v, l, weapon).c_str());
+          parent->log(g, UI_INFO_FMT_STR + out, TEXT_FORMAT_LHS);
+          break;
+        }
+
+      case WIELD_TYPE_NONE :
+      case WIELD_TYPE_ENUM_MAX : break;
+    }
+
+    (void) wid_tp_info_damage(g, v, l, thing_tp(weapon), parent, width, false /* title allowed */);
+    (void) wid_tp_info_special_attacks(g, v, l, thing_tp(weapon), parent, width, false /* title allowed */);
   }
-
-  auto out = string_sprintf("Wielded(%s)", thing_name_short(g, v, l, weapon).c_str());
-  parent->log(g, UI_INFO_FMT_STR + out, TEXT_FORMAT_LHS);
-
-  (void) wid_tp_info_damage(g, v, l, thing_tp(weapon), parent, width, false /* title allowed */);
-  (void) wid_tp_info_special_attacks(g, v, l, thing_tp(weapon), parent, width, false /* title allowed */);
 
   return true;
 }
@@ -1322,7 +1341,11 @@ static void wid_thing_info_item_mouse_over_end(Gamep g, Widp w)
     }
 
     if (thing_is_wielded(item)) {
-      line += "%%tile=icon_hand$";
+      if (thing_is_ring(item)) {
+        line += "%%tile=icon_ring$";
+      } else {
+        line += "%%tile=icon_hand$";
+      }
     }
 
     Widp w = parent->log(g, line, TEXT_FORMAT_LHS);

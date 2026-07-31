@@ -83,23 +83,51 @@
   for (auto tries = 0; tries < 20; tries++) {
     TEST_LOOP_PROGRESS(t, g, v, l, tries, w, h);
 
-    if (! thing_wield(g, v, l, player, weapon, e)) {
+    TEST_LOG(t, "first, wield the weapon");
+    TRACE_INDENT();
+
+    if (! thing_wield_item(g, v, l, player, weapon, e)) {
       TEST_FAILED(t, "failed to wield");
       goto exit;
     }
 
-    wielding = thing_wielding(g, v, l, player);
+    TEST_LOG(t, "check it is wielded");
+    TRACE_INDENT();
+
+    if (! thing_is_wielded(weapon)) {
+      TEST_FAILED(t, "weapon is not wielded");
+      goto exit;
+    }
+
+    TEST_LOG(t, "get the weapon from its slot");
+    TRACE_INDENT();
+
+    wielding = thing_wielding_get(g, v, l, player, WIELD_TYPE_WEAPON);
     if (! wielding) {
       TEST_FAILED(t, "unexpectedly not wielding a weapon");
       goto exit;
     }
 
-    if (! thing_unwield(g, v, l, player, e)) {
+    TEST_LOG(t, "now unwield it");
+    TRACE_INDENT();
+
+    if (! thing_unwield_item(g, v, l, player, wielding, e)) {
       TEST_FAILED(t, "failed to unwield");
       goto exit;
     }
 
-    wielding = thing_wielding(g, v, l, player);
+    TEST_LOG(t, "check the weapon is unwielded");
+    TRACE_INDENT();
+
+    if (thing_is_wielded(weapon)) {
+      TEST_FAILED(t, "weapon is not unwielded");
+      goto exit;
+    }
+
+    TEST_LOG(t, "check ths slot is empty");
+    TRACE_INDENT();
+
+    wielding = thing_wielding_get(g, v, l, player, WIELD_TYPE_WEAPON);
     if (wielding) {
       thing_log(g, v, l, wielding, "wielding this");
       TEST_FAILED(t, "unexpectedly wielding a weapon");

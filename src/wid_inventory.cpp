@@ -357,7 +357,11 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
         }
 
         if (thing_is_wielded(item)) {
-          line += "%%tile=icon_hand$";
+          if (thing_is_ring(item)) {
+            line += "%%tile=icon_ring$";
+          } else {
+            line += "%%tile=icon_hand$";
+          }
         }
       }
 

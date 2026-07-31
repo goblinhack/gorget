@@ -285,7 +285,7 @@ static Thingp g_item;
     return false;
   }
 
-  if (! thing_is_wieldable(item)) {
+  if (! thing_is_weapon(item)) {
     topcon("Weapon cannot be wielded.");
     (void) sound_play(g, "error");
     return true;
@@ -303,7 +303,7 @@ static Thingp g_item;
       .source     = player,                     //
   };
 
-  if (! thing_wield(g, v, l, player, item, e)) {
+  if (! thing_wield_item(g, v, l, player, item, e)) {
     (void) sound_play(g, "error");
     return true;
   }
@@ -342,7 +342,7 @@ static Thingp g_item;
     return false;
   }
 
-  if (! thing_is_wieldable(item)) {
+  if (! thing_is_weapon(item)) {
     topcon("Weapon cannot be wielded.");
     (void) sound_play(g, "error");
     return true;
@@ -360,7 +360,7 @@ static Thingp g_item;
       .source     = player,                     //
   };
 
-  if (! thing_unwield(g, v, l, player, e)) {
+  if (! thing_unwield_item(g, v, l, player, item, e)) {
     (void) sound_play(g, "error");
     return true;
   }
@@ -514,7 +514,7 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item, bool from_inventory)
     menu_height += box_step;
   }
 
-  if (thing_is_wieldable(item)) {
+  if (thing_is_weapon(item)) {
     menu_height += box_step;
   }
 
@@ -585,7 +585,7 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item, bool from_inventory)
     y_at += box_step;
   }
 
-  if (thing_is_wieldable(item)) {
+  if (thing_is_weapon(item)) {
     if (thing_is_wielded(item)) {
       TRACE();
       auto *p = wid_item_menu_window->wid_text_area->wid_text_area;

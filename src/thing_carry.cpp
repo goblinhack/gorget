@@ -307,16 +307,7 @@ void thing_on_carry_success_set(Tpp tp, thing_on_carry_success_t callback)
     return false;
   }
 
-  //
-  // Auto wield if nothing wielded?
-  //
-  if (thing_is_auto_wield(item)) {
-    if (thing_wielding(g, v, l, me) == nullptr) {
-      if (! thing_wield(g, v, l, me, item, e)) {
-        return false;
-      }
-    }
-  }
+  (void) thing_auto_wield_try(g, v, l, me, item, e);
 
   return true;
 }

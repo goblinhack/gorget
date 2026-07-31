@@ -490,7 +490,11 @@ void wid_collect_show(Gamep g, Levelsp v, Levelp l, Thingp player, std::vector< 
         }
 
         if (thing_is_wielded(item)) {
-          line += "%%tile=icon_hand$";
+          if (thing_is_ring(item)) {
+            line += "%%tile=icon_ring$";
+          } else {
+            line += "%%tile=icon_hand$";
+          }
         }
       }
 

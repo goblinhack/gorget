@@ -2192,10 +2192,10 @@
   return level_open(g, v, l, is_able_to_fire_weapons, p);
 }
 
-[[nodiscard]] auto level_open_is_wieldable(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_open_is_weapon(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_open(g, v, l, is_wieldable, p);
+  return level_open(g, v, l, is_weapon, p);
 }
 
 [[nodiscard]] auto level_open_is_light_flicker(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp

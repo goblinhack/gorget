@@ -2192,10 +2192,10 @@
   return level_flag(g, v, l, is_able_to_fire_weapons, p, me);
 }
 
-[[nodiscard]] auto level_is_wieldable(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_weapon(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_wieldable, p, me);
+  return level_flag(g, v, l, is_weapon, p, me);
 }
 
 [[nodiscard]] auto level_is_light_flicker(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
