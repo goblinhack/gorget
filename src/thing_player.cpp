@@ -807,6 +807,13 @@ static auto player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy) -> b
   }
 
   //
+  // Don't fire while moving. The player can end up shooting themselves.
+  //
+  if (thing_is_moving(me)) {
+    return false;
+  }
+
+  //
   // Wait until the end of the tick
   //
   if (level_tick_is_in_progress(g, v, l)) {

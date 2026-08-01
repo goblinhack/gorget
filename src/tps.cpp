@@ -24,6 +24,7 @@
   if (!tp_load_brazier()) { return false; }
   if (!tp_load_bridge()) { return false; }
   if (!tp_load_buff_immune_fire()) { return false; }
+  if (!tp_load_buff_protection()) { return false; }
   if (!tp_load_buff_resistant_fire()) { return false; }
   if (!tp_load_buff_stealth()) { return false; }
   if (!tp_load_buff_tireless()) { return false; }
@@ -72,6 +73,7 @@
   if (!tp_load_potion_dislocation()) { return false; }
   if (!tp_load_potion_healing()) { return false; }
   if (!tp_load_potion_incin()) { return false; }
+  if (!tp_load_potion_protection()) { return false; }
   if (!tp_load_potion_stealth()) { return false; }
   if (!tp_load_potion_tireless()) { return false; }
   if (!tp_load_projectile_fire()) { return false; }
