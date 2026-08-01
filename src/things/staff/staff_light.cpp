@@ -27,7 +27,7 @@ static auto tp_staff_light_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -
       UI_INFO1_FMT_STR "A brilliantly lit staff. White sparks drip from it.\n"                                    //
       UI_INFO2_FMT_STR "Tip: staves fire a single blast at a time, unavoidable by monsters.\n"                    //
       UI_INFO3_FMT_STR "Tip: blast can pass through multiple monsters, so aim to create a conga line of death.\n" //
-      UI_INFO4_FMT_STR "Info: staves are more powerful than staves, but have fewer charges and are wielded with a move penalty.\n";
+      UI_INFO4_FMT_STR "Info: staves are more powerful than wands, but have fewer charges and are wielded with a move penalty.\n";
 }
 
 [[nodiscard]] static auto tp_staff_light_on_light_weapon_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user) -> Tpp
@@ -70,6 +70,8 @@ static auto tp_staff_light_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -
   tp_flag_set(tp, is_blit_hit_outline_w_black_inside);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_collectable);
+  tp_flag_set(tp, is_tick_on_unwield);
+  tp_flag_set(tp, is_tick_on_wield);
   tp_flag_set(tp, is_collision_circle_small);
   tp_flag_set(tp, is_combustible); // will continue to burn once on light
   tp_flag_set(tp, is_dead_when_discharged);

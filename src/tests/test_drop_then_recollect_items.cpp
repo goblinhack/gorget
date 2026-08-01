@@ -165,7 +165,7 @@
     goto exit;
   }
 
-  TEST_ASSERT(t, game_tick_get(g, v) == 46, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 45, "final tick counter value");
 
   level_dump(g, v, l, w, h);
   TEST_PASSED(t);

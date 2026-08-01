@@ -104,7 +104,7 @@
 
   TEST_ASSERT(t, thing_inventory_get_item_count(g, v, l, player) == 1, "final item count");
 
-  TEST_ASSERT(t, game_tick_get(g, v) == 15, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 16, "final tick counter value");
 
   level_dump(g, v, l, w, h);
   TEST_PASSED(t);

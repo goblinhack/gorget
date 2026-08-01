@@ -31,6 +31,66 @@
 
 static WidPopup *wid_over_stats;
 
+static void wid_thing_info_item_mouse_over_begin(Gamep g, Widp w, int /*relx*/, int /*rely*/, int /*wheelx*/, int /*wheely*/)
+{
+  TRACE();
+
+  auto *v = game_levels_get(g);
+  if (v == nullptr) {
+    return;
+  }
+
+  auto *t = wid_get_thing_context(g, v, w, 0);
+  if (t == nullptr) {
+    return;
+  }
+
+  level_cursor_describe_clear(g, v);
+  (void) level_cursor_describe_add(g, v, t);
+  (void) wid_rightbar_init(g);
+}
+
+static void wid_thing_info_item_mouse_over_end(Gamep g, Widp w)
+{
+  TRACE();
+
+  auto *v = game_levels_get(g);
+  if (v == nullptr) {
+    return;
+  }
+
+  auto *t = wid_get_thing_context(g, v, w, 0);
+  if (t == nullptr) {
+    return;
+  }
+
+  (void) level_cursor_describe_remove(g, v, t);
+  (void) wid_rightbar_init(g);
+}
+
+[[nodiscard]] static auto wid_thing_info_item_mouse_down(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+{
+  TRACE();
+
+  auto *v = game_levels_get(g);
+  if (v == nullptr) {
+    return false;
+  }
+
+  auto *t = wid_get_thing_context(g, v, w, 0);
+  if (t == nullptr) {
+    return false;
+  }
+
+  if (game_state(g) != STATE_PLAYING) {
+    return true;
+  }
+
+  wid_item_menu_select(g, v, t, false /* not from inventory */);
+
+  return true;
+}
+
 [[nodiscard]] auto wid_thing_info_keys(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent) -> bool
 {
   TRACE();
@@ -1054,23 +1114,23 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
 
   FOR_ALL_WIELD_TYPES(w)
   {
-    auto *weapon = thing_wielding_get(g, v, l, me, w);
-    if (weapon == nullptr) {
-      return false;
+    auto *item = thing_wielding_get(g, v, l, me, w);
+    if (item == nullptr) {
+      continue;
     }
+
+    std::string line;
 
     switch (w) {
       case WIELD_TYPE_WEAPON :
         {
-          auto out = string_sprintf("Wielded(%s)", thing_name_short(g, v, l, weapon).c_str());
-          parent->log(g, UI_INFO_FMT_STR + out, TEXT_FORMAT_LHS);
+          line = string_sprintf("Wielded(%s)", thing_name_short(g, v, l, item).c_str());
           break;
         }
       case WIELD_TYPE_RING1 : [[fallthrough]];
       case WIELD_TYPE_RING2 :
         {
-          auto out = string_sprintf("Worn(%s)", thing_name_short(g, v, l, weapon).c_str());
-          parent->log(g, UI_INFO_FMT_STR + out, TEXT_FORMAT_LHS);
+          line = string_sprintf("Worn(%s)", thing_name_short(g, v, l, item).c_str());
           break;
         }
 
@@ -1078,8 +1138,19 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
       case WIELD_TYPE_ENUM_MAX : break;
     }
 
-    (void) wid_tp_info_damage(g, v, l, thing_tp(weapon), parent, width, false /* title allowed */);
-    (void) wid_tp_info_special_attacks(g, v, l, thing_tp(weapon), parent, width, false /* title allowed */);
+    if (line.empty()) {
+      continue;
+    }
+
+    Widp wid = parent->log(g, UI_INFO_FMT_STR + line, TEXT_FORMAT_LHS);
+
+    wid_set_thing_context(g, v, wid, item);
+    wid_set_on_mouse_down(wid, wid_thing_info_item_mouse_down);
+    wid_set_on_mouse_over_begin(wid, wid_thing_info_item_mouse_over_begin);
+    wid_set_on_mouse_over_end(wid, wid_thing_info_item_mouse_over_end);
+
+    (void) wid_tp_info_damage(g, v, l, thing_tp(item), parent, width, false /* title allowed */);
+    (void) wid_tp_info_special_attacks(g, v, l, thing_tp(item), parent, width, false /* title allowed */);
   }
 
   return true;
@@ -1230,69 +1301,6 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
   return false;
 }
 
-static void wid_thing_info_item_mouse_over_begin(Gamep g, Widp w, int /*relx*/, int /*rely*/, int /*wheelx*/, int /*wheely*/)
-{
-  TRACE();
-
-  auto *v = game_levels_get(g);
-  if (v == nullptr) {
-    return;
-  }
-
-  auto *t = wid_get_thing_context(g, v, w, 0);
-  if (t == nullptr) {
-    return;
-  }
-
-  level_cursor_describe_clear(g, v);
-  (void) level_cursor_describe_add(g, v, t);
-  (void) wid_rightbar_init(g);
-}
-
-static void wid_thing_info_item_mouse_over_end(Gamep g, Widp w)
-{
-  TRACE();
-
-  auto *v = game_levels_get(g);
-  if (v == nullptr) {
-    return;
-  }
-
-  auto *t = wid_get_thing_context(g, v, w, 0);
-  if (t == nullptr) {
-    return;
-  }
-
-  (void) level_cursor_describe_remove(g, v, t);
-  (void) wid_rightbar_init(g);
-}
-
-[[nodiscard]] static auto wid_thing_info_item_mouse_down(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
-{
-  TRACE();
-
-  auto *v = game_levels_get(g);
-  if (v == nullptr) {
-    return false;
-  }
-
-  auto *t = wid_get_thing_context(g, v, w, 0);
-  if (t == nullptr) {
-    return false;
-  }
-
-  if (game_state(g) != STATE_PLAYING) {
-    return true;
-  }
-
-  wid_item_menu_select(g, v, t, false /* not from inventory */);
-
-  return true;
-}
-
-//
-// Items
-//
 [[nodiscard]] static auto wid_thing_info_items(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent) -> bool
 {
   TRACE();
@@ -1348,12 +1356,12 @@ static void wid_thing_info_item_mouse_over_end(Gamep g, Widp w)
       }
     }
 
-    Widp w = parent->log(g, line, TEXT_FORMAT_LHS);
+    Widp wid = parent->log(g, line, TEXT_FORMAT_LHS);
 
-    wid_set_thing_context(g, v, w, item);
-    wid_set_on_mouse_down(w, wid_thing_info_item_mouse_down);
-    wid_set_on_mouse_over_begin(w, wid_thing_info_item_mouse_over_begin);
-    wid_set_on_mouse_over_end(w, wid_thing_info_item_mouse_over_end);
+    wid_set_thing_context(g, v, wid, item);
+    wid_set_on_mouse_down(wid, wid_thing_info_item_mouse_down);
+    wid_set_on_mouse_over_begin(wid, wid_thing_info_item_mouse_over_begin);
+    wid_set_on_mouse_over_end(wid, wid_thing_info_item_mouse_over_end);
   }
 
   return printed_something;

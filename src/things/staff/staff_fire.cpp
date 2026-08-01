@@ -27,7 +27,7 @@ static auto tp_staff_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
       UI_INFO1_FMT_STR "A firey red staff. Burning sparks drip from it.\n"                                        //
       UI_INFO2_FMT_STR "Tip: staves fire a single blast at a time, unavoidable by monsters.\n"                    //
       UI_INFO3_FMT_STR "Tip: blast can pass through multiple monsters, so aim to create a conga line of death.\n" //
-      UI_INFO4_FMT_STR "Info: staves are more powerful than staves, but have fewer charges and are wielded with a move penalty.\n";
+      UI_INFO4_FMT_STR "Info: staves are more powerful than wands, but have fewer charges and are wielded with a move penalty.\n";
 }
 
 [[nodiscard]] static auto tp_staff_fire_on_use_weapon_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user) -> Tpp
@@ -89,6 +89,8 @@ static auto tp_staff_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
   tp_flag_set(tp, is_throwable);
   tp_flag_set(tp, is_tick_on_drop);
   tp_flag_set(tp, is_tickable);
+  tp_flag_set(tp, is_tick_on_unwield);
+  tp_flag_set(tp, is_tick_on_wield);
   tp_flag_set(tp, is_treasure);
   tp_flag_set(tp, is_weapon);
   tp_flag_set(tp, is_wood);

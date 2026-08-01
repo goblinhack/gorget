@@ -108,12 +108,10 @@ static bool tp_ring_life_on_damage(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_throwable);
   tp_flag_set(tp, is_tick_on_drop);
-  tp_flag_set(tp, is_tick_on_use);
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_metal);
   tp_flag_set(tp, is_gold);
   tp_flag_set(tp, is_treasure);
-  tp_flag_set(tp, is_usable);
   tp_health_set(tp, "1d6");
   tp_is_immune_to_add(tp, THING_EVENT_FIRE_DAMAGE);
   tp_is_immune_to_add(tp, THING_EVENT_CRUSH_DAMAGE);
