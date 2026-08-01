@@ -287,13 +287,17 @@ static void thing_collision_handle_do(Gamep g, Levelsp v, Levelp l, Thingp obsta
   //
   if (thing_is_flat(obstacle)) {
     if (thing_is_projectile(me) || thing_is_beam_weapon(me)) {
+      THING_DBG(g, v, l, obstacle, "ignore as flat");
       return;
     }
   }
 
   auto *owner = thing_owner(g, v, l, me);
-  if (obstacle == owner) {
-    return;
+  if (owner) {
+    if (obstacle == owner) {
+      THING_DBG(g, v, l, obstacle, "ignore for owner");
+      return;
+    }
   }
 
   //
@@ -301,6 +305,7 @@ static void thing_collision_handle_do(Gamep g, Levelsp v, Levelp l, Thingp obsta
   //
   auto *fired_by = thing_missile_fired_by_get(g, v, l, me);
   if (obstacle == fired_by) {
+    THING_DBG(g, v, l, obstacle, "ignore for firer");
     return;
   }
 

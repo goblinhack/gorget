@@ -131,6 +131,18 @@ static void level_tick_ok_to_end_check(Gamep g, Levelsp v, Levelp l)
     }
 
     //
+    // Slows the game too much
+    //
+    if (compiler_unused) {
+      if (thing_is_beam_weapon(t)) {
+        l->tick_wait_on_things = true;
+        if (compiler_unused) { //
+          LEVEL_DBG(g, v, l, "waiting on beam weapon %s", to_string(g, v, l, t).c_str());
+        }
+      }
+    }
+
+    //
     // Some things like explosions, we want to wait for the explosion to finish before
     // moving to the next tick. Except it adds delays and is currently disabled.
     //

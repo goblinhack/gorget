@@ -211,6 +211,21 @@ void level_thing_pair_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp a,
     return;
   }
 
+  //
+  // To avoid the player firing a laser and walking into it and receiving damage.
+  // We could make the player wait on the laser, but that makes the game feel sluggish.
+  //
+  if (a == thing_missile_fired_by_get(g, v, l, b)) {
+    THING_DBG(g, v, l, a, "ignore for firer");
+    THING_DBG(g, v, l, b, "ignore for firer");
+    return;
+  }
+  if (b == thing_missile_fired_by_get(g, v, l, a)) {
+    THING_DBG(g, v, l, a, "ignore for firer");
+    THING_DBG(g, v, l, b, "ignore for firer");
+    return;
+  }
+
   int const Ta = thing_temperature(a);
   int const Tb = thing_temperature(b);
 
