@@ -71,12 +71,13 @@
 
   (void) thing_charge_count_set(g, v, l, t, tp_charge_count_get(tp));
   (void) thing_distance_avoid_target_set(g, v, l, t, tp_distance_avoid_target_get(tp));
-  (void) thing_hearing_threshold_set(g, v, l, t, tp_hearing_threshold_get(tp));
   (void) thing_distance_jump_set(g, v, l, t, tp_distance_jump_get(tp));
   (void) thing_distance_minion_from_mob_max_set(g, v, l, t, tp_distance_minion_from_mob_max_get(tp));
   (void) thing_distance_throw_set(g, v, l, t, tp_distance_throw_get(tp));
   (void) thing_distance_vision_set(g, v, l, t, tp_distance_vision_get(tp));
   (void) thing_health_max_set(g, v, l, t, thing_health_set(g, v, l, t, tp_health_max_get(tp)));
+  (void) thing_hearing_threshold_set(g, v, l, t, tp_hearing_threshold_get(tp));
+  (void) thing_items_collected_max_set(g, v, l, t, tp_items_collected_max_get(tp));
   (void) thing_minion_max_set(g, v, l, t, tp_minion_max_get(tp));
   (void) thing_missile_count_max_set(g, v, l, t, tp_missile_count_max_get(tp));
   (void) thing_priority_set(g, v, l, t, tp_priority_get(tp));
@@ -87,7 +88,6 @@
   (void) thing_value1_set(g, v, l, t, tp_value1_get(tp));
   (void) thing_value10_set(g, v, l, t, tp_value10_get(tp));
   (void) thing_value11_set(g, v, l, t, tp_value11_get(tp));
-  (void) thing_items_collected_max_set(g, v, l, t, tp_items_collected_max_get(tp));
   (void) thing_value2_set(g, v, l, t, tp_value2_get(tp));
   (void) thing_value3_set(g, v, l, t, tp_value3_get(tp));
   (void) thing_value4_set(g, v, l, t, tp_value4_get(tp));

@@ -809,8 +809,13 @@ static auto player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy) -> b
   //
   // Don't fire while moving. The player can end up shooting themselves.
   //
-  if (thing_is_moving(me)) {
-    return false;
+  if (compiler_unused) {
+    //
+    // It's a more arcade like feeling to allow this tho
+    //
+    if (thing_is_moving(me)) {
+      return false;
+    }
   }
 
   //

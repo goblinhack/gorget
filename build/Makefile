@@ -20,6 +20,7 @@ FORMAT_DIRS=$(DIRS) \
 	    src/things/monst \
 	    src/things/player \
 	    src/things/potions \
+	    src/things/rings \
 	    src/things/projectiles \
 	    src/things/staff \
 	    src/things/traps \

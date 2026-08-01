@@ -45,7 +45,7 @@ static bool tp_buff_protection_on_damage(Gamep g, Levelsp v, Levelp l, Thingp me
     }
   }
 
-  return false; // allow the damage to be applied
+  return true; // allow the damage to be applied
 }
 
 [[nodiscard]] auto tp_load_buff_protection() -> bool

@@ -4511,6 +4511,23 @@ static void gfx_init_tiles()
       "",
       "",
       "",
+      // ##############################################################################
+      "ring_life.0",
+      "ring_life.1",
+      "ring_war.0",
+      "ring_war.1",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
   };
   tile_load_arr_sprites("data/gfx/tiles.tga", "tiles", OUTLINE_TILE_WIDTH, OUTLINE_TILE_HEIGHT, ARRAY_SIZE(tiles), tiles);
 }

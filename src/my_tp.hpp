@@ -1401,6 +1401,7 @@ void tp_z_depth_set(Tpp tp, MapZDepthType val);
 #define WEIGHT_HUMAN    (ONE_KG * 50)
 #define WEIGHT_MEDIUM   (ONE_KG * 10)
 #define WEIGHT_LIGHT    (ONE_KG * 1)
+#define WEIGHT_VLIGHT   (100)
 #define WEIGHT_FEATHER  (1)
 #define WEIGHT_NONE     (0)
 
