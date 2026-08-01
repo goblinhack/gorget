@@ -1574,7 +1574,13 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, i
 
     auto *fire_what_tp = thing_on_use_weapon_request(g, v, l, me, nullptr /* intentional to avoid use */);
     if (fire_what_tp != nullptr) {
-      parent->log(g, UI_INFO_FMT_STR "Fires:", TEXT_FORMAT_LHS);
+      auto charge_count = thing_charge_count(me);
+      if (charge_count > 0) {
+        auto tmp = string_sprintf(" (x%d charges):", charge_count);
+        parent->log(g, UI_INFO_FMT_STR "Fires" + tmp, TEXT_FORMAT_LHS);
+      } else {
+        parent->log(g, UI_INFO_FMT_STR "Fires:", TEXT_FORMAT_LHS);
+      }
       wid_tp_info(g, v, l, fire_what_tp, parent, width);
     }
   }
