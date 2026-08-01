@@ -132,8 +132,9 @@ static void thing_dump_buffs(Gamep g, Levelsp v, Levelp l, Thingp me)
   auto *existing_buff = thing_buff_find(g, v, l, me, what);
   if (existing_buff != nullptr) {
     //
-    // Merge a new tp buff into an existing thing buff
+    // Merge a new tp buff into an existing thing buff instead of creating a new buff
     //
+    THING_DBG(g, v, l, existing_buff, "enhance existing buff");
     thing_enhance(g, v, l, existing_buff, what);
     return existing_buff;
   }

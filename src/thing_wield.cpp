@@ -263,7 +263,7 @@ static auto thing_wield_item_do(Gamep g, Levelsp v, Levelp l, Thingp wielder, Th
   THING_DBG(g, v, l, wielder, "wield: %s (%s)", s.c_str(), WieldType_to_string(w).c_str());
   TRACE_INDENT();
 
-  if (wielder->wielding_id[ w ] != 0u) {
+  if (wielder->wielding_id[ w ] != 0U) {
     auto *existing_item = thing_wielding_get(g, v, l, wielder, w);
     if (existing_item == nullptr) {
       thing_err(g, v, l, wielder, "wielding_id is set, but no item");
