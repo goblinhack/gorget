@@ -1387,7 +1387,7 @@ static void wid_thing_info_item_mouse_over_end(Gamep g, Widp w)
 
     line += thing_name_short(g, v, l, buff);
 
-    auto lifespan = thing_lifespan(buff);
+    auto lifespan = thing_lifespan(g, v, l, buff);
     if (lifespan > 0) {
       line += ", ";
       line += std::to_string(lifespan);
@@ -1400,13 +1400,13 @@ static void wid_thing_info_item_mouse_over_end(Gamep g, Widp w)
     memset(line_bar, ' ', sizeof(line_bar) - 1);
 
     auto lifespan_max = thing_lifespan_initial(buff);
-    auto h            = thing_lifespan(buff);
+    auto h            = thing_lifespan(g, v, l, buff);
     h                 = std::max(h, 0);
 
     (void) my_strlcpy(line_bar, line.c_str(), line.size() + 1);
     auto *w = parent->log(g, std::string(line_bar));
     if (w != nullptr) {
-      int lifespan_how_much = static_cast< int >((static_cast< float >(thing_lifespan(buff)) / static_cast< float >(lifespan_max))
+      int lifespan_how_much = static_cast< int >((static_cast< float >(thing_lifespan(g, v, l, buff)) / static_cast< float >(lifespan_max))
                                                  * (static_cast< float > UI_STAT_BAR_STEPS - 1));
       lifespan_how_much     = std::min(lifespan_how_much, UI_STAT_BAR_STEPS - 1);
       lifespan_how_much     = std::max(lifespan_how_much, 0);

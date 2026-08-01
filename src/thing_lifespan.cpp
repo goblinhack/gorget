@@ -7,7 +7,7 @@
 #include "my_thing.hpp"
 #include "my_types.hpp"
 
-[[nodiscard]] auto thing_lifespan(Thingp t) -> int
+[[nodiscard]] auto thing_lifespan(Gamep g, Levelsp v, Levelp l, Thingp t) -> int
 {
   TRACE_DEBUG();
 

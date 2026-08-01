@@ -386,6 +386,7 @@ static void tp_player_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
       "wand_fire",          //
       "potion_healing",     //
       "potion_protection",  //
+      "potion_protection",  //
       "potion_dislocation", //
       "potion_incin",       //
 #if 0

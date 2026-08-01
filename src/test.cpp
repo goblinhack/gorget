@@ -127,6 +127,7 @@ static std::initializer_list< std::string > tests = {
     "player_triggered",
     "potion_dislocation",
     "potion_healing",
+    "potion_protection",
     "potion_stealth",
     "potion_tireless",
     "projectile_barrel_explosion",

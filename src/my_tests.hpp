@@ -104,6 +104,7 @@ auto test_load_player_on_fire() -> bool;
 auto test_load_player_triggered() -> bool;
 auto test_load_potion_dislocation() -> bool;
 auto test_load_potion_healing() -> bool;
+auto test_load_potion_protection() -> bool;
 auto test_load_potion_stealth() -> bool;
 auto test_load_potion_tireless() -> bool;
 auto test_load_projectile_barrel_explosion() -> bool;

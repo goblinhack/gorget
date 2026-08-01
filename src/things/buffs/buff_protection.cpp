@@ -26,11 +26,15 @@ static bool tp_buff_protection_on_damage(Gamep g, Levelsp v, Levelp l, Thingp me
     return true; // allow the damage to be applied
   }
 
+  auto owner        = thing_buff_owner_get(g, v, l, me);
+  auto lifespan     = thing_lifespan(g, v, l, me);
+  auto new_lifespan = thing_lifespan_decr(g, v, l, me, e.damage);
+
+  THING_DBG(g, v, l, me, "activated: damage %d lifespan %d => %d", e.damage, lifespan, new_lifespan);
+
   e.damage = 0;
 
-  auto owner = thing_buff_owner_get(g, v, l, me);
-
-  if (thing_lifespan_decr(g, v, l, me, e.damage) <= 0) {
+  if (new_lifespan <= 0) {
     if (owner && thing_is_player(owner)) {
       topcon(UI_GOOD_FMT_STR "Your trial period of protection has ended." UI_RESET_FMT);
       thing_sound_play(g, v, l, owner, "bonus");
