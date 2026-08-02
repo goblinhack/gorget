@@ -229,7 +229,7 @@
     out += mod;
   }
 
-  FOR_ALL_INVENTORY_ITEMS(g, v, l, me, item)
+  FOR_ALL_ACTIVE_ITEMS(g, v, l, me, item)
   {
     auto mod = thing_stat_mod(g, v, l, item, stat);
 

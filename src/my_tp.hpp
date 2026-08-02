@@ -329,7 +329,7 @@
       list_macro(is_unused195, "is_unused195"),                                             /* newline */                                       \
       list_macro(is_unused196, "is_unused196"),                                             /* newline */                                       \
       list_macro(is_unused197, "is_unused197"),                                             /* newline */                                       \
-      list_macro(is_unused198, "is_unused198"),                                             /* newline */                                       \
+      list_macro(is_item_active_when_carried, "is_item_active_when_carried"),               /* newline */                                       \
       list_macro(is_wearable, "is_wearable"),                                               /* newline */                                       \
       list_macro(is_unused2, "is_unused2"),                                                 /* newline */                                       \
       list_macro(is_unused20, "is_unused20"),                                               /* newline */                                       \
@@ -930,6 +930,7 @@ class Tp;
 [[nodiscard]] auto tp_is_indestructible(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_insectoid(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_inventory_item(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_item_active_when_carried(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_item_mergeable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_item(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_key(Tpp tp) -> bool;
@@ -1126,7 +1127,6 @@ class Tp;
 [[nodiscard]] auto tp_is_unused195(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused196(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused197(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused198(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused2(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused20(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused21(Tpp tp) -> bool;

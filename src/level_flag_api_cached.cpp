@@ -2060,10 +2060,10 @@
   return level_flag_cached(g, v, l, is_unused197, p);
 }
 
-[[nodiscard]] auto level_is_unused198_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_item_active_when_carried_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused198, p);
+  return level_flag_cached(g, v, l, is_item_active_when_carried, p);
 }
 
 [[nodiscard]] auto level_is_wearable_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

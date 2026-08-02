@@ -897,6 +897,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_indestructible(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_insectoid(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_inventory_item(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_item_active_when_carried(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_item_mergeable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_item(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_key(Thingp t) -> bool;
@@ -1094,7 +1095,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused195(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused196(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused197(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused198(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused2(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused20(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused21(Thingp t) -> bool;
@@ -1636,6 +1636,14 @@ void thing_display(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp
         if (AUTO(_slot_) = &_ext_->inventory.slots[ _n_ ])                                                                                      \
           if (AUTO(_item_) = thing_find_optional(g, v, _slot_->item_id))                                                                        \
             if (thing_is_worn(_item_))
+
+#define FOR_ALL_ACTIVE_ITEMS(_g_, _v_, _l_, _owner_, _item_)                                                                                    \
+  if ((_g_) && (_v_) && (_l_))                                                                                                                  \
+    if (AUTO(_ext_) = thing_ext_struct(_g_, _v_, _owner_))                                                                                      \
+      for (auto _n_ = 0; _n_ < THING_INVENTORY_MAX; _n_++)                                                                                      \
+        if (AUTO(_slot_) = &_ext_->inventory.slots[ _n_ ])                                                                                      \
+          if (AUTO(_item_) = thing_find_optional(g, v, _slot_->item_id))                                                                        \
+            if (thing_is_worn(_item_) || thing_is_item_active_when_carried(_item_))
 
 #define THING_DBG IF_DEBUG thing_dbg
 #define LEVEL_DBG IF_DEBUG level_dbg

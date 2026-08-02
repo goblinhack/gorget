@@ -2059,10 +2059,10 @@
   return tp_flag(tp, is_unused197) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused198(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_item_active_when_carried(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused198) != 0;
+  return tp_flag(tp, is_item_active_when_carried) != 0;
 }
 
 [[nodiscard]] auto tp_is_wearable(Tpp tp) -> bool

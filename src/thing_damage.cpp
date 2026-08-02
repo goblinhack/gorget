@@ -591,7 +591,7 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
   //
   // Allow rings to reduce damage
   //
-  FOR_ALL_WORN_ITEMS(g, v, l, me, item) { (void) thing_on_damage(g, v, l, item, e); }
+  FOR_ALL_ACTIVE_ITEMS(g, v, l, me, item) { (void) thing_on_damage(g, v, l, item, e); }
 
   if (e.damage <= 0) {
     THING_DBG(g, v, l, me, "%s: no damage to apply due to buffs", to_string(g, v, l, e).c_str());

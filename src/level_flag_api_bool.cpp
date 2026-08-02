@@ -2060,10 +2060,10 @@
   return level_flag(g, v, l, is_unused197, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_unused198_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_item_active_when_carried_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused198, p, me) != nullptr;
+  return level_flag(g, v, l, is_item_active_when_carried, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_wearable_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
