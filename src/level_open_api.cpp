@@ -2066,10 +2066,10 @@
   return level_open(g, v, l, is_unused198, p);
 }
 
-[[nodiscard]] auto level_open_is_unused199(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_open_is_wearable(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_open(g, v, l, is_unused199, p);
+  return level_open(g, v, l, is_wearable, p);
 }
 
 [[nodiscard]] auto level_open_is_ring(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp

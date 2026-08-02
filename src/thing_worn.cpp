@@ -48,7 +48,7 @@ auto thing_strip_item(Gamep g, Levelsp v, Levelp l, Thingp owner, Thingp item, T
     if (thing_is_player(owner)) {
       if (e.event_type == THING_EVENT_USER_INITIATED) {
         auto the_thing = thing_name_long_the(g, v, l, item);
-        topcon(UI_IMPORTANT_FMT_STR "You fail to strip %s." UI_RESET_FMT, the_thing.c_str());
+        topcon(UI_IMPORTANT_FMT_STR "You fail to remove %s." UI_RESET_FMT, the_thing.c_str());
       }
     }
     return false;
@@ -57,7 +57,7 @@ auto thing_strip_item(Gamep g, Levelsp v, Levelp l, Thingp owner, Thingp item, T
   if (thing_is_player(owner)) {
     if (e.event_type == THING_EVENT_USER_INITIATED) {
       auto the_thing = thing_name_long_the(g, v, l, item);
-      topcon("You strip %s.", the_thing.c_str());
+      topcon("You remove %s.", the_thing.c_str());
     }
     game_request_to_remake_ui_set(g);
 
@@ -215,7 +215,7 @@ static auto thing_wear_item_do(Gamep g, Levelsp v, Levelp l, Thingp owner, Thing
 
     if (thing_is_player(owner)) {
       auto the_thing = thing_name_long_the(g, v, l, item);
-      topcon(UI_IMPORTANT_FMT_STR "You fail to wield %s." UI_RESET_FMT, the_thing.c_str());
+      topcon(UI_IMPORTANT_FMT_STR "You fail to remove %s." UI_RESET_FMT, the_thing.c_str());
     }
     return false;
   }
@@ -227,7 +227,11 @@ static auto thing_wear_item_do(Gamep g, Levelsp v, Levelp l, Thingp owner, Thing
   if (thing_is_player(owner)) {
     if (e.event_type != THING_EVENT_SPAWNED) {
       auto the_thing = thing_name_long_the(g, v, l, item);
-      topcon("You wield %s.", the_thing.c_str());
+      if (thing_is_weapon(item)) {
+        topcon("You wield %s.", the_thing.c_str());
+      } else {
+        topcon("You wear %s.", the_thing.c_str());
+      }
     }
     game_request_to_remake_ui_set(g);
 

@@ -848,14 +848,14 @@ static auto player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy) -> b
     //
     item = thing_worn_get(g, v, l, me, WORN_TYPE_WEAPON);
     if (item == nullptr) {
-      topcon(UI_IMPORTANT_FMT_STR "You have nothing to wield." UI_RESET_FMT);
+      topcon(UI_IMPORTANT_FMT_STR "You have no weapon to wield. Try walking into enemies for melee attacks instead." UI_RESET_FMT);
       return false;
     }
 
     fire_what = thing_on_use_weapon_request(g, v, l, item, me);
     if (item == nullptr) {
       auto the_thing = thing_name_long_the(g, v, l, item);
-      topcon(UI_IMPORTANT_FMT_STR "You fail to fire %s." UI_RESET_FMT, the_thing.c_str());
+      topcon(UI_IMPORTANT_FMT_STR "You fail to use %s." UI_RESET_FMT, the_thing.c_str());
       return false;
     }
   }

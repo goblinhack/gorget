@@ -2066,10 +2066,10 @@
   return level_flag_cached(g, v, l, is_unused198, p);
 }
 
-[[nodiscard]] auto level_is_unused199_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_wearable_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused199, p);
+  return level_flag_cached(g, v, l, is_wearable, p);
 }
 
 [[nodiscard]] auto level_is_ring_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

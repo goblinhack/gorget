@@ -285,14 +285,14 @@ static Thingp g_item;
     return false;
   }
 
-  if (! thing_is_weapon(item)) {
-    topcon("Weapon cannot be worn.");
+  if (! thing_is_weapon(item) && ! thing_is_wearable(item)) {
+    topcon("Item cannot be worn.");
     (void) sound_play(g, "error");
     return true;
   }
 
   if (thing_is_worn(item)) {
-    topcon("Weapon is already worn.");
+    topcon("Item is already worn.");
     (void) sound_play(g, "error");
     return true;
   }
@@ -342,14 +342,14 @@ static Thingp g_item;
     return false;
   }
 
-  if (! thing_is_weapon(item)) {
-    topcon("Weapon cannot be worn.");
+  if (! thing_is_weapon(item) && ! thing_is_wearable(item)) {
+    topcon("Item cannot be worn.");
     (void) sound_play(g, "error");
     return true;
   }
 
   if (! thing_is_worn(item)) {
-    topcon("Weapon is not worn.");
+    topcon("Item is not worn.");
     (void) sound_play(g, "error");
     return true;
   }
@@ -518,6 +518,10 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item, bool from_inventory)
     menu_height += box_step;
   }
 
+  if (thing_is_wearable(item)) {
+    menu_height += box_step;
+  }
+
   if (thing_is_throwable(item)) {
     menu_height += box_step;
   }
@@ -607,6 +611,32 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item, bool from_inventory)
       wid_set_on_mouse_down(w, wid_item_menu_wield);
       wid_set_pos(w, tl, br);
       wid_set_text(w, UI_HIGHLIGHT_FMT_STR "W" UI_FMT_STR "ield");
+      y_at += box_step;
+    }
+  }
+
+  if (thing_is_wearable(item)) {
+    if (thing_is_worn(item)) {
+      TRACE();
+      auto *p = wid_item_menu_window->wid_text_area->wid_text_area;
+      auto *w = wid_new_menu_button(g, p, "Strip");
+
+      spoint const tl(0, y_at);
+      spoint const br(button_width, y_at + box_height);
+      wid_set_on_mouse_down(w, wid_item_menu_strip);
+      wid_set_pos(w, tl, br);
+      wid_set_text(w, "Strip (" UI_HIGHLIGHT_FMT_STR "W" UI_FMT_STR ")");
+      y_at += box_step;
+    } else {
+      TRACE();
+      auto *p = wid_item_menu_window->wid_text_area->wid_text_area;
+      auto *w = wid_new_menu_button(g, p, "Wear");
+
+      spoint const tl(0, y_at);
+      spoint const br(button_width, y_at + box_height);
+      wid_set_on_mouse_down(w, wid_item_menu_wield);
+      wid_set_text(w, UI_HIGHLIGHT_FMT_STR "W" UI_FMT_STR "ear");
+      wid_set_pos(w, tl, br);
       y_at += box_step;
     }
   }

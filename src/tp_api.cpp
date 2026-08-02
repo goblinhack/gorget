@@ -2065,10 +2065,10 @@
   return tp_flag(tp, is_unused198) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused199(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_wearable(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused199) != 0;
+  return tp_flag(tp, is_wearable) != 0;
 }
 
 [[nodiscard]] auto tp_is_ring(Tpp tp) -> bool

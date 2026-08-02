@@ -211,7 +211,7 @@
       list_macro(is_throwable, "is_throwable"),                                             /* newline */                                       \
       list_macro(is_tick_end_delay, "is_tick_end_delay"),                                   /* newline */                                       \
       list_macro(is_tick_on_drop, "is_tick_on_drop"),                                       /* newline */                                       \
-      list_macro(is_tick_on_strip, "is_tick_on_strip"),                                   /* newline */                                       \
+      list_macro(is_tick_on_strip, "is_tick_on_strip"),                                     /* newline */                                       \
       list_macro(is_tick_on_use, "is_tick_on_use"),                                         /* newline */                                       \
       list_macro(is_tick_on_worn, "is_tick_on_worn"),                                       /* newline */                                       \
       list_macro(is_tickable, "is_tickable"),                                               /* newline */                                       \
@@ -330,7 +330,7 @@
       list_macro(is_unused196, "is_unused196"),                                             /* newline */                                       \
       list_macro(is_unused197, "is_unused197"),                                             /* newline */                                       \
       list_macro(is_unused198, "is_unused198"),                                             /* newline */                                       \
-      list_macro(is_unused199, "is_unused199"),                                             /* newline */                                       \
+      list_macro(is_wearable, "is_wearable"),                                               /* newline */                                       \
       list_macro(is_unused2, "is_unused2"),                                                 /* newline */                                       \
       list_macro(is_unused20, "is_unused20"),                                               /* newline */                                       \
       list_macro(is_ring, "is_ring"),                                                       /* newline */                                       \
@@ -1127,7 +1127,6 @@ class Tp;
 [[nodiscard]] auto tp_is_unused196(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused197(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused198(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused199(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused2(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused20(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused21(Tpp tp) -> bool;
@@ -1226,6 +1225,7 @@ class Tp;
 [[nodiscard]] auto tp_is_wand(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_water(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_weapon(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_wearable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_wood(Tpp tp) -> bool;
 [[nodiscard]] auto tp_items_collected_max_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_lifespan_get(Tpp tp) -> int;

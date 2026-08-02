@@ -2067,10 +2067,10 @@
   return level_count(g, v, l, is_unused198, p);
 }
 
-[[nodiscard]] auto level_count_is_unused199(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_wearable(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused199, p);
+  return level_count(g, v, l, is_wearable, p);
 }
 
 [[nodiscard]] auto level_count_is_ring(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t

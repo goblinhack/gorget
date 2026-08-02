@@ -1095,7 +1095,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused196(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused197(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused198(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused199(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused2(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused20(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused21(Thingp t) -> bool;
@@ -1192,6 +1191,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_wait_on_dead_anim(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_wand(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_weapon(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_wearable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_wood(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_worn_try_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp owner, bool val = true) -> bool;
 [[nodiscard]] auto thing_is_worn_try_unset(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp owner) -> bool;
