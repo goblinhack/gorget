@@ -16,7 +16,7 @@ static auto tp_potion_tireless_description_get(Gamep g, Levelsp v, Levelp l, Thi
 {
   TRACE();
 
-  return "potion, tireless";
+  return "potion, tirelessness";
 }
 
 static auto tp_potion_tireless_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
@@ -142,11 +142,11 @@ static void tp_potion_tireless_on_death(Gamep g, Levelsp v, Levelp l, Thingp me,
   tp_health_set(tp, "1d6");
   tp_is_immune_to_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_light_color_set(tp, "white");
-  tp_name_a_or_an_set(tp, "a potion of tireless");
-  tp_name_apostrophize_set(tp, "potion of tireless's");
-  tp_name_long_set(tp, "potion of tireless");
-  tp_name_pluralize_set(tp, "potions of tireless");
-  tp_name_short_set(tp, "potion, tireless");
+  tp_name_a_or_an_set(tp, "a potion of tirelessness");
+  tp_name_apostrophize_set(tp, "potion of tirelessness'");
+  tp_name_long_set(tp, "potion of tirelessness");
+  tp_name_pluralize_set(tp, "potions of tirelessness");
+  tp_name_short_set(tp, "potion, tirelessness");
   tp_priority_set(tp, THING_PRIORITY_OBJECT);
   tp_rarity_set(tp, THING_RARITY_COMMON);
   tp_temperature_burns_at_set(tp, 30);  // celsius
