@@ -140,7 +140,7 @@
   if (!test_load_trampled_grass()) { return false; }
   if (!test_load_wall()) { return false; }
   if (!test_load_weapon_discharge()) { return false; }
-  if (!test_load_weapon_wield_unwield()) { return false; }
+  if (!test_load_weapon_worn_then_stripped()) { return false; }
   /* end shell marker1 */
   // clang-format on
 

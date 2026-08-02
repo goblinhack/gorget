@@ -489,7 +489,7 @@ void wid_collect_show(Gamep g, Levelsp v, Levelp l, Thingp player, std::vector< 
           line += " charges %%tile=icon_lightning$";
         }
 
-        if (thing_is_wielded(item)) {
+        if (thing_is_worn(item)) {
           if (thing_is_ring(item)) {
             line += "%%tile=icon_ring$";
           } else {

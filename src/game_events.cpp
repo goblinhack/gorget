@@ -523,6 +523,9 @@ static auto game_event_throw(Gamep g) -> bool
 
   std::vector< Thingp > items;
 
+  //
+  // Collect all throwable items
+  //
   FOR_ALL_INVENTORY_ITEMS(g, v, l, player, item)
   {
     if (thing_is_throwable(item)) {

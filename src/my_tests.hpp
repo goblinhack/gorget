@@ -138,7 +138,7 @@ auto test_load_throw_potion_incin() -> bool;
 auto test_load_trampled_grass() -> bool;
 auto test_load_wall() -> bool;
 auto test_load_weapon_discharge() -> bool;
-auto test_load_weapon_wield_unwield() -> bool;
+auto test_load_weapon_worn_then_stripped() -> bool;
   /* end shell marker1 */
 
 #endif // MY_TESTS_HPP

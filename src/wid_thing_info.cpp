@@ -1056,7 +1056,7 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
       out = string_append_with_comma(out, "Thrower");
     }
   }
-  if (thing_is_able_to_wield_items(me)) {
+  if (thing_is_able_to_wear_items(me)) {
     if (! thing_is_player(me)) {
       out = string_append_with_comma(out, "Wielder");
     }
@@ -1106,15 +1106,15 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
 }
 
 //
-// Add wielded weapon
+// Add worn weapon
 //
-[[nodiscard]] static auto wid_thing_info_wielded(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, int width) -> bool
+[[nodiscard]] static auto wid_thing_info_worn(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, int width) -> bool
 {
   TRACE();
 
-  FOR_ALL_WIELD_TYPES(w)
+  FOR_ALL_WORN_TYPES(w)
   {
-    auto *item = thing_wielding_get(g, v, l, me, w);
+    auto *item = thing_worn_get(g, v, l, me, w);
     if (item == nullptr) {
       continue;
     }
@@ -1122,20 +1122,20 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
     std::string line;
 
     switch (w) {
-      case WIELD_TYPE_WEAPON :
+      case WORN_TYPE_WEAPON :
         {
           line = string_sprintf("Wielded(%s)", thing_name_short(g, v, l, item).c_str());
           break;
         }
-      case WIELD_TYPE_RING1 : [[fallthrough]];
-      case WIELD_TYPE_RING2 :
+      case WORN_TYPE_RING1 : [[fallthrough]];
+      case WORN_TYPE_RING2 :
         {
           line = string_sprintf("Worn(%s)", thing_name_short(g, v, l, item).c_str());
           break;
         }
 
-      case WIELD_TYPE_NONE :
-      case WIELD_TYPE_ENUM_MAX : break;
+      case WORN_TYPE_NONE :
+      case WORN_TYPE_ENUM_MAX : break;
     }
 
     if (line.empty()) {
@@ -1348,7 +1348,7 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
       line += "%%tile=icon_lightning$";
     }
 
-    if (thing_is_wielded(item)) {
+    if (thing_is_worn(item)) {
       if (thing_is_ring(item)) {
         line += "%%tile=icon_ring$";
       } else {
@@ -1492,7 +1492,7 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, i
   if (thing_is_player(me)) {
     if (wid_thing_info_player_stats(g, v, l, me, parent, width)) {}
 
-    if (wid_thing_info_wielded(g, v, l, me, parent, width)) {
+    if (wid_thing_info_worn(g, v, l, me, parent, width)) {
       parent->log_empty_line(g);
     }
     if (wid_tp_info_damage(g, v, l, tp, parent, width, true /* title allowed */)) {
@@ -1518,7 +1518,7 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, i
     if (! thing_is_dead(me)) {
       if (wid_thing_info_monst_stats(g, v, l, me, parent, width)) {}
 
-      if (wid_thing_info_wielded(g, v, l, me, parent, width)) {
+      if (wid_thing_info_worn(g, v, l, me, parent, width)) {
         parent->log_empty_line(g);
       }
 

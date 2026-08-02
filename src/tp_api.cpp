@@ -2107,16 +2107,16 @@
   return tp_flag(tp, is_physics_trap) != 0;
 }
 
-[[nodiscard]] auto tp_is_tick_on_unwield(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_tick_on_strip(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_tick_on_unwield) != 0;
+  return tp_flag(tp, is_tick_on_strip) != 0;
 }
 
-[[nodiscard]] auto tp_is_tick_on_wield(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_tick_on_worn(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_tick_on_wield) != 0;
+  return tp_flag(tp, is_tick_on_worn) != 0;
 }
 
 [[nodiscard]] auto tp_is_buff(Tpp tp) -> bool
@@ -2173,10 +2173,10 @@
   return tp_flag(tp, is_flammable) != 0;
 }
 
-[[nodiscard]] auto tp_is_auto_wield(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_auto_wear(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_auto_wield) != 0;
+  return tp_flag(tp, is_auto_wear) != 0;
 }
 
 [[nodiscard]] auto tp_is_dead_when_discharged(Tpp tp) -> bool
@@ -2203,10 +2203,10 @@
   return tp_flag(tp, is_light_flicker) != 0;
 }
 
-[[nodiscard]] auto tp_is_able_to_wield_items(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_able_to_wear_items(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_able_to_wield_items) != 0;
+  return tp_flag(tp, is_able_to_wear_items) != 0;
 }
 
 [[nodiscard]] auto tp_is_wand(Tpp tp) -> bool

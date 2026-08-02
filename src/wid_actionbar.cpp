@@ -319,14 +319,14 @@ static void wid_actionbar_fire_over_begin(Gamep g, Widp w, int /*relx*/, int /*r
   wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
 
   int const width  = 32;
-  int const height = 9;
+  int const height = 14;
 
   tlx -= width / 2;
   brx += width / 2;
   tly -= height;
 
-  bry -= 1;
-  tly += 1;
+  bry -= 2;
+  tly += 3;
 
   spoint const tl(tlx, tly);
   spoint const br(brx, bry);
@@ -335,6 +335,9 @@ static void wid_actionbar_fire_over_begin(Gamep g, Widp w, int /*relx*/, int /*r
   wid_over_fire->log(g, UI_HIGHLIGHT_FMT_STR "Fire");
   wid_over_fire->log_empty_line(g);
   wid_over_fire->log(g, "Hover the mouse over your chosen enemy and press this key to blast them to deserved oblivion.");
+  wid_over_fire->log_empty_line(g);
+  wid_over_fire->log(g, "For melee damage, simply try to walk into the monster to deliver a knuckle sandwich.");
+  wid_over_fire->log_empty_line(g);
   wid_over_fire->compress(g);
 
   level_cursor_path_reset(g);

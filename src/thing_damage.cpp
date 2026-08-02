@@ -110,9 +110,9 @@
     }
   }
 
-  FOR_ALL_WIELD_TYPES(w)
+  FOR_ALL_WORN_TYPES(w)
   {
-    auto *weapon = thing_wielding_get(g, v, l, me, w);
+    auto *weapon = thing_worn_get(g, v, l, me, w);
     if (weapon != nullptr) {
       max_damage = std::max(max_damage, thing_damage_max(g, v, l, weapon));
     }
@@ -178,9 +178,9 @@
     }
   }
 
-  FOR_ALL_WIELD_TYPES(w)
+  FOR_ALL_WORN_TYPES(w)
   {
-    auto *weapon = thing_wielding_get(g, v, l, me, w);
+    auto *weapon = thing_worn_get(g, v, l, me, w);
     if (weapon != nullptr) {
       auto tmp = thing_damage_types(g, v, l, weapon);
       out.insert(out.end(), tmp.begin(), tmp.end());
@@ -591,7 +591,7 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
   //
   // Allow rings to reduce damage
   //
-  FOR_ALL_INVENTORY_ITEMS(g, v, l, me, item) { (void) thing_on_damage(g, v, l, item, e); }
+  FOR_ALL_WORN_ITEMS(g, v, l, me, item) { (void) thing_on_damage(g, v, l, item, e); }
 
   if (e.damage <= 0) {
     THING_DBG(g, v, l, me, "%s: no damage to apply due to buffs", to_string(g, v, l, e).c_str());

@@ -2109,16 +2109,16 @@
   return level_count(g, v, l, is_physics_trap, p);
 }
 
-[[nodiscard]] auto level_count_is_tick_on_unwield(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_tick_on_strip(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_tick_on_unwield, p);
+  return level_count(g, v, l, is_tick_on_strip, p);
 }
 
-[[nodiscard]] auto level_count_is_tick_on_wield(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_tick_on_worn(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_tick_on_wield, p);
+  return level_count(g, v, l, is_tick_on_worn, p);
 }
 
 [[nodiscard]] auto level_count_is_buff(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
@@ -2175,10 +2175,10 @@
   return level_count(g, v, l, is_flammable, p);
 }
 
-[[nodiscard]] auto level_count_is_auto_wield(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_auto_wear(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_auto_wield, p);
+  return level_count(g, v, l, is_auto_wear, p);
 }
 
 [[nodiscard]] auto level_count_is_dead_when_discharged(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
@@ -2205,10 +2205,10 @@
   return level_count(g, v, l, is_light_flicker, p);
 }
 
-[[nodiscard]] auto level_count_is_able_to_wield_items(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_able_to_wear_items(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_able_to_wield_items, p);
+  return level_count(g, v, l, is_able_to_wear_items, p);
 }
 
 [[nodiscard]] auto level_count_is_wand(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t

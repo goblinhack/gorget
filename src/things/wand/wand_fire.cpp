@@ -26,7 +26,7 @@ static auto tp_wand_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> 
   return                                                                                                                                     //
       UI_INFO1_FMT_STR "A firey red wand. Burning sparks drip from it.\n"                                                                    //
       UI_INFO2_FMT_STR "Tip: wands can fire multiple rounds down long corridors. However, this means monsters can potentially avoid them.\n" //
-      UI_INFO3_FMT_STR "Info: wands are less powerful than staves, but have more charges and be wielded without a move penalty.\n";
+      UI_INFO3_FMT_STR "Info: wands are less powerful than staves, but have more charges and be worn without a move penalty.\n";
 }
 
 [[nodiscard]] static auto tp_wand_fire_on_use_weapon_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user) -> Tpp
@@ -64,7 +64,7 @@ static auto tp_wand_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> 
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated);
-  tp_flag_set(tp, is_auto_wield);
+  tp_flag_set(tp, is_auto_wear);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_hit_outline_w_black_inside);
   tp_flag_set(tp, is_blit_shown_in_chasms);

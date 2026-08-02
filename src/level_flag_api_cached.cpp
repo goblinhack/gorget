@@ -2108,16 +2108,16 @@
   return level_flag_cached(g, v, l, is_physics_trap, p);
 }
 
-[[nodiscard]] auto level_is_tick_on_unwield_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_tick_on_strip_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_tick_on_unwield, p);
+  return level_flag_cached(g, v, l, is_tick_on_strip, p);
 }
 
-[[nodiscard]] auto level_is_tick_on_wield_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_tick_on_worn_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_tick_on_wield, p);
+  return level_flag_cached(g, v, l, is_tick_on_worn, p);
 }
 
 [[nodiscard]] auto level_is_buff_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
@@ -2174,10 +2174,10 @@
   return level_flag_cached(g, v, l, is_flammable, p);
 }
 
-[[nodiscard]] auto level_is_auto_wield_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_auto_wear_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_auto_wield, p);
+  return level_flag_cached(g, v, l, is_auto_wear, p);
 }
 
 [[nodiscard]] auto level_is_dead_when_discharged_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
@@ -2204,10 +2204,10 @@
   return level_flag_cached(g, v, l, is_light_flicker, p);
 }
 
-[[nodiscard]] auto level_is_able_to_wield_items_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_able_to_wear_items_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_able_to_wield_items, p);
+  return level_flag_cached(g, v, l, is_able_to_wear_items, p);
 }
 
 [[nodiscard]] auto level_is_wand_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

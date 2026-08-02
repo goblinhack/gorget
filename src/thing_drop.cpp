@@ -213,8 +213,8 @@ void thing_on_drop_success_set(Tpp tp, thing_on_drop_success_t callback)
     return false;
   }
 
-  if (thing_is_wielded(item)) {
-    if (! thing_unwield_item(g, v, l, me, item, e)) {
+  if (thing_is_worn(item)) {
+    if (! thing_strip_item(g, v, l, me, item, e)) {
       return false;
     }
   }

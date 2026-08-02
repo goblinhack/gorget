@@ -37,14 +37,14 @@
         "xxxxxxxxxxxxxxxxxxxxxxxxxxx";
 
   Overrides overrides;
-  overrides[ 'G' ]    = [](char c, bpoint p) -> Tpp { return tp_find_mand("kobalos_mob"); };
-  Levelp     l        = nullptr;
-  Levelsp    v        = game_test_init(g, &l, level_num, w, h, start.c_str(), overrides);
-  bool       result   = true;
-  Thingp     weapon   = nullptr;
-  Thingp     wielding = nullptr;
-  Tpp        item_tp  = nullptr;
-  ThingEvent e        = {};
+  overrides[ 'G' ]   = [](char c, bpoint p) -> Tpp { return tp_find_mand("kobalos_mob"); };
+  Levelp     l       = nullptr;
+  Levelsp    v       = game_test_init(g, &l, level_num, w, h, start.c_str(), overrides);
+  bool       result  = true;
+  Thingp     weapon  = nullptr;
+  Thingp     worn    = nullptr;
+  Tpp        item_tp = nullptr;
+  ThingEvent e       = {};
 
   auto *player = thing_player(g);
   if (player == nullptr) [[unlikely]] {
@@ -73,7 +73,7 @@
     goto exit;
   }
 
-  if (! thing_wield_item(g, v, l, player, weapon, e)) {
+  if (! thing_wear_item(g, v, l, player, weapon, e)) {
     TEST_FAILED(t, "failed to wield");
     goto exit;
   }
@@ -98,10 +98,10 @@
     }
   }
 
-  wielding = thing_wielding_get(g, v, l, player, WIELD_TYPE_WEAPON);
-  if (wielding) {
-    thing_log(g, v, l, wielding, "wielding this");
-    TEST_FAILED(t, "unexpectedly wielding a weapon still");
+  worn = thing_worn_get(g, v, l, player, WORN_TYPE_WEAPON);
+  if (worn) {
+    thing_log(g, v, l, worn, "worn this");
+    TEST_FAILED(t, "unexpectedly worn a weapon still");
     goto exit;
   }
 

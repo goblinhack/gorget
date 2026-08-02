@@ -58,7 +58,7 @@ static void tp_player_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
 
     FOR_ALL_INVENTORY_ITEMS(g, v, l, me, item)
     {
-      if (thing_is_wielded(item)) {
+      if (thing_is_worn(item)) {
         continue;
       }
 
@@ -500,7 +500,7 @@ static bool tp_player_on_missing(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp
   tp_flag_set(tp, is_able_to_open_things);
   tp_flag_set(tp, is_able_to_shove);
   tp_flag_set(tp, is_able_to_throw);
-  tp_flag_set(tp, is_able_to_wield_items);
+  tp_flag_set(tp, is_able_to_wear_items);
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_attackable_by_monst);

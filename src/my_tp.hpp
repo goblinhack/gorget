@@ -38,14 +38,14 @@
       list_macro(is_able_to_see_through_walls, "is_able_to_see_through_walls"),             /* newline */                                       \
       list_macro(is_able_to_shove, "is_able_to_shove"),                                     /* newline */                                       \
       list_macro(is_able_to_throw, "is_able_to_throw"),                                     /* newline */                                       \
-      list_macro(is_able_to_wield_items, "is_able_to_wield_items"),                         /* newline */                                       \
+      list_macro(is_able_to_wear_items, "is_able_to_wear_items"),                           /* newline */                                       \
       list_macro(is_animated_can_hflip, "is_animated_can_hflip"),                           /* newline */                                       \
       list_macro(is_animated_no_dir, "is_animated_no_dir"),                                 /* newline */                                       \
       list_macro(is_animated_sync_first, "is_animated_sync_first"),                         /* newline */                                       \
       list_macro(is_animated, "is_animated"),                                               /* newline */                                       \
       list_macro(is_attackable_by_monst, "is_attackable_by_monst"),                         /* newline */                                       \
       list_macro(is_attackable_by_player, "is_attackable_by_player"),                       /* newline */                                       \
-      list_macro(is_auto_wield, "is_auto_wield"),                                           /* newline */                                       \
+      list_macro(is_auto_wear, "is_auto_wear"),                                             /* newline */                                       \
       list_macro(is_barrel, "is_barrel"),                                                   /* newline */                                       \
       list_macro(is_beam_weapon, "is_beam_weapon"),                                         /* newline */                                       \
       list_macro(is_biome_bogland, "is_biome_bogland"),                                     /* newline */                                       \
@@ -211,9 +211,9 @@
       list_macro(is_throwable, "is_throwable"),                                             /* newline */                                       \
       list_macro(is_tick_end_delay, "is_tick_end_delay"),                                   /* newline */                                       \
       list_macro(is_tick_on_drop, "is_tick_on_drop"),                                       /* newline */                                       \
-      list_macro(is_tick_on_unwield, "is_tick_on_unwield"),                                 /* newline */                                       \
+      list_macro(is_tick_on_strip, "is_tick_on_strip"),                                   /* newline */                                       \
       list_macro(is_tick_on_use, "is_tick_on_use"),                                         /* newline */                                       \
-      list_macro(is_tick_on_wield, "is_tick_on_wield"),                                     /* newline */                                       \
+      list_macro(is_tick_on_worn, "is_tick_on_worn"),                                       /* newline */                                       \
       list_macro(is_tickable, "is_tickable"),                                               /* newline */                                       \
       list_macro(is_tiled, "is_tiled"),                                                     /* newline */                                       \
       list_macro(is_tireless, "is_tireless"),                                               /* newline */                                       \
@@ -498,23 +498,23 @@ ENUM_DEF_H(LEVEL_TYPE_ENUM, LevelType)
 ENUM_DEF_H(BIOME_ENUM, BiomeType)
 
 //
-// WieldType
+// WornType
 //
-#define WIELD_TYPE_ENUM(list_macro)                                                                                                             \
-  CLANG_FORMAT_INDENT()                        /* dummy line for clang indentation fixup */                                                     \
-  list_macro(WIELD_TYPE_NONE, "NONE"),         /* newline */                                                                                    \
-      list_macro(WIELD_TYPE_WEAPON, "weapon"), /* newline */                                                                                    \
-      list_macro(WIELD_TYPE_RING1, "ring1"),   /* newline */                                                                                    \
-      list_macro(WIELD_TYPE_RING2, "ring2"),   /* newline */
+#define WORN_TYPE_ENUM(list_macro)                                                                                                              \
+  CLANG_FORMAT_INDENT()                       /* dummy line for clang indentation fixup */                                                      \
+  list_macro(WORN_TYPE_NONE, "NONE"),         /* newline */                                                                                     \
+      list_macro(WORN_TYPE_WEAPON, "weapon"), /* newline */                                                                                     \
+      list_macro(WORN_TYPE_RING1, "ring1"),   /* newline */                                                                                     \
+      list_macro(WORN_TYPE_RING2, "ring2"),   /* newline */
 
-ENUM_DEF_H(WIELD_TYPE_ENUM, WieldType)
+ENUM_DEF_H(WORN_TYPE_ENUM, WornType)
 
-#define WIELD_TYPE_ENUM_FIRST ((WieldType) 0)
+#define WORN_TYPE_ENUM_FIRST ((WornType) 0)
 
-#define FOR_ALL_WIELD_TYPES(_iter_)                                                                                                             \
-  for (WieldType _iter_ = WIELD_TYPE_ENUM_FIRST; /* newline */                                                                                  \
-       (_iter_) < WIELD_TYPE_ENUM_MAX;           /* newline */                                                                                  \
-       (_iter_) = static_cast< WieldType >(static_cast< int >(_iter_) + 1))
+#define FOR_ALL_WORN_TYPES(_iter_)                                                                                                              \
+  for (WornType _iter_ = WORN_TYPE_ENUM_FIRST; /* newline */                                                                                    \
+       (_iter_) < WORN_TYPE_ENUM_MAX;          /* newline */                                                                                    \
+       (_iter_) = static_cast< WornType >(static_cast< int >(_iter_) + 1))
 
 //
 // Thing anim enum
@@ -832,14 +832,14 @@ class Tp;
 [[nodiscard]] auto tp_is_able_to_see_through_walls(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_shove(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_throw(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_able_to_wield_items(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_able_to_wear_items(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_animated_can_hflip(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_animated_no_dir(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_animated_sync_first(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_animated(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_attackable_by_monst(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_attackable_by_player(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_auto_wield(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_auto_wear(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_barrel(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_beam_weapon(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_biome_bogland(Tpp tp) -> bool;
@@ -1008,9 +1008,9 @@ class Tp;
 [[nodiscard]] auto tp_is_throwable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_tick_end_delay(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_tick_on_drop(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_tick_on_unwield(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_tick_on_strip(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_tick_on_use(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_tick_on_wield(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_tick_on_worn(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_tickable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_tiled(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_tireless(Tpp tp) -> bool;

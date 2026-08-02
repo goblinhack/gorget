@@ -2108,16 +2108,16 @@
   return level_flag(g, v, l, is_physics_trap, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_tick_on_unwield_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_tick_on_strip_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_tick_on_unwield, p, me) != nullptr;
+  return level_flag(g, v, l, is_tick_on_strip, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_tick_on_wield_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_tick_on_worn_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_tick_on_wield, p, me) != nullptr;
+  return level_flag(g, v, l, is_tick_on_worn, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_buff_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
@@ -2174,10 +2174,10 @@
   return level_flag(g, v, l, is_flammable, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_auto_wield_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_auto_wear_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_auto_wield, p, me) != nullptr;
+  return level_flag(g, v, l, is_auto_wear, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_dead_when_discharged_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
@@ -2204,10 +2204,10 @@
   return level_flag(g, v, l, is_light_flicker, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_able_to_wield_items_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_able_to_wear_items_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_able_to_wield_items, p, me) != nullptr;
+  return level_flag(g, v, l, is_able_to_wear_items, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_wand_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool

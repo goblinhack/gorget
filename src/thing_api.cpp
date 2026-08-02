@@ -2863,7 +2863,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_physics_trap) != 0;
 }
 
-[[nodiscard]] auto thing_is_tick_on_unwield(Thingp t) -> bool
+[[nodiscard]] auto thing_is_tick_on_strip(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2871,10 +2871,10 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_tick_on_unwield) != 0;
+  return tp_flag(thing_tp(t), is_tick_on_strip) != 0;
 }
 
-[[nodiscard]] auto thing_is_tick_on_wield(Thingp t) -> bool
+[[nodiscard]] auto thing_is_tick_on_worn(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2882,7 +2882,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_tick_on_wield) != 0;
+  return tp_flag(thing_tp(t), is_tick_on_worn) != 0;
 }
 
 [[nodiscard]] auto thing_is_buff(Thingp t) -> bool
@@ -2972,7 +2972,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_flammable) != 0;
 }
 
-[[nodiscard]] auto thing_is_auto_wield(Thingp t) -> bool
+[[nodiscard]] auto thing_is_auto_wear(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2980,7 +2980,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_auto_wield) != 0;
+  return tp_flag(thing_tp(t), is_auto_wear) != 0;
 }
 
 [[nodiscard]] auto thing_is_able_to_fire_weapons(Thingp t) -> bool
@@ -3006,7 +3006,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_weapon) != 0;
 }
 
-[[nodiscard]] auto thing_is_able_to_wield_items(Thingp t) -> bool
+[[nodiscard]] auto thing_is_able_to_wear_items(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -3019,7 +3019,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     return false;
   }
 
-  return tp_flag(thing_tp(t), is_able_to_wield_items) != 0;
+  return tp_flag(thing_tp(t), is_able_to_wear_items) != 0;
 }
 
 [[nodiscard]] auto thing_is_wand(Thingp t) -> bool

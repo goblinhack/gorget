@@ -161,7 +161,7 @@ static std::initializer_list< std::string > tests = {
     "trampled_grass",
     "wall",
     "weapon_discharge",
-    "weapon_wield_unwield",
+    "weapon_worn_then_stripped",
   /* end shell marker1 */
 };
 /* clang-format on */

@@ -407,9 +407,9 @@ using Thing = struct Thing {
   //
   uint8_t _is_carried : 1;
   //
-  // Is being wielded
+  // Is being worn
   //
-  uint8_t _is_wielded : 1;
+  uint8_t _is_worn : 1;
   //
   // Pushed onto the map?
   //
@@ -576,9 +576,9 @@ using Thing = struct Thing {
   //
   ThingId id;
   //
-  // What weapon, ring etc... we're wielding
+  // What weapon, ring etc... we're worn
   //
-  ThingId wielding_id[ WIELD_TYPE_ENUM_MAX ];
+  ThingId worn_id[ WORN_TYPE_ENUM_MAX ];
   //
   // If owned, by whom
   //
@@ -676,7 +676,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_attack_count_per_tick_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_attack_count_per_tick_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_attack_count_per_tick(Thingp t) -> int;
-[[nodiscard]] auto thing_auto_wield_try(Gamep g, Levelsp v, Levelp l, Thingp wielder, Thingp item, ThingEvent &e) -> bool;
+[[nodiscard]] auto thing_auto_wear_try(Gamep g, Levelsp v, Levelp l, Thingp owner, Thingp item, ThingEvent &e) -> bool;
 [[nodiscard]] auto thing_beam_weapon_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, bpoint target) -> bool;
 [[nodiscard]] auto thing_beam_weapon_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, fpoint target) -> bool;
 [[nodiscard]] auto thing_buff_add(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what) -> Thingp;
@@ -783,7 +783,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_able_to_see_through_walls(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_shove(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_throw(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_able_to_wield_items(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_able_to_wear_items(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_always_hot(Thingp me) -> bool;
 [[nodiscard]] auto thing_is_animated_can_hflip(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_animated_no_dir(Thingp t) -> bool;
@@ -791,7 +791,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_animated(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_attackable_by_monst(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_attackable_by_player(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_auto_wield(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_auto_wear(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_barrel(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_beam_weapon(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_biome_bogland(Thingp t) -> bool;
@@ -975,9 +975,9 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_throwable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_tick_end_delay(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_tick_on_drop(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_tick_on_unwield(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_tick_on_strip(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_tick_on_use(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_tick_on_wield(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_tick_on_worn(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_tickable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_tiled(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_tireless(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
@@ -1192,10 +1192,10 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_wait_on_dead_anim(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_wand(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_weapon(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_wielded_try_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp wielder, bool val = true) -> bool;
-[[nodiscard]] auto thing_is_wielded_try_unset(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp wielder) -> bool;
-[[nodiscard]] auto thing_is_wielded(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_wood(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_worn_try_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp owner, bool val = true) -> bool;
+[[nodiscard]] auto thing_is_worn_try_unset(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp owner) -> bool;
+[[nodiscard]] auto thing_is_worn(Thingp t) -> bool;
 [[nodiscard]] auto thing_items_collected_max_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_items_collected_max_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_items_collected_max_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
@@ -1273,6 +1273,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_old_at(Thingp me) -> bpoint;
 [[nodiscard]] auto thing_on_same_level_as_player(Gamep g, Levelsp v, Thingp t) -> bool;
 [[nodiscard]] auto thing_open(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp opener) -> bool;
+[[nodiscard]] auto thing_owner_of(Gamep g, Levelsp v, Levelp l, Thingp t) -> Thingp;
 [[nodiscard]] auto thing_owner(Gamep g, Levelsp v, Levelp l, Thingp me) -> Thingp;
 [[nodiscard]] auto thing_path_cost(Gamep g, Levelsp v, Levelp l, Thingp me, const std::vector< bpoint > &path) -> int;
 [[nodiscard]] auto thing_player_level(Gamep g) -> Levelp;
@@ -1321,6 +1322,8 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_stat_string(Gamep g, Levelsp v, Levelp l, Thingp me, ThingStatType stat) -> std::string;
 [[nodiscard]] auto thing_stat_success(Gamep g, Levelsp v, Levelp l, Thingp me, ThingStatType stat, int target_roll) -> bool;
 [[nodiscard]] auto thing_stat(Gamep g, Levelsp v, Levelp l, Thingp me, ThingStatType stat) -> int;
+[[nodiscard]] auto thing_strip_item(Gamep g, Levelsp v, Levelp l, Thingp owner, Thingp item, ThingEvent &e) -> bool;
+[[nodiscard]] auto thing_strip_slot(Gamep g, Levelsp v, Levelp l, Thingp me, WornType w, ThingEvent &e) -> bool;
 [[nodiscard]] auto thing_submerged_pct_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_submerged_pct_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_submerged_pct_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
@@ -1332,8 +1335,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_temperature(Thingp t) -> int;
 [[nodiscard]] auto thing_throw_to(Gamep g, Levelsp v, Levelp l, Thingp thrower, Thingp item, bpoint to) -> bool;
 [[nodiscard]] auto thing_unengulf(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp engulfer) -> bool;
-[[nodiscard]] auto thing_unwield_item(Gamep g, Levelsp v, Levelp l, Thingp wielder, Thingp item, ThingEvent &e) -> bool;
-[[nodiscard]] auto thing_unwield_slot(Gamep g, Levelsp v, Levelp l, Thingp me, WieldType w, ThingEvent &e) -> bool;
 [[nodiscard]] auto thing_use(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, ThingEvent &e) -> bool;
 [[nodiscard]] auto thing_value1_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_value1_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
@@ -1385,12 +1386,11 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_vision_can_hear_tile(Gamep g, Levelsp v, Levelp l, Thingp t, bpoint p) -> bool;
 [[nodiscard]] auto thing_vision_can_see_tile(Gamep g, Levelsp v, Levelp l, Thingp t, bpoint p) -> bool;
 [[nodiscard]] auto thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp me, bpoint to) -> bool;
+[[nodiscard]] auto thing_wear_item(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, ThingEvent &e, WornType) -> bool;
+[[nodiscard]] auto thing_wear_item(Gamep g, Levelsp v, Levelp l, Thingp owner, Thingp item, ThingEvent &e) -> bool;
 [[nodiscard]] auto thing_weight_set(Gamep g, Levelsp v, Levelp l, Thingp t, uint32_t val) -> int;
 [[nodiscard]] auto thing_weight(Thingp t) -> int;
-[[nodiscard]] auto thing_wield_item(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, ThingEvent &e, WieldType) -> bool;
-[[nodiscard]] auto thing_wield_item(Gamep g, Levelsp v, Levelp l, Thingp wielder, Thingp item, ThingEvent &e) -> bool;
-[[nodiscard]] auto thing_wielder_of(Gamep g, Levelsp v, Levelp l, Thingp t) -> Thingp;
-[[nodiscard]] auto thing_wielding_get(Gamep g, Levelsp v, Levelp l, Thingp wielder, WieldType /*w*/) -> Thingp;
+[[nodiscard]] auto thing_worn_get(Gamep g, Levelsp v, Levelp l, Thingp owner, WornType /*w*/) -> Thingp;
 [[nodiscard]] auto to_death_reason_string(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e) -> std::string;
 [[nodiscard]] auto to_string(Gamep g, Levelsp v, Levelp l, ThingEvent &e) -> std::string;
 [[nodiscard]] auto to_string(Gamep g, Levelsp v, Levelp l, Thingp t) -> std::string;
@@ -1628,6 +1628,14 @@ void thing_display(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp
       for (auto _n_ = 0; _n_ < THING_INVENTORY_MAX; _n_++)                                                                                      \
         if (AUTO(_slot_) = &_ext_->inventory.slots[ _n_ ])                                                                                      \
           if (AUTO(_item_) = thing_find_optional(g, v, _slot_->item_id))
+
+#define FOR_ALL_WORN_ITEMS(_g_, _v_, _l_, _owner_, _item_)                                                                                      \
+  if ((_g_) && (_v_) && (_l_))                                                                                                                  \
+    if (AUTO(_ext_) = thing_ext_struct(_g_, _v_, _owner_))                                                                                      \
+      for (auto _n_ = 0; _n_ < THING_INVENTORY_MAX; _n_++)                                                                                      \
+        if (AUTO(_slot_) = &_ext_->inventory.slots[ _n_ ])                                                                                      \
+          if (AUTO(_item_) = thing_find_optional(g, v, _slot_->item_id))                                                                        \
+            if (thing_is_worn(_item_))
 
 #define THING_DBG IF_DEBUG thing_dbg
 #define LEVEL_DBG IF_DEBUG level_dbg

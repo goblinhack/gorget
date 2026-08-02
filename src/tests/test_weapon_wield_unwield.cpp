@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static auto test_weapon_wield(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_weapon_worn(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -37,13 +37,13 @@
         "xxxxxxxxxxxxxxxxxxxxxxxxxxx";
 
   Overrides  overrides;
-  Levelp     l        = nullptr;
-  Levelsp    v        = game_test_init(g, &l, level_num, w, h, start.c_str());
-  bool       result   = true;
-  Thingp     weapon   = nullptr;
-  Thingp     wielding = nullptr;
-  Tpp        item_tp  = nullptr;
-  ThingEvent e        = {};
+  Levelp     l       = nullptr;
+  Levelsp    v       = game_test_init(g, &l, level_num, w, h, start.c_str());
+  bool       result  = true;
+  Thingp     weapon  = nullptr;
+  Thingp     worn    = nullptr;
+  Tpp        item_tp = nullptr;
+  ThingEvent e       = {};
 
   auto *player = thing_player(g);
   if (player == nullptr) [[unlikely]] {
@@ -76,7 +76,7 @@
   TEST_PROGRESS(t);
 
   //
-  // Wield and unwield over and over
+  // Wield and strip over and over
   //
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
@@ -86,51 +86,51 @@
     TEST_LOG(t, "first, wield the weapon");
     TRACE_INDENT();
 
-    if (! thing_wield_item(g, v, l, player, weapon, e)) {
+    if (! thing_wear_item(g, v, l, player, weapon, e)) {
       TEST_FAILED(t, "failed to wield");
       goto exit;
     }
 
-    TEST_LOG(t, "check it is wielded");
+    TEST_LOG(t, "check it is worn");
     TRACE_INDENT();
 
-    if (! thing_is_wielded(weapon)) {
-      TEST_FAILED(t, "weapon is not wielded");
+    if (! thing_is_worn(weapon)) {
+      TEST_FAILED(t, "weapon is not worn");
       goto exit;
     }
 
     TEST_LOG(t, "get the weapon from its slot");
     TRACE_INDENT();
 
-    wielding = thing_wielding_get(g, v, l, player, WIELD_TYPE_WEAPON);
-    if (! wielding) {
-      TEST_FAILED(t, "unexpectedly not wielding a weapon");
+    worn = thing_worn_get(g, v, l, player, WORN_TYPE_WEAPON);
+    if (! worn) {
+      TEST_FAILED(t, "unexpectedly not worn a weapon");
       goto exit;
     }
 
-    TEST_LOG(t, "now unwield it");
+    TEST_LOG(t, "now strip it");
     TRACE_INDENT();
 
-    if (! thing_unwield_item(g, v, l, player, wielding, e)) {
-      TEST_FAILED(t, "failed to unwield");
+    if (! thing_strip_item(g, v, l, player, worn, e)) {
+      TEST_FAILED(t, "failed to strip");
       goto exit;
     }
 
-    TEST_LOG(t, "check the weapon is unwielded");
+    TEST_LOG(t, "check the weapon is striped");
     TRACE_INDENT();
 
-    if (thing_is_wielded(weapon)) {
-      TEST_FAILED(t, "weapon is not unwielded");
+    if (thing_is_worn(weapon)) {
+      TEST_FAILED(t, "weapon is not striped");
       goto exit;
     }
 
     TEST_LOG(t, "check ths slot is empty");
     TRACE_INDENT();
 
-    wielding = thing_wielding_get(g, v, l, player, WIELD_TYPE_WEAPON);
-    if (wielding) {
-      thing_log(g, v, l, wielding, "wielding this");
-      TEST_FAILED(t, "unexpectedly wielding a weapon");
+    worn = thing_worn_get(g, v, l, player, WORN_TYPE_WEAPON);
+    if (worn) {
+      thing_log(g, v, l, worn, "worn this");
+      TEST_FAILED(t, "unexpectedly worn a weapon");
       goto exit;
     }
 
@@ -160,14 +160,14 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_weapon_wield_unwield() -> bool // NOLINT
+[[nodiscard]] auto test_load_weapon_worn_then_stripped() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("weapon_wield_unwield");
+  Testp test = test_load("weapon_worn_then_stripped");
 
   // begin sort marker1 {
-  test_callback_set(test, test_weapon_wield);
+  test_callback_set(test, test_weapon_worn);
   // end sort marker1 }
 
   return true;

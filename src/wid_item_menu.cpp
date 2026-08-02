@@ -286,24 +286,24 @@ static Thingp g_item;
   }
 
   if (! thing_is_weapon(item)) {
-    topcon("Weapon cannot be wielded.");
+    topcon("Weapon cannot be worn.");
     (void) sound_play(g, "error");
     return true;
   }
 
-  if (thing_is_wielded(item)) {
-    topcon("Weapon is already wielded.");
+  if (thing_is_worn(item)) {
+    topcon("Weapon is already worn.");
     (void) sound_play(g, "error");
     return true;
   }
 
   ThingEvent e {
-      .reason     = "user wielded",             //
+      .reason     = "user worn",                //
       .event_type = THING_EVENT_USER_INITIATED, //
       .source     = player,                     //
   };
 
-  if (! thing_wield_item(g, v, l, player, item, e)) {
+  if (! thing_wear_item(g, v, l, player, item, e)) {
     (void) sound_play(g, "error");
     return true;
   }
@@ -318,7 +318,7 @@ static Thingp g_item;
   return true;
 }
 
-[[nodiscard]] static auto wid_item_menu_unwield(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+[[nodiscard]] static auto wid_item_menu_strip(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
 
@@ -343,24 +343,24 @@ static Thingp g_item;
   }
 
   if (! thing_is_weapon(item)) {
-    topcon("Weapon cannot be wielded.");
+    topcon("Weapon cannot be worn.");
     (void) sound_play(g, "error");
     return true;
   }
 
-  if (! thing_is_wielded(item)) {
-    topcon("Weapon is not wielded.");
+  if (! thing_is_worn(item)) {
+    topcon("Weapon is not worn.");
     (void) sound_play(g, "error");
     return true;
   }
 
   ThingEvent e {
-      .reason     = "user unwielded",           //
+      .reason     = "user striped",             //
       .event_type = THING_EVENT_USER_INITIATED, //
       .source     = player,                     //
   };
 
-  if (! thing_unwield_item(g, v, l, player, item, e)) {
+  if (! thing_strip_item(g, v, l, player, item, e)) {
     (void) sound_play(g, "error");
     return true;
   }
@@ -399,8 +399,8 @@ static Thingp g_item;
     return false;
   }
 
-  if (thing_is_wielded(item)) {
-    return wid_item_menu_unwield(g, w, x, y, button);
+  if (thing_is_worn(item)) {
+    return wid_item_menu_strip(g, w, x, y, button);
   }
   return wid_item_menu_wield(g, w, x, y, button);
 }
@@ -586,14 +586,14 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item, bool from_inventory)
   }
 
   if (thing_is_weapon(item)) {
-    if (thing_is_wielded(item)) {
+    if (thing_is_worn(item)) {
       TRACE();
       auto *p = wid_item_menu_window->wid_text_area->wid_text_area;
       auto *w = wid_new_menu_button(g, p, "Unwield");
 
       spoint const tl(0, y_at);
       spoint const br(button_width, y_at + box_height);
-      wid_set_on_mouse_down(w, wid_item_menu_unwield);
+      wid_set_on_mouse_down(w, wid_item_menu_strip);
       wid_set_pos(w, tl, br);
       wid_set_text(w, "Unwield (" UI_HIGHLIGHT_FMT_STR "W" UI_FMT_STR ")");
       y_at += box_step;

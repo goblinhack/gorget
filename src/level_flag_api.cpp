@@ -2108,16 +2108,16 @@
   return level_flag(g, v, l, is_physics_trap, p, me);
 }
 
-[[nodiscard]] auto level_is_tick_on_unwield(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_tick_on_strip(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_tick_on_unwield, p, me);
+  return level_flag(g, v, l, is_tick_on_strip, p, me);
 }
 
-[[nodiscard]] auto level_is_tick_on_wield(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_tick_on_worn(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_tick_on_wield, p, me);
+  return level_flag(g, v, l, is_tick_on_worn, p, me);
 }
 
 [[nodiscard]] auto level_is_buff(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
@@ -2174,10 +2174,10 @@
   return level_flag(g, v, l, is_flammable, p, me);
 }
 
-[[nodiscard]] auto level_is_auto_wield(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_auto_wear(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_auto_wield, p, me);
+  return level_flag(g, v, l, is_auto_wear, p, me);
 }
 
 [[nodiscard]] auto level_is_dead_when_discharged(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
@@ -2204,10 +2204,10 @@
   return level_flag(g, v, l, is_light_flicker, p, me);
 }
 
-[[nodiscard]] auto level_is_able_to_wield_items(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_able_to_wear_items(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_able_to_wield_items, p, me);
+  return level_flag(g, v, l, is_able_to_wear_items, p, me);
 }
 
 [[nodiscard]] auto level_is_wand(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp

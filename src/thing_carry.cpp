@@ -307,7 +307,7 @@ void thing_on_carry_success_set(Tpp tp, thing_on_carry_success_t callback)
     return false;
   }
 
-  (void) thing_auto_wield_try(g, v, l, me, item, e);
+  (void) thing_auto_wear_try(g, v, l, me, item, e);
 
   return true;
 }
