@@ -123,7 +123,7 @@ void wid_intro_select(Gamep g)
     wid_intro_destroy();
   }
 
-  int const    menu_height = TERM_HEIGHT - 30;
+  int const    menu_height = TERM_HEIGHT - 28;
   int const    menu_width  = UI_WID_POPUP_WIDTH_NORMAL + 8;
   spoint const outer_tl(TERM_WIDTH - menu_width - 18, 14);
   spoint const outer_br(TERM_WIDTH - 14, menu_height + 14);
@@ -146,10 +146,11 @@ void wid_intro_select(Gamep g)
                         TEXT_FORMAT_LHS);
   wid_intro_window->log_empty_line(g);
 
-  wid_intro_window->log(g, UI_INFO3_FMT_STR "Along the way you can collect spell books to increase your casting capacity.", TEXT_FORMAT_LHS);
+  wid_intro_window->log(g, UI_INFO3_FMT_STR "Along the way you can collect rings, potions and oddly smelling spell books to asist your quest.",
+                        TEXT_FORMAT_LHS);
   wid_intro_window->log_empty_line(g);
 
-  wid_intro_window->log(g, UI_INFO4_FMT_STR "However, the best way to increase your casting power is to make sacrifies...", TEXT_FORMAT_LHS);
+  wid_intro_window->log(g, UI_INFO4_FMT_STR "However, the best way to increase your power is to make sacrifies...", TEXT_FORMAT_LHS);
   wid_intro_window->log_empty_line(g);
 
   if (compiler_unused) {
@@ -180,7 +181,11 @@ void wid_intro_select(Gamep g)
     wid_intro_window->log_empty_line(g);
   }
 
-  wid_intro_window->log(g, UI_INFO1_FMT_STR "Enough talk... Begin your quest to defeat Lord Batcat!");
+  wid_intro_window->log(g, UI_INFO1_FMT_STR "Above all, remember your motto.", TEXT_FORMAT_LHS);
+  wid_intro_window->log_empty_line(g);
+  wid_intro_window->log(g, UI_INFO2_FMT_STR "I will succeed, for I am insane.");
+  wid_intro_window->log_empty_line(g);
+  wid_intro_window->log(g, UI_INFO3_FMT_STR "Enough talk... Begin your quest to defeat Lord Batcat!", TEXT_FORMAT_LHS);
   wid_intro_window->log_empty_line(g);
 
   {
