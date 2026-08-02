@@ -117,6 +117,7 @@ static std::initializer_list< std::string > tps = {
     "chest",
     "cleaner",
     "clover",
+    "copious_chest",
     "corridor",
     "cursor_at",
     "cursor_path",

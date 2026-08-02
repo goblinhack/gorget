@@ -124,7 +124,7 @@ static bool tp_ring_life_on_damage(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
   tp_name_pluralize_set(tp, "rings of life");
   tp_name_short_set(tp, "ring, life");
   tp_priority_set(tp, THING_PRIORITY_OBJECT);
-  tp_rarity_set(tp, THING_RARITY_COMMON);
+  tp_rarity_set(tp, THING_RARITY_UNCOMMON);
   tp_temperature_burns_at_set(tp, 1000);  // celsius
   tp_temperature_damage_at_set(tp, 1000); // celsius
   tp_temperature_initial_set(tp, 20);     // celsius

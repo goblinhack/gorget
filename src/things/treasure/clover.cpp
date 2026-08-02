@@ -72,8 +72,8 @@ static auto tp_clover_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std
   tp_name_pluralize_set(tp, "four leaf clovers");
   tp_name_short_set(tp, "four leaf clover");
   tp_priority_set(tp, THING_PRIORITY_OBJECT);
-  tp_rarity_set(tp, THING_RARITY_COMMON);
-  tp_stat_set(tp, THING_STAT_LUCK, "11");
+  tp_rarity_set(tp, THING_RARITY_UNCOMMON);
+  tp_stat_set(tp, THING_STAT_LUCK, "14");
   tp_temperature_burns_at_set(tp, 100); // celsius
   tp_temperature_damage_at_set(tp, 50); // celsius
   tp_temperature_initial_set(tp, 20);   // celsius

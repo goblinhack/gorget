@@ -4167,8 +4167,8 @@ static void gfx_init_tiles()
       "level_curr.over.1",
       "level_final.over.0",
       "level_final.over.1",
-      "",
-      "",
+      "copious_chest.closed.0",
+      "copious_chest.open.0",
       "",
       "",
       // ##############################################################################

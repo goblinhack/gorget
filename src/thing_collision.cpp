@@ -168,14 +168,6 @@ static void thing_collision_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thi
   }
 
   //
-  // Crush obstacle
-  //
-  if (thing_crush(g, v, l, obstacle, me)) {
-    stop = true;
-    return;
-  }
-
-  //
   // Collect keys?
   //
   if (thing_collect_key(g, v, l, me, obstacle)) {
@@ -195,6 +187,14 @@ static void thing_collision_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thi
     if (thing_carry(g, v, l, me, obstacle, e)) {
       return;
     }
+  }
+
+  //
+  // Crush obstacle
+  //
+  if (thing_crush(g, v, l, obstacle, me)) {
+    stop = true;
+    return;
   }
 
   if (thing_is_projectile(me) || thing_is_beam_weapon(me)) {

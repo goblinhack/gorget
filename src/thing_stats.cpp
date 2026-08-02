@@ -168,6 +168,44 @@
 //
 // "Att 20/+9"
 //
+[[nodiscard]] auto thing_stat_dbg_string(Gamep g, Levelsp v, Levelp l, Thingp me, ThingStatType stat) -> std::string
+{
+  TRACE_DEBUG();
+
+  auto              val       = thing_stat(g, v, l, me, stat);
+  auto              mod       = thing_stat_mod(g, v, l, me, stat);
+  auto              mod_str   = thing_stat_mod_value_string(g, v, l, me, stat);
+  std::string const stat_name = stat_to_name(stat);
+  std::string       stat_str;
+
+  switch (stat) {
+    case THING_STAT_ATT :  return string_sprintf("%s %2d", stat_name.c_str(), val);
+    case THING_STAT_DEF :  return string_sprintf("%s %2d", stat_name.c_str(), val);
+    case THING_STAT_STR :  break;
+    case THING_STAT_CON :  break;
+    case THING_STAT_INT :  break;
+    case THING_STAT_DEX :  break;
+    case THING_STAT_PSI :  break;
+    case THING_STAT_LUCK : break;
+    default :              break;
+  }
+
+  if (mod < -5) {
+    stat_str = string_sprintf("%s%2d/%-2s", stat_name.c_str(), val, mod_str.c_str());
+  } else if (mod < -3) {
+    stat_str = string_sprintf("%s%2d/%-2s", stat_name.c_str(), val, mod_str.c_str());
+  } else if (mod > 0) {
+    stat_str = string_sprintf("%s%2d/%-2s", stat_name.c_str(), val, mod_str.c_str());
+  } else {
+    stat_str = string_sprintf("%s%2d/%-2s", stat_name.c_str(), val, mod_str.c_str());
+  }
+
+  return stat_str;
+}
+
+//
+// "Att 20/+9"
+//
 [[nodiscard]] auto thing_stat_string(Gamep g, Levelsp v, Levelp l, Thingp me, ThingStatType stat) -> std::string
 {
   TRACE_DEBUG();
@@ -220,29 +258,49 @@
     return THING_STAT_DEFAULT;
   }
 
-  int out = me->_stat[ stat ];
+  auto stat_string = stat_to_name(stat);
+  int  out         = me->_stat[ stat ];
 
   FOR_ALL_BUFFS(g, v, l, me, buff)
   {
     auto mod = thing_stat_mod(g, v, l, buff, stat);
 
     out += mod;
+    THING_DBG(g, v, l, me, "stat: %s %d (with mod)", stat_string.c_str(), out);
   }
 
   FOR_ALL_ACTIVE_ITEMS(g, v, l, me, item)
   {
     auto mod = thing_stat_mod(g, v, l, item, stat);
+    if (! mod) {
+      continue;
+    }
 
     auto item_count = thing_inventory_get_item_count(g, v, l, item, me);
     if (item_count > 0) {
+      if (compiler_unused) {
+        THING_DBG(g, v, l, item, "mod: %d x %d", mod, item_count);
+      }
       mod *= item_count;
+    } else {
+      if (compiler_unused) {
+        THING_DBG(g, v, l, item, "mod: %d", mod);
+      }
     }
 
     out += mod;
+
+    if (compiler_unused) {
+      THING_DBG(g, v, l, me, "stat: %s %d (with item)", stat_string.c_str(), out);
+    }
   }
 
   out = std::max(THING_STAT_MIN, out);
   out = std::min(THING_STAT_MAX, out);
+
+  if (compiler_unused) {
+    THING_DBG(g, v, l, me, "stat: %s %d", stat_string.c_str(), out);
+  }
 
   return out;
 }
@@ -271,10 +329,12 @@
   auto mod = thing_stat_mod(g, v, l, me, stat);
 
   if (roll + mod >= target_roll) {
-    THING_DBG(g, v, l, me, "roll: %s d20:%d +mod:%d vs:%d => pass", thing_stat_string(g, v, l, me, stat).c_str(), roll, roll + mod, target_roll);
+    THING_DBG(g, v, l, me, "roll: %s d20:%d +mod:%d vs:%d => pass", thing_stat_dbg_string(g, v, l, me, stat).c_str(), roll, roll + mod,
+              target_roll);
     return true;
   }
 
-  THING_DBG(g, v, l, me, "roll: %s d20:%d +mod:%d vs:%d => fail", thing_stat_string(g, v, l, me, stat).c_str(), roll, roll + mod, target_roll);
+  THING_DBG(g, v, l, me, "roll: %s d20:%d +mod:%d vs:%d => fail", thing_stat_dbg_string(g, v, l, me, stat).c_str(), roll, roll + mod,
+            target_roll);
   return false;
 }

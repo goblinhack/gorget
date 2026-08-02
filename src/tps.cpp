@@ -32,6 +32,7 @@
   if (!tp_load_chest()) { return false; }
   if (!tp_load_cleaner()) { return false; }
   if (!tp_load_clover()) { return false; }
+  if (!tp_load_copious_chest()) { return false; }
   if (!tp_load_corridor()) { return false; }
   if (!tp_load_cursor_at()) { return false; }
   if (!tp_load_cursor_path()) { return false; }

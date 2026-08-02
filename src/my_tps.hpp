@@ -30,6 +30,7 @@ auto tp_load_chasm() -> bool;
 auto tp_load_chest() -> bool;
 auto tp_load_cleaner() -> bool;
 auto tp_load_clover() -> bool;
+auto tp_load_copious_chest() -> bool;
 auto tp_load_corridor() -> bool;
 auto tp_load_cursor_at() -> bool;
 auto tp_load_cursor_path() -> bool;
