@@ -81,7 +81,6 @@
   if (!test_load_path_astar()) { return false; }
   if (!test_load_path_dmap_reverse()) { return false; }
   if (!test_load_path_dmap()) { return false; }
-  if (!test_load_player_did_not_trigger()) { return false; }
   if (!test_load_player_engulfed_max_items()) { return false; }
   if (!test_load_player_engulfed_multiple()) { return false; }
   if (!test_load_player_engulfed_same_items()) { return false; }
@@ -103,6 +102,8 @@
   if (!test_load_player_moving_in_foliage()) { return false; }
   if (!test_load_player_on_fire_move_into_water()) { return false; }
   if (!test_load_player_on_fire()) { return false; }
+  if (!test_load_player_trap_did_not_trigger_due_to_clover()) { return false; }
+  if (!test_load_player_trap_did_not_trigger_due_to_horseshoe()) { return false; }
   if (!test_load_player_triggered()) { return false; }
   if (!test_load_potion_dislocation()) { return false; }
   if (!test_load_potion_healing()) { return false; }

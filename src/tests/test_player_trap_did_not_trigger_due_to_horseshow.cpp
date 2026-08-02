@@ -9,7 +9,7 @@
 #include "../my_test.hpp"
 #include "../my_thing_inlines.hpp"
 
-[[nodiscard]] static auto test_player_did_not_trigger(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_player_trap_did_not_trigger_due_to_horseshoe(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -143,14 +143,14 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_player_did_not_trigger() -> bool // NOLINT
+[[nodiscard]] auto test_load_player_trap_did_not_trigger_due_to_horseshoe() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("player_did_not_trigger");
+  Testp test = test_load("player_trap_did_not_trigger_due_to_horseshoe");
 
   // begin sort marker1 {
-  test_callback_set(test, test_player_did_not_trigger);
+  test_callback_set(test, test_player_trap_did_not_trigger_due_to_horseshoe);
   // end sort marker1 }
 
   return true;
