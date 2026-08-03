@@ -171,7 +171,7 @@ void fragments_init(Gamep g)
     }
     if (! fragment_alt_add(g, CHANCE_UNLIKELY, ROOM_FLAG_ALL, __FUNCTION__, __LINE__,
                            /* alt  */ (const char *) "xxxxx",
-                           /* alt  */ (const char *) "xTCCx",
+                           /* alt  */ (const char *) "xT.Cx",
                            /* alt  */ (const char *) "xCCCx",
                            /* alt  */ (const char *) "xCC$x",
                            /* alt  */ (const char *) "xxxxx", nullptr)) {
@@ -179,7 +179,7 @@ void fragments_init(Gamep g)
     }
     if (! fragment_alt_add(g, CHANCE_UNLIKELY, ROOM_FLAG_ALL, __FUNCTION__, __LINE__,
                            /* alt  */ (const char *) "xxxxx",
-                           /* alt  */ (const char *) "xTLLx",
+                           /* alt  */ (const char *) "xT.Lx",
                            /* alt  */ (const char *) "xLLLx",
                            /* alt  */ (const char *) "xLL$x",
                            /* alt  */ (const char *) "xxxxx", nullptr)) {
@@ -315,7 +315,7 @@ void fragments_init(Gamep g)
     }
     if (! fragment_alt_add(g, CHANCE_UNLIKELY, ROOM_FLAG_ALL, __FUNCTION__, __LINE__,
                            /* alt  */ (const char *) "xxxxx",
-                           /* alt  */ (const char *) "xTCC.",
+                           /* alt  */ (const char *) "xT.C.",
                            /* alt  */ (const char *) "xCCC.",
                            /* alt  */ (const char *) "xCCC.",
                            /* alt  */ (const char *) "x....", nullptr)) {
@@ -379,7 +379,7 @@ void fragments_init(Gamep g)
     }
     if (! fragment_alt_add(g, CHANCE_VV_UNLIKELY, ROOM_FLAG_ALL, __FUNCTION__, __LINE__,
                            /* alt  */ (const char *) "vvvvx",
-                           /* alt  */ (const char *) "vTCv.",
+                           /* alt  */ (const char *) "vT.v.",
                            /* alt  */ (const char *) "vCCv.",
                            /* alt  */ (const char *) "vvDv.",
                            /* alt  */ (const char *) "x....", nullptr)) {
@@ -435,7 +435,7 @@ void fragments_init(Gamep g)
     }
     if (! fragment_alt_add(g, CHANCE_NORMAL, ROOM_FLAG_ALL, __FUNCTION__, __LINE__,
                            /* alt  */ (const char *) "xxxxx",
-                           /* alt  */ (const char *) "xCTCx",
+                           /* alt  */ (const char *) "x.T.x",
                            /* alt  */ (const char *) "xCCCx",
                            /* alt  */ (const char *) "x...x",
                            /* alt  */ (const char *) "x...x", nullptr)) {

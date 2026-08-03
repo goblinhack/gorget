@@ -23,7 +23,7 @@ static auto tp_ring_life_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> 
 {
   TRACE();
 
-  return UI_INFO1_FMT_STR "A ring of life is a very special thing. Should you die in service, your health will be restored to 25%%%.\n" //
+  return UI_INFO1_FMT_STR "A ring of life is a very special thing. Should you die in service, your health will be restored to 50%%%.\n" //
       UI_INFO2_FMT_STR "More importantly, you will not be dead!\n"                                                                      //
       UI_INFO3_FMT_STR "Keep it safe. Keep it secret.\n";
 }
@@ -60,7 +60,7 @@ static bool tp_ring_life_on_damage(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
   }
 
   THING_DBG(g, v, l, me, "activated");
-  (void) thing_health_set(g, v, l, owner, thing_health_max(g, v, l, owner) / 4);
+  (void) thing_health_set(g, v, l, owner, thing_health_max(g, v, l, owner) / 2);
 
   if (thing_is_player(owner)) {
     topcon(UI_GOOD_FMT_STR "Your ring of life saves you as it crumbles into dust." UI_RESET_FMT);
