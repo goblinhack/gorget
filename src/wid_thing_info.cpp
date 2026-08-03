@@ -457,7 +457,7 @@ static void wid_thing_info_stats_att_mouse_over_begin(Gamep g, Widp w, int /*rel
   wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
 
   int const width  = 32;
-  int const height = 16;
+  int const height = 17;
 
   tlx = UI_LEFTBAR_WIDTH;
   brx = tlx + width;
@@ -473,8 +473,8 @@ static void wid_thing_info_stats_att_mouse_over_begin(Gamep g, Widp w, int /*rel
   wid_over_stats->log(g, UI_INFO2_FMT_STR "If you roll more than your target's defence roll, you hit. Otherwise you miss.\n", TEXT_FORMAT_LHS);
   wid_over_stats->log(g, UI_INFO3_FMT_STR "A roll of 20 always hits and does double damage. A roll of 1 always misses.\n", TEXT_FORMAT_LHS);
   wid_over_stats->log(g, UI_INFO4_FMT_STR "Attack rolls are used for all types of attacks, melee, staffs, wands etc...\n", TEXT_FORMAT_LHS);
-  wid_over_stats->log(g, UI_INFO5_FMT_STR "Don't worry, the computer does the rolls for you!\n", TEXT_FORMAT_LHS);
-  wid_over_stats->log_empty_line(g);
+  wid_over_stats->log(g, UI_INFO5_FMT_STR "Don't worry, the computer does the rolls for you! And you can trust the computer, right?\n",
+                      TEXT_FORMAT_LHS);
   wid_over_stats->compress(g);
 
   level_cursor_path_reset(g);
@@ -491,7 +491,7 @@ static void wid_thing_info_stats_def_mouse_over_begin(Gamep g, Widp w, int /*rel
   wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
 
   int const width  = 32;
-  int const height = 12;
+  int const height = 13;
 
   tlx = UI_LEFTBAR_WIDTH;
   brx = tlx + width;
@@ -506,8 +506,8 @@ static void wid_thing_info_stats_def_mouse_over_begin(Gamep g, Widp w, int /*rel
   wid_over_stats->log(g, UI_INFO1_FMT_STR "This is your overall defence roll out of a max of 20.\n", TEXT_FORMAT_LHS);
   wid_over_stats->log(g, UI_INFO2_FMT_STR "If your attacker rolls more than this, you are hit.\n", TEXT_FORMAT_LHS);
   wid_over_stats->log(g, UI_INFO3_FMT_STR "A roll of 20 always hits and does double damage. A roll of 1 always misses.\n", TEXT_FORMAT_LHS);
-  wid_over_stats->log(g, UI_INFO4_FMT_STR "Don't worry, the computer does the rolls for you!\n", TEXT_FORMAT_LHS);
-  wid_over_stats->log_empty_line(g);
+  wid_over_stats->log(g, UI_INFO4_FMT_STR "Don't worry, the computer does the rolls for you! And you can trust the computer, right?\n",
+                      TEXT_FORMAT_LHS);
   wid_over_stats->compress(g);
 
   level_cursor_path_reset(g);
@@ -536,9 +536,7 @@ static void wid_thing_info_stats_str_mouse_over_begin(Gamep g, Widp w, int /*rel
   wid_over_stats = new WidPopup(g, "stats", tl, br, nullptr, "", false, false);
   wid_over_stats->log(g, UI_HIGHLIGHT_FMT_STR "Strength");
   wid_over_stats->log_empty_line(g);
-  wid_over_stats->log(g, UI_INFO1_FMT_STR "Strength impacts your attack rolls with a modifier, for good or ill.\n", TEXT_FORMAT_LHS);
-  wid_over_stats->log(g, UI_INFO2_FMT_STR "If you have Str of 20, then you have a +10 bonus to attack rolls.\n", TEXT_FORMAT_LHS);
-  wid_over_stats->log(g, UI_INFO3_FMT_STR "If you have Str of 5, then you have a -5 penalty to attack rolls.\n", TEXT_FORMAT_LHS);
+  wid_over_stats->log(g, UI_INFO1_FMT_STR "Strength TODO.\n", TEXT_FORMAT_LHS);
   wid_over_stats->log_empty_line(g);
   wid_over_stats->compress(g);
 
@@ -568,10 +566,37 @@ static void wid_thing_info_stats_dex_mouse_over_begin(Gamep g, Widp w, int /*rel
   wid_over_stats = new WidPopup(g, "stats", tl, br, nullptr, "", false, false);
   wid_over_stats->log(g, UI_HIGHLIGHT_FMT_STR "Dexterity");
   wid_over_stats->log_empty_line(g);
-  wid_over_stats->log(g, UI_INFO1_FMT_STR "Dexterity impacts your defence rolls with a modifier, for good or ill.\n", TEXT_FORMAT_LHS);
-  wid_over_stats->log(g, UI_INFO2_FMT_STR "If you have Def of 20, then you have a +10 bonus to defence rolls.\n", TEXT_FORMAT_LHS);
-  wid_over_stats->log(g, UI_INFO3_FMT_STR "If you have Def of 5, then you have a -5 penalty to defence rolls.\n", TEXT_FORMAT_LHS);
+  wid_over_stats->log(g, UI_INFO1_FMT_STR "Dexterity TODO.\n", TEXT_FORMAT_LHS);
   wid_over_stats->log_empty_line(g);
+  wid_over_stats->compress(g);
+
+  level_cursor_path_reset(g);
+}
+
+static void wid_thing_info_stats_dmg_mouse_over_begin(Gamep g, Widp w, int /*relx*/, int /*rely*/, int /*wheelx*/, int /*wheely*/)
+{
+  TRACE();
+
+  int tlx = 0;
+  int tly = 0;
+  int brx = 0;
+  int bry = 0;
+  wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
+
+  int const width  = 32;
+  int const height = 10;
+
+  tlx = UI_LEFTBAR_WIDTH;
+  brx = tlx + width;
+  bry = tly + height;
+
+  spoint const tl(tlx, tly);
+  spoint const br(brx, bry);
+
+  wid_over_stats = new WidPopup(g, "stats", tl, br, nullptr, "", false, false);
+  wid_over_stats->log(g, UI_HIGHLIGHT_FMT_STR "Damage");
+  wid_over_stats->log_empty_line(g);
+  wid_over_stats->log(g, UI_INFO1_FMT_STR "This is your damage boost, if any, for all attacks, magical or melee.\n", TEXT_FORMAT_LHS);
   wid_over_stats->compress(g);
 
   level_cursor_path_reset(g);
@@ -601,7 +626,6 @@ static void wid_thing_info_stats_con_mouse_over_begin(Gamep g, Widp w, int /*rel
   wid_over_stats->log(g, UI_HIGHLIGHT_FMT_STR "Constitution");
   wid_over_stats->log_empty_line(g);
   wid_over_stats->log(g, UI_INFO1_FMT_STR "Constitution aids you in fending off poison attacks and reducing stamina loss.\n", TEXT_FORMAT_LHS);
-  wid_over_stats->log(g, UI_INFO2_FMT_STR "Your stamina is needed for critical jumps, so don't neglect your health here!\n", TEXT_FORMAT_LHS);
   wid_over_stats->log_empty_line(g);
   wid_over_stats->compress(g);
 
@@ -667,6 +691,8 @@ static void wid_thing_info_stats_lck_mouse_over_begin(Gamep g, Widp w, int /*rel
   wid_over_stats->log(g, UI_INFO3_FMT_STR "Will that loose floor tile reveal a hidden chasm?\n", TEXT_FORMAT_LHS);
   wid_over_stats->log(g, UI_INFO4_FMT_STR "Will you land in lava when jumping into a chasm?\n", TEXT_FORMAT_LHS);
   wid_over_stats->log(g, UI_INFO5_FMT_STR "Look for horseshoes or clover to increase your luck.\n", TEXT_FORMAT_LHS);
+  wid_over_stats->log(g, UI_INFO6_FMT_STR "If you have Lck of 20, then you have a +10 bonus to luck rolls.\n", TEXT_FORMAT_LHS);
+  wid_over_stats->log(g, UI_INFO7_FMT_STR "If you have Lck of 5, then you have a -5 penalty to luck rolls.\n", TEXT_FORMAT_LHS);
   wid_over_stats->log_empty_line(g);
   wid_over_stats->compress(g);
 
@@ -717,48 +743,61 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
   parent->log_empty_line(g);
   parent->log_empty_line(g);
 
+  if (compiler_unused) {
+    {
+      auto         out = thing_stat_mod_string(g, v, l, me, THING_STAT_STR);
+      auto        *w   = wid_new_bright_button(g, b, "Str");
+      spoint const tl(1, text->line_count);
+      spoint const br(10, text->line_count + 2);
+      wid_set_pos(w, tl, br);
+      wid_set_text(w, out);
+      wid_set_on_mouse_over_begin(w, wid_thing_info_stats_str_mouse_over_begin);
+      wid_set_on_mouse_over_end(w, wid_thing_info_stats_mouse_over_end);
+    }
+
+    {
+      auto         out = thing_stat_mod_string(g, v, l, me, THING_STAT_CON);
+      auto        *w   = wid_new_bright_button(g, b, "Con");
+      spoint const tl(11, text->line_count);
+      spoint const br(20, text->line_count + 2);
+      wid_set_pos(w, tl, br);
+      wid_set_text(w, out);
+      wid_set_on_mouse_over_begin(w, wid_thing_info_stats_con_mouse_over_begin);
+      wid_set_on_mouse_over_end(w, wid_thing_info_stats_mouse_over_end);
+    }
+
+    {
+      auto         out = thing_stat_mod_string(g, v, l, me, THING_STAT_DEX);
+      auto        *w   = wid_new_bright_button(g, b, "Dex");
+      spoint const tl(21, text->line_count);
+      spoint const br(30, text->line_count + 2);
+      wid_set_pos(w, tl, br);
+      wid_set_text(w, out);
+      wid_set_on_mouse_over_begin(w, wid_thing_info_stats_dex_mouse_over_begin);
+      wid_set_on_mouse_over_end(w, wid_thing_info_stats_mouse_over_end);
+    }
+
+    parent->log_empty_line(g);
+    parent->log_empty_line(g);
+    parent->log_empty_line(g);
+  }
+
   {
-    auto         out = thing_stat_mod_string(g, v, l, me, THING_STAT_STR);
-    auto        *w   = wid_new_bright_button(g, b, "Str");
+    auto         out = thing_stat_mod_string(g, v, l, me, THING_STAT_DMG);
+    auto        *w   = wid_new_bright_button(g, b, "Dmg");
     spoint const tl(1, text->line_count);
     spoint const br(10, text->line_count + 2);
     wid_set_pos(w, tl, br);
     wid_set_text(w, out);
-    wid_set_on_mouse_over_begin(w, wid_thing_info_stats_str_mouse_over_begin);
+    wid_set_on_mouse_over_begin(w, wid_thing_info_stats_dmg_mouse_over_begin);
     wid_set_on_mouse_over_end(w, wid_thing_info_stats_mouse_over_end);
   }
-
-  {
-    auto         out = thing_stat_mod_string(g, v, l, me, THING_STAT_CON);
-    auto        *w   = wid_new_bright_button(g, b, "Con");
-    spoint const tl(11, text->line_count);
-    spoint const br(20, text->line_count + 2);
-    wid_set_pos(w, tl, br);
-    wid_set_text(w, out);
-    wid_set_on_mouse_over_begin(w, wid_thing_info_stats_con_mouse_over_begin);
-    wid_set_on_mouse_over_end(w, wid_thing_info_stats_mouse_over_end);
-  }
-
-  {
-    auto         out = thing_stat_mod_string(g, v, l, me, THING_STAT_DEX);
-    auto        *w   = wid_new_bright_button(g, b, "Dex");
-    spoint const tl(21, text->line_count);
-    spoint const br(30, text->line_count + 2);
-    wid_set_pos(w, tl, br);
-    wid_set_text(w, out);
-    wid_set_on_mouse_over_begin(w, wid_thing_info_stats_dex_mouse_over_begin);
-    wid_set_on_mouse_over_end(w, wid_thing_info_stats_mouse_over_end);
-  }
-
-  parent->log_empty_line(g);
-  parent->log_empty_line(g);
-  parent->log_empty_line(g);
 
   {
     auto         out = thing_stat_mod_string(g, v, l, me, THING_STAT_LUCK);
     auto        *w   = wid_new_bright_button(g, b, "Lck");
-    spoint const tl(6, text->line_count);
-    spoint const br(15, text->line_count + 2);
+    spoint const tl(11, text->line_count);
+    spoint const br(20, text->line_count + 2);
     wid_set_pos(w, tl, br);
     wid_set_text(w, out);
     wid_set_on_mouse_over_begin(w, wid_thing_info_stats_lck_mouse_over_begin);
@@ -768,8 +807,8 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
   {
     auto         out = thing_stat_mod_string(g, v, l, me, THING_STAT_PSI);
     auto        *w   = wid_new_bright_button(g, b, "Psi");
-    spoint const tl(16, text->line_count);
-    spoint const br(25, text->line_count + 2);
+    spoint const tl(21, text->line_count);
+    spoint const br(30, text->line_count + 2);
     wid_set_pos(w, tl, br);
     wid_set_text(w, out);
     wid_set_on_mouse_over_begin(w, wid_thing_info_stats_psi_mouse_over_begin);

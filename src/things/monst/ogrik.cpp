@@ -49,16 +49,17 @@ static void tp_ogrik_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEven
   thing_sound_play(g, v, l, me, "monst_death");
 }
 
-static bool tp_ogrik_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, ThingEvent &e)
+static bool tp_ogrik_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp target, ThingEvent &e)
 {
   TRACE();
 
-  (void) thing_spawn(g, v, l, tp_first(is_effect_attack), it);
-  thing_sound_play(g, v, l, me, "rock");
+  (void) thing_spawn(g, v, l, tp_first(is_effect_attack), target);
+
+  thing_sound_play(g, v, l, attacker, "rock");
 
   TpSpecialAttack d;
 
-  if (thing_special_attack_get_random(g, v, l, me, it, d)) {
+  if (thing_special_attack_get_random(g, v, l, attacker, target, d)) {
     e.special_attack = d;
     e.event_type     = d.event_type;
     e.damage         = d.dice.roll();
@@ -67,12 +68,13 @@ static bool tp_ogrik_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thing
   return true;
 }
 
-static bool tp_ogrik_on_missing(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, ThingEvent &e)
+static bool tp_ogrik_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp target, ThingEvent &e)
 {
   TRACE();
 
-  (void) thing_spawn(g, v, l, tp_first(is_effect_attack), it);
-  thing_sound_play(g, v, l, me, "rock");
+  (void) thing_spawn(g, v, l, tp_first(is_effect_attack), target);
+
+  thing_sound_play(g, v, l, attacker, "rock");
 
   return true;
 }
@@ -148,6 +150,7 @@ static void tp_ogrik_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_speed_set(tp, 25);
   tp_stat_set(tp, THING_STAT_ATT, "1d8+10");
   tp_stat_set(tp, THING_STAT_DEF, "1d8+12");
+  tp_stat_set(tp, THING_STAT_DMG, "1d4+14");
   tp_temperature_damage_at_set(tp, 50); // celsius
   tp_temperature_initial_set(tp, 20);   // celsius
   tp_temperature_melts_at_set(tp, 250); // celsius

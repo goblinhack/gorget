@@ -295,7 +295,7 @@ static void thing_fall_end(Gamep g, Levelsp v, Levelp l, Thingp me)
     //
     // "You take n damage from falling"
     //
-    thing_damage(g, v, l, me, e);
+    thing_damage_apply(g, v, l, me, e);
     thing_is_falling_continues_unset(g, v, l, me);
   }
 

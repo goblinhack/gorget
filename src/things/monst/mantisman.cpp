@@ -58,24 +58,24 @@ static void tp_mantisman_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, Thing
   thing_sound_play(g, v, l, me, "monst_death");
 }
 
-static bool tp_mantisman_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, ThingEvent &e)
+static bool tp_mantisman_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp target, ThingEvent &e)
 {
   TRACE();
 
-  (void) thing_spawn(g, v, l, tp_first(is_effect_attack), it);
+  (void) thing_spawn(g, v, l, tp_first(is_effect_attack), target);
 
-  thing_sound_play(g, v, l, me, "hiss");
+  thing_sound_play(g, v, l, attacker, "hiss");
 
   return true;
 }
 
-static bool tp_mantisman_on_missing(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, ThingEvent &e)
+static bool tp_mantisman_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp target, ThingEvent &e)
 {
   TRACE();
 
-  (void) thing_spawn(g, v, l, tp_first(is_effect_attack), it);
+  (void) thing_spawn(g, v, l, tp_first(is_effect_attack), target);
 
-  thing_sound_play(g, v, l, me, "hiss");
+  thing_sound_play(g, v, l, attacker, "hiss");
 
   return true;
 }

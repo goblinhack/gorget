@@ -97,7 +97,6 @@ static bool tp_ring_life_on_damage(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_collectable);
   tp_flag_set(tp, is_collision_circle_small);
-  tp_flag_set(tp, is_combustible); // will continue to burn once on fire
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_droppable);
   tp_flag_set(tp, is_gold);
@@ -114,7 +113,7 @@ static bool tp_ring_life_on_damage(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_treasure);
   tp_flag_set(tp, is_wearable);
-  tp_health_set(tp, "1d6");
+  tp_health_set(tp, "1d50");
   tp_is_immune_to_add(tp, THING_EVENT_CRUSH_DAMAGE);
   tp_is_immune_to_add(tp, THING_EVENT_FIRE_DAMAGE);
   tp_is_immune_to_add(tp, THING_EVENT_WATER_DAMAGE);

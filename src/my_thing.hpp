@@ -1303,7 +1303,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, const bpoint &at) -> Thingp;
 [[nodiscard]] auto thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &at) -> Thingp;
 [[nodiscard]] auto thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp spawner) -> Thingp;
-[[nodiscard]] auto thing_special_attack_get_random(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, TpSpecialAttack &out) -> bool;
+[[nodiscard]] auto thing_special_attack_get_random(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp it, TpSpecialAttack &out) -> bool;
 [[nodiscard]] auto thing_speed_decr(Gamep g, Levelsp v, Levelp l, Thingp me, int val) -> int;
 [[nodiscard]] auto thing_speed_incr(Gamep g, Levelsp v, Levelp l, Thingp me, int val) -> int;
 [[nodiscard]] auto thing_speed_set(Gamep g, Levelsp v, Levelp l, Thingp me, int val) -> int;
@@ -1443,7 +1443,7 @@ void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me);
 void thing_con(Gamep g, Levelsp v, Levelp l, Thingp t, const char *fmt, ...) CHECK_FORMAT_STR(printf, 5, 6);
 void thing_continue_to_burn_check(Gamep g, Levelsp v, Levelp l, Thingp me);
 void thing_croak(Gamep g, Levelsp v, Levelp l, Thingp t, const char *fmt, ...) CHECK_FORMAT_STR(printf, 5, 6);
-void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e);
+void thing_damage_apply(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e);
 void thing_dbg(Gamep g, Levelsp v, Levelp l, Thingp t, const char *fmt, ...) CHECK_FORMAT_STR(printf, 5, 6);
 void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e);
 void thing_degroup(Gamep g, Levelsp v, Levelp l, Thingp t);

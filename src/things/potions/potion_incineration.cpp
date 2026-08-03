@@ -110,7 +110,7 @@ static bool tp_potion_incin_on_use(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
       .source     = me,                      //
   };
 
-  thing_damage(g, v, l, user, e);
+  thing_damage_apply(g, v, l, user, e);
 
   return true;
 }

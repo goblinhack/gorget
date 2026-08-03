@@ -56,46 +56,47 @@ static void tp_skullferno_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
   thing_sound_play(g, v, l, me, "monst_death");
 }
 
-static bool tp_skullferno_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, ThingEvent &e)
+static bool tp_skullferno_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp target, ThingEvent &e)
 {
-  THING_DBG(g, v, l, me, "on attack");
+  THING_DBG(g, v, l, attacker, "on attack");
   TRACE_INDENT();
 
   TpSpecialAttack d;
 
-  if (thing_special_attack_get_random(g, v, l, me, it, d)) {
+  if (thing_special_attack_get_random(g, v, l, attacker, target, d)) {
     e.special_attack = d;
     e.event_type     = d.event_type;
 
     if (d.what != "") {
-      auto target    = thing_at(g, v, l, it);
+      auto target_at = thing_at(g, v, l, target);
       auto fire_what = tp_find_mand(d.what);
 
-      THING_DBG(g, v, l, me, "fire beam weapon");
+      THING_DBG(g, v, l, attacker, "fire beam weapon");
       TRACE_INDENT();
 
-      (void) thing_projectile_launch_at(g, v, l, me, fire_what, target);
+      (void) thing_projectile_launch_at(g, v, l, attacker, fire_what, target_at);
       return false; // prevent melee attack
     }
   }
 
-  if (! adjacent(thing_at(g, v, l, me), thing_at(g, v, l, it))) {
+  if (! adjacent(thing_at(g, v, l, attacker), thing_at(g, v, l, target))) {
     return false; // prevent melee attack
   }
 
-  (void) thing_spawn(g, v, l, tp_first(is_effect_attack), it);
-  thing_sound_play(g, v, l, me, "hiss");
+  (void) thing_spawn(g, v, l, tp_first(is_effect_attack), target);
+  thing_sound_play(g, v, l, attacker, "hiss");
 
   return true;
 }
 
-static bool tp_skullferno_on_missing(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, ThingEvent &e)
+static bool tp_skullferno_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp target, ThingEvent &e)
 {
-  THING_DBG(g, v, l, me, "on attack");
+  THING_DBG(g, v, l, attacker, "on attack");
   TRACE_INDENT();
 
-  (void) thing_spawn(g, v, l, tp_first(is_effect_attack), it);
-  thing_sound_play(g, v, l, me, "hiss");
+  (void) thing_spawn(g, v, l, tp_first(is_effect_attack), target);
+
+  thing_sound_play(g, v, l, attacker, "hiss");
 
   return true;
 }

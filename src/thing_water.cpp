@@ -42,5 +42,5 @@ void thing_water_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
       .source     = source,            //
   };
 
-  thing_damage(g, v, l, t, e);
+  thing_damage_apply(g, v, l, t, e);
 }

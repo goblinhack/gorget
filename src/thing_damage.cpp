@@ -118,6 +118,8 @@
     }
   }
 
+  max_damage += thing_stat(g, v, l, me, THING_STAT_DMG);
+
   auto attack_count = tp_attack_count_max_per_tick_get(thing_tp(me));
   if (attack_count != 0) {
     max_damage *= attack_count;
@@ -514,9 +516,9 @@ static void thing_damage_cap(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent
 //
 // Apply a damage type to a thing
 //
-void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
+void thing_damage_apply(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
 {
-  THING_DBG(g, v, l, me, "%s: thing_damage", to_string(g, v, l, e).c_str());
+  THING_DBG(g, v, l, me, "apply damage: %s", to_string(g, v, l, e).c_str());
   TRACE_INDENT();
 
   auto *tp = thing_tp(me);
@@ -549,6 +551,27 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
       topcon(UI_GOOD_FMT_STR "You take no damage from the heat." UI_RESET_FMT);
     }
     return;
+  }
+
+  //
+  // Add on damage modifier
+  //
+  if (e.source) {
+    Thingp from = nullptr;
+
+    if (auto fired_by = thing_missile_fired_by_get(g, v, l, e.source)) {
+      from = fired_by;
+    } else if (auto owner = thing_owner(g, v, l, e.source)) {
+      from = owner;
+    } else {
+      from = e.source;
+    }
+
+    auto additional_damage = thing_stat_mod(g, v, l, from, THING_STAT_DMG);
+    if (additional_damage) {
+      e.damage += additional_damage;
+      THING_DBG(g, v, l, from, "additional damage:%d", additional_damage);
+    }
   }
 
   //

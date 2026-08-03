@@ -44,6 +44,7 @@ enum { UI_TYPE_PIXELART = 0, UI_TYPES_MAX = 1 };
 #define UI_INFO4_FMT_STR     "%%fg=gray90$"
 #define UI_INFO5_FMT_STR     "%%fg=gray70$"
 #define UI_INFO6_FMT_STR     "%%fg=gray90$"
+#define UI_INFO7_FMT_STR     "%%fg=gray70$"
 #define UI_GOOD_FMT_STR      "%%fg=gold$"
 #define UI_GREEN_FMT_STR     "%%fg=green$"
 #define UI_HIGHLIGHT_FMT_STR "%%fg=white$"

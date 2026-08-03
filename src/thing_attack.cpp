@@ -24,7 +24,7 @@
 //
 // The monster missed
 //
-static void thing_missed_player(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
+static void thing_attack_missed_player(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
 {
   TRACE();
 
@@ -55,7 +55,7 @@ static void thing_missed_player(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEv
 //
 // The player missed
 //
-static void player_missed_thing(Gamep g, Levelsp v, Levelp l, Thingp it, ThingEvent &e)
+static void thing_attack_player_missed(Gamep g, Levelsp v, Levelp l, Thingp it, ThingEvent &e)
 {
   TRACE();
   auto *the_player = e.source;
@@ -78,7 +78,7 @@ static void player_missed_thing(Gamep g, Levelsp v, Levelp l, Thingp it, ThingEv
 //
 // We're trying to attack at this tile. What do we hit first?
 //
-static auto thing_attack(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp it, ThingEvent *e_in = nullptr) -> bool
+static auto thing_attack_melee(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp it, ThingEvent *e_in = nullptr) -> bool
 {
   TRACE();
 
@@ -148,12 +148,12 @@ static auto thing_attack(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp i
 
     if (thing_is_monst(attacker)) {
       // Misses you
-      thing_missed_player(g, v, l, it, e);
+      thing_attack_missed_player(g, v, l, it, e);
       return false;
     }
     if (thing_is_player(attacker)) {
       // You miss
-      player_missed_thing(g, v, l, it, e);
+      thing_attack_player_missed(g, v, l, it, e);
       return false;
     }
   }
@@ -177,9 +177,7 @@ static auto thing_attack(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp i
     return false;
   }
 
-  thing_damage(g, v, l, it, e);
-
-  thing_is_hit_set(g, v, l, it, THING_HIT_FLASH_ANIM_MS);
+  thing_damage_apply(g, v, l, it, e);
 
   return true;
 }
@@ -256,7 +254,7 @@ static auto thing_attack(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp i
       }
     }
 
-    if (thing_attack(g, v, l, attacker, cand, e)) {
+    if (thing_attack_melee(g, v, l, attacker, cand, e)) {
       return true;
     }
   }

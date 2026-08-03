@@ -15,16 +15,16 @@
 #include <utility>
 #include <vector>
 
-auto thing_special_attack_get_random(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it_maybe_null, TpSpecialAttack &out) -> bool
+auto thing_special_attack_get_random(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp it_maybe_null, TpSpecialAttack &out) -> bool
 {
   TRACE();
 
-  if (me == nullptr) [[unlikely]] {
+  if (attacker == nullptr) [[unlikely]] {
     ERR("no thing pointer");
     return false;
   }
 
-  auto *tp = thing_tp(me);
+  auto *tp = thing_tp(attacker);
 
   if (tp->special_attacks.empty()) {
     return false;
@@ -43,14 +43,14 @@ auto thing_special_attack_get_random(Gamep g, Levelsp v, Levelp l, Thingp me, Th
     if (it_maybe_null != nullptr) {
       if (val.when_adjacent) {
         auto target = thing_at(g, v, l, it_maybe_null);
-        if (! adjacent(thing_at(g, v, l, me), target)) {
+        if (! adjacent(thing_at(g, v, l, attacker), target)) {
           continue;
         }
       }
 
       if (val.when_distant) {
         auto target = thing_at(g, v, l, it_maybe_null);
-        if (distance(thing_at(g, v, l, me), target) <= 1) {
+        if (distance(thing_at(g, v, l, attacker), target) <= 1) {
           continue;
         }
       }

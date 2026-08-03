@@ -137,7 +137,7 @@ static void thing_collision_handle_dead_thing(Gamep g, Levelsp v, Levelp l, Thin
     THING_DBG(g, v, l, me, "weapon collision with dead thing");
     THING_DBG(g, v, l, obstacle, "me");
 
-    thing_damage(g, v, l, obstacle, e);
+    thing_damage_apply(g, v, l, obstacle, e);
   }
 
   if (thing_is_dead_on_collision(me)) {
@@ -213,7 +213,7 @@ static void thing_collision_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thi
     THING_DBG(g, v, l, me, "weapon collision with");
     THING_DBG(g, v, l, obstacle, "me");
 
-    thing_damage(g, v, l, obstacle, e);
+    thing_damage_apply(g, v, l, obstacle, e);
   }
 
   if (thing_is_dead_on_collision(me)) {

@@ -95,7 +95,7 @@ void thing_continue_to_burn_check(Gamep g, Levelsp v, Levelp l, Thingp me)
 
   if (! level_is_fire_bool(g, v, l, thing_at(g, v, l, me))) {
     if (thing_is_burning(me)) {
-      thing_damage(g, v, l, me, e);
+      thing_damage_apply(g, v, l, me, e);
     }
   }
 

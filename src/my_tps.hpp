@@ -79,6 +79,7 @@ auto tp_load_projectile_fire() -> bool;
 auto tp_load_projectile_light() -> bool;
 auto tp_load_reeds() -> bool;
 auto tp_load_ring_life() -> bool;
+auto tp_load_ring_war() -> bool;
 auto tp_load_rock() -> bool;
 auto tp_load_skullferno() -> bool;
 auto tp_load_smoke() -> bool;

@@ -121,7 +121,7 @@ static void thing_temperature_damage_apply(Gamep g, Levelsp v, Levelp l, Thingp 
     e.reason = "by heat damage";
   }
 
-  thing_damage(g, v, l, t, e);
+  thing_damage_apply(g, v, l, t, e);
 }
 
 //

@@ -38,30 +38,31 @@ static auto tp_ghost_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at,
   return THING_ENVIRON_NEUTRAL;
 }
 
-static bool tp_ghost_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, ThingEvent &e)
+static bool tp_ghost_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp target, ThingEvent &e)
 {
   TRACE();
 
   TpSpecialAttack d;
 
-  if (thing_special_attack_get_random(g, v, l, me, it, d)) {
+  if (thing_special_attack_get_random(g, v, l, attacker, target, d)) {
     e.special_attack = d;
     e.damage         = d.dice.roll();
     e.event_type     = d.event_type;
   }
 
-  (void) thing_spawn(g, v, l, tp_first(is_effect_attack), it);
-  thing_sound_play(g, v, l, me, "hiss");
+  (void) thing_spawn(g, v, l, tp_first(is_effect_attack), target);
+  thing_sound_play(g, v, l, attacker, "hiss");
 
   return true;
 }
 
-static bool tp_ghost_on_missing(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, ThingEvent &e)
+static bool tp_ghost_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp target, ThingEvent &e)
 {
   TRACE();
 
-  (void) thing_spawn(g, v, l, tp_first(is_effect_attack), it);
-  thing_sound_play(g, v, l, me, "hiss");
+  (void) thing_spawn(g, v, l, tp_first(is_effect_attack), target);
+
+  thing_sound_play(g, v, l, attacker, "hiss");
 
   return true;
 }

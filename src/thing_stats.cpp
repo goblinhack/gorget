@@ -90,6 +90,7 @@
 {
   switch (stat) {
     case THING_STAT_ATT :  return "Att";
+    case THING_STAT_DMG :  return "Dmg";
     case THING_STAT_DEF :  return "Def";
     case THING_STAT_STR :  return "Str";
     case THING_STAT_CON :  return "Con";
@@ -186,6 +187,7 @@
     case THING_STAT_INT :  break;
     case THING_STAT_DEX :  break;
     case THING_STAT_PSI :  break;
+    case THING_STAT_DMG :  break;
     case THING_STAT_LUCK : break;
     default :              break;
   }
@@ -224,6 +226,7 @@
     case THING_STAT_INT :  break;
     case THING_STAT_DEX :  break;
     case THING_STAT_PSI :  break;
+    case THING_STAT_DMG :  break;
     case THING_STAT_LUCK : break;
     default :              break;
   }

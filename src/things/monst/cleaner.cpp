@@ -63,24 +63,24 @@ static auto tp_cleaner_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &a
   return THING_ENVIRON_NEUTRAL;
 }
 
-static bool tp_cleaner_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, ThingEvent &e)
+static bool tp_cleaner_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp target, ThingEvent &e)
 {
   TRACE();
 
-  (void) thing_spawn(g, v, l, tp_first(is_effect_attack), it);
+  (void) thing_spawn(g, v, l, tp_first(is_effect_attack), target);
 
-  thing_sound_play(g, v, l, me, "squelch");
+  thing_sound_play(g, v, l, attacker, "squelch");
 
   return true;
 }
 
-static bool tp_cleaner_on_missing(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, ThingEvent &e)
+static bool tp_cleaner_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp target, ThingEvent &e)
 {
   TRACE();
 
-  (void) thing_spawn(g, v, l, tp_first(is_effect_attack), it);
+  (void) thing_spawn(g, v, l, tp_first(is_effect_attack), target);
 
-  thing_sound_play(g, v, l, me, "squelch");
+  thing_sound_play(g, v, l, attacker, "squelch");
 
   return true;
 }

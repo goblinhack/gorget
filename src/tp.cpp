@@ -164,6 +164,7 @@ static std::initializer_list< std::string > tps = {
     "projectile_light",
     "reeds",
     "ring_life",
+    "ring_war",
     "skullferno",
     "smoke",
     "staff_fire",

@@ -51,24 +51,24 @@ static auto tp_glorp_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at,
   return THING_ENVIRON_NEUTRAL;
 }
 
-static bool tp_glorp_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, ThingEvent &e)
+static bool tp_glorp_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp target, ThingEvent &e)
 {
   TRACE();
 
-  (void) thing_spawn(g, v, l, tp_first(is_effect_attack), it);
+  (void) thing_spawn(g, v, l, tp_first(is_effect_attack), target);
 
-  thing_sound_play(g, v, l, me, "hiss");
+  thing_sound_play(g, v, l, attacker, "hiss");
 
   return true;
 }
 
-static bool tp_glorp_on_missing(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, ThingEvent &e)
+static bool tp_glorp_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp target, ThingEvent &e)
 {
   TRACE();
 
-  (void) thing_spawn(g, v, l, tp_first(is_effect_attack), it);
+  (void) thing_spawn(g, v, l, tp_first(is_effect_attack), target);
 
-  thing_sound_play(g, v, l, me, "hiss");
+  thing_sound_play(g, v, l, attacker, "hiss");
 
   return true;
 }

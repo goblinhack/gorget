@@ -81,6 +81,7 @@
   if (!tp_load_projectile_light()) { return false; }
   if (!tp_load_reeds()) { return false; }
   if (!tp_load_ring_life()) { return false; }
+  if (!tp_load_ring_war()) { return false; }
   if (!tp_load_rock()) { return false; }
   if (!tp_load_skullferno()) { return false; }
   if (!tp_load_smoke()) { return false; }

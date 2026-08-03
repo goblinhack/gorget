@@ -383,30 +383,7 @@ static void tp_player_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
 
   static std::initializer_list< std::string > items = {
       "wand_fire", //
-      "ring_life", //
-      "ring_life", //
-      "ring_life", //
-#if 0
-      "staff_fire", //
-      "potion_healing",     //
-      "potion_protection",  //
-      "potion_protection",  //
-      "potion_dislocation", //
-      "potion_incin",       //
-      "ring_life",          //
-      "staff_fire",     //
-      "staff_light",    //
-      "wand_light",     //
-      "potion_incin",   //
-      "potion_incin",   //
-      "potion_incin",   //
-      "potion_incin",   //
-      "horseshoe",      //
-      "horseshoe",      //
-      "horseshoe",      //
-      "horseshoe",      //
-      "horseshoe",      //
-#endif
+      "ring_war",  //
   };
 
   if (! thing_carry(g, v, l, me, items)) {
@@ -432,27 +409,27 @@ static void tp_player_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 }
 
-static bool tp_player_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, ThingEvent &e)
+static bool tp_player_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp target, ThingEvent &e)
 {
   TRACE();
 
   if (e.event_type == THING_EVENT_MELEE_DAMAGE) {
-    (void) thing_spawn(g, v, l, tp_first(is_effect_attack), it);
+    (void) thing_spawn(g, v, l, tp_first(is_effect_attack), target);
 
-    thing_sound_play(g, v, l, me, "player_punch");
+    thing_sound_play(g, v, l, attacker, "player_punch");
   }
 
   return true;
 }
 
-static bool tp_player_on_missing(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it, ThingEvent &e)
+static bool tp_player_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp target, ThingEvent &e)
 {
   TRACE();
 
   if (e.event_type == THING_EVENT_MELEE_DAMAGE) {
-    (void) thing_spawn(g, v, l, tp_first(is_effect_attack), it);
+    (void) thing_spawn(g, v, l, tp_first(is_effect_attack), target);
 
-    thing_sound_play(g, v, l, me, "player_punch");
+    thing_sound_play(g, v, l, attacker, "player_punch");
   }
 
   return true;
