@@ -67,6 +67,7 @@ static bool tp_ring_life_on_damage(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
     thing_sound_play(g, v, l, owner, "bonus");
   }
 
+  THING_DBG(g, v, l, owner, "new health");
   THING_DBG(g, v, l, me, "dead due to being used");
   TRACE_INDENT();
 

@@ -329,12 +329,12 @@
   auto mod = thing_stat_mod(g, v, l, me, stat);
 
   if (roll + mod >= target_roll) {
-    THING_DBG(g, v, l, me, "roll: %s d20:%d +mod:%d vs:%d => pass", thing_stat_dbg_string(g, v, l, me, stat).c_str(), roll, roll + mod,
-              target_roll);
+    THING_DBG(g, v, l, me, "roll: %s d20:%d mod:%d tot:%d vs:%d => pass", thing_stat_dbg_string(g, v, l, me, stat).c_str(), roll, mod,
+              roll + mod, target_roll);
     return true;
   }
 
-  THING_DBG(g, v, l, me, "roll: %s d20:%d +mod:%d vs:%d => fail", thing_stat_dbg_string(g, v, l, me, stat).c_str(), roll, roll + mod,
+  THING_DBG(g, v, l, me, "roll: %s d20:%d mod:%d tot:%d vs:%d => fail", thing_stat_dbg_string(g, v, l, me, stat).c_str(), roll, mod, roll + mod,
             target_roll);
   return false;
 }
