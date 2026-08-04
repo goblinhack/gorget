@@ -460,7 +460,7 @@ static void thing_display_it(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t_mayb
       auto h_max = thing_health_max(g, v, l, t_maybe_null);
       auto h     = thing_health(g, v, l, t_maybe_null);
 
-      if (h < h_max / 4) {
+      if (h < h_max / 10) {
         thing_low_health(tl, br, tile, x1, x2, y1, y2, fg, light_pixels);
       }
     }
