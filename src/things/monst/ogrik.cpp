@@ -137,7 +137,6 @@ static void tp_ogrik_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_health_set(tp, "4d8");
   tp_hearing_threshold_set(tp, 2);
   tp_is_immune_to_add(tp, THING_EVENT_FIRE_DAMAGE);
-  tp_is_immune_to_add(tp, THING_EVENT_LIGHT_DAMAGE);
   tp_is_immune_to_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_monst_group_add(tp, MONST_GROUP2);
   tp_name_a_or_an_set(tp, "an ogrik");

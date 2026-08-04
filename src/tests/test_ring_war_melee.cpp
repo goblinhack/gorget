@@ -10,7 +10,7 @@
 #include "../my_thing_inlines.hpp"
 #include "../my_wids.hpp"
 
-[[nodiscard]] static auto test_ring_war(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_ring_war_melee(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -169,7 +169,7 @@ exit:
   Testp test = test_load("ring_war");
 
   // begin sort marker1 {
-  test_callback_set(test, test_ring_war);
+  test_callback_set(test, test_ring_war_melee);
   // end sort marker1 }
 
   return true;

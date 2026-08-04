@@ -23,7 +23,7 @@
   }
 
   if (val >= THING_STAT_MAX) {
-    return +9;
+    return val - 10;
   }
 
   switch (val) {
@@ -58,7 +58,7 @@
   }
 
   if (val >= THING_STAT_MAX) {
-    return "+9";
+    return "+" + std::to_string(val - 10);
   }
 
   switch (val) {
@@ -219,8 +219,18 @@
   std::string       stat_str;
 
   switch (stat) {
-    case THING_STAT_ATT :  return string_sprintf(UI_INFO_FMT_STR "%s" UI_RESET_FMT " %2d", stat_name.c_str(), val);
-    case THING_STAT_DEF :  return string_sprintf(UI_INFO_FMT_STR "%s" UI_RESET_FMT " %2d", stat_name.c_str(), val);
+    case THING_STAT_ATT : [[fallthrough]];
+    case THING_STAT_DEF :
+      if (mod < -5) {
+        return string_sprintf(UI_INFO_FMT_STR "%s" UI_RESET_FMT UI_IMPORTANT_FMT_STR " %2d", stat_name.c_str(), val);
+      } else if (mod < -3) {
+        return string_sprintf(UI_INFO_FMT_STR "%s" UI_RESET_FMT UI_WARN_FMT_STR " %2d", stat_name.c_str(), val);
+      } else if (mod > 0) {
+        return string_sprintf(UI_INFO_FMT_STR "%s" UI_RESET_FMT UI_GOOD_FMT_STR " %2d", stat_name.c_str(), val);
+      } else {
+        return string_sprintf(UI_INFO_FMT_STR "%s" UI_RESET_FMT " %2d", stat_name.c_str(), val);
+      }
+
     case THING_STAT_STR :  break;
     case THING_STAT_CON :  break;
     case THING_STAT_INT :  break;
@@ -264,12 +274,20 @@
   auto stat_string = stat_to_name(stat);
   int  out         = me->_stat[ stat ];
 
+  THING_DBG(g, v, l, me, "stat get: %s", stat_string.c_str());
+  TRACE_INDENT();
+
   FOR_ALL_BUFFS(g, v, l, me, buff)
   {
     auto mod = thing_stat_mod(g, v, l, buff, stat);
 
     out += mod;
-    THING_DBG(g, v, l, me, "stat: %s %d (with mod)", stat_string.c_str(), out);
+
+    if (mod > 0) {
+      THING_DBG(g, v, l, me, "mod: %s +%d (from buff)", stat_string.c_str(), out);
+    } else {
+      THING_DBG(g, v, l, me, "mod: %s %d (from buff)", stat_string.c_str(), out);
+    }
   }
 
   FOR_ALL_ACTIVE_ITEMS(g, v, l, me, item)
@@ -280,29 +298,33 @@
     }
 
     auto item_count = thing_inventory_get_item_count(g, v, l, item, me);
-    if (item_count > 0) {
-      if (compiler_unused) {
-        THING_DBG(g, v, l, item, "mod: %d x %d", mod, item_count);
+    if (item_count > 1) {
+      if (mod > 0) {
+        THING_DBG(g, v, l, item, "mod: +%d x %d (from item)", mod, item_count);
+      } else {
+        THING_DBG(g, v, l, item, "mod: %d x %d (from item)", mod, item_count);
       }
       mod *= item_count;
     } else {
-      if (compiler_unused) {
-        THING_DBG(g, v, l, item, "mod: %d", mod);
+      if (mod > 0) {
+        THING_DBG(g, v, l, item, "mod: +%d (from item)", mod);
+      } else {
+        THING_DBG(g, v, l, item, "mod: %d (from item)", mod);
       }
     }
 
     out += mod;
-
-    if (compiler_unused) {
-      THING_DBG(g, v, l, me, "stat: %s %d (with item)", stat_string.c_str(), out);
-    }
   }
 
   out = std::max(THING_STAT_MIN, out);
-  out = std::min(THING_STAT_MAX, out);
 
-  if (compiler_unused) {
-    THING_DBG(g, v, l, me, "stat: %s %d", stat_string.c_str(), out);
+  auto final_mod = stat_to_mod(out);
+  if (final_mod > 0) {
+    THING_DBG(g, v, l, me, "final stat: %s %d mod:+%d", stat_string.c_str(), out, final_mod);
+  } else if (final_mod < 0) {
+    THING_DBG(g, v, l, me, "final stat: %s %d mod:%d", stat_string.c_str(), out, final_mod);
+  } else {
+    THING_DBG(g, v, l, me, "final stat: %s %d no-mod", stat_string.c_str(), out);
   }
 
   return out;

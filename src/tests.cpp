@@ -123,6 +123,7 @@
   if (!test_load_projectile_wall_turns_to_lava()) { return false; }
   if (!test_load_projectile()) { return false; }
   if (!test_load_ring_life()) { return false; }
+  if (!test_load_ring_war_beam_weapon()) { return false; }
   if (!test_load_ring_war()) { return false; }
   if (!test_load_save_load()) { return false; }
   if (!test_load_slots()) { return false; }

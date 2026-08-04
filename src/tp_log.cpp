@@ -53,7 +53,7 @@ void tp_log(Tpp tp, const char *fmt, ...)
   va_end(args);
 }
 
-void tp_dbg_(Tpp tp, const char *fmt, ...)
+void tp_dbg(Tpp tp, const char *fmt, ...)
 {
   TRACE();
 

@@ -121,6 +121,7 @@ auto test_load_projectile_teleport() -> bool;
 auto test_load_projectile_wall_turns_to_lava() -> bool;
 auto test_load_projectile() -> bool;
 auto test_load_ring_life() -> bool;
+auto test_load_ring_war_beam_weapon() -> bool;
 auto test_load_ring_war() -> bool;
 auto test_load_save_load() -> bool;
 auto test_load_slots() -> bool;

@@ -49,7 +49,7 @@
   }
 
   //
-  // Wait for the projectile to ignite a barrel
+  // Wait for the projectile
   //
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);

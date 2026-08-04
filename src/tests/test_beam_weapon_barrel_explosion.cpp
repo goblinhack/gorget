@@ -48,9 +48,6 @@
     goto exit;
   }
 
-  //
-  // Spawn fire. This should be enough to blow up all the barrels
-  //
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   (void) player_fire(g, v, l, 1, 0, tp_beam_of_fire, bpoint(13, 3));

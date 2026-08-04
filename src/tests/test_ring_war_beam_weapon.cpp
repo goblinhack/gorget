@@ -4,10 +4,12 @@
 
 #include "../my_game.hpp"
 #include "../my_level.hpp"
+#include "../my_level_inlines.hpp"
 #include "../my_main.hpp"
 #include "../my_test.hpp"
+#include "../my_thing_inlines.hpp"
 
-[[nodiscard]] static auto test_beam_weapon_mob(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_ring_war_beam_weapon(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -23,7 +25,7 @@
       = "xxxxxxxxxxxxxxxxx"
         "x...............x"
         "x...............x"
-        "x@......G.......x"
+        "x@......m.......x"
         "x...............x"
         "x...............x"
         "xxxxxxxxxxxxxxxxx";
@@ -39,34 +41,67 @@
       = "xxxxxxxxxxxxxxxxx"
         "x...............x"
         "x...............x"
-        "x@......!.......x"
+        "x@......M.......x"
         "x...............x"
         "x...............x"
         "xxxxxxxxxxxxxxxxx";
-  Levelp  l      = nullptr;
-  Levelsp v      = game_test_init(g, &l, level_num, w, h, start.c_str());
-  bool    result = true;
 
-  auto *tp_beam_of_fire = tp_find_mand("beam_of_fire");
-  tp_damage_set(tp_beam_of_fire, THING_EVENT_FIRE_DAMAGE, "100");
+  Overrides overrides;
+  overrides[ 'm' ]         = [](char c, bpoint p) -> Tpp { return tp_find_mand("ogrik"); };
+  Levelp  l                = nullptr;
+  Thingp  player           = nullptr;
+  Tpp     tp_beam_of_light = nullptr;
+  Thingp  monst            = nullptr;
+  Levelsp v                = game_test_init(g, &l, level_num, w, h, start.c_str(), overrides);
+  bool    result           = true;
 
-  auto *player = thing_player(g);
+  static std::initializer_list< std::string > items = {
+      "ring_war", //
+      "ring_war", //
+  };
+
+  tp_beam_of_light = tp_find_mand("beam_of_light");
+  if (tp_beam_of_light == nullptr) [[unlikely]] {
+    TEST_FAILED(t, "no weapon");
+    goto exit;
+  }
+
+  player = thing_player(g);
   if (player == nullptr) [[unlikely]] {
     TEST_FAILED(t, "no player");
     goto exit;
   }
 
+  //
+  // Find the monster
+  //
+  FOR_ALL_THINGS_AT(g, v, l, it, thing_at(g, v, l, player) + bpoint(7, 0))
+  {
+    if (thing_is_monst(it)) {
+      monst = it;
+    }
+  }
+
+  if (! thing_carry(g, v, l, player, items)) {
+    TEST_FAILED(t, "no item carried");
+    goto exit;
+  }
+
+  //
+  // Spawn fire. This should be enough to blow up all the barrels
+  //
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
 
   //
-  // Wait for the weapon to destroy the mob
+  // Wait for the weapon to kill the monster
   //
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   for (auto tries = 0; tries < 5; tries++) {
     TEST_LOOP_PROGRESS(t, g, v, l, tries, w, h);
-    (void) player_fire(g, v, l, 1, 0, tp_beam_of_fire, bpoint(13, 3));
+    (void) player_fire(g, v, l, 1, 0, tp_beam_of_light, bpoint(13, 3));
+
     if (tries == 0) {
       TEST_PROGRESS(t);
       if (! (result = level_match_contents(g, v, l, t, w, h, expect1.c_str()))) {
@@ -94,6 +129,8 @@
     }
   }
 
+  TEST_ASSERT(t, thing_is_dead(monst), "expected dead monst");
+
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   if (! (result = level_match_contents(g, v, l, t, w, h, expect2.c_str()))) {
@@ -112,14 +149,14 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_beam_weapon_mob() -> bool // NOLINT
+[[nodiscard]] auto test_load_ring_war_beam_weapon() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("beam_weapon_mob");
+  Testp test = test_load("ring_war_beam_weapon");
 
   // begin sort marker1 {
-  test_callback_set(test, test_beam_weapon_mob);
+  test_callback_set(test, test_ring_war_beam_weapon);
   // end sort marker1 }
 
   return true;

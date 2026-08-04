@@ -23,9 +23,12 @@
 #include <string>
 #include <vector>
 
-[[nodiscard]] auto tp_damage_max(Tpp tp, ThingEventType val) -> int
+//
+// Roll for damage
+//
+[[nodiscard]] auto tp_damage(Tpp tp, ThingEventType val) -> int
 {
-  TRACE();
+  TRACE_DEBUG();
   if (tp == nullptr) [[unlikely]] {
     ERR("no thing template pointer");
     return 0;
@@ -36,6 +39,22 @@
     return 0;
   }
 
+  return tp->damage[ val ].roll();
+}
+
+[[nodiscard]] auto tp_damage_max(Tpp tp, ThingEventType event_type) -> int
+{
+  TRACE();
+  if (tp == nullptr) [[unlikely]] {
+    ERR("no thing template pointer");
+    return 0;
+  }
+
+  if (event_type >= THING_EVENT_ENUM_MAX) {
+    tp_err(tp, "bad value in tp for %s, %d", __FUNCTION__, event_type);
+    return 0;
+  }
+
   int damage = 0;
 
   for (const auto &d : tp->special_attacks) {
@@ -43,7 +62,7 @@
     damage    = std::max(damage, spec.dice.max_roll());
   }
 
-  return std::max(damage, tp->damage[ val ].max_roll());
+  return std::max(damage, tp->damage[ event_type ].max_roll());
 }
 
 [[nodiscard]] static auto tp_damage_max(Tpp tp) -> int
@@ -62,7 +81,7 @@
   return damage;
 }
 
-[[nodiscard]] auto thing_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEventType val) -> int
+[[nodiscard]] auto thing_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEventType event_type) -> int
 {
   TRACE();
 
@@ -71,10 +90,66 @@
     return 0;
   }
 
-  return tp_damage(thing_tp(me), val);
+  int final_damage {};
+  int new_damage {};
+  int initial_damage {};
+  int additional_damage {};
+
+  auto *tp = thing_tp(me);
+
+  final_damage   = tp_damage(tp, event_type);
+  initial_damage = final_damage;
+
+  THING_DBG(g, v, l, me, "base damage: %d", final_damage);
+  TRACE_INDENT();
+
+  //
+  // Add on my damage modifier
+  //
+  additional_damage = thing_stat_mod(g, v, l, me, THING_STAT_DMG);
+  if (additional_damage != 0) {
+    new_damage = final_damage + additional_damage;
+    if (new_damage != final_damage) {
+      THING_DBG(g, v, l, me, "damage-mod: %d->%d", final_damage, new_damage);
+      final_damage = new_damage;
+    }
+  }
+
+  //
+  // Add on damage modifier from owner if any
+  //
+  Thingp from = nullptr;
+
+  if (auto *fired_by = thing_missile_fired_by_get(g, v, l, me)) {
+    from = fired_by;
+  } else if (auto *owner = thing_owner(g, v, l, me)) {
+    from = owner;
+  } else {
+    from = nullptr;
+  }
+
+  if (from) {
+    THING_DBG(g, v, l, me, "get owner damage:");
+    TRACE_INDENT();
+
+    additional_damage = thing_stat_mod(g, v, l, from, THING_STAT_DMG);
+    if (additional_damage != 0) {
+      new_damage = final_damage + additional_damage;
+      if (new_damage != final_damage) {
+        THING_DBG(g, v, l, me, "damage: %d->%d", final_damage, new_damage);
+        final_damage = new_damage;
+      }
+    }
+  }
+
+  if (final_damage != initial_damage) {
+    THING_DBG(g, v, l, me, "final damage: %d", final_damage);
+  }
+
+  return final_damage;
 }
 
-[[nodiscard]] auto thing_damage_max(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEventType val) -> int
+[[nodiscard]] auto thing_damage_max(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEventType event_type) -> int
 {
   TRACE();
 
@@ -83,7 +158,7 @@
     return 0;
   }
 
-  return tp_damage_max(thing_tp(me), val);
+  return tp_damage_max(thing_tp(me), event_type);
 }
 
 //
@@ -94,10 +169,16 @@
   TRACE();
 
   int max_damage {};
+  int new_damage {};
+  int initial_damage {};
 
   auto *tp = thing_tp(me);
 
-  max_damage = std::max(max_damage, tp_damage_max(tp));
+  max_damage     = std::max(max_damage, tp_damage_max(tp));
+  initial_damage = max_damage;
+
+  THING_DBG(g, v, l, me, "base damage max: %d", max_damage);
+  TRACE_INDENT();
 
   for (const auto &d : tp->special_attacks) {
     auto val  = d.second;
@@ -105,7 +186,11 @@
     if (! what.empty()) {
       auto *what_tp = tp_find_mand(what);
       if (what_tp != nullptr) {
-        max_damage = std::max(max_damage, tp_damage_max(what_tp));
+        new_damage = std::max(max_damage, tp_damage_max(what_tp));
+        if (new_damage != max_damage) {
+          TP_DBG(what_tp, "damage max: %d->%d (special attack)", max_damage, new_damage);
+          max_damage = new_damage;
+        }
       }
     }
   }
@@ -114,15 +199,32 @@
   {
     auto *weapon = thing_worn_get(g, v, l, me, w);
     if (weapon != nullptr) {
-      max_damage = std::max(max_damage, thing_damage_max(g, v, l, weapon));
+      new_damage = std::max(max_damage, thing_damage_max(g, v, l, weapon));
+      if (new_damage != max_damage) {
+        THING_DBG(g, v, l, weapon, "damage max: %d->%d (item)", max_damage, new_damage);
+        max_damage = new_damage;
+      }
     }
   }
 
-  max_damage += thing_stat(g, v, l, me, THING_STAT_DMG);
+  new_damage = max_damage + thing_stat_mod(g, v, l, me, THING_STAT_DMG);
+  if (new_damage != max_damage) {
+    THING_DBG(g, v, l, me, "damage max: %d->%d (dmg stat)", max_damage, new_damage);
+    max_damage = new_damage;
+  }
 
   auto attack_count = tp_attack_count_max_per_tick_get(thing_tp(me));
   if (attack_count != 0) {
-    max_damage *= attack_count;
+    new_damage = max_damage * attack_count;
+
+    if (new_damage != max_damage) {
+      THING_DBG(g, v, l, me, "damage max: %d->%d (attack count)", max_damage, new_damage);
+      max_damage = new_damage;
+    }
+  }
+
+  if (max_damage != initial_damage) {
+    THING_DBG(g, v, l, me, "final damage max: %d", max_damage);
   }
 
   return max_damage;
@@ -551,27 +653,6 @@ void thing_damage_apply(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
       topcon(UI_GOOD_FMT_STR "You take no damage from the heat." UI_RESET_FMT);
     }
     return;
-  }
-
-  //
-  // Add on damage modifier
-  //
-  if (e.source != nullptr) {
-    Thingp from = nullptr;
-
-    if (auto *fired_by = thing_missile_fired_by_get(g, v, l, e.source)) {
-      from = fired_by;
-    } else if (auto *owner = thing_owner(g, v, l, e.source)) {
-      from = owner;
-    } else {
-      from = e.source;
-    }
-
-    auto additional_damage = thing_stat_mod(g, v, l, from, THING_STAT_DMG);
-    if (additional_damage != 0) {
-      e.damage += additional_damage;
-      THING_DBG(g, v, l, from, "additional damage:%d", additional_damage);
-    }
   }
 
   //

@@ -620,25 +620,6 @@ void tp_damage_set(Tpp tp, ThingEventType stat, const std::string &val)
 }
 
 //
-// Roll for damage
-//
-[[nodiscard]] auto tp_damage(Tpp tp, ThingEventType val) -> int
-{
-  TRACE_DEBUG();
-  if (tp == nullptr) [[unlikely]] {
-    ERR("no thing template pointer");
-    return 0;
-  }
-
-  if (val >= THING_EVENT_ENUM_MAX) {
-    tp_err(tp, "bad value in tp for %s, %d", __FUNCTION__, val);
-    return 0;
-  }
-
-  return tp->damage[ val ].roll();
-}
-
-//
 // Get the damage roll string
 //
 [[nodiscard]] auto tp_damage_dice_roll_string(Tpp tp, ThingEventType val) -> std::string

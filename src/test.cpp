@@ -144,6 +144,7 @@ static std::initializer_list< std::string > tests = {
     "projectile_wall_turns_to_lava",
     "projectile",
     "ring_life",
+    "ring_war_beam_weapon",
     "ring_war",
     "save_load",
     "slots",

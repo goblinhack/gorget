@@ -1287,7 +1287,7 @@ void tp_charge_count_set(Tpp tp, int val);
 void tp_con_(Tpp tp, const char *fmt, va_list args); // compile error without
 void tp_con(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void tp_damage_set(Tpp tp, ThingEventType stat, const std::string &val);
-void tp_dbg_(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void tp_dbg(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void tp_die_(Tpp tp, const char *fmt, va_list args); // compile error without
 void tp_die(Tpp tp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void tp_distance_avoid_target_set(Tpp tp, int val);
@@ -1405,5 +1405,7 @@ void tp_z_depth_set(Tpp tp, MapZDepthType val);
 #define WEIGHT_VLIGHT   (100)
 #define WEIGHT_FEATHER  (1)
 #define WEIGHT_NONE     (0)
+
+#define TP_DBG IF_DEBUG tp_dbg
 
 #endif // MY_THING_TEMPLATE_HPP

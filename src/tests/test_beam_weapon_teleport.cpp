@@ -56,14 +56,11 @@
     goto exit;
   }
 
-  //
-  // Spawn fire. This should be enough to blow up all the barrels
-  //
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
 
   //
-  // Wait for the weapon to ignite a barrel
+  // Wait for the weapon to hit the teleport
   //
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
