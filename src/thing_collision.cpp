@@ -293,7 +293,7 @@ static void thing_collision_handle_do(Gamep g, Levelsp v, Levelp l, Thingp obsta
   }
 
   auto *owner = thing_owner(g, v, l, me);
-  if (owner) {
+  if (owner != nullptr) {
     if (obstacle == owner) {
       THING_DBG(g, v, l, obstacle, "ignore for owner");
       return;

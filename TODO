@@ -1,11 +1,10 @@
 bugs
 ----
-dmg stat for all attacks
+test ring of war melee and beam
 
 todo
 ----
 crits
-ring, war
 potion, levitate
 potion, dislocation  (teleport)
 potion, imperceptable (invisible)
@@ -139,14 +138,9 @@ spells
   - spells need to have a cost that can be influenced by specializing
   - shrines that reduce spell points
 gameplay
-  - brazier kick over sound
-  - items hiding in bushes 
   - shoot from behind double damage
   - hard coded to fire fireball
-  - traps must do something / gas effects
-  - items can be lost in deep water
-  - chests need to contain something and those items destroyed when the chest is
-  - projectile collision with projectile
+  - traps gas effects
   - boulders that can crush
   - cobwebs burns and get you stuck
   - ice weapon and shattering
@@ -160,9 +154,6 @@ gameplay
   - Enemy souls can be harvested to add to your life force. Thinking
     of a pacman like blue ghost you need to hunt down. Only applies to
     living beings that are toasted.
-  - Alternative turn based idea is that the dungeon will force a move
-    after say 10 seconds. Gradually this will increase in speed until
-    the monsters are moving almost real time.
 allies
   - Allies vanish each level and the life force is returned to you
   - Life force can be applied to the summoning of allies each level.

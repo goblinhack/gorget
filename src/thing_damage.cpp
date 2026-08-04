@@ -556,19 +556,19 @@ void thing_damage_apply(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
   //
   // Add on damage modifier
   //
-  if (e.source) {
+  if (e.source != nullptr) {
     Thingp from = nullptr;
 
-    if (auto fired_by = thing_missile_fired_by_get(g, v, l, e.source)) {
+    if (auto *fired_by = thing_missile_fired_by_get(g, v, l, e.source)) {
       from = fired_by;
-    } else if (auto owner = thing_owner(g, v, l, e.source)) {
+    } else if (auto *owner = thing_owner(g, v, l, e.source)) {
       from = owner;
     } else {
       from = e.source;
     }
 
     auto additional_damage = thing_stat_mod(g, v, l, from, THING_STAT_DMG);
-    if (additional_damage) {
+    if (additional_damage != 0) {
       e.damage += additional_damage;
       THING_DBG(g, v, l, from, "additional damage:%d", additional_damage);
     }

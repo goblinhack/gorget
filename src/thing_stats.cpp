@@ -169,7 +169,7 @@
 //
 // "Att 20/+9"
 //
-[[nodiscard]] auto thing_stat_dbg_string(Gamep g, Levelsp v, Levelp l, Thingp me, ThingStatType stat) -> std::string
+[[nodiscard]] static auto thing_stat_dbg_string(Gamep g, Levelsp v, Levelp l, Thingp me, ThingStatType stat) -> std::string
 {
   TRACE_DEBUG();
 
@@ -275,7 +275,7 @@
   FOR_ALL_ACTIVE_ITEMS(g, v, l, me, item)
   {
     auto mod = thing_stat_mod(g, v, l, item, stat);
-    if (! mod) {
+    if (mod == 0) {
       continue;
     }
 
