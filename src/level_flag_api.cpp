@@ -2054,10 +2054,10 @@
   return level_flag(g, v, l, is_unused196, p, me);
 }
 
-[[nodiscard]] auto level_is_unused197(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_teleport_hazard(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused197, p, me);
+  return level_flag(g, v, l, is_teleport_hazard, p, me);
 }
 
 [[nodiscard]] auto level_is_item_active_when_carried(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp

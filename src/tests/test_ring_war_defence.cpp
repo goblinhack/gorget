@@ -10,7 +10,7 @@
 #include "../my_thing_inlines.hpp"
 #include "../my_wids.hpp"
 
-[[nodiscard]] static auto test_ring_war_melee(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_ring_war_defence(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -34,7 +34,7 @@
       = "xxxxxxx"
         "x.....x"
         "x.....x"
-        "x.@M..x"
+        "x.@m..x"
         "x.....x"
         "x.....x"
         "xxxxxxx";
@@ -42,7 +42,7 @@
       = "xxxxxxx"
         "x.....x"
         "x.....x"
-        "x..@..x"
+        "x.@m..x"
         "x.....x"
         "x.....x"
         "xxxxxxx";
@@ -51,19 +51,14 @@
   // Create the level and start playing
   //
   Overrides overrides;
-  overrides[ 'm' ] = [](char c, bpoint p) -> Tpp { return tp_find_mand("ogrik"); };
+  overrides[ 'm' ] = [](char c, bpoint p) -> Tpp { return tp_find_mand("kobalos"); };
   Levelp  l        = nullptr;
   Levelsp v        = game_test_init(g, &l, level_num, w, h, start.c_str(), overrides);
 
   //
   // The guts of the test
   //
-  bool   result = false;
-  bool   up     = false;
-  bool   down   = false;
-  bool   left   = false;
-  bool   right  = false;
-  Thingp monst  = nullptr;
+  bool result = false;
 
   static std::initializer_list< std::string > items = {
       "ring_war", //
@@ -81,63 +76,29 @@
     goto exit;
   }
 
-  FOR_ALL_THINGS_AT(g, v, l, it, thing_at(g, v, l, player) + bpoint(1, 0))
-  {
-    if (thing_is_monst(it)) {
-      monst = it;
-    }
-  }
-
-  TEST_ASSERT(t, monst, "did not find monst");
-
   if (! (result = level_match_contents(g, v, l, t, w, h, expect1.c_str()))) {
     TEST_FAILED(t, "unexpected contents");
     goto exit;
   }
 
   //
-  // Move right and hit monst
+  // Stand still and take a pummelling
   //
   for (auto tries = 0; tries < 100; tries++) {
     TEST_LOOP_PROGRESS(t, g, v, l, tries, w, h);
 
     TEST_LOG(t, "move right");
     TRACE();
-    up = down = left = right = false;
-    right                    = true;
 
-    if (! (result = player_move_request(g, up, down, left, right, false /* fire */))) {
-      TEST_FAILED(t, "move fail");
-      goto exit;
-    }
+    TEST_ASSERT(t, game_event_wait(g), "failed to wait");
 
     if (! game_wait_for_tick_to_finish(g, v, l)) {
       TEST_FAILED(t, "wait loop failed");
       goto exit;
     }
 
-    if (thing_is_dead(monst)) {
+    if (thing_is_dead(player)) {
       break;
-    }
-  }
-
-  //
-  // Move right onto the body
-  //
-  {
-    TEST_LOG(t, "move right");
-    TRACE();
-    up = down = left = right = false;
-    right                    = true;
-
-    if (! (result = player_move_request(g, up, down, left, right, false /* fire */))) {
-      TEST_FAILED(t, "move fail");
-      goto exit;
-    }
-
-    if (! game_wait_for_tick_to_finish(g, v, l)) {
-      TEST_FAILED(t, "wait loop failed");
-      goto exit;
     }
   }
 
@@ -146,9 +107,9 @@
     goto exit;
   }
 
-  TEST_ASSERT(t, wid_console_find_text(g, "You hit the ogrik"), "did not find console text");
+  TEST_ASSERT(t, thing_is_dead(player), "player is not dead");
 
-  TEST_ASSERT(t, game_tick_get(g, v) == 4, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 75, "final tick counter value");
 
   level_dump(g, v, l, w, h);
   TEST_PASSED(t);
@@ -159,14 +120,14 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_ring_war_melee() -> bool // NOLINT
+[[nodiscard]] auto test_load_ring_war_defence() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("ring_war_melee");
+  Testp test = test_load("ring_war_defence");
 
   // begin sort marker1 {
-  test_callback_set(test, test_ring_war_melee);
+  test_callback_set(test, test_ring_war_defence);
   // end sort marker1 }
 
   return true;

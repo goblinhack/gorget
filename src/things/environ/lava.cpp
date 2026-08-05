@@ -43,6 +43,7 @@ static auto tp_lava_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> 
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_physics_water);
   tp_flag_set(tp, is_teleport_blocked);
+  tp_flag_set(tp, is_teleport_hazard);
   tp_flag_set(tp, is_tick_end_delay);
   tp_flag_set(tp, is_tiled);
   tp_is_immune_to_add(tp, THING_EVENT_FIRE_DAMAGE);

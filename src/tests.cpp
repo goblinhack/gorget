@@ -124,10 +124,14 @@
   if (!test_load_projectile()) { return false; }
   if (!test_load_ring_life()) { return false; }
   if (!test_load_ring_war_beam_weapon()) { return false; }
-  if (!test_load_ring_war()) { return false; }
+  if (!test_load_ring_war_defence()) { return false; }
+  if (!test_load_ring_war_melee()) { return false; }
+  if (!test_load_ring_war_projectile()) { return false; }
   if (!test_load_save_load()) { return false; }
   if (!test_load_slots()) { return false; }
+  if (!test_load_teleport_chasm_bad_luck()) { return false; }
   if (!test_load_teleport_chasm()) { return false; }
+  if (!test_load_teleport_lava()) { return false; }
   if (!test_load_teleport_shove_barrel()) { return false; }
   if (!test_load_teleport_shove_brazier()) { return false; }
   if (!test_load_teleport_shove_mob()) { return false; }

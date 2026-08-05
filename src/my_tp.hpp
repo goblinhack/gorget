@@ -328,7 +328,7 @@
       list_macro(is_unused194, "is_unused194"),                                             /* newline */                                       \
       list_macro(is_unused195, "is_unused195"),                                             /* newline */                                       \
       list_macro(is_unused196, "is_unused196"),                                             /* newline */                                       \
-      list_macro(is_unused197, "is_unused197"),                                             /* newline */                                       \
+      list_macro(is_teleport_hazard, "is_teleport_hazard"),                                 /* newline */                                       \
       list_macro(is_item_active_when_carried, "is_item_active_when_carried"),               /* newline */                                       \
       list_macro(is_wearable, "is_wearable"),                                               /* newline */                                       \
       list_macro(is_unused2, "is_unused2"),                                                 /* newline */                                       \
@@ -1006,6 +1006,7 @@ class Tp;
 [[nodiscard]] auto tp_is_stone(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_submergible(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_teleport_blocked(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_teleport_hazard(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_teleport(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_throwable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_tick_end_delay(Tpp tp) -> bool;
@@ -1127,7 +1128,6 @@ class Tp;
 [[nodiscard]] auto tp_is_unused194(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused195(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused196(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused197(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused2(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused20(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused21(Tpp tp) -> bool;

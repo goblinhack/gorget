@@ -2054,10 +2054,10 @@
   return level_flag_cached(g, v, l, is_unused196, p);
 }
 
-[[nodiscard]] auto level_is_unused197_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_teleport_hazard_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused197, p);
+  return level_flag_cached(g, v, l, is_teleport_hazard, p);
 }
 
 [[nodiscard]] auto level_is_item_active_when_carried_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

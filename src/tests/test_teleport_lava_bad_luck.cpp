@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static auto test_teleport_chasm(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_teleport_chasm_bad_luck(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -37,12 +37,23 @@
         "x...CCCx"
         "x......x"
         "xxxxxxxx";
+  std::string const level2
+      = "xxxxxxxx"
+        "x......x"
+        "x......x"
+        "x......x"
+        "x......x"
+        "x....C.x"
+        "x......x"
+        "xxxxxxxx";
 
   //
   // Create the level and start playing
   //
-  Levelp  l = nullptr;
-  Levelsp v = game_test_init(g, &l, level_num, w, h, start.c_str());
+  Levelp  l1 = nullptr;
+  Levelp  l2 = nullptr;
+  Levelsp v  = game_test_init(g, &l1, level_num, w, h, start.c_str());
+  game_test_init_level(g, v, &l2, level_num + 1, w, h, level2.c_str());
 
   //
   // The guts of the test
@@ -53,30 +64,10 @@
   bool left   = false;
   bool right  = false;
 
-  static std::initializer_list< std::string > items = {
-      "horseshoe", //
-      "horseshoe", //
-      "horseshoe", //
-      "horseshoe", //
-      "horseshoe", //
-      "horseshoe", //
-  };
-
-  auto *player = thing_player(g);
-  if (player == nullptr) [[unlikely]] {
-    TEST_FAILED(t, "no player");
-    goto exit;
-  }
-
-  if (! thing_carry(g, v, l, player, items)) {
-    TEST_FAILED(t, "no item carried");
-    goto exit;
-  }
-
   //
   // Move right and teleport
   //
-  level_dump(g, v, l, w, h);
+  level_dump(g, v, l1, w, h);
   TEST_PROGRESS(t);
   {
     TEST_LOG(t, "move right");
@@ -89,20 +80,27 @@
       goto exit;
     }
 
-    if (! game_wait_for_tick_to_finish(g, v, l)) {
+    if (! game_wait_for_tick_to_finish(g, v, l1)) {
       TEST_FAILED(t, "wait loop failed");
       goto exit;
     }
 
-    if (! (result = level_match_contents(g, v, l, t, w, h, expect1.c_str()))) {
+    if (! (result = level_match_contents(g, v, l1, t, w, h, expect1.c_str()))) {
       TEST_FAILED(t, "unexpected contents");
       goto exit;
     }
   }
 
   TEST_ASSERT(t, game_tick_get(g, v) == 1, "final tick counter value");
+  level_dump(g, v, l1, w, h);
 
-  level_dump(g, v, l, w, h);
+  if (! (result = level_match_contents(g, v, l2, t, w, h, level2.c_str()))) {
+    TEST_FAILED(t, "unexpected contents");
+    goto exit;
+  }
+
+  level_dump(g, v, l2, w, h);
+
   TEST_PASSED(t);
 exit:
   TRACE();
@@ -111,14 +109,14 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_teleport_chasm() -> bool // NOLINT
+[[nodiscard]] auto test_load_teleport_chasm_bad_luck() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("teleport_chasm");
+  Testp test = test_load("teleport_chasm_bad_luck");
 
   // begin sort marker1 {
-  test_callback_set(test, test_teleport_chasm);
+  test_callback_set(test, test_teleport_chasm_bad_luck);
   // end sort marker1 }
 
   return true;

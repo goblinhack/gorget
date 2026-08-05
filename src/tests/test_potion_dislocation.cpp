@@ -111,8 +111,8 @@
         "xCCCCCCCCCCCCCCCCCCCCCCCCCCCxCCCCCCCCCCCCCCCCCCx"  //
         "xCCCCCCCCCCCCCCCCCCCCCCCCCCCxCCCCCCCCCCCCCCCCCCx"  //
         "xCCCCCCCCCCCCCCCCCCCCCCCCCCCxCCCCCCCCCCCCCCCCCCx"  //
-        "x...........@...............x..................x"  //
         "x...........................x..................x"  //
+        "x..........@................x..................x"  //
         "x...........................x..................x"  //
         "x...........................x..................x"  //
         "x...........................x..................x"  //
@@ -131,8 +131,15 @@
   bool result    = false;
   int  use_count = 0;
 
-  static std::initializer_list< std::string > items = {
+  static std::initializer_list< std::string > usable_items = {
       "potion_dislocation", //
+  };
+  static std::initializer_list< std::string > other_items = {
+      "horseshoe", //
+      "horseshoe", //
+      "horseshoe", //
+      "horseshoe", //
+      "horseshoe", //
   };
 
   auto *player = thing_player(g);
@@ -141,7 +148,7 @@
     goto exit;
   }
 
-  if (! thing_carry(g, v, l, player, items)) {
+  if (! thing_carry(g, v, l, player, usable_items)) {
     TEST_FAILED(t, "no item carried");
     goto exit;
   }
@@ -178,7 +185,12 @@
     }
   }
 
-  TEST_ASSERT(t, use_count == (int) items.size(), "did not use expected item amount");
+  TEST_ASSERT(t, use_count == (int) usable_items.size(), "did not use expected item amount");
+
+  if (! thing_carry(g, v, l, player, other_items)) {
+    TEST_FAILED(t, "no item carried");
+    goto exit;
+  }
 
   //
   // Jump

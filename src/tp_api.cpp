@@ -2053,10 +2053,10 @@
   return tp_flag(tp, is_unused196) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused197(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_teleport_hazard(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused197) != 0;
+  return tp_flag(tp, is_teleport_hazard) != 0;
 }
 
 [[nodiscard]] auto tp_is_item_active_when_carried(Tpp tp) -> bool

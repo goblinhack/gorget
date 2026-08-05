@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static auto test_teleport_chasm(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_teleport_lava(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -23,18 +23,18 @@
       = "xxxxxxxx"
         "x......x"
         "x......x"
-        "x...C.Cx"
-        "x@T.CTCx"
-        "x...CCCx"
+        "x...L.Lx"
+        "x@T.LTLx"
+        "x...LLLx"
         "x......x"
         "xxxxxxxx";
   std::string const expect1
       = "xxxxxxxx"
         "x......x"
         "x......x"
-        "x...C@Cx"
-        "x.T.CTCx"
-        "x...CCCx"
+        "x...L@Lx"
+        "x.T.LTLx"
+        "x...LLLx"
         "x......x"
         "xxxxxxxx";
 
@@ -111,14 +111,14 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_teleport_chasm() -> bool // NOLINT
+[[nodiscard]] auto test_load_teleport_lava() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("teleport_chasm");
+  Testp test = test_load("teleport_lava");
 
   // begin sort marker1 {
-  test_callback_set(test, test_teleport_chasm);
+  test_callback_set(test, test_teleport_lava);
   // end sort marker1 }
 
   return true;

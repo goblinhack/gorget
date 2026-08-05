@@ -16,6 +16,7 @@
 #include "my_thing_inlines.hpp" // NOLINT
 #include "my_tp.hpp"
 #include "my_types.hpp"
+#include "my_ui.hpp"
 #include <cstdint>
 #include <initializer_list>
 #include <vector>
@@ -94,14 +95,15 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
 //
 // Find a spot next to the teleport where we can land.
 //
-[[nodiscard]] static auto teleport_find_landing_spot(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint &out) -> bool
+[[nodiscard]] static auto teleport_find_landing_spot(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint &out, int attempt) -> bool
 {
-  TRACE();
-
   auto   outf  = make_fpoint(out);
   fpoint delta = thing_real_at(g, v, l, me) - make_fpoint(thing_old_at(me));
   fpoint tof   = outf + delta;
   bpoint to    = make_bpoint(tof);
+
+  THING_DBG(g, v, l, me, "find a landing spot, target (%d,%d)", to.x, to.y);
+  TRACE_INDENT();
 
   //
   // No need to check for collisions for things like projectile_fires otherwise we will
@@ -116,30 +118,85 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
     return true;
   }
 
-  if ((delta == fpoint(0, 0)) || (level_is_obs_to_teleporting_onto(g, v, l, to) != nullptr)) {
-    delta = thing_get_direction(g, v, l, me);
-    tof   = outf + delta;
-    to    = make_bpoint(tof);
+  if (attempt == 0) {
+    if ((delta == fpoint(0, 0)) || (level_is_obs_to_teleporting_onto(g, v, l, to) != nullptr)) {
+      delta = thing_get_direction(g, v, l, me);
+      tof   = outf + delta;
+      to    = make_bpoint(tof);
+      THING_DBG(g, v, l, me, "found a landing spot (%d,%d) (1)", to.x, to.y);
+    }
+
+    if ((delta == fpoint(0, 0)) || (level_is_obs_to_teleporting_onto(g, v, l, to) != nullptr)) {
+      delta = thing_get_direction(g, v, l, me);
+      tof   = outf + delta;
+      to    = make_bpoint(tof);
+      THING_DBG(g, v, l, me, "found a landing spot (%d,%d) (2)", to.x, to.y);
+    }
   }
 
-  if ((delta == fpoint(0, 0)) || (level_is_obs_to_teleporting_onto(g, v, l, to) != nullptr)) {
-    delta = thing_get_direction(g, v, l, me);
-    tof   = outf + delta;
-    to    = make_bpoint(tof);
-  }
-
+  //
+  //  x
+  // x.x
+  //  x
+  //
   if ((delta == fpoint(0, 0)) || (level_is_obs_to_teleporting_onto(g, v, l, to) != nullptr)) {
     const std::initializer_list< fpoint > deltas = {
-        fpoint(1, 0), fpoint(-1, 0), fpoint(0, 1), fpoint(0, -1), fpoint(-1, -1), fpoint(-1, 1), fpoint(1, -1), fpoint(1, 1),
+        fpoint(1, 0),
+        fpoint(-1, 0),
+        fpoint(0, 1),
+        fpoint(0, -1),
     };
+
+    std::vector< bpoint > cands;
 
     for (auto d : deltas) {
       delta = d;
       tof   = outf + delta;
       to    = make_bpoint(tof);
       if (level_is_obs_to_teleporting_onto(g, v, l, to) == nullptr) {
-        break;
+        cands.push_back(to);
+        THING_DBG(g, v, l, me, "found a landing spot cand (%d,%d) (3)", to.x, to.y);
       }
+    }
+
+    if (cands.size()) {
+      to  = pcg_rand_one_of(cands);
+      out = to;
+      THING_DBG(g, v, l, me, "found a landing spot (%d,%d) (4)", to.x, to.y);
+      return true;
+    }
+  }
+
+  //
+  // x x
+  //  .
+  // x x
+  //
+  if ((delta == fpoint(0, 0)) || (level_is_obs_to_teleporting_onto(g, v, l, to) != nullptr)) {
+    const std::initializer_list< fpoint > deltas = {
+        fpoint(1, 0),
+        fpoint(-1, 0),
+        fpoint(0, 1),
+        fpoint(0, -1),
+    };
+
+    std::vector< bpoint > cands;
+
+    for (auto d : deltas) {
+      delta = d;
+      tof   = outf + delta;
+      to    = make_bpoint(tof);
+      if (level_is_obs_to_teleporting_onto(g, v, l, to) == nullptr) {
+        cands.push_back(to);
+        THING_DBG(g, v, l, me, "found a landing spot cand (%d,%d) (3)", to.x, to.y);
+      }
+    }
+
+    if (cands.size()) {
+      to  = pcg_rand_one_of(cands);
+      out = to;
+      THING_DBG(g, v, l, me, "found a landing spot (%d,%d) (4)", to.x, to.y);
+      return true;
     }
   }
 
@@ -165,7 +222,74 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 
   out = to;
+  THING_DBG(g, v, l, me, "landing spot (%d,%d)", out.x, out.y);
   return true;
+}
+
+//
+// Find a safe spot next to the teleport where we can land (depending on luck).
+//
+[[nodiscard]] static auto teleport_find_maybe_safe_landing_spot(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint &target) -> bool
+{
+  THING_DBG(g, v, l, me, "find a maybe safe landing spot, target (%d,%d)", target.x, target.y);
+  TRACE_INDENT();
+
+  //
+  // Where do we spawn?
+  //
+  for (auto attempt = 0; attempt < 100; attempt++) {
+    bpoint out = target;
+
+    //
+    // Find a place to teleport that is not an obstacle.
+    //
+    if (! teleport_find_landing_spot(g, v, l, me, out, attempt)) {
+      THING_DBG(g, v, l, me, "failed to find landing spot next to chosen teleport");
+      return false;
+    }
+
+    if (level_is_teleport_hazard_bool(g, v, l, out)) {
+      THING_DBG(g, v, l, me, "target is on a hazard (%d,%d)", out.x, out.y);
+      TRACE_INDENT();
+
+      //
+      // Teleport destination is a hazard
+      //
+      if (thing_stat_success(g, v, l, me, THING_STAT_LUCK, TARGET_ROLL_TELEPORT_HAZARD)) {
+        //
+        // Lucky. Try again.
+        //
+        THING_DBG(g, v, l, me, "found an unsafe landing spot (%d,%d); try again", out.x, out.y);
+        continue;
+      }
+
+      //
+      // Unlucky. You land in something bad.
+      //
+      if (thing_is_player(me)) {
+        if (level_is_chasm_bool(g, v, l, out)) {
+          topcon(UI_IMPORTANT_FMT_STR "Bad luck. You teleport onto a chasm!" UI_RESET_FMT);
+        } else if (level_is_lava_bool(g, v, l, out)) {
+          topcon(UI_IMPORTANT_FMT_STR "Bad luck. You teleport into lava!" UI_RESET_FMT);
+        } else {
+          topcon(UI_IMPORTANT_FMT_STR "You feel unlucky with that teleport." UI_RESET_FMT);
+        }
+      }
+
+      THING_DBG(g, v, l, me, "found an unsafe landing spot (%d,%d)", out.x, out.y);
+      target = out;
+      return true;
+    }
+
+    //
+    // No hazard
+    //
+    THING_DBG(g, v, l, me, "found a landing spot (%d,%d)", out.x, out.y);
+    target = out;
+    return true;
+  }
+
+  return false;
 }
 
 //
@@ -234,10 +358,11 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 
   //
-  // Where do we spawn?
+  // Find a place to teleport that is not an obstacle.
   //
-  if (! teleport_find_landing_spot(g, v, l, me, to)) {
+  if (! teleport_find_maybe_safe_landing_spot(g, v, l, me, to)) {
     THING_DBG(g, v, l, me, "failed to find landing spot next to chosen teleport");
+    return false;
   }
 
   if (to == thing_at(g, v, l, me)) {
@@ -280,7 +405,7 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
   //
   // Find somewhere random to land
   //
-  for (auto tries = 0; tries < 1000; tries++) {
+  for (auto attempt = 0; attempt < 1000; attempt++) {
     uint8_t const border = MAP_BORDER;
     to.x                 = PCG_RANDOM_RANGE(border, (uint8_t) MAP_WIDTH - border);
     to.y                 = PCG_RANDOM_RANGE(border, (uint8_t) MAP_HEIGHT - border);
@@ -295,15 +420,19 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
       continue;
     }
 
-    if (tries < 100) {
+    if (attempt < 100) {
       if (l->info.on_path_entrance_to_exit[ to.x ][ to.y ] == 0U) {
         THING_DBG(g, v, l, me, "teleport, no; not on safe path");
         continue;
       }
     }
 
-    if (! teleport_find_landing_spot(g, v, l, me, to)) {
-      THING_DBG(g, v, l, me, "failed to find landing spot next to chosen teleport");
+    if (level_is_teleport_hazard_bool(g, v, l, to)) {
+      continue;
+    }
+
+    if (! teleport_find_maybe_safe_landing_spot(g, v, l, me, to)) {
+      THING_DBG(g, v, l, me, "failed to find a random landing spot");
       continue;
     }
 
@@ -335,8 +464,12 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
           continue;
         }
 
-        if (! teleport_find_landing_spot(g, v, l, me, to)) {
-          THING_DBG(g, v, l, me, "failed to find landing spot next to chosen teleport");
+        if (level_is_teleport_hazard_bool(g, v, l, to)) {
+          continue;
+        }
+
+        if (! teleport_find_maybe_safe_landing_spot(g, v, l, me, to)) {
+          THING_DBG(g, v, l, me, "failed to find a random landing (2)");
           continue;
         }
 
@@ -369,8 +502,46 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
           continue;
         }
 
-        if (! teleport_find_landing_spot(g, v, l, me, to)) {
-          THING_DBG(g, v, l, me, "failed to find landing spot next to chosen teleport");
+        if (level_is_teleport_hazard_bool(g, v, l, to)) {
+          continue;
+        }
+
+        if (! teleport_find_landing_spot(g, v, l, me, to, 0)) {
+          THING_DBG(g, v, l, me, "failed to find a random landing (3)");
+          continue;
+        }
+
+        got_one = true;
+        break;
+      }
+
+      if (got_one) {
+        break;
+      }
+    }
+  }
+
+  //
+  // Ignore the entrance to exit path. Consider hazard tiles.
+  //
+  if (! got_one) {
+    for (uint8_t y = MAP_BORDER; y < MAP_HEIGHT - MAP_BORDER; y++) {
+      for (uint8_t x = MAP_BORDER; x < MAP_WIDTH - MAP_BORDER; x++) {
+        to.x = x;
+        to.y = y;
+
+        if (is_oob_or_border(to)) [[unlikely]] {
+          THING_DBG(g, v, l, me, "teleport, no; oob");
+          continue;
+        }
+
+        if (distance(to, at) < MAP_WIDTH / 4) {
+          THING_DBG(g, v, l, me, "teleport, no; too close");
+          continue;
+        }
+
+        if (! teleport_find_landing_spot(g, v, l, me, to, 0)) {
+          THING_DBG(g, v, l, me, "failed to find a random landing (3)");
           continue;
         }
 

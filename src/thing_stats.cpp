@@ -274,8 +274,11 @@
   auto stat_string = stat_to_name(stat);
   int  out         = me->_stat[ stat ];
 
-  THING_DBG(g, v, l, me, "stat get: %s", stat_string.c_str());
-  TRACE_INDENT();
+  IF_DEBUG2
+  {
+    THING_DBG(g, v, l, me, "stat get: %s", stat_string.c_str());
+    TRACE_INDENT();
+  }
 
   FOR_ALL_BUFFS(g, v, l, me, buff)
   {
@@ -283,10 +286,13 @@
 
     out += mod;
 
-    if (mod > 0) {
-      THING_DBG(g, v, l, me, "mod: %s +%d (from buff)", stat_string.c_str(), out);
-    } else {
-      THING_DBG(g, v, l, me, "mod: %s %d (from buff)", stat_string.c_str(), out);
+    IF_DEBUG2
+    {
+      if (mod > 0) {
+        THING_DBG(g, v, l, me, "mod: %s +%d (from buff)", stat_string.c_str(), out);
+      } else {
+        THING_DBG(g, v, l, me, "mod: %s %d (from buff)", stat_string.c_str(), out);
+      }
     }
   }
 
@@ -299,17 +305,23 @@
 
     auto item_count = thing_inventory_get_item_count(g, v, l, item, me);
     if (item_count > 1) {
-      if (mod > 0) {
-        THING_DBG(g, v, l, item, "mod: +%d x %d (from item)", mod, item_count);
-      } else {
-        THING_DBG(g, v, l, item, "mod: %d x %d (from item)", mod, item_count);
+      IF_DEBUG2
+      {
+        if (mod > 0) {
+          THING_DBG(g, v, l, item, "mod: +%d x %d (from item)", mod, item_count);
+        } else {
+          THING_DBG(g, v, l, item, "mod: %d x %d (from item)", mod, item_count);
+        }
       }
       mod *= item_count;
     } else {
-      if (mod > 0) {
-        THING_DBG(g, v, l, item, "mod: +%d (from item)", mod);
-      } else {
-        THING_DBG(g, v, l, item, "mod: %d (from item)", mod);
+      IF_DEBUG2
+      {
+        if (mod > 0) {
+          THING_DBG(g, v, l, item, "mod: +%d (from item)", mod);
+        } else {
+          THING_DBG(g, v, l, item, "mod: %d (from item)", mod);
+        }
       }
     }
 
@@ -318,13 +330,16 @@
 
   out = std::max(THING_STAT_MIN, out);
 
-  auto final_mod = stat_to_mod(out);
-  if (final_mod > 0) {
-    THING_DBG(g, v, l, me, "final stat: %s %d mod:+%d", stat_string.c_str(), out, final_mod);
-  } else if (final_mod < 0) {
-    THING_DBG(g, v, l, me, "final stat: %s %d mod:%d", stat_string.c_str(), out, final_mod);
-  } else {
-    THING_DBG(g, v, l, me, "final stat: %s %d no-mod", stat_string.c_str(), out);
+  IF_DEBUG2
+  {
+    auto final_mod = stat_to_mod(out);
+    if (final_mod > 0) {
+      THING_DBG(g, v, l, me, "final stat: %s %d mod:+%d", stat_string.c_str(), out, final_mod);
+    } else if (final_mod < 0) {
+      THING_DBG(g, v, l, me, "final stat: %s %d mod:%d", stat_string.c_str(), out, final_mod);
+    } else {
+      THING_DBG(g, v, l, me, "final stat: %s %d no-mod", stat_string.c_str(), out);
+    }
   }
 
   return out;
@@ -339,19 +354,24 @@
 
   auto roll = d20();
 
-  if (roll <= 1) {
-    return false;
-  }
-  if (roll >= 20) {
-    return true;
-  }
-
   //
   // Override the level. This can happen during falling and the level we want to use is that of the thing.
   //
   l = thing_level(g, v, me);
 
   auto mod = thing_stat_mod(g, v, l, me, stat);
+
+  if (roll <= 1) {
+    THING_DBG(g, v, l, me, "roll: %s d20:%d mod:%d tot:%d vs:%d => fumble", thing_stat_dbg_string(g, v, l, me, stat).c_str(), roll, mod,
+              roll + mod, target_roll);
+    return false;
+  }
+
+  if (roll >= 20) {
+    THING_DBG(g, v, l, me, "roll: %s d20:%d mod:%d tot:%d vs:%d => crit", thing_stat_dbg_string(g, v, l, me, stat).c_str(), roll, mod,
+              roll + mod, target_roll);
+    return true;
+  }
 
   if (roll + mod >= target_roll) {
     THING_DBG(g, v, l, me, "roll: %s d20:%d mod:%d tot:%d vs:%d => pass", thing_stat_dbg_string(g, v, l, me, stat).c_str(), roll, mod,
