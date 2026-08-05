@@ -128,7 +128,7 @@
     from = nullptr;
   }
 
-  if (from) {
+  if (from != nullptr) {
     THING_DBG(g, v, l, me, "get owner damage:");
     TRACE_INDENT();
 

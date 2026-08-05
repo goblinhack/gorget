@@ -159,7 +159,7 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
       }
     }
 
-    if (cands.size()) {
+    if (! cands.empty() != 0u) {
       to  = pcg_rand_one_of(cands);
       out = to;
       THING_DBG(g, v, l, me, "found a landing spot (%d,%d) (4)", to.x, to.y);
@@ -192,7 +192,7 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
       }
     }
 
-    if (cands.size()) {
+    if (! cands.empty() != 0u) {
       to  = pcg_rand_one_of(cands);
       out = to;
       THING_DBG(g, v, l, me, "found a landing spot (%d,%d) (4)", to.x, to.y);

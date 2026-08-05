@@ -795,7 +795,7 @@ class Tp;
 [[nodiscard]] auto tp_charge_count_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_collision_radius(Tpp t) -> float;
 [[nodiscard]] auto tp_damage_dice_roll_string(Tpp tp, ThingEventType val) -> std::string;
-[[nodiscard]] auto tp_damage_max(Tpp tp, ThingEventType val) -> int;
+[[nodiscard]] auto tp_damage_max(Tpp tp, ThingEventType event_type) -> int;
 [[nodiscard]] auto tp_damage_random_type_get(Tpp tp) -> ThingEventType;
 [[nodiscard]] auto tp_damage(Tpp tp, ThingEventType val) -> int;
 [[nodiscard]] auto tp_distance_avoid_target_get(Tpp tp) -> int;
