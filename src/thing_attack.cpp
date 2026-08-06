@@ -90,6 +90,9 @@ static auto thing_attack_melee(Gamep g, Levelsp v, Levelp l, Thingp attacker, Th
   //
   if (thing_is_engulfed(it)) {
     if (thing_is_able_to_engulf(attacker)) {
+      //
+      // As we're in the melee path, this can crit too!
+      //
       event_type = THING_EVENT_ENGULF_DAMAGE;
     }
   }
@@ -137,8 +140,12 @@ static auto thing_attack_melee(Gamep g, Levelsp v, Levelp l, Thingp attacker, Th
   // The attack modifier, say +4 has to beat the defense, say 10
   // We roll d20 and add 4 .
   //
-  auto def    = thing_stat(g, v, l, it, THING_STAT_DEF);
-  auto is_hit = thing_stat_success(g, v, l, attacker, THING_STAT_ATT, def);
+  auto def = thing_stat(g, v, l, it, THING_STAT_DEF);
+
+  //
+  // Passing the event here allows for crit attacks
+  //
+  auto is_hit = thing_stat_success(g, v, l, attacker, THING_STAT_ATT, def, e);
 
   if (! is_hit) {
     if (! thing_on_missing(g, v, l, attacker, it, e)) {

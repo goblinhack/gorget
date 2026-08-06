@@ -348,7 +348,7 @@
 //
 // Does d20 + stat modifier reach or exceed the target roll
 //
-[[nodiscard]] auto thing_stat_success(Gamep g, Levelsp v, Levelp l, Thingp me, ThingStatType stat, int target_roll) -> bool
+[[nodiscard]] auto thing_stat_success(Gamep g, Levelsp v, Levelp l, Thingp me, ThingStatType stat, int target_roll, ThingEvent &e) -> bool
 {
   TRACE_DEBUG();
 
@@ -364,12 +364,14 @@
   if (roll <= 1) {
     THING_DBG(g, v, l, me, "roll: %s d20:%d mod:%d tot:%d vs:%d => fumble", thing_stat_dbg_string(g, v, l, me, stat).c_str(), roll, mod,
               roll + mod, target_roll);
+    e.fumble = true;
     return false;
   }
 
   if (roll >= 20) {
     THING_DBG(g, v, l, me, "roll: %s d20:%d mod:%d tot:%d vs:%d => crit", thing_stat_dbg_string(g, v, l, me, stat).c_str(), roll, mod,
               roll + mod, target_roll);
+    e.crit = true;
     return true;
   }
 
@@ -382,4 +384,16 @@
   THING_DBG(g, v, l, me, "roll: %s d20:%d mod:%d tot:%d vs:%d => fail", thing_stat_dbg_string(g, v, l, me, stat).c_str(), roll, mod, roll + mod,
             target_roll);
   return false;
+}
+
+//
+// Does d20 + stat modifier reach or exceed the target roll
+//
+[[nodiscard]] auto thing_stat_success(Gamep g, Levelsp v, Levelp l, Thingp me, ThingStatType stat, int target_roll) -> bool
+{
+  TRACE_DEBUG();
+
+  ThingEvent e = {};
+
+  return thing_stat_success(g, v, l, me, stat, target_roll, e);
 }

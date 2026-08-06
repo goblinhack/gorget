@@ -303,8 +303,16 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
 
   auto *it = e.source;
 
-  std::string const msg = "-" + std::to_string(e.damage);
-  auto              at  = thing_at(g, v, l, me);
+  //
+  // Popup for damage
+  //
+  std::string msg;
+  if (e.crit) {
+    msg = "CRIT! -" + std::to_string(e.damage);
+  } else {
+    msg = "-" + std::to_string(e.damage);
+  }
+  auto at = thing_at(g, v, l, me);
   game_popup_text_add(g, at.x, at.y, msg, RED);
 
   auto damage_name = e.special_attack.name;
@@ -332,15 +340,27 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
       case THING_EVENT_CRUSH_DAMAGE : //
         topcon(UI_WARN_FMT_STR "You are crushed by %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
-      case THING_EVENT_ENGULF_DAMAGE : //
-        topcon(UI_WARN_FMT_STR "You suffer digestive damage from %s." UI_RESET_FMT, by_the_thing.c_str());
+      case THING_EVENT_ENGULF_DAMAGE :
+        if (e.crit) {
+          topcon(UI_WARN_FMT_STR "You suffer critted digestive damage from %s." UI_RESET_FMT, by_the_thing.c_str());
+        } else {
+          topcon(UI_WARN_FMT_STR "You suffer digestive damage from %s." UI_RESET_FMT, by_the_thing.c_str());
+        }
         break;
       case THING_EVENT_THROWN_DAMAGE : [[fallthrough]];
       case THING_EVENT_MELEE_DAMAGE :
         if (damage_name.empty()) {
-          damage_name = "hit";
+          if (e.crit) {
+            damage_name = "critted";
+          } else {
+            damage_name = "hit";
+          }
         } else {
-          damage_name = "hit(" + damage_name + ")";
+          if (e.crit) {
+            damage_name = "critted(" + damage_name + ")";
+          } else {
+            damage_name = "hit(" + damage_name + ")";
+          }
         }
 
         if (thing_attack_count_per_tick(it) > 1) {
@@ -473,11 +493,20 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
 static void thing_damage_by_player(Gamep g, Levelsp v, Levelp l, Thingp it, ThingEvent &e)
 {
   TRACE();
+
   auto *the_player = e.source;
 
+  //
+  // Popup for damage to monsters
+  //
   if (thing_is_monst(it)) {
-    std::string const msg = "-" + std::to_string(e.damage);
-    auto              at  = thing_at(g, v, l, it);
+    std::string msg;
+    if (e.crit) {
+      msg = "CRIT! -" + std::to_string(e.damage);
+    } else {
+      msg = "-" + std::to_string(e.damage);
+    }
+    auto at = thing_at(g, v, l, it);
     game_popup_text_add(g, at.x, at.y, msg, WHITE);
   }
 
@@ -503,8 +532,12 @@ static void thing_damage_by_player(Gamep g, Levelsp v, Levelp l, Thingp it, Thin
       case THING_EVENT_ENGULF_DAMAGE : //
         topcon("You digest %s.", the_thing_name_long.c_str());
         break;
-      case THING_EVENT_MELEE_DAMAGE : //
-        topcon("You hit %s.", the_thing_name_long.c_str());
+      case THING_EVENT_MELEE_DAMAGE :
+        if (e.crit) {
+          topcon("You crit %s.", the_thing_name_long.c_str());
+        } else {
+          topcon("You hit %s.", the_thing_name_long.c_str());
+        }
         break;
       case THING_EVENT_WATER_DAMAGE : //
         topcon("%s suffers water damage from %s.", The_thing_name_long.c_str(), by_player.c_str());
@@ -672,6 +705,13 @@ void thing_damage_apply(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
     if (thing_is_player(me)) {
       topcon(UI_GOOD_FMT_STR "You take half damage from the heat." UI_RESET_FMT);
     }
+  }
+
+  //
+  // Critical attack?
+  //
+  if (e.crit) {
+    e.damage *= 2;
   }
 
   //

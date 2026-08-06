@@ -130,6 +130,11 @@ using ThingEvent = struct ThingEvent {
   // For fire that causes heat damage
   //
   bool nested_damage {};
+  //
+  // Critical hit attack
+  //
+  bool crit {};
+  bool fumble {};
 };
 
 //
@@ -1320,6 +1325,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_stat_mod(Gamep g, Levelsp v, Levelp l, Thingp me, ThingStatType stat) -> int;
 [[nodiscard]] auto thing_stat_set(Gamep g, Levelsp v, Levelp l, Thingp me, ThingStatType stat, uint8_t val) -> uint8_t;
 [[nodiscard]] auto thing_stat_string(Gamep g, Levelsp v, Levelp l, Thingp me, ThingStatType stat) -> std::string;
+[[nodiscard]] auto thing_stat_success(Gamep g, Levelsp v, Levelp l, Thingp me, ThingStatType stat, int target_roll, ThingEvent &e) -> bool;
 [[nodiscard]] auto thing_stat_success(Gamep g, Levelsp v, Levelp l, Thingp me, ThingStatType stat, int target_roll) -> bool;
 [[nodiscard]] auto thing_stat(Gamep g, Levelsp v, Levelp l, Thingp me, ThingStatType stat) -> int;
 [[nodiscard]] auto thing_strip_item(Gamep g, Levelsp v, Levelp l, Thingp owner, Thingp item, ThingEvent &e) -> bool;
