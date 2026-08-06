@@ -35,10 +35,10 @@ static void thing_collision_sort_cands(Gamep g, Levelsp v, Levelp l, Thingp me, 
   if (compiler_unused) {
     THING_DBG(g, v, l, me, "final cands: (pre sort)");
     for (auto a_cand : cands) {
-      auto  o_dist = a_cand.first;
-      auto *o      = a_cand.second;
+      auto  o_dist   = a_cand.first;
+      auto *obstacle = a_cand.second;
 
-      THING_DBG(g, v, l, o, "- sort_distance %f prio %u", o_dist, thing_priority(o));
+      THING_DBG(g, v, l, obstacle, "- sort_distance %f prio %u", o_dist, thing_priority(obstacle));
     }
   }
 
@@ -63,11 +63,292 @@ static void thing_collision_sort_cands(Gamep g, Levelsp v, Levelp l, Thingp me, 
   if (compiler_unused) {
     THING_DBG(g, v, l, me, "final cands:");
     for (auto a_cand : cands) {
-      auto  o_dist = a_cand.first;
-      auto *o      = a_cand.second;
+      auto  o_dist   = a_cand.first;
+      auto *obstacle = a_cand.second;
 
-      THING_DBG(g, v, l, o, "- sort_distance %f prio %u", o_dist, thing_priority(o));
+      THING_DBG(g, v, l, obstacle, "- sort_distance %f prio %u", o_dist, thing_priority(obstacle));
     }
+  }
+}
+
+[[nodiscard]] static auto thing_collision_check_circle_circle(Gamep g, Levelsp v, Levelp l, Thingp A, fpoint A_at, Thingp B, fpoint B_at) -> bool
+{
+  float const A_radius = thing_collision_radius(A);
+  float const B_radius = thing_collision_radius(B);
+
+  float const touching_dist = A_radius + B_radius;
+  float const dist          = distance(A_at, B_at);
+
+  if (compiler_unused) {
+    THING_DBG(g, v, l, A, "A %f,%f touching_dist %f dist %f ", A_at.x, A_at.y, touching_dist, dist);
+    THING_DBG(g, v, l, B, "B %f,%f", B_at.x, B_at.y);
+  }
+
+  if (dist >= touching_dist) {
+    return false;
+  }
+
+  return true;
+}
+
+[[nodiscard]] static auto thing_collision_check_circle_square(Gamep g, Levelsp v, Levelp l, Thingp C, fpoint C_at, Thingp B, fpoint B_at) -> bool
+{
+  float const radius = thing_collision_radius(C);
+
+  //
+  // Need to perform calculations from the center of the circle as the
+  // circle is really inside a tile with the top left co-ords being the
+  // blit point for the tile. The radius then is used from this cental
+  // point for collision.s
+  //
+  C_at.x += 0.5F;
+  C_at.y += 0.5F;
+
+  fpoint const tl(B_at.x, B_at.y);
+  fpoint const br(B_at.x + 1, B_at.y + 1);
+
+  if (1 || compiler_unused) {
+    THING_DBG(g, v, l, C, "circle %f,%f", C_at.x, C_at.y);
+    THING_DBG(g, v, l, B, "box %f,%f -> %f,%f", tl.x, tl.y, br.x, br.y);
+  }
+
+  fpoint const B0(B_at.x - 0, B_at.y - 0);
+  fpoint const B1(B_at.x + 1, B_at.y - 0);
+  fpoint const B2(B_at.x + 1, B_at.y + 1);
+  fpoint const B3(B_at.x + 0, B_at.y + 1);
+
+  //
+  // Circle inside box
+  //
+  if ((C_at.x >= B0.x) && (C_at.y >= B0.y) && (C_at.x <= B2.x) && (C_at.y <= B2.y)) {
+    if (1 || compiler_unused) {
+      THING_DBG(g, v, l, B, "collision line %d", __LINE__);
+    }
+    return true;
+  }
+
+  //
+  // Corner collisions.
+  //
+  if (distance(C_at, B0) < radius) {
+    if (1 || compiler_unused) {
+      THING_DBG(g, v, l, B, "collision line %d", __LINE__);
+    }
+    return true;
+  }
+
+  if (distance(C_at, B1) < radius) {
+    if (1 || compiler_unused) {
+      THING_DBG(g, v, l, B, "collision line %d", __LINE__);
+    }
+    return true;
+  }
+
+  if (distance(C_at, B2) < radius) {
+    if (1 || compiler_unused) {
+      THING_DBG(g, v, l, B, "collision line %d", __LINE__);
+    }
+    return true;
+  }
+
+  if (distance(C_at, B3) < radius) {
+    if (1 || compiler_unused) {
+      THING_DBG(g, v, l, B, "collision line %d", __LINE__);
+    }
+    return true;
+  }
+
+  fpoint *intersect_out = nullptr;
+  float   dist          = 0;
+
+  if (distance_to_line(C_at, B0, B1, &dist, intersect_out) != 0) {
+    if (dist < radius) {
+      if (1 || compiler_unused) {
+        THING_DBG(g, v, l, B, "collision line %d", __LINE__);
+      }
+      return true;
+    }
+  }
+
+  if (distance_to_line(C_at, B1, B2, &dist, intersect_out) != 0) {
+    if (dist < radius) {
+      if (1 || compiler_unused) {
+        THING_DBG(g, v, l, B, "collision line %d", __LINE__);
+      }
+      return true;
+    }
+  }
+
+  if (distance_to_line(C_at, B2, B3, &dist, intersect_out) != 0) {
+    if (dist < radius) {
+      if (1 || compiler_unused) {
+        THING_DBG(g, v, l, B, "collision line %d", __LINE__);
+      }
+      return true;
+    }
+  }
+
+  if (distance_to_line(C_at, B3, B0, &dist, intersect_out) != 0) {
+    if (dist < radius) {
+      if (1 || compiler_unused) {
+        THING_DBG(g, v, l, B, "collision line %d", __LINE__);
+      }
+      return true;
+    }
+  }
+
+  if (1 || compiler_unused) {
+    THING_DBG(g, v, l, B, "no collision line %d", __LINE__);
+  }
+
+  return false;
+}
+
+[[nodiscard]] static auto thing_collision_check_squares(fpoint A_at, fpoint B_at) -> bool
+{
+  fpoint const A0(A_at.x - 0, A_at.y - 0);
+  fpoint const A1(A_at.x + 1, A_at.y - 0);
+  fpoint const A2(A_at.x - 0, A_at.y + 1);
+  fpoint const A3(A_at.x + 1, A_at.y + 1);
+
+  fpoint const tl(B_at.x - 0, B_at.y - 0);
+  fpoint const br(B_at.x + 1, B_at.y + 1);
+
+  if ((A0.x >= tl.x) && (A0.x <= br.x) && (A0.y >= tl.y) && (A0.y <= br.y)) {
+    return true;
+  }
+  if ((A1.x >= tl.x) && (A1.x <= br.x) && (A1.y >= tl.y) && (A1.y <= br.y)) {
+    return true;
+  }
+  if ((A2.x >= tl.x) && (A2.x <= br.x) && (A2.y >= tl.y) && (A2.y <= br.y)) {
+    return true;
+  }
+  if ((A3.x >= tl.x) && (A3.x <= br.x) && (A3.y >= tl.y) && (A3.y <= br.y)) {
+    return true;
+  }
+
+  return false;
+}
+
+[[nodiscard]] static auto thing_collision_check_circle_small_circle_small(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint me_at, Thingp obstacle,
+                                                                          fpoint o_at) -> bool
+{
+  TRACE();
+  return thing_collision_check_circle_circle(g, v, l, me, me_at, obstacle, o_at);
+}
+
+[[nodiscard]] static auto thing_collision_check_circle_small_circle_large(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint me_at, Thingp obstacle,
+                                                                          fpoint o_at) -> bool
+{
+  TRACE();
+  return thing_collision_check_circle_circle(g, v, l, me, me_at, obstacle, o_at);
+}
+
+[[nodiscard]] static auto thing_collision_check_circle_small_square(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint me_at, Thingp obstacle,
+                                                                    fpoint o_at) -> bool
+{
+  TRACE();
+  return thing_collision_check_circle_square(g, v, l, me, me_at, obstacle, o_at);
+}
+
+[[nodiscard]] static auto thing_collision_check_circle_large_circle_large(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint me_at, Thingp obstacle,
+                                                                          fpoint o_at) -> bool
+{
+  TRACE();
+  return thing_collision_check_circle_circle(g, v, l, me, me_at, obstacle, o_at);
+}
+
+[[nodiscard]] static auto thing_collision_check_circle_large_square(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint me_at, Thingp obstacle,
+                                                                    fpoint o_at) -> bool
+{
+  TRACE();
+  return thing_collision_check_circle_square(g, v, l, me, me_at, obstacle, o_at);
+}
+
+[[nodiscard]] static auto thing_collision_check_square_square(fpoint me_at, fpoint o_at) -> bool
+{
+  TRACE();
+  return thing_collision_check_squares(me_at, o_at);
+}
+
+//
+// Do accurate hit box collision detection for this interpolated postion
+//
+static auto thing_collision_check(Gamep g, Levelsp v, Levelp l, Thingp me, const fpoint &interp_at_f, Thingp obstacle) -> bool
+{
+  TRACE();
+
+  auto o_at      = thing_real_at(g, v, l, obstacle);
+  auto collision = false;
+
+  if (thing_is_collision_circle_small(me)) {
+    if (thing_is_collision_circle_small(obstacle)) {
+      collision = thing_collision_check_circle_small_circle_small(g, v, l, me, interp_at_f, obstacle, o_at);
+      if (compiler_unused) {
+        THING_DBG(g, v, l, obstacle, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
+      }
+      return collision;
+    } else if (thing_is_collision_circle_large(obstacle)) {
+      collision = thing_collision_check_circle_small_circle_large(g, v, l, me, interp_at_f, obstacle, o_at);
+      if (compiler_unused) {
+        THING_DBG(g, v, l, obstacle, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
+      }
+      return collision;
+    } else if (thing_is_collision_square(obstacle)) {
+      collision = thing_collision_check_circle_small_square(g, v, l, me, interp_at_f, obstacle, o_at);
+      if (compiler_unused) {
+        THING_DBG(g, v, l, obstacle, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
+      }
+      return collision;
+    } else {
+      return false;
+    }
+  } else if (thing_is_collision_circle_large(me)) {
+    if (thing_is_collision_circle_small(obstacle)) {
+      collision = thing_collision_check_circle_small_circle_large(g, v, l, me, interp_at_f, obstacle, o_at);
+      if (compiler_unused) {
+        THING_DBG(g, v, l, obstacle, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
+      }
+      return collision;
+    } else if (thing_is_collision_circle_large(obstacle)) {
+      collision = thing_collision_check_circle_large_circle_large(g, v, l, me, interp_at_f, obstacle, o_at);
+      if (compiler_unused) {
+        THING_DBG(g, v, l, obstacle, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
+      }
+      return collision;
+    } else if (thing_is_collision_square(obstacle)) {
+      collision = thing_collision_check_circle_large_square(g, v, l, me, interp_at_f, obstacle, o_at);
+      if (compiler_unused) {
+        THING_DBG(g, v, l, obstacle, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
+      }
+      return collision;
+    } else {
+      return false;
+    }
+  } else if (thing_is_collision_square(me)) {
+    if (thing_is_collision_circle_small(obstacle)) {
+      collision = thing_collision_check_circle_small_square(g, v, l, obstacle, o_at, me, interp_at_f);
+      if (compiler_unused) {
+        THING_DBG(g, v, l, obstacle, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
+      }
+      return collision;
+    } else if (thing_is_collision_circle_large(obstacle)) {
+      collision = thing_collision_check_circle_large_square(g, v, l, obstacle, o_at, me, interp_at_f);
+      if (compiler_unused) {
+        THING_DBG(g, v, l, obstacle, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
+      }
+      return collision;
+    } else if (thing_is_collision_square(obstacle)) {
+      collision = thing_collision_check_square_square(o_at, interp_at_f);
+      if (compiler_unused) {
+        THING_DBG(g, v, l, obstacle, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
+      }
+      return collision;
+    } else {
+      return false;
+    }
+  } else {
+    return false;
   }
 }
 
@@ -360,191 +641,32 @@ void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
   ThingCands cands;
   FOR_ALL_THINGS_AT(g, v, l, obstacle, at)
   {
+    //
+    // Filter to only things that can be hit
+    //
+    if (! thing_is_collision_detection_enabled(obstacle)) {
+      continue;
+    }
+
     ThingCand const p = std::make_pair(0 /* dist */, obstacle);
     cands.push_back(p);
   }
 
   thing_collision_sort_cands(g, v, l, me, cands);
-
   TRACE_INDENT();
 
   for (auto cand : cands) {
     auto *obstacle = cand.second;
     bool  stop     = {};
+
+    THING_DBG(g, v, l, obstacle, "cand");
+    TRACE_INDENT();
+
     thing_collision_handle_do(g, v, l, obstacle, me, stop);
     if (stop) {
       return;
     }
   }
-}
-
-[[nodiscard]] static auto thing_collision_check_circle_circle(Gamep g, Levelsp v, Levelp l, Thingp A, fpoint A_at, Thingp B, fpoint B_at) -> bool
-{
-  float const A_radius = thing_collision_radius(A);
-  float const B_radius = thing_collision_radius(B);
-
-  float const touching_dist = A_radius + B_radius;
-  float const dist          = distance(A_at, B_at);
-
-  if (compiler_unused) {
-    THING_DBG(g, v, l, A, "A %f,%f touching_dist %f dist %f ", A_at.x, A_at.y, touching_dist, dist);
-    THING_DBG(g, v, l, B, "B %f,%f", B_at.x, B_at.y);
-  }
-
-  if (dist >= touching_dist) {
-    return false;
-  }
-
-  return true;
-}
-
-[[nodiscard]] static auto thing_collision_check_circle_square(Gamep g, Levelsp v, Levelp l, Thingp C, fpoint C_at, Thingp B, fpoint B_at) -> bool
-{
-  float const radius = thing_collision_radius(C);
-
-  //
-  // Need to perform calculations from the center of the circle as the
-  // circle is really inside a tile with the top left co-ords being the
-  // blit point for the tile. The radius then is used from this cental
-  // point for collision.s
-  //
-  C_at.x += 0.5F;
-  C_at.y += 0.5F;
-
-  fpoint const tl(B_at.x, B_at.y);
-  fpoint const br(B_at.x + 1, B_at.y + 1);
-
-  if (compiler_unused) {
-    THING_DBG(g, v, l, C, "circle %f,%f", C_at.x, C_at.y);
-    THING_DBG(g, v, l, B, "box %f,%f -> %f,%f", tl.x, tl.y, br.x, br.y);
-  }
-
-  fpoint const B0(B_at.x - 0, B_at.y - 0);
-  fpoint const B1(B_at.x + 1, B_at.y - 0);
-  fpoint const B2(B_at.x + 1, B_at.y + 1);
-  fpoint const B3(B_at.x + 0, B_at.y + 1);
-
-  //
-  // Circle inside box
-  //
-  if ((C_at.x >= B0.x) && (C_at.y >= B0.y) && (C_at.x <= B2.x) && (C_at.y <= B2.y)) {
-    return true;
-  }
-
-  //
-  // Corner collisions.
-  //
-  if (distance(C_at, B0) < radius) {
-    return true;
-  }
-
-  if (distance(C_at, B1) < radius) {
-    return true;
-  }
-
-  if (distance(C_at, B2) < radius) {
-    return true;
-  }
-
-  if (distance(C_at, B3) < radius) {
-    return true;
-  }
-
-  fpoint *intersect_out = nullptr;
-  float   dist          = 0;
-
-  if (distance_to_line(C_at, B0, B1, &dist, intersect_out) != 0) {
-    if (dist < radius) {
-      return true;
-    }
-  }
-
-  if (distance_to_line(C_at, B1, B2, &dist, intersect_out) != 0) {
-    if (dist < radius) {
-      return true;
-    }
-  }
-
-  if (distance_to_line(C_at, B2, B3, &dist, intersect_out) != 0) {
-    if (dist < radius) {
-      return true;
-    }
-  }
-
-  if (distance_to_line(C_at, B3, B0, &dist, intersect_out) != 0) {
-    if (dist < radius) {
-      return true;
-    }
-  }
-
-  return false;
-}
-
-[[nodiscard]] static auto thing_collision_check_squares(fpoint A_at, fpoint B_at) -> bool
-{
-  fpoint const A0(A_at.x - 0, A_at.y - 0);
-  fpoint const A1(A_at.x + 1, A_at.y - 0);
-  fpoint const A2(A_at.x - 0, A_at.y + 1);
-  fpoint const A3(A_at.x + 1, A_at.y + 1);
-
-  fpoint const tl(B_at.x - 0, B_at.y - 0);
-  fpoint const br(B_at.x + 1, B_at.y + 1);
-
-  if ((A0.x >= tl.x) && (A0.x <= br.x) && (A0.y >= tl.y) && (A0.y <= br.y)) {
-    return true;
-  }
-  if ((A1.x >= tl.x) && (A1.x <= br.x) && (A1.y >= tl.y) && (A1.y <= br.y)) {
-    return true;
-  }
-  if ((A2.x >= tl.x) && (A2.x <= br.x) && (A2.y >= tl.y) && (A2.y <= br.y)) {
-    return true;
-  }
-  if ((A3.x >= tl.x) && (A3.x <= br.x) && (A3.y >= tl.y) && (A3.y <= br.y)) {
-    return true;
-  }
-
-  return false;
-}
-
-[[nodiscard]] static auto thing_collision_check_circle_small_circle_small(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint me_at, Thingp o,
-                                                                          fpoint o_at) -> bool
-{
-  TRACE();
-  return thing_collision_check_circle_circle(g, v, l, me, me_at, o, o_at);
-}
-
-[[nodiscard]] static auto thing_collision_check_circle_small_circle_large(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint me_at, Thingp o,
-                                                                          fpoint o_at) -> bool
-{
-  TRACE();
-  return thing_collision_check_circle_circle(g, v, l, me, me_at, o, o_at);
-}
-
-[[nodiscard]] static auto thing_collision_check_circle_small_square(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint me_at, Thingp o, fpoint o_at)
-    -> bool
-{
-  TRACE();
-  return thing_collision_check_circle_square(g, v, l, me, me_at, o, o_at);
-}
-
-[[nodiscard]] static auto thing_collision_check_circle_large_circle_large(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint me_at, Thingp o,
-                                                                          fpoint o_at) -> bool
-{
-  TRACE();
-  return thing_collision_check_circle_circle(g, v, l, me, me_at, o, o_at);
-}
-
-[[nodiscard]] static auto thing_collision_check_circle_large_square(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint me_at, Thingp o, fpoint o_at)
-    -> bool
-{
-  TRACE();
-  return thing_collision_check_circle_square(g, v, l, me, me_at, o, o_at);
-}
-
-[[nodiscard]] static auto thing_collision_check_square_square(fpoint me_at, fpoint o_at) -> bool
-{
-  TRACE();
-  return thing_collision_check_squares(me_at, o_at);
 }
 
 //
@@ -554,8 +676,6 @@ void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
 static void thing_collision_interpolated_expand_candidates(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &collision_at,
                                                            ThingCands &cands)
 {
-  TRACE();
-
   //
   // If this is a projectile_fire hitting a wall, then we want to hit the ghost that is
   // also hiding inside the wall
@@ -567,6 +687,9 @@ static void thing_collision_interpolated_expand_candidates(Gamep g, Levelsp v, L
   if (! thing_is_collision_hit_all_on_tile(me) && ! thing_is_collision_hit_first_on_tile(me)) {
     return;
   }
+
+  THING_DBG(g, v, l, me, "expand candidates on (%d,%d)", collision_at.x, collision_at.y);
+  TRACE_INDENT();
 
   auto at = thing_real_at(g, v, l, me);
 
@@ -636,29 +759,35 @@ static void thing_collision_interpolated_expand_candidates(Gamep g, Levelsp v, L
 //
 // Process the collision candidate list
 //
-static auto thing_collision_interplolated_process_candidates(Gamep g, Levelsp v, Levelp l, Thingp me, const ThingCands &cands) -> bool
+static auto thing_collision_interplolated_process_candidates(Gamep g, Levelsp v, Levelp l, Thingp me, const fpoint &interp_at_f,
+                                                             const ThingCands &cands) -> bool
 {
   TRACE();
 
   bool hit_something = {};
 
   for (auto cand : cands) {
-    auto *o = cand.second;
+    auto *obstacle = cand.second;
 
     //
     // Skip things that are dead; unless we can hit their corpse
     //
-    if (thing_is_dead(o)) {
-      if (! thing_is_hit_when_dead(o)) {
+    if (thing_is_dead(obstacle)) {
+      if (! thing_is_hit_when_dead(obstacle)) {
         continue;
       }
+    }
+
+    auto collision = thing_collision_check(g, v, l, me, interp_at_f, obstacle);
+    if (! collision) {
+      continue;
     }
 
     //
     // Handle the actual collision
     //
     bool stop = {};
-    thing_collision_handle_do(g, v, l, o, me, stop);
+    thing_collision_handle_do(g, v, l, obstacle, me, stop);
     if (stop) {
       if (compiler_unused) {
         THING_DBG(g, v, l, me, "stop");
@@ -685,74 +814,14 @@ static void thing_collision_handle_interpolated_delta(Gamep g, Levelsp v, Levelp
 {
   TRACE();
 
-  FOR_ALL_THINGS_AT(g, v, l, o, collision_at)
+  FOR_ALL_THINGS_AT(g, v, l, obstacle, collision_at)
   {
-    if (o == me) {
+    if (obstacle == me) {
       continue;
     }
 
-    auto o_at      = thing_real_at(g, v, l, o);
-    auto collision = false;
-
-    if (thing_is_collision_circle_small(me)) {
-      if (thing_is_collision_circle_small(o)) {
-        collision = thing_collision_check_circle_small_circle_small(g, v, l, me, interp_at_f, o, o_at);
-        if (compiler_unused) {
-          THING_DBG(g, v, l, o, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
-        }
-      } else if (thing_is_collision_circle_large(o)) {
-        collision = thing_collision_check_circle_small_circle_large(g, v, l, me, interp_at_f, o, o_at);
-        if (compiler_unused) {
-          THING_DBG(g, v, l, o, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
-        }
-      } else if (thing_is_collision_square(o)) {
-        collision = thing_collision_check_circle_small_square(g, v, l, me, interp_at_f, o, o_at);
-        if (compiler_unused) {
-          THING_DBG(g, v, l, o, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
-        }
-      } else {
-        continue;
-      }
-    } else if (thing_is_collision_circle_large(me)) {
-      if (thing_is_collision_circle_small(o)) {
-        collision = thing_collision_check_circle_small_circle_large(g, v, l, me, interp_at_f, o, o_at);
-        if (compiler_unused) {
-          THING_DBG(g, v, l, o, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
-        }
-      } else if (thing_is_collision_circle_large(o)) {
-        collision = thing_collision_check_circle_large_circle_large(g, v, l, me, interp_at_f, o, o_at);
-        if (compiler_unused) {
-          THING_DBG(g, v, l, o, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
-        }
-      } else if (thing_is_collision_square(o)) {
-        collision = thing_collision_check_circle_large_square(g, v, l, me, interp_at_f, o, o_at);
-        if (compiler_unused) {
-          THING_DBG(g, v, l, o, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
-        }
-      } else {
-        continue;
-      }
-    } else if (thing_is_collision_square(me)) {
-      if (thing_is_collision_circle_small(o)) {
-        collision = thing_collision_check_circle_small_square(g, v, l, o, o_at, me, interp_at_f);
-        if (compiler_unused) {
-          THING_DBG(g, v, l, o, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
-        }
-      } else if (thing_is_collision_circle_large(o)) {
-        collision = thing_collision_check_circle_large_square(g, v, l, o, o_at, me, interp_at_f);
-        if (compiler_unused) {
-          THING_DBG(g, v, l, o, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
-        }
-      } else if (thing_is_collision_square(o)) {
-        collision = thing_collision_check_square_square(o_at, interp_at_f);
-        if (compiler_unused) {
-          THING_DBG(g, v, l, o, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
-        }
-      } else {
-        continue;
-      }
-    } else {
-      thing_err(g, v, l, me, "no collision type set");
+    auto collision = thing_collision_check(g, v, l, me, interp_at_f, obstacle);
+    if (! collision) {
       continue;
     }
 
@@ -762,9 +831,9 @@ static void thing_collision_handle_interpolated_delta(Gamep g, Levelsp v, Levelp
       // Sort by center of the tile distance. This allows walls and ghost in walls to have
       // the same distance
       //
-      auto            o_tiled_at = make_fpoint(thing_at(g, v, l, o)) + fpoint(0.5, 0.5);
+      auto            o_tiled_at = make_fpoint(thing_at(g, v, l, obstacle)) + fpoint(0.5, 0.5);
       float const     o_dist     = distance(at, o_tiled_at);
-      ThingCand const p          = std::make_pair(o_dist, o);
+      ThingCand const p          = std::make_pair(o_dist, obstacle);
       cands.push_back(p);
     }
   }
@@ -796,10 +865,10 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
         for (auto dy = -1; dy <= 1; dy++) {
           bpoint collision_at(interp_at.x + dx, interp_at.y + dy);
           THING_DBG(g, v, l, me, "- at (%d,%d)", collision_at.x, collision_at.y);
-          FOR_ALL_THINGS_AT(g, v, l, o, collision_at)
+          FOR_ALL_THINGS_AT(g, v, l, obstacle, collision_at)
           {
-            if (o != me) {
-              THING_DBG(g, v, l, o, "   - check for collision");
+            if (obstacle != me) {
+              THING_DBG(g, v, l, obstacle, "   - check for collision");
             }
           }
         }
@@ -834,7 +903,7 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
     //
     // Process the collision candidate list
     //
-    if (thing_collision_interplolated_process_candidates(g, v, l, me, cands)) {
+    if (thing_collision_interplolated_process_candidates(g, v, l, me, interp_at_f, cands)) {
       return;
     }
   }
