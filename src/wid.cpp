@@ -92,7 +92,7 @@ static wid_key_map_int wid_pre_tick_top_level;
 //
 // Last time we changed what we were over.
 //
-ts_t        wid_last_over_event;
+static ts_t wid_last_destroy_event;
 static ts_t wid_last_processed_key_event;
 
 //
@@ -200,7 +200,7 @@ void wid_fini(Gamep g_maybe_null)
   wid_top_level4               = {};
   wid_tick_top_level           = {};
   wid_pre_tick_top_level       = {};
-  wid_last_over_event          = {};
+  wid_last_destroy_event       = {};
   wid_last_processed_key_event = {};
   wid_focus_locked             = {};
   wid_focus                    = {};
@@ -2264,6 +2264,10 @@ static void wid_destroy_delay(Gamep g, Widp *wp, int delay)
 
   if (w->parent == nullptr) {
     wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
+
+    if (! wid_ignore_events(w->parent)) {
+      wid_last_destroy_event = time_ms();
+    }
   }
 
   if (w->on_destroy_begin != nullptr) {
@@ -5675,12 +5679,13 @@ void wid_move_to_abs_centered(Gamep g, Widp w, int x, int y)
   // immediately allow a double click on a chasm that was behind the
   // widget for example.
   //
-  if (! time_have_x_tenths_passed_since(2, wid_last_processed_key_event)) {
-    // DBG("wid_some_recent_event_occurred: Too soon since last wid over event");
+  if (! time_have_x_tenths_passed_since(1, wid_last_processed_key_event)) {
+    // DBG("wid_some_recent_event_occurred: Too soon since last key processed event");
     return true;
   }
-  if (! time_have_x_tenths_passed_since(2, wid_last_over_event)) {
-    // DBG("wid_some_recent_event_occurred: Too soon since last wid over event");
+
+  if (! time_have_x_tenths_passed_since(1, wid_last_destroy_event)) {
+    // DBG("wid_some_recent_event_occurred: Too soon since last wid destroy event");
     return true;
   }
 

@@ -33,7 +33,7 @@
   TRACE_INDENT();
 
   if (wid_some_recent_event_occurred()) {
-    DBG("game mouse down, ignore, some event occurred");
+    topcon("game mouse down, ignore, some event occurred");
     return false;
   }
 

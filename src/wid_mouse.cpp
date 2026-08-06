@@ -21,7 +21,6 @@
 
 bool wid_mouse_visible = true;
 bool wid_mouse_two_clicks;
-ts_t wid_last_mouse_motion;
 
 //
 // Catch recursive cases:
@@ -98,10 +97,7 @@ void wid_mouse_over_end(Gamep g)
     return;
   }
 
-  w = wid_over;
-  if (wid_over != nullptr) {
-    wid_last_over_event = time_ms();
-  }
+  w        = wid_over;
   wid_over = nullptr;
 
   if (w == nullptr) [[unlikely]] {
@@ -170,10 +166,6 @@ void wid_mouse_over_end(Gamep g)
   wid_mouse_over_end(g);
 
   wid_over = w;
-  if (! wid_ignore_events(wid_over)) {
-    wid_last_over_event = time_ms();
-    // DBG("mouse over %s mouse %d,%d.", wid_over->name.c_str(), ascii_mouse_x, ascii_mouse_y);
-  }
 
   wid_set_mode(w, WID_MODE_OVER);
 
@@ -788,10 +780,6 @@ void wid_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx, int
   }
   ascii_mouse_x = x;
   ascii_mouse_y = y;
-
-  if ((relx != 0) || (rely != 0)) {
-    wid_last_mouse_motion = time_ms();
-  }
 
   if (wid_mouse_motion_recursion != 0) {
     return;

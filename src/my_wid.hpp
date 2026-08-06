@@ -249,9 +249,6 @@ extern bool wid_mouse_visible;
 
 extern const int wid_destroy_delay_ms;
 
-extern ts_t wid_last_mouse_motion;
-extern ts_t wid_last_over_event;
-
 extern Widp wid_focus;
 extern Widp wid_over;
 extern Widp wid_focus_locked;

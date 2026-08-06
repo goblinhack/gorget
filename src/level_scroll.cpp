@@ -92,7 +92,7 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
       //
       return;
     }
-    if ((x < MAP_SCROLL_EDGE_OUTER) || (y < MAP_SCROLL_EDGE_OUTER) || (x > 1 - MAP_SCROLL_EDGE_OUTER) || (y > 1 - MAP_SCROLL_EDGE_OUTER)) {
+    if ((x < MAP_SCROLL_EDGE_INNER) || (y < MAP_SCROLL_EDGE_INNER) || (x > 1 - MAP_SCROLL_EDGE_INNER) || (y > 1 - MAP_SCROLL_EDGE_INNER)) {
       //
       // Unless the player has wandered off screen
       //
@@ -114,8 +114,9 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
           //
           // Replace the mouse path
           // Ignore auto scroll
+          // Allow the player to move the mouse while scrolling
           //
-          return;
+          break;
         case PLAYER_STATE_PATH_REQUESTED :
           //
           // Player wants to start following or replace the current path.
@@ -173,6 +174,7 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
   if (x > 1.0 - scroll_outer) {
     dx = static_cast< int >((x - scroll_outer) * v->scroll_speed);
     dx = std::min(dx, max_pixel_scroll_outer);
+    dx = std::max(dx, max_pixel_scroll_inner * 2);
     v->pixel_map_at.x += dx;
   } else if (x > 1.0 - scroll_inner) {
     dx = static_cast< int >((x - scroll_inner) * v->scroll_speed);
@@ -181,18 +183,20 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
   }
 
   if (x < scroll_outer) {
-    dy = static_cast< int >((scroll_outer - x) * v->scroll_speed);
-    dy = std::min(dy, max_pixel_scroll_outer);
-    v->pixel_map_at.x -= dy;
+    dx = static_cast< int >((scroll_outer - x) * v->scroll_speed);
+    dx = std::min(dx, max_pixel_scroll_outer);
+    dx = std::max(dx, max_pixel_scroll_inner * 2);
+    v->pixel_map_at.x -= dx;
   } else if (x < scroll_inner) {
-    dy = static_cast< int >((scroll_inner - x) * v->scroll_speed);
-    dy = std::min(dy, max_pixel_scroll_inner);
-    v->pixel_map_at.x -= dy;
+    dx = static_cast< int >((scroll_inner - x) * v->scroll_speed);
+    dx = std::min(dx, max_pixel_scroll_inner);
+    v->pixel_map_at.x -= dx;
   }
 
   if (y > 1.0 - scroll_outer) {
     dy = static_cast< int >((y - scroll_outer) * v->scroll_speed);
     dy = std::min(dy, max_pixel_scroll_outer);
+    dy = std::max(dy, max_pixel_scroll_inner * 2);
     v->pixel_map_at.y += dy;
   } else if (y > 1.0 - scroll_inner) {
     dy = static_cast< int >((y - scroll_inner) * v->scroll_speed);
@@ -201,13 +205,14 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
   }
 
   if (y < scroll_outer) {
-    dx = static_cast< int >((scroll_outer - y) * v->scroll_speed);
-    dx = std::min(dx, max_pixel_scroll_outer);
-    v->pixel_map_at.y -= dx;
+    dy = static_cast< int >((scroll_outer - y) * v->scroll_speed);
+    dy = std::min(dy, max_pixel_scroll_outer);
+    dy = std::max(dy, max_pixel_scroll_inner * 2);
+    v->pixel_map_at.y -= dy;
   } else if (y < scroll_inner) {
-    dx = static_cast< int >((scroll_inner - y) * v->scroll_speed);
-    dx = std::min(dx, max_pixel_scroll_inner);
-    v->pixel_map_at.y -= dx;
+    dy = static_cast< int >((scroll_inner - y) * v->scroll_speed);
+    dy = std::min(dy, max_pixel_scroll_inner);
+    v->pixel_map_at.y -= dy;
   }
 
   //
