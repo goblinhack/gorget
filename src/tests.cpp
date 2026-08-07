@@ -105,7 +105,8 @@
   if (!test_load_player_trap_did_not_trigger_due_to_clover()) { return false; }
   if (!test_load_player_trap_did_not_trigger_due_to_horseshoe()) { return false; }
   if (!test_load_player_triggered()) { return false; }
-  if (!test_load_potion_dislocation()) { return false; }
+  if (!test_load_potion_dislocation_bad_luck()) { return false; }
+  if (!test_load_potion_dislocation_good_luck()) { return false; }
   if (!test_load_potion_healing()) { return false; }
   if (!test_load_potion_protection()) { return false; }
   if (!test_load_potion_stealth()) { return false; }

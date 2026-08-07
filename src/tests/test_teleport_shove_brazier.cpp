@@ -32,8 +32,8 @@
       = "xxxxxxxx"
         "x...C..x"
         "x...C..x"
-        "x...C..x"
-        "x@BTCT!x"
+        "x...C!.x"
+        "x@BTCT.x"
         "x...C..x"
         "x...C..x"
         "xxxxxxxx";
