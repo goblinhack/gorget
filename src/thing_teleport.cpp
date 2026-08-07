@@ -128,14 +128,14 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
     if ((delta == fpoint(0, 0)) || level_is_obs_to_teleporting_onto_bool(g, v, l, to)) {
       delta = thing_get_direction(g, v, l, me);
       tof   = outf + delta;
-      to    = make_bpoint(tof);
-
-      if ((delta != fpoint(0, 0)) && ! level_is_obs_to_teleporting_onto_bool(g, v, l, to)) {
-
-        if (! level_is_obs_to_teleporting_onto_bool(g, v, l, to)) {
-          out = to;
-          THING_DBG(g, v, l, me, "found a landing spot (%d,%d) delta(%f,%f), (1)", to.x, to.y, delta.x, delta.y);
-          return true;
+      if (! is_oob(tof)) {
+        to = make_bpoint(tof);
+        if ((delta != fpoint(0, 0)) && ! level_is_obs_to_teleporting_onto_bool(g, v, l, to)) {
+          if (! level_is_obs_to_teleporting_onto_bool(g, v, l, to)) {
+            out = to;
+            THING_DBG(g, v, l, me, "found a landing spot (%d,%d) delta(%f,%f), (1)", to.x, to.y, delta.x, delta.y);
+            return true;
+          }
         }
       }
     }
@@ -159,10 +159,12 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
     for (auto d : deltas) {
       delta = d;
       tof   = outf + delta;
-      to    = make_bpoint(tof);
-      if (! level_is_obs_to_teleporting_onto_bool(g, v, l, to)) {
-        cands.push_back(to);
-        THING_DBG(g, v, l, me, "found a landing spot cand (%d,%d) (2)", to.x, to.y);
+      if (! is_oob(tof)) {
+        to = make_bpoint(tof);
+        if (! level_is_obs_to_teleporting_onto_bool(g, v, l, to)) {
+          cands.push_back(to);
+          THING_DBG(g, v, l, me, "found a landing spot cand (%d,%d) (2)", to.x, to.y);
+        }
       }
     }
 
@@ -192,10 +194,12 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
     for (auto d : deltas) {
       delta = d;
       tof   = outf + delta;
-      to    = make_bpoint(tof);
-      if (! level_is_obs_to_teleporting_onto_bool(g, v, l, to)) {
-        cands.push_back(to);
-        THING_DBG(g, v, l, me, "found a landing spot cand (%d,%d) (3)", to.x, to.y);
+      if (! is_oob(tof)) {
+        to = make_bpoint(tof);
+        if (! level_is_obs_to_teleporting_onto_bool(g, v, l, to)) {
+          cands.push_back(to);
+          THING_DBG(g, v, l, me, "found a landing spot cand (%d,%d) (3)", to.x, to.y);
+        }
       }
     }
 
@@ -209,6 +213,11 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
 
   tof = outf + delta;
   to  = make_bpoint(tof);
+
+  if (is_oob(tof)) {
+    THING_DBG(g, v, l, me, "could not teleport to (%d,%d) oob", to.x, to.y);
+    return false;
+  }
 
   if (compiler_unused) {
     THING_DBG(g, v, l, me, "delta %f,%f bpoint %d,%d out %d,%d", delta.x, delta.y, to.x, to.y, out.x, out.y);
@@ -424,18 +433,18 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
     to.y                 = PCG_RANDOM_RANGE(border, (uint8_t) MAP_HEIGHT - border);
 
     if (is_oob_or_border(to)) [[unlikely]] {
-      THING_DBG(g, v, l, me, "teleport, no; oob");
+      IF_DEBUG2 { THING_DBG(g, v, l, me, "teleport, no; oob"); }
       continue;
     }
 
     if (distance(to, at) < MAP_WIDTH / 2) {
-      THING_DBG(g, v, l, me, "teleport, no; too close");
+      IF_DEBUG2 { THING_DBG(g, v, l, me, "teleport, no; too close"); }
       continue;
     }
 
     if (attempt < 100) {
       if (l->info.on_path_entrance_to_exit[ to.x ][ to.y ] == 0U) {
-        THING_DBG(g, v, l, me, "teleport, no; not on safe path");
+        IF_DEBUG2 { THING_DBG(g, v, l, me, "teleport, no; not on safe path"); }
         continue;
       }
     }
@@ -459,17 +468,17 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
         to.y = y;
 
         if (is_oob_or_border(to)) [[unlikely]] {
-          THING_DBG(g, v, l, me, "teleport, no; oob");
+          IF_DEBUG2 { THING_DBG(g, v, l, me, "teleport, no; oob"); }
           continue;
         }
 
         if (distance(to, at) < MAP_WIDTH / 2) {
-          THING_DBG(g, v, l, me, "teleport, no; too close");
+          IF_DEBUG2 { THING_DBG(g, v, l, me, "teleport, no; too close"); }
           continue;
         }
 
         if (l->info.on_path_entrance_to_exit[ to.x ][ to.y ] == 0U) {
-          THING_DBG(g, v, l, me, "teleport, no; not on safe path");
+          IF_DEBUG2 { THING_DBG(g, v, l, me, "teleport, no; not on safe path"); }
           continue;
         }
 
@@ -502,12 +511,12 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
         to.y = y;
 
         if (is_oob_or_border(to)) [[unlikely]] {
-          THING_DBG(g, v, l, me, "teleport, no; oob");
+          IF_DEBUG2 { THING_DBG(g, v, l, me, "teleport, no; oob"); }
           continue;
         }
 
         if (distance(to, at) < MAP_WIDTH / 2) {
-          THING_DBG(g, v, l, me, "teleport, no; too close");
+          IF_DEBUG2 { THING_DBG(g, v, l, me, "teleport, no; too close"); }
           continue;
         }
 
@@ -540,12 +549,12 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
         to.y = y;
 
         if (is_oob_or_border(to)) [[unlikely]] {
-          THING_DBG(g, v, l, me, "teleport, no; oob");
+          IF_DEBUG2 { THING_DBG(g, v, l, me, "teleport, no; oob"); }
           continue;
         }
 
         if (distance(to, at) < MAP_WIDTH / 2) {
-          THING_DBG(g, v, l, me, "teleport, no; too close");
+          IF_DEBUG2 { THING_DBG(g, v, l, me, "teleport, no; too close"); }
           continue;
         }
 
@@ -574,7 +583,7 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
         to.y = y;
 
         if (is_oob_or_border(to)) [[unlikely]] {
-          THING_DBG(g, v, l, me, "teleport, no; oob");
+          IF_DEBUG2 { THING_DBG(g, v, l, me, "teleport, no; oob"); }
           continue;
         }
 

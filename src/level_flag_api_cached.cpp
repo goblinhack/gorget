@@ -5,6 +5,7 @@
 #include "my_bpoint.hpp"
 #include "my_callstack.hpp"
 #include "my_level.hpp"
+#include "my_level_inlines.hpp"
 #include "my_tp.hpp"
 #include "my_types.hpp"
 
@@ -659,72 +660,108 @@
 [[nodiscard]] auto level_is_obs_to_cursor_path_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
+  if (is_oob(p)) {
+    return true;
+  }
   return level_flag_cached(g, v, l, is_obs_to_cursor_path, p);
 }
 
 [[nodiscard]] auto level_is_obs_to_explosion_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
+  if (is_oob(p)) {
+    return true;
+  }
   return level_flag_cached(g, v, l, is_obs_to_explosion, p);
 }
 
 [[nodiscard]] auto level_is_obs_to_falling_onto_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
+  if (is_oob(p)) {
+    return true;
+  }
   return level_flag_cached(g, v, l, is_obs_to_falling_onto, p);
 }
 
 [[nodiscard]] auto level_is_obs_to_fire_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
+  if (is_oob(p)) {
+    return true;
+  }
   return level_flag_cached(g, v, l, is_obs_to_fire, p);
 }
 
 [[nodiscard]] auto level_is_obs_to_jumping_over_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
+  if (is_oob(p)) {
+    return true;
+  }
   return level_flag_cached(g, v, l, is_obs_to_jumping_over, p);
 }
 
 [[nodiscard]] auto level_is_obs_to_jumping_onto_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
+  if (is_oob(p)) {
+    return true;
+  }
   return level_flag_cached(g, v, l, is_obs_to_jumping_onto, p);
 }
 
 [[nodiscard]] auto level_is_obs_to_jumping_out_of_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
+  if (is_oob(p)) {
+    return true;
+  }
   return level_flag_cached(g, v, l, is_obs_to_jumping_out_of, p);
 }
 
 [[nodiscard]] auto level_is_obs_to_movement_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
+  if (is_oob(p)) {
+    return true;
+  }
   return level_flag_cached(g, v, l, is_obs_to_movement, p);
 }
 
 [[nodiscard]] auto level_is_obs_to_spawning_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
+  if (is_oob(p)) {
+    return true;
+  }
   return level_flag_cached(g, v, l, is_obs_to_spawning, p);
 }
 
 [[nodiscard]] auto level_is_obs_to_teleporting_onto_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
+  if (is_oob(p)) {
+    return true;
+  }
   return level_flag_cached(g, v, l, is_obs_to_teleporting_onto, p);
 }
 
 [[nodiscard]] auto level_is_obs_to_vision_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
+  if (is_oob(p)) {
+    return true;
+  }
   return level_flag_cached(g, v, l, is_obs_to_vision, p);
 }
 
 [[nodiscard]] auto level_is_obs_when_dead_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
+  if (is_oob(p)) {
+    return true;
+  }
   return level_flag_cached(g, v, l, is_obs_when_dead, p);
 }
 
@@ -2081,6 +2118,9 @@
 [[nodiscard]] auto level_is_obs_to_hearing_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
+  if (is_oob(p)) {
+    return true;
+  }
   return level_flag_cached(g, v, l, is_obs_to_hearing, p);
 }
 
@@ -2093,12 +2133,18 @@
 [[nodiscard]] auto level_is_obs_to_throwing_over_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
+  if (is_oob(p)) {
+    return true;
+  }
   return level_flag_cached(g, v, l, is_obs_to_throwing_over, p);
 }
 
 [[nodiscard]] auto level_is_obs_to_throwing_onto_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
+  if (is_oob(p)) {
+    return true;
+  }
   return level_flag_cached(g, v, l, is_obs_to_throwing_onto, p);
 }
 
@@ -2243,6 +2289,9 @@
 [[nodiscard]] auto level_is_obs_to_beam_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
+  if (is_oob(p)) {
+    return true;
+  }
   return level_flag_cached(g, v, l, is_obs_to_beam, p);
 }
 
@@ -2447,6 +2496,9 @@
 [[nodiscard]] auto level_is_obs_to_paths_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
+  if (is_oob(p)) {
+    return true;
+  }
   return level_flag_cached(g, v, l, is_obs_to_paths, p);
 }
 

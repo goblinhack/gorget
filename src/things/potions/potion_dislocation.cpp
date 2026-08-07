@@ -3,6 +3,7 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_level_inlines.hpp"
 #include "my_main.hpp"
 #include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp"
@@ -25,12 +26,76 @@ static auto tp_potion_dislocation_detail_get(Gamep g, Levelsp v, Levelp l, Thing
 
   return UI_INFO1_FMT_STR "Feel like a change of location? This potion will transport you somewhere new and exciting on the level.\n" //
       UI_INFO2_FMT_STR "At random.\n"                                                                                                 //
-      UI_INFO3_FMT_STR "Don't neglect the influence of luck with this one when ...";
+      UI_INFO3_FMT_STR "Don't neglect the influence of luck with random teleportation...";
 }
 
 static void tp_potion_dislocation_on_thrown_end(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp thrower)
 {
-  TRACE();
+  THING_DBG(g, v, l, me, "thrown end");
+  TRACE_INDENT();
+
+  auto at      = thing_at(g, v, l, me);
+  bool got_one = {};
+
+  //
+  // Try to teleport a monster at the thrown location first.
+  //
+  FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, at)
+  {
+    if (it == me) {
+      continue;
+    }
+
+    if (thing_is_teleport_blocked(it)) {
+      continue;
+    }
+
+    if (thing_is_monst(it)) {
+      THING_DBG(g, v, l, it, "teleport monst");
+      TRACE_INDENT();
+
+      if (thing_teleport_random(g, v, l, it)) {
+        got_one = true;
+        break;
+      }
+    }
+  }
+
+  //
+  // Try to teleport anythign else at the thrown location first.
+  //
+  if (! got_one) {
+    FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, at)
+    {
+      if (it == me) {
+        continue;
+      }
+
+      if (thing_is_teleport_blocked(it)) {
+        continue;
+      }
+
+      THING_DBG(g, v, l, it, "teleport thing");
+      TRACE_INDENT();
+
+      if (thing_teleport_random(g, v, l, it)) {
+        break;
+      }
+    }
+  }
+
+  //
+  // Try to teleport the potion itself
+  //
+  THING_DBG(g, v, l, me, "self teleport");
+  TRACE_INDENT();
+
+  if (thing_teleport_random(g, v, l, me)) {
+    return;
+  }
+
+  THING_DBG(g, v, l, me, "did not teleport; land instead");
+  TRACE_INDENT();
 
   //
   // Soft landing?
@@ -38,13 +103,6 @@ static void tp_potion_dislocation_on_thrown_end(Gamep g, Levelsp v, Levelp l, Th
   if ((level_is_chasm_bool(g, v, l, thing_at(g, v, l, me))) || // newline
       (level_is_water_bool(g, v, l, thing_at(g, v, l, me))) || // newline
       (level_is_foliage_bool(g, v, l, thing_at(g, v, l, me)))) {
-    return;
-  }
-
-  //
-  // Try to teleport the potion itself
-  //
-  if (thing_teleport_random(g, v, l, me)) {
     return;
   }
 

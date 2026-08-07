@@ -23,17 +23,17 @@
   std::string const start
       = "xxxxxxxxxxxxxxxxxxxxxxxxxxx"
         "x.........................x"
-        "x.`````...................x"
-        "x@`````...................x"
-        "x.`````...................x"
+        "x..````...................x"
+        "x@.````...................x"
+        "x..````...................x"
         "x.........................x"
         "xxxxxxxxxxxxxxxxxxxxxxxxxxx";
   std::string const expect1
       = "xxxxxxxxxxxxxxxxxxxxxxxxxxx"
         "x.........................x"
-        "x.;;!!!...................x"
-        "x@!;!!!...................x"
-        "x.;;!!!...................x"
+        "x..;;!!...................x"
+        "x@.!;!!...................x"
+        "x..;;!!...................x"
         "x.........................x"
         "xxxxxxxxxxxxxxxxxxxxxxxxxxx";
 
@@ -66,7 +66,7 @@
   //
   // Throw all items
   //
-  throw_to = thing_at(g, v, l, player);
+  throw_to = thing_at(g, v, l, player) + bpoint(1, 0);
 
   for (;;) {
     bool got_item = false;

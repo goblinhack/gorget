@@ -438,7 +438,8 @@ using Thing = struct Thing {
   //
   // Being thrown
   //
-  uint8_t _is_thrown : 1;
+  uint8_t _is_thrown            : 1;
+  uint8_t _is_thrown_processing : 1;
   //
   // Idle etc...
   //

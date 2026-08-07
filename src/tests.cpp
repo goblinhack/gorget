@@ -140,6 +140,7 @@
   if (!test_load_throw_item_at_monst()) { return false; }
   if (!test_load_throw_item_chasm()) { return false; }
   if (!test_load_throw_items()) { return false; }
+  if (!test_load_throw_potion_dislocation()) { return false; }
   if (!test_load_throw_potion_healing_into_lava()) { return false; }
   if (!test_load_throw_potion_healing()) { return false; }
   if (!test_load_throw_potion_incin_chain_explosion()) { return false; }

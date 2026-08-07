@@ -138,6 +138,7 @@ auto test_load_teleport() -> bool;
 auto test_load_throw_item_at_monst() -> bool;
 auto test_load_throw_item_chasm() -> bool;
 auto test_load_throw_items() -> bool;
+auto test_load_throw_potion_dislocation() -> bool;
 auto test_load_throw_potion_healing_into_lava() -> bool;
 auto test_load_throw_potion_healing() -> bool;
 auto test_load_throw_potion_incin_chain_explosion() -> bool;

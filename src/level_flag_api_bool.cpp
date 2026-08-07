@@ -5,6 +5,7 @@
 #include "my_bpoint.hpp"
 #include "my_callstack.hpp"
 #include "my_level.hpp"
+#include "my_level_inlines.hpp"
 #include "my_tp.hpp"
 #include "my_types.hpp"
 
@@ -659,72 +660,108 @@
 [[nodiscard]] auto level_is_obs_to_cursor_path_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
+  if (is_oob(p)) {
+    return true;
+  }
   return level_flag(g, v, l, is_obs_to_cursor_path, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_obs_to_explosion_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
+  if (is_oob(p)) {
+    return true;
+  }
   return level_flag(g, v, l, is_obs_to_explosion, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_obs_to_falling_onto_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
+  if (is_oob(p)) {
+    return true;
+  }
   return level_flag(g, v, l, is_obs_to_falling_onto, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_obs_to_fire_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
+  if (is_oob(p)) {
+    return true;
+  }
   return level_flag(g, v, l, is_obs_to_fire, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_obs_to_jumping_over_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
+  if (is_oob(p)) {
+    return true;
+  }
   return level_flag(g, v, l, is_obs_to_jumping_over, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_obs_to_jumping_onto_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
+  if (is_oob(p)) {
+    return true;
+  }
   return level_flag(g, v, l, is_obs_to_jumping_onto, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_obs_to_jumping_out_of_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
+  if (is_oob(p)) {
+    return true;
+  }
   return level_flag(g, v, l, is_obs_to_jumping_out_of, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_obs_to_movement_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
+  if (is_oob(p)) {
+    return true;
+  }
   return level_flag(g, v, l, is_obs_to_movement, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_obs_to_spawning_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
+  if (is_oob(p)) {
+    return true;
+  }
   return level_flag(g, v, l, is_obs_to_spawning, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_obs_to_teleporting_onto_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
+  if (is_oob(p)) {
+    return true;
+  }
   return level_flag(g, v, l, is_obs_to_teleporting_onto, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_obs_to_vision_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
+  if (is_oob(p)) {
+    return true;
+  }
   return level_flag(g, v, l, is_obs_to_vision, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_obs_when_dead_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
+  if (is_oob(p)) {
+    return true;
+  }
   return level_flag(g, v, l, is_obs_when_dead, p, me) != nullptr;
 }
 
@@ -2081,6 +2118,9 @@
 [[nodiscard]] auto level_is_obs_to_hearing_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
+  if (is_oob(p)) {
+    return true;
+  }
   return level_flag(g, v, l, is_obs_to_hearing, p, me) != nullptr;
 }
 
@@ -2093,12 +2133,18 @@
 [[nodiscard]] auto level_is_obs_to_throwing_over_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
+  if (is_oob(p)) {
+    return true;
+  }
   return level_flag(g, v, l, is_obs_to_throwing_over, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_obs_to_throwing_onto_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
+  if (is_oob(p)) {
+    return true;
+  }
   return level_flag(g, v, l, is_obs_to_throwing_onto, p, me) != nullptr;
 }
 
@@ -2243,6 +2289,9 @@
 [[nodiscard]] auto level_is_obs_to_beam_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
+  if (is_oob(p)) {
+    return true;
+  }
   return level_flag(g, v, l, is_obs_to_beam, p, me) != nullptr;
 }
 
@@ -2447,6 +2496,9 @@
 [[nodiscard]] auto level_is_obs_to_paths_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
+  if (is_oob(p)) {
+    return true;
+  }
   return level_flag(g, v, l, is_obs_to_paths, p, me) != nullptr;
 }
 

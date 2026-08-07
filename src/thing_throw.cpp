@@ -34,13 +34,29 @@ void thing_is_thrown_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp throw
     return;
   }
 
+  if (item->_is_thrown_processing) {
+    //
+    // Avoid nested throw loops
+    //
+    if (val) {
+      THING_DBG(g, v, l, item, "nested thrown set");
+    } else {
+      THING_DBG(g, v, l, item, "nested thrown unset");
+    }
+    return;
+  }
+
   if (val) {
+    item->_is_thrown_processing = true;
     thing_on_thrown_begin(g, v, l, item, thrower);
+    item->_is_thrown_processing = false;
   } else {
     THING_DBG(g, v, l, item, "pre thrown end");
     TRACE_INDENT();
 
+    item->_is_thrown_processing = true;
     thing_on_thrown_end(g, v, l, item, thrower);
+    item->_is_thrown_processing = false;
 
     THING_DBG(g, v, l, item, "post thrown end");
     TRACE_INDENT();
@@ -204,7 +220,11 @@ static auto thing_throw_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thing
 
   if (! thing_is_able_to_throw(thrower)) {
     if (thing_is_player(thrower)) {
-      topcon(UI_WARN_FMT_STR "You are unable to throw items." UI_RESET_FMT);
+      if (thing_is_dead(thrower)) {
+        topcon(UI_WARN_FMT_STR "You are unable to throw items on account of being dead." UI_RESET_FMT);
+      } else {
+        topcon(UI_WARN_FMT_STR "You are unable to throw items." UI_RESET_FMT);
+      }
     }
     return false;
   }
