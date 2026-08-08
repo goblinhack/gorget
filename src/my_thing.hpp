@@ -1649,7 +1649,7 @@ void thing_display(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp
       for (auto _n_ = 0; _n_ < THING_INVENTORY_MAX; _n_++)                                                                                      \
         if (AUTO(_slot_) = &_ext_->inventory.slots[ _n_ ])                                                                                      \
           if (AUTO(_item_) = thing_find_optional(g, v, _slot_->item_id))                                                                        \
-            if (thing_is_worn(_item_) || thing_is_item_active_when_carried(_item_))
+            if ((thing_is_worn(_item_) && thing_is_ring(_item_)) || thing_is_item_active_when_carried(_item_) /* horseshoe */)
 
 #define THING_DBG IF_DEBUG thing_dbg
 #define LEVEL_DBG IF_DEBUG level_dbg

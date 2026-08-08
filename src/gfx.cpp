@@ -4490,8 +4490,8 @@ static void gfx_init_tiles()
       "potion_dislocation.1",
       "potion_protection.0",
       "potion_protection.1",
-      "potion_levitating.0",
-      "potion_levitating.1",
+      "potion_levitation.0",
+      "potion_levitation.1",
       "",
       "",
       // ##############################################################################

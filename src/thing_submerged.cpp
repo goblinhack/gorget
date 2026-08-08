@@ -29,6 +29,11 @@
     ERR("no thing pointer");
     return 0;
   }
+
+  if (thing_is_levitating(g, v, l, t)) {
+    val = 0;
+  }
+
   return t->_submerged_pct = val;
 }
 
@@ -40,6 +45,11 @@
     ERR("no thing pointer");
     return 0;
   }
+
+  if (thing_is_levitating(g, v, l, t)) {
+    val = 0;
+  }
+
   return t->_submerged_pct += val;
 }
 
@@ -51,6 +61,11 @@
     ERR("no thing pointer");
     return 0;
   }
+
+  if (thing_is_levitating(g, v, l, t)) {
+    val = 0;
+  }
+
   if (t->_submerged_pct - val <= 0) {
     return t->_submerged_pct = 0;
   }

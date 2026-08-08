@@ -97,31 +97,17 @@ void levels_test(Gamep g)
     Overrides overrides;
 
     overrides[ 'm' ] = [](char /*c*/, bpoint /*p*/) -> Tpp { return tp_find_mand("kobalos"); };
-    overrides[ '$' ] = [](char /*c*/, bpoint /*p*/) -> Tpp { return tp_find_mand("potion_dislocation"); };
+    overrides[ '$' ] = [](char /*c*/, bpoint /*p*/) -> Tpp { return tp_find_mand("potion_levitation"); };
 
     level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "test1", __FUNCTION__, __LINE__, overrides, 0,
                     /* line */ (const char *) "XXXXXXXXXXXXXXXXXXXXXXXXXX",
-                    /* line */ (const char *) "X.B....LL..x.x...........X",
-                    /* line */ (const char *) "X.....LL...x.x...........X",
-                    /* line */ (const char *) "X.....L....x.x...........X",
-                    /* line */ (const char *) "X....L.....x.x...........X",
-                    /* line */ (const char *) "Xxxxxxxxxxxx.xxxxxxxxxxxxX",
-                    /* line */ (const char *) "X..........x.x...........X",
-                    /* line */ (const char *) "Xxxxxxxxxxxx.xxxxxxxxxxxxx",
-                    /* line */ (const char *) "X.........Lx.x...........X",
-                    /* line */ (const char *) "X..........v`x...........X",
-                    /* line */ (const char *) "X..........x`x...........X",
-                    /* line */ (const char *) "X..........x.v...........X",
-                    /* line */ (const char *) "X..........x`x...........X",
-                    /* line */ (const char *) "X..........v`x...........X",
-                    /* line */ (const char *) "X..........x`x...........X",
-                    /* line */ (const char *) "X.........xx`xxxx........X",
-                    /* line */ (const char *) "X.........xx....x........X",
-                    /* line */ (const char *) "X.........xx..B.x........X",
-                    /* line */ (const char *) "X.........xx....x........X",
-                    /* line */ (const char *) "X......xxxxx.x.xx........X",
-                    /* line */ (const char *) "X......x.B......x........X",
-                    /* line */ (const char *) "X.B.B..xm...@.......B.B..X",
+                    /* line */ (const char *) "X.......CCC.....LLL......X",
+                    /* line */ (const char *) "X.......CCC.....LLL......X",
+                    /* line */ (const char *) "X.......CCC.....LLL......X",
+                    /* line */ (const char *) "X.......CCC.@.$.LLL......X",
+                    /* line */ (const char *) "X.......CCC.....LLL......X",
+                    /* line */ (const char *) "X.......CCC.....LLL......X",
+                    /* line */ (const char *) "X.......CCC.....LLL......X",
                     /* line */ (const char *) "XXXXXXXXXXXXXXXXXXXXXXXXXX",
                     /* end */ nullptr);
   }

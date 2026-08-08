@@ -158,7 +158,7 @@ static std::initializer_list< std::string > tps = {
     "potion_dislocation",
     "potion_healing",
     "potion_incin",
-    "potion_levitating",
+    "potion_levitation",
     "potion_protection",
     "potion_stealth",
     "potion_tireless",

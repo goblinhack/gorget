@@ -410,7 +410,8 @@ static void thing_low_health(spoint tl, spoint br, Tilep tile, float x1, float x
   tile_blit_outline_w_invis_inside(tile, x1, x2, y1, y2, tl, br, c);
 }
 
-static void thing_levitating_adjust(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t, spoint tl, spoint br)
+static void thing_levitating_shadow(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t, spoint tl, spoint br, Tilep tile, float x1, float x2,
+                                    float y1, float y2, FboEnum fbo)
 {
   TRACE_DEBUG();
 
@@ -422,10 +423,49 @@ static void thing_levitating_adjust(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp
     return;
   }
 
-  float time_step = (float) time_ms_cached();
-  float height    = br.y - tl.y;
+  float time_step       = (float) time_ms_cached();
+  float height          = br.y - tl.y;
+  float single_pix_size = height / (tile_height(tile) * 4);
+  auto  offset          = (int) height / 16;
+
+  tl.y -= offset;
+  br.y -= offset;
+
   height *= sin((time_step / 1000.0) * RAD_180);
-  height += 3;
+  height /= 16;
+  height = (int) (std::floor((height / single_pix_size)) * single_pix_size);
+
+  tl.y -= (int) height;
+  br.y -= (int) height;
+
+  color fg = BLACK;
+  fg.a     = 150;
+  tile_blit(tile, x1, x2, y1, y2, tl, br, fg, nullptr, false);
+}
+
+static void thing_levitating_adjust(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t, spoint &tl, spoint &br, Tilep tile)
+{
+  TRACE_DEBUG();
+
+  if (thing_is_dead(t)) {
+    return;
+  }
+
+  if (! thing_is_levitating(g, v, l, t)) {
+    return;
+  }
+
+  float time_step       = (float) time_ms_cached();
+  float height          = br.y - tl.y;
+  float single_pix_size = height / (tile_height(tile) * 4);
+  auto  offset          = (int) height / 4;
+
+  tl.y -= offset;
+  br.y -= offset;
+
+  height *= sin((time_step / 1000.0) * RAD_180);
+  height /= 4;
+  height = (int) (std::floor((height / single_pix_size)) * single_pix_size);
 
   tl.y -= (int) height;
   br.y -= (int) height;
@@ -466,7 +506,8 @@ static void thing_display_it(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t_mayb
   //
   // Adjust for levitating
   //
-  thing_levitating_adjust(g, v, l, tp, t_maybe_null, tl, br);
+  thing_levitating_shadow(g, v, l, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo);
+  thing_levitating_adjust(g, v, l, tp, t_maybe_null, tl, br, tile);
 
   //
   // If we have alpha values in the texture, the end of one triangle line and the start of another creates

@@ -13,14 +13,14 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
-static auto tp_potion_levitating_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
+static auto tp_potion_levitation_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
   return "potion, levitation";
 }
 
-static auto tp_potion_levitating_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
+static auto tp_potion_levitation_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
@@ -28,7 +28,7 @@ static auto tp_potion_levitating_detail_get(Gamep g, Levelsp v, Levelp l, Thingp
       UI_INFO2_FMT_STR "(*) cobwebs, fire and gasses not included in care free offer.\n";
 }
 
-static void tp_potion_levitating_on_thrown_end(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp thrower)
+static void tp_potion_levitation_on_thrown_end(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp thrower)
 {
   THING_DBG(g, v, l, me, "thrown end");
   TRACE_INDENT();
@@ -97,7 +97,7 @@ static void tp_potion_levitating_on_thrown_end(Gamep g, Levelsp v, Levelp l, Thi
   thing_dead(g, v, l, me, e);
 }
 
-static bool tp_potion_levitating_on_use(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user)
+static bool tp_potion_levitation_on_use(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user)
 {
   TRACE();
 
@@ -110,7 +110,7 @@ static bool tp_potion_levitating_on_use(Gamep g, Levelsp v, Levelp l, Thingp me,
   return true;
 }
 
-static void tp_potion_levitating_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
+static void tp_potion_levitation_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
 {
   TRACE();
 
@@ -132,19 +132,19 @@ static void tp_potion_levitating_on_death(Gamep g, Levelsp v, Levelp l, Thingp m
   (void) thing_spawn(g, v, l, tp_first(is_water), thing_at(g, v, l, me));
 }
 
-[[nodiscard]] auto tp_load_potion_levitating() -> bool
+[[nodiscard]] auto tp_load_potion_levitation() -> bool
 {
   TRACE();
 
-  auto *tp   = tp_load("potion_levitating"); // keep as string for scripts
+  auto *tp   = tp_load("potion_levitation"); // keep as string for scripts
   auto  name = tp_name(tp);
 
   // begin sort marker1 {
-  thing_description_set(tp, tp_potion_levitating_description_get);
-  thing_detail_set(tp, tp_potion_levitating_detail_get);
-  thing_on_death_set(tp, tp_potion_levitating_on_death);
-  thing_on_thrown_end_set(tp, tp_potion_levitating_on_thrown_end);
-  thing_on_use_set(tp, tp_potion_levitating_on_use);
+  thing_description_set(tp, tp_potion_levitation_description_get);
+  thing_detail_set(tp, tp_potion_levitation_detail_get);
+  thing_on_death_set(tp, tp_potion_levitation_on_death);
+  thing_on_thrown_end_set(tp, tp_potion_levitation_on_thrown_end);
+  thing_on_use_set(tp, tp_potion_levitation_on_use);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // fumble => intensify / keep burning / crit => stop burning
   tp_damage_set(tp, THING_EVENT_THROWN_DAMAGE, "1d4");
   tp_flag_set(tp, is_able_to_fall_sound);

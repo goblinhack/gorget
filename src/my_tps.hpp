@@ -73,7 +73,7 @@ auto tp_load_player() -> bool;
 auto tp_load_potion_dislocation() -> bool;
 auto tp_load_potion_healing() -> bool;
 auto tp_load_potion_incin() -> bool;
-auto tp_load_potion_levitating() -> bool;
+auto tp_load_potion_levitation() -> bool;
 auto tp_load_potion_protection() -> bool;
 auto tp_load_potion_stealth() -> bool;
 auto tp_load_potion_tireless() -> bool;
