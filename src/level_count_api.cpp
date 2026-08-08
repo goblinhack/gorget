@@ -405,10 +405,10 @@
   return level_count(g, v, l, is_flesh, p);
 }
 
-[[nodiscard]] auto level_count_is_floating(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_levitating(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_floating, p);
+  return level_count(g, v, l, is_levitating, p);
 }
 
 [[nodiscard]] auto level_count_is_floor(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
@@ -565,12 +565,6 @@
 {
   TRACE_DEBUG();
   return level_count(g, v, l, is_level_closed_icon, p);
-}
-
-[[nodiscard]] auto level_count_is_levitating(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
-{
-  TRACE_DEBUG();
-  return level_count(g, v, l, is_levitating, p);
 }
 
 [[nodiscard]] auto level_count_is_light_source(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t

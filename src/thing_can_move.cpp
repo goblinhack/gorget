@@ -213,7 +213,7 @@
     // player.
     //
     if (thing_is_monst(me)) {
-      if (thing_is_floating(me)) {
+      if (thing_is_levitating(me)) {
         //
         // Avoids hazards when floating
         //

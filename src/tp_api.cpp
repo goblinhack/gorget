@@ -403,10 +403,10 @@
   return tp_flag(tp, is_flesh) != 0;
 }
 
-[[nodiscard]] auto tp_is_floating(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_levitating(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_floating) != 0;
+  return tp_flag(tp, is_levitating) != 0;
 }
 
 [[nodiscard]] auto tp_is_floor(Tpp tp) -> bool
@@ -563,12 +563,6 @@
 {
   TRACE_DEBUG();
   return tp_flag(tp, is_level_closed_icon) != 0;
-}
-
-[[nodiscard]] auto tp_is_levitating(Tpp tp) -> bool
-{
-  TRACE_DEBUG();
-  return tp_flag(tp, is_levitating) != 0;
 }
 
 [[nodiscard]] auto tp_is_light_source(Tpp tp) -> bool

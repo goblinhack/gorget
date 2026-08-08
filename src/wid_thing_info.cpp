@@ -1031,7 +1031,7 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
     if (thing_is_able_to_see_through_walls(me)) {
       out = string_append_with_comma(out, "Xray-vision");
     }
-    if (thing_is_floating(me)) {
+    if (thing_is_levitating(me)) {
       out = string_append_with_comma(out, "Floating");
     }
     if (thing_is_flying(me)) {

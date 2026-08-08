@@ -121,7 +121,6 @@
       list_macro(is_flammable, "is_flammable"),                                             /* newline */                                       \
       list_macro(is_flat, "is_flat"),                                                       /* newline */                                       \
       list_macro(is_flesh, "is_flesh"),                                                     /* newline */                                       \
-      list_macro(is_floating, "is_floating"),                                               /* newline */                                       \
       list_macro(is_floor, "is_floor"),                                                     /* newline */                                       \
       list_macro(is_flying, "is_flying"),                                                   /* newline */                                       \
       list_macro(is_foliage, "is_foliage"),                                                 /* newline */                                       \
@@ -916,7 +915,6 @@ class Tp;
 [[nodiscard]] auto tp_is_flammable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_flat(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_flesh(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_floating(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_floor(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_flying(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_foliage(Tpp tp) -> bool;

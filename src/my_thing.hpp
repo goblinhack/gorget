@@ -887,7 +887,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_flammable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_flat(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_flesh(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_floating(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_flying(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_gaseous(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_ghost(Thingp t) -> bool;

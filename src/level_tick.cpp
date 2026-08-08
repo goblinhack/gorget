@@ -485,8 +485,6 @@ static void level_tick_begin(Gamep g, Levelsp v, Levelp l)
   TRACE();
 
   if (level_is_player_level(g, v, l)) {
-    level_con(g, v, l, "Tick %u: begin", v->tick);
-  } else {
     level_log(g, v, l, "Tick %u: begin", v->tick);
   }
   TRACE_INDENT();

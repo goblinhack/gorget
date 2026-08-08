@@ -404,10 +404,10 @@
   return level_flag(g, v, l, is_flesh, p, me);
 }
 
-[[nodiscard]] auto level_is_floating(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_levitating(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_floating, p, me);
+  return level_flag(g, v, l, is_levitating, p, me);
 }
 
 [[nodiscard]] auto level_is_floor(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
@@ -564,12 +564,6 @@
 {
   TRACE_DEBUG();
   return level_flag(g, v, l, is_level_closed_icon, p, me);
-}
-
-[[nodiscard]] auto level_is_levitating(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
-{
-  TRACE_DEBUG();
-  return level_flag(g, v, l, is_levitating, p, me);
 }
 
 [[nodiscard]] auto level_is_light_source(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp

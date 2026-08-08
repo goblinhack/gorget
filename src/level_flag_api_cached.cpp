@@ -405,10 +405,10 @@
   return level_flag_cached(g, v, l, is_flesh, p);
 }
 
-[[nodiscard]] auto level_is_floating_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_levitating_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_floating, p);
+  return level_flag_cached(g, v, l, is_levitating, p);
 }
 
 [[nodiscard]] auto level_is_floor_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
@@ -565,12 +565,6 @@
 {
   TRACE_DEBUG();
   return level_flag_cached(g, v, l, is_level_closed_icon, p);
-}
-
-[[nodiscard]] auto level_is_levitating_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
-{
-  TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_levitating, p);
 }
 
 [[nodiscard]] auto level_is_light_source_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
