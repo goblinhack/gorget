@@ -11,6 +11,7 @@
 #include "my_gl.hpp" // NOLINT
 #include "my_level.hpp"
 #include "my_main.hpp"
+#include "my_math.hpp"
 #include "my_spoint.hpp"
 #include "my_thing.hpp"
 #include "my_thing_callbacks.hpp"
@@ -148,14 +149,14 @@ void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, const bpoint &p, 
 
   if (t_maybe_null != nullptr) {
     if (thing_is_jumping(t_maybe_null)) {
-      auto jump_height = static_cast< int >((sin(std::numbers::pi_v< float > * t_maybe_null->thing_dt)) * static_cast< float >(dh));
+      auto jump_height = static_cast< int >((sinf(std::numbers::pi_v< float > * t_maybe_null->thing_dt)) * static_cast< float >(dh));
       jump_height *= THING_JUMP_HEIGHT_ANIM_TILES;
       tl.y -= jump_height;
       br.y -= jump_height;
     }
 
     if (thing_is_thrown(t_maybe_null)) {
-      auto throw_height = static_cast< int >((sin(std::numbers::pi_v< float > * t_maybe_null->thing_dt)) * static_cast< float >(dh));
+      auto throw_height = static_cast< int >((sinf(std::numbers::pi_v< float > * t_maybe_null->thing_dt)) * static_cast< float >(dh));
       throw_height *= THING_THROW_HEIGHT_ANIM_TILES;
       tl.y -= throw_height;
       br.y -= throw_height;
@@ -410,8 +411,8 @@ static void thing_low_health(spoint tl, spoint br, Tilep tile, float x1, float x
   tile_blit_outline_w_invis_inside(tile, x1, x2, y1, y2, tl, br, c);
 }
 
-static void thing_levitating_shadow(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t, spoint tl, spoint br, Tilep tile, float x1, float x2,
-                                    float y1, float y2, FboEnum fbo)
+static void thing_levitating_shadow(Gamep g, Levelsp v, Levelp l, Thingp t, spoint tl, spoint br, Tilep tile, float x1, float x2, float y1,
+                                    float y2)
 {
   TRACE_DEBUG();
 
@@ -423,27 +424,27 @@ static void thing_levitating_shadow(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp
     return;
   }
 
-  float time_step       = (float) time_ms_cached();
-  float height          = br.y - tl.y;
-  float single_pix_size = height / (tile_height(tile) * 4);
-  auto  offset          = (int) height / 16;
+  auto const  time_step       = static_cast< float >(time_ms_cached());
+  float       height          = br.y - tl.y;
+  float const single_pix_size = height / (tile_height(tile) * 4);
+  auto        offset          = static_cast< int >(height) / 16;
 
   tl.y -= offset;
   br.y -= offset;
 
-  height *= sin((time_step / 1000.0) * RAD_180);
+  height *= (float) sinf((time_step / 1000.0) * std::numbers::pi_v< float >);
   height /= 16;
-  height = (int) (std::floor((height / single_pix_size)) * single_pix_size);
+  height = static_cast< int >(std::floor((height / single_pix_size)) * single_pix_size);
 
-  tl.y -= (int) height;
-  br.y -= (int) height;
+  tl.y -= static_cast< int >(height);
+  br.y -= static_cast< int >(height);
 
   color fg = BLACK;
   fg.a     = 150;
   tile_blit(tile, x1, x2, y1, y2, tl, br, fg, nullptr, false);
 }
 
-static void thing_levitating_adjust(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t, spoint &tl, spoint &br, Tilep tile)
+static void thing_levitating_adjust(Gamep g, Levelsp v, Levelp l, Thingp t, spoint &tl, spoint &br, Tilep tile)
 {
   TRACE_DEBUG();
 
@@ -455,20 +456,20 @@ static void thing_levitating_adjust(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp
     return;
   }
 
-  float time_step       = (float) time_ms_cached();
-  float height          = br.y - tl.y;
-  float single_pix_size = height / (tile_height(tile) * 4);
-  auto  offset          = (int) height / 4;
+  auto const  time_step       = static_cast< float >(time_ms_cached());
+  float       height          = br.y - tl.y;
+  float const single_pix_size = height / (tile_height(tile) * 4);
+  auto        offset          = static_cast< int >(height) / 4;
 
   tl.y -= offset;
   br.y -= offset;
 
-  height *= sin((time_step / 1000.0) * RAD_180);
+  height *= (float) sinf((time_step / 1000.0) * std::numbers::pi_v< float >);
   height /= 4;
-  height = (int) (std::floor((height / single_pix_size)) * single_pix_size);
+  height = static_cast< int >(std::floor((height / single_pix_size)) * single_pix_size);
 
-  tl.y -= (int) height;
-  br.y -= (int) height;
+  tl.y -= static_cast< int >(height);
+  br.y -= static_cast< int >(height);
 }
 
 //
@@ -506,8 +507,8 @@ static void thing_display_it(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t_mayb
   //
   // Adjust for levitating
   //
-  thing_levitating_shadow(g, v, l, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo);
-  thing_levitating_adjust(g, v, l, tp, t_maybe_null, tl, br, tile);
+  thing_levitating_shadow(g, v, l, t_maybe_null, tl, br, tile, x1, x2, y1, y2);
+  thing_levitating_adjust(g, v, l, t_maybe_null, tl, br, tile);
 
   //
   // If we have alpha values in the texture, the end of one triangle line and the start of another creates

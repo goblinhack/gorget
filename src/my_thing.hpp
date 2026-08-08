@@ -915,7 +915,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_level_next_icon(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_level_open_icon(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_level_select_bg(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_levitating(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
+[[nodiscard]] auto thing_is_levitating(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
 [[nodiscard]] auto thing_is_light_flicker(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_loggable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_lucky(Thingp t) -> bool;

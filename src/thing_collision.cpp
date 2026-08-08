@@ -302,9 +302,9 @@ static auto thing_collision_check(Gamep g, Levelsp v, Levelp l, Thingp me, const
         THING_DBG(g, v, l, obstacle, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
       }
       return collision;
-    } else {
-      return false;
     }
+    return false;
+
   } else if (thing_is_collision_circle_large(me)) {
     if (thing_is_collision_circle_small(obstacle)) {
       collision = thing_collision_check_circle_small_circle_large(g, v, l, me, interp_at_f, obstacle, o_at);
@@ -326,9 +326,9 @@ static auto thing_collision_check(Gamep g, Levelsp v, Levelp l, Thingp me, const
         THING_DBG(g, v, l, obstacle, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
       }
       return collision;
-    } else {
-      return false;
     }
+    return false;
+
   } else if (thing_is_collision_square(me)) {
     if (thing_is_collision_circle_small(obstacle)) {
       collision = thing_collision_check_circle_small_square(g, v, l, obstacle, o_at, me, interp_at_f);
@@ -350,9 +350,9 @@ static auto thing_collision_check(Gamep g, Levelsp v, Levelp l, Thingp me, const
         THING_DBG(g, v, l, obstacle, "cand coll %d collision=%d", __LINE__, static_cast< int >(collision));
       }
       return collision;
-    } else {
-      return false;
     }
+    return false;
+
   } else {
     return false;
   }

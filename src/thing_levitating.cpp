@@ -2,24 +2,13 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include "my_bpoint.hpp"
 #include "my_callstack.hpp"
-#include "my_cpp_template.hpp"
-#include "my_fpoint.hpp"
-#include "my_game_defs.hpp"
-#include "my_level.hpp"
 #include "my_level_inlines.hpp" // NOLINT
 #include "my_main.hpp"
-#include "my_random.hpp"
 #include "my_thing.hpp"
-#include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp" // NOLINT
 #include "my_tp.hpp"
 #include "my_types.hpp"
-#include "my_ui.hpp"
-#include <cstdint>
-#include <initializer_list>
-#include <vector>
 
 [[nodiscard]] auto thing_is_levitating(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
 {
