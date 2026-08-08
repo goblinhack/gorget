@@ -433,6 +433,7 @@ static void thing_levitating_shadow(Gamep g, Levelsp v, Levelp l, Thingp t, spoi
 
   color fg = BLACK;
   fg.a     = 150;
+
   tile_blit(tile, x1, x2, y1, y2, tl, br, fg, nullptr, false);
 }
 
@@ -491,10 +492,12 @@ static void thing_display_it(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t_mayb
   //
   // Adjust for levitating
   //
-  if (thing_is_blocked_from_levitating(t_maybe_null)) {
+  if (! thing_is_blocked_from_levitating(t_maybe_null)) {
     if (thing_is_levitating(g, v, l, t_maybe_null)) {
       if (! thing_is_dead(t_maybe_null)) {
-        thing_levitating_shadow(g, v, l, t_maybe_null, tl, br, tile, x1, x2, y1, y2);
+        if (fbo == FBO_MAP_FG) {
+          thing_levitating_shadow(g, v, l, t_maybe_null, tl, br, tile, x1, x2, y1, y2);
+        }
         thing_levitating_bounce(g, v, l, t_maybe_null, tl, br, tile);
       }
     }
