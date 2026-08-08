@@ -410,6 +410,27 @@ static void thing_low_health(spoint tl, spoint br, Tilep tile, float x1, float x
   tile_blit_outline_w_invis_inside(tile, x1, x2, y1, y2, tl, br, c);
 }
 
+static void thing_levitating_adjust(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t, spoint tl, spoint br)
+{
+  TRACE_DEBUG();
+
+  if (thing_is_dead(t)) {
+    return;
+  }
+
+  if (! thing_is_levitating(g, v, l, t)) {
+    return;
+  }
+
+  float time_step = (float) time_ms_cached();
+  float height    = br.y - tl.y;
+  height *= sin((time_step / 1000.0) * RAD_180);
+  height += 3;
+
+  tl.y -= (int) height;
+  br.y -= (int) height;
+}
+
 //
 // Handle all the various lighting modes to display a thing
 //
@@ -441,6 +462,11 @@ static void thing_display_it(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t_mayb
     thing_display_rotated(g, v, l, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg);
     return;
   }
+
+  //
+  // Adjust for levitating
+  //
+  thing_levitating_adjust(g, v, l, tp, t_maybe_null, tl, br);
 
   //
   // If we have alpha values in the texture, the end of one triangle line and the start of another creates

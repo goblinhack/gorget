@@ -3766,17 +3766,6 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_indestructible) != 0;
 }
 
-[[nodiscard]] auto thing_is_levitating(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_levitating) != 0;
-}
-
 [[nodiscard]] auto thing_is_obs_to_fire(Thingp t) -> bool
 {
   TRACE_DEBUG();

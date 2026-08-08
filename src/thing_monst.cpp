@@ -533,7 +533,7 @@ static auto thing_monst_choose_something_we_can_wander_to(Gamep g, Levelsp v, Le
     return false;
   }
 
-  if (! thing_is_levitating(me)) {
+  if (! thing_is_levitating(g, v, l, me)) {
     if (thing_is_able_to_jump(me)) {
       //
       // Jump over chasm?

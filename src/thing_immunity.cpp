@@ -21,6 +21,13 @@
     }
   }
 
+  FOR_ALL_ACTIVE_ITEMS(g, v, l, me, item)
+  {
+    if (thing_is_immune_to(g, v, l, item, val)) {
+      return true;
+    }
+  }
+
   return tp_is_immune_to(tp, val);
 }
 
@@ -33,6 +40,13 @@
   FOR_ALL_BUFFS(g, v, l, me, buff)
   {
     if (thing_is_resistant_to(g, v, l, buff, val)) {
+      return true;
+    }
+  }
+
+  FOR_ALL_ACTIVE_ITEMS(g, v, l, me, item)
+  {
+    if (thing_is_resistant_to(g, v, l, item, val)) {
       return true;
     }
   }

@@ -25,5 +25,12 @@
     }
   }
 
+  FOR_ALL_ACTIVE_ITEMS(g, v, l, me, item)
+  {
+    if (thing_is_tireless(g, v, l, item)) {
+      return true;
+    }
+  }
+
   return tp_flag(thing_tp(me), is_tireless) != 0;
 }

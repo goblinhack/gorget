@@ -53,7 +53,7 @@ using ThingIdPacked = union {
 /* begin shell marker1 */
 /* shell printf "#define THING_BUFF_MAX " */
 /* shell find . -name "*.cpp" | xargs grep "tp_flag_set(tp, is_buff);" | wc -l */
-#define THING_BUFF_MAX 5
+#define THING_BUFF_MAX 6
 /* end shell marker1 */
 
 //
@@ -915,7 +915,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_level_next_icon(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_level_open_icon(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_level_select_bg(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_levitating(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_levitating(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
 [[nodiscard]] auto thing_is_light_flicker(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_loggable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_lucky(Thingp t) -> bool;

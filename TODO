@@ -81,7 +81,7 @@ sacrifice altar
                                                        +1   emergency teleport per level
                                                        +50% stamina recovery
                                                        x2   all damage dealt
-                                                       limited levitation
+                                                       limited levitating
 
 
 essential features
@@ -90,7 +90,7 @@ gods
   orcus                           (black)
     - firebolt
     - emergency teleport
-    - limited levitation
+    - limited levitating
   surt, the fire giant            (orange)
     - firebolt
     - immunity to fire and lava
@@ -100,7 +100,7 @@ gods
     - firebolt
     - damage +20%
     - speed +20%
-    - limited levitation per level
+    - limited levitating per level
   morrigan, the demon queen       (blue)
     - fast missile
     - limited wraithwalk per level
@@ -122,7 +122,7 @@ abilities
   - breathless - gas weapons have no effect
   - wraithwalk - walk into walls
   - take on limitations at start e.g one leg, limited jump, reduced spell cost
-  - levitation essential for chasms and return trip
+  - levitating essential for chasms and return trip
 weapon slots
   - etherblast to hit ghosts in walls
   - emergency teleport
