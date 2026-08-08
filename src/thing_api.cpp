@@ -2698,17 +2698,6 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_unused195) != 0;
 }
 
-[[nodiscard]] auto thing_is_unused196(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_unused196) != 0;
-}
-
 [[nodiscard]] auto thing_is_teleport_hazard(Thingp t) -> bool
 {
   TRACE_DEBUG();

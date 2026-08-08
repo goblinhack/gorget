@@ -359,7 +359,7 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
     return false;
   }
 
-  if (thing_is_teleport_blocked(me)) {
+  if (thing_is_blocked_from_teleporting(me)) {
     THING_DBG(g, v, l, me, "teleport, no; blocked");
     return false;
   }
@@ -413,7 +413,7 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
     return false;
   }
 
-  if (thing_is_teleport_blocked(me)) {
+  if (thing_is_blocked_from_teleporting(me)) {
     THING_DBG(g, v, l, me, "teleport, no; blocked");
     return false;
   }
@@ -618,17 +618,6 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
     return false;
   }
   return tp_flag(thing_tp(t), is_teleport) != 0;
-}
-
-[[nodiscard]] auto thing_is_teleport_blocked(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_teleport_blocked) != 0;
 }
 
 [[nodiscard]] auto thing_is_obs_to_teleporting_onto(Thingp t) -> bool

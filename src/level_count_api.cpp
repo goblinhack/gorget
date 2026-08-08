@@ -825,10 +825,10 @@
   return level_count(g, v, l, is_submergible, p);
 }
 
-[[nodiscard]] auto level_count_is_teleport_blocked(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_blocked_from_teleporting(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_teleport_blocked, p);
+  return level_count(g, v, l, is_blocked_from_teleporting, p);
 }
 
 [[nodiscard]] auto level_count_is_teleport(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
@@ -2043,10 +2043,10 @@
   return level_count(g, v, l, is_unused195, p);
 }
 
-[[nodiscard]] auto level_count_is_unused196(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_blocked_from_levitating(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused196, p);
+  return level_count(g, v, l, is_blocked_from_levitating, p);
 }
 
 [[nodiscard]] auto level_count_is_teleport_hazard(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t

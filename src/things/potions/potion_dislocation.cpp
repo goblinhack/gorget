@@ -46,7 +46,7 @@ static void tp_potion_dislocation_on_thrown_end(Gamep g, Levelsp v, Levelp l, Th
       continue;
     }
 
-    if (thing_is_teleport_blocked(it)) {
+    if (thing_is_blocked_from_teleporting(it)) {
       continue;
     }
 
@@ -71,7 +71,7 @@ static void tp_potion_dislocation_on_thrown_end(Gamep g, Levelsp v, Levelp l, Th
         continue;
       }
 
-      if (thing_is_teleport_blocked(it)) {
+      if (thing_is_blocked_from_teleporting(it)) {
         continue;
       }
 

@@ -177,6 +177,7 @@ static void tp_bridge_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_flag_set(tp, is_blit_if_has_seen);
   tp_flag_set(tp, is_blit_per_pixel_lighting);
   tp_flag_set(tp, is_blit_shown_in_chasms);
+  tp_flag_set(tp, is_blocked_from_teleporting);
   tp_flag_set(tp, is_bridge);
   tp_flag_set(tp, is_burnable);    // is capable of being burned by fire
   tp_flag_set(tp, is_combustible); // will continue to burn once on fire
@@ -185,7 +186,6 @@ static void tp_bridge_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
-  tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_tiled);
   tp_flag_set(tp, is_wood);
@@ -202,6 +202,7 @@ static void tp_bridge_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_temperature_initial_set(tp, 20);    // celsius
   tp_weight_set(tp, WEIGHT_MEDIUM);      // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_LIQUID);
+  tp_flag_set(tp, is_blocked_from_levitating);
   // end sort marker1 }
 
   auto *tile = tile_find_mand(name + ".IS_JOIN_BL");

@@ -861,10 +861,10 @@
   return level_flag(g, v, l, is_submergible, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_teleport_blocked_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_blocked_from_teleporting_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_teleport_blocked, p, me) != nullptr;
+  return level_flag(g, v, l, is_blocked_from_teleporting, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_teleport_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
@@ -2079,10 +2079,10 @@
   return level_flag(g, v, l, is_unused195, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_unused196_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_blocked_from_levitating_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused196, p, me) != nullptr;
+  return level_flag(g, v, l, is_blocked_from_levitating, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_teleport_hazard_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool

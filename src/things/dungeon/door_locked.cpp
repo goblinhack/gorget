@@ -265,6 +265,7 @@ static void tp_door_locked_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, Thi
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_if_has_seen);
   tp_flag_set(tp, is_blit_shown_in_chasms);
+  tp_flag_set(tp, is_blocked_from_teleporting);
   tp_flag_set(tp, is_burnable); // is capable of being burned by fire
   tp_flag_set(tp, is_collision_square);
   tp_flag_set(tp, is_combustible); // will continue to burn once on fire
@@ -287,7 +288,6 @@ static void tp_door_locked_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, Thi
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_submergible);
-  tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_wood);
   tp_health_set(tp, "200");
@@ -303,6 +303,7 @@ static void tp_door_locked_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, Thi
   tp_temperature_initial_set(tp, 20);    // celsius
   tp_weight_set(tp, WEIGHT_HEAVY);       // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
+  tp_flag_set(tp, is_blocked_from_levitating);
   // end sort marker1 }
 
   auto delay = 500;

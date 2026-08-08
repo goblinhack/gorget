@@ -64,6 +64,7 @@ static auto tp_door_secret_description_get(Gamep g, Levelsp v, Levelp l, Thingp 
     tp_flag_set(tp, is_blit_centered);
     tp_flag_set(tp, is_blit_if_has_seen);
     tp_flag_set(tp, is_blit_shown_in_chasms);
+    tp_flag_set(tp, is_blocked_from_teleporting);
     tp_flag_set(tp, is_collision_square);
     tp_flag_set(tp, is_described_cursor);
     tp_flag_set(tp, is_dmap);
@@ -80,7 +81,6 @@ static auto tp_door_secret_description_get(Gamep g, Levelsp v, Levelp l, Thingp 
     tp_flag_set(tp, is_physics_explosion);
     tp_flag_set(tp, is_physics_temperature);
     tp_flag_set(tp, is_stone);
-    tp_flag_set(tp, is_teleport_blocked);
     tp_flag_set(tp, is_tickable);
     tp_health_set(tp, "200");
     tp_is_immune_to_add(tp, THING_EVENT_WATER_DAMAGE);
@@ -96,6 +96,7 @@ static auto tp_door_secret_description_get(Gamep g, Levelsp v, Levelp l, Thingp 
     tp_variant_set(tp, variant);
     tp_weight_set(tp, WEIGHT_VHEAVY); // grams
     tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
+    tp_flag_set(tp, is_blocked_from_levitating);
     // end sort marker1 }
 
     auto *tile = tile_find_mand(name + ".idle.0");

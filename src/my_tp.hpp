@@ -205,7 +205,7 @@
       list_macro(is_steam, "is_steam"),                                                     /* newline */                                       \
       list_macro(is_stone, "is_stone"),                                                     /* newline */                                       \
       list_macro(is_submergible, "is_submergible"),                                         /* newline */                                       \
-      list_macro(is_teleport_blocked, "is_teleport_blocked"),                               /* newline */                                       \
+      list_macro(is_blocked_from_teleporting, "is_blocked_from_teleporting"),               /* newline */                                       \
       list_macro(is_teleport, "is_teleport"),                                               /* newline */                                       \
       list_macro(is_throwable, "is_throwable"),                                             /* newline */                                       \
       list_macro(is_tick_end_delay, "is_tick_end_delay"),                                   /* newline */                                       \
@@ -326,7 +326,7 @@
       list_macro(is_unused193, "is_unused193"),                                             /* newline */                                       \
       list_macro(is_unused194, "is_unused194"),                                             /* newline */                                       \
       list_macro(is_unused195, "is_unused195"),                                             /* newline */                                       \
-      list_macro(is_unused196, "is_unused196"),                                             /* newline */                                       \
+      list_macro(is_blocked_from_levitating, "is_blocked_from_levitating"),                 /* newline */                                       \
       list_macro(is_teleport_hazard, "is_teleport_hazard"),                                 /* newline */                                       \
       list_macro(is_item_active_when_carried, "is_item_active_when_carried"),               /* newline */                                       \
       list_macro(is_wearable, "is_wearable"),                                               /* newline */                                       \
@@ -862,6 +862,8 @@ class Tp;
 [[nodiscard]] auto tp_is_blit_square_outlined(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_blit_when_obscured_faded(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_blit_when_obscured_outline(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_blocked_from_levitating(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_blocked_from_teleporting(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_border(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_brazier(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_bridge(Tpp tp) -> bool;
@@ -1003,7 +1005,6 @@ class Tp;
 [[nodiscard]] auto tp_is_steam(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_stone(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_submergible(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_teleport_blocked(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_teleport_hazard(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_teleport(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_throwable(Tpp tp) -> bool;
@@ -1125,7 +1126,6 @@ class Tp;
 [[nodiscard]] auto tp_is_unused193(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused194(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused195(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused196(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused2(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused20(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused21(Tpp tp) -> bool;

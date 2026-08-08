@@ -19,6 +19,10 @@
     return false;
   }
 
+  if (thing_is_blocked_from_levitating(me)) {
+    return false;
+  }
+
   FOR_ALL_BUFFS(g, v, l, me, buff)
   {
     if (thing_is_levitating(g, v, l, buff)) {

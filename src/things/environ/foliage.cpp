@@ -45,6 +45,7 @@ static auto tp_foliage_z_depth_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> M
   tp_flag_set(tp, is_blit_obscures);
   tp_flag_set(tp, is_blit_on_ground);
   tp_flag_set(tp, is_blit_shown_in_chasms);
+  tp_flag_set(tp, is_blocked_from_teleporting);
   tp_flag_set(tp, is_burnable); // is capable of being burned by fire
   tp_flag_set(tp, is_collision_circle_large);
   tp_flag_set(tp, is_combustible); // will continue to burn once on fire
@@ -59,7 +60,6 @@ static auto tp_foliage_z_depth_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> M
   tp_flag_set(tp, is_plant);
   tp_flag_set(tp, is_removable_when_dead_on_err);
   tp_flag_set(tp, is_submergible);
-  tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_tickable);
   tp_health_set(tp, "1d5");
   tp_is_immune_to_add(tp, THING_EVENT_WATER_DAMAGE);
@@ -74,6 +74,7 @@ static auto tp_foliage_z_depth_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> M
   tp_temperature_initial_set(tp, 20);   // celsius
   tp_weight_set(tp, WEIGHT_LIGHT);      // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_FOLIAGE);
+  tp_flag_set(tp, is_blocked_from_levitating);
   // end sort marker1 }
 
   for (auto frame = 0; frame < 14; frame++) {

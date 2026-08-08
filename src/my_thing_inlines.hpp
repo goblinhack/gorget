@@ -491,4 +491,37 @@
   }
   return tp->z_depth_get(g, v, l, me);
 }
+
+[[nodiscard]] static inline auto thing_is_blocked_from_levitating(Thingp me) -> bool
+{
+#ifdef DEBUG_BUILD
+  TRACE();
+#endif
+
+  auto *tp = thing_tp(me);
+#ifdef DEBUG_BUILD
+  if (tp == nullptr) [[unlikely]] {
+    ERR("no thing template pointer");
+    return MAP_Z_DEPTH_FLOOR;
+  }
+#endif
+  return tp_flag(tp, is_blocked_from_levitating) != 0;
+}
+
+[[nodiscard]] static inline auto thing_is_blocked_from_teleporting(Thingp me) -> bool
+{
+#ifdef DEBUG_BUILD
+  TRACE();
+#endif
+
+  auto *tp = thing_tp(me);
+#ifdef DEBUG_BUILD
+  if (tp == nullptr) [[unlikely]] {
+    ERR("no thing template pointer");
+    return MAP_Z_DEPTH_FLOOR;
+  }
+#endif
+  return tp_flag(tp, is_blocked_from_teleporting) != 0;
+}
+
 #endif // MY_THING_INLINES_HPP

@@ -30,6 +30,7 @@ static auto tp_smoke_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_shown_in_chasms);
+  tp_flag_set(tp, is_blocked_from_teleporting);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_gaseous);
   tp_flag_set(tp, is_indestructible);
@@ -37,7 +38,6 @@ static auto tp_smoke_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
   tp_flag_set(tp, is_removable_on_err);
   tp_flag_set(tp, is_smoke);
   tp_flag_set(tp, is_submergible);
-  tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_tickable);
   tp_name_a_or_an_set(tp, "smoke");
   tp_name_apostrophize_set(tp, "smokes'");
@@ -47,6 +47,7 @@ static auto tp_smoke_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
   tp_priority_set(tp, THING_PRIORITY_SMOKE);
   tp_weight_set(tp, WEIGHT_NONE); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_GAS);
+  tp_flag_set(tp, is_blocked_from_levitating);
   // end sort marker1 }
 
   if (g_opt_tests) {

@@ -416,14 +416,6 @@ static void thing_levitating_shadow(Gamep g, Levelsp v, Levelp l, Thingp t, spoi
 {
   TRACE_DEBUG();
 
-  if (thing_is_dead(t)) {
-    return;
-  }
-
-  if (! thing_is_levitating(g, v, l, t)) {
-    return;
-  }
-
   auto const  time_step       = static_cast< float >(time_ms_cached());
   float       height          = br.y - tl.y;
   float const single_pix_size = height / (tile_height(tile) * 4);
@@ -432,8 +424,8 @@ static void thing_levitating_shadow(Gamep g, Levelsp v, Levelp l, Thingp t, spoi
   tl.y -= offset;
   br.y -= offset;
 
-  height *= (float) sinf((time_step / 1000.0) * std::numbers::pi_v< float >);
-  height /= 16;
+  height *= (float) sinf((time_step / 1000.0f) * std::numbers::pi_v< float >);
+  height /= 16.0f;
   height = static_cast< int >(std::floor((height / single_pix_size)) * single_pix_size);
 
   tl.y -= static_cast< int >(height);
@@ -444,17 +436,9 @@ static void thing_levitating_shadow(Gamep g, Levelsp v, Levelp l, Thingp t, spoi
   tile_blit(tile, x1, x2, y1, y2, tl, br, fg, nullptr, false);
 }
 
-static void thing_levitating_adjust(Gamep g, Levelsp v, Levelp l, Thingp t, spoint &tl, spoint &br, Tilep tile)
+static void thing_levitating_bounce(Gamep g, Levelsp v, Levelp l, Thingp t, spoint &tl, spoint &br, Tilep tile)
 {
   TRACE_DEBUG();
-
-  if (thing_is_dead(t)) {
-    return;
-  }
-
-  if (! thing_is_levitating(g, v, l, t)) {
-    return;
-  }
 
   auto const  time_step       = static_cast< float >(time_ms_cached());
   float       height          = br.y - tl.y;
@@ -464,8 +448,8 @@ static void thing_levitating_adjust(Gamep g, Levelsp v, Levelp l, Thingp t, spoi
   tl.y -= offset;
   br.y -= offset;
 
-  height *= (float) sinf((time_step / 1000.0) * std::numbers::pi_v< float >);
-  height /= 4;
+  height *= (float) sinf((time_step / 1000.0f) * std::numbers::pi_v< float >);
+  height /= 4.0f;
   height = static_cast< int >(std::floor((height / single_pix_size)) * single_pix_size);
 
   tl.y -= static_cast< int >(height);
@@ -507,8 +491,14 @@ static void thing_display_it(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t_mayb
   //
   // Adjust for levitating
   //
-  thing_levitating_shadow(g, v, l, t_maybe_null, tl, br, tile, x1, x2, y1, y2);
-  thing_levitating_adjust(g, v, l, t_maybe_null, tl, br, tile);
+  if (thing_is_blocked_from_levitating(t_maybe_null)) {
+    if (thing_is_levitating(g, v, l, t_maybe_null)) {
+      if (! thing_is_dead(t_maybe_null)) {
+        thing_levitating_shadow(g, v, l, t_maybe_null, tl, br, tile, x1, x2, y1, y2);
+        thing_levitating_bounce(g, v, l, t_maybe_null, tl, br, tile);
+      }
+    }
+  }
 
   //
   // If we have alpha values in the texture, the end of one triangle line and the start of another creates

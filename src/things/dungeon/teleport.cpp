@@ -39,6 +39,7 @@ static auto tp_teleport_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> s
   tp_flag_set(tp, is_blit_if_has_seen);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_blit_shown_in_overlay);
+  tp_flag_set(tp, is_blocked_from_teleporting);
   tp_flag_set(tp, is_collision_square);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_indestructible);
@@ -47,7 +48,6 @@ static auto tp_teleport_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> s
   tp_flag_set(tp, is_obs_to_teleporting_onto);
   tp_flag_set(tp, is_stone);
   tp_flag_set(tp, is_submergible);
-  tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_teleport);
   tp_is_immune_to_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_light_color_set(tp, "red");
@@ -59,6 +59,7 @@ static auto tp_teleport_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> s
   tp_priority_set(tp, THING_PRIORITY_TELEPORT);
   tp_weight_set(tp, WEIGHT_VVHEAVY); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
+  tp_flag_set(tp, is_blocked_from_levitating);
   // end sort marker1 }
 
   auto delay = 100;

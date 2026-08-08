@@ -823,10 +823,10 @@
   return tp_flag(tp, is_submergible) != 0;
 }
 
-[[nodiscard]] auto tp_is_teleport_blocked(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_blocked_from_teleporting(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_teleport_blocked) != 0;
+  return tp_flag(tp, is_blocked_from_teleporting) != 0;
 }
 
 [[nodiscard]] auto tp_is_teleport(Tpp tp) -> bool
@@ -2041,10 +2041,10 @@
   return tp_flag(tp, is_unused195) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused196(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_blocked_from_levitating(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused196) != 0;
+  return tp_flag(tp, is_blocked_from_levitating) != 0;
 }
 
 [[nodiscard]] auto tp_is_teleport_hazard(Tpp tp) -> bool

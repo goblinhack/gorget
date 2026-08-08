@@ -975,7 +975,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_steam(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_stone(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_submergible(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_teleport_blocked(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_teleport_hazard(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_teleport(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_teleporting(Thingp me) -> bool;
@@ -1099,7 +1098,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused193(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused194(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused195(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused196(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused2(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused20(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused21(Thingp t) -> bool;
