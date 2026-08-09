@@ -249,6 +249,19 @@ static void thing_display_blit(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t_ma
   TRACE_DEBUG();
 
   switch (fbo) {
+    case FBO_MAP_FG :
+      //
+      // Jumping/thrown/levitating things need to be seen in the overlay.
+      //
+      if (tp_is_blit_shown_in_overlay(tp)) {
+        if (t_maybe_null != nullptr) {
+          if (thing_is_levitating(g, v, l, t_maybe_null) || thing_is_jumping(t_maybe_null) || thing_is_thrown(t_maybe_null)) {
+            return;
+          }
+        }
+      }
+      break;
+
     case FBO_MAP_FG_OVERLAY :
       //
       // Hidden things need to be shown on top of walls or foliage
@@ -258,17 +271,12 @@ static void thing_display_blit(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t_ma
       }
 
       //
-      // Jumping things need to be seen over other things
+      // Jumping/thrown/levitating things need to be seen over other things
       //
-      if ((t_maybe_null != nullptr) && thing_is_jumping(t_maybe_null)) {
-        break;
-      }
-
-      //
-      // Thrown things need to be seen over other things
-      //
-      if ((t_maybe_null != nullptr) && thing_is_thrown(t_maybe_null)) {
-        break;
+      if (t_maybe_null != nullptr) {
+        if (thing_is_levitating(g, v, l, t_maybe_null) || thing_is_jumping(t_maybe_null) || thing_is_thrown(t_maybe_null)) {
+          break;
+        }
       }
 
       //

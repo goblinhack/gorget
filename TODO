@@ -12,14 +12,13 @@ potion, inviolate (health and removes poison, protects from engulfing)
 potion, telepath (see enemies)
 potion, fire immunity (stoneskin)
 potion, light immunity (light beam)
-potion, water walking
 thrown potion, paralysis (gas)
 thrown potion, creeping death
 thrown potion, descent
-steam and smoke should spread
 thrown potion, darkness
 thrown potion, confusion
 thrown potion, caustic gas
+steam and smoke should spread
 potion trading station
 explore bonus for freshly explored tiles
 present icon with multiplites for bonus
@@ -38,7 +37,8 @@ monsters
   - thief that can steal items
   - dropbear
   - barbarian, thrud
-lever for a bridge?
+lever for a bridge? use an overly for rooms
+damage reduction stat
 
 sacrifice altar
 ---------------

@@ -436,6 +436,18 @@ static auto game_event_jump(Gamep g) -> bool
   auto at = thing_at(g, v, l, player);
 
   THING_DBG(g, v, l, player, "jump attempt to (%d,%d)", to.x, to.y);
+  TRACE_INDENT();
+
+  //
+  // Can't jump when levitating.
+  //
+  if (thing_is_levitating(g, v, l, player)) {
+    std::vector< bpoint > move_path;
+    move_path.push_back(to);
+    level_cursor_copy_path_to_player(g, v, l, move_path);
+    player_state_change(g, v, l, PLAYER_STATE_FOLLOWING_PATH);
+    return true;
+  }
 
   if (level_is_cursor_path_hazard(g, v, l, to) != nullptr) {
     //

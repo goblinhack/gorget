@@ -376,11 +376,19 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool tick_is
     // Need to finish all movement
     //
   } else if (dt == 0) {
-    //
-    // During tests, the loop can spin really fast. Pointless doing work at that rate and
-    // projectiles will not move, so wait until time moves on.
-    //
-    return;
+    if (g_opt_tests) {
+      //
+      // During tests, the loop can spin really fast. Pointless doing work at that rate and
+      // projectiles will not move, so wait until time moves on.
+      //
+      return;
+    } else {
+      //
+      // However, we need to interpolate movement of things prior to calling the display
+      // loop, else things can appear to jump to their target and then move smoothly after.
+      // So even with dt of 0, we must process the things.
+      //
+    }
   }
 
   auto *player = thing_player(g);
@@ -485,7 +493,7 @@ static void level_tick_begin(Gamep g, Levelsp v, Levelp l)
   TRACE();
 
   if (level_is_player_level(g, v, l)) {
-    level_log(g, v, l, "Tick %u: begin", v->tick);
+    LEVEL_DBG(g, v, l, "Tick %u: begin", v->tick);
   }
   TRACE_INDENT();
 

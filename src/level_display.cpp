@@ -351,7 +351,7 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp level_above, Levelp 
                     break;
                   }
 
-                  if (thing_is_jumping(it) || thing_is_thrown(it)) {
+                  if (thing_is_levitating(g, v, l, it) || thing_is_jumping(it) || thing_is_thrown(it)) {
                     display_tile = true;
                     break;
                   }
@@ -724,8 +724,8 @@ static void level_display_merge(Gamep g, Levelsp v, Levelp l)
   }
   blit_fbo_unbind();
 
-  //  sdl_fbo_dump(g, FBO_FULL_SCREEN_LEVEL_BELOW, "FBO_FULL_SCREEN_LEVEL_BELOW");
-  //  sdl_fbo_dump(g, FBO_FULL_SCREEN_LEVEL_CURR, "FBO_FULL_SCREEN_LEVEL_CURR");
+  // sdl_fbo_dump(g, FBO_FULL_SCREEN_LEVEL_BELOW, "FBO_FULL_SCREEN_LEVEL_BELOW");
+  // sdl_fbo_dump(g, FBO_FULL_SCREEN_LEVEL_CURR, "FBO_FULL_SCREEN_LEVEL_CURR");
 }
 
 void level_display(Gamep g, Levelsp v, Levelp l)

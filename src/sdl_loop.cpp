@@ -203,21 +203,24 @@ void sdl_loop(Gamep g)
       if (NO_ERROR_OCCURRED()) [[likely]] {
         game_tick(g);
       }
+
+      //
+      // Must call the game tick prior to the display routine, to ensure things are interpolated.
+      // Else things can appear to jump to their target and then move smoothly after.
+      //
+      game_pcg_lock();
+      gl_enter_2d_mode(g, game_map_fbo_width_get(g), game_map_fbo_height_get(g));
+      game_display(g);
+      gl_enter_2d_mode(g, game_window_pix_width_get(g), game_window_pix_height_get(g));
+      game_pcg_unlock();
     }
-
-    game_pcg_lock();
-
-    //
-    // Display the level
-    //
-    gl_enter_2d_mode(g, game_map_fbo_width_get(g), game_map_fbo_height_get(g));
-    game_display(g);
-    gl_enter_2d_mode(g, game_window_pix_width_get(g), game_window_pix_height_get(g));
 
     //
     // Display the FBOs
     //
+    game_pcg_lock();
     sdl_display(g);
+    game_pcg_unlock();
 
     //
     // Config change?
@@ -253,8 +256,6 @@ void sdl_loop(Gamep g)
         frames       = 0;
       }
     }
-
-    game_pcg_unlock();
   }
 
   log("SDL: exited main loop");
