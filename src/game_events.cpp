@@ -442,10 +442,21 @@ static auto game_event_jump(Gamep g) -> bool
   // Can't jump when levitating.
   //
   if (thing_is_levitating(g, v, l, player)) {
-    std::vector< bpoint > move_path;
-    move_path.push_back(to);
-    level_cursor_copy_path_to_player(g, v, l, move_path);
-    player_state_change(g, v, l, PLAYER_STATE_FOLLOWING_PATH);
+    THING_DBG(g, v, l, player, "move instead to (%d,%d)", to.x, to.y);
+    TRACE_INDENT();
+
+    //
+    // Use the existing mouse path
+    //
+    level_cursor_copy_mouse_path_to_player(g, v, l);
+
+    player_state_change(g, v, l, PLAYER_STATE_PATH_REQUESTED);
+    if (! player_check_if_target_needs_move_confirm(g, v, l, v->cursor_at)) {
+      //
+      // We may not be adjacent to the jump target, so allow the player to walk there
+      //
+      player_state_change(g, v, l, PLAYER_STATE_FOLLOWING_PATH);
+    }
     return true;
   }
 

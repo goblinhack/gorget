@@ -106,19 +106,20 @@
 //
 [[nodiscard]] auto thing_can_move_to_attempt(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool
 {
-  TRACE();
+  THING_DBG(g, v, l, me, "can move to: (%d,%d) ?", to.x, to.y);
+  TRACE_INDENT();
 
   if (is_oob_or_border(to)) [[unlikely]] {
     (void) thing_lunge(g, v, l, me, to);
+    THING_DBG(g, v, l, me, "can move to: (%d,%d) ? no, oob", to.x, to.y);
     return false;
   }
 
   auto at = thing_at(g, v, l, me);
   if (to == at) {
+    THING_DBG(g, v, l, me, "can move to: (%d,%d) ? no, same location", to.x, to.y);
     return true;
   }
-
-  THING_DBG(g, v, l, me, "can move to: (%d,%d) ?", to.x, to.y);
 
   if (! adjacent(at, to)) {
     THING_DBG(g, v, l, me, "can move to: (%d,%d); not adjacent", to.x, to.y);

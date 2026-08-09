@@ -537,7 +537,7 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
     return false;
   }
 
-  THING_DBG(g, v, l, me, "player move: move path size %d", thing_move_path_size(g, v, l, me));
+  THING_DBG(g, v, l, me, "player move: check if needs move confirm (move path size %d)", thing_move_path_size(g, v, l, me));
   TRACE_INDENT();
 
   if (! adjacent(thing_at(g, v, l, me), to)) {
@@ -545,6 +545,9 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
   }
 
   if (thing_move_path_size(g, v, l, me) == 0) {
+    THING_DBG(g, v, l, me, "player move: no move path");
+    TRACE_INDENT();
+
     player_state_change(g, v, l, PLAYER_STATE_NORMAL);
 
     if (level_is_cursor_path_hazard(g, v, l, to) != nullptr) {
@@ -620,10 +623,18 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
 //
 [[nodiscard]] static auto player_move_try(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to, bool move_confirmed, bool need_path) -> bool
 {
-  if (move_confirmed) {
-    THING_DBG(g, v, l, me, "player move try (confirmed move)");
+  if (need_path) {
+    if (move_confirmed) {
+      THING_DBG(g, v, l, me, "player move try (need path, confirmed move)");
+    } else {
+      THING_DBG(g, v, l, me, "player move try (need path)");
+    }
   } else {
-    THING_DBG(g, v, l, me, "player move try");
+    if (move_confirmed) {
+      THING_DBG(g, v, l, me, "player move try (confirmed move)");
+    } else {
+      THING_DBG(g, v, l, me, "player move try");
+    }
   }
   TRACE_INDENT();
 
@@ -755,7 +766,7 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
   return false;
 }
 
-static auto player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy) -> bool
+auto player_move_to(Gamep g, Levelsp v, Levelp l, bpoint to) -> bool
 {
   TRACE();
 
@@ -781,9 +792,6 @@ static auto player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy) -> b
     return false;
   }
 
-  auto         at = thing_at(g, v, l, me);
-  bpoint const to(at.x + dx, at.y + dy);
-
   const bool need_path      = true;
   const bool move_confirmed = false;
 
@@ -792,6 +800,21 @@ static auto player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy) -> b
   player_move_requests_reset(g, v);
 
   return success;
+}
+
+static auto player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy) -> bool
+{
+  TRACE();
+
+  auto *me = thing_player(g);
+  if (me == nullptr) {
+    return false;
+  }
+
+  auto         at = thing_at(g, v, l, me);
+  bpoint const to(at.x + dx, at.y + dy);
+
+  return player_move_to(g, v, l, to);
 }
 
 [[nodiscard]] auto player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what, bpoint target) -> bool
