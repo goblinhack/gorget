@@ -223,7 +223,7 @@
         // Avoids hazards when floating
         //
         if (thing_is_chasm(it)) {
-          if (thing_is_able_to_fall(me)) {
+          if (thing_is_able_to_fall(g, v, l, me)) {
             return false;
           }
         }
