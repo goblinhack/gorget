@@ -41,7 +41,6 @@ static auto tp_deep_water_description_get(Gamep g, Levelsp v, Levelp l, Thingp m
   tp_flag_set(tp, is_blit_if_has_seen);
   tp_flag_set(tp, is_blit_per_pixel_lighting);
   tp_flag_set(tp, is_blit_shown_in_chasms);
-  tp_flag_set(tp, is_blocked_from_teleporting);
   tp_flag_set(tp, is_cursor_path_hazard);
   tp_flag_set(tp, is_deep_water);
   tp_flag_set(tp, is_described_cursor);
@@ -62,7 +61,6 @@ static auto tp_deep_water_description_get(Gamep g, Levelsp v, Levelp l, Thingp m
   tp_temperature_initial_set(tp, 5);     // celsius
   tp_weight_set(tp, WEIGHT_VVVHEAVY);    // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_LIQUID2);
-  tp_flag_set(tp, is_blocked_from_levitating);
   // end sort marker1 }
 
   for (auto frame = 0; frame < 2; frame++) {

@@ -19,7 +19,7 @@
     return false;
   }
 
-  if (thing_is_blocked_from_levitating(me)) {
+  if (! thing_is_able_to_levitate(me)) {
     return false;
   }
 

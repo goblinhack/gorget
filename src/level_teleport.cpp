@@ -29,7 +29,7 @@ void level_tick_teleport(Gamep g, Levelsp v, Levelp l)
     if (level_is_teleport_bool(g, v, l, p)) {
       FOR_ALL_THINGS_AT(g, v, l, t, p)
       {
-        if (! thing_is_able_to_fall(t)) {
+        if (! thing_is_able_to_teleport(t)) {
           continue;
         }
 

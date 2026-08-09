@@ -40,6 +40,8 @@ static auto tp_key_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> s
   thing_on_death_set(tp, tp_key_on_death);
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
+  tp_flag_set(tp, is_able_to_levitate);
+  tp_flag_set(tp, is_able_to_teleport);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_hit_outline_w_black_inside);
@@ -48,6 +50,7 @@ static auto tp_key_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> s
   tp_flag_set(tp, is_collision_circle_large);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_key);
+  tp_flag_set(tp, is_levitating);
   tp_flag_set(tp, is_light_source, 2);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_metal);

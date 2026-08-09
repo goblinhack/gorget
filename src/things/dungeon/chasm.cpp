@@ -28,7 +28,6 @@ static auto tp_chasm_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
   tp_flag_set(tp, is_blit_if_has_seen);
   tp_flag_set(tp, is_blit_per_pixel_lighting);
   tp_flag_set(tp, is_blit_shown_in_chasms);
-  tp_flag_set(tp, is_blocked_from_teleporting);
   tp_flag_set(tp, is_chasm);
   tp_flag_set(tp, is_cursor_path_hazard);
   tp_flag_set(tp, is_cursor_path_none);
@@ -48,7 +47,6 @@ static auto tp_chasm_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
   tp_name_short_set(tp, "chasm");
   tp_weight_set(tp, WEIGHT_NONE); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_FLOOR);
-  tp_flag_set(tp, is_blocked_from_levitating);
   // end sort marker1 }
 
   auto *tile = tile_find_mand(name + ".IS_JOIN_BL");

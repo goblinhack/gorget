@@ -492,7 +492,7 @@
   return tp->z_depth_get(g, v, l, me);
 }
 
-[[nodiscard]] static inline auto thing_is_blocked_from_levitating(Thingp me) -> bool
+[[nodiscard]] static inline auto thing_is_able_to_levitate(Thingp me) -> bool
 {
 #ifdef DEBUG_BUILD
   TRACE();
@@ -505,10 +505,10 @@
     return MAP_Z_DEPTH_FLOOR;
   }
 #endif
-  return tp_flag(tp, is_blocked_from_levitating) != 0;
+  return tp_flag(tp, is_able_to_levitate) != 0;
 }
 
-[[nodiscard]] static inline auto thing_is_blocked_from_teleporting(Thingp me) -> bool
+[[nodiscard]] static inline auto thing_is_able_to_teleport(Thingp me) -> bool
 {
 #ifdef DEBUG_BUILD
   TRACE();
@@ -521,7 +521,7 @@
     return MAP_Z_DEPTH_FLOOR;
   }
 #endif
-  return tp_flag(tp, is_blocked_from_teleporting) != 0;
+  return tp_flag(tp, is_able_to_teleport) != 0;
 }
 
 #endif // MY_THING_INLINES_HPP

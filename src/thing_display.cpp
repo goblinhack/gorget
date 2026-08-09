@@ -500,7 +500,7 @@ static void thing_display_it(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t_mayb
   //
   // Adjust for levitating
   //
-  if (! thing_is_blocked_from_levitating(t_maybe_null)) {
+  if (thing_is_able_to_levitate(t_maybe_null)) {
     if (thing_is_levitating(g, v, l, t_maybe_null)) {
       if (! thing_is_dead(t_maybe_null)) {
         if (fbo == FBO_MAP_FG) {

@@ -27,9 +27,9 @@ static auto tp_steam_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
   // begin sort marker1 {
   thing_description_set(tp, tp_steam_description_get);
   tp_damage_set(tp, THING_EVENT_FIRE_DAMAGE, "1d4");
+  tp_flag_set(tp, is_able_to_teleport);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
-  tp_flag_set(tp, is_blocked_from_teleporting);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_gaseous);
   tp_flag_set(tp, is_indestructible);
@@ -50,7 +50,6 @@ static auto tp_steam_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
   tp_temperature_initial_set(tp, 100); // celsius
   tp_weight_set(tp, WEIGHT_NONE);      // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_GAS);
-  tp_flag_set(tp, is_blocked_from_levitating);
   // end sort marker1 }
 
   auto delay = 200;

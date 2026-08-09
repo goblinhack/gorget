@@ -861,10 +861,10 @@
   return level_flag_cached(g, v, l, is_submergible, p);
 }
 
-[[nodiscard]] auto level_is_blocked_from_teleporting_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_able_to_teleport_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_blocked_from_teleporting, p);
+  return level_flag_cached(g, v, l, is_able_to_teleport, p);
 }
 
 [[nodiscard]] auto level_is_teleport_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
@@ -2079,10 +2079,10 @@
   return level_flag_cached(g, v, l, is_unused195, p);
 }
 
-[[nodiscard]] auto level_is_blocked_from_levitating_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_able_to_levitate_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_blocked_from_levitating, p);
+  return level_flag_cached(g, v, l, is_able_to_levitate, p);
 }
 
 [[nodiscard]] auto level_is_teleport_hazard_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

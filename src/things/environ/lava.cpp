@@ -30,7 +30,6 @@ static auto tp_lava_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> 
   tp_flag_set(tp, is_blit_if_has_seen);
   tp_flag_set(tp, is_blit_per_pixel_lighting);
   tp_flag_set(tp, is_blit_shown_in_chasms);
-  tp_flag_set(tp, is_blocked_from_teleporting);
   tp_flag_set(tp, is_cursor_path_hazard);
   tp_flag_set(tp, is_cursor_path_warning);
   tp_flag_set(tp, is_described_cursor);
@@ -58,7 +57,6 @@ static auto tp_lava_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> 
   tp_temperature_initial_set(tp, 1000); // celsius
   tp_weight_set(tp, WEIGHT_VVVHEAVY);   // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_LAVA);
-  tp_flag_set(tp, is_blocked_from_levitating);
   // end sort marker1 }
 
   auto delay = 1200;

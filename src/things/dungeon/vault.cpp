@@ -41,7 +41,6 @@ static void tp_vault_melt(Gamep g, Levelsp v, Levelp l, Thingp me)
     tp_flag_set(tp, is_blit_obscures);
     tp_flag_set(tp, is_blit_per_pixel_lighting);
     tp_flag_set(tp, is_blit_shown_in_chasms);
-    tp_flag_set(tp, is_blocked_from_teleporting);
     tp_flag_set(tp, is_collision_square);
     tp_flag_set(tp, is_meltable);
     tp_flag_set(tp, is_obs_to_beam);
@@ -79,7 +78,6 @@ static void tp_vault_melt(Gamep g, Levelsp v, Levelp l, Thingp me)
     tp_variant_set(tp, variant);
     tp_weight_set(tp, WEIGHT_VVHEAVY); // grams
     tp_z_depth_set(tp, MAP_Z_DEPTH_WALL);
-    tp_flag_set(tp, is_blocked_from_levitating);
     // end sort marker1 }
 
     auto *tile = tile_find_mand(tile_name + ".IS_JOIN_BL");

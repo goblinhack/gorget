@@ -126,6 +126,8 @@ static bool tp_copious_chest_on_damage(Gamep g, Levelsp v, Levelp l, Thingp me, 
   thing_on_open_request_set(tp, tp_copious_chest_on_open_request);
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
+  tp_flag_set(tp, is_able_to_levitate);
+  tp_flag_set(tp, is_able_to_teleport);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_hit_outline_w_black_inside);

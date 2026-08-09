@@ -22,13 +22,11 @@
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_shown_in_chasms);
-  tp_flag_set(tp, is_blocked_from_teleporting);
   tp_flag_set(tp, is_effect_ripple);
   tp_flag_set(tp, is_effect);
   tp_flag_set(tp, is_removable_on_err);
   tp_flag_set(tp, is_wait_on_dead_anim);
   tp_z_depth_set(tp, MAP_Z_DEPTH_LIQUID2);
-  tp_flag_set(tp, is_blocked_from_levitating);
   // end sort marker1 }
 
   auto delay = 100;

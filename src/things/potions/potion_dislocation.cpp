@@ -46,7 +46,7 @@ static void tp_potion_dislocation_on_thrown_end(Gamep g, Levelsp v, Levelp l, Th
       continue;
     }
 
-    if (thing_is_blocked_from_teleporting(it)) {
+    if (! thing_is_able_to_teleport(it)) {
       continue;
     }
 
@@ -71,7 +71,7 @@ static void tp_potion_dislocation_on_thrown_end(Gamep g, Levelsp v, Levelp l, Th
         continue;
       }
 
-      if (thing_is_blocked_from_teleporting(it)) {
+      if (! thing_is_able_to_teleport(it)) {
         continue;
       }
 
@@ -177,6 +177,8 @@ static void tp_potion_dislocation_on_death(Gamep g, Levelsp v, Levelp l, Thingp 
   tp_damage_set(tp, THING_EVENT_THROWN_DAMAGE, "1d4");
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
+  tp_flag_set(tp, is_able_to_levitate);
+  tp_flag_set(tp, is_able_to_teleport);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_hit_outline_w_black_inside);

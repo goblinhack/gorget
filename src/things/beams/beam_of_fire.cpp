@@ -39,6 +39,7 @@ static void tp_beam_of_fire_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_blit_if_has_seen);
+  tp_flag_set(tp, is_able_to_teleport);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_blit_shown_in_overlay);
   tp_flag_set(tp, is_collision_square);

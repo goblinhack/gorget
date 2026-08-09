@@ -70,7 +70,6 @@ static auto tp_trap_chasm_activated(Gamep g, Levelsp v, Levelp l, Thingp trap, T
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_per_pixel_lighting);
   tp_flag_set(tp, is_blit_shown_in_chasms);
-  tp_flag_set(tp, is_blocked_from_teleporting);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_flat);
   tp_flag_set(tp, is_loggable);
@@ -84,7 +83,6 @@ static auto tp_trap_chasm_activated(Gamep g, Levelsp v, Levelp l, Thingp trap, T
   tp_name_short_set(tp, "trap");
   tp_weight_set(tp, WEIGHT_FEATHER); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
-  tp_flag_set(tp, is_blocked_from_levitating);
   // end sort marker1 }
 
   for (auto frame = 0; frame < 1; frame++) {

@@ -40,7 +40,6 @@ static auto tp_exit_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::
   tp_flag_set(tp, is_blit_if_has_seen);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_blit_shown_in_overlay);
-  tp_flag_set(tp, is_blocked_from_teleporting);
   tp_flag_set(tp, is_critical_to_level);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_dmap);
@@ -56,7 +55,6 @@ static auto tp_exit_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::
   tp_name_short_set(tp, "exit");
   tp_weight_set(tp, WEIGHT_VHEAVY); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_BG_OBJ);
-  tp_flag_set(tp, is_blocked_from_levitating);
   // end sort marker1 }
 
   for (auto frame = 0; frame < 2; frame++) {
