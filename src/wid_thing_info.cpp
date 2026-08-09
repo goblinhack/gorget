@@ -1019,7 +1019,10 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
 
   auto *tp = thing_tp(me);
 
-  if (thing_is_ethereal(me)) {
+  if (thing_is_ethereal(g, v, l, me)) {
+    //
+    // Filter other things that are obvious for being ethereal
+    //
     out = string_append_with_comma(out, "Ethereal");
   } else {
     //
@@ -1028,17 +1031,14 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
     if (thing_is_able_to_move_through_walls(me)) {
       out = string_append_with_comma(out, "Wall-walker");
     }
-    if (thing_is_able_to_see_through_walls(me)) {
-      out = string_append_with_comma(out, "Xray-vision");
-    }
     if (thing_is_levitating(g, v, l, me)) {
       out = string_append_with_comma(out, "Levitating");
     }
-    if (thing_is_flying(me)) {
-      out = string_append_with_comma(out, "Flying");
-    }
   }
 
+  if (thing_is_able_to_see_through_walls(me)) {
+    out = string_append_with_comma(out, "Xray-vision");
+  }
   if (thing_is_gaseous(me)) {
     out = string_append_with_comma(out, "Gaseous");
   }
@@ -1413,7 +1413,11 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
     if (lifespan > 0) {
       line += ", ";
       line += std::to_string(lifespan);
-      line += " moves";
+      if (lifespan == 1) {
+        line += " move (last move)";
+      } else {
+        line += " moves";
+      }
     }
 
     char line_bar[ MAXSHORTSTR ];

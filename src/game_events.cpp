@@ -460,7 +460,7 @@ static auto game_event_jump(Gamep g) -> bool
     return true;
   }
 
-  if (level_is_cursor_path_hazard(g, v, l, to) != nullptr) {
+  if (level_is_cursor_path_hazard(g, v, l, to, player) != nullptr) {
     //
     // If there is a hazard at the target, then go through the normal mouse
     // code which will walk up to the edge of the chasm and then jump, and

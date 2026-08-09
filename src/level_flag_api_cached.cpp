@@ -417,10 +417,10 @@
   return level_flag_cached(g, v, l, is_floor, p);
 }
 
-[[nodiscard]] auto level_is_flying_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_unused197_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_flying, p);
+  return level_flag_cached(g, v, l, is_unused197, p);
 }
 
 [[nodiscard]] auto level_is_foliage_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

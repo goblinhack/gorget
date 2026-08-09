@@ -416,10 +416,10 @@
   return level_flag(g, v, l, is_floor, p, me);
 }
 
-[[nodiscard]] auto level_is_flying(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_unused197(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_flying, p, me);
+  return level_flag(g, v, l, is_unused197, p, me);
 }
 
 [[nodiscard]] auto level_is_foliage(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp

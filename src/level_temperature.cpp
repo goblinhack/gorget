@@ -132,6 +132,13 @@ static void thing_heat_exchange(Gamep g, Levelsp v, Levelp l, Thingp a, Thingp b
   finalT = static_cast< int >(Ta);
 
   //
+  // If one party is ethereal, no temperature interactions
+  //
+  if (thing_is_ethereal(g, v, l, a) || thing_is_ethereal(g, v, l, b)) {
+    return;
+  }
+
+  //
   // Weapons only heat up things they hit.
   //
   // Steam over water is handled as a special case.
@@ -139,6 +146,19 @@ static void thing_heat_exchange(Gamep g, Levelsp v, Levelp l, Thingp a, Thingp b
   // If we do turn on collision detection, for say water, then the water ends up boiling
   // off too soon. So the hack is just to ignore this case.
   //
+  if (thing_is_projectile(a) || thing_is_beam_weapon(a)) {
+    //
+    // Avoid grass catching fire due to beams
+    //
+    if (thing_is_flat(b)) {
+      return;
+    }
+
+    if (! thing_is_collision_detection_enabled(b)) {
+      return;
+    }
+  }
+
   if (thing_is_projectile(b) || thing_is_beam_weapon(b)) {
     //
     // Avoid grass catching fire due to beams
@@ -148,6 +168,24 @@ static void thing_heat_exchange(Gamep g, Levelsp v, Levelp l, Thingp a, Thingp b
     }
 
     if (! thing_is_collision_detection_enabled(a)) {
+      return;
+    }
+  }
+
+  if (thing_is_levitating(g, v, l, a)) {
+    //
+    // Avoid lava and water interactions
+    //
+    if (thing_is_flat(b)) {
+      return;
+    }
+  }
+
+  if (thing_is_levitating(g, v, l, b)) {
+    //
+    // Avoid lava and water interactions
+    //
+    if (thing_is_flat(a)) {
       return;
     }
   }

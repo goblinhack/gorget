@@ -12,7 +12,7 @@ void thing_explosion_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE();
 
-  if (thing_is_ethereal(t)) {
+  if (thing_is_ethereal(g, v, l, t)) {
     return;
   }
 

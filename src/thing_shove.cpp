@@ -159,11 +159,7 @@ static void thing_shoved_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
   auto         direction = at - thing_at(g, v, l, shover);
   bpoint const to        = at + direction;
 
-  if (thing_is_ethereal(shover)) {
-    return false;
-  }
-
-  if (! thing_is_able_to_shove(shover)) {
+  if (! thing_is_able_to_shove(g, v, l, shover)) {
     return false;
   }
 
@@ -172,7 +168,7 @@ static void thing_shoved_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
   //
   FOR_ALL_THINGS_AT(g, v, l, it, at)
   {
-    if (! thing_is_shovable(it)) {
+    if (! thing_is_shovable(g, v, l, it)) {
       continue;
     }
 
@@ -207,7 +203,7 @@ static void thing_shoved_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
   return tp_flag(thing_tp(t), is_dead_on_shoving) != 0;
 }
 
-[[nodiscard]] auto thing_is_able_to_shove(Thingp t) -> bool
+[[nodiscard]] auto thing_is_able_to_shove(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -215,10 +211,15 @@ static void thing_shoved_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
     ERR("no thing pointer");
     return false;
   }
+
+  if (thing_is_ethereal(g, v, l, t) || thing_is_levitating(g, v, l, t)) {
+    return false;
+  }
+
   return tp_flag(thing_tp(t), is_able_to_shove) != 0;
 }
 
-[[nodiscard]] auto thing_is_shovable(Thingp t) -> bool
+[[nodiscard]] auto thing_is_shovable(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -226,5 +227,10 @@ static void thing_shoved_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
     ERR("no thing pointer");
     return false;
   }
+
+  if (thing_is_ethereal(g, v, l, t) || thing_is_levitating(g, v, l, t)) {
+    return false;
+  }
+
   return tp_flag(thing_tp(t), is_shovable) != 0;
 }

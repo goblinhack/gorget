@@ -3722,7 +3722,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_blit_obscures) != 0;
 }
 
-[[nodiscard]] auto thing_is_flying(Thingp t) -> bool
+[[nodiscard]] auto thing_is_unused197(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -3730,7 +3730,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_flying) != 0;
+  return tp_flag(thing_tp(t), is_unused197) != 0;
 }
 
 [[nodiscard]] auto thing_is_physics_water(Thingp t) -> bool
@@ -3891,7 +3891,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_crushable) != 0;
 }
 
-[[nodiscard]] auto thing_is_ethereal(Thingp t) -> bool
+[[nodiscard]] auto thing_is_ethereal(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool
 {
   TRACE_DEBUG();
 

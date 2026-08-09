@@ -10,7 +10,7 @@
 #include "my_tp.hpp"
 #include "my_types.hpp"
 
-[[nodiscard]] auto thing_is_submergible(Thingp t) -> bool
+[[nodiscard]] auto thing_is_submergible(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -18,6 +18,11 @@
     ERR("no thing pointer");
     return false;
   }
+
+  if (thing_is_levitating(g, v, l, t)) {
+    return false;
+  }
+
   return tp_flag(thing_tp(t), is_submergible) != 0;
 }
 
@@ -30,7 +35,7 @@
     return 0;
   }
 
-  if (thing_is_levitating(g, v, l, t)) {
+  if (! thing_is_submergible(g, v, l, t)) {
     val = 0;
   }
 
@@ -46,7 +51,7 @@
     return 0;
   }
 
-  if (thing_is_levitating(g, v, l, t)) {
+  if (! thing_is_submergible(g, v, l, t)) {
     val = 0;
   }
 
@@ -62,7 +67,7 @@
     return 0;
   }
 
-  if (thing_is_levitating(g, v, l, t)) {
+  if (! thing_is_submergible(g, v, l, t)) {
     val = 0;
   }
 
@@ -79,7 +84,7 @@ void thing_submerged_update(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE();
 
-  if (! thing_is_submergible(t)) {
+  if (! thing_is_submergible(g, v, l, t)) {
     return;
   }
 

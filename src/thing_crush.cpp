@@ -21,6 +21,10 @@
     return false;
   }
 
+  if (thing_is_levitating(g, v, l, crusher)) {
+    return false;
+  }
+
   //
   // Crush grass?
   //

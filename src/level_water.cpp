@@ -41,6 +41,10 @@ void level_tick_water(Gamep g, Levelsp v, Levelp l)
         continue;
       }
 
+      if (! thing_is_submergible(g, v, l, t)) {
+        continue;
+      }
+
       thing_water_handle(g, v, l, t);
     }
   }

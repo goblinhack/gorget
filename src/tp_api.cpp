@@ -415,10 +415,10 @@
   return tp_flag(tp, is_floor) != 0;
 }
 
-[[nodiscard]] auto tp_is_flying(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_unused197(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_flying) != 0;
+  return tp_flag(tp, is_unused197) != 0;
 }
 
 [[nodiscard]] auto tp_is_foliage(Tpp tp) -> bool

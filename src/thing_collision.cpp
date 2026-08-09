@@ -565,7 +565,7 @@ static void thing_collision_handle_do(Gamep g, Levelsp v, Levelp l, Thingp obsta
     return;
   }
 
-  if (thing_is_ethereal(me)) {
+  if (thing_is_ethereal(g, v, l, me)) {
     return;
   }
 

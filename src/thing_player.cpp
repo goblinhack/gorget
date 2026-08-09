@@ -550,7 +550,7 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
 
     player_state_change(g, v, l, PLAYER_STATE_NORMAL);
 
-    if (level_is_cursor_path_hazard(g, v, l, to) != nullptr) {
+    if (level_is_cursor_path_hazard(g, v, l, to, me) != nullptr) {
       THING_DBG(g, v, l, me, "player move: cursor path is a hazard and have no move path");
       TRACE_INDENT();
 
@@ -565,8 +565,8 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
   //
   // Double check before jumping in chasms or lava
   //
-  if (level_is_needs_move_confirm(g, v, l, to) != nullptr) {
-    if (! thing_is_ethereal(me) && ! thing_is_levitating(g, v, l, me) && ! thing_is_flying(me)) {
+  if (! thing_is_ethereal(g, v, l, me) && ! thing_is_levitating(g, v, l, me)) {
+    if (level_is_needs_move_confirm(g, v, l, to) != nullptr) {
       if (level_is_chasm_bool(g, v, l, to)) {
         if (level_is_boss_level(g, v, l)) {
           return true;
@@ -1399,7 +1399,7 @@ void player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
     THING_DBG(g, v, l, me, "player has a path to target");
     TRACE_INDENT();
 
-    if (level_is_cursor_path_hazard(g, v, l, move_next) != nullptr) {
+    if (level_is_cursor_path_hazard(g, v, l, move_next, me) != nullptr) {
       THING_DBG(g, v, l, me, "player has a path to target, but it is a hazard");
       TRACE_INDENT();
 
@@ -1412,7 +1412,7 @@ void player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
         // the player to have a chance to say no
         //
         bool const need_path = false;
-        if (level_is_cursor_path_hazard(g, v, l, move_destination) != nullptr) {
+        if (level_is_cursor_path_hazard(g, v, l, move_destination, me) != nullptr) {
           if (! player_move_try(g, v, l, me, move_next, move_confirmed, need_path)) {
             return false;
           }

@@ -348,7 +348,7 @@
   auto dy = to.y - at.y;
   thing_set_dir_from_delta(g, v, l, me, dx, dy);
 
-  if (! thing_is_able_to_shove(me)) {
+  if (! thing_is_able_to_shove(g, v, l, me)) {
     return false;
   }
 
@@ -368,7 +368,7 @@
       //
       // But make exceptions for things like braziers
       //
-      if (thing_is_shovable(it)) {
+      if (thing_is_shovable(g, v, l, it)) {
         continue;
       }
 

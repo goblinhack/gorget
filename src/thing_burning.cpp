@@ -61,17 +61,19 @@ void thing_continue_to_burn_check(Gamep g, Levelsp v, Levelp l, Thingp me)
     //
     // Spawn more flames?
     //
-    if (thing_is_flying(me) || thing_is_combustible(me)) {
-      if (level_count_is_fire(g, v, l, thing_at(g, v, l, me)) < 2) {
-        THING_DBG(g, v, l, me, "spawn additional flames");
-        TRACE_INDENT();
-        (void) thing_spawn(g, v, l, tp_first(is_fire), me);
+    if (! thing_is_levitating(g, v, l, me)) {
+      if (thing_is_combustible(me)) {
+        if (level_count_is_fire(g, v, l, thing_at(g, v, l, me)) < 2) {
+          THING_DBG(g, v, l, me, "spawn additional flames");
+          TRACE_INDENT();
+          (void) thing_spawn(g, v, l, tp_first(is_fire), me);
 
-        if (thing_is_player(me)) {
-          if (thing_is_immune_to(g, v, l, me, THING_EVENT_FIRE_DAMAGE)) {
-            topcon(UI_IMPORTANT_FMT_STR "The flames intensify, but you don't care!" UI_RESET_FMT);
-          } else {
-            topcon(UI_IMPORTANT_FMT_STR "The flames intensify!" UI_RESET_FMT);
+          if (thing_is_player(me)) {
+            if (thing_is_immune_to(g, v, l, me, THING_EVENT_FIRE_DAMAGE)) {
+              topcon(UI_IMPORTANT_FMT_STR "The flames intensify, but you don't care!" UI_RESET_FMT);
+            } else {
+              topcon(UI_IMPORTANT_FMT_STR "The flames intensify!" UI_RESET_FMT);
+            }
           }
         }
       }

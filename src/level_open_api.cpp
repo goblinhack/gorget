@@ -416,10 +416,10 @@
   return level_open(g, v, l, is_floor, p);
 }
 
-[[nodiscard]] auto level_open_is_flying(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_open_is_unused197(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_open(g, v, l, is_flying, p);
+  return level_open(g, v, l, is_unused197, p);
 }
 
 [[nodiscard]] auto level_open_is_foliage(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp

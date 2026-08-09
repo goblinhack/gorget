@@ -19,6 +19,10 @@
     return false;
   }
 
+  if (tp_flag(thing_tp(me), is_levitating)) {
+    return true;
+  }
+
   if (! thing_is_able_to_levitate(me)) {
     return false;
   }
@@ -37,5 +41,5 @@
     }
   }
 
-  return tp_flag(thing_tp(me), is_levitating) != 0;
+  return false;
 }

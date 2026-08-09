@@ -56,11 +56,11 @@ static auto tp_cursor_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l, con
     return tile;
   }
 
-  if (level_is_cursor_path_warning_bool(g, v, l, p)) {
+  if (level_is_cursor_path_warning_bool(g, v, l, p, player)) {
     return tp_tiles_get(tp, THING_ANIM_CURSOR_WARNING, 0);
   }
 
-  if (level_is_cursor_path_hazard_bool(g, v, l, p)) {
+  if (level_is_cursor_path_hazard_bool(g, v, l, p, player)) {
     return tp_tiles_get(tp, THING_ANIM_CURSOR_HAZARD, 0);
   }
 

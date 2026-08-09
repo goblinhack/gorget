@@ -417,10 +417,10 @@
   return level_count(g, v, l, is_floor, p);
 }
 
-[[nodiscard]] auto level_count_is_flying(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_unused197(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_flying, p);
+  return level_count(g, v, l, is_unused197, p);
 }
 
 [[nodiscard]] auto level_count_is_foliage(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t

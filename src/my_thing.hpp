@@ -788,7 +788,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_able_to_move_through_walls(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_open_things(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_see_through_walls(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_able_to_shove(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_able_to_shove(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_throw(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_wear_items(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_always_hot(Thingp me) -> bool;
@@ -880,7 +880,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_engulfed_try_unset(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
 [[nodiscard]] auto thing_is_entrance(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_equippable(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_ethereal(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_ethereal(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
 [[nodiscard]] auto thing_is_exit(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_extinguished_on_death(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_falling_continues(Thingp t) -> bool;
@@ -888,7 +888,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_flammable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_flat(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_flesh(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_flying(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_unused197(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_gaseous(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_ghost(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_glass(Thingp t) -> bool;
@@ -964,7 +964,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_ring(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_rock(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_scheduled_for_cleanup(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_shovable(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_shovable(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
 [[nodiscard]] auto thing_is_shown_health(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_shown_noise(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_shown_stamina(Thingp me) -> bool;
@@ -975,7 +975,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_stealthy(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
 [[nodiscard]] auto thing_is_steam(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_stone(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_submergible(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_submergible(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
 [[nodiscard]] auto thing_is_teleport_hazard(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_teleport(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_teleporting(Thingp me) -> bool;

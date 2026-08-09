@@ -47,7 +47,7 @@ static void tp_player_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
     return;
   }
 
-  if (level_is_deep_water_bool(g, v, l, thing_at(g, v, l, me))) {
+  if (thing_is_submergible(g, v, l, me) && level_is_deep_water_bool(g, v, l, thing_at(g, v, l, me))) {
     //
     // Allow some items to drift away
     //
@@ -93,7 +93,7 @@ static void tp_player_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
         break;
       }
     }
-  } else if (level_is_water_bool(g, v, l, thing_at(g, v, l, me))) {
+  } else if (thing_is_submergible(g, v, l, me) && level_is_water_bool(g, v, l, thing_at(g, v, l, me))) {
     //
     // Ripple where we used to be
     //
@@ -116,18 +116,30 @@ static void tp_player_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
       }
     }
   } else if (level_is_foliage_bool(g, v, l, thing_at(g, v, l, me))) {
-    thing_sound_play(g, v, l, me, "footstep_foliage");
-    (void) thing_noise_incr(g, v, l, me, THING_NOISE_FOLIAGE);
-  } else if (level_is_foliage_bool(g, v, l, thing_at(g, v, l, me))) {
-    (void) thing_noise_incr(g, v, l, me, THING_NOISE_GRASS);
+    //
+    // Allow bushes to rustle if levitating, but not ethereal
+    //
+    if (! thing_is_ethereal(g, v, l, me)) {
+      thing_sound_play(g, v, l, me, "footstep_foliage");
+      (void) thing_noise_incr(g, v, l, me, THING_NOISE_FOLIAGE);
+    }
+  } else if (level_is_grass_bool(g, v, l, thing_at(g, v, l, me))) {
+    if (! thing_is_ethereal(g, v, l, me) && ! thing_is_levitating(g, v, l, me)) {
+      (void) thing_noise_incr(g, v, l, me, THING_NOISE_GRASS);
+    }
   } else {
-    thing_sound_play(g, v, l, me, "footstep");
+    //
+    // No footsteps if levitating
+    //
+    if (! thing_is_ethereal(g, v, l, me) && ! thing_is_levitating(g, v, l, me)) {
+      thing_sound_play(g, v, l, me, "footstep");
 
-    //
-    // Noisy bridge?
-    //
-    if (level_is_bridge_bool(g, v, l, thing_at(g, v, l, me))) {
-      (void) thing_noise_incr(g, v, l, me, THING_NOISE_FOOTSTEP);
+      //
+      // Noisy bridge?
+      //
+      if (level_is_bridge_bool(g, v, l, thing_at(g, v, l, me))) {
+        (void) thing_noise_incr(g, v, l, me, THING_NOISE_FOOTSTEP);
+      }
     }
   }
 
@@ -466,6 +478,8 @@ static bool tp_player_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker, 
   tp_distance_throw_set(tp, 6);
   tp_distance_vision_set(tp, MAP_WIDTH); // tiles
   tp_flag_set(tp, is_able_to_be_buffed);
+  tp_flag_set(tp, is_able_to_levitate);
+  tp_flag_set(tp, is_able_to_teleport);
   tp_flag_set(tp, is_able_to_be_engulfed);
   tp_flag_set(tp, is_able_to_collect_items);
   tp_flag_set(tp, is_able_to_collect_keys);

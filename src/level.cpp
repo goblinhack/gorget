@@ -387,7 +387,14 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
 
       [[fallthrough]];
 
+    case is_cursor_path_warning :
     case is_cursor_path_hazard :
+      if (me != nullptr) {
+        if (thing_is_ethereal(g, v, l, me) || thing_is_levitating(g, v, l, me)) {
+          return true; // filter out i.e. ignore
+        }
+      }
+
     case is_obs_to_cursor_path :
     case is_obs_to_explosion :
     case is_obs_to_falling_onto :
