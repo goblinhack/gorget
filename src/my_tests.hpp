@@ -106,6 +106,8 @@ auto test_load_player_triggered() -> bool;
 auto test_load_potion_dislocation_bad_luck() -> bool;
 auto test_load_potion_dislocation_good_luck() -> bool;
 auto test_load_potion_healing() -> bool;
+auto test_load_potion_levitation_player_move_fail() -> bool;
+auto test_load_potion_levitation_trampled_grass() -> bool;
 auto test_load_potion_protection() -> bool;
 auto test_load_potion_stealth() -> bool;
 auto test_load_potion_tireless() -> bool;

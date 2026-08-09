@@ -122,7 +122,7 @@
       list_macro(is_flat, "is_flat"),                                                       /* newline */                                       \
       list_macro(is_flesh, "is_flesh"),                                                     /* newline */                                       \
       list_macro(is_floor, "is_floor"),                                                     /* newline */                                       \
-      list_macro(is_obs_to_ethereal, "is_obs_to_ethereal"),                             /* newline */                                       \
+      list_macro(is_obs_to_ethereal, "is_obs_to_ethereal"),                                 /* newline */                                       \
       list_macro(is_foliage, "is_foliage"),                                                 /* newline */                                       \
       list_macro(is_gaseous, "is_gaseous"),                                                 /* newline */                                       \
       list_macro(is_ghost, "is_ghost"),                                                     /* newline */                                       \
@@ -962,6 +962,7 @@ class Tp;
 [[nodiscard]] auto tp_is_needs_move_confirm(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_obs_to_beam(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_obs_to_cursor_path(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_obs_to_ethereal(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_obs_to_explosion(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_obs_to_falling_onto(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_obs_to_fire(Tpp tp) -> bool;
@@ -969,7 +970,6 @@ class Tp;
 [[nodiscard]] auto tp_is_obs_to_jumping_onto(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_obs_to_jumping_out_of(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_obs_to_jumping_over(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_obs_to_ethereal(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_obs_to_movement(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_obs_to_paths(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_obs_to_spawning(Tpp tp) -> bool;

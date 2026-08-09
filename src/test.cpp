@@ -129,6 +129,8 @@ static std::initializer_list< std::string > tests = {
     "potion_dislocation_bad_luck",
     "potion_dislocation_good_luck",
     "potion_healing",
+    "potion_levitation_player_move_fail",
+    "potion_levitation_trampled_grass",
     "potion_protection",
     "potion_stealth",
     "potion_tireless",

@@ -932,6 +932,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_needs_move_confirm(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_beam(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_cursor_path(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_obs_to_ethereal(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_explosion(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_falling_onto(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_fire(Thingp t) -> bool;
@@ -939,7 +940,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_obs_to_jumping_onto(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_jumping_out_of(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_jumping_over(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_obs_to_ethereal(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_movement(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_paths(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_spawning(Thingp t) -> bool;
