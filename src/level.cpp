@@ -358,53 +358,72 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
     return true;
   }
 
-  switch (f) {
-    case is_obs_to_vision :
-      if (! thing_vision_blocker(g, v, l, me, it)) {
-        return true; // filter out i.e. ignore
-      }
-      return false;
-
-    case is_obs_to_jumping_onto :
-    case is_obs_to_throwing_onto :
-      //
-      // Allow players to land on chasms intentionally. Monsters don't want to.
-      //
-      if (thing_is_chasm(it)) {
-        if ((me != nullptr) && thing_is_player(me)) {
+  if (me != nullptr) {
+    switch (f) {
+      case is_obs_to_vision :
+        if (! thing_vision_blocker(g, v, l, me, it)) {
           return true; // filter out i.e. ignore
         }
-      }
+        break;
 
-      //
-      // Allow engulfers to land on you
-      //
-      if (thing_is_able_to_be_engulfed(it)) {
-        if ((me != nullptr) && thing_is_able_to_engulf(me)) {
-          return true; // filter out i.e. ignore
+      case is_obs_to_jumping_onto :
+        //
+        // Allow players to land on chasms intentionally. Monsters don't want to.
+        //
+        if (thing_is_chasm(it)) {
+          if (thing_is_player(me)) {
+            return true; // filter out i.e. ignore
+          }
         }
-      }
+        break;
 
-      [[fallthrough]];
+        //
+        // Allow engulfers to land on you
+        //
+        if (thing_is_able_to_be_engulfed(it)) {
+          if (thing_is_able_to_engulf(me)) {
+            return true; // filter out i.e. ignore
+          }
+        }
+        break;
 
-    case is_cursor_path_warning :
-    case is_cursor_path_hazard :
-      if (me != nullptr) {
+      case is_cursor_path_warning : [[fallthrough]];
+      case is_cursor_path_hazard :
         if (thing_is_ethereal(g, v, l, me) || thing_is_levitating(g, v, l, me)) {
           return true; // filter out i.e. ignore
         }
-      }
+        break;
 
-    case is_obs_to_cursor_path :
-    case is_obs_to_explosion :
-    case is_obs_to_falling_onto :
-    case is_obs_to_fire :
-    case is_obs_to_jumping_over :
-    case is_obs_to_throwing_over :
-    case is_obs_to_hearing :
-    case is_obs_to_teleporting_onto :
-    case is_obs_to_movement :
-    case is_obs_to_paths :
+      case is_obs_to_paths :    [[fallthrough]];
+      case is_obs_to_movement : [[fallthrough]];
+      case is_obs_to_cursor_path :
+        if (thing_is_ethereal(g, v, l, me)) {
+          return true; // filter out i.e. ignore
+        }
+        break;
+
+      default : break;
+    }
+  }
+
+  //
+  // Check again where "me" is null and/or there are common code paths
+  // for obstacles
+  //
+  switch (f) {
+    case is_obs_to_throwing_onto :    [[fallthrough]];
+    case is_cursor_path_warning :     [[fallthrough]];
+    case is_cursor_path_hazard :      [[fallthrough]];
+    case is_obs_to_movement :         [[fallthrough]];
+    case is_obs_to_paths :            [[fallthrough]];
+    case is_obs_to_cursor_path :      [[fallthrough]];
+    case is_obs_to_explosion :        [[fallthrough]];
+    case is_obs_to_falling_onto :     [[fallthrough]];
+    case is_obs_to_fire :             [[fallthrough]];
+    case is_obs_to_jumping_over :     [[fallthrough]];
+    case is_obs_to_throwing_over :    [[fallthrough]];
+    case is_obs_to_hearing :          [[fallthrough]];
+    case is_obs_to_teleporting_onto : [[fallthrough]];
     case is_obs_to_beam :
       //
       // Should be able to move onto dead things
