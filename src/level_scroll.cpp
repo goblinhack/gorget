@@ -92,57 +92,50 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
       //
       return;
     }
-    if ((x < MAP_SCROLL_EDGE_INNER) || (y < MAP_SCROLL_EDGE_INNER) || (x > 1 - MAP_SCROLL_EDGE_INNER) || (y > 1 - MAP_SCROLL_EDGE_INNER)) {
-      //
-      // Unless the player has wandered off screen
-      //
-      switch (player_state(g, v)) {
-        case PLAYER_STATE_INIT :
-          //
-          // Player not initialized yet
-          // Ignore auto scroll
-          //
-          return;
-        case PLAYER_STATE_DEAD :
-          //
-          // Player is dead.
-          // Re-enable auto scroll
-          //
-          v->requested_auto_scroll = true;
-          break;
-        case PLAYER_STATE_NORMAL :
-          //
-          // Replace the mouse path
-          // Ignore auto scroll
-          // Allow the player to move the mouse while scrolling
-          //
-          break;
-        case PLAYER_STATE_PATH_REQUESTED :
-          //
-          // Player wants to start following or replace the current path.
-          // Re-enable auto scroll
-          //
-          return;
-        case PLAYER_STATE_MOVE_CONFIRM_REQUESTED :
-          //
-          // Wait for confirmation.
-          // Re-enable auto scroll
-          //
-          return;
-        case PLAYER_STATE_FOLLOWING_PATH :
-          //
-          // Already following a path, stick to it until completion.
-          // Re-enable auto scroll
-          //
-          v->requested_auto_scroll = true;
-          break;
-        case PLAYER_STATE_ENUM_MAX : return;
-      }
-    } else {
-      //
-      // Ignore auto scroll
-      //
-      return;
+
+    //
+    // Unless the player is dead or following a path
+    //
+    switch (player_state(g, v)) {
+      case PLAYER_STATE_INIT :
+        //
+        // Player not initialized yet
+        // Ignore auto scroll
+        //
+        return;
+      case PLAYER_STATE_DEAD :
+        //
+        // Player is dead.
+        // Re-enable auto scroll
+        //
+        v->requested_auto_scroll = true;
+        break;
+      case PLAYER_STATE_NORMAL :
+        //
+        // Replace the mouse path
+        // Ignore auto scroll
+        //
+        return;
+      case PLAYER_STATE_PATH_REQUESTED :
+        //
+        // Player wants to start following or replace the current path.
+        // Ignore auto scroll
+        //
+        return;
+      case PLAYER_STATE_MOVE_CONFIRM_REQUESTED :
+        //
+        // Wait for confirmation.
+        // Ignore auto scroll
+        //
+        return;
+      case PLAYER_STATE_FOLLOWING_PATH :
+        //
+        // Already following a path, stick to it until completion.
+        // Re-enable auto scroll
+        //
+        v->requested_auto_scroll = true;
+        break;
+      case PLAYER_STATE_ENUM_MAX : return;
     }
   }
 
@@ -241,7 +234,9 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
   //
   // Have we finished scrolling?
   //
-  if ((dx == 0) && (dy == 0)) {
+  static spoint pixel_map_at_last;
+
+  if (v->pixel_map_at == pixel_map_at_last) {
     if (v->requested_forced_auto_scroll != 0U) {
       if (time_have_x_tenths_passed_since(5, v->requested_forced_auto_scroll)) {
         v->requested_forced_auto_scroll = 0;
@@ -254,6 +249,8 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
       v->scroll_speed                 = MAP_SCROLL_SPEED;
     }
   }
+
+  pixel_map_at_last = v->pixel_map_at;
 
   level_bounds_set(g, v, l);
 }
