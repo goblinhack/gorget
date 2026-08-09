@@ -417,10 +417,10 @@
   return level_count(g, v, l, is_floor, p);
 }
 
-[[nodiscard]] auto level_count_is_unused197(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_obs_to_ethereal(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused197, p);
+  return level_count(g, v, l, is_obs_to_ethereal, p);
 }
 
 [[nodiscard]] auto level_count_is_foliage(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t

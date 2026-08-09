@@ -51,6 +51,7 @@ static void tp_vault_melt(Gamep g, Levelsp v, Levelp l, Thingp me)
     tp_flag_set(tp, is_obs_to_hearing);
     tp_flag_set(tp, is_obs_to_jumping_onto);
     tp_flag_set(tp, is_obs_to_jumping_over);
+    tp_flag_set(tp, is_obs_to_ethereal);
     tp_flag_set(tp, is_obs_to_movement);
     tp_flag_set(tp, is_obs_to_paths);
     tp_flag_set(tp, is_obs_to_spawning);

@@ -478,8 +478,6 @@ static bool tp_player_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker, 
   tp_distance_throw_set(tp, 6);
   tp_distance_vision_set(tp, MAP_WIDTH); // tiles
   tp_flag_set(tp, is_able_to_be_buffed);
-  tp_flag_set(tp, is_able_to_levitate);
-  tp_flag_set(tp, is_able_to_teleport);
   tp_flag_set(tp, is_able_to_be_engulfed);
   tp_flag_set(tp, is_able_to_collect_items);
   tp_flag_set(tp, is_able_to_collect_keys);

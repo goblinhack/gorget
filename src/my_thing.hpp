@@ -888,7 +888,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_flammable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_flat(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_flesh(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused197(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_gaseous(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_ghost(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_glass(Thingp t) -> bool;
@@ -940,6 +939,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_obs_to_jumping_onto(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_jumping_out_of(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_jumping_over(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_obs_to_ethereal(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_movement(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_paths(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_spawning(Thingp t) -> bool;

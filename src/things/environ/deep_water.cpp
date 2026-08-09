@@ -36,7 +36,6 @@ static auto tp_deep_water_description_get(Gamep g, Levelsp v, Levelp l, Thingp m
   thing_description_set(tp, tp_deep_water_description_get);
   tp_damage_set(tp, THING_EVENT_WATER_DAMAGE, "1d6");
   tp_flag_set(tp, is_animated);
-  tp_flag_set(tp, is_flat);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_flush_per_line);
   tp_flag_set(tp, is_blit_if_has_seen);
@@ -45,6 +44,7 @@ static auto tp_deep_water_description_get(Gamep g, Levelsp v, Levelp l, Thingp m
   tp_flag_set(tp, is_cursor_path_hazard);
   tp_flag_set(tp, is_deep_water);
   tp_flag_set(tp, is_described_cursor);
+  tp_flag_set(tp, is_flat);
   tp_flag_set(tp, is_obs_to_fire);
   tp_flag_set(tp, is_obs_to_jumping_out_of);
   tp_flag_set(tp, is_physics_temperature);

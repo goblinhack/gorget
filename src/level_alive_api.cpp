@@ -416,10 +416,10 @@
   return level_alive(g, v, l, is_floor, p);
 }
 
-[[nodiscard]] auto level_alive_is_unused197(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_alive_is_obs_to_ethereal(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_alive(g, v, l, is_unused197, p);
+  return level_alive(g, v, l, is_obs_to_ethereal, p);
 }
 
 [[nodiscard]] auto level_alive_is_foliage(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp

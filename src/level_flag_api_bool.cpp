@@ -417,10 +417,10 @@
   return level_flag(g, v, l, is_floor, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_unused197_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_obs_to_ethereal_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused197, p, me) != nullptr;
+  return level_flag(g, v, l, is_obs_to_ethereal, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_foliage_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool

@@ -122,7 +122,7 @@
       list_macro(is_flat, "is_flat"),                                                       /* newline */                                       \
       list_macro(is_flesh, "is_flesh"),                                                     /* newline */                                       \
       list_macro(is_floor, "is_floor"),                                                     /* newline */                                       \
-      list_macro(is_unused197, "is_unused197"),                                                   /* newline */                                       \
+      list_macro(is_obs_to_ethereal, "is_obs_to_ethereal"),                             /* newline */                                       \
       list_macro(is_foliage, "is_foliage"),                                                 /* newline */                                       \
       list_macro(is_gaseous, "is_gaseous"),                                                 /* newline */                                       \
       list_macro(is_ghost, "is_ghost"),                                                     /* newline */                                       \
@@ -918,7 +918,6 @@ class Tp;
 [[nodiscard]] auto tp_is_flat(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_flesh(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_floor(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused197(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_foliage(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_gaseous(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_ghost(Tpp tp) -> bool;
@@ -970,6 +969,7 @@ class Tp;
 [[nodiscard]] auto tp_is_obs_to_jumping_onto(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_obs_to_jumping_out_of(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_obs_to_jumping_over(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_obs_to_ethereal(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_obs_to_movement(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_obs_to_paths(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_obs_to_spawning(Tpp tp) -> bool;

@@ -358,56 +358,8 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
     return true;
   }
 
-  if (me != nullptr) {
-    switch (f) {
-      case is_obs_to_vision :
-        if (! thing_vision_blocker(g, v, l, me, it)) {
-          return true; // filter out i.e. ignore
-        }
-        break;
-
-      case is_obs_to_jumping_onto :
-        //
-        // Allow players to land on chasms intentionally. Monsters don't want to.
-        //
-        if (thing_is_chasm(it)) {
-          if (thing_is_player(me)) {
-            return true; // filter out i.e. ignore
-          }
-        }
-        break;
-
-        //
-        // Allow engulfers to land on you
-        //
-        if (thing_is_able_to_be_engulfed(it)) {
-          if (thing_is_able_to_engulf(me)) {
-            return true; // filter out i.e. ignore
-          }
-        }
-        break;
-
-      case is_cursor_path_warning : [[fallthrough]];
-      case is_cursor_path_hazard :
-        if (thing_is_ethereal(g, v, l, me) || thing_is_levitating(g, v, l, me)) {
-          return true; // filter out i.e. ignore
-        }
-        break;
-
-      case is_obs_to_paths :    [[fallthrough]];
-      case is_obs_to_movement : [[fallthrough]];
-      case is_obs_to_cursor_path :
-        if (thing_is_ethereal(g, v, l, me)) {
-          return true; // filter out i.e. ignore
-        }
-        break;
-
-      default : break;
-    }
-  }
-
   //
-  // Check again where "me" is null and/or there are common code paths
+  // Check where "me" is null and/or there are common code paths
   // for obstacles
   //
   switch (f) {
@@ -448,6 +400,61 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
       }
       break;
     default : break;
+  }
+
+  if (me != nullptr) {
+    switch (f) {
+      case is_obs_to_vision :
+        if (! thing_vision_blocker(g, v, l, me, it)) {
+          return true; // filter out i.e. ignore
+        }
+        break;
+
+      case is_obs_to_jumping_onto :
+        //
+        // Allow players to land on chasms intentionally. Monsters don't want to.
+        //
+        if (thing_is_chasm(it)) {
+          if (thing_is_player(me)) {
+            return true; // filter out i.e. ignore
+          }
+        }
+        break;
+
+        //
+        // Allow engulfers to land on you
+        //
+        if (thing_is_able_to_be_engulfed(it)) {
+          if (thing_is_able_to_engulf(me)) {
+            return true; // filter out i.e. ignore
+          }
+        }
+        break;
+
+      case is_cursor_path_warning : [[fallthrough]];
+      case is_cursor_path_hazard :
+        if (thing_is_ethereal(g, v, l, me)) {
+          if (thing_is_obs_to_ethereal(it)) {
+            break;
+          }
+        }
+        if (thing_is_levitating(g, v, l, me)) {
+          return true; // filter out i.e. ignore
+        }
+        break;
+
+      case is_obs_to_paths :    [[fallthrough]];
+      case is_obs_to_movement : [[fallthrough]];
+      case is_obs_to_cursor_path :
+        if (thing_is_ethereal(g, v, l, me)) {
+          if (! thing_is_obs_to_ethereal(it)) {
+            return true; // filter out i.e. ignore
+          }
+        }
+        break;
+
+      default : break;
+    }
   }
 
   return false;
