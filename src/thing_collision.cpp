@@ -304,8 +304,8 @@ static auto thing_collision_check(Gamep g, Levelsp v, Levelp l, Thingp me, const
       return collision;
     }
     return false;
-
-  } else if (thing_is_collision_circle_large(me)) {
+  }
+  if (thing_is_collision_circle_large(me)) {
     if (thing_is_collision_circle_small(obstacle)) {
       collision = thing_collision_check_circle_small_circle_large(g, v, l, me, interp_at_f, obstacle, o_at);
       if (compiler_unused) {

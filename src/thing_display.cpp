@@ -11,7 +11,6 @@
 #include "my_gl.hpp" // NOLINT
 #include "my_level.hpp"
 #include "my_main.hpp"
-#include "my_math.hpp"
 #include "my_spoint.hpp"
 #include "my_thing.hpp"
 #include "my_thing_callbacks.hpp"
@@ -419,8 +418,7 @@ static void thing_low_health(spoint tl, spoint br, Tilep tile, float x1, float x
   tile_blit_outline_w_invis_inside(tile, x1, x2, y1, y2, tl, br, c);
 }
 
-static void thing_levitating_shadow(Gamep g, Levelsp v, Levelp l, Thingp t, spoint tl, spoint br, Tilep tile, float x1, float x2, float y1,
-                                    float y2)
+static void thing_levitating_shadow(spoint tl, spoint br, Tilep tile, float x1, float x2, float y1, float y2)
 {
   TRACE_DEBUG();
 
@@ -432,8 +430,8 @@ static void thing_levitating_shadow(Gamep g, Levelsp v, Levelp l, Thingp t, spoi
   tl.y -= offset;
   br.y -= offset;
 
-  height *= (float) sinf((time_step / 1000.0f) * std::numbers::pi_v< float >);
-  height /= 16.0f;
+  height *= (float) sinf((time_step / 1000.0F) * std::numbers::pi_v< float >);
+  height /= 16.0F;
   height = static_cast< int >(std::floor((height / single_pix_size)) * single_pix_size);
 
   tl.y -= static_cast< int >(height);
@@ -445,7 +443,7 @@ static void thing_levitating_shadow(Gamep g, Levelsp v, Levelp l, Thingp t, spoi
   tile_blit(tile, x1, x2, y1, y2, tl, br, fg, nullptr, false);
 }
 
-static void thing_levitating_bounce(Gamep g, Levelsp v, Levelp l, Thingp t, spoint &tl, spoint &br, Tilep tile)
+static void thing_levitating_bounce(spoint &tl, spoint &br, Tilep tile)
 {
   TRACE_DEBUG();
 
@@ -457,8 +455,8 @@ static void thing_levitating_bounce(Gamep g, Levelsp v, Levelp l, Thingp t, spoi
   tl.y -= offset;
   br.y -= offset;
 
-  height *= (float) sinf((time_step / 1000.0f) * std::numbers::pi_v< float >);
-  height /= 4.0f;
+  height *= (float) sinf((time_step / 1000.0F) * std::numbers::pi_v< float >);
+  height /= 4.0F;
   height = static_cast< int >(std::floor((height / single_pix_size)) * single_pix_size);
 
   tl.y -= static_cast< int >(height);
@@ -504,9 +502,9 @@ static void thing_display_it(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t_mayb
     if (thing_is_levitating(g, v, l, t_maybe_null)) {
       if (! thing_is_dead(t_maybe_null)) {
         if (fbo == FBO_MAP_FG) {
-          thing_levitating_shadow(g, v, l, t_maybe_null, tl, br, tile, x1, x2, y1, y2);
+          thing_levitating_shadow(tl, br, tile, x1, x2, y1, y2);
         }
-        thing_levitating_bounce(g, v, l, t_maybe_null, tl, br, tile);
+        thing_levitating_bounce(tl, br, tile);
       }
     }
   }

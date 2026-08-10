@@ -778,9 +778,9 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_able_to_eat_items(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_eat_treasure(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_engulf(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_able_to_fall_repeatedly(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_able_to_fall_sound(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_able_to_fall(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
+[[nodiscard]] auto thing_is_able_to_fall_repeatedly(Thingp me) -> bool;
+[[nodiscard]] auto thing_is_able_to_fall_sound(Thingp me) -> bool;
+[[nodiscard]] auto thing_is_able_to_fall(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
 [[nodiscard]] auto thing_is_able_to_fire_weapons(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_jump(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_lunge(Thingp t) -> bool;
@@ -883,8 +883,8 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_ethereal(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
 [[nodiscard]] auto thing_is_exit(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_extinguished_on_death(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_falling_continues(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_falling_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
+[[nodiscard]] auto thing_is_falling_continues(Thingp me) -> bool;
+[[nodiscard]] auto thing_is_falling_incr(Gamep g, Levelsp v, Levelp l, Thingp me, int val = 1) -> int;
 [[nodiscard]] auto thing_is_flammable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_flat(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_flesh(Thingp t) -> bool;
@@ -934,7 +934,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_obs_to_cursor_path(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_ethereal(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_explosion(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_obs_to_falling_onto(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_obs_to_falling_onto(Thingp me) -> bool;
 [[nodiscard]] auto thing_is_obs_to_fire(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_hearing(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_jumping_onto(Thingp t) -> bool;
@@ -1486,9 +1486,9 @@ void thing_is_corpse_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val = true
 void thing_is_corpse_unset(Gamep g, Levelsp v, Levelp l, Thingp t);
 void thing_is_dead_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val = true);
 void thing_is_dead_unset(Gamep g, Levelsp v, Levelp l, Thingp t);
-void thing_is_falling_continues_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val = true);
-void thing_is_falling_continues_unset(Gamep g, Levelsp v, Levelp l, Thingp t);
-void thing_is_falling_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val);
+void thing_is_falling_continues_set(Gamep g, Levelsp v, Levelp l, Thingp me, bool val = true);
+void thing_is_falling_continues_unset(Gamep g, Levelsp v, Levelp l, Thingp me);
+void thing_is_falling_set(Gamep g, Levelsp v, Levelp l, Thingp me, bool val);
 void thing_is_hidden_set(Gamep g, Levelsp v, Levelp l, Thingp me, bool val);
 void thing_is_hit_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val);
 void thing_is_hot_set(Gamep g, Levelsp v, Levelp l, Thingp me, bool val);

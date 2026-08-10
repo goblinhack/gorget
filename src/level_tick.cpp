@@ -382,13 +382,11 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool tick_is
       // projectiles will not move, so wait until time moves on.
       //
       return;
-    } else {
-      //
+    } //
       // However, we need to interpolate movement of things prior to calling the display
       // loop, else things can appear to jump to their target and then move smoothly after.
       // So even with dt of 0, we must process the things.
       //
-    }
   }
 
   auto *player = thing_player(g);

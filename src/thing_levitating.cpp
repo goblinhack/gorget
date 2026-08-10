@@ -19,7 +19,7 @@
     return false;
   }
 
-  if (tp_flag(thing_tp(me), is_levitating)) {
+  if (tp_flag(thing_tp(me), is_levitating) != 0) {
     return true;
   }
 
