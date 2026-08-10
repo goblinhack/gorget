@@ -685,7 +685,7 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
     return true;
   }
 
-  THING_DBG(g, v, l, me, "player move to attempt failed");
+  THING_DBG(g, v, l, me, "player move to attempt failed, try shoving");
   TRACE_INDENT();
 
   if (thing_can_move_to_attempt_by_shoving(g, v, l, me, to)) {
@@ -741,6 +741,7 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
 
     if (thing_jump_to(g, v, l, me, to, false)) {
       (void) level_tick_begin_requested(g, v, l, "player jumped");
+      return true;
     } else {
       (void) level_tick_begin_requested(g, v, l, "player could not pass diagonal obstacle");
     }
@@ -780,6 +781,9 @@ auto player_move_to(Gamep g, Levelsp v, Levelp l, bpoint to) -> bool
     return false;
   }
 
+  THING_DBG(g, v, l, me, "player move to (%d,%d)", to.x, to.y);
+  TRACE_INDENT();
+
   //
   // Override any mouse request with the key move.
   //
@@ -796,8 +800,12 @@ auto player_move_to(Gamep g, Levelsp v, Levelp l, bpoint to) -> bool
   const bool move_confirmed = false;
 
   auto success = player_move_try(g, v, l, me, to, move_confirmed, need_path);
-
-  player_move_requests_reset(g, v);
+  if (success) {
+    THING_DBG(g, v, l, me, "player move success to (%d,%d)", to.x, to.y);
+    player_move_requests_reset(g, v);
+  } else {
+    THING_DBG(g, v, l, me, "player move fail to (%d,%d)", to.x, to.y);
+  }
 
   return success;
 }
@@ -814,7 +822,18 @@ static auto player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy) -> b
   auto         at = thing_at(g, v, l, me);
   bpoint const to(at.x + dx, at.y + dy);
 
-  return player_move_to(g, v, l, to);
+  THING_DBG(g, v, l, me, "player move delta to (%d,%d)", to.x, to.y);
+  TRACE_INDENT();
+
+  auto success = player_move_to(g, v, l, to);
+  if (success) {
+    THING_DBG(g, v, l, me, "player move delta success to (%d,%d)", to.x, to.y);
+    player_move_requests_reset(g, v);
+  } else {
+    THING_DBG(g, v, l, me, "player move delta fail to (%d,%d)", to.x, to.y);
+  }
+
+  return success;
 }
 
 [[nodiscard]] auto player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what, bpoint target) -> bool
@@ -1018,7 +1037,6 @@ void player_move_accum(Gamep g, Levelsp v, Levelp l, bool up, bool down, bool le
 
   if (v->requested_move_up) {
     if (v->requested_move_left) {
-      player_move_delta(g, v, l, -1, -1);
       if (! player_move_delta(g, v, l, -1, -1)) {
         if (! player_move_delta(g, v, l, -1, 0)) {
           if (! player_move_delta(g, v, l, 0, -1)) {
@@ -1413,6 +1431,8 @@ void player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
         //
         bool const need_path = false;
         if (level_is_cursor_path_hazard(g, v, l, move_destination, me) != nullptr) {
+          THING_DBG(g, v, l, me, "player move to next try due to hazard (%d,%d)", move_next.x, move_next.y);
+          TRACE_INDENT();
           if (! player_move_try(g, v, l, me, move_next, move_confirmed, need_path)) {
             return false;
           }
@@ -1435,6 +1455,9 @@ void player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
       return false;
     }
   }
+
+  THING_DBG(g, v, l, me, "player move to next (%d,%d)", move_next.x, move_next.y);
+  TRACE_INDENT();
 
   bool const need_path = false;
   if (! player_move_try(g, v, l, me, move_next, move_confirmed, need_path)) {

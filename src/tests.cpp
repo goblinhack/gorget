@@ -69,6 +69,13 @@
   if (!test_load_monst_maze()) { return false; }
   if (!test_load_monst_mob_leash()) { return false; }
   if (!test_load_monst_mobbing()) { return false; }
+  if (!test_load_monst_move_diagonal_barrel()) { return false; }
+  if (!test_load_monst_move_diagonal_border()) { return false; }
+  if (!test_load_monst_move_diagonal_brazier()) { return false; }
+  if (!test_load_monst_move_diagonal_pillar()) { return false; }
+  if (!test_load_monst_move_diagonal_rock()) { return false; }
+  if (!test_load_monst_move_diagonal_vault()) { return false; }
+  if (!test_load_monst_move_diagonal_wall()) { return false; }
   if (!test_load_monst_pass_through_open_door()) { return false; }
   if (!test_load_monst_pass_through_walls()) { return false; }
   if (!test_load_monst_secret_door()) { return false; }
@@ -98,6 +105,13 @@
   if (!test_load_player_in_steam()) { return false; }
   if (!test_load_player_lava()) { return false; }
   if (!test_load_player_melee()) { return false; }
+  if (!test_load_player_move_diagonal_barrel()) { return false; }
+  if (!test_load_player_move_diagonal_border()) { return false; }
+  if (!test_load_player_move_diagonal_brazier()) { return false; }
+  if (!test_load_player_move_diagonal_pillar()) { return false; }
+  if (!test_load_player_move_diagonal_rock()) { return false; }
+  if (!test_load_player_move_diagonal_vault()) { return false; }
+  if (!test_load_player_move_diagonal_wall()) { return false; }
   if (!test_load_player_move_ok()) { return false; }
   if (!test_load_player_moving_in_foliage()) { return false; }
   if (!test_load_player_on_fire_move_into_water()) { return false; }
