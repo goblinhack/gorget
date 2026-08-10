@@ -123,6 +123,7 @@ auto test_load_potion_healing() -> bool;
 auto test_load_potion_levitation_player_chasm() -> bool;
 auto test_load_potion_levitation_player_lava() -> bool;
 auto test_load_potion_levitation_player_move_fail() -> bool;
+auto test_load_potion_levitation_player_move_fail2() -> bool;
 auto test_load_potion_levitation_player_water() -> bool;
 auto test_load_potion_levitation_trampled_grass() -> bool;
 auto test_load_potion_protection() -> bool;

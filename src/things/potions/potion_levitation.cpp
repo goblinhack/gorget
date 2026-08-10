@@ -104,6 +104,7 @@ static bool tp_potion_levitation_on_use(Gamep g, Levelsp v, Levelp l, Thingp me,
   if (thing_buff_add(g, v, l, user, tp_find_mand("buff_levitating"))) {
     if (thing_is_player(user)) {
       topcon(UI_GOOD_FMT_STR "You feel strangely light." UI_RESET_FMT);
+      thing_sound_play(g, v, l, user, "bonus");
     }
   }
 
