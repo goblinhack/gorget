@@ -1,0 +1,250 @@
+//
+// Copyright goblinhack@gmail.com
+//
+
+#include "../my_game.hpp"
+#include "../my_level.hpp"
+#include "../my_level_inlines.hpp"
+#include "../my_main.hpp"
+#include "../my_test.hpp"
+#include "../my_thing_inlines.hpp"
+
+[[nodiscard]] static auto test_potion_levitation_player_water(Gamep g, Testp t) -> bool
+{
+  TEST_LOG(t, "begin");
+  TRACE();
+
+  LevelNum const level_num = 0;
+  auto           w         = 7;
+  auto           h         = 7;
+
+  //
+  // How the dungeon starts out, and how we expect it to change
+  //
+  std::string const start
+      = "......."
+        "......."
+        "......."
+        "..@W..."
+        "......."
+        "......."
+        ".......";
+  std::string const expect1
+      = "......."
+        "......."
+        "......."
+        "...@..." // is a corpse
+        "......."
+        "......."
+        ".......";
+
+  //
+  // Create the level and start playing
+  //
+  Levelp  l = nullptr;
+  Levelsp v = game_test_init(g, &l, level_num, w, h, start.c_str());
+
+  //
+  // The guts of the test
+  //
+  bool result = false;
+  bool up     = false;
+  bool down   = false;
+  bool left   = false;
+  bool right  = false;
+
+  bpoint p;
+  bool   found_submerged = false;
+
+  int use_count = 0;
+
+  static std::initializer_list< std::string > usable_items = {
+      "potion_levitation", //
+  };
+
+  auto *player = thing_player(g);
+  if (player == nullptr) [[unlikely]] {
+    TEST_FAILED(t, "no player");
+    goto exit;
+  }
+
+  if (! thing_carry(g, v, l, player, usable_items)) {
+    TEST_FAILED(t, "no item carried");
+    goto exit;
+  }
+
+  for (;;) {
+    bool got_item = false;
+
+    FOR_ALL_INVENTORY_ITEMS(g, v, l, player, an_item)
+    {
+      got_item = true;
+
+      ThingEvent e {
+          .reason     = "user used item",           //
+          .event_type = THING_EVENT_USER_INITIATED, //
+          .source     = player,                     //
+      };
+
+      TEST_ASSERT(t, thing_use(g, v, l, player, an_item, e), "failed to use");
+
+      TRACE();
+      level_dump(g, v, l, w, h);
+      TEST_ASSERT(t, game_event_wait(g), "failed to wait");
+
+      if (! game_wait_for_tick_to_finish(g, v, l)) {
+        TEST_FAILED(t, "wait loop failed");
+        goto exit;
+      }
+
+      use_count++;
+    }
+
+    if (! got_item) {
+      break;
+    }
+  }
+
+  TEST_ASSERT(t, use_count == (int) usable_items.size(), "did not use expected item amount");
+
+  //
+  // Move into the water. The player should die.
+  //
+  {
+    TEST_LOG(t, "move player into water right");
+    TRACE();
+    up = down = left = right = false;
+    right                    = true;
+
+    //
+    // Find the player
+    //
+    level_dump(g, v, l, w, h);
+    TEST_PROGRESS(t);
+    {
+      TRACE();
+      player = thing_player(g);
+      if (player == nullptr) [[unlikely]] {
+        TEST_FAILED(t, "no player");
+        goto exit;
+      }
+    }
+  }
+
+  //
+  // Move right
+  //
+  {
+    level_dump(g, v, l, w, h);
+    TEST_PROGRESS(t);
+    {
+      TRACE();
+      if (! (result = player_move_request(g, up, down, left, right, false /* fire */))) {
+        TEST_FAILED(t, "move failed");
+        goto exit;
+      }
+    }
+  }
+
+  //
+  // Wait for the end of tick
+  //
+  {
+    level_dump(g, v, l, w, h);
+    TEST_PROGRESS(t);
+    {
+      TRACE();
+      if (! game_wait_for_tick_to_finish(g, v, l)) {
+        TEST_FAILED(t, "wait loop failed");
+        goto exit;
+      }
+    }
+  }
+
+  //
+  // Check the level contents
+  //
+  {
+    level_dump(g, v, l, w, h);
+    TEST_PROGRESS(t);
+    {
+      TRACE();
+      if (! (result = level_match_contents(g, v, l, t, w, h, expect1.c_str()))) {
+        TEST_FAILED(t, "unexpected contents");
+        goto exit;
+      }
+    }
+  }
+
+  {
+    level_dump(g, v, l, w, h);
+    TEST_PROGRESS(t);
+    for (auto tries = 0; tries < 10; tries++) {
+      TEST_LOOP_PROGRESS(t, g, v, l, tries, w, h);
+      TEST_ASSERT(t, game_event_wait(g), "failed to wait");
+      if (! game_wait_for_tick_to_finish(g, v, l)) {
+        TEST_FAILED(t, "wait loop failed");
+        goto exit;
+      }
+
+      if (thing_is_dead(player)) {
+        break;
+      }
+    }
+  }
+
+  //
+  // Check player is not submerged
+  //
+  {
+    level_dump(g, v, l, w, h);
+    TEST_PROGRESS(t);
+    {
+      TRACE();
+      TEST_LOG(t, "check player is not submerged");
+      p               = thing_at(g, v, l, player);
+      found_submerged = false;
+
+      FOR_ALL_THINGS_AT(g, v, l, it, p)
+      {
+        if (thing_is_player(it) && thing_is_submerged(g, v, l, it)) {
+          found_submerged = true;
+          break;
+        }
+      }
+
+      if (found_submerged) {
+        TEST_FAILED(t, "found the player submerged");
+        goto exit;
+      }
+    }
+  }
+
+  //
+  // Check the tick is as expected
+  //
+  level_dump(g, v, l, w, h);
+  TEST_PROGRESS(t);
+  TEST_ASSERT(t, game_tick_get(g, v) == 12, "final tick counter value");
+
+  level_dump(g, v, l, w, h);
+  TEST_PASSED(t);
+exit:
+  TRACE();
+  game_cleanup(g);
+
+  return result;
+}
+
+[[nodiscard]] auto test_load_potion_levitation_player_water() -> bool // NOLINT
+{
+  TRACE();
+
+  Testp test = test_load("potion_levitation_player_water");
+
+  // begin sort marker1 {
+  test_callback_set(test, test_potion_levitation_player_water);
+  // end sort marker1 }
+
+  return true;
+}

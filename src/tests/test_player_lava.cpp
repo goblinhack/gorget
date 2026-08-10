@@ -134,7 +134,7 @@
   }
 
   //
-  // Check player is dead when shoved into lava. It should be popped off the level.
+  // Check player is dead when in lava. It should be popped off the level.
   //
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);

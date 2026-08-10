@@ -26,6 +26,18 @@
   return tp_flag(thing_tp(t), is_submergible) != 0;
 }
 
+[[nodiscard]] auto thing_is_submerged(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+
+  return t->_submerged_pct > 0;
+}
+
 [[nodiscard]] auto thing_submerged_pct_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_DEBUG();

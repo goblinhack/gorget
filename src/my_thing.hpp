@@ -975,6 +975,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_stealthy(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
 [[nodiscard]] auto thing_is_steam(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_stone(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_submerged(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
 [[nodiscard]] auto thing_is_submergible(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
 [[nodiscard]] auto thing_is_teleport_hazard(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_teleport(Thingp t) -> bool;
