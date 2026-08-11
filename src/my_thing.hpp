@@ -944,6 +944,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_obs_to_paths(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_spawning(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_teleporting_onto(Thingp t) -> bool;
+[[nodiscard]] auto thing_levitate(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
 [[nodiscard]] auto thing_is_obs_to_throwing_onto(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_throwing_over(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_when_dead(Thingp t) -> bool;

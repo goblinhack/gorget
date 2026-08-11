@@ -43,3 +43,23 @@
 
   return false;
 }
+
+[[nodiscard]] auto thing_levitate(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
+{
+  TRACE_DEBUG();
+
+  if (me == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+
+  if (tp_flag(thing_tp(me), is_levitating) != 0) {
+    return true;
+  }
+
+  if (! thing_is_able_to_levitate(me)) {
+    return false;
+  }
+
+  return thing_buff_add(g, v, l, me, tp_find_mand("buff_immune_fire"));
+}

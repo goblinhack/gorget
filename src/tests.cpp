@@ -123,9 +123,11 @@
   if (!test_load_potion_dislocation_good_luck()) { return false; }
   if (!test_load_potion_healing()) { return false; }
   if (!test_load_potion_levitation_player_chasm()) { return false; }
+  if (!test_load_potion_levitation_player_in_steam()) { return false; }
   if (!test_load_potion_levitation_player_lava()) { return false; }
   if (!test_load_potion_levitation_player_move_fail()) { return false; }
   if (!test_load_potion_levitation_player_move_fail2()) { return false; }
+  if (!test_load_potion_levitation_player_on_fire()) { return false; }
   if (!test_load_potion_levitation_player_water()) { return false; }
   if (!test_load_potion_levitation_trampled_grass()) { return false; }
   if (!test_load_potion_protection()) { return false; }

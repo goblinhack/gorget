@@ -235,6 +235,14 @@ static auto level_populate_biome_dungeon(Gamep g, Levelsp v, Levelp l, class Lev
       lp.need_floor = true;
       tp            = tp_random(g, v, l, is_fire);
       break;
+    case CHARMAP_STEAM :
+      lp.need_floor = true;
+      tp            = tp_random(g, v, l, is_steam);
+      break;
+    case CHARMAP_SMOKE :
+      lp.need_floor = true;
+      tp            = tp_random(g, v, l, is_smoke);
+      break;
     case CHARMAP_ENTRANCE :
       lp.need_floor = true;
 
@@ -387,6 +395,8 @@ static auto level_populate_biome_bogland(Gamep g, Levelsp v, Levelp l, class Lev
     case CHARMAP_MOB1 :        [[fallthrough]];
     case CHARMAP_MOB2 :        [[fallthrough]];
     case CHARMAP_FIRE :        [[fallthrough]];
+    case CHARMAP_STEAM :       [[fallthrough]];
+    case CHARMAP_SMOKE :       [[fallthrough]];
     case CHARMAP_ENTRANCE :    [[fallthrough]];
     case CHARMAP_EXIT :        [[fallthrough]];
     case CHARMAP_KEY :         [[fallthrough]];
@@ -441,6 +451,8 @@ static auto level_populate_biome_nethervoid(Gamep g, Levelsp v, Levelp l, class 
     case CHARMAP_MOB1 :          [[fallthrough]];
     case CHARMAP_MOB2 :          [[fallthrough]];
     case CHARMAP_FIRE :          [[fallthrough]];
+    case CHARMAP_SMOKE :         [[fallthrough]];
+    case CHARMAP_STEAM :         [[fallthrough]];
     case CHARMAP_KEY :           [[fallthrough]];
     case CHARMAP_ENTRANCE :      [[fallthrough]];
     case CHARMAP_EXIT :          return level_populate_biome_dungeon(g, v, l, lp);
@@ -537,6 +549,8 @@ static auto level_populate_biome_graveyard(Gamep g, Levelsp v, Levelp l, class L
     case CHARMAP_MOB1 :          [[fallthrough]];
     case CHARMAP_MOB2 :          [[fallthrough]];
     case CHARMAP_FIRE :          [[fallthrough]];
+    case CHARMAP_SMOKE :         [[fallthrough]];
+    case CHARMAP_STEAM :         [[fallthrough]];
     case CHARMAP_KEY :           [[fallthrough]];
     case CHARMAP_ENTRANCE :      [[fallthrough]];
     case CHARMAP_EXIT :          return level_populate_biome_dungeon(g, v, l, lp);
@@ -626,6 +640,8 @@ static auto level_populate_biome_underhell(Gamep g, Levelsp v, Levelp l, class L
     case CHARMAP_MOB1 :          [[fallthrough]];
     case CHARMAP_MOB2 :          [[fallthrough]];
     case CHARMAP_FIRE :          [[fallthrough]];
+    case CHARMAP_SMOKE :         [[fallthrough]];
+    case CHARMAP_STEAM :         [[fallthrough]];
     case CHARMAP_KEY :           [[fallthrough]];
     case CHARMAP_ENTRANCE :      [[fallthrough]];
     case CHARMAP_EXIT :          return level_populate_biome_dungeon(g, v, l, lp);

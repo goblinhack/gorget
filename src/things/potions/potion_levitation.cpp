@@ -33,7 +33,6 @@ static void tp_potion_levitation_on_thrown_end(Gamep g, Levelsp v, Levelp l, Thi
   THING_DBG(g, v, l, me, "thrown end");
   TRACE_INDENT();
 
-#if 0
   auto at      = thing_at(g, v, l, me);
   bool got_one = {};
 
@@ -75,7 +74,6 @@ static void tp_potion_levitation_on_thrown_end(Gamep g, Levelsp v, Levelp l, Thi
       }
     }
   }
-#endif
 
   //
   // Soft landing?
