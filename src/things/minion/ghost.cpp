@@ -90,6 +90,7 @@ static void tp_ghost_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEven
   tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d1");
   tp_distance_minion_from_mob_max_set(tp, 6);
   tp_distance_vision_set(tp, 12);
+  tp_flag_set(tp, is_able_to_be_buffed);
   tp_flag_set(tp, is_able_to_levitate);
   tp_flag_set(tp, is_able_to_lunge);
   tp_flag_set(tp, is_able_to_move_diagonally);

@@ -2061,22 +2061,22 @@
   return level_flag(g, v, l, is_unused192, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_unused193_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_soft_landing_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused193, p, me) != nullptr;
+  return level_flag(g, v, l, is_soft_landing, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_unused194_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_gelatinous_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused194, p, me) != nullptr;
+  return level_flag(g, v, l, is_gelatinous, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_unused195_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_potion_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused195, p, me) != nullptr;
+  return level_flag(g, v, l, is_potion, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_able_to_levitate_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
@@ -2455,12 +2455,6 @@
 {
   TRACE_DEBUG();
   return level_flag(g, v, l, is_able_to_be_engulfed, p, me) != nullptr;
-}
-
-[[nodiscard]] auto level_is_potion_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
-{
-  TRACE_DEBUG();
-  return level_flag(g, v, l, is_potion, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_grouped_thing_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool

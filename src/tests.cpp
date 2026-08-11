@@ -169,6 +169,9 @@
   if (!test_load_throw_potion_incin_chasm()) { return false; }
   if (!test_load_throw_potion_incin_into_water()) { return false; }
   if (!test_load_throw_potion_incin()) { return false; }
+  if (!test_load_throw_potion_levitation_hard_landing()) { return false; }
+  if (!test_load_throw_potion_levitation_soft_landing()) { return false; }
+  if (!test_load_throw_potion_levitation()) { return false; }
   if (!test_load_trampled_grass()) { return false; }
   if (!test_load_wall()) { return false; }
   if (!test_load_weapon_discharge()) { return false; }

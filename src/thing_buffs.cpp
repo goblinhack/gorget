@@ -23,7 +23,7 @@ static void thing_dump_buffs(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 
   if (! thing_is_able_to_be_buffed(me)) {
-    thing_err(g, v, l, me, "non owner trying to detach buff");
+    thing_log(g, v, l, me, "non owner trying to detach buff");
     return;
   }
 
@@ -111,12 +111,12 @@ static void thing_dump_buffs(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 
   if (! thing_is_able_to_be_buffed(me)) {
-    thing_err(g, v, l, me, "thing trying to spawn buffs when it cannot");
+    thing_log(g, v, l, me, "thing trying to add buffs when it cannot");
     return nullptr;
   }
 
   if (what == nullptr) {
-    thing_err(g, v, l, me, "no buff to spawn");
+    thing_err(g, v, l, me, "no buff to add");
     return nullptr;
   }
 
@@ -217,7 +217,7 @@ static void thing_dump_buffs(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 
   if (! thing_is_able_to_be_buffed(me)) {
-    thing_err(g, v, l, me, "non owner trying to detach buffs");
+    thing_log(g, v, l, me, "non owner trying to detach buffs");
     return false;
   }
 

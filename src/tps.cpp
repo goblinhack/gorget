@@ -24,7 +24,7 @@
   if (!tp_load_brazier()) { return false; }
   if (!tp_load_bridge()) { return false; }
   if (!tp_load_buff_immune_fire()) { return false; }
-  if (!tp_load_buff_levitating()) { return false; }
+  if (!tp_load_buff_levitation()) { return false; }
   if (!tp_load_buff_protection()) { return false; }
   if (!tp_load_buff_resistant_fire()) { return false; }
   if (!tp_load_buff_stealth()) { return false; }

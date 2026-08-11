@@ -93,6 +93,7 @@ static bool tp_kobalos_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker,
   tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d2");
   tp_distance_minion_from_mob_max_set(tp, 20);
   tp_distance_vision_set(tp, 10);
+  tp_flag_set(tp, is_able_to_be_buffed);
   tp_flag_set(tp, is_able_to_be_engulfed);
   tp_flag_set(tp, is_able_to_crush_grass);
   tp_flag_set(tp, is_able_to_fall_sound);

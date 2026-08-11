@@ -98,6 +98,7 @@ static bool tp_mantisman_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacke
   tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d3");
   tp_distance_jump_set(tp, 2);
   tp_distance_vision_set(tp, 12);
+  tp_flag_set(tp, is_able_to_be_buffed);
   tp_flag_set(tp, is_able_to_crush_grass);
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);

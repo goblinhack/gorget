@@ -61,5 +61,9 @@
     return false;
   }
 
-  return thing_buff_add(g, v, l, me, tp_find_mand("buff_immune_fire"));
+  if (! thing_buff_add(g, v, l, me, tp_find_mand("buff_levitation"))) {
+    return false;
+  }
+
+  return true;
 }

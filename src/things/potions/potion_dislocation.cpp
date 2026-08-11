@@ -34,6 +34,13 @@ static void tp_potion_dislocation_on_thrown_end(Gamep g, Levelsp v, Levelp l, Th
   THING_DBG(g, v, l, me, "thrown end");
   TRACE_INDENT();
 
+  //
+  // Soft landing?
+  //
+  if ((level_is_soft_landing_bool(g, v, l, thing_at(g, v, l, me)))) {
+    return;
+  }
+
   auto at      = thing_at(g, v, l, me);
   bool got_one = {};
 
@@ -96,15 +103,6 @@ static void tp_potion_dislocation_on_thrown_end(Gamep g, Levelsp v, Levelp l, Th
 
   THING_DBG(g, v, l, me, "did not teleport; land instead");
   TRACE_INDENT();
-
-  //
-  // Soft landing?
-  //
-  if ((level_is_chasm_bool(g, v, l, thing_at(g, v, l, me))) || // newline
-      (level_is_water_bool(g, v, l, thing_at(g, v, l, me))) || // newline
-      (level_is_foliage_bool(g, v, l, thing_at(g, v, l, me)))) {
-    return;
-  }
 
   ThingEvent e {
       .reason     = "by being thrown",  //
@@ -175,6 +173,7 @@ static void tp_potion_dislocation_on_death(Gamep g, Levelsp v, Levelp l, Thingp 
   thing_on_use_set(tp, tp_potion_dislocation_on_use);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // fumble => intensify / keep burning / crit => stop burning
   tp_damage_set(tp, THING_EVENT_THROWN_DAMAGE, "1d4");
+  tp_flag_set(tp, is_able_to_be_buffed);
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_able_to_levitate);
@@ -199,6 +198,7 @@ static void tp_potion_dislocation_on_death(Gamep g, Levelsp v, Levelp l, Thingp 
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_physics_trap);
   tp_flag_set(tp, is_physics_water);
+  tp_flag_set(tp, is_potion);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_throwable);
   tp_flag_set(tp, is_tick_on_drop);

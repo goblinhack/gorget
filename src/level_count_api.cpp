@@ -2025,22 +2025,22 @@
   return level_count(g, v, l, is_unused192, p);
 }
 
-[[nodiscard]] auto level_count_is_unused193(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_soft_landing(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused193, p);
+  return level_count(g, v, l, is_soft_landing, p);
 }
 
-[[nodiscard]] auto level_count_is_unused194(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_gelatinous(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused194, p);
+  return level_count(g, v, l, is_gelatinous, p);
 }
 
-[[nodiscard]] auto level_count_is_unused195(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_potion(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused195, p);
+  return level_count(g, v, l, is_potion, p);
 }
 
 [[nodiscard]] auto level_count_is_able_to_levitate(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
@@ -2407,12 +2407,6 @@
 {
   TRACE_DEBUG();
   return level_count(g, v, l, is_able_to_be_engulfed, p);
-}
-
-[[nodiscard]] auto level_count_is_potion(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
-{
-  TRACE_DEBUG();
-  return level_count(g, v, l, is_potion, p);
 }
 
 [[nodiscard]] auto level_count_is_grouped_thing(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t

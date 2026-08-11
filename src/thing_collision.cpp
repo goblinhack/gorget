@@ -404,6 +404,13 @@ static void thing_collision_handle_dead_thing(Gamep g, Levelsp v, Levelp l, Thin
 
   thing_collision_handle_common(g, v, l, obstacle, me, stop);
 
+  //
+  // Wait until complete
+  //
+  if (thing_is_thrown(obstacle) || thing_is_falling(obstacle)) {
+    return;
+  }
+
   if (! thing_is_hit_when_dead(obstacle)) {
     return;
   }
@@ -446,11 +453,19 @@ static void thing_collision_handle_dead_thing(Gamep g, Levelsp v, Levelp l, Thin
 //
 static void thing_collision_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thingp obstacle, Thingp me, bool &stop)
 {
-  THING_DBG(g, v, l, obstacle, "%s", __FUNCTION__);
+  THING_DBG(g, v, l, me, "me: %s", __FUNCTION__);
+  THING_DBG(g, v, l, obstacle, "obstacle: %s", __FUNCTION__);
   TRACE_INDENT();
 
   thing_collision_handle_common(g, v, l, obstacle, me, stop);
   if (stop) {
+    return;
+  }
+
+  //
+  // Wait until complete
+  //
+  if (thing_is_thrown(obstacle) || thing_is_falling(obstacle)) {
     return;
   }
 

@@ -114,6 +114,7 @@ static void tp_cleaner_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEv
   tp_distance_jump_set(tp, 2);
   tp_distance_jump_set(tp, 3);
   tp_distance_vision_set(tp, 10);
+  tp_flag_set(tp, is_able_to_be_buffed);
   tp_flag_set(tp, is_able_to_collect_items);
   tp_flag_set(tp, is_able_to_collect_keys);
   tp_flag_set(tp, is_able_to_crush_grass);
@@ -142,6 +143,7 @@ static void tp_cleaner_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEv
   tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_flammable);
+  tp_flag_set(tp, is_gelatinous);
   tp_flag_set(tp, is_light_source, 2);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_monst);
@@ -153,6 +155,7 @@ static void tp_cleaner_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEv
   tp_flag_set(tp, is_removable_when_dead_on_err);
   tp_flag_set(tp, is_shown_health);
   tp_flag_set(tp, is_slime);
+  tp_flag_set(tp, is_soft_landing);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_vision_360_degrees);

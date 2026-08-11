@@ -2061,22 +2061,22 @@
   return level_flag_cached(g, v, l, is_unused192, p);
 }
 
-[[nodiscard]] auto level_is_unused193_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_soft_landing_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused193, p);
+  return level_flag_cached(g, v, l, is_soft_landing, p);
 }
 
-[[nodiscard]] auto level_is_unused194_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_gelatinous_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused194, p);
+  return level_flag_cached(g, v, l, is_gelatinous, p);
 }
 
-[[nodiscard]] auto level_is_unused195_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_potion_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused195, p);
+  return level_flag_cached(g, v, l, is_potion, p);
 }
 
 [[nodiscard]] auto level_is_able_to_levitate_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
@@ -2455,12 +2455,6 @@
 {
   TRACE_DEBUG();
   return level_flag_cached(g, v, l, is_able_to_be_engulfed, p);
-}
-
-[[nodiscard]] auto level_is_potion_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
-{
-  TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_potion, p);
 }
 
 [[nodiscard]] auto level_is_grouped_thing_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

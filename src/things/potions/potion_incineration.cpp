@@ -90,11 +90,13 @@ static bool tp_potion_incin_on_use(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
   if (thing_is_player(user)) {
     auto roll = d100();
     if (roll < 10) {
-      (void) thing_buff_add(g, v, l, user, tp_find_mand("buff_immune_fire"));
-      topcon("Pleasing flames engulf you!");
+      if (thing_buff_add(g, v, l, user, tp_find_mand("buff_immune_fire"))) {
+        topcon("Pleasing flames engulf you!");
+      }
     } else if (roll < 20) {
-      (void) thing_buff_add(g, v, l, user, tp_find_mand("buff_resistant_fire"));
-      topcon("Flames engulf you, but you seem oddly calm");
+      if (thing_buff_add(g, v, l, user, tp_find_mand("buff_resistant_fire"))) {
+        topcon("Flames engulf you, but you seem oddly calm");
+      }
     } else {
       topcon("Flames engulf you as you drink the potion!");
       thing_is_burning_set(g, v, l, user);
@@ -148,6 +150,7 @@ static void tp_potion_incin_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, Th
   thing_on_use_set(tp, tp_potion_incin_on_use);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1"); // fumble => intensify / keep burning / crit => stop burning
   tp_damage_set(tp, THING_EVENT_THROWN_DAMAGE, "1d12");
+  tp_flag_set(tp, is_able_to_be_buffed);
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_able_to_levitate);
@@ -173,6 +176,7 @@ static void tp_potion_incin_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, Th
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_physics_trap);
   tp_flag_set(tp, is_physics_water);
+  tp_flag_set(tp, is_potion);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_throwable);
   tp_flag_set(tp, is_tick_on_use);

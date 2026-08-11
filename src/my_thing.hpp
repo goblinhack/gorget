@@ -889,6 +889,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_flat(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_flesh(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_gaseous(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_gelatinous(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_ghost(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_glass(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_gold(Thingp t) -> bool;
@@ -944,7 +945,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_obs_to_paths(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_spawning(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_teleporting_onto(Thingp t) -> bool;
-[[nodiscard]] auto thing_levitate(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
 [[nodiscard]] auto thing_is_obs_to_throwing_onto(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_throwing_over(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_when_dead(Thingp t) -> bool;
@@ -972,6 +972,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_sleeping(Thingp me) -> bool;
 [[nodiscard]] auto thing_is_slime(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_smoke(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_soft_landing(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_staff(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_stealthy(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
 [[nodiscard]] auto thing_is_steam(Thingp t) -> bool;
@@ -1098,9 +1099,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused190(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused191(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused192(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused193(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused194(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused195(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused2(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused20(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused21(Thingp t) -> bool;
@@ -1212,6 +1210,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_keys_carried_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_keys_carried(Thingp t) -> int;
 [[nodiscard]] auto thing_level(Gamep g, Levelsp v, Thingp t) -> Levelp;
+[[nodiscard]] auto thing_levitate(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
 [[nodiscard]] auto thing_lifespan_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_lifespan_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_lifespan_initial_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;

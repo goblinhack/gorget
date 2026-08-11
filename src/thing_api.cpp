@@ -2665,7 +2665,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_unused192) != 0;
 }
 
-[[nodiscard]] auto thing_is_unused193(Thingp t) -> bool
+[[nodiscard]] auto thing_is_soft_landing(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2673,10 +2673,10 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused193) != 0;
+  return tp_flag(thing_tp(t), is_soft_landing) != 0;
 }
 
-[[nodiscard]] auto thing_is_unused194(Thingp t) -> bool
+[[nodiscard]] auto thing_is_gelatinous(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2684,10 +2684,10 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused194) != 0;
+  return tp_flag(thing_tp(t), is_gelatinous) != 0;
 }
 
-[[nodiscard]] auto thing_is_unused195(Thingp t) -> bool
+[[nodiscard]] auto thing_is_potion(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2695,7 +2695,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused195) != 0;
+  return tp_flag(thing_tp(t), is_potion) != 0;
 }
 
 [[nodiscard]] auto thing_is_teleport_hazard(Thingp t) -> bool
@@ -3251,17 +3251,6 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     return false;
   }
   return tp_flag(thing_tp(t), is_effect_blood) != 0;
-}
-
-[[nodiscard]] auto thing_is_potion(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_potion) != 0;
 }
 
 [[nodiscard]] auto thing_is_grouped_thing(Thingp t) -> bool

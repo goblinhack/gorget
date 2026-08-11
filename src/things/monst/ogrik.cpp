@@ -101,6 +101,7 @@ static void tp_ogrik_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
   thing_on_moved_set(tp, tp_ogrik_on_moved);
   tp_attack_count_max_per_tick_set(tp, 2);
   tp_distance_vision_set(tp, 12);
+  tp_flag_set(tp, is_able_to_be_buffed);
   tp_flag_set(tp, is_able_to_crush_grass);
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);

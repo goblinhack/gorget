@@ -102,6 +102,7 @@ static bool tp_blitzhound_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attack
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // fumble => flames spread to you
   tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d4");
   tp_distance_vision_set(tp, 12);
+  tp_flag_set(tp, is_able_to_be_buffed);
   tp_flag_set(tp, is_able_to_be_engulfed);
   tp_flag_set(tp, is_able_to_crush_grass);
   tp_flag_set(tp, is_able_to_fall_sound);

@@ -99,6 +99,7 @@ static void tp_glorp_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEven
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // fumble => flames spread to you
   tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "2d6");
   tp_distance_vision_set(tp, 10);
+  tp_flag_set(tp, is_able_to_be_buffed);
   tp_flag_set(tp, is_able_to_crush_grass);
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
@@ -131,6 +132,7 @@ static void tp_glorp_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEven
   tp_flag_set(tp, is_removable_when_dead_on_err);
   tp_flag_set(tp, is_shown_health);
   tp_flag_set(tp, is_slime);
+  tp_flag_set(tp, is_soft_landing);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_vision_360_degrees);

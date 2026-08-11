@@ -396,29 +396,10 @@ static void tp_player_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
   static std::initializer_list< std::string > items = {
       "wand_fire",         //
       "potion_levitation", //
-      "potion_tireless",   //
   };
 
   if (! thing_carry(g, v, l, me, items)) {
     thing_err(g, v, l, me, "failed to carry");
-  }
-
-  if (compiler_unused) {
-    if (! thing_buff_add(g, v, l, me, tp_find_mand("buff_resistant_fire"))) {
-      thing_err(g, v, l, me, "failed to add buff");
-    }
-    if (! thing_buff_add(g, v, l, me, tp_find_mand("buff_resistant_fire"))) {
-      thing_err(g, v, l, me, "failed to add buff");
-    }
-    if (! thing_buff_add(g, v, l, me, tp_find_mand("buff_resistant_fire"))) {
-      thing_err(g, v, l, me, "failed to add buff");
-    }
-    if (! thing_buff_add(g, v, l, me, tp_find_mand("buff_immune_fire"))) {
-      thing_err(g, v, l, me, "failed to add buff");
-    }
-    if (! thing_buff_add(g, v, l, me, tp_find_mand("buff_immune_fire"))) {
-      thing_err(g, v, l, me, "failed to add buff");
-    }
   }
 }
 

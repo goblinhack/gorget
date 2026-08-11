@@ -22,7 +22,7 @@ auto tp_load_border() -> bool;
 auto tp_load_brazier() -> bool;
 auto tp_load_bridge() -> bool;
 auto tp_load_buff_immune_fire() -> bool;
-auto tp_load_buff_levitating() -> bool;
+auto tp_load_buff_levitation() -> bool;
 auto tp_load_buff_protection() -> bool;
 auto tp_load_buff_resistant_fire() -> bool;
 auto tp_load_buff_stealth() -> bool;

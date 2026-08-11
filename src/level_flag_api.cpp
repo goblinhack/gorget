@@ -2024,22 +2024,22 @@
   return level_flag(g, v, l, is_unused192, p, me);
 }
 
-[[nodiscard]] auto level_is_unused193(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_soft_landing(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused193, p, me);
+  return level_flag(g, v, l, is_soft_landing, p, me);
 }
 
-[[nodiscard]] auto level_is_unused194(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_gelatinous(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused194, p, me);
+  return level_flag(g, v, l, is_gelatinous, p, me);
 }
 
-[[nodiscard]] auto level_is_unused195(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_potion(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused195, p, me);
+  return level_flag(g, v, l, is_potion, p, me);
 }
 
 [[nodiscard]] auto level_is_able_to_levitate(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
@@ -2406,12 +2406,6 @@
 {
   TRACE_DEBUG();
   return level_flag(g, v, l, is_able_to_be_engulfed, p, me);
-}
-
-[[nodiscard]] auto level_is_potion(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
-{
-  TRACE_DEBUG();
-  return level_flag(g, v, l, is_potion, p, me);
 }
 
 [[nodiscard]] auto level_is_grouped_thing(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp

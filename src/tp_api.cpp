@@ -2023,22 +2023,22 @@
   return tp_flag(tp, is_unused192) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused193(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_soft_landing(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused193) != 0;
+  return tp_flag(tp, is_soft_landing) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused194(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_gelatinous(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused194) != 0;
+  return tp_flag(tp, is_gelatinous) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused195(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_potion(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused195) != 0;
+  return tp_flag(tp, is_potion) != 0;
 }
 
 [[nodiscard]] auto tp_is_able_to_levitate(Tpp tp) -> bool
@@ -2405,12 +2405,6 @@
 {
   TRACE_DEBUG();
   return tp_flag(tp, is_able_to_be_engulfed) != 0;
-}
-
-[[nodiscard]] auto tp_is_potion(Tpp tp) -> bool
-{
-  TRACE_DEBUG();
-  return tp_flag(tp, is_potion) != 0;
 }
 
 [[nodiscard]] auto tp_is_grouped_thing(Tpp tp) -> bool

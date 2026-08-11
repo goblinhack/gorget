@@ -109,7 +109,7 @@ static std::initializer_list< std::string > tps = {
     "brazier",
     "bridge",
     "buff_immune_fire",
-    "buff_levitating",
+    "buff_levitation",
     "buff_protection",
     "buff_resistant_fire",
     "buff_stealth",

@@ -34,9 +34,7 @@ static void tp_potion_protection_on_thrown_end(Gamep g, Levelsp v, Levelp l, Thi
   //
   // Soft landing?
   //
-  if ((level_is_chasm_bool(g, v, l, thing_at(g, v, l, me))) || // newline
-      (level_is_water_bool(g, v, l, thing_at(g, v, l, me))) || // newline
-      (level_is_foliage_bool(g, v, l, thing_at(g, v, l, me)))) {
+  if ((level_is_soft_landing_bool(g, v, l, thing_at(g, v, l, me)))) {
     return;
   }
 
@@ -55,12 +53,12 @@ static bool tp_potion_protection_on_use(Gamep g, Levelsp v, Levelp l, Thingp me,
 {
   TRACE();
 
-  if (thing_is_player(user)) {
-    topcon(UI_GOOD_FMT_STR "You feel safe." UI_RESET_FMT);
-    thing_sound_play(g, v, l, user, "bonus");
+  if (thing_buff_add(g, v, l, user, tp_find_mand("buff_protection"))) {
+    if (thing_is_player(user)) {
+      topcon(UI_GOOD_FMT_STR "You feel safe." UI_RESET_FMT);
+      thing_sound_play(g, v, l, user, "bonus");
+    }
   }
-
-  (void) thing_buff_add(g, v, l, user, tp_find_mand("buff_protection"));
 
   return true;
 }
@@ -102,6 +100,7 @@ static void tp_potion_protection_on_death(Gamep g, Levelsp v, Levelp l, Thingp m
   thing_on_use_set(tp, tp_potion_protection_on_use);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // fumble => intensify / keep burning / crit => stop burning
   tp_damage_set(tp, THING_EVENT_THROWN_DAMAGE, "1d4");
+  tp_flag_set(tp, is_able_to_be_buffed);
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_able_to_levitate);
@@ -126,6 +125,7 @@ static void tp_potion_protection_on_death(Gamep g, Levelsp v, Levelp l, Thingp m
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_physics_trap);
   tp_flag_set(tp, is_physics_water);
+  tp_flag_set(tp, is_potion);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_throwable);
   tp_flag_set(tp, is_tick_on_drop);
