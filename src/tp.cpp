@@ -63,6 +63,14 @@ static std::initializer_list< std::string > tps = {
     "door_secret16", // Update WALL_VARIANTS
     "door_secret17", // Update WALL_VARIANTS
     "door_secret18", // Update WALL_VARIANTS
+    "door_secret19", // Update WALL_VARIANTS
+    "door_secret20", // Update WALL_VARIANTS
+    "door_secret21", // Update WALL_VARIANTS
+    "door_secret22", // Update WALL_VARIANTS
+    "door_secret23", // Update WALL_VARIANTS
+    "door_secret24", // Update WALL_VARIANTS
+    "door_secret25", // Update WALL_VARIANTS
+    "door_secret26", // Update WALL_VARIANTS
     "wall1", // Update WALL_VARIANTS
     "wall2", // Update WALL_VARIANTS
     "wall3", // Update WALL_VARIANTS
@@ -81,6 +89,14 @@ static std::initializer_list< std::string > tps = {
     "wall16", // Update WALL_VARIANTS
     "wall17", // Update WALL_VARIANTS
     "wall18", // Update WALL_VARIANTS
+    "wall19", // Update WALL_VARIANTS
+    "wall20", // Update WALL_VARIANTS
+    "wall21", // Update WALL_VARIANTS
+    "wall22", // Update WALL_VARIANTS
+    "wall23", // Update WALL_VARIANTS
+    "wall24", // Update WALL_VARIANTS
+    "wall25", // Update WALL_VARIANTS
+    "wall26", // Update WALL_VARIANTS
     "vault1", // Update VAULT_VARIANTS
     "vault2", // Update VAULT_VARIANTS
     "vault3", // Update VAULT_VARIANTS
@@ -93,6 +109,14 @@ static std::initializer_list< std::string > tps = {
     "vault10", // Update VAULT_VARIANTS
     "vault11", // Update VAULT_VARIANTS
     "vault12", // Update VAULT_VARIANTS
+    "vault13", // Update VAULT_VARIANTS
+    "vault14", // Update VAULT_VARIANTS
+    "vault15", // Update VAULT_VARIANTS
+    "vault16", // Update VAULT_VARIANTS
+    "vault17", // Update VAULT_VARIANTS
+    "vault18", // Update VAULT_VARIANTS
+    "vault19", // Update VAULT_VARIANTS
+    "vault20", // Update VAULT_VARIANTS
     "rock1",
     "border",
     "player",
