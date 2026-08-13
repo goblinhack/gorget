@@ -186,7 +186,7 @@ enum {
 
 enum {
   WALL_VARIANTS       = 26, // newline
-  WALL_TILED_VARIANTS = 20, // newline
+  WALL_TILED_VARIANTS = 21, // newline
   VAULT_VARIANTS      = 1,  // newline
   FLOOR_VARIANTS      = 10  // newline
 };
