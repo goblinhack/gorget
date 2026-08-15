@@ -778,6 +778,12 @@ void tile_global_index_set(Tilep t, uint32_t val)
   return t->is_end_of_anim;
 }
 
+void tile_is_end_of_anim_set(Tilep t)
+{
+  TRACE();
+  t->is_end_of_anim = true;
+}
+
 [[nodiscard]] auto tile_is_cleanup_on_end_of_anim(Tilep t) -> bool
 {
   TRACE();

@@ -1992,6 +1992,36 @@ void tp_lifespan_set(Tpp tp, const std::string &val)
   return tp->lifespan.max_roll();
 }
 
+void tp_ticks_to_stay_dead_set(Tpp tp, const std::string &val)
+{
+  TRACE_DEBUG();
+  if (tp == nullptr) [[unlikely]] {
+    ERR("no thing template pointer");
+    return;
+  }
+  tp->ticks_to_stay_dead = Dice(std::string(val));
+}
+
+[[nodiscard]] auto tp_ticks_to_stay_dead_get(Tpp tp) -> int
+{
+  TRACE_DEBUG();
+  if (tp == nullptr) [[unlikely]] {
+    ERR("no thing template pointer");
+    return 0;
+  }
+  return tp->ticks_to_stay_dead.roll();
+}
+
+[[nodiscard]] auto tp_ticks_to_stay_dead_max_get(Tpp tp) -> int
+{
+  TRACE_DEBUG();
+  if (tp == nullptr) [[unlikely]] {
+    ERR("no thing template pointer");
+    return 0;
+  }
+  return tp->ticks_to_stay_dead.max_roll();
+}
+
 [[nodiscard]] auto tp_collision_radius(Tpp t) -> float
 {
   TRACE_DEBUG();

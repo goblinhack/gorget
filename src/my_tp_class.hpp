@@ -194,6 +194,11 @@ public:
   Dice lifespan;
 
   //
+  // How long to stay dead.
+  //
+  Dice ticks_to_stay_dead;
+
+  //
   // Internal name
   //
   std::string name;

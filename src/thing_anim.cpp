@@ -212,6 +212,13 @@ void thing_anim_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, int ti
     return;
   }
 
+  //
+  // Last tile?
+  //
+  if (tile_is_end_of_anim(tile)) {
+    return;
+  }
+
   if (thing_is_beam_weapon(t)) {
     t->anim_index += THING_BEAM_WEAPON_TILES_MAX;
   } else {

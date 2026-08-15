@@ -31,6 +31,7 @@ void thing_enhance(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp)
   (void) thing_distance_vision_incr(g, v, l, t, tp_distance_vision_get(tp));
   (void) thing_health_max_incr(g, v, l, t, thing_health_incr(g, v, l, t, tp_health_max_get(tp)));
   (void) thing_lifespan_initial_set(g, v, l, t, thing_lifespan_incr(g, v, l, t, tp_lifespan_get(tp)));
+  (void) thing_ticks_to_stay_dead_initial_set(g, v, l, t, thing_ticks_to_stay_dead_incr(g, v, l, t, tp_ticks_to_stay_dead_get(tp)));
   (void) thing_minion_max_incr(g, v, l, t, tp_minion_max_get(tp));
   (void) thing_missile_count_max_incr(g, v, l, t, tp_missile_count_max_get(tp));
   (void) thing_speed_incr(g, v, l, t, tp_speed_get(tp));

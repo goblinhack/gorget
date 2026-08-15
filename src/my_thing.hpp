@@ -519,6 +519,11 @@ using Thing = struct Thing {
   int16_t _lifespan; // can be decremented, so signed is safer
   int16_t _lifespan_initial;
   //
+  // How long to stay dead
+  //
+  int16_t _ticks_to_stay_dead; // can be decremented, so signed is safer
+  int16_t _ticks_to_stay_dead_initial;
+  //
   // How long this thing has lived
   //
   int16_t _age; // can be decremented, so signed is safer
@@ -1219,6 +1224,14 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_lifespan_initial(Thingp t) -> int;
 [[nodiscard]] auto thing_lifespan_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_lifespan(Gamep g, Levelsp v, Levelp l, Thingp t) -> int;
+[[nodiscard]] auto thing_ticks_to_stay_dead_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
+[[nodiscard]] auto thing_ticks_to_stay_dead_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
+[[nodiscard]] auto thing_ticks_to_stay_dead_initial_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
+[[nodiscard]] auto thing_ticks_to_stay_dead_initial_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
+[[nodiscard]] auto thing_ticks_to_stay_dead_initial_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
+[[nodiscard]] auto thing_ticks_to_stay_dead_initial(Thingp t) -> int;
+[[nodiscard]] auto thing_ticks_to_stay_dead_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
+[[nodiscard]] auto thing_ticks_to_stay_dead(Gamep g, Levelsp v, Levelp l, Thingp t) -> int;
 [[nodiscard]] auto thing_light_struct(Gamep g, Thingp t) -> ThingLightp;
 [[nodiscard]] auto thing_lunge(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &to) -> bool;
 [[nodiscard]] auto thing_minion_can_move_to_possible(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &to) -> bool;

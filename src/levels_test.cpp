@@ -32,19 +32,25 @@ void levels_test(Gamep g)
                   /* line */ (const char *) "xxxxxxxxxxx",
                   /* end */ nullptr);
 
-  level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "mob", __FUNCTION__, __LINE__, no_overrides, 0,
-                  /* line */ (const char *) "xxxxxxxxxxx",
-                  /* line */ (const char *) "xxxxxxxxxxx",
-                  /* line */ (const char *) "xx....g..xx",
-                  /* line */ (const char *) "xx....G..xx",
-                  /* line */ (const char *) "xx....g..xx",
-                  /* line */ (const char *) "xx.@..g..xx",
-                  /* line */ (const char *) "xx....g..xx",
-                  /* line */ (const char *) "xx....G..xx",
-                  /* line */ (const char *) "xx....g..xx",
-                  /* line */ (const char *) "xxxxxxxxxxx",
-                  /* line */ (const char *) "xxxxxxxxxxx",
-                  /* end */ nullptr);
+  {
+    Overrides overrides;
+
+    overrides[ 'm' ] = [](char /*c*/, bpoint /*p*/) -> Tpp { return tp_find_mand("skeleton"); };
+
+    level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "mob", __FUNCTION__, __LINE__, overrides, 0,
+                    /* line */ (const char *) "xxxxxxxxxxx",
+                    /* line */ (const char *) "xxxxxxxxxxx",
+                    /* line */ (const char *) "xx.......xx",
+                    /* line */ (const char *) "xx.......xx",
+                    /* line */ (const char *) "xx.......xx",
+                    /* line */ (const char *) "xx.@..m..xx",
+                    /* line */ (const char *) "xx.......xx",
+                    /* line */ (const char *) "xx.......xx",
+                    /* line */ (const char *) "xx.......xx",
+                    /* line */ (const char *) "xxxxxxxxxxx",
+                    /* line */ (const char *) "xxxxxxxxxxx",
+                    /* end */ nullptr);
+  }
 
   {
     Overrides overrides;

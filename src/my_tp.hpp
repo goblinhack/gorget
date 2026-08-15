@@ -322,7 +322,7 @@
       list_macro(is_unused186, "is_unused186"),                                             /* newline */                                       \
       list_macro(is_unused187, "is_unused187"),                                             /* newline */                                       \
       list_macro(is_unused188, "is_unused188"),                                             /* newline */                                       \
-      list_macro(is_skeleton, "is_skeleton"),                                             /* newline */                                       \
+      list_macro(is_skeleton, "is_skeleton"),                                               /* newline */                                       \
       list_macro(is_unused19, "is_unused19"),                                               /* newline */                                       \
       list_macro(is_water_bound, "is_water_bound"),                                         /* newline */                                       \
       list_macro(is_amphibious, "is_amphibious"),                                           /* newline */                                       \
@@ -1228,6 +1228,8 @@ class Tp;
 [[nodiscard]] auto tp_items_collected_max_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_lifespan_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_lifespan_max_get(Tpp tp) -> int;
+[[nodiscard]] auto tp_ticks_to_stay_dead_get(Tpp tp) -> int;
+[[nodiscard]] auto tp_ticks_to_stay_dead_max_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_light_color(Tpp tp) -> color;
 [[nodiscard]] auto tp_load(const std::string &val) -> Tpp;
 [[nodiscard]] auto tp_minion_max_get(Tpp tp) -> int;
@@ -1303,6 +1305,7 @@ void tp_is_immune_to_add(Tpp tp, ThingEventType val);
 void tp_is_resistant_to_add(Tpp tp, ThingEventType val);
 void tp_items_collected_max_set(Tpp tp, int val);
 void tp_lifespan_set(Tpp tp, const std::string &val);
+void tp_ticks_to_stay_dead_set(Tpp tp, const std::string &val);
 void tp_light_color_apply(Tpp tp);
 void tp_light_color_set(Tpp tp, const std::string &val);
 void tp_log_(Tpp tp, const char *fmt, va_list args); // compile error without

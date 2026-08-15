@@ -109,9 +109,9 @@ static bool tp_skeleton_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker
   tp_flag_set(tp, is_attackable_by_player);
   tp_flag_set(tp, is_biome_bogland);
   tp_flag_set(tp, is_biome_dungeon);
-  tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_hit_outline_w_invis_inside);
   tp_flag_set(tp, is_blit_shown_in_chasms);
+  tp_flag_set(tp, is_blit_on_ground);
   tp_flag_set(tp, is_burnable); // is capable of being burned by fire
   tp_flag_set(tp, is_collision_circle_large);
   tp_flag_set(tp, is_corpse_on_death);
@@ -142,6 +142,7 @@ static bool tp_skeleton_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker
   tp_name_pluralize_set(tp, "kobalo");
   tp_name_short_set(tp, "skeleton");
   tp_priority_set(tp, THING_PRIORITY_MONST);
+  tp_ticks_to_stay_dead_set(tp, "10");
   tp_score_value_set(tp, 2);
   tp_speed_set(tp, 100);
   tp_stat_set(tp, THING_STAT_ATT, "10");
@@ -157,16 +158,22 @@ static bool tp_skeleton_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker
 
   for (auto frame = 0; frame < 2; frame++) {
     auto *tile = tile_find_mand(name + std::string(".idle.") + std::to_string(frame));
-    tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
+    tile_size_set(tile, OUTLINE_TILE_WIDTH, OUTLINE_TILE_HEIGHT);
     tile_delay_ms_set(tile, delay);
     tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
   }
 
+  delay = 250;
+
   for (auto frame = 0; frame < 3; frame++) {
     auto *tile = tile_find_mand(name + std::string(".dead.") + std::to_string(frame));
-    tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
+    tile_size_set(tile, OUTLINE_TILE_WIDTH, OUTLINE_TILE_HEIGHT);
     tile_delay_ms_set(tile, delay);
     tp_tiles_push_back(tp, THING_ANIM_DEAD, tile);
+
+    if (frame == 2) {
+      tile_is_end_of_anim_set(tile);
+    }
   }
 
   return true;

@@ -61,6 +61,23 @@ void thing_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
   // Per thing callback
   //
   thing_on_tick_begin(g, v, l, me);
+
+  //
+  // Resurrection?
+  //
+  if (thing_is_corpse(me)) {
+    if (thing_is_able_to_resurrect(me)) {
+      if (thing_ticks_to_stay_dead_initial(me) != 0) {
+        if (thing_ticks_to_stay_dead_decr(g, v, l, me) == 0) {}
+        if (tp_chance_success(thing_tp(me), THING_CHANCE_RESURRECTION)) {
+          thing_is_dead_unset(g, v, l, me);
+          thing_is_corpse_unset(g, v, l, me);
+          thing_anim_init(g, v, l, me, THING_ANIM_IDLE);
+        }
+      }
+    }
+  }
+
   if (thing_is_dead(me)) {
     return;
   }
