@@ -2621,7 +2621,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_unused188) != 0;
 }
 
-[[nodiscard]] auto thing_is_unused189(Thingp t) -> bool
+[[nodiscard]] auto thing_is_skeleton(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2629,10 +2629,10 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused189) != 0;
+  return tp_flag(thing_tp(t), is_skeleton) != 0;
 }
 
-[[nodiscard]] auto thing_is_unused190(Thingp t) -> bool
+[[nodiscard]] auto thing_is_water_bound(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2640,10 +2640,10 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused190) != 0;
+  return tp_flag(thing_tp(t), is_water_bound) != 0;
 }
 
-[[nodiscard]] auto thing_is_unused191(Thingp t) -> bool
+[[nodiscard]] auto thing_is_amphibious(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2651,10 +2651,10 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused191) != 0;
+  return tp_flag(thing_tp(t), is_amphibious) != 0;
 }
 
-[[nodiscard]] auto thing_is_unused192(Thingp t) -> bool
+[[nodiscard]] auto thing_is_able_to_resurrect(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2662,7 +2662,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused192) != 0;
+  return tp_flag(thing_tp(t), is_able_to_resurrect) != 0;
 }
 
 [[nodiscard]] auto thing_is_soft_landing(Thingp t) -> bool

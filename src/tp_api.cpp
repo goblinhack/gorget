@@ -1999,28 +1999,28 @@
   return tp_flag(tp, is_unused188) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused189(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_skeleton(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused189) != 0;
+  return tp_flag(tp, is_skeleton) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused190(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_water_bound(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused190) != 0;
+  return tp_flag(tp, is_water_bound) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused191(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_amphibious(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused191) != 0;
+  return tp_flag(tp, is_amphibious) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused192(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_able_to_resurrect(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused192) != 0;
+  return tp_flag(tp, is_able_to_resurrect) != 0;
 }
 
 [[nodiscard]] auto tp_is_soft_landing(Tpp tp) -> bool

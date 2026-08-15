@@ -83,6 +83,8 @@ auto tp_load_reeds() -> bool;
 auto tp_load_ring_life() -> bool;
 auto tp_load_ring_war() -> bool;
 auto tp_load_rock() -> bool;
+auto tp_load_skeleton_mob() -> bool;
+auto tp_load_skeleton() -> bool;
 auto tp_load_skullferno() -> bool;
 auto tp_load_smoke() -> bool;
 auto tp_load_staff_fire() -> bool;

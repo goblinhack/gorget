@@ -2000,28 +2000,28 @@
   return level_open(g, v, l, is_unused188, p);
 }
 
-[[nodiscard]] auto level_open_is_unused189(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_open_is_skeleton(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_open(g, v, l, is_unused189, p);
+  return level_open(g, v, l, is_skeleton, p);
 }
 
-[[nodiscard]] auto level_open_is_unused190(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_open_is_water_bound(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_open(g, v, l, is_unused190, p);
+  return level_open(g, v, l, is_water_bound, p);
 }
 
-[[nodiscard]] auto level_open_is_unused191(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_open_is_amphibious(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_open(g, v, l, is_unused191, p);
+  return level_open(g, v, l, is_amphibious, p);
 }
 
-[[nodiscard]] auto level_open_is_unused192(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_open_is_able_to_resurrect(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_open(g, v, l, is_unused192, p);
+  return level_open(g, v, l, is_able_to_resurrect, p);
 }
 
 [[nodiscard]] auto level_open_is_soft_landing(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp

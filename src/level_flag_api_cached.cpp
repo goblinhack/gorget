@@ -2037,28 +2037,28 @@
   return level_flag_cached(g, v, l, is_unused188, p);
 }
 
-[[nodiscard]] auto level_is_unused189_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_skeleton_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused189, p);
+  return level_flag_cached(g, v, l, is_skeleton, p);
 }
 
-[[nodiscard]] auto level_is_unused190_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_water_bound_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused190, p);
+  return level_flag_cached(g, v, l, is_water_bound, p);
 }
 
-[[nodiscard]] auto level_is_unused191_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_amphibious_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused191, p);
+  return level_flag_cached(g, v, l, is_amphibious, p);
 }
 
-[[nodiscard]] auto level_is_unused192_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_able_to_resurrect_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused192, p);
+  return level_flag_cached(g, v, l, is_able_to_resurrect, p);
 }
 
 [[nodiscard]] auto level_is_soft_landing_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

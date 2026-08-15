@@ -787,11 +787,13 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_able_to_move_diagonally(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_move_through_walls(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_open_things(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_able_to_resurrect(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_see_through_walls(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_shove(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_throw(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_wear_items(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_always_hot(Thingp me) -> bool;
+[[nodiscard]] auto thing_is_amphibious(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_animated_can_hflip(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_animated_no_dir(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_animated_sync_first(Thingp t) -> bool;
@@ -1094,11 +1096,8 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused186(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused187(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused188(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused189(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_skeleton(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused19(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused190(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused191(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused192(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused2(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused20(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused21(Thingp t) -> bool;
@@ -1194,6 +1193,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_wait_on_anim(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_wait_on_dead_anim(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_wand(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_water_bound(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_weapon(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_wearable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_wood(Thingp t) -> bool;

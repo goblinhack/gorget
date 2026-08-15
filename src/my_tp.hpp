@@ -322,11 +322,11 @@
       list_macro(is_unused186, "is_unused186"),                                             /* newline */                                       \
       list_macro(is_unused187, "is_unused187"),                                             /* newline */                                       \
       list_macro(is_unused188, "is_unused188"),                                             /* newline */                                       \
-      list_macro(is_unused189, "is_unused189"),                                             /* newline */                                       \
+      list_macro(is_skeleton, "is_skeleton"),                                             /* newline */                                       \
       list_macro(is_unused19, "is_unused19"),                                               /* newline */                                       \
-      list_macro(is_unused190, "is_unused190"),                                             /* newline */                                       \
-      list_macro(is_unused191, "is_unused191"),                                             /* newline */                                       \
-      list_macro(is_unused192, "is_unused192"),                                             /* newline */                                       \
+      list_macro(is_water_bound, "is_water_bound"),                                         /* newline */                                       \
+      list_macro(is_amphibious, "is_amphibious"),                                           /* newline */                                       \
+      list_macro(is_able_to_resurrect, "is_able_to_resurrect"),                             /* newline */                                       \
       list_macro(is_soft_landing, "is_soft_landing"),                                       /* newline */                                       \
       list_macro(is_gelatinous, "is_gelatinous"),                                           /* newline */                                       \
       list_macro(is_unused2, "is_unused2"),                                                 /* newline */                                       \
@@ -697,7 +697,8 @@ ENUM_DEF_H(THING_PRIORITY_ENUM, ThingPriorityType)
 #define THING_CHANCE_ENUM(list_macro)                                                                                                           \
   CLANG_FORMAT_INDENT()                                           /* dummy line for clang indentation fixup */                                  \
   list_macro(THING_CHANCE_START_BURNING, "start-burn"),           /* newline */                                                                 \
-      list_macro(THING_CHANCE_CONTINUE_TO_BURN, "continue-burn"), /* newline */
+      list_macro(THING_CHANCE_CONTINUE_TO_BURN, "continue-burn"), /* newline */                                                                 \
+      list_macro(THING_CHANCE_RESURRECTION, "resurrection"),      /* newline */
 
 ENUM_DEF_H(THING_CHANCE_ENUM, ThingChanceType)
 
@@ -829,11 +830,13 @@ class Tp;
 [[nodiscard]] auto tp_is_able_to_move_diagonally(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_move_through_walls(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_open_things(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_able_to_resurrect(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_see_through_walls(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_shove(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_teleport(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_throw(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_wear_items(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_amphibious(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_animated_can_hflip(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_animated_no_dir(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_animated_sync_first(Tpp tp) -> bool;
@@ -1119,11 +1122,8 @@ class Tp;
 [[nodiscard]] auto tp_is_unused186(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused187(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused188(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused189(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_skeleton(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused19(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused190(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused191(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused192(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused2(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused20(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused21(Tpp tp) -> bool;
@@ -1220,6 +1220,7 @@ class Tp;
 [[nodiscard]] auto tp_is_wait_on_dead_anim(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_wall(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_wand(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_water_bound(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_water(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_weapon(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_wearable(Tpp tp) -> bool;

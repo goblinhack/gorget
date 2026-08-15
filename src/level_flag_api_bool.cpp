@@ -2037,28 +2037,28 @@
   return level_flag(g, v, l, is_unused188, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_unused189_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_skeleton_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused189, p, me) != nullptr;
+  return level_flag(g, v, l, is_skeleton, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_unused190_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_water_bound_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused190, p, me) != nullptr;
+  return level_flag(g, v, l, is_water_bound, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_unused191_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_amphibious_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused191, p, me) != nullptr;
+  return level_flag(g, v, l, is_amphibious, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_unused192_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_able_to_resurrect_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused192, p, me) != nullptr;
+  return level_flag(g, v, l, is_able_to_resurrect, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_soft_landing_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
