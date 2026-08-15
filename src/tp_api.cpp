@@ -823,10 +823,10 @@
   return tp_flag(tp, is_submergible) != 0;
 }
 
-[[nodiscard]] auto tp_is_able_to_teleport(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_able_to_be_teleported(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_able_to_teleport) != 0;
+  return tp_flag(tp, is_able_to_be_teleported) != 0;
 }
 
 [[nodiscard]] auto tp_is_teleport(Tpp tp) -> bool
@@ -2041,10 +2041,10 @@
   return tp_flag(tp, is_potion) != 0;
 }
 
-[[nodiscard]] auto tp_is_able_to_levitate(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_able_to_be_levitated(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_able_to_levitate) != 0;
+  return tp_flag(tp, is_able_to_be_levitated) != 0;
 }
 
 [[nodiscard]] auto tp_is_teleport_hazard(Tpp tp) -> bool

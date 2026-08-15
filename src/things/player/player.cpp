@@ -461,6 +461,8 @@ static bool tp_player_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker, 
   tp_distance_vision_set(tp, MAP_WIDTH); // tiles
   tp_flag_set(tp, is_able_to_be_buffed);
   tp_flag_set(tp, is_able_to_be_engulfed);
+  tp_flag_set(tp, is_able_to_be_levitated);
+  tp_flag_set(tp, is_able_to_be_teleported);
   tp_flag_set(tp, is_able_to_collect_items);
   tp_flag_set(tp, is_able_to_collect_keys);
   tp_flag_set(tp, is_able_to_crush_grass);
@@ -469,12 +471,10 @@ static bool tp_player_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker, 
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_able_to_fire_weapons);
   tp_flag_set(tp, is_able_to_jump);
-  tp_flag_set(tp, is_able_to_levitate);
   tp_flag_set(tp, is_able_to_lunge);
   tp_flag_set(tp, is_able_to_move_diagonally);
   tp_flag_set(tp, is_able_to_open_things);
   tp_flag_set(tp, is_able_to_shove);
-  tp_flag_set(tp, is_able_to_teleport);
   tp_flag_set(tp, is_able_to_throw);
   tp_flag_set(tp, is_able_to_wear_items);
   tp_flag_set(tp, is_animated_can_hflip);

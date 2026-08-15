@@ -31,14 +31,14 @@
       list_macro(is_able_to_fall, "is_able_to_fall"),                                       /* newline */                                       \
       list_macro(is_able_to_fire_weapons, "is_able_to_fire_weapons"),                       /* newline */                                       \
       list_macro(is_able_to_jump, "is_able_to_jump"),                                       /* newline */                                       \
-      list_macro(is_able_to_levitate, "is_able_to_levitate"),                               /* newline */                                       \
+      list_macro(is_able_to_be_levitated, "is_able_to_be_levitated"),                       /* newline */                                       \
       list_macro(is_able_to_lunge, "is_able_to_lunge"),                                     /* newline */                                       \
       list_macro(is_able_to_move_diagonally, "is_able_to_move_diagonally"),                 /* newline */                                       \
       list_macro(is_able_to_move_through_walls, "is_able_to_move_through_walls"),           /* newline */                                       \
       list_macro(is_able_to_open_things, "is_able_to_open_things"),                         /* newline */                                       \
       list_macro(is_able_to_see_through_walls, "is_able_to_see_through_walls"),             /* newline */                                       \
       list_macro(is_able_to_shove, "is_able_to_shove"),                                     /* newline */                                       \
-      list_macro(is_able_to_teleport, "is_able_to_teleport"),                               /* newline */                                       \
+      list_macro(is_able_to_be_teleported, "is_able_to_be_teleported"),                     /* newline */                                       \
       list_macro(is_able_to_throw, "is_able_to_throw"),                                     /* newline */                                       \
       list_macro(is_able_to_wear_items, "is_able_to_wear_items"),                           /* newline */                                       \
       list_macro(is_animated_can_hflip, "is_animated_can_hflip"),                           /* newline */                                       \
@@ -813,6 +813,8 @@ class Tp;
 [[nodiscard]] auto tp_init() -> bool;
 [[nodiscard]] auto tp_is_able_to_be_buffed(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_be_engulfed(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_able_to_be_levitated(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_able_to_be_teleported(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_collect_items(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_collect_keys(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_crush_grass(Tpp tp) -> bool;
@@ -825,7 +827,6 @@ class Tp;
 [[nodiscard]] auto tp_is_able_to_fall(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_fire_weapons(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_jump(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_able_to_levitate(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_lunge(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_move_diagonally(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_move_through_walls(Tpp tp) -> bool;
@@ -833,7 +834,6 @@ class Tp;
 [[nodiscard]] auto tp_is_able_to_resurrect(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_see_through_walls(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_shove(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_able_to_teleport(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_throw(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_wear_items(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_amphibious(Tpp tp) -> bool;
@@ -1001,6 +1001,7 @@ class Tp;
 [[nodiscard]] auto tp_is_shown_health(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_shown_noise(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_shown_stamina(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_skeleton(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_slime(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_smoke(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_soft_landing(Tpp tp) -> bool;
@@ -1122,7 +1123,6 @@ class Tp;
 [[nodiscard]] auto tp_is_unused186(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused187(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused188(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_skeleton(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused19(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused2(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused20(Tpp tp) -> bool;
@@ -1228,8 +1228,6 @@ class Tp;
 [[nodiscard]] auto tp_items_collected_max_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_lifespan_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_lifespan_max_get(Tpp tp) -> int;
-[[nodiscard]] auto tp_ticks_to_stay_dead_get(Tpp tp) -> int;
-[[nodiscard]] auto tp_ticks_to_stay_dead_max_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_light_color(Tpp tp) -> color;
 [[nodiscard]] auto tp_load(const std::string &val) -> Tpp;
 [[nodiscard]] auto tp_minion_max_get(Tpp tp) -> int;
@@ -1258,6 +1256,8 @@ class Tp;
 [[nodiscard]] auto tp_temperature_damage_at_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_temperature_heat_capacity_get(Tpp tp) -> float;
 [[nodiscard]] auto tp_temperature_thermal_conductivity_get(Tpp tp) -> float;
+[[nodiscard]] auto tp_ticks_to_stay_dead_get(Tpp tp) -> int;
+[[nodiscard]] auto tp_ticks_to_stay_dead_max_get(Tpp tp) -> int;
 [[nodiscard]] auto tp_tile_name(Tpp tp) -> std::string;
 [[nodiscard]] auto tp_tiles_get(Tpp tp, ThingAnimType val, int index) -> Tilep;
 [[nodiscard]] auto tp_tiles_size(Tpp tp, ThingAnimType val) -> int;
@@ -1305,7 +1305,6 @@ void tp_is_immune_to_add(Tpp tp, ThingEventType val);
 void tp_is_resistant_to_add(Tpp tp, ThingEventType val);
 void tp_items_collected_max_set(Tpp tp, int val);
 void tp_lifespan_set(Tpp tp, const std::string &val);
-void tp_ticks_to_stay_dead_set(Tpp tp, const std::string &val);
 void tp_light_color_apply(Tpp tp);
 void tp_light_color_set(Tpp tp, const std::string &val);
 void tp_log_(Tpp tp, const char *fmt, va_list args); // compile error without
@@ -1332,6 +1331,7 @@ void tp_temperature_heat_capacity_set(Tpp tp, float val);
 void tp_temperature_initial_set(Tpp tp, int val);
 void tp_temperature_melts_at_set(Tpp tp, int val);
 void tp_temperature_thermal_conductivity_set(Tpp tp, float val);
+void tp_ticks_to_stay_dead_set(Tpp tp, const std::string &val);
 void tp_tile_name_set(Tpp tp, const std::string &val);
 void tp_tiles_push_back(Tpp tp, ThingAnimType val, Tilep tile_p);
 void tp_value1_set(Tpp tp, int val);

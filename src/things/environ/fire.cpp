@@ -187,8 +187,8 @@ static void tp_fire_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
   thing_on_fall_begin_set(tp, tp_fire_on_fall_begin);
   thing_on_tick_begin_set(tp, tp_fire_tick_begin);
   tp_damage_set(tp, THING_EVENT_FIRE_DAMAGE, "1d6");
+  tp_flag_set(tp, is_able_to_be_teleported);
   tp_flag_set(tp, is_able_to_fall);
-  tp_flag_set(tp, is_able_to_teleport);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_if_has_seen);

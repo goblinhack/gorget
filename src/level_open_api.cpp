@@ -824,10 +824,10 @@
   return level_open(g, v, l, is_submergible, p);
 }
 
-[[nodiscard]] auto level_open_is_able_to_teleport(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_open_is_able_to_be_teleported(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_open(g, v, l, is_able_to_teleport, p);
+  return level_open(g, v, l, is_able_to_be_teleported, p);
 }
 
 [[nodiscard]] auto level_open_is_teleport(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
@@ -2042,10 +2042,10 @@
   return level_open(g, v, l, is_potion, p);
 }
 
-[[nodiscard]] auto level_open_is_able_to_levitate(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_open_is_able_to_be_levitated(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_open(g, v, l, is_able_to_levitate, p);
+  return level_open(g, v, l, is_able_to_be_levitated, p);
 }
 
 [[nodiscard]] auto level_open_is_teleport_hazard(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp

@@ -53,7 +53,6 @@ ENUM_DEF_H(TILE_LAYER_ENUM, TileLayerEnum);
 [[nodiscard]] auto tile_is_cleanup_on_end_of_anim(Tilep t) -> bool;
 [[nodiscard]] auto tile_is_end_of_anim(Tilep t) -> bool;
 [[nodiscard]] auto tile_is_dead(Tilep) -> bool;
-[[nodiscard]] auto tile_is_end_of_anim(Tilep t) -> bool;
 [[nodiscard]] auto tile_is_loggable(Tilep t) -> bool;
 [[nodiscard]] auto tile_is_open(Tilep) -> bool;
 [[nodiscard]] auto tile_height(Tilep tile) -> int;

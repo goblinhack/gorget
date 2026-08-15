@@ -27,7 +27,7 @@ static void tp_beam_of_light_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
   // begin sort marker1 {
   thing_on_spawned_set(tp, tp_beam_of_light_on_spawned);
   tp_damage_set(tp, THING_EVENT_LIGHT_DAMAGE, "1d4");
-  tp_flag_set(tp, is_able_to_teleport);
+  tp_flag_set(tp, is_able_to_be_teleported);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_corpse_on_death);

@@ -62,9 +62,9 @@ static void tp_ghost_mob_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
   thing_detail_set(tp, tp_ghost_mob_detail_get);
   thing_on_death_set(tp, tp_ghost_mob_on_death);
   thing_on_tick_begin_set(tp, tp_ghost_mob_tick_begin);
+  tp_flag_set(tp, is_able_to_be_teleported);
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
-  tp_flag_set(tp, is_able_to_teleport);
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_biome_dungeon);

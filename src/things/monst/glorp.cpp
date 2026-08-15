@@ -100,12 +100,12 @@ static void tp_glorp_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEven
   tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "2d6");
   tp_distance_vision_set(tp, 10);
   tp_flag_set(tp, is_able_to_be_buffed);
+  tp_flag_set(tp, is_able_to_be_levitated);
+  tp_flag_set(tp, is_able_to_be_teleported);
   tp_flag_set(tp, is_able_to_crush_grass);
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
-  tp_flag_set(tp, is_able_to_levitate);
   tp_flag_set(tp, is_able_to_lunge);
-  tp_flag_set(tp, is_able_to_teleport);
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_attackable_by_player);

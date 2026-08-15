@@ -14,26 +14,27 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
-static auto tp_skeleton_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
+static auto tp_mummy_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
   if (thing_is_dead(me)) {
-    return "dead skeleton";
+    return "dead mummy";
   }
-  return "skeleton";
+  return "mummy";
 }
 
-static auto tp_skeleton_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
+static auto tp_mummy_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
-  return                                                                                                      //
-      UI_INFO1_FMT_STR "Take pity on the starved bones of once brave adventurers that end up such as this.\n" //
-      UI_INFO2_FMT_STR "For this could be you. Watch out, these bones don't like staying dead.";
+  return                                                                                                                             //
+      UI_INFO1_FMT_STR "A mummy. Red hateful eyes and ragged scraps of cursed material hanging off of long dead bones.\n"            //
+      UI_INFO2_FMT_STR "But apart from that, a snappy dresser. It also has a feriocious melee attack and can likely snap you too.\n" //
+      UI_INFO3_FMT_STR "Does not like staying dead, or fire.";
 }
 
-static auto tp_skeleton_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at, Thingp me) -> ThingEnvironType
+static auto tp_mummy_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at, Thingp me) -> ThingEnvironType
 {
   TRACE_DEBUG();
 
@@ -44,7 +45,7 @@ static auto tp_skeleton_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &
   return THING_ENVIRON_NEUTRAL;
 }
 
-static void tp_skeleton_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
+static void tp_mummy_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
 {
   TRACE();
 
@@ -53,7 +54,7 @@ static void tp_skeleton_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingE
   thing_sound_play(g, v, l, me, "monst_death");
 }
 
-static bool tp_skeleton_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp target, ThingEvent &e)
+static bool tp_mummy_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp target, ThingEvent &e)
 {
   TRACE();
 
@@ -64,7 +65,7 @@ static bool tp_skeleton_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp attack
   return true;
 }
 
-static bool tp_skeleton_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp target, ThingEvent &e)
+static bool tp_mummy_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp target, ThingEvent &e)
 {
   TRACE();
 
@@ -75,50 +76,48 @@ static bool tp_skeleton_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker
   return true;
 }
 
-[[nodiscard]] auto tp_load_skeleton() -> bool
+[[nodiscard]] auto tp_load_mummy() -> bool
 {
-  auto *tp   = tp_load("skeleton"); // keep as string for scripts
+  auto *tp   = tp_load("mummy"); // keep as string for scripts
   auto  name = tp_name(tp);
 
   // begin sort marker1 {
-  thing_assess_tile_set(tp, tp_skeleton_assess_tile);
-  thing_description_set(tp, tp_skeleton_description_get);
-  thing_detail_set(tp, tp_skeleton_detail_get);
-  thing_on_attacking_set(tp, tp_skeleton_on_attacking);
-  thing_on_death_set(tp, tp_skeleton_on_death);
-  thing_on_missing_set(tp, tp_skeleton_on_missing);
+  thing_assess_tile_set(tp, tp_mummy_assess_tile);
+  thing_description_set(tp, tp_mummy_description_get);
+  thing_detail_set(tp, tp_mummy_detail_get);
+  thing_on_attacking_set(tp, tp_mummy_on_attacking);
+  thing_on_death_set(tp, tp_mummy_on_death);
+  thing_on_missing_set(tp, tp_mummy_on_missing);
   tp_attack_count_max_per_tick_set(tp, 1);
-  tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6"); // fumble => intensify / keep burning / crit => stop burning
+  tp_attack_count_max_per_tick_set(tp, 2);
+  tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // fumble => intensify / keep burning / crit => stop burning
   tp_chance_set(tp, THING_CHANCE_RESURRECTION, "1d20");
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2"); // fumble => flames spread to you
-  tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d2");
-  tp_distance_minion_from_mob_max_set(tp, 20);
+  tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "2d8");
   tp_distance_vision_set(tp, 10);
   tp_flag_set(tp, is_able_to_be_buffed);
   tp_flag_set(tp, is_able_to_be_engulfed);
-  tp_flag_set(tp, is_able_to_be_levitated);
-  tp_flag_set(tp, is_able_to_be_teleported);
   tp_flag_set(tp, is_able_to_crush_grass);
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_able_to_lunge);
   tp_flag_set(tp, is_able_to_move_diagonally);
   tp_flag_set(tp, is_able_to_resurrect);
+  tp_flag_set(tp, is_able_to_be_teleported);
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_attackable_by_player);
-  tp_flag_set(tp, is_biome_bogland);
   tp_flag_set(tp, is_biome_dungeon);
   tp_flag_set(tp, is_blit_hit_outline_w_invis_inside);
   tp_flag_set(tp, is_blit_on_ground);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_burnable); // is capable of being burned by fire
   tp_flag_set(tp, is_collision_circle_large);
+  tp_flag_set(tp, is_combustible); // is capable of being burned by fire
   tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_flesh);
   tp_flag_set(tp, is_loggable);
-  tp_flag_set(tp, is_minion);
   tp_flag_set(tp, is_monst);
   tp_flag_set(tp, is_obs_to_beam);
   tp_flag_set(tp, is_obs_to_jumping_onto);
@@ -128,35 +127,35 @@ static bool tp_skeleton_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_removable_when_dead_on_err);
   tp_flag_set(tp, is_shown_health);
-  tp_flag_set(tp, is_skeleton);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_undead);
   tp_flag_set(tp, is_vision_180_degrees);
-  tp_health_set(tp, "1d3");
+  tp_health_set(tp, "3d8");
   tp_hearing_threshold_set(tp, 6);
   tp_is_immune_to_add(tp, THING_EVENT_WATER_DAMAGE);
-  tp_name_a_or_an_set(tp, "a skeleton");
-  tp_name_apostrophize_set(tp, "skeleton'");
-  tp_name_long_set(tp, "skeleton");
-  tp_name_pluralize_set(tp, "skeleton");
-  tp_name_short_set(tp, "skeleton");
+  tp_monst_group_add(tp, MONST_GROUP2);
+  tp_name_a_or_an_set(tp, "a mummy");
+  tp_name_apostrophize_set(tp, "mummy'");
+  tp_name_long_set(tp, "mummy");
+  tp_name_pluralize_set(tp, "mummy");
+  tp_name_short_set(tp, "mummy");
   tp_priority_set(tp, THING_PRIORITY_MONST);
-  tp_score_value_set(tp, 2);
-  tp_speed_set(tp, 100);
-  tp_stat_set(tp, THING_STAT_ATT, "10");
-  tp_stat_set(tp, THING_STAT_DEF, "1d4+8");
+  tp_score_value_set(tp, 10);
+  tp_speed_set(tp, 50);
+  tp_stat_set(tp, THING_STAT_ATT, "1d4+10");
+  tp_stat_set(tp, THING_STAT_DEF, "1d4+10");
   tp_temperature_burns_at_set(tp, 50);  // celsius
   tp_temperature_damage_at_set(tp, 35); // celsius
   tp_temperature_initial_set(tp, 20);   // celsius
-  tp_ticks_to_stay_dead_set(tp, "10");
+  tp_ticks_to_stay_dead_set(tp, "60");
   tp_weight_set(tp, WEIGHT_HUMAN); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   // end sort marker1 }
 
   auto delay = 1000;
 
-  for (auto frame = 0; frame < 2; frame++) {
+  for (auto frame = 0; frame < 3; frame++) {
     auto *tile = tile_find_mand(name + std::string(".idle.") + std::to_string(frame));
     tile_size_set(tile, OUTLINE_TILE_WIDTH, OUTLINE_TILE_HEIGHT);
     tile_delay_ms_set(tile, delay);
@@ -165,13 +164,13 @@ static bool tp_skeleton_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker
 
   delay = 250;
 
-  for (auto frame = 0; frame < 3; frame++) {
+  for (auto frame = 0; frame < 4; frame++) {
     auto *tile = tile_find_mand(name + std::string(".dead.") + std::to_string(frame));
     tile_size_set(tile, OUTLINE_TILE_WIDTH, OUTLINE_TILE_HEIGHT);
     tile_delay_ms_set(tile, delay);
     tp_tiles_push_back(tp, THING_ANIM_DEAD, tile);
 
-    if (frame == 2) {
+    if (frame == 3) {
       tile_is_end_of_anim_set(tile);
     }
   }

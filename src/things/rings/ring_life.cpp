@@ -89,10 +89,10 @@ static bool tp_ring_life_on_damage(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
   thing_on_damage_set(tp, tp_ring_life_on_damage);
   thing_on_use_set(tp, tp_ring_life_on_use);
   tp_flag_set(tp, is_able_to_be_buffed);
+  tp_flag_set(tp, is_able_to_be_levitated);
+  tp_flag_set(tp, is_able_to_be_teleported);
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
-  tp_flag_set(tp, is_able_to_levitate);
-  tp_flag_set(tp, is_able_to_teleport);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_auto_wear);
   tp_flag_set(tp, is_blit_centered);

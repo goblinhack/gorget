@@ -861,10 +861,10 @@
   return level_flag(g, v, l, is_submergible, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_able_to_teleport_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_able_to_be_teleported_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_able_to_teleport, p, me) != nullptr;
+  return level_flag(g, v, l, is_able_to_be_teleported, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_teleport_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
@@ -2079,10 +2079,10 @@
   return level_flag(g, v, l, is_potion, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_able_to_levitate_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_able_to_be_levitated_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_able_to_levitate, p, me) != nullptr;
+  return level_flag(g, v, l, is_able_to_be_levitated, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_teleport_hazard_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool

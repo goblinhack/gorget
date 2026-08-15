@@ -63,10 +63,10 @@ static auto tp_staff_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
   thing_on_use_weapon_request_set(tp, tp_staff_fire_on_use_weapon_request);
   tp_charge_count_set(tp, 500);
   tp_flag_set(tp, is_able_to_be_buffed);
+  tp_flag_set(tp, is_able_to_be_levitated);
+  tp_flag_set(tp, is_able_to_be_teleported);
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
-  tp_flag_set(tp, is_able_to_levitate);
-  tp_flag_set(tp, is_able_to_teleport);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_auto_wear);
   tp_flag_set(tp, is_blit_centered);

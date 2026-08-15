@@ -69,6 +69,7 @@
   if (!tp_load_level_open()) { return false; }
   if (!tp_load_level_select_bg()) { return false; }
   if (!tp_load_mantisman()) { return false; }
+  if (!tp_load_mummy()) { return false; }
   if (!tp_load_ogrik()) { return false; }
   if (!tp_load_pillar()) { return false; }
   if (!tp_load_player()) { return false; }

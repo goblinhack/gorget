@@ -67,6 +67,7 @@ auto tp_load_level_next() -> bool;
 auto tp_load_level_open() -> bool;
 auto tp_load_level_select_bg() -> bool;
 auto tp_load_mantisman() -> bool;
+auto tp_load_mummy() -> bool;
 auto tp_load_ogrik() -> bool;
 auto tp_load_pillar() -> bool;
 auto tp_load_player() -> bool;

@@ -23,7 +23,7 @@
     return true;
   }
 
-  if (! thing_is_able_to_levitate(me)) {
+  if (! thing_is_able_to_be_levitated(me)) {
     return false;
   }
 
@@ -57,7 +57,7 @@
     return true;
   }
 
-  if (! thing_is_able_to_levitate(me)) {
+  if (! thing_is_able_to_be_levitated(me)) {
     return false;
   }
 

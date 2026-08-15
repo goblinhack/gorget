@@ -359,7 +359,7 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
     return false;
   }
 
-  if (! thing_is_able_to_teleport(me)) {
+  if (! thing_is_able_to_be_teleported(me)) {
     THING_DBG(g, v, l, me, "teleport, no; blocked");
     return false;
   }
@@ -413,7 +413,7 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
     return false;
   }
 
-  if (! thing_is_able_to_teleport(me)) {
+  if (! thing_is_able_to_be_teleported(me)) {
     THING_DBG(g, v, l, me, "teleport, no; blocked");
     return false;
   }
