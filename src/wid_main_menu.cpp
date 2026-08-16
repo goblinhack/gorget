@@ -240,7 +240,11 @@ static void game_display_title_bg(Gamep g)
   br.x += center;
 
   blit_init();
-  tile_blit(tile, tl, br, fg);
+  if (compiler_unused) {
+    tile_blit(tile, tl, br, fg);
+  } else {
+    tile_blit(tile, tl, br, WHITE);
+  }
   blit_flush();
 }
 
