@@ -175,13 +175,13 @@ static auto thing_monst_choose_best_target(Gamep g, Levelsp v, Levelp l, Thingp 
     return false;
   }
 
-  bpoint target;
+  bpoint best_target;
   float  best_score = 0;
   float  score      = 0;
 
   for (auto y = 0; y < MAP_HEIGHT; y++) {
     for (auto x = 0; x < MAP_WIDTH; x++) {
-      bpoint const p(x, y);
+      bpoint const target(x, y);
 
       if (static_cast< uint32_t >(fov_map_get(&ext->can_see, x, y)) != 0U) {
         score = 2;
@@ -192,7 +192,7 @@ static auto thing_monst_choose_best_target(Gamep g, Levelsp v, Levelp l, Thingp 
       }
 
       bool skip {};
-      switch (thing_assess_tile(g, v, l, p, me)) {
+      switch (thing_assess_tile(g, v, l, target, me)) {
         case THING_ENVIRON_HATES :    skip = true; break;
         case THING_ENVIRON_DISLIKES : skip = true; break;
         case THING_ENVIRON_NEUTRAL :  skip = true; break;
@@ -204,22 +204,32 @@ static auto thing_monst_choose_best_target(Gamep g, Levelsp v, Levelp l, Thingp 
         continue;
       }
 
-      score -= distance(at, p);
+      auto p = astar_solve(g, v, l, me, at, target);
+      if (p.empty()) {
+        continue;
+      }
+
+      if (! thing_move_path_apply(g, v, l, me, p)) {
+        continue;
+      }
+
+      score -= distance(at, target);
 
       if (compiler_unused) {
         THING_DBG(g, v, l, me, "consider target: (%d,%d) score %f", target.x, target.y, best_score);
       }
 
       if (score > best_score) {
-        best_score = score;
-        target     = p;
+        best_score  = score;
+        best_target = target;
+        thing_monst_target_set(g, v, l, me, target);
       }
     }
   }
 
   if (best_score > 0) {
-    thing_monst_target_set(g, v, l, me, target);
-    THING_DBG(g, v, l, me, "choose target: best (%d,%d) score %f", target.x, target.y, best_score);
+    thing_monst_target_set(g, v, l, me, best_target);
+    THING_DBG(g, v, l, me, "choose target: best (%d,%d) score %f", best_target.x, best_target.y, best_score);
     return true;
   }
 
