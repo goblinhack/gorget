@@ -1479,8 +1479,10 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, i
   //
   // Can happen when changing level
   //
-  if (thing_level(g, v, me) != l) {
-    return;
+  if (! level_is_level_select(g, v, l)) {
+    if (thing_level(g, v, me) != l) {
+      return;
+    }
   }
 
   if (wid_tp_info_icon(g, tp, parent)) {
