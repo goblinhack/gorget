@@ -463,8 +463,7 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
       //
       // Once we hit an obstacle to vision, how far do we allow the ray of light to penetrate
       //
-      auto obs_to_vision_start_distance       = ray_pixel->distance;
-      auto obs_to_vision_penetration_distance = (obs_to_vision_start_distance + static_cast< float >(TILE_WIDTH)) - 2;
+      auto obs_to_vision_start_distance = ray_pixel->distance;
 
       //
       // Keep track of the type of object we hit
@@ -482,6 +481,8 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
         // What type of obstacle?
         //
         tp_obs_to_vision = thing_tp(obs_to_vision);
+
+        auto obs_to_vision_penetration_distance = obs_to_vision_start_distance + tp_distance_light_penetration_pixels_get(tp);
 
         //
         // We hit a wall. Keep walking until we exit the wall or we reach the light limit.

@@ -193,7 +193,6 @@ static void tp_fire_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_if_has_seen);
   tp_flag_set(tp, is_blit_shown_in_chasms);
-  tp_flag_set(tp, is_blit_shown_in_overlay);
   tp_flag_set(tp, is_cursor_path_hazard);
   tp_flag_set(tp, is_cursor_path_warning);
   tp_flag_set(tp, is_described_cursor);

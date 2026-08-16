@@ -48,7 +48,6 @@ static void tp_projectile_light_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_if_has_seen);
   tp_flag_set(tp, is_blit_shown_in_chasms);
-  tp_flag_set(tp, is_blit_shown_in_overlay);
   tp_flag_set(tp, is_collision_circle_small);
   tp_flag_set(tp, is_collision_hit_first_on_tile);
   tp_flag_set(tp, is_dead_on_collision);

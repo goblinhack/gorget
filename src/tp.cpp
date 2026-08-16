@@ -1823,6 +1823,26 @@ void tp_distance_minion_from_mob_max_set(Tpp tp, int val)
   return tp->distance_minion_from_mob_max;
 }
 
+void tp_distance_light_penetration_pixels_set(Tpp tp, int val)
+{
+  TRACE_DEBUG();
+  if (tp == nullptr) [[unlikely]] {
+    ERR("no thing template pointer");
+    return;
+  }
+  tp->distance_light_penetration_pixels = val;
+}
+
+[[nodiscard]] auto tp_distance_light_penetration_pixels_get(Tpp tp) -> int
+{
+  TRACE_DEBUG();
+  if (tp == nullptr) [[unlikely]] {
+    ERR("no thing template pointer");
+    return 0;
+  }
+  return tp->distance_light_penetration_pixels;
+}
+
 void tp_distance_vision_set(Tpp tp, int val)
 {
   TRACE_DEBUG();

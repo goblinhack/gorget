@@ -131,6 +131,11 @@ public:
   int distance_minion_from_mob_max {0};
 
   //
+  // How much light penetrates an object
+  //
+  int distance_light_penetration_pixels {(TILE_WIDTH / 2) - 2};
+
+  //
   // Limit the number of attacks
   //
   int attack_max_per_tick {0};

@@ -4748,22 +4748,22 @@ static void gfx_init_tiles()
       "",
       "",
       // ##############################################################################
-      "pillar.0",
-      "pillar.1",
-      "pillar.2",
-      "pillar.3",
-      "pillar.4",
-      "pillar.5",
-      "pillar.6",
-      "pillar.7",
-      "pillar.8",
-      "pillar.9",
-      "pillar.10",
-      "pillar.11",
-      "pillar.12",
-      "pillar.13",
-      "pillar.14",
-      "pillar.15",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
       // ##############################################################################
       "fire.idle.0",
       "fire.idle.1",
@@ -5159,6 +5159,48 @@ static void gfx_init_tiles()
   tile_load_arr_sprites("data/gfx/tiles.tga", "tiles", OUTLINE_TILE_WIDTH, OUTLINE_TILE_HEIGHT, ARRAY_SIZE(tiles), tiles);
 }
 
+static void gfx_init_tiles2()
+{
+  TRACE();
+  const char *tiles[] = {
+      // ##############################################################################
+      "pillar.0",
+      "pillar.1",
+      "pillar.2",
+      "pillar.3",
+      "pillar.4",
+      "pillar.5",
+      "pillar.6",
+      "pillar.7",
+      "pillar.8",
+      "pillar.9",
+      "pillar.10",
+      "pillar.11",
+      "pillar.12",
+      "pillar.13",
+      "pillar.14",
+      "pillar.15",
+      // ##############################################################################
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+  };
+  tile_load_arr_sprites("data/gfx/tiles2.tga", "tiles2", OUTLINE_TILE_WIDTH, OUTLINE_TILE_HEIGHT * 2, ARRAY_SIZE(tiles), tiles);
+}
+
 static void gfx_init_tiles_beam_of_fire()
 {
   TRACE();
@@ -5316,6 +5358,7 @@ void gfx_init()
   gfx_init_tiles_beam_of_fire();
   gfx_init_tiles_beam_of_light();
   gfx_init_tiles();
+  gfx_init_tiles2();
   gfx_init_tiles_walls_and_floors();
   gfx_init_tiles_water_lava_misc();
   // ##############################################################################

@@ -259,9 +259,9 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp level_above, Levelp 
   //
   // Display tiles in z prio order
   //
-  FOR_ALL_MAP_Z_DEPTH(z_depth)
-  {
-    for (auto y = v->miny; y < v->maxy; y++) {
+  for (auto y = v->miny; y < v->maxy; y++) {
+    FOR_ALL_MAP_Z_DEPTH(z_depth)
+    {
       for (auto x = v->minx; x < v->maxx; x++) {
 
         bpoint const p(x, y);

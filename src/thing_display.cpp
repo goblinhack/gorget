@@ -50,7 +50,7 @@ void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, const bpoint &p, 
 
   int const zoom = game_map_zoom_get(g);
   int const dw   = TILE_WIDTH * zoom;
-  int const dh   = TILE_HEIGHT * zoom;
+  int       dh   = TILE_HEIGHT * zoom;
   Tilep     tile = nullptr;
 
   tile = thing_display_get_tile_info(g, v, l, p, tp_maybe_null, t_maybe_null);

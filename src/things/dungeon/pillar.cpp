@@ -48,6 +48,7 @@ static auto tp_pillar_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -
   tp_flag_set(tp, is_pillar);
   tp_flag_set(tp, is_stone);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
+  tp_distance_light_penetration_pixels_set(tp, TILE_WIDTH / 4);
   tp_health_set(tp, "1d500");
   tp_is_immune_to_add(tp, THING_EVENT_FIRE_DAMAGE);
   tp_is_immune_to_add(tp, THING_EVENT_MELEE_DAMAGE);
@@ -65,7 +66,7 @@ static auto tp_pillar_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -
   for (auto frame = 0; frame < 16; frame++) {
     auto *tile = tile_find_mand(name + std::string(".") + std::to_string(frame));
     tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
-    tile_size_set(tile, OUTLINE_TILE_WIDTH, OUTLINE_TILE_HEIGHT);
+    tile_size_set(tile, OUTLINE_TILE_WIDTH, OUTLINE_TILE_HEIGHT * 2);
   }
 
   return true;

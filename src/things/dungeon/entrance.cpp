@@ -39,7 +39,6 @@ static auto tp_entrance_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> s
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_if_has_seen);
   tp_flag_set(tp, is_blit_shown_in_chasms);
-  tp_flag_set(tp, is_blit_shown_in_overlay);
   tp_flag_set(tp, is_critical_to_level);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_dmap);
