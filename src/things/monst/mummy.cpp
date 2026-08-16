@@ -31,7 +31,7 @@ static auto tp_mummy_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std:
   return                                                                                                                             //
       UI_INFO1_FMT_STR "A mummy. Red hateful eyes and ragged scraps of cursed material hanging off of long dead bones.\n"            //
       UI_INFO2_FMT_STR "But apart from that, a snappy dresser. It also has a feriocious melee attack and can likely snap you too.\n" //
-      UI_INFO3_FMT_STR "Does not like staying dead, or fire.";
+      UI_INFO3_FMT_STR "Does not like staying dead, or being set on fire.";
 }
 
 static auto tp_mummy_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at, Thingp me) -> ThingEnvironType

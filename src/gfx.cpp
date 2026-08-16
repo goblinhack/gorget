@@ -4816,7 +4816,7 @@ static void gfx_init_tiles()
       "steam.idle.14",
       "steam.idle.15",
       // ##############################################################################
-      "barrel.idle.0",
+      "",
       "teleport.idle.0",
       "teleport.idle.1",
       "teleport.idle.2",
@@ -5181,7 +5181,7 @@ static void gfx_init_tiles2()
       "pillar.14",
       "pillar.15",
       // ##############################################################################
-      "",
+      "barrel.idle.0",
       "",
       "",
       "",
