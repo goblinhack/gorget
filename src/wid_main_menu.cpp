@@ -227,17 +227,21 @@ static void game_display_title_bg(Gamep g)
 
   auto *tile = tile_find_mand("main_bg");
 
-  float const tw = tile_width(tile);
-  float const th = tile_height(tile);
+  if (0) {
+    float const tw = tile_width(tile);
+    float const th = tile_height(tile);
 
-  w = (h * tw) / th;
+    w = (h * tw) / th;
+  }
 
   spoint tl(0, 0);
   spoint br(static_cast< int >(w), static_cast< int >(h));
 
-  auto center = static_cast< int >((game_window_pix_width_get(g) - w) / 2);
-  tl.x += center;
-  br.x += center;
+  if (compiler_unused) {
+    auto center = static_cast< int >((game_window_pix_width_get(g) - w) / 2);
+    tl.x += center;
+    br.x += center;
+  }
 
   blit_init();
   if (compiler_unused) {

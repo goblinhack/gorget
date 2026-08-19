@@ -66,7 +66,7 @@ static auto tp_pillar_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -
   for (auto frame = 0; frame < 16; frame++) {
     auto *tile = tile_find_mand(name + std::string(".") + std::to_string(frame));
     tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
-    tile_size_set(tile, OUTLINE_TILE_WIDTH, OUTLINE_TILE_HEIGHT * 2);
+    tile_size_set(tile, OUTLINE_TILE_WIDTH, OUTLINE_TILE_HEIGHT);
   }
 
   return true;
