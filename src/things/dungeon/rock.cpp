@@ -35,9 +35,9 @@ static void tp_rock_melt(Gamep g, Levelsp v, Levelp l, Thingp me)
     auto             *tp   = tp_load(name);
     // begin sort marker1 {
     thing_on_melt_set(tp, tp_rock_melt);
+    tp_distance_light_penetration_pixels_set(tp, 1);
     tp_flag_set(tp, is_blit_centered);
     tp_flag_set(tp, is_blit_if_has_seen);
-    tp_distance_light_penetration_pixels_set(tp, 1);
     tp_flag_set(tp, is_blit_obscures);
     tp_flag_set(tp, is_blit_per_pixel_lighting);
     tp_flag_set(tp, is_blit_shown_in_chasms);

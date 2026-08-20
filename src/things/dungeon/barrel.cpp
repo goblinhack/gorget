@@ -102,15 +102,16 @@ static void tp_barrel_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp me)
   thing_on_fall_end_set(tp, tp_barrel_on_fall_end);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // fumble => intensify / keep burning / crit => stop burning
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // fumble => flames spread to you
+  tp_distance_light_penetration_pixels_set(tp, TILE_WIDTH / 2);
   tp_flag_set(tp, is_able_to_be_levitated);
   tp_flag_set(tp, is_able_to_be_teleported);
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_barrel);
-  tp_flag_set(tp, is_blit_on_ground);
   tp_flag_set(tp, is_blit_hit_outline_w_black_inside);
   tp_flag_set(tp, is_blit_if_has_seen);
+  tp_flag_set(tp, is_blit_on_ground);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_broken_on_death);
   tp_flag_set(tp, is_burnable); // is capable of being burned by fire
@@ -127,7 +128,6 @@ static void tp_barrel_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_flag_set(tp, is_obs_to_spawning);
   tp_flag_set(tp, is_obs_to_teleporting_onto);
   tp_flag_set(tp, is_obs_to_vision);
-  tp_distance_light_penetration_pixels_set(tp, TILE_WIDTH / 2);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_physics_trap);

@@ -35,10 +35,10 @@ static void tp_wall_melt(Gamep g, Levelsp v, Levelp l, Thingp me)
     auto             *tp   = tp_load(name);
     // begin sort marker1 {
     thing_on_melt_set(tp, tp_wall_melt);
-    tp_flag_set(tp, is_blit_on_ground);
     tp_distance_light_penetration_pixels_set(tp, TILE_WIDTH);
     tp_flag_set(tp, is_blit_if_has_seen);
     tp_flag_set(tp, is_blit_obscures);
+    tp_flag_set(tp, is_blit_on_ground);
     tp_flag_set(tp, is_blit_per_pixel_lighting);
     tp_flag_set(tp, is_blit_shown_in_chasms);
     tp_flag_set(tp, is_collision_square);

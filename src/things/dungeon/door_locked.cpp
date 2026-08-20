@@ -261,6 +261,7 @@ static void tp_door_locked_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, Thi
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // fumble => intensify / keep burning / crit => stop burning
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // fumble => flames spread to you
   tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d4");
+  tp_distance_light_penetration_pixels_set(tp, TILE_WIDTH / 2);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_if_has_seen);
@@ -283,7 +284,6 @@ static void tp_door_locked_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, Thi
   tp_flag_set(tp, is_obs_to_throwing_onto);
   tp_flag_set(tp, is_obs_to_throwing_over);
   tp_flag_set(tp, is_obs_to_vision);
-  tp_distance_light_penetration_pixels_set(tp, TILE_WIDTH / 2);
   tp_flag_set(tp, is_openable);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);

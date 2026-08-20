@@ -39,6 +39,7 @@ static auto tp_reeds_z_depth_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> Map
   thing_z_depth_set(tp, tp_reeds_z_depth_get);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // fumble => intensify / keep burning / crit => stop burning
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // fumble => flames spread to you
+  tp_distance_light_penetration_pixels_set(tp, TILE_WIDTH / 2);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_blit_hit_outline_w_black_inside);
   tp_flag_set(tp, is_blit_if_has_seen);
@@ -50,7 +51,6 @@ static auto tp_reeds_z_depth_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> Map
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_obs_to_vision);
-  tp_distance_light_penetration_pixels_set(tp, TILE_WIDTH / 2);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_plant);

@@ -25,6 +25,7 @@ static auto tp_pillar_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -
 
   // begin sort marker1 {
   thing_description_set(tp, tp_pillar_description_get);
+  tp_distance_light_penetration_pixels_set(tp, TILE_WIDTH / 4);
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_blit_if_has_seen);
@@ -48,7 +49,6 @@ static auto tp_pillar_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -
   tp_flag_set(tp, is_pillar);
   tp_flag_set(tp, is_stone);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
-  tp_distance_light_penetration_pixels_set(tp, TILE_WIDTH / 4);
   tp_health_set(tp, "1d500");
   tp_is_immune_to_add(tp, THING_EVENT_FIRE_DAMAGE);
   tp_is_immune_to_add(tp, THING_EVENT_MELEE_DAMAGE);

@@ -15,6 +15,7 @@
   std::string const name = "border";
   auto             *tp   = tp_load(name);
   // begin sort marker1 {
+  tp_distance_light_penetration_pixels_set(tp, 1);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_if_has_seen);
   tp_flag_set(tp, is_blit_shown_in_chasms);
@@ -36,7 +37,6 @@
   tp_flag_set(tp, is_obs_to_teleporting_onto);
   tp_flag_set(tp, is_obs_to_throwing_onto);
   tp_flag_set(tp, is_obs_to_vision);
-  tp_distance_light_penetration_pixels_set(tp, 1);
   tp_flag_set(tp, is_tiled);
   tp_priority_set(tp, THING_PRIORITY_LOWEST);
   tp_weight_set(tp, WEIGHT_VVHEAVY); // grams
