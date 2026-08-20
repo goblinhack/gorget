@@ -229,6 +229,7 @@ static void tp_wall_melt(Gamep g, Levelsp v, Levelp l, Thingp me)
         auto *tile = tile_find_mand(name + "." + std::to_string(i));
         tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
         tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
+        tp_distance_light_penetration_pixels_set(tp, 2);
       }
     }
   }
