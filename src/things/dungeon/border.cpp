@@ -36,6 +36,7 @@
   tp_flag_set(tp, is_obs_to_teleporting_onto);
   tp_flag_set(tp, is_obs_to_throwing_onto);
   tp_flag_set(tp, is_obs_to_vision);
+  tp_distance_light_penetration_pixels_set(tp, 1);
   tp_flag_set(tp, is_tiled);
   tp_priority_set(tp, THING_PRIORITY_LOWEST);
   tp_weight_set(tp, WEIGHT_VVHEAVY); // grams

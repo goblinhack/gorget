@@ -133,7 +133,7 @@ public:
   //
   // How much light penetrates an object
   //
-  int distance_light_penetration_pixels {(TILE_WIDTH / 2) - 2};
+  int distance_light_penetration_pixels {0};
 
   //
   // Limit the number of attacks

@@ -58,6 +58,7 @@ static void tp_vault_melt(Gamep g, Levelsp v, Levelp l, Thingp me)
     tp_flag_set(tp, is_obs_to_teleporting_onto);
     tp_flag_set(tp, is_obs_to_throwing_onto);
     tp_flag_set(tp, is_obs_to_vision);
+    tp_distance_light_penetration_pixels_set(tp, 1);
     tp_flag_set(tp, is_physics_explosion);
     tp_flag_set(tp, is_physics_temperature);
     tp_flag_set(tp, is_stone);

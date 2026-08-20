@@ -35,6 +35,7 @@ static auto tp_smoke_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
   tp_flag_set(tp, is_gaseous);
   tp_flag_set(tp, is_indestructible);
   tp_flag_set(tp, is_obs_to_vision);
+  tp_distance_light_penetration_pixels_set(tp, TILE_WIDTH / 2);
   tp_flag_set(tp, is_removable_on_err);
   tp_flag_set(tp, is_smoke);
   tp_flag_set(tp, is_submergible);

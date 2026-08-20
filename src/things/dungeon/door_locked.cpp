@@ -283,6 +283,7 @@ static void tp_door_locked_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, Thi
   tp_flag_set(tp, is_obs_to_throwing_onto);
   tp_flag_set(tp, is_obs_to_throwing_over);
   tp_flag_set(tp, is_obs_to_vision);
+  tp_distance_light_penetration_pixels_set(tp, TILE_WIDTH / 2);
   tp_flag_set(tp, is_openable);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);

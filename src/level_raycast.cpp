@@ -482,7 +482,7 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
         //
         tp_obs_to_vision = thing_tp(obs_to_vision);
 
-        auto obs_to_vision_penetration_distance = obs_to_vision_start_distance + tp_distance_light_penetration_pixels_get(tp);
+        auto obs_to_vision_penetration_distance = obs_to_vision_start_distance + tp_distance_light_penetration_pixels_get(tp_obs_to_vision);
 
         //
         // We hit a wall. Keep walking until we exit the wall or we reach the light limit.
