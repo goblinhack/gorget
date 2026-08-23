@@ -95,7 +95,7 @@ void wid_main_menu_hide(Gamep g)
   if (g_intro_done++ >= 2) {
     wid_new_game(g);
   } else {
-    wid_intro_select(g);
+    wid_intro1_select(g);
   }
 
   return true;
@@ -143,7 +143,7 @@ void wid_main_menu_hide(Gamep g)
 
   auto s = to_string(*key);
 
-  if (s == "<Return>" || s == "n" || s == "N") {
+  if (s == "<Space>" || s == "<Return>" || s == "n" || s == "N") {
     TRACE();
     ((void) sound_play(g, "keypress"));
     (void) game_menu_new_game(g, nullptr, 0, 0, 0);
