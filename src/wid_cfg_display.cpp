@@ -110,6 +110,22 @@ static void wid_cfg_display_destroy()
   return true;
 }
 
+[[nodiscard]] static auto wid_cfg_display_font_toggle(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+{
+  con("Gfx menu: vsync toggle");
+  TRACE_INDENT();
+
+  if (game_config_font_get(g) == UI_FONT_8x8) {
+    game_config_font_set(g, UI_FONT_6x8);
+  } else {
+    game_config_font_set(g, UI_FONT_8x8);
+  }
+  config_gfx_vsync_update(g);
+
+  (void) wid_cfg_display_save(g, 0, 0);
+  return true;
+}
+
 [[nodiscard]] static auto wid_cfg_display_fullscreen_toggle(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   con("Gfx menu: fullscreen toggle");
@@ -443,8 +459,8 @@ void wid_cfg_display_select(Gamep g, bool menu_was_created_due_to_game_restartin
 
   auto m = TERM_WIDTH / 2;
 
-  spoint const outer_tl(m - 27, (TERM_HEIGHT / 2) - 15);
-  spoint const outer_br(m + 27, (TERM_HEIGHT / 2) + 15);
+  spoint const outer_tl(m - 27, (TERM_HEIGHT / 2) - 18);
+  spoint const outer_br(m + 27, (TERM_HEIGHT / 2) + 18);
 
   auto width = outer_br.x - outer_tl.x - 2;
 
@@ -590,14 +606,14 @@ void wid_cfg_display_select(Gamep g, bool menu_was_created_due_to_game_restartin
   {
     TRACE();
     auto *p = wid_cfg_display_window->wid_text_area->wid_text_area;
-    auto *w = wid_new_square_button(g, p, "Font size");
+    auto *w = wid_new_square_button(g, p, "Font actual pixel size");
 
     spoint const tl(1, y_at);
     spoint const br(width / 2, y_at + 2);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, 1u);
-    wid_set_text(w, "Font size");
+    wid_set_text(w, "Font actual pixel size");
   }
   {
     TRACE();
@@ -762,6 +778,39 @@ void wid_cfg_display_select(Gamep g, bool menu_was_created_due_to_game_restartin
       wid_set_text(w, "True");
     } else {
       wid_set_text(w, "False");
+    }
+  }
+
+  /////////////////////////////////////////////////////////////////////////
+  // font
+  /////////////////////////////////////////////////////////////////////////
+  y_at += 3;
+  {
+    TRACE();
+    auto *p = wid_cfg_display_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_square_button(g, p, "Font");
+
+    spoint const tl(1, y_at);
+    spoint const br(width / 2, y_at + 2);
+    wid_set_shape_none(w);
+    wid_set_pos(w, tl, br);
+    wid_set_text_lhs(w, 1u);
+    wid_set_text(w, "Font");
+  }
+  {
+    TRACE();
+    auto *p = wid_cfg_display_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_bright_button(g, p, "Font value");
+
+    spoint const tl(23, y_at);
+    spoint const br(37, y_at + 2);
+    wid_set_pos(w, tl, br);
+    wid_set_on_mouse_down(w, wid_cfg_display_font_toggle);
+
+    if (game_config_font_get(g) == UI_FONT_8x8) {
+      wid_set_text(w, "8x8");
+    } else {
+      wid_set_text(w, "6x8");
     }
   }
 

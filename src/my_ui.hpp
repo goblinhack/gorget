@@ -7,6 +7,9 @@
 
 #include "my_ascii.hpp"
 
+#define UI_FONT_8x8 1
+#define UI_FONT_6x8 2
+
 //
 // Console size
 //
@@ -61,7 +64,8 @@ enum { UI_TYPE_PIXELART = 0, UI_TYPES_MAX = 1 };
 //
 // Character sizes for text in the UI
 //
-enum { UI_FONT_HEIGHT = 8, UI_FONT_WIDTH = 6 };
+extern int UI_FONT_WIDTH;
+extern int UI_FONT_HEIGHT;
 
 //
 // Name limits

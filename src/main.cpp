@@ -472,10 +472,6 @@ static void parse_args(int argc, char *argv[])
     SDL_GL_SetSwapInterval(0);
   }
 
-  if (! wid_init()) {
-    ERR("widget init");
-  }
-
   //
   // Colors
   //
@@ -488,9 +484,13 @@ static void parse_args(int argc, char *argv[])
     } else {
       log("load fonts");
     }
-    if (! font_init()) {
+    if (! font_init(g)) {
       ERR("font init");
     }
+  }
+
+  if (! wid_init()) {
+    ERR("widget init");
   }
 
   if (! g_skip_audio_and_gfx) {

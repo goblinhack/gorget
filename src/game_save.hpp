@@ -85,6 +85,12 @@ auto operator<<(std::ostream &out, Bits< const Config & > const my) -> std::ostr
     out << bits(tmp);
     tmp = offsetof(Config, mouse_wheel_ud_negated);
     out << bits(tmp);
+    tmp = offsetof(Config, config_font);
+    out << bits(tmp);
+    tmp = offsetof(Config, config_font_height);
+    out << bits(tmp);
+    tmp = offsetof(Config, config_font_width);
+    out << bits(tmp);
     tmp = offsetof(Config, config_pix_height);
     out << bits(tmp);
     tmp = offsetof(Config, config_pix_width);
@@ -192,6 +198,9 @@ auto operator<<(std::ostream &out, Bits< const Config & > const my) -> std::ostr
 
   WRITE_MAGIC(CONFIG_MAGIC_2);
 
+  out << bits(my.t.config_font);
+  out << bits(my.t.config_font_height);
+  out << bits(my.t.config_font_width);
   out << bits(my.t.config_pix_height);
   out << bits(my.t.config_pix_width);
   out << bits(my.t.debug_mode);

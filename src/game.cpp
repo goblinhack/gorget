@@ -92,6 +92,10 @@ public:
   bool mouse_wheel_lr_negated = {};
   bool mouse_wheel_ud_negated = {};
 
+  int config_font        = {};
+  int config_font_height = {};
+  int config_font_width  = {};
+
   int config_pix_height = {};
   int config_pix_width  = {};
 
@@ -347,6 +351,10 @@ void Config::reset()
 {
   log("game reset");
   TRACE_INDENT();
+
+  config_font        = UI_FONT_8x8;
+  config_font_height = 8;
+  config_font_width  = 8;
 
   config_pix_height      = {};
   config_pix_width       = {};
@@ -1941,6 +1949,69 @@ void game_mouse_wheel_ud_negated_unset(Gamep g)
     return;
   }
   g->config.mouse_wheel_ud_negated = false;
+}
+
+[[nodiscard]] auto game_config_font_get(Gamep g) -> int
+{
+  TRACE();
+
+  if (g == nullptr) [[unlikely]] {
+    ERR("no game pointer");
+    return 0;
+  }
+  return g->config.config_font;
+}
+void game_config_font_set(Gamep g, int val)
+{
+  TRACE();
+
+  if (g == nullptr) [[unlikely]] {
+    ERR("no game pointer");
+    return;
+  }
+  g->config.config_font = val;
+}
+
+[[nodiscard]] auto game_config_font_height_get(Gamep g) -> int
+{
+  TRACE();
+
+  if (g == nullptr) [[unlikely]] {
+    ERR("no game pointer");
+    return 0;
+  }
+  return g->config.config_font_height;
+}
+void game_config_font_height_set(Gamep g, int val)
+{
+  TRACE();
+
+  if (g == nullptr) [[unlikely]] {
+    ERR("no game pointer");
+    return;
+  }
+  g->config.config_font_height = val;
+}
+
+[[nodiscard]] auto game_config_font_width_get(Gamep g) -> int
+{
+  TRACE();
+
+  if (g == nullptr) [[unlikely]] {
+    ERR("no game pointer");
+    return 0;
+  }
+  return g->config.config_font_width;
+}
+void game_config_font_width_set(Gamep g, int val)
+{
+  TRACE();
+
+  if (g == nullptr) [[unlikely]] {
+    ERR("no game pointer");
+    return;
+  }
+  g->config.config_font_width = val;
 }
 
 [[nodiscard]] auto game_config_pix_height_get(Gamep g) -> int

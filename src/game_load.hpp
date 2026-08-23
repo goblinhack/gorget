@@ -157,6 +157,21 @@ auto operator>>(std::istream &in, Bits< Config & > my) -> std::istream &
       return in;
     }
     in >> bits(tmp);
+    if (tmp != offsetof(Config, config_font)) {
+      game_load_error = "Config structure changed: offsetof(Config, config_font))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, config_font_height)) {
+      game_load_error = "Config structure changed: offsetof(Config, config_font_height))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, config_font_width)) {
+      game_load_error = "Config structure changed: offsetof(Config, config_font_width))";
+      return in;
+    }
+    in >> bits(tmp);
     if (tmp != offsetof(Config, config_pix_height)) {
       game_load_error = "Config structure changed: offsetof(Config, config_pix_height))";
       return in;
@@ -393,6 +408,10 @@ auto operator>>(std::istream &in, Bits< Config & > my) -> std::istream &
 
   READ_MAGIC("config part 2", (uint32_t) CONFIG_MAGIC_2);
 
+  in >> bits(my.t.config_font);
+  in >> bits(my.t.config_font_height);
+  in >> bits(my.t.config_font_width);
+
   in >> bits(my.t.config_pix_height);
   in >> bits(my.t.config_pix_width);
   in >> bits(my.t.debug_mode);
@@ -450,6 +469,9 @@ auto operator>>(std::istream &in, Bits< Config & > my) -> std::istream &
   in >> bits(my.t.sdl_delay);
   in >> bits(my.t.sound_volume);
 
+  log("read config: config_font            = %d", my.t.config_font);
+  log("read config: config_font_height     = %d", my.t.config_font_height);
+  log("read config: config_font_width      = %d", my.t.config_font_width);
   log("read config: config_pix_height      = %d", my.t.config_pix_height);
   log("read config: config_pix_width       = %d", my.t.config_pix_width);
   log("read config: debug_mode             = %d", static_cast< int >(my.t.debug_mode));
@@ -485,6 +507,14 @@ auto operator>>(std::istream &in, Bits< Config & > my) -> std::istream &
   }
   if (my.t.ascii_pix_width < 0) {
     game_load_error += "ascii_pix_width is invalid";
+    return in;
+  }
+  if (my.t.config_font_height < 0) {
+    game_load_error += "config_font_height is invalid";
+    return in;
+  }
+  if (my.t.config_font_width < 0) {
+    game_load_error += "config_font_width is invalid";
     return in;
   }
   if (my.t.config_pix_height < 0) {

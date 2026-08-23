@@ -4,9 +4,12 @@
 
 #include "my_callstack.hpp"
 #include "my_font.hpp"
+#include "my_game.hpp"
 #include "my_main.hpp"
+#include "my_sdl_proto.hpp"
 #include "my_tile.hpp"
 #include "my_types.hpp"
+#include "my_ui.hpp"
 
 #include <cstdint>
 #include <cstdio>
@@ -14,6 +17,9 @@
 #include <string>
 #include <unordered_map>
 #include <utility>
+
+int UI_FONT_HEIGHT = 8;
+int UI_FONT_WIDTH  = 8;
 
 Fontp font_ui;
 
@@ -132,12 +138,26 @@ static auto font_load(const std::string &name) -> Fontp
   return tile;
 }
 
-[[nodiscard]] auto font_init() -> bool
+[[nodiscard]] auto font_init(Gamep g) -> bool
 {
   TRACE();
 
-  font_ui             = font_load("font");
-  font_ui->tile_index = 1;
+  auto font_ui1        = font_load("font1");
+  font_ui1->tile_index = 1;
+
+  auto font_ui2        = font_load("font2");
+  font_ui2->tile_index = 2;
+
+  if (game_config_font_get(g) == UI_FONT_8x8) {
+    font_ui        = font_ui1;
+    UI_FONT_HEIGHT = 8;
+    UI_FONT_WIDTH  = 8;
+  } else {
+    font_ui        = font_ui2;
+    UI_FONT_HEIGHT = 8;
+    UI_FONT_WIDTH  = 6;
+  }
+  sdl_config_update_all(g);
 
   return true;
 }

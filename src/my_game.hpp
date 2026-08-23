@@ -111,6 +111,15 @@ void               game_mouse_wheel_lr_negated_unset(Gamep g);
 void               game_mouse_wheel_ud_negated_set(Gamep g);
 void               game_mouse_wheel_ud_negated_unset(Gamep g);
 
+[[nodiscard]] auto game_config_font_get(Gamep g) -> int;
+void               game_config_font_set(Gamep g, int val);
+
+[[nodiscard]] auto game_config_font_height_get(Gamep g) -> int;
+void               game_config_font_height_set(Gamep g, int val);
+
+[[nodiscard]] auto game_config_font_width_get(Gamep g) -> int;
+void               game_config_font_width_set(Gamep g, int val);
+
 [[nodiscard]] auto game_config_pix_height_get(Gamep g) -> int;
 void               game_config_pix_height_set(Gamep g, int val);
 
