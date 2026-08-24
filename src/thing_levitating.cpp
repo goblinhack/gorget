@@ -61,7 +61,7 @@
     return false;
   }
 
-  if (! thing_buff_add(g, v, l, me, tp_find_mand("buff_levitation"))) {
+  if (thing_buff_add(g, v, l, me, tp_find_mand("buff_levitation")) == nullptr) {
     return false;
   }
 

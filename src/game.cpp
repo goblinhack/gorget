@@ -26,6 +26,7 @@
 #include "my_tile.hpp"
 #include "my_time.hpp"
 #include "my_types.hpp"
+#include "my_ui.hpp"
 #include "my_wid.hpp"
 #include "my_wids.hpp"
 

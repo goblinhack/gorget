@@ -364,10 +364,10 @@ static void level_select_dump(LevelSelect *s)
 
   for (auto y = 0; y < LEVEL_DOWN; y++) {
     std::string out;
-    for (auto x = 0; x < LEVEL_ACROSS; x++) {
-      LevelSelectCell *c = &s->data[ x ][ y ];
+    for (auto &x : s->data) {
+      LevelSelectCell const *c = &x[ y ];
 
-      if (c->is_set) {
+      if (c->is_set != 0u) {
         out += std::to_string(CHARMAP_FLOOR);
       } else {
         out += std::to_string(CHARMAP_EMPTY);
@@ -446,8 +446,8 @@ static auto level_select_count_levels(LevelSelect *s) -> int
   s->level_count = 0;
 
   for (auto y = 0; y < LEVEL_DOWN; y++) {
-    for (auto x = 0; x < LEVEL_ACROSS; x++) {
-      LevelSelectCell const *c = &s->data[ x ][ y ];
+    for (auto &x : s->data) {
+      LevelSelectCell const *c = &x[ y ];
       if (c->is_set != 0U) {
         s->level_count++;
       }
@@ -698,8 +698,8 @@ static void level_select_create(Gamep g, LevelSelect *s)
   PCG_SRAND(seed_num);
 
   for (auto y = 0; y < LEVEL_DOWN; y++) {
-    for (auto x = 0; x < LEVEL_ACROSS; x++) {
-      LevelSelectCell *c = &s->data[ x ][ y ];
+    for (auto &x : s->data) {
+      LevelSelectCell *c = &x[ y ];
       c->is_set          = 1U;
     }
   }

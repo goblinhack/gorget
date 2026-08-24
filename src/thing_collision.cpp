@@ -328,8 +328,8 @@ static auto thing_collision_check(Gamep g, Levelsp v, Levelp l, Thingp me, const
       return collision;
     }
     return false;
-
-  } else if (thing_is_collision_square(me)) {
+  }
+  if (thing_is_collision_square(me)) {
     if (thing_is_collision_circle_small(obstacle)) {
       collision = thing_collision_check_circle_small_square(g, v, l, obstacle, o_at, me, interp_at_f);
       if (compiler_unused) {
@@ -407,7 +407,7 @@ static void thing_collision_handle_dead_thing(Gamep g, Levelsp v, Levelp l, Thin
   //
   // Wait until complete
   //
-  if (thing_is_thrown(obstacle) || thing_is_falling(obstacle)) {
+  if (thing_is_thrown(obstacle) || (thing_is_falling(obstacle) != 0)) {
     return;
   }
 
@@ -465,7 +465,7 @@ static void thing_collision_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thi
   //
   // Wait until complete
   //
-  if (thing_is_thrown(obstacle) || thing_is_falling(obstacle)) {
+  if (thing_is_thrown(obstacle) || (thing_is_falling(obstacle) != 0)) {
     return;
   }
 

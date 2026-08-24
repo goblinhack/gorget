@@ -14,10 +14,7 @@
 #include "my_spoint.hpp"
 #include "my_tile.hpp"
 #include "my_types.hpp"
-#include "my_ui.hpp"
 #include "my_wid.hpp"
-#include "my_wid_popup.hpp"
-#include "my_wid_text_box.hpp"
 #include "my_wids.hpp"
 
 #include <SDL_keyboard.h>

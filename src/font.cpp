@@ -142,10 +142,10 @@ static auto font_load(const std::string &name) -> Fontp
 {
   TRACE();
 
-  auto font_ui1        = font_load("font1");
+  auto *font_ui1       = font_load("font1");
   font_ui1->tile_index = 1;
 
-  auto font_ui2        = font_load("font2");
+  auto *font_ui2       = font_load("font2");
   font_ui2->tile_index = 2;
 
   if (game_config_font_get(g) == UI_FONT_8x8) {

@@ -227,7 +227,7 @@ static void game_display_title_bg(Gamep g)
 
   auto *tile = tile_find_mand("main_bg");
 
-  if (0) {
+  if (compiler_unused) {
     float const tw = tile_width(tile);
     float const th = tile_height(tile);
 

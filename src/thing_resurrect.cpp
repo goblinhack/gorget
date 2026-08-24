@@ -3,21 +3,17 @@
 //
 
 #include "my_callstack.hpp"
-#include "my_game.hpp"
-#include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_thing.hpp"
-#include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp"
 #include "my_tp.hpp"
 #include "my_types.hpp"
-#include "my_ui.hpp"
 
 [[nodiscard]] auto thing_resurrect(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
 {
   TRACE();
 
-  auto tp = thing_tp(me);
+  auto *tp = thing_tp(me);
 
   thing_is_dead_unset(g, v, l, me);
   thing_is_corpse_unset(g, v, l, me);
@@ -29,7 +25,7 @@
 
   thing_anim_init(g, v, l, me, THING_ANIM_IDLE);
 
-  return me;
+  return me != nullptr;
 }
 
 [[nodiscard]] auto thing_ticks_to_stay_dead(Gamep g, Levelsp v, Levelp l, Thingp me) -> int

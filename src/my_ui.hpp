@@ -7,8 +7,7 @@
 
 #include "my_ascii.hpp"
 
-#define UI_FONT_8x8 1
-#define UI_FONT_6x8 2
+enum { UI_FONT_8x8 = 1, UI_FONT_6x8 = 2 };
 
 //
 // Console size

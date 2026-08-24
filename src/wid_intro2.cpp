@@ -13,14 +13,13 @@
 #include "my_sound.hpp"
 #include "my_spoint.hpp"
 #include "my_tile.hpp"
+#include "my_time.hpp"
 #include "my_types.hpp"
-#include "my_ui.hpp"
 #include "my_wid.hpp"
-#include "my_wid_popup.hpp"
-#include "my_wid_text_box.hpp"
 #include "my_wids.hpp"
 
 #include <SDL_keyboard.h>
+#include <cmath>
 #include <cstdint>
 
 static int      wid_intro2_anim_vert_scroll_offset;
@@ -101,17 +100,17 @@ static void game_display_intro(Gamep g)
     w = ceilf((h * tw) / th_single_screen);
 
     spoint tl(0, 0);
-    spoint br(static_cast< int >(w), static_cast< int >(((float) th / th_single_screen) * h));
+    spoint br(static_cast< int >(w), static_cast< int >((th / th_single_screen) * h));
 
     auto center = static_cast< int >((game_window_pix_width_get(g) - w) / 2);
     tl.x += center;
     br.x += center;
 
-    if (! wid_intro2_anim_vert_scroll_start) {
+    if (wid_intro2_anim_vert_scroll_start == 0u) {
       wid_intro2_anim_vert_scroll_start = time_ms();
     }
 
-    if (! wid_intro2_anim_vert_scroll_ticker) {
+    if (wid_intro2_anim_vert_scroll_ticker == 0u) {
       wid_intro2_anim_vert_scroll_ticker = time_ms();
     }
 
