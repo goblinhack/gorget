@@ -966,7 +966,14 @@ static void gfx_ui_init_intro2_bg()
 {
   TRACE();
   const char *tiles[] = {"intro2"};
-  tile_load_arr("data/gfx/ui/intro2.tga", "intro2", 512, 384, ARRAY_SIZE(tiles), tiles);
+  tile_load_arr("data/gfx/ui/intro2.tga", "intro2", 512, 920, ARRAY_SIZE(tiles), tiles);
+}
+
+static void gfx_ui_init_intro3_bg()
+{
+  TRACE();
+  const char *tiles[] = {"intro3"};
+  tile_load_arr("data/gfx/ui/intro3.tga", "intro3", 512, 384, ARRAY_SIZE(tiles), tiles);
 }
 
 static void gfx_ui_init_game_over_bg()
@@ -5563,6 +5570,7 @@ void gfx_init()
   gfx_ui_init_game_over_fg();
   gfx_ui_init_intro1_bg();
   gfx_ui_init_intro2_bg();
+  gfx_ui_init_intro3_bg();
   gfx_ui_init_lava();
   gfx_ui_init_main_alt_fg();
   gfx_ui_init_main_bg();
