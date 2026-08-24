@@ -155,6 +155,11 @@
       game_request_to_update_cursor_set(g);
 
       //
+      // Scroll up and down only
+      //
+      level_scroll_delta(g, v, l, spoint(0, -wheely));
+
+      //
       // To allow previews of levels
       //
       level_select_mouse_motion(g, v, l);

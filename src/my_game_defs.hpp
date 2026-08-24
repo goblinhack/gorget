@@ -31,9 +31,9 @@ enum {
   // I Per level ID (enough for THING_ID_PER_LEVEL_REQ)
   // L Level        (enough for LEVEL_MAX - 1)
   //
-  THING_LEVEL_ID_BITS           = 6,
+  THING_LEVEL_ID_BITS           = 7,
   THING_PER_LEVEL_THING_ID_BITS = 15,
-  THING_ENTROPY_BITS            = 10,
+  THING_ENTROPY_BITS            = 9,
 
   //
   // In the world minimap, this is how large each level tile is
@@ -155,8 +155,8 @@ enum {
   LIGHT_MAX_RAYS_MAX = (360 * 4),
 
   LEVEL_TEST_MAX  = 1000,
-  LEVEL_ACROSS    = (MAP_WIDTH / LEVEL_SCALE),
-  LEVEL_DOWN      = (MAP_HEIGHT / LEVEL_SCALE),
+  LEVEL_ACROSS    = 5,
+  LEVEL_DOWN      = 20,
   LEVEL_MAX       = ((LEVEL_ACROSS * LEVEL_DOWN) + 1),
   LEVEL_SELECT_ID = (LEVEL_MAX - 1), // The level select level
 

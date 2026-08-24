@@ -362,12 +362,12 @@ static void level_select_dump(LevelSelect *s)
   log("levelSelect, level count %d", s->level_count);
   TRACE_INDENT();
 
-  for (int y = 0; y < LEVEL_DOWN; y++) {
+  for (auto y = 0; y < LEVEL_DOWN; y++) {
     std::string out;
-    for (auto &x : s->data) {
-      auto is_set = x[ y ].is_set != 0U;
+    for (auto x = 0; x < LEVEL_ACROSS; x++) {
+      LevelSelectCell *c = &s->data[ x ][ y ];
 
-      if (is_set) {
+      if (c->is_set) {
         out += std::to_string(CHARMAP_FLOOR);
       } else {
         out += std::to_string(CHARMAP_EMPTY);
@@ -445,9 +445,10 @@ static auto level_select_count_levels(LevelSelect *s) -> int
 
   s->level_count = 0;
 
-  for (int y = 0; y < LEVEL_DOWN; y++) {
-    for (auto &x : s->data) {
-      if (x[ y ].is_set != 0U) {
+  for (auto y = 0; y < LEVEL_DOWN; y++) {
+    for (auto x = 0; x < LEVEL_ACROSS; x++) {
+      LevelSelectCell const *c = &s->data[ x ][ y ];
+      if (c->is_set != 0U) {
         s->level_count++;
       }
     }
@@ -488,13 +489,19 @@ static auto level_select_count_levels(LevelSelect *s) -> int
   auto *tp_is_level_open_icon   = tp_first(is_level_open_icon);
   auto *tp_is_level_next_icon   = tp_first(is_level_next_icon);
 
-  bpoint const map_offset(18, 18);
+  bpoint const map_offset(18, 5);
 
   for (auto y = 0; y < LEVEL_DOWN; y++) {
     for (auto x = 0; x < LEVEL_ACROSS; x++) {
       LevelSelectCell const *c = &s->data[ x ][ y ];
       if (c->is_set == 0U) {
         continue;
+      }
+
+      if ((y % 4) == 3) {
+        if (x != LEVEL_ACROSS / 2) {
+          continue;
+        }
       }
 
       auto *l = game_level_get(g, v, c->level_num);
@@ -613,7 +620,7 @@ static auto level_select_count_levels(LevelSelect *s) -> int
       }
 
       if (tp != nullptr) {
-        bpoint at(x * 3, y * 4);
+        bpoint at(x * 3, y * 2);
         at += map_offset;
         if (is_oob(at)) [[unlikely]] {
           continue;
@@ -691,8 +698,8 @@ static void level_select_create(Gamep g, LevelSelect *s)
   PCG_SRAND(seed_num);
 
   for (auto y = 0; y < LEVEL_DOWN; y++) {
-    for (auto &x : s->data) {
-      LevelSelectCell *c = &x[ y ];
+    for (auto x = 0; x < LEVEL_ACROSS; x++) {
+      LevelSelectCell *c = &s->data[ x ][ y ];
       c->is_set          = 1U;
     }
   }
