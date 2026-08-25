@@ -633,10 +633,15 @@ fi
 # Needed to create PDB files
 #
 LLVM_PATH=$(clang++ -v 2>&1 | grep InstalledDir | sed 's/^.* //g' | sed 's/\(^.*\)\/.*/\1/g')
+LLVM_PATH=/Applications/Xcode.app/Contents/Developer/
 
 if [[ $(which xxxx_mold) ]]; then # binary seems to hang when using mold
   LDFLAGS+=" -fuse-ld=mold"
   log_info "Have mold                  : Yes"
+elif [[ $(which ld64.lld-mp-21) ]]; then # binary seems to hang when using mold
+  # Need in path first /opt/local/bin/
+  LDFLAGS+=" -fuse-ld=lld"
+  log_info "Have lld                   : Yes"
 elif [ -x $LLVM_PATH/bin/lld ]; then
   LDFLAGS+=" -fuse-ld=lld"
   log_info "Have lld                   : Yes"

@@ -115,9 +115,6 @@ void wid_level_show_contents(Gamep g, Levelsp v, Levelp l, WidPopup *parent)
     }
   }
 
-  parent->log(g, UI_INFO_FMT_STR "--");
-  parent->log_empty_line(g);
-
   auto tmp = std::format("Preview of level {}", l->level_num + 1);
   parent->log(g, UI_INFO_FMT_STR + std::string(tmp) + UI_RESET_FMT);
   parent->log_empty_line(g);

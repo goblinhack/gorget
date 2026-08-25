@@ -8,48 +8,49 @@
 #include "../my_test.hpp"
 #include "../my_thing_inlines.hpp"
 
-[[nodiscard]] static auto test_throw_potion_healing_into_lava(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_throw_item_potion_incin_chain_explosion(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
 
   LevelNum const level_num = 0;
   auto           w         = 27;
-  auto           h         = 7;
+  auto           h         = 9;
 
   //
   // How the dungeon starts out, and how we expect it to change
   //
   std::string const start
       = "xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-        "x.........................x"
-        "x.LLLLL...................x"
-        "x@LLLLL...................x"
-        "x.LLLLL...................x"
-        "x.........................x"
+        "x$$$$$$$$$$$$$$$$$$$$$$$$$x"
+        "x$........................x"
+        "x$........................x"
+        "x$$$$$$$$$$$$@$$$$$$$$$$$$x"
+        "x$.......................$x"
+        "x$.......................$x"
+        "x$$$$$$$$$$$$$$$$$$$$$$$$$x"
         "xxxxxxxxxxxxxxxxxxxxxxxxxxx";
   std::string const expect1
       = "xxxxxxxxxxxxxxxxxxxxxxxxxxx"
         "x.........................x"
-        "x.LLLLL...................x"
-        "x@~~~~~~..................x"
-        "x.LLLLL...................x"
         "x.........................x"
+        "x.........................x"
+        "x............@!!!!!!!!!!!!x"
+        "x........................!x"
+        "x........................!x"
+        "x........................!x"
         "xxxxxxxxxxxxxxxxxxxxxxxxxxx";
 
-  Levelp  l      = nullptr;
-  Levelsp v      = game_test_init(g, &l, level_num, w, h, start.c_str());
-  bool    result = true;
+  Levelp    l = nullptr;
+  Overrides overrides;
+  overrides[ '$' ] = [](char c, bpoint p) -> Tpp { return tp_find_mand("potion_incin"); };
+  Levelsp v        = game_test_init(g, &l, level_num, w, h, start.c_str(), overrides);
+  bool    result   = true;
   bpoint  throw_to;
   int     threw_count = 0;
 
   static std::initializer_list< std::string > items = {
-      "potion_healing", //
-      "potion_healing", //
-      "potion_healing", //
-      "potion_healing", //
-      "potion_healing", //
-      "potion_healing", //
+      "potion_incin", //
   };
 
   auto *player = thing_player(g);
@@ -77,10 +78,6 @@
       throw_to.x++;
       TEST_ASSERT(t, thing_throw_to(g, v, l, player, an_item, throw_to), "failed to throw");
 
-      if (thing_is_dead(player)) {
-        break;
-      }
-
       TRACE();
       level_dump(g, v, l, w, h);
       TEST_ASSERT(t, game_event_wait(g), "failed to wait");
@@ -100,15 +97,6 @@
 
   TEST_ASSERT(t, threw_count == (int) items.size(), "did not throw expected item amount");
 
-  for (auto tries = 0; tries < 20; tries++) {
-    TEST_LOOP_PROGRESS(t, g, v, l, tries, w, h);
-    TEST_ASSERT(t, game_event_wait(g), "failed to wait");
-    if (! game_wait_for_tick_to_finish(g, v, l)) {
-      TEST_FAILED(t, "wait loop failed");
-      goto exit;
-    }
-  }
-
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   if (! (result = level_match_contents(g, v, l, t, w, h, expect1.c_str()))) {
@@ -116,7 +104,7 @@
     goto exit;
   }
 
-  TEST_ASSERT(t, game_tick_get(g, v) == 26, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 1, "final tick counter value");
 
   level_dump(g, v, l, w, h);
   TEST_PASSED(t);
@@ -127,14 +115,14 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_throw_potion_healing_into_lava() -> bool // NOLINT
+[[nodiscard]] auto test_load_throw_item_potion_incin_chain_explosion() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("throw_potion_healing_into_lava");
+  Testp test = test_load("throw_item_potion_incin_chain_explosion");
 
   // begin sort marker1 {
-  test_callback_set(test, test_throw_potion_healing_into_lava);
+  test_callback_set(test, test_throw_item_potion_incin_chain_explosion);
   // end sort marker1 }
 
   return true;

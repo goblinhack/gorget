@@ -8,6 +8,7 @@
 #include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_music.hpp"
+#include "my_random.hpp"
 #include "my_sound.hpp"
 #include "my_thing.hpp"
 #include "my_thing_callbacks.hpp"
@@ -248,107 +249,78 @@ static void tp_player_level_enter(Gamep g, Levelsp v, Levelp l, Thingp me)
   //
   thing_prev_pix_at_set(g, v, l, me, spoint(-1, -1));
 
-  switch (l->level_num + 1) {
-    case 1 :
-      (void) sound_play(g, v, l, "dungeon_ambience", scale, loops);
-      (void) music_play(g, "dungeon.1");
-      break;
-    case 2 :
-      (void) sound_play(g, v, l, "dungeon_ambience", scale, loops);
-      (void) music_play(g, "dungeon.2");
-      break;
-    case 3 :
-      (void) sound_play(g, v, l, "dungeon_ambience", scale, loops);
-      (void) music_play(g, "dungeon.3");
-      break;
-    case 4 :
-      (void) sound_play(g, v, l, "dungeon_ambience", scale, loops);
-      (void) music_play(g, "dungeon.4");
-      break;
-    case 5 :
-      (void) sound_play(g, v, l, "dungeon_ambience", scale, loops);
-      (void) music_play(g, "dungeon.boss");
-      break;
-    case 6 :
-      (void) sound_play(g, v, l, "bogland_ambience", scale, loops);
-      (void) music_play(g, "bogland.1");
-      break;
-    case 7 :
-      (void) sound_play(g, v, l, "bogland_ambience", scale, loops);
-      (void) music_play(g, "bogland.2");
-      break;
-    case 8 :
-      (void) sound_play(g, v, l, "bogland_ambience", scale, loops);
-      (void) music_play(g, "bogland.3");
-      break;
-    case 9 :
-      (void) sound_play(g, v, l, "bogland_ambience", scale, loops);
-      (void) music_play(g, "bogland.4");
-      break;
-    case 10 :
-      (void) sound_play(g, v, l, "bogland_ambience", scale, loops);
-      (void) music_play(g, "bogland.boss");
-      break;
-    case 11 :
-      (void) sound_play(g, v, l, "nethervoid_ambience", scale, loops);
-      (void) music_play(g, "nethervoid.1");
-      break;
-    case 12 :
-      (void) sound_play(g, v, l, "nethervoid_ambience", scale, loops);
-      (void) music_play(g, "nethervoid.2");
-      break;
-    case 13 :
-      (void) sound_play(g, v, l, "nethervoid_ambience", scale, loops);
-      (void) music_play(g, "nethervoid.3");
-      break;
-    case 14 :
-      (void) sound_play(g, v, l, "nethervoid_ambience", scale, loops);
-      (void) music_play(g, "nethervoid.4");
-      break;
-    case 15 :
-      (void) sound_play(g, v, l, "nethervoid_ambience", scale, loops);
-      (void) music_play(g, "nethervoid.boss");
-      break;
-    case 16 :
-      (void) sound_play(g, v, l, "graveyard_ambience", scale, loops);
-      (void) music_play(g, "graveyard.1");
-      break;
-    case 17 :
-      (void) sound_play(g, v, l, "graveyard_ambience", scale, loops);
-      (void) music_play(g, "graveyard.2");
-      break;
-    case 18 :
-      (void) sound_play(g, v, l, "graveyard_ambience", scale, loops);
-      (void) music_play(g, "graveyard.3");
-      break;
-    case 19 :
-      (void) sound_play(g, v, l, "graveyard_ambience", scale, loops);
-      (void) music_play(g, "graveyard.4");
-      break;
-    case 20 :
-      (void) sound_play(g, v, l, "graveyard_ambience", scale, loops);
-      (void) music_play(g, "graveyard.boss");
-      break;
-    case 21 :
-      (void) sound_play(g, v, l, "underhell_ambience", scale, loops);
-      (void) music_play(g, "underhell.1");
-      break;
-    case 22 :
-      (void) sound_play(g, v, l, "underhell_ambience", scale, loops);
-      (void) music_play(g, "underhell.2");
-      break;
-    case 23 :
-      (void) sound_play(g, v, l, "underhell_ambience", scale, loops);
-      (void) music_play(g, "underhell.3");
-      break;
-    case 24 :
-      (void) sound_play(g, v, l, "underhell_ambience", scale, loops);
-      (void) music_play(g, "underhell.4");
-      break;
-    case 25 :
-      (void) sound_play(g, v, l, "underhell_ambience", scale, loops);
-      (void) music_play(g, "underhell.boss");
-      break;
+  if (g_opt_tests) {
+    return;
+  }
+
+  switch (level_to_biome(g, v, l)) {
+    case BIOME_DUNGEON :    (void) sound_play(g, v, l, "dungeon_ambience", scale, loops); break;
+    case BIOME_BOGLAND :    (void) sound_play(g, v, l, "bogland_ambience", scale, loops); break;
+    case BIOME_NETHERVOID : (void) sound_play(g, v, l, "nethervoid_ambience", scale, loops); break;
+    case BIOME_GRAVEYARD :  (void) sound_play(g, v, l, "graveyard_ambience", scale, loops); break;
+    case BIOME_UNDERHELL :  (void) sound_play(g, v, l, "underhell_ambience", scale, loops); break;
+    default :               ERR("unhandled biome"); break;
+  }
+
+  if (level_is_boss_level(g, v, l)) {
+    switch (level_to_biome(g, v, l)) {
+      case BIOME_DUNGEON :    (void) music_play(g, "dungeon.boss"); break;
+      case BIOME_BOGLAND :    (void) music_play(g, "bogland.boss"); break;
+      case BIOME_NETHERVOID : (void) music_play(g, "nethervoid.boss"); break;
+      case BIOME_GRAVEYARD :  (void) music_play(g, "graveyard.boss"); break;
+      case BIOME_UNDERHELL :  (void) music_play(g, "underhell.boss"); break;
+      default :               ERR("unhandled biome"); break;
+    }
+  } else {
+    switch (level_to_biome(g, v, l)) {
+      case BIOME_DUNGEON :
+        switch (PCG_RANDOM_RANGE_INCLUSIVE(1, 4)) {
+          case 1 :  (void) music_play(g, "dungeon.1"); break;
+          case 2 :  (void) music_play(g, "dungeon.2"); break;
+          case 3 :  (void) music_play(g, "dungeon.3"); break;
+          case 4 :  (void) music_play(g, "dungeon.4"); break;
+          default : ERR("unhandled biome music"); break;
+        }
+        break;
+
+      case BIOME_BOGLAND :
+        switch (PCG_RANDOM_RANGE_INCLUSIVE(1, 4)) {
+          case 1 :  (void) music_play(g, "bogland.1"); break;
+          case 2 :  (void) music_play(g, "bogland.2"); break;
+          case 3 :  (void) music_play(g, "bogland.3"); break;
+          case 4 :  (void) music_play(g, "bogland.4"); break;
+          default : ERR("unhandled biome music"); break;
+        }
+        break;
+      case BIOME_NETHERVOID :
+        switch (PCG_RANDOM_RANGE_INCLUSIVE(1, 4)) {
+          case 1 :  (void) music_play(g, "nethervoid.1"); break;
+          case 2 :  (void) music_play(g, "nethervoid.2"); break;
+          case 3 :  (void) music_play(g, "nethervoid.3"); break;
+          case 4 :  (void) music_play(g, "nethervoid.4"); break;
+          default : ERR("unhandled biome music"); break;
+        }
+        break;
+      case BIOME_GRAVEYARD :
+        switch (PCG_RANDOM_RANGE_INCLUSIVE(1, 4)) {
+          case 1 :  (void) music_play(g, "graveyard.1"); break;
+          case 2 :  (void) music_play(g, "graveyard.2"); break;
+          case 3 :  (void) music_play(g, "graveyard.3"); break;
+          case 4 :  (void) music_play(g, "graveyard.4"); break;
+          default : ERR("unhandled biome music"); break;
+        }
+        break;
+      case BIOME_UNDERHELL :
+        switch (PCG_RANDOM_RANGE_INCLUSIVE(1, 4)) {
+          case 1 :  (void) music_play(g, "underhell.1"); break;
+          case 2 :  (void) music_play(g, "underhell.2"); break;
+          case 3 :  (void) music_play(g, "underhell.3"); break;
+          case 4 :  (void) music_play(g, "underhell.4"); break;
+          default : ERR("unhandled biome music"); break;
+        }
+        break;
+      default : ERR("unhandled biome"); break;
+    }
   }
 }
 

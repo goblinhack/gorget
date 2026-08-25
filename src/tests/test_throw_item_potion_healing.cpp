@@ -8,7 +8,7 @@
 #include "../my_test.hpp"
 #include "../my_thing_inlines.hpp"
 
-[[nodiscard]] static auto test_throw_potion_healing(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_throw_item_potion_healing(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -123,14 +123,14 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_throw_potion_healing() -> bool // NOLINT
+[[nodiscard]] auto test_load_throw_item_potion_healing() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("throw_potion_healing");
+  Testp test = test_load("throw_item_potion_healing");
 
   // begin sort marker1 {
-  test_callback_set(test, test_throw_potion_healing);
+  test_callback_set(test, test_throw_item_potion_healing);
   // end sort marker1 }
 
   return true;

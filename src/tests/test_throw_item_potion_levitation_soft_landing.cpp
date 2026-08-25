@@ -9,7 +9,7 @@
 #include "../my_test.hpp"
 #include "../my_thing_inlines.hpp"
 
-[[nodiscard]] static auto test_throw_potion_levitation_hard_landing(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_throw_item_potion_levitation_soft_landing(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -33,12 +33,12 @@
   std::string const expect1
       = "xxxxxxxx"  //
         "x......x"  //
-        "x..@.M.x"  //
+        "x..@.$.x"  //
         "x......x"  //
         "xxxxxxxx"; //
 
   Overrides overrides;
-  overrides[ 'M' ] = [](char c, bpoint p) -> Tpp { return tp_find_mand("ogrik"); };
+  overrides[ 'M' ] = [](char c, bpoint p) -> Tpp { return tp_find_mand("cleaner"); };
   Levelp  l        = nullptr;
   Levelsp v        = game_test_init(g, &l, level_num, w, h, start.c_str(), overrides);
   bool    result   = true;
@@ -115,7 +115,7 @@
   }
 
   TEST_ASSERT(t, monst, "expecting monster");
-  TEST_ASSERT(t, thing_is_levitating(g, v, l, monst), "expecting levitating monster");
+  TEST_ASSERT(t, ! thing_is_levitating(g, v, l, monst), "expecting non levitating monster");
   TEST_ASSERT(t, game_tick_get(g, v) == 1, "final tick counter value");
 
   level_dump(g, v, l, w, h);
@@ -127,14 +127,14 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_throw_potion_levitation_hard_landing() -> bool // NOLINT
+[[nodiscard]] auto test_load_throw_item_potion_levitation_soft_landing() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("throw_potion_levitation_hard_landing");
+  Testp test = test_load("throw_item_potion_levitation_soft_landing");
 
   // begin sort marker1 {
-  test_callback_set(test, test_throw_potion_levitation_hard_landing);
+  test_callback_set(test, test_throw_item_potion_levitation_soft_landing);
   // end sort marker1 }
 
   return true;

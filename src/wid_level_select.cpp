@@ -93,22 +93,6 @@ void wid_level_select(Gamep g, Levelsp v, Levelp l)
 
   wid_set_on_key_down(wid_level_select_window->wid_popup_container, wid_level_select_key_down);
 
-  if (v->tick != 0U) {
-    wid_level_select_window->log_empty_line(g);
-    wid_level_select_window->log(g, UI_GREEN_FMT_STR "Still here, mortal.");
-    wid_level_select_window->log_empty_line(g);
-    wid_level_select_window->log(g, UI_INFO1_FMT_STR "Mouse hover over levels to preview contents.", TEXT_FORMAT_LHS);
-    wid_level_select_window->log_empty_line(g);
-  } else {
-    wid_level_select_window->log_empty_line(g);
-    wid_level_select_window->log(g, UI_GREEN_FMT_STR "Hello, mortal.");
-    wid_level_select_window->log_empty_line(g);
-    wid_level_select_window->log(g, UI_INFO1_FMT_STR "Ready to enter the 1st level?", TEXT_FORMAT_LHS);
-    wid_level_select_window->log_empty_line(g);
-    wid_level_select_window->log(g, UI_INFO2_FMT_STR "Or mouse hover over other levels to preview their contents.", TEXT_FORMAT_LHS);
-    wid_level_select_window->log_empty_line(g);
-  }
-
   {
     TRACE();
     auto *p = wid_level_select_window->wid_text_area->wid_text_area;

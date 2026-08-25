@@ -4,38 +4,38 @@
 
 #include "../my_game.hpp"
 #include "../my_level.hpp"
-#include "../my_level_inlines.hpp"
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 #include "../my_thing_inlines.hpp"
 
-[[nodiscard]] static auto test_throw_potion_levitation(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_throw_item_potion_incin_into_water(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
 
-  //
-  // How the dungeon starts out, and how we expect it to change
-  //
   LevelNum const level_num = 0;
-  auto           w         = 8;
-  auto           h         = 5;
+  auto           w         = 27;
+  auto           h         = 7;
 
   //
   // How the dungeon starts out, and how we expect it to change
   //
   std::string const start
-      = "xxxxxxxx"  //
-        "x......x"  //
-        "x..@...x"  //
-        "x......x"  //
-        "xxxxxxxx"; //
+      = "xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+        "x.........................x"
+        "x.~~~~~~..................x"
+        "x@~~~~~~..................x"
+        "x.~~~~~~..................x"
+        "x.........................x"
+        "xxxxxxxxxxxxxxxxxxxxxxxxxxx";
   std::string const expect1
-      = "xxxxxxxx"  //
-        "x......x"  //
-        "x..@.~.x"  //
-        "x......x"  //
-        "xxxxxxxx"; //
+      = "xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+        "x.........................x"
+        "x.~~~~~~..................x"
+        "x@$$$$$$..................x"
+        "x.~~~~~~..................x"
+        "x.........................x"
+        "xxxxxxxxxxxxxxxxxxxxxxxxxxx";
 
   Levelp  l      = nullptr;
   Levelsp v      = game_test_init(g, &l, level_num, w, h, start.c_str());
@@ -44,7 +44,12 @@
   int     threw_count = 0;
 
   static std::initializer_list< std::string > items = {
-      "potion_levitation", //
+      "potion_incin", //
+      "potion_incin", //
+      "potion_incin", //
+      "potion_incin", //
+      "potion_incin", //
+      "potion_incin", //
   };
 
   auto *player = thing_player(g);
@@ -61,7 +66,7 @@
   //
   // Throw all items
   //
-  throw_to = thing_at(g, v, l, player) + bpoint(2, 0);
+  throw_to = thing_at(g, v, l, player);
 
   for (;;) {
     bool got_item = false;
@@ -69,11 +74,8 @@
     FOR_ALL_INVENTORY_ITEMS(g, v, l, player, an_item)
     {
       got_item = true;
+      throw_to.x++;
       TEST_ASSERT(t, thing_throw_to(g, v, l, player, an_item, throw_to), "failed to throw");
-
-      if (thing_is_dead(player)) {
-        break;
-      }
 
       TRACE();
       level_dump(g, v, l, w, h);
@@ -101,7 +103,7 @@
     goto exit;
   }
 
-  TEST_ASSERT(t, game_tick_get(g, v) == 1, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 6, "final tick counter value");
 
   level_dump(g, v, l, w, h);
   TEST_PASSED(t);
@@ -112,14 +114,14 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_throw_potion_levitation() -> bool // NOLINT
+[[nodiscard]] auto test_load_throw_item_potion_incin_into_water() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("throw_potion_levitation");
+  Testp test = test_load("throw_item_potion_incin_into_water");
 
   // begin sort marker1 {
-  test_callback_set(test, test_throw_potion_levitation);
+  test_callback_set(test, test_throw_item_potion_incin_into_water);
   // end sort marker1 }
 
   return true;
