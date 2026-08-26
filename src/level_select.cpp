@@ -608,7 +608,7 @@ static auto level_select_count_levels(LevelSelect *s) -> int
       // Final level
       //
       if ((x == LEVEL_NUM_BOSS_OFFSET) && (y == LEVEL_GRID_DOWN - 1)) {
-        if (! tp) {
+        if (tp != tp_is_level_next_icon) {
           tp = tp_is_level_final_icon;
           level_is_boss_final_level_set(g, v, l);
         }
