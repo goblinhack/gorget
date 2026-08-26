@@ -946,7 +946,7 @@ void wid_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx, int
 void wid_mouse_down(Gamep g, uint32_t button, int x, int y)
 {
   DBG("widget mouse down");
-  TRACE();
+  TRACE_INDENT();
 
   Widp w {};
 

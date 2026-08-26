@@ -511,6 +511,7 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
         THING_DBG(g, v, l, me, "player declined move");
         TRACE_INDENT();
         player_state_change(g, v, l, PLAYER_STATE_NORMAL);
+        player_move_requests_reset(g, v);
       }
       break;
     case PLAYER_STATE_FOLLOWING_PATH :
@@ -983,8 +984,6 @@ void player_move_accum(Gamep g, Levelsp v, Levelp l, bool up, bool down, bool le
 //
 [[nodiscard]] auto player_move_request(Gamep g, bool up, bool down, bool left, bool right, bool fire) -> bool
 {
-  TRACE();
-
   auto *v = game_levels_get(g);
   if (v == nullptr) {
     return false;
@@ -994,6 +993,14 @@ void player_move_accum(Gamep g, Levelsp v, Levelp l, bool up, bool down, bool le
   if (l == nullptr) {
     return false;
   }
+
+  auto *me = thing_player(g);
+  if (me == nullptr) {
+    return false;
+  }
+
+  THING_DBG(g, v, l, me, "player move request");
+  TRACE_INDENT();
 
   if (game_state(g) != STATE_PLAYING) {
     player_move_requests_reset(g, v);
