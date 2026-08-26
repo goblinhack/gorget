@@ -25,13 +25,13 @@ using color = struct Color {
 [[nodiscard]] auto string2color(std::string &s) -> color;
 [[nodiscard]] auto string2color(std::string &s, int *len) -> color;
 [[nodiscard]] auto string2colorname(std::string &s, int *len) -> std::string;
-void               color_fini();
-void               color_init1();
-void               color_init2();
-void               color_init3();
-void               color_init4();
-void               color_init();
-void               color_set(const std::string &name, color *c, uint8_t r, uint8_t g, uint8_t b, uint8_t a);
+auto               color_fini() -> void;
+auto               color_init1() -> void;
+auto               color_init2() -> void;
+auto               color_init3() -> void;
+auto               color_init4() -> void;
+auto               color_init() -> void;
+auto               color_set(const std::string &name, color *c, uint8_t r, uint8_t g, uint8_t b, uint8_t a) -> void;
 
 static inline auto color_eq(const color &col1, const color &col2) -> bool
 {

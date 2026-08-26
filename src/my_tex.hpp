@@ -27,8 +27,8 @@
 
 [[nodiscard]] auto tex_init() -> bool;
 
-void tex_fini();
-void tex_free(Texp tex);
+auto tex_fini() -> void;
+auto tex_free(Texp tex) -> void;
 void tex_load_sprites(Texp *tex, Texp *tex_monochrome, Texp *tex_mask,
                       Texp              *tex_outline_w_black_inside, // newline
                       Texp              *tex_outline_w_invis_inside, // newline

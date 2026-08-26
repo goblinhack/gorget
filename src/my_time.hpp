@@ -25,7 +25,7 @@ using ts_t = int;
 [[nodiscard]] auto time_ms() -> ts_t;
 [[nodiscard]] auto time_ms_cached() -> ts_t;
 
-void get_timestamp(char *buf, int len);
+auto get_timestamp(char *buf, int len) -> void;
 
 [[nodiscard]] auto current_date() -> std::string;
 [[nodiscard]] auto string_timestamp() -> std::string &;

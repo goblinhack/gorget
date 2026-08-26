@@ -18,9 +18,9 @@ using soundp = class Sound *;
     -> bool;
 [[nodiscard]] auto sound_play(Gamep g, const std::string &alias, float scale = 1.0, int loops = 0) -> bool;
 
-void sound_fini();
-void sounds_load(Gamep g);
-void sound_fade_out(Gamep g);
+auto sound_fini() -> void;
+auto sounds_load(Gamep g) -> void;
+auto sound_fade_out(Gamep g) -> void;
 
 enum {
   CHANNEL_MISC,

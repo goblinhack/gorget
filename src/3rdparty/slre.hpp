@@ -88,5 +88,5 @@ auto slre_compile(struct Slre *, const char *re) -> int;
 //
 auto slre_match(const struct Slre *, const char *buf, int buf_len, struct Cap *captured_substrings) -> int;
 
-void slre_test();
+auto slre_test() ->void;
 #endif // SLRE_HEADER_DEFINED

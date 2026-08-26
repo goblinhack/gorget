@@ -18,10 +18,10 @@ using Dmap = struct Dmap {
   uint8_t val[ MAP_WIDTH ][ MAP_HEIGHT ];
 };
 
-void dmap_process(Dmap *D, bpoint tl, bpoint br);
-void dmap_process_reverse(Dmap *D, bpoint tl, bpoint br);
-void dmap_print(const Dmap *d, bpoint at, bpoint tl, bpoint br);
-void dmap_print(const Dmap *d);
+auto dmap_process(Dmap *D, bpoint tl, bpoint br) -> void;
+auto dmap_process_reverse(Dmap *D, bpoint tl, bpoint br) -> void;
+auto dmap_print(const Dmap *d, bpoint at, bpoint tl, bpoint br) -> void;
+auto dmap_print(const Dmap *d) -> void;
 
 [[nodiscard]] auto dmap_solve(Gamep g, Levelsp v, Levelp l, Thingp t, const Dmap *d, bpoint start) -> std::vector< bpoint >;
 

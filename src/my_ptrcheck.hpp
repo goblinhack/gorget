@@ -10,11 +10,11 @@
 //
 #define PTRCHECK_AT SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM
 
-void ptrcheck_fini();
+auto ptrcheck_fini() -> void;
 auto MYZALLOC_(int size, const char *what, const char *file, const char *func, int line) -> void *;
 auto MYMALLOC_(int size, const char *what, const char *file, const char *func, int line) -> void *;
 auto MYREALLOC_(void *ptr, int size, const char *what, const char *file, const char *func, int line) -> void *;
-void MYFREE_(void *ptr, const char *file, const char *func, int line);
+auto MYFREE_(void *ptr, const char *file, const char *func, int line) -> void;
 auto MYDUPSTR_(const char *in, const char *what, const char *file, const char *func, int line) -> char *;
 auto strsub_(const char *in, const char *look_for, const char *replace_with, const char *what, const char *file, const char *func, int line)
     -> char *;
@@ -34,8 +34,8 @@ auto strsub_(const char *in, const char *look_for, const char *replace_with, con
 auto ptrcheck_alloc(int mtype, const void *ptr, const char *what, int size, const char *func, const char *file, int line) -> void *;
 auto ptrcheck_verify(int mtype, const void *ptr, const char *func, const char *file, int line) -> int;
 auto ptrcheck_free(int mtype, void *ptr, const char *func, const char *file, int line) -> int;
-void ptrcheck_leak_print(int mtype);
-void ptrcheck_leak_print();
+auto ptrcheck_leak_print(int mtype) -> void;
+auto ptrcheck_leak_print() -> void;
 
 //
 // MUST use DEBUG2 else "set debug on" gets confused as it never learned pointers.

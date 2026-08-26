@@ -40,10 +40,10 @@ using Cave = struct Cave {
   Blob blob;
 };
 
-void               cave_dump(Gamep g, Cave *c);
-void               cave_create(Gamep g, Cave *c, uint32_t fill_prob, uint8_t r1, uint8_t r2, int map_generations);
+auto               cave_dump(Gamep g, Cave *c) -> void;
+auto               cave_create(Gamep g, Cave *c, uint32_t fill_prob, uint8_t r1, uint8_t r2, int map_generations) -> void;
 [[nodiscard]] auto cave_generation_fill_blob_cand(Gamep g, Cave *c, int x, int y, uint16_t size, uint16_t id) -> int;
-void               cave_generation_keep_largest_blob(Gamep g, Cave *c);
-void               cave_generation_center_blob(Gamep g, Cave *c);
+auto               cave_generation_keep_largest_blob(Gamep g, Cave *c) -> void;
+auto               cave_generation_center_blob(Gamep g, Cave *c) -> void;
 
 #endif // MY_CAVE_HPP

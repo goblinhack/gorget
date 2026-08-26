@@ -7,7 +7,7 @@
 
 #include <stdio.h>
 
-void putf(FILE *fp, const char *s);
-void log_(const char *fmt, va_list args);
+auto putf(FILE *fp, const char *s) -> void;
+auto log_(const char *fmt, va_list args) -> void;
 
 #endif

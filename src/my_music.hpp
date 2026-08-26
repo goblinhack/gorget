@@ -10,11 +10,11 @@
 #include <string>
 
 [[nodiscard]] auto music_init() -> bool;
-void               music_fini();
+auto               music_fini() -> void;
 [[nodiscard]] auto music_load(Gamep g, uint32_t rate, const char *file, const char *name) -> bool;
 [[nodiscard]] auto music_play(Gamep g, const std::string &name) -> bool;
 [[nodiscard]] auto music_halt() -> bool;
-void               music_update_volume(Gamep g);
-void               music_load(Gamep g);
+auto               music_update_volume(Gamep g) -> void;
+auto               music_load(Gamep g) -> void;
 
 #endif

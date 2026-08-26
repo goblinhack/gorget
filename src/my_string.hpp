@@ -41,13 +41,13 @@ enum {
 [[nodiscard]] auto  split_tokens(const std::string &s, char delimiter) -> std::vector< std::string >;
 [[nodiscard]] char *dynprintf(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2); // NOLINT
 
-void hexdump(const uint8_t *addr, size_t len);
-void hexdump(std::vector< uint8_t > &v);
-void strchop(char *s);
-void strchopc(char *s, char c);
-void strnoescape(char *uncompressed);
-void strrepc(char *s, const char *replace_set, char replace_with);
-void replace(std::string &input, const std::string &pattern, const std::string &replace_with);
+auto hexdump(const uint8_t *addr, size_t len) -> void;
+auto hexdump(std::vector< uint8_t > &v) -> void;
+auto strchop(char *s) -> void;
+auto strchopc(char *s, char c) -> void;
+auto strnoescape(char *uncompressed) -> void;
+auto strrepc(char *s, const char *replace_set, char replace_with) -> void;
+auto replace(std::string &input, const std::string &pattern, const std::string &replace_with) -> void;
 
 #ifdef _WIN32
 #define strerror_r(_errno_, _buf_, _len_) strerror_s(_buf_, _len_, _errno_)

@@ -19,8 +19,8 @@ public:
 
 [[nodiscard]] auto tokens_to_string(const char *input, class Tokens *tokens) -> class Tokens *;
 
-void tokens_print_to(class Tokens *tokens, char *output, int output_size);
-void tokens_print(class Tokens *tokens);
-void tokens_test();
+auto tokens_print_to(class Tokens *tokens, char *output, int output_size) -> void;
+auto tokens_print(class Tokens *tokens) -> void;
+auto tokens_test() -> void;
 
 #endif

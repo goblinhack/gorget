@@ -19,8 +19,8 @@ class Test;
 [[nodiscard]] auto test_load(const char * /*name_in*/) -> Testp;
 
 using test_callback_t = bool (*)(Gamep, Testp);
-void test_callback_set(Testp test, test_callback_t callback);
-void tests_run(Gamep g);
+auto test_callback_set(Testp test, test_callback_t callback) -> void;
+auto tests_run(Gamep g) -> void;
 
 #define TEST_FAILED(test, why)                                                                                                                  \
   {                                                                                                                                             \
@@ -78,8 +78,8 @@ void tests_run(Gamep g);
 
 #pragma GCC diagnostic pop
 
-void test_init();
-void test_fini();
+auto test_init() -> void;
+auto test_fini() -> void;
 
 [[nodiscard]] auto game_test_init(Gamep g, Levelp *out, LevelNum level_num, int w, int h, const char *contents,
                                   const Overrides &overrides = no_overrides) -> Levelsp;

@@ -266,7 +266,7 @@ extern GLuint g_render_buf_id[ FBO_ENUM_MAX ];
 
 struct LightPixels;
 
-void blit(int tex, GLshort left, GLshort top, GLshort right, GLshort bottom, const color &c);
+auto blit(int tex, GLshort left, GLshort top, GLshort right, GLshort bottom, const color &c) -> void;
 void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLshort left, GLshort top, GLshort right, GLshort bottom,
           const color &c);
 void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLshort left, GLshort top, GLshort right, GLshort bottom,
@@ -275,39 +275,39 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
           GLshort pixMaxY, const color &c, struct LightPixels * /*light_pixels*/, bool is_blit_flush_per_line);
 void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLshort pixMinX, GLshort pixMinY, GLshort pixMaxX,
           GLshort pixMaxY, struct LightPixels * /*light_pixels*/, bool is_blit_flush_per_line);
-void blit_fbo(Gamep g, FboEnum fbo, color c);
-void blit_fbo(Gamep g, FboEnum fbo, int tl_x, int tl_y, int br_x, int br_y, color c);
-void blit_fbo_push(FboEnum fbo);
-void blit_fbo_pop();
-void blit_fbo_bind(FboEnum fbo);
-void blit_fbo_bind_locked(FboEnum fbo);
-void blit_fbo_unbind();
-void blit_fbo_unbind_locked();
-void blit_fini();
-void blit_flush();
-void blit_flush_colored_triangle_fan(float *begin, const float *end);
-void blit_flush_colored_triangle_fan();
-void blit_flush_triangle_fan(float *begin, const float *end);
-void blit_flush_triangle_fan();
-void blit_init();
-void fbo_get_size(Gamep g, FboEnum fbo, int &w, int &h);
-void fbo_get_curr_size(Gamep g, int &w, int &h);
+auto blit_fbo(Gamep g, FboEnum fbo, color c) -> void;
+auto blit_fbo(Gamep g, FboEnum fbo, int tl_x, int tl_y, int br_x, int br_y, color c) -> void;
+auto blit_fbo_push(FboEnum fbo) -> void;
+auto blit_fbo_pop() -> void;
+auto blit_fbo_bind(FboEnum fbo) -> void;
+auto blit_fbo_bind_locked(FboEnum fbo) -> void;
+auto blit_fbo_unbind() -> void;
+auto blit_fbo_unbind_locked() -> void;
+auto blit_fini() -> void;
+auto blit_flush() -> void;
+auto blit_flush_colored_triangle_fan(float *begin, const float *end) -> void;
+auto blit_flush_colored_triangle_fan() -> void;
+auto blit_flush_triangle_fan(float *begin, const float *end) -> void;
+auto blit_flush_triangle_fan() -> void;
+auto blit_init() -> void;
+auto fbo_get_size(Gamep g, FboEnum fbo, int &w, int &h) -> void;
+auto fbo_get_curr_size(Gamep g, int &w, int &h) -> void;
 
-void gl_blitline(GLshort left, GLshort top, GLshort right, GLshort bottom);
-void gl_blitquad(spoint tl, spoint tr, spoint bl, spoint br);
-void gl_blitquad(GLshort left, GLshort top, GLshort right, GLshort bottom);
-void gl_blitsquare(GLshort left, GLshort top, GLshort right, GLshort bottom);
-void gl_enter_2_5d_mode(Gamep);
-void gl_enter_2d_mode(Gamep g, int w, int h);
-void gl_enter_2d_mode(Gamep g);
-void gl_error(GLenum err);
-void gl_ext_init();
-void gl_fini_2d_mode(Gamep g);
-void gl_fini_fbo(Gamep g);
-void gl_init_2d_mode(Gamep g);
-void gl_init_fbo(Gamep g, FboEnum fbo = FBO_NONE);
-void gl_leave_2d_mode(Gamep g);
-void gl_clear();
+auto gl_blitline(GLshort left, GLshort top, GLshort right, GLshort bottom) -> void;
+auto gl_blitquad(spoint tl, spoint tr, spoint bl, spoint br) -> void;
+auto gl_blitquad(GLshort left, GLshort top, GLshort right, GLshort bottom) -> void;
+auto gl_blitsquare(GLshort left, GLshort top, GLshort right, GLshort bottom) -> void;
+auto gl_enter_2_5d_mode(Gamep) -> void;
+auto gl_enter_2d_mode(Gamep g, int w, int h) -> void;
+auto gl_enter_2d_mode(Gamep g) -> void;
+auto gl_error(GLenum err) -> void;
+auto gl_ext_init() -> void;
+auto gl_fini_2d_mode(Gamep g) -> void;
+auto gl_fini_fbo(Gamep g) -> void;
+auto gl_init_2d_mode(Gamep g) -> void;
+auto gl_init_fbo(Gamep g, FboEnum fbo = FBO_NONE) -> void;
+auto gl_leave_2d_mode(Gamep g) -> void;
+auto gl_clear() -> void;
 
 #define GL_ERROR_CHECK()                                                                                                                        \
   {                                                                                                                                             \
