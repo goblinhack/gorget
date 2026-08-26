@@ -1139,7 +1139,7 @@ void player_reached_exit_do(Gamep g, Levelsp v, Levelp l)
 
   level_is_completed_by_player_exiting(g, v, l);
 
-  if (l->level_num == LEVEL_ARR_IDX_GRID - LEVEL_NUM_BOSS_OFFSET - 1) {
+  if (level_is_boss_final_level(g, v, l)) {
     auto *player = thing_player(g);
     if (player != nullptr) {
       ThingEvent e {

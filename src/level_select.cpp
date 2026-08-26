@@ -480,21 +480,33 @@ static auto level_select_count_levels(LevelSelect *s) -> int
 
   for (auto y = 0; y < LEVEL_GRID_DOWN; y++) {
     for (auto x = 0; x < LEVEL_GRID_ACROSS; x++) {
-      LevelSelectCell const *c = &s->data[ x ][ y ];
-      if (c->is_set == 0U) {
+
+      //
+      // Skip fake levels
+      //
+      if (! level_is_valid_grid_coord(x, y)) {
         continue;
       }
 
-      if ((y % 4) == 3) {
-        if (x != LEVEL_NUM_BOSS_OFFSET) {
-          continue;
-        }
+      LevelSelectCell const *c = &s->data[ x ][ y ];
+      if (c->is_set == 0U) {
+        ERR("valid level, but not set");
+        continue;
       }
 
       auto *l = game_level_get(g, v, c->level_num);
       if (l == nullptr) {
         ERR("missing level in select map");
         continue;
+      }
+
+      //
+      // Boss level?
+      //
+      if ((y % 4) == 3) {
+        if (x == LEVEL_NUM_BOSS_OFFSET) {
+          level_is_boss_level_set(g, v, l);
+        }
       }
 
       //
@@ -598,6 +610,7 @@ static auto level_select_count_levels(LevelSelect *s) -> int
       if ((x == LEVEL_NUM_BOSS_OFFSET) && (y == LEVEL_GRID_DOWN - 1)) {
         if (! tp) {
           tp = tp_is_level_final_icon;
+          level_is_boss_final_level_set(g, v, l);
         }
       }
 

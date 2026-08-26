@@ -41,6 +41,11 @@
 {
   TRACE();
 
+  if (! l) {
+    ERR("no level pointer");
+    return false;
+  }
+
   switch (l->level_num + 1) {
     case LEVEL_NUM_BOSS_1 : return true;
     case LEVEL_NUM_BOSS_2 : return true;
@@ -49,7 +54,43 @@
     case LEVEL_NUM_BOSS_5 : return true;
     default :               break;
   }
-  return false;
+  return l->is_boss_level;
+}
+
+auto level_is_boss_level_set(Gamep g, Levelsp v, Levelp l, bool val) -> void
+{
+  TRACE();
+
+  if (! l) {
+    ERR("no level pointer");
+    return;
+  }
+
+  l->is_boss_level = val;
+}
+
+[[nodiscard]] auto level_is_boss_final_level(Gamep g, Levelsp v, Levelp l) -> bool
+{
+  TRACE();
+
+  if (! l) {
+    ERR("no level pointer");
+    return false;
+  }
+
+  return l->is_boss_final_level;
+}
+
+auto level_is_boss_final_level_set(Gamep g, Levelsp v, Levelp l, bool val) -> void
+{
+  TRACE();
+
+  if (! l) {
+    ERR("no level pointer");
+    return;
+  }
+
+  l->is_boss_final_level = val;
 }
 
 [[nodiscard]] auto level_is_valid_grid_coord(int x, int y) -> bool

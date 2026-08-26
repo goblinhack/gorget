@@ -191,6 +191,14 @@ using Level = struct Level {
   //
   uint8_t is_initialized : 1;
   //
+  // A boss level
+  //
+  uint8_t is_boss_level : 1;
+  //
+  // Last boss
+  //
+  uint8_t is_boss_final_level : 1;
+  //
   // Is this level one of the set that ticks every turn?
   //
   uint8_t is_tick_required : 1;
@@ -717,6 +725,7 @@ enum {
 [[nodiscard]] auto level_gen_is_room_secret(Gamep g, class LevelGen *lg, int x, int y) -> bool;
 [[nodiscard]] auto level_get_thing_id_at(Gamep g, Levelsp v, Levelp l, const bpoint &p, int slot) -> ThingId;
 [[nodiscard]] auto level_is_boss_level(Gamep g, Levelsp v, Levelp l) -> bool;
+[[nodiscard]] auto level_is_boss_final_level(Gamep g, Levelsp v, Levelp l) -> bool;
 [[nodiscard]] auto level_is_level_select(Gamep g, Levelsp v, Levelp l) -> bool;
 [[nodiscard]] auto level_is_player_level(Gamep g, Levelsp v, Levelp l) -> bool;
 [[nodiscard]] auto level_is_same_obj_type_at(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp) -> bool;
@@ -752,6 +761,8 @@ enum {
 // end sort marker1 }
 
 // begin sort marker2 {
+auto level_is_boss_level_set(Gamep g, Levelsp v, Levelp l, bool val = true) -> void;
+auto level_is_boss_final_level_set(Gamep g, Levelsp v, Levelp l, bool val = true) -> void;
 void fragment_alts_fini(Gamep g);
 void fragments_fini(Gamep g);
 void fragments_init(Gamep g);

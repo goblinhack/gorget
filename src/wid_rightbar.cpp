@@ -97,7 +97,7 @@ static void wid_rightbar_create_minimap_level(Gamep g)
     if (level_type_is_boss_level(num)) {
       s = std::format("{}:{} Seed:{}", bs, "boss", game_seed_name_get(g));
     } else {
-      s = std::format("{}:{} Seed:{}", bs, num, game_seed_name_get(g));
+      s = std::format("{}:L{} Seed:{}", bs, num, game_seed_name_get(g));
     }
 
     wid_rightbar->log(g, s);
