@@ -617,10 +617,9 @@ static auto level_select_count_levels(LevelSelect *s) -> int
       //
       // Completed levels
       //
-      if (0)
-        if (l->player_completed_level_via_exit || l->player_fell_out_of_level) {
-          tp = tp_is_level_closed_icon;
-        }
+      if (l->player_completed_level_via_exit || l->player_fell_out_of_level) {
+        tp = tp_is_level_closed_icon;
+      }
 
       if (! v->tick && ! player->level_num) {
         //
@@ -858,22 +857,29 @@ static auto level_select_next(Gamep g, Levelsp v, Levelp l, Levelp level_over) -
     (void) sound_play(g, "error");
     return false;
   }
+
+  bool ok_to_choose = {};
   if (level_is_level_final_icon(g, v, l, at) != nullptr) {
     // ok to choose
+    ok_to_choose = true;
   }
   if (level_is_level_open_icon(g, v, l, at) != nullptr) {
     // ok to choose
+    ok_to_choose = true;
   }
   if (level_is_level_closed_icon(g, v, l, at) != nullptr) {
-    topcon("This level is closed to you. Choose an open door.");
-    (void) sound_play(g, "error");
-    return false;
+    // ok to choose
+    ok_to_choose = true;
+  }
+  if (level_is_level_next_icon(g, v, l, at) != nullptr) {
+    // ok to choose
+    ok_to_choose = true;
   }
 
   //
   // Switch to the chosen level if possible; allow going back to the old level to clean up if needed
   //
-  if ((level_over == player_level) || level_is_level_next_icon(g, v, l, at) != nullptr) {
+  if ((level_over == player_level) || ok_to_choose) {
     new_level = level_change(g, v, level_over->level_num);
   } else {
     topcon("You cannot enter level %u yet. Choose an open door.", level_over->level_num + 1);
