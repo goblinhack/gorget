@@ -666,7 +666,6 @@ using Thing = struct Thing {
 };
 
 // begin sort marker1 {
-[[nodiscard]] auto thing_is_game_over(Thingp t) -> bool;
 [[nodiscard]] auto astar_solve(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint src, bpoint dst) -> std::vector< bpoint >;
 [[nodiscard]] auto level_vision_blocker_at(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &at) -> bool;
 [[nodiscard]] auto monst_state_to_string(MonstState state) -> std::string;
@@ -900,6 +899,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_flammable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_flat(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_flesh(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_game_over(Thingp player) -> bool;
 [[nodiscard]] auto thing_is_gaseous(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_gelatinous(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_ghost(Thingp t) -> bool;
@@ -1496,6 +1496,8 @@ auto thing_is_dead_unset(Gamep g, Levelsp v, Levelp l, Thingp t) -> void;
 auto thing_is_falling_continues_set(Gamep g, Levelsp v, Levelp l, Thingp me, bool val = true) -> void;
 auto thing_is_falling_continues_unset(Gamep g, Levelsp v, Levelp l, Thingp me) -> void;
 auto thing_is_falling_set(Gamep g, Levelsp v, Levelp l, Thingp me, bool val) -> void;
+auto thing_is_game_over_set(Gamep g, Levelsp v, Levelp l, Thingp player, bool val = true) -> void;
+auto thing_is_game_over_unset(Gamep g, Levelsp v, Levelp l, Thingp player) -> void;
 auto thing_is_hidden_set(Gamep g, Levelsp v, Levelp l, Thingp me, bool val) -> void;
 auto thing_is_hit_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> void;
 auto thing_is_hot_set(Gamep g, Levelsp v, Levelp l, Thingp me, bool val) -> void;
@@ -1518,8 +1520,6 @@ auto thing_is_thrown_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp throw
 auto thing_is_thrown_unset(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp thrower) -> void;
 auto thing_is_unlocked_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val = true) -> void;
 auto thing_is_unlocked_unset(Gamep g, Levelsp v, Levelp l, Thingp t) -> void;
-auto thing_is_game_over_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val = true) -> void;
-auto thing_is_game_over_unset(Gamep g, Levelsp v, Levelp l, Thingp t) -> void;
 auto thing_level_warp_to_entrance(Gamep g, Levelsp v, Levelp new_level, Thingp t) -> void;
 auto thing_level_warp_to_exit(Gamep g, Levelsp v, Levelp new_level, Thingp t) -> void;
 auto thing_lunge_end_check(Gamep g, Levelsp v, Levelp l, Thingp me) -> void;

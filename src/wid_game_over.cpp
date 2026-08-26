@@ -9,11 +9,11 @@
 #include "my_game.hpp"
 #include "my_game_inlines.hpp"
 #include "my_gl.hpp" // NOLINT
-#include "my_globals.hpp"
 #include "my_main.hpp"
 #include "my_music.hpp"
 #include "my_random.hpp"
 #include "my_spoint.hpp"
+#include "my_thing.hpp"
 #include "my_tile.hpp"
 #include "my_types.hpp"
 #include "my_ui.hpp"
@@ -511,7 +511,10 @@ void wid_game_over_select(Gamep g)
     wid_game_over_destroy();
   }
 
-  if (! game_music_volume_get(g)) {
+  //
+  // If music is muted, we really want to show off the final music
+  //
+  if (game_music_volume_get(g) == 0) {
     game_music_volume_set(g, MIX_MAX_VOLUME);
     music_update_volume(g);
   }

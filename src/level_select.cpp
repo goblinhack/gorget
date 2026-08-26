@@ -621,7 +621,7 @@ static auto level_select_count_levels(LevelSelect *s) -> int
         tp = tp_is_level_closed_icon;
       }
 
-      if ((v->tick == 0u) && (player->level_num == 0u)) {
+      if ((v->tick == 0U) && (player->level_num == 0U)) {
         //
         // Where the player is initially
         //
@@ -684,7 +684,7 @@ static auto level_select_count_levels(LevelSelect *s) -> int
 
         v->level_select.tile_to_level[ at.x ][ at.y ] = l->level_num;
 
-        if (v->level_select_id == 0u) {
+        if (v->level_select_id == 0U) {
           if ((x == LEVEL_NUM_BOSS_OFFSET) && (y == 0)) {
             v->level_select_id = t->id;
             level_scroll_to_focus(g, v, level_select);

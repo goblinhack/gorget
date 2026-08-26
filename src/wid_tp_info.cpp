@@ -96,7 +96,7 @@
         show_string = true;
         break;
       case THING_EVENT_NONE :             [[fallthrough]];
-      case THING_EVENT_GAME_OVER :          [[fallthrough]];
+      case THING_EVENT_GAME_OVER :        [[fallthrough]];
       case THING_EVENT_MELT :             [[fallthrough]];
       case THING_EVENT_OPEN :             [[fallthrough]];
       case THING_EVENT_LIFESPAN_EXPIRED : [[fallthrough]];
@@ -223,7 +223,7 @@
         show_string = true;
         break;
       case THING_EVENT_NONE :             [[fallthrough]];
-      case THING_EVENT_GAME_OVER :          [[fallthrough]];
+      case THING_EVENT_GAME_OVER :        [[fallthrough]];
       case THING_EVENT_MELT :             [[fallthrough]];
       case THING_EVENT_OPEN :             [[fallthrough]];
       case THING_EVENT_LIFESPAN_EXPIRED : [[fallthrough]];
@@ -286,7 +286,7 @@
         show_string = true;
         break;
       case THING_EVENT_NONE :             [[fallthrough]];
-      case THING_EVENT_GAME_OVER :          [[fallthrough]];
+      case THING_EVENT_GAME_OVER :        [[fallthrough]];
       case THING_EVENT_MELT :             [[fallthrough]];
       case THING_EVENT_OPEN :             [[fallthrough]];
       case THING_EVENT_LIFESPAN_EXPIRED : [[fallthrough]];

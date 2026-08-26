@@ -586,28 +586,28 @@ ENUM_DEF_H(THING_ANIM_ENUM, ThingAnimType)
 // Thing event enum
 //
 #define THING_EVENT_ENUM(list_macro)                                                                                                            \
-  CLANG_FORMAT_INDENT()                                             /* dummy line for clang indentation fixup */                                \
-  list_macro(THING_EVENT_FIRE_DAMAGE, "fire-damage"),               /* newline */                                                               \
-      list_macro(THING_EVENT_LIGHT_DAMAGE, "light-damage"),         /* newline */                                                               \
-      list_macro(THING_EVENT_MELEE_DAMAGE, "melee-damage"),         /* newline */                                                               \
-      list_macro(THING_EVENT_ENGULF_DAMAGE, "engulf-damage"),       /* newline */                                                               \
-      list_macro(THING_EVENT_THROWN_DAMAGE, "thrown-damage"),       /* newline */                                                               \
-      list_macro(THING_EVENT_WATER_DAMAGE, "water-damage"),         /* newline */                                                               \
-      list_macro(THING_EVENT_CRUSH_DAMAGE, "crush-damage"),         /* newline */                                                               \
-      list_macro(THING_EVENT_FALL, "fall-damage"),                  /* newline */                                                               \
-      list_macro(THING_EVENT_EXPLOSION_DAMAGE, "explosion-damage"), /* newline */                                                               \
-      list_macro(THING_EVENT_USER_INITIATED, "user-initiated"),     /* newline */                                                               \
-      list_macro(THING_EVENT_LIFESPAN_EXPIRED, "lifespan-expired"), /* newline */                                                               \
-      list_macro(THING_EVENT_MELT, "melt"),                         /* newline */                                                               \
-      list_macro(THING_EVENT_OPEN, "open"),                         /* newline */                                                               \
-      list_macro(THING_EVENT_THROWN, "thrown"),                     /* newline */                                                               \
-      list_macro(THING_EVENT_USED, "used"),                         /* newline */                                                               \
-      list_macro(THING_EVENT_NONE, "none"),                         /* newline */                                                               \
-      list_macro(THING_EVENT_GAME_OVER, "became-the-new-dark-lord"),  /* newline */                                                               \
-      list_macro(THING_EVENT_SPAWNED, "spawned"),                   /* newline */                                                               \
-      list_macro(THING_EVENT_SHOVED, "shoved"),                     /* newline */                                                               \
-      list_macro(THING_EVENT_CARRIED, "carried"),                   /* newline */                                                               \
-      list_macro(THING_EVENT_CARRIED_MERGED, "carried-merged"),     /* newline */
+  CLANG_FORMAT_INDENT()                                              /* dummy line for clang indentation fixup */                               \
+  list_macro(THING_EVENT_FIRE_DAMAGE, "fire-damage"),                /* newline */                                                              \
+      list_macro(THING_EVENT_LIGHT_DAMAGE, "light-damage"),          /* newline */                                                              \
+      list_macro(THING_EVENT_MELEE_DAMAGE, "melee-damage"),          /* newline */                                                              \
+      list_macro(THING_EVENT_ENGULF_DAMAGE, "engulf-damage"),        /* newline */                                                              \
+      list_macro(THING_EVENT_THROWN_DAMAGE, "thrown-damage"),        /* newline */                                                              \
+      list_macro(THING_EVENT_WATER_DAMAGE, "water-damage"),          /* newline */                                                              \
+      list_macro(THING_EVENT_CRUSH_DAMAGE, "crush-damage"),          /* newline */                                                              \
+      list_macro(THING_EVENT_FALL, "fall-damage"),                   /* newline */                                                              \
+      list_macro(THING_EVENT_EXPLOSION_DAMAGE, "explosion-damage"),  /* newline */                                                              \
+      list_macro(THING_EVENT_USER_INITIATED, "user-initiated"),      /* newline */                                                              \
+      list_macro(THING_EVENT_LIFESPAN_EXPIRED, "lifespan-expired"),  /* newline */                                                              \
+      list_macro(THING_EVENT_MELT, "melt"),                          /* newline */                                                              \
+      list_macro(THING_EVENT_OPEN, "open"),                          /* newline */                                                              \
+      list_macro(THING_EVENT_THROWN, "thrown"),                      /* newline */                                                              \
+      list_macro(THING_EVENT_USED, "used"),                          /* newline */                                                              \
+      list_macro(THING_EVENT_NONE, "none"),                          /* newline */                                                              \
+      list_macro(THING_EVENT_GAME_OVER, "became-the-new-dark-lord"), /* newline */                                                              \
+      list_macro(THING_EVENT_SPAWNED, "spawned"),                    /* newline */                                                              \
+      list_macro(THING_EVENT_SHOVED, "shoved"),                      /* newline */                                                              \
+      list_macro(THING_EVENT_CARRIED, "carried"),                    /* newline */                                                              \
+      list_macro(THING_EVENT_CARRIED_MERGED, "carried-merged"),      /* newline */
 
 ENUM_DEF_H(THING_EVENT_ENUM, ThingEventType)
 
