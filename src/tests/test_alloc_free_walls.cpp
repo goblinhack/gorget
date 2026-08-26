@@ -32,8 +32,13 @@
   TEST_ASSERT(t, levels_thing_count(g, v) == 0, "expected thing count to be 0");
   TEST_ASSERT(t, levels_thing_ext_count(g, v) == 0, "expected thing count to be 0");
 
-  for (auto X = 0; X < LEVEL_ACROSS; X++) {
-    for (auto Y = 0; Y < LEVEL_DOWN; Y++) {
+  for (auto Y = 0; Y < LEVEL_GRID_DOWN; Y++) {
+    for (auto X = 0; X < LEVEL_GRID_ACROSS; X++) {
+
+      if (! level_is_valid_grid_coord(X, Y)) {
+        continue;
+      }
+
       if (level_num++ == 0) {
         //
         // Already inited
@@ -47,7 +52,7 @@
       // all the other levels, so not a lot of space to alloc IDs from.
       //
       auto slot_depth_to_test = static_cast< int >(MAP_SLOTS - 1);
-      if (level_num == LEVEL_SELECT_ID) {
+      if (level_num == LEVEL_ARR_IDX_GRID) {
         //
         // There's just no space in other levels if we fully allocate them!
         //

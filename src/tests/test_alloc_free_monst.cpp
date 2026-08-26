@@ -29,8 +29,13 @@
   TEST_ASSERT(t, levels_thing_count(g, v) == 0, "expected thing count to be 0");
   TEST_ASSERT(t, levels_thing_ext_count(g, v) == 0, "expected thing count to be 0");
 
-  for (auto X = 0; X < LEVEL_ACROSS; X++) {
-    for (auto Y = 0; Y < LEVEL_DOWN; Y++) {
+  for (auto Y = 0; Y < LEVEL_GRID_DOWN; Y++) {
+    for (auto X = 0; X < LEVEL_GRID_ACROSS; X++) {
+
+      if (! level_is_valid_grid_coord(X, Y)) {
+        continue;
+      }
+
       if ((X == 0) && (Y == 0)) {
         continue;
       }

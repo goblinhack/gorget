@@ -29,7 +29,7 @@ enum {
   //
   // E Entropy
   // I Per level ID (enough for THING_ID_PER_LEVEL_REQ)
-  // L Level        (enough for LEVEL_MAX - 1)
+  // L Level        (enough for LEVEL_ARR_IDX_MAX - 1)
   //
   THING_LEVEL_ID_BITS           = 7,
   THING_PER_LEVEL_THING_ID_BITS = 15,
@@ -154,11 +154,36 @@ enum {
   //
   LIGHT_MAX_RAYS_MAX = (360 * 4),
 
-  LEVEL_TEST_MAX  = 1000,
-  LEVEL_ACROSS    = 5,
-  LEVEL_DOWN      = 20,
-  LEVEL_MAX       = ((LEVEL_ACROSS * LEVEL_DOWN) + 1),
-  LEVEL_SELECT_ID = (LEVEL_MAX - 1), // The level select level
+  LEVEL_TEST_MAX = 1000,
+
+  //
+  // This is the level selection grid
+  //
+  LEVEL_GRID_ACROSS = 5,
+  LEVEL_GRID_DOWN   = 20,
+
+  //
+  // This is the maximum number of levesl we need to generate.
+  // We can skip some due to gaps due to the boss levels
+  //
+  BIOME_COUNT       = 5,
+  EMPTY_LEVEL_COUNT = ((LEVEL_GRID_ACROSS - 1) * 5),
+  LEVEL_ARR_IDX_MAX = (((LEVEL_GRID_ACROSS * LEVEL_GRID_DOWN) + 1) - EMPTY_LEVEL_COUNT),
+
+  //
+  // The level selection grid is at the end of the array
+  //
+  LEVEL_ARR_IDX_GRID = (LEVEL_ARR_IDX_MAX - 1), // The level select level
+
+  //
+  // LevelNums have a base of 1
+  //
+  LEVEL_NUM_BOSS_1      = 16,
+  LEVEL_NUM_BOSS_2      = 32,
+  LEVEL_NUM_BOSS_3      = 48,
+  LEVEL_NUM_BOSS_4      = 64,
+  LEVEL_NUM_BOSS_5      = 80,
+  LEVEL_NUM_BOSS_OFFSET = 2, // Boss levels are in the middle of the grid
 
   THING_ARR_INDEX_BITS = (THING_LEVEL_ID_BITS + THING_PER_LEVEL_THING_ID_BITS),
   THING_ID_MAX         = (1 << THING_ARR_INDEX_BITS),
@@ -171,7 +196,7 @@ enum {
   //
   TP_ID_MAX = 255,
 
-  LEVEL_ID_REQ = (LEVEL_ACROSS * LEVEL_DOWN),
+  LEVEL_ID_REQ = (LEVEL_GRID_ACROSS * LEVEL_GRID_DOWN),
   LEVEL_ID_MAX = (1 << THING_LEVEL_ID_BITS),
 };
 

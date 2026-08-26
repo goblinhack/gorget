@@ -210,7 +210,7 @@ void thing_player_init(Gamep g)
     case STATE_QUIT_MENU :         [[fallthrough]];
     case STATE_QUITTING :          [[fallthrough]];
     case STATE_SAVE_MENU :         [[fallthrough]];
-    case STATE_THE_END_MENU :      [[fallthrough]];
+    case STATE_GAME_OVER_MENU :    [[fallthrough]];
     case STATE_THROW_MENU :        [[fallthrough]];
     case GAME_STATE_ENUM_MAX :     DBG("game motion, ignore, not playing"); return false;
   }
@@ -292,7 +292,7 @@ void thing_player_event_loop(Gamep g, Levelsp v, Levelp l)
         case PLAYER_STATE_ENUM_MAX : break;
       }
       break;
-    case STATE_THE_END_MENU :
+    case STATE_GAME_OVER_MENU :
     case STATE_LEVEL_SELECT_MENU :
     case STATE_DEAD_MENU :
       //
@@ -1087,7 +1087,7 @@ void player_move_accum(Gamep g, Levelsp v, Levelp l, bool up, bool down, bool le
 //
 // Handle common level exit interactions
 //
-static void player_leave_current_level_and_change_to_level_num(Gamep g, Levelsp v, LevelNum level_num = LEVEL_SELECT_ID)
+static void player_leave_current_level_and_change_to_level_num(Gamep g, Levelsp v, LevelNum level_num = LEVEL_ARR_IDX_GRID)
 {
   TRACE();
 
@@ -1139,7 +1139,7 @@ void player_reached_exit_do(Gamep g, Levelsp v, Levelp l)
 
   level_is_completed_by_player_exiting(g, v, l);
 
-  if (l->level_num == LEVEL_SELECT_ID - 1) {
+  if (l->level_num == LEVEL_ARR_IDX_GRID - LEVEL_NUM_BOSS_OFFSET - 1) {
     auto *player = thing_player(g);
     if (player != nullptr) {
       ThingEvent e {
@@ -1155,7 +1155,7 @@ void player_reached_exit_do(Gamep g, Levelsp v, Levelp l)
     game_request_to_end_game_set(g);
     game_request_to_end_game_reason_set(g, "game over");
   } else {
-    player_leave_current_level_and_change_to_level_num(g, v, LEVEL_SELECT_ID);
+    player_leave_current_level_and_change_to_level_num(g, v, LEVEL_ARR_IDX_GRID);
   }
 }
 
@@ -1188,7 +1188,7 @@ void player_reached_entrance_do(Gamep g, Levelsp v, Levelp l)
   level_log(g, v, l, "player reached entrance handler");
   TRACE_INDENT();
 
-  player_leave_current_level_and_change_to_level_num(g, v, LEVEL_SELECT_ID);
+  player_leave_current_level_and_change_to_level_num(g, v, LEVEL_ARR_IDX_GRID);
 }
 
 //

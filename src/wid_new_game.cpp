@@ -36,7 +36,7 @@ void wid_new_game(Gamep g)
   if (! g_opt_quick_start) {
     auto *v = game_levels_get(g);
     if (v != nullptr) {
-      (void) level_change(g, v, LEVEL_SELECT_ID);
+      (void) level_change(g, v, LEVEL_ARR_IDX_GRID);
     }
   }
 }

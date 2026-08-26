@@ -23,7 +23,7 @@
     return nullptr;
   }
 #endif
-  if (n >= LEVEL_MAX) [[unlikely]] {
+  if (n >= LEVEL_ARR_IDX_MAX) [[unlikely]] {
     ERR("game_level_get: Exceeded max level: %u", n);
     return nullptr;
   }

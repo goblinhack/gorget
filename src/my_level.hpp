@@ -331,7 +331,7 @@ using LevelSelect = struct LevelSelect {
   //
   // Level tiles and grid info
   //
-  LevelSelectCell data[ LEVEL_ACROSS ][ LEVEL_DOWN ];
+  LevelSelectCell data[ LEVEL_GRID_ACROSS ][ LEVEL_GRID_DOWN ];
 
   //
   // This is a reverse mapping from on screen tile to level
@@ -393,7 +393,7 @@ using Levels = struct Levels {
   //
   // Flag array of all levels. The levels equate to one tile in the level grid.
   //
-  Level level[ LEVEL_MAX ];
+  Level level[ LEVEL_ARR_IDX_MAX ];
   //
   // Level lighting.
   //
@@ -533,14 +533,14 @@ struct MyIter {
 #define FOR_ALL_LEVELS(_g_, _v_, _l_)                                                                                                           \
   if ((VERIFY(MTYPE_GAME, _g_)) && (VERIFY(MTYPE_LEVELS, _v_)))                                                                                 \
     if (Levelp _l_ = nullptr; true)                                                                                                             \
-      for (auto _n_ = 0; _n_ < LEVEL_MAX; _n_++)                                                                                                \
+      for (auto _n_ = 0; _n_ < LEVEL_ARR_IDX_MAX; _n_++)                                                                                        \
         if (((_l_) = &v->level[ _n_ ]))                                                                                                         \
           if ((_l_)->is_initialized)
 
 #define FOR_ALL_TICKING_LEVELS(_g_, _v_, _l_)                                                                                                   \
   if ((VERIFY(MTYPE_GAME, _g_)) && (VERIFY(MTYPE_LEVELS, _v_)))                                                                                 \
     if (Levelp _l_ = nullptr; true)                                                                                                             \
-      for (auto _n_ = 0; _n_ < LEVEL_MAX; _n_++)                                                                                                \
+      for (auto _n_ = 0; _n_ < LEVEL_ARR_IDX_MAX; _n_++)                                                                                        \
         if (((_l_) = &v->level[ _n_ ]))                                                                                                         \
           if ((_l_)->is_tick_required)
 
@@ -720,6 +720,7 @@ enum {
 [[nodiscard]] auto level_is_level_select(Gamep g, Levelsp v, Levelp l) -> bool;
 [[nodiscard]] auto level_is_player_level(Gamep g, Levelsp v, Levelp l) -> bool;
 [[nodiscard]] auto level_is_same_obj_type_at(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp) -> bool;
+[[nodiscard]] auto level_is_valid_grid_coord(int x, int y) -> bool;
 [[nodiscard]] auto level_light_blocker_at(Gamep g, Levelsp v, Levelp l, const bpoint &pov, Thingp me) -> Thingp;
 [[nodiscard]] auto level_match_contents(Gamep g, Levelsp v, Levelp l, Testp t, int w, int h, const char *expected) -> bool;
 [[nodiscard]] auto level_open(Gamep g, Levelsp v, Levelp l, ThingFlagType f, bpoint p, Thingp me = nullptr) -> Thingp;
@@ -739,6 +740,7 @@ enum {
 [[nodiscard]] auto level_tick_begin_requested_cached(Gamep g, Levelsp v, Levelp l, const char *why) -> bool;
 [[nodiscard]] auto level_tick_is_in_progress(Gamep g, Levelsp v, Levelp l) -> bool;
 [[nodiscard]] auto level_to_biome(Gamep g, Levelsp v, Levelp l) -> BiomeType;
+[[nodiscard]] auto level_type_is_boss_level(LevelNum level_num) -> bool;
 [[nodiscard]] auto level_type(LevelNum level_num) -> LevelType;
 [[nodiscard]] auto levels_memory_alloc(Gamep g) -> Levelsp;
 [[nodiscard]] auto levels_thing_count(Gamep g, Levelsp v) -> int;

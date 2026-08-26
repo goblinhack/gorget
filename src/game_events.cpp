@@ -95,7 +95,7 @@
     case STATE_QUIT_MENU :         [[fallthrough]];
     case STATE_QUITTING :          [[fallthrough]];
     case STATE_SAVE_MENU :         [[fallthrough]];
-    case STATE_THE_END_MENU :      [[fallthrough]];
+    case STATE_GAME_OVER_MENU :    [[fallthrough]];
     case STATE_THROW_MENU :        [[fallthrough]];
     case GAME_STATE_ENUM_MAX :     DBG("game mouse down, ignore, not playing"); return false;
   }
@@ -179,7 +179,7 @@
     case STATE_QUIT_MENU :         [[fallthrough]];
     case STATE_QUITTING :          [[fallthrough]];
     case STATE_SAVE_MENU :         [[fallthrough]];
-    case STATE_THE_END_MENU :      [[fallthrough]];
+    case STATE_GAME_OVER_MENU :    [[fallthrough]];
     case STATE_THROW_MENU :        [[fallthrough]];
     case GAME_STATE_ENUM_MAX :     DBG("game motion, ignore, not playing"); return false;
   }
@@ -646,7 +646,7 @@ static auto game_event_abort(Gamep g) -> bool
     case STATE_QUIT_MENU :         [[fallthrough]];
     case STATE_QUITTING :          [[fallthrough]];
     case STATE_SAVE_MENU :         [[fallthrough]];
-    case STATE_THE_END_MENU :      [[fallthrough]];
+    case STATE_GAME_OVER_MENU :    [[fallthrough]];
     case STATE_THROW_MENU :        [[fallthrough]];
     case GAME_STATE_ENUM_MAX :     DBG("ignore, not playing"); return false;
   }
@@ -680,7 +680,7 @@ static auto game_event_abort(Gamep g) -> bool
     case STATE_QUIT_MENU :         [[fallthrough]];
     case STATE_QUITTING :          [[fallthrough]];
     case STATE_SAVE_MENU :         [[fallthrough]];
-    case STATE_THE_END_MENU :      [[fallthrough]];
+    case STATE_GAME_OVER_MENU :    [[fallthrough]];
     case STATE_THROW_MENU :        [[fallthrough]];
     case GAME_STATE_ENUM_MAX :     DBG("ignore, not playing"); return false;
   }
@@ -848,7 +848,7 @@ static auto game_event_abort(Gamep g) -> bool
     case STATE_QUIT_MENU :         [[fallthrough]];
     case STATE_QUITTING :          [[fallthrough]];
     case STATE_SAVE_MENU :         [[fallthrough]];
-    case STATE_THE_END_MENU :      [[fallthrough]];
+    case STATE_GAME_OVER_MENU :    [[fallthrough]];
     case STATE_THROW_MENU :        [[fallthrough]];
     case GAME_STATE_ENUM_MAX :     DBG("game mouse down, ignore, not playing"); return false;
   }

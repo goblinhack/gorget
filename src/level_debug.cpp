@@ -35,10 +35,10 @@ void game_debug_info(Gamep g)
   log("- MAP_WIDTH                        %u", MAP_WIDTH);
   log("- MAP_SLOTS                        %u", MAP_SLOTS);
   log("- LEVEL_SCALE                      %u", LEVEL_SCALE);
-  log("- LEVEL_ACROSS                     %u", LEVEL_ACROSS);
-  log("- LEVEL_DOWN                       %u", LEVEL_DOWN);
-  log("- LEVEL_SELECT_ID                  %u", LEVEL_SELECT_ID);
-  log("- LEVEL_MAX                        %u", LEVEL_MAX);
+  log("- LEVEL_GRID_ACROSS                %u", LEVEL_GRID_ACROSS);
+  log("- LEVEL_GRID_DOWN                  %u", LEVEL_GRID_DOWN);
+  log("- LEVEL_ARR_IDX_GRID               %u", LEVEL_ARR_IDX_GRID);
+  log("- LEVEL_ARR_IDX_MAX                %u", LEVEL_ARR_IDX_MAX);
   log("- LEVEL_ID_MAX                     %u", THING_ID_PER_LEVEL_MAX);
   log("- THING_LEVEL_ID_BITS              %u (%u indices)", THING_LEVEL_ID_BITS, (1 << THING_LEVEL_ID_BITS) - 1);
   log("- THING_PER_LEVEL_THING_ID_BITS    %u (%u indices)", THING_PER_LEVEL_THING_ID_BITS, (1 << THING_PER_LEVEL_THING_ID_BITS) - 1);

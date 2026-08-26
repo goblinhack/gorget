@@ -189,18 +189,23 @@ static void thing_fall_end(Gamep g, Levelsp v, Levelp l, Thingp me)
     return;
   }
 
-  if (next_level == l) {
-    ThingEvent e {
-        .reason     = "by falling into nothing",      //
-        .event_type = THING_EVENT_FALL,               //
-        .damage     = thing_fall_damage(g, v, l, me), //
-    };
+  //
+  // We can fall into the same level if falling on a boss level
+  //
+  if (compiler_unused) {
+    if (next_level == l) {
+      ThingEvent e {
+          .reason     = "by falling into nothing",      //
+          .event_type = THING_EVENT_FALL,               //
+          .damage     = thing_fall_damage(g, v, l, me), //
+      };
 
-    THING_DBG(g, v, l, me, "dead due to falling into nothing");
-    TRACE_INDENT();
+      THING_DBG(g, v, l, me, "dead due to falling into nothing");
+      TRACE_INDENT();
 
-    thing_dead(g, v, l, me, e);
-    return;
+      thing_dead(g, v, l, me, e);
+      return;
+    }
   }
 
   //

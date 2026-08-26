@@ -56,7 +56,7 @@ void level_verify(Gamep g, Levelsp v, Levelp l)
     return false;
   }
 
-  return l->level_num == LEVEL_SELECT_ID;
+  return l->level_num == LEVEL_ARR_IDX_GRID;
 }
 
 void level_init(Gamep g, Levelsp v, Levelp l, LevelNum n)
@@ -207,7 +207,7 @@ void level_is_completed_by_player_falling(Gamep g, Levelsp v, Levelp l)
     return nullptr;
   }
 
-  if (level_num == LEVEL_SELECT_ID) {
+  if (level_num == LEVEL_ARR_IDX_GRID) {
     //
     // Enter level selectionm
     //

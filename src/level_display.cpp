@@ -482,7 +482,7 @@ static void level_display_fbo(Gamep g, Levelsp v, Levelp level_above, Levelp l, 
           case STATE_QUIT_MENU :         [[fallthrough]];
           case STATE_QUITTING :          [[fallthrough]];
           case STATE_SAVE_MENU :         [[fallthrough]];
-          case STATE_THE_END_MENU :      [[fallthrough]];
+          case STATE_GAME_OVER_MENU :    [[fallthrough]];
           case STATE_THROW_MENU :        [[fallthrough]];
           case GAME_STATE_ENUM_MAX :     break;
         }

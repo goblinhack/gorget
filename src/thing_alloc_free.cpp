@@ -290,12 +290,12 @@ static auto thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, ThingIdPacked i
   // is not initialized
   //
   auto level_num = l->level_num;
-  if (level_num == LEVEL_SELECT_ID) {
+  if (level_num == LEVEL_ARR_IDX_GRID) {
     if (v->is_generating_levels) {
       CROAK("cannot allocate level select while mutexes are off");
     }
 
-    for (auto i = 0; i < LEVEL_MAX; i++) {
+    for (auto i = 0; i < LEVEL_ARR_IDX_MAX; i++) {
       if (! v->level[ i ].is_initialized) {
         level_num = i;
         break;
@@ -303,7 +303,7 @@ static auto thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, ThingIdPacked i
     }
   }
 
-  static uint32_t last_per_level_id[ LEVEL_MAX ];
+  static uint32_t last_per_level_id[ LEVEL_ARR_IDX_MAX ];
 
   //
   // Sequentially try to allocate an ID from the last ID allocated.

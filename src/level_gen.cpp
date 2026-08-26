@@ -175,7 +175,7 @@ static int level_no_exit_room;
 //
 // Fixed or proc gen levels
 //
-static std::array< class LevelGen *, LEVEL_MAX > levels_generated = {};
+static std::array< class LevelGen *, LEVEL_ARR_IDX_MAX > levels_generated = {};
 
 static void level_gen_dump(class LevelGen *lg, const char *msg = nullptr);
 
@@ -3052,7 +3052,7 @@ static auto level_gen_new_class(Gamep g, LevelNum level_num) -> class LevelGen *
   //
   // Per thread seed that increments each time we fail. Hopefully this avoids dup levels.
   //
-  uint32_t seed_num = (game_seed_num_get(g) * 1001) + ((level_num + 1) * LEVEL_MAX);
+  uint32_t seed_num = (game_seed_num_get(g) * 1001) + ((level_num + 1) * LEVEL_ARR_IDX_MAX);
   PCG_SRAND(seed_num);
 
   auto *lg = new LevelGen();
@@ -3060,7 +3060,7 @@ static auto level_gen_new_class(Gamep g, LevelNum level_num) -> class LevelGen *
   //
   // Per thread seed that increments each time we fail. Hopefully this avoids dup levels.
   //
-  seed_num = (game_seed_num_get(g) * 1001) + ((level_num + 1) * LEVEL_MAX);
+  seed_num = (game_seed_num_get(g) * 1001) + ((level_num + 1) * LEVEL_ARR_IDX_MAX);
   PCG_SRAND(seed_num);
   lg->info.seed_num = seed_num;
 
@@ -3109,7 +3109,7 @@ static auto level_proc_gen_create_rooms(Gamep g, LevelNum level_num) -> class Le
   //
   // Per thread seed that increments each time we fail. Hopefully this avoids dup levels.
   //
-  uint32_t seed_num = (game_seed_num_get(g) * 1001) + ((level_num + 1) * LEVEL_MAX);
+  uint32_t seed_num = (game_seed_num_get(g) * 1001) + ((level_num + 1) * LEVEL_ARR_IDX_MAX);
   PCG_SRAND(seed_num);
 
   bool const add_blob = d100() < LEVEL_BLOB_GEN_PROB;
@@ -3128,7 +3128,7 @@ static auto level_proc_gen_create_rooms(Gamep g, LevelNum level_num) -> class Le
     //
     // Per thread seed that increments each time we fail. Hopefully this avoids dup levels.
     //
-    seed_num = (game_seed_num_get(g) * 1001) + ((level_num + 1) * LEVEL_MAX) + level_gen_tries;
+    seed_num = (game_seed_num_get(g) * 1001) + ((level_num + 1) * LEVEL_ARR_IDX_MAX) + level_gen_tries;
     PCG_SRAND(seed_num);
     lg->info.seed_num = seed_num;
 
@@ -5495,7 +5495,7 @@ static void level_gen_create_fixed_or_proc_gen_level(Gamep g, LevelNum level_num
   //
   g_thread_id = level_num + 1;
 
-  if (level_num >= LEVEL_SELECT_ID) {
+  if (level_num >= LEVEL_ARR_IDX_GRID) {
     CROAK("this will exceed the number of level bits");
   }
 
@@ -5637,7 +5637,7 @@ void level_gen_test(Gamep g)
     // Generate the maximum number of levels
     //
     LevelSelect *s = &v->level_select;
-    s->level_count = LEVEL_SELECT_ID - 1;
+    s->level_count = LEVEL_ARR_IDX_GRID - 1;
 
     //
     // Create the levels

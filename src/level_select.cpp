@@ -35,10 +35,10 @@
   if (p.y < 0) {
     return true;
   }
-  if (p.x >= LEVEL_ACROSS) {
+  if (p.x >= LEVEL_GRID_ACROSS) {
     return true;
   }
-  if (p.y >= LEVEL_DOWN) {
+  if (p.y >= LEVEL_GRID_DOWN) {
     return true;
   }
   return false;
@@ -54,10 +54,10 @@
   if (y < 0) {
     return true;
   }
-  if (x >= LEVEL_ACROSS) {
+  if (x >= LEVEL_GRID_ACROSS) {
     return true;
   }
-  if (y >= LEVEL_DOWN) {
+  if (y >= LEVEL_GRID_DOWN) {
     return true;
   }
   return false;
@@ -70,7 +70,7 @@
 {
   TRACE();
 
-  auto  *level_select = game_level_get(g, v, LEVEL_SELECT_ID);
+  auto  *level_select = game_level_get(g, v, LEVEL_ARR_IDX_GRID);
   Levelp level_over   = nullptr;
 
   auto *tp_is_level_locked_icon = tp_first(is_level_locked_icon);
@@ -107,7 +107,7 @@
 {
   TRACE();
 
-  auto *level_select = game_level_get(g, v, LEVEL_SELECT_ID);
+  auto *level_select = game_level_get(g, v, LEVEL_ARR_IDX_GRID);
 
   FOR_ALL_THINGS_AT(g, v, level_select, t, p) { return t; }
 
@@ -137,7 +137,7 @@ static auto level_select_get_level_from_grid_coords(Levelsp v, bpoint p) -> Leve
 
   auto level_num = s->level_num;
 
-  if (level_num >= LEVEL_SELECT_ID) {
+  if (level_num >= LEVEL_ARR_IDX_GRID) {
     return nullptr;
   }
 
@@ -220,9 +220,9 @@ static auto level_select_get_level_from_grid_coords(Levelsp v, bpoint p) -> Leve
   //
   // Try to fall down
   //
-  while (tries++ < LEVEL_ACROSS * 2) {
+  {
     p.y++;
-    if (p.y >= LEVEL_DOWN) {
+    if (p.y >= LEVEL_GRID_DOWN) {
       //
       // Failed.
       //
@@ -241,6 +241,30 @@ static auto level_select_get_level_from_grid_coords(Levelsp v, bpoint p) -> Leve
     }
   }
 
+  //
+  // Try to fall down into the boss level
+  //
+  switch (p.y) {
+    case 3 :
+    case 7 :
+    case 11 :
+    case 15 :
+    case 19 :
+      {
+        p.x = LEVEL_NUM_BOSS_OFFSET;
+
+        if (compiler_unused) {
+          con("level %d -> next (look at boss level %u,%u)", l->level_num, p.x, p.y);
+        }
+
+        auto *cand = level_select_get_level_from_grid_coords(v, p);
+        if ((cand != nullptr) && (cand != l)) {
+          level_out = cand;
+          goto got_level;
+        }
+      }
+  }
+
   if (l->level_num == v->level_count) {
     auto *cand = game_level_get(g, v, 0);
     if (cand != nullptr) {
@@ -256,11 +280,11 @@ static auto level_select_get_level_from_grid_coords(Levelsp v, bpoint p) -> Leve
   // Nothing to fall onto. Try a random level.
   //
   tries = 0;
-  while (tries++ < LEVEL_DOWN * LEVEL_ACROSS * 2) {
+  while (tries++ < LEVEL_GRID_DOWN * LEVEL_GRID_ACROSS * 2) {
     if (compiler_unused) {
       con("level %d -> next (random)", l->level_num);
     }
-    bpoint const random_p(PCG_RANDOM_RANGE(0, LEVEL_ACROSS), PCG_RANDOM_RANGE(0, LEVEL_DOWN));
+    bpoint const random_p(PCG_RANDOM_RANGE(0, LEVEL_GRID_ACROSS), PCG_RANDOM_RANGE(0, LEVEL_GRID_DOWN));
 
     auto *cand = level_select_get_level_from_grid_coords(v, random_p);
     if ((cand != nullptr) && (cand != l)) {
@@ -281,7 +305,7 @@ got_level:
     l->level_num_next_set = true;
     l->level_num_next     = level_out->level_num;
     if (compiler_unused) {
-      con("level %d -> next %d at %u,%u", l->level_num, l->level_num_next, l->level_select_at.x, l->level_select_at.y);
+      con("level %d -> got next %d at %u,%u", l->level_num, l->level_num_next, l->level_select_at.x, l->level_select_at.y);
     }
   }
 
@@ -319,9 +343,9 @@ static void level_select_dump(LevelSelect *s)
   log("levelSelect, level count %d", s->level_count);
   TRACE_INDENT();
 
-  for (auto y = 0; y < LEVEL_DOWN; y++) {
+  for (auto y = 0; y < LEVEL_GRID_DOWN; y++) {
     std::string out;
-    for (auto x = 0; x < LEVEL_ACROSS; x++) {
+    for (auto x = 0; x < LEVEL_GRID_ACROSS; x++) {
       LevelSelectCell *c = &s->data[ x ][ y ];
 
       if (c->is_set != 0u) {
@@ -346,8 +370,8 @@ void level_select_assign_levels_to_grid(Gamep g, Levelsp v)
 
   auto n = 0;
 
-  for (int y = 0; y < LEVEL_DOWN; y++) {
-    for (int x = 0; x < LEVEL_ACROSS; x++) {
+  for (int y = 0; y < LEVEL_GRID_DOWN; y++) {
+    for (int x = 0; x < LEVEL_GRID_ACROSS; x++) {
       if (s->data[ x ][ y ].is_set != 0U) {
         auto *l = game_level_get(g, v, n);
         if (l == nullptr) {
@@ -362,7 +386,7 @@ void level_select_assign_levels_to_grid(Gamep g, Levelsp v)
         l->level_select_at = bpoint(x, y);
 
         c->level_num = l->level_num;
-        if ((x == 2) && (y == LEVEL_DOWN - 1)) {
+        if ((x == LEVEL_NUM_BOSS_OFFSET) && (y == LEVEL_GRID_DOWN - 1)) {
           c->final_level = true;
         }
 
@@ -402,8 +426,8 @@ static auto level_select_count_levels(LevelSelect *s) -> int
 
   s->level_count = 0;
 
-  for (auto y = 0; y < LEVEL_DOWN; y++) {
-    for (auto x = 0; x < LEVEL_ACROSS; x++) {
+  for (auto y = 0; y < LEVEL_GRID_DOWN; y++) {
+    for (auto x = 0; x < LEVEL_GRID_ACROSS; x++) {
       LevelSelectCell const *c = &s->data[ x ][ y ];
       if (c->is_set != 0U) {
         s->level_count++;
@@ -422,11 +446,18 @@ static auto level_select_count_levels(LevelSelect *s) -> int
   TRACE_INDENT();
 
   LevelSelect const *s            = &v->level_select;
-  auto               level_num    = LEVEL_SELECT_ID;
+  auto               level_num    = LEVEL_ARR_IDX_GRID;
   auto              *level_select = game_level_get(g, v, level_num);
 
   auto  *player       = thing_player(g);
   Levelp player_level = thing_player_level(g);
+
+  IF_DEBUG
+  {
+    if (player_level != nullptr) {
+      player_level->player_completed_level_via_exit = true;
+    }
+  }
 
   //
   // Clean up all previous things
@@ -447,15 +478,15 @@ static auto level_select_count_levels(LevelSelect *s) -> int
 
   bpoint const map_offset(18, 5);
 
-  for (auto y = 0; y < LEVEL_DOWN; y++) {
-    for (auto x = 0; x < LEVEL_ACROSS; x++) {
+  for (auto y = 0; y < LEVEL_GRID_DOWN; y++) {
+    for (auto x = 0; x < LEVEL_GRID_ACROSS; x++) {
       LevelSelectCell const *c = &s->data[ x ][ y ];
       if (c->is_set == 0U) {
         continue;
       }
 
       if ((y % 4) == 3) {
-        if (x != LEVEL_ACROSS / 2) {
+        if (x != LEVEL_NUM_BOSS_OFFSET) {
           continue;
         }
       }
@@ -481,7 +512,7 @@ static auto level_select_count_levels(LevelSelect *s) -> int
       //
       if ((player_level != nullptr) && (player_level->player_completed_level_via_exit || player_level->player_fell_out_of_level)) {
 
-        if (x < LEVEL_ACROSS - 1) {
+        if (x < LEVEL_GRID_ACROSS - 1) {
           LevelSelectCell const *o = &s->data[ x + 1 ][ y ]; // left levels
           if ((o != nullptr) && (o->is_set != 0U) && (o->level_num == player_level->level_num)) {
             tp                                  = tp_is_level_next_icon;
@@ -497,7 +528,7 @@ static auto level_select_count_levels(LevelSelect *s) -> int
           }
         }
 
-        if (y < LEVEL_DOWN - 1) {
+        if (y < LEVEL_GRID_DOWN - 1) {
           LevelSelectCell const *o = &s->data[ x ][ y + 1 ]; // left levels
           if ((o != nullptr) && (o->is_set != 0U) && (o->level_num == player_level->level_num)) {
             tp                                  = tp_is_level_next_icon;
@@ -522,7 +553,7 @@ static auto level_select_count_levels(LevelSelect *s) -> int
           case 11 :
           case 15 :
           case 19 :
-            for (auto px = 0; px < LEVEL_ACROSS; px++) {
+            for (auto px = 0; px < LEVEL_GRID_ACROSS; px++) {
               LevelSelectCell const *o = &s->data[ px ][ y - 1 ];
               if ((o != nullptr) && (o->is_set != 0U) && (o->level_num == player_level->level_num)) {
                 tp                                  = tp_is_level_next_icon;
@@ -545,7 +576,7 @@ static auto level_select_count_levels(LevelSelect *s) -> int
           }
         }
 
-        if (x < LEVEL_ACROSS - 2) {
+        if (x < LEVEL_GRID_ACROSS - 2) {
           LevelSelectCell const *o = &s->data[ x + 1 ][ y ]; // limit to adjacent levels
           if ((o != nullptr) && (o->is_set != 0U) && (o->level_num == player_level->level_num)) {
             tp                                  = tp_is_level_next_icon;
@@ -564,7 +595,7 @@ static auto level_select_count_levels(LevelSelect *s) -> int
       //
       // Final level
       //
-      if ((x == 2) && (y == LEVEL_DOWN - 1)) {
+      if ((x == LEVEL_NUM_BOSS_OFFSET) && (y == LEVEL_GRID_DOWN - 1)) {
         if (! tp) {
           tp = tp_is_level_final_icon;
         }
@@ -642,14 +673,14 @@ static auto level_select_count_levels(LevelSelect *s) -> int
         v->level_select.tile_to_level[ at.x ][ at.y ] = l->level_num;
 
         if (! v->level_select_id) {
-          if ((x == 2) && (y == 0)) {
+          if ((x == LEVEL_NUM_BOSS_OFFSET) && (y == 0)) {
             v->level_select_id = t->id;
             level_scroll_to_focus(g, v, level_select);
           }
         }
 
-        if (x == 2) {
-          for (auto px = 0; px < LEVEL_ACROSS; px++) {
+        if (x == LEVEL_NUM_BOSS_OFFSET) {
+          for (auto px = 0; px < LEVEL_GRID_ACROSS; px++) {
             LevelSelectCell const *o = &s->data[ px ][ y ];
             if ((o != nullptr) && (o->is_set != 0U) && (o->level_num == player_level->level_num)) {
               v->level_select_id = t->id;
@@ -694,10 +725,12 @@ static void level_select_create(Gamep g, LevelSelect *s)
   uint32_t const seed_num = game_seed_num_get(g);
   PCG_SRAND(seed_num);
 
-  for (auto y = 0; y < LEVEL_DOWN; y++) {
-    for (auto x = 0; x < LEVEL_ACROSS; x++) {
-      LevelSelectCell *c = &s->data[ x ][ y ];
-      c->is_set          = 1U;
+  for (auto y = 0; y < LEVEL_GRID_DOWN; y++) {
+    for (auto x = 0; x < LEVEL_GRID_ACROSS; x++) {
+      if (level_is_valid_grid_coord(x, y)) {
+        LevelSelectCell *c = &s->data[ x ][ y ];
+        c->is_set          = 1U;
+      }
     }
   }
 
@@ -711,7 +744,7 @@ void level_select_update_grid_tiles(Gamep g, Levelsp v)
 {
   TRACE();
 
-  auto  level_num = LEVEL_SELECT_ID;
+  auto  level_num = LEVEL_ARR_IDX_GRID;
   auto *l         = game_level_get(g, v, level_num);
 
   level_init(g, v, l, level_num);

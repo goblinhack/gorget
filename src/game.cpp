@@ -504,15 +504,15 @@ void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num,
     CROAK("level populate failed");
   }
 
-  if (level_num >= LEVEL_MAX) {
+  if (level_num >= LEVEL_ARR_IDX_MAX) {
     CROAK("too many levels deep, level_num %d", level_num);
   }
 
-  if (level_at.x >= LEVEL_ACROSS) {
+  if (level_at.x >= LEVEL_GRID_ACROSS) {
     CROAK("level oob (%d,%d)", level_at.x, level_at.y);
   }
 
-  if (level_at.y >= LEVEL_DOWN) {
+  if (level_at.y >= LEVEL_GRID_DOWN) {
     CROAK("level oob (%d,%d)", level_at.x, level_at.y);
   }
 
@@ -910,7 +910,7 @@ void Game::create_levels()
     //
     // Start in level select?
     //
-    if (level_change(g, v, LEVEL_SELECT_ID) == nullptr) {
+    if (level_change(g, v, LEVEL_ARR_IDX_GRID) == nullptr) {
       ERR("failed to change to level selection");
       return;
     }
@@ -1042,7 +1042,7 @@ void Game::state_change(GameStateType new_state, const std::string &why)
     case STATE_INIT :      [[fallthrough]];
     case STATE_MAIN_MENU : [[fallthrough]];
     case STATE_QUITTING :
-    case STATE_THE_END_MENU :
+    case STATE_GAME_OVER_MENU :
       wid_load_destroy(g);
       wid_main_menu_destroy(g);
       wid_quit_destroy(g);
@@ -1153,7 +1153,7 @@ void Game::state_change(GameStateType new_state, const std::string &why)
         case STATE_INIT :              [[fallthrough]];
         case STATE_QUITTING :          [[fallthrough]];
         case STATE_DEAD_MENU :         [[fallthrough]];
-        case STATE_THE_END_MENU :      [[fallthrough]];
+        case STATE_GAME_OVER_MENU :    [[fallthrough]];
         case STATE_PLAYING :           [[fallthrough]];
         case STATE_LEVEL_SELECT_MENU : [[fallthrough]];
         case STATE_GENERATING :        [[fallthrough]];
@@ -1162,7 +1162,7 @@ void Game::state_change(GameStateType new_state, const std::string &why)
       }
       break;
     case STATE_DEAD_MENU :      [[fallthrough]];
-    case STATE_THE_END_MENU :   [[fallthrough]];
+    case STATE_GAME_OVER_MENU : [[fallthrough]];
     case STATE_KEYBOARD_MENU :  [[fallthrough]];
     case STATE_LOAD_MENU :      [[fallthrough]];
     case STATE_THROW_MENU :     [[fallthrough]];
@@ -1228,7 +1228,6 @@ void Game::handle_game_request_to_remake_ui()
       }
       break;
     case STATE_DEAD_MENU :    [[fallthrough]];
-    case STATE_THE_END_MENU : [[fallthrough]];
     case STATE_PLAYING :      [[fallthrough]];
     case STATE_COLLECT_MENU : [[fallthrough]];
     case STATE_THROW_ITEM :   [[fallthrough]];
@@ -1240,6 +1239,7 @@ void Game::handle_game_request_to_remake_ui()
         (void) wid_actionbar_init(g);
       }
       break;
+    case STATE_GAME_OVER_MENU :    [[fallthrough]];
     case STATE_INIT :              [[fallthrough]];
     case STATE_MAIN_MENU :         [[fallthrough]];
     case STATE_QUITTING :          [[fallthrough]];
@@ -1273,7 +1273,7 @@ void Game::tick()
   if (v != nullptr) {
     switch (state) {
       case STATE_DEAD_MENU :
-      case STATE_THE_END_MENU :
+      case STATE_GAME_OVER_MENU :
         //
         // We want things to finish their animations when the player is dead,
         // so need to allow ticking to complete
@@ -1424,7 +1424,7 @@ void Game::display()
     case STATE_THROW_ITEM :        [[fallthrough]];
     case STATE_PLAYING :           [[fallthrough]];
     case STATE_DEAD_MENU :         [[fallthrough]];
-    case STATE_THE_END_MENU :
+    case STATE_GAME_OVER_MENU :
       level_mouse_position_get(g, v, l);
       level_display(g, v, l);
       thing_player_event_loop(g, v, l);
@@ -2283,7 +2283,7 @@ void game_sound_volume_set(Gamep g, int val)
     ERR("game_level_populate: no levels pointer");
     return nullptr;
   }
-  if (n >= LEVEL_MAX) {
+  if (n >= LEVEL_ARR_IDX_MAX) {
     ERR("game_level_populate: Exceeded max level: %u", n);
     return nullptr;
   }

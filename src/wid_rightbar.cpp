@@ -93,11 +93,11 @@ static void wid_rightbar_create_minimap_level(Gamep g)
     wid_rightbar->log_empty_line(g);
     auto        bs = BiomeType_to_string(l->biome);
     std::string s;
-    auto        ln = (l->level_num % 5) + 1;
-    if (ln == 5) {
+    auto        num = l->level_num + 1;
+    if (level_type_is_boss_level(num)) {
       s = std::format("{}:{} Seed:{}", bs, "boss", game_seed_name_get(g));
     } else {
-      s = std::format("{}:{} Seed:{}", bs, (l->level_num % 5) + 1, game_seed_name_get(g));
+      s = std::format("{}:{} Seed:{}", bs, num, game_seed_name_get(g));
     }
 
     wid_rightbar->log(g, s);

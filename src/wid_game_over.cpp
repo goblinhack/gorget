@@ -501,7 +501,7 @@ void wid_game_over_select(Gamep g)
   }
 
   (void) music_play(g, "game over");
-  game_state_change(g, STATE_THE_END_MENU, "game over");
+  game_state_change(g, STATE_GAME_OVER_MENU, "game over");
 
   int const    menu_height = 38;
   int const    menu_width  = UI_WID_POPUP_WIDTH_NORMAL * 2;
@@ -523,7 +523,7 @@ void wid_game_over_select(Gamep g)
 
   wid_game_over_window->log(g,
                             UI_INFO2_FMT_STR // newline
-                            "Lord Batcat III is no more and all is at peace or in pieces and the vantablack throne "
+                            "Lord Batcat is no more and all is at peace or in pieces and the throne "
                             "is once again yours!",
                             TEXT_FORMAT_LHS);
   wid_game_over_window->log_empty_line(g);
