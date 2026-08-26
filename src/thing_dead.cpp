@@ -84,7 +84,7 @@ static void thing_killed_player(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEv
       case THING_EVENT_USED :             [[fallthrough]];
       case THING_EVENT_NONE :             [[fallthrough]];
       case THING_EVENT_FALL :             [[fallthrough]];
-      case THING_EVENT_THE_END :          [[fallthrough]];
+      case THING_EVENT_GAME_OVER :          [[fallthrough]];
       case THING_EVENT_LIFESPAN_EXPIRED : [[fallthrough]];
       case THING_EVENT_MELT :             [[fallthrough]];
       case THING_EVENT_USER_INITIATED :   [[fallthrough]];
@@ -130,7 +130,7 @@ static void thing_killed_player(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEv
       case THING_EVENT_LIGHT_DAMAGE : //
         topcon(UI_IMPORTANT_FMT_STR "You are blasted to death." UI_RESET_FMT);
         break;
-      case THING_EVENT_THE_END : //
+      case THING_EVENT_GAME_OVER : //
         break;
       case THING_EVENT_OPEN :           [[fallthrough]];
       case THING_EVENT_USED :           [[fallthrough]];
@@ -222,7 +222,7 @@ static void thing_killed_by_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
     case THING_EVENT_OPEN :             [[fallthrough]];
     case THING_EVENT_USED :             [[fallthrough]];
     case THING_EVENT_NONE :             [[fallthrough]];
-    case THING_EVENT_THE_END :          [[fallthrough]];
+    case THING_EVENT_GAME_OVER :          [[fallthrough]];
     case THING_EVENT_FALL :             [[fallthrough]];
     case THING_EVENT_LIFESPAN_EXPIRED : [[fallthrough]];
     case THING_EVENT_MELT :             [[fallthrough]];

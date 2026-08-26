@@ -93,6 +93,9 @@ static void wid_statistics_destroy(Gamep g)
   game_cleanup(g);
 
   TRACE();
+  game_state_change(g, STATE_MAIN_MENU, "game over");
+
+  TRACE();
   game_state_reset(g, "finished game");
 
   if (g_opt_quick_start) {
@@ -226,7 +229,7 @@ void wid_statistics_show(Gamep g, Levelsp v, Levelp l, Thingp player)
     return;
   }
 
-  const int defeated_width  = UI_INVENTORY_WIDTH;
+  const int defeated_width  = UI_INVENTORY_WIDTH * 2;
   const int defeated_height = UI_INVENTORY_HEIGHT;
 
   const int left_half  = defeated_width / 2;
@@ -247,7 +250,13 @@ void wid_statistics_show(Gamep g, Levelsp v, Levelp l, Thingp player)
     wid_statistics_window = wid_statistics_popup->wid_popup_container;
 
     wid_set_on_key_down(wid_statistics_window, wid_statistics_key_down);
-    wid_set_text(wid_statistics_window, "Ye status of final demise");
+
+    if (thing_is_game_over(player)) {
+      wid_set_text(wid_statistics_window, "Ye status of final victory");
+    } else {
+      wid_set_text(wid_statistics_window, "Ye status of final demise");
+    }
+
     wid_set_text_top(wid_statistics_window, 1u);
   }
 

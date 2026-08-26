@@ -352,10 +352,8 @@ static auto thing_collision_check(Gamep g, Levelsp v, Levelp l, Thingp me, const
       return collision;
     }
     return false;
-
-  } else {
-    return false;
   }
+  return false;
 }
 
 //

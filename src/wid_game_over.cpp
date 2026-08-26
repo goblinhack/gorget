@@ -7,6 +7,7 @@
 #include "my_color.hpp"
 #include "my_color_defs.hpp"
 #include "my_game.hpp"
+#include "my_game_inlines.hpp"
 #include "my_gl.hpp" // NOLINT
 #include "my_globals.hpp"
 #include "my_main.hpp"
@@ -21,6 +22,7 @@
 #include "my_wid_text_box.hpp"
 #include "my_wids.hpp"
 
+#include <SDL_mixer.h>
 #include <SDL_timer.h>
 #include <algorithm>
 #include <cstdint>
@@ -48,17 +50,26 @@ static void wid_game_over_destroy()
 [[nodiscard]] static auto wid_game_over_mouse_down(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
+
+  auto *v = game_levels_get(g);
+  if (v == nullptr) {
+    return true;
+  }
+
+  auto *l = game_level_get(g, v);
+  if (l == nullptr) {
+    return true;
+  }
+
+  auto *player = thing_player(g);
+  if (player == nullptr) {
+    return true;
+  }
+
   wid_game_over_destroy();
 
-  TRACE();
-  game_cleanup(g);
+  wid_statistics_show(g, v, l, player);
 
-  TRACE();
-  game_state_change(g, STATE_MAIN_MENU, "game over");
-
-  if (g_opt_quick_start) {
-    DIE_CLEAN("Quick quit");
-  }
   return true;
 }
 
@@ -500,7 +511,13 @@ void wid_game_over_select(Gamep g)
     wid_game_over_destroy();
   }
 
+  if (! game_music_volume_get(g)) {
+    game_music_volume_set(g, MIX_MAX_VOLUME);
+    music_update_volume(g);
+  }
+
   (void) music_play(g, "game over");
+
   game_state_change(g, STATE_GAME_OVER_MENU, "game over");
 
   int const    menu_height = 38;

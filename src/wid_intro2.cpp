@@ -106,11 +106,11 @@ static void game_display_intro(Gamep g)
     tl.x += center;
     br.x += center;
 
-    if (wid_intro2_anim_vert_scroll_start == 0u) {
+    if (wid_intro2_anim_vert_scroll_start == 0U) {
       wid_intro2_anim_vert_scroll_start = time_ms();
     }
 
-    if (wid_intro2_anim_vert_scroll_ticker == 0u) {
+    if (wid_intro2_anim_vert_scroll_ticker == 0U) {
       wid_intro2_anim_vert_scroll_ticker = time_ms();
     }
 

@@ -172,7 +172,7 @@
     case THING_EVENT_CARRIED_MERGED : //
       s += "carried-merged";
       break;
-    case THING_EVENT_THE_END : //
+    case THING_EVENT_GAME_OVER : //
       s += "became the new even darker dark lord";
       break;
     case THING_EVENT_USER_INITIATED : //

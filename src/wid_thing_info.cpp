@@ -413,7 +413,7 @@ static void wid_thing_info_item_mouse_over_end(Gamep g, Widp w)
         show_string = true;
         break;
       case THING_EVENT_NONE :             [[fallthrough]];
-      case THING_EVENT_THE_END :          [[fallthrough]];
+      case THING_EVENT_GAME_OVER :          [[fallthrough]];
       case THING_EVENT_MELT :             [[fallthrough]];
       case THING_EVENT_OPEN :             [[fallthrough]];
       case THING_EVENT_LIFESPAN_EXPIRED : [[fallthrough]];
@@ -975,7 +975,7 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
         show_string = true;
         break;
       case THING_EVENT_NONE :             [[fallthrough]];
-      case THING_EVENT_THE_END :          [[fallthrough]];
+      case THING_EVENT_GAME_OVER :          [[fallthrough]];
       case THING_EVENT_MELT :             [[fallthrough]];
       case THING_EVENT_OPEN :             [[fallthrough]];
       case THING_EVENT_LIFESPAN_EXPIRED : [[fallthrough]];

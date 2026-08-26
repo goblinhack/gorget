@@ -186,7 +186,7 @@ static auto level_select_get_level_from_grid_coords(Levelsp v, bpoint p) -> Leve
 {
   TRACE();
 
-  LevelSelect *s = &v->level_select;
+  LevelSelect const *s = &v->level_select;
   if (s == nullptr) {
     CROAK("missing level select pointer");
   }
@@ -345,10 +345,10 @@ static void level_select_dump(LevelSelect *s)
 
   for (auto y = 0; y < LEVEL_GRID_DOWN; y++) {
     std::string out;
-    for (auto x = 0; x < LEVEL_GRID_ACROSS; x++) {
-      LevelSelectCell *c = &s->data[ x ][ y ];
+    for (auto &x : s->data) {
+      LevelSelectCell const *c = &x[ y ];
 
-      if (c->is_set != 0u) {
+      if (c->is_set != 0U) {
         out += std::to_string(CHARMAP_FLOOR);
       } else {
         out += std::to_string(CHARMAP_EMPTY);
@@ -427,8 +427,8 @@ static auto level_select_count_levels(LevelSelect *s) -> int
   s->level_count = 0;
 
   for (auto y = 0; y < LEVEL_GRID_DOWN; y++) {
-    for (auto x = 0; x < LEVEL_GRID_ACROSS; x++) {
-      LevelSelectCell const *c = &s->data[ x ][ y ];
+    for (auto &x : s->data) {
+      LevelSelectCell const *c = &x[ y ];
       if (c->is_set != 0U) {
         s->level_count++;
       }
@@ -565,8 +565,8 @@ static auto level_select_count_levels(LevelSelect *s) -> int
           case 11 :
           case 15 :
           case 19 :
-            for (auto px = 0; px < LEVEL_GRID_ACROSS; px++) {
-              LevelSelectCell const *o = &s->data[ px ][ y - 1 ];
+            for (const auto &px : s->data) {
+              LevelSelectCell const *o = &px[ y - 1 ];
               if ((o != nullptr) && (o->is_set != 0U) && (o->level_num == player_level->level_num)) {
                 tp                                  = tp_is_level_next_icon;
                 l->player_can_enter_this_level_next = true;
@@ -621,7 +621,7 @@ static auto level_select_count_levels(LevelSelect *s) -> int
         tp = tp_is_level_closed_icon;
       }
 
-      if (! v->tick && ! player->level_num) {
+      if ((v->tick == 0u) && (player->level_num == 0u)) {
         //
         // Where the player is initially
         //
@@ -684,7 +684,7 @@ static auto level_select_count_levels(LevelSelect *s) -> int
 
         v->level_select.tile_to_level[ at.x ][ at.y ] = l->level_num;
 
-        if (! v->level_select_id) {
+        if (v->level_select_id == 0u) {
           if ((x == LEVEL_NUM_BOSS_OFFSET) && (y == 0)) {
             v->level_select_id = t->id;
             level_scroll_to_focus(g, v, level_select);
@@ -692,8 +692,8 @@ static auto level_select_count_levels(LevelSelect *s) -> int
         }
 
         if (x == LEVEL_NUM_BOSS_OFFSET) {
-          for (auto px = 0; px < LEVEL_GRID_ACROSS; px++) {
-            LevelSelectCell const *o = &s->data[ px ][ y ];
+          for (const auto &px : s->data) {
+            LevelSelectCell const *o = &px[ y ];
             if ((o != nullptr) && (o->is_set != 0U) && (o->level_num == player_level->level_num)) {
               v->level_select_id = t->id;
             }

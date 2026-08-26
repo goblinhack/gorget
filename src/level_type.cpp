@@ -3,7 +3,9 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_game_defs.hpp"
 #include "my_level.hpp"
+#include "my_main.hpp"
 #include "my_tp.hpp"
 #include "my_types.hpp"
 
@@ -41,7 +43,7 @@
 {
   TRACE();
 
-  if (! l) {
+  if (l == nullptr) {
     ERR("no level pointer");
     return false;
   }
@@ -61,7 +63,7 @@ auto level_is_boss_level_set(Gamep g, Levelsp v, Levelp l, bool val) -> void
 {
   TRACE();
 
-  if (! l) {
+  if (l == nullptr) {
     ERR("no level pointer");
     return;
   }
@@ -73,7 +75,7 @@ auto level_is_boss_level_set(Gamep g, Levelsp v, Levelp l, bool val) -> void
 {
   TRACE();
 
-  if (! l) {
+  if (l == nullptr) {
     ERR("no level pointer");
     return false;
   }
@@ -85,7 +87,7 @@ auto level_is_boss_final_level_set(Gamep g, Levelsp v, Levelp l, bool val) -> vo
 {
   TRACE();
 
-  if (! l) {
+  if (l == nullptr) {
     ERR("no level pointer");
     return;
   }
@@ -97,7 +99,7 @@ auto level_is_boss_final_level_set(Gamep g, Levelsp v, Levelp l, bool val) -> vo
 {
   TRACE();
 
-  bool valid[ LEVEL_GRID_DOWN ][ LEVEL_GRID_ACROSS ] = {
+  bool const valid[ LEVEL_GRID_DOWN ][ LEVEL_GRID_ACROSS ] = {
       {true, true, true, true, true},     //
       {true, true, true, true, true},     //
       {true, true, true, true, true},     //

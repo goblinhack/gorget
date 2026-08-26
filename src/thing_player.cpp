@@ -1142,18 +1142,8 @@ void player_reached_exit_do(Gamep g, Levelsp v, Levelp l)
   if (level_is_boss_final_level(g, v, l)) {
     auto *player = thing_player(g);
     if (player != nullptr) {
-      ThingEvent e {
-          .reason     = "excaped the dungeon", //
-          .event_type = THING_EVENT_THE_END,   //
-      };
-
-      (void) thing_score_incr(g, v, l, player, 10000);
-      THING_DBG(g, v, l, player, "reached the final exit");
-      thing_dead(g, v, l, player, e);
+      thing_is_game_over_set(g, v, l, player);
     }
-
-    game_request_to_end_game_set(g);
-    game_request_to_end_game_reason_set(g, "game over");
   } else {
     player_leave_current_level_and_change_to_level_num(g, v, LEVEL_ARR_IDX_GRID);
   }
