@@ -791,6 +791,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_able_to_fall_sound(Thingp me) -> bool;
 [[nodiscard]] auto thing_is_able_to_fall(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
 [[nodiscard]] auto thing_is_able_to_fire_weapons(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_able_to_jump_pounce(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_jump(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_lunge(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_move_diagonally(Thingp t) -> bool;
@@ -1105,7 +1106,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused184(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused185(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused186(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused187(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused188(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused19(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused2(Thingp t) -> bool;

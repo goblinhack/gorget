@@ -45,7 +45,7 @@ static auto tp_glorp_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at,
   }
 
   if (level_is_water_cached(g, v, l, at)) {
-    return THING_ENVIRON_HATES;
+    return THING_ENVIRON_DISLIKES;
   }
 
   return THING_ENVIRON_NEUTRAL;

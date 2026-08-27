@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static auto test_monst_jump_over_chasm(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_monst_jump_over_lava(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -21,35 +21,35 @@
   //
   std::string const start
       = "XXXXXXX"
-        "X..C..X"
-        "X..C..X"
-        "X@.C.mX"
-        "X..C..X"
-        "X..C..X"
+        "X..L..X"
+        "X..L..X"
+        "X@.L.mX"
+        "X..L..X"
+        "X..L..X"
         "XXXXXXX";
   std::string const expect1
       = "XXXXXXX"
-        "X..C..X"
-        "X..C..X"
-        "X@.Cm.X"
-        "X..C..X"
-        "X..C..X"
+        "X..L..X"
+        "X..L..X"
+        "X@.Lm.X"
+        "X..L..X"
+        "X..L..X"
         "XXXXXXX";
   std::string const expect2
       = "XXXXXXX"
-        "X..C..X"
-        "X..C..X"
-        "X@mC..X"
-        "X..C..X"
-        "X..C..X"
+        "X..L..X"
+        "X..L..X"
+        "X@mL..X"
+        "X..L..X"
+        "X..L..X"
         "XXXXXXX";
   std::string const expect3
       = "XXXXXXX"
-        "X..C..X"
-        "X..C..X"
-        "X@mC..X"
-        "X..C..X"
-        "X..C..X"
+        "X..L..X"
+        "X..L..X"
+        "X@mL..X"
+        "X..L..X"
+        "X..L..X"
         "XXXXXXX";
 
   //
@@ -91,7 +91,7 @@
 
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 2; tries++) {
+  for (auto tries = 0; tries < 1; tries++) {
     TEST_LOOP_PROGRESS(t, g, v, l, tries, w, h);
     TEST_ASSERT(t, game_event_wait(g), "failed to wait");
     if (! game_wait_for_tick_to_finish(g, v, l)) {
@@ -115,7 +115,7 @@
 
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 2; tries++) {
+  for (auto tries = 0; tries < 1; tries++) {
     TEST_LOOP_PROGRESS(t, g, v, l, tries, w, h);
     TEST_ASSERT(t, game_event_wait(g), "failed to wait");
     if (! game_wait_for_tick_to_finish(g, v, l)) {
@@ -142,7 +142,7 @@
   //
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  TEST_ASSERT(t, game_tick_get(g, v) == 5, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 3, "final tick counter value");
 
   level_dump(g, v, l, w, h);
   TEST_PASSED(t);
@@ -153,14 +153,14 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_monst_jump_over_chasm() -> bool // NOLINT
+[[nodiscard]] auto test_load_monst_jump_over_lava() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("monst_jump_over_chasm");
+  Testp test = test_load("monst_jump_over_lava");
 
   // begin sort marker1 {
-  test_callback_set(test, test_monst_jump_over_chasm);
+  test_callback_set(test, test_monst_jump_over_lava);
   // end sort marker1 }
 
   return true;

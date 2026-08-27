@@ -320,7 +320,7 @@
       list_macro(is_unused184, "is_unused184"),                                             /* newline */                                       \
       list_macro(is_unused185, "is_unused185"),                                             /* newline */                                       \
       list_macro(is_unused186, "is_unused186"),                                             /* newline */                                       \
-      list_macro(is_unused187, "is_unused187"),                                             /* newline */                                       \
+      list_macro(is_able_to_jump_pounce, "is_able_to_jump_pounce"),                         /* newline */                                       \
       list_macro(is_unused188, "is_unused188"),                                             /* newline */                                       \
       list_macro(is_skeleton, "is_skeleton"),                                               /* newline */                                       \
       list_macro(is_unused19, "is_unused19"),                                               /* newline */                                       \
@@ -827,6 +827,7 @@ class Tp;
 [[nodiscard]] auto tp_is_able_to_fall_sound(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_fall(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_fire_weapons(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_able_to_jump_pounce(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_jump(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_lunge(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_move_diagonally(Tpp tp) -> bool;
@@ -1122,7 +1123,6 @@ class Tp;
 [[nodiscard]] auto tp_is_unused184(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused185(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused186(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused187(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused188(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused19(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused2(Tpp tp) -> bool;

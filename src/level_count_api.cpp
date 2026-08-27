@@ -1989,10 +1989,10 @@
   return level_count(g, v, l, is_unused186, p);
 }
 
-[[nodiscard]] auto level_count_is_unused187(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_able_to_jump_pounce(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused187, p);
+  return level_count(g, v, l, is_able_to_jump_pounce, p);
 }
 
 [[nodiscard]] auto level_count_is_unused188(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t

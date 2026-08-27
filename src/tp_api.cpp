@@ -1987,10 +1987,10 @@
   return tp_flag(tp, is_unused186) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused187(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_able_to_jump_pounce(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused187) != 0;
+  return tp_flag(tp, is_able_to_jump_pounce) != 0;
 }
 
 [[nodiscard]] auto tp_is_unused188(Tpp tp) -> bool

@@ -505,9 +505,6 @@ static auto thing_monst_choose_something_we_can_wander_to(Gamep g, Levelsp v, Le
 
           if (adjacent(at, nexthop)) {
             if (thing_move_to(g, v, l, me, nexthop)) {
-              //
-              // If could jump, then abort the path walk
-              //
               THING_DBG(g, v, l, me, "moved to nexthop");
               return false;
             }
@@ -516,8 +513,14 @@ static auto thing_monst_choose_something_we_can_wander_to(Gamep g, Levelsp v, Le
               //
               // If could jump, then abort the path walk
               //
-              THING_DBG(g, v, l, me, "jumped to nexthop");
-              return false;
+              if (thing_is_able_to_jump_pounce(me)) {
+                THING_DBG(g, v, l, me, "jumped to nexthop; pounce?");
+                return false;
+              } else {
+                THING_DBG(g, v, l, me, "jumped to nexthop; stop");
+                monst_state_change(g, v, l, me, MONST_STATE_NORMAL);
+                return true;
+              }
             }
           }
         } else {
