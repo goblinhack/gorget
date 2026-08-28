@@ -424,7 +424,7 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
         //
         // Allow engulfers to land on you
         //
-        if (thing_is_able_to_be_engulfed(it)) {
+        if (thing_is_able_to_be_engulfed(g, v, l, it)) {
           if (thing_is_able_to_engulf(me)) {
             return true; // filter out i.e. ignore
           }

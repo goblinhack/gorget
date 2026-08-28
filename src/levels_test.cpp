@@ -423,7 +423,7 @@ void levels_test(Gamep g)
                     /* line */ (const char *) "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
                     /* line */ (const char *) "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
                     /* line */ (const char *) "CCCCCCCCCCCCCCCCCCCxxxxxxxxxxxCCCCCCCCCCCCCCCCCC",
-                    /* line */ (const char *) "CCCCCCCCCCCCCCCCCCCx....@.r.mxCCCCCCCCCCCCCCCCCC",
+                    /* line */ (const char *) "CCCCCCCCCCCCCCCCCCCx....@''.mxCCCCCCCCCCCCCCCCCC",
                     /* line */ (const char *) "CCCCCCCCCCCCCCCCCCCx.....rr,MxCCCCCCCCCCCCCCCCCC",
                     /* line */ (const char *) "CCCCCCCCCCCCCCCCCCCx.....rr,.xCCCCCCCCCCCCCCCCCC",
                     /* line */ (const char *) "CCCCCCCCCCCCCCCCCCCx~~~.C.W,.xCCCCCCCCCCCCCCCCCC",

@@ -163,7 +163,7 @@
     return false;
   }
 
-  if (! thing_is_able_to_be_engulfed(me)) {
+  if (! thing_is_able_to_be_engulfed(g, v, l, me)) {
     return false;
   }
 
@@ -269,7 +269,7 @@
     // A wall or pillar or somesuch?
     //
     if (thing_is_obs_to_movement(it)) {
-      if (thing_is_able_to_be_engulfed(it)) {
+      if (thing_is_able_to_be_engulfed(g, v, l, it)) {
         if (thing_engulf(g, v, l, it, me)) {
           return true;
         }
@@ -296,7 +296,7 @@
   return tp_flag(thing_tp(t), is_able_to_engulf) != 0;
 }
 
-[[nodiscard]] auto thing_is_able_to_be_engulfed(Thingp t) -> bool
+[[nodiscard]] auto thing_is_able_to_be_engulfed(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -304,5 +304,14 @@
     ERR("no thing pointer");
     return false;
   }
+
+  if (thing_is_ethereal(g, v, l, t)) {
+    return false;
+  }
+
+  if (thing_is_levitating(g, v, l, t)) {
+    return false;
+  }
+
   return tp_flag(thing_tp(t), is_able_to_be_engulfed) != 0;
 }

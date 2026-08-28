@@ -9,7 +9,7 @@
 #include "../my_test.hpp"
 #include "../my_thing_inlines.hpp"
 
-[[nodiscard]] static auto test_potion_levitation_player_lava(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_potion_levitation_player_grass(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -25,7 +25,7 @@
       = "......."
         "......."
         "......."
-        "..@L..."
+        "..@'..."
         "......."
         "......."
         ".......";
@@ -33,7 +33,7 @@
       = "......."
         "......."
         "......."
-        "...@..."
+        "...'@.."
         "......."
         "......."
         ".......";
@@ -108,10 +108,10 @@
   TEST_ASSERT(t, use_count == (int) usable_items.size(), "did not use expected item amount");
 
   //
-  // Move into the lava. The player should die.
+  // Move over the grass.
   //
   {
-    TEST_LOG(t, "move player into lava right");
+    TEST_LOG(t, "move player into grass right");
     TRACE();
     up = down = left = right = false;
     right                    = true;
@@ -126,6 +126,36 @@
       player = thing_player(g);
       if (player == nullptr) [[unlikely]] {
         TEST_FAILED(t, "no player");
+        goto exit;
+      }
+    }
+  }
+
+  //
+  // Move right
+  //
+  {
+    level_dump(g, v, l, w, h);
+    TEST_PROGRESS(t);
+    {
+      TRACE();
+      if (! (result = player_move_request(g, up, down, left, right, false /* fire */))) {
+        TEST_FAILED(t, "move failed");
+        goto exit;
+      }
+    }
+  }
+
+  //
+  // Wait for the end of tick
+  //
+  {
+    level_dump(g, v, l, w, h);
+    TEST_PROGRESS(t);
+    {
+      TRACE();
+      if (! game_wait_for_tick_to_finish(g, v, l)) {
+        TEST_FAILED(t, "wait loop failed");
         goto exit;
       }
     }
@@ -194,14 +224,14 @@
   }
 
   //
-  // Check player is not dead when over lava. It should be popped off the level.
+  // Check player is not dead when over grass. It should be popped off the level.
   //
   {
     level_dump(g, v, l, w, h);
     TEST_PROGRESS(t);
     {
       TRACE();
-      TEST_LOG(t, "check player is not dead when in lava");
+      TEST_LOG(t, "check player is not dead when in grass");
       p            = thing_at(g, v, l, player);
       found_corpse = false;
 
@@ -225,7 +255,7 @@
   //
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  TEST_ASSERT(t, game_tick_get(g, v) == 12, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 13, "final tick counter value");
 
   level_dump(g, v, l, w, h);
   TEST_PASSED(t);
@@ -236,14 +266,14 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_potion_levitation_player_lava() -> bool // NOLINT
+[[nodiscard]] auto test_load_potion_levitation_player_grass() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("potion_levitation_player_lava");
+  Testp test = test_load("potion_levitation_player_grass");
 
   // begin sort marker1 {
-  test_callback_set(test, test_potion_levitation_player_lava);
+  test_callback_set(test, test_potion_levitation_player_grass);
   // end sort marker1 }
 
   return true;

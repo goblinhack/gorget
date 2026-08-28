@@ -366,7 +366,8 @@ static void tp_player_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 
   static std::initializer_list< std::string > items = {
-      "wand_light", //
+      "wand_light",        //
+      "potion_levitation", //
   };
 
   if (! thing_carry(g, v, l, me, items)) {

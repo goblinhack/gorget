@@ -127,6 +127,9 @@
       if (level_is_pillar_bool(g, v, l, p)) {
         c = CHARMAP_PILLAR;
       }
+      if (level_is_rubble_bool(g, v, l, p)) {
+        c = CHARMAP_RUBBLE;
+      }
       if (level_is_teleport_bool(g, v, l, p)) {
         c = CHARMAP_TELEPORT;
       }
