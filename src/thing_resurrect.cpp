@@ -11,7 +11,13 @@
 
 [[nodiscard]] auto thing_resurrect(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
 {
-  TRACE();
+  THING_DBG(g, v, l, me, "resurrect");
+  TRACE_INDENT();
+
+  if (! thing_is_able_to_resurrect(me)) {
+    THING_DBG(g, v, l, me, "resurrect; not allowed");
+    return false;
+  }
 
   auto *tp = thing_tp(me);
 
@@ -25,7 +31,7 @@
 
   thing_anim_init(g, v, l, me, THING_ANIM_IDLE);
 
-  return me != nullptr;
+  return true;
 }
 
 [[nodiscard]] auto thing_ticks_to_stay_dead(Gamep g, Levelsp v, Levelp l, Thingp me) -> int

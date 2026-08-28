@@ -78,6 +78,7 @@ auto test_load_monst_move_diagonal_vault() -> bool;
 auto test_load_monst_move_diagonal_wall() -> bool;
 auto test_load_monst_pass_through_open_door() -> bool;
 auto test_load_monst_pass_through_walls() -> bool;
+auto test_load_monst_resurrect() -> bool;
 auto test_load_monst_secret_door() -> bool;
 auto test_load_monst_short_jump_around_chasm() -> bool;
 auto test_load_monst_slow_attack_multi() -> bool;

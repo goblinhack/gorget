@@ -789,7 +789,7 @@ void tp_stat_set(Tpp tp, ThingStatType stat, const std::string &val)
   }
 
   if (compiler_unused) {
-    tp_con(tp, " tp_chance_success roll %d", roll);
+    tp_con(tp, " tp_chance_success roll %d vs %d", roll, tp->chance[ val ].max_roll());
   }
 
   return roll == tp->chance[ val ].max_roll();
@@ -814,7 +814,7 @@ void tp_stat_set(Tpp tp, ThingStatType stat, const std::string &val)
   auto roll = tp->chance[ val ].roll();
 
   if (compiler_unused) {
-    tp_con(tp, " tp_chance_fail roll %d", roll);
+    tp_con(tp, " tp_chance_fail roll %d vs %d", roll, 1);
   }
 
   return roll == 1;

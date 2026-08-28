@@ -73,6 +73,10 @@ void thing_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
             (void) thing_resurrect(g, v, l, me);
           }
         }
+      } else {
+        if (tp_chance_success(thing_tp(me), THING_CHANCE_RESURRECTION)) {
+          (void) thing_resurrect(g, v, l, me);
+        }
       }
     }
   }
