@@ -165,7 +165,7 @@ static auto wid_rightbar_thing_info_add(Gamep g, Levelsp v, Levelp l) -> void
     // Minimaps
     //
     wid_rightbar_create_minimap_level(g);
-  } else if (wid_rightbar_thing_info_count(g, v)) {
+  } else if (wid_rightbar_thing_info_count(g, v) != 0) {
     //
     // Thing infos
     //

@@ -12,6 +12,7 @@
 #include "my_sound.hpp"
 #include "my_spoint.hpp"
 #include "my_sprintf.hpp"
+#include "my_string.hpp"
 #include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
 #include "my_tp.hpp"
