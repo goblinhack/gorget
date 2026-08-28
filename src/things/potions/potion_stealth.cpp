@@ -87,7 +87,7 @@ static void tp_potion_stealth_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, 
   // No noise from this potion. It's silent...
   //
 
-  (void) thing_spawn(g, v, l, tp_first(is_water), thing_at(g, v, l, me));
+  (void) thing_spawn(g, v, l, tp_first(is_shallow_water), thing_at(g, v, l, me));
 }
 
 [[nodiscard]] auto tp_load_potion_stealth() -> bool

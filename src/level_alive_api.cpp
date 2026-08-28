@@ -2468,10 +2468,10 @@
   return level_alive(g, v, l, is_wall, p);
 }
 
-[[nodiscard]] auto level_alive_is_water(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_alive_is_shallow_water(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_alive(g, v, l, is_water, p);
+  return level_alive(g, v, l, is_shallow_water, p);
 }
 
 [[nodiscard]] auto level_alive_is_wood(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp

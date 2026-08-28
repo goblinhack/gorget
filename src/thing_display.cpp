@@ -307,7 +307,7 @@ static void thing_display_blit(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t_ma
   if (light_pixels != nullptr) {
     fg = WHITE;
 
-    if (thing_is_water(t_maybe_null)) {
+    if (thing_is_shallow_water(t_maybe_null)) {
       switch (level_to_biome(g, v, l)) {
         case BIOME_DUNGEON :    break;
         case BIOME_BOGLAND :    fg = GREEN2; break;
@@ -749,7 +749,7 @@ void thing_display(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp
           //
           // Reflections only in water. Not lava!
           //
-          if (level_is_water_cached(g, v, l, p)) {
+          if (level_is_shallow_water_cached(g, v, l, p)) {
             fg.a /= 8;
             fg.r /= 2;
             fg.g /= 2;

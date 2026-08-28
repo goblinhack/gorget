@@ -88,7 +88,7 @@
   //
   auto *player = thing_player(g);
 
-  if (thing_spawn(g, v, l, tp_random(g, v, l, is_water), thing_at(g, v, l, player)) == nullptr) {
+  if (thing_spawn(g, v, l, tp_random(g, v, l, is_shallow_water), thing_at(g, v, l, player)) == nullptr) {
     TEST_FAILED(t, "failed to spawn thing");
     goto exit;
   }

@@ -94,7 +94,7 @@ static void tp_player_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
         break;
       }
     }
-  } else if (thing_is_submergible(g, v, l, me) && level_is_water_bool(g, v, l, thing_at(g, v, l, me))) {
+  } else if (thing_is_submergible(g, v, l, me) && level_is_shallow_water_bool(g, v, l, thing_at(g, v, l, me))) {
     //
     // Ripple where we used to be
     //
@@ -102,7 +102,7 @@ static void tp_player_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
       if (thing_noise_incr(g, v, l, me, THING_NOISE_SPLASH)) {
         auto at = thing_old_at(me);
 
-        if (! level_is_water_bool(g, v, l, at)) {
+        if (! level_is_shallow_water_bool(g, v, l, at)) {
           at = thing_at(g, v, l, me);
         }
 
@@ -174,7 +174,7 @@ static void tp_player_on_jump_end(Gamep g, Levelsp v, Levelp l, Thingp me)
     return;
   }
 
-  if (level_is_water_bool(g, v, l, thing_at(g, v, l, me))) {
+  if (level_is_shallow_water_bool(g, v, l, thing_at(g, v, l, me))) {
     //
     // We already have a splash noise
     //
@@ -210,7 +210,7 @@ static void tp_player_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp me)
     return;
   }
 
-  if (level_is_water_bool(g, v, l, thing_at(g, v, l, me))) {
+  if (level_is_shallow_water_bool(g, v, l, thing_at(g, v, l, me))) {
     if (thing_noise_incr(g, v, l, me, THING_NOISE_SPLASH)) {
       auto at = thing_at(g, v, l, me);
       game_popup_text_add(g, at.x, at.y, std::string("Splash!"));

@@ -79,7 +79,13 @@ void thing_is_thrown_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp throw
       }
     }
 
-    if (level_is_water_bool(g, v, l, item_at)) {
+    if (level_is_deep_water_bool(g, v, l, item_at)) {
+      thing_sound_play(g, v, l, item, "splash");
+
+      if (thing_is_player(thrower)) {
+        topcon("%s lands with a big splash.", The_thing.c_str());
+      }
+    } else if (level_is_shallow_water_bool(g, v, l, item_at)) {
       thing_sound_play(g, v, l, item, "splash");
 
       if (thing_is_player(thrower)) {

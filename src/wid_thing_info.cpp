@@ -1123,11 +1123,124 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
 }
 
 //
+// Add what the thing hates
+//
+[[nodiscard]] static auto wid_thing_info_hates(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent) -> bool
+{
+  TRACE();
+
+  std::string out;
+
+  for (auto i = 1; i < TP_ID_MAX; i++) {
+
+    auto *it = tp_find(i);
+    if (it == nullptr) {
+      continue;
+    }
+
+    switch (thing_assess_tp(g, v, l, it, me)) {
+      case THING_ENVIRON_HATES :    out = string_append_with_comma(out, capitalize_first(tp_name_short(it))); break;
+      case THING_ENVIRON_DISLIKES : break;
+      case THING_ENVIRON_NEUTRAL :  break;
+      case THING_ENVIRON_LIKES :    break;
+      case THING_ENVIRON_ENUM_MAX : break;
+    }
+  }
+
+  if (out.empty()) {
+    return false;
+  }
+
+  replace(out, "Deep water, Shallow water", "All water");
+
+  parent->log(g, UI_INFO_FMT_STR "Hates:", TEXT_FORMAT_LHS);
+  parent->log(g, "- " + out, TEXT_FORMAT_LHS);
+
+  return true;
+}
+
+//
+// Add what the thing dislikes
+//
+[[nodiscard]] static auto wid_thing_info_dislikes(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent) -> bool
+{
+  TRACE();
+
+  std::string out;
+
+  for (auto i = 1; i < TP_ID_MAX; i++) {
+
+    auto *it = tp_find(i);
+    if (it == nullptr) {
+      continue;
+    }
+
+    switch (thing_assess_tp(g, v, l, it, me)) {
+      case THING_ENVIRON_HATES :    break;
+      case THING_ENVIRON_DISLIKES : out = string_append_with_comma(out, capitalize_first(tp_name_short(it))); break;
+      case THING_ENVIRON_NEUTRAL :  break;
+      case THING_ENVIRON_LIKES :    break;
+      case THING_ENVIRON_ENUM_MAX : break;
+    }
+  }
+
+  if (out.empty()) {
+    return false;
+  }
+
+  replace(out, "Deep water, Shallow water", "All water");
+
+  parent->log(g, UI_INFO_FMT_STR "Dislikes:", TEXT_FORMAT_LHS);
+  parent->log(g, "- " + out, TEXT_FORMAT_LHS);
+
+  return true;
+}
+
+//
+// Add what the thing likes
+//
+[[nodiscard]] static auto wid_thing_info_likes(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent) -> bool
+{
+  TRACE();
+
+  std::string out;
+
+  for (auto i = 1; i < TP_ID_MAX; i++) {
+
+    auto *it = tp_find(i);
+    if (it == nullptr) {
+      continue;
+    }
+
+    switch (thing_assess_tp(g, v, l, it, me)) {
+      case THING_ENVIRON_HATES :    break;
+      case THING_ENVIRON_LIKES :    out = string_append_with_comma(out, capitalize_first(tp_name_short(it))); break;
+      case THING_ENVIRON_NEUTRAL :  break;
+      case THING_ENVIRON_DISLIKES : break;
+      case THING_ENVIRON_ENUM_MAX : break;
+    }
+  }
+
+  if (out.empty()) {
+    return false;
+  }
+
+  replace(out, "Deep water, Shallow water", "All water");
+
+  parent->log(g, UI_INFO_FMT_STR "Likes:", TEXT_FORMAT_LHS);
+  parent->log(g, "- " + out, TEXT_FORMAT_LHS);
+
+  return true;
+}
+
+//
 // Add worn weapon
 //
 [[nodiscard]] static auto wid_thing_info_worn(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, int width) -> bool
 {
   TRACE();
+
+  bool worn {};
 
   FOR_ALL_WORN_TYPES(w)
   {
@@ -1142,12 +1255,14 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
       case WORN_TYPE_WEAPON :
         {
           line = string_sprintf("Wielded(%s)", thing_name_short(g, v, l, item).c_str());
+          worn = true;
           break;
         }
       case WORN_TYPE_RING1 : [[fallthrough]];
       case WORN_TYPE_RING2 :
         {
           line = string_sprintf("Worn(%s)", thing_name_short(g, v, l, item).c_str());
+          worn = true;
           break;
         }
 
@@ -1170,7 +1285,7 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
     (void) wid_tp_info_special_attacks(g, v, l, thing_tp(item), parent, width, false /* title allowed */);
   }
 
-  return true;
+  return worn;
 }
 
 //
@@ -1569,6 +1684,18 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, i
       }
 
       if (wid_thing_info_abilities(g, v, l, me, parent)) {
+        parent->log_empty_line(g);
+      }
+
+      if (wid_thing_info_hates(g, v, l, me, parent)) {
+        parent->log_empty_line(g);
+      }
+
+      if (wid_thing_info_dislikes(g, v, l, me, parent)) {
+        parent->log_empty_line(g);
+      }
+
+      if (wid_thing_info_likes(g, v, l, me, parent)) {
         parent->log_empty_line(g);
       }
 

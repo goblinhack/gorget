@@ -2467,10 +2467,10 @@
   return tp_flag(tp, is_wall) != 0;
 }
 
-[[nodiscard]] auto tp_is_water(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_shallow_water(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_water) != 0;
+  return tp_flag(tp, is_shallow_water) != 0;
 }
 
 [[nodiscard]] auto tp_is_wood(Tpp tp) -> bool

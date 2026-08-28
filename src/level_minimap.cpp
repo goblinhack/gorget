@@ -76,7 +76,7 @@ static void level_minimap_levels_update(Gamep g, Levelsp v, Levelp l, const bool
         if (level_is_chasm_bool(g, v, l, p)) {
           c = BLACK;
         }
-        if (level_is_water_bool(g, v, l, p)) {
+        if (level_is_shallow_water_bool(g, v, l, p)) {
           c = BLUE;
         }
         if (level_is_deep_water_bool(g, v, l, p)) {

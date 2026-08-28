@@ -103,7 +103,7 @@
       if (level_is_lava_bool(g, v, l, p)) {
         c = CHARMAP_LAVA;
       }
-      if (level_is_water_bool(g, v, l, p)) {
+      if (level_is_shallow_water_bool(g, v, l, p)) {
         c = CHARMAP_WATER;
       }
       if (level_is_deep_water_bool(g, v, l, p)) {

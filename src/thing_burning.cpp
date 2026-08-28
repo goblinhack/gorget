@@ -26,7 +26,17 @@ void thing_continue_to_burn_check(Gamep g, Levelsp v, Levelp l, Thingp me)
   //
   // Over water?
   //
-  if (level_is_water_bool(g, v, l, thing_at(g, v, l, me))) {
+  if (level_is_deep_water_bool(g, v, l, thing_at(g, v, l, me))) {
+    thing_is_burning_unset(g, v, l, me);
+
+    if (thing_is_player(me)) {
+      topcon(UI_GOOD_FMT_STR "You extinguish the flames in the deep water!" UI_RESET_FMT);
+    }
+
+    return;
+  }
+
+  if (level_is_shallow_water_bool(g, v, l, thing_at(g, v, l, me))) {
     thing_is_burning_unset(g, v, l, me);
 
     if (thing_is_player(me)) {

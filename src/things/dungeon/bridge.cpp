@@ -42,7 +42,7 @@ static void thing_bridge_replace(Gamep g, Levelsp v, Levelp l, Thingp me)
       auto at = thing_at(g, v, l, me);
       auto p  = at + delta;
       lava_count += (level_is_lava_bool(g, v, l, p)) ? 1 : 0;
-      water_count += (level_is_water_bool(g, v, l, p)) ? 1 : 0;
+      water_count += (level_is_shallow_water_bool(g, v, l, p) || level_is_deep_water_bool(g, v, l, p)) ? 1 : 0;
       chasm_count += (level_is_chasm_bool(g, v, l, p)) ? 1 : 0;
     }
 
@@ -56,8 +56,8 @@ static void thing_bridge_replace(Gamep g, Levelsp v, Levelp l, Thingp me)
         //
         // Water needs dirt under it so we can see the transparency
         //
-        if (! level_is_water_bool(g, v, l, thing_at(g, v, l, me))) {
-          (void) thing_spawn(g, v, l, tp_first(is_water), me);
+        if (! level_is_shallow_water_bool(g, v, l, thing_at(g, v, l, me))) {
+          (void) thing_spawn(g, v, l, tp_first(is_shallow_water), me);
         }
         if (! level_is_dirt_bool(g, v, l, thing_at(g, v, l, me))) {
           (void) thing_spawn(g, v, l, tp_first(is_dirt), me);

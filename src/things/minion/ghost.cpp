@@ -31,7 +31,11 @@ static auto tp_ghost_assess_tp(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp me) 
 {
   TRACE_DEBUG();
 
-  if (tp_is_water(tp)) {
+  if (tp_is_shallow_water(tp)) {
+    return THING_ENVIRON_HATES;
+  }
+
+  if (tp_is_deep_water(tp)) {
     return THING_ENVIRON_HATES;
   }
 
@@ -42,7 +46,11 @@ static auto tp_ghost_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at,
 {
   TRACE_DEBUG();
 
-  if (level_is_water_cached(g, v, l, at)) {
+  if (level_is_shallow_water_cached(g, v, l, at)) {
+    return THING_ENVIRON_HATES;
+  }
+
+  if (level_is_deep_water_cached(g, v, l, at)) {
     return THING_ENVIRON_HATES;
   }
 

@@ -2468,10 +2468,10 @@
   return level_open(g, v, l, is_wall, p);
 }
 
-[[nodiscard]] auto level_open_is_water(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_open_is_shallow_water(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_open(g, v, l, is_water, p);
+  return level_open(g, v, l, is_shallow_water, p);
 }
 
 [[nodiscard]] auto level_open_is_wood(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp

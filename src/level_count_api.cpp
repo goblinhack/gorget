@@ -2469,10 +2469,10 @@
   return level_count(g, v, l, is_wall, p);
 }
 
-[[nodiscard]] auto level_count_is_water(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_shallow_water(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_water, p);
+  return level_count(g, v, l, is_shallow_water, p);
 }
 
 [[nodiscard]] auto level_count_is_wood(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t

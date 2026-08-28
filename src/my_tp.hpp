@@ -429,7 +429,7 @@
       list_macro(is_wearable, "is_wearable"),                                               /* newline */                                       \
       list_macro(is_wood, "is_wood"),                                                       /* newline */                                       \
       list_macro(is_able_to_be_engulfed, "is_able_to_be_engulfed"),                         /* newline */                                       \
-      list_macro(is_water, "is_water"),                                                     /* newline */
+      list_macro(is_shallow_water, "is_shallow_water"),                                     /* newline */
 
 ENUM_DEF_H(THING_FLAG_ENUM, ThingFlagType)
 
@@ -999,6 +999,8 @@ class Tp;
 [[nodiscard]] auto tp_is_resistant_to(Tpp tp, ThingEventType val) -> bool;
 [[nodiscard]] auto tp_is_ring(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_rock(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_water_bound(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_shallow_water(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_shovable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_shown_health(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_shown_noise(Tpp tp) -> bool;
@@ -1221,8 +1223,6 @@ class Tp;
 [[nodiscard]] auto tp_is_wait_on_dead_anim(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_wall(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_wand(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_water_bound(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_water(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_weapon(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_wearable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_wood(Tpp tp) -> bool;

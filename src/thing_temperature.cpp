@@ -43,7 +43,7 @@ void thing_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thing
   THING_DBG(g, v, l, t, "temperature handle: %d degrees (Tmax %d)", n, Tmax * 2);
 
   if ((Tb != 0) && (n >= Tb)) {
-    if (thing_is_steam(source) || thing_is_water(source)) {
+    if (thing_is_steam(source) || thing_is_deep_water(source) || thing_is_shallow_water(source)) {
       //
       // You don't continue to burn with steam
       //
@@ -175,7 +175,7 @@ void tp_temperature_init(Tpp tp)
     tp_temperature_heat_capacity_set(tp, HEAT_CAPACITY_STEEL);
     heat_exchange_set = true;
   }
-  if (tp_is_water(tp) || tp_is_deep_water(tp)) {
+  if (tp_is_shallow_water(tp) || tp_is_deep_water(tp)) {
     tp_temperature_thermal_conductivity_set(tp, THERMAL_CONDUCTIVITY_WATER);
     tp_temperature_heat_capacity_set(tp, HEAT_CAPACITY_WATER);
     heat_exchange_set = true;

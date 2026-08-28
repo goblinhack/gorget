@@ -60,6 +60,80 @@ static void wid_rightbar_create_minimap_level(Gamep g)
   }
 }
 
+[[nodiscard]] static auto wid_rightbar_thing_info_count(Gamep g, Levelsp v) -> int
+{
+  int wid_thing_info_count {};
+
+  for (auto n = 0; std::cmp_less(n, v->describe_count); n++) {
+    auto *t = thing_find_optional(g, v, v->describe[ n ]);
+    if (t == nullptr) {
+      continue;
+    }
+
+    if (thing_is_player(t)) {
+      continue;
+    }
+
+    if (thing_is_dead(t)) {
+      continue;
+    }
+
+    wid_thing_info_count++;
+  }
+
+  for (auto n = 0; std::cmp_less(n, v->describe_count); n++) {
+    auto *t = thing_find_optional(g, v, v->describe[ n ]);
+    if (t == nullptr) {
+      continue;
+    }
+
+    if (thing_is_player(t)) {
+      continue;
+    }
+
+    if (thing_is_dead(t)) {
+      wid_thing_info_count++;
+    }
+  }
+
+  return wid_thing_info_count;
+}
+
+static auto wid_rightbar_thing_info_add(Gamep g, Levelsp v, Levelp l) -> void
+{
+  for (auto n = 0; std::cmp_less(n, v->describe_count); n++) {
+    auto *t = thing_find_optional(g, v, v->describe[ n ]);
+    if (t == nullptr) {
+      continue;
+    }
+
+    if (thing_is_player(t)) {
+      continue;
+    }
+
+    if (thing_is_dead(t)) {
+      continue;
+    }
+
+    wid_thing_info(g, v, l, t, wid_rightbar, UI_RIGHTBAR_WIDTH);
+  }
+
+  for (auto n = 0; std::cmp_less(n, v->describe_count); n++) {
+    auto *t = thing_find_optional(g, v, v->describe[ n ]);
+    if (t == nullptr) {
+      continue;
+    }
+
+    if (thing_is_player(t)) {
+      continue;
+    }
+
+    if (thing_is_dead(t)) {
+      wid_thing_info(g, v, l, t, wid_rightbar, UI_RIGHTBAR_WIDTH);
+    }
+  }
+}
+
 [[nodiscard]] static auto wid_rightbar_create_window(Gamep g) -> bool
 {
   TRACE();
@@ -86,14 +160,28 @@ static void wid_rightbar_create_minimap_level(Gamep g)
     //
     // If in level select mode, a different wid is used
     //
+
+    //
+    // Minimaps
+    //
+    wid_rightbar_create_minimap_level(g);
+  } else if (wid_rightbar_thing_info_count(g, v)) {
+    //
+    // Thing infos
+    //
+    wid_rightbar_thing_info_add(g, v, l);
   } else {
     //
-    // Normal level contents
+    // Show level number etc...
     //
     wid_rightbar->log_empty_line(g);
     auto        bs = BiomeType_to_string(l->biome);
     std::string s;
     auto        num = l->level_num + 1;
+
+    //
+    // Boss level?
+    //
     if (level_type_is_boss_level(num)) {
       s = std::format("{}:{} Seed:{}", bs, "boss", game_seed_name_get(g));
     } else {
@@ -102,48 +190,17 @@ static void wid_rightbar_create_minimap_level(Gamep g)
 
     wid_rightbar->log(g, s);
 
-    {
-      s = std::format("Move:{}", v->tick);
-      wid_rightbar->log(g, s);
-    }
+    //
+    // Add move count
+    //
+    auto mv = std::format("Move:{}", v->tick);
+    wid_rightbar->log(g, mv);
 
-    for (auto n = 0; std::cmp_less(n, v->describe_count); n++) {
-      auto *t = thing_find_optional(g, v, v->describe[ n ]);
-      if (t == nullptr) {
-        continue;
-      }
-
-      if (thing_is_player(t)) {
-        continue;
-      }
-
-      if (thing_is_dead(t)) {
-        continue;
-      }
-
-      wid_thing_info(g, v, l, t, wid_rightbar, UI_RIGHTBAR_WIDTH);
-    }
-
-    for (auto n = 0; std::cmp_less(n, v->describe_count); n++) {
-      auto *t = thing_find_optional(g, v, v->describe[ n ]);
-      if (t == nullptr) {
-        continue;
-      }
-
-      if (thing_is_player(t)) {
-        continue;
-      }
-
-      if (thing_is_dead(t)) {
-        wid_thing_info(g, v, l, t, wid_rightbar, UI_RIGHTBAR_WIDTH);
-      }
-    }
+    //
+    // Minimaps
+    //
+    wid_rightbar_create_minimap_level(g);
   }
-
-  //
-  // Minimaps
-  //
-  wid_rightbar_create_minimap_level(g);
 
   wid_update(g, wid_rightbar->wid_popup_container);
 

@@ -274,7 +274,7 @@
   return t->_is_player;
 }
 
-[[nodiscard]] static inline auto thing_is_water(Thingp t) -> bool
+[[nodiscard]] static inline auto thing_is_shallow_water(Thingp t) -> bool
 {
 #ifdef DEBUG_BUILD
   TRACE_DEBUG();
@@ -284,7 +284,7 @@
     return false;
   }
 #endif
-  return tp_flag(thing_tp(t), is_water) != 0;
+  return tp_flag(thing_tp(t), is_shallow_water) != 0;
 }
 
 [[nodiscard]] static inline auto thing_is_foliage(Thingp t) -> bool

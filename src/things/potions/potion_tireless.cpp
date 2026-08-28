@@ -90,7 +90,7 @@ static void tp_potion_tireless_on_death(Gamep g, Levelsp v, Levelp l, Thingp me,
     (void) thing_noise_incr(g, v, l, me, THING_NOISE_SHATTER);
   }
 
-  (void) thing_spawn(g, v, l, tp_first(is_water), thing_at(g, v, l, me));
+  (void) thing_spawn(g, v, l, tp_first(is_shallow_water), thing_at(g, v, l, me));
 }
 
 [[nodiscard]] auto tp_load_potion_tireless() -> bool

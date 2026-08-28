@@ -2520,10 +2520,10 @@
   return level_flag(g, v, l, is_wall, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_water_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_shallow_water_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_water, p, me) != nullptr;
+  return level_flag(g, v, l, is_shallow_water, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_wood_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool

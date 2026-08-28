@@ -193,24 +193,20 @@
   //
   // Add some more spice to the message
   //
-  if (level_is_lava_bool(g, v, l, thing_at(g, v, l, t))) {
-    if ((source == nullptr) || ! thing_is_lava(source)) {
-      s += " in lava";
-    }
-  } else if (level_is_deep_water(g, v, l, thing_at(g, v, l, t)) != nullptr) {
-    if ((source == nullptr) || ! thing_is_water(source)) {
-      s += " in the depths";
-    }
-  } else if (level_is_water_bool(g, v, l, thing_at(g, v, l, t))) {
-    if ((source == nullptr) || ! thing_is_water(source)) {
-      s += " in a puddle";
-    }
+  if (level_is_lava_bool(g, v, l, thing_at(g, v, l, t)) || ((source != nullptr) && thing_is_lava(source))) {
+    s += " in lava";
+  } else if (level_is_deep_water_bool(g, v, l, thing_at(g, v, l, t)) || ((source != nullptr) && thing_is_deep_water(source))) {
+    s += " in the depths";
+  } else if (level_is_shallow_water_bool(g, v, l, thing_at(g, v, l, t)) || ((source != nullptr) && thing_is_shallow_water(source))) {
+    s += " in a puddle";
+  } else if (level_is_steam_bool(g, v, l, thing_at(g, v, l, t)) || ((source != nullptr) && thing_is_steam(source))) {
+    s += " in the steam";
+  } else if (level_is_smoke_bool(g, v, l, thing_at(g, v, l, t)) || ((source != nullptr) && thing_is_smoke(source))) {
+    s += " in the smoke";
   }
 
   if (source != nullptr) {
-    if (thing_is_lava(source) || thing_is_water(source)) {
-      s += " in " + tp_name_long(thing_tp(source));
-    } else if ((g != nullptr) && thing_is_player(source)) {
+    if ((g != nullptr) && thing_is_player(source)) {
       std::string const name = game_player_name_get(g);
       s += " by " + name;
     } else {

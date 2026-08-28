@@ -978,6 +978,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_ring(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_rock(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_scheduled_for_cleanup(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_water_bound(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_shovable(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
 [[nodiscard]] auto thing_is_shown_health(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_shown_noise(Thingp t) -> bool;
@@ -1203,7 +1204,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_wait_on_anim(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_wait_on_dead_anim(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_wand(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_water_bound(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_weapon(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_wearable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_wood(Thingp t) -> bool;

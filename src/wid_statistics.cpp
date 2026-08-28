@@ -29,7 +29,7 @@
 
 static WidPopup *wid_statistics_popup;
 
-static int column_width = 20;
+static const int column_width = 20;
 
 static void wid_statistics_destroy(Gamep g)
 {
@@ -137,7 +137,7 @@ static void wid_statistics_show_defeated(Gamep g, Levelp l, Thingp player)
     }
 
     if (player_struct->defeated[ i ] == 0U) {
-      //     continue;
+      continue;
     }
 
     printed_something = true;
