@@ -33,6 +33,17 @@ static auto tp_kobalos_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> st
       UI_INFO2_FMT_STR "Kobalos are vindictive, greedy little things and have a habit of thievery...";
 }
 
+static auto tp_kobalos_assess_tp(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp me) -> ThingEnvironType
+{
+  TRACE_DEBUG();
+
+  if (tp_is_lava(tp)) {
+    return THING_ENVIRON_HATES;
+  }
+
+  return THING_ENVIRON_NEUTRAL;
+}
+
 static auto tp_kobalos_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at, Thingp me) -> ThingEnvironType
 {
   TRACE_DEBUG();
@@ -82,6 +93,7 @@ static bool tp_kobalos_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker,
 
   // begin sort marker1 {
   thing_assess_tile_set(tp, tp_kobalos_assess_tile);
+  thing_assess_tp_set(tp, tp_kobalos_assess_tp);
   thing_description_set(tp, tp_kobalos_description_get);
   thing_detail_set(tp, tp_kobalos_detail_get);
   thing_on_attacking_set(tp, tp_kobalos_on_attacking);

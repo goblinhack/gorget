@@ -32,6 +32,25 @@ static auto tp_glorp_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std:
       UI_INFO3_FMT_STR "Although they look like lime jelly, no one has yet confirmed how they taste..."; //
 }
 
+static auto tp_glorp_assess_tp(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp me) -> ThingEnvironType
+{
+  TRACE_DEBUG();
+
+  if (tp_is_lava(tp)) {
+    return THING_ENVIRON_HATES;
+  }
+
+  if (tp_is_chasm(tp)) {
+    return THING_ENVIRON_HATES;
+  }
+
+  if (tp_is_water(tp)) {
+    return THING_ENVIRON_DISLIKES;
+  }
+
+  return THING_ENVIRON_NEUTRAL;
+}
+
 static auto tp_glorp_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at, Thingp me) -> ThingEnvironType
 {
   TRACE_DEBUG();
@@ -89,6 +108,7 @@ static void tp_glorp_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEven
 
   // begin sort marker1 {
   thing_assess_tile_set(tp, tp_glorp_assess_tile);
+  thing_assess_tp_set(tp, tp_glorp_assess_tp);
   thing_description_set(tp, tp_glorp_description_get);
   thing_detail_set(tp, tp_glorp_detail_get);
   thing_on_attacking_set(tp, tp_glorp_on_attacking);

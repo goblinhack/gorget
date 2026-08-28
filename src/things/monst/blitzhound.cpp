@@ -39,6 +39,21 @@ static auto tp_blitzhound_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
       "Also make good pets.";
 }
 
+static auto tp_blitzhound_assess_tp(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp me) -> ThingEnvironType
+{
+  TRACE_DEBUG();
+
+  if (tp_is_lava(tp)) {
+    return THING_ENVIRON_HATES;
+  }
+
+  if (tp_is_chasm(tp)) {
+    return THING_ENVIRON_HATES;
+  }
+
+  return THING_ENVIRON_NEUTRAL;
+}
+
 static auto tp_blitzhound_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at, Thingp me) -> ThingEnvironType
 {
   TRACE_DEBUG();
@@ -92,6 +107,7 @@ static bool tp_blitzhound_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attack
 
   // begin sort marker1 {
   thing_assess_tile_set(tp, tp_blitzhound_assess_tile);
+  thing_assess_tp_set(tp, tp_blitzhound_assess_tp);
   thing_description_set(tp, tp_blitzhound_description_get);
   thing_detail_set(tp, tp_blitzhound_detail_get);
   thing_on_attacking_set(tp, tp_blitzhound_on_attacking);

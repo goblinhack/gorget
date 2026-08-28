@@ -27,6 +27,17 @@ static auto tp_ghost_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std:
       UI_INFO2_FMT_STR "Beware, such spirits can traverse chasms and float through solid rock.";
 }
 
+static auto tp_ghost_assess_tp(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp me) -> ThingEnvironType
+{
+  TRACE_DEBUG();
+
+  if (tp_is_water(tp)) {
+    return THING_ENVIRON_HATES;
+  }
+
+  return THING_ENVIRON_NEUTRAL;
+}
+
 static auto tp_ghost_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at, Thingp me) -> ThingEnvironType
 {
   TRACE_DEBUG();
@@ -81,6 +92,7 @@ static void tp_ghost_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEven
 
   // begin sort marker1 {
   thing_assess_tile_set(tp, tp_ghost_assess_tile);
+  thing_assess_tp_set(tp, tp_ghost_assess_tp);
   thing_description_set(tp, tp_ghost_description_get);
   thing_detail_set(tp, tp_ghost_detail_get);
   thing_on_attacking_set(tp, tp_ghost_on_attacking);

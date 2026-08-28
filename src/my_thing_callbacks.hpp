@@ -20,6 +20,10 @@ using thing_assess_tile_t = ThingEnvironType (*)(Gamep, Levelsp, Levelp l, const
 auto               thing_assess_tile_set(Tpp tp, thing_assess_tile_t callback) -> void;
 [[nodiscard]] auto thing_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> ThingEnvironType;
 
+using thing_assess_tp_t = ThingEnvironType (*)(Gamep, Levelsp, Levelp l, Tpp tp, Thingp me);
+auto               thing_assess_tp_set(Tpp tp, thing_assess_tp_t callback) -> void;
+[[nodiscard]] auto thing_assess_tp(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp me) -> ThingEnvironType;
+
 using thing_description_get_t = std::string (*)(Gamep, Levelsp, Levelp, Thingp me);
 auto               thing_description_set(Tpp tp, thing_description_get_t callback) -> void;
 [[nodiscard]] auto thing_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string;

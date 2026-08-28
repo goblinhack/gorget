@@ -34,6 +34,21 @@ static auto tp_mantisman_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> 
       UI_INFO5_FMT_STR "Watch out for their jump attack!\n";
 }
 
+static auto tp_mantisman_assess_tp(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp me) -> ThingEnvironType
+{
+  TRACE_DEBUG();
+
+  if (tp_is_lava(tp)) {
+    return THING_ENVIRON_HATES;
+  }
+
+  if (tp_is_water(tp)) {
+    return THING_ENVIRON_DISLIKES;
+  }
+
+  return THING_ENVIRON_NEUTRAL;
+}
+
 static auto tp_mantisman_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at, Thingp me) -> ThingEnvironType
 {
   TRACE_DEBUG();
@@ -87,6 +102,7 @@ static bool tp_mantisman_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacke
 
   // begin sort marker1 {
   thing_assess_tile_set(tp, tp_mantisman_assess_tile);
+  thing_assess_tp_set(tp, tp_mantisman_assess_tp);
   thing_description_set(tp, tp_mantisman_description_get);
   thing_detail_set(tp, tp_mantisman_detail_get);
   thing_on_attacking_set(tp, tp_mantisman_on_attacking);

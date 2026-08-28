@@ -34,6 +34,17 @@ static auto tp_mummy_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std:
       UI_INFO3_FMT_STR "Does not like staying dead, or being set on fire.";
 }
 
+static auto tp_mummy_assess_tp(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp me) -> ThingEnvironType
+{
+  TRACE_DEBUG();
+
+  if (tp_is_lava(tp)) {
+    return THING_ENVIRON_HATES;
+  }
+
+  return THING_ENVIRON_NEUTRAL;
+}
+
 static auto tp_mummy_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at, Thingp me) -> ThingEnvironType
 {
   TRACE_DEBUG();
@@ -83,6 +94,7 @@ static bool tp_mummy_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker, T
 
   // begin sort marker1 {
   thing_assess_tile_set(tp, tp_mummy_assess_tile);
+  thing_assess_tp_set(tp, tp_mummy_assess_tp);
   thing_description_set(tp, tp_mummy_description_get);
   thing_detail_set(tp, tp_mummy_detail_get);
   thing_on_attacking_set(tp, tp_mummy_on_attacking);

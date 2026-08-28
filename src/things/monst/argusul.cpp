@@ -41,6 +41,13 @@ static auto tp_argusul_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> st
       "It is rumoured that a greater Argusul lurks in the dungeon somewhere...\n";     //
 }
 
+static auto tp_argusul_assess_tp(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp me) -> ThingEnvironType
+{
+  TRACE_DEBUG();
+
+  return THING_ENVIRON_NEUTRAL;
+}
+
 static auto tp_argusul_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at, Thingp me) -> ThingEnvironType
 {
   TRACE_DEBUG();
@@ -113,6 +120,7 @@ static void tp_argusul_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
 
   // begin sort marker1 {
   thing_assess_tile_set(tp, tp_argusul_assess_tile);
+  thing_assess_tp_set(tp, tp_argusul_assess_tp);
   thing_description_set(tp, tp_argusul_description_get);
   thing_detail_set(tp, tp_argusul_detail_get);
   thing_on_attacking_set(tp, tp_argusul_on_attacking);

@@ -798,3 +798,29 @@ void thing_assess_tile_set(Tpp tp, thing_assess_tile_t callback)
   }
   return tp->assess_tile(g, v, l, p, me);
 }
+
+void thing_assess_tp_set(Tpp tp, thing_assess_tp_t callback)
+{
+  TRACE();
+
+  if (tp == nullptr) [[unlikely]] {
+    ERR("no thing template pointer");
+    return;
+  }
+  tp->assess_tp = callback;
+}
+
+[[nodiscard]] auto thing_assess_tp(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp me) -> ThingEnvironType
+{
+  TRACE_DEBUG();
+
+  auto *me_tp = thing_tp(me);
+  if (me_tp == nullptr) [[unlikely]] {
+    ERR("no thing template pointer");
+    return THING_ENVIRON_NEUTRAL;
+  }
+  if (me_tp->assess_tp == nullptr) {
+    return THING_ENVIRON_NEUTRAL;
+  }
+  return me_tp->assess_tp(g, v, l, tp, me);
+}

@@ -33,6 +33,13 @@ static auto tp_ogrik_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std:
       UI_INFO4_FMT_STR "Naturally, due to their tough rock-like skin, Ogrik are impervious to most attacks.\n";                //
 }
 
+static auto tp_ogrik_assess_tp(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp me) -> ThingEnvironType
+{
+  TRACE_DEBUG();
+
+  return THING_ENVIRON_NEUTRAL;
+}
+
 static auto tp_ogrik_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at, Thingp me) -> ThingEnvironType
 {
   TRACE_DEBUG();
@@ -93,6 +100,7 @@ static void tp_ogrik_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
 
   // begin sort marker1 {
   thing_assess_tile_set(tp, tp_ogrik_assess_tile);
+  thing_assess_tp_set(tp, tp_ogrik_assess_tp);
   thing_description_set(tp, tp_ogrik_description_get);
   thing_detail_set(tp, tp_ogrik_detail_get);
   thing_on_attacking_set(tp, tp_ogrik_on_attacking);

@@ -305,6 +305,7 @@ public:
   thing_on_fall_end_t           on_fall_end           = {};
   thing_display_get_tile_info_t display_get_tile_info = {};
   thing_assess_tile_t           assess_tile           = {};
+  thing_assess_tp_t             assess_tp             = {};
 
   Tp();
   ~Tp();

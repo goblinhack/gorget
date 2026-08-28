@@ -40,9 +40,24 @@ static auto tp_skullferno_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
       "Beware their fiery breath and their natural immunity to fire...\n";
 }
 
+static auto tp_skullferno_assess_tp(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp me) -> ThingEnvironType
+{
+  TRACE_DEBUG();
+
+  if (tp_is_water(tp)) {
+    return THING_ENVIRON_HATES;
+  }
+
+  return THING_ENVIRON_NEUTRAL;
+}
+
 static auto tp_skullferno_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at, Thingp me) -> ThingEnvironType
 {
   TRACE_DEBUG();
+
+  if (level_is_water_cached(g, v, l, at)) {
+    return THING_ENVIRON_HATES;
+  }
 
   return THING_ENVIRON_NEUTRAL;
 }
@@ -118,6 +133,7 @@ static void tp_skullferno_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
 
   // begin sort marker1 {
   thing_assess_tile_set(tp, tp_skullferno_assess_tile);
+  thing_assess_tp_set(tp, tp_skullferno_assess_tp);
   thing_description_set(tp, tp_skullferno_description_get);
   thing_detail_set(tp, tp_skullferno_detail_get);
   thing_on_attacking_set(tp, tp_skullferno_on_attacking);
