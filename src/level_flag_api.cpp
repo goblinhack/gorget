@@ -308,10 +308,10 @@
   return level_flag(g, v, l, is_dead_on_shoving, p, me);
 }
 
-[[nodiscard]] auto level_is_deep_water(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_water_deep(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_deep_water, p, me);
+  return level_flag(g, v, l, is_water_deep, p, me);
 }
 
 [[nodiscard]] auto level_is_described_cursor(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
@@ -2468,10 +2468,10 @@
   return level_flag(g, v, l, is_wall, p, me);
 }
 
-[[nodiscard]] auto level_is_shallow_water(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_water_shallow(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_shallow_water, p, me);
+  return level_flag(g, v, l, is_water_shallow, p, me);
 }
 
 [[nodiscard]] auto level_is_wood(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp

@@ -307,10 +307,10 @@
   return tp_flag(tp, is_dead_on_shoving) != 0;
 }
 
-[[nodiscard]] auto tp_is_deep_water(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_water_deep(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_deep_water) != 0;
+  return tp_flag(tp, is_water_deep) != 0;
 }
 
 [[nodiscard]] auto tp_is_described_cursor(Tpp tp) -> bool
@@ -2467,10 +2467,10 @@
   return tp_flag(tp, is_wall) != 0;
 }
 
-[[nodiscard]] auto tp_is_shallow_water(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_water_shallow(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_shallow_water) != 0;
+  return tp_flag(tp, is_water_shallow) != 0;
 }
 
 [[nodiscard]] auto tp_is_wood(Tpp tp) -> bool

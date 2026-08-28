@@ -44,7 +44,7 @@ void thing_is_jumping_set(Gamep g, Levelsp v, Levelp l, Thingp me, bool val)
     //
     // Splash!
     //
-    if (level_is_shallow_water_bool(g, v, l, thing_at(g, v, l, me)) || level_is_deep_water_bool(g, v, l, thing_at(g, v, l, me))) {
+    if (level_is_water_shallow_bool(g, v, l, thing_at(g, v, l, me)) || level_is_water_deep_bool(g, v, l, thing_at(g, v, l, me))) {
       thing_sound_play(g, v, l, me, "splash");
     }
   }

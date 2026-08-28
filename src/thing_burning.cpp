@@ -26,7 +26,7 @@ void thing_continue_to_burn_check(Gamep g, Levelsp v, Levelp l, Thingp me)
   //
   // Over water?
   //
-  if (level_is_deep_water_bool(g, v, l, thing_at(g, v, l, me))) {
+  if (level_is_water_deep_bool(g, v, l, thing_at(g, v, l, me))) {
     thing_is_burning_unset(g, v, l, me);
 
     if (thing_is_player(me)) {
@@ -36,7 +36,7 @@ void thing_continue_to_burn_check(Gamep g, Levelsp v, Levelp l, Thingp me)
     return;
   }
 
-  if (level_is_shallow_water_bool(g, v, l, thing_at(g, v, l, me))) {
+  if (level_is_water_shallow_bool(g, v, l, thing_at(g, v, l, me))) {
     thing_is_burning_unset(g, v, l, me);
 
     if (thing_is_player(me)) {

@@ -4281,7 +4281,7 @@ static void level_gen_remove_conflicting_tiles(class LevelGen *lg)
 //
 // Change water to deep water if possible
 //
-static void level_gen_create_deep_water(class LevelGen *lg)
+static void level_gen_create_water_deep(class LevelGen *lg)
 {
   TRACE();
 
@@ -5398,7 +5398,7 @@ static auto level_gen_create_proc_gen_level(Gamep g, LevelNum level_num) -> clas
   //
   // Create deep water
   //
-  level_gen_create_deep_water(lg);
+  level_gen_create_water_deep(lg);
 
   //
   // Mark walkable tiles prior to adding content; as we want to check teleports are on the main path

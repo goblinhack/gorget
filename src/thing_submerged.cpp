@@ -102,9 +102,9 @@ void thing_submerged_update(Gamep g, Levelsp v, Levelp l, Thingp t)
 
   auto at = thing_at(g, v, l, t);
   (void) thing_submerged_pct_set(g, v, l, t, 0);
-  if (level_is_deep_water_cached(g, v, l, at)) {
+  if (level_is_water_deep_cached(g, v, l, at)) {
     (void) thing_submerged_pct_set(g, v, l, t, 75);
-  } else if (level_is_shallow_water_cached(g, v, l, at)) {
+  } else if (level_is_water_shallow_cached(g, v, l, at)) {
     (void) thing_submerged_pct_set(g, v, l, t, 50);
   } else if (level_is_lava_cached(g, v, l, at)) {
     (void) thing_submerged_pct_set(g, v, l, t, 50);

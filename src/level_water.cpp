@@ -24,7 +24,7 @@ void level_tick_water(Gamep g, Levelsp v, Levelp l)
   {
     bpoint p(x, y);
 
-    if (! level_is_shallow_water_bool(g, v, l, p) && ! level_is_deep_water_bool(g, v, l, p)) {
+    if (! level_is_water_shallow_bool(g, v, l, p) && ! level_is_water_deep_bool(g, v, l, p)) {
       continue;
     }
 

@@ -68,7 +68,7 @@ static void tp_potion_incin_on_thrown_end(Gamep g, Levelsp v, Levelp l, Thingp m
   // Soft landing?
   //
   if ((level_is_chasm_bool(g, v, l, thing_at(g, v, l, me))) || // newline
-      (level_is_shallow_water_bool(g, v, l, thing_at(g, v, l, me)))) {
+      (level_is_water_shallow_bool(g, v, l, thing_at(g, v, l, me)))) {
     return;
   }
 

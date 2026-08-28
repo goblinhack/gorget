@@ -309,10 +309,10 @@
   return level_flag_cached(g, v, l, is_dead_on_shoving, p);
 }
 
-[[nodiscard]] auto level_is_deep_water_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_water_deep_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_deep_water, p);
+  return level_flag_cached(g, v, l, is_water_deep, p);
 }
 
 [[nodiscard]] auto level_is_described_cursor_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
@@ -2520,10 +2520,10 @@
   return level_flag_cached(g, v, l, is_wall, p);
 }
 
-[[nodiscard]] auto level_is_shallow_water_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_water_shallow_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_shallow_water, p);
+  return level_flag_cached(g, v, l, is_water_shallow, p);
 }
 
 [[nodiscard]] auto level_is_wood_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

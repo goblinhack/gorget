@@ -70,7 +70,7 @@ static void thing_killed_player(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEv
           topcon(UI_IMPORTANT_FMT_STR "You are consumed by lava!" UI_RESET_FMT);
         } else if (thing_is_fire(it)) {
           topcon(UI_IMPORTANT_FMT_STR "You are consumed in flames!" UI_RESET_FMT);
-        } else if (thing_is_shallow_water(it) || thing_is_deep_water(it)) {
+        } else if (thing_is_water_shallow(it) || thing_is_water_deep(it)) {
           topcon(UI_IMPORTANT_FMT_STR "You are boiled to death!" UI_RESET_FMT);
         } else if (thing_is_steam(it)) {
           topcon(UI_IMPORTANT_FMT_STR "You are steamed to death!" UI_RESET_FMT);

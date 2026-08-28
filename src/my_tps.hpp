@@ -35,7 +35,6 @@ auto tp_load_copious_chest() -> bool;
 auto tp_load_corridor() -> bool;
 auto tp_load_cursor_at() -> bool;
 auto tp_load_cursor_path() -> bool;
-auto tp_load_deep_water() -> bool;
 auto tp_load_dirt() -> bool;
 auto tp_load_door_locked() -> bool;
 auto tp_load_door_secret() -> bool;
@@ -97,6 +96,7 @@ auto tp_load_vault() -> bool;
 auto tp_load_wall() -> bool;
 auto tp_load_wand_fire() -> bool;
 auto tp_load_wand_light() -> bool;
+auto tp_load_water_deep() -> bool;
 auto tp_load_water() -> bool;
   /* end shell marker1 */
 

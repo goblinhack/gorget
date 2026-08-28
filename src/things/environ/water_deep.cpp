@@ -10,30 +10,30 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-static auto tp_water_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
+static auto tp_water_deep_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
   switch (l->biome) {
-    case BIOME_BOGLAND :    return "murky smelly water";
-    case BIOME_NETHERVOID : return "water that reflects starlight";
+    case BIOME_BOGLAND :    return "deep murky water";
+    case BIOME_NETHERVOID : return "dark water that reflects starlight";
     case BIOME_GRAVEYARD :  return "foul smelling water";
     case BIOME_UNDERHELL :  return "unexpected water";
     case BIOME_DUNGEON :    [[fallthrough]];
     case BIOME_NONE :       [[fallthrough]];
-    case BIOME_ENUM_MAX :   return "shallow water";
+    case BIOME_ENUM_MAX :   return "deep water";
   }
-  return "shallow water";
+  return "deep water";
 }
 
-[[nodiscard]] auto tp_load_water() -> bool
+[[nodiscard]] auto tp_load_water_deep() -> bool
 {
   TRACE();
 
-  auto *tp   = tp_load("shallow_water"); // keep as string for scripts
+  auto *tp   = tp_load("water_deep"); // keep as string for scripts
   auto  name = tp_name(tp);
   // begin sort marker1 {
-  thing_description_set(tp, tp_water_description_get);
+  thing_description_set(tp, tp_water_deep_description_get);
   tp_damage_set(tp, THING_EVENT_WATER_DAMAGE, "1d6");
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
@@ -41,30 +41,31 @@ static auto tp_water_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
   tp_flag_set(tp, is_blit_if_has_seen);
   tp_flag_set(tp, is_blit_per_pixel_lighting);
   tp_flag_set(tp, is_blit_shown_in_chasms);
+  tp_flag_set(tp, is_cursor_path_hazard);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_flat);
   tp_flag_set(tp, is_obs_to_fire);
   tp_flag_set(tp, is_obs_to_jumping_out_of);
   tp_flag_set(tp, is_physics_temperature);
-  tp_flag_set(tp, is_shallow_water);
   tp_flag_set(tp, is_soft_landing);
   tp_flag_set(tp, is_tick_end_delay);
   tp_flag_set(tp, is_tiled);
-  tp_health_set(tp, "1d10"); // to allow it to be damaged by fire
-  tp_name_a_or_an_set(tp, "shallow water");
-  tp_name_apostrophize_set(tp, "shallow waters'");
-  tp_name_long_set(tp, "shallow water");
-  tp_name_pluralize_set(tp, "shallow waters");
-  tp_name_short_set(tp, "shallow water");
+  tp_flag_set(tp, is_water_deep);
+  tp_health_set(tp, "40"); // to allow it to be damaged by fire
+  tp_name_a_or_an_set(tp, "deep water");
+  tp_name_apostrophize_set(tp, "deep waters'");
+  tp_name_long_set(tp, "deep water");
+  tp_name_pluralize_set(tp, "deep waters");
+  tp_name_short_set(tp, "deep water");
   tp_priority_set(tp, THING_PRIORITY_WATER);
   tp_temperature_burns_at_set(tp, 100);  // celsius
   tp_temperature_damage_at_set(tp, 100); // celsius
-  tp_temperature_initial_set(tp, 10);    // celsius
+  tp_temperature_initial_set(tp, 5);     // celsius
   tp_weight_set(tp, WEIGHT_VVVHEAVY);    // grams
-  tp_z_depth_set(tp, MAP_Z_DEPTH_LIQUID);
+  tp_z_depth_set(tp, MAP_Z_DEPTH_LIQUID2);
   // end sort marker1 }
 
-  for (auto frame = 0; frame < 8; frame++) {
+  for (auto frame = 0; frame < 2; frame++) {
     auto  frame_string = std::to_string(frame);
     auto *tile         = tile_find_mand(name + ".IS_JOIN_BL." + frame_string);
     tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);

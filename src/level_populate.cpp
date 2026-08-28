@@ -65,7 +65,7 @@ public:
   Tpp       tp_lava               = {};
   Tpp       tp_bridge             = {};
   Tpp       tp_chasm              = {};
-  Tpp       tp_deep_water         = {};
+  Tpp       tp_water_deep         = {};
   Tpp       tp_brazier            = {};
   Tpp       tp_pillar             = {};
   Tpp       tp_barrel             = {};
@@ -153,7 +153,7 @@ static auto level_populate_biome_dungeon(Gamep g, Levelsp v, Levelp l, class Lev
     case CHARMAP_REEDS :   lp.need_reeds = true; break;
     case CHARMAP_DEEP_WATER :
       lp.need_dirt  = true;
-      tp            = lp.tp_deep_water;
+      tp            = lp.tp_water_deep;
       lp.need_water = true;
       break;
     case CHARMAP_WATER :
@@ -355,7 +355,7 @@ static auto level_populate_biome_bogland(Gamep g, Levelsp v, Levelp l, class Lev
       break;
     case CHARMAP_LAVA :
       lp.need_dirt  = true;
-      tp            = lp.tp_deep_water;
+      tp            = lp.tp_water_deep;
       lp.need_water = true;
       break;
     case CHARMAP_DOOR_UNLOCKED : lp.need_dirt = true; break;
@@ -486,7 +486,7 @@ static auto level_populate_fixup_biome_nethervoid(class LevelPopulate &lp, Tpp t
     tp               = lp.tp_chasm;
   }
 
-  if ((tp == lp.tp_water) || (tp == lp.tp_deep_water) || (tp == lp.tp_lava) || (tp == lp.tp_bridge) || (tp == lp.tp_corridor)) {
+  if ((tp == lp.tp_water) || (tp == lp.tp_water_deep) || (tp == lp.tp_lava) || (tp == lp.tp_bridge) || (tp == lp.tp_corridor)) {
     tp = lp.tp_chasm;
   }
 
@@ -575,7 +575,7 @@ static auto level_populate_fixup_biome_graveyard(class LevelPopulate &lp, Tpp tp
     lp.need_dirt = true;
   }
 
-  if ((tp == lp.tp_water) || (tp == lp.tp_deep_water) || (tp == lp.tp_lava) || (tp == lp.tp_chasm) || (tp == lp.tp_bridge)) {
+  if ((tp == lp.tp_water) || (tp == lp.tp_water_deep) || (tp == lp.tp_lava) || (tp == lp.tp_chasm) || (tp == lp.tp_bridge)) {
     tp              = nullptr;
     lp.need_foliage = true;
   }
@@ -671,7 +671,7 @@ static auto level_populate_fixup_biome_underhell(class LevelPopulate &lp, Tpp tp
     lp.need_foliage = false;
   }
 
-  if ((tp == lp.tp_water) || (tp == lp.tp_deep_water) || (tp == lp.tp_chasm) || (tp == lp.tp_bridge)) {
+  if ((tp == lp.tp_water) || (tp == lp.tp_water_deep) || (tp == lp.tp_chasm) || (tp == lp.tp_bridge)) {
     tp = lp.tp_lava;
   }
 
@@ -704,11 +704,11 @@ static auto level_populate_fixup_biome_underhell(class LevelPopulate &lp, Tpp tp
   lp.tp_border     = tp_first(is_border);
   lp.tp_wall       = tp_random(g, v, l, is_wall);
   lp.tp_rock       = tp_random(g, v, l, is_rock);
-  lp.tp_water      = tp_random(g, v, l, is_shallow_water);
+  lp.tp_water      = tp_random(g, v, l, is_water_shallow);
   lp.tp_lava       = tp_random(g, v, l, is_lava);
   lp.tp_bridge     = tp_random(g, v, l, is_bridge);
   lp.tp_chasm      = tp_random(g, v, l, is_chasm);
-  lp.tp_deep_water = tp_random(g, v, l, is_deep_water);
+  lp.tp_water_deep = tp_random(g, v, l, is_water_deep);
   lp.tp_brazier    = tp_random(g, v, l, is_brazier);
   lp.tp_pillar     = tp_random(g, v, l, is_pillar);
   lp.tp_barrel     = tp_random(g, v, l, is_barrel);

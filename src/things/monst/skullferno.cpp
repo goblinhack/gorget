@@ -44,11 +44,11 @@ static auto tp_skullferno_assess_tp(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp
 {
   TRACE_DEBUG();
 
-  if (tp_is_shallow_water(tp)) {
+  if (tp_is_water_shallow(tp)) {
     return THING_ENVIRON_HATES;
   }
 
-  if (tp_is_deep_water(tp)) {
+  if (tp_is_water_deep(tp)) {
     return THING_ENVIRON_HATES;
   }
 
@@ -59,11 +59,11 @@ static auto tp_skullferno_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint
 {
   TRACE_DEBUG();
 
-  if (level_is_shallow_water_cached(g, v, l, at)) {
+  if (level_is_water_shallow_cached(g, v, l, at)) {
     return THING_ENVIRON_HATES;
   }
 
-  if (level_is_deep_water_cached(g, v, l, at)) {
+  if (level_is_water_deep_cached(g, v, l, at)) {
     return THING_ENVIRON_HATES;
   }
 

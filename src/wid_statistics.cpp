@@ -29,7 +29,7 @@
 
 static WidPopup *wid_statistics_popup;
 
-static const int column_width = 20;
+#define COLUMN_WIDTH 20
 
 static void wid_statistics_destroy(Gamep g)
 {
@@ -150,7 +150,7 @@ static void wid_statistics_show_defeated(Gamep g, Levelp l, Thingp player)
     auto n = tp_name_short(it);
     n      = truncate(n, UI_MAX_SHORT_STRING, false);
     s += std::format("{:>15}", n);
-    line += std::format("{:<{}}", s, column_width);
+    line += std::format("{:<{}}", s, COLUMN_WIDTH);
 
     if (++column_count >= 4) {
       column_count = 0;
@@ -204,7 +204,7 @@ static void wid_statistics_show_items(Gamep g, Levelsp v, Levelp l, Thingp playe
     auto n = tp_name_short(it);
     n      = truncate(n, UI_MAX_SHORT_STRING, false);
     s += std::format("{:>15}", n);
-    line += std::format("{:<{}}", s, column_width);
+    line += std::format("{:<{}}", s, COLUMN_WIDTH);
 
     if (++column_count >= 4) {
       column_count = 0;
@@ -236,7 +236,7 @@ void wid_statistics_show(Gamep g, Levelsp v, Levelp l, Thingp player)
     return;
   }
 
-  const int defeated_width  = (column_width * 5) + 4;
+  const int defeated_width  = (COLUMN_WIDTH * 5) + 4;
   const int defeated_height = UI_INVENTORY_HEIGHT;
 
   const int left_half  = defeated_width / 2;

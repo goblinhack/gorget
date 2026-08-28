@@ -924,7 +924,7 @@ static auto player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy) -> b
   //
   // No firing in deep water
   //
-  if (level_is_deep_water(g, v, l, thing_at(g, v, l, me)) != nullptr) {
+  if (level_is_water_deep(g, v, l, thing_at(g, v, l, me)) != nullptr) {
     topcon("The deep water is preventing you from firing a volley!");
     return false;
   }

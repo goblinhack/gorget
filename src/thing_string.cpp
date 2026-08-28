@@ -195,9 +195,9 @@
   //
   if (level_is_lava_bool(g, v, l, thing_at(g, v, l, t)) || ((source != nullptr) && thing_is_lava(source))) {
     s += " in lava";
-  } else if (level_is_deep_water_bool(g, v, l, thing_at(g, v, l, t)) || ((source != nullptr) && thing_is_deep_water(source))) {
+  } else if (level_is_water_deep_bool(g, v, l, thing_at(g, v, l, t)) || ((source != nullptr) && thing_is_water_deep(source))) {
     s += " in the depths";
-  } else if (level_is_shallow_water_bool(g, v, l, thing_at(g, v, l, t)) || ((source != nullptr) && thing_is_shallow_water(source))) {
+  } else if (level_is_water_shallow_bool(g, v, l, thing_at(g, v, l, t)) || ((source != nullptr) && thing_is_water_shallow(source))) {
     s += " in a puddle";
   } else if (level_is_steam_bool(g, v, l, thing_at(g, v, l, t)) || ((source != nullptr) && thing_is_steam(source))) {
     s += " in the steam";

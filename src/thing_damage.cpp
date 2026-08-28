@@ -389,7 +389,7 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
               topcon(UI_WARN_FMT_STR "You suffer additional heat damage in lava!" UI_RESET_FMT);
             } else if (thing_is_fire(it)) {
               topcon(UI_WARN_FMT_STR "You suffer additional heat damage standing in the flames!" UI_RESET_FMT);
-            } else if (thing_is_shallow_water(it) || thing_is_deep_water(it)) {
+            } else if (thing_is_water_shallow(it) || thing_is_water_deep(it)) {
               topcon(UI_WARN_FMT_STR "You suffer additional heat damage from the boiling water." UI_RESET_FMT);
             } else if (thing_is_steam(it)) {
               topcon(UI_WARN_FMT_STR "You suffer additional heat damage from the scalding steam." UI_RESET_FMT);
@@ -401,7 +401,7 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
               topcon(UI_WARN_FMT_STR "You suffer heat damage in lava!" UI_RESET_FMT);
             } else if (thing_is_fire(it)) {
               topcon(UI_WARN_FMT_STR "You suffer heat damage from standing in the flames!" UI_RESET_FMT);
-            } else if (thing_is_shallow_water(it) || thing_is_deep_water(it)) {
+            } else if (thing_is_water_shallow(it) || thing_is_water_deep(it)) {
               topcon(UI_WARN_FMT_STR "You suffer heat damage from the boiling water." UI_RESET_FMT);
             } else if (thing_is_steam(it)) {
               topcon(UI_WARN_FMT_STR "You suffer heat damage from the scalding steam." UI_RESET_FMT);
@@ -414,7 +414,7 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
             topcon(UI_WARN_FMT_STR "You are burning in lava!" UI_RESET_FMT);
           } else if (thing_is_fire(it)) {
             topcon(UI_WARN_FMT_STR "You are standing in flames!" UI_RESET_FMT);
-          } else if (thing_is_shallow_water(it) || thing_is_deep_water(it)) {
+          } else if (thing_is_water_shallow(it) || thing_is_water_deep(it)) {
             topcon(UI_WARN_FMT_STR "You are boiling in water." UI_RESET_FMT);
           } else if (thing_is_steam(it)) {
             topcon(UI_WARN_FMT_STR "You scalded by the steam." UI_RESET_FMT);
@@ -786,11 +786,11 @@ void thing_damage_apply(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
         {
           auto temp_burn = tp_temperature_burns_at_get(tp);
           if ((temp_burn != 0) && (thing_temperature(me) > temp_burn)) {
-            if (level_is_deep_water_bool(g, v, l, thing_at(g, v, l, me))) {
+            if (level_is_water_deep_bool(g, v, l, thing_at(g, v, l, me))) {
               //
               // No steam
               //
-            } else if (level_is_shallow_water_bool(g, v, l, thing_at(g, v, l, me))) {
+            } else if (level_is_water_shallow_bool(g, v, l, thing_at(g, v, l, me))) {
               if (! level_is_steam_bool(g, v, l, thing_at(g, v, l, me))) {
                 THING_DBG(g, v, l, me, "spawn steam over water due to fire damage");
                 TRACE_INDENT();

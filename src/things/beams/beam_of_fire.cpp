@@ -18,7 +18,7 @@ static void tp_beam_of_fire_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
 
   thing_sound_play(g, v, l, me, "beam_weapon");
 
-  if (level_is_shallow_water_bool(g, v, l, thing_at(g, v, l, me))) {
+  if (level_is_water_shallow_bool(g, v, l, thing_at(g, v, l, me))) {
     if (! level_is_steam_bool(g, v, l, thing_at(g, v, l, me))) {
       if (d100() < 50) {
         (void) thing_spawn(g, v, l, tp_first(is_steam), thing_at(g, v, l, me));

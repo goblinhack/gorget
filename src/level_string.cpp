@@ -103,10 +103,10 @@
       if (level_is_lava_bool(g, v, l, p)) {
         c = CHARMAP_LAVA;
       }
-      if (level_is_shallow_water_bool(g, v, l, p)) {
+      if (level_is_water_shallow_bool(g, v, l, p)) {
         c = CHARMAP_WATER;
       }
-      if (level_is_deep_water_bool(g, v, l, p)) {
+      if (level_is_water_deep_bool(g, v, l, p)) {
         c = CHARMAP_DEEP_WATER;
       }
       if (level_is_mob1(g, v, l, p) != nullptr) {

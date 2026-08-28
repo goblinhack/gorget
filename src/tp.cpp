@@ -147,7 +147,6 @@ static std::initializer_list< std::string > tps = {
     "corridor",
     "cursor_at",
     "cursor_path",
-    "deep_water",
     "dirt",
     "door_locked",
     "door_unlocked",
@@ -193,7 +192,6 @@ static std::initializer_list< std::string > tps = {
     "reeds",
     "ring_life",
     "ring_war",
-    "shallow_water",
     "skeleton_mob",
     "skeleton",
     "skullferno",
@@ -205,6 +203,8 @@ static std::initializer_list< std::string > tps = {
     "trap_chasm",
     "wand_fire",
     "wand_light",
+    "water_deep",
+    "water_shallow",
   /* end shell marker1 */
 };
 /* clang-format on */

@@ -37,7 +37,6 @@
   if (!tp_load_corridor()) { return false; }
   if (!tp_load_cursor_at()) { return false; }
   if (!tp_load_cursor_path()) { return false; }
-  if (!tp_load_deep_water()) { return false; }
   if (!tp_load_dirt()) { return false; }
   if (!tp_load_door_locked()) { return false; }
   if (!tp_load_door_secret()) { return false; }
@@ -99,6 +98,7 @@
   if (!tp_load_wall()) { return false; }
   if (!tp_load_wand_fire()) { return false; }
   if (!tp_load_wand_light()) { return false; }
+  if (!tp_load_water_deep()) { return false; }
   if (!tp_load_water()) { return false; }
   /* end shell marker1 */
   // clang-format on

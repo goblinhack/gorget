@@ -99,7 +99,7 @@
       list_macro(is_dead_on_collision, "is_dead_on_collision"),                             /* newline */                                       \
       list_macro(is_dead_on_shoving, "is_dead_on_shoving"),                                 /* newline */                                       \
       list_macro(is_dead_when_discharged, "is_dead_when_discharged"),                       /* newline */                                       \
-      list_macro(is_deep_water, "is_deep_water"),                                           /* newline */                                       \
+      list_macro(is_water_deep, "is_water_deep"),                                           /* newline */                                       \
       list_macro(is_described_cursor, "is_described_cursor"),                               /* newline */                                       \
       list_macro(is_described_when_killed, "is_described_when_killed"),                     /* newline */                                       \
       list_macro(is_dirt, "is_dirt"),                                                       /* newline */                                       \
@@ -429,7 +429,7 @@
       list_macro(is_wearable, "is_wearable"),                                               /* newline */                                       \
       list_macro(is_wood, "is_wood"),                                                       /* newline */                                       \
       list_macro(is_able_to_be_engulfed, "is_able_to_be_engulfed"),                         /* newline */                                       \
-      list_macro(is_shallow_water, "is_shallow_water"),                                     /* newline */
+      list_macro(is_water_shallow, "is_water_shallow"),                                     /* newline */
 
 ENUM_DEF_H(THING_FLAG_ENUM, ThingFlagType)
 
@@ -897,7 +897,6 @@ class Tp;
 [[nodiscard]] auto tp_is_dead_on_collision(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_dead_on_shoving(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_dead_when_discharged(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_deep_water(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_described_cursor(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_described_when_killed(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_dirt(Tpp tp) -> bool;
@@ -999,8 +998,6 @@ class Tp;
 [[nodiscard]] auto tp_is_resistant_to(Tpp tp, ThingEventType val) -> bool;
 [[nodiscard]] auto tp_is_ring(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_rock(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_water_bound(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_shallow_water(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_shovable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_shown_health(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_shown_noise(Tpp tp) -> bool;
@@ -1223,6 +1220,9 @@ class Tp;
 [[nodiscard]] auto tp_is_wait_on_dead_anim(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_wall(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_wand(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_water_bound(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_water_deep(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_water_shallow(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_weapon(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_wearable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_wood(Tpp tp) -> bool;
