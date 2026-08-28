@@ -18,6 +18,7 @@
 #include "my_tp_inlines.hpp"
 #include "my_tps.hpp"
 #include "my_types.hpp"
+#include "my_ui.hpp"
 
 #include <cstdint>
 #include <initializer_list>
@@ -900,6 +901,10 @@ void tp_name_short_set(Tpp tp, const std::string &val)
     return;
   }
   tp->name_short = std::string(val);
+  if (tp->name_short.size() > UI_MAX_SHORT_STRING) {
+    tp_err(tp, "string [%s] too long for short names", val.c_str());
+    return;
+  }
 }
 
 [[nodiscard]] auto tp_name_short(Tpp tp) -> std::string

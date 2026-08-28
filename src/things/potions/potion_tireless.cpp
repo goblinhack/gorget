@@ -148,7 +148,7 @@ static void tp_potion_tireless_on_death(Gamep g, Levelsp v, Levelp l, Thingp me,
   tp_name_apostrophize_set(tp, "potion of tirelessness'");
   tp_name_long_set(tp, "potion of tirelessness");
   tp_name_pluralize_set(tp, "potions of tirelessness");
-  tp_name_short_set(tp, "potion, tirelessness");
+  tp_name_short_set(tp, "potn, tireless");
   tp_priority_set(tp, THING_PRIORITY_OBJECT);
   tp_rarity_set(tp, THING_RARITY_COMMON);
   tp_temperature_burns_at_set(tp, 30);  // celsius

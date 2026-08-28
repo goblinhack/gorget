@@ -19,27 +19,28 @@ enum {
   MAXSHORTSTR = 128
 };
 
-[[nodiscard]] auto  my_strlcpy(char *dst, const char *src, size_t max_len) -> size_t;
-[[nodiscard]] auto  my_strlcat(char *dst, const char *src, size_t max_len) -> size_t;
-[[nodiscard]] auto  my_strcasestr(const char *s, const char *find) -> char *;
-[[nodiscard]] auto  capitalize_first(const std::string &in) -> std::string;
-[[nodiscard]] auto  capitalize(std::string in) -> std::string;
-[[nodiscard]] auto  length_without_format(const std::string &text) -> int;
-[[nodiscard]] auto  ltrim_ws(const std::string &s) -> std::string;
-[[nodiscard]] auto  ltrim(std::string &s) -> std::string &;
-[[nodiscard]] auto  mybasename(const char *in, const char *who) -> std::string;
-[[nodiscard]] auto  rtrim_ws(const std::string &s) -> std::string;
-[[nodiscard]] auto  rtrim(std::string &s) -> std::string &;
-[[nodiscard]] auto  split(const std::string &text, int max_line_len) -> std::vector< std::string >;
-[[nodiscard]] auto  strappend(const char *in, const char *append) -> char *;
-[[nodiscard]] auto  strcommon(const char *a, const char *b) -> uint32_t;
-[[nodiscard]] auto  strerror_to_string(int err) -> std::string;
-[[nodiscard]] auto  strisregexp(const char *in) -> int;
-[[nodiscard]] auto  strprepend(const char *in, const char *prepend) -> char *;
-[[nodiscard]] auto  trim_ws(const std::string &s) -> std::string;
-[[nodiscard]] auto  trim(std::string &s) -> std::string &;
-[[nodiscard]] auto  split_tokens(const std::string &s, char delimiter) -> std::vector< std::string >;
-[[nodiscard]] char *dynprintf(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2); // NOLINT
+[[nodiscard]] auto        my_strlcpy(char *dst, const char *src, size_t max_len) -> size_t;
+[[nodiscard]] auto        my_strlcat(char *dst, const char *src, size_t max_len) -> size_t;
+[[nodiscard]] auto        my_strcasestr(const char *s, const char *find) -> char *;
+[[nodiscard]] auto        capitalize_first(const std::string &in) -> std::string;
+[[nodiscard]] auto        capitalize(std::string in) -> std::string;
+[[nodiscard]] auto        length_without_format(const std::string &text) -> int;
+[[nodiscard]] auto        ltrim_ws(const std::string &s) -> std::string;
+[[nodiscard]] auto        ltrim(std::string &s) -> std::string &;
+[[nodiscard]] auto        mybasename(const char *in, const char *who) -> std::string;
+[[nodiscard]] auto        rtrim_ws(const std::string &s) -> std::string;
+[[nodiscard]] auto        rtrim(std::string &s) -> std::string &;
+[[nodiscard]] auto        split(const std::string &text, int max_line_len) -> std::vector< std::string >;
+[[nodiscard]] auto        strappend(const char *in, const char *append) -> char *;
+[[nodiscard]] auto        strcommon(const char *a, const char *b) -> uint32_t;
+[[nodiscard]] auto        strerror_to_string(int err) -> std::string;
+[[nodiscard]] auto        strisregexp(const char *in) -> int;
+[[nodiscard]] auto        strprepend(const char *in, const char *prepend) -> char *;
+[[nodiscard]] auto        trim_ws(const std::string &s) -> std::string;
+[[nodiscard]] auto        trim(std::string &s) -> std::string &;
+[[nodiscard]] auto        split_tokens(const std::string &s, char delimiter) -> std::vector< std::string >;
+[[nodiscard]] char       *dynprintf(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2); // NOLINT
+[[nodiscard]] std::string truncate(std::string str, size_t width, bool show_ellipsis = true);
 
 auto hexdump(const uint8_t *addr, size_t len) -> void;
 auto hexdump(std::vector< uint8_t > &v) -> void;

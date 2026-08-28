@@ -948,3 +948,22 @@ void replace(std::string &input, const std::string &pattern, const std::string &
 
   return tp;
 }
+
+//
+// Borrowed from
+//
+// https://stackoverflow.com/questions/19580877/how-to-truncate-a-string-formating-c#19590797
+//
+std::string truncate(std::string str, size_t width, bool show_ellipsis)
+{
+  if (str.length() > width) {
+    if (show_ellipsis) {
+      str.resize(width);
+      return str.append("...");
+    } else {
+      str.resize(width);
+      return str;
+    }
+  }
+  return str;
+}

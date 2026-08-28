@@ -57,9 +57,10 @@ static void wid_dead_close(Gamep g)
 
   wid_statistics_show(g, v, l, player);
 
-  if (g_opt_quick_start) {
-    DIE_CLEAN("Quick quit");
-  }
+  if (0)
+    if (g_opt_quick_start) {
+      DIE_CLEAN("Quick quit");
+    }
 
   wid_dead_fini(g);
 }
@@ -146,7 +147,6 @@ void wid_dead_select(Gamep g, const std::string &reason)
 
   wid_set_do_not_lower(wid_dead_window->wid_popup_container);
 
-  wid_dead_window->log_empty_line(g);
   wid_dead_window->log_empty_line(g);
   wid_dead_window->log_empty_line(g);
   wid_dead_window->log_empty_line(g);

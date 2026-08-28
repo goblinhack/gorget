@@ -185,7 +185,7 @@ static void tp_potion_levitation_on_death(Gamep g, Levelsp v, Levelp l, Thingp m
   tp_name_apostrophize_set(tp, "potion of levitation's");
   tp_name_long_set(tp, "potion of levitation");
   tp_name_pluralize_set(tp, "potions of levitation");
-  tp_name_short_set(tp, "potion, levitation");
+  tp_name_short_set(tp, "potion, levit");
   tp_priority_set(tp, THING_PRIORITY_OBJECT);
   tp_rarity_set(tp, THING_RARITY_COMMON);
   tp_temperature_burns_at_set(tp, 30);  // celsius

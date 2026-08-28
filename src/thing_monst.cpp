@@ -516,11 +516,10 @@ static auto thing_monst_choose_something_we_can_wander_to(Gamep g, Levelsp v, Le
               if (thing_is_able_to_jump_pounce(me)) {
                 THING_DBG(g, v, l, me, "jumped to nexthop; pounce?");
                 return false;
-              } else {
-                THING_DBG(g, v, l, me, "jumped to nexthop; stop");
-                monst_state_change(g, v, l, me, MONST_STATE_NORMAL);
-                return true;
               }
+              THING_DBG(g, v, l, me, "jumped to nexthop; stop");
+              monst_state_change(g, v, l, me, MONST_STATE_NORMAL);
+              return true;
             }
           }
         } else {

@@ -29,6 +29,8 @@
 
 static WidPopup *wid_statistics_popup;
 
+static int column_width = 20;
+
 static void wid_statistics_destroy(Gamep g)
 {
   TRACE();
@@ -115,54 +117,56 @@ static void wid_statistics_show_defeated(Gamep g, Levelp l, Thingp player)
   }
 
   std::string line;
-  bool        defeated_something = {};
+  bool        printed_something = {};
 
   wid_statistics_popup->log(g, "Defeated:", TEXT_FORMAT_LHS);
 
   //
   // Monster defeated
   //
+  int column_count {};
   for (auto i = 1; i < TP_ID_MAX; i++) {
 
-    auto *defeated_tp = tp_find(i);
-    if (defeated_tp == nullptr) {
+    auto *it = tp_find(i);
+    if (it == nullptr) {
       continue;
     }
 
-    if (! tp_is_monst(defeated_tp) && ! tp_is_mob(defeated_tp) && ! tp_is_minion(defeated_tp)) {
+    if (! tp_is_monst(it) && ! tp_is_mob(it) && ! tp_is_minion(it)) {
       continue;
     }
 
     if (player_struct->defeated[ i ] == 0U) {
-      continue;
+      //     continue;
     }
 
-    defeated_something = true;
+    printed_something = true;
 
-    auto s = std::format("{:<3}", player_struct->defeated[ i ]);
-
+    std::string s;
     s += " %%tp=";
-    s += tp_name(defeated_tp);
-    s += "$";
-    s += " ";
-    s += std::format("{:<20}", tp_name_short(defeated_tp));
+    s += tp_name(it);
+    s += "$ ";
+    s += std::format("{}x ", player_struct->defeated[ i ]);
+    auto n = tp_name_short(it);
+    n      = truncate(n, UI_MAX_SHORT_STRING, false);
+    s += std::format("{:>15}", n);
+    line += std::format("{:<{}}", s, column_width);
 
-    if (line.empty()) {
-      line = s;
-    } else {
-      line = " - " + line + "  " + s;
+    if (++column_count >= 4) {
+      column_count = 0;
       wid_statistics_popup->log(g, line, TEXT_FORMAT_LHS);
       line = "";
+    } else {
+      line += " %%fg=red$|%%fg=reset$ ";
     }
   }
 
   if (! line.empty()) {
-    line = " - " + line;
     wid_statistics_popup->log(g, line, TEXT_FORMAT_LHS);
-    line = "";
   }
 
-  if (! defeated_something) {
+  if (! printed_something) {
+    wid_statistics_popup->log_empty_line(g);
     wid_statistics_popup->log(g, "You did not defeat anything!");
   }
   wid_statistics_popup->log_empty_line(g);
@@ -178,43 +182,46 @@ static void wid_statistics_show_items(Gamep g, Levelsp v, Levelp l, Thingp playe
   }
 
   std::string line;
-  bool        carried_something = {};
+  bool        printed_something = {};
 
   wid_statistics_popup->log(g, "Carrying:", TEXT_FORMAT_LHS);
+  int column_count {};
 
   FOR_ALL_INVENTORY_SLOTS(g, v, l, player, slot, item)
   {
-    auto *item_tp = (item != nullptr) ? thing_tp(item) : nullptr;
-    if (item_tp == nullptr) {
+    auto *it = (item != nullptr) ? thing_tp(item) : nullptr;
+    if (it == nullptr) {
       continue;
     }
 
-    carried_something = true;
+    printed_something = true;
 
-    auto s = std::format("{:<3}", slot->count);
-
+    std::string s;
     s += " %%tp=";
-    s += tp_name(item_tp);
-    s += "$";
-    s += " ";
-    s += std::format("{:<20}", tp_name_short(item_tp));
+    s += tp_name(it);
+    s += "$ ";
+    s += std::format("{}x ", slot->count);
+    auto n = tp_name_short(it);
+    n      = truncate(n, UI_MAX_SHORT_STRING, false);
+    s += std::format("{:>15}", n);
+    line += std::format("{:<{}}", s, column_width);
 
-    if (line.empty()) {
-      line = s;
-    } else {
-      line = " - " + line + "  " + s;
+    if (++column_count >= 4) {
+      column_count = 0;
       wid_statistics_popup->log(g, line, TEXT_FORMAT_LHS);
       line = "";
+    } else {
+      line += " %%fg=red$|%%fg=reset$ ";
     }
   }
 
   if (! line.empty()) {
-    line = " - " + line;
     wid_statistics_popup->log(g, line, TEXT_FORMAT_LHS);
-    line = "";
   }
 
-  if (! carried_something) {
+  if (! printed_something) {
+    wid_statistics_popup->log_empty_line(g);
+    wid_statistics_popup->log(g, "You did not defeat anything!");
     wid_statistics_popup->log(g, "You were not carrying anything");
   }
   wid_statistics_popup->log_empty_line(g);
@@ -229,7 +236,7 @@ void wid_statistics_show(Gamep g, Levelsp v, Levelp l, Thingp player)
     return;
   }
 
-  const int defeated_width  = UI_INVENTORY_WIDTH * 2;
+  const int defeated_width  = (column_width * 5) + 4;
   const int defeated_height = UI_INVENTORY_HEIGHT;
 
   const int left_half  = defeated_width / 2;

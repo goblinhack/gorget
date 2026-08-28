@@ -190,7 +190,7 @@ static void tp_potion_incin_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, Th
   tp_name_apostrophize_set(tp, "potion of incineration's");
   tp_name_long_set(tp, "potion of incineration");
   tp_name_pluralize_set(tp, "potions of incineration");
-  tp_name_short_set(tp, "potion, incineration");
+  tp_name_short_set(tp, "potion, incin");
   tp_priority_set(tp, THING_PRIORITY_OBJECT);
   tp_rarity_set(tp, THING_RARITY_COMMON);
   tp_temperature_burns_at_set(tp, 30);  // celsius
