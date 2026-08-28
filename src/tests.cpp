@@ -29,6 +29,7 @@
   if (!test_load_beam_weapon_over_grass()) { return false; }
   if (!test_load_beam_weapon_over_water()) { return false; }
   if (!test_load_beam_weapon_rock_turns_to_lava()) { return false; }
+  if (!test_load_beam_weapon_rubble()) { return false; }
   if (!test_load_beam_weapon_teleport()) { return false; }
   if (!test_load_beam_weapon_wall_turns_to_lava()) { return false; }
   if (!test_load_beam_weapon()) { return false; }

@@ -1982,10 +1982,10 @@
   return level_open(g, v, l, is_unused185, p);
 }
 
-[[nodiscard]] auto level_open_is_unused186(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_open_is_rubble(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_open(g, v, l, is_unused186, p);
+  return level_open(g, v, l, is_rubble, p);
 }
 
 [[nodiscard]] auto level_open_is_able_to_jump_pounce(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp

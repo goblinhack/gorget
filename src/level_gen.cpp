@@ -143,10 +143,12 @@ static const int MAX_LEVEL_GEN_ADD_ADDITIONAL_ROOM_WITH_DOOR_TRIES = 10;
 static const int LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_TELEPORTS   = 50;
 static const int LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_ITEMS       = 20;
 static const int LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_TRAPS       = 75;
+static const int LEVEL_GEN_CHANCE_OF_RUBBLE_AROUND_TRAPS        = 5;
 static const int LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_KEYS        = 100;
 static const int LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_CHASMS      = 30;
 static const int LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_DOOR_LOCKED = 50;
 static const int LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_DOOR_SECRET = 80;
+static const int LEVEL_GEN_CHANCE_OF_RUBBLE_AROUND_DOOR_SECRET  = 10;
 static const int LEVEL_GEN_CHANCE_OF_DOOR_LOCKED                = 30;
 static const int LEVEL_GEN_CHANCE_OF_CENTRAL_BRIDGE             = 50;
 
@@ -659,6 +661,7 @@ static auto room_flip_horiz(class Room *r) -> class Room *
     case CHARMAP_MONST1 :        return true;
     case CHARMAP_MONST2 :        return true;
     case CHARMAP_PILLAR :        return false;
+    case CHARMAP_RUBBLE :        return true;
     case CHARMAP_REEDS :         return true;
     case CHARMAP_ROCK :          return false;
     case CHARMAP_SMOKE :         return true;
@@ -774,6 +777,7 @@ void room_add(Gamep g, int chance, int room_flags, const char *file, int line, .
         case CHARMAP_MONST1 :        break;
         case CHARMAP_MONST2 :        break;
         case CHARMAP_PILLAR :        break;
+        case CHARMAP_RUBBLE :        break;
         case CHARMAP_TELEPORT :      break;
         case CHARMAP_TRAP :          break;
         case CHARMAP_TREASURE :      break;
@@ -1397,6 +1401,7 @@ static auto fragment_alt_flip_horiz(class FragmentAlt *r) -> class FragmentAlt *
         case CHARMAP_MONST1 :        break;
         case CHARMAP_MONST2 :        break;
         case CHARMAP_PILLAR :        break;
+        case CHARMAP_RUBBLE :        break;
         case CHARMAP_TELEPORT :      break;
         case CHARMAP_TRAP :          break;
         case CHARMAP_TREASURE :      break;
@@ -1771,6 +1776,7 @@ static auto fragment_flip_horiz(class Fragment *f) -> class Fragment *
         case CHARMAP_MONST1 :        break;
         case CHARMAP_MONST2 :        break;
         case CHARMAP_PILLAR :        break;
+        case CHARMAP_RUBBLE :        break;
         case CHARMAP_TELEPORT :      break;
         case CHARMAP_TRAP :          break;
         case CHARMAP_TREASURE :      break;
@@ -2131,6 +2137,7 @@ void level_fixed_add(Gamep g, int chance, LevelType level_type, const std::strin
         case CHARMAP_MONST1 :        break;
         case CHARMAP_MONST2 :        break;
         case CHARMAP_PILLAR :        break;
+        case CHARMAP_RUBBLE :        break;
         case CHARMAP_TELEPORT :      break;
         case CHARMAP_TRAP :          break;
         case CHARMAP_TREASURE :      break;
@@ -2411,6 +2418,7 @@ static void level_gen_dump(class LevelGen *lg, const char *msg)
           case CHARMAP_MONST1 :
           case CHARMAP_MONST2 :
           case CHARMAP_PILLAR :
+          case CHARMAP_RUBBLE :
           case CHARMAP_REEDS :
           case CHARMAP_TELEPORT :
           case CHARMAP_TRAP :
@@ -2931,6 +2939,7 @@ static void level_gen_single_large_blob_in_center(Gamep g, class LevelGen *lg, c
           case CHARMAP_MONST1 :
           case CHARMAP_MONST2 :
           case CHARMAP_PILLAR :
+          case CHARMAP_RUBBLE :
           case CHARMAP_TELEPORT :
           case CHARMAP_TRAP :
           case CHARMAP_TREASURE :
@@ -3009,6 +3018,7 @@ static void level_gen_blob(Gamep g, class LevelGen *lg, char c)
           case CHARMAP_MONST1 :
           case CHARMAP_MONST2 :
           case CHARMAP_PILLAR :
+          case CHARMAP_RUBBLE :
           case CHARMAP_TELEPORT :
           case CHARMAP_TRAP :
           case CHARMAP_TREASURE :
@@ -3772,6 +3782,7 @@ static void level_gen_add_walls_around_rooms(class LevelGen *lg)
         case CHARMAP_MONST1 :
         case CHARMAP_MONST2 :
         case CHARMAP_PILLAR :
+        case CHARMAP_RUBBLE :
         case CHARMAP_TELEPORT :
         case CHARMAP_TRAP :
         case CHARMAP_TREASURE :      break;
@@ -3985,6 +3996,9 @@ static void level_gen_add_foliage_around_secret_doors(Gamep g, class LevelGen *l
               }
               auto d = lg->data[ X ][ Y ].c;
               if ((d == CHARMAP_EMPTY) || (d == CHARMAP_FLOOR)) {
+                if (d100() < LEVEL_GEN_CHANCE_OF_RUBBLE_AROUND_DOOR_SECRET) {
+                  lg->data[ x - dx ][ y - dy ].c = CHARMAP_RUBBLE;
+                }
                 if (d100() < LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_DOOR_SECRET) {
                   lg->data[ x - dx ][ y - dy ].c = CHARMAP_FOLIAGE;
                 }
@@ -4005,12 +4019,16 @@ static void level_gen_add_foliage_around_secret_doors(Gamep g, class LevelGen *l
                 if (d100() < LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_TRAPS) {
                   lg->data[ x - dx ][ y - dy ].c = CHARMAP_FOLIAGE;
                 }
+                if (d100() < LEVEL_GEN_CHANCE_OF_RUBBLE_AROUND_TRAPS) {
+                  lg->data[ x - dx ][ y - dy ].c = CHARMAP_FOLIAGE;
+                }
               }
             }
           }
           break;
         case CHARMAP_PILLAR :
         case CHARMAP_BARREL :
+        case CHARMAP_RUBBLE :
         case CHARMAP_TREASURE :
           //
           // No foliage in starting rooms. Makes it harder to see
@@ -5040,6 +5058,7 @@ static void level_gen_extend_bridges_do(Gamep g, class LevelGen *lg, int x, int 
     case CHARMAP_MONST1 :     break;
     case CHARMAP_MONST2 :     break;
     case CHARMAP_PILLAR :     break;
+    case CHARMAP_RUBBLE :     break;
     case CHARMAP_TELEPORT :   break;
     case CHARMAP_TRAP :       break;
     case CHARMAP_FIRE :       break;

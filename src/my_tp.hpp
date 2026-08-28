@@ -319,7 +319,7 @@
       list_macro(is_unused183, "is_unused183"),                                             /* newline */                                       \
       list_macro(is_unused184, "is_unused184"),                                             /* newline */                                       \
       list_macro(is_unused185, "is_unused185"),                                             /* newline */                                       \
-      list_macro(is_unused186, "is_unused186"),                                             /* newline */                                       \
+      list_macro(is_rubble, "is_rubble"),                                                   /* newline */                                       \
       list_macro(is_able_to_jump_pounce, "is_able_to_jump_pounce"),                         /* newline */                                       \
       list_macro(is_unused188, "is_unused188"),                                             /* newline */                                       \
       list_macro(is_skeleton, "is_skeleton"),                                               /* newline */                                       \
@@ -998,6 +998,7 @@ class Tp;
 [[nodiscard]] auto tp_is_resistant_to(Tpp tp, ThingEventType val) -> bool;
 [[nodiscard]] auto tp_is_ring(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_rock(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_rubble(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_shovable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_shown_health(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_shown_noise(Tpp tp) -> bool;
@@ -1121,7 +1122,6 @@ class Tp;
 [[nodiscard]] auto tp_is_unused183(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused184(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused185(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused186(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused188(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused19(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused2(Tpp tp) -> bool;

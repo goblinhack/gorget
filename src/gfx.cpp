@@ -4910,7 +4910,7 @@ static void gfx_init_tiles()
       "entrance.0",
       "entrance.1",
       "skull",
-      "",
+      "rubble.0",
       "",
       "",
       "",

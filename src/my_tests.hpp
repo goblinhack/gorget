@@ -27,6 +27,7 @@ auto test_load_beam_weapon_monst_chain() -> bool;
 auto test_load_beam_weapon_over_grass() -> bool;
 auto test_load_beam_weapon_over_water() -> bool;
 auto test_load_beam_weapon_rock_turns_to_lava() -> bool;
+auto test_load_beam_weapon_rubble() -> bool;
 auto test_load_beam_weapon_teleport() -> bool;
 auto test_load_beam_weapon_wall_turns_to_lava() -> bool;
 auto test_load_beam_weapon() -> bool;
