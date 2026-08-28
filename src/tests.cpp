@@ -77,6 +77,7 @@
   if (!test_load_monst_move_diagonal_brazier()) { return false; }
   if (!test_load_monst_move_diagonal_pillar()) { return false; }
   if (!test_load_monst_move_diagonal_rock()) { return false; }
+  if (!test_load_monst_move_diagonal_rubble()) { return false; }
   if (!test_load_monst_move_diagonal_vault()) { return false; }
   if (!test_load_monst_move_diagonal_wall()) { return false; }
   if (!test_load_monst_pass_through_open_door()) { return false; }
@@ -94,6 +95,7 @@
   if (!test_load_path_astar()) { return false; }
   if (!test_load_path_dmap_reverse()) { return false; }
   if (!test_load_path_dmap()) { return false; }
+  if (!test_load_player_engulfed_if_levitating()) { return false; }
   if (!test_load_player_engulfed_max_items()) { return false; }
   if (!test_load_player_engulfed_multiple()) { return false; }
   if (!test_load_player_engulfed_same_items()) { return false; }
