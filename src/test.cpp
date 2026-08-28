@@ -97,6 +97,8 @@ static std::initializer_list< std::string > tests = {
     "monst_move_diagonal_wall",
     "monst_pass_through_open_door",
     "monst_pass_through_walls",
+    "monst_resurrect_but_burns",
+    "monst_resurrect_fire",
     "monst_resurrect",
     "monst_secret_door",
     "monst_short_jump_around_chasm",

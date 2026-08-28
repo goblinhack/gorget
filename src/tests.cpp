@@ -80,6 +80,8 @@
   if (!test_load_monst_move_diagonal_wall()) { return false; }
   if (!test_load_monst_pass_through_open_door()) { return false; }
   if (!test_load_monst_pass_through_walls()) { return false; }
+  if (!test_load_monst_resurrect_but_burns()) { return false; }
+  if (!test_load_monst_resurrect_fire()) { return false; }
   if (!test_load_monst_resurrect()) { return false; }
   if (!test_load_monst_secret_door()) { return false; }
   if (!test_load_monst_short_jump_around_chasm()) { return false; }

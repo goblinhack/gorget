@@ -127,3 +127,14 @@
   }
   return me->_ticks_to_stay_dead_initial -= val;
 }
+
+[[nodiscard]] auto thing_is_able_to_resurrect(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_able_to_resurrect) != 0;
+}

@@ -41,6 +41,10 @@ static auto tp_skeleton_assess_tp(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp m
     return THING_ENVIRON_HATES;
   }
 
+  if (tp_is_fire(tp)) {
+    return THING_ENVIRON_HATES;
+  }
+
   if (tp_is_water_shallow(tp)) {
     return THING_ENVIRON_HATES;
   }
@@ -57,6 +61,10 @@ static auto tp_skeleton_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &
   TRACE_DEBUG();
 
   if (level_is_lava_cached(g, v, l, at)) {
+    return THING_ENVIRON_HATES;
+  }
+
+  if (level_is_fire_cached(g, v, l, at)) {
     return THING_ENVIRON_HATES;
   }
 
@@ -145,6 +153,7 @@ static bool tp_skeleton_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker
   tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_flesh);
+  tp_flag_set(tp, is_hit_when_dead);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_minion);
   tp_flag_set(tp, is_monst);

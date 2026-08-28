@@ -140,7 +140,9 @@ void thing_temperature_damage_handle(Gamep g, Levelsp v, Levelp l, Thingp source
   if ((T != 0) && (n > T)) {
     thing_temperature_damage_apply(g, v, l, source, t, n, std::move(e));
     if (thing_is_dead(t)) {
-      return;
+      if (! thing_is_hit_when_dead(t)) {
+        return;
+      }
     }
   }
 }

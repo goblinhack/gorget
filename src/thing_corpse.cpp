@@ -29,6 +29,19 @@
   }
 
   //
+  // Block corpses for resurrection
+  //
+  if (thing_is_able_to_resurrect(t)) {
+    switch (thing_assess_tile(g, v, l, thing_at(g, v, l, t), t)) {
+      case THING_ENVIRON_HATES :    return false;
+      case THING_ENVIRON_DISLIKES : return false;
+      case THING_ENVIRON_NEUTRAL :  break;
+      case THING_ENVIRON_LIKES :    break;
+      case THING_ENVIRON_ENUM_MAX : break;
+    }
+  }
+
+  //
   // Look for other corpses
   //
   auto corpse_count = 0;

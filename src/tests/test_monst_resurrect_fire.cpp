@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static auto test_monst_resurrect(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_monst_resurrect_fire(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -39,7 +39,7 @@
       = "xxxxxxxxxxxxxxxxx"
         "x...............x"
         "x...............x"
-        "x@m.............x"
+        "x@..............x"
         "x...............x"
         "x...............x"
         "xxxxxxxxxxxxxxxxx";
@@ -86,8 +86,12 @@
     }
   }
 
+  if (thing_spawn(g, v, l, tp_first(is_fire), thing_at(g, v, l, player) + bpoint(6, 0)) == nullptr) {
+    TEST_FAILED(t, "spawn failed");
+  }
+
   //
-  // Wait for the weapon to fade away and the monst to resurrect
+  // Wait for the weapon to fade away and the monst to (not) resurrect
   //
   for (auto tries = 0; tries < 102; tries++) {
     TEST_LOOP_PROGRESS(t, g, v, l, tries, w, h);
@@ -116,14 +120,14 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_monst_resurrect() -> bool // NOLINT
+[[nodiscard]] auto test_load_monst_resurrect_fire() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("monst_resurrect");
+  Testp test = test_load("monst_resurrect_fire");
 
   // begin sort marker1 {
-  test_callback_set(test, test_monst_resurrect);
+  test_callback_set(test, test_monst_resurrect_fire);
   // end sort marker1 }
 
   return true;

@@ -402,7 +402,8 @@ void levels_test(Gamep g)
   {
     Overrides overrides;
 
-    overrides[ 'm' ] = [](char /*c*/, bpoint /*p*/) -> Tpp { return tp_find_mand("cleaner"); };
+    overrides[ 'm' ] = [](char /*c*/, bpoint /*p*/) -> Tpp { return tp_find_mand("skeleton"); };
+    overrides[ 'M' ] = [](char /*c*/, bpoint /*p*/) -> Tpp { return tp_find_mand("mummy"); };
 
     level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "chasm.1", __FUNCTION__, __LINE__, overrides, 0,
                     /* line */ (const char *) "xxxxxxCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
@@ -423,7 +424,7 @@ void levels_test(Gamep g)
                     /* line */ (const char *) "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
                     /* line */ (const char *) "CCCCCCCCCCCCCCCCCCCxxxxxxxxxxxCCCCCCCCCCCCCCCCCC",
                     /* line */ (const char *) "CCCCCCCCCCCCCCCCCCCx....@.W.mxCCCCCCCCCCCCCCCCCC",
-                    /* line */ (const char *) "CCCCCCCCCCCCCCCCCCCx.....,W,.xCCCCCCCCCCCCCCCCCC",
+                    /* line */ (const char *) "CCCCCCCCCCCCCCCCCCCx.....,W,MxCCCCCCCCCCCCCCCCCC",
                     /* line */ (const char *) "CCCCCCCCCCCCCCCCCCCx.....,W,.xCCCCCCCCCCCCCCCCCC",
                     /* line */ (const char *) "CCCCCCCCCCCCCCCCCCCx~~~.C.W,.xCCCCCCCCCCCCCCCCCC",
                     /* line */ (const char *) "CCCCCCCCCCCCCCCCCCCx$.~.C.W..xCCCCCCCCCCCCCCCCCC",

@@ -266,7 +266,12 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
   THING_DBG(g, v, l, me, "is dead");
   TRACE_INDENT();
 
-  if (thing_is_dead(me)) {
+  if (thing_is_corpse(me)) {
+    if (! thing_is_able_to_resurrect(me)) {
+      return;
+    }
+    THING_DBG(g, v, l, me, "is a corpse already");
+  } else if (thing_is_dead(me)) {
     THING_DBG(g, v, l, me, "is already dead");
     return;
   }
@@ -337,7 +342,12 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
   //
   // Leaves a corpse?
   //
-  if (thing_corpse_allowed(g, v, l, me)) {
+  if (thing_is_corpse(me)) {
+    //
+    // Already a corpse, clean it up
+    //
+    thing_is_scheduled_for_cleanup_set(g, v, l, me);
+  } else if (thing_corpse_allowed(g, v, l, me)) {
     //
     // Keep the thing on the map, but in dead state.
     //

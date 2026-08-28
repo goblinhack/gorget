@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static auto test_monst_resurrect(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_monst_resurrect_but_burns(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -23,7 +23,7 @@
       = "xxxxxxxxxxxxxxxxx"
         "x...............x"
         "x...............x"
-        "x@......m.......x"
+        "x@......M.......x"
         "x...............x"
         "x...............x"
         "xxxxxxxxxxxxxxxxx";
@@ -39,13 +39,13 @@
       = "xxxxxxxxxxxxxxxxx"
         "x...............x"
         "x...............x"
-        "x@m.............x"
+        "x@..............x"
         "x...............x"
         "x...............x"
         "xxxxxxxxxxxxxxxxx";
 
   Overrides overrides;
-  overrides[ 'm' ] = [](char c, bpoint p) -> Tpp { return tp_find_mand("skeleton"); };
+  overrides[ 'M' ] = [](char c, bpoint p) -> Tpp { return tp_find_mand("mummy"); };
   Levelp  l        = nullptr;
   Levelsp v        = game_test_init(g, &l, level_num, w, h, start.c_str(), overrides);
   bool    result   = true;
@@ -116,14 +116,14 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_monst_resurrect() -> bool // NOLINT
+[[nodiscard]] auto test_load_monst_resurrect_but_burns() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("monst_resurrect");
+  Testp test = test_load("monst_resurrect_but_burns");
 
   // begin sort marker1 {
-  test_callback_set(test, test_monst_resurrect);
+  test_callback_set(test, test_monst_resurrect_but_burns);
   // end sort marker1 }
 
   return true;

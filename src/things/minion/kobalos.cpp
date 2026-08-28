@@ -41,6 +41,10 @@ static auto tp_kobalos_assess_tp(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp me
     return THING_ENVIRON_HATES;
   }
 
+  if (tp_is_fire(tp)) {
+    return THING_ENVIRON_HATES;
+  }
+
   if (tp_is_water_deep(tp)) {
     return THING_ENVIRON_HATES;
   }
@@ -53,6 +57,10 @@ static auto tp_kobalos_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &a
   TRACE_DEBUG();
 
   if (level_is_lava_cached(g, v, l, at)) {
+    return THING_ENVIRON_HATES;
+  }
+
+  if (level_is_fire_cached(g, v, l, at)) {
     return THING_ENVIRON_HATES;
   }
 

@@ -674,7 +674,10 @@ void thing_damage_apply(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
     if (thing_is_hit_when_dead(me) || thing_is_obs_when_dead(me)) {
       thing_is_hit_set(g, v, l, me, THING_HIT_FLASH_ANIM_MS);
     }
-    return;
+
+    if (! thing_is_hit_when_dead(me)) {
+      return;
+    }
   }
 
   //
