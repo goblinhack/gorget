@@ -78,6 +78,7 @@ static std::initializer_list< std::string > tests = {
     "monst_blasts_player",
     "monst_crosses_chasm",
     "monst_crosses_lava",
+    "monst_crosses_rubble",
     "monst_crosses_water",
     "monst_door_locked",
     "monst_door_slam_attack",

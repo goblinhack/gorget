@@ -59,6 +59,7 @@ auto test_load_monst_avoids_water() -> bool;
 auto test_load_monst_blasts_player() -> bool;
 auto test_load_monst_crosses_chasm() -> bool;
 auto test_load_monst_crosses_lava() -> bool;
+auto test_load_monst_crosses_rubble() -> bool;
 auto test_load_monst_crosses_water() -> bool;
 auto test_load_monst_door_locked() -> bool;
 auto test_load_monst_door_slam_attack() -> bool;

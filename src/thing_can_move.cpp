@@ -205,7 +205,16 @@
     // A wall or pillar or somesuch?
     //
     if (thing_is_obs_to_paths(it)) {
-      return false;
+      if (thing_is_flat(it) && thing_is_levitating(g, v, l, me)) {
+        //
+        // Ok to levitate over rubble
+        //
+      } else {
+        //
+        // Blocked
+        //
+        return false;
+      }
     }
 
     //

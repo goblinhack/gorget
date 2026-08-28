@@ -61,6 +61,7 @@
   if (!test_load_monst_blasts_player()) { return false; }
   if (!test_load_monst_crosses_chasm()) { return false; }
   if (!test_load_monst_crosses_lava()) { return false; }
+  if (!test_load_monst_crosses_rubble()) { return false; }
   if (!test_load_monst_crosses_water()) { return false; }
   if (!test_load_monst_door_locked()) { return false; }
   if (!test_load_monst_door_slam_attack()) { return false; }
