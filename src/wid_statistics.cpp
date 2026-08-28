@@ -11,6 +11,7 @@
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
 #include "my_spoint.hpp"
+#include "my_sprintf.hpp"
 #include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
 #include "my_tp.hpp"
@@ -29,7 +30,7 @@
 
 static WidPopup *wid_statistics_popup;
 
-#define COLUMN_WIDTH 20
+static const auto COLUMN_WIDTH = 20;
 
 static void wid_statistics_destroy(Gamep g)
 {
@@ -150,7 +151,12 @@ static void wid_statistics_show_defeated(Gamep g, Levelp l, Thingp player)
     auto n = tp_name_short(it);
     n      = truncate(n, UI_MAX_SHORT_STRING, false);
     s += std::format("{:>15}", n);
-    line += std::format("{:<{}}", s, COLUMN_WIDTH);
+
+    //
+    // This fails compilation
+    //
+    // line += std::format("{:<{}}", s, COLUMN_WIDTH);
+    line += string_sprintf("%*s", COLUMN_WIDTH, s.c_str());
 
     if (++column_count >= 4) {
       column_count = 0;
@@ -204,7 +210,12 @@ static void wid_statistics_show_items(Gamep g, Levelsp v, Levelp l, Thingp playe
     auto n = tp_name_short(it);
     n      = truncate(n, UI_MAX_SHORT_STRING, false);
     s += std::format("{:>15}", n);
-    line += std::format("{:<{}}", s, COLUMN_WIDTH);
+
+    //
+    // This fails compilation
+    //
+    // line += std::format("{:<{}}", s, COLUMN_WIDTH);
+    line += string_sprintf("%*s", COLUMN_WIDTH, s.c_str());
 
     if (++column_count >= 4) {
       column_count = 0;
