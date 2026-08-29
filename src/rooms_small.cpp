@@ -1718,7 +1718,7 @@ void rooms_small(Gamep g)
            /* line */ (const char *) "   ^   ",
            /* line */ (const char *) " ..... ",
            /* line */ (const char *) " .vvv. ",
-           /* line */ (const char *) "^.sMv. ",
+           /* line */ (const char *) "^.+Mv. ",
            /* line */ (const char *) "..vvv.^",
            /* line */ (const char *) "...... ",
            /* line */ (const char *) "m.  ^  ",
