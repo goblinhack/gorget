@@ -12,6 +12,7 @@
 #include "my_test.hpp"
 #include "my_tests.hpp"
 #include "my_time.hpp"
+#include "my_tp.hpp"
 #include "my_types.hpp"
 
 #include <SDL_timer.h>
@@ -358,7 +359,7 @@ void tests_run(Gamep g)
 
   auto started_tests = SDL_GetTicks();
 
-  (void) tp_fini();
+  tp_fini();
   for (auto repeat = 0; repeat < g_opt_test_repeat; repeat++) {
     for (auto &test : test_name_map) {
 
@@ -426,7 +427,7 @@ void tests_run(Gamep g)
       if (! skipped) {
         result = t->callback(g, t);
       }
-      (void) tp_fini();
+      tp_fini();
 
       auto elapsed  = SDL_GetTicks() - started;
       auto how_long = std::format("(took {:.2f} secs, {} ms)", static_cast< float >(elapsed) / 1000.0, elapsed);

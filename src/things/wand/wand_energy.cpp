@@ -115,7 +115,7 @@ static auto tp_wand_energy_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -
                         TpSpecialAttack {
                             .type = "1",                //
                             .name = "projectile blast", //
-                            .what = "proj_energy", //
+                            .what = "proj_energy",      //
                         });
   auto delay = 20;
 

@@ -218,8 +218,8 @@ static void tp_skullferno_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
 
   tp_special_attack_add(tp,
                         TpSpecialAttack {
-                            .type         = "2",               //
-                            .name         = "mind fire",       //
+                            .type         = "2",         //
+                            .name         = "mind fire", //
                             .what         = "proj_fire", //
                             .d100         = 20,
                             .when_distant = true,

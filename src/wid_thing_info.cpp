@@ -404,7 +404,7 @@ static void wid_thing_info_item_mouse_over_end(Gamep g, Widp w)
     switch (e) {
       case THING_EVENT_SHOVED :           [[fallthrough]];
       case THING_EVENT_CRUSH_DAMAGE :     [[fallthrough]];
-      case THING_EVENT_ENERGY_DAMAGE :     [[fallthrough]];
+      case THING_EVENT_ENERGY_DAMAGE :    [[fallthrough]];
       case THING_EVENT_THROWN_DAMAGE :    [[fallthrough]];
       case THING_EVENT_MELEE_DAMAGE :     [[fallthrough]];
       case THING_EVENT_ENGULF_DAMAGE :    [[fallthrough]];
@@ -966,7 +966,7 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
     switch (e) {
       case THING_EVENT_SHOVED :           [[fallthrough]];
       case THING_EVENT_CRUSH_DAMAGE :     [[fallthrough]];
-      case THING_EVENT_ENERGY_DAMAGE :     [[fallthrough]];
+      case THING_EVENT_ENERGY_DAMAGE :    [[fallthrough]];
       case THING_EVENT_MELEE_DAMAGE :     [[fallthrough]];
       case THING_EVENT_THROWN_DAMAGE :    [[fallthrough]];
       case THING_EVENT_ENGULF_DAMAGE :    [[fallthrough]];

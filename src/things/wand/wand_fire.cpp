@@ -115,7 +115,7 @@ static auto tp_wand_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> 
                         TpSpecialAttack {
                             .type = "1",                //
                             .name = "projectile blast", //
-                            .what = "proj_fire",  //
+                            .what = "proj_fire",        //
                         });
 
   auto delay = 20;

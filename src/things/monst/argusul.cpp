@@ -202,7 +202,7 @@ static void tp_argusul_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
                         TpSpecialAttack {
                             .type         = "2",                 //
                             .name         = "central eye blast", //
-                            .what         = "beam_of_energy",     //
+                            .what         = "beam_of_energy",    //
                             .d100         = 20,
                             .when_distant = true,
                         });

@@ -44,14 +44,14 @@
   static std::initializer_list< std::string > items = {
       "staff_fire",     //
       "staff_fire",     //
-      "staff_energy",    //
+      "staff_energy",   //
       "wand_fire",      //
-      "wand_energy",     //
+      "wand_energy",    //
       "staff_fire",     //
       "staff_fire",     //
-      "staff_energy",    //
+      "staff_energy",   //
       "wand_fire",      //
-      "wand_energy",     //
+      "wand_energy",    //
       "potion_healing", //
       "potion_healing", //
       "potion_healing", //

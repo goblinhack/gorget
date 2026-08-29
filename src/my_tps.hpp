@@ -15,8 +15,8 @@
 /* shell done */
 auto tp_load_argusul() -> bool;
 auto tp_load_barrel() -> bool;
-auto tp_load_beam_of_fire() -> bool;
 auto tp_load_beam_of_energy() -> bool;
+auto tp_load_beam_of_fire() -> bool;
 auto tp_load_blitzhound() -> bool;
 auto tp_load_border() -> bool;
 auto tp_load_brazier() -> bool;
@@ -77,8 +77,8 @@ auto tp_load_potion_levitation() -> bool;
 auto tp_load_potion_protection() -> bool;
 auto tp_load_potion_stealth() -> bool;
 auto tp_load_potion_tireless() -> bool;
-auto tp_load_proj_fire() -> bool;
 auto tp_load_proj_energy() -> bool;
+auto tp_load_proj_fire() -> bool;
 auto tp_load_reeds() -> bool;
 auto tp_load_ring_life() -> bool;
 auto tp_load_ring_war() -> bool;
@@ -89,15 +89,15 @@ auto tp_load_skeleton() -> bool;
 auto tp_load_skullferno() -> bool;
 auto tp_load_smoke() -> bool;
 auto tp_load_spiderweb() -> bool;
-auto tp_load_staff_fire() -> bool;
 auto tp_load_staff_energy() -> bool;
+auto tp_load_staff_fire() -> bool;
 auto tp_load_steam() -> bool;
 auto tp_load_teleport() -> bool;
 auto tp_load_trap() -> bool;
 auto tp_load_vault() -> bool;
 auto tp_load_wall() -> bool;
-auto tp_load_wand_fire() -> bool;
 auto tp_load_wand_energy() -> bool;
+auto tp_load_wand_fire() -> bool;
 auto tp_load_water_deep() -> bool;
 auto tp_load_water() -> bool;
   /* end shell marker1 */

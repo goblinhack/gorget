@@ -774,7 +774,7 @@ void thing_damage_apply(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
     //
     switch (e.event_type) {
       case THING_EVENT_NONE :             [[fallthrough]];
-      case THING_EVENT_ENERGY_DAMAGE :     [[fallthrough]];
+      case THING_EVENT_ENERGY_DAMAGE :    [[fallthrough]];
       case THING_EVENT_EXPLOSION_DAMAGE : [[fallthrough]];
       case THING_EVENT_USED :             [[fallthrough]];
       case THING_EVENT_LIFESPAN_EXPIRED : [[fallthrough]];
@@ -874,7 +874,7 @@ void thing_damage_apply(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
           }
         }
         break;
-      case THING_EVENT_ENERGY_DAMAGE :     [[fallthrough]];
+      case THING_EVENT_ENERGY_DAMAGE :    [[fallthrough]];
       case THING_EVENT_WATER_DAMAGE :     [[fallthrough]];
       case THING_EVENT_EXPLOSION_DAMAGE : [[fallthrough]];
       case THING_EVENT_OPEN :             [[fallthrough]];

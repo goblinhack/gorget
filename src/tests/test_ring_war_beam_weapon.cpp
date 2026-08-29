@@ -47,13 +47,13 @@
         "xxxxxxxxxxxxxxxxx";
 
   Overrides overrides;
-  overrides[ 'm' ]         = [](char c, bpoint p) -> Tpp { return tp_find_mand("ogrik"); };
-  Levelp  l                = nullptr;
-  Thingp  player           = nullptr;
+  overrides[ 'm' ]          = [](char c, bpoint p) -> Tpp { return tp_find_mand("ogrik"); };
+  Levelp  l                 = nullptr;
+  Thingp  player            = nullptr;
   Tpp     tp_beam_of_energy = nullptr;
-  Thingp  monst            = nullptr;
-  Levelsp v                = game_test_init(g, &l, level_num, w, h, start.c_str(), overrides);
-  bool    result           = true;
+  Thingp  monst             = nullptr;
+  Levelsp v                 = game_test_init(g, &l, level_num, w, h, start.c_str(), overrides);
+  bool    result            = true;
 
   static std::initializer_list< std::string > items = {
       "ring_war", //
