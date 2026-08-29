@@ -1969,10 +1969,10 @@
   return tp_flag(tp, is_unused183) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused184(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_able_to_ensnare(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused184) != 0;
+  return tp_flag(tp, is_able_to_ensnare) != 0;
 }
 
 [[nodiscard]] auto tp_is_spiderweb(Tpp tp) -> bool

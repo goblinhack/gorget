@@ -787,6 +787,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_able_to_eat_items(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_eat_treasure(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_engulf(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_able_to_ensnare(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_fall_repeatedly(Thingp me) -> bool;
 [[nodiscard]] auto thing_is_able_to_fall_sound(Thingp me) -> bool;
 [[nodiscard]] auto thing_is_able_to_fall(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
@@ -1104,7 +1105,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused181(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused182(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused183(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused184(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused188(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused19(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused2(Thingp t) -> bool;

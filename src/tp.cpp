@@ -197,6 +197,7 @@ static std::initializer_list< std::string > tps = {
     "skeleton",
     "skullferno",
     "smoke",
+    "spiderweb",
     "staff_fire",
     "staff_light",
     "steam",

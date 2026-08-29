@@ -1970,10 +1970,10 @@
   return level_alive(g, v, l, is_unused183, p);
 }
 
-[[nodiscard]] auto level_alive_is_unused184(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_alive_is_able_to_ensnare(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_alive(g, v, l, is_unused184, p);
+  return level_alive(g, v, l, is_able_to_ensnare, p);
 }
 
 [[nodiscard]] auto level_alive_is_spiderweb(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp

@@ -423,6 +423,48 @@ void fragments_init(Gamep g)
   }
 
   if (fragment_add(g, CHANCE_NORMAL, __FUNCTION__, __LINE__,
+                   /* frag   */ (const char *) "x.x",
+                   /* frag   */ (const char *) "x.x",
+                   /* frag   */ (const char *) "x.x",
+                   /* frag   */ (const char *) "x.x", nullptr)) {
+    if (! fragment_alt_add(g, CHANCE_NORMAL, ROOM_FLAG_ALL, __FUNCTION__, __LINE__,
+                           /* alt  */ (const char *) "x.x",
+                           /* alt  */ (const char *) "xrx",
+                           /* alt  */ (const char *) "x.x",
+                           /* alt  */ (const char *) "x.x", nullptr)) {
+      CROAK("failed to add fragment alt");
+    }
+    if (! fragment_alt_add(g, CHANCE_NORMAL, ROOM_FLAG_ALL, __FUNCTION__, __LINE__,
+                           /* alt  */ (const char *) "x.x",
+                           /* alt  */ (const char *) "xwx",
+                           /* alt  */ (const char *) "x.x",
+                           /* alt  */ (const char *) "x.x", nullptr)) {
+      CROAK("failed to add fragment alt");
+    }
+    if (! fragment_alt_add(g, CHANCE_NORMAL, ROOM_FLAG_ALL, __FUNCTION__, __LINE__,
+                           /* alt  */ (const char *) "x.x",
+                           /* alt  */ (const char *) "xtx",
+                           /* alt  */ (const char *) "x.x",
+                           /* alt  */ (const char *) "x.x", nullptr)) {
+      CROAK("failed to add fragment alt");
+    }
+    if (! fragment_alt_add(g, CHANCE_NORMAL, ROOM_FLAG_ALL, __FUNCTION__, __LINE__,
+                           /* alt  */ (const char *) "x.x",
+                           /* alt  */ (const char *) "xCx",
+                           /* alt  */ (const char *) "x.x",
+                           /* alt  */ (const char *) "x.x", nullptr)) {
+      CROAK("failed to add fragment alt");
+    }
+    if (! fragment_alt_add(g, CHANCE_NORMAL, ROOM_FLAG_ALL, __FUNCTION__, __LINE__,
+                           /* alt  */ (const char *) "x.x",
+                           /* alt  */ (const char *) "x~x",
+                           /* alt  */ (const char *) "x.x",
+                           /* alt  */ (const char *) "x.x", nullptr)) {
+      CROAK("failed to add fragment alt");
+    }
+  }
+
+  if (fragment_add(g, CHANCE_NORMAL, __FUNCTION__, __LINE__,
                    /* frag   */ (const char *) "xxxxx",
                    /* frag   */ (const char *) "x...x",
                    /* frag   */ (const char *) "x...x",

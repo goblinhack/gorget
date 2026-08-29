@@ -317,7 +317,7 @@
       list_macro(is_unused181, "is_unused181"),                                             /* newline */                                       \
       list_macro(is_unused182, "is_unused182"),                                             /* newline */                                       \
       list_macro(is_unused183, "is_unused183"),                                             /* newline */                                       \
-      list_macro(is_unused184, "is_unused184"),                                             /* newline */                                       \
+      list_macro(is_able_to_ensnare, "is_able_to_ensnare"),                                 /* newline */                                       \
       list_macro(is_spiderweb, "is_spiderweb"),                                             /* newline */                                       \
       list_macro(is_rubble, "is_rubble"),                                                   /* newline */                                       \
       list_macro(is_able_to_jump_pounce, "is_able_to_jump_pounce"),                         /* newline */                                       \
@@ -823,6 +823,7 @@ class Tp;
 [[nodiscard]] auto tp_is_able_to_eat_items(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_eat_treasure(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_engulf(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_able_to_ensnare(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_fall_repeatedly(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_fall_sound(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_fall(Tpp tp) -> bool;
@@ -1121,7 +1122,6 @@ class Tp;
 [[nodiscard]] auto tp_is_unused181(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused182(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused183(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused184(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused188(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused19(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused2(Tpp tp) -> bool;
@@ -1364,49 +1364,53 @@ void tp_z_depth_set(Tpp tp, MapZDepthType val);
 //
 // Unit is in joules per kelvin per gram
 //
-#define HEAT_CAPACITY_AIR   1.0f
-#define HEAT_CAPACITY_FLESH 3.0f
-#define HEAT_CAPACITY_GAS   14.0f
-#define HEAT_CAPACITY_GEL   0.02f
-#define HEAT_CAPACITY_GLASS 0.8f
-#define HEAT_CAPACITY_GOLD  0.1f
-#define HEAT_CAPACITY_STEEL 0.5f
-#define HEAT_CAPACITY_STONE 0.8f
-#define HEAT_CAPACITY_WALL  0.8f
-#define HEAT_CAPACITY_WATER 4.0f
-#define HEAT_CAPACITY_WOOD  2.0f
-#define HEAT_CAPACITY_MAX   15.0f
+// Higher values, means harder to heat
+//
+#define HEAT_CAPACITY_GEL       0.02f
+#define HEAT_CAPACITY_GOLD      0.1f
+#define HEAT_CAPACITY_STEEL     0.5f
+#define HEAT_CAPACITY_GLASS     0.8f
+#define HEAT_CAPACITY_STONE     0.8f
+#define HEAT_CAPACITY_WALL      0.8f
+#define HEAT_CAPACITY_AIR       1.0f
+#define HEAT_CAPACITY_WOOD      2.0f
+#define HEAT_CAPACITY_INSECTOID 2.0f
+#define HEAT_CAPACITY_FLESH     3.0f
+#define HEAT_CAPACITY_PAPER     3.0f
+#define HEAT_CAPACITY_WATER     4.0f
+#define HEAT_CAPACITY_GAS       14.0f
+#define HEAT_CAPACITY_MAX       15.0f
 
 //
 // Unit is weight per mass per kelvin
 //
 #define THERMAL_CONDUCTIVITY_AIR   0.025f
-#define THERMAL_CONDUCTIVITY_FLESH 10.0f
 #define THERMAL_CONDUCTIVITY_GAS   0.01f
+#define THERMAL_CONDUCTIVITY_WOOD  0.1f
 #define THERMAL_CONDUCTIVITY_GEL   0.2f
+#define THERMAL_CONDUCTIVITY_WATER 0.6f
 #define THERMAL_CONDUCTIVITY_GLASS 1.1f
+#define THERMAL_CONDUCTIVITY_FLESH 10.0f
 #define THERMAL_CONDUCTIVITY_STEEL 32.0f
 #define THERMAL_CONDUCTIVITY_STONE 70.0f
 #define THERMAL_CONDUCTIVITY_WALL  70.0f
-#define THERMAL_CONDUCTIVITY_WATER 0.6f
-#define THERMAL_CONDUCTIVITY_WOOD  0.1f
-#define THERMAL_CONDUCTIVITY_GOLD  310.0f
 #define THERMAL_CONDUCTIVITY_HIGH  70.0f
+#define THERMAL_CONDUCTIVITY_GOLD  310.0f
 
 //
 // Unit is in grams
 //
 #define ONE_KG          1000
-#define WEIGHT_VVVHEAVY (ONE_KG * 500)
-#define WEIGHT_VVHEAVY  (ONE_KG * 200)
-#define WEIGHT_VHEAVY   (ONE_KG * 100)
-#define WEIGHT_HEAVY    (ONE_KG * 50)
-#define WEIGHT_HUMAN    (ONE_KG * 50)
-#define WEIGHT_MEDIUM   (ONE_KG * 10)
-#define WEIGHT_LIGHT    (ONE_KG * 1)
-#define WEIGHT_VLIGHT   (100)
-#define WEIGHT_FEATHER  (1)
 #define WEIGHT_NONE     (0)
+#define WEIGHT_FEATHER  (1)
+#define WEIGHT_VLIGHT   (100)
+#define WEIGHT_LIGHT    (ONE_KG * 1)
+#define WEIGHT_MEDIUM   (ONE_KG * 10)
+#define WEIGHT_HUMAN    (ONE_KG * 50)
+#define WEIGHT_HEAVY    (ONE_KG * 50)
+#define WEIGHT_VHEAVY   (ONE_KG * 100)
+#define WEIGHT_VVHEAVY  (ONE_KG * 200)
+#define WEIGHT_VVVHEAVY (ONE_KG * 500)
 
 #define TP_DBG IF_DEBUG tp_dbg
 
