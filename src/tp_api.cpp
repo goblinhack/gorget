@@ -1975,10 +1975,10 @@
   return tp_flag(tp, is_unused184) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused185(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_spiderweb(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused185) != 0;
+  return tp_flag(tp, is_spiderweb) != 0;
 }
 
 [[nodiscard]] auto tp_is_rubble(Tpp tp) -> bool

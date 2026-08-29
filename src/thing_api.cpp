@@ -2577,7 +2577,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_unused184) != 0;
 }
 
-[[nodiscard]] auto thing_is_unused185(Thingp t) -> bool
+[[nodiscard]] auto thing_is_spiderweb(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2585,7 +2585,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused185) != 0;
+  return tp_flag(thing_tp(t), is_spiderweb) != 0;
 }
 
 [[nodiscard]] auto thing_is_rubble(Thingp t) -> bool

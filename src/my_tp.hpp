@@ -318,7 +318,7 @@
       list_macro(is_unused182, "is_unused182"),                                             /* newline */                                       \
       list_macro(is_unused183, "is_unused183"),                                             /* newline */                                       \
       list_macro(is_unused184, "is_unused184"),                                             /* newline */                                       \
-      list_macro(is_unused185, "is_unused185"),                                             /* newline */                                       \
+      list_macro(is_spiderweb, "is_spiderweb"),                                             /* newline */                                       \
       list_macro(is_rubble, "is_rubble"),                                                   /* newline */                                       \
       list_macro(is_able_to_jump_pounce, "is_able_to_jump_pounce"),                         /* newline */                                       \
       list_macro(is_unused188, "is_unused188"),                                             /* newline */                                       \
@@ -1007,6 +1007,7 @@ class Tp;
 [[nodiscard]] auto tp_is_slime(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_smoke(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_soft_landing(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_spiderweb(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_staff(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_stealthy(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_steam(Tpp tp) -> bool;
@@ -1121,7 +1122,6 @@ class Tp;
 [[nodiscard]] auto tp_is_unused182(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused183(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused184(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused185(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused188(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused19(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused2(Tpp tp) -> bool;

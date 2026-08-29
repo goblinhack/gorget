@@ -2013,10 +2013,10 @@
   return level_flag(g, v, l, is_unused184, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_unused185_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_spiderweb_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused185, p, me) != nullptr;
+  return level_flag(g, v, l, is_spiderweb, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_rubble_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool

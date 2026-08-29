@@ -987,6 +987,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_slime(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_smoke(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_soft_landing(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_spiderweb(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_staff(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_stealthy(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
 [[nodiscard]] auto thing_is_steam(Thingp t) -> bool;
@@ -1104,7 +1105,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused182(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused183(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused184(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused185(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused188(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused19(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused2(Thingp t) -> bool;

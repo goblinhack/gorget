@@ -1977,10 +1977,10 @@
   return level_count(g, v, l, is_unused184, p);
 }
 
-[[nodiscard]] auto level_count_is_unused185(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_spiderweb(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused185, p);
+  return level_count(g, v, l, is_spiderweb, p);
 }
 
 [[nodiscard]] auto level_count_is_rubble(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
