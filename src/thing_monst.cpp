@@ -381,6 +381,14 @@ static auto thing_monst_choose_something_we_can_wander_to(Gamep g, Levelsp v, Le
     return false;
   }
 
+  if (thing_is_ensnared(me)) {
+    THING_DBG(g, v, l, me, "move try: not possible, ensnared, lunge");
+    TRACE_INDENT();
+
+    (void) thing_lunge(g, v, l, me, to);
+    return false;
+  }
+
   if (thing_can_move_to_attempt(g, v, l, me, to)) {
     TRACE_INDENT();
 

@@ -128,6 +128,7 @@ enum {
   TARGET_ROLL_FALL            = 12,
   TARGET_ROLL_CHEST_EXPLODE   = 12,
   TARGET_ROLL_ENGULFED        = 15,
+  TARGET_ROLL_ENSNARED        = 18,
 
   //
   // Jump animation height in tiles

@@ -316,7 +316,7 @@
       list_macro(is_unused180, "is_unused180"),                                             /* newline */                                       \
       list_macro(is_unused181, "is_unused181"),                                             /* newline */                                       \
       list_macro(is_unused182, "is_unused182"),                                             /* newline */                                       \
-      list_macro(is_unused183, "is_unused183"),                                             /* newline */                                       \
+      list_macro(is_able_to_be_ensnared, "is_able_to_be_ensnared"),                         /* newline */                                       \
       list_macro(is_able_to_ensnare, "is_able_to_ensnare"),                                 /* newline */                                       \
       list_macro(is_spiderweb, "is_spiderweb"),                                             /* newline */                                       \
       list_macro(is_rubble, "is_rubble"),                                                   /* newline */                                       \
@@ -814,6 +814,7 @@ class Tp;
 [[nodiscard]] auto tp_init() -> bool;
 [[nodiscard]] auto tp_is_able_to_be_buffed(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_be_engulfed(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_able_to_be_ensnared(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_be_levitated(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_be_teleported(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_collect_items(Tpp tp) -> bool;
@@ -1121,7 +1122,6 @@ class Tp;
 [[nodiscard]] auto tp_is_unused180(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused181(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused182(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused183(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused188(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused19(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused2(Tpp tp) -> bool;

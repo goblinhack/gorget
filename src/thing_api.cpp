@@ -2555,28 +2555,6 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_unused182) != 0;
 }
 
-[[nodiscard]] auto thing_is_unused183(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_unused183) != 0;
-}
-
-[[nodiscard]] auto thing_is_able_to_ensnare(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_able_to_ensnare) != 0;
-}
-
 [[nodiscard]] auto thing_is_spiderweb(Thingp t) -> bool
 {
   TRACE_DEBUG();

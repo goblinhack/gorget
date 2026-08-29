@@ -2001,10 +2001,10 @@
   return level_flag_cached(g, v, l, is_unused182, p);
 }
 
-[[nodiscard]] auto level_is_unused183_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_able_to_be_ensnared_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused183, p);
+  return level_flag_cached(g, v, l, is_able_to_be_ensnared, p);
 }
 
 [[nodiscard]] auto level_is_able_to_ensnare_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

@@ -32,6 +32,16 @@ void thing_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 
   //
+  // Check if still ensnared
+  //
+  if (thing_is_ensnared(me)) {
+    if (level_alive_is_able_to_engulf(g, v, l, at) == nullptr) {
+      topcon(UI_IMPORTANT_FMT_STR "You seem to be free!" UI_RESET_FMT);
+      (void) thing_is_ensnared_try_unset(g, v, l, me);
+    }
+  }
+
+  //
   // Update hidden and submerged status
   //
   if (! thing_is_moving(me)) {

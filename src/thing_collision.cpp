@@ -379,6 +379,18 @@ static void thing_collision_handle_common(Gamep g, Levelsp v, Levelp l, Thingp o
   }
 
   //
+  // Handle walking into a spiderweb
+  //
+  if (thing_is_able_to_ensnare(obstacle)) {
+    THING_DBG(g, v, l, me, "ensnare check");
+    TRACE_INDENT();
+    if (thing_ensnare(g, v, l, me, obstacle)) {
+      stop = true;
+      return;
+    }
+  }
+
+  //
   // Handle walking onto a chasm
   //
   if (thing_is_chasm(obstacle)) {

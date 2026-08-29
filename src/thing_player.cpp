@@ -654,6 +654,9 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
     }
   }
 
+  //
+  // Try to break free of the engulfer
+  //
   if (thing_is_engulfed(me)) {
     if (thing_stat_success(g, v, l, me, THING_STAT_LUCK, TARGET_ROLL_ENGULFED)) {
       topcon(UI_IMPORTANT_FMT_STR "You are engulfed but break free!" UI_RESET_FMT);
@@ -662,6 +665,21 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
       THING_DBG(g, v, l, me, "move to next: not possible, engulfed, lunge");
       (void) thing_lunge(g, v, l, me, to);
       topcon(UI_IMPORTANT_FMT_STR "You are engulfed and cannot move!" UI_RESET_FMT);
+      return false;
+    }
+  }
+
+  //
+  // Try to break free of the ensnarer
+  //
+  if (thing_is_ensnared(me)) {
+    if (thing_stat_success(g, v, l, me, THING_STAT_LUCK, TARGET_ROLL_ENSNARED)) {
+      topcon(UI_IMPORTANT_FMT_STR "You were ensnared but break free!" UI_RESET_FMT);
+      (void) thing_is_ensnared_try_unset(g, v, l, me);
+    } else {
+      THING_DBG(g, v, l, me, "move to next: not possible, ensnared, lunge");
+      (void) thing_lunge(g, v, l, me, to);
+      topcon(UI_IMPORTANT_FMT_STR "You are ensnared and cannot move!" UI_RESET_FMT);
       return false;
     }
   }

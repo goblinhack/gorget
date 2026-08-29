@@ -1964,10 +1964,10 @@
   return level_alive(g, v, l, is_unused182, p);
 }
 
-[[nodiscard]] auto level_alive_is_unused183(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_alive_is_able_to_be_ensnared(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_alive(g, v, l, is_unused183, p);
+  return level_alive(g, v, l, is_able_to_be_ensnared, p);
 }
 
 [[nodiscard]] auto level_alive_is_able_to_ensnare(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp

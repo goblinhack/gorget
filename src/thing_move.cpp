@@ -46,6 +46,9 @@
   thing_is_moving_set(g, v, l, me);
   THING_DBG(g, v, l, me, "is moving to set");
 
+  //
+  // If we're an engulfer, move the unlucky engulfed things inside us along with us as we move
+  //
   if (thing_is_able_to_engulf(me)) {
     FOR_ALL_THINGS_AT(g, v, l, it, at)
     {
@@ -230,9 +233,21 @@ void thing_move_finish(Gamep g, Levelsp v, Levelp l, Thingp me)
   thing_is_moving_unset(g, v, l, me);
   thing_is_jumping_unset(g, v, l, me);
   thing_is_thrown_unset(g, v, l, me, thing_owner(g, v, l, me));
+
+  //
+  // If we've gotten away from an engulfer, unset the state
+  //
   if (! level_is_able_to_engulf_bool(g, v, l, at)) {
     (void) thing_is_engulfed_try_unset(g, v, l, me);
   }
+
+  //
+  // If we've gotten away from an ensarer, unset the state
+  //
+  if (! level_is_able_to_ensnare_bool(g, v, l, at)) {
+    (void) thing_is_ensnared_try_unset(g, v, l, me);
+  }
+
   thing_dmap(g, v, l, me);
   thing_update_pos(g, v, l, me);
 }

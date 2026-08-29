@@ -1963,10 +1963,10 @@
   return tp_flag(tp, is_unused182) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused183(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_able_to_be_ensnared(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused183) != 0;
+  return tp_flag(tp, is_able_to_be_ensnared) != 0;
 }
 
 [[nodiscard]] auto tp_is_able_to_ensnare(Tpp tp) -> bool

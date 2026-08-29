@@ -123,6 +123,11 @@
     return false;
   }
 
+  if (! thing_is_able_to_engulf(engulfer)) {
+    THING_DBG(g, v, l, engulfer, "cannot engulf");
+    return false;
+  }
+
   if (thing_is_collectable(me)) {
     ThingEvent e {
         .reason     = "auto collected",    //
@@ -187,7 +192,7 @@
 }
 
 //
-// Returns true if we can move to this location by engulfing a door
+// Returns true if we can move to this location by engulfing
 //
 [[nodiscard]] auto thing_can_move_to_attempt_by_engulfing(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool
 {

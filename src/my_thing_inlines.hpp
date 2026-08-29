@@ -390,6 +390,19 @@
   return t->_is_engulfed;
 }
 
+[[nodiscard]] static inline auto thing_is_ensnared(Thingp t) -> bool
+{
+#ifdef DEBUG_BUILD
+  TRACE_DEBUG();
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+#endif
+
+  return t->_is_ensnared;
+}
+
 [[nodiscard]] static inline auto thing_find_optional(Gamep g, Levelsp v, ThingId id) -> Thingp
 {
 #ifdef DEBUG_BUILD

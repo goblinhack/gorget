@@ -157,11 +157,26 @@ static auto thing_jump_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thingp
   if (thing_is_engulfed(me)) {
     THING_DBG(g, v, l, me, "move to next: not possible, engulfed, lunge");
     if (thing_stat_success(g, v, l, me, THING_STAT_LUCK, TARGET_ROLL_ENGULFED)) {
-      topcon(UI_IMPORTANT_FMT_STR "You are engulfed but break free!" UI_RESET_FMT);
+      topcon(UI_IMPORTANT_FMT_STR "You were engulfed but break free!" UI_RESET_FMT);
       (void) thing_is_engulfed_try_unset(g, v, l, me);
     } else {
       (void) thing_lunge(g, v, l, me, to);
       topcon(UI_IMPORTANT_FMT_STR "You are engulfed and cannot jump!" UI_RESET_FMT);
+      return false;
+    }
+  }
+
+  //
+  // Give a chance of escape
+  //
+  if (thing_is_ensnared(me)) {
+    THING_DBG(g, v, l, me, "move to next: not possible, ensnared, lunge");
+    if (thing_stat_success(g, v, l, me, THING_STAT_LUCK, TARGET_ROLL_ENSNARED)) {
+      topcon(UI_IMPORTANT_FMT_STR "You were ensnared but break free!" UI_RESET_FMT);
+      (void) thing_is_ensnared_try_unset(g, v, l, me);
+    } else {
+      (void) thing_lunge(g, v, l, me, to);
+      topcon(UI_IMPORTANT_FMT_STR "You are ensnared and cannot jump!" UI_RESET_FMT);
       return false;
     }
   }

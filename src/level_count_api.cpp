@@ -1965,10 +1965,10 @@
   return level_count(g, v, l, is_unused182, p);
 }
 
-[[nodiscard]] auto level_count_is_unused183(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_able_to_be_ensnared(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused183, p);
+  return level_count(g, v, l, is_able_to_be_ensnared, p);
 }
 
 [[nodiscard]] auto level_count_is_able_to_ensnare(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
