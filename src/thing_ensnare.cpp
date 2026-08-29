@@ -104,6 +104,12 @@
   }
 
   if (! thing_is_able_to_ensnare(ensnarer)) {
+    THING_DBG(g, v, l, ensnarer, "cannot ensnare");
+    return false;
+  }
+
+  if (! thing_is_able_to_be_ensnared(g, v, l, me)) {
+    THING_DBG(g, v, l, me, "cannot be ensnared");
     return false;
   }
 

@@ -379,8 +379,8 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
       case THING_EVENT_EXPLOSION_DAMAGE : //
         topcon(UI_WARN_FMT_STR "You suffer concussive damage from %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
-      case THING_EVENT_LIGHT_DAMAGE : //
-        topcon(UI_WARN_FMT_STR "You suffer dazzling damage from %s." UI_RESET_FMT, by_the_thing.c_str());
+      case THING_EVENT_ENERGY_DAMAGE : //
+        topcon(UI_WARN_FMT_STR "You suffer blast damage from %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
       case THING_EVENT_FIRE_DAMAGE :
         if (e.temperature_damage) {
@@ -465,7 +465,7 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
       case THING_EVENT_EXPLOSION_DAMAGE : //
         topcon(UI_WARN_FMT_STR "You suffer explosion damage." UI_RESET_FMT);
         break;
-      case THING_EVENT_LIGHT_DAMAGE : //
+      case THING_EVENT_ENERGY_DAMAGE : //
         topcon(UI_WARN_FMT_STR "You suffer dazzling damage." UI_RESET_FMT);
         break;
       case THING_EVENT_FIRE_DAMAGE : //
@@ -545,7 +545,7 @@ static void thing_damage_by_player(Gamep g, Levelsp v, Levelp l, Thingp it, Thin
       case THING_EVENT_EXPLOSION_DAMAGE : //
         topcon("You blast %s.", the_thing_name_long.c_str());
         break;
-      case THING_EVENT_LIGHT_DAMAGE : //
+      case THING_EVENT_ENERGY_DAMAGE : //
         topcon("You dazzle %s.", the_thing_name_long.c_str());
         break;
       case THING_EVENT_FIRE_DAMAGE : //
@@ -774,7 +774,7 @@ void thing_damage_apply(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
     //
     switch (e.event_type) {
       case THING_EVENT_NONE :             [[fallthrough]];
-      case THING_EVENT_LIGHT_DAMAGE :     [[fallthrough]];
+      case THING_EVENT_ENERGY_DAMAGE :     [[fallthrough]];
       case THING_EVENT_EXPLOSION_DAMAGE : [[fallthrough]];
       case THING_EVENT_USED :             [[fallthrough]];
       case THING_EVENT_LIFESPAN_EXPIRED : [[fallthrough]];
@@ -874,7 +874,7 @@ void thing_damage_apply(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
           }
         }
         break;
-      case THING_EVENT_LIGHT_DAMAGE :     [[fallthrough]];
+      case THING_EVENT_ENERGY_DAMAGE :     [[fallthrough]];
       case THING_EVENT_WATER_DAMAGE :     [[fallthrough]];
       case THING_EVENT_EXPLOSION_DAMAGE : [[fallthrough]];
       case THING_EVENT_OPEN :             [[fallthrough]];

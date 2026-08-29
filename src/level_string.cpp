@@ -160,7 +160,7 @@
       if (level_is_smoke_bool(g, v, l, p)) {
         c = CHARMAP_SMOKE;
       }
-      if (level_is_projectile_bool(g, v, l, p)) {
+      if (level_is_proj_bool(g, v, l, p)) {
         c = CHARMAP_WEAPON;
       }
       if (level_is_beam_weapon_bool(g, v, l, p)) {

@@ -160,7 +160,7 @@
     }
   }
 
-  TEST_ASSERT(t, wid_console_find_text(g, "beam of light"), "did not find console text");
+  TEST_ASSERT(t, wid_console_find_text(g, "beam of energy"), "did not find console text");
 
   //
   // Check the tick is as expected

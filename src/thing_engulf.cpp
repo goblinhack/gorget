@@ -128,6 +128,11 @@
     return false;
   }
 
+  if (! thing_is_able_to_be_engulfed(g, v, l, me)) {
+    THING_DBG(g, v, l, me, "cannot be engulfed");
+    return false;
+  }
+
   if (thing_is_collectable(me)) {
     ThingEvent e {
         .reason     = "auto collected",    //

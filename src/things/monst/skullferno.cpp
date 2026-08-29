@@ -97,7 +97,7 @@ static bool tp_skullferno_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp atta
       THING_DBG(g, v, l, attacker, "fire beam weapon");
       TRACE_INDENT();
 
-      (void) thing_projectile_launch_at(g, v, l, attacker, fire_what, target_at);
+      (void) thing_proj_launch_at(g, v, l, attacker, fire_what, target_at);
       return false; // prevent melee attack
     }
   }
@@ -220,7 +220,7 @@ static void tp_skullferno_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
                         TpSpecialAttack {
                             .type         = "2",               //
                             .name         = "mind fire",       //
-                            .what         = "projectile_fire", //
+                            .what         = "proj_fire", //
                             .d100         = 20,
                             .when_distant = true,
                         });

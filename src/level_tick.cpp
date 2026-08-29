@@ -456,7 +456,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool tick_is
       // Every pixel change, we want to redo collision detection
       //
       if (dt != 0) {
-        thing_projectile_move(g, v, l, t, dt);
+        thing_proj_move(g, v, l, t, dt);
       }
     } else {
       thing_interpolate(g, v, l, t, t->thing_dt);

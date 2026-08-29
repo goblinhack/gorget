@@ -62,7 +62,7 @@ static void thing_killed_player(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEv
       case THING_EVENT_EXPLOSION_DAMAGE : //
         topcon(UI_IMPORTANT_FMT_STR "You die in the blast from %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
-      case THING_EVENT_LIGHT_DAMAGE : //
+      case THING_EVENT_ENERGY_DAMAGE : //
         topcon(UI_IMPORTANT_FMT_STR "You die in the blinding light from %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
       case THING_EVENT_FIRE_DAMAGE : //
@@ -127,7 +127,7 @@ static void thing_killed_player(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEv
       case THING_EVENT_FIRE_DAMAGE : //
         topcon(UI_IMPORTANT_FMT_STR "You are burnt to death." UI_RESET_FMT);
         break;
-      case THING_EVENT_LIGHT_DAMAGE : //
+      case THING_EVENT_ENERGY_DAMAGE : //
         topcon(UI_IMPORTANT_FMT_STR "You are blasted to death." UI_RESET_FMT);
         break;
       case THING_EVENT_GAME_OVER : //
@@ -214,7 +214,7 @@ static void thing_killed_by_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
         topcon("%s is burnt to death by %s.", the_thing.c_str(), by_player.c_str());
       }
       break;
-    case THING_EVENT_LIGHT_DAMAGE : //
+    case THING_EVENT_ENERGY_DAMAGE : //
       topcon("%s is blasted to death by %s.", the_thing.c_str(), by_player.c_str());
       break;
     case THING_EVENT_CARRIED :          [[fallthrough]];

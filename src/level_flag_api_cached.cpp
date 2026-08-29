@@ -801,7 +801,7 @@
   return level_flag_cached(g, v, l, is_player, p);
 }
 
-[[nodiscard]] auto level_is_projectile_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_proj_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
   return level_flag_cached(g, v, l, is_projectile, p);

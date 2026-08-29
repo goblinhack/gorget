@@ -50,7 +50,7 @@
   overrides[ 'm' ]         = [](char c, bpoint p) -> Tpp { return tp_find_mand("ogrik"); };
   Levelp  l                = nullptr;
   Thingp  player           = nullptr;
-  Tpp     tp_beam_of_light = nullptr;
+  Tpp     tp_beam_of_energy = nullptr;
   Thingp  monst            = nullptr;
   Levelsp v                = game_test_init(g, &l, level_num, w, h, start.c_str(), overrides);
   bool    result           = true;
@@ -60,8 +60,8 @@
       "ring_war", //
   };
 
-  tp_beam_of_light = tp_find_mand("beam_of_light");
-  if (tp_beam_of_light == nullptr) [[unlikely]] {
+  tp_beam_of_energy = tp_find_mand("beam_of_energy");
+  if (tp_beam_of_energy == nullptr) [[unlikely]] {
     TEST_FAILED(t, "no weapon");
     goto exit;
   }
@@ -100,7 +100,7 @@
   TEST_PROGRESS(t);
   for (auto tries = 0; tries < 5; tries++) {
     TEST_LOOP_PROGRESS(t, g, v, l, tries, w, h);
-    (void) player_fire(g, v, l, 1, 0, tp_beam_of_light, bpoint(13, 3));
+    (void) player_fire(g, v, l, 1, 0, tp_beam_of_energy, bpoint(13, 3));
 
     if (tries == 0) {
       TEST_PROGRESS(t);

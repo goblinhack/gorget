@@ -106,7 +106,7 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp me)
   TRACE_INDENT();
 
   //
-  // No need to check for collisions for things like projectile_fires otherwise we will
+  // No need to check for collisions for things like proj_fires otherwise we will
   // not be able to say fire through a teleport and hit a barrel.
   //
   if (thing_is_projectile(me) || thing_is_beam_weapon(me)) {

@@ -18,7 +18,7 @@
   if (!tp_load_argusul()) { return false; }
   if (!tp_load_barrel()) { return false; }
   if (!tp_load_beam_of_fire()) { return false; }
-  if (!tp_load_beam_of_light()) { return false; }
+  if (!tp_load_beam_of_energy()) { return false; }
   if (!tp_load_blitzhound()) { return false; }
   if (!tp_load_border()) { return false; }
   if (!tp_load_brazier()) { return false; }
@@ -79,8 +79,8 @@
   if (!tp_load_potion_protection()) { return false; }
   if (!tp_load_potion_stealth()) { return false; }
   if (!tp_load_potion_tireless()) { return false; }
-  if (!tp_load_projectile_fire()) { return false; }
-  if (!tp_load_projectile_light()) { return false; }
+  if (!tp_load_proj_fire()) { return false; }
+  if (!tp_load_proj_energy()) { return false; }
   if (!tp_load_reeds()) { return false; }
   if (!tp_load_ring_life()) { return false; }
   if (!tp_load_ring_war()) { return false; }
@@ -92,14 +92,14 @@
   if (!tp_load_smoke()) { return false; }
   if (!tp_load_spiderweb()) { return false; }
   if (!tp_load_staff_fire()) { return false; }
-  if (!tp_load_staff_light()) { return false; }
+  if (!tp_load_staff_energy()) { return false; }
   if (!tp_load_steam()) { return false; }
   if (!tp_load_teleport()) { return false; }
   if (!tp_load_trap()) { return false; }
   if (!tp_load_vault()) { return false; }
   if (!tp_load_wall()) { return false; }
   if (!tp_load_wand_fire()) { return false; }
-  if (!tp_load_wand_light()) { return false; }
+  if (!tp_load_wand_energy()) { return false; }
   if (!tp_load_water_deep()) { return false; }
   if (!tp_load_water()) { return false; }
   /* end shell marker1 */

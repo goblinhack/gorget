@@ -5230,8 +5230,8 @@ static void gfx_init_tiles()
       // ##############################################################################
       "staff_fire.0",
       "staff_fire.1",
-      "staff_light.0",
-      "staff_light.1",
+      "staff_energy.0",
+      "staff_energy.1",
       "",
       "",
       "",
@@ -5247,8 +5247,8 @@ static void gfx_init_tiles()
       // ##############################################################################
       "wand_fire.0",
       "wand_fire.1",
-      "wand_light.0",
-      "wand_light.1",
+      "wand_energy.0",
+      "wand_energy.1",
       "",
       "",
       "",
@@ -5262,10 +5262,10 @@ static void gfx_init_tiles()
       "",
       "",
       // ##############################################################################
-      "projectile_fire.0",
-      "projectile_fire.1",
-      "projectile_light.0",
-      "projectile_light.1",
+      "proj_fire.0",
+      "proj_fire.1",
+      "proj_energy.0",
+      "proj_energy.1",
       "",
       "",
       "",
@@ -5456,77 +5456,77 @@ static void gfx_init_tiles_beam_of_fire()
   tile_load_arr_sprites("data/gfx/tiles_beam_of_fire.tga", "beam_of_fire", TILE_WIDTH, TILE_HEIGHT, ARRAY_SIZE(tiles), tiles);
 }
 
-static void gfx_init_tiles_beam_of_light()
+static void gfx_init_tiles_beam_of_energy()
 {
   TRACE();
   const char *tiles[] = {
-      "beam_of_light.0.0",   "beam_of_light.0.1",   "beam_of_light.0.2",   "beam_of_light.0.3",   "beam_of_light.0.4",
-      "beam_of_light.0.5",   "beam_of_light.0.6",   "beam_of_light.0.7",   "beam_of_light.0.8",   "beam_of_light.0.9",
-      "beam_of_light.0.10",  "beam_of_light.0.11",  "beam_of_light.0.12",  "beam_of_light.0.13",  "beam_of_light.0.14",
-      "beam_of_light.0.15", // newline
-      "beam_of_light.1.0",   "beam_of_light.1.1",   "beam_of_light.1.2",   "beam_of_light.1.3",   "beam_of_light.1.4",
-      "beam_of_light.1.5",   "beam_of_light.1.6",   "beam_of_light.1.7",   "beam_of_light.1.8",   "beam_of_light.1.9",
-      "beam_of_light.1.10",  "beam_of_light.1.11",  "beam_of_light.1.12",  "beam_of_light.1.13",  "beam_of_light.1.14",
-      "beam_of_light.1.15", // newline
-      "beam_of_light.2.0",   "beam_of_light.2.1",   "beam_of_light.2.2",   "beam_of_light.2.3",   "beam_of_light.2.4",
-      "beam_of_light.2.5",   "beam_of_light.2.6",   "beam_of_light.2.7",   "beam_of_light.2.8",   "beam_of_light.2.9",
-      "beam_of_light.2.10",  "beam_of_light.2.11",  "beam_of_light.2.12",  "beam_of_light.2.13",  "beam_of_light.2.14",
-      "beam_of_light.2.15", // newline
-      "beam_of_light.3.0",   "beam_of_light.3.1",   "beam_of_light.3.2",   "beam_of_light.3.3",   "beam_of_light.3.4",
-      "beam_of_light.3.5",   "beam_of_light.3.6",   "beam_of_light.3.7",   "beam_of_light.3.8",   "beam_of_light.3.9",
-      "beam_of_light.3.10",  "beam_of_light.3.11",  "beam_of_light.3.12",  "beam_of_light.3.13",  "beam_of_light.3.14",
-      "beam_of_light.3.15", // newline
-      "beam_of_light.4.0",   "beam_of_light.4.1",   "beam_of_light.4.2",   "beam_of_light.4.3",   "beam_of_light.4.4",
-      "beam_of_light.4.5",   "beam_of_light.4.6",   "beam_of_light.4.7",   "beam_of_light.4.8",   "beam_of_light.4.9",
-      "beam_of_light.4.10",  "beam_of_light.4.11",  "beam_of_light.4.12",  "beam_of_light.4.13",  "beam_of_light.4.14",
-      "beam_of_light.4.15", // newline
-      "beam_of_light.5.0",   "beam_of_light.5.1",   "beam_of_light.5.2",   "beam_of_light.5.3",   "beam_of_light.5.4",
-      "beam_of_light.5.5",   "beam_of_light.5.6",   "beam_of_light.5.7",   "beam_of_light.5.8",   "beam_of_light.5.9",
-      "beam_of_light.5.10",  "beam_of_light.5.11",  "beam_of_light.5.12",  "beam_of_light.5.13",  "beam_of_light.5.14",
-      "beam_of_light.5.15", // newline
-      "beam_of_light.6.0",   "beam_of_light.6.1",   "beam_of_light.6.2",   "beam_of_light.6.3",   "beam_of_light.6.4",
-      "beam_of_light.6.5",   "beam_of_light.6.6",   "beam_of_light.6.7",   "beam_of_light.6.8",   "beam_of_light.6.9",
-      "beam_of_light.6.10",  "beam_of_light.6.11",  "beam_of_light.6.12",  "beam_of_light.6.13",  "beam_of_light.6.14",
-      "beam_of_light.6.15", // newline
-      "beam_of_light.7.0",   "beam_of_light.7.1",   "beam_of_light.7.2",   "beam_of_light.7.3",   "beam_of_light.7.4",
-      "beam_of_light.7.5",   "beam_of_light.7.6",   "beam_of_light.7.7",   "beam_of_light.7.8",   "beam_of_light.7.9",
-      "beam_of_light.7.10",  "beam_of_light.7.11",  "beam_of_light.7.12",  "beam_of_light.7.13",  "beam_of_light.7.14",
-      "beam_of_light.7.15", // newline
-      "beam_of_light.8.0",   "beam_of_light.8.1",   "beam_of_light.8.2",   "beam_of_light.8.3",   "beam_of_light.8.4",
-      "beam_of_light.8.5",   "beam_of_light.8.6",   "beam_of_light.8.7",   "beam_of_light.8.8",   "beam_of_light.8.9",
-      "beam_of_light.8.10",  "beam_of_light.8.11",  "beam_of_light.8.12",  "beam_of_light.8.13",  "beam_of_light.8.14",
-      "beam_of_light.8.15", // newline
-      "beam_of_light.9.0",   "beam_of_light.9.1",   "beam_of_light.9.2",   "beam_of_light.9.3",   "beam_of_light.9.4",
-      "beam_of_light.9.5",   "beam_of_light.9.6",   "beam_of_light.9.7",   "beam_of_light.9.8",   "beam_of_light.9.9",
-      "beam_of_light.9.10",  "beam_of_light.9.11",  "beam_of_light.9.12",  "beam_of_light.9.13",  "beam_of_light.9.14",
-      "beam_of_light.9.15", // newline
-      "beam_of_light.10.0",  "beam_of_light.10.1",  "beam_of_light.10.2",  "beam_of_light.10.3",  "beam_of_light.10.4",
-      "beam_of_light.10.5",  "beam_of_light.10.6",  "beam_of_light.10.7",  "beam_of_light.10.8",  "beam_of_light.10.9",
-      "beam_of_light.10.10", "beam_of_light.10.11", "beam_of_light.10.12", "beam_of_light.10.13", "beam_of_light.10.14",
-      "beam_of_light.10.15", // newline
-      "beam_of_light.11.0",  "beam_of_light.11.1",  "beam_of_light.11.2",  "beam_of_light.11.3",  "beam_of_light.11.4",
-      "beam_of_light.11.5",  "beam_of_light.11.6",  "beam_of_light.11.7",  "beam_of_light.11.8",  "beam_of_light.11.9",
-      "beam_of_light.11.10", "beam_of_light.11.11", "beam_of_light.11.12", "beam_of_light.11.13", "beam_of_light.11.14",
-      "beam_of_light.11.15", // newline
-      "beam_of_light.12.0",  "beam_of_light.12.1",  "beam_of_light.12.2",  "beam_of_light.12.3",  "beam_of_light.12.4",
-      "beam_of_light.12.5",  "beam_of_light.12.6",  "beam_of_light.12.7",  "beam_of_light.12.8",  "beam_of_light.12.9",
-      "beam_of_light.12.10", "beam_of_light.12.11", "beam_of_light.12.12", "beam_of_light.12.13", "beam_of_light.12.14",
-      "beam_of_light.12.15", // newline
-      "beam_of_light.13.0",  "beam_of_light.13.1",  "beam_of_light.13.2",  "beam_of_light.13.3",  "beam_of_light.13.4",
-      "beam_of_light.13.5",  "beam_of_light.13.6",  "beam_of_light.13.7",  "beam_of_light.13.8",  "beam_of_light.13.9",
-      "beam_of_light.13.10", "beam_of_light.13.11", "beam_of_light.13.12", "beam_of_light.13.13", "beam_of_light.13.14",
-      "beam_of_light.13.15", // newline
-      "beam_of_light.14.0",  "beam_of_light.14.1",  "beam_of_light.14.2",  "beam_of_light.14.3",  "beam_of_light.14.4",
-      "beam_of_light.14.5",  "beam_of_light.14.6",  "beam_of_light.14.7",  "beam_of_light.14.8",  "beam_of_light.14.9",
-      "beam_of_light.14.10", "beam_of_light.14.11", "beam_of_light.14.12", "beam_of_light.14.13", "beam_of_light.14.14",
-      "beam_of_light.14.15", // newline
-      "beam_of_light.15.0",  "beam_of_light.15.1",  "beam_of_light.15.2",  "beam_of_light.15.3",  "beam_of_light.15.4",
-      "beam_of_light.15.5",  "beam_of_light.15.6",  "beam_of_light.15.7",  "beam_of_light.15.8",  "beam_of_light.15.9",
-      "beam_of_light.15.10", "beam_of_light.15.11", "beam_of_light.15.12", "beam_of_light.15.13", "beam_of_light.15.14",
-      "beam_of_light.15.15", // newline
+      "beam_of_energy.0.0",   "beam_of_energy.0.1",   "beam_of_energy.0.2",   "beam_of_energy.0.3",   "beam_of_energy.0.4",
+      "beam_of_energy.0.5",   "beam_of_energy.0.6",   "beam_of_energy.0.7",   "beam_of_energy.0.8",   "beam_of_energy.0.9",
+      "beam_of_energy.0.10",  "beam_of_energy.0.11",  "beam_of_energy.0.12",  "beam_of_energy.0.13",  "beam_of_energy.0.14",
+      "beam_of_energy.0.15", // newline
+      "beam_of_energy.1.0",   "beam_of_energy.1.1",   "beam_of_energy.1.2",   "beam_of_energy.1.3",   "beam_of_energy.1.4",
+      "beam_of_energy.1.5",   "beam_of_energy.1.6",   "beam_of_energy.1.7",   "beam_of_energy.1.8",   "beam_of_energy.1.9",
+      "beam_of_energy.1.10",  "beam_of_energy.1.11",  "beam_of_energy.1.12",  "beam_of_energy.1.13",  "beam_of_energy.1.14",
+      "beam_of_energy.1.15", // newline
+      "beam_of_energy.2.0",   "beam_of_energy.2.1",   "beam_of_energy.2.2",   "beam_of_energy.2.3",   "beam_of_energy.2.4",
+      "beam_of_energy.2.5",   "beam_of_energy.2.6",   "beam_of_energy.2.7",   "beam_of_energy.2.8",   "beam_of_energy.2.9",
+      "beam_of_energy.2.10",  "beam_of_energy.2.11",  "beam_of_energy.2.12",  "beam_of_energy.2.13",  "beam_of_energy.2.14",
+      "beam_of_energy.2.15", // newline
+      "beam_of_energy.3.0",   "beam_of_energy.3.1",   "beam_of_energy.3.2",   "beam_of_energy.3.3",   "beam_of_energy.3.4",
+      "beam_of_energy.3.5",   "beam_of_energy.3.6",   "beam_of_energy.3.7",   "beam_of_energy.3.8",   "beam_of_energy.3.9",
+      "beam_of_energy.3.10",  "beam_of_energy.3.11",  "beam_of_energy.3.12",  "beam_of_energy.3.13",  "beam_of_energy.3.14",
+      "beam_of_energy.3.15", // newline
+      "beam_of_energy.4.0",   "beam_of_energy.4.1",   "beam_of_energy.4.2",   "beam_of_energy.4.3",   "beam_of_energy.4.4",
+      "beam_of_energy.4.5",   "beam_of_energy.4.6",   "beam_of_energy.4.7",   "beam_of_energy.4.8",   "beam_of_energy.4.9",
+      "beam_of_energy.4.10",  "beam_of_energy.4.11",  "beam_of_energy.4.12",  "beam_of_energy.4.13",  "beam_of_energy.4.14",
+      "beam_of_energy.4.15", // newline
+      "beam_of_energy.5.0",   "beam_of_energy.5.1",   "beam_of_energy.5.2",   "beam_of_energy.5.3",   "beam_of_energy.5.4",
+      "beam_of_energy.5.5",   "beam_of_energy.5.6",   "beam_of_energy.5.7",   "beam_of_energy.5.8",   "beam_of_energy.5.9",
+      "beam_of_energy.5.10",  "beam_of_energy.5.11",  "beam_of_energy.5.12",  "beam_of_energy.5.13",  "beam_of_energy.5.14",
+      "beam_of_energy.5.15", // newline
+      "beam_of_energy.6.0",   "beam_of_energy.6.1",   "beam_of_energy.6.2",   "beam_of_energy.6.3",   "beam_of_energy.6.4",
+      "beam_of_energy.6.5",   "beam_of_energy.6.6",   "beam_of_energy.6.7",   "beam_of_energy.6.8",   "beam_of_energy.6.9",
+      "beam_of_energy.6.10",  "beam_of_energy.6.11",  "beam_of_energy.6.12",  "beam_of_energy.6.13",  "beam_of_energy.6.14",
+      "beam_of_energy.6.15", // newline
+      "beam_of_energy.7.0",   "beam_of_energy.7.1",   "beam_of_energy.7.2",   "beam_of_energy.7.3",   "beam_of_energy.7.4",
+      "beam_of_energy.7.5",   "beam_of_energy.7.6",   "beam_of_energy.7.7",   "beam_of_energy.7.8",   "beam_of_energy.7.9",
+      "beam_of_energy.7.10",  "beam_of_energy.7.11",  "beam_of_energy.7.12",  "beam_of_energy.7.13",  "beam_of_energy.7.14",
+      "beam_of_energy.7.15", // newline
+      "beam_of_energy.8.0",   "beam_of_energy.8.1",   "beam_of_energy.8.2",   "beam_of_energy.8.3",   "beam_of_energy.8.4",
+      "beam_of_energy.8.5",   "beam_of_energy.8.6",   "beam_of_energy.8.7",   "beam_of_energy.8.8",   "beam_of_energy.8.9",
+      "beam_of_energy.8.10",  "beam_of_energy.8.11",  "beam_of_energy.8.12",  "beam_of_energy.8.13",  "beam_of_energy.8.14",
+      "beam_of_energy.8.15", // newline
+      "beam_of_energy.9.0",   "beam_of_energy.9.1",   "beam_of_energy.9.2",   "beam_of_energy.9.3",   "beam_of_energy.9.4",
+      "beam_of_energy.9.5",   "beam_of_energy.9.6",   "beam_of_energy.9.7",   "beam_of_energy.9.8",   "beam_of_energy.9.9",
+      "beam_of_energy.9.10",  "beam_of_energy.9.11",  "beam_of_energy.9.12",  "beam_of_energy.9.13",  "beam_of_energy.9.14",
+      "beam_of_energy.9.15", // newline
+      "beam_of_energy.10.0",  "beam_of_energy.10.1",  "beam_of_energy.10.2",  "beam_of_energy.10.3",  "beam_of_energy.10.4",
+      "beam_of_energy.10.5",  "beam_of_energy.10.6",  "beam_of_energy.10.7",  "beam_of_energy.10.8",  "beam_of_energy.10.9",
+      "beam_of_energy.10.10", "beam_of_energy.10.11", "beam_of_energy.10.12", "beam_of_energy.10.13", "beam_of_energy.10.14",
+      "beam_of_energy.10.15", // newline
+      "beam_of_energy.11.0",  "beam_of_energy.11.1",  "beam_of_energy.11.2",  "beam_of_energy.11.3",  "beam_of_energy.11.4",
+      "beam_of_energy.11.5",  "beam_of_energy.11.6",  "beam_of_energy.11.7",  "beam_of_energy.11.8",  "beam_of_energy.11.9",
+      "beam_of_energy.11.10", "beam_of_energy.11.11", "beam_of_energy.11.12", "beam_of_energy.11.13", "beam_of_energy.11.14",
+      "beam_of_energy.11.15", // newline
+      "beam_of_energy.12.0",  "beam_of_energy.12.1",  "beam_of_energy.12.2",  "beam_of_energy.12.3",  "beam_of_energy.12.4",
+      "beam_of_energy.12.5",  "beam_of_energy.12.6",  "beam_of_energy.12.7",  "beam_of_energy.12.8",  "beam_of_energy.12.9",
+      "beam_of_energy.12.10", "beam_of_energy.12.11", "beam_of_energy.12.12", "beam_of_energy.12.13", "beam_of_energy.12.14",
+      "beam_of_energy.12.15", // newline
+      "beam_of_energy.13.0",  "beam_of_energy.13.1",  "beam_of_energy.13.2",  "beam_of_energy.13.3",  "beam_of_energy.13.4",
+      "beam_of_energy.13.5",  "beam_of_energy.13.6",  "beam_of_energy.13.7",  "beam_of_energy.13.8",  "beam_of_energy.13.9",
+      "beam_of_energy.13.10", "beam_of_energy.13.11", "beam_of_energy.13.12", "beam_of_energy.13.13", "beam_of_energy.13.14",
+      "beam_of_energy.13.15", // newline
+      "beam_of_energy.14.0",  "beam_of_energy.14.1",  "beam_of_energy.14.2",  "beam_of_energy.14.3",  "beam_of_energy.14.4",
+      "beam_of_energy.14.5",  "beam_of_energy.14.6",  "beam_of_energy.14.7",  "beam_of_energy.14.8",  "beam_of_energy.14.9",
+      "beam_of_energy.14.10", "beam_of_energy.14.11", "beam_of_energy.14.12", "beam_of_energy.14.13", "beam_of_energy.14.14",
+      "beam_of_energy.14.15", // newline
+      "beam_of_energy.15.0",  "beam_of_energy.15.1",  "beam_of_energy.15.2",  "beam_of_energy.15.3",  "beam_of_energy.15.4",
+      "beam_of_energy.15.5",  "beam_of_energy.15.6",  "beam_of_energy.15.7",  "beam_of_energy.15.8",  "beam_of_energy.15.9",
+      "beam_of_energy.15.10", "beam_of_energy.15.11", "beam_of_energy.15.12", "beam_of_energy.15.13", "beam_of_energy.15.14",
+      "beam_of_energy.15.15", // newline
   };
 
-  tile_load_arr_sprites("data/gfx/tiles_beam_of_light.tga", "beam_of_light", TILE_WIDTH, TILE_HEIGHT, ARRAY_SIZE(tiles), tiles);
+  tile_load_arr_sprites("data/gfx/tiles_beam_of_energy.tga", "beam_of_energy", TILE_WIDTH, TILE_HEIGHT, ARRAY_SIZE(tiles), tiles);
 }
 
 void gfx_init()
@@ -5539,7 +5539,7 @@ void gfx_init()
   // NOTE: use tile_load_arr_sprites for sprites
   // ##############################################################################
   gfx_init_tiles_beam_of_fire();
-  gfx_init_tiles_beam_of_light();
+  gfx_init_tiles_beam_of_energy();
   gfx_init_tiles();
   gfx_init_tiles_tall();
   gfx_init_tiles_walls_and_floors();

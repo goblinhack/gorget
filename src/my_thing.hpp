@@ -1306,8 +1306,8 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_prev_pix_at(Thingp me) -> spoint;
 [[nodiscard]] auto thing_priority_set(Gamep g, Levelsp v, Levelp l, Thingp t, ThingPriorityType val) -> ThingPriorityType;
 [[nodiscard]] auto thing_priority(Thingp t) -> ThingPriorityType;
-[[nodiscard]] auto thing_projectile_launch_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, bpoint target) -> bool;
-[[nodiscard]] auto thing_projectile_launch_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, fpoint target) -> bool;
+[[nodiscard]] auto thing_proj_launch_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, bpoint target) -> bool;
+[[nodiscard]] auto thing_proj_launch_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, fpoint target) -> bool;
 [[nodiscard]] auto thing_push(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
 [[nodiscard]] auto thing_real_at(Gamep g, Levelsp v, Levelp l, Thingp me) -> fpoint;
 [[nodiscard]] auto thing_resurrect(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
@@ -1549,7 +1549,7 @@ auto thing_pix_at_set(Gamep g, Levelsp v, Levelp l, Thingp me, short x, short y)
 auto thing_player_event_loop(Gamep g, Levelsp v, Levelp l) -> void;
 auto thing_player_init(Gamep g) -> void;
 auto thing_prev_pix_at_set(Gamep g, Levelsp v, Levelp l, Thingp me, const spoint &val) -> void;
-auto thing_projectile_move(Gamep g, Levelsp v, Levelp l, Thingp me, float dt) -> void;
+auto thing_proj_move(Gamep g, Levelsp v, Levelp l, Thingp me, float dt) -> void;
 auto thing_set_dir_from_delta(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &p) -> void;
 auto thing_set_dir_from_delta(Gamep g, Levelsp v, Levelp l, Thingp me, int dx, int dy) -> void;
 auto thing_set_dir_from_target(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &p) -> void;

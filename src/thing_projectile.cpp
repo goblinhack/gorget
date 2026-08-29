@@ -14,7 +14,7 @@
 #include "my_tp.hpp"
 #include "my_types.hpp"
 
-[[nodiscard]] auto thing_projectile_launch_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const fpoint target) -> bool
+[[nodiscard]] auto thing_proj_launch_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const fpoint target) -> bool
 {
   THING_DBG(g, v, l, me, "fire projectile");
   TRACE_INDENT();
@@ -30,17 +30,17 @@
   float c     = 0;
   SINCOSF(angle, &s, &c);
 
-  fpoint projectile_at = thing_real_at(g, v, l, me);
+  fpoint proj_at = thing_real_at(g, v, l, me);
 
   //
   // Need a small fraction to account for comparisons of very similar floats where
   // we end up shooting the player upon firing
   //
   float const offset = thing_collision_radius(me) + tp_collision_radius(what) + THING_COLLISION_FIRING_OFFSET;
-  projectile_at.x += c * offset;
-  projectile_at.y += s * offset;
+  proj_at.x += c * offset;
+  proj_at.y += s * offset;
 
-  auto *projectile = thing_spawn_missile(g, v, l, me, what, projectile_at);
+  auto *projectile = thing_spawn_missile(g, v, l, me, what, proj_at);
   if (projectile == nullptr) {
     return false;
   }
@@ -50,7 +50,7 @@
   //
   // Set my direction based on where I fire
   //
-  bpoint const dir    = make_bpoint(projectile_at);
+  bpoint const dir    = make_bpoint(proj_at);
   bpoint const source = thing_at(g, v, l, me);
   thing_set_dir_from_delta(g, v, l, me, dir.x - source.x, dir.y - source.y);
 
@@ -65,12 +65,12 @@
   return true;
 }
 
-[[nodiscard]] auto thing_projectile_launch_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const bpoint target) -> bool
+[[nodiscard]] auto thing_proj_launch_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const bpoint target) -> bool
 {
-  return thing_projectile_launch_at(g, v, l, me, what, make_fpoint(target));
+  return thing_proj_launch_at(g, v, l, me, what, make_fpoint(target));
 }
 
-void thing_projectile_move(Gamep g, Levelsp v, Levelp l, Thingp me, float dt)
+void thing_proj_move(Gamep g, Levelsp v, Levelp l, Thingp me, float dt)
 {
   TRACE();
 

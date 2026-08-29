@@ -12,25 +12,24 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
-static auto tp_staff_light_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
+static auto tp_wand_energy_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
-  return "staff_light";
+  return "wand_energy";
 }
 
-static auto tp_staff_light_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
+static auto tp_wand_energy_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
-  return                                                                                                          //
-      UI_INFO1_FMT_STR "A brilliantly lit staff. White sparks drip from it.\n"                                    //
-      UI_INFO2_FMT_STR "Tip: staves fire a single blast at a time, unavoidable by monsters.\n"                    //
-      UI_INFO3_FMT_STR "Tip: blast can pass through multiple monsters, so aim to create a conga line of death.\n" //
-      UI_INFO4_FMT_STR "Info: staves are more powerful than wands, but have fewer charges and are worn with a move penalty.\n";
+  return                                                                                                                                     //
+      UI_INFO1_FMT_STR "A brilliant lit wand. White sparks drip from it.\n"                                                                  //
+      UI_INFO2_FMT_STR "Tip: wands can fire multiple rounds down long corridors. However, this means monsters can potentially avoid them.\n" //
+      UI_INFO3_FMT_STR "Info: wands are less powerful than staves, but have more charges and be worn without a move penalty.\n";
 }
 
-[[nodiscard]] static auto tp_staff_light_on_light_weapon_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user) -> Tpp
+[[nodiscard]] static auto tp_wand_energy_on_use_weapon_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user) -> Tpp
 {
   TRACE();
 
@@ -44,24 +43,24 @@ static auto tp_staff_light_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -
   }
 
   if (user && thing_is_player(user)) {
-    (void) thing_noise_incr(g, v, l, user, THING_NOISE_STAFF);
+    (void) thing_noise_incr(g, v, l, user, THING_NOISE_WAND);
   }
 
   return what;
 }
 
-[[nodiscard]] auto tp_load_staff_light() -> bool
+[[nodiscard]] auto tp_load_wand_energy() -> bool
 {
   TRACE();
 
-  auto *tp   = tp_load("staff_light"); // keep as string for scripts
+  auto *tp   = tp_load("wand_energy"); // keep as string for scripts
   auto  name = tp_name(tp);
 
   // begin sort marker1 {
-  thing_description_set(tp, tp_staff_light_description_get);
-  thing_detail_set(tp, tp_staff_light_detail_get);
-  thing_on_use_weapon_request_set(tp, tp_staff_light_on_light_weapon_request);
-  tp_charge_count_set(tp, 500);
+  thing_description_set(tp, tp_wand_energy_description_get);
+  thing_detail_set(tp, tp_wand_energy_detail_get);
+  thing_on_use_weapon_request_set(tp, tp_wand_energy_on_use_weapon_request);
+  tp_charge_count_set(tp, 5000);
   tp_flag_set(tp, is_able_to_be_buffed);
   tp_flag_set(tp, is_able_to_be_levitated);
   tp_flag_set(tp, is_able_to_be_teleported);
@@ -87,38 +86,36 @@ static auto tp_staff_light_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_physics_trap);
   tp_flag_set(tp, is_physics_water);
-  tp_flag_set(tp, is_staff);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_throwable);
   tp_flag_set(tp, is_tick_on_drop);
-  tp_flag_set(tp, is_tick_on_strip);
-  tp_flag_set(tp, is_tick_on_worn);
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_treasure);
+  tp_flag_set(tp, is_wand);
   tp_flag_set(tp, is_weapon);
   tp_flag_set(tp, is_wood);
   tp_health_set(tp, "1d4");
   tp_is_immune_to_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_light_color_set(tp, "red");
-  tp_name_a_or_an_set(tp, "a staff of light");
-  tp_name_apostrophize_set(tp, "staff of light's");
-  tp_name_long_set(tp, "staff of light");
-  tp_name_pluralize_set(tp, "staves of light");
-  tp_name_short_set(tp, "staff of light");
+  tp_name_a_or_an_set(tp, "a wand of energy");
+  tp_name_apostrophize_set(tp, "wand of energy's");
+  tp_name_long_set(tp, "wand of energy");
+  tp_name_pluralize_set(tp, "wands of energy");
+  tp_name_short_set(tp, "wand of energy");
   tp_priority_set(tp, THING_PRIORITY_OBJECT);
   tp_rarity_set(tp, THING_RARITY_UNCOMMON);
   tp_temperature_burns_at_set(tp, 30);  // celsius
   tp_temperature_damage_at_set(tp, 30); // celsius
   tp_temperature_initial_set(tp, 20);   // celsius
-  tp_weight_set(tp, WEIGHT_MEDIUM);     // grams
+  tp_weight_set(tp, WEIGHT_LIGHT);      // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   // end sort marker1 }
 
   tp_special_attack_add(tp,
                         TpSpecialAttack {
-                            .type = "1",             //
-                            .name = "beam weapon",   //
-                            .what = "beam_of_light", //
+                            .type = "1",                //
+                            .name = "projectile blast", //
+                            .what = "proj_energy", //
                         });
   auto delay = 20;
 

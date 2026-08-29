@@ -80,7 +80,7 @@ void thing_on_use_weapon_request_set(Tpp tp, thing_on_use_weapon_request_t callb
       return false;
     }
   } else {
-    if (! thing_projectile_launch_at(g, v, l, me, fire_what, target)) {
+    if (! thing_proj_launch_at(g, v, l, me, fire_what, target)) {
       return false;
     }
   }

@@ -564,7 +564,7 @@ static void thing_display_it(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t_mayb
 
   if ((thing_is_hot(t_maybe_null) != 0) && ! thing_is_dead(t_maybe_null)) {
     //
-    // Pulse when hot. But not when dead. Else a monster killed by a projectile_fire will pulse!
+    // Pulse when hot. But not when dead. Else a monster killed by a proj_fire will pulse!
     //
     if (! thing_is_always_hot(t_maybe_null)) {
       color const hot = ORANGE;

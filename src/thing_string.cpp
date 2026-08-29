@@ -48,6 +48,7 @@
                                   /* is_moving                     */ "{}"
                                   /* is_worn                       */ "{}"
                                   /* is_jumping                    */ "{}"
+                                  /* is_levitating                 */ "{}"
                                   /* is_thrown                     */ "{}"
                                   /* is_engulfed                   */ "{}"
                                   /* is_ensnared                   */ "{}"
@@ -67,6 +68,7 @@
                                   /* newline */ thing_is_moving(t) ? "/move" : "",
                                   /* newline */ thing_is_worn(t) ? "/worn" : "",
                                   /* newline */ thing_is_jumping(t) ? "/jump" : "",
+                                  /* newline */ thing_is_levitating(g, v, l, t) ? "/lev" : "",
                                   /* newline */ thing_is_thrown(t) ? "/thrw" : "",
                                   /* newline */ thing_is_engulfed(t) ? "/gulf" : "",
                                   /* newline */ thing_is_ensnared(t) ? "/trap" : "",
@@ -159,7 +161,7 @@
     case THING_EVENT_FIRE_DAMAGE : //
       s += "burned";
       break;
-    case THING_EVENT_LIGHT_DAMAGE : //
+    case THING_EVENT_ENERGY_DAMAGE : //
       s += "blasted";
       break;
     case THING_EVENT_OPEN : //

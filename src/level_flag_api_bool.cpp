@@ -801,7 +801,7 @@
   return level_flag(g, v, l, is_player, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_projectile_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_proj_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
   return level_flag(g, v, l, is_projectile, p, me) != nullptr;
