@@ -419,7 +419,6 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
             return true; // filter out i.e. ignore
           }
         }
-        break;
 
         //
         // Allow engulfers to land on you
