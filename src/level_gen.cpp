@@ -103,7 +103,7 @@ static const int MAX_LEVEL_GEN_PLACE_MISSING_KEY_TRIES = 1000;
 //
 // The max amount of fragments to create
 //
-static const int MAX_LEVEL_GEN_FRAGMENTS = 20;
+static const int MAX_LEVEL_GEN_FRAGMENTS = 50;
 
 //
 // How far away the start and exit should be at a minimum
@@ -674,6 +674,58 @@ static auto room_flip_horiz(class Room *r) -> class Room *
     case CHARMAP_WALL :          return false;
     case CHARMAP_WATER :         return true;
     case CHARMAP_WEAPON :        return true;
+    case CHARMAP_WILDCARD :      return false;
+  }
+  return false;
+}
+
+//
+// A tile we don't want to replace with fragments?
+//
+[[nodiscard]] static auto level_char_is_critical_to_level(char c) -> bool
+{
+  switch (c) {
+    case CHARMAP_BARREL :        return false;
+    case CHARMAP_BORDER :        return true;
+    case CHARMAP_BRAZIER :       return false;
+    case CHARMAP_BRIDGE :        return true;
+    case CHARMAP_CHASM :         return false;
+    case CHARMAP_CHASM_50 :      return false;
+    case CHARMAP_CORRIDOR :      return false;
+    case CHARMAP_DEEP_WATER :    return false;
+    case CHARMAP_DIRT :          return false;
+    case CHARMAP_DOOR_LOCKED :   return true;
+    case CHARMAP_DOOR_SECRET :   return true;
+    case CHARMAP_DOOR_UNLOCKED : return true;
+    case CHARMAP_EMPTY :         return false;
+    case CHARMAP_ENTRANCE :      return true;
+    case CHARMAP_EXIT :          return true;
+    case CHARMAP_FIRE :          return false;
+    case CHARMAP_FLOOR :         return false;
+    case CHARMAP_FLOOR_50 :      return false;
+    case CHARMAP_FOLIAGE :       return false;
+    case CHARMAP_GRASS :         return false;
+    case CHARMAP_JOIN :          return false;
+    case CHARMAP_KEY :           return true;
+    case CHARMAP_LAVA :          return false;
+    case CHARMAP_MOB1 :          return false;
+    case CHARMAP_MOB2 :          return false;
+    case CHARMAP_MONST1 :        return false;
+    case CHARMAP_MONST2 :        return false;
+    case CHARMAP_PILLAR :        return false;
+    case CHARMAP_RUBBLE :        return false;
+    case CHARMAP_SPIDERWEB :     return false;
+    case CHARMAP_REEDS :         return false;
+    case CHARMAP_ROCK :          return false;
+    case CHARMAP_SMOKE :         return false;
+    case CHARMAP_STEAM :         return false;
+    case CHARMAP_TELEPORT :      return true;
+    case CHARMAP_TRAP :          return true;
+    case CHARMAP_TREASURE :      return false;
+    case CHARMAP_VAULT :         return true;
+    case CHARMAP_WALL :          return false;
+    case CHARMAP_WATER :         return false;
+    case CHARMAP_WEAPON :        return false;
     case CHARMAP_WILDCARD :      return false;
   }
   return false;
@@ -1925,12 +1977,6 @@ void fragments_dump(Gamep g)
 {
   for (int ry = 0; ry < f->height; ry++) {
     for (int rx = 0; rx < f->width; rx++) {
-
-      auto c = fragment_char(f, rx, ry);
-      if (c == CHARMAP_WILDCARD) {
-        continue;
-      }
-
       bpoint const p(rx + at.x, ry + at.y);
 
       if ((p.x <= 0)) [[unlikely]] {
@@ -1945,7 +1991,18 @@ void fragments_dump(Gamep g)
       if ((p.y >= MAP_HEIGHT - 1)) [[unlikely]] {
         return false;
       }
-      if (c != lg->data[ p.x ][ p.y ].c) {
+
+      auto c          = fragment_char(f, rx, ry);
+      auto existing_c = lg->data[ p.x ][ p.y ].c;
+
+      if (c == CHARMAP_WILDCARD) {
+        if (level_char_is_critical_to_level(existing_c)) {
+          return false;
+        }
+        continue;
+      }
+
+      if (c != existing_c) {
         return false;
       }
     }
