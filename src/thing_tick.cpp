@@ -26,7 +26,9 @@ void thing_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
   //
   if (thing_is_engulfed(me)) {
     if (level_alive_is_able_to_engulf(g, v, l, at) == nullptr) {
-      topcon(UI_IMPORTANT_FMT_STR "You seem to be free!" UI_RESET_FMT);
+      if (thing_is_player(me)) {
+        topcon(UI_IMPORTANT_FMT_STR "You seem to be free!" UI_RESET_FMT);
+      }
       (void) thing_is_engulfed_try_unset(g, v, l, me);
     }
   }
@@ -35,8 +37,10 @@ void thing_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
   // Check if still ensnared
   //
   if (thing_is_ensnared(me)) {
-    if (level_alive_is_able_to_engulf(g, v, l, at) == nullptr) {
-      topcon(UI_IMPORTANT_FMT_STR "You seem to be free!" UI_RESET_FMT);
+    if (level_alive_is_able_to_ensnare(g, v, l, at) == nullptr) {
+      if (thing_is_player(me)) {
+        topcon(UI_IMPORTANT_FMT_STR "You seem to be free!" UI_RESET_FMT);
+      }
       (void) thing_is_ensnared_try_unset(g, v, l, me);
     }
   }

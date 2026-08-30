@@ -373,20 +373,36 @@ static auto thing_monst_choose_something_we_can_wander_to(Gamep g, Levelsp v, Le
 
   auto at = thing_at(g, v, l, me);
 
+  //
+  // Check if enguilfed
+  //
   if (thing_is_engulfed(me)) {
+    //
+    // Give a chance of escape
+    //
     THING_DBG(g, v, l, me, "move try: not possible, engulfed, lunge");
-    TRACE_INDENT();
-
-    (void) thing_lunge(g, v, l, me, to);
-    return false;
+    if (thing_stat_success(g, v, l, me, THING_STAT_LUCK, TARGET_ROLL_ENGULFED)) {
+      (void) thing_is_engulfed_try_unset(g, v, l, me);
+    } else {
+      (void) thing_lunge(g, v, l, me, to);
+      return false;
+    }
   }
 
+  //
+  // Check if ensnared
+  //
   if (thing_is_ensnared(me)) {
+    //
+    // Give a chance of escape
+    //
     THING_DBG(g, v, l, me, "move try: not possible, ensnared, lunge");
-    TRACE_INDENT();
-
-    (void) thing_lunge(g, v, l, me, to);
-    return false;
+    if (thing_stat_success(g, v, l, me, THING_STAT_LUCK, TARGET_ROLL_ENSNARED)) {
+      (void) thing_is_ensnared_try_unset(g, v, l, me);
+    } else {
+      (void) thing_lunge(g, v, l, me, to);
+      return false;
+    }
   }
 
   if (thing_can_move_to_attempt(g, v, l, me, to)) {
