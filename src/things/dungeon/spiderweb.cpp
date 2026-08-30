@@ -52,6 +52,7 @@ static auto tp_spiderweb_description_get(Gamep g, Levelsp v, Levelp l, Thingp me
   tp_name_apostrophize_set(tp, "spiderwebs'");
   tp_name_long_set(tp, "spiderweb");
   tp_name_pluralize_set(tp, "spiderwebs");
+  tp_health_set(tp, "100");
   tp_name_short_set(tp, "spiderweb");
   tp_priority_set(tp, THING_PRIORITY_OBJECT);
   tp_temperature_burns_at_set(tp, 30);  // celsius

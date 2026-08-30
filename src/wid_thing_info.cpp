@@ -567,8 +567,8 @@ static void wid_thing_info_stats_dex_mouse_over_begin(Gamep g, Widp w, int /*rel
   wid_over_stats = new WidPopup(g, "stats", tl, br, nullptr, "", false, false);
   wid_over_stats->log(g, UI_HIGHLIGHT_FMT_STR "Dexterity");
   wid_over_stats->log_empty_line(g);
-  wid_over_stats->log(g, UI_INFO1_FMT_STR "Dexterity TODO.\n", TEXT_FORMAT_LHS);
-  wid_over_stats->log_empty_line(g);
+  wid_over_stats->log(g, UI_INFO1_FMT_STR "This is your overall dexterity roll out of a max of 20.\n", TEXT_FORMAT_LHS);
+  wid_over_stats->log(g, UI_INFO4_FMT_STR "Use this to break out of tangly spiderwebs and avoid traps.\n", TEXT_FORMAT_LHS);
   wid_over_stats->compress(g);
 
   level_cursor_path_reset(g);
@@ -744,44 +744,42 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
   parent->log_empty_line(g);
   parent->log_empty_line(g);
 
-  if (compiler_unused) {
-    {
-      auto         out = thing_stat_mod_string(g, v, l, me, THING_STAT_STR);
-      auto        *w   = wid_new_bright_button(g, b, "Str");
-      spoint const tl(1, text->line_count);
-      spoint const br(10, text->line_count + 2);
-      wid_set_pos(w, tl, br);
-      wid_set_text(w, out);
-      wid_set_on_mouse_over_begin(w, wid_thing_info_stats_str_mouse_over_begin);
-      wid_set_on_mouse_over_end(w, wid_thing_info_stats_mouse_over_end);
-    }
-
-    {
-      auto         out = thing_stat_mod_string(g, v, l, me, THING_STAT_CON);
-      auto        *w   = wid_new_bright_button(g, b, "Con");
-      spoint const tl(11, text->line_count);
-      spoint const br(20, text->line_count + 2);
-      wid_set_pos(w, tl, br);
-      wid_set_text(w, out);
-      wid_set_on_mouse_over_begin(w, wid_thing_info_stats_con_mouse_over_begin);
-      wid_set_on_mouse_over_end(w, wid_thing_info_stats_mouse_over_end);
-    }
-
-    {
-      auto         out = thing_stat_mod_string(g, v, l, me, THING_STAT_DEX);
-      auto        *w   = wid_new_bright_button(g, b, "Dex");
-      spoint const tl(21, text->line_count);
-      spoint const br(30, text->line_count + 2);
-      wid_set_pos(w, tl, br);
-      wid_set_text(w, out);
-      wid_set_on_mouse_over_begin(w, wid_thing_info_stats_dex_mouse_over_begin);
-      wid_set_on_mouse_over_end(w, wid_thing_info_stats_mouse_over_end);
-    }
-
-    parent->log_empty_line(g);
-    parent->log_empty_line(g);
-    parent->log_empty_line(g);
+  {
+    auto         out = thing_stat_mod_string(g, v, l, me, THING_STAT_STR);
+    auto        *w   = wid_new_bright_button(g, b, "Str");
+    spoint const tl(1, text->line_count);
+    spoint const br(10, text->line_count + 2);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, out);
+    wid_set_on_mouse_over_begin(w, wid_thing_info_stats_str_mouse_over_begin);
+    wid_set_on_mouse_over_end(w, wid_thing_info_stats_mouse_over_end);
   }
+
+  {
+    auto         out = thing_stat_mod_string(g, v, l, me, THING_STAT_CON);
+    auto        *w   = wid_new_bright_button(g, b, "Con");
+    spoint const tl(11, text->line_count);
+    spoint const br(20, text->line_count + 2);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, out);
+    wid_set_on_mouse_over_begin(w, wid_thing_info_stats_con_mouse_over_begin);
+    wid_set_on_mouse_over_end(w, wid_thing_info_stats_mouse_over_end);
+  }
+
+  {
+    auto         out = thing_stat_mod_string(g, v, l, me, THING_STAT_DEX);
+    auto        *w   = wid_new_bright_button(g, b, "Dex");
+    spoint const tl(21, text->line_count);
+    spoint const br(30, text->line_count + 2);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, out);
+    wid_set_on_mouse_over_begin(w, wid_thing_info_stats_dex_mouse_over_begin);
+    wid_set_on_mouse_over_end(w, wid_thing_info_stats_mouse_over_end);
+  }
+
+  parent->log_empty_line(g);
+  parent->log_empty_line(g);
+  parent->log_empty_line(g);
 
   {
     auto         out = thing_stat_mod_string(g, v, l, me, THING_STAT_DMG);

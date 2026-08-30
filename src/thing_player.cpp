@@ -673,7 +673,7 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
   // Try to break free of the ensnarer
   //
   if (thing_is_ensnared(me)) {
-    if (thing_stat_success(g, v, l, me, THING_STAT_LUCK, TARGET_ROLL_ENSNARED)) {
+    if (thing_stat_success(g, v, l, me, THING_STAT_DEX, TARGET_ROLL_ENSNARED)) {
       topcon(UI_IMPORTANT_FMT_STR "You were ensnared but break free!" UI_RESET_FMT);
       (void) thing_is_ensnared_try_unset(g, v, l, me);
     } else {

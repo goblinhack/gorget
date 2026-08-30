@@ -123,10 +123,10 @@ enum {
   // Target rolls. Higher targets are harder to exceed.
   //
   TARGET_ROLL                 = 10,
-  TARGET_ROLL_TRAP            = 11,
   TARGET_ROLL_TELEPORT_HAZARD = 12,
   TARGET_ROLL_FALL            = 12,
   TARGET_ROLL_CHEST_EXPLODE   = 12,
+  TARGET_ROLL_TRAP            = 15,
   TARGET_ROLL_ENGULFED        = 15,
   TARGET_ROLL_ENSNARED        = 19,
 

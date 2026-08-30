@@ -71,7 +71,7 @@
                                   /* newline */ thing_is_levitating(g, v, l, t) ? "/lev" : "",
                                   /* newline */ thing_is_thrown(t) ? "/thrw" : "",
                                   /* newline */ thing_is_engulfed(t) ? "/gulf" : "",
-                                  /* newline */ thing_is_ensnared(t) ? "/trap" : "",
+                                  /* newline */ thing_is_ensnared(t) ? "/snrd" : "",
                                   /* newline */ thing_is_carried(t) ? "/carr" : "",
                                   /* newline */ thing_is_dead(t) ? "/dead" : "",
                                   /* newline */ thing_is_sleeping(t) ? "/zzz" : "",

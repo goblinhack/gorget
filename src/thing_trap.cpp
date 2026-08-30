@@ -41,6 +41,13 @@ void thing_trap_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
     if (thing_is_player(me)) {
       topcon(UI_IMPORTANT_FMT_STR "You feel a loose floor tile." UI_RESET_FMT);
     }
+  } else if (thing_stat_success(g, v, l, me, THING_STAT_DEX, TARGET_ROLL_TRAP)) {
+    //
+    // Skillful
+    //
+    if (thing_is_player(me)) {
+      topcon(UI_IMPORTANT_FMT_STR "You skillully skip over a trap." UI_RESET_FMT);
+    }
   } else if (thing_on_activated(g, v, l, trap, me)) {
     //
     // The trap springs

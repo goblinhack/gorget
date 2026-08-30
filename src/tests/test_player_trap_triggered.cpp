@@ -9,50 +9,50 @@
 #include "../my_test.hpp"
 #include "../my_thing_inlines.hpp"
 
-[[nodiscard]] static auto test_player_triggered(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_player_trap_triggered(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
 
   LevelNum const level_num = 0;
-  auto           w         = 7;
+  auto           w         = 10;
   auto           h         = 7;
 
   //
   // How the dungeon starts out, and how we expect it to change
   //
   std::string const level1 // first level
-      = "......."
-        "......."
-        "......."
-        "..@tt.."
-        "......."
-        "......."
-        ".......";
+      = ".........."
+        ".........."
+        ".........."
+        "@ttttttttt"
+        ".........."
+        ".........."
+        "..........";
   std::string const expect1 // first level
-      = "......."
-        "......."
-        "......."
-        "...tC.."
-        "......."
-        "......."
-        ".......";
+      = ".........."
+        ".........."
+        ".........."
+        ".Ctttttttt"
+        ".........."
+        ".........."
+        "..........";
   std::string const level2 // second level
-      = "xxxxxxx"
-        "xxxxxxx"
-        "xx...xx"
-        "xx...xx"
-        "xx...xx"
-        "xxxxxxx"
-        "xxxxxxx";
+      = ".........."
+        ".........."
+        ".........."
+        ".........."
+        ".........."
+        ".........."
+        "..........";
   std::string const expect2 // second level
-      = "xxxxxxx"
-        "xxxxxxx"
-        "xx...xx"
-        "xx..@xx"
-        "xx...xx"
-        "xxxxxxx"
-        "xxxxxxx";
+      = ".........."
+        ".........."
+        ".........."
+        "........@."
+        ".........."
+        ".........."
+        "..........";
 
   //
   // Create the level and start playing
@@ -88,29 +88,12 @@
     }
   }
 
-  //
-  // Move right
-  //
-  TEST_PROGRESS(t);
-  {
-    TEST_LOG(t, "move right");
-    TRACE();
-    up = down = left = right = false;
-    right                    = true;
+  for (auto tries = 0; tries < 8; tries++) {
+    TEST_LOOP_PROGRESS(t, g, v, l1, tries, w, h);
 
-    if (! (result = player_move_request(g, up, down, left, right, false /* fire */))) {
-      TEST_FAILED(t, "move failed");
-      goto exit;
-    }
-
-    TEST_ASSERT(t, game_wait_for_tick_to_finish(g, v, l1), "failed to wait for tick to finish");
-  }
-
-  //
-  // Move right
-  //
-  TEST_PROGRESS(t);
-  {
+    //
+    // Move right
+    //
     TEST_LOG(t, "move right");
     TRACE();
     up = down = left = right = false;
@@ -150,7 +133,7 @@
     TEST_ASSERT(t, game_wait_for_tick_to_finish(g, v, l2), "failed to wait for tick to finish");
   }
 
-  TEST_ASSERT(t, game_tick_get(g, v) == 6, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 12, "final tick counter value");
 
   TEST_PASSED(t);
 exit:
@@ -167,7 +150,7 @@ exit:
   Testp test = test_load("player_triggered");
 
   // begin sort marker1 {
-  test_callback_set(test, test_player_triggered);
+  test_callback_set(test, test_player_trap_triggered);
   // end sort marker1 }
 
   return true;

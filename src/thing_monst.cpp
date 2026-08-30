@@ -397,7 +397,7 @@ static auto thing_monst_choose_something_we_can_wander_to(Gamep g, Levelsp v, Le
     // Give a chance of escape
     //
     THING_DBG(g, v, l, me, "move try: not possible, ensnared, lunge");
-    if (thing_stat_success(g, v, l, me, THING_STAT_LUCK, TARGET_ROLL_ENSNARED)) {
+    if (thing_stat_success(g, v, l, me, THING_STAT_DEX, TARGET_ROLL_ENSNARED)) {
       (void) thing_is_ensnared_try_unset(g, v, l, me);
     } else {
       (void) thing_lunge(g, v, l, me, to);
