@@ -175,6 +175,7 @@ static std::initializer_list< std::string > tests = {
     "proj_over_grass",
     "proj_over_water",
     "proj_rock_turns_to_lava",
+    "proj_spiderweb",
     "proj_teleport",
     "proj_wall_turns_to_lava",
     "projectile",

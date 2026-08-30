@@ -153,6 +153,7 @@
   if (!test_load_proj_over_grass()) { return false; }
   if (!test_load_proj_over_water()) { return false; }
   if (!test_load_proj_rock_turns_to_lava()) { return false; }
+  if (!test_load_proj_spiderweb()) { return false; }
   if (!test_load_proj_teleport()) { return false; }
   if (!test_load_proj_wall_turns_to_lava()) { return false; }
   if (!test_load_projectile()) { return false; }

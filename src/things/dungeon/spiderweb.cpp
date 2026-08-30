@@ -48,11 +48,11 @@ static auto tp_spiderweb_description_get(Gamep g, Levelsp v, Levelp l, Thingp me
   tp_flag_set(tp, is_removable_when_dead_on_err);
   tp_flag_set(tp, is_spiderweb);
   tp_flag_set(tp, is_tickable);
+  tp_health_set(tp, "1d10");
   tp_name_a_or_an_set(tp, "a spiderweb");
   tp_name_apostrophize_set(tp, "spiderwebs'");
   tp_name_long_set(tp, "spiderweb");
   tp_name_pluralize_set(tp, "spiderwebs");
-  tp_health_set(tp, "1d10");
   tp_name_short_set(tp, "spiderweb");
   tp_priority_set(tp, THING_PRIORITY_OBJECT);
   tp_temperature_burns_at_set(tp, 30);  // celsius
