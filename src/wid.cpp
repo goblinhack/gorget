@@ -497,7 +497,7 @@ void wid_set_thing_context(Gamep g, Levelsp v, Widp w, Thingp t)
     return;
   }
 
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     ERR("no levels pointer");
     return;
   }
@@ -537,7 +537,7 @@ void wid_unset_thing_context(Gamep g, Levelsp v, Widp w, Thingp t)
     return;
   }
 
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     ERR("no levels pointer");
     return;
   }
@@ -570,7 +570,7 @@ void wid_unset_thing_context(Gamep g, Levelsp v, Widp w, Thingp t)
     return nullptr;
   }
 
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     ERR("no levels pointer");
     return nullptr;
   }

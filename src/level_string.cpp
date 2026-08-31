@@ -115,17 +115,17 @@
       if (level_is_spiderweb_bool(g, v, l, p)) {
         c = CHARMAP_SPIDERWEB;
       }
-      if (level_is_mob1(g, v, l, p) != nullptr) {
+      if (level_is_mob1_bool(g, v, l, p)) {
         c = CHARMAP_MOB1;
       }
-      if (level_is_mob2(g, v, l, p) != nullptr) {
+      if (level_is_mob2_bool(g, v, l, p)) {
         c = CHARMAP_MOB2;
       }
-      if (level_is_monst1(g, v, l, p) != nullptr) {
+      if (level_is_monst1_bool(g, v, l, p)) {
         c = CHARMAP_MONST1;
-      } else if (level_is_monst2(g, v, l, p) != nullptr) {
+      } else if (level_is_monst2_bool(g, v, l, p)) {
         c = CHARMAP_MONST2;
-      } else if (level_is_monst(g, v, l, p) != nullptr) {
+      } else if (level_is_monst_bool(g, v, l, p)) {
         c = CHARMAP_MONST1;
       }
       if (level_is_minion_bool(g, v, l, p)) {

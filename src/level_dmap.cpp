@@ -30,7 +30,7 @@ void levels_dmap(Gamep g, Levelsp v)
     CROAK("no game pointer");
   }
 
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     CROAK("no levels pointer");
   }
 

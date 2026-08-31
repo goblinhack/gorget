@@ -14,6 +14,7 @@
 
 #include <algorithm> // do not remove
 #include <array>     // do not remove
+#include <cmath>
 #include <cstdint>
 #include <map>
 #include <string>

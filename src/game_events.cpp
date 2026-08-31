@@ -46,7 +46,7 @@
   // Follow the mouse path?
   //
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     DBG("game mouse down, ignore, no levels");
     return true;
   }
@@ -119,7 +119,7 @@
   }
 
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     return false;
   }
 
@@ -193,7 +193,7 @@
   TRACE();
 
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     return false;
   }
 
@@ -251,7 +251,7 @@
   TRACE_INDENT();
 
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     return false;
   }
 
@@ -298,7 +298,7 @@
   TRACE_INDENT();
 
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     return false;
   }
 
@@ -329,7 +329,7 @@
   TRACE_INDENT();
 
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     return false;
   }
 
@@ -371,7 +371,7 @@
   TRACE_INDENT();
 
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     return false;
   }
 
@@ -413,7 +413,7 @@ static auto game_event_jump(Gamep g) -> bool
   TRACE_INDENT();
 
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     return false;
   }
 
@@ -519,7 +519,7 @@ static auto game_event_throw(Gamep g) -> bool
   TRACE_INDENT();
 
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     return false;
   }
 
@@ -578,7 +578,7 @@ static auto game_event_abort(Gamep g) -> bool
   TRACE_INDENT();
 
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     return false;
   }
 
@@ -709,7 +709,7 @@ static auto game_event_abort(Gamep g) -> bool
   }
 
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     DBG("pressed a key; no levels");
     return false;
   }

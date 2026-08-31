@@ -41,7 +41,7 @@ void wid_dead_fini(Gamep g)
 static void wid_dead_close(Gamep g)
 {
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     return;
   }
 

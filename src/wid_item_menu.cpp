@@ -47,7 +47,7 @@ static Thingp g_item;
   TRACE();
 
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     return false;
   }
 
@@ -88,7 +88,7 @@ static Thingp g_item;
   TRACE();
 
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     return false;
   }
 
@@ -115,7 +115,7 @@ static Thingp g_item;
   TRACE();
 
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     return false;
   }
 
@@ -163,7 +163,7 @@ static Thingp g_item;
   TRACE();
 
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     return false;
   }
 
@@ -214,7 +214,7 @@ static Thingp g_item;
   TRACE();
 
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     return false;
   }
 
@@ -266,7 +266,7 @@ static Thingp g_item;
   TRACE();
 
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     return false;
   }
 
@@ -323,7 +323,7 @@ static Thingp g_item;
   TRACE();
 
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     return false;
   }
 
@@ -380,7 +380,7 @@ static Thingp g_item;
   TRACE();
 
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     return false;
   }
 

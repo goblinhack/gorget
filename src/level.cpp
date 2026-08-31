@@ -87,7 +87,7 @@ void level_init(Gamep g, Levelsp v, Levelp l, LevelNum n)
   // DO NOT USE C++ classes or types
   //
   v = static_cast< Levelsp >(MYZALLOC(SIZEOF(*v), "v"));
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     return nullptr;
   }
   NEWPTR(MTYPE_LEVELS, v, "levels");
@@ -138,7 +138,7 @@ void levels_finalize(Gamep g, Levelsp v)
     CROAK("no game pointer");
   }
 
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     CROAK("no levels pointer");
   }
 

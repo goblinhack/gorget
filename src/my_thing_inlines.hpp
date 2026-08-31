@@ -41,7 +41,7 @@
     return nullptr;
   }
   //
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     ERR("no levels pointer");
     return nullptr;
   }

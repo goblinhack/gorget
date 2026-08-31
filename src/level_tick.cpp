@@ -861,7 +861,7 @@ void level_tick_reset_frame_counter(Gamep g)
 {
   auto *v = game_levels_get(g);
 
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     return;
   }
 

@@ -366,7 +366,7 @@ static auto thing_monst_choose_something_we_can_wander_to(Gamep g, Levelsp v, Le
 //
 // Return true on a successful move (or a popup asking more info)
 //
-[[nodiscard]] auto thing_monst_move_try(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint target, bpoint to) -> bool
+[[nodiscard]] static auto thing_monst_move_try(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint target, bpoint to) -> bool
 {
   THING_DBG(g, v, l, me, "move try");
   TRACE_INDENT();

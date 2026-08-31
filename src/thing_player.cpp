@@ -34,7 +34,7 @@ void thing_player_init(Gamep g)
   TRACE();
 
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     ERR("no levels");
     return;
   }
@@ -56,7 +56,7 @@ void thing_player_init(Gamep g)
   TRACE();
 
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     return nullptr;
   }
 
@@ -77,7 +77,7 @@ void thing_player_init(Gamep g)
   }
 
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     return nullptr;
   }
 
@@ -456,7 +456,7 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
   }
 
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     return;
   }
 
@@ -1005,7 +1005,7 @@ void player_move_accum(Gamep g, Levelsp v, Levelp l, bool up, bool down, bool le
 [[nodiscard]] auto player_move_request(Gamep g, bool up, bool down, bool left, bool right, bool fire) -> bool
 {
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     return false;
   }
 

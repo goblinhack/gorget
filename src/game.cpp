@@ -858,7 +858,7 @@ void Game::create_levels()
   // We shuld have levels memory now
   //
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     ERR("no level memory created");
     return;
   }
@@ -933,7 +933,7 @@ void Game::start_playing()
   }
 
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     return;
   }
 
@@ -954,7 +954,7 @@ void Game::destroy_levels()
 {
   auto *g = this;
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     return;
   }
 
@@ -1362,7 +1362,7 @@ void game_tick(Gamep g)
   auto max_time = 60;
 #endif
 
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     ERR("no levels pointer");
     return false;
   }
@@ -1385,7 +1385,7 @@ void game_tick(Gamep g)
     TRACE();
     game_tick(g);
 
-    if (v == nullptr) {
+    if (v == nullptr) [[unlikely]] {
       return true;
     }
 
@@ -1407,7 +1407,7 @@ void Game::display()
   auto *g = this;
 
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     return;
   }
 
@@ -2971,7 +2971,7 @@ static void game_map_zoom_update(Gamep g)
   TRACE_INDENT();
 
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     return;
   }
 

@@ -5238,7 +5238,7 @@ static void level_gen_extend_bridges(Gamep g, class LevelGen *lg)
   TRACE();
 
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     ERR("no levels created");
     return false;
   }
@@ -5582,7 +5582,7 @@ static void level_gen_create_fixed_or_proc_gen_level(Gamep g, LevelNum level_num
 
   do {
     auto *v = game_levels_get(g);
-    if (v == nullptr) {
+    if (v == nullptr) [[unlikely]] {
       if (! g_level_opt.level_name.empty()) {
         ERR("no levels generate for level %s", g_level_opt.level_name.c_str());
       } else {

@@ -478,7 +478,7 @@ void level_cursor_path_reset(Gamep g, Levelsp v, Levelp l)
 void level_cursor_path_reset(Gamep g)
 {
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     return;
   }
 

@@ -31,7 +31,7 @@ void level_cursor_describe_update(Gamep g, Levelsp v)
     return;
   }
 
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     ERR("no levels pointer");
     return;
   }
@@ -57,7 +57,7 @@ void level_cursor_describe_update(Gamep g, Levelsp v)
     return false;
   }
 
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     ERR("no levels pointer");
     return false;
   }
@@ -98,7 +98,7 @@ void level_cursor_describe_update(Gamep g, Levelsp v)
     return false;
   }
 
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     ERR("no levels pointer");
     return false;
   }
@@ -131,7 +131,7 @@ void level_cursor_describe_clear(Gamep g, Levelsp v)
     return;
   }
 
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     ERR("no levels pointer");
     return;
   }
@@ -155,7 +155,7 @@ void level_cursor_describe(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     ERR("no levels pointer");
     return;
   }

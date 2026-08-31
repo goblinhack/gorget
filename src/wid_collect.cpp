@@ -66,7 +66,7 @@ static void wid_collect_mouse_over_begin(Gamep g, Widp w, int /*relx*/, int /*re
   }
 
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     return;
   }
 
@@ -86,7 +86,7 @@ static void wid_collect_mouse_over_end(Gamep g, Widp w)
   TRACE();
 
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     return;
   }
 
@@ -105,7 +105,7 @@ static void wid_collect_mouse_over_end(Gamep g, Widp w)
   TRACE();
 
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     return false;
   }
 
@@ -151,7 +151,7 @@ static void wid_collect_mouse_over_end(Gamep g, Widp w)
   TRACE();
 
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     return false;
   }
 

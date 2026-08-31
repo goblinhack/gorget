@@ -264,7 +264,7 @@ static void wid_actionbar_inventory_over_end(Gamep g, Widp w)
   wid_last_key_repeat = time_ms_cached();
 
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     return false;
   }
 
@@ -294,7 +294,7 @@ static void wid_actionbar_inventory_over_end(Gamep g, Widp w)
   wid_last_key_repeat = time_ms_cached();
 
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     return false;
   }
 
@@ -595,7 +595,7 @@ static auto wid_actionbar_create_window(Gamep g) -> bool
   TRACE();
 
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     return false;
   }
 

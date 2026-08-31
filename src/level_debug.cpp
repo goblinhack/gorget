@@ -18,7 +18,7 @@ void game_debug_info(Gamep g)
   TRACE();
 
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     return;
   }
 

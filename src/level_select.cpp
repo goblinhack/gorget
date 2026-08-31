@@ -122,7 +122,7 @@ static auto level_select_get_level_from_grid_coords(Levelsp v, bpoint p) -> Leve
 {
   TRACE();
 
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     return nullptr;
   }
 
@@ -320,7 +320,7 @@ got_level:
   TRACE();
 
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     return nullptr;
   }
 
@@ -921,7 +921,7 @@ auto level_select_mouse_down(Gamep g) -> bool
   TRACE();
 
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     (void) sound_play(g, "error");
     return false;
   }

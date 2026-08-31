@@ -58,7 +58,7 @@ void wid_inventory_mouse_over_begin(Gamep g, Widp w, int /*relx*/, int /*rely*/,
   }
 
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     return;
   }
 
@@ -78,7 +78,7 @@ void wid_inventory_mouse_over_end(Gamep g, Widp w)
   TRACE();
 
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     return;
   }
 
@@ -97,7 +97,7 @@ void wid_inventory_mouse_over_end(Gamep g, Widp w)
   TRACE();
 
   auto *v = game_levels_get(g);
-  if (v == nullptr) {
+  if (v == nullptr) [[unlikely]] {
     return false;
   }
 
