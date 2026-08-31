@@ -692,6 +692,29 @@ static auto thing_monst_choose_something_we_can_wander_to(Gamep g, Levelsp v, Le
   return false;
 }
 
+[[nodiscard]] static auto thing_monst_attack(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
+{
+  THING_DBG(g, v, l, me, "choose target");
+  TRACE_INDENT();
+
+  auto target = thing_monst_target(me);
+  auto at     = thing_at(g, v, l, me);
+
+  if (adjacent(at, target)) {
+    if (thing_is_flesh_eater(me)) {
+      if (level_alive_is_flesh(g, v, l, target) != nullptr) {
+        THING_DBG(g, v, l, me, "monst: try attack on flesh");
+        if (thing_attack_at(g, v, l, me, target)) {
+          THING_DBG(g, v, l, me, "monst: attack");
+          return true;
+        }
+      }
+    }
+  }
+
+  return false;
+}
+
 //
 // Called multiple times per tick potentially. If the monster has enough
 // move_remaining then it can move or attack again.
@@ -728,6 +751,10 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me)
             (void) thing_move_remaining_set(g, v, l, me, 0);
           }
         }
+
+        if (thing_monst_attack(g, v, l, me)) {
+          return;
+        }
       }
     }
     return;
@@ -748,19 +775,9 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me)
       monst_state_change(g, v, l, me, MONST_STATE_NORMAL);
       [[fallthrough]];
     case MONST_STATE_NORMAL : //
-      if (0)
-        if (adjacent(at, target)) {
-          THING_DBG(g, v, l, me, "monst: adjacent to target");
-          TRACE_INDENT();
-
-          if (level_is_attackable_by_monst(g, v, l, target) != nullptr) {
-            if (thing_attack_at(g, v, l, me, target)) {
-              THING_DBG(g, v, l, me, "monst: attack");
-              (void) thing_move_remaining_set(g, v, l, me, 0);
-              return;
-            }
-          }
-        }
+      if (thing_monst_attack(g, v, l, me)) {
+        return;
+      }
 
       (void) thing_monst_choose_target(g, v, l, me);
       break;

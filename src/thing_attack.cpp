@@ -212,6 +212,7 @@ static auto thing_attack_melee(Gamep g, Levelsp v, Levelp l, Thingp attacker, Th
       //
       // Adjacent tile attack
       //
+      THING_DBG(g, v, l, attacker, "not adjacent");
       return false;
     }
   }
@@ -226,6 +227,9 @@ static auto thing_attack_melee(Gamep g, Levelsp v, Levelp l, Thingp attacker, Th
 
     if (thing_is_monst(attacker) || ((e != nullptr) && (e->source != nullptr) && thing_is_monst(e->source))) {
       if (thing_is_attackable_by_monst(o)) {
+        cands.push_back(o);
+      } else if (thing_is_flesh_eater(attacker) && thing_is_flesh(o)) {
+        THING_DBG(g, v, l, o, "add flesh candidate");
         cands.push_back(o);
       }
     } else if (thing_is_player(attacker) || ((e != nullptr) && (e->source != nullptr) && thing_is_player(e->source))) {
@@ -246,14 +250,13 @@ static auto thing_attack_melee(Gamep g, Levelsp v, Levelp l, Thingp attacker, Th
   //
   std::ranges::sort(cands, [](Thingp a, Thingp b) -> bool { return thing_priority(a) < thing_priority(b); });
 
-  if (compiler_unused) {
+  if (1 || compiler_unused) {
     for (auto *cand : cands) {
       THING_DBG(g, v, l, cand, "prio %u", thing_priority(cand));
     }
   }
 
   for (auto *cand : cands) {
-
     if (thing_is_dead(cand)) {
       if (! thing_is_hit_when_dead(cand)) {
         continue;

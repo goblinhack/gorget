@@ -184,6 +184,7 @@ static bool tp_spider_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker, 
   tp_flag_set(tp, is_shown_health);
   tp_flag_set(tp, is_spider);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
+  tp_flag_set(tp, is_flesh_eater);
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_able_to_choose_targets);
   tp_flag_set(tp, is_vision_360_degrees);
@@ -195,6 +196,7 @@ static bool tp_spider_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker, 
   tp_name_long_set(tp, "giant spider");
   tp_name_pluralize_set(tp, "giant spiders");
   tp_name_short_set(tp, "spider");
+  tp_attack_count_max_per_tick_set(tp, 2);
   tp_priority_set(tp, THING_PRIORITY_MONST);
   tp_score_value_set(tp, 5);
   tp_speed_set(tp, 50);
