@@ -298,8 +298,7 @@ static auto thing_monst_choose_something_we_can_wander_to(Gamep g, Levelsp v, Le
     target.x = static_cast< int >(at.x) - radius + PCG_RANDOM_RANGE(0, diameter);
     target.y = static_cast< int >(at.y) - radius + PCG_RANDOM_RANGE(0, diameter);
 
-    THING_DBG(g, v, l, me, "choose target: try: (%d,%d)", target.x, target.y);
-    TRACE_INDENT();
+    IF_DEBUG2 { THING_DBG(g, v, l, me, "choose target: try: (%d,%d)", target.x, target.y); }
 
     if (is_oob_or_border(target)) {
       continue;

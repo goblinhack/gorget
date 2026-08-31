@@ -256,7 +256,7 @@ static auto thing_attack_melee(Gamep g, Levelsp v, Levelp l, Thingp attacker, Th
   //
   std::ranges::sort(cands, [](Thingp a, Thingp b) -> bool { return thing_priority(a) < thing_priority(b); });
 
-  if (1 || compiler_unused) {
+  if (compiler_unused) {
     for (auto *cand : cands) {
       THING_DBG(g, v, l, cand, "prio %u", thing_priority(cand));
     }

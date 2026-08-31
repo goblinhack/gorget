@@ -107,7 +107,7 @@ static void thing_collision_sort_cands(Gamep g, Levelsp v, Levelp l, Thingp me, 
   fpoint const tl(B_at.x, B_at.y);
   fpoint const br(B_at.x + 1, B_at.y + 1);
 
-  if (1 || compiler_unused) {
+  if (compiler_unused) {
     THING_DBG(g, v, l, C, "circle %f,%f", C_at.x, C_at.y);
     THING_DBG(g, v, l, B, "box %f,%f -> %f,%f", tl.x, tl.y, br.x, br.y);
   }
@@ -121,7 +121,7 @@ static void thing_collision_sort_cands(Gamep g, Levelsp v, Levelp l, Thingp me, 
   // Circle inside box
   //
   if ((C_at.x >= B0.x) && (C_at.y >= B0.y) && (C_at.x <= B2.x) && (C_at.y <= B2.y)) {
-    if (1 || compiler_unused) {
+    if (compiler_unused) {
       THING_DBG(g, v, l, B, "collision line %d", __LINE__);
     }
     return true;
@@ -131,28 +131,28 @@ static void thing_collision_sort_cands(Gamep g, Levelsp v, Levelp l, Thingp me, 
   // Corner collisions.
   //
   if (distance(C_at, B0) < radius) {
-    if (1 || compiler_unused) {
+    if (compiler_unused) {
       THING_DBG(g, v, l, B, "collision line %d", __LINE__);
     }
     return true;
   }
 
   if (distance(C_at, B1) < radius) {
-    if (1 || compiler_unused) {
+    if (compiler_unused) {
       THING_DBG(g, v, l, B, "collision line %d", __LINE__);
     }
     return true;
   }
 
   if (distance(C_at, B2) < radius) {
-    if (1 || compiler_unused) {
+    if (compiler_unused) {
       THING_DBG(g, v, l, B, "collision line %d", __LINE__);
     }
     return true;
   }
 
   if (distance(C_at, B3) < radius) {
-    if (1 || compiler_unused) {
+    if (compiler_unused) {
       THING_DBG(g, v, l, B, "collision line %d", __LINE__);
     }
     return true;
@@ -163,7 +163,7 @@ static void thing_collision_sort_cands(Gamep g, Levelsp v, Levelp l, Thingp me, 
 
   if (distance_to_line(C_at, B0, B1, &dist, intersect_out) != 0) {
     if (dist < radius) {
-      if (1 || compiler_unused) {
+      if (compiler_unused) {
         THING_DBG(g, v, l, B, "collision line %d", __LINE__);
       }
       return true;
@@ -172,7 +172,7 @@ static void thing_collision_sort_cands(Gamep g, Levelsp v, Levelp l, Thingp me, 
 
   if (distance_to_line(C_at, B1, B2, &dist, intersect_out) != 0) {
     if (dist < radius) {
-      if (1 || compiler_unused) {
+      if (compiler_unused) {
         THING_DBG(g, v, l, B, "collision line %d", __LINE__);
       }
       return true;
@@ -181,7 +181,7 @@ static void thing_collision_sort_cands(Gamep g, Levelsp v, Levelp l, Thingp me, 
 
   if (distance_to_line(C_at, B2, B3, &dist, intersect_out) != 0) {
     if (dist < radius) {
-      if (1 || compiler_unused) {
+      if (compiler_unused) {
         THING_DBG(g, v, l, B, "collision line %d", __LINE__);
       }
       return true;
@@ -190,14 +190,14 @@ static void thing_collision_sort_cands(Gamep g, Levelsp v, Levelp l, Thingp me, 
 
   if (distance_to_line(C_at, B3, B0, &dist, intersect_out) != 0) {
     if (dist < radius) {
-      if (1 || compiler_unused) {
+      if (compiler_unused) {
         THING_DBG(g, v, l, B, "collision line %d", __LINE__);
       }
       return true;
     }
   }
 
-  if (1 || compiler_unused) {
+  if (compiler_unused) {
     THING_DBG(g, v, l, B, "no collision line %d", __LINE__);
   }
 
@@ -409,8 +409,9 @@ static void thing_collision_handle_common(Gamep g, Levelsp v, Levelp l, Thingp o
 //
 static void thing_collision_handle_dead_thing(Gamep g, Levelsp v, Levelp l, Thingp obstacle, Thingp me, bool &stop)
 {
-  THING_DBG(g, v, l, obstacle, "%s", __FUNCTION__);
-  TRACE_INDENT();
+  if (compiler_unused) {
+    THING_DBG(g, v, l, obstacle, "%s", __FUNCTION__);
+  }
 
   thing_collision_handle_common(g, v, l, obstacle, me, stop);
 
@@ -463,9 +464,10 @@ static void thing_collision_handle_dead_thing(Gamep g, Levelsp v, Levelp l, Thin
 //
 static void thing_collision_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thingp obstacle, Thingp me, bool &stop)
 {
-  THING_DBG(g, v, l, me, "me: %s", __FUNCTION__);
-  THING_DBG(g, v, l, obstacle, "obstacle: %s", __FUNCTION__);
-  TRACE_INDENT();
+  if (compiler_unused) {
+    THING_DBG(g, v, l, me, "me: %s", __FUNCTION__);
+    THING_DBG(g, v, l, obstacle, "obstacle: %s", __FUNCTION__);
+  }
 
   thing_collision_handle_common(g, v, l, obstacle, me, stop);
   if (stop) {
@@ -575,8 +577,9 @@ static void thing_collision_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thi
 //
 static void thing_collision_handle_do(Gamep g, Levelsp v, Levelp l, Thingp obstacle, Thingp me, bool &stop)
 {
-  THING_DBG(g, v, l, obstacle, "%s", __FUNCTION__);
-  TRACE_INDENT();
+  if (compiler_unused) {
+    THING_DBG(g, v, l, obstacle, "%s", __FUNCTION__);
+  }
 
   if (obstacle == me) {
     return;
@@ -652,8 +655,9 @@ void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
   //
   auto at = thing_at(g, v, l, me);
 
-  THING_DBG(g, v, l, me, "%s at (%d,%d)", __FUNCTION__, at.x, at.y);
-  TRACE_INDENT();
+  if (compiler_unused) {
+    THING_DBG(g, v, l, me, "%s at (%d,%d)", __FUNCTION__, at.x, at.y);
+  }
 
   //
   // Weapons handled seperately.
@@ -690,8 +694,9 @@ void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
     auto *obstacle = cand.second;
     bool  stop     = {};
 
-    THING_DBG(g, v, l, obstacle, "cand");
-    TRACE_INDENT();
+    if (compiler_unused) {
+      THING_DBG(g, v, l, obstacle, "cand");
+    }
 
     thing_collision_handle_do(g, v, l, obstacle, me, stop);
     if (stop) {

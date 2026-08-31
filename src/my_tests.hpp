@@ -69,6 +69,7 @@ auto test_load_monst_jump_over_chasm() -> bool;
 auto test_load_monst_jump_over_lava() -> bool;
 auto test_load_monst_jump_pounce_over_water() -> bool;
 auto test_load_monst_jumper() -> bool;
+auto test_load_monst_massacre() -> bool;
 auto test_load_monst_maze() -> bool;
 auto test_load_monst_mob_leash() -> bool;
 auto test_load_monst_mobbing() -> bool;

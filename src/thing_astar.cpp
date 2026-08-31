@@ -33,13 +33,20 @@ class Nodecost
 {
 public:
   Nodecost() = default;
-  explicit Nodecost(Cost c) : cost(c), tiebreak(++g_tiebreak) { log("new node %f:%u", c, tiebreak); }
+  explicit Nodecost(Cost c) : cost(c), tiebreak(++g_tiebreak)
+  {
+    if (compiler_unused) {
+      log("new node %f:%u", c, tiebreak);
+    }
+  }
 
   auto operator<(const Nodecost &rhs) const -> bool
   {
-    log("compare:");
-    log(" a node %f:%u", cost, tiebreak);
-    log(" b node %f:%u", rhs.cost, rhs.tiebreak);
+    if (compiler_unused) {
+      log("compare:");
+      log(" a node %f:%u", cost, tiebreak);
+      log(" b node %f:%u", rhs.cost, rhs.tiebreak);
+    }
     if (cost < rhs.cost) {
       return true;
     }

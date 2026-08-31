@@ -132,6 +132,7 @@ tidy:
 	$(SCRIPT_DIR)/splat "if (player == nullptr) [[unlikely]] {" "if (player == nullptr) [[unlikely]] {" "*" do
 	$(SCRIPT_DIR)/splat "if (tp == nullptr) [[unlikely]] {" "if (tp == nullptr) [[unlikely]] {" "*" do
 	$(SCRIPT_DIR)/splat "if (0)" "if (compiler_unused)" "*cpp" do
+	$(SCRIPT_DIR)/splat "1 \|\| compiler_unused" "compiler_unused" "*" do
 	$(SCRIPT_DIR)/splat-del "include.*OpenGL" "*cpp" do
 	$(SCRIPT_DIR)/splat "<_" "<" "*cpp" do
 	$(SCRIPT_DIR)/splat "Gamep *\/\*g\*\/" "Gamep g" "*" do

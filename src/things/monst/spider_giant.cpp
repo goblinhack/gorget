@@ -148,7 +148,7 @@ static bool tp_spider_giant_on_missing(Gamep g, Levelsp v, Levelp l, Thingp atta
 
 [[nodiscard]] auto tp_load_spider() -> bool
 {
-  auto *tp   = tp_load("spider"); // keep as string for scripts
+  auto *tp   = tp_load("spider_giant"); // keep as string for scripts
   auto  name = tp_name(tp);
 
   // begin sort marker1 {
