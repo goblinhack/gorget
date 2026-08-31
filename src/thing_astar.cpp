@@ -32,10 +32,13 @@ class Nodecost
 {
 public:
   Nodecost() = default;
-  explicit Nodecost(Cost c) : cost(c), tiebreak(g_tiebreak++) {}
+  explicit Nodecost(Cost c) : cost(c), tiebreak(++g_tiebreak) { log("new node %f:%u", c, tiebreak); }
 
   auto operator<(const Nodecost &rhs) const -> bool
   {
+    log("compare:");
+    log(" a node %f:%u", cost, tiebreak);
+    log(" b node %f:%u", rhs.cost, rhs.tiebreak);
     if (cost < rhs.cost) {
       return true;
     }
@@ -141,6 +144,10 @@ void Astar::add_to_open(Node *n)
   }
   *o = n;
 
+  if (compiler_unused) {
+    thing_log(g, v, l, me, "add to open (cost %f:%u at %d,%d)", n->cost.cost, n->cost.tiebreak, p.x, p.y);
+  }
+
   auto result = open_nodes.insert(std::make_pair(n->cost, n));
   if (! result.second) {
     thing_err(g, v, l, me, "open insert fail");
@@ -158,9 +165,13 @@ void Astar::add_to_closed(Node *n)
   }
   *o = n;
 
+  if (compiler_unused) {
+    thing_log(g, v, l, me, "add to closed (cost %f:%u at %d,%d)", n->cost.cost, n->cost.tiebreak, p.x, p.y);
+  }
+
   auto result = closed_nodes.insert(std::make_pair(n->cost, n));
   if (! result.second) {
-    thing_err(g, v, l, me, "closed insert fail");
+    thing_err(g, v, l, me, "closed insert fail (cost %f:%u at %d,%d)", n->cost.cost, n->cost.tiebreak, p.x, p.y);
     return;
   }
 }
@@ -174,6 +185,10 @@ void Astar::remove_from_open(Node *n)
     return;
   }
   *o = nullptr;
+
+  if (compiler_unused) {
+    thing_log(g, v, l, me, "remove from open (cost %f:%u at %d,%d)", n->cost.cost, n->cost.tiebreak, p.x, p.y);
+  }
 
   open_nodes.erase(n->cost);
 }
@@ -320,6 +335,8 @@ void Astar::init()
 
 [[nodiscard]] auto Astar::solve(bool allow_diagonal) -> std::vector< bpoint >
 {
+  init();
+
   static const std::vector< bpoint > empty;
 
   auto  ncost    = Nodecost(heuristic(src));
@@ -327,11 +344,25 @@ void Astar::init()
 
   add_to_open(neighbor);
 
-  init();
-
   while (! open_nodes.empty()) {
     auto  c       = open_nodes.begin();
     Node *current = c->second;
+
+    if (compiler_unused) {
+      log("open nodes:");
+      for (auto n : open_nodes) {
+        auto p = n.first;
+        log(" %f:%u", p.cost, p.tiebreak);
+      }
+    }
+
+    if (compiler_unused) {
+      log("closed nodes:");
+      for (auto n : closed_nodes) {
+        auto p = n.first;
+        log(" %f:%u", p.cost, p.tiebreak);
+      }
+    }
 
     //
     // Reached the target?

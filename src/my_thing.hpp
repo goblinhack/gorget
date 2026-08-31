@@ -787,6 +787,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_able_to_be_buffed(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_be_engulfed(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_be_ensnared(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
+[[nodiscard]] auto thing_is_able_to_choose_targets(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_collect_items(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_collect_keys(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_crush_grass(Thingp t) -> bool;
@@ -908,6 +909,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_falling_incr(Gamep g, Levelsp v, Levelp l, Thingp me, int val = 1) -> int;
 [[nodiscard]] auto thing_is_flammable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_flat(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_flesh_eater(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_flesh(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_game_over(Thingp player) -> bool;
 [[nodiscard]] auto thing_is_gaseous(Thingp t) -> bool;
@@ -997,6 +999,8 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_slime(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_smoke(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_soft_landing(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_spider_baby(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_spider_giant(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_spider(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_spiderweb(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_staff(Thingp t) -> bool;
@@ -1107,11 +1111,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused174(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused175(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused176(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused177(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused178(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_able_to_choose_targets(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused18(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_flesh_eater(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused188(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused19(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused2(Thingp t) -> bool;

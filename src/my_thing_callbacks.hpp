@@ -123,6 +123,10 @@ using thing_on_attacking_t = bool (*)(Gamep, Levelsp, Levelp, Thingp attacker, T
 auto               thing_on_attacking_set(Tpp tp, thing_on_attacking_t callback) -> void;
 [[nodiscard]] auto thing_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp target, ThingEvent &e) -> bool;
 
+using thing_on_killing_t = bool (*)(Gamep, Levelsp, Levelp, Thingp attacker, Thingp target, ThingEvent &);
+auto               thing_on_killing_set(Tpp tp, thing_on_killing_t callback) -> void;
+[[nodiscard]] auto thing_on_killing(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp target, ThingEvent &e) -> bool;
+
 using thing_on_missing_t = bool (*)(Gamep, Levelsp, Levelp, Thingp attacker, Thingp target, ThingEvent &);
 auto               thing_on_missing_set(Tpp tp, thing_on_missing_t callback) -> void;
 [[nodiscard]] auto thing_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp target, ThingEvent &e) -> bool;

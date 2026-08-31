@@ -236,11 +236,11 @@ void levels_test(Gamep g)
 
     level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "avoid-water", __FUNCTION__, __LINE__, overrides, 0,
                     /* line */ (const char *) "XXXXXXXXXXXXXXX",
-                    /* line */ (const char *) "X..~~.x...k..kX",
-                    /* line */ (const char *) "X..==.x.k..k..X",
-                    /* line */ (const char *) "X..~~.xk.k..k.X",
-                    /* line */ (const char *) "X..~~.xk..k...X",
-                    /* line */ (const char *) "X@.~~.x..k...mX",
+                    /* line */ (const char *) "X..~~.xkk.k.kkX",
+                    /* line */ (const char *) "X..==.x.k..kk.X",
+                    /* line */ (const char *) "X..~~.xk.k.kk.X",
+                    /* line */ (const char *) "X..~~.xkk.k.k.X",
+                    /* line */ (const char *) "X@.~~.xk.k.kkmX",
                     /* line */ (const char *) "XXXXXXXXXXXXXXX",
                     /* end */ nullptr);
   }

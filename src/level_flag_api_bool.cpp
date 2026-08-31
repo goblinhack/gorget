@@ -1965,16 +1965,16 @@
   return level_flag(g, v, l, is_unused176, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_unused177_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_spider_giant_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused177, p, me) != nullptr;
+  return level_flag(g, v, l, is_spider_giant, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_unused178_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_spider_baby_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused178, p, me) != nullptr;
+  return level_flag(g, v, l, is_spider_baby, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_able_to_choose_targets_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool

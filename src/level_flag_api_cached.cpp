@@ -1965,16 +1965,16 @@
   return level_flag_cached(g, v, l, is_unused176, p);
 }
 
-[[nodiscard]] auto level_is_unused177_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_spider_giant_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused177, p);
+  return level_flag_cached(g, v, l, is_spider_giant, p);
 }
 
-[[nodiscard]] auto level_is_unused178_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_spider_baby_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused178, p);
+  return level_flag_cached(g, v, l, is_spider_baby, p);
 }
 
 [[nodiscard]] auto level_is_able_to_choose_targets_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

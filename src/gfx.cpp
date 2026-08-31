@@ -5071,9 +5071,9 @@ static void gfx_init_tiles()
       "",
       "",
       "",
-      "",
-      "",
-      "",
+      "spider_baby.idle.0",
+      "spider_baby.idle.1",
+      "spider_baby.idle.2",
       // ##############################################################################
       "argusul.idle.0",
       "argusul.idle.1",

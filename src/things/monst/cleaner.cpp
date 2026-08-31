@@ -161,8 +161,8 @@ static void tp_cleaner_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEv
   tp_flag_set(tp, is_able_to_be_buffed);
   tp_flag_set(tp, is_able_to_be_ensnared);
   tp_flag_set(tp, is_able_to_be_levitated);
-  tp_flag_set(tp, is_able_to_choose_targets);
   tp_flag_set(tp, is_able_to_be_teleported);
+  tp_flag_set(tp, is_able_to_choose_targets);
   tp_flag_set(tp, is_able_to_collect_items);
   tp_flag_set(tp, is_able_to_collect_keys);
   tp_flag_set(tp, is_able_to_crush_grass);

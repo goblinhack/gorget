@@ -185,6 +185,12 @@ static auto thing_attack_melee(Gamep g, Levelsp v, Levelp l, Thingp attacker, Th
 
   thing_damage_apply(g, v, l, it, e);
 
+  if (thing_is_dead(it)) {
+    if (! thing_on_killing(g, v, l, attacker, it, e)) {
+      return false;
+    }
+  }
+
   return true;
 }
 

@@ -25,7 +25,7 @@ static void tp_spiderweb_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
   TRACE();
 
   if (! g_opt_tests) {
-    (void) thing_spawn(g, v, l, tp_random(g, v, l, is_spider), thing_at(g, v, l, me));
+    (void) thing_spawn(g, v, l, tp_random(g, v, l, is_spider_giant), thing_at(g, v, l, me));
   }
 }
 
@@ -41,7 +41,6 @@ static void tp_spiderweb_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // fumble => flames spread to you
   tp_flag_set(tp, is_able_to_be_teleported);
   tp_flag_set(tp, is_able_to_ensnare);
-  tp_flag_set(tp, is_flesh_eater);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_attackable_by_player);
   tp_flag_set(tp, is_biome_bogland);
@@ -54,6 +53,7 @@ static void tp_spiderweb_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_flag_set(tp, is_combustible); // will continue to burn once on fire
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_flammable);
+  tp_flag_set(tp, is_flesh_eater);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);

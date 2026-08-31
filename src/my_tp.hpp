@@ -309,11 +309,11 @@
       list_macro(is_unused174, "is_unused174"),                                             /* newline */                                       \
       list_macro(is_unused175, "is_unused175"),                                             /* newline */                                       \
       list_macro(is_unused176, "is_unused176"),                                             /* newline */                                       \
-      list_macro(is_unused177, "is_unused177"),                                             /* newline */                                       \
-      list_macro(is_unused178, "is_unused178"),                                             /* newline */                                       \
-      list_macro(is_able_to_choose_targets, "is_able_to_choose_targets"),                                             /* newline */                                       \
+      list_macro(is_spider_giant, "is_spider_giant"),                                       /* newline */                                       \
+      list_macro(is_spider_baby, "is_spider_baby"),                                         /* newline */                                       \
+      list_macro(is_able_to_choose_targets, "is_able_to_choose_targets"),                   /* newline */                                       \
       list_macro(is_unused18, "is_unused18"),                                               /* newline */                                       \
-      list_macro(is_flesh_eater, "is_flesh_eater"),                                             /* newline */                                       \
+      list_macro(is_flesh_eater, "is_flesh_eater"),                                         /* newline */                                       \
       list_macro(is_able_to_move, "is_able_to_move"),                                       /* newline */                                       \
       list_macro(is_spider, "is_spider"),                                                   /* newline */                                       \
       list_macro(is_able_to_be_ensnared, "is_able_to_be_ensnared"),                         /* newline */                                       \
@@ -817,6 +817,7 @@ class Tp;
 [[nodiscard]] auto tp_is_able_to_be_ensnared(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_be_levitated(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_be_teleported(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_able_to_choose_targets(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_collect_items(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_collect_keys(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_crush_grass(Tpp tp) -> bool;
@@ -922,6 +923,7 @@ class Tp;
 [[nodiscard]] auto tp_is_fire(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_flammable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_flat(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_flesh_eater(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_flesh(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_floor(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_foliage(Tpp tp) -> bool;
@@ -1010,6 +1012,8 @@ class Tp;
 [[nodiscard]] auto tp_is_slime(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_smoke(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_soft_landing(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_spider_baby(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_spider_giant(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_spider(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_spiderweb(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_staff(Tpp tp) -> bool;
@@ -1117,11 +1121,7 @@ class Tp;
 [[nodiscard]] auto tp_is_unused174(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused175(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused176(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused177(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused178(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_able_to_choose_targets(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused18(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_flesh_eater(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused188(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused19(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused2(Tpp tp) -> bool;

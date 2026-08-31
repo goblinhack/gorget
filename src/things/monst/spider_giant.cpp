@@ -3,6 +3,7 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_dice_rolls.hpp"
 #include "my_thing.hpp"
 #include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp"
@@ -12,7 +13,7 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
-static auto tp_spider_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
+static auto tp_spider_giant_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
@@ -22,7 +23,7 @@ static auto tp_spider_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -
   return "spider";
 }
 
-static auto tp_spider_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
+static auto tp_spider_giant_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
@@ -31,7 +32,7 @@ static auto tp_spider_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std
       UI_INFO2_FMT_STR "Watch out for jump attacks.\n";                                                        //
 }
 
-static auto tp_spider_assess_tp(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp me) -> ThingEnvironType
+static auto tp_spider_giant_assess_tp(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp me) -> ThingEnvironType
 {
   TRACE_DEBUG();
 
@@ -66,7 +67,7 @@ static auto tp_spider_assess_tp(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp me)
   return THING_ENVIRON_NEUTRAL;
 }
 
-static auto tp_spider_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at, Thingp me) -> ThingEnvironType
+static auto tp_spider_giant_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at, Thingp me) -> ThingEnvironType
 {
   TRACE_DEBUG();
 
@@ -101,7 +102,7 @@ static auto tp_spider_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at
   return THING_ENVIRON_NEUTRAL;
 }
 
-static void tp_spider_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
+static void tp_spider_giant_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
 {
   TRACE();
 
@@ -110,7 +111,7 @@ static void tp_spider_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEve
   thing_sound_play(g, v, l, me, "monst_death");
 }
 
-static bool tp_spider_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp target, ThingEvent &e)
+static bool tp_spider_giant_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp target, ThingEvent &e)
 {
   TRACE();
 
@@ -121,7 +122,20 @@ static bool tp_spider_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp attacker
   return true;
 }
 
-static bool tp_spider_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp target, ThingEvent &e)
+static bool tp_spider_giant_on_killing(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp target, ThingEvent &e)
+{
+  TRACE();
+
+  (void) thing_spawn(g, v, l, tp_first(is_spider_baby), target);
+
+  if (d100() < 10) {
+    (void) thing_spawn(g, v, l, tp_first(is_spiderweb), target);
+  }
+
+  return true;
+}
+
+static bool tp_spider_giant_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp target, ThingEvent &e)
 {
   TRACE();
 
@@ -138,22 +152,25 @@ static bool tp_spider_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker, 
   auto  name = tp_name(tp);
 
   // begin sort marker1 {
-  thing_assess_tile_set(tp, tp_spider_assess_tile);
-  thing_assess_tp_set(tp, tp_spider_assess_tp);
-  thing_description_set(tp, tp_spider_description_get);
-  thing_detail_set(tp, tp_spider_detail_get);
-  thing_on_attacking_set(tp, tp_spider_on_attacking);
-  thing_on_death_set(tp, tp_spider_on_death);
-  thing_on_missing_set(tp, tp_spider_on_missing);
+  thing_assess_tile_set(tp, tp_spider_giant_assess_tile);
+  thing_assess_tp_set(tp, tp_spider_giant_assess_tp);
+  thing_description_set(tp, tp_spider_giant_description_get);
+  thing_detail_set(tp, tp_spider_giant_detail_get);
+  thing_on_attacking_set(tp, tp_spider_giant_on_attacking);
+  thing_on_death_set(tp, tp_spider_giant_on_death);
+  thing_on_killing_set(tp, tp_spider_giant_on_killing);
+  thing_on_missing_set(tp, tp_spider_giant_on_missing);
   tp_attack_count_max_per_tick_set(tp, 1);
+  tp_attack_count_max_per_tick_set(tp, 2);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6"); // fumble => intensify / keep burning / crit => stop burning
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // fumble => flames spread to you
-  tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d3");
+  tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "2d6");
   tp_distance_jump_set(tp, 3);
   tp_distance_vision_set(tp, 12);
   tp_flag_set(tp, is_able_to_be_buffed);
   tp_flag_set(tp, is_able_to_be_levitated);
   tp_flag_set(tp, is_able_to_be_teleported);
+  tp_flag_set(tp, is_able_to_choose_targets);
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_able_to_jump);
@@ -170,6 +187,7 @@ static bool tp_spider_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker, 
   tp_flag_set(tp, is_burnable); // is capable of being burned by fire
   tp_flag_set(tp, is_collision_circle_large);
   tp_flag_set(tp, is_described_cursor);
+  tp_flag_set(tp, is_flesh_eater);
   tp_flag_set(tp, is_insectoid);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_monst);
@@ -182,21 +200,18 @@ static bool tp_spider_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker, 
   tp_flag_set(tp, is_physics_trap);
   tp_flag_set(tp, is_removable_when_dead_on_err);
   tp_flag_set(tp, is_shown_health);
+  tp_flag_set(tp, is_spider_giant);
   tp_flag_set(tp, is_spider);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
-  tp_flag_set(tp, is_flesh_eater);
   tp_flag_set(tp, is_tickable);
-  tp_flag_set(tp, is_able_to_choose_targets);
   tp_flag_set(tp, is_vision_360_degrees);
   tp_health_set(tp, "2d8");
   tp_hearing_threshold_set(tp, 1);
-  tp_is_immune_to_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_name_a_or_an_set(tp, "a giant spider");
   tp_name_apostrophize_set(tp, "giant spiders'");
   tp_name_long_set(tp, "giant spider");
   tp_name_pluralize_set(tp, "giant spiders");
   tp_name_short_set(tp, "spider");
-  tp_attack_count_max_per_tick_set(tp, 2);
   tp_priority_set(tp, THING_PRIORITY_MONST);
   tp_score_value_set(tp, 5);
   tp_speed_set(tp, 50);

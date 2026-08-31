@@ -1927,16 +1927,16 @@
   return tp_flag(tp, is_unused176) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused177(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_spider_giant(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused177) != 0;
+  return tp_flag(tp, is_spider_giant) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused178(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_spider_baby(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused178) != 0;
+  return tp_flag(tp, is_spider_baby) != 0;
 }
 
 [[nodiscard]] auto tp_is_able_to_choose_targets(Tpp tp) -> bool
