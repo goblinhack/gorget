@@ -5054,9 +5054,9 @@ static void gfx_init_tiles()
       "mantisman.idle.4",
       "mantisman.idle.5",
       "mantisman.dead.0",
-      "",
-      "",
-      "",
+      "spider.idle.0",
+      "spider.idle.1",
+      "spider.idle.2",
       // ##############################################################################
       "",
       "",

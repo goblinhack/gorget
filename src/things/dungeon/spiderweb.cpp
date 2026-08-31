@@ -3,6 +3,7 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_dice_rolls.hpp"
 #include "my_thing.hpp"
 #include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp"
@@ -19,6 +20,15 @@ static auto tp_spiderweb_description_get(Gamep g, Levelsp v, Levelp l, Thingp me
   return "spiderweb";
 }
 
+static void tp_spiderweb_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
+{
+  TRACE();
+
+  if (! g_opt_tests) {
+    (void) thing_spawn(g, v, l, tp_random(g, v, l, is_spider), thing_at(g, v, l, me));
+  }
+}
+
 [[nodiscard]] auto tp_load_spiderweb() -> bool
 {
   auto *tp   = tp_load("spiderweb"); // keep as string for scripts
@@ -26,10 +36,12 @@ static auto tp_spiderweb_description_get(Gamep g, Levelsp v, Levelp l, Thingp me
 
   // begin sort marker1 {
   thing_description_set(tp, tp_spiderweb_description_get);
+  thing_on_spawned_set(tp, tp_spiderweb_spawned);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // fumble => intensify / keep burning / crit => stop burning
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // fumble => flames spread to you
   tp_flag_set(tp, is_able_to_be_teleported);
   tp_flag_set(tp, is_able_to_ensnare);
+  tp_flag_set(tp, is_flesh_eater);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_attackable_by_player);
   tp_flag_set(tp, is_biome_bogland);

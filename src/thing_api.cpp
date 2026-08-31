@@ -2511,7 +2511,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_unused178) != 0;
 }
 
-[[nodiscard]] auto thing_is_unused179(Thingp t) -> bool
+[[nodiscard]] auto thing_is_able_to_choose_targets(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2519,10 +2519,10 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused179) != 0;
+  return tp_flag(thing_tp(t), is_able_to_choose_targets) != 0;
 }
 
-[[nodiscard]] auto thing_is_unused180(Thingp t) -> bool
+[[nodiscard]] auto thing_is_flesh_eater(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2530,10 +2530,10 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused180) != 0;
+  return tp_flag(thing_tp(t), is_flesh_eater) != 0;
 }
 
-[[nodiscard]] auto thing_is_unused181(Thingp t) -> bool
+[[nodiscard]] auto thing_is_able_to_move(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2541,10 +2541,10 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused181) != 0;
+  return tp_flag(thing_tp(t), is_able_to_move) != 0;
 }
 
-[[nodiscard]] auto thing_is_unused182(Thingp t) -> bool
+[[nodiscard]] auto thing_is_spider(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2552,7 +2552,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused182) != 0;
+  return tp_flag(thing_tp(t), is_spider) != 0;
 }
 
 [[nodiscard]] auto thing_is_spiderweb(Thingp t) -> bool

@@ -804,6 +804,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_able_to_lunge(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_move_diagonally(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_move_through_walls(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_able_to_move(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_open_things(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_resurrect(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_see_through_walls(Thingp t) -> bool;
@@ -996,6 +997,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_slime(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_smoke(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_soft_landing(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_spider(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_spiderweb(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_staff(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_stealthy(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
@@ -1107,11 +1109,9 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused176(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused177(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused178(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused179(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_able_to_choose_targets(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused18(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused180(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused181(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused182(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_flesh_eater(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused188(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused19(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused2(Thingp t) -> bool;

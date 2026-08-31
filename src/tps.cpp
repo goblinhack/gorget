@@ -90,6 +90,7 @@
   if (!tp_load_skeleton()) { return false; }
   if (!tp_load_skullferno()) { return false; }
   if (!tp_load_smoke()) { return false; }
+  if (!tp_load_spider()) { return false; }
   if (!tp_load_spiderweb()) { return false; }
   if (!tp_load_staff_energy()) { return false; }
   if (!tp_load_staff_fire()) { return false; }

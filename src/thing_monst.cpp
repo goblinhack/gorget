@@ -171,7 +171,7 @@ static auto thing_monst_choose_best_target(Gamep g, Levelsp v, Levelp l, Thingp 
     return false;
   }
 
-  if (! thing_is_able_to_collect_items(me)) {
+  if (! thing_is_able_to_choose_targets(me)) {
     return false;
   }
 
@@ -366,7 +366,7 @@ static auto thing_monst_choose_something_we_can_wander_to(Gamep g, Levelsp v, Le
 //
 // Return true on a successful move (or a popup asking more info)
 //
-[[nodiscard]] auto thing_monst_move_try(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool
+[[nodiscard]] auto thing_monst_move_try(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint target, bpoint to) -> bool
 {
   THING_DBG(g, v, l, me, "move try");
   TRACE_INDENT();
@@ -403,6 +403,49 @@ static auto thing_monst_choose_something_we_can_wander_to(Gamep g, Levelsp v, Le
       (void) thing_lunge(g, v, l, me, to);
       return false;
     }
+  }
+
+  //
+  // This is for spiders that do not move conventionally, but jump
+  //
+  if (! thing_is_able_to_move(me)) {
+    THING_DBG(g, v, l, me, "move try: cannot move, jump?");
+    if (! adjacent(at, to)) {
+      if (thing_jump_to(g, v, l, me, to, false)) {
+        return true;
+      }
+    }
+
+    //
+    // Try to reach the final target
+    //
+    if (thing_jump_to(g, v, l, me, target, false)) {
+      return true;
+    }
+
+    //
+    // Jump half way?
+    //
+    auto middle = (target + to) / 2;
+    if (thing_jump_to(g, v, l, me, middle, false)) {
+      return true;
+    }
+
+    //
+    // Try some alternative jump targets
+    //
+    for (auto tries = 0; tries < 10; tries++) {
+      auto alt_target = middle + bpoint(PCG_RANDOM_RANGE_INCLUSIVE(-2, 2), PCG_RANDOM_RANGE_INCLUSIVE(-2, 2));
+      if (thing_jump_to(g, v, l, me, alt_target, false)) {
+        return true;
+      }
+    }
+
+    //
+    // Gave up
+    //
+    (void) thing_lunge(g, v, l, me, to);
+    return false;
   }
 
   if (thing_can_move_to_attempt(g, v, l, me, to)) {
@@ -561,12 +604,16 @@ static auto thing_monst_choose_something_we_can_wander_to(Gamep g, Levelsp v, Le
     }
   }
 
-  if (! thing_monst_move_try(g, v, l, me, nexthop)) {
+  if (! thing_monst_move_try(g, v, l, me, target, nexthop)) {
     //
     // If could not move, then abort the path walk
     //
     THING_DBG(g, v, l, me, "move to next: could not move");
     return false;
+  }
+
+  if (! thing_is_able_to_move(me)) {
+    return true;
   }
 
   if (! thing_is_levitating(g, v, l, me)) {
@@ -661,6 +708,8 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me)
 
   const int player_speed = thing_speed(g, v, l, player);
   auto      rem          = thing_move_remaining(me);
+  auto      target       = thing_monst_target(me);
+  auto      at           = thing_at(g, v, l, me);
 
   //
   // If we have run out of moves, stop
@@ -673,7 +722,6 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me)
     //
     if (rem > 0) {
       if (tp_attack_count_max_per_tick_get(thing_tp(me)) > 1) {
-        auto target = thing_monst_target(me);
         if (level_is_attackable_by_monst(g, v, l, target) != nullptr) {
           if (thing_attack_at(g, v, l, me, target)) {
             THING_DBG(g, v, l, me, "in between move: attack");
@@ -700,6 +748,20 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me)
       monst_state_change(g, v, l, me, MONST_STATE_NORMAL);
       [[fallthrough]];
     case MONST_STATE_NORMAL : //
+      if (0)
+        if (adjacent(at, target)) {
+          THING_DBG(g, v, l, me, "monst: adjacent to target");
+          TRACE_INDENT();
+
+          if (level_is_attackable_by_monst(g, v, l, target) != nullptr) {
+            if (thing_attack_at(g, v, l, me, target)) {
+              THING_DBG(g, v, l, me, "monst: attack");
+              (void) thing_move_remaining_set(g, v, l, me, 0);
+              return;
+            }
+          }
+        }
+
       (void) thing_monst_choose_target(g, v, l, me);
       break;
     case MONST_STATE_DEAD :
@@ -753,7 +815,7 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me)
         //
         // To avoid one move of sitting idle, can we choose a new target and keep on moving?
         //
-        auto at = thing_at(g, v, l, me);
+        at = thing_at(g, v, l, me);
         if ((at == old_target) || adjacent(at, old_target)) {
           //
           // We're probably lunging at the player right now. No need to try to move again.

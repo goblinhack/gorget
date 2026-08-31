@@ -70,6 +70,7 @@
   if (!test_load_monst_jump_over_chasm()) { return false; }
   if (!test_load_monst_jump_over_lava()) { return false; }
   if (!test_load_monst_jump_pounce_over_water()) { return false; }
+  if (!test_load_monst_jumper()) { return false; }
   if (!test_load_monst_maze()) { return false; }
   if (!test_load_monst_mob_leash()) { return false; }
   if (!test_load_monst_mobbing()) { return false; }

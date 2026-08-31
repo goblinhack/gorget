@@ -357,6 +357,10 @@
     return false;
   }
 
+  if (! thing_is_able_to_shove(g, v, l, me)) {
+    return false;
+  }
+
   auto at = thing_at(g, v, l, me);
   if (to == at) {
     return true;
@@ -365,10 +369,6 @@
   auto dx = to.x - at.x;
   auto dy = to.y - at.y;
   thing_set_dir_from_delta(g, v, l, me, dx, dy);
-
-  if (! thing_is_able_to_shove(g, v, l, me)) {
-    return false;
-  }
 
   //
   // Needs to be something we can shove

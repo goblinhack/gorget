@@ -311,11 +311,11 @@
       list_macro(is_unused176, "is_unused176"),                                             /* newline */                                       \
       list_macro(is_unused177, "is_unused177"),                                             /* newline */                                       \
       list_macro(is_unused178, "is_unused178"),                                             /* newline */                                       \
-      list_macro(is_unused179, "is_unused179"),                                             /* newline */                                       \
+      list_macro(is_able_to_choose_targets, "is_able_to_choose_targets"),                                             /* newline */                                       \
       list_macro(is_unused18, "is_unused18"),                                               /* newline */                                       \
-      list_macro(is_unused180, "is_unused180"),                                             /* newline */                                       \
-      list_macro(is_unused181, "is_unused181"),                                             /* newline */                                       \
-      list_macro(is_unused182, "is_unused182"),                                             /* newline */                                       \
+      list_macro(is_flesh_eater, "is_flesh_eater"),                                             /* newline */                                       \
+      list_macro(is_able_to_move, "is_able_to_move"),                                       /* newline */                                       \
+      list_macro(is_spider, "is_spider"),                                                   /* newline */                                       \
       list_macro(is_able_to_be_ensnared, "is_able_to_be_ensnared"),                         /* newline */                                       \
       list_macro(is_able_to_ensnare, "is_able_to_ensnare"),                                 /* newline */                                       \
       list_macro(is_spiderweb, "is_spiderweb"),                                             /* newline */                                       \
@@ -834,6 +834,7 @@ class Tp;
 [[nodiscard]] auto tp_is_able_to_lunge(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_move_diagonally(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_move_through_walls(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_able_to_move(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_open_things(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_resurrect(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_see_through_walls(Tpp tp) -> bool;
@@ -1009,6 +1010,7 @@ class Tp;
 [[nodiscard]] auto tp_is_slime(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_smoke(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_soft_landing(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_spider(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_spiderweb(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_staff(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_stealthy(Tpp tp) -> bool;
@@ -1117,11 +1119,9 @@ class Tp;
 [[nodiscard]] auto tp_is_unused176(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused177(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused178(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused179(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_able_to_choose_targets(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused18(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused180(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused181(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused182(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_flesh_eater(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused188(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused19(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused2(Tpp tp) -> bool;

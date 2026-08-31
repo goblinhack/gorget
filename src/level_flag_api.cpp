@@ -1940,28 +1940,28 @@
   return level_flag(g, v, l, is_unused178, p, me);
 }
 
-[[nodiscard]] auto level_is_unused179(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_able_to_choose_targets(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused179, p, me);
+  return level_flag(g, v, l, is_able_to_choose_targets, p, me);
 }
 
-[[nodiscard]] auto level_is_unused180(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_flesh_eater(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused180, p, me);
+  return level_flag(g, v, l, is_flesh_eater, p, me);
 }
 
-[[nodiscard]] auto level_is_unused181(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_able_to_move(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused181, p, me);
+  return level_flag(g, v, l, is_able_to_move, p, me);
 }
 
-[[nodiscard]] auto level_is_unused182(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_spider(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused182, p, me);
+  return level_flag(g, v, l, is_spider, p, me);
 }
 
 [[nodiscard]] auto level_is_able_to_be_ensnared(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp

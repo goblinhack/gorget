@@ -3,8 +3,6 @@
 //
 
 #include "my_callstack.hpp"
-#include "my_globals.hpp"
-#include "my_main.hpp"
 #include "my_thing.hpp"
 #include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp"
@@ -14,26 +12,26 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
-static auto tp_kobalos_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
+static auto tp_spider_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
   if (thing_is_dead(me)) {
-    return "dead kobalos";
+    return "dead spider";
   }
-  return "kobalos";
+  return "spider";
 }
 
-static auto tp_kobalos_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
+static auto tp_spider_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
-  return                                                                                                                   //
-      UI_INFO1_FMT_STR "Kobalos are small green-skinned creatures that are identical in every possible way to a goblin.\n" //
-      UI_INFO2_FMT_STR "Kobalos are vindictive, greedy little things and have a habit of thievery...";
+  return                                                                                                       //
+      UI_INFO1_FMT_STR "Giant spider. Need I say more than describe the green gore dripping from its fangs?\n" //
+      UI_INFO2_FMT_STR "Watch out for jump attacks.\n";                                                        //
 }
 
-static auto tp_kobalos_assess_tp(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp me) -> ThingEnvironType
+static auto tp_spider_assess_tp(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp me) -> ThingEnvironType
 {
   TRACE_DEBUG();
 
@@ -45,14 +43,30 @@ static auto tp_kobalos_assess_tp(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp me
     return THING_ENVIRON_HATES;
   }
 
+  if (tp_is_water_shallow(tp)) {
+    return THING_ENVIRON_DISLIKES;
+  }
+
   if (tp_is_water_deep(tp)) {
+    return THING_ENVIRON_DISLIKES;
+  }
+
+  if (tp_is_spiderweb(tp)) {
+    return THING_ENVIRON_LIKES;
+  }
+
+  if (tp_is_spider(tp)) {
     return THING_ENVIRON_HATES;
+  }
+
+  if (tp_is_flesh(tp)) {
+    return THING_ENVIRON_LIKES;
   }
 
   return THING_ENVIRON_NEUTRAL;
 }
 
-static auto tp_kobalos_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at, Thingp me) -> ThingEnvironType
+static auto tp_spider_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at, Thingp me) -> ThingEnvironType
 {
   TRACE_DEBUG();
 
@@ -64,14 +78,30 @@ static auto tp_kobalos_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &a
     return THING_ENVIRON_HATES;
   }
 
+  if (level_is_water_shallow_cached(g, v, l, at)) {
+    return THING_ENVIRON_HATES;
+  }
+
   if (level_is_water_deep_cached(g, v, l, at)) {
     return THING_ENVIRON_HATES;
+  }
+
+  if (level_is_spiderweb_cached(g, v, l, at)) {
+    return THING_ENVIRON_LIKES;
+  }
+
+  if (level_is_spider_cached(g, v, l, at)) {
+    return THING_ENVIRON_HATES;
+  }
+
+  if (level_is_flesh_cached(g, v, l, at)) {
+    return THING_ENVIRON_LIKES;
   }
 
   return THING_ENVIRON_NEUTRAL;
 }
 
-static void tp_kobalos_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
+static void tp_spider_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
 {
   TRACE();
 
@@ -80,7 +110,7 @@ static void tp_kobalos_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEv
   thing_sound_play(g, v, l, me, "monst_death");
 }
 
-static bool tp_kobalos_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp target, ThingEvent &e)
+static bool tp_spider_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp target, ThingEvent &e)
 {
   TRACE();
 
@@ -91,7 +121,7 @@ static bool tp_kobalos_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp attacke
   return true;
 }
 
-static bool tp_kobalos_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp target, ThingEvent &e)
+static bool tp_spider_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp target, ThingEvent &e)
 {
   TRACE();
 
@@ -102,36 +132,33 @@ static bool tp_kobalos_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker,
   return true;
 }
 
-[[nodiscard]] auto tp_load_kobalos() -> bool
+[[nodiscard]] auto tp_load_spider() -> bool
 {
-  auto *tp   = tp_load("kobalos"); // keep as string for scripts
+  auto *tp   = tp_load("spider"); // keep as string for scripts
   auto  name = tp_name(tp);
 
   // begin sort marker1 {
-  thing_assess_tile_set(tp, tp_kobalos_assess_tile);
-  thing_assess_tp_set(tp, tp_kobalos_assess_tp);
-  thing_description_set(tp, tp_kobalos_description_get);
-  thing_detail_set(tp, tp_kobalos_detail_get);
-  thing_on_attacking_set(tp, tp_kobalos_on_attacking);
-  thing_on_death_set(tp, tp_kobalos_on_death);
-  thing_on_missing_set(tp, tp_kobalos_on_missing);
+  thing_assess_tile_set(tp, tp_spider_assess_tile);
+  thing_assess_tp_set(tp, tp_spider_assess_tp);
+  thing_description_set(tp, tp_spider_description_get);
+  thing_detail_set(tp, tp_spider_detail_get);
+  thing_on_attacking_set(tp, tp_spider_on_attacking);
+  thing_on_death_set(tp, tp_spider_on_death);
+  thing_on_missing_set(tp, tp_spider_on_missing);
   tp_attack_count_max_per_tick_set(tp, 1);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6"); // fumble => intensify / keep burning / crit => stop burning
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // fumble => flames spread to you
-  tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d2");
-  tp_distance_minion_from_mob_max_set(tp, 20);
-  tp_distance_vision_set(tp, 10);
+  tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d3");
+  tp_distance_jump_set(tp, 3);
+  tp_distance_vision_set(tp, 12);
   tp_flag_set(tp, is_able_to_be_buffed);
-  tp_flag_set(tp, is_able_to_be_engulfed);
-  tp_flag_set(tp, is_able_to_be_ensnared);
   tp_flag_set(tp, is_able_to_be_levitated);
   tp_flag_set(tp, is_able_to_be_teleported);
-  tp_flag_set(tp, is_able_to_crush_grass);
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
+  tp_flag_set(tp, is_able_to_jump);
   tp_flag_set(tp, is_able_to_lunge);
   tp_flag_set(tp, is_able_to_move_diagonally);
-  tp_flag_set(tp, is_able_to_move);
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_attackable_by_player);
@@ -142,12 +169,9 @@ static bool tp_kobalos_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker,
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_burnable); // is capable of being burned by fire
   tp_flag_set(tp, is_collision_circle_large);
-  tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_described_cursor);
-  tp_flag_set(tp, is_flesh);
-  tp_flag_set(tp, is_kobalos);
+  tp_flag_set(tp, is_insectoid);
   tp_flag_set(tp, is_loggable);
-  tp_flag_set(tp, is_minion);
   tp_flag_set(tp, is_monst);
   tp_flag_set(tp, is_obs_to_beam);
   tp_flag_set(tp, is_obs_to_jumping_onto);
@@ -155,45 +179,41 @@ static bool tp_kobalos_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker,
   tp_flag_set(tp, is_obs_to_teleporting_onto);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
+  tp_flag_set(tp, is_physics_trap);
   tp_flag_set(tp, is_removable_when_dead_on_err);
   tp_flag_set(tp, is_shown_health);
+  tp_flag_set(tp, is_spider);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_tickable);
-  tp_flag_set(tp, is_vision_180_degrees);
-  tp_health_set(tp, "1d4");
-  tp_hearing_threshold_set(tp, 6);
+  tp_flag_set(tp, is_able_to_choose_targets);
+  tp_flag_set(tp, is_vision_360_degrees);
+  tp_health_set(tp, "2d8");
+  tp_hearing_threshold_set(tp, 1);
   tp_is_immune_to_add(tp, THING_EVENT_WATER_DAMAGE);
-  tp_name_a_or_an_set(tp, "a kobalos");
-  tp_name_apostrophize_set(tp, "kobalos'");
-  tp_name_long_set(tp, "kobalos");
-  tp_name_pluralize_set(tp, "kobalo");
-  tp_name_short_set(tp, "kobalos");
+  tp_name_a_or_an_set(tp, "a giant spider");
+  tp_name_apostrophize_set(tp, "giant spiders'");
+  tp_name_long_set(tp, "giant spider");
+  tp_name_pluralize_set(tp, "giant spiders");
+  tp_name_short_set(tp, "spider");
   tp_priority_set(tp, THING_PRIORITY_MONST);
-  tp_score_value_set(tp, 2);
-  tp_speed_set(tp, 100);
-  tp_stat_set(tp, THING_STAT_ATT, "1d4+10");
-  tp_stat_set(tp, THING_STAT_DEF, "1d4+8");
+  tp_score_value_set(tp, 5);
+  tp_speed_set(tp, 50);
+  tp_stat_set(tp, THING_STAT_ATT, "1d8+10");
+  tp_stat_set(tp, THING_STAT_DEF, "8");
   tp_temperature_burns_at_set(tp, 50);  // celsius
   tp_temperature_damage_at_set(tp, 35); // celsius
   tp_temperature_initial_set(tp, 20);   // celsius
-  tp_weight_set(tp, WEIGHT_HUMAN);      // grams
+  tp_weight_set(tp, WEIGHT_HEAVY);      // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   // end sort marker1 }
 
-  auto delay = 1000;
+  auto delay = 800;
 
-  for (auto frame = 0; frame < 2; frame++) {
+  for (auto frame = 0; frame < 3; frame++) {
     auto *tile = tile_find_mand(name + std::string(".idle.") + std::to_string(frame));
-    tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
+    tile_size_set(tile, OUTLINE_TILE_WIDTH, OUTLINE_TILE_HEIGHT);
     tile_delay_ms_set(tile, delay);
     tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
-  }
-
-  for (auto frame = 0; frame < 1; frame++) {
-    auto *tile = tile_find_mand(name + std::string(".dead.") + std::to_string(frame));
-    tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
-    tile_delay_ms_set(tile, delay);
-    tp_tiles_push_back(tp, THING_ANIM_DEAD, tile);
   }
 
   return true;

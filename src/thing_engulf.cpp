@@ -207,6 +207,10 @@
     return false;
   }
 
+  if (! thing_is_able_to_engulf(me)) {
+    return false;
+  }
+
   if (to == thing_at(g, v, l, me)) {
     return true;
   }
@@ -215,10 +219,6 @@
   auto dx = to.x - at.x;
   auto dy = to.y - at.y;
   thing_set_dir_from_delta(g, v, l, me, dx, dy);
-
-  if (! thing_is_able_to_engulf(me)) {
-    return false;
-  }
 
   THING_DBG(g, v, l, me, "try to engulf");
   TRACE_INDENT();

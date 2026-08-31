@@ -123,9 +123,10 @@
       }
       if (level_is_monst1(g, v, l, p) != nullptr) {
         c = CHARMAP_MONST1;
-      }
-      if (level_is_monst2(g, v, l, p) != nullptr) {
+      } else if (level_is_monst2(g, v, l, p) != nullptr) {
         c = CHARMAP_MONST2;
+      } else if (level_is_monst(g, v, l, p) != nullptr) {
+        c = CHARMAP_MONST1;
       }
       if (level_is_minion_bool(g, v, l, p)) {
         c = CHARMAP_MONST1;

@@ -1939,28 +1939,28 @@
   return tp_flag(tp, is_unused178) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused179(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_able_to_choose_targets(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused179) != 0;
+  return tp_flag(tp, is_able_to_choose_targets) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused180(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_flesh_eater(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused180) != 0;
+  return tp_flag(tp, is_flesh_eater) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused181(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_able_to_move(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused181) != 0;
+  return tp_flag(tp, is_able_to_move) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused182(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_spider(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused182) != 0;
+  return tp_flag(tp, is_spider) != 0;
 }
 
 [[nodiscard]] auto tp_is_able_to_be_ensnared(Tpp tp) -> bool

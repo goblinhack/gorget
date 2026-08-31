@@ -1941,28 +1941,28 @@
   return level_count(g, v, l, is_unused178, p);
 }
 
-[[nodiscard]] auto level_count_is_unused179(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_able_to_choose_targets(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused179, p);
+  return level_count(g, v, l, is_able_to_choose_targets, p);
 }
 
-[[nodiscard]] auto level_count_is_unused180(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_flesh_eater(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused180, p);
+  return level_count(g, v, l, is_flesh_eater, p);
 }
 
-[[nodiscard]] auto level_count_is_unused181(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_able_to_move(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused181, p);
+  return level_count(g, v, l, is_able_to_move, p);
 }
 
-[[nodiscard]] auto level_count_is_unused182(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_spider(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused182, p);
+  return level_count(g, v, l, is_spider, p);
 }
 
 [[nodiscard]] auto level_count_is_able_to_be_ensnared(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t

@@ -88,6 +88,7 @@ static std::initializer_list< std::string > tests = {
     "monst_jump_over_chasm",
     "monst_jump_over_lava",
     "monst_jump_pounce_over_water",
+    "monst_jumper",
     "monst_maze",
     "monst_mob_leash",
     "monst_mobbing",

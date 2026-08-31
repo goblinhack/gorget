@@ -124,6 +124,7 @@ static bool tp_mummy_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker, T
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_able_to_lunge);
   tp_flag_set(tp, is_able_to_move_diagonally);
+  tp_flag_set(tp, is_able_to_move);
   tp_flag_set(tp, is_able_to_resurrect);
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
