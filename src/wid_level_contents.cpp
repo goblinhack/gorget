@@ -76,13 +76,13 @@ void wid_level_show_contents(Gamep g, Levelsp v, Levelp l, WidPopup *parent)
   //
   if (level_is_level_select(g, v, l)) {
     l = thing_player_level(g);
-    if (l == nullptr) {
+    if (l == nullptr) [[unlikely]] {
       return;
     }
 
     if (v->tick != 0U) {
       l = level_select_get_next_level(g, v, l);
-      if (l == nullptr) {
+      if (l == nullptr) [[unlikely]] {
         return;
       }
     } else {

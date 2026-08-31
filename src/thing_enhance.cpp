@@ -19,7 +19,7 @@ void thing_enhance(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp)
     return;
   }
 
-  if (tp == nullptr) {
+  if (tp == nullptr) [[unlikely]] {
     return;
   }
 

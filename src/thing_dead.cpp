@@ -154,7 +154,7 @@ static void thing_killed_by_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
   TRACE();
 
   auto *player = e.source;
-  if (player == nullptr) {
+  if (player == nullptr) [[unlikely]] {
     return;
   }
 

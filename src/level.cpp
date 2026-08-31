@@ -134,7 +134,7 @@ void levels_finalize(Gamep g, Levelsp v)
   log("levels finalize");
   TRACE_INDENT();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     CROAK("no game pointer");
   }
 
@@ -752,7 +752,7 @@ void level_update_flags(Gamep g, Levelsp v, Levelp l)
 {
   TRACE();
 
-  if (l == nullptr) {
+  if (l == nullptr) [[unlikely]] {
     return false;
   }
 

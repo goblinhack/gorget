@@ -1063,7 +1063,7 @@ void tp_light_color_apply(Tpp tp)
 {
 #ifdef DEBUG_BUILD
   TRACE_DEBUG();
-  if (tp == nullptr) {
+  if (tp == nullptr) [[unlikely]] {
     ERR("no thing template pointer");
     return WHITE;
   }

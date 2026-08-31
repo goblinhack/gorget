@@ -374,7 +374,7 @@ void level_select_assign_levels_to_grid(Gamep g, Levelsp v)
     for (int x = 0; x < LEVEL_GRID_ACROSS; x++) {
       if (s->data[ x ][ y ].is_set != 0U) {
         auto *l = game_level_get(g, v, n);
-        if (l == nullptr) {
+        if (l == nullptr) [[unlikely]] {
           CROAK("ran out of levels to assign to grid, %u", n);
         }
 
@@ -495,7 +495,7 @@ static auto level_select_count_levels(LevelSelect *s) -> int
       }
 
       auto *l = game_level_get(g, v, c->level_num);
-      if (l == nullptr) {
+      if (l == nullptr) [[unlikely]] {
         ERR("missing level in select map");
         continue;
       }
@@ -927,7 +927,7 @@ auto level_select_mouse_down(Gamep g) -> bool
   }
 
   Levelp l = thing_player_level(g);
-  if (l == nullptr) {
+  if (l == nullptr) [[unlikely]] {
     (void) sound_play(g, "error");
     return false;
   }

@@ -19,7 +19,7 @@
 {
   TRACE_DEBUG();
 
-  if (l == nullptr) {
+  if (l == nullptr) [[unlikely]] {
     ERR("trying to get a thing on a null level");
     return nullptr;
   }
@@ -93,7 +93,7 @@
 
   *out = nullptr;
 
-  if (l == nullptr) {
+  if (l == nullptr) [[unlikely]] {
     ERR("trying to get a thing on a null level");
     return nullptr;
   }

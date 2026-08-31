@@ -1263,7 +1263,7 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
   TRACE();
 
   auto *player = thing_player(g);
-  if (player == nullptr) {
+  if (player == nullptr) [[unlikely]] {
     return false;
   }
 
@@ -1334,7 +1334,7 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
   TRACE();
 
   auto *player = thing_player(g);
-  if (player == nullptr) {
+  if (player == nullptr) [[unlikely]] {
     return false;
   }
 
@@ -1371,7 +1371,7 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
   TRACE();
 
   auto *player = thing_player(g);
-  if (player == nullptr) {
+  if (player == nullptr) [[unlikely]] {
     return false;
   }
 

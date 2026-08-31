@@ -125,12 +125,12 @@ tidy:
 			$x -- $(CFLAGS); \
 	)
 	git checkout 3rdparty
-	$(SCRIPT_DIR)/splat "if (g == nullptr) {" "if (g == nullptr) [[unlikely]] {" "*" do
+	$(SCRIPT_DIR)/splat "if (g == nullptr) [[unlikely]] {" "if (g == nullptr) [[unlikely]] {" "*" do
 	$(SCRIPT_DIR)/splat "if (v == nullptr) [[unlikely]] {" "if (v == nullptr) [[unlikely]] {" "*" do
-	$(SCRIPT_DIR)/splat "if (l == nullptr) {" "if (l == nullptr) [[unlikely]] {" "*" do
-	$(SCRIPT_DIR)/splat "if (ext == nullptr) {" "if (ext == nullptr) [[unlikely]] {" "*" do
-	$(SCRIPT_DIR)/splat "if (player == nullptr) {" "if (player == nullptr) [[unlikely]] {" "*" do
-	$(SCRIPT_DIR)/splat "if (tp == nullptr) {" "if (tp == nullptr) [[unlikely]] {" "*" do
+	$(SCRIPT_DIR)/splat "if (l == nullptr) [[unlikely]] {" "if (l == nullptr) [[unlikely]] {" "*" do
+	$(SCRIPT_DIR)/splat "if (ext == nullptr) [[unlikely]] {" "if (ext == nullptr) [[unlikely]] {" "*" do
+	$(SCRIPT_DIR)/splat "if (player == nullptr) [[unlikely]] {" "if (player == nullptr) [[unlikely]] {" "*" do
+	$(SCRIPT_DIR)/splat "if (tp == nullptr) [[unlikely]] {" "if (tp == nullptr) [[unlikely]] {" "*" do
 	$(SCRIPT_DIR)/splat "if (0)" "if (compiler_unused)" "*cpp" do
 	$(SCRIPT_DIR)/splat-del "include.*OpenGL" "*cpp" do
 	$(SCRIPT_DIR)/splat "<_" "<" "*cpp" do

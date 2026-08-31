@@ -46,12 +46,12 @@ static void wid_dead_close(Gamep g)
   }
 
   auto *l = game_level_get(g, v);
-  if (l == nullptr) {
+  if (l == nullptr) [[unlikely]] {
     return;
   }
 
   auto *player = thing_player(g);
-  if (player == nullptr) {
+  if (player == nullptr) [[unlikely]] {
     return;
   }
 

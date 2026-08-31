@@ -147,7 +147,7 @@ static auto wid_rightbar_thing_info_add(Gamep g, Levelsp v, Levelp l) -> void
   }
 
   auto *l = game_level_get(g, v);
-  if (l == nullptr) {
+  if (l == nullptr) [[unlikely]] {
     return false;
   }
 

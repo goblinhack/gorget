@@ -57,12 +57,12 @@ static void wid_game_over_destroy()
   }
 
   auto *l = game_level_get(g, v);
-  if (l == nullptr) {
+  if (l == nullptr) [[unlikely]] {
     return true;
   }
 
   auto *player = thing_player(g);
-  if (player == nullptr) {
+  if (player == nullptr) [[unlikely]] {
     return true;
   }
 

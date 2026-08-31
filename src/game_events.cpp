@@ -37,7 +37,7 @@
     return false;
   }
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     DBG("game mouse down, ignore, no game");
     return false;
   }
@@ -55,7 +55,7 @@
   // Have a level?
   //
   auto *l = game_level_get(g, v);
-  if (l == nullptr) {
+  if (l == nullptr) [[unlikely]] {
     DBG("game mouse down, ignore, no level");
     return false;
   }
@@ -113,7 +113,7 @@
   DBG("game mouse motion");
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     DBG("game motion, ignore, no game");
     return false;
   }
@@ -127,7 +127,7 @@
   // Have a level?
   //
   auto *l = game_level_get(g, v);
-  if (l == nullptr) {
+  if (l == nullptr) [[unlikely]] {
     return false;
   }
 
@@ -198,7 +198,7 @@
   }
 
   auto *l = game_level_get(g, v);
-  if (l == nullptr) {
+  if (l == nullptr) [[unlikely]] {
     return false;
   }
 
@@ -256,7 +256,7 @@
   }
 
   auto *l = game_level_get(g, v);
-  if (l == nullptr) {
+  if (l == nullptr) [[unlikely]] {
     return false;
   }
 
@@ -303,7 +303,7 @@
   }
 
   auto *l = game_level_get(g, v);
-  if (l == nullptr) {
+  if (l == nullptr) [[unlikely]] {
     return false;
   }
 
@@ -334,7 +334,7 @@
   }
 
   auto *l = game_level_get(g, v);
-  if (l == nullptr) {
+  if (l == nullptr) [[unlikely]] {
     return false;
   }
 
@@ -376,7 +376,7 @@
   }
 
   auto *l = game_level_get(g, v);
-  if (l == nullptr) {
+  if (l == nullptr) [[unlikely]] {
     return false;
   }
 
@@ -418,7 +418,7 @@ static auto game_event_jump(Gamep g) -> bool
   }
 
   auto *l = game_level_get(g, v);
-  if (l == nullptr) {
+  if (l == nullptr) [[unlikely]] {
     return false;
   }
 
@@ -524,7 +524,7 @@ static auto game_event_throw(Gamep g) -> bool
   }
 
   auto *l = game_level_get(g, v);
-  if (l == nullptr) {
+  if (l == nullptr) [[unlikely]] {
     return false;
   }
 
@@ -583,7 +583,7 @@ static auto game_event_abort(Gamep g) -> bool
   }
 
   auto *l = game_level_get(g, v);
-  if (l == nullptr) {
+  if (l == nullptr) [[unlikely]] {
     return false;
   }
 
@@ -703,7 +703,7 @@ static auto game_event_abort(Gamep g) -> bool
   DBG("pressed a key");
   TRACE_INDENT();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     DBG("pressed a key; no game");
     return false;
   }

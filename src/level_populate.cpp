@@ -596,7 +596,7 @@ static auto level_populate_fixup_biome_graveyard(class LevelPopulate &lp, Tpp tp
     lp.need_foliage = true;
   }
 
-  if (tp == nullptr) {
+  if (tp == nullptr) [[unlikely]] {
     if (d100() < 20) {
       lp.need_foliage = true;
     }
@@ -693,7 +693,7 @@ static auto level_populate_fixup_biome_underhell(class LevelPopulate &lp, Tpp tp
     tp = lp.tp_lava;
   }
 
-  if (tp == nullptr) {
+  if (tp == nullptr) [[unlikely]] {
     if (d100() < 10) {
       tp = lp.tp_lava;
     }

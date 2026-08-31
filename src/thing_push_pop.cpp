@@ -270,7 +270,7 @@
   TRACE();
 
   auto *l = thing_level(g, v, t);
-  if (l == nullptr) {
+  if (l == nullptr) [[unlikely]] {
     return false;
   }
 

@@ -111,7 +111,7 @@ static void wid_throw_item_mouse_over_end(Gamep g, Widp w)
   }
 
   auto *l = game_level_get(g, v);
-  if (l == nullptr) {
+  if (l == nullptr) [[unlikely]] {
     return false;
   }
 

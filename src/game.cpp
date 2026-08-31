@@ -548,7 +548,7 @@ void game_fini(Gamep g)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return;
   }
 
@@ -586,7 +586,7 @@ void game_cleanup(Gamep g)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return;
   }
 
@@ -597,7 +597,7 @@ void game_save_config(Gamep g)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     ERR("no game pointer");
     return;
   }
@@ -724,7 +724,7 @@ void game_seed_set(Gamep g, const char *maybe_seed)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     ERR("no game pointer");
     return;
   }
@@ -736,7 +736,7 @@ void game_seed_clear(Gamep g)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     ERR("no game pointer");
     return;
   }
@@ -749,7 +749,7 @@ void game_seed_set(Gamep g, uint32_t seed)
   DBG("set seed: %u", seed);
   TRACE_INDENT();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     ERR("no game pointer");
     return;
   }
@@ -762,7 +762,7 @@ void game_seed_set(Gamep g, uint32_t seed)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     ERR("no game pointer");
     return "";
   }
@@ -775,7 +775,7 @@ void game_seed_set(Gamep g, uint32_t seed)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     ERR("no game pointer");
     return SEED_SOURCE_RANDOM;
   }
@@ -787,7 +787,7 @@ void game_seed_set(Gamep g, uint32_t seed)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     ERR("no game pointer");
     return 0;
   }
@@ -816,7 +816,7 @@ void game_player_name_set(Gamep g, const char *maybe_player_name)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     ERR("no game pointer");
     return;
   }
@@ -828,7 +828,7 @@ void game_player_name_set(Gamep g, const char *maybe_player_name)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     ERR("no game pointer");
     return "";
   }
@@ -928,7 +928,7 @@ void Game::start_playing()
   TRACE();
 
   auto *g = this;
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return;
   }
 
@@ -941,7 +941,7 @@ void Game::start_playing()
   (void) wid_botcon_init(g);
 
   auto *l = game_level_get(g, v);
-  if (l == nullptr) {
+  if (l == nullptr) [[unlikely]] {
     return;
   }
 
@@ -1412,7 +1412,7 @@ void Game::display()
   }
 
   auto *l = game_level_get(g, v);
-  if (l == nullptr) {
+  if (l == nullptr) [[unlikely]] {
     return;
   }
 
@@ -2295,7 +2295,7 @@ void game_sound_volume_set(Gamep g, int val)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return no_key;
   }
   return g->config.key_wait;
@@ -2304,7 +2304,7 @@ void game_key_wait_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return;
   }
   g->config.key_wait = key;
@@ -2314,7 +2314,7 @@ void game_key_wait_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return no_key;
   }
   return g->config.key_console;
@@ -2323,7 +2323,7 @@ void game_key_console_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return;
   }
   g->config.key_console = key;
@@ -2333,7 +2333,7 @@ void game_key_console_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return no_key;
   }
   return g->config.key_help;
@@ -2342,7 +2342,7 @@ void game_key_help_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return;
   }
   g->config.key_help = key;
@@ -2352,7 +2352,7 @@ void game_key_help_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return no_key;
   }
   return g->config.key_load;
@@ -2361,7 +2361,7 @@ void game_key_load_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return;
   }
   g->config.key_load = key;
@@ -2371,7 +2371,7 @@ void game_key_load_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return no_key;
   }
   return g->config.key_move_down;
@@ -2380,7 +2380,7 @@ void game_key_move_down_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return;
   }
   g->config.key_move_down = key;
@@ -2390,7 +2390,7 @@ void game_key_move_down_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return no_key;
   }
   return g->config.key_move_left;
@@ -2399,7 +2399,7 @@ void game_key_move_left_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return;
   }
   g->config.key_move_left = key;
@@ -2409,7 +2409,7 @@ void game_key_move_left_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return no_key;
   }
   return g->config.key_move_right;
@@ -2418,7 +2418,7 @@ void game_key_move_right_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return;
   }
   g->config.key_move_right = key;
@@ -2428,7 +2428,7 @@ void game_key_move_right_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return no_key;
   }
   return g->config.key_move_up;
@@ -2437,7 +2437,7 @@ void game_key_move_up_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return;
   }
   g->config.key_move_up = key;
@@ -2447,7 +2447,7 @@ void game_key_move_up_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return no_key;
   }
   return g->config.key_quit;
@@ -2456,7 +2456,7 @@ void game_key_quit_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return;
   }
   g->config.key_quit = key;
@@ -2466,7 +2466,7 @@ void game_key_quit_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return no_key;
   }
   return g->config.key_save;
@@ -2475,7 +2475,7 @@ void game_key_save_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return;
   }
   g->config.key_save = key;
@@ -2485,7 +2485,7 @@ void game_key_save_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return no_key;
   }
   return g->config.key_screenshot;
@@ -2494,7 +2494,7 @@ void game_key_screenshot_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return;
   }
   g->config.key_screenshot = key;
@@ -2504,7 +2504,7 @@ void game_key_screenshot_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return no_key;
   }
   return g->config.key_unused1;
@@ -2524,7 +2524,7 @@ void game_key_unused1_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return no_key;
   }
   return g->config.key_unused2;
@@ -2544,7 +2544,7 @@ void game_key_unused2_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return no_key;
   }
   return g->config.key_unused3;
@@ -2564,7 +2564,7 @@ void game_key_unused3_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return no_key;
   }
   return g->config.key_unused4;
@@ -2584,7 +2584,7 @@ void game_key_unused4_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return no_key;
   }
   return g->config.key_unused5;
@@ -2604,7 +2604,7 @@ void game_key_unused5_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return no_key;
   }
   return g->config.key_unused6;
@@ -2624,7 +2624,7 @@ void game_key_unused6_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return no_key;
   }
   return g->config.key_unused7;
@@ -2644,7 +2644,7 @@ void game_key_unused7_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return no_key;
   }
   return g->config.key_unused8;
@@ -2664,7 +2664,7 @@ void game_key_unused8_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return no_key;
   }
   return g->config.key_unused9;
@@ -2684,7 +2684,7 @@ void game_key_unused9_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return no_key;
   }
   return g->config.key_unused10;
@@ -2704,7 +2704,7 @@ void game_key_unused10_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return no_key;
   }
   return g->config.key_unused11;
@@ -2724,7 +2724,7 @@ void game_key_unused11_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return no_key;
   }
   return g->config.key_unused12;
@@ -2744,7 +2744,7 @@ void game_key_unused12_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return no_key;
   }
   return g->config.key_abort;
@@ -2764,7 +2764,7 @@ void game_key_abort_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return no_key;
   }
   return g->config.key_throw;
@@ -2784,7 +2784,7 @@ void game_key_throw_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return no_key;
   }
   return g->config.key_fire;
@@ -2804,7 +2804,7 @@ void game_key_fire_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return no_key;
   }
   return g->config.key_inventory;
@@ -2824,7 +2824,7 @@ void game_key_inventory_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return no_key;
   }
   return g->config.key_jump;
@@ -2844,7 +2844,7 @@ void game_key_jump_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return no_key;
   }
   return g->config.key_ascend;
@@ -2864,7 +2864,7 @@ void game_key_ascend_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return no_key;
   }
   return g->config.key_descend;
@@ -2884,7 +2884,7 @@ void game_key_descend_set(Gamep g, SDL_Keysym key)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return no_key;
   }
   return g->config.key_zoom;

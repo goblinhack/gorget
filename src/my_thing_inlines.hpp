@@ -36,7 +36,7 @@
 {
 #ifdef DEBUG_BUILD
   TRACE_DEBUG(); // expensive
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     ERR("no game pointer");
     return nullptr;
   }

@@ -43,7 +43,7 @@
 {
   TRACE();
 
-  if (l == nullptr) {
+  if (l == nullptr) [[unlikely]] {
     ERR("no level pointer");
     return false;
   }
@@ -63,7 +63,7 @@ auto level_is_boss_level_set(Gamep g, Levelsp v, Levelp l, bool val) -> void
 {
   TRACE();
 
-  if (l == nullptr) {
+  if (l == nullptr) [[unlikely]] {
     ERR("no level pointer");
     return;
   }
@@ -75,7 +75,7 @@ auto level_is_boss_level_set(Gamep g, Levelsp v, Levelp l, bool val) -> void
 {
   TRACE();
 
-  if (l == nullptr) {
+  if (l == nullptr) [[unlikely]] {
     ERR("no level pointer");
     return false;
   }
@@ -87,7 +87,7 @@ auto level_is_boss_final_level_set(Gamep g, Levelsp v, Levelp l, bool val) -> vo
 {
   TRACE();
 
-  if (l == nullptr) {
+  if (l == nullptr) [[unlikely]] {
     ERR("no level pointer");
     return;
   }

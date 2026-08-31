@@ -26,7 +26,7 @@ void levels_dmap(Gamep g, Levelsp v)
   log("levels dmap");
   TRACE_INDENT();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     CROAK("no game pointer");
   }
 

@@ -110,7 +110,7 @@ static void wid_collect_mouse_over_end(Gamep g, Widp w)
   }
 
   auto *l = game_level_get(g, v);
-  if (l == nullptr) {
+  if (l == nullptr) [[unlikely]] {
     return false;
   }
 
@@ -156,7 +156,7 @@ static void wid_collect_mouse_over_end(Gamep g, Widp w)
   }
 
   auto *l = game_level_get(g, v);
-  if (l == nullptr) {
+  if (l == nullptr) [[unlikely]] {
     return false;
   }
 

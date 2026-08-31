@@ -453,7 +453,7 @@ static auto ptrcheck_verify_pointer(int mtype, const void *ptr, const char *func
     IF_DEBUG
     {
       auto *l = pc->last_seen[ pc->last_seen_at ];
-      if (l == nullptr) {
+      if (l == nullptr) [[unlikely]] {
         l = pc->last_seen[ pc->last_seen_at ] = new PtrcheckHistory();
       }
       l->file = file;

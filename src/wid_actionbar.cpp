@@ -269,7 +269,7 @@ static void wid_actionbar_inventory_over_end(Gamep g, Widp w)
   }
 
   auto *l = game_level_get(g, v);
-  if (l == nullptr) {
+  if (l == nullptr) [[unlikely]] {
     return false;
   }
 
@@ -299,7 +299,7 @@ static void wid_actionbar_inventory_over_end(Gamep g, Widp w)
   }
 
   auto *l = game_level_get(g, v);
-  if (l == nullptr) {
+  if (l == nullptr) [[unlikely]] {
     return false;
   }
 
@@ -600,7 +600,7 @@ static auto wid_actionbar_create_window(Gamep g) -> bool
   }
 
   auto *l = game_level_get(g, v);
-  if (l == nullptr) {
+  if (l == nullptr) [[unlikely]] {
     return false;
   }
 

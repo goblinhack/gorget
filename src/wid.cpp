@@ -492,7 +492,7 @@ void wid_set_thing_context(Gamep g, Levelsp v, Widp w, Thingp t)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     ERR("no game pointer");
     return;
   }
@@ -532,7 +532,7 @@ void wid_unset_thing_context(Gamep g, Levelsp v, Widp w, Thingp t)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     ERR("no game pointer");
     return;
   }
@@ -565,7 +565,7 @@ void wid_unset_thing_context(Gamep g, Levelsp v, Widp w, Thingp t)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     ERR("no game pointer");
     return nullptr;
   }
@@ -1320,7 +1320,7 @@ void wid_set_moveable(Gamep g, Widp w, bool val)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return;
   }
 
@@ -1350,7 +1350,7 @@ void wid_set_moveable_horiz(Gamep g, Widp w, bool val)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return;
   }
 
@@ -1373,7 +1373,7 @@ void wid_set_moveable_vert(Gamep g, Widp w, bool val)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return;
   }
 
@@ -1396,7 +1396,7 @@ void wid_set_moveable_bounded(Gamep g, Widp w, bool val)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return;
   }
 
@@ -1419,7 +1419,7 @@ void wid_set_moveable_no_user_scroll(Gamep g, Widp w, bool val)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return;
   }
 
@@ -1619,7 +1619,7 @@ void wid_set_focus(Gamep g, Widp w)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return;
   }
 
@@ -1663,7 +1663,7 @@ void wid_set_active(Gamep g, Widp w)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return;
   }
 
@@ -1674,7 +1674,7 @@ void wid_focus_lock(Gamep g, Widp w)
 {
   TRACE();
 
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     return;
   }
 
@@ -4292,7 +4292,7 @@ void wid_move_to_bottom(Gamep g, Widp w)
 void wid_move_to_y_off(Gamep g, Widp w, int off)
 {
   TRACE();
-  if (g == nullptr) {
+  if (g == nullptr) [[unlikely]] {
     ERR("no game pointer");
     return;
   }

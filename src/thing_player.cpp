@@ -44,7 +44,7 @@ void thing_player_init(Gamep g)
     return;
   }
   auto *l = game_level_get(g, v);
-  if (l == nullptr) {
+  if (l == nullptr) [[unlikely]] {
     return;
   }
 
@@ -461,7 +461,7 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
   }
 
   auto *l = game_level_get(g, v);
-  if (l == nullptr) {
+  if (l == nullptr) [[unlikely]] {
     return;
   }
 
@@ -1010,7 +1010,7 @@ void player_move_accum(Gamep g, Levelsp v, Levelp l, bool up, bool down, bool le
   }
 
   auto *l = game_level_get(g, v);
-  if (l == nullptr) {
+  if (l == nullptr) [[unlikely]] {
     return false;
   }
 

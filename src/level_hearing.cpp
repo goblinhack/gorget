@@ -20,7 +20,7 @@ void level_hearing_gen(Gamep g, Levelsp v, Levelp l)
   TRACE();
 
   auto *player = thing_player(g);
-  if (player == nullptr) {
+  if (player == nullptr) [[unlikely]] {
     return;
   }
 

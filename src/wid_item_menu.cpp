@@ -52,7 +52,7 @@ static Thingp g_item;
   }
 
   auto *l = game_level_get(g, v);
-  if (l == nullptr) {
+  if (l == nullptr) [[unlikely]] {
     return false;
   }
 
@@ -93,7 +93,7 @@ static Thingp g_item;
   }
 
   auto *l = game_level_get(g, v);
-  if (l == nullptr) {
+  if (l == nullptr) [[unlikely]] {
     return false;
   }
 
@@ -120,7 +120,7 @@ static Thingp g_item;
   }
 
   auto *l = game_level_get(g, v);
-  if (l == nullptr) {
+  if (l == nullptr) [[unlikely]] {
     return false;
   }
 
@@ -168,7 +168,7 @@ static Thingp g_item;
   }
 
   auto *l = game_level_get(g, v);
-  if (l == nullptr) {
+  if (l == nullptr) [[unlikely]] {
     return false;
   }
 
@@ -219,7 +219,7 @@ static Thingp g_item;
   }
 
   auto *l = game_level_get(g, v);
-  if (l == nullptr) {
+  if (l == nullptr) [[unlikely]] {
     return false;
   }
 
@@ -271,7 +271,7 @@ static Thingp g_item;
   }
 
   auto *l = game_level_get(g, v);
-  if (l == nullptr) {
+  if (l == nullptr) [[unlikely]] {
     return false;
   }
 
@@ -328,7 +328,7 @@ static Thingp g_item;
   }
 
   auto *l = game_level_get(g, v);
-  if (l == nullptr) {
+  if (l == nullptr) [[unlikely]] {
     return false;
   }
 
@@ -385,7 +385,7 @@ static Thingp g_item;
   }
 
   auto *l = game_level_get(g, v);
-  if (l == nullptr) {
+  if (l == nullptr) [[unlikely]] {
     return false;
   }
 
@@ -487,7 +487,7 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item, bool from_inventory)
   wid_got_here_from_inventory = from_inventory;
 
   auto *l = game_level_get(g, v);
-  if (l == nullptr) {
+  if (l == nullptr) [[unlikely]] {
     return;
   }
 

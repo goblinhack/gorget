@@ -166,7 +166,7 @@ static auto thing_monst_choose_best_target(Gamep g, Levelsp v, Levelp l, Thingp 
   auto at = thing_at(g, v, l, me);
 
   auto *ext = thing_ext_struct(g, v, me);
-  if (ext == nullptr) {
+  if (ext == nullptr) [[unlikely]] {
     thing_err(g, v, l, me, "no ext pointer");
     return false;
   }
@@ -247,7 +247,7 @@ static auto thing_monst_choose_something_we_can_wander_to(Gamep g, Levelsp v, Le
   auto at = thing_at(g, v, l, me);
 
   auto *ext = thing_ext_struct(g, v, me);
-  if (ext == nullptr) {
+  if (ext == nullptr) [[unlikely]] {
     thing_err(g, v, l, me, "no ext pointer");
     return false;
   }
@@ -725,7 +725,7 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me)
   TRACE_INDENT();
 
   auto *player = thing_player(g);
-  if (player == nullptr) {
+  if (player == nullptr) [[unlikely]] {
     return;
   }
 

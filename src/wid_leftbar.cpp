@@ -43,7 +43,7 @@ static WidPopup *wid_leftbar;
   }
 
   auto *l = game_level_get(g, v);
-  if (l == nullptr) {
+  if (l == nullptr) [[unlikely]] {
     return false;
   }
 

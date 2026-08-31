@@ -16,7 +16,7 @@
 {
   TRACE();
 
-  if (l == nullptr) {
+  if (l == nullptr) [[unlikely]] {
     ERR("no level pointer");
     return "<no level>";
   }
