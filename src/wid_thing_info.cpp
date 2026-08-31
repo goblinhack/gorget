@@ -1201,43 +1201,6 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
 }
 
 //
-// Add what the thing likes
-//
-[[nodiscard]] static auto wid_thing_info_likes(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent) -> bool
-{
-  TRACE();
-
-  std::string out;
-
-  for (auto i = 1; i < TP_ID_MAX; i++) {
-
-    auto *it = tp_find(i);
-    if (it == nullptr) {
-      continue;
-    }
-
-    switch (thing_assess_tp(g, v, l, it, me)) {
-      case THING_ENVIRON_HATES :    break;
-      case THING_ENVIRON_LIKES :    out = string_append_with_comma(out, capitalize_first(tp_name_short(it))); break;
-      case THING_ENVIRON_NEUTRAL :  break;
-      case THING_ENVIRON_DISLIKES : break;
-      case THING_ENVIRON_ENUM_MAX : break;
-    }
-  }
-
-  if (out.empty()) {
-    return false;
-  }
-
-  replace(out, "Deep water, Shallow water", "All water");
-
-  parent->log(g, UI_INFO_FMT_STR "Likes:", TEXT_FORMAT_LHS);
-  parent->log(g, "- " + out, TEXT_FORMAT_LHS);
-
-  return true;
-}
-
-//
 // Add worn weapon
 //
 [[nodiscard]] static auto wid_thing_info_worn(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, int width) -> bool
@@ -1696,10 +1659,6 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, i
       }
 
       if (wid_thing_info_dislikes(g, v, l, me, parent)) {
-        parent->log_empty_line(g);
-      }
-
-      if (wid_thing_info_likes(g, v, l, me, parent)) {
         parent->log_empty_line(g);
       }
 

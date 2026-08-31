@@ -139,6 +139,7 @@
   if (!test_load_potion_levitation_player_move_fail2()) { return false; }
   if (!test_load_potion_levitation_player_on_fire()) { return false; }
   if (!test_load_potion_levitation_player_rubble()) { return false; }
+  if (!test_load_potion_levitation_player_spiderweb()) { return false; }
   if (!test_load_potion_levitation_player_water()) { return false; }
   if (!test_load_potion_levitation_trampled_grass()) { return false; }
   if (!test_load_potion_protection()) { return false; }
@@ -167,6 +168,7 @@
   if (!test_load_spiderweb_monst_not_trapped_due_to_ethereal()) { return false; }
   if (!test_load_spiderweb_monst_not_trapped_due_to_levitation()) { return false; }
   if (!test_load_spiderweb_monst_trapped()) { return false; }
+  if (!test_load_spiderweb_player_trapped()) { return false; }
   if (!test_load_teleport_chasm_bad_luck()) { return false; }
   if (!test_load_teleport_chasm()) { return false; }
   if (!test_load_teleport_lava()) { return false; }

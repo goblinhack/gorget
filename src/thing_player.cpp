@@ -665,6 +665,7 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
       THING_DBG(g, v, l, me, "move to next: not possible, engulfed, lunge");
       (void) thing_lunge(g, v, l, me, to);
       topcon(UI_IMPORTANT_FMT_STR "You are engulfed and cannot move!" UI_RESET_FMT);
+      (void) level_tick_begin_requested(g, v, l, "player failed to move");
       return false;
     }
   }
@@ -680,6 +681,7 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
       THING_DBG(g, v, l, me, "move to next: not possible, ensnared, lunge");
       (void) thing_lunge(g, v, l, me, to);
       topcon(UI_IMPORTANT_FMT_STR "You are ensnared and cannot move!" UI_RESET_FMT);
+      (void) level_tick_begin_requested(g, v, l, "player failed to move");
       return false;
     }
   }
@@ -1332,9 +1334,7 @@ void player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
   //
   auto how_far_i_can_jump = thing_distance_jump(g, v, l, me);
   if (how_far_i_can_jump == 0) {
-    if (thing_is_player(me)) {
-      topcon(UI_WARN_FMT_STR "You are too tired to jump." UI_RESET_FMT);
-    }
+    topcon(UI_WARN_FMT_STR "You are too tired to jump." UI_RESET_FMT);
     return false;
   }
 
@@ -1480,13 +1480,9 @@ void player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 
   if (thing_move_to(g, v, l, me, move_next)) {
-    if (thing_is_player(me)) {
-      (void) level_tick_begin_requested(g, v, l, "player moved to next");
-    }
+    (void) level_tick_begin_requested(g, v, l, "player moved to next");
   } else {
-    if (thing_is_player(me)) {
-      (void) level_tick_begin_requested(g, v, l, "player faled moved to next location");
-    }
+    (void) level_tick_begin_requested(g, v, l, "player faled moved to next location");
   }
 
   return true;
