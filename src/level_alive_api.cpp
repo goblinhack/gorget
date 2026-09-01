@@ -1898,34 +1898,34 @@
   return level_alive(g, v, l, is_unused171, p);
 }
 
-[[nodiscard]] auto level_alive_is_unused172(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_alive_is_able_to_be_engulfed_blocked(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_alive(g, v, l, is_unused172, p);
+  return level_alive(g, v, l, is_able_to_be_engulfed_blocked, p);
 }
 
-[[nodiscard]] auto level_alive_is_unused173(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_alive_is_able_to_be_ensnared_blocked(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_alive(g, v, l, is_unused173, p);
+  return level_alive(g, v, l, is_able_to_be_ensnared_blocked, p);
 }
 
-[[nodiscard]] auto level_alive_is_unused174(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_alive_is_active_when_worn(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_alive(g, v, l, is_unused174, p);
+  return level_alive(g, v, l, is_active_when_worn, p);
 }
 
-[[nodiscard]] auto level_alive_is_unused175(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_alive_is_leather(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_alive(g, v, l, is_unused175, p);
+  return level_alive(g, v, l, is_leather, p);
 }
 
-[[nodiscard]] auto level_alive_is_unused176(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_alive_is_boots(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_alive(g, v, l, is_unused176, p);
+  return level_alive(g, v, l, is_boots, p);
 }
 
 [[nodiscard]] auto level_alive_is_spider_giant(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp

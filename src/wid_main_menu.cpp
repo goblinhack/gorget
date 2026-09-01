@@ -111,6 +111,16 @@ void wid_main_menu_hide(Gamep g)
   return game_menu_new_game(g, w, x, y, button);
 }
 
+[[nodiscard]] static auto game_menu_daily_seed(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+{
+  con("Main menu: daily seed");
+  TRACE_INDENT();
+
+  game_seed_set(g, g_opt_seed_name_daily.c_str());
+
+  return game_menu_new_game(g, w, x, y, button);
+}
+
 [[nodiscard]] static auto game_menu_previous_seed(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   con("Main menu: previous seed");
@@ -183,6 +193,12 @@ void wid_main_menu_hide(Gamep g)
   if (s == "w" || s == "W") {
     (void) sound_play(g, "keypress");
     (void) game_menu_weekly_seed(g, nullptr, 0, 0, 0);
+    return true;
+  }
+
+  if (s == "d" || s == "D") {
+    (void) sound_play(g, "keypress");
+    (void) game_menu_daily_seed(g, nullptr, 0, 0, 0);
     return true;
   }
 
@@ -382,8 +398,19 @@ void wid_main_menu_select(Gamep g)
     }
   }
 
+  if (! g_opt_seed_name_daily.empty()) {
+    menu_height += 3;
+
+    if (game_seed_name_get(g) == g_opt_seed_name_daily) {
+      DBG("clear old seed as using 'daily seed'");
+      game_seed_clear(g);
+      game_seed_set(g, nullptr);
+    }
+  }
+
   if (! g_opt_seed_name_previous.empty()) {
-    if (g_opt_seed_name_previous != g_opt_seed_name_weekly) {
+    if ((g_opt_seed_name_previous != g_opt_seed_name_weekly) && //
+        (g_opt_seed_name_previous != g_opt_seed_name_daily)) {
       menu_height += 3;
 
       if (game_seed_name_get(g) == g_opt_seed_name_previous) {
@@ -395,9 +422,11 @@ void wid_main_menu_select(Gamep g)
   }
 
   auto str1       = "Weekly: seed " + g_opt_seed_name_weekly;
-  auto str2       = "Previous: seed " + g_opt_seed_name_previous;
+  auto str2       = "Daily: seed " + g_opt_seed_name_daily;
+  auto str3       = "Previous: seed " + g_opt_seed_name_previous;
   auto menu_width = std::max(static_cast< int >(str1.size()) + 6, static_cast< int >(UI_WID_POPUP_WIDTH_NORMAL));
   menu_width      = std::max(static_cast< int >(str2.size()) + 6, menu_width);
+  menu_width      = std::max(static_cast< int >(str3.size()) + 6, menu_width);
 
   auto y_at = 0;
 
@@ -438,6 +467,22 @@ void wid_main_menu_select(Gamep g)
     }
   }
   y_at += button_step;
+
+  if (! g_opt_seed_name_daily.empty()) {
+    TRACE();
+    auto *p = wid_main_menu_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_menu_button(g, p, "Daily Seed");
+
+    spoint const tl(0, y_at);
+    spoint const br(button_width, y_at + button_height);
+    wid_set_on_mouse_down(w, game_menu_daily_seed);
+    wid_set_pos(w, tl, br);
+    std::string const s = std::string(UI_HIGHLIGHT_FMT_STR) + std::string("D") + std::string(UI_RESET_FMT) + std::string("aily seed:")
+                        + std::string(UI_RESET_FMT) + std::string(" ") + g_opt_seed_name_daily;
+    wid_set_text(w, s);
+    y_at += button_step;
+  }
+
   if (! g_opt_seed_name_weekly.empty()) {
     TRACE();
     auto *p = wid_main_menu_window->wid_text_area->wid_text_area;
@@ -452,6 +497,7 @@ void wid_main_menu_select(Gamep g)
     wid_set_text(w, s);
     y_at += button_step;
   }
+
   if (! g_opt_seed_name_previous.empty()) {
     if (g_opt_seed_name_previous != g_opt_seed_name_weekly) {
       TRACE();

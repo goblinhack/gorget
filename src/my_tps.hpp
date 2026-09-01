@@ -18,6 +18,7 @@ auto tp_load_barrel() -> bool;
 auto tp_load_beam_of_energy() -> bool;
 auto tp_load_beam_of_fire() -> bool;
 auto tp_load_blitzhound() -> bool;
+auto tp_load_boots_spider() -> bool;
 auto tp_load_border() -> bool;
 auto tp_load_brazier() -> bool;
 auto tp_load_bridge() -> bool;

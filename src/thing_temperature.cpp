@@ -192,7 +192,7 @@ void tp_temperature_init(Tpp tp)
     tp_temperature_heat_capacity_set(tp, HEAT_CAPACITY_WOOD);
     heat_exchange_set = true;
   }
-  if (tp_is_flesh(tp)) {
+  if (tp_is_flesh(tp) || tp_is_leather(tp)) {
     tp_temperature_thermal_conductivity_set(tp, THERMAL_CONDUCTIVITY_HIGH);
     tp_temperature_heat_capacity_set(tp, HEAT_CAPACITY_FLESH);
     heat_exchange_set = true;

@@ -904,6 +904,43 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
   parent->log_empty_line(g);
 
   {
+    auto         out = thing_stat_mod_string(g, v, l, me, THING_STAT_STR);
+    auto        *w   = wid_new_bright_button(g, b, "Str");
+    spoint const tl(1, text->line_count);
+    spoint const br(10, text->line_count + 2);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, out);
+    wid_set_on_mouse_over_begin(w, wid_thing_info_stats_str_mouse_over_begin);
+    wid_set_on_mouse_over_end(w, wid_thing_info_stats_mouse_over_end);
+  }
+
+  {
+    auto         out = thing_stat_mod_string(g, v, l, me, THING_STAT_CON);
+    auto        *w   = wid_new_bright_button(g, b, "Con");
+    spoint const tl(11, text->line_count);
+    spoint const br(20, text->line_count + 2);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, out);
+    wid_set_on_mouse_over_begin(w, wid_thing_info_stats_con_mouse_over_begin);
+    wid_set_on_mouse_over_end(w, wid_thing_info_stats_mouse_over_end);
+  }
+
+  {
+    auto         out = thing_stat_mod_string(g, v, l, me, THING_STAT_DEX);
+    auto        *w   = wid_new_bright_button(g, b, "Dex");
+    spoint const tl(21, text->line_count);
+    spoint const br(30, text->line_count + 2);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, out);
+    wid_set_on_mouse_over_begin(w, wid_thing_info_stats_dex_mouse_over_begin);
+    wid_set_on_mouse_over_end(w, wid_thing_info_stats_mouse_over_end);
+  }
+
+  parent->log_empty_line(g);
+  parent->log_empty_line(g);
+  parent->log_empty_line(g);
+
+  {
     auto         out = thing_stat_mod_string(g, v, l, me, THING_STAT_DMG);
     auto        *w   = wid_new_bright_button(g, b, "Dmg");
     spoint const tl(1, text->line_count);
@@ -1225,6 +1262,7 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
           worn = true;
           break;
         }
+      case WORN_TYPE_BOOTS : [[fallthrough]];
       case WORN_TYPE_RING1 : [[fallthrough]];
       case WORN_TYPE_RING2 :
         {
@@ -1448,7 +1486,9 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
     }
 
     if (thing_is_worn(item)) {
-      if (thing_is_ring(item)) {
+      if (thing_is_boots(item)) {
+        line += "%%tile=icon_boots$";
+      } else if (thing_is_ring(item)) {
         line += "%%tile=icon_ring$";
       } else {
         line += "%%tile=icon_hand$";

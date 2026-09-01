@@ -1935,34 +1935,34 @@
   return level_flag(g, v, l, is_unused171, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_unused172_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_able_to_be_engulfed_blocked_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused172, p, me) != nullptr;
+  return level_flag(g, v, l, is_able_to_be_engulfed_blocked, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_unused173_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_able_to_be_ensnared_blocked_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused173, p, me) != nullptr;
+  return level_flag(g, v, l, is_able_to_be_ensnared_blocked, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_unused174_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_active_when_worn_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused174, p, me) != nullptr;
+  return level_flag(g, v, l, is_active_when_worn, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_unused175_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_leather_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused175, p, me) != nullptr;
+  return level_flag(g, v, l, is_leather, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_unused176_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_boots_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused176, p, me) != nullptr;
+  return level_flag(g, v, l, is_boots, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_spider_giant_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool

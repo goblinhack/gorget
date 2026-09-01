@@ -46,40 +46,40 @@
 //
 // Returns true/false on success/fail
 //
-[[nodiscard]] static auto thing_is_ensnared_try_set(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp ensnarer, bool val = true) -> bool
+[[nodiscard]] static auto thing_is_ensnared_try_set(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp ensnarer, bool val = true) -> bool
 {
-  if (t == nullptr) {
+  if (me == nullptr) {
     ERR("no thing pointer");
     return false;
   }
 
-  if (t->_is_ensnared == static_cast< int >(val)) {
+  if (me->_is_ensnared == static_cast< int >(val)) {
     return true;
   }
-  t->_is_ensnared = val;
+  me->_is_ensnared = val;
 
   if (val) {
     THING_DBG(g, v, l, ensnarer, "ensnarer");
     TRACE_INDENT();
-    THING_DBG(g, v, l, t, "ensnared");
+    THING_DBG(g, v, l, me, "ensnared");
     TRACE_INDENT();
   } else {
-    THING_DBG(g, v, l, t, "un-ensnared");
+    THING_DBG(g, v, l, me, "un-ensnared");
   }
 
   //
   // Reset animation
   //
-  thing_anim_init(g, v, l, t, THING_ANIM_IDLE);
+  thing_anim_init(g, v, l, me, THING_ANIM_IDLE);
 
   return true;
 }
 
-[[nodiscard]] auto thing_is_ensnared_try_unset(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool
+[[nodiscard]] auto thing_is_ensnared_try_unset(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
 {
   TRACE_DEBUG();
 
-  return thing_is_ensnared_try_set(g, v, l, t, nullptr, false);
+  return thing_is_ensnared_try_set(g, v, l, me, nullptr, false);
 }
 
 //
@@ -158,38 +158,48 @@
   return success;
 }
 
-[[nodiscard]] auto thing_is_able_to_ensnare(Thingp t) -> bool
+[[nodiscard]] auto thing_is_able_to_ensnare(Thingp me) -> bool
 {
   TRACE_DEBUG();
 
-  if (t == nullptr) {
+  if (me == nullptr) {
     ERR("no thing pointer");
     return false;
   }
 
-  if (thing_is_dead(t)) {
+  if (thing_is_dead(me)) {
     return false;
   }
 
-  return tp_flag(thing_tp(t), is_able_to_ensnare) != 0;
+  return tp_flag(thing_tp(me), is_able_to_ensnare) != 0;
 }
 
-[[nodiscard]] auto thing_is_able_to_be_ensnared(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool
+[[nodiscard]] auto thing_is_able_to_be_ensnared(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
 {
   TRACE_DEBUG();
 
-  if (t == nullptr) {
+  if (me == nullptr) {
     ERR("no thing pointer");
     return false;
   }
 
-  if (thing_is_ethereal(g, v, l, t)) {
+  if (thing_is_ethereal(g, v, l, me)) {
     return false;
   }
 
-  if (thing_is_levitating(g, v, l, t)) {
+  if (thing_is_levitating(g, v, l, me)) {
     return false;
   }
 
-  return tp_flag(thing_tp(t), is_able_to_be_ensnared) != 0;
+  //
+  // More specifically for spider boots
+  //
+  FOR_ALL_ACTIVE_ITEMS(g, v, l, me, item)
+  {
+    if (tp_flag(thing_tp(item), is_able_to_be_ensnared_blocked)) {
+      return false;
+    }
+  }
+
+  return tp_flag(thing_tp(me), is_able_to_be_ensnared) != 0;
 }

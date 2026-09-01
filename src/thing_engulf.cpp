@@ -48,17 +48,17 @@
 //
 // Returns true/false on success/fail
 //
-[[nodiscard]] static auto thing_is_engulfed_try_set(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp engulfer, bool val = true) -> bool
+[[nodiscard]] static auto thing_is_engulfed_try_set(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp engulfer, bool val = true) -> bool
 {
-  if (t == nullptr) {
+  if (me == nullptr) {
     ERR("no thing pointer");
     return false;
   }
 
-  if (t->_is_engulfed == static_cast< int >(val)) {
+  if (me->_is_engulfed == static_cast< int >(val)) {
     return true;
   }
-  t->_is_engulfed = val;
+  me->_is_engulfed = val;
 
   //
   // Attempt the engulf. It can fail.
@@ -69,39 +69,39 @@
     //
     THING_DBG(g, v, l, engulfer, "engulfer");
     TRACE_INDENT();
-    THING_DBG(g, v, l, t, "to be engulfed");
+    THING_DBG(g, v, l, me, "to be engulfed");
     TRACE_INDENT();
 
-    if (! thing_on_engulf_request(g, v, l, t, engulfer)) {
+    if (! thing_on_engulf_request(g, v, l, me, engulfer)) {
       //
       // Engulf failed
       //
-      THING_DBG(g, v, l, t, "engulf failed");
-      t->_is_engulfed = false;
+      THING_DBG(g, v, l, me, "engulf failed");
+      me->_is_engulfed = false;
       return false;
     }
 
     //
     // Reset animation
     //
-    THING_DBG(g, v, l, t, "engulf success");
-    thing_anim_init(g, v, l, t, THING_ANIM_IDLE);
+    THING_DBG(g, v, l, me, "engulf success");
+    thing_anim_init(g, v, l, me, THING_ANIM_IDLE);
   } else {
     //
     // Un-engulfed
     //
-    THING_DBG(g, v, l, t, "un-engulf success");
-    thing_anim_init(g, v, l, t, THING_ANIM_IDLE);
+    THING_DBG(g, v, l, me, "un-engulf success");
+    thing_anim_init(g, v, l, me, THING_ANIM_IDLE);
   }
 
   return true;
 }
 
-[[nodiscard]] auto thing_is_engulfed_try_unset(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool
+[[nodiscard]] auto thing_is_engulfed_try_unset(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
 {
   TRACE_DEBUG();
 
-  return thing_is_engulfed_try_set(g, v, l, t, nullptr, false);
+  return thing_is_engulfed_try_set(g, v, l, me, nullptr, false);
 }
 
 //
@@ -290,38 +290,45 @@
   return false;
 }
 
-[[nodiscard]] auto thing_is_able_to_engulf(Thingp t) -> bool
+[[nodiscard]] auto thing_is_able_to_engulf(Thingp me) -> bool
 {
   TRACE_DEBUG();
 
-  if (t == nullptr) {
+  if (me == nullptr) {
     ERR("no thing pointer");
     return false;
   }
 
-  if (thing_is_dead(t)) {
+  if (thing_is_dead(me)) {
     return false;
   }
 
-  return tp_flag(thing_tp(t), is_able_to_engulf) != 0;
+  return tp_flag(thing_tp(me), is_able_to_engulf) != 0;
 }
 
-[[nodiscard]] auto thing_is_able_to_be_engulfed(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool
+[[nodiscard]] auto thing_is_able_to_be_engulfed(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
 {
   TRACE_DEBUG();
 
-  if (t == nullptr) {
+  if (me == nullptr) {
     ERR("no thing pointer");
     return false;
   }
 
-  if (thing_is_ethereal(g, v, l, t)) {
+  if (thing_is_ethereal(g, v, l, me)) {
     return false;
   }
 
-  if (thing_is_levitating(g, v, l, t)) {
+  if (thing_is_levitating(g, v, l, me)) {
     return false;
   }
 
-  return tp_flag(thing_tp(t), is_able_to_be_engulfed) != 0;
+  FOR_ALL_ACTIVE_ITEMS(g, v, l, me, item)
+  {
+    if (tp_flag(thing_tp(item), is_able_to_be_engulfed_blocked)) {
+      return false;
+    }
+  }
+
+  return tp_flag(thing_tp(me), is_able_to_be_engulfed) != 0;
 }

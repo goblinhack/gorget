@@ -490,7 +490,9 @@ void wid_collect_show(Gamep g, Levelsp v, Levelp l, Thingp player, std::vector< 
         }
 
         if (thing_is_worn(item)) {
-          if (thing_is_ring(item)) {
+          if (thing_is_boots(item)) {
+            line += "%%tile=icon_boots$";
+          } else if (thing_is_ring(item)) {
             line += "%%tile=icon_ring$";
           } else {
             line += "%%tile=icon_hand$";

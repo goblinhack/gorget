@@ -49,6 +49,7 @@ static auto tp_ring_war_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> s
   tp_flag_set(tp, is_able_to_be_teleported);
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
+  tp_flag_set(tp, is_active_when_worn);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_auto_wear);
   tp_flag_set(tp, is_blit_centered);

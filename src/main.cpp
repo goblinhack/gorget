@@ -129,6 +129,10 @@ static void parse_args(int argc, char *argv[])
         g_opt_seed_name = g_opt_seed_name_weekly;
       }
 
+      if (g_opt_seed_name == "daily") {
+        g_opt_seed_name = g_opt_seed_name_daily;
+      }
+
       i++;
       continue;
     }
@@ -310,6 +314,16 @@ static void parse_args(int argc, char *argv[])
     auto       seed_str    = std::format("weekly:{:%Y:%U}", now);
     auto       h           = string_to_hash(seed_str);
     g_opt_seed_name_weekly = os_random_name_from_hash(h, UI_MAX_SEED_NAME_LEN);
+  }
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Set the daily seed
+  //////////////////////////////////////////////////////////////////////////////
+  {
+    const auto now        = std::chrono::system_clock::now();
+    auto       seed_str   = std::format("daily:{:%Y:%U:%D}", now);
+    auto       h          = string_to_hash(seed_str);
+    g_opt_seed_name_daily = os_random_name_from_hash(h, UI_MAX_SEED_NAME_LEN);
   }
 
   //////////////////////////////////////////////////////////////////////////////

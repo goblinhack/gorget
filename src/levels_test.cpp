@@ -133,11 +133,12 @@ void levels_test(Gamep g)
     Overrides overrides;
 
     overrides[ 'M' ] = [](char /*c*/, bpoint /*p*/) -> Tpp { return tp_find_mand("spiderweb"); };
+    overrides[ '$' ] = [](char /*c*/, bpoint /*p*/) -> Tpp { return tp_find_mand("boots_spider"); };
 
     level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "spiderweb", __FUNCTION__, __LINE__, overrides, 0,
                     /* line */ (const char *) "XXXXXXXXXXXXXX",
                     /* line */ (const char *) "XxxxxxxxxxxxxX",
-                    /* line */ (const char *) "X.@wwwwwwwwM.X",
+                    /* line */ (const char *) "X.@$wwwwwww..X",
                     /* line */ (const char *) "XxxxxxxxxxxxxX",
                     /* line */ (const char *) "XXXXXXXXXXXXXX",
                     /* end */ nullptr);

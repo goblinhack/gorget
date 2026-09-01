@@ -2434,7 +2434,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_unused171) != 0;
 }
 
-[[nodiscard]] auto thing_is_unused172(Thingp t) -> bool
+[[nodiscard]] auto thing_is_able_to_be_engulfed_blocked(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2442,10 +2442,10 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused172) != 0;
+  return tp_flag(thing_tp(t), is_able_to_be_engulfed_blocked) != 0;
 }
 
-[[nodiscard]] auto thing_is_unused173(Thingp t) -> bool
+[[nodiscard]] auto thing_is_able_to_be_ensnared_blocked(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2453,10 +2453,10 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused173) != 0;
+  return tp_flag(thing_tp(t), is_able_to_be_ensnared_blocked) != 0;
 }
 
-[[nodiscard]] auto thing_is_unused174(Thingp t) -> bool
+[[nodiscard]] auto thing_is_active_when_worn(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2464,10 +2464,10 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused174) != 0;
+  return tp_flag(thing_tp(t), is_active_when_worn) != 0;
 }
 
-[[nodiscard]] auto thing_is_unused175(Thingp t) -> bool
+[[nodiscard]] auto thing_is_leather(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2475,10 +2475,10 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused175) != 0;
+  return tp_flag(thing_tp(t), is_leather) != 0;
 }
 
-[[nodiscard]] auto thing_is_unused176(Thingp t) -> bool
+[[nodiscard]] auto thing_is_boots(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2486,7 +2486,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused176) != 0;
+  return tp_flag(thing_tp(t), is_boots) != 0;
 }
 
 [[nodiscard]] auto thing_is_spider_giant(Thingp t) -> bool

@@ -1935,34 +1935,34 @@
   return level_flag_cached(g, v, l, is_unused171, p);
 }
 
-[[nodiscard]] auto level_is_unused172_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_able_to_be_engulfed_blocked_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused172, p);
+  return level_flag_cached(g, v, l, is_able_to_be_engulfed_blocked, p);
 }
 
-[[nodiscard]] auto level_is_unused173_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_able_to_be_ensnared_blocked_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused173, p);
+  return level_flag_cached(g, v, l, is_able_to_be_ensnared_blocked, p);
 }
 
-[[nodiscard]] auto level_is_unused174_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_active_when_worn_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused174, p);
+  return level_flag_cached(g, v, l, is_active_when_worn, p);
 }
 
-[[nodiscard]] auto level_is_unused175_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_leather_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused175, p);
+  return level_flag_cached(g, v, l, is_leather, p);
 }
 
-[[nodiscard]] auto level_is_unused176_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_boots_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused176, p);
+  return level_flag_cached(g, v, l, is_boots, p);
 }
 
 [[nodiscard]] auto level_is_spider_giant_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

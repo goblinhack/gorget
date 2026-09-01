@@ -1897,34 +1897,34 @@
   return tp_flag(tp, is_unused171) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused172(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_able_to_be_engulfed_blocked(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused172) != 0;
+  return tp_flag(tp, is_able_to_be_engulfed_blocked) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused173(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_able_to_be_ensnared_blocked(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused173) != 0;
+  return tp_flag(tp, is_able_to_be_ensnared_blocked) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused174(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_active_when_worn(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused174) != 0;
+  return tp_flag(tp, is_active_when_worn) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused175(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_leather(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused175) != 0;
+  return tp_flag(tp, is_leather) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused176(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_boots(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused176) != 0;
+  return tp_flag(tp, is_boots) != 0;
 }
 
 [[nodiscard]] auto tp_is_spider_giant(Tpp tp) -> bool

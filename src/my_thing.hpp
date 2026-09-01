@@ -786,6 +786,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_inventory_remove(Gamep g, Levelsp v, Levelp l, Thingp drop_item, Thingp owner) -> bool;
 [[nodiscard]] auto thing_is_able_to_be_buffed(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_be_engulfed(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
+[[nodiscard]] auto thing_is_able_to_be_ensnared_blocked(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_be_ensnared(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_choose_targets(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_collect_items(Thingp t) -> bool;
@@ -812,6 +813,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_able_to_shove(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_throw(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_wear_items(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_active_when_worn(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_always_hot(Thingp me) -> bool;
 [[nodiscard]] auto thing_is_amphibious(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_animated_can_hflip(Thingp t) -> bool;
@@ -843,6 +845,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_blit_square_outlined(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_blit_when_obscured_faded(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_blit_when_obscured_outline(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_boots(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_border(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_brazier(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_bridge(Thingp t) -> bool;
@@ -933,6 +936,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_key(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_kobalos(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_lava_bg(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_leather(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_level_closed_icon(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_level_curr(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_level_final_icon(Thingp t) -> bool;
@@ -1106,11 +1110,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused17(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused170(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused171(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused172(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused173(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused174(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused175(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused176(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_able_to_be_engulfed_blocked(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused18(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused188(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused19(Thingp t) -> bool;
@@ -1678,7 +1678,7 @@ void thing_display(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp
       for (auto _n_ = 0; _n_ < THING_INVENTORY_MAX; _n_++)                                                                                      \
         if (AUTO(_slot_) = &_ext_->inventory.slots[ _n_ ])                                                                                      \
           if (AUTO(_item_) = thing_find_optional(g, v, _slot_->item_id))                                                                        \
-            if ((thing_is_worn(_item_) && thing_is_ring(_item_)) || thing_is_item_active_when_carried(_item_) /* horseshoe */)
+            if ((thing_is_worn(_item_) && thing_is_active_when_worn(_item_)) || thing_is_item_active_when_carried(_item_) /* horseshoe */)
 
 #define THING_DBG IF_DEBUG thing_dbg
 #define LEVEL_DBG IF_DEBUG level_dbg

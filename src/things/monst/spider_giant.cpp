@@ -18,18 +18,18 @@ static auto tp_spider_giant_description_get(Gamep g, Levelsp v, Levelp l, Thingp
   TRACE();
 
   if (thing_is_dead(me)) {
-    return "dead spider";
+    return "dead giant spider";
   }
-  return "spider";
+  return "giant spider";
 }
 
 static auto tp_spider_giant_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
-  return                                                                                                       //
-      UI_INFO1_FMT_STR "Giant spider. Need I say more than describe the green gore dripping from its fangs?\n" //
-      UI_INFO2_FMT_STR "Watch out for jump attacks.\n";                                                        //
+  return                                                                                                                    //
+      UI_INFO1_FMT_STR "Green ichor drips from the fangs of this uncomfortably large spider. One might even say giant...\n" //
+      UI_INFO2_FMT_STR "It moves silently with its many eyes watching you over intently. It seems poised to jump.\n";       //
 }
 
 static auto tp_spider_giant_assess_tp(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp me) -> ThingEnvironType

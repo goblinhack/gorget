@@ -351,6 +351,28 @@ static auto thing_wear_item_do(Gamep g, Levelsp v, Levelp l, Thingp owner, Thing
     return thing_wear_item_slot(g, v, l, owner, item, WORN_TYPE_WEAPON, e);
   }
 
+  if (thing_is_boots(item)) {
+    auto *existing_item = thing_worn_get(g, v, l, owner, WORN_TYPE_BOOTS);
+    if (existing_item != nullptr) {
+      //
+      // Already worn
+      //
+      if (existing_item == item) {
+        THING_DBG(g, v, l, owner, "wield (already worn): %s", s.c_str());
+        return true;
+      }
+
+      auto s2 = to_string(g, v, l, existing_item);
+      THING_DBG(g, v, l, owner, "strip boots: %s", s2.c_str());
+      TRACE_INDENT();
+
+      if (! thing_strip_item(g, v, l, owner, existing_item, e)) {
+        return false;
+      }
+    }
+    return thing_wear_item_slot(g, v, l, owner, item, WORN_TYPE_BOOTS, e);
+  }
+
   if (thing_is_ring(item)) {
     auto *ring1 = thing_worn_get(g, v, l, owner, WORN_TYPE_RING1);
     auto *ring2 = thing_worn_get(g, v, l, owner, WORN_TYPE_RING2);
@@ -410,6 +432,12 @@ static auto thing_wear_item_do(Gamep g, Levelsp v, Levelp l, Thingp owner, Thing
 
   if (thing_is_weapon(item)) {
     if (thing_worn_get(g, v, l, owner, WORN_TYPE_WEAPON) == nullptr) {
+      return thing_wear_item(g, v, l, owner, item, e);
+    }
+  }
+
+  if (thing_is_boots(item)) {
+    if (thing_worn_get(g, v, l, owner, WORN_TYPE_BOOTS) == nullptr) {
       return thing_wear_item(g, v, l, owner, item, e);
     }
   }

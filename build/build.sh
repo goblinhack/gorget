@@ -968,6 +968,7 @@ echo \$0: all done
             echo "  ./${TARGET} --debug          # enable a reasonable level of debugging"
             echo "  ./${TARGET} --debug2         # include level generation debugging"
             echo "  ./${TARGET} --seed weekly    # to play the weekly seed"
+            echo "  ./${TARGET} --seed daily     # to play the daily seed"
             echo "  ./${TARGET} --seed someseed  # to play a specific seed"
             echo "  ./${TARGET} --level <n>      # to start at level number <n>"
             echo "  ./${TARGET} --quickstart     # to jump past the initial menus"

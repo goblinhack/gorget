@@ -17,18 +17,17 @@ static auto tp_spider_baby_description_get(Gamep g, Levelsp v, Levelp l, Thingp 
   TRACE();
 
   if (thing_is_dead(me)) {
-    return "dead spider_baby";
+    return "dead baby spider";
   }
-  return "spider_baby";
+  return "baby spider";
 }
 
 static auto tp_spider_baby_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
-  return                                                             //
-      UI_INFO1_FMT_STR "Baby giant spider. One day it will feast.\n" //
-      UI_INFO2_FMT_STR "Watch out for baby jump attacks.\n";         //
+  return                                                                                                     //
+      UI_INFO1_FMT_STR "Baby giant spider. Cute but deadly. One day its fangs will feast. Maybe today...\n"; //
 }
 
 static auto tp_spider_baby_assess_tp(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp me) -> ThingEnvironType

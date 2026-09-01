@@ -304,11 +304,11 @@
       list_macro(is_unused17, "is_unused17"),                                               /* newline */                                       \
       list_macro(is_unused170, "is_unused170"),                                             /* newline */                                       \
       list_macro(is_unused171, "is_unused171"),                                             /* newline */                                       \
-      list_macro(is_unused172, "is_unused172"),                                             /* newline */                                       \
-      list_macro(is_unused173, "is_unused173"),                                             /* newline */                                       \
-      list_macro(is_unused174, "is_unused174"),                                             /* newline */                                       \
-      list_macro(is_unused175, "is_unused175"),                                             /* newline */                                       \
-      list_macro(is_unused176, "is_unused176"),                                             /* newline */                                       \
+      list_macro(is_able_to_be_engulfed_blocked, "is_able_to_be_engulfed_blocked"),                                             /* newline */                                       \
+      list_macro(is_able_to_be_ensnared_blocked, "is_able_to_be_ensnared_blocked"),         /* newline */                                       \
+      list_macro(is_active_when_worn, "is_active_when_worn"),                               /* newline */                                       \
+      list_macro(is_leather, "is_leather"),                                                 /* newline */                                       \
+      list_macro(is_boots, "is_boots"),                                                     /* newline */                                       \
       list_macro(is_spider_giant, "is_spider_giant"),                                       /* newline */                                       \
       list_macro(is_spider_baby, "is_spider_baby"),                                         /* newline */                                       \
       list_macro(is_able_to_choose_targets, "is_able_to_choose_targets"),                   /* newline */                                       \
@@ -503,7 +503,8 @@ ENUM_DEF_H(BIOME_ENUM, BiomeType)
   list_macro(WORN_TYPE_NONE, "NONE"),         /* newline */                                                                                     \
       list_macro(WORN_TYPE_WEAPON, "weapon"), /* newline */                                                                                     \
       list_macro(WORN_TYPE_RING1, "ring1"),   /* newline */                                                                                     \
-      list_macro(WORN_TYPE_RING2, "ring2"),   /* newline */
+      list_macro(WORN_TYPE_RING2, "ring2"),   /* newline */                                                                                     \
+      list_macro(WORN_TYPE_BOOTS, "boots"),   /* newline */
 
 ENUM_DEF_H(WORN_TYPE_ENUM, WornType)
 
@@ -814,6 +815,7 @@ class Tp;
 [[nodiscard]] auto tp_init() -> bool;
 [[nodiscard]] auto tp_is_able_to_be_buffed(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_be_engulfed(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_able_to_be_ensnared_blocked(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_be_ensnared(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_be_levitated(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_be_teleported(Tpp tp) -> bool;
@@ -842,6 +844,7 @@ class Tp;
 [[nodiscard]] auto tp_is_able_to_shove(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_throw(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_wear_items(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_active_when_worn(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_amphibious(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_animated_can_hflip(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_animated_no_dir(Tpp tp) -> bool;
@@ -872,6 +875,7 @@ class Tp;
 [[nodiscard]] auto tp_is_blit_square_outlined(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_blit_when_obscured_faded(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_blit_when_obscured_outline(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_boots(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_border(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_brazier(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_bridge(Tpp tp) -> bool;
@@ -946,6 +950,7 @@ class Tp;
 [[nodiscard]] auto tp_is_kobalos(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_lava_bg(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_lava(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_leather(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_level_closed_icon(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_level_curr(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_level_final_icon(Tpp tp) -> bool;
@@ -1116,11 +1121,7 @@ class Tp;
 [[nodiscard]] auto tp_is_unused17(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused170(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused171(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused172(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused173(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused174(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused175(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused176(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_able_to_be_engulfed_blocked(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused18(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused188(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused19(Tpp tp) -> bool;
