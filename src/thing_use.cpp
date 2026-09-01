@@ -32,9 +32,6 @@ void thing_on_use_set(Tpp tp, thing_on_use_t callback)
     return false;
   }
   if (tp->on_use == nullptr) {
-    //
-    // Assume success
-    //
     return false;
   }
   if (! thing_is_player(user) && ! thing_is_monst(user)) {

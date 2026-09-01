@@ -30,6 +30,7 @@ auto tp_load_buff_stealth() -> bool;
 auto tp_load_buff_tireless() -> bool;
 auto tp_load_chasm() -> bool;
 auto tp_load_chest() -> bool;
+auto tp_load_chocolate_frog() -> bool;
 auto tp_load_cleaner() -> bool;
 auto tp_load_clover() -> bool;
 auto tp_load_copious_chest() -> bool;

@@ -44,6 +44,7 @@ static auto tp_horseshoe_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> 
   tp_flag_set(tp, is_able_to_be_teleported);
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
+  tp_flag_set(tp, is_active_when_carried);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_hit_outline_w_black_inside);
@@ -53,7 +54,6 @@ static auto tp_horseshoe_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> 
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_droppable);
   tp_flag_set(tp, is_inventory_item);
-  tp_flag_set(tp, is_item_active_when_carried);
   tp_flag_set(tp, is_item_mergeable);
   tp_flag_set(tp, is_item);
   tp_flag_set(tp, is_loggable);

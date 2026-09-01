@@ -39,6 +39,7 @@ auto test_load_brazier_shove_into_mob() -> bool;
 auto test_load_brazier_shove_ok() -> bool;
 auto test_load_bridge_on_fire_over_lava() -> bool;
 auto test_load_bridge_on_fire() -> bool;
+auto test_load_chocolate_frog() -> bool;
 auto test_load_drop_all_items() -> bool;
 auto test_load_drop_items() -> bool;
 auto test_load_drop_then_recollect_items() -> bool;

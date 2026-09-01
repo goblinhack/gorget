@@ -489,10 +489,10 @@
   return level_flag_cached(g, v, l, is_droppable, p);
 }
 
-[[nodiscard]] auto level_is_equippable_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_unused183_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_equippable, p);
+  return level_flag_cached(g, v, l, is_unused183, p);
 }
 
 [[nodiscard]] auto level_is_item_mergeable_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
@@ -1911,28 +1911,28 @@
   return level_flag_cached(g, v, l, is_unused167, p);
 }
 
-[[nodiscard]] auto level_is_unused168_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_chocolate_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused168, p);
+  return level_flag_cached(g, v, l, is_chocolate, p);
 }
 
-[[nodiscard]] auto level_is_unused169_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_tick_on_eaten_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused169, p);
+  return level_flag_cached(g, v, l, is_tick_on_eaten, p);
 }
 
-[[nodiscard]] auto level_is_unused170_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_able_to_eat_food_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused170, p);
+  return level_flag_cached(g, v, l, is_able_to_eat_food, p);
 }
 
-[[nodiscard]] auto level_is_unused171_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_edible_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused171, p);
+  return level_flag_cached(g, v, l, is_edible, p);
 }
 
 [[nodiscard]] auto level_is_able_to_be_engulfed_blocked_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
@@ -2091,10 +2091,10 @@
   return level_flag_cached(g, v, l, is_teleport_hazard, p);
 }
 
-[[nodiscard]] auto level_is_item_active_when_carried_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_active_when_carried_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_item_active_when_carried, p);
+  return level_flag_cached(g, v, l, is_active_when_carried, p);
 }
 
 [[nodiscard]] auto level_is_wearable_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

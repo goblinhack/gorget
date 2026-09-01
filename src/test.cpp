@@ -59,6 +59,7 @@ static std::initializer_list< std::string > tests = {
     "brazier_shove_ok",
     "bridge_on_fire_over_lava",
     "bridge_on_fire",
+    "chocolate_frog",
     "drop_all_items",
     "drop_items",
     "drop_then_recollect_items",

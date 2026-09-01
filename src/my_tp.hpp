@@ -114,7 +114,7 @@
       list_macro(is_effect_ripple, "is_effect_ripple"),                                     /* newline */                                       \
       list_macro(is_effect, "is_effect"),                                                   /* newline */                                       \
       list_macro(is_entrance, "is_entrance"),                                               /* newline */                                       \
-      list_macro(is_equippable, "is_equippable"),                                           /* newline */                                       \
+      list_macro(is_unused183, "is_unused183"),                                             /* newline */                                       \
       list_macro(is_ethereal, "is_ethereal"),                                               /* newline */                                       \
       list_macro(is_exit, "is_exit"),                                                       /* newline */                                       \
       list_macro(is_explosion, "is_explosion"),                                             /* newline */                                       \
@@ -135,7 +135,7 @@
       list_macro(is_indestructible, "is_indestructible"),                                   /* newline */                                       \
       list_macro(is_insectoid, "is_insectoid"),                                             /* newline */                                       \
       list_macro(is_inventory_item, "is_inventory_item"),                                   /* newline */                                       \
-      list_macro(is_item_active_when_carried, "is_item_active_when_carried"),               /* newline */                                       \
+      list_macro(is_active_when_carried, "is_active_when_carried"),                         /* newline */                                       \
       list_macro(is_item_mergeable, "is_item_mergeable"),                                   /* newline */                                       \
       list_macro(is_item, "is_item"),                                                       /* newline */                                       \
       list_macro(is_key, "is_key"),                                                         /* newline */                                       \
@@ -299,11 +299,11 @@
       list_macro(is_unused165, "is_unused165"),                                             /* newline */                                       \
       list_macro(is_unused166, "is_unused166"),                                             /* newline */                                       \
       list_macro(is_unused167, "is_unused167"),                                             /* newline */                                       \
-      list_macro(is_unused168, "is_unused168"),                                             /* newline */                                       \
-      list_macro(is_unused169, "is_unused169"),                                             /* newline */                                       \
+      list_macro(is_chocolate, "is_chocolate"),                                             /* newline */                                       \
+      list_macro(is_tick_on_eaten, "is_tick_on_eaten"),                                     /* newline */                                       \
       list_macro(is_unused17, "is_unused17"),                                               /* newline */                                       \
-      list_macro(is_unused170, "is_unused170"),                                             /* newline */                                       \
-      list_macro(is_unused171, "is_unused171"),                                             /* newline */                                       \
+      list_macro(is_able_to_eat_food, "is_able_to_eat_food"),                               /* newline */                                       \
+      list_macro(is_edible, "is_edible"),                                                   /* newline */                                       \
       list_macro(is_able_to_be_engulfed_blocked, "is_able_to_be_engulfed_blocked"),         /* newline */                                       \
       list_macro(is_able_to_be_ensnared_blocked, "is_able_to_be_ensnared_blocked"),         /* newline */                                       \
       list_macro(is_active_when_worn, "is_active_when_worn"),                               /* newline */                                       \
@@ -603,6 +603,7 @@ ENUM_DEF_H(THING_ANIM_ENUM, ThingAnimType)
       list_macro(THING_EVENT_OPEN, "open"),                          /* newline */                                                              \
       list_macro(THING_EVENT_THROWN, "thrown"),                      /* newline */                                                              \
       list_macro(THING_EVENT_USED, "used"),                          /* newline */                                                              \
+      list_macro(THING_EVENT_EATEN, "eaten"),                        /* newline */                                                              \
       list_macro(THING_EVENT_NONE, "none"),                          /* newline */                                                              \
       list_macro(THING_EVENT_GAME_OVER, "became-the-new-dark-lord"), /* newline */                                                              \
       list_macro(THING_EVENT_SPAWNED, "spawned"),                    /* newline */                                                              \
@@ -825,6 +826,7 @@ class Tp;
 [[nodiscard]] auto tp_is_able_to_collect_keys(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_crush_grass(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_drop_all_items_on_death(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_able_to_eat_food(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_eat_items(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_eat_treasure(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_engulf(Tpp tp) -> bool;
@@ -845,6 +847,7 @@ class Tp;
 [[nodiscard]] auto tp_is_able_to_shove(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_throw(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_wear_items(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_active_when_carried(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_active_when_worn(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_amphibious(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_animated_can_hflip(Tpp tp) -> bool;
@@ -885,6 +888,7 @@ class Tp;
 [[nodiscard]] auto tp_is_burnable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_chasm(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_chest(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_chocolate(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_collectable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_collision_circle_large(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_collision_circle_small(Tpp tp) -> bool;
@@ -915,12 +919,12 @@ class Tp;
 [[nodiscard]] auto tp_is_door_unlocked(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_droppable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_dungeon_entrance(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_edible(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_effect_attack(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_effect_blood(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_effect_ripple(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_effect(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_entrance(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_equippable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_ethereal(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_exit(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_explosion(Tpp tp) -> bool;
@@ -944,7 +948,6 @@ class Tp;
 [[nodiscard]] auto tp_is_indestructible(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_insectoid(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_inventory_item(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_item_active_when_carried(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_item_mergeable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_item(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_key(Tpp tp) -> bool;
@@ -1032,6 +1035,7 @@ class Tp;
 [[nodiscard]] auto tp_is_throwable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_tick_end_delay(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_tick_on_drop(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_tick_on_eaten(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_tick_on_strip(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_tick_on_use(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_tick_on_worn(Tpp tp) -> bool;
@@ -1117,12 +1121,9 @@ class Tp;
 [[nodiscard]] auto tp_is_unused165(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused166(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused167(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused168(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused169(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused17(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused170(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused171(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused18(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unused183(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused188(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused19(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused2(Tpp tp) -> bool;
@@ -1367,36 +1368,38 @@ void tp_z_depth_set(Tpp tp, MapZDepthType val);
 //
 // Higher values, means harder to heat
 //
-#define HEAT_CAPACITY_GEL       0.02f
-#define HEAT_CAPACITY_GOLD      0.1f
-#define HEAT_CAPACITY_STEEL     0.5f
-#define HEAT_CAPACITY_GLASS     0.8f
-#define HEAT_CAPACITY_STONE     0.8f
-#define HEAT_CAPACITY_WALL      0.8f
-#define HEAT_CAPACITY_AIR       1.0f
-#define HEAT_CAPACITY_WOOD      2.0f
-#define HEAT_CAPACITY_INSECTOID 2.0f
-#define HEAT_CAPACITY_FLESH     3.0f
-#define HEAT_CAPACITY_PAPER     3.0f
-#define HEAT_CAPACITY_WATER     4.0f
-#define HEAT_CAPACITY_GAS       14.0f
-#define HEAT_CAPACITY_MAX       15.0f
+#define HEAT_CAPACITY_GEL     0.02f
+#define HEAT_CAPACITY_GOLD    0.1f
+#define HEAT_CAPACITY_STEEL   0.5f
+#define HEAT_CAPACITY_GLASS   0.8f
+#define HEAT_CAPACITY_STONE   0.8f
+#define HEAT_CAPACITY_WALL    0.8f
+#define HEAT_CAPACITY_AIR     1.0f
+#define HEAT_CAPACITY_UNKNOWN 1.0f
+#define HEAT_CAPACITY_WOOD    2.0f
+#define HEAT_CAPACITY_FLESH   3.0f
+#define HEAT_CAPACITY_PAPER   3.0f
+#define HEAT_CAPACITY_WATER   4.0f
+#define HEAT_CAPACITY_GAS     14.0f
+#define HEAT_CAPACITY_MAX     15.0f
 
 //
 // Unit is weight per mass per kelvin
 //
-#define THERMAL_CONDUCTIVITY_AIR   0.025f
-#define THERMAL_CONDUCTIVITY_GAS   0.01f
-#define THERMAL_CONDUCTIVITY_WOOD  0.1f
-#define THERMAL_CONDUCTIVITY_GEL   0.2f
-#define THERMAL_CONDUCTIVITY_WATER 0.6f
-#define THERMAL_CONDUCTIVITY_GLASS 1.1f
-#define THERMAL_CONDUCTIVITY_FLESH 10.0f
-#define THERMAL_CONDUCTIVITY_STEEL 32.0f
-#define THERMAL_CONDUCTIVITY_STONE 70.0f
-#define THERMAL_CONDUCTIVITY_WALL  70.0f
-#define THERMAL_CONDUCTIVITY_HIGH  70.0f
-#define THERMAL_CONDUCTIVITY_GOLD  310.0f
+#define THERMAL_CONDUCTIVITY_AIR     0.025f
+#define THERMAL_CONDUCTIVITY_GAS     0.01f
+#define THERMAL_CONDUCTIVITY_WOOD    0.1f
+#define THERMAL_CONDUCTIVITY_GEL     0.2f
+#define THERMAL_CONDUCTIVITY_WATER   0.6f
+#define THERMAL_CONDUCTIVITY_GLASS   1.1f
+#define THERMAL_CONDUCTIVITY_UNKNOWN 1.0f
+#define THERMAL_CONDUCTIVITY_FLESH   10.0f
+#define THERMAL_CONDUCTIVITY_PAPER   10.0f
+#define THERMAL_CONDUCTIVITY_STEEL   32.0f
+#define THERMAL_CONDUCTIVITY_STONE   70.0f
+#define THERMAL_CONDUCTIVITY_WALL    70.0f
+#define THERMAL_CONDUCTIVITY_HIGH    70.0f
+#define THERMAL_CONDUCTIVITY_GOLD    310.0f
 
 //
 // Unit is in grams

@@ -754,6 +754,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_distance_vision(Gamep g, Levelsp v, Levelp l, Thingp t) -> int;
 [[nodiscard]] auto thing_drop_all(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e) -> bool;
 [[nodiscard]] auto thing_drop(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, ThingEvent &e) -> bool;
+[[nodiscard]] auto thing_eat(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, ThingEvent &e) -> bool;
 [[nodiscard]] auto thing_engulfer(Gamep g, Levelsp v, Levelp l, Thingp me) -> Thingp;
 [[nodiscard]] auto thing_ensnare(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp ensnarer) -> bool;
 [[nodiscard]] auto thing_ensnarer(Gamep g, Levelsp v, Levelp l, Thingp me) -> Thingp;
@@ -794,6 +795,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_able_to_collect_keys(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_crush_grass(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_drop_all_items_on_death(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_able_to_eat_food(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_eat_items(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_eat_treasure(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_engulf(Thingp t) -> bool;
@@ -814,6 +816,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_able_to_shove(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_throw(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_wear_items(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_active_when_carried(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_active_when_worn(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_always_hot(Thingp me) -> bool;
 [[nodiscard]] auto thing_is_amphibious(Thingp t) -> bool;
@@ -859,6 +862,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_carried(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_chasm(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_chest(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_chocolate(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_collectable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_collision_circle_large(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_collision_circle_small(Thingp t) -> bool;
@@ -898,6 +902,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_door_unlocked(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_droppable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_dungeon_entrance(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_edible(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_effect_attack(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_effect_blood(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_effect_ripple(Thingp t) -> bool;
@@ -905,7 +910,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_engulfed_try_unset(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
 [[nodiscard]] auto thing_is_ensnared_try_unset(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
 [[nodiscard]] auto thing_is_entrance(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_equippable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_ethereal(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
 [[nodiscard]] auto thing_is_exit(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_extinguished_on_death(Thingp t) -> bool;
@@ -931,7 +935,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_indestructible(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_insectoid(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_inventory_item(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_item_active_when_carried(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_item_mergeable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_item(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_key(Thingp t) -> bool;
@@ -1020,6 +1023,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_throwable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_tick_end_delay(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_tick_on_drop(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_tick_on_eaten(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_tick_on_strip(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_tick_on_use(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_tick_on_worn(Thingp t) -> bool;
@@ -1106,12 +1110,9 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused165(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused166(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused167(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused168(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused169(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused17(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused170(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused171(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused18(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_unused183(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused188(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused19(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused2(Thingp t) -> bool;
@@ -1678,7 +1679,7 @@ void thing_display(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp
       for (auto _n_ = 0; _n_ < THING_INVENTORY_MAX; _n_++)                                                                                      \
         if (AUTO(_slot_) = &_ext_->inventory.slots[ _n_ ])                                                                                      \
           if (AUTO(_item_) = thing_find_optional(g, v, _slot_->item_id))                                                                        \
-            if ((thing_is_worn(_item_) && thing_is_active_when_worn(_item_)) || thing_is_item_active_when_carried(_item_) /* horseshoe */)
+            if ((thing_is_worn(_item_) && thing_is_active_when_worn(_item_)) || thing_is_active_when_carried(_item_) /* horseshoe */)
 
 #define THING_DBG IF_DEBUG thing_dbg
 #define LEVEL_DBG IF_DEBUG level_dbg

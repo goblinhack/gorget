@@ -425,6 +425,7 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
         break;
       case THING_EVENT_NONE :             [[fallthrough]];
       case THING_EVENT_USED :             [[fallthrough]];
+      case THING_EVENT_EATEN :            [[fallthrough]];
       case THING_EVENT_OPEN :             [[fallthrough]];
       case THING_EVENT_GAME_OVER :        [[fallthrough]];
       case THING_EVENT_LIFESPAN_EXPIRED : [[fallthrough]];
@@ -471,14 +472,15 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
       case THING_EVENT_FIRE_DAMAGE : //
         topcon(UI_WARN_FMT_STR "You are burning." UI_RESET_FMT);
         break;
-      case THING_EVENT_NONE :             //
-      case THING_EVENT_OPEN :             //
-      case THING_EVENT_USED :             //
-      case THING_EVENT_LIFESPAN_EXPIRED : //
-      case THING_EVENT_GAME_OVER :        //
-      case THING_EVENT_CARRIED :          //
-      case THING_EVENT_CARRIED_MERGED :   //
-      case THING_EVENT_MELT :             //
+      case THING_EVENT_NONE :             [[fallthrough]];
+      case THING_EVENT_OPEN :             [[fallthrough]];
+      case THING_EVENT_USED :             [[fallthrough]];
+      case THING_EVENT_EATEN :            [[fallthrough]];
+      case THING_EVENT_LIFESPAN_EXPIRED : [[fallthrough]];
+      case THING_EVENT_GAME_OVER :        [[fallthrough]];
+      case THING_EVENT_CARRIED :          [[fallthrough]];
+      case THING_EVENT_CARRIED_MERGED :   [[fallthrough]];
+      case THING_EVENT_MELT :             [[fallthrough]];
       case THING_EVENT_USER_INITIATED :   [[fallthrough]];
       case THING_EVENT_SPAWNED :          [[fallthrough]];
       case THING_EVENT_ENUM_MAX : //
@@ -572,6 +574,7 @@ static void thing_damage_by_player(Gamep g, Levelsp v, Levelp l, Thingp it, Thin
       case THING_EVENT_NONE :             [[fallthrough]];
       case THING_EVENT_OPEN :             [[fallthrough]];
       case THING_EVENT_USED :             [[fallthrough]];
+      case THING_EVENT_EATEN :            [[fallthrough]];
       case THING_EVENT_LIFESPAN_EXPIRED : [[fallthrough]];
       case THING_EVENT_FALL :             [[fallthrough]];
       case THING_EVENT_GAME_OVER :        [[fallthrough]];
@@ -777,6 +780,7 @@ void thing_damage_apply(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
       case THING_EVENT_ENERGY_DAMAGE :    [[fallthrough]];
       case THING_EVENT_EXPLOSION_DAMAGE : [[fallthrough]];
       case THING_EVENT_USED :             [[fallthrough]];
+      case THING_EVENT_EATEN :            [[fallthrough]];
       case THING_EVENT_LIFESPAN_EXPIRED : [[fallthrough]];
       case THING_EVENT_FALL :             [[fallthrough]];
       case THING_EVENT_THROWN :           [[fallthrough]];
@@ -854,6 +858,7 @@ void thing_damage_apply(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
     switch (e.event_type) {
       case THING_EVENT_NONE :             [[fallthrough]];
       case THING_EVENT_USED :             [[fallthrough]];
+      case THING_EVENT_EATEN :            [[fallthrough]];
       case THING_EVENT_LIFESPAN_EXPIRED : [[fallthrough]];
       case THING_EVENT_FALL :             [[fallthrough]];
       case THING_EVENT_THROWN :           [[fallthrough]];

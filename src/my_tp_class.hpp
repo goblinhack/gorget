@@ -282,6 +282,7 @@ public:
   thing_on_drop_success_t       on_drop_success       = {};
   thing_on_use_weapon_request_t on_use_weapon_request = {};
   thing_on_use_t                on_use                = {};
+  thing_on_eaten_t              on_eaten              = {};
   thing_on_worn_request_t       on_worn_request       = {};
   thing_on_strip_request_t      on_strip_request      = {};
   thing_on_close_request_t      on_close_request      = {};

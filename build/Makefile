@@ -8,21 +8,22 @@ TOP=$(shell pwd)
 DIRS=src
 FORMAT_DIRS=$(DIRS) \
 	    src/things \
+	    src/things/boots \
 	    src/things/buffs \
 	    src/things/dungeon \
 	    src/things/effect \
 	    src/things/environ \
+	    src/things/food \
 	    src/things/internal/cursor \
-	    src/things/internal/things \
 	    src/things/internal/levels \
+	    src/things/internal/things \
 	    src/things/minion \
 	    src/things/mob \
 	    src/things/monst \
 	    src/things/player \
 	    src/things/potions \
-	    src/things/rings \
-	    src/things/boots \
 	    src/things/projectiles \
+	    src/things/rings \
 	    src/things/staff \
 	    src/things/traps \
 	    src/things/treasure \

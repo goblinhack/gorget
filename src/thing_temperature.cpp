@@ -197,14 +197,9 @@ void tp_temperature_init(Tpp tp)
     tp_temperature_heat_capacity_set(tp, HEAT_CAPACITY_FLESH);
     heat_exchange_set = true;
   }
-  if (tp_is_spiderweb(tp)) {
-    tp_temperature_thermal_conductivity_set(tp, THERMAL_CONDUCTIVITY_HIGH);
-    tp_temperature_heat_capacity_set(tp, HEAT_CAPACITY_PAPER);
-    heat_exchange_set = true;
-  }
-  if (tp_is_insectoid(tp)) {
-    tp_temperature_thermal_conductivity_set(tp, THERMAL_CONDUCTIVITY_HIGH);
-    tp_temperature_heat_capacity_set(tp, HEAT_CAPACITY_INSECTOID);
+  if (tp_is_spiderweb(tp) || tp_is_chocolate(tp) || tp_is_insectoid(tp) || tp_is_edible(tp)) {
+    tp_temperature_thermal_conductivity_set(tp, THERMAL_CONDUCTIVITY_UNKNOWN);
+    tp_temperature_heat_capacity_set(tp, HEAT_CAPACITY_UNKNOWN);
     heat_exchange_set = true;
   }
   if (tp_is_slime(tp)) {

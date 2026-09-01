@@ -489,10 +489,10 @@
   return level_count(g, v, l, is_droppable, p);
 }
 
-[[nodiscard]] auto level_count_is_equippable(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_unused183(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_equippable, p);
+  return level_count(g, v, l, is_unused183, p);
 }
 
 [[nodiscard]] auto level_count_is_item_mergeable(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
@@ -1875,28 +1875,28 @@
   return level_count(g, v, l, is_unused167, p);
 }
 
-[[nodiscard]] auto level_count_is_unused168(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_chocolate(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused168, p);
+  return level_count(g, v, l, is_chocolate, p);
 }
 
-[[nodiscard]] auto level_count_is_unused169(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_tick_on_eaten(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused169, p);
+  return level_count(g, v, l, is_tick_on_eaten, p);
 }
 
-[[nodiscard]] auto level_count_is_unused170(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_able_to_eat_food(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused170, p);
+  return level_count(g, v, l, is_able_to_eat_food, p);
 }
 
-[[nodiscard]] auto level_count_is_unused171(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_edible(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused171, p);
+  return level_count(g, v, l, is_edible, p);
 }
 
 [[nodiscard]] auto level_count_is_able_to_be_engulfed_blocked(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
@@ -2055,10 +2055,10 @@
   return level_count(g, v, l, is_teleport_hazard, p);
 }
 
-[[nodiscard]] auto level_count_is_item_active_when_carried(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_active_when_carried(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_item_active_when_carried, p);
+  return level_count(g, v, l, is_active_when_carried, p);
 }
 
 [[nodiscard]] auto level_count_is_wearable(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t

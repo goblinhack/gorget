@@ -489,10 +489,10 @@
   return level_flag(g, v, l, is_droppable, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_equippable_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_unused183_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_equippable, p, me) != nullptr;
+  return level_flag(g, v, l, is_unused183, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_item_mergeable_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
@@ -1911,28 +1911,28 @@
   return level_flag(g, v, l, is_unused167, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_unused168_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_chocolate_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused168, p, me) != nullptr;
+  return level_flag(g, v, l, is_chocolate, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_unused169_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_tick_on_eaten_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused169, p, me) != nullptr;
+  return level_flag(g, v, l, is_tick_on_eaten, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_unused170_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_able_to_eat_food_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused170, p, me) != nullptr;
+  return level_flag(g, v, l, is_able_to_eat_food, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_unused171_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_edible_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused171, p, me) != nullptr;
+  return level_flag(g, v, l, is_edible, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_able_to_be_engulfed_blocked_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
@@ -2091,10 +2091,10 @@
   return level_flag(g, v, l, is_teleport_hazard, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_item_active_when_carried_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_active_when_carried_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_item_active_when_carried, p, me) != nullptr;
+  return level_flag(g, v, l, is_active_when_carried, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_wearable_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool

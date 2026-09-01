@@ -439,6 +439,7 @@ static bool tp_player_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker, 
   tp_flag_set(tp, is_able_to_collect_items);
   tp_flag_set(tp, is_able_to_collect_keys);
   tp_flag_set(tp, is_able_to_crush_grass);
+  tp_flag_set(tp, is_able_to_eat_food);
   tp_flag_set(tp, is_able_to_fall_repeatedly);
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);

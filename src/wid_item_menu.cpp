@@ -158,6 +158,57 @@ static Thingp g_item;
   return true;
 }
 
+[[nodiscard]] static auto wid_item_menu_eat(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+{
+  TRACE();
+
+  auto *v = game_levels_get(g);
+  if (v == nullptr) [[unlikely]] {
+    return false;
+  }
+
+  auto *l = game_level_get(g, v);
+  if (l == nullptr) [[unlikely]] {
+    return false;
+  }
+
+  auto *player = thing_player(g);
+  if (player == nullptr) [[unlikely]] {
+    return false;
+  }
+
+  auto *item = g_item;
+  if (item == nullptr) {
+    return false;
+  }
+
+  if (level_is_level_select(g, v, l)) {
+    topcon(UI_WARN_FMT_STR "You can't eat things here!" UI_RESET_FMT);
+    (void) sound_play(g, "error");
+    return false;
+  }
+
+  ThingEvent e {
+      .reason     = "eater atr item",           //
+      .event_type = THING_EVENT_USER_INITIATED, //
+      .source     = player,                     //
+  };
+
+  if (! thing_eat(g, v, l, player, item, e)) {
+    (void) sound_play(g, "error");
+    return false;
+  }
+
+  (void) wid_item_menu_destroy();
+
+  //
+  // Just go back to playing
+  //
+  game_state_reset(g, "ate item");
+
+  return true;
+}
+
 [[nodiscard]] static auto wid_item_menu_use(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
@@ -180,6 +231,10 @@ static Thingp g_item;
   auto *item = g_item;
   if (item == nullptr) {
     return false;
+  }
+
+  if (thing_is_edible(item)) {
+    return wid_item_menu_eat(g, w, x, y, button);
   }
 
   if (level_is_level_select(g, v, l)) {
@@ -243,20 +298,6 @@ static Thingp g_item;
 
   g_thing_throw_id = item->id;
   game_state_change(g, STATE_THROW_ITEM, "choose a target");
-
-  return true;
-}
-
-[[nodiscard]] static auto wid_item_menu_equip(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
-{
-  TRACE();
-  topcon("TODO equip");
-  (void) wid_item_menu_destroy();
-
-  //
-  // Just go back to playing
-  //
-  game_state_change(g, STATE_PLAYING, "close inventory");
 
   return true;
 }
@@ -445,6 +486,11 @@ static Thingp g_item;
                 (void) sound_play(g, "keypress");
                 (void) wid_item_menu_use(g, nullptr, 0, 0, 0);
                 return true;
+              case 'e' :
+              case 'E' :
+                (void) sound_play(g, "keypress");
+                (void) wid_item_menu_eat(g, nullptr, 0, 0, 0);
+                return true;
               case 't' :
               case 'T' :
                 (void) sound_play(g, "keypress");
@@ -459,11 +505,6 @@ static Thingp g_item;
               case 'W' :
                 (void) sound_play(g, "keypress");
                 (void) wid_item_menu_wield_toggle(g, nullptr, 0, 0, 0);
-                return true;
-              case 'e' :
-              case 'E' :
-                (void) sound_play(g, "keypress");
-                (void) wid_item_menu_equip(g, nullptr, 0, 0, 0);
                 return true;
               case 'b' :
               case 'B' :
@@ -510,7 +551,7 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item, bool from_inventory)
     menu_height += box_step;
   }
 
-  if (thing_is_equippable(item)) {
+  if (thing_is_edible(item)) {
     menu_height += box_step;
   }
 
@@ -576,16 +617,21 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item, bool from_inventory)
     y_at += box_step;
   }
 
-  if (thing_is_equippable(item)) {
+  if (thing_is_edible(item)) {
     TRACE();
     auto *p = wid_item_menu_window->wid_text_area->wid_text_area;
-    auto *w = wid_new_menu_button(g, p, "Equip");
+    auto *w = wid_new_menu_button(g, p, "Use");
 
     spoint const tl(0, y_at);
     spoint const br(button_width, y_at + box_height);
-    wid_set_on_mouse_down(w, wid_item_menu_equip);
+
+    if (level_is_level_select(g, v, l)) {
+      wid_gray_out_button(g, w);
+    }
+
+    wid_set_on_mouse_down(w, wid_item_menu_eat);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, UI_HIGHLIGHT_FMT_STR "E" UI_FMT_STR "quip");
+    wid_set_text(w, UI_HIGHLIGHT_FMT_STR "U" UI_FMT_STR "se (eat)");
     y_at += box_step;
   }
 

@@ -487,10 +487,10 @@
   return tp_flag(tp, is_droppable) != 0;
 }
 
-[[nodiscard]] auto tp_is_equippable(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_unused183(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_equippable) != 0;
+  return tp_flag(tp, is_unused183) != 0;
 }
 
 [[nodiscard]] auto tp_is_item_mergeable(Tpp tp) -> bool
@@ -1873,28 +1873,28 @@
   return tp_flag(tp, is_unused167) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused168(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_chocolate(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused168) != 0;
+  return tp_flag(tp, is_chocolate) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused169(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_tick_on_eaten(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused169) != 0;
+  return tp_flag(tp, is_tick_on_eaten) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused170(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_able_to_eat_food(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused170) != 0;
+  return tp_flag(tp, is_able_to_eat_food) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused171(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_edible(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused171) != 0;
+  return tp_flag(tp, is_edible) != 0;
 }
 
 [[nodiscard]] auto tp_is_able_to_be_engulfed_blocked(Tpp tp) -> bool
@@ -2053,10 +2053,10 @@
   return tp_flag(tp, is_teleport_hazard) != 0;
 }
 
-[[nodiscard]] auto tp_is_item_active_when_carried(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_active_when_carried(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_item_active_when_carried) != 0;
+  return tp_flag(tp, is_active_when_carried) != 0;
 }
 
 [[nodiscard]] auto tp_is_wearable(Tpp tp) -> bool

@@ -83,6 +83,10 @@ using thing_on_use_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp user);
 auto               thing_on_use_set(Tpp tp, thing_on_use_t callback) -> void;
 [[nodiscard]] auto thing_on_use(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user) -> bool;
 
+using thing_on_eaten_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp eatenr);
+auto               thing_on_eaten_set(Tpp tp, thing_on_eaten_t callback) -> void;
+[[nodiscard]] auto thing_on_eaten(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp eatenr) -> bool;
+
 using thing_on_worn_request_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp owner);
 auto               thing_on_worn_request_set(Tpp tp, thing_on_worn_request_t callback) -> void;
 [[nodiscard]] auto thing_on_worn_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner) -> bool;
