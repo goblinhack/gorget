@@ -1104,7 +1104,7 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
       out = string_append_with_comma(out, "Ensnarer");
     }
   }
-  if (thing_is_able_to_jump(me)) {
+  if (thing_is_able_to_jump(g, v, l, me)) {
     if (! thing_is_player(me)) {
       out = string_append_with_comma(out, "Jumper");
     }
@@ -1133,6 +1133,19 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
     if (! thing_is_player(me)) {
       out = string_append_with_comma(out, "Combustible");
     }
+  }
+  if (! thing_is_able_to_be_ensnared(g, v, l, me)) {
+    if (! thing_is_player(me)) {
+      out = string_append_with_comma(out, "Snare-blocked");
+    }
+  }
+  if (! thing_is_able_to_be_engulfed(g, v, l, me)) {
+    if (! thing_is_player(me)) {
+      out = string_append_with_comma(out, "Engulf-blocked");
+    }
+  }
+  if (thing_is_able_to_jump_pounce(g, v, l, me)) {
+    out = string_append_with_comma(out, "Jump-pounce");
   }
   if (tp_attack_count_max_per_tick_get(tp) > 1) {
     out = string_sprintf_append_with_comma(out, "Multi-attack(%u)", tp_attack_count_max_per_tick_get(tp));

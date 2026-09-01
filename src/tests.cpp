@@ -33,6 +33,7 @@
   if (!test_load_beam_weapon_teleport()) { return false; }
   if (!test_load_beam_weapon_wall_turns_to_lava()) { return false; }
   if (!test_load_beam_weapon()) { return false; }
+  if (!test_load_boots_spider_player_spiderweb()) { return false; }
   if (!test_load_brazier_shove_chasm_twice()) { return false; }
   if (!test_load_brazier_shove_chasm()) { return false; }
   if (!test_load_brazier_shove_fail()) { return false; }
@@ -190,6 +191,8 @@
   if (!test_load_throw_item_potion_levitation_hard_landing()) { return false; }
   if (!test_load_throw_item_potion_levitation_soft_landing()) { return false; }
   if (!test_load_throw_item_potion_levitation()) { return false; }
+  if (!test_load_throw_item_potion_monst_can_move()) { return false; }
+  if (!test_load_throw_item_potion_monst_cannot_move()) { return false; }
   if (!test_load_throw_items()) { return false; }
   if (!test_load_trampled_grass()) { return false; }
   if (!test_load_wall()) { return false; }

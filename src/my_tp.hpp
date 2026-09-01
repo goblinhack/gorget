@@ -304,7 +304,7 @@
       list_macro(is_unused17, "is_unused17"),                                               /* newline */                                       \
       list_macro(is_unused170, "is_unused170"),                                             /* newline */                                       \
       list_macro(is_unused171, "is_unused171"),                                             /* newline */                                       \
-      list_macro(is_able_to_be_engulfed_blocked, "is_able_to_be_engulfed_blocked"),                                             /* newline */                                       \
+      list_macro(is_able_to_be_engulfed_blocked, "is_able_to_be_engulfed_blocked"),         /* newline */                                       \
       list_macro(is_able_to_be_ensnared_blocked, "is_able_to_be_ensnared_blocked"),         /* newline */                                       \
       list_macro(is_active_when_worn, "is_active_when_worn"),                               /* newline */                                       \
       list_macro(is_leather, "is_leather"),                                                 /* newline */                                       \
@@ -814,6 +814,7 @@ class Tp;
 [[nodiscard]] auto tp_id_get(Tpp tp) -> TpId;
 [[nodiscard]] auto tp_init() -> bool;
 [[nodiscard]] auto tp_is_able_to_be_buffed(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_able_to_be_engulfed_blocked(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_be_engulfed(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_be_ensnared_blocked(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_be_ensnared(Tpp tp) -> bool;
@@ -1121,7 +1122,6 @@ class Tp;
 [[nodiscard]] auto tp_is_unused17(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused170(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused171(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_able_to_be_engulfed_blocked(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused18(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused188(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused19(Tpp tp) -> bool;

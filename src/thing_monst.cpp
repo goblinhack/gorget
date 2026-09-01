@@ -579,7 +579,7 @@ static auto thing_monst_choose_something_we_can_wander_to(Gamep g, Levelsp v, Le
               //
               // If could jump, then abort the path walk
               //
-              if (thing_is_able_to_jump_pounce(me)) {
+              if (thing_is_able_to_jump_pounce(g, v, l, me)) {
                 THING_DBG(g, v, l, me, "jumped to nexthop; pounce?");
                 return false;
               }
@@ -616,7 +616,7 @@ static auto thing_monst_choose_something_we_can_wander_to(Gamep g, Levelsp v, Le
   }
 
   if (! thing_is_levitating(g, v, l, me)) {
-    if (thing_is_able_to_jump(me)) {
+    if (thing_is_able_to_jump(g, v, l, me)) {
       //
       // Jump over chasm?
       //

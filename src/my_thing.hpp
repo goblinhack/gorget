@@ -785,6 +785,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_inventory_item_mergeable(Gamep g, Levelsp v, Levelp l, Thingp a, Thingp b) -> bool;
 [[nodiscard]] auto thing_inventory_remove(Gamep g, Levelsp v, Levelp l, Thingp drop_item, Thingp owner) -> bool;
 [[nodiscard]] auto thing_is_able_to_be_buffed(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_able_to_be_engulfed_blocked(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_be_engulfed(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_be_ensnared_blocked(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_be_ensnared(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
@@ -801,8 +802,8 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_able_to_fall_sound(Thingp me) -> bool;
 [[nodiscard]] auto thing_is_able_to_fall(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
 [[nodiscard]] auto thing_is_able_to_fire_weapons(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_able_to_jump_pounce(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_able_to_jump(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_able_to_jump_pounce(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
+[[nodiscard]] auto thing_is_able_to_jump(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_lunge(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_move_diagonally(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_move_through_walls(Thingp t) -> bool;
@@ -1110,7 +1111,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused17(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused170(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused171(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_able_to_be_engulfed_blocked(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused18(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused188(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused19(Thingp t) -> bool;

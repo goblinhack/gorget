@@ -147,7 +147,7 @@ static auto thing_jump_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thingp
     return false;
   }
 
-  if (! thing_is_able_to_jump(me)) {
+  if (! thing_is_able_to_jump(g, v, l, me)) {
     return false;
   }
 
@@ -442,4 +442,44 @@ static auto thing_jump_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thingp
   }
 
   return tp_flag(thing_tp(t), is_obs_to_jumping_onto) != 0;
+}
+
+[[nodiscard]] auto thing_is_able_to_jump_pounce(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+
+  if (thing_is_dead(t)) {
+    return false;
+  }
+
+  if (thing_is_levitating(g, v, l, t)) {
+    return false;
+  }
+
+  return tp_flag(thing_tp(t), is_able_to_jump_pounce) != 0;
+}
+
+[[nodiscard]] auto thing_is_able_to_jump(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+
+  if (thing_is_dead(t)) {
+    return false;
+  }
+
+  if (thing_is_levitating(g, v, l, t)) {
+    return false;
+  }
+
+  return tp_flag(thing_tp(t), is_able_to_jump) != 0;
 }
