@@ -81,7 +81,6 @@ static bool tp_boots_spider_on_use(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
   tp_flag_set(tp, is_treasure);
   tp_flag_set(tp, is_wearable);
   tp_health_set(tp, "1d10");
-  tp_is_immune_to_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_name_a_or_an_set(tp, "spider boots");
   tp_name_apostrophize_set(tp, "spider boots'");
   tp_name_long_set(tp, "spider boots");

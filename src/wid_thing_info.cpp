@@ -1099,7 +1099,7 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
       out = string_append_with_comma(out, "Engulfer");
     }
   }
-  if (thing_is_able_to_engulf(me)) {
+  if (thing_is_able_to_ensnare(me)) {
     if (! thing_is_player(me)) {
       out = string_append_with_comma(out, "Ensnarer");
     }
@@ -1135,13 +1135,13 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
     }
   }
   if (! thing_is_able_to_be_ensnared(g, v, l, me)) {
-    if (! thing_is_player(me)) {
-      out = string_append_with_comma(out, "Snare-blocked");
+    if (thing_is_player(me) || thing_is_monst(me)) {
+      out = string_append_with_comma(out, "Snare-proof");
     }
   }
   if (! thing_is_able_to_be_engulfed(g, v, l, me)) {
-    if (! thing_is_player(me)) {
-      out = string_append_with_comma(out, "Engulf-blocked");
+    if (thing_is_player(me) || thing_is_monst(me)) {
+      out = string_append_with_comma(out, "Engulf-proof");
     }
   }
   if (thing_is_able_to_jump_pounce(g, v, l, me)) {
@@ -1483,7 +1483,7 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
     line += tp_name(item_tp);
     line += "$";
     line += " ";
-    line += thing_name_short(g, v, l, item);
+    line += thing_name_long(g, v, l, item);
 
     if (slot->count > 1) {
       line += " x";
