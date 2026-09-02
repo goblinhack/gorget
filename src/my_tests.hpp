@@ -194,6 +194,7 @@ auto test_load_throw_item_potion_levitation_soft_landing() -> bool;
 auto test_load_throw_item_potion_levitation() -> bool;
 auto test_load_throw_item_potion_monst_can_move() -> bool;
 auto test_load_throw_item_potion_monst_cannot_move() -> bool;
+auto test_load_throw_item_potion_monst_death() -> bool;
 auto test_load_throw_items() -> bool;
 auto test_load_trampled_grass() -> bool;
 auto test_load_wall() -> bool;

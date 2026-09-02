@@ -196,6 +196,7 @@
   if (!test_load_throw_item_potion_levitation()) { return false; }
   if (!test_load_throw_item_potion_monst_can_move()) { return false; }
   if (!test_load_throw_item_potion_monst_cannot_move()) { return false; }
+  if (!test_load_throw_item_potion_monst_death()) { return false; }
   if (!test_load_throw_items()) { return false; }
   if (!test_load_trampled_grass()) { return false; }
   if (!test_load_wall()) { return false; }

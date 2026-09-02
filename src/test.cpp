@@ -218,6 +218,7 @@ static std::initializer_list< std::string > tests = {
     "throw_item_potion_levitation",
     "throw_item_potion_monst_can_move",
     "throw_item_potion_monst_cannot_move",
+    "throw_item_potion_monst_death",
     "throw_items",
     "trampled_grass",
     "wall",
