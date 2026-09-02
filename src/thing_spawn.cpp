@@ -10,7 +10,9 @@
 #include "my_main.hpp"
 #include "my_thing.hpp"
 #include "my_thing_callbacks.hpp"
+#include "my_thing_inlines.hpp"
 #include "my_tp.hpp"
+#include "my_tp_class.hpp"
 #include "my_types.hpp"
 
 void thing_is_spawned_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
@@ -101,4 +103,28 @@ void thing_is_spawned_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   thing_set_dir_from_delta(g, v, l, spawned, dir.x, dir.y);
 
   return spawned;
+}
+
+void thing_on_spawned_set(Tpp tp, thing_on_spawned_t callback)
+{
+  TRACE();
+  if (tp == nullptr) [[unlikely]] {
+    ERR("no thing template pointer");
+    return;
+  }
+  tp->on_spawned = callback;
+}
+
+void thing_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
+{
+  TRACE();
+  auto *tp = thing_tp(me);
+  if (tp == nullptr) [[unlikely]] {
+    ERR("no thing template pointer");
+    return;
+  }
+  if (tp->on_spawned == nullptr) {
+    return;
+  }
+  tp->on_spawned(g, v, l, me);
 }

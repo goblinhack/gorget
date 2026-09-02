@@ -190,6 +190,9 @@
     case THING_EVENT_SPAWNED : //
       s += "spawned";
       break;
+    case THING_EVENT_LEVITATED : //
+      s += "levitated";
+      break;
     case THING_EVENT_EATEN : //
       s += "used";
       break;

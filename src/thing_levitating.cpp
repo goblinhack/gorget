@@ -8,6 +8,7 @@
 #include "my_thing.hpp"
 #include "my_thing_inlines.hpp" // NOLINT
 #include "my_tp.hpp"
+#include "my_tp_class.hpp"
 #include "my_types.hpp"
 
 [[nodiscard]] auto thing_is_levitating(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
@@ -65,5 +66,31 @@
     return false;
   }
 
+  thing_on_levitated(g, v, l, me);
+
   return true;
+}
+
+void thing_on_levitated_set(Tpp tp, thing_on_levitated_t callback)
+{
+  TRACE();
+  if (tp == nullptr) [[unlikely]] {
+    ERR("no thing template pointer");
+    return;
+  }
+  tp->on_levitated = callback;
+}
+
+void thing_on_levitated(Gamep g, Levelsp v, Levelp l, Thingp me)
+{
+  TRACE();
+  auto *tp = thing_tp(me);
+  if (tp == nullptr) [[unlikely]] {
+    ERR("no thing template pointer");
+    return;
+  }
+  if (tp->on_levitated == nullptr) {
+    return;
+  }
+  tp->on_levitated(g, v, l, me);
 }

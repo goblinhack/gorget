@@ -167,30 +167,6 @@ void thing_on_tick_end(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp->tick_end(g, v, l, me);
 }
 
-void thing_on_spawned_set(Tpp tp, thing_on_spawned_t callback)
-{
-  TRACE();
-  if (tp == nullptr) [[unlikely]] {
-    ERR("no thing template pointer");
-    return;
-  }
-  tp->on_spawned = callback;
-}
-
-void thing_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
-{
-  TRACE();
-  auto *tp = thing_tp(me);
-  if (tp == nullptr) [[unlikely]] {
-    ERR("no thing template pointer");
-    return;
-  }
-  if (tp->on_spawned == nullptr) {
-    return;
-  }
-  tp->on_spawned(g, v, l, me);
-}
-
 void thing_on_level_populated_set(Tpp tp, thing_on_level_populated_t callback)
 {
   TRACE();

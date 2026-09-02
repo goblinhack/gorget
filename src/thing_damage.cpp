@@ -426,6 +426,7 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
       case THING_EVENT_NONE :             [[fallthrough]];
       case THING_EVENT_USED :             [[fallthrough]];
       case THING_EVENT_EATEN :            [[fallthrough]];
+      case THING_EVENT_LEVITATED :        [[fallthrough]];
       case THING_EVENT_OPEN :             [[fallthrough]];
       case THING_EVENT_GAME_OVER :        [[fallthrough]];
       case THING_EVENT_LIFESPAN_EXPIRED : [[fallthrough]];
@@ -476,6 +477,7 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
       case THING_EVENT_OPEN :             [[fallthrough]];
       case THING_EVENT_USED :             [[fallthrough]];
       case THING_EVENT_EATEN :            [[fallthrough]];
+      case THING_EVENT_LEVITATED :        [[fallthrough]];
       case THING_EVENT_LIFESPAN_EXPIRED : [[fallthrough]];
       case THING_EVENT_GAME_OVER :        [[fallthrough]];
       case THING_EVENT_CARRIED :          [[fallthrough]];
@@ -575,6 +577,7 @@ static void thing_damage_by_player(Gamep g, Levelsp v, Levelp l, Thingp it, Thin
       case THING_EVENT_OPEN :             [[fallthrough]];
       case THING_EVENT_USED :             [[fallthrough]];
       case THING_EVENT_EATEN :            [[fallthrough]];
+      case THING_EVENT_LEVITATED :        [[fallthrough]];
       case THING_EVENT_LIFESPAN_EXPIRED : [[fallthrough]];
       case THING_EVENT_FALL :             [[fallthrough]];
       case THING_EVENT_GAME_OVER :        [[fallthrough]];
@@ -781,6 +784,7 @@ void thing_damage_apply(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
       case THING_EVENT_EXPLOSION_DAMAGE : [[fallthrough]];
       case THING_EVENT_USED :             [[fallthrough]];
       case THING_EVENT_EATEN :            [[fallthrough]];
+      case THING_EVENT_LEVITATED :        [[fallthrough]];
       case THING_EVENT_LIFESPAN_EXPIRED : [[fallthrough]];
       case THING_EVENT_FALL :             [[fallthrough]];
       case THING_EVENT_THROWN :           [[fallthrough]];
@@ -859,6 +863,7 @@ void thing_damage_apply(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
       case THING_EVENT_NONE :             [[fallthrough]];
       case THING_EVENT_USED :             [[fallthrough]];
       case THING_EVENT_EATEN :            [[fallthrough]];
+      case THING_EVENT_LEVITATED :        [[fallthrough]];
       case THING_EVENT_LIFESPAN_EXPIRED : [[fallthrough]];
       case THING_EVENT_FALL :             [[fallthrough]];
       case THING_EVENT_THROWN :           [[fallthrough]];

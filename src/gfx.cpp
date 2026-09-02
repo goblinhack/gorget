@@ -5101,7 +5101,7 @@ static void gfx_init_tiles()
       "pale_eel.idle.6",
       "pale_eel.idle.7",
       "pale_eel.idle.8",
-      "",
+      "pale_eel.dead.0",
       "",
       "",
       "",

@@ -78,11 +78,14 @@ static void thing_killed_player(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEv
           topcon(UI_IMPORTANT_FMT_STR "You are burnt by %s." UI_RESET_FMT, by_the_thing.c_str());
         }
         break;
+      case THING_EVENT_EATEN : //
+        topcon(UI_IMPORTANT_FMT_STR "You are eaten by %s." UI_RESET_FMT, by_the_thing.c_str());
+        break;
       case THING_EVENT_CARRIED :          [[fallthrough]];
       case THING_EVENT_CARRIED_MERGED :   break;
       case THING_EVENT_OPEN :             [[fallthrough]];
       case THING_EVENT_USED :             [[fallthrough]];
-      case THING_EVENT_EATEN :            [[fallthrough]];
+      case THING_EVENT_LEVITATED :        [[fallthrough]];
       case THING_EVENT_NONE :             [[fallthrough]];
       case THING_EVENT_FALL :             [[fallthrough]];
       case THING_EVENT_GAME_OVER :        [[fallthrough]];
@@ -131,11 +134,14 @@ static void thing_killed_player(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEv
       case THING_EVENT_ENERGY_DAMAGE : //
         topcon(UI_IMPORTANT_FMT_STR "You are blasted to death." UI_RESET_FMT);
         break;
+      case THING_EVENT_EATEN : //
+        topcon(UI_IMPORTANT_FMT_STR "You are eaten." UI_RESET_FMT);
+        break;
       case THING_EVENT_GAME_OVER : //
         break;
       case THING_EVENT_OPEN :           [[fallthrough]];
       case THING_EVENT_USED :           [[fallthrough]];
-      case THING_EVENT_EATEN :          [[fallthrough]];
+      case THING_EVENT_LEVITATED :      [[fallthrough]];
       case THING_EVENT_CARRIED :        [[fallthrough]];
       case THING_EVENT_CARRIED_MERGED : [[fallthrough]];
       case THING_EVENT_MELT :           [[fallthrough]];
@@ -219,11 +225,14 @@ static void thing_killed_by_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
     case THING_EVENT_ENERGY_DAMAGE : //
       topcon("%s is blasted to death by %s.", the_thing.c_str(), by_player.c_str());
       break;
+    case THING_EVENT_EATEN : //
+      topcon("%s is eaten by %s.", the_thing.c_str(), by_player.c_str());
+      break;
     case THING_EVENT_CARRIED :          [[fallthrough]];
     case THING_EVENT_CARRIED_MERGED :   break;
     case THING_EVENT_OPEN :             [[fallthrough]];
     case THING_EVENT_USED :             [[fallthrough]];
-    case THING_EVENT_EATEN :            [[fallthrough]];
+    case THING_EVENT_LEVITATED :        [[fallthrough]];
     case THING_EVENT_NONE :             [[fallthrough]];
     case THING_EVENT_GAME_OVER :        [[fallthrough]];
     case THING_EVENT_FALL :             [[fallthrough]];

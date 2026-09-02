@@ -108,6 +108,7 @@
       case THING_EVENT_THROWN :           [[fallthrough]];
       case THING_EVENT_USED :             [[fallthrough]];
       case THING_EVENT_EATEN :            [[fallthrough]];
+      case THING_EVENT_LEVITATED :        [[fallthrough]];
       case THING_EVENT_ENUM_MAX : //
         show_string = false;
         break;
@@ -236,6 +237,7 @@
       case THING_EVENT_THROWN :           [[fallthrough]];
       case THING_EVENT_USED :             [[fallthrough]];
       case THING_EVENT_EATEN :            [[fallthrough]];
+      case THING_EVENT_LEVITATED :        [[fallthrough]];
       case THING_EVENT_ENUM_MAX : //
         show_string = false;
         break;
@@ -300,6 +302,7 @@
       case THING_EVENT_THROWN :           [[fallthrough]];
       case THING_EVENT_USED :             [[fallthrough]];
       case THING_EVENT_EATEN :            [[fallthrough]];
+      case THING_EVENT_LEVITATED :        [[fallthrough]];
       case THING_EVENT_ENUM_MAX : //
         show_string = false;
         break;

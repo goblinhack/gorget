@@ -142,6 +142,7 @@ static bool tp_mantisman_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacke
   tp_flag_set(tp, is_able_to_be_ensnared);
   tp_flag_set(tp, is_able_to_be_levitated);
   tp_flag_set(tp, is_able_to_be_teleported);
+  tp_flag_set(tp, is_able_to_choose_targets);
   tp_flag_set(tp, is_able_to_crush_grass);
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
@@ -161,6 +162,7 @@ static bool tp_mantisman_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacke
   tp_flag_set(tp, is_collision_circle_large);
   tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_described_cursor);
+  tp_flag_set(tp, is_flesh_eater);
   tp_flag_set(tp, is_hit_when_dead);
   tp_flag_set(tp, is_insectoid);
   tp_flag_set(tp, is_loggable);
@@ -174,9 +176,7 @@ static bool tp_mantisman_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacke
   tp_flag_set(tp, is_physics_trap);
   tp_flag_set(tp, is_removable_when_dead_on_err);
   tp_flag_set(tp, is_shown_health);
-  tp_flag_set(tp, is_flesh_eater);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
-  tp_flag_set(tp, is_able_to_choose_targets);
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_vision_180_degrees);
   tp_health_set(tp, "2d4");

@@ -604,6 +604,7 @@ ENUM_DEF_H(THING_ANIM_ENUM, ThingAnimType)
       list_macro(THING_EVENT_THROWN, "thrown"),                      /* newline */                                                              \
       list_macro(THING_EVENT_USED, "used"),                          /* newline */                                                              \
       list_macro(THING_EVENT_EATEN, "eaten"),                        /* newline */                                                              \
+      list_macro(THING_EVENT_LEVITATED, "levitated"),                /* newline */                                                              \
       list_macro(THING_EVENT_NONE, "none"),                          /* newline */                                                              \
       list_macro(THING_EVENT_GAME_OVER, "became-the-new-dark-lord"), /* newline */                                                              \
       list_macro(THING_EVENT_SPAWNED, "spawned"),                    /* newline */                                                              \

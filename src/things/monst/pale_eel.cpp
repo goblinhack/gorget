@@ -109,6 +109,21 @@ static void tp_pale_eel_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingE
   thing_sound_play(g, v, l, me, "monst_death");
 }
 
+static void tp_pale_eel_on_levitated(Gamep g, Levelsp v, Levelp l, Thingp me)
+{
+  TRACE();
+
+  ThingEvent e {
+      .reason     = "by being out of water", //
+      .event_type = THING_EVENT_LEVITATED,   //
+  };
+
+  THING_DBG(g, v, l, me, "dead due to levitating");
+  TRACE_INDENT();
+
+  thing_dead(g, v, l, me, e);
+}
+
 static bool tp_pale_eel_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp target, ThingEvent &e)
 {
   TRACE();
@@ -143,6 +158,7 @@ static bool tp_pale_eel_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker
   thing_detail_set(tp, tp_pale_eel_detail_get);
   thing_on_attacking_set(tp, tp_pale_eel_on_attacking);
   thing_on_death_set(tp, tp_pale_eel_on_death);
+  thing_on_levitated_set(tp, tp_pale_eel_on_levitated);
   thing_on_missing_set(tp, tp_pale_eel_on_missing);
   tp_attack_count_max_per_tick_set(tp, 2);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6"); // fumble => intensify / keep burning / crit => stop burning
@@ -156,6 +172,7 @@ static bool tp_pale_eel_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker
   tp_flag_set(tp, is_able_to_lunge);
   tp_flag_set(tp, is_able_to_move_diagonally);
   tp_flag_set(tp, is_able_to_move);
+  tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_amphibious);
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
@@ -209,6 +226,12 @@ static bool tp_pale_eel_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker
     }
     tile_delay_ms_set(tile, delay);
     tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
+  }
+
+  for (auto frame = 0; frame < 1; frame++) {
+    auto *tile = tile_find_mand(name + std::string(".dead.") + std::to_string(frame));
+    tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
+    tp_tiles_push_back(tp, THING_ANIM_DEAD, tile);
   }
 
   return true;

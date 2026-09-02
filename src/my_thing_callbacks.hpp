@@ -43,6 +43,10 @@ using thing_on_spawned_t = void (*)(Gamep, Levelsp, Levelp, Thingp me);
 auto thing_on_spawned_set(Tpp tp, thing_on_spawned_t callback) -> void;
 auto thing_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me) -> void;
 
+using thing_on_levitated_t = void (*)(Gamep, Levelsp, Levelp, Thingp me);
+auto thing_on_levitated_set(Tpp tp, thing_on_levitated_t callback) -> void;
+auto thing_on_levitated(Gamep g, Levelsp v, Levelp l, Thingp me) -> void;
+
 using thing_on_level_enter_t = void (*)(Gamep, Levelsp, Levelp, Thingp me);
 auto thing_on_level_enter_set(Tpp tp, thing_on_level_enter_t callback) -> void;
 auto thing_on_level_enter(Gamep g, Levelsp v, Levelp l, Thingp me) -> void;
