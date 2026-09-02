@@ -894,6 +894,17 @@ static auto level_populate_fixup_biome_underhell(class LevelPopulate &lp, Tpp tp
         l->entrance = lp.at;
       }
 
+      //
+      // Random eels
+      //
+      if (! g_opt_tests) {
+        if (tp == lp.tp_water_deep) {
+          if (d100() < 5) {
+            tp = tp_random(g, v, l, is_amphibious);
+          }
+        }
+      }
+
       if (tp != nullptr) {
         if (thing_spawn(g, v, l, tp, lp.at) == nullptr) {
           return false;

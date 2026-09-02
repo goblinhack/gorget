@@ -183,6 +183,7 @@ static std::initializer_list< std::string > tps = {
     "mantisman",
     "mummy",
     "ogrik",
+    "pale_eel",
     "pillar",
     "player",
     "potion_dislocation",

@@ -75,6 +75,7 @@
   if (!tp_load_mantisman()) { return false; }
   if (!tp_load_mummy()) { return false; }
   if (!tp_load_ogrik()) { return false; }
+  if (!tp_load_pale_eel()) { return false; }
   if (!tp_load_pillar()) { return false; }
   if (!tp_load_player()) { return false; }
   if (!tp_load_potion_dislocation()) { return false; }

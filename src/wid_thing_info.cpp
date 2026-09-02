@@ -1709,12 +1709,17 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, i
         parent->log_empty_line(g);
       }
 
-      if (wid_thing_info_hates(g, v, l, me, parent)) {
-        parent->log_empty_line(g);
-      }
+      //
+      // Just shows too much information for things like eels that hate most things
+      //
+      if (compiler_unused) {
+        if (wid_thing_info_hates(g, v, l, me, parent)) {
+          parent->log_empty_line(g);
+        }
 
-      if (wid_thing_info_dislikes(g, v, l, me, parent)) {
-        parent->log_empty_line(g);
+        if (wid_thing_info_dislikes(g, v, l, me, parent)) {
+          parent->log_empty_line(g);
+        }
       }
 
       if (wid_thing_info_danger(g, v, l, me, parent)) {
