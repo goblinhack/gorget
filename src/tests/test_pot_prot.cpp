@@ -4,12 +4,11 @@
 
 #include "../my_game.hpp"
 #include "../my_level.hpp"
-#include "../my_level_inlines.hpp"
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 #include "../my_thing_inlines.hpp"
 
-[[nodiscard]] static auto test_player_engulfed_if_levitating(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_pot_prot(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -22,46 +21,39 @@
   // How the dungeon starts out, and how we expect it to change
   //
   std::string const start
-      = "XXXXXXX"
-        "X.....X"
-        "X.....X"
-        "X@...MX"
-        "X.....X"
-        "X.....X"
-        "XXXXXXX";
+      = "xxxxxxx"
+        "x.....x"
+        "x.....x"
+        "x..@m.x"
+        "x.....x"
+        "x.....x"
+        "xxxxxxx";
   std::string const expect1
-      = "XXXXXXX"
-        "X.....X"
-        "X.....X"
-        "X@M...X"
-        "X.....X"
-        "X.....X"
-        "XXXXXXX";
-  std::string const expect2
-      = "XXXXXXX"
-        "X.....X"
-        "X.....X"
-        "X@M...X"
-        "X.....X"
-        "X.....X"
-        "XXXXXXX";
+      = "xxxxxxx"
+        "x.....x"
+        "x.....x"
+        "x..@..x"
+        "x.....x"
+        "x.....x"
+        "xxxxxxx";
 
   //
   // Create the level and start playing
   //
+  Levelp    l = nullptr;
   Overrides overrides;
-  overrides[ 'M' ]  = [](char c, bpoint p) -> Tpp { return tp_find_mand("cleaner"); };
-  Levelp  l         = nullptr;
-  Levelsp v         = game_test_init(g, &l, level_num, w, h, start.c_str(), overrides);
-  int     use_count = 0;
+  overrides[ 'm' ] = [](char c, bpoint p) -> Tpp { return tp_find_mand("cleaner"); };
+  Levelsp v        = game_test_init(g, &l, level_num, w, h, start.c_str(), overrides);
 
   //
   // The guts of the test
   //
-  bool result = false;
+  bool result    = false;
+  int  use_count = 0;
 
-  static std::initializer_list< std::string > usable_items = {
-      "pot_lev", //
+  static std::initializer_list< std::string > items = {
+      "pot_prot", //
+      "pot_prot", //
   };
 
   auto *player = thing_player(g);
@@ -70,10 +62,12 @@
     goto exit;
   }
 
-  if (! thing_carry(g, v, l, player, usable_items)) {
+  if (! thing_carry(g, v, l, player, items)) {
     TEST_FAILED(t, "no item carried");
     goto exit;
   }
+
+  (void) thing_health_set(g, v, l, player, 10);
 
   for (;;) {
     bool got_item = false;
@@ -107,19 +101,18 @@
     }
   }
 
-  TEST_ASSERT(t, use_count == (int) usable_items.size(), "did not use expected item amount");
+  TEST_ASSERT(t, use_count == (int) items.size(), "did not use expected item amount");
 
-  //
-  // Wait to be engulfed
-  //
-  level_dump(g, v, l, w, h);
-  TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 10; tries++) {
+  for (auto tries = 0; tries < 200; tries++) {
     TEST_LOOP_PROGRESS(t, g, v, l, tries, w, h);
     TEST_ASSERT(t, game_event_wait(g), "failed to wait");
     if (! game_wait_for_tick_to_finish(g, v, l)) {
       TEST_FAILED(t, "wait loop failed");
       goto exit;
+    }
+
+    if (thing_is_dead(player)) {
+      break;
     }
   }
 
@@ -136,10 +129,8 @@
     }
   }
 
-  TEST_ASSERT(t, ! thing_is_engulfed(player), "was not expecting player to be engulfed");
-
-  TEST_PROGRESS(t);
-  TEST_ASSERT(t, game_tick_get(g, v) == 11, "final tick counter value");
+  TEST_ASSERT(t, thing_is_dead(player), "expected dead player");
+  TEST_ASSERT(t, game_tick_get(g, v) == 52, "final tick counter value");
 
   level_dump(g, v, l, w, h);
   TEST_PASSED(t);
@@ -150,14 +141,14 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_player_engulfed_if_levitating() -> bool // NOLINT
+[[nodiscard]] auto test_load_pot_prot() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("player_engulfed_if_levitating");
+  Testp test = test_load("pot_prot");
 
   // begin sort marker1 {
-  test_callback_set(test, test_player_engulfed_if_levitating);
+  test_callback_set(test, test_pot_prot);
   // end sort marker1 }
 
   return true;

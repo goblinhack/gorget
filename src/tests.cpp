@@ -134,23 +134,23 @@
   if (!test_load_player_trap_did_not_trigger_due_to_clover()) { return false; }
   if (!test_load_player_trap_did_not_trigger_due_to_horseshoe()) { return false; }
   if (!test_load_player_triggered()) { return false; }
-  if (!test_load_potion_dislocation_bad_luck()) { return false; }
-  if (!test_load_potion_dislocation_good_luck()) { return false; }
-  if (!test_load_potion_healing()) { return false; }
-  if (!test_load_potion_levitation_player_chasm()) { return false; }
-  if (!test_load_potion_levitation_player_grass()) { return false; }
-  if (!test_load_potion_levitation_player_in_steam()) { return false; }
-  if (!test_load_potion_levitation_player_lava()) { return false; }
-  if (!test_load_potion_levitation_player_move_fail()) { return false; }
-  if (!test_load_potion_levitation_player_move_fail2()) { return false; }
-  if (!test_load_potion_levitation_player_on_fire()) { return false; }
-  if (!test_load_potion_levitation_player_rubble()) { return false; }
-  if (!test_load_potion_levitation_player_spiderweb()) { return false; }
-  if (!test_load_potion_levitation_player_water()) { return false; }
-  if (!test_load_potion_levitation_trampled_grass()) { return false; }
-  if (!test_load_potion_protection()) { return false; }
-  if (!test_load_potion_stealth()) { return false; }
-  if (!test_load_potion_tireless()) { return false; }
+  if (!test_load_pot_dislocn_bad_luck()) { return false; }
+  if (!test_load_pot_dislocn_good_luck()) { return false; }
+  if (!test_load_pot_healing()) { return false; }
+  if (!test_load_pot_lev_player_chasm()) { return false; }
+  if (!test_load_pot_lev_player_grass()) { return false; }
+  if (!test_load_pot_lev_player_in_steam()) { return false; }
+  if (!test_load_pot_lev_player_lava()) { return false; }
+  if (!test_load_pot_lev_player_move_fail()) { return false; }
+  if (!test_load_pot_lev_player_move_fail2()) { return false; }
+  if (!test_load_pot_lev_player_on_fire()) { return false; }
+  if (!test_load_pot_lev_player_rubble()) { return false; }
+  if (!test_load_pot_lev_player_spiderweb()) { return false; }
+  if (!test_load_pot_lev_player_water()) { return false; }
+  if (!test_load_pot_lev_trampled_grass()) { return false; }
+  if (!test_load_pot_prot()) { return false; }
+  if (!test_load_pot_stealth()) { return false; }
+  if (!test_load_pot_tireless()) { return false; }
   if (!test_load_proj_barrel_explosion()) { return false; }
   if (!test_load_proj_border_turns_to_lava()) { return false; }
   if (!test_load_proj_door_locked()) { return false; }
@@ -184,19 +184,19 @@
   if (!test_load_teleport()) { return false; }
   if (!test_load_throw_item_at_monst()) { return false; }
   if (!test_load_throw_item_chasm()) { return false; }
-  if (!test_load_throw_item_potion_dislocation()) { return false; }
-  if (!test_load_throw_item_potion_healing_into_lava()) { return false; }
-  if (!test_load_throw_item_potion_healing()) { return false; }
-  if (!test_load_throw_item_potion_incin_chain_explosion()) { return false; }
-  if (!test_load_throw_item_potion_incin_chasm()) { return false; }
-  if (!test_load_throw_item_potion_incin_into_water()) { return false; }
-  if (!test_load_throw_item_potion_incin()) { return false; }
-  if (!test_load_throw_item_potion_levitation_hard_landing()) { return false; }
-  if (!test_load_throw_item_potion_levitation_soft_landing()) { return false; }
-  if (!test_load_throw_item_potion_levitation()) { return false; }
-  if (!test_load_throw_item_potion_monst_can_move()) { return false; }
-  if (!test_load_throw_item_potion_monst_cannot_move()) { return false; }
-  if (!test_load_throw_item_potion_monst_death()) { return false; }
+  if (!test_load_throw_item_pot_dislocn()) { return false; }
+  if (!test_load_throw_item_pot_healing_into_lava()) { return false; }
+  if (!test_load_throw_item_pot_healing()) { return false; }
+  if (!test_load_throw_item_pot_incin_chain_explosion()) { return false; }
+  if (!test_load_throw_item_pot_incin_chasm()) { return false; }
+  if (!test_load_throw_item_pot_incin_into_water()) { return false; }
+  if (!test_load_throw_item_pot_incin()) { return false; }
+  if (!test_load_throw_item_pot_lev_hard_landing()) { return false; }
+  if (!test_load_throw_item_pot_lev_soft_landing()) { return false; }
+  if (!test_load_throw_item_pot_lev()) { return false; }
+  if (!test_load_throw_item_pot_monst_can_move()) { return false; }
+  if (!test_load_throw_item_pot_monst_cannot_move()) { return false; }
+  if (!test_load_throw_item_pot_monst_death()) { return false; }
   if (!test_load_throw_items()) { return false; }
   if (!test_load_trampled_grass()) { return false; }
   if (!test_load_wall()) { return false; }

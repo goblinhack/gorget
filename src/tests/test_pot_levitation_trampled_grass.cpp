@@ -9,7 +9,7 @@
 #include "../my_test.hpp"
 #include "../my_thing_inlines.hpp"
 
-[[nodiscard]] static auto test_player_engulfed_if_levitating(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_pot_lev_trampled_grass(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -22,43 +22,37 @@
   // How the dungeon starts out, and how we expect it to change
   //
   std::string const start
-      = "XXXXXXX"
-        "X.....X"
-        "X.....X"
-        "X@...MX"
-        "X.....X"
-        "X.....X"
-        "XXXXXXX";
+      = "xxxxxxx"
+        "x.....x"
+        "x.....x"
+        "x.@'..x"
+        "x.....x"
+        "x.....x"
+        "xxxxxxx";
   std::string const expect1
-      = "XXXXXXX"
-        "X.....X"
-        "X.....X"
-        "X@M...X"
-        "X.....X"
-        "X.....X"
-        "XXXXXXX";
-  std::string const expect2
-      = "XXXXXXX"
-        "X.....X"
-        "X.....X"
-        "X@M...X"
-        "X.....X"
-        "X.....X"
-        "XXXXXXX";
+      = "xxxxxxx"
+        "x.....x"
+        "x.....x"
+        "x..@..x"
+        "x.....x"
+        "x.....x"
+        "xxxxxxx";
 
   //
   // Create the level and start playing
   //
-  Overrides overrides;
-  overrides[ 'M' ]  = [](char c, bpoint p) -> Tpp { return tp_find_mand("cleaner"); };
-  Levelp  l         = nullptr;
-  Levelsp v         = game_test_init(g, &l, level_num, w, h, start.c_str(), overrides);
-  int     use_count = 0;
+  Levelp  l = nullptr;
+  Levelsp v = game_test_init(g, &l, level_num, w, h, start.c_str());
 
   //
   // The guts of the test
   //
-  bool result = false;
+  bool result    = false;
+  bool up        = false;
+  bool down      = false;
+  bool left      = false;
+  bool right     = false;
+  int  use_count = 0;
 
   static std::initializer_list< std::string > usable_items = {
       "pot_lev", //
@@ -110,36 +104,53 @@
   TEST_ASSERT(t, use_count == (int) usable_items.size(), "did not use expected item amount");
 
   //
-  // Wait to be engulfed
-  //
-  level_dump(g, v, l, w, h);
-  TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 10; tries++) {
-    TEST_LOOP_PROGRESS(t, g, v, l, tries, w, h);
-    TEST_ASSERT(t, game_event_wait(g), "failed to wait");
-    if (! game_wait_for_tick_to_finish(g, v, l)) {
-      TEST_FAILED(t, "wait loop failed");
-      goto exit;
-    }
-  }
-
-  //
-  // Check the level contents
+  // Walk over grass and then check it is crushed/dead
   //
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
   {
+    TEST_LOG(t, "move right");
     TRACE();
+    up = down = left = right = false;
+    right                    = true;
+
+    if (! (result = player_move_request(g, up, down, left, right, false /* fire */))) {
+      TEST_FAILED(t, "move failed");
+      goto exit;
+    }
+
+    if (! game_wait_for_tick_to_finish(g, v, l)) {
+      TEST_FAILED(t, "wait loop failed");
+      goto exit;
+    }
+
     if (! (result = level_match_contents(g, v, l, t, w, h, expect1.c_str()))) {
       TEST_FAILED(t, "unexpected contents");
       goto exit;
     }
+
+    //
+    // Check the grass is dead
+    //
+    TEST_LOG(t, "check grass is not dead");
+    auto p        = thing_at(g, v, l, player);
+    bool found_it = false;
+
+    FOR_ALL_THINGS_AT(g, v, l, it, p)
+    {
+      if (thing_is_grass(it) && ! thing_is_dead(it)) {
+        found_it = true;
+        break;
+      }
+    }
+
+    if (! found_it) {
+      TEST_FAILED(t, "dead grass");
+      goto exit;
+    }
   }
 
-  TEST_ASSERT(t, ! thing_is_engulfed(player), "was not expecting player to be engulfed");
-
-  TEST_PROGRESS(t);
-  TEST_ASSERT(t, game_tick_get(g, v) == 11, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 2, "final tick counter value");
 
   level_dump(g, v, l, w, h);
   TEST_PASSED(t);
@@ -150,14 +161,14 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_player_engulfed_if_levitating() -> bool // NOLINT
+[[nodiscard]] auto test_load_pot_lev_trampled_grass() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("player_engulfed_if_levitating");
+  Testp test = test_load("pot_lev_trampled_grass");
 
   // begin sort marker1 {
-  test_callback_set(test, test_player_engulfed_if_levitating);
+  test_callback_set(test, test_pot_lev_trampled_grass);
   // end sort marker1 }
 
   return true;

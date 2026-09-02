@@ -42,10 +42,10 @@
   // Create the level and start playing
   //
   Overrides overrides;
-  overrides[ '1' ] = [](char c, bpoint p) -> Tpp { return tp_find_mand("potion_healing"); };
-  overrides[ '2' ] = [](char c, bpoint p) -> Tpp { return tp_find_mand("potion_incin"); };
-  overrides[ '3' ] = [](char c, bpoint p) -> Tpp { return tp_find_mand("potion_stealth"); };
-  overrides[ '4' ] = [](char c, bpoint p) -> Tpp { return tp_find_mand("potion_tireless"); };
+  overrides[ '1' ] = [](char c, bpoint p) -> Tpp { return tp_find_mand("pot_healing"); };
+  overrides[ '2' ] = [](char c, bpoint p) -> Tpp { return tp_find_mand("pot_incin"); };
+  overrides[ '3' ] = [](char c, bpoint p) -> Tpp { return tp_find_mand("pot_stealth"); };
+  overrides[ '4' ] = [](char c, bpoint p) -> Tpp { return tp_find_mand("pot_tireless"); };
   overrides[ '5' ] = [](char c, bpoint p) -> Tpp { return tp_find_mand("horseshoe"); };
   overrides[ '6' ] = [](char c, bpoint p) -> Tpp { return tp_find_mand("chest"); };
   overrides[ 'm' ] = [](char c, bpoint p) -> Tpp { return tp_find_mand("cleaner"); };

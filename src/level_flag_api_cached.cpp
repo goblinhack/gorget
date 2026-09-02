@@ -2073,7 +2073,7 @@
   return level_flag_cached(g, v, l, is_gelatinous, p);
 }
 
-[[nodiscard]] auto level_is_potion_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_pot_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
   return level_flag_cached(g, v, l, is_potion, p);

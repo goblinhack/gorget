@@ -2073,7 +2073,7 @@
   return level_flag(g, v, l, is_gelatinous, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_potion_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_pot_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
   return level_flag(g, v, l, is_potion, p, me) != nullptr;

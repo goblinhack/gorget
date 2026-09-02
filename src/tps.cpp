@@ -78,13 +78,13 @@
   if (!tp_load_pale_eel()) { return false; }
   if (!tp_load_pillar()) { return false; }
   if (!tp_load_player()) { return false; }
-  if (!tp_load_potion_dislocation()) { return false; }
-  if (!tp_load_potion_healing()) { return false; }
-  if (!tp_load_potion_incin()) { return false; }
-  if (!tp_load_potion_levitation()) { return false; }
-  if (!tp_load_potion_protection()) { return false; }
-  if (!tp_load_potion_stealth()) { return false; }
-  if (!tp_load_potion_tireless()) { return false; }
+  if (!tp_load_pot_dislocn()) { return false; }
+  if (!tp_load_pot_healing()) { return false; }
+  if (!tp_load_pot_incin()) { return false; }
+  if (!tp_load_pot_lev()) { return false; }
+  if (!tp_load_pot_prot()) { return false; }
+  if (!tp_load_pot_stealth()) { return false; }
+  if (!tp_load_pot_tireless()) { return false; }
   if (!tp_load_proj_energy()) { return false; }
   if (!tp_load_proj_fire()) { return false; }
   if (!tp_load_reeds()) { return false; }

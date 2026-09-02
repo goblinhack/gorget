@@ -46,21 +46,21 @@
   bool    right  = false;
 
   static std::initializer_list< std::string > items = {
-      "staff_fire",     //
-      "staff_fire",     //
-      "staff_energy",   //
-      "wand_fire",      //
-      "wand_energy",    //
-      "staff_fire",     //
-      "staff_fire",     //
-      "staff_energy",   //
-      "wand_fire",      //
-      "wand_energy",    //
-      "potion_healing", //
-      "potion_healing", //
-      "potion_healing", //
-      "potion_healing", //
-      "potion_healing", //
+      "staff_fire",   //
+      "staff_fire",   //
+      "staff_energy", //
+      "wand_fire",    //
+      "wand_energy",  //
+      "staff_fire",   //
+      "staff_fire",   //
+      "staff_energy", //
+      "wand_fire",    //
+      "wand_energy",  //
+      "pot_healing",  //
+      "pot_healing",  //
+      "pot_healing",  //
+      "pot_healing",  //
+      "pot_healing",  //
   };
 
   auto *player = thing_player(g);
