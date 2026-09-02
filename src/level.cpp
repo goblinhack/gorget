@@ -552,6 +552,10 @@ void level_update_flags(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_DEBUG();
 
+  if (is_oob(p)) [[unlikely]] {
+    return false;
+  }
+
   return l->flag[ p.x ][ p.y ][ f ] != 0;
 }
 

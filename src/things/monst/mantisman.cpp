@@ -51,7 +51,11 @@ static auto tp_mantisman_assess_tp(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp 
   }
 
   if (tp_is_water_deep(tp)) {
-    return THING_ENVIRON_DISLIKES;
+    return THING_ENVIRON_HATES;
+  }
+
+  if (tp_is_flesh(tp)) {
+    return THING_ENVIRON_LIKES;
   }
 
   return THING_ENVIRON_NEUTRAL;
@@ -74,7 +78,11 @@ static auto tp_mantisman_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint 
   }
 
   if (level_is_water_deep_cached(g, v, l, at)) {
-    return THING_ENVIRON_DISLIKES;
+    return THING_ENVIRON_HATES;
+  }
+
+  if (level_is_flesh_cached(g, v, l, at)) {
+    return THING_ENVIRON_LIKES;
   }
 
   return THING_ENVIRON_NEUTRAL;
@@ -166,7 +174,9 @@ static bool tp_mantisman_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacke
   tp_flag_set(tp, is_physics_trap);
   tp_flag_set(tp, is_removable_when_dead_on_err);
   tp_flag_set(tp, is_shown_health);
+  tp_flag_set(tp, is_flesh_eater);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
+  tp_flag_set(tp, is_able_to_choose_targets);
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_vision_180_degrees);
   tp_health_set(tp, "2d4");

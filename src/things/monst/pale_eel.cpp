@@ -76,7 +76,21 @@ static auto tp_pale_eel_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &
   }
 
   if (level_is_dirt_cached(g, v, l, at)) {
-    return THING_ENVIRON_NEUTRAL;
+    const std::initializer_list< bpoint > points = {
+        bpoint(-1, -1), bpoint(0, -1), bpoint(1, -1), bpoint(-1, 0), bpoint(1, 0), bpoint(-1, 1), bpoint(0, 1), bpoint(1, 1),
+    };
+
+    for (auto delta : points) {
+      auto p = at + delta;
+
+      if (level_is_water_deep_cached(g, v, l, p)) {
+        return THING_ENVIRON_LIKES;
+      }
+
+      if (level_is_water_shallow_cached(g, v, l, p)) {
+        return THING_ENVIRON_LIKES;
+      }
+    }
   }
 
   if (level_is_floor_cached(g, v, l, at)) {
@@ -175,7 +189,7 @@ static bool tp_pale_eel_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker
   tp_name_short_set(tp, "pale eel");
   tp_priority_set(tp, THING_PRIORITY_MONST);
   tp_score_value_set(tp, 4);
-  tp_speed_set(tp, 200);
+  tp_speed_set(tp, 50);
   tp_stat_set(tp, THING_STAT_ATT, "1d2+10");
   tp_stat_set(tp, THING_STAT_DEF, "16");
   tp_temperature_burns_at_set(tp, 50);  // celsius

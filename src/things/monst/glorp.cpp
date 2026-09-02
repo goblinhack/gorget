@@ -56,6 +56,10 @@ static auto tp_glorp_assess_tp(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp me) 
     return THING_ENVIRON_DISLIKES;
   }
 
+  if (tp_is_flesh(tp)) {
+    return THING_ENVIRON_LIKES;
+  }
+
   return THING_ENVIRON_NEUTRAL;
 }
 
@@ -81,6 +85,10 @@ static auto tp_glorp_assess_tile(Gamep g, Levelsp v, Levelp l, const bpoint &at,
 
   if (level_is_water_deep_cached(g, v, l, at)) {
     return THING_ENVIRON_DISLIKES;
+  }
+
+  if (level_is_flesh_cached(g, v, l, at)) {
+    return THING_ENVIRON_LIKES;
   }
 
   return THING_ENVIRON_NEUTRAL;
@@ -165,6 +173,7 @@ static void tp_glorp_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEven
   tp_flag_set(tp, is_obs_to_jumping_onto);
   tp_flag_set(tp, is_obs_to_movement);
   tp_flag_set(tp, is_obs_to_teleporting_onto);
+  tp_flag_set(tp, is_flesh_eater);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_removable_when_dead_on_err);

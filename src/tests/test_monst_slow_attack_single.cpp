@@ -180,7 +180,7 @@
 
     log("attacked_count %d", attacked_count);
 
-    TEST_ASSERT(t, attacked_count == 13, "attacked by count not as expected");
+    TEST_ASSERT(t, attacked_count == 16, "attacked by count not as expected");
   }
 
   //
@@ -188,7 +188,7 @@
   //
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
-  TEST_ASSERT(t, game_tick_get(g, v) == 36, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 42, "final tick counter value");
 
   level_dump(g, v, l, w, h);
   TEST_PASSED(t);
