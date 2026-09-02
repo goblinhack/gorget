@@ -1863,16 +1863,16 @@
   return level_count(g, v, l, is_unused165, p);
 }
 
-[[nodiscard]] auto level_count_is_unused166(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_unlucky(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused166, p);
+  return level_count(g, v, l, is_unlucky, p);
 }
 
-[[nodiscard]] auto level_count_is_unused167(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_cursed(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused167, p);
+  return level_count(g, v, l, is_cursed, p);
 }
 
 [[nodiscard]] auto level_count_is_chocolate(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t

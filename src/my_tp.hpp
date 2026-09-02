@@ -297,8 +297,8 @@
       list_macro(is_unused163, "is_unused163"),                                             /* newline */                                       \
       list_macro(is_unused164, "is_unused164"),                                             /* newline */                                       \
       list_macro(is_unused165, "is_unused165"),                                             /* newline */                                       \
-      list_macro(is_unused166, "is_unused166"),                                             /* newline */                                       \
-      list_macro(is_unused167, "is_unused167"),                                             /* newline */                                       \
+      list_macro(is_unlucky, "is_unlucky"),                                                 /* newline */                                       \
+      list_macro(is_cursed, "is_cursed"),                                                   /* newline */                                       \
       list_macro(is_chocolate, "is_chocolate"),                                             /* newline */                                       \
       list_macro(is_tick_on_eaten, "is_tick_on_eaten"),                                     /* newline */                                       \
       list_macro(is_unused17, "is_unused17"),                                               /* newline */                                       \
@@ -901,6 +901,7 @@ class Tp;
 [[nodiscard]] auto tp_is_corridor(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_critical_to_level(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_crushable(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_cursed(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_cursor_path_hazard(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_cursor_path_none(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_cursor_path_warning(Tpp tp) -> bool;
@@ -1045,6 +1046,7 @@ class Tp;
 [[nodiscard]] auto tp_is_trap(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_treasure(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_undead(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_unlucky(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused1(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused10(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused100(Tpp tp) -> bool;
@@ -1119,8 +1121,6 @@ class Tp;
 [[nodiscard]] auto tp_is_unused163(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused164(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused165(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused166(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused167(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused17(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused18(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused183(Tpp tp) -> bool;

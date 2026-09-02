@@ -155,9 +155,15 @@ void thing_on_drop_request_set(Tpp tp, thing_on_drop_request_t callback)
     ERR("no thing template pointer");
     return false;
   }
+
   if (tp->on_drop_request == nullptr) {
     return true;
   }
+
+  if (thing_is_cursed(me)) {
+    return false;
+  }
+
   if (! thing_is_player(user) && ! thing_is_monst(user)) {
     thing_err(g, v, l, user, "unexpected thing for %s", __FUNCTION__);
     return false;

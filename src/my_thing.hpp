@@ -53,7 +53,7 @@ using ThingIdPacked = union {
 /* begin shell marker1 */
 /* shell printf "#define THING_BUFF_MAX " */
 /* shell find . -name "*.cpp" | xargs grep "tp_flag_set(tp, is_buff);" | wc -l */
-#define THING_BUFF_MAX 6
+#define THING_BUFF_MAX 8
 /* end shell marker1 */
 
 //
@@ -876,6 +876,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_corridor(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_critical_to_level(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_crushable(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_cursed(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_cursor_path_hazard(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_cursor_path_none(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_cursor_path_warning(Thingp t) -> bool;
@@ -1034,6 +1035,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_treasure(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_undead(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unlocked(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_unlucky(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused1(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused10(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused100(Thingp t) -> bool;
@@ -1108,8 +1110,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused163(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused164(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused165(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused166(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused167(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused17(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused18(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused183(Thingp t) -> bool;

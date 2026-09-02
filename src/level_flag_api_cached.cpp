@@ -1899,16 +1899,16 @@
   return level_flag_cached(g, v, l, is_unused165, p);
 }
 
-[[nodiscard]] auto level_is_unused166_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_unlucky_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused166, p);
+  return level_flag_cached(g, v, l, is_unlucky, p);
 }
 
-[[nodiscard]] auto level_is_unused167_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_cursed_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused167, p);
+  return level_flag_cached(g, v, l, is_cursed, p);
 }
 
 [[nodiscard]] auto level_is_chocolate_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

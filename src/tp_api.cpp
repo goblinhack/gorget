@@ -1861,16 +1861,16 @@
   return tp_flag(tp, is_unused165) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused166(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_unlucky(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused166) != 0;
+  return tp_flag(tp, is_unlucky) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused167(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_cursed(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused167) != 0;
+  return tp_flag(tp, is_cursed) != 0;
 }
 
 [[nodiscard]] auto tp_is_chocolate(Tpp tp) -> bool

@@ -2368,7 +2368,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_unused165) != 0;
 }
 
-[[nodiscard]] auto thing_is_unused166(Thingp t) -> bool
+[[nodiscard]] auto thing_is_unlucky(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2376,10 +2376,10 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused166) != 0;
+  return tp_flag(thing_tp(t), is_unlucky) != 0;
 }
 
-[[nodiscard]] auto thing_is_unused167(Thingp t) -> bool
+[[nodiscard]] auto thing_is_cursed(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2387,7 +2387,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused167) != 0;
+  return tp_flag(thing_tp(t), is_cursed) != 0;
 }
 
 [[nodiscard]] auto thing_is_chocolate(Thingp t) -> bool

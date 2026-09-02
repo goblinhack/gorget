@@ -1899,16 +1899,16 @@
   return level_flag(g, v, l, is_unused165, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_unused166_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_unlucky_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused166, p, me) != nullptr;
+  return level_flag(g, v, l, is_unlucky, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_unused167_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_cursed_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused167, p, me) != nullptr;
+  return level_flag(g, v, l, is_cursed, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_chocolate_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool

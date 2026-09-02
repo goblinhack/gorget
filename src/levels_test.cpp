@@ -76,12 +76,14 @@ void levels_test(Gamep g)
     Overrides overrides;
 
     overrides[ 'c' ] = [](char /*c*/, bpoint /*p*/) -> Tpp { return tp_find_mand("chocolate_frog"); };
+    overrides[ 'd' ] = [](char /*c*/, bpoint /*p*/) -> Tpp { return tp_find_mand("clown_meat"); };
 
     level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "treasure", __FUNCTION__, __LINE__, overrides, 0,
                     /* line */ (const char *) "xxxxxxxxxxx",
                     /* line */ (const char *) "x.........x",
                     /* line */ (const char *) "x.........x",
-                    /* line */ (const char *) "x..@.c....x",
+                    /* line */ (const char *) "x.ddddddddx",
+                    /* line */ (const char *) "x@ccccccccx",
                     /* line */ (const char *) "x.........x",
                     /* line */ (const char *) "x.........x",
                     /* line */ (const char *) "xxxxxxxxxxx",

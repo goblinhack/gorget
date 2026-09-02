@@ -24,6 +24,8 @@
   if (!tp_load_border()) { return false; }
   if (!tp_load_brazier()) { return false; }
   if (!tp_load_bridge()) { return false; }
+  if (!tp_load_buff_bad_luck()) { return false; }
+  if (!tp_load_buff_good_luck()) { return false; }
   if (!tp_load_buff_immune_fire()) { return false; }
   if (!tp_load_buff_levitation()) { return false; }
   if (!tp_load_buff_protection()) { return false; }
@@ -35,6 +37,7 @@
   if (!tp_load_chocolate_frog()) { return false; }
   if (!tp_load_cleaner()) { return false; }
   if (!tp_load_clover()) { return false; }
+  if (!tp_load_clown_meat()) { return false; }
   if (!tp_load_copious_chest()) { return false; }
   if (!tp_load_corridor()) { return false; }
   if (!tp_load_cursor_at()) { return false; }
