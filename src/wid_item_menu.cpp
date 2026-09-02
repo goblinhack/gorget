@@ -148,7 +148,6 @@ static Thingp g_item;
 
   if (! thing_drop(g, v, l, player, item, e)) {
     (void) sound_play(g, "error");
-    return false;
   }
 
   (void) wid_item_menu_destroy();
@@ -546,6 +545,13 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item, bool from_inventory)
   auto box_height  = 2;
   auto box_step    = 3;
   auto menu_height = 0;
+
+  //
+  // Need to describe the item
+  //
+  level_cursor_describe_clear(g, v);
+  (void) level_cursor_describe_add(g, v, item);
+  (void) wid_rightbar_init(g);
 
   if (thing_is_usable(item)) {
     menu_height += box_step;

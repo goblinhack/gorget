@@ -23,10 +23,10 @@ void thing_on_eaten_set(Tpp tp, thing_on_eaten_t callback)
   tp->on_eaten = callback;
 }
 
-[[nodiscard]] auto thing_on_eaten(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp eater) -> bool
+[[nodiscard]] auto thing_on_eaten(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp eater) -> bool
 {
   TRACE();
-  auto *tp = thing_tp(me);
+  auto *tp = thing_tp(item);
   if (tp == nullptr) [[unlikely]] {
     ERR("no thing template pointer");
     return false;
@@ -38,7 +38,7 @@ void thing_on_eaten_set(Tpp tp, thing_on_eaten_t callback)
     thing_err(g, v, l, eater, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
-  return tp->on_eaten(g, v, l, me, eater);
+  return tp->on_eaten(g, v, l, item, eater);
 }
 
 //
@@ -114,19 +114,19 @@ static auto thing_eat_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp eat
   return true;
 }
 
-[[nodiscard]] auto thing_eat(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, ThingEvent &e) -> bool
+[[nodiscard]] auto thing_eat(Gamep g, Levelsp v, Levelp l, Thingp user, Thingp item, ThingEvent &e) -> bool
 {
   TRACE();
 
-  if (me == nullptr) {
+  if (user == nullptr) {
     ERR("no thing pointer");
     return false;
   }
 
   if (item == nullptr) {
-    thing_err(g, v, l, me, "no item to eat");
+    thing_err(g, v, l, user, "no item to eat");
     return false;
   }
 
-  return thing_eat_item(g, v, l, item, me, e);
+  return thing_eat_item(g, v, l, item, user, e);
 }

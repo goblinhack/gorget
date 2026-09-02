@@ -23,8 +23,21 @@ static auto tp_clown_meat_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) ->
 {
   TRACE();
 
-  return                                                                              //
-      UI_INFO1_FMT_STR "Guaranteed the longest lasting meat. As no one will eat it."; //
+  return                                                                                             //
+      UI_INFO1_FMT_STR "A mass of ghastly pink meat with the face of a clown. What's not to like?\n" //
+      UI_INFO2_FMT_STR "Clown meat is guaranteed to be the longest lasting meat... "                 //
+                       "as no one is mad enough to eat it. Will you?";                               //
+}
+
+static bool tp_clown_meat_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp dropper, ThingEvent &e)
+{
+  TRACE();
+
+  if (thing_is_player(dropper)) {
+    topcon(UI_WARN_FMT_STR "You try to drop the horrible meat, but find it sticks in your backpack..." UI_RESET_FMT);
+  }
+
+  return false;
 }
 
 static bool tp_clown_meat_on_eaten(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user)
@@ -36,7 +49,7 @@ static bool tp_clown_meat_on_eaten(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
 
   if (old_health == new_health) {
     if (thing_is_player(user)) {
-      topcon(UI_WARN_FMT_STR "You ate that horrible meat and felt nothing." UI_RESET_FMT);
+      topcon(UI_WARN_FMT_STR "You ate that horrible meat and felt no improvement." UI_RESET_FMT);
       thing_sound_play(g, v, l, user, "error");
     }
   } else {
@@ -47,7 +60,7 @@ static bool tp_clown_meat_on_eaten(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
   }
 
   if (thing_buff_add(g, v, l, user, tp_find_mand("buff_bad_luck"))) {
-    topcon("You feel lucky!");
+    topcon("You feel dismal!");
   }
 
   return true;
@@ -63,6 +76,7 @@ static bool tp_clown_meat_on_eaten(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
   // begin sort marker1 {
   thing_description_set(tp, tp_clown_meat_description_get);
   thing_detail_set(tp, tp_clown_meat_detail_get);
+  thing_on_drop_request_set(tp, tp_clown_meat_on_drop_request);
   thing_on_eaten_set(tp, tp_clown_meat_on_eaten);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // fumble => intensify / keep burning / crit => stop burning
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d100");  // fumble => flames spread to you

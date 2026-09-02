@@ -653,6 +653,11 @@ static void level_tick_idle(Gamep g, Levelsp v, Levelp l)
   v->requested_move_left  = false;
   v->requested_move_right = false;
 
+  //
+  // Needed to update the move count
+  //
+  game_request_to_remake_ui_set(g);
+
   return ret;
 }
 

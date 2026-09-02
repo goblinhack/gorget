@@ -48,7 +48,15 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp user, Thingp it
         auto the_thing = thing_name_long_the(g, v, l, item);
         topcon(UI_WARN_FMT_STR "You fail to drop %s." UI_RESET_FMT, the_thing.c_str());
       }
+
+      //
+      // Needed for cursed items
+      //
+      if (thing_is_tick_on_drop(item)) {
+        (void) level_tick_begin_requested(g, v, l, "player failed dropped an item");
+      }
     }
+
     return false;
   }
 
@@ -119,12 +127,11 @@ static auto thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp user, Thingp it
       auto the_thing = thing_name_long_the(g, v, l, item);
       topcon("You drop %s.", the_thing.c_str());
     }
-    game_request_to_remake_ui_set(g);
-  }
 
-  if (e.event_type == THING_EVENT_USER_INITIATED) {
-    if (thing_is_tick_on_drop(item)) {
-      (void) level_tick_begin_requested(g, v, l, "player dropped an item");
+    if (e.event_type == THING_EVENT_USER_INITIATED) {
+      if (thing_is_tick_on_drop(item)) {
+        (void) level_tick_begin_requested(g, v, l, "player dropped an item");
+      }
     }
   }
 
@@ -147,28 +154,38 @@ void thing_on_drop_request_set(Tpp tp, thing_on_drop_request_t callback)
   tp->on_drop_request = callback;
 }
 
-[[nodiscard]] auto thing_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user, ThingEvent &e) -> bool
+[[nodiscard]] auto thing_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp user, ThingEvent &e) -> bool
 {
   TRACE();
-  auto *tp = thing_tp(me);
+  auto *tp = thing_tp(item);
   if (tp == nullptr) [[unlikely]] {
     ERR("no thing template pointer");
     return false;
+  }
+
+  if (e.event_type == THING_EVENT_EATEN) {
+    return true;
+  }
+
+  if (thing_is_cursed(item)) {
+    if (tp->on_drop_request == nullptr) {
+      if (thing_is_player(user)) {
+        auto the_thing = thing_name_long_the(g, v, l, item);
+        topcon(UI_WARN_FMT_STR "You fail to drop %s. It might be cursed..." UI_RESET_FMT, the_thing.c_str());
+      }
+      return false;
+    }
   }
 
   if (tp->on_drop_request == nullptr) {
     return true;
   }
 
-  if (thing_is_cursed(me)) {
-    return false;
-  }
-
   if (! thing_is_player(user) && ! thing_is_monst(user)) {
     thing_err(g, v, l, user, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
-  return tp->on_drop_request(g, v, l, me, user, e);
+  return tp->on_drop_request(g, v, l, item, user, e);
 }
 
 void thing_on_drop_success_set(Tpp tp, thing_on_drop_success_t callback)
@@ -181,10 +198,10 @@ void thing_on_drop_success_set(Tpp tp, thing_on_drop_success_t callback)
   tp->on_drop_success = callback;
 }
 
-[[nodiscard]] auto thing_on_drop_success(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user, ThingEvent &e) -> bool
+[[nodiscard]] auto thing_on_drop_success(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp user, ThingEvent &e) -> bool
 {
   TRACE();
-  auto *tp = thing_tp(me);
+  auto *tp = thing_tp(item);
   if (tp == nullptr) [[unlikely]] {
     ERR("no thing template pointer");
     return false;
@@ -204,47 +221,47 @@ void thing_on_drop_success_set(Tpp tp, thing_on_drop_success_t callback)
     thing_err(g, v, l, user, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
-  return tp->on_drop_success(g, v, l, me, user, e);
+  return tp->on_drop_success(g, v, l, item, user, e);
 }
 
-[[nodiscard]] auto thing_drop(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, ThingEvent &e) -> bool
+[[nodiscard]] auto thing_drop(Gamep g, Levelsp v, Levelp l, Thingp user, Thingp item, ThingEvent &e) -> bool
 {
   TRACE();
 
-  if (me == nullptr) {
+  if (user == nullptr) {
     ERR("no thing pointer");
     return false;
   }
 
   if (item == nullptr) {
-    thing_err(g, v, l, me, "no item to drop");
+    thing_err(g, v, l, user, "no item to drop");
     return false;
   }
 
   if (thing_is_worn(item)) {
-    if (! thing_strip_item(g, v, l, me, item, e)) {
+    if (! thing_strip_item(g, v, l, user, item, e)) {
       return false;
     }
   }
 
-  return thing_drop_item(g, v, l, me, item, e);
+  return thing_drop_item(g, v, l, user, item, e);
 }
 
-[[nodiscard]] auto thing_drop_all(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e) -> bool
+[[nodiscard]] auto thing_drop_all(Gamep g, Levelsp v, Levelp l, Thingp user, ThingEvent &e) -> bool
 {
   TRACE();
 
-  if (me == nullptr) {
+  if (user == nullptr) {
     ERR("no thing pointer");
     return false;
   }
 
   bool ok = true;
 
-  while (thing_inventory_get_item_count(g, v, l, me) > 0) {
-    FOR_ALL_INVENTORY_ITEMS(g, v, l, me, an_item)
+  while (thing_inventory_get_item_count(g, v, l, user) > 0) {
+    FOR_ALL_INVENTORY_ITEMS(g, v, l, user, an_item)
     {
-      if (! thing_drop(g, v, l, me, an_item, e)) {
+      if (! thing_drop(g, v, l, user, an_item, e)) {
         ok = false;
       }
     }

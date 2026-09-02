@@ -36,7 +36,7 @@ static bool tp_chocolate_frog_on_eaten(Gamep g, Levelsp v, Levelp l, Thingp me, 
 
   if (old_health == new_health) {
     if (thing_is_player(user)) {
-      topcon(UI_WARN_FMT_STR "That frog seemed to have no effect." UI_RESET_FMT);
+      topcon(UI_WARN_FMT_STR "That frog was nice but didn't improve your health." UI_RESET_FMT);
       thing_sound_play(g, v, l, user, "error");
     }
   } else {
