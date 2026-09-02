@@ -214,7 +214,7 @@ static bool tp_spider_giant_on_missing(Gamep g, Levelsp v, Levelp l, Thingp atta
   tp_name_short_set(tp, "spider");
   tp_priority_set(tp, THING_PRIORITY_MONST);
   tp_score_value_set(tp, 5);
-  tp_speed_set(tp, 50);
+  tp_speed_set(tp, 25);
   tp_stat_set(tp, THING_STAT_ATT, "1d8+10");
   tp_stat_set(tp, THING_STAT_DEF, "8");
   tp_temperature_burns_at_set(tp, 50);  // celsius
