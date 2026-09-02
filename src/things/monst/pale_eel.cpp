@@ -172,7 +172,6 @@ static bool tp_pale_eel_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker
   tp_flag_set(tp, is_able_to_lunge);
   tp_flag_set(tp, is_able_to_move_diagonally);
   tp_flag_set(tp, is_able_to_move);
-  tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_amphibious);
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
@@ -184,6 +183,7 @@ static bool tp_pale_eel_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_burnable); // is capable of being burned by fire
   tp_flag_set(tp, is_collision_circle_large);
+  tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_flesh_eater);
   tp_flag_set(tp, is_flesh);

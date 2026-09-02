@@ -69,7 +69,7 @@ auto               thing_on_carry_request_set(Tpp tp, thing_on_carry_request_t c
 
 using thing_on_drop_request_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp dropper, ThingEvent &);
 auto               thing_on_drop_request_set(Tpp tp, thing_on_drop_request_t callback) -> void;
-[[nodiscard]] auto thing_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user, ThingEvent & /*e*/) -> bool;
+[[nodiscard]] auto thing_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp user, ThingEvent & /*e*/) -> bool;
 
 using thing_on_carry_success_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp owner, ThingEvent &);
 auto               thing_on_carry_success_set(Tpp tp, thing_on_carry_success_t callback) -> void;
@@ -77,7 +77,7 @@ auto               thing_on_carry_success_set(Tpp tp, thing_on_carry_success_t c
 
 using thing_on_drop_success_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp dropper, ThingEvent &);
 auto               thing_on_drop_success_set(Tpp tp, thing_on_drop_success_t callback) -> void;
-[[nodiscard]] auto thing_on_drop_success(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user, ThingEvent & /*e*/) -> bool;
+[[nodiscard]] auto thing_on_drop_success(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp user, ThingEvent & /*e*/) -> bool;
 
 using thing_on_use_weapon_request_t = Tpp (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp user);
 auto               thing_on_use_weapon_request_set(Tpp tp, thing_on_use_weapon_request_t callback) -> void;
@@ -89,7 +89,7 @@ auto               thing_on_use_set(Tpp tp, thing_on_use_t callback) -> void;
 
 using thing_on_eaten_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp eatenr);
 auto               thing_on_eaten_set(Tpp tp, thing_on_eaten_t callback) -> void;
-[[nodiscard]] auto thing_on_eaten(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp eatenr) -> bool;
+[[nodiscard]] auto thing_on_eaten(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp eater) -> bool;
 
 using thing_on_worn_request_t = bool (*)(Gamep, Levelsp, Levelp, Thingp me, Thingp owner);
 auto               thing_on_worn_request_set(Tpp tp, thing_on_worn_request_t callback) -> void;

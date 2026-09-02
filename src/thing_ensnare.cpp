@@ -196,7 +196,7 @@
   //
   FOR_ALL_ACTIVE_ITEMS(g, v, l, me, item)
   {
-    if (tp_flag(thing_tp(item), is_able_to_be_ensnared_blocked)) {
+    if (tp_flag(thing_tp(item), is_able_to_be_ensnared_blocked) != 0) {
       return false;
     }
   }

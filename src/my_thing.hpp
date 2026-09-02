@@ -752,9 +752,9 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_distance_vision_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_distance_vision_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_distance_vision(Gamep g, Levelsp v, Levelp l, Thingp t) -> int;
-[[nodiscard]] auto thing_drop_all(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e) -> bool;
-[[nodiscard]] auto thing_drop(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, ThingEvent &e) -> bool;
-[[nodiscard]] auto thing_eat(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, ThingEvent &e) -> bool;
+[[nodiscard]] auto thing_drop_all(Gamep g, Levelsp v, Levelp l, Thingp user, ThingEvent &e) -> bool;
+[[nodiscard]] auto thing_drop(Gamep g, Levelsp v, Levelp l, Thingp user, Thingp item, ThingEvent &e) -> bool;
+[[nodiscard]] auto thing_eat(Gamep g, Levelsp v, Levelp l, Thingp user, Thingp item, ThingEvent &e) -> bool;
 [[nodiscard]] auto thing_engulfer(Gamep g, Levelsp v, Levelp l, Thingp me) -> Thingp;
 [[nodiscard]] auto thing_ensnare(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp ensnarer) -> bool;
 [[nodiscard]] auto thing_ensnarer(Gamep g, Levelsp v, Levelp l, Thingp me) -> Thingp;
@@ -787,9 +787,9 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_inventory_remove(Gamep g, Levelsp v, Levelp l, Thingp drop_item, Thingp owner) -> bool;
 [[nodiscard]] auto thing_is_able_to_be_buffed(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_be_engulfed_blocked(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_able_to_be_engulfed(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
+[[nodiscard]] auto thing_is_able_to_be_engulfed(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
 [[nodiscard]] auto thing_is_able_to_be_ensnared_blocked(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_able_to_be_ensnared(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
+[[nodiscard]] auto thing_is_able_to_be_ensnared(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
 [[nodiscard]] auto thing_is_able_to_choose_targets(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_collect_items(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_collect_keys(Thingp t) -> bool;
@@ -798,8 +798,8 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_able_to_eat_food(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_eat_items(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_eat_treasure(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_able_to_engulf(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_able_to_ensnare(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_able_to_engulf(Thingp me) -> bool;
+[[nodiscard]] auto thing_is_able_to_ensnare(Thingp me) -> bool;
 [[nodiscard]] auto thing_is_able_to_fall_repeatedly(Thingp me) -> bool;
 [[nodiscard]] auto thing_is_able_to_fall_sound(Thingp me) -> bool;
 [[nodiscard]] auto thing_is_able_to_fall(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
@@ -908,8 +908,8 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_effect_blood(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_effect_ripple(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_effect(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_engulfed_try_unset(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
-[[nodiscard]] auto thing_is_ensnared_try_unset(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
+[[nodiscard]] auto thing_is_engulfed_try_unset(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
+[[nodiscard]] auto thing_is_ensnared_try_unset(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
 [[nodiscard]] auto thing_is_entrance(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_ethereal(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
 [[nodiscard]] auto thing_is_exit(Thingp t) -> bool;
