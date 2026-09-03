@@ -462,7 +462,7 @@ static bool tp_player_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker, 
   tp_flag_set(tp, is_collision_circle_large);
   tp_flag_set(tp, is_combustible);
   tp_flag_set(tp, is_corpse_on_death);
-  tp_flag_set(tp, is_critical_to_level);
+  tp_flag_set(tp, is_critical_to_gameplay);
   tp_flag_set(tp, is_damage_capped);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_dmap);

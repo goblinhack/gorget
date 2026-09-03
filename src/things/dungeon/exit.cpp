@@ -39,7 +39,8 @@ static auto tp_exit_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_if_has_seen);
   tp_flag_set(tp, is_blit_shown_in_chasms);
-  tp_flag_set(tp, is_critical_to_level);
+  tp_flag_set(tp, is_critical_to_dungeon_design);
+  tp_flag_set(tp, is_critical_to_gameplay);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_dmap);
   tp_flag_set(tp, is_exit);

@@ -410,7 +410,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_level_curr) != 0;
 }
 
-[[nodiscard]] auto thing_is_critical_to_level(Thingp t) -> bool
+[[nodiscard]] auto thing_is_critical_to_dungeon_design(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -418,7 +418,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_critical_to_level) != 0;
+  return tp_flag(thing_tp(t), is_critical_to_dungeon_design) != 0;
 }
 
 [[nodiscard]] auto thing_is_level_final_icon(Thingp t) -> bool
@@ -2335,7 +2335,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_unused162) != 0;
 }
 
-[[nodiscard]] auto thing_is_unused163(Thingp t) -> bool
+[[nodiscard]] auto thing_is_critical_to_gameplay(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2343,7 +2343,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused163) != 0;
+  return tp_flag(thing_tp(t), is_critical_to_gameplay) != 0;
 }
 
 [[nodiscard]] auto thing_is_fish(Thingp t) -> bool

@@ -537,10 +537,10 @@
   return level_flag_cached(g, v, l, is_level_curr, p);
 }
 
-[[nodiscard]] auto level_is_critical_to_level_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_critical_to_dungeon_design_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_critical_to_level, p);
+  return level_flag_cached(g, v, l, is_critical_to_dungeon_design, p);
 }
 
 [[nodiscard]] auto level_is_level_final_icon_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
@@ -1881,10 +1881,10 @@
   return level_flag_cached(g, v, l, is_unused162, p);
 }
 
-[[nodiscard]] auto level_is_unused163_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_critical_to_gameplay_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused163, p);
+  return level_flag_cached(g, v, l, is_critical_to_gameplay, p);
 }
 
 [[nodiscard]] auto level_is_able_to_jump_attack_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

@@ -106,6 +106,7 @@
   if (!tp_load_teleport()) { return false; }
   if (!tp_load_trap()) { return false; }
   if (!tp_load_vault()) { return false; }
+  if (!tp_load_voider()) { return false; }
   if (!tp_load_wall()) { return false; }
   if (!tp_load_wand_energy()) { return false; }
   if (!tp_load_wand_fire()) { return false; }

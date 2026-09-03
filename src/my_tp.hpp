@@ -102,7 +102,7 @@
       list_macro(is_combustible, "is_combustible"),                                         /* newline */                                       \
       list_macro(is_corpse_on_death, "is_corpse_on_death"),                                 /* newline */                                       \
       list_macro(is_corridor, "is_corridor"),                                               /* newline */                                       \
-      list_macro(is_critical_to_level, "is_critical_to_level"),                             /* newline */                                       \
+      list_macro(is_critical_to_dungeon_design, "is_critical_to_dungeon_design"),           /* newline */                                       \
       list_macro(is_crushable, "is_crushable"),                                             /* newline */                                       \
       list_macro(is_cursed, "is_cursed"),                                                   /* newline */                                       \
       list_macro(is_cursor_path_hazard, "is_cursor_path_hazard"),                           /* newline */                                       \
@@ -320,7 +320,7 @@
       list_macro(is_unused160, "is_unused160"),                                             /* newline */                                       \
       list_macro(is_unused161, "is_unused161"),                                             /* newline */                                       \
       list_macro(is_unused162, "is_unused162"),                                             /* newline */                                       \
-      list_macro(is_unused163, "is_unused163"),                                             /* newline */                                       \
+      list_macro(is_critical_to_gameplay, "is_critical_to_gameplay"),                       /* newline */                                       \
       list_macro(is_able_to_jump_attack, "is_able_to_jump_attack"),                         /* newline */                                       \
       list_macro(is_unused17, "is_unused17"),                                               /* newline */                                       \
       list_macro(is_unused18, "is_unused18"),                                               /* newline */                                       \
@@ -901,7 +901,8 @@ class Tp;
 [[nodiscard]] auto tp_is_combustible(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_corpse_on_death(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_corridor(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_critical_to_level(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_critical_to_dungeon_design(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_critical_to_gameplay(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_crushable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_cursed(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_cursor_path_hazard(Tpp tp) -> bool;
@@ -1121,7 +1122,6 @@ class Tp;
 [[nodiscard]] auto tp_is_unused160(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused161(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused162(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused163(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused17(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused18(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused183(Tpp tp) -> bool;

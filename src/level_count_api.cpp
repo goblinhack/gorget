@@ -537,10 +537,10 @@
   return level_count(g, v, l, is_level_curr, p);
 }
 
-[[nodiscard]] auto level_count_is_critical_to_level(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_critical_to_dungeon_design(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_critical_to_level, p);
+  return level_count(g, v, l, is_critical_to_dungeon_design, p);
 }
 
 [[nodiscard]] auto level_count_is_level_final_icon(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
@@ -1845,10 +1845,10 @@
   return level_count(g, v, l, is_unused162, p);
 }
 
-[[nodiscard]] auto level_count_is_unused163(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_critical_to_gameplay(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused163, p);
+  return level_count(g, v, l, is_critical_to_gameplay, p);
 }
 
 [[nodiscard]] auto level_count_is_able_to_jump_attack(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t

@@ -194,7 +194,7 @@ static void tp_glorp_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEven
   tp_name_pluralize_set(tp, "glorps");
   tp_name_short_set(tp, "glorp");
   tp_priority_set(tp, THING_PRIORITY_MONST);
-  tp_score_value_set(tp, 5);
+  tp_score_value_set(tp, 10);
   tp_speed_set(tp, 50);
   tp_stat_set(tp, THING_STAT_ATT, "1d8+10");
   tp_stat_set(tp, THING_STAT_DEF, "2");

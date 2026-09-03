@@ -218,7 +218,7 @@ static void tp_cleaner_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEv
   tp_name_pluralize_set(tp, "dungeon cleaners");
   tp_name_short_set(tp, "dungeon cleaner");
   tp_priority_set(tp, THING_PRIORITY_MONST);
-  tp_score_value_set(tp, 5);
+  tp_score_value_set(tp, 10);
   tp_speed_set(tp, 50);
   tp_stat_set(tp, THING_STAT_ATT, "1d4+14");
   tp_stat_set(tp, THING_STAT_DEF, "2");

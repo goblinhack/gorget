@@ -104,6 +104,7 @@ auto tp_load_steam() -> bool;
 auto tp_load_teleport() -> bool;
 auto tp_load_trap() -> bool;
 auto tp_load_vault() -> bool;
+auto tp_load_voider() -> bool;
 auto tp_load_wall() -> bool;
 auto tp_load_wand_energy() -> bool;
 auto tp_load_wand_fire() -> bool;

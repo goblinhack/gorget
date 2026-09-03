@@ -5104,8 +5104,8 @@ static void gfx_init_tiles()
       "pale_eel.dead.0",
       "pirnana.idle.0",
       "pirnana.idle.1",
-      "",
-      "",
+      "voider.idle.0",
+      "voider.idle.1",
       "",
       "",
       // ##############################################################################

@@ -682,7 +682,7 @@ static auto room_flip_horiz(class Room *r) -> class Room *
 //
 // A tile we don't want to replace with fragments?
 //
-[[nodiscard]] static auto level_char_is_critical_to_level(char c) -> bool
+[[nodiscard]] static auto level_char_is_tile_blocked_for_fragments(char c) -> bool
 {
   switch (c) {
     case CHARMAP_BARREL :        return false;
@@ -1996,7 +1996,7 @@ void fragments_dump(Gamep g)
       auto existing_c = lg->data[ p.x ][ p.y ].c;
 
       if (c == CHARMAP_WILDCARD) {
-        if (level_char_is_critical_to_level(existing_c)) {
+        if (level_char_is_tile_blocked_for_fragments(existing_c)) {
           return false;
         }
         continue;

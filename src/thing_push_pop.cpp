@@ -44,7 +44,7 @@
   // Try and keep some space for critical things like the player
   //
   if (slot_count > MAP_SLOTS - 2) {
-    if (! thing_is_critical_to_level(t)) {
+    if (! thing_is_critical_to_gameplay(t)) {
       return false;
     }
   }

@@ -535,10 +535,10 @@
   return tp_flag(tp, is_level_curr) != 0;
 }
 
-[[nodiscard]] auto tp_is_critical_to_level(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_critical_to_dungeon_design(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_critical_to_level) != 0;
+  return tp_flag(tp, is_critical_to_dungeon_design) != 0;
 }
 
 [[nodiscard]] auto tp_is_level_final_icon(Tpp tp) -> bool
@@ -1843,10 +1843,10 @@
   return tp_flag(tp, is_unused162) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused163(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_critical_to_gameplay(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused163) != 0;
+  return tp_flag(tp, is_critical_to_gameplay) != 0;
 }
 
 [[nodiscard]] auto tp_is_able_to_jump_attack(Tpp tp) -> bool
