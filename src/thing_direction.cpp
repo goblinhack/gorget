@@ -44,10 +44,6 @@ void thing_is_moving_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
   // Just in case we are still mid lunge, stop it.
   //
   thing_is_lunging_set(g, v, l, t, false);
-
-  if (val) {
-    thing_on_moved(g, v, l, t);
-  }
 }
 
 void thing_is_moving_unset(Gamep g, Levelsp v, Levelp l, Thingp t)

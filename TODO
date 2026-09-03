@@ -1,8 +1,8 @@
 bugs
 ----
 
-chasm creature
 boots of fire
+explore bonus for freshly explored tiles
 boots of stealth
 
 todo
@@ -23,23 +23,20 @@ thrown potion, confusion
 thrown potion, caustic gas
 steam and smoke should spread
 potion trading station
-explore bonus for freshly explored tiles
 present icon with multiplites for bonus
 wandering monster for grinding
 enchants
 wortweed
 spikes
 monsters
-  - eels (beached?)
+  - gloater
   - crayfish men
   - drift spider
-  - spider with webs
   - unisheep
   - ochrehulk
   - gravedog
   - ravenbeast
   - bearowl
-  - ogyr (celtic)
   - door mimic
   - thief that can steal items
   - dropbear

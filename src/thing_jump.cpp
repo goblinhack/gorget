@@ -494,7 +494,7 @@ static auto thing_jump_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thingp
     return false;
   }
 
-  bool out = tp_flag(thing_tp(t), is_able_to_jump_attack) != 0;
+  bool const out = tp_flag(thing_tp(t), is_able_to_jump_attack) != 0;
 
   if (out) {
     if (d100() < thing_jump_attack_pct_chance(t)) {

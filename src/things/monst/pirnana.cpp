@@ -30,7 +30,7 @@ static auto tp_pirnana_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> st
 
   return                                                                                                              //
       UI_INFO1_FMT_STR                                                                                                //
-      "The dreaded pirnana, half-piranha, half-banana, lurks in the deep waters waiting to strike.\n"                 //
+      "The dreaded pirnana - half piranha, half banana - lurks in the deep waters waiting to strike.\n"               //
       UI_INFO2_FMT_STR                                                                                                //
       "Its yellow scales glitter in the dark and, it has been speculated, evolved to lure unwary gold prospectors.\n" //
       UI_INFO3_FMT_STR                                                                                                //

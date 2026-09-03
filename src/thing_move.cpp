@@ -42,9 +42,9 @@
   thing_moving_from_set(me, at);
   thing_at_set(g, v, l, me, to);
   (void) thing_push(g, v, l, me);
+  thing_on_moved(g, v, l, me);
 
   thing_is_moving_set(g, v, l, me);
-  THING_DBG(g, v, l, me, "is moving to set");
 
   //
   // If we're an engulfer, move the unlucky engulfed things inside us along with us as we move

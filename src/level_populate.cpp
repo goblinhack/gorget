@@ -908,7 +908,7 @@ static auto level_populate_fixup_biome_underhell(class LevelPopulate &lp, Tpp tp
             tp_add = tp_random(g, v, l, is_amphibious);
           }
 
-          if (tp_add) {
+          if (tp_add != nullptr) {
             if (thing_spawn(g, v, l, tp_add, lp.at) == nullptr) {
               return false;
             }

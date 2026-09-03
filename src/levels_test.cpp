@@ -417,19 +417,25 @@ void levels_test(Gamep g)
                     /* end */ nullptr);
   }
 
-  level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "lava", __FUNCTION__, __LINE__, no_overrides, 0,
-                  /* line */ (const char *) "xxxxxxxxxxx",
-                  /* line */ (const char *) "xxxxxxxxxxx",
-                  /* line */ (const char *) "xx.......xx",
-                  /* line */ (const char *) "xx...LL..xx",
-                  /* line */ (const char *) "xx...LL..xx",
-                  /* line */ (const char *) "xx.@.Lxxxxx",
-                  /* line */ (const char *) "xx...LxLLxx",
-                  /* line */ (const char *) "xx...LxLLxx",
-                  /* line */ (const char *) "xx...LLLLxx",
-                  /* line */ (const char *) "xx.......xx",
-                  /* line */ (const char *) "xxxxxxxxxxx",
-                  /* end */ nullptr);
+  {
+    Overrides overrides;
+
+    overrides[ '$' ] = [](char /*c*/, bpoint /*p*/) -> Tpp { return tp_find_mand("boots_fire"); };
+
+    level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "lava", __FUNCTION__, __LINE__, overrides, 0,
+                    /* line */ (const char *) "xxxxxxxxxxx",
+                    /* line */ (const char *) "xxxxxxxxxxx",
+                    /* line */ (const char *) "xx.......xx",
+                    /* line */ (const char *) "xx...LL..xx",
+                    /* line */ (const char *) "xx...LL..xx",
+                    /* line */ (const char *) "xx.@$Lxxxxx",
+                    /* line */ (const char *) "xx...LxLLxx",
+                    /* line */ (const char *) "xx...LxLLxx",
+                    /* line */ (const char *) "xx...LLLLxx",
+                    /* line */ (const char *) "xx.......xx",
+                    /* line */ (const char *) "xxxxxxxxxxx",
+                    /* end */ nullptr);
+  }
 
   level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "rock", __FUNCTION__, __LINE__, no_overrides, 0,
                   /* line */ (const char *) "xxxxxxxxxxx",

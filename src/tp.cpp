@@ -131,6 +131,7 @@ static std::initializer_list< std::string > tps = {
     "beam_of_energy",
     "beam_of_fire",
     "blitzhound",
+    "boots_fire",
     "boots_spider",
     "brazier",
     "bridge",

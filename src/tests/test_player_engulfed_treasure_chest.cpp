@@ -121,7 +121,7 @@
   TEST_ASSERT(t, monst, "was expecting to find a monster");
 
   //
-  // Kill the monster. Dumping the chest again.o
+  // Kill the monster. Dumping the chest again.
   //
   thing_dead(g, v, l, monst, e);
 
