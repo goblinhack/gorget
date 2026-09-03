@@ -93,33 +93,38 @@ void sdl_loop(Gamep g)
     bool const update_fast      = (ts_now - ui_ts_fast_last >= UI_EVENT_LOOP_FREQ_FAST_MS);
 
     //
-    // Check for clock reset due to leaving robot mode
-    //
-    if ((ts_now < ui_ts_fast_last) || (ts_now < ui_ts_slow_last) || (ts_now < ui_ts_very_slow_last)) {
-      ui_ts_fast_last      = time_ms();
-      ui_ts_slow_last      = ui_ts_fast_last;
-      ui_ts_very_slow_last = ui_ts_fast_last;
-    }
-
-    //
     // This is for when in pixel art mode and between levels and waiting for level fade in
     //
-    if ((update_very_slow)) [[unlikely]] {
+    if (update_very_slow) [[unlikely]] {
       ui_ts_very_slow_last = ts_now;
+
+      //
+      // Display all widgets (the UI)
+      //
       wid_display_all(g);
+
+      //
+      // Screenshot?
+      //
+      if ((! g_do_screenshot)) [[unlikely]] {
+        if ((! g_main_loop_running)) [[unlikely]] {
+          DBG("Exit main loop");
+          break;
+        }
+      }
     }
 
     //
     // Less frequent updates like updating the FPS
     //
-    if ((update_slow)) [[unlikely]] {
+    if (update_slow) [[unlikely]] {
       ui_ts_slow_last = ts_now;
     }
 
     //
     // Do faster processing of events, like reading the keyboard and updating widgets.
     //
-    if ((update_fast)) {
+    if (update_fast) {
       ui_ts_fast_last = ts_now;
 
       //
@@ -175,16 +180,6 @@ void sdl_loop(Gamep g)
               }
             }
           }
-        }
-      }
-
-      //
-      // Screenshot?
-      //
-      if ((! g_do_screenshot)) [[unlikely]] {
-        if ((! g_main_loop_running)) [[unlikely]] {
-          DBG("Exit main loop");
-          break;
         }
       }
 
