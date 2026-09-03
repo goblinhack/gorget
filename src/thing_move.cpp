@@ -32,6 +32,10 @@
     return false;
   }
 
+  //
+  // We call moving-to when the move cannot fail
+  //
+  thing_on_moving_to(g, v, l, me, to);
   (void) thing_pop(g, v, me);
 
   spoint pix_at;
@@ -41,9 +45,16 @@
   thing_pix_at_set(g, v, l, me, pix_at);
   thing_moving_from_set(me, at);
   thing_at_set(g, v, l, me, to);
+
+  //
+  // The move is complete now
+  //
   (void) thing_push(g, v, l, me);
   thing_on_moved(g, v, l, me);
 
+  //
+  // Inerpolate the move
+  //
   thing_is_moving_set(g, v, l, me);
 
   //

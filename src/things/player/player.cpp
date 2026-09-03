@@ -148,6 +148,16 @@ static void tp_player_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
   v->cursor[ at.x ][ at.y ] = CURSOR_NONE;
 }
 
+static void tp_player_on_moving_to(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &to)
+{
+  THING_DBG(g, v, l, me, "player moving");
+  TRACE_INDENT();
+
+  if (! l->player_has_walked_tile[ to.x ][ to.y ]) {
+    (void) thing_score_incr(g, v, l, me, 1);
+  }
+}
+
 static bool tp_player_on_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
 {
   TRACE();
@@ -418,6 +428,7 @@ static bool tp_player_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker, 
   thing_on_level_populated_set(tp, tp_player_level_populated);
   thing_on_missing_set(tp, tp_player_on_missing);
   thing_on_moved_set(tp, tp_player_on_moved);
+  thing_on_moving_to_set(tp, tp_player_on_moving_to);
   thing_on_spawned_set(tp, tp_player_on_spawned);
   thing_on_teleported_set(tp, tp_player_on_teleported);
   thing_on_tick_begin_set(tp, tp_player_tick_begin);

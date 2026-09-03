@@ -170,7 +170,7 @@ static bool tp_kobalos_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker,
   tp_name_pluralize_set(tp, "kobalo");
   tp_name_short_set(tp, "kobalos");
   tp_priority_set(tp, THING_PRIORITY_MONST);
-  tp_score_value_set(tp, 2);
+  tp_score_value_set(tp, 20);
   tp_speed_set(tp, 100);
   tp_stat_set(tp, THING_STAT_ATT, "1d4+10");
   tp_stat_set(tp, THING_STAT_DEF, "1d4+8");

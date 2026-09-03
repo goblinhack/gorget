@@ -296,6 +296,7 @@ public:
   thing_on_killing_t            on_killing            = {};
   thing_on_missing_t            on_missing            = {};
   thing_on_moved_t              on_moved              = {};
+  thing_on_moving_to_t          on_moving_to          = {};
   thing_on_teleported_t         on_teleported         = {};
   thing_on_activated_t          on_activated          = {};
   thing_on_shoved_t             on_shoved             = {};

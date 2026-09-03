@@ -500,6 +500,30 @@ void thing_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp->on_moved(g, v, l, me);
 }
 
+void thing_on_moving_to_set(Tpp tp, thing_on_moving_to_t callback)
+{
+  TRACE();
+  if (tp == nullptr) [[unlikely]] {
+    ERR("no thing template pointer");
+    return;
+  }
+  tp->on_moving_to = callback;
+}
+
+void thing_on_moving_to(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &to)
+{
+  TRACE();
+  auto *tp = thing_tp(me);
+  if (tp == nullptr) [[unlikely]] {
+    ERR("no thing template pointer");
+    return;
+  }
+  if (tp->on_moving_to == nullptr) {
+    return;
+  }
+  tp->on_moving_to(g, v, l, me, to);
+}
+
 void thing_on_teleported_set(Tpp tp, thing_on_teleported_t callback)
 {
   TRACE();

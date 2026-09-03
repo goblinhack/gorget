@@ -197,7 +197,7 @@ static bool tp_spider_baby_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attac
   tp_name_pluralize_set(tp, "baby giant spiders");
   tp_name_short_set(tp, "spider_baby");
   tp_priority_set(tp, THING_PRIORITY_MONST);
-  tp_score_value_set(tp, 2);
+  tp_score_value_set(tp, 20);
   tp_speed_set(tp, 25);
   tp_temperature_burns_at_set(tp, 50);  // celsius
   tp_temperature_damage_at_set(tp, 35); // celsius

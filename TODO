@@ -1,8 +1,6 @@
 bugs
 ----
 
-boots of fire
-explore bonus for freshly explored tiles
 boots of stealth
 
 todo
@@ -43,6 +41,7 @@ monsters
   - barbarian, thrud
 lever for a bridge? use an overly for rooms
 damage reduction stat
+for windows, checkout https://github.com/eythaann/Seelen-UI/
 
 sacrifice altar
 ---------------

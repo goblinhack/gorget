@@ -202,7 +202,7 @@ static bool tp_pale_eel_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker
   tp_name_pluralize_set(tp, "pale eels");
   tp_name_short_set(tp, "pale eel");
   tp_priority_set(tp, THING_PRIORITY_MONST);
-  tp_score_value_set(tp, 4);
+  tp_score_value_set(tp, 40);
   tp_speed_set(tp, 50);
   tp_stat_set(tp, THING_STAT_ATT, "1d2+10");
   tp_stat_set(tp, THING_STAT_DEF, "16");

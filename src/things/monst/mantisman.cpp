@@ -189,7 +189,7 @@ static bool tp_mantisman_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacke
   tp_name_pluralize_set(tp, "mantismen");
   tp_name_short_set(tp, "mantisman");
   tp_priority_set(tp, THING_PRIORITY_MONST);
-  tp_score_value_set(tp, 5);
+  tp_score_value_set(tp, 50);
   tp_speed_set(tp, 100);
   tp_stat_set(tp, THING_STAT_ATT, "1d8+10");
   tp_stat_set(tp, THING_STAT_DEF, "8");

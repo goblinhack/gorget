@@ -143,6 +143,10 @@ using thing_on_moved_t = void (*)(Gamep, Levelsp, Levelp, Thingp me);
 auto thing_on_moved_set(Tpp tp, thing_on_moved_t callback) -> void;
 auto thing_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me) -> void;
 
+using thing_on_moving_to_t = void (*)(Gamep, Levelsp, Levelp, Thingp me, const bpoint &to);
+auto thing_on_moving_to_set(Tpp tp, thing_on_moving_to_t callback) -> void;
+auto thing_on_moving_to(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &to) -> void;
+
 using thing_on_activated_t = bool (*)(Gamep, Levelsp, Levelp, Thingp trap, Thingp sucker);
 auto thing_on_activated_set(Tpp tp, thing_on_activated_t callback) -> void;
 auto thing_on_activated(Gamep g, Levelsp v, Levelp l, Thingp trap, Thingp user) -> bool;
