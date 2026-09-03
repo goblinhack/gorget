@@ -634,16 +634,16 @@ static void level_tick_idle(Gamep g, Levelsp v, Levelp l)
   }
 
   if (ret) {
-    level_log(g, v, l, "Tick %u: requested new tick: %s", v->tick, why);
+    LEVEL_DBG(g, v, l, "Tick %u: requested new tick: %s", v->tick, why);
   } else {
-    level_log(g, v, l, "Tick %u: already requested, ignore: %s", v->tick, why);
+    LEVEL_DBG(g, v, l, "Tick %u: already requested, ignore: %s", v->tick, why);
   }
 
   FOR_ALL_TICKING_LEVELS(g, v, iter)
   {
     if (! iter->tick_begin_requested) {
       iter->tick_begin_requested = true;
-      level_log(g, v, iter, "Tick requested for this level");
+      LEVEL_DBG(g, v, iter, "Tick requested for this level");
     }
   }
 
