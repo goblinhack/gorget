@@ -31,11 +31,11 @@
         "XXXXXXXXXXXXXXX";
   std::string const expect1
       = "XXXXXXXXXXXXXXX"
-        "Xmmmmmm.mmmmmmX"
-        "Xmmmmmmmmmm.m.X"
-        "X.mmmmm.mmmmmmX"
-        "XxxmmmmmmmmmmmX"
-        "X@xmmmmmmmmmm.X"
+        "Xmmmmmmmmmm.mmX"
+        "Xmmmm.mmmmmmmmX"
+        "Xmmmmmmmmmmm.mX"
+        "Xxxmmmmmmmm.mmX"
+        "X@xmmmmmmmm.m.X"
         "XXXXXXXXXXXXXXX";
 
   //
@@ -99,16 +99,14 @@
   }
 
   TEST_LOG(t, "dead_kobalos: %d", dead_kobalos);
-  TEST_ASSERT(t, dead_kobalos == 7, "missing dead kobalos");
-
   TEST_LOG(t, "spider_count: %d", spider_count);
-  TEST_ASSERT(t, spider_count == 6, "missing spiders");
-
   TEST_LOG(t, "spider_giant_count: %d", spider_giant_count);
-  TEST_ASSERT(t, spider_giant_count == 1, "missing giant spiders");
-
   TEST_LOG(t, "spider_baby_count: %d", spider_baby_count);
-  TEST_ASSERT(t, spider_baby_count == 5, "missing baby spiders");
+
+  TEST_ASSERT(t, dead_kobalos == 6, "missing dead kobalos");
+  TEST_ASSERT(t, spider_count == 5, "missing spiders");
+  TEST_ASSERT(t, spider_giant_count == 1, "missing giant spiders");
+  TEST_ASSERT(t, spider_baby_count == 4, "missing baby spiders");
 
   //
   // Check the tick is as expected

@@ -501,7 +501,7 @@ using Thing = struct Thing {
   int16_t _value8;
   int16_t _value9;
   int16_t _value10;
-  int16_t _value11;
+  int16_t _jump_attack_pct_chance;
   int16_t _items_collected_max;
   int16_t _charge_count;
   int16_t _score_value;
@@ -804,7 +804,8 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_able_to_fall_sound(Thingp me) -> bool;
 [[nodiscard]] auto thing_is_able_to_fall(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
 [[nodiscard]] auto thing_is_able_to_fire_weapons(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_able_to_jump_pounce(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
+[[nodiscard]] auto thing_is_able_to_jump_attack(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_able_to_jump_land_then_pounce(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_jump(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_lunge(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_move_diagonally(Thingp t) -> bool;
@@ -916,6 +917,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_extinguished_on_death(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_falling_continues(Thingp me) -> bool;
 [[nodiscard]] auto thing_is_falling_incr(Gamep g, Levelsp v, Levelp l, Thingp me, int val = 1) -> int;
+[[nodiscard]] auto thing_is_fish(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_flammable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_flat(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_flesh_eater(Thingp t) -> bool;
@@ -1108,8 +1110,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused161(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused162(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused163(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused164(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused165(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused17(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused18(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused183(Thingp t) -> bool;
@@ -1222,6 +1222,10 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_items_collected_max_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_items_collected_max_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_items_collected_max(Thingp t) -> int;
+[[nodiscard]] auto thing_jump_attack_pct_chance_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
+[[nodiscard]] auto thing_jump_attack_pct_chance_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
+[[nodiscard]] auto thing_jump_attack_pct_chance_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
+[[nodiscard]] auto thing_jump_attack_pct_chance(Thingp t) -> int;
 [[nodiscard]] auto thing_jump_to(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to, bool warn = true) -> bool;
 [[nodiscard]] auto thing_keys_carried_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_keys_carried_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
@@ -1378,10 +1382,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_value10_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_value10_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_value10(Thingp t) -> int;
-[[nodiscard]] auto thing_value11_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
-[[nodiscard]] auto thing_value11_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
-[[nodiscard]] auto thing_value11_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
-[[nodiscard]] auto thing_value11(Thingp t) -> int;
 [[nodiscard]] auto thing_value2_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_value2_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_value2_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;

@@ -4,6 +4,7 @@
 
 #include "my_bpoint.hpp"
 #include "my_callstack.hpp"
+#include "my_dice_rolls.hpp"
 #include "my_fpoint.hpp"
 #include "my_game_defs.hpp"
 #include "my_level.hpp"
@@ -444,7 +445,7 @@ static auto thing_jump_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thingp
   return tp_flag(thing_tp(t), is_obs_to_jumping_onto) != 0;
 }
 
-[[nodiscard]] auto thing_is_able_to_jump_pounce(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool
+[[nodiscard]] auto thing_is_able_to_jump_land_then_pounce(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -461,7 +462,7 @@ static auto thing_jump_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thingp
     return false;
   }
 
-  return tp_flag(thing_tp(t), is_able_to_jump_pounce) != 0;
+  return tp_flag(thing_tp(t), is_able_to_jump_land_then_pounce) != 0;
 }
 
 [[nodiscard]] auto thing_is_able_to_jump(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool
@@ -482,4 +483,71 @@ static auto thing_jump_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thingp
   }
 
   return tp_flag(thing_tp(t), is_able_to_jump) != 0;
+}
+
+[[nodiscard]] auto thing_is_able_to_jump_attack(Thingp t) -> bool
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return false;
+  }
+
+  bool out = tp_flag(thing_tp(t), is_able_to_jump_attack) != 0;
+
+  if (out) {
+    if (d100() < thing_jump_attack_pct_chance(t)) {
+      return false;
+    }
+  }
+
+  return out;
+}
+
+[[nodiscard]] auto thing_jump_attack_pct_chance(Thingp t) -> int
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return 0;
+  }
+  return t->_jump_attack_pct_chance;
+}
+
+[[nodiscard]] auto thing_jump_attack_pct_chance_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return 0;
+  }
+  return t->_jump_attack_pct_chance = val;
+}
+
+[[nodiscard]] auto thing_jump_attack_pct_chance_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return 0;
+  }
+  return t->_jump_attack_pct_chance += val;
+}
+
+[[nodiscard]] auto thing_jump_attack_pct_chance_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+{
+  TRACE_DEBUG();
+
+  if (t == nullptr) {
+    ERR("no thing pointer");
+    return 0;
+  }
+  if (static_cast< int >(t->_jump_attack_pct_chance) - val <= 0) {
+    return t->_jump_attack_pct_chance = 0;
+  }
+  return t->_jump_attack_pct_chance -= val;
 }

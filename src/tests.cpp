@@ -57,6 +57,7 @@
   if (!test_load_mob_shove_into_lava()) { return false; }
   if (!test_load_mob_water()) { return false; }
   if (!test_load_mob()) { return false; }
+  if (!test_load_monst_amphibian()) { return false; }
   if (!test_load_monst_avoids_chasm()) { return false; }
   if (!test_load_monst_avoids_lava()) { return false; }
   if (!test_load_monst_avoids_player()) { return false; }
@@ -71,9 +72,11 @@
   if (!test_load_monst_door_slam_attack()) { return false; }
   if (!test_load_monst_door_unlocked()) { return false; }
   if (!test_load_monst_fast()) { return false; }
+  if (!test_load_monst_fish_jump()) { return false; }
+  if (!test_load_monst_fish()) { return false; }
+  if (!test_load_monst_jump_land_then_pounce_over_water()) { return false; }
   if (!test_load_monst_jump_over_chasm()) { return false; }
   if (!test_load_monst_jump_over_lava()) { return false; }
-  if (!test_load_monst_jump_pounce_over_water()) { return false; }
   if (!test_load_monst_jumper()) { return false; }
   if (!test_load_monst_massacre()) { return false; }
   if (!test_load_monst_maze()) { return false; }

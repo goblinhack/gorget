@@ -75,6 +75,7 @@ auto tp_load_mummy() -> bool;
 auto tp_load_ogrik() -> bool;
 auto tp_load_pale_eel() -> bool;
 auto tp_load_pillar() -> bool;
+auto tp_load_pirnana() -> bool;
 auto tp_load_player() -> bool;
 auto tp_load_pot_dislocn() -> bool;
 auto tp_load_pot_healing() -> bool;

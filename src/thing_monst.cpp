@@ -407,7 +407,7 @@ static auto thing_monst_choose_something_we_can_wander_to(Gamep g, Levelsp v, Le
   //
   // This is for spiders that do not move conventionally, but jump
   //
-  if (! thing_is_able_to_move(me)) {
+  if (! thing_is_able_to_move(me) || thing_is_able_to_jump_attack(me)) {
     THING_DBG(g, v, l, me, "move try: cannot move, jump?");
     if (! adjacent(at, to)) {
       if (thing_jump_to(g, v, l, me, to, false)) {
@@ -418,16 +418,20 @@ static auto thing_monst_choose_something_we_can_wander_to(Gamep g, Levelsp v, Le
     //
     // Try to reach the final target
     //
-    if (thing_jump_to(g, v, l, me, target, false)) {
-      return true;
+    if (! adjacent(at, target)) {
+      if (thing_jump_to(g, v, l, me, target, false)) {
+        return true;
+      }
     }
 
     //
     // Jump half way?
     //
     auto middle = (target + to) / 2;
-    if (thing_jump_to(g, v, l, me, middle, false)) {
-      return true;
+    if (! adjacent(at, middle)) {
+      if (thing_jump_to(g, v, l, me, middle, false)) {
+        return true;
+      }
     }
 
     //
@@ -435,8 +439,10 @@ static auto thing_monst_choose_something_we_can_wander_to(Gamep g, Levelsp v, Le
     //
     for (auto tries = 0; tries < 10; tries++) {
       auto alt_target = middle + bpoint(PCG_RANDOM_RANGE_INCLUSIVE(-2, 2), PCG_RANDOM_RANGE_INCLUSIVE(-2, 2));
-      if (thing_jump_to(g, v, l, me, alt_target, false)) {
-        return true;
+      if (! adjacent(at, alt_target)) {
+        if (thing_jump_to(g, v, l, me, alt_target, false)) {
+          return true;
+        }
       }
     }
 
@@ -579,7 +585,7 @@ static auto thing_monst_choose_something_we_can_wander_to(Gamep g, Levelsp v, Le
               //
               // If could jump, then abort the path walk
               //
-              if (thing_is_able_to_jump_pounce(g, v, l, me)) {
+              if (thing_is_able_to_jump_land_then_pounce(g, v, l, me)) {
                 THING_DBG(g, v, l, me, "jumped to nexthop; pounce?");
                 return false;
               }
@@ -611,7 +617,16 @@ static auto thing_monst_choose_something_we_can_wander_to(Gamep g, Levelsp v, Le
     return false;
   }
 
+  //
+  // If we're mid jump already, stop
+  //
+  if (thing_is_jumping(me)) {
+    THING_DBG(g, v, l, me, "move to next: jumping already");
+    return true;
+  }
+
   if (! thing_is_able_to_move(me)) {
+    THING_DBG(g, v, l, me, "move to next: unable to move");
     return true;
   }
 

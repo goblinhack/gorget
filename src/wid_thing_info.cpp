@@ -1148,7 +1148,7 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
       out = string_append_with_comma(out, "Engulf-proof");
     }
   }
-  if (thing_is_able_to_jump_pounce(g, v, l, me)) {
+  if (thing_is_able_to_jump_land_then_pounce(g, v, l, me)) {
     out = string_append_with_comma(out, "Jump-pounce");
   }
   if (tp_attack_count_max_per_tick_get(tp) > 1) {

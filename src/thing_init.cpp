@@ -87,7 +87,7 @@
   (void) thing_temperature_set(g, v, l, t, tp_temperature_initial_get(tp));
   (void) thing_value1_set(g, v, l, t, tp_value1_get(tp));
   (void) thing_value10_set(g, v, l, t, tp_value10_get(tp));
-  (void) thing_value11_set(g, v, l, t, tp_value11_get(tp));
+  (void) thing_jump_attack_pct_chance_set(g, v, l, t, tp_jump_attack_pct_chance_get(tp));
   (void) thing_value2_set(g, v, l, t, tp_value2_get(tp));
   (void) thing_value3_set(g, v, l, t, tp_value3_get(tp));
   (void) thing_value4_set(g, v, l, t, tp_value4_get(tp));

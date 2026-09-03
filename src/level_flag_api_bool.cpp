@@ -1887,16 +1887,16 @@
   return level_flag(g, v, l, is_unused163, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_unused164_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_able_to_jump_attack_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused164, p, me) != nullptr;
+  return level_flag(g, v, l, is_able_to_jump_attack, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_unused165_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_fish_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused165, p, me) != nullptr;
+  return level_flag(g, v, l, is_fish, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_unlucky_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
@@ -2025,10 +2025,10 @@
   return level_flag(g, v, l, is_rubble, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_able_to_jump_pounce_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_able_to_jump_land_then_pounce_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_able_to_jump_pounce, p, me) != nullptr;
+  return level_flag(g, v, l, is_able_to_jump_land_then_pounce, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_unused188_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool

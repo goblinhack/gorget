@@ -458,6 +458,10 @@
   }
 #endif
 
+  if (thing_is_jumping(t)) {
+    return (t->_submerged_pct * 2) / 3;
+  }
+
   //
   // Floating when dead?
   //

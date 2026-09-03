@@ -1850,16 +1850,16 @@
   return level_flag(g, v, l, is_unused163, p, me);
 }
 
-[[nodiscard]] auto level_is_unused164(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_able_to_jump_attack(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused164, p, me);
+  return level_flag(g, v, l, is_able_to_jump_attack, p, me);
 }
 
-[[nodiscard]] auto level_is_unused165(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_fish(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused165, p, me);
+  return level_flag(g, v, l, is_fish, p, me);
 }
 
 [[nodiscard]] auto level_is_unlucky(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
@@ -1988,10 +1988,10 @@
   return level_flag(g, v, l, is_rubble, p, me);
 }
 
-[[nodiscard]] auto level_is_able_to_jump_pounce(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_able_to_jump_land_then_pounce(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_able_to_jump_pounce, p, me);
+  return level_flag(g, v, l, is_able_to_jump_land_then_pounce, p, me);
 }
 
 [[nodiscard]] auto level_is_unused188(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp

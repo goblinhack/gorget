@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-[[nodiscard]] static auto test_monst_jump_pounce_over_water(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_monst_jump_land_then_pounce_over_water(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -153,14 +153,14 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_monst_jump_pounce_over_water() -> bool // NOLINT
+[[nodiscard]] auto test_load_monst_jump_land_then_pounce_over_water() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("monst_jump_pounce_over_water");
+  Testp test = test_load("monst_jump_land_then_pounce_over_water");
 
   // begin sort marker1 {
-  test_callback_set(test, test_monst_jump_pounce_over_water);
+  test_callback_set(test, test_monst_jump_land_then_pounce_over_water);
   // end sort marker1 }
 
   return true;

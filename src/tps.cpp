@@ -77,6 +77,7 @@
   if (!tp_load_ogrik()) { return false; }
   if (!tp_load_pale_eel()) { return false; }
   if (!tp_load_pillar()) { return false; }
+  if (!tp_load_pirnana()) { return false; }
   if (!tp_load_player()) { return false; }
   if (!tp_load_pot_dislocn()) { return false; }
   if (!tp_load_pot_healing()) { return false; }

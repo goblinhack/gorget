@@ -363,6 +363,13 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
   // for obstacles
   //
   switch (f) {
+    case is_obs_to_jumping_out_of :
+      if (thing_is_water_deep(it)) {
+        if (thing_is_fish(me) && thing_is_able_to_jump(g, v, l, me)) {
+          return true; // filter out i.e. ignore
+        }
+      }
+      [[fallthrough]];
     case is_obs_to_throwing_onto :    [[fallthrough]];
     case is_cursor_path_warning :     [[fallthrough]];
     case is_cursor_path_hazard :      [[fallthrough]];

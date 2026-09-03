@@ -246,7 +246,7 @@ enum {
 
 enum {
   MAP_SCROLL_EDGE_INNER_PIXEL = 1, // max pixels to scroll jump
-  MAP_SCROLL_EDGE_OUTER_PIXEL = 5  // max pixels to scroll jump
+  MAP_SCROLL_EDGE_OUTER_PIXEL = 10 // max pixels to scroll jump
 };
 
 //

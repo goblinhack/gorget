@@ -1887,16 +1887,16 @@
   return level_flag_cached(g, v, l, is_unused163, p);
 }
 
-[[nodiscard]] auto level_is_unused164_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_able_to_jump_attack_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused164, p);
+  return level_flag_cached(g, v, l, is_able_to_jump_attack, p);
 }
 
-[[nodiscard]] auto level_is_unused165_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_fish_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused165, p);
+  return level_flag_cached(g, v, l, is_fish, p);
 }
 
 [[nodiscard]] auto level_is_unlucky_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
@@ -2025,10 +2025,10 @@
   return level_flag_cached(g, v, l, is_rubble, p);
 }
 
-[[nodiscard]] auto level_is_able_to_jump_pounce_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_able_to_jump_land_then_pounce_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_able_to_jump_pounce, p);
+  return level_flag_cached(g, v, l, is_able_to_jump_land_then_pounce, p);
 }
 
 [[nodiscard]] auto level_is_unused188_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

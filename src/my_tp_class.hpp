@@ -150,7 +150,7 @@ public:
   int value8 {0};
   int value9 {0};
   int value10 {0};
-  int value11 {0};
+  int jump_attack_pct_chance {0};
   int items_collected_max {0};
   int hearing_threshold {0};
   int distance_throw {0};

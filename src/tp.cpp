@@ -185,6 +185,7 @@ static std::initializer_list< std::string > tps = {
     "ogrik",
     "pale_eel",
     "pillar",
+    "pirnana",
     "player",
     "pot_dislocn",
     "pot_healing",
@@ -1608,24 +1609,24 @@ void tp_value10_set(Tpp tp, int val)
   return tp->value10;
 }
 
-void tp_value11_set(Tpp tp, int val)
+void tp_jump_attack_pct_chance_set(Tpp tp, int val)
 {
   TRACE_DEBUG();
   if (tp == nullptr) [[unlikely]] {
     ERR("no thing template pointer");
     return;
   }
-  tp->value11 = val;
+  tp->jump_attack_pct_chance = val;
 }
 
-[[nodiscard]] auto tp_value11_get(Tpp tp) -> int
+[[nodiscard]] auto tp_jump_attack_pct_chance_get(Tpp tp) -> int
 {
   TRACE_DEBUG();
   if (tp == nullptr) [[unlikely]] {
     ERR("no thing template pointer");
     return 0;
   }
-  return tp->value11;
+  return tp->jump_attack_pct_chance;
 }
 
 void tp_items_collected_max_set(Tpp tp, int val)

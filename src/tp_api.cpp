@@ -1849,16 +1849,16 @@
   return tp_flag(tp, is_unused163) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused164(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_able_to_jump_attack(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused164) != 0;
+  return tp_flag(tp, is_able_to_jump_attack) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused165(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_fish(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused165) != 0;
+  return tp_flag(tp, is_fish) != 0;
 }
 
 [[nodiscard]] auto tp_is_unlucky(Tpp tp) -> bool
@@ -1987,10 +1987,10 @@
   return tp_flag(tp, is_rubble) != 0;
 }
 
-[[nodiscard]] auto tp_is_able_to_jump_pounce(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_able_to_jump_land_then_pounce(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_able_to_jump_pounce) != 0;
+  return tp_flag(tp, is_able_to_jump_land_then_pounce) != 0;
 }
 
 [[nodiscard]] auto tp_is_unused188(Tpp tp) -> bool

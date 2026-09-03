@@ -2,9 +2,6 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include <cstdint>
-#include <limits>
-
 #include "my_callstack.hpp"
 #include "my_globals.hpp"
 #include "my_main.hpp"
@@ -12,6 +9,9 @@
 #include "my_thing_inlines.hpp"
 #include "my_tp.hpp"
 #include "my_types.hpp"
+
+#include <cstdint>
+#include <limits>
 
 [[nodiscard]] auto thing_weight(Thingp t) -> int
 {
@@ -2346,7 +2346,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_unused163) != 0;
 }
 
-[[nodiscard]] auto thing_is_unused164(Thingp t) -> bool
+[[nodiscard]] auto thing_is_fish(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2354,18 +2354,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused164) != 0;
-}
-
-[[nodiscard]] auto thing_is_unused165(Thingp t) -> bool
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_unused165) != 0;
+  return tp_flag(thing_tp(t), is_fish) != 0;
 }
 
 [[nodiscard]] auto thing_is_unlucky(Thingp t) -> bool
@@ -4335,52 +4324,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
   return t->_value10 -= val;
 }
-[[nodiscard]] auto thing_value11(Thingp t) -> int
-{
-  TRACE_DEBUG();
 
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  return t->_value11;
-}
-
-[[nodiscard]] auto thing_value11_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  return t->_value11 = val;
-}
-
-[[nodiscard]] auto thing_value11_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  return t->_value11 += val;
-}
-
-[[nodiscard]] auto thing_value11_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
-{
-  TRACE_DEBUG();
-
-  if (t == nullptr) {
-    ERR("no thing pointer");
-    return 0;
-  }
-  if (static_cast< int >(t->_value11) - val <= 0) {
-    return t->_value11 = 0;
-  }
-  return t->_value11 -= val;
-}
 [[nodiscard]] auto thing_items_collected_max(Thingp t) -> int
 {
   TRACE_DEBUG();

@@ -35,7 +35,7 @@ static auto tp_pale_eel_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> s
       "Albino and almost blind, its pale eyes on stalks are of little use, so the pale eel resorts to its " //
       "ability to detect the smallest vibrations in the murky water.\n"                                     //
       UI_INFO3_FMT_STR                                                                                      //
-      "With a bite first policy, the pale eel, although small, is best to be avoided.\n"                    //
+      "With a bite first policy, the pale eel, although small is best to be avoided.\n"                     //
       UI_INFO4_FMT_STR                                                                                      //
       "Also make good pets, but avoid putting your hand in the tank.";
 }
@@ -161,10 +161,8 @@ static bool tp_pale_eel_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker
   thing_on_levitated_set(tp, tp_pale_eel_on_levitated);
   thing_on_missing_set(tp, tp_pale_eel_on_missing);
   tp_attack_count_max_per_tick_set(tp, 2);
-  tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6"); // fumble => intensify / keep burning / crit => stop burning
-  tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // fumble => flames spread to you
   tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d3");
-  tp_distance_vision_set(tp, 12);
+  tp_distance_vision_set(tp, 8);
   tp_flag_set(tp, is_able_to_be_buffed);
   tp_flag_set(tp, is_able_to_be_levitated);
   tp_flag_set(tp, is_able_to_fall_sound);
@@ -181,7 +179,6 @@ static bool tp_pale_eel_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_hit_outline_w_invis_inside);
   tp_flag_set(tp, is_blit_shown_in_chasms);
-  tp_flag_set(tp, is_burnable); // is capable of being burned by fire
   tp_flag_set(tp, is_collision_circle_large);
   tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_described_cursor);
@@ -209,7 +206,6 @@ static bool tp_pale_eel_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker
   tp_speed_set(tp, 50);
   tp_stat_set(tp, THING_STAT_ATT, "1d2+10");
   tp_stat_set(tp, THING_STAT_DEF, "16");
-  tp_temperature_burns_at_set(tp, 50);  // celsius
   tp_temperature_damage_at_set(tp, 35); // celsius
   tp_temperature_initial_set(tp, 20);   // celsius
   tp_weight_set(tp, WEIGHT_HUMAN);      // grams
