@@ -352,7 +352,13 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
   //
   // Local cache of things blocking light
   //
-  static Thingp light_blocker_cache[ MAP_WIDTH ][ MAP_HEIGHT ];
+  Thingp light_blocker_cache[ MAP_WIDTH ][ MAP_HEIGHT ];
+
+  for (auto x = 0; x < MAP_WIDTH; x++) {
+    for (auto y = 0; y < MAP_HEIGHT; y++) {
+      light_blocker_cache[ x ][ y ] = level_light_blocker_at(g, v, l, bpoint(x, y), player);
+    }
+  }
 
   FovContext ctx;
 
@@ -364,21 +370,6 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
   ctx.light_color              = tp_light_color(tp);
   ctx.thing_at_in_pixels       = thing_pix_at(player);
   ctx.light_strength_in_pixels = thing_is_light_source(player) * TILE_WIDTH;
-
-  //
-  // Update the light cache
-  //
-  static spoint last_pix_at {};
-  static Levelp last_l {};
-  if ((last_l == l) && (last_pix_at != ctx.thing_at_in_pixels)) {
-    last_pix_at = ctx.thing_at_in_pixels;
-    last_l      = l;
-    for (auto x = 0; x < MAP_WIDTH; x++) {
-      for (auto y = 0; y < MAP_HEIGHT; y++) {
-        light_blocker_cache[ x ][ y ] = level_light_blocker_at(g, v, l, bpoint(x, y), player);
-      }
-    }
-  }
 
   //
   // Flicker the light strength and color?
