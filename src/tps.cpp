@@ -80,7 +80,7 @@
   if (!tp_load_pillar()) { return false; }
   if (!tp_load_pirnana()) { return false; }
   if (!tp_load_player()) { return false; }
-  if (!tp_load_pot_dislocn()) { return false; }
+  if (!tp_load_pot_disloc()) { return false; }
   if (!tp_load_pot_healing()) { return false; }
   if (!tp_load_pot_incin()) { return false; }
   if (!tp_load_pot_lev()) { return false; }

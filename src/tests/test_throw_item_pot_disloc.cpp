@@ -8,7 +8,7 @@
 #include "../my_test.hpp"
 #include "../my_thing_inlines.hpp"
 
-[[nodiscard]] static auto test_throw_item_pot_dislocn(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_throw_item_pot_disloc(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -131,12 +131,12 @@
   int     threw_count = 0;
 
   static std::initializer_list< std::string > items = {
-      "pot_dislocn", //
-      "pot_dislocn", //
-      "pot_dislocn", //
-      "pot_dislocn", //
-      "pot_dislocn", //
-      "pot_dislocn", //
+      "pot_disloc", //
+      "pot_disloc", //
+      "pot_disloc", //
+      "pot_disloc", //
+      "pot_disloc", //
+      "pot_disloc", //
   };
 
   auto *player = thing_player(g);
@@ -204,14 +204,14 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_throw_item_pot_dislocn() -> bool // NOLINT
+[[nodiscard]] auto test_load_throw_item_pot_disloc() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("throw_item_pot_dislocn");
+  Testp test = test_load("throw_item_pot_disloc");
 
   // begin sort marker1 {
-  test_callback_set(test, test_throw_item_pot_dislocn);
+  test_callback_set(test, test_throw_item_pot_disloc);
   // end sort marker1 }
 
   return true;

@@ -139,8 +139,8 @@
   if (!test_load_player_trap_did_not_trigger_due_to_clover()) { return false; }
   if (!test_load_player_trap_did_not_trigger_due_to_horseshoe()) { return false; }
   if (!test_load_player_triggered()) { return false; }
-  if (!test_load_pot_dislocn_bad_luck()) { return false; }
-  if (!test_load_pot_dislocn_good_luck()) { return false; }
+  if (!test_load_pot_disloc_bad_luck()) { return false; }
+  if (!test_load_pot_disloc_good_luck()) { return false; }
   if (!test_load_pot_healing()) { return false; }
   if (!test_load_pot_lev_player_chasm()) { return false; }
   if (!test_load_pot_lev_player_grass()) { return false; }
@@ -189,7 +189,7 @@
   if (!test_load_teleport()) { return false; }
   if (!test_load_throw_item_at_monst()) { return false; }
   if (!test_load_throw_item_chasm()) { return false; }
-  if (!test_load_throw_item_pot_dislocn()) { return false; }
+  if (!test_load_throw_item_pot_disloc()) { return false; }
   if (!test_load_throw_item_pot_healing_into_lava()) { return false; }
   if (!test_load_throw_item_pot_healing()) { return false; }
   if (!test_load_throw_item_pot_incin_chain_explosion()) { return false; }

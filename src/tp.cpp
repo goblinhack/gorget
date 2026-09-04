@@ -188,7 +188,7 @@ static std::initializer_list< std::string > tps = {
     "pillar",
     "pirnana",
     "player",
-    "pot_dislocn",
+    "pot_disloc",
     "pot_healing",
     "pot_incin",
     "pot_lev",

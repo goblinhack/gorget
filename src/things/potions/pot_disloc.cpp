@@ -13,14 +13,14 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
-static auto tp_pot_dislocn_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
+static auto tp_pot_disloc_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
   return "potion, dislocation";
 }
 
-static auto tp_pot_dislocn_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
+static auto tp_pot_disloc_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
@@ -29,7 +29,7 @@ static auto tp_pot_dislocn_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -
       UI_INFO3_FMT_STR "Don't neglect the influence of luck with random teleportation...";
 }
 
-static void tp_pot_dislocn_on_thrown_end(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp thrower)
+static void tp_pot_disloc_on_thrown_end(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp thrower)
 {
   THING_DBG(g, v, l, me, "thrown end");
   TRACE_INDENT();
@@ -115,7 +115,7 @@ static void tp_pot_dislocn_on_thrown_end(Gamep g, Levelsp v, Levelp l, Thingp me
   thing_dead(g, v, l, me, e);
 }
 
-static bool tp_pot_dislocn_on_use(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user)
+static bool tp_pot_disloc_on_use(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user)
 {
   TRACE();
 
@@ -136,7 +136,7 @@ static bool tp_pot_dislocn_on_use(Gamep g, Levelsp v, Levelp l, Thingp me, Thing
   return true;
 }
 
-static void tp_pot_dislocn_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
+static void tp_pot_disloc_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
 {
   TRACE();
 
@@ -158,19 +158,19 @@ static void tp_pot_dislocn_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, Thi
   (void) thing_spawn(g, v, l, tp_first(is_water_shallow), thing_at(g, v, l, me));
 }
 
-[[nodiscard]] auto tp_load_pot_dislocn() -> bool
+[[nodiscard]] auto tp_load_pot_disloc() -> bool
 {
   TRACE();
 
-  auto *tp   = tp_load("pot_dislocn"); // keep as string for scripts
+  auto *tp   = tp_load("pot_disloc"); // keep as string for scripts
   auto  name = tp_name(tp);
 
   // begin sort marker1 {
-  thing_description_set(tp, tp_pot_dislocn_description_get);
-  thing_detail_set(tp, tp_pot_dislocn_detail_get);
-  thing_on_death_set(tp, tp_pot_dislocn_on_death);
-  thing_on_thrown_end_set(tp, tp_pot_dislocn_on_thrown_end);
-  thing_on_use_set(tp, tp_pot_dislocn_on_use);
+  thing_description_set(tp, tp_pot_disloc_description_get);
+  thing_detail_set(tp, tp_pot_disloc_detail_get);
+  thing_on_death_set(tp, tp_pot_disloc_on_death);
+  thing_on_thrown_end_set(tp, tp_pot_disloc_on_thrown_end);
+  thing_on_use_set(tp, tp_pot_disloc_on_use);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // fumble => intensify / keep burning / crit => stop burning
   tp_damage_set(tp, THING_EVENT_THROWN_DAMAGE, "1d4");
   tp_flag_set(tp, is_able_to_be_buffed);

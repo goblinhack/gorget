@@ -8,7 +8,7 @@
 #include "../my_test.hpp"
 #include "../my_thing_inlines.hpp"
 
-[[nodiscard]] static auto test_pot_dislocn_good_luck(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_pot_disloc_good_luck(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -132,7 +132,7 @@
   int  use_count = 0;
 
   static std::initializer_list< std::string > usable_items = {
-      "pot_dislocn", //
+      "pot_disloc", //
   };
   static std::initializer_list< std::string > other_items = {
       "horseshoe", //
@@ -199,14 +199,14 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_pot_dislocn_good_luck() -> bool // NOLINT
+[[nodiscard]] auto test_load_pot_disloc_good_luck() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("pot_dislocn_good_luck");
+  Testp test = test_load("pot_disloc_good_luck");
 
   // begin sort marker1 {
-  test_callback_set(test, test_pot_dislocn_good_luck);
+  test_callback_set(test, test_pot_disloc_good_luck);
   // end sort marker1 }
 
   return true;
