@@ -412,6 +412,10 @@ static void tp_fixup()
       tp_temperature_init(tp);
       tp_collision_init(tp);
       tp_display_init(tp);
+
+      if (tp_is_able_to_be_levitated(tp) || tp_is_able_to_be_invisible(tp)) {
+        tp_flag_set(tp, is_able_to_be_buffed);
+      }
     }
   }
 }

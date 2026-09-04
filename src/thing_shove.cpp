@@ -228,7 +228,7 @@ static void thing_shoved_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
     return false;
   }
 
-  if (thing_is_ethereal(g, v, l, t) || thing_is_levitating(g, v, l, t)) {
+  if (thing_is_ethereal(g, v, l, t)) {
     return false;
   }
 
