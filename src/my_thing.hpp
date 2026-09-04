@@ -53,7 +53,7 @@ using ThingIdPacked = union {
 /* begin shell marker1 */
 /* shell printf "#define THING_BUFF_MAX " */
 /* shell find . -name "*.cpp" | xargs grep "tp_flag_set(tp, is_buff);" | wc -l */
-#define THING_BUFF_MAX 8
+#define THING_BUFF_MAX 9
 /* end shell marker1 */
 
 //
@@ -642,6 +642,10 @@ using Thing = struct Thing {
   //
   bpoint last_pushed_at;
   //
+  // Last tile we attacked
+  //
+  bpoint attacked_at;
+  //
   // Where we're lunging
   //
   bpoint lunging_to;
@@ -709,7 +713,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_can_move_to_attempt_by_shoving(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool;
 [[nodiscard]] auto thing_can_move_to_attempt(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool;
 [[nodiscard]] auto thing_can_move_to_diagonal_is_blocked(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool;
-[[nodiscard]] auto thing_can_move_to_possible(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool;
+[[nodiscard]] auto thing_can_move_to_possible(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to, bool from_astar = false) -> bool;
 [[nodiscard]] auto thing_carry(Gamep g, Levelsp v, Levelp l, Thingp me, const std::initializer_list< std::string > &items) -> bool;
 [[nodiscard]] auto thing_carry(Gamep g, Levelsp v, Levelp l, Thingp me, const std::vector< Thingp > &items) -> bool;
 [[nodiscard]] auto thing_carry(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp item, ThingEvent &e) -> bool;
@@ -785,6 +789,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_inventory_is_empty(Gamep g, Levelsp v, Levelp l, Thingp owner) -> bool;
 [[nodiscard]] auto thing_inventory_item_mergeable(Gamep g, Levelsp v, Levelp l, Thingp a, Thingp b) -> bool;
 [[nodiscard]] auto thing_inventory_remove(Gamep g, Levelsp v, Levelp l, Thingp drop_item, Thingp owner) -> bool;
+[[nodiscard]] auto thing_invisible(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
 [[nodiscard]] auto thing_is_able_to_be_buffed(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_be_engulfed_blocked(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_be_engulfed(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
@@ -813,6 +818,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_able_to_move(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_open_things(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_resurrect(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_able_to_see_invisible(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_see_through_walls(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_shove(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
 [[nodiscard]] auto thing_is_able_to_throw(Thingp t) -> bool;
@@ -939,6 +945,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_indestructible(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_insectoid(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_inventory_item(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_invisible(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool;
 [[nodiscard]] auto thing_is_item_mergeable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_item(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_key(Thingp t) -> bool;
@@ -1107,9 +1114,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused158(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused159(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused16(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused160(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused161(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused162(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused17(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused18(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused183(Thingp t) -> bool;

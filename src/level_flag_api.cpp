@@ -1826,22 +1826,22 @@
   return level_flag(g, v, l, is_unused159, p, me);
 }
 
-[[nodiscard]] auto level_is_unused160(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_able_to_see_invisible(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused160, p, me);
+  return level_flag(g, v, l, is_able_to_see_invisible, p, me);
 }
 
-[[nodiscard]] auto level_is_unused161(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_able_to_be_invisible(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused161, p, me);
+  return level_flag(g, v, l, is_able_to_be_invisible, p, me);
 }
 
-[[nodiscard]] auto level_is_unused162(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_invisible(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused162, p, me);
+  return level_flag(g, v, l, is_invisible, p, me);
 }
 
 [[nodiscard]] auto level_is_critical_to_gameplay(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp

@@ -113,10 +113,17 @@ static auto thing_attack_melee(Gamep g, Levelsp v, Levelp l, Thingp attacker, Th
     }
   }
 
+  auto victim_at = thing_at(g, v, l, it);
+
+  //
+  // Keep track of where we tried to attack
+  //
+  attacker->attacked_at = victim_at;
+
   //
   // Even if the attack fails, make the monster point at the target
   //
-  thing_set_dir_from_target(g, v, l, attacker, thing_at(g, v, l, it));
+  thing_set_dir_from_target(g, v, l, attacker, victim_at);
 
   //
   // Check not too many attacks

@@ -1863,22 +1863,22 @@
   return level_flag_cached(g, v, l, is_unused159, p);
 }
 
-[[nodiscard]] auto level_is_unused160_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_able_to_see_invisible_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused160, p);
+  return level_flag_cached(g, v, l, is_able_to_see_invisible, p);
 }
 
-[[nodiscard]] auto level_is_unused161_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_able_to_be_invisible_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused161, p);
+  return level_flag_cached(g, v, l, is_able_to_be_invisible, p);
 }
 
-[[nodiscard]] auto level_is_unused162_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_invisible_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused162, p);
+  return level_flag_cached(g, v, l, is_invisible, p);
 }
 
 [[nodiscard]] auto level_is_critical_to_gameplay_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

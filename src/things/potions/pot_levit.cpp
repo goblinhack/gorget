@@ -13,14 +13,14 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
-static auto tp_pot_lev_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
+static auto tp_pot_levit_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
   return "potion, levitation";
 }
 
-static auto tp_pot_lev_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
+static auto tp_pot_levit_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
@@ -28,7 +28,7 @@ static auto tp_pot_lev_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> st
       UI_INFO2_FMT_STR "(*) cobwebs, fire and gasses not included in care free offer.\n";
 }
 
-static void tp_pot_lev_on_thrown_end(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp thrower)
+static void tp_pot_levit_on_thrown_end(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp thrower)
 {
   THING_DBG(g, v, l, me, "thrown end");
   TRACE_INDENT();
@@ -93,11 +93,11 @@ static void tp_pot_lev_on_thrown_end(Gamep g, Levelsp v, Levelp l, Thingp me, Th
   thing_dead(g, v, l, me, e);
 }
 
-static bool tp_pot_lev_on_use(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user)
+static bool tp_pot_levit_on_use(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user)
 {
   TRACE();
 
-  if (thing_buff_add(g, v, l, user, tp_find_mand("buff_levitation"))) {
+  if (thing_buff_add(g, v, l, user, tp_find_mand("buff_levit"))) {
     if (thing_is_player(user)) {
       topcon(UI_GOOD_FMT_STR "You feel strangely light." UI_RESET_FMT);
       thing_sound_play(g, v, l, user, "bonus");
@@ -107,7 +107,7 @@ static bool tp_pot_lev_on_use(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp us
   return true;
 }
 
-static void tp_pot_lev_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
+static void tp_pot_levit_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
 {
   TRACE();
 
@@ -129,22 +129,23 @@ static void tp_pot_lev_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEv
   (void) thing_spawn(g, v, l, tp_first(is_water_shallow), thing_at(g, v, l, me));
 }
 
-[[nodiscard]] auto tp_load_pot_lev() -> bool
+[[nodiscard]] auto tp_load_pot_levit() -> bool
 {
   TRACE();
 
-  auto *tp   = tp_load("pot_lev"); // keep as string for scripts
+  auto *tp   = tp_load("pot_levit"); // keep as string for scripts
   auto  name = tp_name(tp);
 
   // begin sort marker1 {
-  thing_description_set(tp, tp_pot_lev_description_get);
-  thing_detail_set(tp, tp_pot_lev_detail_get);
-  thing_on_death_set(tp, tp_pot_lev_on_death);
-  thing_on_thrown_end_set(tp, tp_pot_lev_on_thrown_end);
-  thing_on_use_set(tp, tp_pot_lev_on_use);
+  thing_description_set(tp, tp_pot_levit_description_get);
+  thing_detail_set(tp, tp_pot_levit_detail_get);
+  thing_on_death_set(tp, tp_pot_levit_on_death);
+  thing_on_thrown_end_set(tp, tp_pot_levit_on_thrown_end);
+  thing_on_use_set(tp, tp_pot_levit_on_use);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // fumble => intensify / keep burning / crit => stop burning
   tp_damage_set(tp, THING_EVENT_THROWN_DAMAGE, "1d4");
   tp_flag_set(tp, is_able_to_be_buffed);
+  tp_flag_set(tp, is_able_to_be_invisible);
   tp_flag_set(tp, is_able_to_be_levitated);
   tp_flag_set(tp, is_able_to_be_teleported);
   tp_flag_set(tp, is_able_to_fall_sound);

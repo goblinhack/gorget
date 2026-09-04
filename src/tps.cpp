@@ -28,8 +28,9 @@
   if (!tp_load_buff_bad_luck()) { return false; }
   if (!tp_load_buff_good_luck()) { return false; }
   if (!tp_load_buff_immune_fire()) { return false; }
-  if (!tp_load_buff_levitation()) { return false; }
-  if (!tp_load_buff_protection()) { return false; }
+  if (!tp_load_buff_invis()) { return false; }
+  if (!tp_load_buff_levit()) { return false; }
+  if (!tp_load_buff_prot()) { return false; }
   if (!tp_load_buff_resistant_fire()) { return false; }
   if (!tp_load_buff_stealth()) { return false; }
   if (!tp_load_buff_tireless()) { return false; }
@@ -83,7 +84,8 @@
   if (!tp_load_pot_disloc()) { return false; }
   if (!tp_load_pot_healing()) { return false; }
   if (!tp_load_pot_incin()) { return false; }
-  if (!tp_load_pot_lev()) { return false; }
+  if (!tp_load_pot_invis()) { return false; }
+  if (!tp_load_pot_levit()) { return false; }
   if (!tp_load_pot_prot()) { return false; }
   if (!tp_load_pot_stealth()) { return false; }
   if (!tp_load_pot_tireless()) { return false; }

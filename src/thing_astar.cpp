@@ -305,7 +305,7 @@ void Astar::init()
 
   if (! can_move_to_possible_cached_set[ to.x ][ to.y ]) {
     can_move_to_possible_cached_set[ to.x ][ to.y ]    = true;
-    return can_move_to_possible_cached[ to.x ][ to.y ] = thing_can_move_to_possible(g, v, l, me, to);
+    return can_move_to_possible_cached[ to.x ][ to.y ] = thing_can_move_to_possible(g, v, l, me, to, true);
   }
 
   return can_move_to_possible_cached[ to.x ][ to.y ];

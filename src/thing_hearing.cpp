@@ -33,10 +33,11 @@
   auto actual_noise = DMAP_IS_GOAL_REVERSE - stealth;
 
   if (compiler_unused) {
-    log("stealth %d", stealth);
-    log("actual_noise %d", actual_noise);
-    log("thing_hearing_threshold %d", thing_hearing_threshold(t));
+    THING_DBG(g, v, l, t, "tile dmap value         : %d", stealth);
+    THING_DBG(g, v, l, t, " actual_noise           : %d", actual_noise);
+    THING_DBG(g, v, l, t, " thing_hearing_threshold: %d", thing_hearing_threshold(t));
+    THING_DBG(g, v, l, t, " can hear               : %d", actual_noise >= thing_hearing_threshold(t) ? true : false);
   }
 
-  return actual_noise >= thing_hearing_threshold(t);
+  return actual_noise >= thing_hearing_threshold(t) ? true : false;
 }

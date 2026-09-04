@@ -12,7 +12,7 @@
 #include "my_tp_class.hpp"
 #include "my_types.hpp"
 
-[[nodiscard]] auto thing_is_levitating(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
+[[nodiscard]] auto thing_is_invisible(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
 {
   TRACE_DEBUG();
 
@@ -21,24 +21,24 @@
     return false;
   }
 
-  if (tp_flag(thing_tp(me), is_levitating) != 0) {
+  if (tp_flag(thing_tp(me), is_invisible) != 0) {
     return true;
   }
 
-  if (! thing_is_able_to_be_levitated(me)) {
+  if (! thing_is_able_to_be_invisible(me)) {
     return false;
   }
 
   FOR_ALL_BUFFS(g, v, l, me, buff)
   {
-    if (thing_is_levitating(g, v, l, buff)) {
+    if (thing_is_invisible(g, v, l, buff)) {
       return true;
     }
   }
 
   FOR_ALL_ACTIVE_ITEMS(g, v, l, me, item)
   {
-    if (thing_is_levitating(g, v, l, item)) {
+    if (thing_is_invisible(g, v, l, item)) {
       return true;
     }
   }
@@ -46,7 +46,7 @@
   return false;
 }
 
-[[nodiscard]] auto thing_levitate(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
+[[nodiscard]] auto thing_invisible(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
 {
   TRACE_DEBUG();
 
@@ -55,34 +55,34 @@
     return false;
   }
 
-  if (tp_flag(thing_tp(me), is_levitating) != 0) {
+  if (tp_flag(thing_tp(me), is_invisible) != 0) {
     return true;
   }
 
-  if (! thing_is_able_to_be_levitated(me)) {
+  if (! thing_is_able_to_be_invisible(me)) {
     return false;
   }
 
-  if (thing_buff_add(g, v, l, me, tp_find_mand("buff_levit")) == nullptr) {
+  if (thing_buff_add(g, v, l, me, tp_find_mand("buff_invis")) == nullptr) {
     return false;
   }
 
-  thing_on_levitated(g, v, l, me);
+  thing_on_invisible(g, v, l, me);
 
   return true;
 }
 
-void thing_on_levitated_set(Tpp tp, thing_on_levitated_t callback)
+void thing_on_invisible_set(Tpp tp, thing_on_invisible_t callback)
 {
   TRACE();
   if (tp == nullptr) [[unlikely]] {
     ERR("no thing template pointer");
     return;
   }
-  tp->on_levitated = callback;
+  tp->on_invisible = callback;
 }
 
-void thing_on_levitated(Gamep g, Levelsp v, Levelp l, Thingp me)
+void thing_on_invisible(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
   auto *tp = thing_tp(me);
@@ -90,8 +90,8 @@ void thing_on_levitated(Gamep g, Levelsp v, Levelp l, Thingp me)
     ERR("no thing template pointer");
     return;
   }
-  if (tp->on_levitated == nullptr) {
+  if (tp->on_invisible == nullptr) {
     return;
   }
-  tp->on_levitated(g, v, l, me);
+  tp->on_invisible(g, v, l, me);
 }

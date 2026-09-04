@@ -134,12 +134,14 @@ static void tp_voider_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d4");
   tp_distance_vision_set(tp, 12);
   tp_flag_set(tp, is_able_to_be_buffed);
+  tp_flag_set(tp, is_able_to_be_invisible);
   tp_flag_set(tp, is_able_to_be_levitated);
   tp_flag_set(tp, is_able_to_be_teleported);
   tp_flag_set(tp, is_able_to_engulf);
   tp_flag_set(tp, is_able_to_lunge);
   tp_flag_set(tp, is_able_to_move_diagonally);
   tp_flag_set(tp, is_able_to_move);
+  tp_flag_set(tp, is_able_to_see_invisible);
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_attackable_by_player);

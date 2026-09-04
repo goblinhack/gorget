@@ -1076,6 +1076,9 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
     }
   }
 
+  if (thing_is_able_to_see_invisible(me)) {
+    out = string_append_with_comma(out, "See-invis");
+  }
   if (thing_is_able_to_resurrect(me)) {
     out = string_append_with_comma(out, "Resurrection");
   }
@@ -1091,11 +1094,6 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
   if (thing_is_able_to_collect_items(me)) {
     if (! thing_is_player(me)) {
       out = string_append_with_comma(out, "Collector");
-    }
-  }
-  if (thing_is_able_to_be_buffed(me)) {
-    if (! thing_is_player(me)) {
-      out = string_append_with_comma(out, "Buffable");
     }
   }
   if (thing_is_able_to_engulf(me)) {

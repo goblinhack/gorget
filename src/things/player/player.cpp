@@ -139,6 +139,8 @@ static void tp_player_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
       // Noisy bridge?
       //
       if (level_is_bridge_bool(g, v, l, thing_at(g, v, l, me))) {
+        (void) thing_noise_incr(g, v, l, me, THING_NOISE_FOOTSTEP_BRIDGE);
+      } else {
         (void) thing_noise_incr(g, v, l, me, THING_NOISE_FOOTSTEP);
       }
     }
@@ -444,6 +446,7 @@ static bool tp_player_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker, 
   tp_flag_set(tp, is_able_to_be_buffed);
   tp_flag_set(tp, is_able_to_be_engulfed);
   tp_flag_set(tp, is_able_to_be_ensnared);
+  tp_flag_set(tp, is_able_to_be_invisible);
   tp_flag_set(tp, is_able_to_be_levitated);
   tp_flag_set(tp, is_able_to_be_teleported);
   tp_flag_set(tp, is_able_to_collect_items);

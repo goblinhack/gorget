@@ -168,6 +168,7 @@ static bool tp_spider_giant_on_missing(Gamep g, Levelsp v, Levelp l, Thingp atta
   tp_distance_jump_set(tp, 3);
   tp_distance_vision_set(tp, 12);
   tp_flag_set(tp, is_able_to_be_buffed);
+  tp_flag_set(tp, is_able_to_be_invisible);
   tp_flag_set(tp, is_able_to_be_levitated);
   tp_flag_set(tp, is_able_to_be_teleported);
   tp_flag_set(tp, is_able_to_choose_targets);
@@ -206,7 +207,7 @@ static bool tp_spider_giant_on_missing(Gamep g, Levelsp v, Levelp l, Thingp atta
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_vision_360_degrees);
   tp_health_set(tp, "2d8");
-  tp_hearing_threshold_set(tp, 1);
+  tp_hearing_threshold_set(tp, 2);
   tp_name_a_or_an_set(tp, "a giant spider");
   tp_name_apostrophize_set(tp, "giant spiders'");
   tp_name_long_set(tp, "giant spider");

@@ -525,6 +525,22 @@
   return tp_flag(tp, is_able_to_be_levitated) != 0;
 }
 
+[[nodiscard]] static inline auto thing_is_able_to_be_invisible(Thingp me) -> bool
+{
+#ifdef DEBUG_BUILD
+  TRACE();
+#endif
+
+  auto *tp = thing_tp(me);
+#ifdef DEBUG_BUILD
+  if (tp == nullptr) [[unlikely]] {
+    ERR("no thing template pointer");
+    return MAP_Z_DEPTH_FLOOR;
+  }
+#endif
+  return tp_flag(tp, is_able_to_be_invisible) != 0;
+}
+
 [[nodiscard]] static inline auto thing_is_able_to_be_teleported(Thingp me) -> bool
 {
 #ifdef DEBUG_BUILD

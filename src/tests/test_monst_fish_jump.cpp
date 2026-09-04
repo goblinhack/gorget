@@ -30,8 +30,8 @@
   std::string const expect1
       = "XXXXXXXXXXXXXXX"
         "X....W,,WWWWW.X"
-        "X....m,,WWWWW.X"
-        "X...@W,,WW.WW.X"
+        "X....W,,WWWWW.X"
+        "X...@m,,WW.WW.X"
         "X....W,,WWWWW.X"
         "X.............X"
         "XXXXXXXXXXXXXXX";

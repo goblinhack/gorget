@@ -35,7 +35,7 @@ static auto tp_buff_resistant_fire_detail_get(Gamep g, Levelsp v, Levelp l, Thin
   tp_flag_set(tp, is_tickable);
   tp_is_resistant_to_add(tp, THING_EVENT_FIRE_DAMAGE);
   tp_lifespan_set(tp, "100+1000");
-  tp_name_short_set(tp, "fire resistant");
+  tp_name_short_set(tp, "fire resist");
   // end sort marker1 }
 
   return true;

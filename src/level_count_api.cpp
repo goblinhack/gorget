@@ -1827,22 +1827,22 @@
   return level_count(g, v, l, is_unused159, p);
 }
 
-[[nodiscard]] auto level_count_is_unused160(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_able_to_see_invisible(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused160, p);
+  return level_count(g, v, l, is_able_to_see_invisible, p);
 }
 
-[[nodiscard]] auto level_count_is_unused161(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_able_to_be_invisible(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused161, p);
+  return level_count(g, v, l, is_able_to_be_invisible, p);
 }
 
-[[nodiscard]] auto level_count_is_unused162(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_invisible(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused162, p);
+  return level_count(g, v, l, is_invisible, p);
 }
 
 [[nodiscard]] auto level_count_is_critical_to_gameplay(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t

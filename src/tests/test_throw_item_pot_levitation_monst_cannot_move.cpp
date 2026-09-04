@@ -53,7 +53,7 @@
   Thingp  monst       = nullptr;
 
   static std::initializer_list< std::string > items = {
-      "pot_lev", //
+      "pot_levit", //
   };
 
   auto *player = thing_player(g);

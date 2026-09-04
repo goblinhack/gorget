@@ -317,9 +317,9 @@
       list_macro(is_unused158, "is_unused158"),                                             /* newline */                                       \
       list_macro(is_unused159, "is_unused159"),                                             /* newline */                                       \
       list_macro(is_unused16, "is_unused16"),                                               /* newline */                                       \
-      list_macro(is_unused160, "is_unused160"),                                             /* newline */                                       \
-      list_macro(is_unused161, "is_unused161"),                                             /* newline */                                       \
-      list_macro(is_unused162, "is_unused162"),                                             /* newline */                                       \
+      list_macro(is_able_to_see_invisible, "is_able_to_see_invisible"),                     /* newline */                                       \
+      list_macro(is_able_to_be_invisible, "is_able_to_be_invisible"),                       /* newline */                                       \
+      list_macro(is_invisible, "is_invisible"),                                             /* newline */                                       \
       list_macro(is_critical_to_gameplay, "is_critical_to_gameplay"),                       /* newline */                                       \
       list_macro(is_able_to_jump_attack, "is_able_to_jump_attack"),                         /* newline */                                       \
       list_macro(is_unused17, "is_unused17"),                                               /* newline */                                       \
@@ -820,6 +820,7 @@ class Tp;
 [[nodiscard]] auto tp_is_able_to_be_engulfed(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_be_ensnared_blocked(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_be_ensnared(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_able_to_be_invisible(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_be_levitated(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_be_teleported(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_choose_targets(Tpp tp) -> bool;
@@ -845,6 +846,7 @@ class Tp;
 [[nodiscard]] auto tp_is_able_to_move(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_open_things(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_resurrect(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_able_to_see_invisible(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_see_through_walls(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_shove(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_able_to_throw(Tpp tp) -> bool;
@@ -953,6 +955,7 @@ class Tp;
 [[nodiscard]] auto tp_is_indestructible(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_insectoid(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_inventory_item(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_invisible(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_item_mergeable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_item(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_key(Tpp tp) -> bool;
@@ -1119,9 +1122,6 @@ class Tp;
 [[nodiscard]] auto tp_is_unused158(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused159(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused16(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused160(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused161(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused162(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused17(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused18(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused183(Tpp tp) -> bool;

@@ -160,6 +160,7 @@ static void tp_cleaner_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEv
   tp_distance_vision_set(tp, 10);
   tp_flag_set(tp, is_able_to_be_buffed);
   tp_flag_set(tp, is_able_to_be_ensnared);
+  tp_flag_set(tp, is_able_to_be_invisible);
   tp_flag_set(tp, is_able_to_be_levitated);
   tp_flag_set(tp, is_able_to_be_teleported);
   tp_flag_set(tp, is_able_to_choose_targets);

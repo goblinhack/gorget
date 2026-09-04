@@ -123,6 +123,7 @@ static void tp_brazier_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEv
   thing_description_set(tp, tp_brazier_description_get);
   thing_on_death_set(tp, tp_brazier_on_death);
   thing_on_shoved_set(tp, tp_brazier_on_shoved);
+  tp_flag_set(tp, is_able_to_be_invisible);
   tp_flag_set(tp, is_able_to_be_levitated);
   tp_flag_set(tp, is_able_to_be_teleported);
   tp_flag_set(tp, is_able_to_fall_sound);

@@ -18,8 +18,11 @@
   }
 
   if (thing_is_stealthy(g, v, l, t)) {
+    IF_DEBUG2 { THING_DBG(g, v, l, t, "noise: %d (0 due to stealth)", t->_noise); }
     return 0;
   }
+
+  IF_DEBUG2 { THING_DBG(g, v, l, t, "noise: %d", t->_noise); }
 
   return t->_noise;
 }

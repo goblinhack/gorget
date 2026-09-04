@@ -346,6 +346,11 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp level_above, Levelp 
               if (thing_vision_can_see_tile(g, v, player_level, player, p)) {
                 FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, p)
                 {
+                  if (thing_is_player(it) && thing_is_invisible(g, v, l, it)) {
+                    display_tile = true;
+                    break;
+                  }
+
                   if (thing_is_hidden(it) != 0) {
                     display_tile = true;
                     break;

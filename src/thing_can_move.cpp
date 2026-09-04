@@ -268,7 +268,7 @@
 //
 // We do not change direction upon this attempt; purely a check only
 //
-[[nodiscard]] auto thing_can_move_to_possible(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool
+[[nodiscard]] auto thing_can_move_to_possible(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to, bool from_astar) -> bool
 {
   TRACE_DEBUG();
 
@@ -335,6 +335,16 @@
         // Ok to levitate over rubble
         //
       } else {
+        //
+        // Need to allow astar to make paths through invisible things so that a monster
+        // can bump into you
+        //
+        if (from_astar) {
+          if (thing_is_invisible(g, v, l, it)) {
+            return true;
+          }
+        }
+
         //
         // Blocked
         //

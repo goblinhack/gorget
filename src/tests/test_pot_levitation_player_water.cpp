@@ -9,7 +9,7 @@
 #include "../my_test.hpp"
 #include "../my_thing_inlines.hpp"
 
-[[nodiscard]] static auto test_pot_lev_player_water(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_pot_levit_player_water(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -59,7 +59,7 @@
   int use_count = 0;
 
   static std::initializer_list< std::string > usable_items = {
-      "pot_lev", //
+      "pot_levit", //
   };
 
   auto *player = thing_player(g);
@@ -236,14 +236,14 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_pot_lev_player_water() -> bool // NOLINT
+[[nodiscard]] auto test_load_pot_levit_player_water() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("pot_lev_player_water");
+  Testp test = test_load("pot_levit_player_water");
 
   // begin sort marker1 {
-  test_callback_set(test, test_pot_lev_player_water);
+  test_callback_set(test, test_pot_levit_player_water);
   // end sort marker1 }
 
   return true;

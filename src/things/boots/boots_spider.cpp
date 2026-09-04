@@ -54,6 +54,7 @@ static bool tp_boots_spider_on_use(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
   thing_on_use_set(tp, tp_boots_spider_on_use);
   tp_flag_set(tp, is_able_to_be_buffed);
   tp_flag_set(tp, is_able_to_be_ensnared_blocked);
+  tp_flag_set(tp, is_able_to_be_invisible);
   tp_flag_set(tp, is_able_to_be_levitated);
   tp_flag_set(tp, is_able_to_be_teleported);
   tp_flag_set(tp, is_able_to_fall_sound);

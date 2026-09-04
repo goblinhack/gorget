@@ -61,7 +61,7 @@
   bool result = false;
 
   static std::initializer_list< std::string > usable_items = {
-      "pot_lev", //
+      "pot_levit", //
   };
 
   auto *player = thing_player(g);

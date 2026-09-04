@@ -45,6 +45,7 @@ static auto tp_ring_war_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> s
   thing_description_set(tp, tp_ring_war_description_get);
   thing_detail_set(tp, tp_ring_war_detail_get);
   tp_flag_set(tp, is_able_to_be_buffed);
+  tp_flag_set(tp, is_able_to_be_invisible);
   tp_flag_set(tp, is_able_to_be_levitated);
   tp_flag_set(tp, is_able_to_be_teleported);
   tp_flag_set(tp, is_able_to_fall_sound);

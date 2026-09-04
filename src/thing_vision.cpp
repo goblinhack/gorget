@@ -58,6 +58,15 @@
     return false;
   }
 
+  //
+  // See invisible?
+  //
+  if (thing_is_invisible(g, v, l, it)) {
+    if (! thing_is_able_to_see_invisible(me)) {
+      return false;
+    }
+  }
+
   if (thing_is_obs_to_vision(it)) {
     //
     // Things that are submerged should not block you, if you are less submerged

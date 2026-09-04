@@ -1825,22 +1825,22 @@
   return tp_flag(tp, is_unused159) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused160(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_able_to_see_invisible(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused160) != 0;
+  return tp_flag(tp, is_able_to_see_invisible) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused161(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_able_to_be_invisible(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused161) != 0;
+  return tp_flag(tp, is_able_to_be_invisible) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused162(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_invisible(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused162) != 0;
+  return tp_flag(tp, is_invisible) != 0;
 }
 
 [[nodiscard]] auto tp_is_critical_to_gameplay(Tpp tp) -> bool

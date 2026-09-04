@@ -164,6 +164,7 @@ static bool tp_pale_eel_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker
   tp_damage_set(tp, THING_EVENT_MELEE_DAMAGE, "1d3");
   tp_distance_vision_set(tp, 8);
   tp_flag_set(tp, is_able_to_be_buffed);
+  tp_flag_set(tp, is_able_to_be_invisible);
   tp_flag_set(tp, is_able_to_be_levitated);
   tp_flag_set(tp, is_able_to_fall_sound);
   tp_flag_set(tp, is_able_to_fall);
@@ -194,7 +195,7 @@ static bool tp_pale_eel_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_vision_360_degrees);
   tp_health_set(tp, "2d4");
-  tp_hearing_threshold_set(tp, 1);
+  tp_hearing_threshold_set(tp, 3);
   tp_is_immune_to_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_name_a_or_an_set(tp, "a pale eel");
   tp_name_apostrophize_set(tp, "pale eels'");

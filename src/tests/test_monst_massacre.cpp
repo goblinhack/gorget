@@ -31,11 +31,11 @@
         "XXXXXXXXXXXXXXX";
   std::string const expect1
       = "XXXXXXXXXXXXXXX"
-        "Xmmmmmmmmmm.mmX"
-        "Xmmmm.mmmmmmmmX"
-        "Xmmmmmmmmmmm.mX"
-        "Xxxmmmmmmmm.mmX"
-        "X@xmmmmmmmm.m.X"
+        "Xmmmmmmmmm..mmX"
+        "XmmmmmmmmmmmmmX"
+        "Xmmm.mmm.mmmmmX"
+        "Xxxmmmmmmm.mmmX"
+        "X@xmmmmmmmmmmmX"
         "XXXXXXXXXXXXXXX";
 
   //
@@ -103,7 +103,7 @@
   TEST_LOG(t, "spider_giant_count: %d", spider_giant_count);
   TEST_LOG(t, "spider_baby_count: %d", spider_baby_count);
 
-  TEST_ASSERT(t, dead_kobalos == 6, "missing dead kobalos");
+  TEST_ASSERT(t, dead_kobalos == 5, "missing dead kobalos");
   TEST_ASSERT(t, spider_count == 5, "missing spiders");
   TEST_ASSERT(t, spider_giant_count == 1, "missing giant spiders");
   TEST_ASSERT(t, spider_baby_count == 4, "missing baby spiders");

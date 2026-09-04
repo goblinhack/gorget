@@ -32,8 +32,8 @@
         "X@````X"
         "X`````X"
         "X`````X"
+        "X.m...X"
         "X.....X"
-        "Xm....X"
         "XXXXXXX";
   std::string const expect2
       = "XXXXXXX"
@@ -47,22 +47,22 @@
       = "XXXXXXX"
         "X.`@``X"
         "X`````X"
-        "Xm````X"
-        "X.....X"
+        "X`````X"
+        "X.m...X"
         "X.....X"
         "XXXXXXX";
   std::string const expect4
       = "XXXXXXX"
         "X.`@``X"
-        "X`m```X"
         "X`````X"
-        "X.....X"
+        "X`````X"
+        "X.m...X"
         "X.....X"
         "XXXXXXX";
   std::string const expect5
       = "XXXXXXX"
         "X.`@``X"
-        "X`m```X"
+        "X``m``X"
         "X`````X"
         "X.....X"
         "X.....X"
@@ -70,7 +70,7 @@
   std::string const expect6
       = "XXXXXXX"
         "X.`@``X"
-        "X`m```X"
+        "X``m``X"
         "X`````X"
         "X.....X"
         "X.....X"

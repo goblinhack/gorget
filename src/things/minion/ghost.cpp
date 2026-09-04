@@ -111,6 +111,7 @@ static void tp_ghost_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEven
   tp_distance_minion_from_mob_max_set(tp, 6);
   tp_distance_vision_set(tp, 12);
   tp_flag_set(tp, is_able_to_be_buffed);
+  tp_flag_set(tp, is_able_to_be_invisible);
   tp_flag_set(tp, is_able_to_be_levitated);
   tp_flag_set(tp, is_able_to_be_teleported);
   tp_flag_set(tp, is_able_to_lunge);

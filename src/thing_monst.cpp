@@ -56,40 +56,12 @@ static auto thing_monst_over_target_player(Gamep g, Levelsp v, Levelp l, Thingp 
 //
 // Can we chase the player?
 //
-static auto thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
+static auto thing_monst_apply_target_path_if_possible(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &target_in) -> bool
 {
   TRACE();
 
   bool avoiding {};
-
-  auto *player = thing_player(g);
-  if (player == nullptr) [[unlikely]] {
-    return false;
-  }
-
-  if (compiler_unused) {
-    thing_can_see_dump(g, v, l, me);
-  }
-
-  auto *player_level = game_level_get(g, v, player->level_num);
-  auto *monst_level  = game_level_get(g, v, me->level_num);
-  if (player_level != monst_level) {
-    THING_DBG(g, v, l, me, "choose target: different level from player");
-    return false;
-  }
-
-  auto target = thing_at(g, v, l, player);
-  if (! thing_vision_can_see_tile(g, v, l, me, target)) {
-    THING_DBG(g, v, l, me, "choose target: cannot see player");
-    if (thing_vision_can_hear_tile(g, v, l, me, thing_at(g, v, l, me))) {
-      THING_DBG(g, v, l, me, "choose target: can hear player");
-    } else {
-      THING_DBG(g, v, l, me, "choose target: cannot hear player");
-      return false;
-    }
-  }
-  THING_DBG(g, v, l, me, "choose target: can see player");
-
+  auto target   = target_in;
   auto monst_at = thing_at(g, v, l, me);
   auto dist     = distance(monst_at, target);
   auto v_dist   = thing_distance_vision(g, v, l, me);
@@ -153,6 +125,145 @@ static auto thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thing
 
   THING_DBG(g, v, l, me, "choose target: failed to apply path to target");
   return false;
+}
+
+//
+// Can we hear the player at some location close by?
+//
+static auto thing_monst_can_hear_player_nearby(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
+{
+  TRACE();
+
+  auto *player = thing_player(g);
+  if (player == nullptr) [[unlikely]] {
+    return false;
+  }
+
+  auto at     = thing_at(g, v, l, me);
+  auto target = thing_at(g, v, l, player);
+
+  //
+  // Can we hear anything half way?
+  //
+  auto middle = (target + at) / 2;
+  THING_DBG(g, v, l, me, "try middle hearing target %d,%d", middle.x, middle.y);
+  if (thing_vision_can_hear_tile(g, v, l, me, middle)) {
+    THING_DBG(g, v, l, me, "choose target: can hear something half way to the player");
+    if (thing_monst_apply_target_path_if_possible(g, v, l, me, middle)) {
+      return true;
+    }
+  }
+
+  //
+  // Try some alternative hearing targets
+  //
+  for (auto tries = 0; tries < 20; tries++) {
+    auto alt_target = middle + bpoint(PCG_RANDOM_RANGE_INCLUSIVE(-5, 5), PCG_RANDOM_RANGE_INCLUSIVE(-5, 5));
+    if (is_oob(alt_target)) {
+      continue;
+    }
+
+    THING_DBG(g, v, l, me, "try alt hearing target %d,%d", alt_target.x, alt_target.y);
+    if (thing_vision_can_hear_tile(g, v, l, me, alt_target)) {
+      THING_DBG(g, v, l, me, "choose target: can hear something near the player");
+      if (thing_monst_apply_target_path_if_possible(g, v, l, me, alt_target)) {
+        return true;
+      }
+    }
+  }
+
+  return false;
+}
+
+//
+// Can we chase the player?
+//
+static auto thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
+{
+  TRACE();
+
+  auto *player = thing_player(g);
+  if (player == nullptr) [[unlikely]] {
+    return false;
+  }
+
+  if (compiler_unused) {
+    thing_can_see_dump(g, v, l, me);
+  }
+
+  auto *player_level = game_level_get(g, v, player->level_num);
+  auto *monst_level  = game_level_get(g, v, me->level_num);
+  if (player_level != monst_level) {
+    THING_DBG(g, v, l, me, "choose target: different level from player");
+    return false;
+  }
+
+  //
+  // Can the monst hear this tile?
+  //
+  auto at       = thing_at(g, v, l, me);
+  auto target   = thing_at(g, v, l, player);
+  auto can_hear = thing_vision_can_hear_tile(g, v, l, me, target);
+
+  //
+  // Can the monst see this tile?
+  //
+  if (! thing_vision_can_see_tile(g, v, l, me, target)) {
+    THING_DBG(g, v, l, me, "choose target: cannot see player");
+
+    //
+    // No. Can it hear something?
+    //
+    if (can_hear) {
+      THING_DBG(g, v, l, me, "choose target: cannot see, but can hear player");
+    } else if (thing_monst_can_hear_player_nearby(g, v, l, me)) {
+      THING_DBG(g, v, l, me, "choose target: cannot see, but can hear player nearby");
+      return true;
+    } else {
+      THING_DBG(g, v, l, me, "choose target: cannot see and cannot hear player");
+      return false;
+    }
+  }
+
+  //
+  // We can technically see the player. However, they might be hidden.
+  //
+  THING_DBG(g, v, l, me, "choose target: can see player");
+
+  //
+  // Invisible
+  //
+  if (thing_is_invisible(g, v, l, player)) {
+    //
+    // Can the monst see regardless?
+    //
+    if (! thing_is_able_to_see_invisible(me)) {
+      //
+      // But silent?
+      //
+      if (can_hear) {
+        THING_DBG(g, v, l, me, "choose target: cannot see invisibile, but can hear player");
+      } else if (thing_monst_can_hear_player_nearby(g, v, l, me)) {
+        THING_DBG(g, v, l, me, "choose target: cannot see invisibile, but can hear player nearby");
+        return true;
+      } else {
+        THING_DBG(g, v, l, me, "choose target: cannot see invisibile and cannot hear player");
+
+        if (adjacent(me->attacked_at, at)) {
+          if (level_is_player_bool(g, v, l, me->attacked_at)) {
+            THING_DBG(g, v, l, me, "choose target: cannot see invisibile but player is still here");
+          } else {
+            THING_DBG(g, v, l, me, "choose target: cannot see invisibile and player is gone");
+            return false;
+          }
+        } else {
+          return false;
+        }
+      }
+    }
+  }
+
+  return thing_monst_apply_target_path_if_possible(g, v, l, me, target);
 }
 
 //
@@ -241,7 +352,7 @@ static auto thing_monst_choose_best_target(Gamep g, Levelsp v, Levelp l, Thingp 
 //
 static auto thing_monst_choose_something_we_can_wander_to(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
 {
-  THING_DBG(g, v, l, me, "choose target: can see");
+  THING_DBG(g, v, l, me, "choose target: something we can wander to");
   TRACE_INDENT();
 
   auto at = thing_at(g, v, l, me);
@@ -292,17 +403,24 @@ static auto thing_monst_choose_something_we_can_wander_to(Gamep g, Levelsp v, Le
   while (tries++ < max_tries) {
     bpoint target;
 
+    if (tries == max_tries / 2) {
+      radius /= 2;
+      if (! radius) {
+        radius = 1;
+      }
+    }
+
     //
     // Get a valid tile.
     //
     target.x = static_cast< int >(at.x) - radius + PCG_RANDOM_RANGE(0, diameter);
     target.y = static_cast< int >(at.y) - radius + PCG_RANDOM_RANGE(0, diameter);
 
-    IF_DEBUG2 { THING_DBG(g, v, l, me, "choose target: try: (%d,%d)", target.x, target.y); }
-
     if (is_oob_or_border(target)) {
       continue;
     }
+
+    THING_DBG(g, v, l, me, "choose target: try: (%d,%d)", target.x, target.y);
 
     if (tried[ target.x ][ target.y ]) {
       continue;
@@ -516,6 +634,60 @@ static auto thing_monst_choose_something_we_can_wander_to(Gamep g, Levelsp v, Le
   return false;
 }
 
+[[nodiscard]] static auto thing_monst_attack_at(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &target) -> bool
+{
+  auto at = thing_at(g, v, l, me);
+
+  if (thing_is_able_to_fire_weapons(me)) {
+    // ok
+  } else if (adjacent(at, target)) {
+    // ok
+  } else if ((at == target)) {
+    // ok
+  } else {
+    return false;
+  }
+
+  THING_DBG(g, v, l, me, "monst attack at %d,%d", target.x, target.y);
+  TRACE_INDENT();
+
+  if (thing_is_flesh_eater(me)) {
+    if (level_alive_is_flesh(g, v, l, target) != nullptr) {
+      THING_DBG(g, v, l, me, "monst: try attack on flesh");
+      if (thing_attack_at(g, v, l, me, target)) {
+        THING_DBG(g, v, l, me, "monst: attack success");
+        return true;
+      } else {
+        THING_DBG(g, v, l, me, "monst: attack missed");
+        return true; // still success of a sort
+      }
+    }
+  }
+
+  if (level_is_attackable_by_monst_bool(g, v, l, target)) {
+    if (thing_attack_at(g, v, l, me, target)) {
+      THING_DBG(g, v, l, me, "monst: attack success");
+      return true;
+    } else {
+      THING_DBG(g, v, l, me, "monst: attack missed");
+      return true; // still success of a sort
+    }
+  }
+
+  THING_DBG(g, v, l, me, "nothing to attack");
+
+  return false;
+}
+
+[[nodiscard]] static auto thing_monst_attack(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
+{
+  THING_DBG(g, v, l, me, "monst attack");
+  TRACE_INDENT();
+
+  auto target = thing_monst_target(me);
+  return thing_monst_attack_at(g, v, l, me, target);
+}
+
 //
 // Move to the next path on the popped path if it exits.
 //
@@ -589,6 +761,7 @@ static auto thing_monst_choose_something_we_can_wander_to(Gamep g, Levelsp v, Le
                 THING_DBG(g, v, l, me, "jumped to nexthop; pounce?");
                 return false;
               }
+
               THING_DBG(g, v, l, me, "jumped to nexthop; stop");
               monst_state_change(g, v, l, me, MONST_STATE_NORMAL);
               return true;
@@ -604,6 +777,8 @@ static auto thing_monst_choose_something_we_can_wander_to(Gamep g, Levelsp v, Le
       // walk into a chasm.
       //
       THING_DBG(g, v, l, me, "move to next: not possible, lunge");
+      TRACE_INDENT();
+
       (void) thing_lunge(g, v, l, me, nexthop);
       return false;
     }
@@ -613,6 +788,18 @@ static auto thing_monst_choose_something_we_can_wander_to(Gamep g, Levelsp v, Le
     //
     // If could not move, then abort the path walk
     //
+    if (level_is_invisible_bool(g, v, l, nexthop, me)) {
+      THING_DBG(g, v, l, me, "move to next: could not move due to invisible thing");
+      TRACE_INDENT();
+
+      if (thing_monst_attack_at(g, v, l, me, nexthop)) {
+        THING_DBG(g, v, l, me, "move to next: could not move due to invisible thing, attacked it");
+        TRACE_INDENT();
+        thing_monst_target_set(g, v, l, me, nexthop);
+        return true;
+      }
+    }
+
     THING_DBG(g, v, l, me, "move to next: could not move");
     return false;
   }
@@ -706,29 +893,6 @@ static auto thing_monst_choose_something_we_can_wander_to(Gamep g, Levelsp v, Le
   return false;
 }
 
-[[nodiscard]] static auto thing_monst_attack(Gamep g, Levelsp v, Levelp l, Thingp me) -> bool
-{
-  THING_DBG(g, v, l, me, "choose target");
-  TRACE_INDENT();
-
-  auto target = thing_monst_target(me);
-  auto at     = thing_at(g, v, l, me);
-
-  if (adjacent(at, target)) {
-    if (thing_is_flesh_eater(me)) {
-      if (level_alive_is_flesh(g, v, l, target) != nullptr) {
-        THING_DBG(g, v, l, me, "monst: try attack on flesh");
-        if (thing_attack_at(g, v, l, me, target)) {
-          THING_DBG(g, v, l, me, "monst: attack");
-          return true;
-        }
-      }
-    }
-  }
-
-  return false;
-}
-
 //
 // Called multiple times per tick potentially. If the monster has enough
 // move_remaining then it can move or attack again.
@@ -745,7 +909,6 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me)
 
   const int player_speed = thing_speed(g, v, l, player);
   auto      rem          = thing_move_remaining(me);
-  auto      target       = thing_monst_target(me);
   auto      at           = thing_at(g, v, l, me);
 
   //
@@ -759,18 +922,13 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me)
     //
     if (rem > 0) {
       if (tp_attack_count_max_per_tick_get(thing_tp(me)) > 1) {
-        if (level_is_attackable_by_monst(g, v, l, target) != nullptr) {
-          if (thing_attack_at(g, v, l, me, target)) {
-            THING_DBG(g, v, l, me, "in between move: attack");
-            (void) thing_move_remaining_set(g, v, l, me, 0);
-          }
-        }
-
         if (thing_monst_attack(g, v, l, me)) {
-          return;
+          THING_DBG(g, v, l, me, "in between move: attack");
+          (void) thing_move_remaining_set(g, v, l, me, 0);
         }
       }
     }
+
     return;
   }
 
@@ -869,11 +1027,9 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me)
           //
           // Can we attack here?
           //
-          if (level_is_attackable_by_monst(g, v, l, old_target) != nullptr) {
-            if (thing_attack_at(g, v, l, me, old_target)) {
-              THING_DBG(g, v, l, me, "end of move: attack");
-              break;
-            }
+          if (thing_monst_attack_at(g, v, l, me, old_target)) {
+            THING_DBG(g, v, l, me, "end of move: attack");
+            break;
           }
           break;
         }
@@ -895,11 +1051,9 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me)
           //
           // Can we attack here?
           //
-          if (level_is_attackable_by_monst(g, v, l, new_target) != nullptr) {
-            if (thing_attack_at(g, v, l, me, new_target)) {
-              THING_DBG(g, v, l, me, "end of move: same target as before, attacked");
-              break;
-            }
+          if (thing_monst_attack_at(g, v, l, me, new_target)) {
+            THING_DBG(g, v, l, me, "end of move: same target as before, attacked");
+            break;
           }
 
           THING_DBG(g, v, l, me, "end of move: same target as before, do not continue");
@@ -1022,57 +1176,59 @@ void thing_monst_tick(Gamep g, Levelsp v, Levelp l, Thingp me)
   thing_monst_event_loop(g, v, l, me);
 }
 
-[[nodiscard]] auto thing_is_monst(Thingp t) -> bool
+[[nodiscard]] auto thing_is_monst(Thingp me) -> bool
 {
   TRACE_DEBUG();
 
-  if (t == nullptr) {
+  if (me == nullptr) {
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_monst) != 0;
+  return tp_flag(thing_tp(me), is_monst) != 0;
 }
 
-[[nodiscard]] auto thing_is_monst1(Thingp t) -> bool
+[[nodiscard]] auto thing_is_monst1(Thingp me) -> bool
 {
   TRACE_DEBUG();
 
-  if (t == nullptr) {
+  if (me == nullptr) {
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_monst1) != 0;
+  return tp_flag(thing_tp(me), is_monst1) != 0;
 }
 
-[[nodiscard]] auto thing_is_monst2(Thingp t) -> bool
+[[nodiscard]] auto thing_is_monst2(Thingp me) -> bool
 {
   TRACE_DEBUG();
 
-  if (t == nullptr) {
+  if (me == nullptr) {
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_monst2) != 0;
+  return tp_flag(thing_tp(me), is_monst2) != 0;
 }
 
-[[nodiscard]] auto thing_monst_target(Thingp t) -> bpoint
+[[nodiscard]] auto thing_monst_target(Thingp me) -> bpoint
 {
   TRACE_DEBUG();
 
-  if (t == nullptr) {
+  if (me == nullptr) {
     CROAK("no thing pointer");
   }
 
-  return t->_monst_target;
+  return me->_monst_target;
 }
 
-void thing_monst_target_set(Gamep g, Levelsp v, Levelp l, Thingp t, const bpoint &val)
+void thing_monst_target_set(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &val)
 {
   TRACE_DEBUG();
 
-  if (t == nullptr) {
+  if (me == nullptr) {
     CROAK("no thing pointer");
   }
 
-  t->_monst_target = val;
+  me->_monst_target = val;
+
+  THING_DBG(g, v, l, me, "target set: %d,%d", val.x, val.y);
 }

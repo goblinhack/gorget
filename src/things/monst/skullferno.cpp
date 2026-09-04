@@ -153,6 +153,7 @@ static void tp_skullferno_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_distance_avoid_target_set(tp, 3);
   tp_distance_vision_set(tp, 12);
   tp_flag_set(tp, is_able_to_be_buffed);
+  tp_flag_set(tp, is_able_to_be_invisible);
   tp_flag_set(tp, is_able_to_be_levitated);
   tp_flag_set(tp, is_able_to_be_teleported);
   tp_flag_set(tp, is_able_to_fire_weapons);

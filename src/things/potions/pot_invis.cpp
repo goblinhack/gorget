@@ -3,6 +3,7 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_level_inlines.hpp"
 #include "my_main.hpp"
 #include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp"
@@ -12,30 +13,74 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
-static auto tp_pot_prot_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
+static auto tp_pot_invis_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
-  return "potion, protection";
+  return "potion, invisibility";
 }
 
-static auto tp_pot_prot_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
+static auto tp_pot_invis_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
-  return UI_INFO1_FMT_STR "Acts like temporary health points that ticks down constantly.\n" //
-      UI_INFO2_FMT_STR "Any damage taken will be from the protection health points first, before your own health is impacted.\n";
+  return UI_INFO1_FMT_STR "Hide from enemies with ease with this hard to see potion\n" //
+      UI_INFO2_FMT_STR "If only one tile away from a monster, they can see you.\n"     //
+      UI_INFO3_FMT_STR "Some monsters can see invisible.\n";
 }
 
-static void tp_pot_prot_on_thrown_end(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp thrower)
+static void tp_pot_invis_on_thrown_end(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp thrower)
 {
-  TRACE();
+  THING_DBG(g, v, l, me, "thrown end");
+  TRACE_INDENT();
 
   //
   // Soft landing?
   //
   if ((level_is_soft_landing_bool(g, v, l, thing_at(g, v, l, me)))) {
     return;
+  }
+
+  auto at      = thing_at(g, v, l, me);
+  bool got_one = {};
+
+  //
+  // Try to make invisible a monster at the thrown location first.
+  //
+  FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, at)
+  {
+    if (it == me) {
+      continue;
+    }
+
+    if (thing_is_monst(it)) {
+      THING_DBG(g, v, l, it, "invisible monst");
+      TRACE_INDENT();
+
+      if (thing_invisible(g, v, l, it)) {
+        got_one = true;
+        break;
+      }
+    }
+  }
+
+  //
+  // Try to invisible anything else at the thrown location first.
+  //
+  if (! got_one) {
+    FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, at)
+    {
+      if (it == me) {
+        continue;
+      }
+
+      THING_DBG(g, v, l, it, "invisible thing");
+      TRACE_INDENT();
+
+      if (thing_invisible(g, v, l, it)) {
+        break;
+      }
+    }
   }
 
   ThingEvent e {
@@ -49,13 +94,13 @@ static void tp_pot_prot_on_thrown_end(Gamep g, Levelsp v, Levelp l, Thingp me, T
   thing_dead(g, v, l, me, e);
 }
 
-static bool tp_pot_prot_on_use(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user)
+static bool tp_pot_invis_on_use(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp user)
 {
   TRACE();
 
-  if (thing_buff_add(g, v, l, user, tp_find_mand("buff_prot"))) {
+  if (thing_buff_add(g, v, l, user, tp_find_mand("buff_invis"))) {
     if (thing_is_player(user)) {
-      topcon(UI_GOOD_FMT_STR "You feel safe." UI_RESET_FMT);
+      topcon(UI_GOOD_FMT_STR "You feel strangely see through." UI_RESET_FMT);
       thing_sound_play(g, v, l, user, "bonus");
     }
   }
@@ -63,7 +108,7 @@ static bool tp_pot_prot_on_use(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp u
   return true;
 }
 
-static void tp_pot_prot_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
+static void tp_pot_invis_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
 {
   TRACE();
 
@@ -74,7 +119,7 @@ static void tp_pot_prot_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingE
   }
 
   if (e.source && thing_is_player(e.source)) {
-    topcon("The potion shatters.");
+    topcon("The invisible potion shatters.");
   }
   thing_sound_play(g, v, l, me, "glass_shatter");
 
@@ -85,19 +130,19 @@ static void tp_pot_prot_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingE
   (void) thing_spawn(g, v, l, tp_first(is_water_shallow), thing_at(g, v, l, me));
 }
 
-[[nodiscard]] auto tp_load_pot_prot() -> bool
+[[nodiscard]] auto tp_load_pot_invis() -> bool
 {
   TRACE();
 
-  auto *tp   = tp_load("pot_prot"); // keep as string for scripts
+  auto *tp   = tp_load("pot_invis"); // keep as string for scripts
   auto  name = tp_name(tp);
 
   // begin sort marker1 {
-  thing_description_set(tp, tp_pot_prot_description_get);
-  thing_detail_set(tp, tp_pot_prot_detail_get);
-  thing_on_death_set(tp, tp_pot_prot_on_death);
-  thing_on_thrown_end_set(tp, tp_pot_prot_on_thrown_end);
-  thing_on_use_set(tp, tp_pot_prot_on_use);
+  thing_description_set(tp, tp_pot_invis_description_get);
+  thing_detail_set(tp, tp_pot_invis_detail_get);
+  thing_on_death_set(tp, tp_pot_invis_on_death);
+  thing_on_thrown_end_set(tp, tp_pot_invis_on_thrown_end);
+  thing_on_use_set(tp, tp_pot_invis_on_use);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // fumble => intensify / keep burning / crit => stop burning
   tp_damage_set(tp, THING_EVENT_THROWN_DAMAGE, "1d4");
   tp_flag_set(tp, is_able_to_be_buffed);
@@ -137,11 +182,11 @@ static void tp_pot_prot_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingE
   tp_health_set(tp, "1d6");
   tp_is_immune_to_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_light_color_set(tp, "white");
-  tp_name_a_or_an_set(tp, "a potion of protection");
-  tp_name_apostrophize_set(tp, "potion of protection's");
-  tp_name_long_set(tp, "potion of protection");
-  tp_name_pluralize_set(tp, "potions of protection");
-  tp_name_short_set(tp, "potion, prot");
+  tp_name_a_or_an_set(tp, "a potion of invisibility");
+  tp_name_apostrophize_set(tp, "potion of invisibility's");
+  tp_name_long_set(tp, "potion of invisibility");
+  tp_name_pluralize_set(tp, "potions of invisibility");
+  tp_name_short_set(tp, "potion, invis");
   tp_priority_set(tp, THING_PRIORITY_OBJECT);
   tp_rarity_set(tp, THING_RARITY_COMMON);
   tp_temperature_burns_at_set(tp, 30);  // celsius

@@ -142,6 +142,7 @@ static bool tp_pirnana_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker,
   tp_distance_jump_set(tp, 3);
   tp_distance_vision_set(tp, 5);
   tp_flag_set(tp, is_able_to_be_buffed);
+  tp_flag_set(tp, is_able_to_be_invisible);
   tp_flag_set(tp, is_able_to_be_levitated);
   tp_flag_set(tp, is_able_to_choose_targets);
   tp_flag_set(tp, is_able_to_fall_sound);
@@ -175,7 +176,7 @@ static bool tp_pirnana_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker,
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_vision_360_degrees);
   tp_health_set(tp, "2d6");
-  tp_hearing_threshold_set(tp, 1);
+  tp_hearing_threshold_set(tp, 3);
   tp_is_immune_to_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_jump_attack_pct_chance_set(tp, 5);
   tp_name_a_or_an_set(tp, "a pirnana");

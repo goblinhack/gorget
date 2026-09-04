@@ -75,6 +75,29 @@ void levels_test(Gamep g)
   {
     Overrides overrides;
 
+    overrides[ '$' ] = [](char /*c*/, bpoint /*p*/) -> Tpp { return tp_find_mand("pot_invis"); };
+    overrides[ 'm' ] = [](char /*c*/, bpoint /*p*/) -> Tpp { return tp_find_mand("kobalos"); };
+
+    level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "invisibility", __FUNCTION__, __LINE__, overrides, 0,
+                    /* line */ (const char *) "xxxxxxxxx",
+                    /* line */ (const char *) "x.......x",
+                    /* line */ (const char *) "x......mx",
+                    /* line */ (const char *) "x..xxxxxx",
+                    /* line */ (const char *) "x..x....x",
+                    /* line */ (const char *) "x@$x....x",
+                    /* line */ (const char *) "x..x....x",
+                    /* line */ (const char *) "x..x....x",
+                    /* line */ (const char *) "x..x....x",
+                    /* line */ (const char *) "x..x....x",
+                    /* line */ (const char *) "x..x....x",
+                    /* line */ (const char *) "x..x....x",
+                    /* line */ (const char *) "xxxxxxxxx",
+                    /* end */ nullptr);
+  }
+
+  {
+    Overrides overrides;
+
     overrides[ 'c' ] = [](char /*c*/, bpoint /*p*/) -> Tpp { return tp_find_mand("chocolate_frog"); };
     overrides[ 'd' ] = [](char /*c*/, bpoint /*p*/) -> Tpp { return tp_find_mand("clown_meat"); };
 
@@ -101,6 +124,29 @@ void levels_test(Gamep g)
                     /* line */ (const char *) "X............X",
                     /* line */ (const char *) "X............X",
                     /* line */ (const char *) "X.@........g.X",
+                    /* line */ (const char *) "X............X",
+                    /* line */ (const char *) "X............X",
+                    /* line */ (const char *) "X............X",
+                    /* line */ (const char *) "X............X",
+                    /* line */ (const char *) "X............X",
+                    /* line */ (const char *) "X............X",
+                    /* line */ (const char *) "XXXXXXXXXXXXXX",
+                    /* end */ nullptr);
+  }
+
+  {
+    Overrides overrides;
+
+    overrides[ 'M' ] = [](char /*c*/, bpoint /*p*/) -> Tpp { return tp_find_mand("cleaner"); };
+
+    level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "cleaner", __FUNCTION__, __LINE__, overrides, 0,
+                    /* line */ (const char *) "XXXXXXXXXXXXXX",
+                    /* line */ (const char *) "X............X",
+                    /* line */ (const char *) "X............X",
+                    /* line */ (const char *) "X............X",
+                    /* line */ (const char *) "X............X",
+                    /* line */ (const char *) "X............X",
+                    /* line */ (const char *) "X......@...M.X",
                     /* line */ (const char *) "X............X",
                     /* line */ (const char *) "X............X",
                     /* line */ (const char *) "X............X",
@@ -160,14 +206,14 @@ void levels_test(Gamep g)
     Overrides overrides;
 
     overrides[ 'm' ] = [](char /*c*/, bpoint /*p*/) -> Tpp { return tp_find_mand("kobalos"); };
-    overrides[ '$' ] = [](char /*c*/, bpoint /*p*/) -> Tpp { return tp_find_mand("pot_lev"); };
+    overrides[ '$' ] = [](char /*c*/, bpoint /*p*/) -> Tpp { return tp_find_mand("pot_levit"); };
 
     level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "test1", __FUNCTION__, __LINE__, overrides, 0,
                     /* line */ (const char *) "XXXXXXXXXXXXXXXXXXXXXXXXXX",
                     /* line */ (const char *) "X.......CCC.bBb.LLL......X",
                     /* line */ (const char *) "X.......CCC.....LLL......X",
-                    /* line */ (const char *) "X.......CCC.:::.LLL......X",
-                    /* line */ (const char *) "X.......CCC.@..MLLL......X",
+                    /* line */ (const char *) "X.......CCC.$...LLL......X",
+                    /* line */ (const char *) "X.......CCC.@.b.LLL......X",
                     /* line */ (const char *) "X.......CCC.....LLL......X",
                     /* line */ (const char *) "X.......CCC.WWW.LLL......X",
                     /* line */ (const char *) "X.......CCC.WWW.LLL......X",
@@ -178,21 +224,20 @@ void levels_test(Gamep g)
   {
     Overrides overrides;
 
-    overrides[ 'm' ] = [](char /*c*/, bpoint /*p*/) -> Tpp { return tp_find_mand("blitzhound"); };
+    overrides[ 'm' ] = [](char /*c*/, bpoint /*p*/) -> Tpp { return tp_find_mand("kobalos"); };
+    overrides[ '$' ] = [](char /*c*/, bpoint /*p*/) -> Tpp { return tp_find_mand("pot_stealth"); };
 
     level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "foliage", __FUNCTION__, __LINE__, overrides, 0,
-                    /* line */ (const char *) "XXXXXXXXXX",
-                    /* line */ (const char *) "X```````@X",
-                    /* line */ (const char *) "X````````X",
-                    /* line */ (const char *) "X````````X",
-                    /* line */ (const char *) "X````````X",
-                    /* line */ (const char *) "X````````X",
-                    /* line */ (const char *) "X````````X",
-                    /* line */ (const char *) "X````````X",
-                    /* line */ (const char *) "X``......X",
-                    /* line */ (const char *) "X........X",
-                    /* line */ (const char *) "X.......mX",
-                    /* line */ (const char *) "XXXXXXXXXX",
+                    /* line */ (const char *) "XXXXXXX",
+                    /* line */ (const char *) "X``@$`X",
+                    /* line */ (const char *) "X`````X",
+                    /* line */ (const char *) "X`````X",
+                    /* line */ (const char *) "X.....X",
+                    /* line */ (const char *) "X.....X",
+                    /* line */ (const char *) "X.....X",
+                    /* line */ (const char *) "X.....X",
+                    /* line */ (const char *) "X....mX",
+                    /* line */ (const char *) "XXXXXXX",
                     /* end */ nullptr);
   }
 

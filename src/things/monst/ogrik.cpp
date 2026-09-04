@@ -110,6 +110,7 @@ static void tp_ogrik_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_attack_count_max_per_tick_set(tp, 2);
   tp_distance_vision_set(tp, 12);
   tp_flag_set(tp, is_able_to_be_buffed);
+  tp_flag_set(tp, is_able_to_be_invisible);
   tp_flag_set(tp, is_able_to_be_levitated);
   tp_flag_set(tp, is_able_to_be_teleported);
   tp_flag_set(tp, is_able_to_crush_grass);
@@ -147,7 +148,7 @@ static void tp_ogrik_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_vision_360_degrees);
   tp_health_set(tp, "4d8");
-  tp_hearing_threshold_set(tp, 2);
+  tp_hearing_threshold_set(tp, 10);
   tp_is_immune_to_add(tp, THING_EVENT_FIRE_DAMAGE);
   tp_is_immune_to_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_monst_group_add(tp, MONST_GROUP2);

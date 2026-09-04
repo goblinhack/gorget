@@ -42,8 +42,8 @@
       = "xxxxxxx"
         "x...x.x"
         "x...x.x"
-        "x...@.x"
-        "x...xmx"
+        "x...@mx"
+        "x...x.x"
         "x...x.x"
         "xxxxxxx";
   std::string const expect3
