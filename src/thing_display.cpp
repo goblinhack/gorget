@@ -224,14 +224,18 @@ static void thing_display_outlined_blit(Gamep g, Tpp tp, spoint tl, spoint br, T
     return false;
   }
 
+  //
+  // Player cannot see it!
+  //
   if (! thing_is_player(t_maybe_null)) {
-    return false;
+    return true;
   }
 
   if (! thing_is_invisible(g, v, l, t_maybe_null)) {
     return false;
   }
 
+  tile_blit(tile, x1, x2, y1, y2, tl, br, fg);
   color c = BLUE;
   tile_blit_outline_w_invis_inside(tile, x1, x2, y1, y2, tl, br, c);
 
@@ -315,6 +319,12 @@ static void thing_display_blit(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t_ma
   // NOTE: light_pixels is set for things like floors and walls, and blits the tile as lots of individual
   // pixels with their own lighting
   //
+
+  if (t_maybe_null != nullptr) {
+    if (thing_is_invisible(g, v, l, t_maybe_null)) {
+      return;
+    }
+  }
 
   if (tp_is_blit_outlined(tp) || tp_is_blit_square_outlined(tp)) {
     thing_display_outlined_blit(g, tp, tl, br, tile, x1, x2, y1, y2, fg, BLACK);

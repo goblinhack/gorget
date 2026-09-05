@@ -9,7 +9,7 @@
 #include "../my_test.hpp"
 #include "../my_thing_inlines.hpp"
 
-[[nodiscard]] static auto test_throw_item_pot_monst_can_move(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_throw_item_pot_invis(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -27,33 +27,24 @@
   std::string const start
       = "xxxxxxxx"  //
         "x......x"  //
-        "x..@..mx"  //
+        "x..@...x"  //
         "x......x"  //
         "xxxxxxxx"; //
   std::string const expect1
       = "xxxxxxxx"  //
         "x......x"  //
-        "x..@.m.x"  //
-        "x......x"  //
-        "xxxxxxxx"; //
-  std::string const expect2
-      = "xxxxxxxx"  //
-        "x......x"  //
-        "x..@m~.x"  //
+        "x..@.~.x"  //
         "x......x"  //
         "xxxxxxxx"; //
 
-  Overrides overrides;
-  overrides[ 'm' ] = [](char c, bpoint p) -> Tpp { return tp_find_mand("kobalos"); };
-  Levelp  l        = nullptr;
-  Levelsp v        = game_test_init(g, &l, level_num, w, h, start.c_str(), overrides);
-  bool    result   = true;
+  Levelp  l      = nullptr;
+  Levelsp v      = game_test_init(g, &l, level_num, w, h, start.c_str());
+  bool    result = true;
   bpoint  throw_to;
   int     threw_count = 0;
-  Thingp  monst       = nullptr;
 
   static std::initializer_list< std::string > items = {
-      "pot_levit", //
+      "pot_invis", //
   };
 
   auto *player = thing_player(g);
@@ -110,42 +101,7 @@
     goto exit;
   }
 
-  //
-  // Check the monster is levitating
-  //
-  FOR_ALL_THINGS_AT(g, v, l, it, throw_to)
-  {
-    if (thing_is_monst(it)) {
-      monst = it;
-    }
-  }
-
-  TEST_ASSERT(t, monst, "expecting monster");
-  TEST_ASSERT(t, thing_is_levitating(g, v, l, monst), "expecting levitating monster");
-
-  //
-  // Check the kobalos does move
-  //
-  level_dump(g, v, l, w, h);
-  TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 20; tries++) {
-    TEST_LOOP_PROGRESS(t, g, v, l, tries, w, h);
-    (void) player_fire(g, v, l, 1, 0);
-    TEST_ASSERT(t, game_event_wait(g), "failed to wait");
-    if (! game_wait_for_tick_to_finish(g, v, l)) {
-      TEST_FAILED(t, "wait loop failed");
-      goto exit;
-    }
-  }
-
-  level_dump(g, v, l, w, h);
-  TEST_PROGRESS(t);
-  if (! (result = level_match_contents(g, v, l, t, w, h, expect2.c_str()))) {
-    TEST_FAILED(t, "unexpected contents");
-    goto exit;
-  }
-
-  TEST_ASSERT(t, game_tick_get(g, v) == 21, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 1, "final tick counter value");
 
   level_dump(g, v, l, w, h);
   TEST_PASSED(t);
@@ -156,14 +112,14 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_throw_item_pot_monst_can_move() -> bool // NOLINT
+[[nodiscard]] auto test_load_throw_item_pot_invis() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("throw_item_pot_monst_can_move");
+  Testp test = test_load("throw_item_pot_invis");
 
   // begin sort marker1 {
-  test_callback_set(test, test_throw_item_pot_monst_can_move);
+  test_callback_set(test, test_throw_item_pot_invis);
   // end sort marker1 }
 
   return true;

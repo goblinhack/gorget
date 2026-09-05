@@ -37,7 +37,7 @@ static void tp_pot_invis_on_thrown_end(Gamep g, Levelsp v, Levelp l, Thingp me, 
   //
   // Soft landing?
   //
-  if ((level_is_soft_landing_bool(g, v, l, thing_at(g, v, l, me)))) {
+  if (level_is_soft_landing_bool(g, v, l, thing_at(g, v, l, me))) {
     return;
   }
 

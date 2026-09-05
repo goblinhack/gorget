@@ -142,6 +142,9 @@
   if (!test_load_pot_disloc_bad_luck()) { return false; }
   if (!test_load_pot_disloc_good_luck()) { return false; }
   if (!test_load_pot_healing()) { return false; }
+  if (!test_load_pot_invis_player_monst_can_see()) { return false; }
+  if (!test_load_pot_invis_player_monst_cannot_see_but_made_sound()) { return false; }
+  if (!test_load_pot_invis_player_monst_cannot_see()) { return false; }
   if (!test_load_pot_levit_player_chasm()) { return false; }
   if (!test_load_pot_levit_player_grass()) { return false; }
   if (!test_load_pot_levit_player_in_steam()) { return false; }
@@ -196,12 +199,14 @@
   if (!test_load_throw_item_pot_incin_chasm()) { return false; }
   if (!test_load_throw_item_pot_incin_into_water()) { return false; }
   if (!test_load_throw_item_pot_incin()) { return false; }
+  if (!test_load_throw_item_pot_invis_monst()) { return false; }
+  if (!test_load_throw_item_pot_invis()) { return false; }
   if (!test_load_throw_item_pot_levit_hard_landing()) { return false; }
+  if (!test_load_throw_item_pot_levit_monst_can_move()) { return false; }
+  if (!test_load_throw_item_pot_levit_monst_cannot_move()) { return false; }
+  if (!test_load_throw_item_pot_levit_monst_death()) { return false; }
   if (!test_load_throw_item_pot_levit_soft_landing()) { return false; }
   if (!test_load_throw_item_pot_levit()) { return false; }
-  if (!test_load_throw_item_pot_monst_can_move()) { return false; }
-  if (!test_load_throw_item_pot_monst_cannot_move()) { return false; }
-  if (!test_load_throw_item_pot_monst_death()) { return false; }
   if (!test_load_throw_items()) { return false; }
   if (!test_load_trampled_grass()) { return false; }
   if (!test_load_wall()) { return false; }

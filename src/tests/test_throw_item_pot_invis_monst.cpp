@@ -9,7 +9,7 @@
 #include "../my_test.hpp"
 #include "../my_thing_inlines.hpp"
 
-[[nodiscard]] static auto test_throw_item_pot_monst_cannot_move(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_throw_item_pot_invis_monst(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -27,7 +27,7 @@
   std::string const start
       = "xxxxxxxx"  //
         "x......x"  //
-        "x..@.m.x"  //
+        "x..@..mx"  //
         "x......x"  //
         "xxxxxxxx"; //
   std::string const expect1
@@ -39,12 +39,12 @@
   std::string const expect2
       = "xxxxxxxx"  //
         "x......x"  //
-        "x..@.m.x"  //
+        "x..@m~.x"  //
         "x......x"  //
         "xxxxxxxx"; //
 
   Overrides overrides;
-  overrides[ 'm' ] = [](char c, bpoint p) -> Tpp { return tp_find_mand("spider_giant"); };
+  overrides[ 'm' ] = [](char c, bpoint p) -> Tpp { return tp_find_mand("kobalos"); };
   Levelp  l        = nullptr;
   Levelsp v        = game_test_init(g, &l, level_num, w, h, start.c_str(), overrides);
   bool    result   = true;
@@ -124,7 +124,7 @@
   TEST_ASSERT(t, thing_is_levitating(g, v, l, monst), "expecting levitating monster");
 
   //
-  // Check the spider does not move
+  // Check the kobalos does move
   //
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
@@ -156,14 +156,14 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_throw_item_pot_monst_cannot_move() -> bool // NOLINT
+[[nodiscard]] auto test_load_throw_item_pot_invis_monst() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("throw_item_pot_monst_cannot_move");
+  Testp test = test_load("throw_item_pot_invis_monst");
 
   // begin sort marker1 {
-  test_callback_set(test, test_throw_item_pot_monst_cannot_move);
+  test_callback_set(test, test_throw_item_pot_invis_monst);
   // end sort marker1 }
 
   return true;

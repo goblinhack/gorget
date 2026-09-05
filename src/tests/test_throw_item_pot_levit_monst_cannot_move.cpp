@@ -9,7 +9,7 @@
 #include "../my_test.hpp"
 #include "../my_thing_inlines.hpp"
 
-[[nodiscard]] static auto test_throw_item_pot_monst_death(Gamep g, Testp t) -> bool
+[[nodiscard]] static auto test_throw_item_pot_levit_monst_cannot_move(Gamep g, Testp t) -> bool
 {
   TEST_LOG(t, "begin");
   TRACE();
@@ -26,25 +26,25 @@
   //
   std::string const start
       = "xxxxxxxx"  //
-        "x..WWWWx"  //
-        "x..@WWmx"  //
-        "x..WWWWx"  //
+        "x......x"  //
+        "x..@.m.x"  //
+        "x......x"  //
         "xxxxxxxx"; //
   std::string const expect1
       = "xxxxxxxx"  //
-        "x..WWWWx"  //
-        "x..@WWmx"  //
-        "x..WWWWx"  //
+        "x......x"  //
+        "x..@.m.x"  //
+        "x......x"  //
         "xxxxxxxx"; //
   std::string const expect2
       = "xxxxxxxx"  //
-        "x..WWWWx"  //
-        "x..@WWmx"  //
-        "x..WWWWx"  //
+        "x......x"  //
+        "x..@.m.x"  //
+        "x......x"  //
         "xxxxxxxx"; //
 
   Overrides overrides;
-  overrides[ 'm' ] = [](char c, bpoint p) -> Tpp { return tp_find_mand("pale_eel"); };
+  overrides[ 'm' ] = [](char c, bpoint p) -> Tpp { return tp_find_mand("spider_giant"); };
   Levelp  l        = nullptr;
   Levelsp v        = game_test_init(g, &l, level_num, w, h, start.c_str(), overrides);
   bool    result   = true;
@@ -70,7 +70,7 @@
   //
   // Throw all items
   //
-  throw_to = thing_at(g, v, l, player) + bpoint(3, 0);
+  throw_to = thing_at(g, v, l, player) + bpoint(2, 0);
 
   for (;;) {
     bool got_item = false;
@@ -124,7 +124,7 @@
   TEST_ASSERT(t, thing_is_levitating(g, v, l, monst), "expecting levitating monster");
 
   //
-  // Check the kobalos does move
+  // Check the spider does not move
   //
   level_dump(g, v, l, w, h);
   TEST_PROGRESS(t);
@@ -156,14 +156,14 @@ exit:
   return result;
 }
 
-[[nodiscard]] auto test_load_throw_item_pot_monst_death() -> bool // NOLINT
+[[nodiscard]] auto test_load_throw_item_pot_levit_monst_cannot_move() -> bool // NOLINT
 {
   TRACE();
 
-  Testp test = test_load("throw_item_pot_monst_death");
+  Testp test = test_load("throw_item_pot_levit_monst_cannot_move");
 
   // begin sort marker1 {
-  test_callback_set(test, test_throw_item_pot_monst_death);
+  test_callback_set(test, test_throw_item_pot_levit_monst_cannot_move);
   // end sort marker1 }
 
   return true;
