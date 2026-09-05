@@ -496,7 +496,7 @@ static bool tp_player_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker, 
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_tickable);
   tp_health_set(tp, "100");
-  tp_hearing_threshold_set(tp, 10);
+  tp_hearing_threshold_set(tp, 10); // smaller values => better hearing
   tp_light_color_set(tp, "white");
   tp_missile_count_max_set(tp, THING_MISSILE_MAX);
   tp_priority_set(tp, THING_PRIORITY_PLAYER);

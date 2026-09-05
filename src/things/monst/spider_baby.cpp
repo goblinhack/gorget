@@ -191,7 +191,7 @@ static bool tp_spider_baby_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attac
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_vision_360_degrees);
   tp_health_set(tp, "1d4");
-  tp_hearing_threshold_set(tp, 2);
+  tp_hearing_threshold_set(tp, 2); // smaller values => better hearing
   tp_name_a_or_an_set(tp, "a baby giant spider");
   tp_name_apostrophize_set(tp, "baby giant spiders'");
   tp_name_long_set(tp, "baby giant spider");

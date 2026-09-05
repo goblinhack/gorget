@@ -181,7 +181,7 @@ static bool tp_mantisman_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacke
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_vision_180_degrees);
   tp_health_set(tp, "2d4");
-  tp_hearing_threshold_set(tp, 5);
+  tp_hearing_threshold_set(tp, 5); // smaller values => better hearing
   tp_is_immune_to_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_monst_group_add(tp, MONST_GROUP1);
   tp_name_a_or_an_set(tp, "a mantisman");

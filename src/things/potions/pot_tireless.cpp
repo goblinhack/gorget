@@ -56,8 +56,8 @@ static bool tp_pot_tireless_on_use(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
   auto new_stamina = thing_stamina_incr(g, v, l, user, thing_stamina_max(g, v, l, user) / 2);
   if (old_stamina == new_stamina) {
     if (thing_is_player(user)) {
-      topcon(UI_WARN_FMT_STR "That potion seemed to have no effect." UI_RESET_FMT);
-      thing_sound_play(g, v, l, user, "error");
+      topcon(UI_WARN_FMT_STR "That potion seemed to have no effect on your stamina." UI_RESET_FMT);
+      thing_sound_play(g, v, l, user, "bonus");
     }
   } else {
     if (thing_is_player(user)) {
