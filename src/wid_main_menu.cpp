@@ -373,8 +373,6 @@ void wid_main_menu_select(Gamep g)
   con("Main menu: select");
   TRACE_INDENT();
 
-  sound_fade_out(g);
-
   if (wid_main_menu_window == nullptr) {
     (void) music_play(g, "intro");
   }

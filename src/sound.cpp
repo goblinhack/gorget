@@ -92,6 +92,7 @@ void sound_fade_out(Gamep g)
 {
   TRACE();
 
+  return;
   for (auto c = 0; c < max_channels; c++) {
     Mix_FadeOutChannel(c, 1000);
   }

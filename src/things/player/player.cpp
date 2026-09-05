@@ -239,21 +239,31 @@ static void tp_player_level_leave(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
+  THING_DBG(g, v, l, me, "level leave");
+
   thing_vision_reset(g, v, l, me);
 
-  sound_fade_out(g);
+  //
+  // If in level select we might choose another level than level 1, so only fade out
+  // when leaving a level that we spent time in.
+  //
+  if (v->tick) {
+    sound_fade_out(g);
+  }
 }
 
 static void tp_player_level_enter(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
+  THING_DBG(g, v, l, me, "level enter");
+
   thing_vision_reset(g, v, l, me);
 
   //
   // Ambience loops
   //
-  auto loops = 100;
+  auto loops = 1000;
   auto scale = 1;
 
   //
