@@ -303,6 +303,8 @@ void wid_console_clear(Gamep g)
 {
   TRACE();
 
+  wid_console_lines.clear();
+
   std::vector< std::string > const r;
   auto                            *tmp = wid_get_head(wid_console_input_line);
   while (tmp != nullptr) {
