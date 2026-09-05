@@ -1,11 +1,8 @@
 bugs
 ----
-test shove levitating barrel over rubble
-test invis
 
 todo
 ----
-potion, imperceptable (invisible)
 potion, feathertail (jump)
 potion, etherealness (wall throu walls, vaults?)
 potion, haste
@@ -21,7 +18,7 @@ thrown potion, confusion
 thrown potion, caustic gas
 steam and smoke should spread
 potion trading station
-present icon with multiplites for bonus
+present icon with multiplies for bonus
 wandering monster for grinding
 enchants
 wortweed
@@ -41,7 +38,6 @@ monsters
   - barbarian, thrud
 lever for a bridge? use an overly for rooms
 damage reduction stat
-for windows, checkout https://github.com/eythaann/Seelen-UI/
 
 sacrifice altar
 ---------------
