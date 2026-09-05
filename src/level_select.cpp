@@ -70,7 +70,7 @@
 {
   TRACE();
 
-  auto  *level_select = game_level_get(g, v, LEVEL_ARR_IDX_GRID);
+  auto  *level_select = game_level_get(g, v, LEVEL_ARR_IDX_LEVEL_SELECT);
   Levelp level_over   = nullptr;
 
   auto *tp_is_level_locked_icon = tp_first(is_level_locked_icon);
@@ -107,7 +107,7 @@
 {
   TRACE();
 
-  auto *level_select = game_level_get(g, v, LEVEL_ARR_IDX_GRID);
+  auto *level_select = game_level_get(g, v, LEVEL_ARR_IDX_LEVEL_SELECT);
 
   FOR_ALL_THINGS_AT(g, v, level_select, t, p) { return t; }
 
@@ -137,7 +137,7 @@ static auto level_select_get_level_from_grid_coords(Levelsp v, bpoint p) -> Leve
 
   auto level_num = s->level_num;
 
-  if (level_num >= LEVEL_ARR_IDX_GRID) {
+  if (level_num >= LEVEL_ARR_IDX_LEVEL_SELECT) {
     return nullptr;
   }
 
@@ -251,7 +251,7 @@ static auto level_select_get_level_from_grid_coords(Levelsp v, bpoint p) -> Leve
     case 15 :
     case 19 :
       {
-        p.x = LEVEL_NUM_BOSS_OFFSET;
+        p.x = LEVEL_ARR_IDX_BOSS_OFFSET;
 
         if (compiler_unused) {
           con("level %d -> next (look at boss level %u,%u)", l->level_num, p.x, p.y);
@@ -386,7 +386,7 @@ void level_select_assign_levels_to_grid(Gamep g, Levelsp v)
         l->level_select_at = bpoint(x, y);
 
         c->level_num = l->level_num;
-        if ((x == LEVEL_NUM_BOSS_OFFSET) && (y == LEVEL_GRID_DOWN - 1)) {
+        if ((x == LEVEL_ARR_IDX_BOSS_OFFSET) && (y == LEVEL_GRID_DOWN - 1)) {
           c->final_level = true;
         }
 
@@ -446,7 +446,7 @@ static auto level_select_count_levels(LevelSelect *s) -> int
   TRACE_INDENT();
 
   LevelSelect const *s            = &v->level_select;
-  auto               level_num    = LEVEL_ARR_IDX_GRID;
+  auto               level_num    = LEVEL_ARR_IDX_LEVEL_SELECT;
   auto              *level_select = game_level_get(g, v, level_num);
 
   auto  *player       = thing_player(g);
@@ -504,7 +504,7 @@ static auto level_select_count_levels(LevelSelect *s) -> int
       // Boss level?
       //
       if ((y % 4) == 3) {
-        if (x == LEVEL_NUM_BOSS_OFFSET) {
+        if (x == LEVEL_ARR_IDX_BOSS_OFFSET) {
           level_is_boss_level_set(g, v, l);
         }
       }
@@ -607,7 +607,7 @@ static auto level_select_count_levels(LevelSelect *s) -> int
       //
       // Final level
       //
-      if ((x == LEVEL_NUM_BOSS_OFFSET) && (y == LEVEL_GRID_DOWN - 1)) {
+      if ((x == LEVEL_ARR_IDX_BOSS_OFFSET) && (y == LEVEL_GRID_DOWN - 1)) {
         if (tp != tp_is_level_next_icon) {
           tp = tp_is_level_final_icon;
           level_is_boss_final_level_set(g, v, l);
@@ -685,13 +685,13 @@ static auto level_select_count_levels(LevelSelect *s) -> int
         v->level_select.tile_to_level[ at.x ][ at.y ] = l->level_num;
 
         if (v->level_select_id == 0U) {
-          if ((x == LEVEL_NUM_BOSS_OFFSET) && (y == 0)) {
+          if ((x == LEVEL_ARR_IDX_BOSS_OFFSET) && (y == 0)) {
             v->level_select_id = t->id;
             level_scroll_to_focus(g, v, level_select);
           }
         }
 
-        if (x == LEVEL_NUM_BOSS_OFFSET) {
+        if (x == LEVEL_ARR_IDX_BOSS_OFFSET) {
           for (const auto &px : s->data) {
             LevelSelectCell const *o = &px[ y ];
             if ((o != nullptr) && (o->is_set != 0U) && (o->level_num == player_level->level_num)) {
@@ -756,7 +756,7 @@ void level_select_update_grid_tiles(Gamep g, Levelsp v)
 {
   TRACE();
 
-  auto  level_num = LEVEL_ARR_IDX_GRID;
+  auto  level_num = LEVEL_ARR_IDX_LEVEL_SELECT;
   auto *l         = game_level_get(g, v, level_num);
 
   level_init(g, v, l, level_num);

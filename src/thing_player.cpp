@@ -1114,7 +1114,7 @@ void player_move_accum(Gamep g, Levelsp v, Levelp l, bool up, bool down, bool le
 //
 // Handle common level exit interactions
 //
-static void player_leave_current_level_and_change_to_level_num(Gamep g, Levelsp v, LevelNum level_num = LEVEL_ARR_IDX_GRID)
+static void player_leave_current_level_and_change_to_level_num(Gamep g, Levelsp v, LevelNum level_num = LEVEL_ARR_IDX_LEVEL_SELECT)
 {
   TRACE();
 
@@ -1172,7 +1172,7 @@ void player_reached_exit_do(Gamep g, Levelsp v, Levelp l)
       thing_is_game_over_set(g, v, l, player);
     }
   } else {
-    player_leave_current_level_and_change_to_level_num(g, v, LEVEL_ARR_IDX_GRID);
+    player_leave_current_level_and_change_to_level_num(g, v, LEVEL_ARR_IDX_LEVEL_SELECT);
   }
 }
 
@@ -1205,7 +1205,7 @@ void player_reached_entrance_do(Gamep g, Levelsp v, Levelp l)
   level_log(g, v, l, "player reached entrance handler");
   TRACE_INDENT();
 
-  player_leave_current_level_and_change_to_level_num(g, v, LEVEL_ARR_IDX_GRID);
+  player_leave_current_level_and_change_to_level_num(g, v, LEVEL_ARR_IDX_LEVEL_SELECT);
 }
 
 //

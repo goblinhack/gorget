@@ -5569,7 +5569,7 @@ static void level_gen_create_fixed_or_proc_gen_level(Gamep g, LevelNum level_num
   //
   g_thread_id = level_num + 1;
 
-  if (level_num >= LEVEL_ARR_IDX_GRID) {
+  if (level_num >= LEVEL_ARR_IDX_LEVEL_SELECT) {
     CROAK("this will exceed the number of level bits");
   }
 
@@ -5711,7 +5711,7 @@ void level_gen_test(Gamep g)
     // Generate the maximum number of levels
     //
     LevelSelect *s = &v->level_select;
-    s->level_count = LEVEL_ARR_IDX_GRID - 1;
+    s->level_count = LEVEL_ARR_IDX_LEVEL_SELECT - 1;
 
     //
     // Create the levels

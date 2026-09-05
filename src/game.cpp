@@ -910,7 +910,7 @@ void Game::create_levels()
     //
     // Start in level select?
     //
-    if (level_change(g, v, LEVEL_ARR_IDX_GRID) == nullptr) {
+    if (level_change(g, v, LEVEL_ARR_IDX_LEVEL_SELECT) == nullptr) {
       ERR("failed to change to level selection");
       return;
     }
@@ -2284,7 +2284,7 @@ void game_sound_volume_set(Gamep g, int val)
     return nullptr;
   }
   if (n >= LEVEL_ARR_IDX_MAX) {
-    ERR("game_level_populate: Exceeded max level: %u", n);
+    ERR("game_level_populate: Exceeded max level arr idx: %u", n);
     return nullptr;
   }
   v->level_num = n;

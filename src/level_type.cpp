@@ -14,11 +14,11 @@
   TRACE();
 
   switch (level_num) {
-    case LEVEL_NUM_BOSS_1 : return LEVEL_TYPE_BOSS1;
-    case LEVEL_NUM_BOSS_2 : return LEVEL_TYPE_BOSS2;
-    case LEVEL_NUM_BOSS_3 : return LEVEL_TYPE_BOSS3;
-    case LEVEL_NUM_BOSS_4 : return LEVEL_TYPE_BOSS4;
-    case LEVEL_NUM_BOSS_5 : return LEVEL_TYPE_BOSS5;
+    case LEVEL_ARR_IDX_BOSS_1 : return LEVEL_TYPE_BOSS1;
+    case LEVEL_ARR_IDX_BOSS_2 : return LEVEL_TYPE_BOSS2;
+    case LEVEL_ARR_IDX_BOSS_3 : return LEVEL_TYPE_BOSS3;
+    case LEVEL_ARR_IDX_BOSS_4 : return LEVEL_TYPE_BOSS4;
+    case LEVEL_ARR_IDX_BOSS_5 : return LEVEL_TYPE_BOSS5;
     default :               break;
   }
   return LEVEL_TYPE_NORMAL;
@@ -29,11 +29,11 @@
   TRACE();
 
   switch (level_num) {
-    case LEVEL_NUM_BOSS_1 : return true;
-    case LEVEL_NUM_BOSS_2 : return true;
-    case LEVEL_NUM_BOSS_3 : return true;
-    case LEVEL_NUM_BOSS_4 : return true;
-    case LEVEL_NUM_BOSS_5 : return true;
+    case LEVEL_ARR_IDX_BOSS_1 : return true;
+    case LEVEL_ARR_IDX_BOSS_2 : return true;
+    case LEVEL_ARR_IDX_BOSS_3 : return true;
+    case LEVEL_ARR_IDX_BOSS_4 : return true;
+    case LEVEL_ARR_IDX_BOSS_5 : return true;
     default :               break;
   }
   return false;
@@ -49,11 +49,11 @@
   }
 
   switch (l->level_num + 1) {
-    case LEVEL_NUM_BOSS_1 : return true;
-    case LEVEL_NUM_BOSS_2 : return true;
-    case LEVEL_NUM_BOSS_3 : return true;
-    case LEVEL_NUM_BOSS_4 : return true;
-    case LEVEL_NUM_BOSS_5 : return true;
+    case LEVEL_ARR_IDX_BOSS_1 : return true;
+    case LEVEL_ARR_IDX_BOSS_2 : return true;
+    case LEVEL_ARR_IDX_BOSS_3 : return true;
+    case LEVEL_ARR_IDX_BOSS_4 : return true;
+    case LEVEL_ARR_IDX_BOSS_5 : return true;
     default :               break;
   }
   return l->is_boss_level;

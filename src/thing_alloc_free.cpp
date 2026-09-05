@@ -291,7 +291,7 @@ static auto thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, ThingIdPacked i
   // is not initialized
   //
   auto level_num = l->level_num;
-  if (level_num == LEVEL_ARR_IDX_GRID) {
+  if ((level_num == LEVEL_ARR_IDX_LEVEL_SELECT) || (level_num == LEVEL_ARR_IDX_PLAYER_SELECT)) {
     if (v->is_generating_levels) {
       CROAK("cannot allocate level select while mutexes are off");
     }
