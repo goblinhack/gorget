@@ -158,6 +158,7 @@ static void tp_ogrik_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_name_pluralize_set(tp, "ogrik");
   tp_name_short_set(tp, "ogrik");
   tp_priority_set(tp, THING_PRIORITY_MONST);
+  tp_rarity_set(tp, THING_RARITY_COMMON);
   tp_score_value_set(tp, 300);
   tp_speed_set(tp, 25);
   tp_stat_set(tp, THING_STAT_ATT, "1d8+10");

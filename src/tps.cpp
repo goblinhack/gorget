@@ -30,6 +30,7 @@
   if (!tp_load_buff_immune_fire()) { return false; }
   if (!tp_load_buff_invis()) { return false; }
   if (!tp_load_buff_levit()) { return false; }
+  if (!tp_load_buff_poison()) { return false; }
   if (!tp_load_buff_prot()) { return false; }
   if (!tp_load_buff_resistant_fire()) { return false; }
   if (!tp_load_buff_stealth()) { return false; }
@@ -40,6 +41,7 @@
   if (!tp_load_cleaner()) { return false; }
   if (!tp_load_clover()) { return false; }
   if (!tp_load_clown_meat()) { return false; }
+  if (!tp_load_coil_eel()) { return false; }
   if (!tp_load_copious_chest()) { return false; }
   if (!tp_load_corridor()) { return false; }
   if (!tp_load_cursor_at()) { return false; }

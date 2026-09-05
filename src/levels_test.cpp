@@ -871,34 +871,29 @@ void levels_test(Gamep g)
                   /* line */ (const char *) "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
                   /* end */ nullptr);
 
-  level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "water", __FUNCTION__, __LINE__, no_overrides, 0,
-                  /* line */ (const char *) "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-                  /* line */ (const char *) "x..............................................x",
-                  /* line */ (const char *) "x..............................................x",
-                  /* line */ (const char *) "x..............................................x",
-                  /* line */ (const char *) "x..............................................x",
-                  /* line */ (const char *) "x..............................................x",
-                  /* line */ (const char *) "x..............................................x",
-                  /* line */ (const char *) "x..............................................x",
-                  /* line */ (const char *) "x..............................................x",
-                  /* line */ (const char *) "x..............................................x",
-                  /* line */ (const char *) "x..............................................x",
-                  /* line */ (const char *) "x..............................................x",
-                  /* line */ (const char *) "x..............................................x",
-                  /* line */ (const char *) "x.......@......................................x",
-                  /* line */ (const char *) "x..............................................x",
-                  /* line */ (const char *) "x..............................................x",
-                  /* line */ (const char *) "x..............................................x",
-                  /* line */ (const char *) "x..............................................x",
-                  /* line */ (const char *) "x..............................................x",
-                  /* line */ (const char *) "x..............................................x",
-                  /* line */ (const char *) "x..............................................x",
-                  /* line */ (const char *) "x..............................................x",
-                  /* line */ (const char *) "x..............................................x",
-                  /* line */ (const char *) "x..............................................x",
-                  /* line */ (const char *) "x..............................................x",
-                  /* line */ (const char *) "x..............................................x",
-                  /* line */ (const char *) "x..............................................x",
-                  /* line */ (const char *) "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-                  /* end */ nullptr);
+  {
+    Overrides overrides;
+
+    overrides[ 'm' ] = [](char /*c*/, bpoint /*p*/) -> Tpp { return tp_find_mand("coil_eel"); };
+
+    level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "water", __FUNCTION__, __LINE__, overrides, 0,
+                    /* line */ (const char *) "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+                    /* line */ (const char *) "x..........~~~~~WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWx",
+                    /* line */ (const char *) "x..........~~~~~WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWx",
+                    /* line */ (const char *) "x..........~~~~~WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWx",
+                    /* line */ (const char *) "x..........~~~~~WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWx",
+                    /* line */ (const char *) "x..........~~~~~WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWx",
+                    /* line */ (const char *) "x.....@....~m~~~WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWx",
+                    /* line */ (const char *) "x..........~~~~~WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWx",
+                    /* line */ (const char *) "x..........~~~~~WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWx",
+                    /* line */ (const char *) "x..........~~~~~WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWx",
+                    /* line */ (const char *) "x..........~~~~~WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWx",
+                    /* line */ (const char *) "x..........~~~~~WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWx",
+                    /* line */ (const char *) "x..........~~~~~WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWx",
+                    /* line */ (const char *) "x..........~~~~~WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWx",
+                    /* line */ (const char *) "x..........~~~~~WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWx",
+                    /* line */ (const char *) "x..........~~~~~WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWx",
+                    /* line */ (const char *) "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+                    /* end */ nullptr);
+  }
 }

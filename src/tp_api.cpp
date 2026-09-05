@@ -1819,10 +1819,10 @@
   return tp_flag(tp, is_unused158) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused159(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_venomous(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused159) != 0;
+  return tp_flag(tp, is_venomous) != 0;
 }
 
 [[nodiscard]] auto tp_is_able_to_see_invisible(Tpp tp) -> bool

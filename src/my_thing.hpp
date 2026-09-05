@@ -53,7 +53,7 @@ using ThingIdPacked = union {
 /* begin shell marker1 */
 /* shell printf "#define THING_BUFF_MAX " */
 /* shell find . -name "*.cpp" | xargs grep "tp_flag_set(tp, is_buff);" | wc -l */
-#define THING_BUFF_MAX 9
+#define THING_BUFF_MAX 10
 /* end shell marker1 */
 
 //
@@ -700,6 +700,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_attack_count_per_tick_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val = 1) -> int;
 [[nodiscard]] auto thing_attack_count_per_tick_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int;
 [[nodiscard]] auto thing_attack_count_per_tick(Thingp t) -> int;
+[[nodiscard]] auto thing_attack_poison(Gamep g, Levelsp v, Levelp l, Thingp it) -> bool;
 [[nodiscard]] auto thing_auto_wear_try(Gamep g, Levelsp v, Levelp l, Thingp owner, Thingp item, ThingEvent &e) -> bool;
 [[nodiscard]] auto thing_beam_weapon_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, bpoint target) -> bool;
 [[nodiscard]] auto thing_beam_weapon_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, fpoint target) -> bool;
@@ -1112,7 +1113,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused156(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused157(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused158(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused159(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused16(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused17(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused18(Thingp t) -> bool;
@@ -1209,6 +1209,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused99(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_usable(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_vault(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_venomous(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_vision_180_degrees(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_vision_360_degrees(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_wait_on_anim(Thingp t) -> bool;

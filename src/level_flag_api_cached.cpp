@@ -1857,10 +1857,10 @@
   return level_flag_cached(g, v, l, is_unused158, p);
 }
 
-[[nodiscard]] auto level_is_unused159_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_venomous_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused159, p);
+  return level_flag_cached(g, v, l, is_venomous, p);
 }
 
 [[nodiscard]] auto level_is_able_to_see_invisible_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

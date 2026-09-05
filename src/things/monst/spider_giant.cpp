@@ -214,6 +214,7 @@ static bool tp_spider_giant_on_missing(Gamep g, Levelsp v, Levelp l, Thingp atta
   tp_name_pluralize_set(tp, "giant spiders");
   tp_name_short_set(tp, "spider");
   tp_priority_set(tp, THING_PRIORITY_MONST);
+  tp_rarity_set(tp, THING_RARITY_COMMON);
   tp_score_value_set(tp, 100);
   tp_speed_set(tp, 25);
   tp_stat_set(tp, THING_STAT_ATT, "1d8+10");

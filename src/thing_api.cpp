@@ -2291,7 +2291,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return tp_flag(thing_tp(t), is_unused158) != 0;
 }
 
-[[nodiscard]] auto thing_is_unused159(Thingp t) -> bool
+[[nodiscard]] auto thing_is_venomous(Thingp t) -> bool
 {
   TRACE_DEBUG();
 
@@ -2299,7 +2299,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused159) != 0;
+  return tp_flag(thing_tp(t), is_venomous) != 0;
 }
 
 [[nodiscard]] auto thing_is_able_to_see_invisible(Thingp t) -> bool

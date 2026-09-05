@@ -348,6 +348,7 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
         }
         break;
       case THING_EVENT_THROWN_DAMAGE : [[fallthrough]];
+      case THING_EVENT_POISON_DAMAGE : [[fallthrough]];
       case THING_EVENT_MELEE_DAMAGE :
         if (damage_name.empty()) {
           if (e.crit) {
@@ -457,6 +458,9 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp me, Thin
       case THING_EVENT_ENGULF_DAMAGE : //
         topcon(UI_WARN_FMT_STR "You are being digested!" UI_RESET_FMT);
         break;
+      case THING_EVENT_POISON_DAMAGE : //
+        topcon(UI_WARN_FMT_STR "You are being poisoned." UI_RESET_FMT);
+        break;
       case THING_EVENT_THROWN_DAMAGE : [[fallthrough]];
       case THING_EVENT_MELEE_DAMAGE : //
         topcon(UI_WARN_FMT_STR "You are hit." UI_RESET_FMT);
@@ -535,6 +539,9 @@ static void thing_damage_by_player(Gamep g, Levelsp v, Levelp l, Thingp it, Thin
         break;
       case THING_EVENT_ENGULF_DAMAGE : //
         topcon("You digest %s.", the_thing_name_long.c_str());
+        break;
+      case THING_EVENT_POISON_DAMAGE : //
+        topcon("You poison %s.", the_thing_name_long.c_str());
         break;
       case THING_EVENT_MELEE_DAMAGE :
         if (e.crit) {
@@ -792,6 +799,7 @@ void thing_damage_apply(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
       case THING_EVENT_CRUSH_DAMAGE :     [[fallthrough]];
       case THING_EVENT_THROWN_DAMAGE :    [[fallthrough]];
       case THING_EVENT_ENGULF_DAMAGE :    [[fallthrough]];
+      case THING_EVENT_POISON_DAMAGE :    [[fallthrough]];
       case THING_EVENT_MELEE_DAMAGE :     break;
       case THING_EVENT_FIRE_DAMAGE :
         {
@@ -871,6 +879,7 @@ void thing_damage_apply(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
       case THING_EVENT_CRUSH_DAMAGE :     [[fallthrough]];
       case THING_EVENT_THROWN_DAMAGE :    [[fallthrough]];
       case THING_EVENT_ENGULF_DAMAGE :    [[fallthrough]];
+      case THING_EVENT_POISON_DAMAGE :    [[fallthrough]];
       case THING_EVENT_MELEE_DAMAGE :     break;
       case THING_EVENT_FIRE_DAMAGE :
         //

@@ -175,6 +175,7 @@ static bool tp_blitzhound_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attack
   tp_name_pluralize_set(tp, "blitzhounds");
   tp_name_short_set(tp, "blitzhound");
   tp_priority_set(tp, THING_PRIORITY_MONST);
+  tp_rarity_set(tp, THING_RARITY_COMMON);
   tp_score_value_set(tp, 100);
   tp_speed_set(tp, 200);
   tp_stat_set(tp, THING_STAT_ATT, "1d8+10");

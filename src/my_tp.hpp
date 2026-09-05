@@ -315,7 +315,7 @@
       list_macro(is_unused156, "is_unused156"),                                             /* newline */                                       \
       list_macro(is_unused157, "is_unused157"),                                             /* newline */                                       \
       list_macro(is_unused158, "is_unused158"),                                             /* newline */                                       \
-      list_macro(is_unused159, "is_unused159"),                                             /* newline */                                       \
+      list_macro(is_venomous, "is_venomous"),                                               /* newline */                                       \
       list_macro(is_unused16, "is_unused16"),                                               /* newline */                                       \
       list_macro(is_able_to_see_invisible, "is_able_to_see_invisible"),                     /* newline */                                       \
       list_macro(is_able_to_be_invisible, "is_able_to_be_invisible"),                       /* newline */                                       \
@@ -591,6 +591,7 @@ ENUM_DEF_H(THING_ANIM_ENUM, ThingAnimType)
   list_macro(THING_EVENT_FIRE_DAMAGE, "fire-damage"),                /* newline */                                                              \
       list_macro(THING_EVENT_ENERGY_DAMAGE, "energy-damage"),        /* newline */                                                              \
       list_macro(THING_EVENT_MELEE_DAMAGE, "melee-damage"),          /* newline */                                                              \
+      list_macro(THING_EVENT_POISON_DAMAGE, "poison-damage"),        /* newline */                                                              \
       list_macro(THING_EVENT_ENGULF_DAMAGE, "engulf-damage"),        /* newline */                                                              \
       list_macro(THING_EVENT_THROWN_DAMAGE, "thrown-damage"),        /* newline */                                                              \
       list_macro(THING_EVENT_WATER_DAMAGE, "water-damage"),          /* newline */                                                              \
@@ -1120,7 +1121,6 @@ class Tp;
 [[nodiscard]] auto tp_is_unused156(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused157(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused158(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused159(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused16(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused17(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused18(Tpp tp) -> bool;
@@ -1217,6 +1217,7 @@ class Tp;
 [[nodiscard]] auto tp_is_unused99(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_usable(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_vault(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_venomous(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_vision_180_degrees(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_vision_360_degrees(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_wait_on_anim(Tpp tp) -> bool;

@@ -1857,10 +1857,10 @@
   return level_flag(g, v, l, is_unused158, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_unused159_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_venomous_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused159, p, me) != nullptr;
+  return level_flag(g, v, l, is_venomous, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_able_to_see_invisible_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool

@@ -119,6 +119,13 @@ void thing_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
 
   (void) thing_age_incr(g, v, l, me);
 
+  //
+  // Tick buffs and items
+  //
+  FOR_ALL_BUFFS(g, v, l, me, buff) { thing_on_tick_begin(g, v, l, buff); }
+
+  FOR_ALL_ACTIVE_ITEMS(g, v, l, me, item) { thing_on_tick_begin(g, v, l, item); }
+
   thing_continue_to_burn_check(g, v, l, me);
   if (thing_is_dead(me)) {
     return;

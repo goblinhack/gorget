@@ -178,6 +178,7 @@ static void tp_voider_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
   tp_name_pluralize_set(tp, "voiders");
   tp_name_short_set(tp, "voider");
   tp_priority_set(tp, THING_PRIORITY_MONST);
+  tp_rarity_set(tp, THING_RARITY_COMMON);
   tp_score_value_set(tp, 200);
   tp_speed_set(tp, 50);
   tp_stat_set(tp, THING_STAT_ATT, "1d4+14");

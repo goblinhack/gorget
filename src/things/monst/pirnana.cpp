@@ -185,6 +185,7 @@ static bool tp_pirnana_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker,
   tp_name_pluralize_set(tp, "pirnanas");
   tp_name_short_set(tp, "pirnana");
   tp_priority_set(tp, THING_PRIORITY_MONST);
+  tp_rarity_set(tp, THING_RARITY_COMMON);
   tp_score_value_set(tp, 50);
   tp_speed_set(tp, 50);
   tp_stat_set(tp, THING_STAT_ATT, "1d4+10");
