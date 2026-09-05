@@ -24,8 +24,8 @@ static auto tp_pot_levit_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> 
 {
   TRACE();
 
-  return UI_INFO1_FMT_STR "Float above hazards without a care in the world (*)\n" //
-      UI_INFO2_FMT_STR "(*) cobwebs, fire and gasses not included in care free offer.\n";
+  return UI_INFO1_FMT_STR "This bouncing copper potion will help you float above hazards without a care in the world.\n" //
+      UI_INFO2_FMT_STR "Do not let the effects of this potion wear out when hovering over lava.\n";
 }
 
 static void tp_pot_levit_on_thrown_end(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp thrower)

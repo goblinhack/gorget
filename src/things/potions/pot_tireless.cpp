@@ -23,7 +23,12 @@ static auto tp_pot_tireless_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) 
 {
   TRACE();
 
-  return UI_INFO1_FMT_STR "Get rid of that sluggish feeling when your stamina runs low and bound once more with tireless energy!";
+  return UI_INFO1_FMT_STR
+      "Get rid of that sluggish feeling when your stamina runs low and " //
+      "bound once more with tireless energy!\n"                          //
+      UI_INFO2_FMT_STR
+      "This brilliant amber potion will not only restore your stamina, " //
+      "but prevent it from dropping whilst the effect lasts.\n";
 }
 
 static void tp_pot_tireless_on_thrown_end(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp thrower)

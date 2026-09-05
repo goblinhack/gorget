@@ -25,8 +25,8 @@ static auto tp_pot_stealth_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -
 
   return //
       UI_INFO1_FMT_STR
-      "Consume this potion and you can creep silently through the noisiest of bushes," //
-      "or cross water as quietly as a morning breeze.\n"                               //
+      "Consume this dark oozing potion and you can creep silently through the noisiest of bushes, " //
+      "or cross water as quietly as a morning breeze. Depending on the morning.\n"                  //
       UI_INFO2_FMT_STR
       "Note: weapon fire and other forms of attack are included in this no noise guarantee, " //
       "even though this makes no sense. I mean, do you get naked for a potion of invisibiliy? "

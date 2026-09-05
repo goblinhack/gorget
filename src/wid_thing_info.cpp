@@ -1729,6 +1729,10 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, i
         parent->log_empty_line(g);
       }
     }
+  } else if (thing_is_potion(me)) {
+    //
+    // Keep it terse
+    //
   } else {
     if (wid_thing_info_item_stats(g, v, l, me, parent, width)) {}
 

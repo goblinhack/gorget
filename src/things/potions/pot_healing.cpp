@@ -23,7 +23,7 @@ static auto tp_pot_healing_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -
 {
   TRACE();
 
-  return UI_INFO1_FMT_STR "Consume this potion to restore your health. Other problems in life may remain.";
+  return UI_INFO1_FMT_STR "Consume this beautiful jade green potion to restore your health. Other problems in life may remain.";
 }
 
 static void tp_pot_healing_on_thrown_end(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp thrower)
