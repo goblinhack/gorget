@@ -71,6 +71,7 @@ static void usage()
   con("Testing:");
   con(" --level name/<number>             -- Start in this level only.");
   con(" --level-select                    -- Start in the level select menu.");
+  con(" --player-select                   -- Start in the player select menu.");
   con(" --quick-start                     -- Quick start inside level.");
   con(" --test <name>                     -- Run test foo only.");
   con(" --tests                           -- Run all tests.");
@@ -158,6 +159,11 @@ static void parse_args(int argc, char *argv[])
 
     if ((strcasecmp(argv[ i ], "--level-select") == 0) || (strcasecmp(argv[ i ], "-level-select") == 0)) {
       g_opt_level_select_menu = true;
+      continue;
+    }
+
+    if ((strcasecmp(argv[ i ], "--player-select") == 0) || (strcasecmp(argv[ i ], "-player-select") == 0)) {
+      g_opt_player_select_menu = true;
       continue;
     }
 
@@ -696,6 +702,12 @@ static void parse_args(int argc, char *argv[])
     wid_cfg_display_select(g, true /* menu_was_created_due_to_game_restarting */);
   } else if (g_opt_quick_start) {
     con("Quick start");
+    TRACE_INDENT();
+
+    wid_hide(g, wid_console_window);
+    wid_new_game(g);
+  } else if (g_opt_player_select_menu) {
+    con("Player select menu");
     TRACE_INDENT();
 
     wid_hide(g, wid_console_window);

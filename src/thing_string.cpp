@@ -80,19 +80,6 @@
                                   /* newline */ thing_is_burning(t) ? "/burn" : "",
                                   /* newline */ thing_is_scheduled_for_cleanup(t) ? "/fre" : ""));
 
-  //
-  // This check never really worked. e.g. a skleleton being detached from its mob due to falling.
-  //
-  if (compiler_unused) {
-    if (! level_is_level_select(g, v, l)) {
-      if (thing_level(g, v, t) != l) {
-        level_log(g, v, thing_level(g, v, t), "this is the things (%s) level", out.c_str());
-        level_log(g, v, l, "this is the debug log level");
-        ERR("thing level mismatch");
-      }
-    }
-  }
-
   return out;
 }
 

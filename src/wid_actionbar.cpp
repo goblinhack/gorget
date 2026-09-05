@@ -635,7 +635,7 @@ static auto wid_actionbar_create_window(Gamep g) -> bool
     }
   }
 
-  if (level_is_level_select(g, v, l)) {
+  if (level_is_level_select(g, v, l) || level_is_player_select(g, v, l)) {
     opt_ascend    = false;
     opt_descend   = false;
     opt_fire      = false;

@@ -20,7 +20,8 @@ bool g_opt_debug2;                // All debugs. Slow.
 bool g_opt_do_level_gen;          // Test level gen
 bool g_opt_do_level_select_gen;   // Test level select gen
 bool g_opt_do_room_gen;           // Test room gen
-bool g_opt_level_select_menu;     // Start in the select menu
+bool g_opt_level_select_menu;     // Start in the level select menu
+bool g_opt_player_select_menu;    // Start in the player select menu
 bool g_opt_no_slow_log_flush;     // Do not flush after each console log at start
 bool g_opt_override_debug_level;  // Temporary used to disable debugs on load
 bool g_opt_quick_start;           // Start in the main menu
@@ -68,6 +69,7 @@ void reset_globals()
   g_opt_override_debug_level  = false;
   g_opt_quick_start           = false;
   g_opt_level_select_menu     = false;
+  g_opt_player_select_menu    = false;
   g_opt_do_room_gen           = false;
   g_opt_do_level_select_gen   = false;
   g_opt_do_level_gen          = false;

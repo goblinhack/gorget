@@ -59,6 +59,20 @@ void level_verify(Gamep g, Levelsp v, Levelp l)
   return l->level_num == LEVEL_ARR_IDX_LEVEL_SELECT;
 }
 
+//
+// Are we on the player selection level?
+//
+[[nodiscard]] auto level_is_player_select(Gamep g, Levelsp v, Levelp l) -> bool
+{
+  TRACE();
+
+  if ((g == nullptr) || (v == nullptr) || (l == nullptr)) {
+    return false;
+  }
+
+  return l->level_num == LEVEL_ARR_IDX_PLAYER_SELECT;
+}
+
 void level_init(Gamep g, Levelsp v, Levelp l, LevelNum n)
 {
   TRACE();
@@ -241,7 +255,11 @@ void level_is_completed_by_player_falling(Gamep g, Levelsp v, Levelp l)
   level_scroll_warp_to_focus(g, v, new_level);
   level_debug(g, v, new_level);
 
-  if (level_is_level_select(g, v, new_level)) {
+  if (level_is_player_select(g, v, new_level)) {
+    botcon_newline();
+    game_state_change(g, STATE_PLAYER_SELECT_MENU, "level change");
+    wid_player_select(g, v, new_level);
+  } else if (level_is_level_select(g, v, new_level)) {
     botcon_newline();
     game_state_change(g, STATE_LEVEL_SELECT_MENU, "level change");
     wid_level_select(g, v, new_level);
@@ -288,31 +306,19 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
   IF_DEBUG2
   {
     DBG("Level destroy %u dump all", l->level_num);
-    FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
-    {
-      //
-      THING_DBG(g, v, l, t, "dump");
-    }
+    FOR_ALL_THINGS_ON_LEVEL(g, v, l, t) { THING_DBG(g, v, l, t, "dump"); }
   }
 
   //
   // Remove all things
   //
   DBG("Level destroy %u", l->level_num);
-  FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
-  {
-    TRACE();
-    thing_fini(g, v, l, t);
-  }
+  FOR_ALL_THINGS_ON_LEVEL(g, v, l, t) { thing_fini(g, v, l, t); }
 
   //
   // Check all things are gone
   //
-  FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
-  {
-    //
-    thing_err(g, v, l, t, "thing still on level after destroying it");
-  }
+  FOR_ALL_THINGS_ON_LEVEL(g, v, l, t) { thing_err(g, v, l, t, "thing still on level after destroying it"); }
 
   //
   // Clean up the level select snake walk
@@ -851,7 +857,7 @@ void level_bounds_set(Gamep g, Levelsp v, Levelp l)
   //
   // We need to animate all the level tiles in sync, so might as well draw the whole level
   //
-  if (level_is_level_select(g, v, l)) {
+  if (level_is_level_select(g, v, l) || level_is_player_select(g, v, l)) {
     v->minx = 0;
     v->miny = 0;
     v->maxx = MAP_WIDTH;

@@ -727,6 +727,7 @@ enum {
 [[nodiscard]] auto level_is_boss_final_level(Gamep g, Levelsp v, Levelp l) -> bool;
 [[nodiscard]] auto level_is_boss_level(Gamep g, Levelsp v, Levelp l) -> bool;
 [[nodiscard]] auto level_is_level_select(Gamep g, Levelsp v, Levelp l) -> bool;
+[[nodiscard]] auto level_is_player_select(Gamep g, Levelsp v, Levelp l) -> bool;
 [[nodiscard]] auto level_is_player_level(Gamep g, Levelsp v, Levelp l) -> bool;
 [[nodiscard]] auto level_is_same_obj_type_at(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp) -> bool;
 [[nodiscard]] auto level_is_valid_grid_coord(int x, int y) -> bool;
@@ -1311,6 +1312,8 @@ auto level_fov(const FovContext & /*ctx*/) -> void;
 [[nodiscard]] auto level_is_wood(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me = nullptr) -> Thingp;
 [[nodiscard]] auto level_select_mouse_down(Gamep g, Levelsp v, Levelp l) -> bool;
 [[nodiscard]] auto level_select_mouse_down(Gamep g) -> bool;
+[[nodiscard]] auto player_select_mouse_down(Gamep g, Levelsp v, Levelp l) -> bool;
+[[nodiscard]] auto player_select_mouse_down(Gamep g) -> bool;
 [[nodiscard]] auto level_tick_begin_is_requested(Gamep g, Levelsp v, Levelp l) -> bool;
 [[nodiscard]] auto level_tick_begin_requested(Gamep g, Levelsp v, Levelp l, const char *why) -> bool;
 // end sort marker3 }

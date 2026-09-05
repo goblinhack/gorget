@@ -1695,15 +1695,6 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, i
     return;
   }
 
-  //
-  // Can happen when changing level
-  //
-  if (! level_is_level_select(g, v, l)) {
-    if (thing_level(g, v, me) != l) {
-      return;
-    }
-  }
-
   if (wid_tp_info_icon(g, tp, parent)) {
     parent->log_empty_line(g);
   }

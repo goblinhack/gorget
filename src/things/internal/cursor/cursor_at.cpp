@@ -22,7 +22,7 @@ static auto tp_cursor_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l, con
   //
   Tilep tile = tp_tiles_get(tp, THING_ANIM_CURSOR_NOPATH, 0);
 
-  if (level_is_level_select(g, v, l)) {
+  if (level_is_level_select(g, v, l) || level_is_player_select(g, v, l)) {
     return tp_tiles_get(tp, THING_ANIM_CURSOR_NORMAL, 0);
   }
 
@@ -69,16 +69,6 @@ static auto tp_cursor_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l, con
   //
   if ((level_cursor_path_size(g) != 0) || (thing_move_path_size(g, v, l, player) != 0)) {
     return tp_tiles_get(tp, THING_ANIM_CURSOR_NORMAL, 0);
-  }
-
-  //
-  // If we are over a level, show the cursor highlighted
-  //
-  if (level_is_level_select(g, v, l)) {
-    auto *s = level_select_get_level_at_tile_coords(g, v, p);
-    if (s != nullptr) {
-      return tp_tiles_get(tp, THING_ANIM_CURSOR_NORMAL, 0);
-    }
   }
 
   return tile;

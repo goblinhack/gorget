@@ -108,7 +108,7 @@ static void level_display_cursor(Gamep g, Levelsp v, Levelp l, const bpoint &p, 
         //
         // No cursor path during level selection
         //
-        if (level_is_level_select(g, v, l)) {
+        if (level_is_level_select(g, v, l) || level_is_player_select(g, v, l)) {
           return;
         }
 
@@ -162,7 +162,7 @@ static void level_display_cursor(Gamep g, Levelsp v, Levelp l, FboEnum fbo)
 {
   TRACE_DEBUG();
 
-  if (level_is_level_select(g, v, l)) {
+  if (level_is_level_select(g, v, l) || level_is_player_select(g, v, l)) {
     //
     // ok
     //
@@ -244,7 +244,7 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp level_above, Levelp 
 {
   TRACE_DEBUG();
 
-  const bool is_level_select = level_is_level_select(g, v, l);
+  const bool is_level_select = level_is_level_select(g, v, l) || level_is_player_select(g, v, l);
 
   auto *player = thing_player(g);
   if (player == nullptr) [[unlikely]] {
@@ -465,8 +465,9 @@ static void level_display_fbo(Gamep g, Levelsp v, Levelp level_above, Levelp l, 
     if (fbo == FBO_MAP_FG_OVERLAY) {
       if (wid_over == nullptr) {
         switch (game_state(g)) {
-          case STATE_THROW_ITEM :        [[fallthrough]];
-          case STATE_LEVEL_SELECT_MENU : [[fallthrough]];
+          case STATE_THROW_ITEM :         [[fallthrough]];
+          case STATE_LEVEL_SELECT_MENU :  [[fallthrough]];
+          case STATE_PLAYER_SELECT_MENU : [[fallthrough]];
           case STATE_PLAYING :
             blit_init();
             level_display_cursor(g, v, l, fbo);
@@ -514,7 +515,7 @@ static void level_display_fbos(Gamep g, Levelsp v, Levelp level_above, Levelp l)
 
   gl_enter_2d_mode(g, game_map_fbo_width_get(g), game_map_fbo_height_get(g));
 
-  auto is_level_select = level_is_level_select(g, v, l);
+  const bool is_level_select = level_is_level_select(g, v, l) || level_is_player_select(g, v, l);
 
   if (level_above == nullptr) {
     level_display_fbo(g, v, level_above, l, FBO_MAP_BG_PREVIOUSLY_SEEN_TILES);
@@ -761,7 +762,7 @@ void level_display(Gamep g, Levelsp v, Levelp l)
   //
   FOR_ALL_TICKING_LEVELS(g, v, iter) { level_anim(g, v, iter); }
 
-  if (level_is_level_select(g, v, l)) {
+  if (level_is_level_select(g, v, l) || level_is_player_select(g, v, l)) {
     //
     // Animate the level selection too
     //

@@ -76,28 +76,34 @@
     return true;
   }
 
+  if (level_is_player_select(g, v, l)) {
+    (void) player_select_mouse_down(g, v, l);
+    return true;
+  }
+
   switch (game_state(g)) {
-    case STATE_THROW_ITEM :        [[fallthrough]];
-    case STATE_PLAYING :           break;
-    case STATE_COLLECT_MENU :      [[fallthrough]];
-    case STATE_DEAD_MENU :         [[fallthrough]];
-    case STATE_GENERATED :         [[fallthrough]];
-    case STATE_GENERATING :        [[fallthrough]];
-    case STATE_INIT :              [[fallthrough]];
-    case STATE_INVENTORY_MENU :    [[fallthrough]];
-    case STATE_ITEM_MENU :         [[fallthrough]];
-    case STATE_KEYBOARD_MENU :     [[fallthrough]];
-    case STATE_LEVEL_SELECT_MENU : [[fallthrough]];
-    case STATE_LOAD_MENU :         [[fallthrough]];
-    case STATE_LOADED :            [[fallthrough]];
-    case STATE_MAIN_MENU :         [[fallthrough]];
-    case STATE_MOVE_WARNING_MENU : [[fallthrough]];
-    case STATE_QUIT_MENU :         [[fallthrough]];
-    case STATE_QUITTING :          [[fallthrough]];
-    case STATE_SAVE_MENU :         [[fallthrough]];
-    case STATE_GAME_OVER_MENU :    [[fallthrough]];
-    case STATE_THROW_MENU :        [[fallthrough]];
-    case GAME_STATE_ENUM_MAX :     DBG("game mouse down, ignore, not playing"); return false;
+    case STATE_THROW_ITEM :         [[fallthrough]];
+    case STATE_PLAYING :            break;
+    case STATE_COLLECT_MENU :       [[fallthrough]];
+    case STATE_DEAD_MENU :          [[fallthrough]];
+    case STATE_GENERATED :          [[fallthrough]];
+    case STATE_GENERATING :         [[fallthrough]];
+    case STATE_INIT :               [[fallthrough]];
+    case STATE_INVENTORY_MENU :     [[fallthrough]];
+    case STATE_ITEM_MENU :          [[fallthrough]];
+    case STATE_KEYBOARD_MENU :      [[fallthrough]];
+    case STATE_LEVEL_SELECT_MENU :  [[fallthrough]];
+    case STATE_PLAYER_SELECT_MENU : [[fallthrough]];
+    case STATE_LOAD_MENU :          [[fallthrough]];
+    case STATE_LOADED :             [[fallthrough]];
+    case STATE_MAIN_MENU :          [[fallthrough]];
+    case STATE_MOVE_WARNING_MENU :  [[fallthrough]];
+    case STATE_QUIT_MENU :          [[fallthrough]];
+    case STATE_QUITTING :           [[fallthrough]];
+    case STATE_SAVE_MENU :          [[fallthrough]];
+    case STATE_GAME_OVER_MENU :     [[fallthrough]];
+    case STATE_THROW_MENU :         [[fallthrough]];
+    case GAME_STATE_ENUM_MAX :      DBG("game mouse down, ignore, not playing"); return false;
   }
 
   //
@@ -145,6 +151,14 @@
       if (! level_cursor_is_valid(g, v)) {
         return false;
       }
+
+      level_scroll_delta(g, v, l, spoint(wheelx, -wheely));
+      break;
+    case STATE_PLAYER_SELECT_MENU :
+      //
+      // Update the cursor path
+      //
+      game_request_to_update_cursor_set(g);
 
       level_scroll_delta(g, v, l, spoint(wheelx, -wheely));
       break;
@@ -260,7 +274,7 @@
     return false;
   }
 
-  if (level_is_level_select(g, v, l)) {
+  if (level_is_level_select(g, v, l) || level_is_player_select(g, v, l)) {
     (void) sound_play(g, "error");
     return false;
   }
@@ -307,7 +321,7 @@
     return false;
   }
 
-  if (level_is_level_select(g, v, l)) {
+  if (level_is_level_select(g, v, l) || level_is_player_select(g, v, l)) {
     (void) sound_play(g, "error");
     return false;
   }
@@ -338,7 +352,7 @@
     return false;
   }
 
-  if (level_is_level_select(g, v, l)) {
+  if (level_is_level_select(g, v, l) || level_is_player_select(g, v, l)) {
     (void) sound_play(g, "error");
     return false;
   }
@@ -380,7 +394,7 @@
     return false;
   }
 
-  if (level_is_level_select(g, v, l)) {
+  if (level_is_level_select(g, v, l) || level_is_player_select(g, v, l)) {
     (void) sound_play(g, "error");
     return false;
   }
@@ -422,7 +436,7 @@ static auto game_event_jump(Gamep g) -> bool
     return false;
   }
 
-  if (level_is_level_select(g, v, l)) {
+  if (level_is_level_select(g, v, l) || level_is_player_select(g, v, l)) {
     (void) sound_play(g, "error");
     return false;
   }
@@ -528,7 +542,7 @@ static auto game_event_throw(Gamep g) -> bool
     return false;
   }
 
-  if (level_is_level_select(g, v, l)) {
+  if (level_is_level_select(g, v, l) || level_is_player_select(g, v, l)) {
     (void) sound_play(g, "error");
     return false;
   }
@@ -587,7 +601,7 @@ static auto game_event_abort(Gamep g) -> bool
     return false;
   }
 
-  if (level_is_level_select(g, v, l)) {
+  if (level_is_level_select(g, v, l) || level_is_player_select(g, v, l)) {
     (void) sound_play(g, "error");
     return false;
   }
@@ -628,27 +642,28 @@ static auto game_event_abort(Gamep g) -> bool
   }
 
   switch (game_state(g)) {
-    case STATE_THROW_ITEM :        [[fallthrough]];
-    case STATE_PLAYING :           break;
-    case STATE_COLLECT_MENU :      [[fallthrough]];
-    case STATE_DEAD_MENU :         [[fallthrough]];
-    case STATE_GENERATED :         [[fallthrough]];
-    case STATE_GENERATING :        [[fallthrough]];
-    case STATE_INIT :              [[fallthrough]];
-    case STATE_INVENTORY_MENU :    [[fallthrough]];
-    case STATE_ITEM_MENU :         [[fallthrough]];
-    case STATE_KEYBOARD_MENU :     [[fallthrough]];
-    case STATE_LEVEL_SELECT_MENU : [[fallthrough]];
-    case STATE_LOAD_MENU :         [[fallthrough]];
-    case STATE_LOADED :            [[fallthrough]];
-    case STATE_MAIN_MENU :         [[fallthrough]];
-    case STATE_MOVE_WARNING_MENU : [[fallthrough]];
-    case STATE_QUIT_MENU :         [[fallthrough]];
-    case STATE_QUITTING :          [[fallthrough]];
-    case STATE_SAVE_MENU :         [[fallthrough]];
-    case STATE_GAME_OVER_MENU :    [[fallthrough]];
-    case STATE_THROW_MENU :        [[fallthrough]];
-    case GAME_STATE_ENUM_MAX :     DBG("ignore, not playing"); return false;
+    case STATE_THROW_ITEM :         [[fallthrough]];
+    case STATE_PLAYING :            break;
+    case STATE_COLLECT_MENU :       [[fallthrough]];
+    case STATE_DEAD_MENU :          [[fallthrough]];
+    case STATE_GENERATED :          [[fallthrough]];
+    case STATE_GENERATING :         [[fallthrough]];
+    case STATE_INIT :               [[fallthrough]];
+    case STATE_INVENTORY_MENU :     [[fallthrough]];
+    case STATE_ITEM_MENU :          [[fallthrough]];
+    case STATE_KEYBOARD_MENU :      [[fallthrough]];
+    case STATE_LEVEL_SELECT_MENU :  [[fallthrough]];
+    case STATE_PLAYER_SELECT_MENU : [[fallthrough]];
+    case STATE_LOAD_MENU :          [[fallthrough]];
+    case STATE_LOADED :             [[fallthrough]];
+    case STATE_MAIN_MENU :          [[fallthrough]];
+    case STATE_MOVE_WARNING_MENU :  [[fallthrough]];
+    case STATE_QUIT_MENU :          [[fallthrough]];
+    case STATE_QUITTING :           [[fallthrough]];
+    case STATE_SAVE_MENU :          [[fallthrough]];
+    case STATE_GAME_OVER_MENU :     [[fallthrough]];
+    case STATE_THROW_MENU :         [[fallthrough]];
+    case GAME_STATE_ENUM_MAX :      DBG("ignore, not playing"); return false;
   }
 
   wid_cfg_help_select(g);
@@ -662,34 +677,35 @@ static auto game_event_abort(Gamep g) -> bool
   TRACE_INDENT();
 
   switch (game_state(g)) {
-    case STATE_PLAYING :           [[fallthrough]];
-    case STATE_MAIN_MENU :         break;
-    case STATE_LEVEL_SELECT_MENU : [[fallthrough]];
-    case STATE_THROW_ITEM :        [[fallthrough]];
-    case STATE_COLLECT_MENU :      [[fallthrough]];
-    case STATE_DEAD_MENU :         [[fallthrough]];
-    case STATE_GENERATED :         [[fallthrough]];
-    case STATE_GENERATING :        [[fallthrough]];
-    case STATE_INIT :              [[fallthrough]];
-    case STATE_INVENTORY_MENU :    [[fallthrough]];
-    case STATE_ITEM_MENU :         [[fallthrough]];
-    case STATE_KEYBOARD_MENU :     [[fallthrough]];
-    case STATE_LOAD_MENU :         [[fallthrough]];
-    case STATE_LOADED :            [[fallthrough]];
-    case STATE_MOVE_WARNING_MENU : [[fallthrough]];
-    case STATE_QUIT_MENU :         [[fallthrough]];
-    case STATE_QUITTING :          [[fallthrough]];
-    case STATE_SAVE_MENU :         [[fallthrough]];
-    case STATE_GAME_OVER_MENU :    [[fallthrough]];
-    case STATE_THROW_MENU :        [[fallthrough]];
-    case GAME_STATE_ENUM_MAX :     DBG("ignore, not playing"); return false;
+    case STATE_PLAYING :            [[fallthrough]];
+    case STATE_MAIN_MENU :          break;
+    case STATE_LEVEL_SELECT_MENU :  [[fallthrough]];
+    case STATE_PLAYER_SELECT_MENU : [[fallthrough]];
+    case STATE_THROW_ITEM :         [[fallthrough]];
+    case STATE_COLLECT_MENU :       [[fallthrough]];
+    case STATE_DEAD_MENU :          [[fallthrough]];
+    case STATE_GENERATED :          [[fallthrough]];
+    case STATE_GENERATING :         [[fallthrough]];
+    case STATE_INIT :               [[fallthrough]];
+    case STATE_INVENTORY_MENU :     [[fallthrough]];
+    case STATE_ITEM_MENU :          [[fallthrough]];
+    case STATE_KEYBOARD_MENU :      [[fallthrough]];
+    case STATE_LOAD_MENU :          [[fallthrough]];
+    case STATE_LOADED :             [[fallthrough]];
+    case STATE_MOVE_WARNING_MENU :  [[fallthrough]];
+    case STATE_QUIT_MENU :          [[fallthrough]];
+    case STATE_QUITTING :           [[fallthrough]];
+    case STATE_SAVE_MENU :          [[fallthrough]];
+    case STATE_GAME_OVER_MENU :     [[fallthrough]];
+    case STATE_THROW_MENU :         [[fallthrough]];
+    case GAME_STATE_ENUM_MAX :      DBG("ignore, not playing"); return false;
   }
 
   if (g_opt_quick_start) {
     DIE_CLEAN("Quick quit");
   }
 
-  if (g_opt_level_select_menu) {
+  if (g_opt_level_select_menu || g_opt_player_select_menu) {
     DIE_CLEAN("Quick quit from level select");
   }
 
@@ -832,25 +848,26 @@ static auto game_event_abort(Gamep g) -> bool
       }
 
       break;
-    case STATE_COLLECT_MENU :      [[fallthrough]];
-    case STATE_DEAD_MENU :         [[fallthrough]];
-    case STATE_GENERATED :         [[fallthrough]];
-    case STATE_GENERATING :        [[fallthrough]];
-    case STATE_INIT :              [[fallthrough]];
-    case STATE_INVENTORY_MENU :    [[fallthrough]];
-    case STATE_ITEM_MENU :         [[fallthrough]];
-    case STATE_KEYBOARD_MENU :     [[fallthrough]];
-    case STATE_LEVEL_SELECT_MENU : [[fallthrough]];
-    case STATE_LOAD_MENU :         [[fallthrough]];
-    case STATE_LOADED :            [[fallthrough]];
-    case STATE_MAIN_MENU :         [[fallthrough]];
-    case STATE_MOVE_WARNING_MENU : [[fallthrough]];
-    case STATE_QUIT_MENU :         [[fallthrough]];
-    case STATE_QUITTING :          [[fallthrough]];
-    case STATE_SAVE_MENU :         [[fallthrough]];
-    case STATE_GAME_OVER_MENU :    [[fallthrough]];
-    case STATE_THROW_MENU :        [[fallthrough]];
-    case GAME_STATE_ENUM_MAX :     DBG("game mouse down, ignore, not playing"); return false;
+    case STATE_COLLECT_MENU :       [[fallthrough]];
+    case STATE_DEAD_MENU :          [[fallthrough]];
+    case STATE_GENERATED :          [[fallthrough]];
+    case STATE_GENERATING :         [[fallthrough]];
+    case STATE_INIT :               [[fallthrough]];
+    case STATE_INVENTORY_MENU :     [[fallthrough]];
+    case STATE_ITEM_MENU :          [[fallthrough]];
+    case STATE_KEYBOARD_MENU :      [[fallthrough]];
+    case STATE_LEVEL_SELECT_MENU :  [[fallthrough]];
+    case STATE_PLAYER_SELECT_MENU : [[fallthrough]];
+    case STATE_LOAD_MENU :          [[fallthrough]];
+    case STATE_LOADED :             [[fallthrough]];
+    case STATE_MAIN_MENU :          [[fallthrough]];
+    case STATE_MOVE_WARNING_MENU :  [[fallthrough]];
+    case STATE_QUIT_MENU :          [[fallthrough]];
+    case STATE_QUITTING :           [[fallthrough]];
+    case STATE_SAVE_MENU :          [[fallthrough]];
+    case STATE_GAME_OVER_MENU :     [[fallthrough]];
+    case STATE_THROW_MENU :         [[fallthrough]];
+    case GAME_STATE_ENUM_MAX :      DBG("game mouse down, ignore, not playing"); return false;
   }
 
   switch (key->mod) {

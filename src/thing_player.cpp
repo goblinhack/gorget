@@ -194,25 +194,26 @@ void thing_player_init(Gamep g)
         case PLAYER_STATE_ENUM_MAX : break;
       }
       break;
-    case STATE_COLLECT_MENU :      [[fallthrough]];
-    case STATE_DEAD_MENU :         [[fallthrough]];
-    case STATE_GENERATED :         [[fallthrough]];
-    case STATE_GENERATING :        [[fallthrough]];
-    case STATE_INIT :              [[fallthrough]];
-    case STATE_INVENTORY_MENU :    [[fallthrough]];
-    case STATE_ITEM_MENU :         [[fallthrough]];
-    case STATE_KEYBOARD_MENU :     [[fallthrough]];
-    case STATE_LEVEL_SELECT_MENU : [[fallthrough]];
-    case STATE_LOAD_MENU :         [[fallthrough]];
-    case STATE_LOADED :            [[fallthrough]];
-    case STATE_MAIN_MENU :         [[fallthrough]];
-    case STATE_MOVE_WARNING_MENU : [[fallthrough]];
-    case STATE_QUIT_MENU :         [[fallthrough]];
-    case STATE_QUITTING :          [[fallthrough]];
-    case STATE_SAVE_MENU :         [[fallthrough]];
-    case STATE_GAME_OVER_MENU :    [[fallthrough]];
-    case STATE_THROW_MENU :        [[fallthrough]];
-    case GAME_STATE_ENUM_MAX :     DBG("game motion, ignore, not playing"); return false;
+    case STATE_COLLECT_MENU :       [[fallthrough]];
+    case STATE_DEAD_MENU :          [[fallthrough]];
+    case STATE_GENERATED :          [[fallthrough]];
+    case STATE_GENERATING :         [[fallthrough]];
+    case STATE_INIT :               [[fallthrough]];
+    case STATE_INVENTORY_MENU :     [[fallthrough]];
+    case STATE_ITEM_MENU :          [[fallthrough]];
+    case STATE_KEYBOARD_MENU :      [[fallthrough]];
+    case STATE_LEVEL_SELECT_MENU :  [[fallthrough]];
+    case STATE_PLAYER_SELECT_MENU : [[fallthrough]];
+    case STATE_LOAD_MENU :          [[fallthrough]];
+    case STATE_LOADED :             [[fallthrough]];
+    case STATE_MAIN_MENU :          [[fallthrough]];
+    case STATE_MOVE_WARNING_MENU :  [[fallthrough]];
+    case STATE_QUIT_MENU :          [[fallthrough]];
+    case STATE_QUITTING :           [[fallthrough]];
+    case STATE_SAVE_MENU :          [[fallthrough]];
+    case STATE_GAME_OVER_MENU :     [[fallthrough]];
+    case STATE_THROW_MENU :         [[fallthrough]];
+    case GAME_STATE_ENUM_MAX :      DBG("game motion, ignore, not playing"); return false;
   }
 
   //
@@ -256,7 +257,7 @@ void thing_player_event_loop(Gamep g, Levelsp v, Levelp l)
           //
           // Player not initialized yet
           //
-          if (g_opt_level_select_menu) {
+          if (g_opt_level_select_menu || g_opt_player_select_menu) {
             thing_player_cursor_loop(g, v, l);
           }
           break;
@@ -292,8 +293,9 @@ void thing_player_event_loop(Gamep g, Levelsp v, Levelp l)
         case PLAYER_STATE_ENUM_MAX : break;
       }
       break;
-    case STATE_GAME_OVER_MENU :
-    case STATE_LEVEL_SELECT_MENU :
+    case STATE_GAME_OVER_MENU :     [[fallthrough]];
+    case STATE_LEVEL_SELECT_MENU :  [[fallthrough]];
+    case STATE_PLAYER_SELECT_MENU : [[fallthrough]];
     case STATE_DEAD_MENU :
       //
       // If the cursor moved, update what we see

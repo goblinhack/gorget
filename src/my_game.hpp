@@ -13,27 +13,28 @@
 #include <string>
 
 #define GAME_STATE_ENUM(list_macro)                                                                                                             \
-  CLANG_FORMAT_INDENT()                                         /* dummy line for clang indentation fixup */                                    \
-  list_macro(STATE_INIT, "INIT"),                               /* newline */                                                                   \
-      list_macro(STATE_MAIN_MENU, "MAIN-MENU"),                 /* newline */                                                                   \
-      list_macro(STATE_GENERATING, "GENERATING"),               /* newline */                                                                   \
-      list_macro(STATE_GENERATED, "GENERATED"),                 /* newline */                                                                   \
-      list_macro(STATE_PLAYING, "PLAYING"),                     /* newline */                                                                   \
-      list_macro(STATE_LEVEL_SELECT_MENU, "LEVEL-SELECT-MENU"), /* newline */                                                                   \
-      list_macro(STATE_MOVE_WARNING_MENU, "MOVE-WARNING-MENU"), /* newline */                                                                   \
-      list_macro(STATE_QUITTING, "QUITTING"),                   /* newline */                                                                   \
-      list_macro(STATE_KEYBOARD_MENU, "KEYBOARD-MENU"),         /* newline */                                                                   \
-      list_macro(STATE_LOAD_MENU, "LOAD-MENU"),                 /* newline */                                                                   \
-      list_macro(STATE_LOADED, "LOADED"),                       /* newline */                                                                   \
-      list_macro(STATE_INVENTORY_MENU, "INVENTORY-MENU"),       /* newline */                                                                   \
-      list_macro(STATE_COLLECT_MENU, "COLLECT-MENU"),           /* newline */                                                                   \
-      list_macro(STATE_THROW_MENU, "THROW-MENU"),               /* newline */                                                                   \
-      list_macro(STATE_THROW_ITEM, "THROW-ITEM"),               /* newline */                                                                   \
-      list_macro(STATE_ITEM_MENU, "ITEM-MENU"),                 /* newline */                                                                   \
-      list_macro(STATE_DEAD_MENU, "DEAD-MENU"),                 /* newline */                                                                   \
-      list_macro(STATE_GAME_OVER_MENU, "GAME-OVER-MENU"),       /* newline */                                                                   \
-      list_macro(STATE_SAVE_MENU, "SAVE-MENU"),                 /* newline */                                                                   \
-      list_macro(STATE_QUIT_MENU, "QUIT-MENU"),                 /* newline */
+  CLANG_FORMAT_INDENT()                                           /* dummy line for clang indentation fixup */                                  \
+  list_macro(STATE_INIT, "INIT"),                                 /* newline */                                                                 \
+      list_macro(STATE_MAIN_MENU, "MAIN-MENU"),                   /* newline */                                                                 \
+      list_macro(STATE_GENERATING, "GENERATING"),                 /* newline */                                                                 \
+      list_macro(STATE_GENERATED, "GENERATED"),                   /* newline */                                                                 \
+      list_macro(STATE_PLAYING, "PLAYING"),                       /* newline */                                                                 \
+      list_macro(STATE_LEVEL_SELECT_MENU, "LEVEL-SELECT-MENU"),   /* newline */                                                                 \
+      list_macro(STATE_PLAYER_SELECT_MENU, "PLAYER-SELECT-MENU"), /* newline */                                                                 \
+      list_macro(STATE_MOVE_WARNING_MENU, "MOVE-WARNING-MENU"),   /* newline */                                                                 \
+      list_macro(STATE_QUITTING, "QUITTING"),                     /* newline */                                                                 \
+      list_macro(STATE_KEYBOARD_MENU, "KEYBOARD-MENU"),           /* newline */                                                                 \
+      list_macro(STATE_LOAD_MENU, "LOAD-MENU"),                   /* newline */                                                                 \
+      list_macro(STATE_LOADED, "LOADED"),                         /* newline */                                                                 \
+      list_macro(STATE_INVENTORY_MENU, "INVENTORY-MENU"),         /* newline */                                                                 \
+      list_macro(STATE_COLLECT_MENU, "COLLECT-MENU"),             /* newline */                                                                 \
+      list_macro(STATE_THROW_MENU, "THROW-MENU"),                 /* newline */                                                                 \
+      list_macro(STATE_THROW_ITEM, "THROW-ITEM"),                 /* newline */                                                                 \
+      list_macro(STATE_ITEM_MENU, "ITEM-MENU"),                   /* newline */                                                                 \
+      list_macro(STATE_DEAD_MENU, "DEAD-MENU"),                   /* newline */                                                                 \
+      list_macro(STATE_GAME_OVER_MENU, "GAME-OVER-MENU"),         /* newline */                                                                 \
+      list_macro(STATE_SAVE_MENU, "SAVE-MENU"),                   /* newline */                                                                 \
+      list_macro(STATE_QUIT_MENU, "QUIT-MENU"),                   /* newline */
 
 ENUM_DEF_H(GAME_STATE_ENUM, GameStateType)
 

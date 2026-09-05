@@ -23,8 +23,14 @@ void wid_new_game(Gamep g)
   game_map_zoom_in(g);
   game_start_playing(g);
 
-  if (g_opt_level_select_menu) {
-    game_state_change(g, STATE_LEVEL_SELECT_MENU, "new game");
+  if (g_opt_player_select_menu) {
+    game_state_change(g, STATE_PLAYER_SELECT_MENU, "select player");
+    //
+    // So we can quit the player and play normally
+    //
+    g_opt_player_select_menu = false;
+  } else if (g_opt_level_select_menu) {
+    game_state_change(g, STATE_LEVEL_SELECT_MENU, "select level");
     //
     // So we can quit the level and play normally
     //
