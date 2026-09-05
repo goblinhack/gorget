@@ -23,26 +23,36 @@ void wid_new_game(Gamep g)
   game_map_zoom_in(g);
   game_start_playing(g);
 
+  auto *v = game_levels_get(g);
+
   if (g_opt_player_select_menu) {
     game_state_change(g, STATE_PLAYER_SELECT_MENU, "select player");
     //
     // So we can quit the player and play normally
     //
     g_opt_player_select_menu = false;
+
+    if (v != nullptr) {
+      (void) level_change(g, v, LEVEL_ARR_IDX_PLAYER_SELECT);
+    }
+    return;
   } else if (g_opt_level_select_menu) {
     game_state_change(g, STATE_LEVEL_SELECT_MENU, "select level");
     //
     // So we can quit the level and play normally
     //
     g_opt_level_select_menu = false;
-  } else {
-    game_state_change(g, STATE_PLAYING, "new game");
-  }
 
-  if (! g_opt_quick_start) {
-    auto *v = game_levels_get(g);
     if (v != nullptr) {
       (void) level_change(g, v, LEVEL_ARR_IDX_LEVEL_SELECT);
+    }
+  } else {
+    game_state_change(g, STATE_PLAYING, "new game");
+
+    if (! g_opt_quick_start) {
+      if (v != nullptr) {
+        (void) level_change(g, v, LEVEL_ARR_IDX_LEVEL_SELECT);
+      }
     }
   }
 }

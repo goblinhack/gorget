@@ -31,7 +31,7 @@ void wid_player_select_destroy()
     return;
   }
 
-  log("Level select menu: destroy");
+  log("Player select menu: destroy");
   TRACE();
 
   delete wid_player_select_window;
@@ -64,7 +64,7 @@ void wid_player_select_destroy()
 
 [[nodiscard]] static auto wid_player_select_mouse_down(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  log("Level select menu: mouse up");
+  log("Player select menu: mouse up");
   TRACE();
 
   if (player_select_mouse_down(g)) {
@@ -76,7 +76,7 @@ void wid_player_select_destroy()
 
 void wid_player_select(Gamep g, Levelsp v, Levelp l)
 {
-  log("Level select menu: select");
+  log("Player select menu: select");
   TRACE();
 
   if (wid_player_select_window != nullptr) {

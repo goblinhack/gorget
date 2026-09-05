@@ -71,7 +71,10 @@ static std::unordered_map< int, Playing > already_playing;
 
 static void sound_finished(int channel)
 {
-  DBG2("Sound channel %d finished", channel);
+  //
+  // Warning, not thread safe
+  //
+  //  DBG2("Sound channel %d finished", channel);
   if (channel != -1) {
     already_playing[ channel ].name_alias = "";
   }

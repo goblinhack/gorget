@@ -221,10 +221,16 @@ void level_is_completed_by_player_falling(Gamep g, Levelsp v, Levelp l)
     return nullptr;
   }
 
-  if (level_num == LEVEL_ARR_IDX_LEVEL_SELECT) {
+  if (level_num == LEVEL_ARR_IDX_PLAYER_SELECT) {
     //
     // Enter level selectionm
     //
+    log("level change to %u (player select)", level_num);
+  } else if (level_num == LEVEL_ARR_IDX_LEVEL_SELECT) {
+    //
+    // Enter level selectionm
+    //
+    log("level change to %u (level select)", level_num);
   } else if ((level_num > s->level_count) && (static_cast< bool >(s->level_count))) {
     //
     // Jump to the last real level
