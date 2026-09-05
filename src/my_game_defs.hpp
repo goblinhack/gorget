@@ -165,7 +165,7 @@ enum {
   LEVEL_GRID_DOWN   = 20,
 
   //
-  // This is the maximum number of levesl we need to generate.
+  // This is the maximum number of levels we need to generate.
   // We can skip some due to gaps due to the boss levels
   //
   BIOME_COUNT       = 5,

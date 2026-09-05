@@ -405,7 +405,7 @@ static auto thing_monst_choose_something_we_can_wander_to(Gamep g, Levelsp v, Le
 
     if (tries == max_tries / 2) {
       radius /= 2;
-      if (! radius) {
+      if (radius == 0) {
         radius = 1;
       }
     }
@@ -657,10 +657,9 @@ static auto thing_monst_choose_something_we_can_wander_to(Gamep g, Levelsp v, Le
       if (thing_attack_at(g, v, l, me, target)) {
         THING_DBG(g, v, l, me, "monst: attack success");
         return true;
-      } else {
-        THING_DBG(g, v, l, me, "monst: attack missed");
-        return true; // still success of a sort
       }
+      THING_DBG(g, v, l, me, "monst: attack missed");
+      return true; // still success of a sort
     }
   }
 
@@ -668,10 +667,9 @@ static auto thing_monst_choose_something_we_can_wander_to(Gamep g, Levelsp v, Le
     if (thing_attack_at(g, v, l, me, target)) {
       THING_DBG(g, v, l, me, "monst: attack success");
       return true;
-    } else {
-      THING_DBG(g, v, l, me, "monst: attack missed");
-      return true; // still success of a sort
     }
+    THING_DBG(g, v, l, me, "monst: attack missed");
+    return true; // still success of a sort
   }
 
   THING_DBG(g, v, l, me, "nothing to attack");

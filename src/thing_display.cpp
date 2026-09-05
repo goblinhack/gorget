@@ -236,7 +236,7 @@ static void thing_display_outlined_blit(Gamep g, Tpp tp, spoint tl, spoint br, T
   }
 
   tile_blit(tile, x1, x2, y1, y2, tl, br, fg);
-  color c = BLUE;
+  color const c = BLUE;
   tile_blit_outline_w_invis_inside(tile, x1, x2, y1, y2, tl, br, c);
 
   return true;

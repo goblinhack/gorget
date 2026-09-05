@@ -9,7 +9,6 @@
 #include "my_main.hpp"
 #include "my_thing.hpp"
 #include "my_types.hpp"
-#include <cmath>
 
 [[nodiscard]] auto thing_vision_can_hear_tile(Gamep g, Levelsp v, Levelp l, Thingp t, bpoint p) -> bool
 {
@@ -60,8 +59,8 @@
     THING_DBG(g, v, l, t, "tile dmap value         : %d", noise);
     THING_DBG(g, v, l, t, " actual_noise           : %d", actual_noise);
     THING_DBG(g, v, l, t, " thing_hearing_threshold: %d", thing_hearing_threshold(t));
-    THING_DBG(g, v, l, t, " can hear               : %d", actual_noise >= thing_hearing_threshold(t) ? true : false);
+    THING_DBG(g, v, l, t, " can hear               : %d", static_cast< int >(actual_noise >= thing_hearing_threshold(t)));
   }
 
-  return actual_noise >= thing_hearing_threshold(t) ? true : false;
+  return actual_noise >= thing_hearing_threshold(t);
 }

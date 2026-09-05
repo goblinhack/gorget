@@ -972,9 +972,9 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_mob(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_mob1(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_mob2(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_monst(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_monst1(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_monst2(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_monst(Thingp me) -> bool;
+[[nodiscard]] auto thing_is_monst1(Thingp me) -> bool;
+[[nodiscard]] auto thing_is_monst2(Thingp me) -> bool;
 [[nodiscard]] auto thing_is_needs_move_confirm(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_beam(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_obs_to_cursor_path(Thingp t) -> bool;
@@ -1273,7 +1273,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_mob_minion_count_get(Gamep g, Levelsp v, Levelp l, Thingp mob) -> int;
 [[nodiscard]] auto thing_mob_spawn_a_minion(Gamep g, Levelsp v, Levelp l, Thingp mob, Tpp tp_minion) -> Thingp;
 [[nodiscard]] auto thing_monst_move_try(Gamep g, Levelsp v, Levelp l, Thingp me, bpoint to) -> bool;
-[[nodiscard]] auto thing_monst_target(Thingp t) -> bpoint;
+[[nodiscard]] auto thing_monst_target(Thingp me) -> bpoint;
 [[nodiscard]] auto thing_move_path_apply(Gamep g, Levelsp v, Levelp l, Thingp me, const std::vector< bpoint > &move_path) -> bool;
 [[nodiscard]] auto thing_move_path_confirmed(Gamep g, Levelsp v, Levelp l, Thingp me, const std::vector< bpoint > &move_path) -> bool;
 [[nodiscard]] auto thing_move_path_pop(Gamep g, Levelsp v, Levelp l, Thingp me, bool &move_confirmed, bpoint &out) -> bool;
@@ -1541,7 +1541,7 @@ auto thing_lunge_time_step(Gamep g, Levelsp v, Levelp l, Thingp me, int time_ste
 auto thing_melt(Gamep g, Levelsp v, Levelp l, Thingp t) -> void;
 auto thing_mob_dump_minions(Gamep g, Levelsp v, Levelp l, Thingp mob) -> void;
 auto thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp me) -> void;
-auto thing_monst_target_set(Gamep g, Levelsp v, Levelp l, Thingp t, const bpoint &val) -> void;
+auto thing_monst_target_set(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &val) -> void;
 auto thing_monst_tick(Gamep g, Levelsp v, Levelp l, Thingp me) -> void;
 auto thing_move_finish(Gamep g, Levelsp v, Levelp l, Thingp me) -> void;
 auto thing_move_path_confirm(Gamep g, Levelsp v, Levelp l, Thingp me) -> void;
