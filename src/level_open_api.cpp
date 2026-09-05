@@ -1814,10 +1814,10 @@
   return level_open(g, v, l, is_unused157, p);
 }
 
-[[nodiscard]] auto level_open_is_unused158(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
+[[nodiscard]] auto level_open_is_debuff(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp
 {
   TRACE_DEBUG();
-  return level_open(g, v, l, is_unused158, p);
+  return level_open(g, v, l, is_debuff, p);
 }
 
 [[nodiscard]] auto level_open_is_venomous(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> Thingp

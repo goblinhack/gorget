@@ -314,7 +314,7 @@
       list_macro(is_unused155, "is_unused155"),                                             /* newline */                                       \
       list_macro(is_unused156, "is_unused156"),                                             /* newline */                                       \
       list_macro(is_unused157, "is_unused157"),                                             /* newline */                                       \
-      list_macro(is_unused158, "is_unused158"),                                             /* newline */                                       \
+      list_macro(is_debuff, "is_debuff"),                                                   /* newline */                                       \
       list_macro(is_venomous, "is_venomous"),                                               /* newline */                                       \
       list_macro(is_unused16, "is_unused16"),                                               /* newline */                                       \
       list_macro(is_able_to_see_invisible, "is_able_to_see_invisible"),                     /* newline */                                       \
@@ -917,6 +917,7 @@ class Tp;
 [[nodiscard]] auto tp_is_dead_on_collision(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_dead_on_shoving(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_dead_when_discharged(Tpp tp) -> bool;
+[[nodiscard]] auto tp_is_debuff(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_described_cursor(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_described_when_killed(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_dirt(Tpp tp) -> bool;
@@ -1120,7 +1121,6 @@ class Tp;
 [[nodiscard]] auto tp_is_unused155(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused156(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused157(Tpp tp) -> bool;
-[[nodiscard]] auto tp_is_unused158(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused16(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused17(Tpp tp) -> bool;
 [[nodiscard]] auto tp_is_unused18(Tpp tp) -> bool;

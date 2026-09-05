@@ -1813,10 +1813,10 @@
   return tp_flag(tp, is_unused157) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused158(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_debuff(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused158) != 0;
+  return tp_flag(tp, is_debuff) != 0;
 }
 
 [[nodiscard]] auto tp_is_venomous(Tpp tp) -> bool

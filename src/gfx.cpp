@@ -901,6 +901,18 @@ static void gfx_ui_init_stat_bar()
   tile_load_arr("data/gfx/ui/stat_bar.tga", "stat_bar", 192, 8, ARRAY_SIZE(tiles), tiles);
 }
 
+static void gfx_ui_init_debuff_bar()
+{
+  TRACE();
+  const char *tiles[] = {
+      "debuff_bar.32", "debuff_bar.31", "debuff_bar.30", "debuff_bar.29", "debuff_bar.28", "debuff_bar.27", "debuff_bar.26", "debuff_bar.25",
+      "debuff_bar.24", "debuff_bar.23", "debuff_bar.22", "debuff_bar.21", "debuff_bar.20", "debuff_bar.19", "debuff_bar.18", "debuff_bar.17",
+      "debuff_bar.16", "debuff_bar.15", "debuff_bar.14", "debuff_bar.13", "debuff_bar.12", "debuff_bar.11", "debuff_bar.10", "debuff_bar.9",
+      "debuff_bar.8",  "debuff_bar.7",  "debuff_bar.6",  "debuff_bar.5",  "debuff_bar.4",  "debuff_bar.3",  "debuff_bar.2",  "debuff_bar.1",
+  };
+  tile_load_arr("data/gfx/ui/debuff_bar.tga", "debuff_bar", 192, 8, ARRAY_SIZE(tiles), tiles);
+}
+
 static void gfx_ui_init_solid()
 {
   TRACE();
@@ -5599,6 +5611,7 @@ void gfx_init()
   gfx_ui_init_7();
   gfx_ui_init_8();
   gfx_ui_init_9();
+  gfx_ui_init_debuff_bar();
   gfx_ui_init_game_over_bg();
   gfx_ui_init_game_over_fg();
   gfx_ui_init_intro1_bg();

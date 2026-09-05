@@ -895,6 +895,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_dead_on_collision(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_dead_on_shoving(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_dead_when_discharged(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_debuff(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_described_cursor(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_described_when_killed(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_dir_bl(Thingp me) -> bool;
@@ -1112,7 +1113,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused155(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused156(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused157(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused158(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused16(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused17(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused18(Thingp t) -> bool;

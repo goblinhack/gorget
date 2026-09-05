@@ -1814,10 +1814,10 @@
   return level_flag(g, v, l, is_unused157, p, me);
 }
 
-[[nodiscard]] auto level_is_unused158(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
+[[nodiscard]] auto level_is_debuff(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused158, p, me);
+  return level_flag(g, v, l, is_debuff, p, me);
 }
 
 [[nodiscard]] auto level_is_venomous(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> Thingp

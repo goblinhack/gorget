@@ -1815,10 +1815,10 @@
   return level_count(g, v, l, is_unused157, p);
 }
 
-[[nodiscard]] auto level_count_is_unused158(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
+[[nodiscard]] auto level_count_is_debuff(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t
 {
   TRACE_DEBUG();
-  return level_count(g, v, l, is_unused158, p);
+  return level_count(g, v, l, is_debuff, p);
 }
 
 [[nodiscard]] auto level_count_is_venomous(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> uint32_t

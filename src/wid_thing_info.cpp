@@ -1544,6 +1544,10 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
 
   FOR_ALL_BUFFS(g, v, l, me, buff)
   {
+    if (thing_is_debuff(buff)) {
+      continue;
+    }
+
     if (first) {
       first = false;
       (void) parent->log(g, "Buffs:", TEXT_FORMAT_LHS);
@@ -1583,6 +1587,78 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
       lifespan_how_much     = std::min(lifespan_how_much, UI_STAT_BAR_STEPS - 1);
       lifespan_how_much     = std::max(lifespan_how_much, 0);
       auto icon             = "stat_bar." + std::to_string(lifespan_how_much + 1);
+
+      wid_set_shape_square(w);
+      wid_set_style(w, UI_WID_STYLE_SPARSE_NONE);
+      wid_set_color(w, WID_COLOR_TEXT_FG, UI_HIGHLIGHT_COLOR);
+      wid_set_tilename(TILE_LAYER_BOX_BG, w, icon);
+      wid_set_text_lhs(w, 1u);
+      wid_set_thing_context(g, v, w, buff);
+      wid_set_on_mouse_over_begin(w, wid_thing_info_item_mouse_over_begin);
+      wid_set_on_mouse_over_end(w, wid_thing_info_item_mouse_over_end);
+    }
+  }
+
+  return printed_something;
+}
+
+[[nodiscard]] static auto wid_thing_info_debuffs(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent) -> bool
+{
+  TRACE();
+
+  bool printed_something = false;
+
+  if (! thing_is_player(me)) {
+    return printed_something;
+  }
+
+  bool first = true;
+
+  FOR_ALL_BUFFS(g, v, l, me, buff)
+  {
+    if (! thing_is_debuff(buff)) {
+      continue;
+    }
+
+    if (first) {
+      first = false;
+      (void) parent->log(g, "Debuffs:", TEXT_FORMAT_LHS);
+    }
+
+    printed_something = true;
+
+    std::string line = "- ";
+
+    line += thing_name_short(g, v, l, buff);
+
+    auto lifespan = thing_lifespan(g, v, l, buff);
+    if (lifespan > 0) {
+      line += ", ";
+      line += std::to_string(lifespan);
+      if (lifespan == 1) {
+        line += " move (last move)";
+      } else {
+        line += " moves";
+      }
+    }
+
+    char line_bar[ MAXSHORTSTR ];
+
+    memset(line_bar, 0, sizeof(line_bar));
+    memset(line_bar, ' ', sizeof(line_bar) - 1);
+
+    auto lifespan_max = thing_lifespan_initial(buff);
+    auto h            = thing_lifespan(g, v, l, buff);
+    h                 = std::max(h, 0);
+
+    (void) my_strlcpy(line_bar, line.c_str(), line.size() + 1);
+    auto *w = parent->log(g, std::string(line_bar));
+    if (w != nullptr) {
+      int lifespan_how_much = static_cast< int >((static_cast< float >(thing_lifespan(g, v, l, buff)) / static_cast< float >(lifespan_max))
+                                                 * (static_cast< float > UI_STAT_BAR_STEPS - 1));
+      lifespan_how_much     = std::min(lifespan_how_much, UI_STAT_BAR_STEPS - 1);
+      lifespan_how_much     = std::max(lifespan_how_much, 0);
+      auto icon             = "debuff_bar." + std::to_string(lifespan_how_much + 1);
 
       wid_set_shape_square(w);
       wid_set_style(w, UI_WID_STYLE_SPARSE_NONE);
@@ -1659,6 +1735,10 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, i
   }
 
   if (wid_thing_info_buffs(g, v, l, me, parent)) {
+    parent->log_empty_line(g);
+  }
+
+  if (wid_thing_info_debuffs(g, v, l, me, parent)) {
     parent->log_empty_line(g);
   }
 
