@@ -64,7 +64,7 @@ void wid_level_select_destroy()
 
 [[nodiscard]] static auto wid_level_select_mouse_down(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  log("Level select menu: mouse up");
+  log("Level select menu: mouse down");
   TRACE();
 
   if (level_select_mouse_down(g)) {

@@ -273,7 +273,8 @@ static auto level_populate_biome_dungeon(Gamep g, Levelsp v, Levelp l, class Lev
         //
         // This is the default start level
         //
-        tp = lp.tp_player;
+        tp               = lp.tp_player;
+        lp.need_entrance = false;
       }
 
       //

@@ -257,7 +257,7 @@ void thing_player_event_loop(Gamep g, Levelsp v, Levelp l)
           //
           // Player not initialized yet
           //
-          if (g_opt_level_select_menu || g_opt_player_select_menu) {
+          if (g_opt_level_select_menu) {
             thing_player_cursor_loop(g, v, l);
           }
           break;

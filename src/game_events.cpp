@@ -149,14 +149,6 @@
 
       level_scroll_delta(g, v, l, spoint(wheelx, -wheely));
       break;
-    case STATE_PLAYER_SELECT_MENU :
-      //
-      // Update the cursor path
-      //
-      game_request_to_update_cursor_set(g);
-
-      level_scroll_delta(g, v, l, spoint(wheelx, -wheely));
-      break;
     case STATE_LEVEL_SELECT_MENU :
       //
       // Update the cursor path
@@ -173,24 +165,25 @@
       //
       level_select_mouse_motion(g, v, l);
       break;
-    case STATE_COLLECT_MENU :      [[fallthrough]];
-    case STATE_DEAD_MENU :         [[fallthrough]];
-    case STATE_GENERATED :         [[fallthrough]];
-    case STATE_GENERATING :        [[fallthrough]];
-    case STATE_INIT :              [[fallthrough]];
-    case STATE_INVENTORY_MENU :    [[fallthrough]];
-    case STATE_ITEM_MENU :         [[fallthrough]];
-    case STATE_KEYBOARD_MENU :     [[fallthrough]];
-    case STATE_LOAD_MENU :         [[fallthrough]];
-    case STATE_LOADED :            [[fallthrough]];
-    case STATE_MAIN_MENU :         [[fallthrough]];
-    case STATE_MOVE_WARNING_MENU : [[fallthrough]];
-    case STATE_QUIT_MENU :         [[fallthrough]];
-    case STATE_QUITTING :          [[fallthrough]];
-    case STATE_SAVE_MENU :         [[fallthrough]];
-    case STATE_GAME_OVER_MENU :    [[fallthrough]];
-    case STATE_THROW_MENU :        [[fallthrough]];
-    case GAME_STATE_ENUM_MAX :     DBG("game motion, ignore, not playing"); return false;
+    case STATE_PLAYER_SELECT_MENU : [[fallthrough]];
+    case STATE_COLLECT_MENU :       [[fallthrough]];
+    case STATE_DEAD_MENU :          [[fallthrough]];
+    case STATE_GENERATED :          [[fallthrough]];
+    case STATE_GENERATING :         [[fallthrough]];
+    case STATE_INIT :               [[fallthrough]];
+    case STATE_INVENTORY_MENU :     [[fallthrough]];
+    case STATE_ITEM_MENU :          [[fallthrough]];
+    case STATE_KEYBOARD_MENU :      [[fallthrough]];
+    case STATE_LOAD_MENU :          [[fallthrough]];
+    case STATE_LOADED :             [[fallthrough]];
+    case STATE_MAIN_MENU :          [[fallthrough]];
+    case STATE_MOVE_WARNING_MENU :  [[fallthrough]];
+    case STATE_QUIT_MENU :          [[fallthrough]];
+    case STATE_QUITTING :           [[fallthrough]];
+    case STATE_SAVE_MENU :          [[fallthrough]];
+    case STATE_GAME_OVER_MENU :     [[fallthrough]];
+    case STATE_THROW_MENU :         [[fallthrough]];
+    case GAME_STATE_ENUM_MAX :      DBG("game motion, ignore, not playing"); return false;
   }
 
   return true;

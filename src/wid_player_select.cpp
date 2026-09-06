@@ -38,6 +38,37 @@ void wid_player_select_destroy()
   wid_player_select_window = nullptr;
 }
 
+[[nodiscard]] static auto wid_player_select_continue(Gamep g)
+{
+  log("Player select menu: continue");
+  TRACE();
+
+  auto *v = game_levels_get(g);
+  if (v == nullptr) [[unlikely]] {
+    (void) sound_play(g, "error");
+    return false;
+  }
+
+  Levelp l = thing_player_level(g);
+  if (l == nullptr) [[unlikely]] {
+    (void) sound_play(g, "error");
+    return false;
+  }
+
+  wid_player_select_destroy();
+  (void) level_change(g, v, LEVEL_ARR_IDX_LEVEL_SELECT);
+
+  return true;
+}
+
+[[nodiscard]] static auto wid_player_select_mouse_down(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
+{
+  log("Player select menu: mouse down");
+  TRACE();
+
+  return wid_player_select_continue(g);
+}
+
 [[nodiscard]] static auto wid_player_select_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
 {
   TRACE();
@@ -53,34 +84,20 @@ void wid_player_select_destroy()
     TRACE();
     (void) sound_play(g, "keypress");
 
-    if (player_select_mouse_down(g)) {
-      wid_player_select_destroy();
-    }
-    return true;
+    return wid_player_select_continue(g);
   }
 
   return false;
 }
-
-[[nodiscard]] static auto wid_player_select_mouse_down(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
-{
-  log("Player select menu: mouse up");
-  TRACE();
-
-  if (player_select_mouse_down(g)) {
-    wid_player_select_destroy();
-  }
-
-  return true;
-}
-
-void wid_player_select(Gamep g, Levelsp v, Levelp l)
+void wid_player_select(Gamep g, Levelsp v)
 {
   log("Player select menu: select");
   TRACE();
 
   if (wid_player_select_window != nullptr) {
     wid_player_select_destroy();
+  } else if (! v->tick) {
+    topcon("Choose one major and one major sacrifice to continue.");
   }
 
   auto         width = UI_RIGHTBAR_WIDTH;
@@ -103,10 +120,6 @@ void wid_player_select(Gamep g, Levelsp v, Levelp l)
 
     wid_set_on_mouse_down(w, wid_player_select_mouse_down);
     wid_set_pos(w, button_tl, button_br);
-  }
-
-  if (l != nullptr) {
-    wid_level_show_contents(g, v, l, wid_player_select_window);
   }
 
   wid_update(g, wid_player_select_window->wid_text_area->wid_text_area);
