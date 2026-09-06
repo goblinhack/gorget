@@ -65,10 +65,9 @@ static void thing_attack_player_missed(Gamep g, Levelsp v, Levelp l, Thingp it, 
   }
 
   if ((the_player != nullptr) && thing_is_loggable(it)) {
-    auto the_thing_name_long  = thing_name_long_the(g, v, l, it);
-    auto The_thing_name_long  = capitalize_first(the_thing_name_long);
-    auto the_thing_name_short = thing_name_short_the(g, v, l, it);
-    auto by_player            = thing_name_long(g, v, l, the_player);
+    auto the_thing_name_long = thing_name_long_the(g, v, l, it);
+    auto The_thing_name_long = capitalize_first(the_thing_name_long);
+    auto by_player           = thing_name_long(g, v, l, the_player);
 
     topcon("You miss %s.", the_thing_name_long.c_str());
   }

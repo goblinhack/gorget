@@ -1201,7 +1201,7 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
     }
 
     switch (thing_assess_tp(g, v, l, it, me)) {
-      case THING_ENVIRON_HATES :    out = string_append_with_comma(out, capitalize_first(tp_name_short(it))); break;
+      case THING_ENVIRON_HATES :    out = string_append_with_comma(out, capitalize_first(tp_name_long(it))); break;
       case THING_ENVIRON_DISLIKES : break;
       case THING_ENVIRON_NEUTRAL :  break;
       case THING_ENVIRON_LIKES :    break;
@@ -1239,7 +1239,7 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
 
     switch (thing_assess_tp(g, v, l, it, me)) {
       case THING_ENVIRON_HATES :    break;
-      case THING_ENVIRON_DISLIKES : out = string_append_with_comma(out, capitalize_first(tp_name_short(it))); break;
+      case THING_ENVIRON_DISLIKES : out = string_append_with_comma(out, capitalize_first(tp_name_long(it))); break;
       case THING_ENVIRON_NEUTRAL :  break;
       case THING_ENVIRON_LIKES :    break;
       case THING_ENVIRON_ENUM_MAX : break;
@@ -1279,7 +1279,7 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
     switch (w) {
       case WORN_TYPE_WEAPON :
         {
-          line = string_sprintf("Wielded(%s)", thing_name_short(g, v, l, item).c_str());
+          line = string_sprintf("Wielded(%s)", thing_name_long(g, v, l, item).c_str());
           worn = true;
           break;
         }
@@ -1287,7 +1287,7 @@ static void wid_thing_info_stats_mouse_over_end(Gamep g, Widp w)
       case WORN_TYPE_RING1 : [[fallthrough]];
       case WORN_TYPE_RING2 :
         {
-          line = string_sprintf("Worn(%s)", thing_name_short(g, v, l, item).c_str());
+          line = string_sprintf("Worn(%s)", thing_name_long(g, v, l, item).c_str());
           worn = true;
           break;
         }

@@ -519,10 +519,9 @@ static void thing_damage_by_player(Gamep g, Levelsp v, Levelp l, Thingp it, Thin
   }
 
   if ((the_player != nullptr) && thing_is_loggable(it)) {
-    auto the_thing_name_long  = thing_name_long_the(g, v, l, it);
-    auto The_thing_name_long  = capitalize_first(the_thing_name_long);
-    auto the_thing_name_short = thing_name_short_the(g, v, l, it);
-    auto by_player            = thing_name_long(g, v, l, the_player);
+    auto the_thing_name_long = thing_name_long_the(g, v, l, it);
+    auto The_thing_name_long = capitalize_first(the_thing_name_long);
+    auto by_player           = thing_name_long(g, v, l, the_player);
 
     switch (e.event_type) {
       case THING_EVENT_THROWN : //
@@ -565,18 +564,18 @@ static void thing_damage_by_player(Gamep g, Levelsp v, Levelp l, Thingp it, Thin
           // The player is burning.
           //
           if (thing_is_burning(it)) {
-            topcon(UI_IMPORTANT_FMT_STR "Your burning body burns %s." UI_RESET_FMT, the_thing_name_short.c_str());
+            topcon(UI_IMPORTANT_FMT_STR "Your burning body burns %s." UI_RESET_FMT, the_thing_name_long.c_str());
           } else {
-            topcon(UI_IMPORTANT_FMT_STR "Your burning body sets fire to %s." UI_RESET_FMT, the_thing_name_short.c_str());
+            topcon(UI_IMPORTANT_FMT_STR "Your burning body sets fire to %s." UI_RESET_FMT, the_thing_name_long.c_str());
           }
         } else {
           //
           // The player is not burning.
           //
           if (thing_is_burning(it)) {
-            topcon(UI_IMPORTANT_FMT_STR "You burn %s." UI_RESET_FMT, the_thing_name_short.c_str());
+            topcon(UI_IMPORTANT_FMT_STR "You burn %s." UI_RESET_FMT, the_thing_name_long.c_str());
           } else {
-            topcon(UI_IMPORTANT_FMT_STR "You set fire to %s." UI_RESET_FMT, the_thing_name_short.c_str());
+            topcon(UI_IMPORTANT_FMT_STR "You set fire to %s." UI_RESET_FMT, the_thing_name_long.c_str());
           }
         }
         break;

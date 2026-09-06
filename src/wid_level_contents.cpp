@@ -52,7 +52,7 @@ static auto level_select_show_sorted_values(Gamep g, WidPopup *parent, std::map<
     {
       TRACE();
       auto             *tp   = tp_find_mand(highest);
-      std::string const name = tp_name_short(tp);
+      std::string const name = tp_name_long(tp);
 
       auto s2 = std::format("  {} x %tp={}$ {}", map_in[ highest ], highest, name);
       parent->log(g, s2, TEXT_FORMAT_LHS);

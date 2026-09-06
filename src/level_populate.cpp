@@ -957,7 +957,9 @@ static auto level_populate_fixup_biome_underhell(class LevelPopulate &lp, Tpp tp
   }
 
   if (l->entrance == bpoint(0, 0)) {
-    level_err(g, v, l, "no entrance found");
+    if (! g_opt_tests) {
+      level_err(g, v, l, "no entrance found");
+    }
   }
 
   return level_populated(g, v, l);

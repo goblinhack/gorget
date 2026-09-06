@@ -150,7 +150,7 @@ static void wid_statistics_show_defeated(Gamep g, Levelp l, Thingp player)
     s += "$ ";
     s += std::format("{}x ", player_struct->defeated[ i ]);
     auto n = tp_name_short(it);
-    n      = truncate(n, UI_MAX_SHORT_STRING, false);
+    n      = truncate(n, UI_MAX_THING_NAME_SHORT, false);
     s += std::format("{:>15}", n);
 
     //
@@ -209,7 +209,7 @@ static void wid_statistics_show_items(Gamep g, Levelsp v, Levelp l, Thingp playe
     s += "$ ";
     s += std::format("{}x ", slot->count);
     auto n = tp_name_short(it);
-    n      = truncate(n, UI_MAX_SHORT_STRING, false);
+    n      = truncate(n, UI_MAX_THING_NAME_SHORT, false);
     s += std::format("{:>15}", n);
 
     //

@@ -922,7 +922,7 @@ void tp_name_short_set(Tpp tp, const std::string &val)
     return;
   }
   tp->name_short = std::string(val);
-  if (tp->name_short.size() > UI_MAX_SHORT_STRING) {
+  if (tp->name_short.size() > UI_MAX_THING_NAME_SHORT) {
     tp_err(tp, "string [%s] too long for short names", val.c_str());
     return;
   }
@@ -949,6 +949,10 @@ void tp_name_long_set(Tpp tp, const std::string &val)
     return;
   }
   tp->name_long = std::string(val);
+  if (tp->name_long.size() > UI_MAX_THING_NAME_LONG) {
+    tp_err(tp, "string [%s] too long for long names", val.c_str());
+    return;
+  }
 }
 
 [[nodiscard]] auto tp_name_long(Tpp tp) -> std::string

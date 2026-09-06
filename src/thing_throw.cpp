@@ -221,7 +221,7 @@ static auto thing_throw_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thing
     return false;
   }
 
-  THING_DBG(g, v, l, thrower, "throw %s to (%d,%d)", thing_name_short(g, v, l, item).c_str(), to.x, to.y);
+  THING_DBG(g, v, l, thrower, "throw %s to (%d,%d)", thing_name_long(g, v, l, item).c_str(), to.x, to.y);
   TRACE_INDENT();
 
   if (! thing_is_able_to_throw(thrower)) {
