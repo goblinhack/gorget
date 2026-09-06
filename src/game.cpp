@@ -399,7 +399,7 @@ void Config::reset()
   key_zoom.sym       = SDLK_z;
   music_volume       = {MIX_MAX_VOLUME / 4};
   sdl_delay          = 1;
-  sound_volume       = {MIX_MAX_VOLUME};
+  sound_volume       = {MIX_MAX_VOLUME / 2};
 }
 
 void game_config_reset(Gamep g) { g->config.reset(); }
