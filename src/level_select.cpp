@@ -626,13 +626,6 @@ static auto level_select_count_levels(LevelSelect *s) -> int
         // Where the player is initially
         //
         if (y == 0) {
-          if (x == 0) {
-            if (! g_opt_quick_start) {
-              topcon("Choose your starting level, mortal.");
-              topcon_newline();
-              topcon("Mouse hover over levels to preview contents.");
-            }
-          }
           tp = tp_is_level_next_icon;
         }
       } else if (player != nullptr) {
