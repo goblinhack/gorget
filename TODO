@@ -1,29 +1,106 @@
 bugs
 ----
-press space in level select - lost entrance
 
 todo
 ----
-potion, feathertail (jump)
-potion, etherealness (wall throu walls, vaults?)
-potion, haste
-potion, inviolate (health and removes poison, protects from engulfing)
-potion, telepath (see enemies)
-potion, fire immunity (stoneskin)
-potion, light immunity (light beam)
-thrown potion, paralysis (gas)
-thrown potion, creeping death
-thrown potion, descent
-thrown potion, darkness
-thrown potion, confusion
-thrown potion, caustic gas
-steam and smoke should spread
-potion trading station
-present icon with multiplies for bonus
-wandering monster for grinding
-enchants
-wortweed
-spikes
+players
+  easier wizard
+    - 250 hp
+    - fire ball
+  fire wizard
+    - 150 hp
+    - fire ball
+    - fire resist
+    - damage +10%
+    - speed -20%
+    - def 8
+  war wizard
+    - 125 hp
+    - fire beam
+    - damage +20%
+    - speed -20%
+    - att 12
+  demon wizard
+    - 100 hp
+    - fire beam
+    - fire immune
+    - poison blood
+    - damage +50%
+    - att 14
+    - def 6
+sacrifices
+  - clumsy                  x2 noise generated                                                    melee +10
+  - blood-feast:            absorb health from fleshy monsters / x2 damage-received from undead   melee +20
+  - breathless:             gas weapons, no effect, but tire much quicker                         melee +30
+  - myopic:                 vision distance halved                                                melee +30
+  - power-crazed:           rolls over 10 directed to damage         def -10                      melee +40
+  - one-arm:                can only wear one ring                                                melee +50
+  - hollow-bones:           fall-damage -50%   damage-received +50%  def -2                       melee +50
+  - glass-bones:            fall-damage +100%  damage-received +50%  def -4  att +2               melee +70
+  - random-failure:         effects like levitation and ethereal may fail randomly                melee +80
+  - tunnel-vision:          180 degree vision                                                     melee +100
+  - fire-prone:             x2 damage from fire                                                   melee +100
+  - madness:                occasional random spell use                                           melee +100
+  - extreme-tunnel-vision:  90 degree vision                                                      melee +200
+  - defenceless             no weapon at start, melee only                                        melee +200
+  - poison-blood:           health ticks down                                                     melee +200
+  - wraith-like:            can walk through walls, but can never eat food or heal                melee +200
+  - blood-pact:             damage delivered is subtracted from your health                       melee +300
+  - one-legged:             can only jump, limited jump distance, easily exhausted                melee +400
+spells
+  - etherblast to hit ghosts in walls
+  - spell coupons?
+  - powerword kill
+  - rot living flesh
+  - more lich like spells
+  - spells need to have a cost that can be influenced by specializing
+  - shrines that reduce spell points
+gameplay
+  - shoot from behind double damage
+  - traps gas effects
+  - boulders that can crush
+  - ice weapon and shattering
+  - intelligent monsters when hurt should escape
+  - anti magic areas
+  - anti anti magic areas
+  - debug shell "add monst"
+  - "You have used up your 5 free stabs included with the basic plan. If you wish to stab more..."
+  - Allies will follow you around and defend you; also thinking you
+    can set an ally with a basic programmed task - explore/defend/attack
+  - Enemy souls can be harvested to add to your life force. Thinking
+    of a pacman like blue ghost you need to hunt down. Only applies to
+    living beings that are toasted.
+  - Allies vanish each level and the life force is returned to you
+  - Life force can be applied to the summoning of allies each level.
+    Each ally that dies in-level, is a permanent loss of life force.
+    Hence you need to balance how many allies to summon with the chance
+    of permanent loss.
+ui
+  - random player name e.g. galatrex the dark
+items
+  - potion, feathertail (jump)
+  - potion, etherealness (wall throu walls, vaults?)
+  - potion, haste
+  - potion, inviolate (health and removes poison, protects from engulfing)
+  - potion, telepath (see enemies)
+  - potion, fire immunity (stoneskin)
+  - potion, light immunity (light beam)
+  - thrown potion, paralysis (gas)
+  - thrown potion, creeping death
+  - thrown potion, descent
+  - thrown potion, darkness
+  - thrown potion, confusion
+  - thrown potion, caustic gas
+dungeon
+  - steam and smoke should spread
+  - potion trading station
+  - present icon with multiplies for bonus
+  - wandering monster for grinding
+  - enchants
+  - lever for a bridge? use an overly for rooms
+  - damage reduction stat
+  - lever for a bridge? use an overly for rooms
+  - damage reduction stat
 monsters
   - gloater
   - crayfish men
@@ -37,132 +114,3 @@ monsters
   - thief that can steal items
   - dropbear
   - barbarian, thrud
-lever for a bridge? use an overly for rooms
-damage reduction stat
-
-sacrifice altar
----------------
-                      sacrifice                        bonus
-                      ---------------------------      ---------------
-- clumsy              hiding in bushes does not work   +10  spell points
-
-- fire prone          x2 damage from fire              +10  spell points
-                                                       2    spell coupons
-
-- hollow bones        x2 damage from melee             +10  spell points
-                                                       -50% fall damage
-                                                       +25% speed
-                                                       +50% jump distance
-                         
-- tunnel vision       no peripheral vision             +10  spell points
-                                                       +25% speed
-
-- defenceless         no weapon at start               +20  spell points
-                                                       +1   emergency teleport per level
-
-- myopic              -50% vision distance             +20  spell points
-                                                       5    spell coupons
-
-- breathless          -50% stamina                     +20  spell points
-                      -50% speed                       gas  has no effect
-
-- wraithlike          -80% health                      +30  spell points
-                                                       limited wall walk
-                                                       +25 magical armour
-
-- glass bones         x2 damage from melee             +30  spell points
-                      x4 damage from falling           +50% speed
-                                                       jump damage
-                                                       +1   emergency teleport per level
-                                                       +50 magical armour
-                                                       regeneration
-
-- one legged          every move is a tiring jump      +40  spell points
-                                                       +1   emergency teleport per level
-                                                       +50% stamina recovery
-                                                       x2   all damage dealt
-                                                       limited levitating
-
-
-essential features
-------------------
-gods
-  orcus                           (black)
-    - firebolt
-    - emergency teleport
-    - limited levitating
-  surt, the fire giant            (orange)
-    - firebolt
-    - immunity to fire and lava
-    - damage +10%
-    - speed -20%
-  ares, god of war                (red)
-    - firebolt
-    - damage +20%
-    - speed +20%
-    - limited levitating per level
-  morrigan, the demon queen       (blue)
-    - fast missile
-    - limited wraithwalk per level
-    - magical armour 1d20
-    - speed +50%
-  - lilith                        (white)
-  - loviater                      (yellow)
-    - darknes
-  - horned god                    (green)
-  sacrificing an acolyte of the same god - bad
-abilities
-  - Hollow Bones: Fall damage is halved and you move silently, but strong winds can knock you off balance.
-  - Glass Bones: Take double damage from falls and blunt impacts, but your strikes are unnaturally precise.
-  - keep a percentage of money or stats each time you restart
-  - madness as an ability - randomly fire a spell
-  - bloodfeaster - each corpse can be drained / chance of resurrecting something much stronger
-  - lightbringer - light follows you randomly
-  - demonbloodpact - vow to not hurt demons
-  - breathless - gas weapons have no effect
-  - wraithwalk - walk into walls
-  - take on limitations at start e.g one leg, limited jump, reduced spell cost
-  - levitating essential for chasms and return trip
-weapon slots
-  - etherblast to hit ghosts in walls
-  - emergency teleport
-spells
-  - powerword kill
-  - rot living flesh
-  - more lich like spells
-  - spell points to collect
-  - all spells are availabl
-  - spell coupons
-  - spells need to have a cost that can be influenced by specializing
-  - shrines that reduce spell points
-gameplay
-  - shoot from behind double damage
-  - hard coded to fire fireball
-  - traps gas effects
-  - boulders that can crush
-  - cobwebs burns and get you stuck
-  - ice weapon and shattering
-  - intelligent monsters when hurt should escape
-  - anti magic areas
-  - anti anti magic areas
-  - debug shell "add monst"
-  - "You have used up your 5 free stabs included with the basic plan. If you wish to stab more..."
-  - Allies will follow you around and defend you; also thinking you
-    can set an ally with a basic programmed task - explore/defend/attack
-  - Enemy souls can be harvested to add to your life force. Thinking
-    of a pacman like blue ghost you need to hunt down. Only applies to
-    living beings that are toasted.
-allies
-  - Allies vanish each level and the life force is returned to you
-  - Life force can be applied to the summoning of allies each level.
-    Each ally that dies in-level, is a permanent loss of life force.
-    Hence you need to balance how many allies to summon with the chance
-    of permanent loss.
-ui
-  - random player name e.g. galatrex the dark
-sacrifices
-  - sacrifice a leg / soul to progress
-  - sacrifices are to Gods
-  - sacrificed an arm to a god of fire, would you get a spectral arm of fire with fire damage bonus as replacement
-    most players would need to sacrifice something in order to get past the first half of the game
-    eyes of ice, heart of fire
