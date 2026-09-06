@@ -134,7 +134,7 @@ static Thingp g_item;
     return false;
   }
 
-  if (level_is_level_select(g, v, l) || level_is_player_select(g, v, l)) {
+  if (level_is_level_select(g, v, l)) {
     topcon(UI_WARN_FMT_STR "You can't drop things here!" UI_RESET_FMT);
     (void) sound_play(g, "error");
     return false;
@@ -236,7 +236,7 @@ static Thingp g_item;
     return wid_item_menu_eat(g, w, x, y, button);
   }
 
-  if (level_is_level_select(g, v, l) || level_is_player_select(g, v, l)) {
+  if (level_is_level_select(g, v, l)) {
     topcon(UI_WARN_FMT_STR "You can't use things here!" UI_RESET_FMT);
     (void) sound_play(g, "error");
     return false;
@@ -287,7 +287,7 @@ static Thingp g_item;
     return false;
   }
 
-  if (level_is_level_select(g, v, l) || level_is_player_select(g, v, l)) {
+  if (level_is_level_select(g, v, l)) {
     topcon(UI_WARN_FMT_STR "You can't throw things here!" UI_RESET_FMT);
     (void) sound_play(g, "error");
     return false;
@@ -609,7 +609,7 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item, bool from_inventory)
     spoint const tl(0, y_at);
     spoint const br(button_width, y_at + box_height);
 
-    if (level_is_level_select(g, v, l) || level_is_player_select(g, v, l)) {
+    if (level_is_level_select(g, v, l)) {
       wid_gray_out_button(g, w);
     }
 
@@ -631,7 +631,7 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item, bool from_inventory)
     spoint const tl(0, y_at);
     spoint const br(button_width, y_at + box_height);
 
-    if (level_is_level_select(g, v, l) || level_is_player_select(g, v, l)) {
+    if (level_is_level_select(g, v, l)) {
       wid_gray_out_button(g, w);
     }
 
@@ -701,7 +701,7 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item, bool from_inventory)
     spoint const tl(0, y_at);
     spoint const br(button_width, y_at + box_height);
 
-    if (level_is_level_select(g, v, l) || level_is_player_select(g, v, l)) {
+    if (level_is_level_select(g, v, l)) {
       wid_gray_out_button(g, w);
     }
 
@@ -719,7 +719,7 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item, bool from_inventory)
     spoint const tl(0, y_at);
     spoint const br(button_width, y_at + box_height);
 
-    if (level_is_level_select(g, v, l) || level_is_player_select(g, v, l)) {
+    if (level_is_level_select(g, v, l)) {
       wid_gray_out_button(g, w);
     }
 

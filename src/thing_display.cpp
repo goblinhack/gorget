@@ -633,7 +633,7 @@ void thing_display(Gamep g, Levelsp v, Levelp l, const bpoint &p, Tpp tp, Thingp
   //
   // What level are we currently displaying?
   //
-  const auto is_level_select = level_is_level_select(g, v, l) || level_is_player_select(g, v, l);
+  const auto is_level_select = level_is_level_select(g, v, l);
 
   if (t_maybe_null != nullptr) {
     is_falling = thing_is_falling(t_maybe_null) > 0;

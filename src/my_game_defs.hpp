@@ -197,7 +197,7 @@ enum {
   //    83 LEVEL_ARR_IDX_MAX
   //
   LEVEL_ARR_IDX_MAX           = (((LEVEL_GRID_ACROSS * LEVEL_GRID_DOWN) + 3) - EMPTY_LEVEL_COUNT), // 83
-  LEVEL_ARR_IDX_PLAYER_SELECT = (LEVEL_ARR_IDX_MAX - 1),                                           // 82
+  LEVEL_ARR_IDX_LEVEL_SECRET = (LEVEL_ARR_IDX_MAX - 1),                                           // 82
   LEVEL_ARR_IDX_LEVEL_SELECT  = (LEVEL_ARR_IDX_MAX - 2),                                           // 81
   LEVEL_ARR_IDX_BOSS_5        = 80,
   LEVEL_ARR_IDX_BOSS_4        = 64,

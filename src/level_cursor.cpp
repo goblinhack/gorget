@@ -586,7 +586,7 @@ static void level_cursor_path_create(Gamep g, Levelsp v, Levelp l)
     //
     // Helpful to have a cursor when selecting levels
     //
-    if (level_is_level_select(g, v, l) || level_is_player_select(g, v, l)) {
+    if (level_is_level_select(g, v, l)) {
       v->cursor[ v->cursor_at.x ][ v->cursor_at.y ] = CURSOR_AT;
     }
 

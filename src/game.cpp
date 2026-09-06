@@ -910,7 +910,7 @@ void Game::create_levels()
     //
     // Start in level select?
     //
-    if (level_change(g, v, LEVEL_ARR_IDX_PLAYER_SELECT) == nullptr) {
+    if (level_change(g, v, LEVEL_ARR_IDX_LEVEL_SECRET) == nullptr) {
       ERR("failed to change to player selection");
       return;
     }
@@ -1009,7 +1009,7 @@ void Game::state_reset(const std::string &why)
   if (v != nullptr) {
     auto *l = game_level_get(g, v);
     if (l != nullptr) {
-      if (level_is_player_select(g, v, l)) {
+      if (level_is_level_secret(g, v, l)) {
         state_change(STATE_PLAYER_SELECT_MENU, why);
       } else if (level_is_level_select(g, v, l)) {
         state_change(STATE_LEVEL_SELECT_MENU, why);

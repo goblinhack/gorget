@@ -62,7 +62,7 @@ void level_verify(Gamep g, Levelsp v, Levelp l)
 //
 // Are we on the player selection level?
 //
-[[nodiscard]] auto level_is_player_select(Gamep g, Levelsp v, Levelp l) -> bool
+[[nodiscard]] auto level_is_level_secret(Gamep g, Levelsp v, Levelp l) -> bool
 {
   TRACE();
 
@@ -70,7 +70,7 @@ void level_verify(Gamep g, Levelsp v, Levelp l)
     return false;
   }
 
-  return l->level_num == LEVEL_ARR_IDX_PLAYER_SELECT;
+  return l->level_num == LEVEL_ARR_IDX_LEVEL_SECRET;
 }
 
 void level_init(Gamep g, Levelsp v, Levelp l, LevelNum n)
@@ -221,7 +221,7 @@ void level_is_completed_by_player_falling(Gamep g, Levelsp v, Levelp l)
     return nullptr;
   }
 
-  if (level_num == LEVEL_ARR_IDX_PLAYER_SELECT) {
+  if (level_num == LEVEL_ARR_IDX_LEVEL_SECRET) {
     //
     // Enter level selectionm
     //
@@ -261,11 +261,7 @@ void level_is_completed_by_player_falling(Gamep g, Levelsp v, Levelp l)
   level_scroll_warp_to_focus(g, v, new_level);
   level_debug(g, v, new_level);
 
-  if (level_is_player_select(g, v, new_level)) {
-    botcon_newline();
-    game_state_change(g, STATE_PLAYER_SELECT_MENU, "level change");
-    wid_player_select(g, v, new_level);
-  } else if (level_is_level_select(g, v, new_level)) {
+  if (level_is_level_select(g, v, new_level)) {
     botcon_newline();
     game_state_change(g, STATE_LEVEL_SELECT_MENU, "level change");
     wid_level_select(g, v, new_level);
@@ -863,7 +859,7 @@ void level_bounds_set(Gamep g, Levelsp v, Levelp l)
   //
   // We need to animate all the level tiles in sync, so might as well draw the whole level
   //
-  if (level_is_level_select(g, v, l) || level_is_player_select(g, v, l)) {
+  if (level_is_level_select(g, v, l)) {
     v->minx = 0;
     v->miny = 0;
     v->maxx = MAP_WIDTH;

@@ -33,7 +33,7 @@ void wid_new_game(Gamep g)
     g_opt_player_select_menu = false;
 
     if (v != nullptr) {
-      (void) level_change(g, v, LEVEL_ARR_IDX_PLAYER_SELECT);
+      (void) level_change(g, v, LEVEL_ARR_IDX_LEVEL_SECRET);
     }
     return;
   } else if (g_opt_level_select_menu) {

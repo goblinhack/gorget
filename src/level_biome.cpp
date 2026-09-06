@@ -100,7 +100,7 @@
     case 79 :                          return BIOME_UNDERHELL;
     case LEVEL_ARR_IDX_BOSS_5 :        return BIOME_UNDERHELL;
     case LEVEL_ARR_IDX_LEVEL_SELECT :  return BIOME_DUNGEON;
-    case LEVEL_ARR_IDX_PLAYER_SELECT : return BIOME_DUNGEON;
+    case LEVEL_ARR_IDX_LEVEL_SECRET : return BIOME_DUNGEON;
     default :                          ERR("unexpected level number with no biome assigned: %d", l->level_num); return BIOME_DUNGEON;
   }
 }

@@ -56,11 +56,6 @@ auto player_select_mouse_down(Gamep g, Levelsp v, Levelp l) -> bool
 {
   TRACE();
 
-  if (! level_is_player_select(g, v, l)) {
-    (void) sound_play(g, "error");
-    return false;
-  }
-
   topcon("TODO");
 
   return true;

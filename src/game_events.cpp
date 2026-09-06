@@ -76,11 +76,6 @@
     return true;
   }
 
-  if (level_is_player_select(g, v, l)) {
-    (void) player_select_mouse_down(g, v, l);
-    return true;
-  }
-
   switch (game_state(g)) {
     case STATE_THROW_ITEM :         [[fallthrough]];
     case STATE_PLAYING :            break;
@@ -274,7 +269,7 @@
     return false;
   }
 
-  if (level_is_level_select(g, v, l) || level_is_player_select(g, v, l)) {
+  if (level_is_level_select(g, v, l)) {
     (void) sound_play(g, "error");
     return false;
   }
@@ -321,7 +316,7 @@
     return false;
   }
 
-  if (level_is_level_select(g, v, l) || level_is_player_select(g, v, l)) {
+  if (level_is_level_select(g, v, l)) {
     (void) sound_play(g, "error");
     return false;
   }
@@ -352,7 +347,7 @@
     return false;
   }
 
-  if (level_is_level_select(g, v, l) || level_is_player_select(g, v, l)) {
+  if (level_is_level_select(g, v, l)) {
     (void) sound_play(g, "error");
     return false;
   }
@@ -394,7 +389,7 @@
     return false;
   }
 
-  if (level_is_level_select(g, v, l) || level_is_player_select(g, v, l)) {
+  if (level_is_level_select(g, v, l)) {
     (void) sound_play(g, "error");
     return false;
   }
@@ -436,7 +431,7 @@ static auto game_event_jump(Gamep g) -> bool
     return false;
   }
 
-  if (level_is_level_select(g, v, l) || level_is_player_select(g, v, l)) {
+  if (level_is_level_select(g, v, l)) {
     (void) sound_play(g, "error");
     return false;
   }
@@ -542,7 +537,7 @@ static auto game_event_throw(Gamep g) -> bool
     return false;
   }
 
-  if (level_is_level_select(g, v, l) || level_is_player_select(g, v, l)) {
+  if (level_is_level_select(g, v, l)) {
     (void) sound_play(g, "error");
     return false;
   }
@@ -601,7 +596,7 @@ static auto game_event_abort(Gamep g) -> bool
     return false;
   }
 
-  if (level_is_level_select(g, v, l) || level_is_player_select(g, v, l)) {
+  if (level_is_level_select(g, v, l)) {
     (void) sound_play(g, "error");
     return false;
   }

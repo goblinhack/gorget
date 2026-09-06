@@ -22,7 +22,7 @@ static auto tp_cursor_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l, con
   //
   Tilep tile = tp_tiles_get(tp, THING_ANIM_CURSOR_NOPATH, 0);
 
-  if (level_is_level_select(g, v, l) || level_is_player_select(g, v, l)) {
+  if (level_is_level_select(g, v, l)) {
     return tp_tiles_get(tp, THING_ANIM_CURSOR_NORMAL, 0);
   }
 
