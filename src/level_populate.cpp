@@ -273,9 +273,13 @@ static auto level_populate_biome_dungeon(Gamep g, Levelsp v, Levelp l, class Lev
         //
         // This is the default start level
         //
-        tp               = lp.tp_player;
-        lp.need_entrance = false;
+        tp = lp.tp_player;
       }
+
+      //
+      // Even if we do not need an entrance, we still need to start the player somewhere
+      //
+      l->entrance = lp.at;
       break;
     case CHARMAP_EXIT :
       lp.need_floor = true;
@@ -791,7 +795,7 @@ static auto level_populate_fixup_biome_underhell(class LevelPopulate &lp, Tpp tp
         //
         tp = (o->second)(lp.c, lp.at);
         if (tp == nullptr) [[unlikely]] {
-          ERR("could not find a template for override char %c", lp.c);
+          level_err(g, v, l, "could not find a template for override char %c", lp.c);
           return false;
         }
         lp.need_floor = true;
@@ -891,7 +895,6 @@ static auto level_populate_fixup_biome_underhell(class LevelPopulate &lp, Tpp tp
         if (thing_spawn(g, v, l, tp_add, lp.at) == nullptr) {
           return false;
         }
-        l->entrance = lp.at;
       }
 
       //
@@ -953,6 +956,10 @@ static auto level_populate_fixup_biome_underhell(class LevelPopulate &lp, Tpp tp
     }
   }
 
+  if (l->entrance == bpoint(0, 0)) {
+    level_err(g, v, l, "no entrance found");
+  }
+
   return level_populated(g, v, l);
 }
 
@@ -961,7 +968,7 @@ static auto level_populate_fixup_biome_underhell(class LevelPopulate &lp, Tpp tp
   TRACE();
 
   if (! level_populate(g, v, l, lg, MAP_WIDTH, MAP_HEIGHT, in, overrides)) {
-    ERR("level populate failed");
+    level_err(g, v, l, "level populate failed");
     return false;
   }
 

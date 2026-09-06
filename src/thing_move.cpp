@@ -113,6 +113,7 @@
   TRACE();
 
   if (is_oob_or_border(to)) [[unlikely]] {
+    thing_err(g, v, new_level, me, "warp to oob %d,%d", to.x, to.y);
     return false;
   }
 
