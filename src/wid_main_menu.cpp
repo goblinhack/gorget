@@ -143,7 +143,7 @@ void wid_main_menu_hide(Gamep g)
 
 [[nodiscard]] static auto wid_main_menu_key_down(Gamep g, Widp w, const struct SDL_Keysym *key) -> bool
 {
-  con("Main menu: key wodn");
+  con("Main menu: key down");
   TRACE_INDENT();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
