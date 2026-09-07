@@ -49,10 +49,10 @@
   return tp->temperature_initial;
 }
 
+extern TpVec tp_vec;
+
 [[nodiscard]] static inline auto tp_find(TpId id) -> Tpp
 {
-  extern TpVec tp_vec;
-
 #ifdef DEBUG_BUILD
   TRACE_DEBUG(); // expensive
 

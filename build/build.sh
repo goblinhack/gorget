@@ -521,7 +521,7 @@ case "$MY_OS_NAME" in
         #
         # Run in the background as it is slow and is only needed for debugging
         #
-        DSYM="dsymutil \${TARGET_GAME} &"
+        DSYM="dsymutil \${TARGET} &"
 
         if [[ $OPT_SANITY_BUILD != "" ]]; then
             CFLAGS+="$EXTRA_CHECKS"
@@ -982,6 +982,8 @@ else
     log_die "Build failed"
     exit 1
 fi
+
+$DSYM
 
 #
 # Execute unit tests?

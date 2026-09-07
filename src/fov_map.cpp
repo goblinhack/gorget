@@ -5,6 +5,8 @@
 #include "my_bpoint.hpp"
 #include "my_fov_map.hpp"
 #include "my_fov_map_inlines.hpp"
+#include "my_level_inlines.hpp" // NOLINT
+
 #include <cstdint>
 
 void fov_map_set(FovMap *m, const bpoint &pov, const bool val)

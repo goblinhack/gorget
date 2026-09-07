@@ -448,18 +448,18 @@ void wid_main_menu_select(Gamep g)
   {
     TRACE();
     auto *p = wid_main_menu_window->wid_text_area->wid_text_area;
-    auto *w = wid_new_menu_button(g, p, "New Game");
+    auto *w = wid_new_menu_button(g, p, "New Sacrifice");
 
     spoint const tl(0, y_at);
     spoint const br(button_width, y_at + button_height);
     wid_set_on_mouse_down(w, game_menu_new_game);
     wid_set_pos(w, tl, br);
     if (game_seed_source_get(g) == SEED_SOURCE_RANDOM) {
-      std::string const s = std::string(UI_HIGHLIGHT_FMT_STR) + std::string("N") + std::string(UI_RESET_FMT) + std::string("ew game")
+      std::string const s = std::string(UI_HIGHLIGHT_FMT_STR) + std::string("N") + std::string(UI_RESET_FMT) + std::string("ew sacrifice")
                           + std::string(UI_RESET_FMT);
       wid_set_text(w, s);
     } else {
-      std::string const s = std::string(UI_HIGHLIGHT_FMT_STR) + std::string("N") + std::string(UI_RESET_FMT) + std::string("ew game:")
+      std::string const s = std::string(UI_HIGHLIGHT_FMT_STR) + std::string("N") + std::string(UI_RESET_FMT) + std::string("ew sacrifice:")
                           + std::string(UI_RESET_FMT) + std::string(" ") + game_seed_name_get(g);
       wid_set_text(w, s);
     }

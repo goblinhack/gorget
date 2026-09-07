@@ -233,6 +233,7 @@ public:
   void       *void_context {};
 
   std::array< ThingId, UI_MAX_WID_CONTEXT > thing_id_context {};
+  std::array< Tpp, UI_MAX_WID_CONTEXT >     tp_context {};
 
   //
   // Text placement.

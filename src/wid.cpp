@@ -588,6 +588,101 @@ void wid_unset_thing_context(Gamep g, Levelsp v, Widp w, Thingp t)
   return thing_find_optional(g, v, w->thing_id_context[ which ]);
 }
 
+void wid_set_tp_context(Gamep g, Levelsp v, Widp w, Tpp tp)
+{
+  TRACE();
+
+  if (g == nullptr) [[unlikely]] {
+    ERR("no game pointer");
+    return;
+  }
+
+  if (v == nullptr) [[unlikely]] {
+    ERR("no levels pointer");
+    return;
+  }
+
+  if (w == nullptr) {
+    ERR("no widget pointer");
+    return;
+  }
+
+  if (tp == nullptr) {
+    ERR("no thing pointer");
+    return;
+  }
+
+  for (auto i = 0; i < UI_MAX_WID_CONTEXT; i++) {
+    auto *cand = w->tp_context[ i ];
+    if (cand == tp) {
+      return;
+    }
+  }
+
+  for (auto i = 0; i < UI_MAX_WID_CONTEXT; i++) {
+    auto cand = w->tp_context[ i ];
+    if (! static_cast< bool >(cand)) {
+      w->tp_context[ i ] = tp;
+      return;
+    }
+  }
+}
+
+void wid_unset_tp_context(Gamep g, Levelsp v, Widp w, Tpp tp)
+{
+  TRACE();
+
+  if (g == nullptr) [[unlikely]] {
+    ERR("no game pointer");
+    return;
+  }
+
+  if (v == nullptr) [[unlikely]] {
+    ERR("no levels pointer");
+    return;
+  }
+
+  if (w == nullptr) {
+    ERR("no widget pointer");
+    return;
+  }
+
+  if (tp == nullptr) {
+    ERR("no thing pointer");
+    return;
+  }
+
+  for (auto i = 0; i < UI_MAX_WID_CONTEXT; i++) {
+    auto *cand = w->tp_context[ i ];
+    if (cand == tp) {
+      w->tp_context[ i ] = 0;
+      return;
+    }
+  }
+}
+
+[[nodiscard]] auto wid_get_tp_context(Gamep g, Widp w, int which) -> Tpp
+{
+  TRACE();
+
+  if (g == nullptr) [[unlikely]] {
+    ERR("no game pointer");
+    return nullptr;
+  }
+
+  if (w == nullptr) {
+    ERR("no widget pointer");
+    return nullptr;
+  }
+
+  if (which >= UI_MAX_WID_CONTEXT) {
+    ERR("index overflow for UI_MAX_WID_CONTEXT");
+    return nullptr;
+  }
+
+  return w->tp_context[ which ];
+}
+
 void wid_set_prev(Widp w, Widp prev)
 {
   TRACE();
@@ -2384,7 +2479,7 @@ void wid_destroy_in(Gamep g, Widp w, uint32_t ms)
   }
 
   if (parent == nullptr) {
-    ERR("no parent widget");
+    return wid_new_window(g, name);
   }
 
   Widp w = wid_new(parent);

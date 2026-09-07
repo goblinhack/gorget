@@ -5,6 +5,8 @@
 #include "my_age_map.hpp"
 #include "my_age_map_inlines.hpp"
 #include "my_bpoint.hpp"
+#include "my_level_inlines.hpp" // NOLINT
+
 #include <cstdint>
 
 void age_map_incr(AgeMap *m, const bpoint &pov, const uint8_t val)

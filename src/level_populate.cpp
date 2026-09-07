@@ -264,7 +264,13 @@ static auto level_populate_biome_dungeon(Gamep g, Levelsp v, Levelp l, class Lev
       //
       // First level. Usually 0 but can be a specified level.
       //
-      if ((g_level_opt.level_num == l->level_num) && g_level_opt.is_set) {
+      if (g_opt_tests) {
+        //
+        // Test levels just need the player
+        //
+        lp.need_entrance = false;
+        tp               = lp.tp_player;
+      } else if ((g_level_opt.level_num == l->level_num) && g_level_opt.is_set) {
         //
         // This is the chosen start level
         //
@@ -273,8 +279,11 @@ static auto level_populate_biome_dungeon(Gamep g, Levelsp v, Levelp l, class Lev
         //
         // This is the default start level
         //
-        tp               = lp.tp_player;
-        lp.need_entrance = false;
+        tp = lp.tp_player;
+      } else {
+        //
+        // The player is not on this level yet
+        //
       }
 
       //
