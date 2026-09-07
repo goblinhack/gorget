@@ -25,14 +25,7 @@ void wid_new_game(Gamep g)
 
   auto *v = game_levels_get(g);
 
-  if (g_opt_player_select_menu) {
-    //
-    // So we can quit the player and play normally
-    //
-    g_opt_player_select_menu = false;
-
-    wid_player_select(g);
-  } else if (g_opt_level_select_menu) {
+  if (g_opt_level_select_menu) {
     game_state_change(g, STATE_LEVEL_SELECT_MENU, "select level");
     //
     // So we can quit the level and play normally
@@ -46,9 +39,6 @@ void wid_new_game(Gamep g)
     if (g_opt_quick_start) {
       game_state_change(g, STATE_PLAYING, "new game");
     } else {
-      wid_player_select(g);
-      return;
-
       if (v != nullptr) {
         (void) level_change(g, v, LEVEL_ARR_IDX_LEVEL_SELECT);
       }

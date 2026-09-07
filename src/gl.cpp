@@ -251,6 +251,18 @@ void gl_clear()
   glClear(GL_COLOR_BUFFER_BIT);
 }
 
+void gl_clear_fbo_all()
+{
+  TRACE();
+
+  FOR_ALL_FBO(i)
+  {
+    blit_fbo_bind(i);
+    gl_clear();
+    blit_fbo_unbind();
+  }
+}
+
 static void gl_init_fbo_(FboEnum fbo, GLuint *render_buf_id, GLuint *fbo_id, GLuint *fbo_tex_id, GLuint tex_width, GLuint tex_height)
 {
   TRACE();

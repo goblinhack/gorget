@@ -588,17 +588,12 @@ void wid_unset_thing_context(Gamep g, Levelsp v, Widp w, Thingp t)
   return thing_find_optional(g, v, w->thing_id_context[ which ]);
 }
 
-void wid_set_tp_context(Gamep g, Levelsp v, Widp w, Tpp tp)
+void wid_set_tp_context(Gamep g, Widp w, Tpp tp)
 {
   TRACE();
 
   if (g == nullptr) [[unlikely]] {
     ERR("no game pointer");
-    return;
-  }
-
-  if (v == nullptr) [[unlikely]] {
-    ERR("no levels pointer");
     return;
   }
 
@@ -628,17 +623,12 @@ void wid_set_tp_context(Gamep g, Levelsp v, Widp w, Tpp tp)
   }
 }
 
-void wid_unset_tp_context(Gamep g, Levelsp v, Widp w, Tpp tp)
+void wid_unset_tp_context(Gamep g, Widp w, Tpp tp)
 {
   TRACE();
 
   if (g == nullptr) [[unlikely]] {
     ERR("no game pointer");
-    return;
-  }
-
-  if (v == nullptr) [[unlikely]] {
-    ERR("no levels pointer");
     return;
   }
 

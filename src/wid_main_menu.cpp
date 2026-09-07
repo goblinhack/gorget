@@ -93,7 +93,7 @@ void wid_main_menu_hide(Gamep g)
   wid_main_menu_destroy(g);
 
   if (g_intro_done++ >= 2) {
-    wid_new_game(g);
+    wid_player_select(g);
   } else {
     wid_intro1_select(g);
   }
@@ -372,6 +372,11 @@ void wid_main_menu_select(Gamep g)
 
   con("Main menu: select");
   TRACE_INDENT();
+
+  //
+  // Ensure no previous game gfx hang around from the last run
+  //
+  gl_clear_fbo_all();
 
   if (wid_main_menu_window == nullptr) {
     (void) music_play(g, "intro");

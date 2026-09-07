@@ -55,7 +55,7 @@ static void wid_player_select_destroy(Gamep g)
   }
 }
 
-static void wid_player_select_check_if_done(Gamep g, Levelsp v)
+static void wid_player_select_check_if_done(Gamep g)
 {
   TRACE();
 
@@ -65,7 +65,7 @@ static void wid_player_select_check_if_done(Gamep g, Levelsp v)
 
   wid_player_select_destroy(g);
 
-  (void) level_change(g, v, LEVEL_ARR_IDX_LEVEL_SELECT);
+  wid_new_game(g);
 
   chosen_player    = nullptr;
   chosen_sacrifice = nullptr;
@@ -133,18 +133,14 @@ void wid_player_select_player_via_mouse_over_begin(Gamep g, Widp w, int /*relx*/
 {
   TRACE();
 
-  auto *v = game_levels_get(g);
-  if (v == nullptr) [[unlikely]] {
-    return;
-  }
-
   auto *tp = wid_get_tp_context(g, w, 0);
   if (tp == nullptr) {
     return;
   }
 
-  level_cursor_describe_clear(g, v);
 #if 0
+  level_cursor_describe_clear(g, v);
+
   if (level_cursor_describe_add(g, v, tp)) {
     game_request_to_remake_ui_set(g);
   }
@@ -154,11 +150,6 @@ void wid_player_select_player_via_mouse_over_begin(Gamep g, Widp w, int /*relx*/
 void wid_player_select_player_via_mouse_over_end(Gamep g, Widp w)
 {
   TRACE();
-
-  auto *v = game_levels_get(g);
-  if (v == nullptr) [[unlikely]] {
-    return;
-  }
 
   auto *tp = wid_get_tp_context(g, w, 0);
   if (tp == nullptr) {
@@ -176,11 +167,6 @@ void wid_player_select_player_via_mouse_over_end(Gamep g, Widp w)
 {
   TRACE();
 
-  auto *v = game_levels_get(g);
-  if (v == nullptr) [[unlikely]] {
-    return false;
-  }
-
   auto *tp = wid_get_tp_context(g, w, 0);
   if (tp == nullptr) {
     return false;
@@ -192,7 +178,7 @@ void wid_player_select_player_via_mouse_over_end(Gamep g, Widp w)
     chosen_player = tp;
   }
 
-  wid_player_select_check_if_done(g, v);
+  wid_player_select_check_if_done(g);
 
   wid_player_update_selections(g);
 
@@ -203,18 +189,14 @@ void wid_player_select_sacrifice_via_mouse_over_begin(Gamep g, Widp w, int /*rel
 {
   TRACE();
 
-  auto *v = game_levels_get(g);
-  if (v == nullptr) [[unlikely]] {
-    return;
-  }
-
   auto *tp = wid_get_tp_context(g, w, 0);
   if (tp == nullptr) {
     return;
   }
 
-  level_cursor_describe_clear(g, v);
 #if 0
+  level_cursor_describe_clear(g, v);
+
   if (level_cursor_describe_add(g, v, tp)) {
     game_request_to_remake_ui_set(g);
   }
@@ -224,11 +206,6 @@ void wid_player_select_sacrifice_via_mouse_over_begin(Gamep g, Widp w, int /*rel
 void wid_player_select_sacrifice_via_mouse_over_end(Gamep g, Widp w)
 {
   TRACE();
-
-  auto *v = game_levels_get(g);
-  if (v == nullptr) [[unlikely]] {
-    return;
-  }
 
   auto *tp = wid_get_tp_context(g, w, 0);
   if (tp == nullptr) {
@@ -246,11 +223,6 @@ void wid_player_select_sacrifice_via_mouse_over_end(Gamep g, Widp w)
 {
   TRACE();
 
-  auto *v = game_levels_get(g);
-  if (v == nullptr) [[unlikely]] {
-    return false;
-  }
-
   auto *tp = wid_get_tp_context(g, w, 0);
   if (tp == nullptr) {
     return false;
@@ -262,7 +234,7 @@ void wid_player_select_sacrifice_via_mouse_over_end(Gamep g, Widp w)
     chosen_sacrifice = tp;
   }
 
-  wid_player_select_check_if_done(g, v);
+  wid_player_select_check_if_done(g);
 
   wid_player_update_selections(g);
 
@@ -362,26 +334,6 @@ void wid_player_select(Gamep g)
     wid_player_select_destroy(g);
   }
 
-  auto *v = game_levels_get(g);
-  if (v == nullptr) [[unlikely]] {
-    return;
-  }
-
-  auto *l = game_level_get(g, v);
-  if (! l) {
-    return;
-  }
-
-  auto *player = thing_player(g);
-  if (! player) {
-    return;
-  }
-
-  auto *ext_struct = thing_ext_struct(g, v, player);
-  if (ext_struct == nullptr) {
-    return;
-  }
-
   const int player_select_width  = UI_INVENTORY_WIDTH;
   const int player_select_height = UI_INVENTORY_HEIGHT;
 
@@ -463,7 +415,7 @@ void wid_player_select(Gamep g)
         wid_set_style(w, button_style);
         wid_set_pos(w, tl, br);
 
-        wid_set_tp_context(g, v, w, tp);
+        wid_set_tp_context(g, w, tp);
         wid_set_on_mouse_down(w, wid_player_select_player_via_mouse_down);
 
         wid_set_on_mouse_over_begin(w, wid_player_select_player_via_mouse_over_begin);
@@ -494,7 +446,7 @@ void wid_player_select(Gamep g)
       wid_set_pos(w, tl, br);
       wid_set_text(w, s);
 
-      wid_set_tp_context(g, v, w, tp);
+      wid_set_tp_context(g, w, tp);
       wid_set_on_mouse_down(w, wid_player_select_player_via_mouse_down);
 
       wid_set_on_mouse_over_begin(w, wid_player_select_player_via_mouse_over_begin);
@@ -520,7 +472,7 @@ void wid_player_select(Gamep g)
       wid_set_pos(w, tl, br);
       wid_set_text(w, line);
 
-      wid_set_tp_context(g, v, w, tp);
+      wid_set_tp_context(g, w, tp);
       wid_set_on_mouse_down(w, wid_player_select_player_via_mouse_down);
 
       wid_set_on_mouse_over_begin(w, wid_player_select_player_via_mouse_over_begin);
@@ -578,7 +530,7 @@ void wid_player_select(Gamep g)
       wid_set_pos(w, tl, br);
       wid_set_text(w, s);
 
-      wid_set_tp_context(g, v, w, tp);
+      wid_set_tp_context(g, w, tp);
       wid_set_on_mouse_down(w, wid_player_select_sacrifice_via_mouse_down);
 
       wid_set_on_mouse_over_begin(w, wid_player_select_sacrifice_via_mouse_over_begin);
@@ -604,7 +556,7 @@ void wid_player_select(Gamep g)
       wid_set_pos(w, tl, br);
       wid_set_text(w, line);
 
-      wid_set_tp_context(g, v, w, tp);
+      wid_set_tp_context(g, w, tp);
       wid_set_on_mouse_down(w, wid_player_select_sacrifice_via_mouse_down);
 
       wid_set_on_mouse_over_begin(w, wid_player_select_sacrifice_via_mouse_over_begin);

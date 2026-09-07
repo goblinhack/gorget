@@ -308,6 +308,7 @@ auto gl_init_2d_mode(Gamep g) -> void;
 auto gl_init_fbo(Gamep g, FboEnum fbo = FBO_NONE) -> void;
 auto gl_leave_2d_mode(Gamep g) -> void;
 auto gl_clear() -> void;
+void gl_clear_fbo_all();
 
 #define GL_ERROR_CHECK()                                                                                                                        \
   {                                                                                                                                             \
