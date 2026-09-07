@@ -19,7 +19,7 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
-static auto tp_player_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
+auto tp_player_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
@@ -29,14 +29,14 @@ static auto tp_player_description_get(Gamep g, Levelsp v, Levelp l, Thingp me) -
   return "You";
 }
 
-static auto tp_player_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
+auto tp_player_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
   return UI_INFO1_FMT_STR "You: a luckless wizard hoping to reclaim forgotten skills.";
 }
 
-static void tp_player_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
+void tp_player_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   THING_DBG(g, v, l, me, "player moved");
   TRACE_INDENT();
@@ -150,7 +150,7 @@ static void tp_player_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
   v->cursor[ at.x ][ at.y ] = CURSOR_NONE;
 }
 
-static void tp_player_on_moving_to(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &to)
+void tp_player_on_moving_to(Gamep g, Levelsp v, Levelp l, Thingp me, const bpoint &to)
 {
   THING_DBG(g, v, l, me, "player moving");
   TRACE_INDENT();
@@ -160,7 +160,7 @@ static void tp_player_on_moving_to(Gamep g, Levelsp v, Levelp l, Thingp me, cons
   }
 }
 
-static bool tp_player_on_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
+bool tp_player_on_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
 {
   TRACE();
 
@@ -178,7 +178,7 @@ static bool tp_player_on_damage(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEv
   return true; // allow the damage to be applied
 }
 
-static void tp_player_on_jump_end(Gamep g, Levelsp v, Levelp l, Thingp me)
+void tp_player_on_jump_end(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
@@ -203,7 +203,7 @@ static void tp_player_on_jump_end(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 }
 
-static void tp_player_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
+void tp_player_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
@@ -211,7 +211,7 @@ static void tp_player_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
   game_popup_text_add(g, at.x, at.y, std::string("Aargh!"));
 }
 
-static void tp_player_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp me)
+void tp_player_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
@@ -235,7 +235,7 @@ static void tp_player_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 }
 
-static void tp_player_level_leave(Gamep g, Levelsp v, Levelp l, Thingp me)
+void tp_player_level_leave(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
@@ -252,7 +252,7 @@ static void tp_player_level_leave(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 }
 
-static void tp_player_level_enter(Gamep g, Levelsp v, Levelp l, Thingp me)
+void tp_player_level_enter(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
@@ -346,11 +346,11 @@ static void tp_player_level_enter(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 }
 
-static void tp_player_level_populated(Gamep g, Levelsp v, Levelp l, Thingp me) { TRACE(); }
+void tp_player_level_populated(Gamep g, Levelsp v, Levelp l, Thingp me) { TRACE(); }
 
-static void tp_player_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me) { TRACE(); }
+void tp_player_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me) { TRACE(); }
 
-static void tp_player_on_teleported(Gamep g, Levelsp v, Levelp l, Thingp me)
+void tp_player_on_teleported(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
@@ -358,7 +358,7 @@ static void tp_player_on_teleported(Gamep g, Levelsp v, Levelp l, Thingp me)
   game_popup_text_add(g, at.x, at.y, std::string("Urgh"));
 }
 
-static void tp_player_tick_idle(Gamep g, Levelsp v, Levelp l, Thingp me)
+void tp_player_tick_idle(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
@@ -368,7 +368,7 @@ static void tp_player_tick_idle(Gamep g, Levelsp v, Levelp l, Thingp me)
   (void) player_move_to_next(g, v, l, me);
 }
 
-static void tp_player_tick_end(Gamep g, Levelsp v, Levelp l, Thingp me)
+void tp_player_tick_end(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
@@ -378,7 +378,7 @@ static void tp_player_tick_end(Gamep g, Levelsp v, Levelp l, Thingp me)
   (void) player_move_to_next(g, v, l, me);
 }
 
-static void tp_player_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
+void tp_player_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
   THING_DBG(g, v, l, me, "player spawned");
@@ -396,7 +396,7 @@ static void tp_player_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 }
 
-static bool tp_player_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp target, ThingEvent &e)
+bool tp_player_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp target, ThingEvent &e)
 {
   TRACE();
 
@@ -409,7 +409,7 @@ static bool tp_player_on_attacking(Gamep g, Levelsp v, Levelp l, Thingp attacker
   return true;
 }
 
-static bool tp_player_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp target, ThingEvent &e)
+bool tp_player_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker, Thingp target, ThingEvent &e)
 {
   TRACE();
 
@@ -422,11 +422,8 @@ static bool tp_player_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker, 
   return true;
 }
 
-[[nodiscard]] auto tp_load_player() -> bool
+void tp_load_player_common(Tpp tp)
 {
-  auto *tp   = tp_load("player"); // keep as string for scripts
-  auto  name = tp_name(tp);
-
   // begin sort marker1 {
   thing_description_set(tp, tp_player_description_get);
   thing_detail_set(tp, tp_player_detail_get);
@@ -509,6 +506,7 @@ static bool tp_player_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker, 
   tp_hearing_threshold_set(tp, 10); // smaller values => better hearing
   tp_light_color_set(tp, "white");
   tp_missile_count_max_set(tp, THING_MISSILE_MAX);
+  tp_name_long_set(tp, "easier wizard");
   tp_priority_set(tp, THING_PRIORITY_PLAYER);
   tp_speed_set(tp, 100);
   tp_stamina_set(tp, "100");
@@ -520,6 +518,8 @@ static bool tp_player_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker, 
   // end sort marker1 }
 
   auto delay = 1000;
+
+  auto name = tp_name(tp);
 
   for (auto frame = 0; frame < 2; frame++) {
     auto *tile = tile_find_mand(name + std::string(".idle.") + std::to_string(frame));
@@ -534,6 +534,4 @@ static bool tp_player_on_missing(Gamep g, Levelsp v, Levelp l, Thingp attacker, 
     tile_delay_ms_set(tile, delay);
     tp_tiles_push_back(tp, THING_ANIM_DEAD, tile);
   }
-
-  return true;
 }

@@ -196,15 +196,15 @@ enum {
   //    82 player select
   //    83 LEVEL_ARR_IDX_MAX
   //
-  LEVEL_ARR_IDX_MAX           = (((LEVEL_GRID_ACROSS * LEVEL_GRID_DOWN) + 3) - EMPTY_LEVEL_COUNT), // 83
+  LEVEL_ARR_IDX_MAX          = (((LEVEL_GRID_ACROSS * LEVEL_GRID_DOWN) + 3) - EMPTY_LEVEL_COUNT), // 83
   LEVEL_ARR_IDX_LEVEL_SECRET = (LEVEL_ARR_IDX_MAX - 1),                                           // 82
-  LEVEL_ARR_IDX_LEVEL_SELECT  = (LEVEL_ARR_IDX_MAX - 2),                                           // 81
-  LEVEL_ARR_IDX_BOSS_5        = 80,
-  LEVEL_ARR_IDX_BOSS_4        = 64,
-  LEVEL_ARR_IDX_BOSS_3        = 48,
-  LEVEL_ARR_IDX_BOSS_2        = 32,
-  LEVEL_ARR_IDX_BOSS_1        = 16,
-  LEVEL_ARR_IDX_BOSS_OFFSET   = 2, // Boss levels are in the middle of the grid
+  LEVEL_ARR_IDX_LEVEL_SELECT = (LEVEL_ARR_IDX_MAX - 2),                                           // 81
+  LEVEL_ARR_IDX_BOSS_5       = 80,
+  LEVEL_ARR_IDX_BOSS_4       = 64,
+  LEVEL_ARR_IDX_BOSS_3       = 48,
+  LEVEL_ARR_IDX_BOSS_2       = 32,
+  LEVEL_ARR_IDX_BOSS_1       = 16,
+  LEVEL_ARR_IDX_BOSS_OFFSET  = 2, // Boss levels are in the middle of the grid
 
   THING_ARR_INDEX_BITS = (THING_LEVEL_ID_BITS + THING_PER_LEVEL_THING_ID_BITS),
   THING_ID_MAX         = (1 << THING_ARR_INDEX_BITS),

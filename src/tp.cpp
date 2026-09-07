@@ -120,7 +120,6 @@ static std::initializer_list< std::string > tps = {
     "vault20", // Update VAULT_VARIANTS
     "rock1",
     "border",
-    "player",
     /* begin shell marker1 */
     /* shell for i in $(find . -name "*.cpp" | xargs grep -h "tp_load(\"" | sort | awk '{print $4}' | cut -d\" -f2) */
     /* shell do */
@@ -190,7 +189,8 @@ static std::initializer_list< std::string > tps = {
     "pale_eel",
     "pillar",
     "pirnana",
-    "player",
+    "player1",
+    "player2",
     "pot_disloc",
     "pot_healing",
     "pot_incin",

@@ -19,7 +19,7 @@
     case LEVEL_ARR_IDX_BOSS_3 : return LEVEL_TYPE_BOSS3;
     case LEVEL_ARR_IDX_BOSS_4 : return LEVEL_TYPE_BOSS4;
     case LEVEL_ARR_IDX_BOSS_5 : return LEVEL_TYPE_BOSS5;
-    default :               break;
+    default :                   break;
   }
   return LEVEL_TYPE_NORMAL;
 }
@@ -34,7 +34,7 @@
     case LEVEL_ARR_IDX_BOSS_3 : return true;
     case LEVEL_ARR_IDX_BOSS_4 : return true;
     case LEVEL_ARR_IDX_BOSS_5 : return true;
-    default :               break;
+    default :                   break;
   }
   return false;
 }
@@ -54,7 +54,7 @@
     case LEVEL_ARR_IDX_BOSS_3 : return true;
     case LEVEL_ARR_IDX_BOSS_4 : return true;
     case LEVEL_ARR_IDX_BOSS_5 : return true;
-    default :               break;
+    default :                   break;
   }
   return l->is_boss_level;
 }

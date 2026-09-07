@@ -983,7 +983,20 @@ else
     exit 1
 fi
 
-$DSYM
+case "$MY_OS_NAME" in
+    *MSYS*)
+        log_err "Please compile for ming64, not msys"
+        exit 1
+        ;;
+    *Darwin*)
+        dsymutil \${TARGET} 
+        ;;
+    *inux*)
+        ;;
+    *)
+        EXE=""
+        ;;
+esac
 
 #
 # Execute unit tests?

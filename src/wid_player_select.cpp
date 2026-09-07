@@ -330,6 +330,8 @@ void wid_player_select(Gamep g)
 {
   TRACE();
 
+  auto *v = game_levels_get(g);
+
   if (wid_player_select_window != nullptr) {
     wid_player_select_destroy(g);
   }
@@ -368,7 +370,11 @@ void wid_player_select(Gamep g)
     spoint const tl(0, y_at);
     spoint const br(player_select_width, y_at);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, UI_FMT_STR "Choose your sacrecant and first sacrifice");
+    if (v) {
+      wid_set_text(w, UI_FMT_STR "Choose your next sacrifice");
+    } else {
+      wid_set_text(w, UI_FMT_STR "Choose a sacrecant and first sacrifice");
+    }
     wid_set_style(w, UI_WID_STYLE_BUTTON_OUTLINE);
     wid_set_shape_none(w);
     wid_set_text_centerx(w, 1u);
@@ -386,7 +392,7 @@ void wid_player_select(Gamep g)
     spoint const br(button_width, y_at + button_height);
     wid_set_text_lhs(w, 1u);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, "Sacrecant");
+    wid_set_text(w, UI_INFO_FMT_STR "Sacrecant");
     y_at++;
   }
 
@@ -461,7 +467,7 @@ void wid_player_select(Gamep g)
     {
       std::string line;
 
-      line = tp_name_long(tp);
+      line = capitalize(tp_name_long(tp));
 
       TRACE();
       auto *w = wid_new_bar_button(g, wid_player_select_window, "Sacrecant");
@@ -484,6 +490,8 @@ void wid_player_select(Gamep g)
     y_at += button_step;
   }
 
+  y_at++;
+
   //
   // Sacrifices
   //
@@ -495,7 +503,7 @@ void wid_player_select(Gamep g)
     spoint const br(button_width, y_at + button_height);
     wid_set_text_lhs(w, 1u);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, "Sacrifices");
+    wid_set_text(w, UI_INFO_FMT_STR "Sacrifices");
     y_at++;
   }
 
@@ -545,7 +553,7 @@ void wid_player_select(Gamep g)
     {
       std::string line;
 
-      line = tp_name_long(tp);
+      line = capitalize_first(tp_name_long(tp));
 
       TRACE();
       auto *w = wid_new_bar_button(g, wid_player_select_window, "Sacrifice");

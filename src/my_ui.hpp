@@ -70,12 +70,12 @@ extern int UI_FONT_HEIGHT;
 // Name limits
 //
 enum {
-  UI_MAX_PLAYER_NAME_LEN = 12,
-  UI_MAX_SEED_NAME_LEN   = 17,
-  UI_MAX_WID_CONTEXT     = 2,
-  UI_MAX_SAVE_SLOTS      = 10, // How many save game slots
-  UI_MAX_THING_NAME_SHORT    = 15, // For short thing names
-  UI_MAX_THING_NAME_LONG     = 23, // For long thing names
+  UI_MAX_PLAYER_NAME_LEN  = 12,
+  UI_MAX_SEED_NAME_LEN    = 17,
+  UI_MAX_WID_CONTEXT      = 2,
+  UI_MAX_SAVE_SLOTS       = 10, // How many save game slots
+  UI_MAX_THING_NAME_SHORT = 15, // For short thing names
+  UI_MAX_THING_NAME_LONG  = 23, // For long thing names
 };
 
 //

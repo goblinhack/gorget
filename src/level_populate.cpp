@@ -754,7 +754,7 @@ static auto level_populate_fixup_biome_underhell(class LevelPopulate &lp, Tpp tp
   lp.tp_floor      = tp_random(g, v, l, is_floor);
   lp.tp_dirt       = tp_find_mand("dirt");
   lp.tp_exit       = tp_find_mand("exit");
-  lp.tp_player     = tp_find_mand("player");
+  lp.tp_player     = tp_first(is_player);
   lp.tp_entrance   = tp_find_mand("entrance");
 
   //
