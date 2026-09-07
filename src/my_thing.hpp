@@ -1010,6 +1010,7 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_ring(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_rock(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_rubble(Thingp t) -> bool;
+[[nodiscard]] auto thing_is_sacrifice(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_scheduled_for_cleanup(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_shovable(Gamep g, Levelsp v, Levelp l, Thingp t) -> bool;
 [[nodiscard]] auto thing_is_shown_health(Thingp t) -> bool;
@@ -1112,7 +1113,6 @@ using Thing = struct Thing {
 [[nodiscard]] auto thing_is_unused154(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused155(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused156(Thingp t) -> bool;
-[[nodiscard]] auto thing_is_unused157(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused16(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused17(Thingp t) -> bool;
 [[nodiscard]] auto thing_is_unused18(Thingp t) -> bool;

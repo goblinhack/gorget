@@ -1807,10 +1807,10 @@
   return tp_flag(tp, is_unused156) != 0;
 }
 
-[[nodiscard]] auto tp_is_unused157(Tpp tp) -> bool
+[[nodiscard]] auto tp_is_sacrifice(Tpp tp) -> bool
 {
   TRACE_DEBUG();
-  return tp_flag(tp, is_unused157) != 0;
+  return tp_flag(tp, is_sacrifice) != 0;
 }
 
 [[nodiscard]] auto tp_is_debuff(Tpp tp) -> bool

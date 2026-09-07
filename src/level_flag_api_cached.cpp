@@ -1845,10 +1845,10 @@
   return level_flag_cached(g, v, l, is_unused156, p);
 }
 
-[[nodiscard]] auto level_is_unused157_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
+[[nodiscard]] auto level_is_sacrifice_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool
 {
   TRACE_DEBUG();
-  return level_flag_cached(g, v, l, is_unused157, p);
+  return level_flag_cached(g, v, l, is_sacrifice, p);
 }
 
 [[nodiscard]] auto level_is_debuff_cached(Gamep g, Levelsp v, Levelp l, const bpoint &p) -> bool

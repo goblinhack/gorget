@@ -1845,10 +1845,10 @@
   return level_flag(g, v, l, is_unused156, p, me) != nullptr;
 }
 
-[[nodiscard]] auto level_is_unused157_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
+[[nodiscard]] auto level_is_sacrifice_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
 {
   TRACE_DEBUG();
-  return level_flag(g, v, l, is_unused157, p, me) != nullptr;
+  return level_flag(g, v, l, is_sacrifice, p, me) != nullptr;
 }
 
 [[nodiscard]] auto level_is_debuff_bool(Gamep g, Levelsp v, Levelp l, const bpoint &p, Thingp me) -> bool
