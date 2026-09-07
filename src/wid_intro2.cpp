@@ -34,7 +34,7 @@ static void wid_intro2_destroy(Gamep g)
     return;
   }
 
-  con("Intro menu: destroy");
+  con("Intro menu2: destroy");
   TRACE();
 
   wid_destroy(g, &wid_intro2_window);
@@ -71,7 +71,7 @@ static void wid_intro2_destroy(Gamep g)
 
 [[nodiscard]] static auto wid_intro2_mouse_down(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  con("Intro menu: next menu");
+  con("Intro menu2: next menu");
   TRACE();
 
   wid_intro2_destroy(g);
@@ -174,10 +174,9 @@ static void wid_intro2_tick(Gamep g, Widp w)
 
 void wid_intro2_select(Gamep g)
 {
-  con("Intro menu: select");
-  TRACE();
+  con("Intro menu2: select");
+  TRACE_INDENT();
 
-  TRACE();
   wid_intro2_window = wid_new_window(g, "continue");
 
   wid_intro2_anim_vert_scroll_offset = 0;

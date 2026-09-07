@@ -293,6 +293,12 @@ public:
   //
   bool compiler_non_const_hack {};
 
+  //
+  // Which player was selected
+  //
+  Tpp chosen_player {};
+  Tpp chosen_sacrifice {};
+
   /////////////////////////////////////////////////////////////////////////
   // not worth saving
   // ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^
@@ -3077,6 +3083,46 @@ void game_map_zoom_out(Gamep g)
 
   game_map_zoom_set(g, MAP_ZOOM_FULL_MAP);
   game_map_zoom_update(g);
+}
+
+[[nodiscard]] auto game_chosen_player_get(Gamep g) -> Tpp
+{
+  TRACE();
+
+  if (g == nullptr) [[unlikely]] {
+    return nullptr;
+  }
+  return g->chosen_player;
+}
+void game_chosen_player_set(Gamep g, Tpp tp)
+{
+  TRACE();
+
+  if (g == nullptr) [[unlikely]] {
+    ERR("no game pointer");
+    return;
+  }
+  g->chosen_player = tp;
+}
+
+[[nodiscard]] auto game_chosen_sacrifice_get(Gamep g) -> Tpp
+{
+  TRACE();
+
+  if (g == nullptr) [[unlikely]] {
+    return nullptr;
+  }
+  return g->chosen_sacrifice;
+}
+void game_chosen_sacrifice_set(Gamep g, Tpp tp)
+{
+  TRACE();
+
+  if (g == nullptr) [[unlikely]] {
+    ERR("no game pointer");
+    return;
+  }
+  g->chosen_sacrifice = tp;
 }
 
 [[nodiscard]] auto game_map_single_pix_size_get(Gamep g) -> int

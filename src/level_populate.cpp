@@ -754,8 +754,15 @@ static auto level_populate_fixup_biome_underhell(class LevelPopulate &lp, Tpp tp
   lp.tp_floor      = tp_random(g, v, l, is_floor);
   lp.tp_dirt       = tp_find_mand("dirt");
   lp.tp_exit       = tp_find_mand("exit");
-  lp.tp_player     = tp_first(is_player);
   lp.tp_entrance   = tp_find_mand("entrance");
+
+  //
+  // Get the chosen player
+  //
+  lp.tp_player = game_chosen_player_get(g);
+  if (! lp.tp_player) {
+    lp.tp_player = tp_first(is_player);
+  }
 
   //
   // We need secret doors to match the style of walls

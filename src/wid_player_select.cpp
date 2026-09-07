@@ -6,6 +6,7 @@
 #include "my_callstack.hpp"
 #include "my_color_defs.hpp"
 #include "my_game.hpp"
+#include "my_main.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
 #include "my_spoint.hpp"
@@ -26,9 +27,6 @@
 #include <string>
 
 static Widp wid_player_select_window;
-
-static Tpp chosen_player;
-static Tpp chosen_sacrifice;
 
 static Widp wid_player_shortcut[ THING_INVENTORY_MAX ];
 static Widp wid_player[ THING_INVENTORY_MAX ];
@@ -57,7 +55,7 @@ static void wid_player_select_check_if_done(Gamep g)
 {
   TRACE();
 
-  if ((chosen_player == nullptr) || (chosen_sacrifice == nullptr)) {
+  if ((game_chosen_player_get(g) == nullptr) || (game_chosen_sacrifice_get(g) == nullptr)) {
     return;
   }
 
@@ -65,8 +63,8 @@ static void wid_player_select_check_if_done(Gamep g)
 
   wid_new_game(g);
 
-  chosen_player    = nullptr;
-  chosen_sacrifice = nullptr;
+  game_chosen_player_set(g, nullptr);
+  game_chosen_sacrifice_set(g, nullptr);
 }
 
 static void wid_player_update_selections(Gamep g)
@@ -90,7 +88,7 @@ static void wid_player_update_selections(Gamep g)
       wid_set_color(w, WID_COLOR_BG, GRAY10);
 
       auto *tp = wid_get_tp_context(g, w, 0);
-      if (tp == chosen_player) {
+      if (tp == game_chosen_player_get(g)) {
         wid_set_mode(w, WID_MODE_OVER);
         wid_set_style(w, UI_WID_STYLE_BUTTON_SQUARE_SOLID);
         wid_set_color(w, WID_COLOR_BG, RED);
@@ -114,7 +112,7 @@ static void wid_player_update_selections(Gamep g)
       wid_set_color(w, WID_COLOR_BG, GRAY10);
 
       auto *tp = wid_get_tp_context(g, w, 0);
-      if (tp == chosen_sacrifice) {
+      if (tp == game_chosen_sacrifice_get(g)) {
         wid_set_mode(w, WID_MODE_OVER);
         wid_set_style(w, UI_WID_STYLE_BUTTON_SQUARE_SOLID);
         wid_set_color(w, WID_COLOR_BG, RED);
@@ -170,10 +168,10 @@ static void wid_player_select_player_via_mouse_over_end(Gamep g, Widp w)
     return false;
   }
 
-  if (chosen_player == tp) {
-    chosen_player = nullptr;
+  if (game_chosen_player_get(g) == tp) {
+    game_chosen_player_set(g, nullptr);
   } else {
-    chosen_player = tp;
+    game_chosen_player_set(g, tp);
   }
 
   wid_player_select_check_if_done(g);
@@ -226,10 +224,10 @@ static void wid_player_select_sacrifice_via_mouse_over_end(Gamep g, Widp w)
     return false;
   }
 
-  if (chosen_sacrifice == tp) {
-    chosen_sacrifice = nullptr;
+  if (game_chosen_sacrifice_get(g) == tp) {
+    game_chosen_sacrifice_set(g, nullptr);
   } else {
-    chosen_sacrifice = tp;
+    game_chosen_sacrifice_set(g, tp);
   }
 
   wid_player_select_check_if_done(g);
@@ -326,7 +324,8 @@ static void wid_player_select_sacrifice_via_mouse_over_end(Gamep g, Widp w)
 
 void wid_player_select(Gamep g)
 {
-  TRACE();
+  con("Player select menu: create");
+  TRACE_INDENT();
 
   auto *v = game_levels_get(g);
 

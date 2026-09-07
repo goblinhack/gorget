@@ -28,7 +28,7 @@ static void wid_intro1_destroy(Gamep g)
     return;
   }
 
-  con("Intro menu: destroy");
+  con("Intro menu1: destroy");
   TRACE();
 
   wid_destroy(g, &wid_intro1_window);
@@ -65,7 +65,7 @@ static void wid_intro1_destroy(Gamep g)
 
 [[nodiscard]] static auto wid_intro1_mouse_down(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
-  con("Intro menu: next menu");
+  con("Intro menu1: next menu");
   TRACE();
 
   wid_intro1_destroy(g);
@@ -112,7 +112,7 @@ static void wid_intro1_tick(Gamep g, Widp w)
 
 void wid_intro1_select(Gamep g)
 {
-  con("Intro menu: select");
+  con("Intro menu1: select");
   TRACE();
 
   TRACE();

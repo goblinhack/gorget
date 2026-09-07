@@ -288,6 +288,12 @@ auto               game_request_to_end_game_unset(Gamep g) -> void;
 [[nodiscard]] auto game_request_to_end_game_reason_get(Gamep g) -> std::string;
 auto               game_request_to_end_game_reason_set(Gamep g, const std::string &val) -> void;
 
+[[nodiscard]] auto game_chosen_player_get(Gamep g) -> Tpp;
+void               game_chosen_player_set(Gamep g, Tpp tp);
+
+[[nodiscard]] auto game_chosen_sacrifice_get(Gamep g) -> Tpp;
+void               game_chosen_sacrifice_set(Gamep g, Tpp tp);
+
 [[nodiscard]] auto game_is_new_highest_hiscore(Gamep g, uint32_t score) -> bool;
 [[nodiscard]] auto game_is_new_hiscore(Gamep g, uint32_t score) -> bool;
 [[nodiscard]] auto game_wait_for_tick_to_finish(Gamep g, Levelsp v, Levelp l) -> bool;
