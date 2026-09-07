@@ -615,7 +615,7 @@ void wid_set_tp_context(Gamep g, Widp w, Tpp tp)
   }
 
   for (auto i = 0; i < UI_MAX_WID_CONTEXT; i++) {
-    auto cand = w->tp_context[ i ];
+    auto *cand = w->tp_context[ i ];
     if (! static_cast< bool >(cand)) {
       w->tp_context[ i ] = tp;
       return;
@@ -645,7 +645,7 @@ void wid_unset_tp_context(Gamep g, Widp w, Tpp tp)
   for (auto i = 0; i < UI_MAX_WID_CONTEXT; i++) {
     auto *cand = w->tp_context[ i ];
     if (cand == tp) {
-      w->tp_context[ i ] = 0;
+      w->tp_context[ i ] = nullptr;
       return;
     }
   }

@@ -6,13 +6,11 @@
 #include "my_callstack.hpp"
 #include "my_color_defs.hpp"
 #include "my_game.hpp"
-#include "my_game_inlines.hpp"
-#include "my_level.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
 #include "my_spoint.hpp"
+#include "my_string.hpp"
 #include "my_thing.hpp"
-#include "my_thing_inlines.hpp"
 #include "my_tile.hpp"
 #include "my_tp.hpp"
 #include "my_tp_inlines.hpp"
@@ -59,7 +57,7 @@ static void wid_player_select_check_if_done(Gamep g)
 {
   TRACE();
 
-  if (! chosen_player || ! chosen_sacrifice) {
+  if ((chosen_player == nullptr) || (chosen_sacrifice == nullptr)) {
     return;
   }
 
@@ -75,7 +73,7 @@ static void wid_player_update_selections(Gamep g)
 {
   TRACE();
 
-  Widp w;
+  Widp w = nullptr;
 
   wid_unset_focus(g);
   wid_mouse_over_end(g);
@@ -129,7 +127,7 @@ static void wid_player_update_selections(Gamep g)
   }
 }
 
-void wid_player_select_player_via_mouse_over_begin(Gamep g, Widp w, int /*relx*/, int /*rely*/, int /*wheelx*/, int /*wheely*/)
+static void wid_player_select_player_via_mouse_over_begin(Gamep g, Widp w, int /*relx*/, int /*rely*/, int /*wheelx*/, int /*wheely*/)
 {
   TRACE();
 
@@ -147,7 +145,7 @@ void wid_player_select_player_via_mouse_over_begin(Gamep g, Widp w, int /*relx*/
 #endif
 }
 
-void wid_player_select_player_via_mouse_over_end(Gamep g, Widp w)
+static void wid_player_select_player_via_mouse_over_end(Gamep g, Widp w)
 {
   TRACE();
 
@@ -185,7 +183,7 @@ void wid_player_select_player_via_mouse_over_end(Gamep g, Widp w)
   return true;
 }
 
-void wid_player_select_sacrifice_via_mouse_over_begin(Gamep g, Widp w, int /*relx*/, int /*rely*/, int /*wheelx*/, int /*wheely*/)
+static void wid_player_select_sacrifice_via_mouse_over_begin(Gamep g, Widp w, int /*relx*/, int /*rely*/, int /*wheelx*/, int /*wheely*/)
 {
   TRACE();
 
@@ -203,7 +201,7 @@ void wid_player_select_sacrifice_via_mouse_over_begin(Gamep g, Widp w, int /*rel
 #endif
 }
 
-void wid_player_select_sacrifice_via_mouse_over_end(Gamep g, Widp w)
+static void wid_player_select_sacrifice_via_mouse_over_end(Gamep g, Widp w)
 {
   TRACE();
 
@@ -370,7 +368,7 @@ void wid_player_select(Gamep g)
     spoint const tl(0, y_at);
     spoint const br(player_select_width, y_at);
     wid_set_pos(w, tl, br);
-    if (v) {
+    if (v != nullptr) {
       wid_set_text(w, UI_FMT_STR "Choose your next sacrifice");
     } else {
       wid_set_text(w, UI_FMT_STR "Choose a sacrecant and first sacrifice");
