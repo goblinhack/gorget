@@ -408,25 +408,23 @@ void wid_player_select(Gamep g)
     //
     // Sacrecant icon
     //
-    if (tp != nullptr) {
-      Tilep tile = tp_tiles_get(tp, THING_ANIM_IDLE, 0);
-      if (tile != nullptr) {
-        TRACE();
-        auto        *w = wid_new_square_button(g, wid_player_select_window, "Icon");
-        spoint const tl(1, y_at);
-        spoint const br(1, y_at);
-        wid_set_tile(TILE_LAYER_TEXT_FG, w, tile);
-        wid_set_style(w, button_style);
-        wid_set_pos(w, tl, br);
+    Tilep tile = tp_tiles_get(tp, THING_ANIM_IDLE, 0);
+    if (tile != nullptr) {
+      TRACE();
+      auto        *w = wid_new_square_button(g, wid_player_select_window, "Icon");
+      spoint const tl(1, y_at);
+      spoint const br(1, y_at);
+      wid_set_tile(TILE_LAYER_TEXT_FG, w, tile);
+      wid_set_style(w, button_style);
+      wid_set_pos(w, tl, br);
 
-        wid_set_tp_context(g, w, tp);
-        wid_set_on_mouse_down(w, wid_player_select_player_via_mouse_down);
+      wid_set_tp_context(g, w, tp);
+      wid_set_on_mouse_down(w, wid_player_select_player_via_mouse_down);
 
-        wid_set_on_mouse_over_begin(w, wid_player_select_player_via_mouse_over_begin);
-        wid_set_on_mouse_over_end(w, wid_player_select_player_via_mouse_over_end);
+      wid_set_on_mouse_over_begin(w, wid_player_select_player_via_mouse_over_begin);
+      wid_set_on_mouse_over_end(w, wid_player_select_player_via_mouse_over_end);
 
-        wid_player_icon[ y_index ] = w;
-      }
+      wid_player_icon[ y_index ] = w;
     }
 
     //
@@ -486,6 +484,7 @@ void wid_player_select(Gamep g)
     }
 
     y_at += button_step;
+    y_index++;
   }
 
   y_at++;
@@ -572,6 +571,7 @@ void wid_player_select(Gamep g)
     }
 
     y_at += button_step;
+    y_index++;
   }
 
   wid_update(g, wid_player_select_window);
