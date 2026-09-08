@@ -102,7 +102,7 @@ static void wid_statistics_destroy(Gamep g)
   TRACE();
   game_state_reset(g, "finished game");
 
-  if (g_opt_quick_start) {
+  if (g_opt_quick_start || g_opt_player_select_menu || g_opt_level_select_menu) {
     DIE_CLEAN("Quick quit");
   }
 
