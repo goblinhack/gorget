@@ -20,6 +20,32 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
+void tp_player1_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
+{
+  TRACE();
+  THING_DBG(g, v, l, me, "player spawned");
+
+  if (g_opt_tests) {
+    return;
+  }
+
+  static std::initializer_list< std::string > items = {
+      "wand_fire", //
+  };
+
+  if (! thing_carry(g, v, l, me, items)) {
+    thing_err(g, v, l, me, "failed to carry");
+  }
+}
+
+auto tp_player1_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
+{
+  TRACE();
+
+  return UI_INFO1_FMT_STR "The choice for the sacrecant that doesn't like to sacrifice much!\n" //
+      UI_INFO2_FMT_STR "This sacrecant has generous health and no stat penalties.\n";
+}
+
 [[nodiscard]] auto tp_load_player1() -> bool
 {
   auto *tp   = tp_load("player1"); // keep as string for scripts
@@ -27,8 +53,15 @@
 
   tp_load_player_common(tp);
 
-  // begin sort marker1 {
-  // end sort marker1 }
+  if (! g_opt_tests) {
+    // begin sort marker1 {
+    thing_detail_set(tp, tp_player1_detail_get);
+    thing_on_spawned_set(tp, tp_player1_on_spawned);
+    tp_name_long_set(tp, "cowardly wizard");
+    tp_health_set(tp, "250");
+    tp_mana_set(tp, 50);
+    // end sort marker1 }
+  }
 
   return true;
 }

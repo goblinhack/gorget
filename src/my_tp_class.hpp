@@ -148,8 +148,8 @@ public:
   int value6 {0};
   int value7 {0};
   int value8 {0};
-  int value9 {0};
-  int value10 {0};
+  int mana_max {0};
+  int melee {0};
   int jump_attack_pct_chance {0};
   int items_collected_max {0};
   int hearing_threshold {0};

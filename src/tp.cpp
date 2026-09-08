@@ -191,6 +191,8 @@ static std::initializer_list< std::string > tps = {
     "pirnana",
     "player1",
     "player2",
+    "player3",
+    "player4",
     "pot_disloc",
     "pot_healing",
     "pot_incin",
@@ -1583,44 +1585,44 @@ void tp_value8_set(Tpp tp, int val)
   return tp->value8;
 }
 
-void tp_value9_set(Tpp tp, int val)
+void tp_mana_max_set(Tpp tp, int val)
 {
   TRACE_DEBUG();
   if (tp == nullptr) [[unlikely]] {
     ERR("no thing template pointer");
     return;
   }
-  tp->value9 = val;
+  tp->mana_max = val;
 }
 
-[[nodiscard]] auto tp_value9_get(Tpp tp) -> int
+[[nodiscard]] auto tp_mana_max_get(Tpp tp) -> int
 {
   TRACE_DEBUG();
   if (tp == nullptr) [[unlikely]] {
     ERR("no thing template pointer");
     return 0;
   }
-  return tp->value9;
+  return tp->mana_max;
 }
 
-void tp_value10_set(Tpp tp, int val)
+void tp_mana_set(Tpp tp, int val)
 {
   TRACE_DEBUG();
   if (tp == nullptr) [[unlikely]] {
     ERR("no thing template pointer");
     return;
   }
-  tp->value10 = val;
+  tp->melee = val;
 }
 
-[[nodiscard]] auto tp_value10_get(Tpp tp) -> int
+[[nodiscard]] auto tp_mana_get(Tpp tp) -> int
 {
   TRACE_DEBUG();
   if (tp == nullptr) [[unlikely]] {
     ERR("no thing template pointer");
     return 0;
   }
-  return tp->value10;
+  return tp->melee;
 }
 
 void tp_jump_attack_pct_chance_set(Tpp tp, int val)

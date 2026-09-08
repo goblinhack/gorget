@@ -724,13 +724,13 @@ auto operator>>(std::istream &in, Bits< class Game & > my) -> std::istream &
       return in;
     }
     in >> bits(tmp);
-    if (tmp != offsetof(Thing, _value9)) {
-      game_load_error = "thing structure changed: offsetof(Thing, _value9)";
+    if (tmp != offsetof(Thing, _mana_max)) {
+      game_load_error = "thing structure changed: offsetof(Thing, _mana_max)";
       return in;
     }
     in >> bits(tmp);
-    if (tmp != offsetof(Thing, _value10)) {
-      game_load_error = "thing structure changed: offsetof(Thing, _value10)";
+    if (tmp != offsetof(Thing, _mana)) {
+      game_load_error = "thing structure changed: offsetof(Thing, _mana)";
       return in;
     }
     in >> bits(tmp);

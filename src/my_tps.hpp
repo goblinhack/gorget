@@ -82,6 +82,8 @@ auto tp_load_pillar() -> bool;
 auto tp_load_pirnana() -> bool;
 auto tp_load_player1() -> bool;
 auto tp_load_player2() -> bool;
+auto tp_load_player3() -> bool;
+auto tp_load_player4() -> bool;
 auto tp_load_pot_disloc() -> bool;
 auto tp_load_pot_healing() -> bool;
 auto tp_load_pot_incin() -> bool;

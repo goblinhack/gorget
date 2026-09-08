@@ -38,7 +38,7 @@ void thing_enhance(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp)
   (void) thing_stamina_max_incr(g, v, l, t, thing_stamina_incr(g, v, l, t, tp_stamina_max_get(tp)));
   (void) thing_temperature_incr(g, v, l, t, tp_temperature_initial_get(tp));
   (void) thing_value1_incr(g, v, l, t, tp_value1_get(tp));
-  (void) thing_value10_incr(g, v, l, t, tp_value10_get(tp));
+  (void) thing_mana_incr(g, v, l, t, tp_mana_get(tp));
   (void) thing_jump_attack_pct_chance_incr(g, v, l, t, tp_jump_attack_pct_chance_get(tp));
   (void) thing_items_collected_max_incr(g, v, l, t, tp_items_collected_max_get(tp));
   (void) thing_value2_incr(g, v, l, t, tp_value2_get(tp));
@@ -48,5 +48,5 @@ void thing_enhance(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp)
   (void) thing_value6_incr(g, v, l, t, tp_value6_get(tp));
   (void) thing_value7_incr(g, v, l, t, tp_value7_get(tp));
   (void) thing_value8_incr(g, v, l, t, tp_value8_get(tp));
-  (void) thing_value9_incr(g, v, l, t, tp_value9_get(tp));
+  (void) thing_mana_max_incr(g, v, l, t, tp_mana_max_get(tp));
 }

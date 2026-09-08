@@ -266,6 +266,56 @@ static void wid_thing_info_item_mouse_over_end(Gamep g, Widp w)
 }
 
 //
+// Mana bar
+//
+[[nodiscard]] auto wid_thing_info_mana_bar(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp tp, WidPopup *parent, int width) -> bool
+{
+  TRACE();
+
+  char line_bar[ MAXSHORTSTR ];
+
+  //
+  // "Mana            "
+  //
+  memset(line_bar, 0, sizeof(line_bar));
+  memset(line_bar, ' ', sizeof(line_bar) - 1);
+
+  (void) my_strlcpy(line_bar + 1, "Mana", sizeof("Mana"));
+
+  //
+  // "Mana         a/b"
+  //
+  auto mana_max = thing_mana_max(g, v, l, me);
+  auto h        = thing_mana(g, v, l, me);
+  h             = std::max(h, 0);
+
+  std::string const mana_str = std::to_string(h) + "/" + std::to_string(mana_max);
+  (void) my_strlcpy(line_bar + width - mana_str.size() - 3, mana_str.c_str(), width - mana_str.size());
+  line_bar[ strlen(line_bar) ] = ' ';
+
+  //
+  // "Mana         a/b"
+  // "xxxxxxxxxxxxxxxxxx"
+  //
+  auto *w = parent->log(g, std::string(line_bar));
+  if (w != nullptr) {
+    int mana_how_much = static_cast< int >((static_cast< float >(thing_mana(g, v, l, me)) / static_cast< float >(mana_max))
+                                           * (static_cast< float > UI_STAT_BAR_STEPS - 1));
+    mana_how_much     = std::min(mana_how_much, UI_STAT_BAR_STEPS - 1);
+    mana_how_much     = std::max(mana_how_much, 0);
+    auto icon         = "stat_bar." + std::to_string(mana_how_much + 1);
+
+    wid_set_shape_square(w);
+    wid_set_style(w, UI_WID_STYLE_SPARSE_NONE);
+    wid_set_color(w, WID_COLOR_TEXT_FG, UI_HIGHLIGHT_COLOR);
+    wid_set_tilename(TILE_LAYER_BOX_BG, w, icon);
+    wid_set_text_lhs(w, 1u);
+  }
+
+  return true;
+}
+
+//
 // Stamina bar
 //
 [[nodiscard]] auto wid_thing_info_stamina_bar(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp tp, WidPopup *parent, int width) -> bool
@@ -1710,15 +1760,15 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, i
       if (wid_thing_info_detail(g, v, l, me, parent)) {
         parent->log_empty_line(g);
       }
+    } else {
+      if (wid_thing_info_score(g, v, l, me, parent)) {
+        parent->log_empty_line(g);
+      }
     }
   } else {
     if (wid_thing_info_detail(g, v, l, me, parent)) {
       parent->log_empty_line(g);
     }
-  }
-
-  if (wid_thing_info_score(g, v, l, me, parent)) {
-    parent->log_empty_line(g);
   }
 
   if (wid_thing_info_health_bar(g, v, l, me, tp, parent, width)) {
@@ -1727,6 +1777,12 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, i
 
   if (wid_thing_info_stamina_bar(g, v, l, me, tp, parent, width)) {
     parent->log_empty_line(g);
+  }
+
+  if (thing_is_player(me)) {
+    if (wid_thing_info_mana_bar(g, v, l, me, tp, parent, width)) {
+      parent->log_empty_line(g);
+    }
   }
 
   if (wid_thing_info_noise_bar(g, v, l, me, tp, parent, width)) {
