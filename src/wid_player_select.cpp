@@ -69,11 +69,13 @@ static void wid_player_select_check_if_done(Gamep g)
     return;
   }
 
-  game_chosen_player_set(g, thing_tp(game_selected_player_get(g)));
+  auto tp = thing_tp(game_selected_player_get(g));
+  game_chosen_player_set(g, tp);
   game_chosen_sacrifice_set(g, thing_tp(game_selected_sacrifice_get(g)));
 
   wid_player_select_destroy(g);
 
+  game_difficulty_set(g, tp_difficulty_get(tp));
   wid_new_game(g);
 
   game_chosen_player_set(g, nullptr);

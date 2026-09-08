@@ -4164,7 +4164,7 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
   return t->_value7 -= val;
 }
-[[nodiscard]] auto thing_value8(Thingp t) -> int
+[[nodiscard]] auto thing_difficulty(Thingp t) -> int
 {
   TRACE_DEBUG();
 
@@ -4172,10 +4172,10 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return 0;
   }
-  return t->_value8;
+  return t->_difficulty;
 }
 
-[[nodiscard]] auto thing_value8_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_difficulty_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -4183,10 +4183,10 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return 0;
   }
-  return t->_value8 = val;
+  return t->_difficulty = val;
 }
 
-[[nodiscard]] auto thing_value8_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_difficulty_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -4194,10 +4194,10 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return 0;
   }
-  return t->_value8 += val;
+  return t->_difficulty += val;
 }
 
-[[nodiscard]] auto thing_value8_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
+[[nodiscard]] auto thing_difficulty_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val) -> int
 {
   TRACE_DEBUG();
 
@@ -4205,10 +4205,10 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
     ERR("no thing pointer");
     return 0;
   }
-  if (static_cast< int >(t->_value8) - val <= 0) {
-    return t->_value8 = 0;
+  if (static_cast< int >(t->_difficulty) - val <= 0) {
+    return t->_difficulty = 0;
   }
-  return t->_value8 -= val;
+  return t->_difficulty -= val;
 }
 
 [[nodiscard]] auto thing_items_collected_max(Thingp t) -> int

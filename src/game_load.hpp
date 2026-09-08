@@ -237,6 +237,11 @@ auto operator>>(std::istream &in, Bits< Config & > my) -> std::istream &
       return in;
     }
     in >> bits(tmp);
+    if (tmp != offsetof(Config, difficulty)) {
+      game_load_error = "Config structure changed: offsetof(Config, difficulty))";
+      return in;
+    }
+    in >> bits(tmp);
     if (tmp != offsetof(Config, key_wait)) {
       game_load_error = "Config structure changed: offsetof(Config, key_wait))";
       return in;
@@ -468,6 +473,7 @@ auto operator>>(std::istream &in, Bits< Config & > my) -> std::istream &
   in >> bits(my.t.music_volume);
   in >> bits(my.t.sdl_delay);
   in >> bits(my.t.sound_volume);
+  in >> bits(my.t.difficulty);
 
   log("read config: config_font            = %d", my.t.config_font);
   log("read config: config_font_height     = %d", my.t.config_font_height);
@@ -485,6 +491,7 @@ auto operator>>(std::istream &in, Bits< Config & > my) -> std::istream &
   log("read config: music_volume           = %d", my.t.music_volume);
   log("read config: sdl_delay              = %d", my.t.sdl_delay);
   log("read config: sound_volume           = %d", my.t.sound_volume);
+  log("read config: difficulty             = %d", my.t.difficulty);
 
   if (! g_opt_override_debug_level) {
     if (my.t.debug_mode) {
@@ -719,8 +726,8 @@ auto operator>>(std::istream &in, Bits< class Game & > my) -> std::istream &
       return in;
     }
     in >> bits(tmp);
-    if (tmp != offsetof(Thing, _value8)) {
-      game_load_error = "thing structure changed: offsetof(Thing, _value8)";
+    if (tmp != offsetof(Thing, _difficulty)) {
+      game_load_error = "thing structure changed: offsetof(Thing, _difficulty)";
       return in;
     }
     in >> bits(tmp);

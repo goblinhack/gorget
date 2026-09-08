@@ -4776,9 +4776,9 @@ static void gfx_init_tiles()
       "player4.idle.0",
       "player4.idle.1",
       "player4.dead.0",
-      "",
-      "",
-      "",
+      "player5.idle.0",
+      "player5.idle.1",
+      "player5.dead.0",
       "",
       // ##############################################################################
       "",

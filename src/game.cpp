@@ -124,6 +124,11 @@ public:
   int sdl_delay        = {};
   int sound_volume     = {};
 
+  //
+  // Game toughness
+  //
+  int difficulty = {};
+
   SDL_Keysym key_wait       = {};
   SDL_Keysym key_console    = {};
   SDL_Keysym key_help       = {};
@@ -418,6 +423,7 @@ void Config::reset()
   music_volume       = {MIX_MAX_VOLUME / 4};
   sdl_delay          = 1;
   sound_volume       = {MIX_MAX_VOLUME / 2};
+  difficulty         = 0;
 }
 
 void game_config_reset(Gamep g) { g->config.reset(); }
@@ -2264,6 +2270,27 @@ void game_sdl_delay_set(Gamep g, int val)
     return;
   }
   g->config.sdl_delay = val;
+}
+
+[[nodiscard]] auto game_difficulty_get(Gamep g) -> int
+{
+  TRACE();
+
+  if (g == nullptr) [[unlikely]] {
+    ERR("no game pointer");
+    return 0;
+  }
+  return g->config.difficulty;
+}
+void game_difficulty_set(Gamep g, int val)
+{
+  TRACE();
+
+  if (g == nullptr) [[unlikely]] {
+    ERR("no game pointer");
+    return;
+  }
+  g->config.difficulty = val;
 }
 
 [[nodiscard]] auto game_sound_volume_get(Gamep g) -> int

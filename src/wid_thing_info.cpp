@@ -169,6 +169,38 @@ static void wid_thing_info_item_mouse_over_end(Gamep g, Widp w)
 }
 
 //
+// How tough the game ie
+//
+[[nodiscard]] auto wid_thing_info_difficulty(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent) -> bool
+{
+  TRACE();
+
+  switch (tp_difficulty_get(thing_tp(me))) {
+    case 0 : //
+      parent->log(g, "Difficulty: as easy as it gets...");
+      break;
+    case 1 : //
+      parent->log(g, "Difficulty: hard");
+      parent->log(g, UI_INFO2_FMT_STR "Expect more monsters and faster mob spawn chances" UI_RESET_FMT);
+      break;
+    case 2 : //
+      parent->log(g, "Difficulty: harder");
+      parent->log(g, UI_YELLOW_FMT_STR "Expect more monsters and faster mob spawn chances" UI_RESET_FMT);
+      break;
+    case 3 : //
+      parent->log(g, "Difficulty: nightmare");
+      parent->log(g, UI_ORANGE_FMT_STR "Expect more monsters and faster mob spawn chances" UI_RESET_FMT);
+      break;
+    case 4 : //
+      parent->log(g, "Difficulty: psycho");
+      parent->log(g, UI_RED_FMT_STR "Expect even more monsters and faster mob spawn chances" UI_RESET_FMT);
+      break;
+  }
+
+  return true;
+}
+
+//
 // Score
 //
 [[nodiscard]] auto wid_thing_info_score(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent) -> bool
@@ -1758,6 +1790,10 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, i
   if (thing_is_player(me)) {
     if (level_is_level_select(g, v, l)) {
       if (wid_thing_info_detail(g, v, l, me, parent)) {
+        parent->log_empty_line(g);
+      }
+
+      if (wid_thing_info_difficulty(g, v, l, me, parent)) {
         parent->log_empty_line(g);
       }
     } else {

@@ -98,7 +98,7 @@
   (void) thing_value5_set(g, v, l, t, tp_value5_get(tp));
   (void) thing_value6_set(g, v, l, t, tp_value6_get(tp));
   (void) thing_value7_set(g, v, l, t, tp_value7_get(tp));
-  (void) thing_value8_set(g, v, l, t, tp_value8_get(tp));
+  (void) thing_difficulty_set(g, v, l, t, tp_difficulty_get(tp));
   (void) thing_mana_set(g, v, l, t, tp_mana_get(tp));
   (void) thing_mana_max_set(g, v, l, t, tp_mana_get(tp));
   (void) thing_variant_set(g, v, l, t, tp_variant_get(tp));

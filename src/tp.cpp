@@ -193,6 +193,7 @@ static std::initializer_list< std::string > tps = {
     "player2",
     "player3",
     "player4",
+    "player5",
     "pot_disloc",
     "pot_healing",
     "pot_incin",
@@ -1565,24 +1566,24 @@ void tp_value7_set(Tpp tp, int val)
   return tp->value7;
 }
 
-void tp_value8_set(Tpp tp, int val)
+void tp_difficulty_set(Tpp tp, int val)
 {
   TRACE_DEBUG();
   if (tp == nullptr) [[unlikely]] {
     ERR("no thing template pointer");
     return;
   }
-  tp->value8 = val;
+  tp->difficulty = val;
 }
 
-[[nodiscard]] auto tp_value8_get(Tpp tp) -> int
+[[nodiscard]] auto tp_difficulty_get(Tpp tp) -> int
 {
   TRACE_DEBUG();
   if (tp == nullptr) [[unlikely]] {
     ERR("no thing template pointer");
     return 0;
   }
-  return tp->value8;
+  return tp->difficulty;
 }
 
 void tp_mana_max_set(Tpp tp, int val)

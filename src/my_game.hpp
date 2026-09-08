@@ -154,6 +154,9 @@ auto               game_sdl_delay_set(Gamep g, int val) -> void;
 [[nodiscard]] auto game_sound_volume_get(Gamep g) -> int;
 auto               game_sound_volume_set(Gamep g, int val) -> void;
 
+[[nodiscard]] auto game_difficulty_get(Gamep g) -> int;
+auto               game_difficulty_set(Gamep g, int val) -> void;
+
 [[nodiscard]] auto game_levels_get(Gamep g) -> Levelsp;
 [[nodiscard]] auto game_levels_set(Gamep g, Levelsp val) -> Levelsp;
 [[nodiscard]] auto game_level_populate(Gamep g, Levelsp v, LevelNum n) -> Levelp;

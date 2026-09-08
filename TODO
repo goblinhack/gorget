@@ -1,33 +1,9 @@
 bugs
 ----
+stuck after stats window
 
 todo
 ----
-players
-  easier wizard
-    - 250 hp
-    - fire ball
-  fire wizard
-    - 150 hp
-    - fire ball
-    - fire resist
-    - damage +10%
-    - speed -20%
-    - def 8
-  war wizard
-    - 125 hp
-    - fire beam
-    - damage +20%
-    - speed -20%
-    - att 12
-  demon wizard
-    - 100 hp
-    - fire beam
-    - fire immune
-    - poison blood
-    - damage +50%
-    - att 14
-    - def 6
 sacrifices
   - clumsy                  x2 noise generated                                                    melee +10
   - blood-feast:            absorb health from fleshy monsters / x2 damage-received from undead   melee +20

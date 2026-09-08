@@ -62,12 +62,13 @@ auto tp_player3_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::stri
     thing_on_spawned_set(tp, tp_player3_on_spawned);
     tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d20"); // fumble => intensify / keep burning / crit => stop burning
     tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d1000");  // fumble => flames spread to you
-    tp_name_long_set(tp, "firestarter wizard");
+    tp_difficulty_set(tp, 2);
     tp_health_set(tp, "100");
-    tp_stat_set(tp, THING_STAT_ATT, "1d4+10");
-    tp_stat_set(tp, THING_STAT_DEF, "12");
     tp_is_resistant_to_add(tp, THING_EVENT_FIRE_DAMAGE);
     tp_mana_set(tp, 150);
+    tp_name_long_set(tp, "firestarter wizard");
+    tp_stat_set(tp, THING_STAT_ATT, "1d4+10");
+    tp_stat_set(tp, THING_STAT_DEF, "12");
     // end sort marker1 }
   }
 

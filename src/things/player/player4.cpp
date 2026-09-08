@@ -59,14 +59,15 @@ auto tp_player4_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::stri
     // begin sort marker1 {
     thing_detail_set(tp, tp_player4_detail_get);
     thing_on_spawned_set(tp, tp_player4_on_spawned);
-    tp_name_long_set(tp, "speed-demon wizard");
-    tp_health_set(tp, "150");
+    tp_difficulty_set(tp, 3);
     tp_distance_jump_set(tp, 5);
-    tp_stamina_set(tp, "200");
+    tp_health_set(tp, "150");
+    tp_mana_set(tp, 200);
+    tp_name_long_set(tp, "speed demon wizard");
     tp_speed_set(tp, 200);
+    tp_stamina_set(tp, "200");
     tp_stat_set(tp, THING_STAT_DEF, "8");
     tp_stat_set(tp, THING_STAT_LUCK, "1d6+10");
-    tp_mana_set(tp, 200);
     // end sort marker1 }
   }
 

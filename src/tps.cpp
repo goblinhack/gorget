@@ -86,6 +86,7 @@
   if (!tp_load_player2()) { return false; }
   if (!tp_load_player3()) { return false; }
   if (!tp_load_player4()) { return false; }
+  if (!tp_load_player5()) { return false; }
   if (!tp_load_pot_disloc()) { return false; }
   if (!tp_load_pot_healing()) { return false; }
   if (!tp_load_pot_incin()) { return false; }

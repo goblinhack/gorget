@@ -20,7 +20,7 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
-void tp_player1_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
+void tp_player5_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
   THING_DBG(g, v, l, me, "player spawned");
@@ -30,7 +30,8 @@ void tp_player1_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 
   static std::initializer_list< std::string > items = {
-      "wand_fire", //
+      "staff_fire", //
+      "wand_fire",  //
   };
 
   if (! thing_carry(g, v, l, me, items)) {
@@ -38,29 +39,31 @@ void tp_player1_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 }
 
-auto tp_player1_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
+auto tp_player5_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me) -> std::string
 {
   TRACE();
 
-  return UI_INFO1_FMT_STR "The choice for the sacrecant that doesn't like to sacrifice much!\n" //
-      UI_INFO2_FMT_STR "This sacrecant has generous health and no stat penalties.\n";
+  return UI_INFO1_FMT_STR "Psycho wizard. A choice of weapons and improved damage, but monsters galore.\n";
 }
 
-[[nodiscard]] auto tp_load_player1() -> bool
+[[nodiscard]] auto tp_load_player5() -> bool
 {
-  auto *tp   = tp_load("player1"); // keep as string for scripts
+  auto *tp   = tp_load("player5"); // keep as string for scripts
   auto  name = tp_name(tp);
 
   tp_load_player_common(tp);
 
   if (! g_opt_tests) {
     // begin sort marker1 {
-    thing_detail_set(tp, tp_player1_detail_get);
-    thing_on_spawned_set(tp, tp_player1_on_spawned);
-    tp_difficulty_set(tp, 0);
-    tp_health_set(tp, "250");
-    tp_mana_set(tp, 50);
-    tp_name_long_set(tp, "cowardly wizard");
+    thing_detail_set(tp, tp_player5_detail_get);
+    thing_on_spawned_set(tp, tp_player5_on_spawned);
+    tp_difficulty_set(tp, 5);
+    tp_health_set(tp, "100");
+    tp_mana_set(tp, 200);
+    tp_name_long_set(tp, "psycho wizard");
+    tp_stat_set(tp, THING_STAT_ATT, "1d4+10");
+    tp_stat_set(tp, THING_STAT_DEF, "12");
+    tp_stat_set(tp, THING_STAT_DMG, "14");
     // end sort marker1 }
   }
 
