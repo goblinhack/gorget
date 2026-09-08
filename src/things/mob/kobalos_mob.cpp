@@ -38,7 +38,7 @@ static void tp_kobalos_mob_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE();
 
-  if (d100() < 90) {
+  if (d100() < 90 - (game_difficulty_get(g) * 10)) {
     return;
   }
 

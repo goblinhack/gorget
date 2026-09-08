@@ -117,8 +117,6 @@ auto operator<<(std::ostream &out, Bits< const Config & > const my) -> std::ostr
     out << bits(tmp);
     tmp = offsetof(Config, sound_volume);
     out << bits(tmp);
-    tmp = offsetof(Config, difficulty);
-    out << bits(tmp);
     tmp = offsetof(Config, key_wait);
     out << bits(tmp);
     tmp = offsetof(Config, key_console);
@@ -259,7 +257,6 @@ auto operator<<(std::ostream &out, Bits< const Config & > const my) -> std::ostr
   out << bits(my.t.music_volume);
   out << bits(my.t.sdl_delay);
   out << bits(my.t.sound_volume);
-  out << bits(my.t.difficulty);
 
   out << bits(my.t.hiscores);
 
@@ -344,8 +341,6 @@ auto operator<<(std::ostream &out, Bits< const class Game & > const my) -> std::
     tmp = offsetof(Thing, _value6);                       // all we're saving here is offsets for validation later
     out << bits(tmp);                                     // all we're saving here is offsets for validation later
     tmp = offsetof(Thing, _value7);                       // all we're saving here is offsets for validation later
-    out << bits(tmp);                                     // all we're saving here is offsets for validation later
-    tmp = offsetof(Thing, _difficulty);             // all we're saving here is offsets for validation later
     out << bits(tmp);                                     // all we're saving here is offsets for validation later
     tmp = offsetof(Thing, _mana_max);                     // all we're saving here is offsets for validation later
     out << bits(tmp);                                     // all we're saving here is offsets for validation later
