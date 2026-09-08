@@ -39,10 +39,16 @@ static WidPopup *wid_leftbar;
 
   auto *player = thing_player(g);
   if (player == nullptr) [[unlikely]] {
-    return false;
+    player = game_cand_player_get(g);
+    if (player == nullptr) [[unlikely]] {
+      player = game_selected_player_get(g);
+      if (player == nullptr) [[unlikely]] {
+        return false;
+      }
+    }
   }
 
-  auto *l = game_level_get(g, v);
+  auto *l = thing_level(g, v, player);
   if (l == nullptr) [[unlikely]] {
     return false;
   }

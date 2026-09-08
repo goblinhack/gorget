@@ -56,15 +56,25 @@ extern TpVec tp_vec;
 #ifdef DEBUG_BUILD
   TRACE_DEBUG(); // expensive
 
-  if (static_cast< int >(id) - 1 >= static_cast< int >(tp_vec.size())) {
+  if (! id) [[unlikely]] {
+    CROAK("tp_find: thing template %" PRIX16 " invalid id", id);
+    return nullptr;
+  }
+
+  if (static_cast< int >(id) - 1 > static_cast< int >(tp_vec.size())) {
     CROAK("tp_find: thing template %" PRIX16 " bad id, beyond size of tp_vec", id);
     return nullptr;
   }
-#endif
+#else
+
+  if (! id) [[unlikely]] {
+    return nullptr;
+  }
 
   if (id > tp_vec.size()) [[unlikely]] {
     return nullptr;
   }
+#endif
 
   auto *result = tp_vec[ id - 1 ];
 

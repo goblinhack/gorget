@@ -6,12 +6,16 @@
 #include "my_callstack.hpp"
 #include "my_color_defs.hpp"
 #include "my_game.hpp"
+#include "my_game_inlines.hpp"
+#include "my_level.hpp"
+#include "my_level_inlines.hpp"
 #include "my_main.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
 #include "my_spoint.hpp"
 #include "my_string.hpp"
 #include "my_thing.hpp"
+#include "my_thing_inlines.hpp"
 #include "my_tile.hpp"
 #include "my_tp.hpp"
 #include "my_tp_inlines.hpp"
@@ -46,6 +50,12 @@ static void wid_player_select_destroy(Gamep g)
   memset(wid_sacrifice_shortcut, 0, sizeof(wid_sacrifice_shortcut));
   memset(wid_sacrifice, 0, sizeof(wid_sacrifice));
 
+  game_cand_player_set(g, nullptr);
+  game_cand_sacrifice_set(g, nullptr);
+
+  game_selected_player_set(g, nullptr);
+  game_selected_sacrifice_set(g, nullptr);
+
   if (wid_player_select_window != nullptr) {
     wid_destroy(g, &wid_player_select_window);
   }
@@ -55,9 +65,12 @@ static void wid_player_select_check_if_done(Gamep g)
 {
   TRACE();
 
-  if ((game_chosen_player_get(g) == nullptr) || (game_chosen_sacrifice_get(g) == nullptr)) {
+  if ((game_selected_player_get(g) == nullptr) || (game_selected_sacrifice_get(g) == nullptr)) {
     return;
   }
+
+  game_chosen_player_set(g, thing_tp(game_selected_player_get(g)));
+  game_chosen_sacrifice_set(g, thing_tp(game_selected_sacrifice_get(g)));
 
   wid_player_select_destroy(g);
 
@@ -70,6 +83,11 @@ static void wid_player_select_check_if_done(Gamep g)
 static void wid_player_update_selections(Gamep g)
 {
   TRACE();
+
+  auto *v = levels_memory_alloc(g);
+  if (! v) {
+    return;
+  }
 
   Widp w = nullptr;
 
@@ -87,8 +105,8 @@ static void wid_player_update_selections(Gamep g)
       wid_set_style(w, UI_WID_STYLE_BUTTON_SQUARE_SOLID);
       wid_set_color(w, WID_COLOR_BG, GRAY10);
 
-      auto *tp = wid_get_tp_context(g, w, 0);
-      if (tp == game_chosen_player_get(g)) {
+      auto *t = wid_get_thing_context(g, v, w, 0);
+      if (t == game_selected_player_get(g)) {
         wid_set_mode(w, WID_MODE_OVER);
         wid_set_style(w, UI_WID_STYLE_BUTTON_SQUARE_SOLID);
         wid_set_color(w, WID_COLOR_BG, RED);
@@ -111,8 +129,8 @@ static void wid_player_update_selections(Gamep g)
       wid_set_style(w, UI_WID_STYLE_BUTTON_SQUARE_SOLID);
       wid_set_color(w, WID_COLOR_BG, GRAY10);
 
-      auto *tp = wid_get_tp_context(g, w, 0);
-      if (tp == game_chosen_sacrifice_get(g)) {
+      auto *t = wid_get_thing_context(g, v, w, 0);
+      if (t == game_selected_sacrifice_get(g)) {
         wid_set_mode(w, WID_MODE_OVER);
         wid_set_style(w, UI_WID_STYLE_BUTTON_SQUARE_SOLID);
         wid_set_color(w, WID_COLOR_BG, RED);
@@ -129,49 +147,64 @@ static void wid_player_select_player_via_mouse_over_begin(Gamep g, Widp w, int /
 {
   TRACE();
 
-  auto *tp = wid_get_tp_context(g, w, 0);
-  if (tp == nullptr) {
+  auto *v = levels_memory_alloc(g);
+  if (! v) {
     return;
   }
 
-#if 0
+  auto *t = wid_get_thing_context(g, v, w, 0);
+  if (t == nullptr) {
+    return;
+  }
+
+  game_cand_player_set(g, t);
+
   level_cursor_describe_clear(g, v);
 
-  if (level_cursor_describe_add(g, v, tp)) {
+  if (level_cursor_describe_add(g, v, t)) {
     game_request_to_remake_ui_set(g);
   }
-#endif
 }
 
 static void wid_player_select_player_via_mouse_over_end(Gamep g, Widp w)
 {
   TRACE();
 
-  auto *tp = wid_get_tp_context(g, w, 0);
-  if (tp == nullptr) {
+  auto *v = levels_memory_alloc(g);
+  if (! v) {
     return;
   }
 
-#if 0
-  if (level_cursor_describe_remove(g, v, tp)) {
+  auto *t = wid_get_thing_context(g, v, w, 0);
+  if (t == nullptr) {
+    return;
+  }
+
+  game_cand_player_set(g, nullptr);
+
+  if (level_cursor_describe_remove(g, v, t)) {
     game_request_to_remake_ui_set(g);
   }
-#endif
 }
 
 [[nodiscard]] static auto wid_player_select_player_via_mouse_down(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
 
-  auto *tp = wid_get_tp_context(g, w, 0);
-  if (tp == nullptr) {
+  auto *v = levels_memory_alloc(g);
+  if (! v) {
     return false;
   }
 
-  if (game_chosen_player_get(g) == tp) {
-    game_chosen_player_set(g, nullptr);
+  auto *t = wid_get_thing_context(g, v, w, 0);
+  if (t == nullptr) {
+    return false;
+  }
+
+  if (game_selected_player_get(g) == t) {
+    game_selected_player_set(g, nullptr);
   } else {
-    game_chosen_player_set(g, tp);
+    game_selected_player_set(g, t);
   }
 
   wid_player_select_check_if_done(g);
@@ -185,49 +218,64 @@ static void wid_player_select_sacrifice_via_mouse_over_begin(Gamep g, Widp w, in
 {
   TRACE();
 
-  auto *tp = wid_get_tp_context(g, w, 0);
-  if (tp == nullptr) {
+  auto *v = levels_memory_alloc(g);
+  if (! v) {
     return;
   }
 
-#if 0
+  auto *t = wid_get_thing_context(g, v, w, 0);
+  if (t == nullptr) {
+    return;
+  }
+
+  game_cand_sacrifice_set(g, t);
+
   level_cursor_describe_clear(g, v);
 
-  if (level_cursor_describe_add(g, v, tp)) {
+  if (level_cursor_describe_add(g, v, t)) {
     game_request_to_remake_ui_set(g);
   }
-#endif
 }
 
 static void wid_player_select_sacrifice_via_mouse_over_end(Gamep g, Widp w)
 {
   TRACE();
 
-  auto *tp = wid_get_tp_context(g, w, 0);
-  if (tp == nullptr) {
+  auto *v = levels_memory_alloc(g);
+  if (! v) {
     return;
   }
 
-#if 0
-  if (level_cursor_describe_remove(g, v, tp)) {
+  auto *t = wid_get_thing_context(g, v, w, 0);
+  if (t == nullptr) {
+    return;
+  }
+
+  game_cand_sacrifice_set(g, nullptr);
+
+  if (level_cursor_describe_remove(g, v, t)) {
     game_request_to_remake_ui_set(g);
   }
-#endif
 }
 
 [[nodiscard]] static auto wid_player_select_sacrifice_via_mouse_down(Gamep g, Widp w, int x, int y, uint32_t button) -> bool
 {
   TRACE();
 
-  auto *tp = wid_get_tp_context(g, w, 0);
-  if (tp == nullptr) {
+  auto *v = levels_memory_alloc(g);
+  if (! v) {
     return false;
   }
 
-  if (game_chosen_sacrifice_get(g) == tp) {
-    game_chosen_sacrifice_set(g, nullptr);
+  auto *t = wid_get_thing_context(g, v, w, 0);
+  if (t == nullptr) {
+    return false;
+  }
+
+  if (game_selected_sacrifice_get(g) == t) {
+    game_selected_sacrifice_set(g, nullptr);
   } else {
-    game_chosen_sacrifice_set(g, tp);
+    game_selected_sacrifice_set(g, t);
   }
 
   wid_player_select_check_if_done(g);
@@ -327,7 +375,19 @@ void wid_player_select(Gamep g)
   con("Player select menu: create");
   TRACE_INDENT();
 
-  auto *v = game_levels_get(g);
+  auto *v = levels_memory_alloc(g);
+  if (! v) {
+    return;
+  }
+
+  (void) game_levels_set(g, v);
+
+  auto *level_select = game_level_get(g, v, LEVEL_ARR_IDX_LEVEL_SELECT);
+  if (! level_select) {
+    return;
+  }
+
+  level_init(g, v, level_select, LEVEL_ARR_IDX_LEVEL_SELECT);
 
   if (wid_player_select_window != nullptr) {
     wid_player_select_destroy(g);
@@ -405,6 +465,30 @@ void wid_player_select(Gamep g)
     }
 
     //
+    // Create a temporary thing on the level select map
+    //
+    auto   at             = bpoint(0, y_index);
+    Thingp existing_thing = nullptr;
+    FOR_ALL_THINGS_AT(g, v, level_select, t, at)
+    {
+      if (t) {
+        existing_thing = t;
+        break;
+      }
+    }
+
+    if (! existing_thing) {
+      existing_thing = thing_spawn(g, v, level_select, tp, at);
+      if (! existing_thing) {
+        continue;
+      }
+    }
+
+    if (! game_cand_player_get(g)) {
+      game_cand_player_set(g, existing_thing);
+    }
+
+    //
     // Sacrecant icon
     //
     Tilep tile = tp_tiles_get(tp, THING_ANIM_IDLE, 0);
@@ -417,7 +501,7 @@ void wid_player_select(Gamep g)
       wid_set_style(w, button_style);
       wid_set_pos(w, tl, br);
 
-      wid_set_tp_context(g, w, tp);
+      wid_set_thing_context(g, v, w, existing_thing);
       wid_set_on_mouse_down(w, wid_player_select_player_via_mouse_down);
 
       wid_set_on_mouse_over_begin(w, wid_player_select_player_via_mouse_over_begin);
@@ -447,7 +531,7 @@ void wid_player_select(Gamep g)
       wid_set_pos(w, tl, br);
       wid_set_text(w, s);
 
-      wid_set_tp_context(g, w, tp);
+      wid_set_thing_context(g, v, w, existing_thing);
       wid_set_on_mouse_down(w, wid_player_select_player_via_mouse_down);
 
       wid_set_on_mouse_over_begin(w, wid_player_select_player_via_mouse_over_begin);
@@ -473,7 +557,7 @@ void wid_player_select(Gamep g)
       wid_set_pos(w, tl, br);
       wid_set_text(w, line);
 
-      wid_set_tp_context(g, w, tp);
+      wid_set_thing_context(g, v, w, existing_thing);
       wid_set_on_mouse_down(w, wid_player_select_player_via_mouse_down);
 
       wid_set_on_mouse_over_begin(w, wid_player_select_player_via_mouse_over_begin);
@@ -514,6 +598,30 @@ void wid_player_select(Gamep g)
     }
 
     //
+    // Create a temporary thing on the level select map
+    //
+    auto   at             = bpoint(1, y_index);
+    Thingp existing_thing = nullptr;
+    FOR_ALL_THINGS_AT(g, v, level_select, t, at)
+    {
+      if (t) {
+        existing_thing = t;
+        break;
+      }
+    }
+
+    if (! existing_thing) {
+      existing_thing = thing_spawn(g, v, level_select, tp, at);
+      if (! existing_thing) {
+        continue;
+      }
+    }
+
+    if (! game_cand_sacrifice_get(g)) {
+      game_cand_sacrifice_set(g, existing_thing);
+    }
+
+    //
     // Key shortcut
     //
     {
@@ -534,7 +642,7 @@ void wid_player_select(Gamep g)
       wid_set_pos(w, tl, br);
       wid_set_text(w, s);
 
-      wid_set_tp_context(g, w, tp);
+      wid_set_thing_context(g, v, w, existing_thing);
       wid_set_on_mouse_down(w, wid_player_select_sacrifice_via_mouse_down);
 
       wid_set_on_mouse_over_begin(w, wid_player_select_sacrifice_via_mouse_over_begin);
@@ -560,7 +668,7 @@ void wid_player_select(Gamep g)
       wid_set_pos(w, tl, br);
       wid_set_text(w, line);
 
-      wid_set_tp_context(g, w, tp);
+      wid_set_thing_context(g, v, w, existing_thing);
       wid_set_on_mouse_down(w, wid_player_select_sacrifice_via_mouse_down);
 
       wid_set_on_mouse_over_begin(w, wid_player_select_sacrifice_via_mouse_over_begin);

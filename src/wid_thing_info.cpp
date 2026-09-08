@@ -1705,8 +1705,16 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp me, WidPopup *parent, i
     parent->log_empty_line(g);
   }
 
-  if (wid_thing_info_detail(g, v, l, me, parent)) {
-    parent->log_empty_line(g);
+  if (thing_is_player(me)) {
+    if (level_is_level_select(g, v, l)) {
+      if (wid_thing_info_detail(g, v, l, me, parent)) {
+        parent->log_empty_line(g);
+      }
+    }
+  } else {
+    if (wid_thing_info_detail(g, v, l, me, parent)) {
+      parent->log_empty_line(g);
+    }
   }
 
   if (wid_thing_info_score(g, v, l, me, parent)) {

@@ -47,20 +47,25 @@
   //
   if (tp_is_player(tp)) {
     //
-    // MUST come before player_state_change
+    // But only if this is not a temporary thing being created during player selection
     //
-    v->player_id = t->id;
+    if (! level_is_level_select(g, v, l)) {
+      //
+      // MUST come before player_state_change
+      //
+      v->player_id = t->id;
 
-    //
-    // Reset the player state
-    //
-    player_state_change(g, v, l, PLAYER_STATE_NORMAL);
+      //
+      // Reset the player state
+      //
+      player_state_change(g, v, l, PLAYER_STATE_NORMAL);
 
-    //
-    // First time entering this level?
-    //
-    if (! l->player_has_entered_level) {
-      level_enter(g, v, l, t);
+      //
+      // First time entering this level?
+      //
+      if (! l->player_has_entered_level) {
+        level_enter(g, v, l, t);
+      }
     }
   }
 

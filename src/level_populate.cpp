@@ -762,6 +762,10 @@ static auto level_populate_fixup_biome_underhell(class LevelPopulate &lp, Tpp tp
   lp.tp_player = game_chosen_player_get(g);
   if (! lp.tp_player) {
     lp.tp_player = tp_first(is_player);
+    if (! lp.tp_player) {
+      level_err(g, v, l, "could not find a player to use");
+      return false;
+    }
   }
 
   //

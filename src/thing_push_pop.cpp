@@ -314,6 +314,13 @@
     }
   }
 
+  //
+  // Happens during player selection when carrying an item
+  //
+  if (level_is_level_select(g, v, l)) {
+    return false;
+  }
+
   thing_err(g, v, l, t, "could not pop thing that is on the map");
   return false;
 }
